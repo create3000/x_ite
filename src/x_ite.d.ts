@@ -1240,17 +1240,38 @@ interface X3DConstants
 
 declare class FieldDefinitionArray extends X3DInfoArray <X3DFieldDefinition> { }
 
+/**
+ * The X3DFieldDefinition object represents all of the descriptive properties of a single field of a node.
+ */
 declare class X3DFieldDefinition
 {
+   /**
+    * Value from the X3DConstants object describing the accessType (e.g., "X3DConstants.inputOnly"). This property is read only.
+    */
    readonly accessType: number;
+   /**
+    * Value from X3DConstants object describing the field's data type (e.g., "X3DConstants.SFBool"). This property is read only.
+    */
    readonly dataType: number;
+   /**
+    * A string of the field name (e.g., "children"). This property is read only.
+    */
    readonly name: string;
+   /**
+    * A X3DField object holding the default value.
+    */
    readonly value: X3DField;
 }
 
+/**
+ * The X3DField object is the base object of all SF* field and X3DArrayField.
+ */
 declare class X3DField
 {
    copy (): this;
+   /**
+    * Returns true if the passed SF* or MF* *field* of the same type is equals to this object, otherwise false.
+    */
    equals (other: this): boolean;
    assign (other: this): void;
    isDefaultValue (): boolean;
@@ -1297,40 +1318,101 @@ declare class SFBool extends X3DField
    valueOf (): boolean;
 }
 
+/**
+ * The SFColor object corresponds to an X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.\<property\>*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (\<argument-list\>)*, where *sfColorObjectName* is an instance of a SFColor object.
+ */
 declare class SFColor extends X3DField
 {
    static readonly typeName: "SFColor";
 
+   /**
+    * A new color initialized with zero values is created and returned.
+    */
    constructor ();
+   /**
+    * *r, g,* and *b* are scalar values with the red, green, and blue values of the color in the range 0–1.
+    */
    constructor (r: number, g: number, b: number);
 
+   /**
+    * Red component of the color.
+    */
    r: number;
+   /**
+    * Green component of the color.
+    */
    g: number;
+   /**
+    * Blue component of the color.
+    */
    b: number;
 
    [index: number]: number;
 
+   /**
+    * Return an array with the components of the color's HSV value.
+    */
    getHSV (): number [];
+   /**
+    * Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
+    *
+    * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
+    */
    setHSV (h: number, s: number, v: number): void;
+   /**
+    * Linearly interpolates in HSV space between source color and destination color by an amount of t.
+    */
    lerp (destination: SFColor, t: number): SFColor;
 }
 
+/**
+ * The SFColorRGBA object corresponds to an X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.\<property\>*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (\<argument-list\>)*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object.
+ */
 declare class SFColorRGBA extends X3DField
 {
    static readonly typeName: "SFColorRGBA";
 
+   /**
+    * A new color initialized with zero values is created and returned.
+    */
    constructor ();
+   /**
+    * *r, g, b* and *a* are scalar values with the red, green and blue values of the color in the range 0–1.
+    */
    constructor (r: number, g: number, b: number, a: number);
 
+   /**
+    * Red component of the color.
+    */
    r: number;
+   /**
+    * Green component of the color.
+    */
    g: number;
+   /**
+    * Blue component of the color.
+    */
    b: number;
+   /**
+    * Alpha component of the color.
+    */
    a: number;
 
    [index: number]: number;
 
+   /**
+    * Return an array with the components of the color's HSVA value.
+    */
    getHSVA (): number [];
+   /**
+    * Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
+    *
+    * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
+    */
    setHSVA (h: number, s: number, v: number): void;
+   /**
+    * Linearly interpolates in HSVA space between source color and destination color by an amount of t.
+    */
    lerp (destination: SFColor, t: number): SFColorRGBA;
 }
 
@@ -1354,18 +1436,48 @@ declare class SFFloat extends X3DField
    valueOf (): number;
 }
 
+/**
+ * The SFImage object corresponds to an X3D SFImage field.
+ */
 declare class SFImage extends X3DField
 {
    static readonly typeName: "SFImage";
 
+   /**
+    * A new image initialized with zero values is created and returned.
+    */
    constructor ();
-   constructor (width: number, height: number, components: number, array: MFInt32);
+   /**
+    * @param width is the width in pixels of the image.
+    * @param height is the height in pixels of the image.
+    * @param components are the number of components of the image (0-4).
+    * @param array is a MFInt32 array with pixel data.
+    */
+   constructor (width: number, height: number, components: number, array?: MFInt32);
 
+   /**
+    * Width of the image in pixels.
+    */
    x: number;
+   /**
+    * Height of the image in pixels.
+    */
    y: number;
+   /**
+    * Width of the image in pixels.
+    */
    width: number;
+   /**
+    * Height of the image in pixels.
+    */
    height: number;
+   /**
+    * Number of components.
+    */
    comp: number;
+   /**
+    * A MFInt32 array corresponding to the pixels of the image.
+    */
    array: MFInt32;
 }
 
@@ -1379,72 +1491,198 @@ declare class SFInt32 extends X3DField
    valueOf (): number;
 }
 
+/**
+ * The SFMatrix3d/f object provides many useful methods for performing manipulations on 3×3 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix3d/fObjectName[0], ..., sflMatrixObjectName[8]*).
+ */
 declare class SFMatrix3 extends X3DField
 {
+   /**
+    * A new matrix initialized with the identity matrix is created and returned.
+    */
    constructor ();
+   /**
+    * A new matrix initialized with the vectors in *r1* through *r3* of type SFVec3d/f is created and returned.
+    */
    constructor (r1: SFVec3, r2: SFVec3, r3: SFVec3);
-   constructor (a: number, b: number, c: number,
-                d: number, e: number, f: number,
-                g: number, h: number, i: number);
+   /**
+    * A new matrix initialized with the values in *f11* through *f44* is created and returned.
+    */
+   constructor (f11: number, f12: number, f13: number,
+                f21: number, f22: number, f23: number,
+                f31: number, f32: number, f33: number);
 
    [index: number]: number;
 
+   /**
+    * Sets the SFMatrix3d/f to the passed values. *translation* is an SFVec2d/f object, *rotation* is a Number, *scaleFactor* is a SFVec2d/f object, *scaleOrientation* is a Number and *center* is a SFVec2d/f object.
+    *
+    * Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
+    */
    setTransform (translation: SFVec2, rotation: number, scaleFactor: SFVec2, scaleOrientation: number, center: SFVec2): void;
+   /**
+    * Decomposes the SFMatrix3d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*. rotation* is a SFVec3d/f, where x and y are the complex value of the rotation and z is the rotation angle in radians. The other types of the parameters are the same as in **setTransform**.
+    *
+    * Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
+    *
+    * A center of any value can be specified around which the rotation and scaling will take place.
+    */
    getTransform (translation: SFVec2, rotation: SFVec3, scaleFactor: SFVec2, scaleOrientation: SFVec3, center: SFVec2): void;
+   /**
+    * Returns the determinant of this object's matrix.
+    */
    determinant (): number;
+   /**
+    * Returns a SFMatrix whose value is the inverse of this object.
+    */
    inverse (): this;
+   /**
+    * Returns a SFMatrix3d/f whose value is the transpose of this object.
+    */
    transpose (): this;
+   /**
+    * Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the left.
+    */
    multLeft (matrix: this): this;
+   /**
+    * Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the right.
+    */
    multRight (matrix: this): this;
+   /**
+    * Returns a SFVec2d/f whose value is the object multiplied by the passed row vector.
+    */
    multVecMatrix <T extends SFVec2d | SFVec2f> (row: T): T;
+   /**
+    * Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
+    */
    multVecMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
+   /**
+    * Returns a SFVec2d/f whose value is the object multiplied by the passed column vector.
+    */
    multMatrixVec <T extends SFVec2d | SFVec2f> (col: T): T;
+   /**
+    * Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
+    */
    multMatrixVec <T extends SFVec3d | SFVec3f> (col: T): T;
+   /**
+    * Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed row vector.
+    */
    multDirMatrix <T extends SFVec2d | SFVec2f> (row: T): T;
+   /**
+    * Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
+    */
    multMatrixDir <T extends SFVec2d | SFVec2f> (col: T): T;
 }
 
+/**
+ * The SFMatrix3d/f object provides many useful methods for performing manipulations on 3×3 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix3d/fObjectName[0], ..., sflMatrixObjectName[8]*).
+ */
 declare class SFMatrix3d extends SFMatrix3
 {
    static readonly typeName: "SFMatrix3d";
 }
 
+/**
+ * The SFMatrix3d/f object provides many useful methods for performing manipulations on 3×3 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix3d/fObjectName[0], ..., sflMatrixObjectName[8]*).
+ */
 declare class SFMatrix3f extends SFMatrix3
 {
    static readonly typeName: "SFMatrix3f";
 }
 
+/**
+ * The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4d/fObjectName[0], ..., sflMatrixObjectName[15]*).
+ */
 declare class SFMatrix4 extends X3DField
 {
+   /**
+    * A new matrix initialized with the identity matrix is created and returned.
+    */
    constructor ();
+   /**
+    * A new matrix initialized with the vectors in *r1* through *r4* of type SFVec4d/f is created and returned.
+    */
    constructor (r1: SFVec4, r2: SFVec4, r3: SFVec4, r4: SFVec4);
-   constructor (a: number, b: number, c: number, d: number,
-                e: number, f: number, g: number, h: number,
-                i: number, j: number, k: number, l: number,
-                m: number, n: number, o: number, p: number);
+   /**
+    * A new matrix initialized with the values in *f11* through *f44* is created and returned.
+    */
+   constructor (f11: number, f12: number, f13: number, f14: number,
+                f21: number, f22: number, f23: number, f24: number,
+                f31: number, f32: number, f33: number, f34: number,
+                f41: number, f42: number, f43: number, f44: number);
 
    [index: number]: number;
 
+   /**
+    * Sets the SFMatrix4d/f to the passed values. *translation* is an SFVec3d/f object, *rotation* is a SFRotation object, *scaleFactor* is a SFVec3d/f object, *scaleOrientation* is a SFRotation object and *center* is a SFVec3d/f object.
+    *
+    * Any of the rightmost parameters can be omitted. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
+    */
    setTransform (translation: SFVec3, rotation: SFRotation, scaleFactor: SFVec3, scaleOrientation: SFRotation, center: SFVec3): void;
+   /**
+    * Decomposes the SFMatrix4d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects. The types of the parameters are the same as in **setTransform**.
+    *
+    * Any of the rightmost parameters can be omitted. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
+    *
+    * A center of any value can be specified around which the rotation and scaling will take place.
+    */
    getTransform (translation: SFVec3, rotation: SFRotation, scaleFactor: SFVec3, scaleOrientation: SFRotation, center: SFVec3): void;
+   /**
+    * Returns the determinant of this object's matrix.
+    */
    determinant (): number;
+   /**
+    * Returns a SFMatrix whose value is the inverse of this object.
+    */
    inverse (): this;
+   /**
+    * Returns a SFMatrix4d/f whose value is the transpose of this object.
+    */
    transpose (): this;
+   /**
+    * Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the left.
+    */
    multLeft (matrix: this): this;
+   /**
+    * Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the right.
+    */
    multRight (matrix: this): this;
+   /**
+    * Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
+    */
    multVecMatrix <T extends SFVec4d | SFVec4f> (row: T): T;
+   /**
+    * Returns a SFVec4d/f whose value is the object multiplied by the passed row vector.
+    */
    multVecMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
+   /**
+    * Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
+    */
    multMatrixVec <T extends SFVec4d | SFVec4f> (col: T): T;
+   /**
+    * Returns a SFVec4d/f whose value is the object multiplied by the passed column vector.
+    */
    multMatrixVec <T extends SFVec3d | SFVec3f> (col: T): T;
+   /**
+    * Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed row vector.
+    */
    multDirMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
+   /**
+    * Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
+    */
    multMatrixDir <T extends SFVec3d | SFVec3f> (col: T): T;
 }
 
+/**
+ * The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4d/fObjectName[0], ..., sflMatrixObjectName[15]*).
+ */
 declare class SFMatrix4d extends SFMatrix4
 {
    static readonly typeName: "SFMatrix4d";
 }
 
+/**
+ * The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4d/fObjectName[0], ..., sflMatrixObjectName[15]*).
+ */
 declare class SFMatrix4f extends SFMatrix4
 {
    static readonly typeName: "SFMatrix4f";

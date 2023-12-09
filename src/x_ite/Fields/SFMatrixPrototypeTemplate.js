@@ -47,7 +47,7 @@
 
 import X3DField from "../Base/X3DField.js";
 
-function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double)
+function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double)
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
@@ -159,19 +159,19 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double
       },
       multVecMatrix (vector)
       {
-         return new SFVec (this .getValue () .multVecMatrix (vector .getValue () .copy ()));
+         return new (vector .constructor) (this .getValue () .multVecMatrix (vector .getValue () .copy ()));
       },
       multMatrixVec (vector)
       {
-         return new SFVec (this .getValue () .multMatrixVec (vector .getValue () .copy ()));
+         return new (vector .constructor) (this .getValue () .multMatrixVec (vector .getValue () .copy ()));
       },
       multDirMatrix (vector)
       {
-         return new SFVec (this .getValue () .multDirMatrix (vector .getValue () .copy ()));
+         return new (vector .constructor) (this .getValue () .multDirMatrix (vector .getValue () .copy ()));
       },
       multMatrixDir (vector)
       {
-         return new SFVec (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
+         return new (vector .constructor) (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
       },
       toStream (generator)
       {

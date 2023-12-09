@@ -15,17 +15,17 @@ None.
 
 ### Properties
 
-#### **name**
-
-A string of the field name (e.g., "children"). This property is read only.
-
 #### **accessType**
 
-Value from the X3DConstants object describing the accessType (e.g., "inputOnly"). This property is read only.
+Value from the X3DConstants object describing the accessType (e.g., "X3DConstants.inputOnly"). This property is read only.
 
 #### **dataType**
 
-Value from X3DConstants cobject describing the field's data type (e.g., "SFBool"). This property is read only.
+Value from X3DConstants object describing the field's data type (e.g., "X3DConstants.SFBool"). This property is read only.
+
+#### **name**
+
+A string of the field name (e.g., "children"). This property is read only.
 
 ### Methods
 
@@ -112,7 +112,7 @@ Returns true if the passed SF* or MF* *field* of the same type is equals to this
 
 ## SFColor Object
 
-The SFColor object corresponds to an X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.<property>*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (<argument-list>*), where *sfColorObjectName* is an instance of a SFColor object.
+The SFColor object corresponds to an X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.\<property\>*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (\<argument-list\>)*, where *sfColorObjectName* is an instance of a SFColor object.
 
 ### Instance Creation Method(s)
 
@@ -140,23 +140,23 @@ Blue component of the color.
 
 ### Methods
 
+#### Array **getHSV** ()
+
+Return an array with the components of the color's HSV value.
+
 #### void **setHSV** (*h, s, v*)
 
 Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
 
 The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
 
-#### Array **getHSV** ()
-
-Return an array with the components of the color's HSV value.
-
 #### SFColor **lerp** (*destination, t*)
 
-Linearely interpolate in HSV space between source color and destination color by an amount of t.
+Linearly interpolates in HSV space between source color and destination color by an amount of t.
 
 ## SFColorRGBA Object
 
-The SFColorRGBA object corresponds to an X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.<property>*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (<argument-list>*), where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object.
+The SFColorRGBA object corresponds to an X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.\<property\>*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (\<argument-list\>)*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object.
 
 ### Instance Creation Method(s)
 
@@ -166,7 +166,7 @@ A new color initialized with zero values is created and returned.
 
 #### *sfColorRGBAObjectName* = new **SFColor** (*r, g, b, a*)
 
-*r, g,*  *b* and *a* are scalar values with the red, green and blue values of the color in the range 0–1.
+*r, g, b* and *a* are scalar values with the red, green and blue values of the color in the range 0–1.
 
 ### Properties
 
@@ -188,25 +188,29 @@ Alpha component of the color.
 
 ### Methods
 
+#### Array **getHSVA** ()
+
+Return an array with the components of the color's HSVA value.
+
 #### void **setHSVA** (*h, s, v, a*)
 
 Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
 
 The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
 
-#### Array **getHSVA** ()
-
-Return an array with the components of the color's HSVA value.
-
 #### SFColorRGBA **lerp** (*destination, t*)
 
-Linearely interpolate in HSVA space between source color and destination color by an amount of t.
+Linearly interpolates in HSVA space between source color and destination color by an amount of t.
 
 ## SFImage Object
 
 The SFImage object corresponds to an X3D SFImage field.
 
 ### Instance Creation Method(s)
+
+#### *sfImageObjectName* = new **SFImage** ()
+
+A new image initialized with zero values is created and returned.
 
 #### *sfImageObjectName* = new **SFImage** (*width, height, components[, MFInt32 array]*)
 
@@ -247,13 +251,13 @@ The SFMatrix3d/f object provides many useful methods for performing manipulation
 
 A new matrix initialized with the identity matrix is created and returned.
 
+#### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*r1, r2, r3*)
+
+A new matrix initialized with the vectors in *r1* through *r3* of type SFVec3d/f is created and returned.
+
 #### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*f11, f12, f13, f21, f22, f23, f31, f32, f33*)
 
 A new matrix initialized with the values in *f11* through *f44* is created and returned.
-
-#### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*vector0, vector1, vector2*)
-
-A new matrix initialized with the vectors in *vector0* through *vector2* of type SFVec3d/f is created and returned.
 
 ### Properties
 
@@ -287,27 +291,35 @@ Returns a SFMatrix whose value is the inverse of this object.
 
 Returns a SFMatrix3d/f whose value is the transpose of this object.
 
-#### SFMatrix3d/f **multLeft** *(matrix*)
+#### SFMatrix3d/f **multLeft** (*SFMatrix3d/f matrix*)
 
 Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the left.
 
-#### SFMatrix3d/f **multRight** (*matrix*)
+#### SFMatrix3d/f **multRight** (*SFMatrix3d/f matrix*)
 
 Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the right.
 
-#### SFVec2d/f **multVecMatrix** (*vec*)
+#### SFVec2d/f **multVecMatrix** (*SFVec2d/f vec*)
 
 Returns a SFVec2d/f whose value is the object multiplied by the passed row vector.
 
-#### SFVec2d/f **multMatrixVec** (*vec*)
+#### SFVec3d/f **multVecMatrix** (*SFVec3d/f vec*)
+
+Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
+
+#### SFVec2d/f **multMatrixVec** (*SFVec2d/f vec*)
 
 Returns a SFVec2d/f whose value is the object multiplied by the passed column vector.
 
-#### SFVec2d/f **multDirMatrix** (*vec*)
+#### SFVec3d/f **multMatrixVec** (*SFVec3d/f vec*)
+
+Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
+
+#### SFVec2d/f **multDirMatrix** (*SFVec2d/f vec*)
 
 Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed row vector.
 
-#### SFVec2d/f **multMatrixDir** (*vec*)
+#### SFVec2d/f **multMatrixDir** (*SFVec2d/f vec*)
 
 Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
 
@@ -321,13 +333,13 @@ The SFMatrix4d/f object provides many useful methods for performing manipulation
 
 A new matrix initialized with the identity matrix is created and returned.
 
+#### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*r1, r2, r3, r4*)
+
+A new matrix initialized with the vectors in *r1* through *r4* of type SFVec4d/f is created and returned.
+
 #### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*f11, f12, f13, f14, f21, f22, f23, f24, f31, f32, f33, f34, f41, f42, f43, f44*)
 
 A new matrix initialized with the values in *f11* through *f44* is created and returned.
-
-#### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*vector0, vector1, vector2, vector3*)
-
-A new matrix initialized with the vectors in *vector0* through *vector3* of type SFVec4d/f is created and returned.
 
 ### Properties
 
@@ -361,27 +373,35 @@ Returns a SFMatrix whose value is the inverse of this object.
 
 Returns a SFMatrix4d/f whose value is the transpose of this object.
 
-#### SFMatrix4d/f **multLeft** *(matrix*)
+#### SFMatrix4d/f **multLeft** (*SFMatrix4d/f matrix*)
 
 Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the left.
 
-#### SFMatrix4d/f **multRight** (*matrix*)
+#### SFMatrix4d/f **multRight** (*SFMatrix4d/f matrix*)
 
 Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the right.
 
-#### SFVec3d/f **multVecMatrix** (*vec*)
+#### SFVec3d/f **multVecMatrix** (*SFVec3d/f vec*)
 
 Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
 
-#### SFVec3d/f **multMatrixVec** (*vec*)
+#### SFVec4d/f **multVecMatrix** (*SFVec4d/f vec*)
+
+Returns a SFVec4d/f whose value is the object multiplied by the passed row vector.
+
+#### SFVec3d/f **multMatrixVec** (*SFVec3d/f vec*)
 
 Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
 
-#### SFVec3d/f **multDirMatrix** (*vec*)
+#### SFVec4d/f **multMatrixVec** (*SFVec4d/f vec*)
+
+Returns a SFVec4d/f whose value is the object multiplied by the passed column vector.
+
+#### SFVec3d/f **multDirMatrix** (*SFVec3d/f vec*)
 
 Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed row vector.
 
-#### SFVec3d/f **multMatrixDir** (*vec*)
+#### SFVec3d/f **multMatrixDir** (*SFVec3d/f vec*)
 
 Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
 
