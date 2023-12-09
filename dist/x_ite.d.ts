@@ -8,6 +8,9 @@ export = X3D;
 
 declare const X3D: X3D;
 
+/**
+ * Namespace for all X3D objects.
+ */
 interface X3D
 {
    (callback?: () => void, fallback?: (error: Error) => void): Promise <void>;
@@ -88,66 +91,219 @@ interface X3D
    readonly MFVec4f: typeof MFVec4f;
 }
 
+/**
+ * The X3DCanvasElement, \<x3d-canvas\>, is the main element that displays the X3D content. It defines some functions to be used with this object.
+ */
 declare class X3DCanvasElement extends HTMLElement
 {
+   /**
+    * A reference to the X3DBrowser object that is associated with this element.
+    */
    readonly browser: X3DBrowser;
 
+   /**
+    * See https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/captureStream.
+    */
    captureStream (frameRate?: number): MediaStream;
+   /**
+    * See https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob.
+    */
    toBlob (callback: (blob: Blob) => void, type?: string, quality?: number): void;
+   /**
+    * See https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL.
+    */
    toDataURL (type?: string, encoderOptions?: number): string;
 }
 
+/**
+ * This section lists the methods available in the *browser* object, which allows scripts to get and set browser information.
+ */
 declare class X3DBrowser
 {
+   /**
+    * A browser-implementation specific string describing the browser.
+    */
    readonly name: string;
+   /**
+    * A browser-implementation specific string describing the browser version.
+    */
    readonly version: string;
+   /**
+    * If provided, the URL to the entity that wrote this browser.
+    */
    readonly providerURL: string;
+   /**
+    * The current speed of the avatar in m/s.
+    */
    readonly currentSpeed: number;
+   /**
+    * The current frame rate in frames per second.
+    */
    readonly currentFrameRate: number;
+   /**
+    * A user-defined String which can be read and written.
+    */
    description: string;
-   readonly supportedComponents: ComponentInfoArray;
+   /**
+    * The property value cannot be changed, but the properties of the ProfileInfoArray can be.
+    */
    readonly supportedProfiles: ProfileInfoArray;
+   /**
+    * The property value cannot be changed, but the properties of the ComponentInfoArray can be.
+    */
+   readonly supportedComponents: ComponentInfoArray;
+   /**
+    * A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
+    */
    baseURL: string;
+   /**
+    * The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene.
+    */
    readonly currentScene: X3DScene;
 
+   /**
+    * Replace the current world with this new scene that has been loaded or constructed from somewhere. A Promise is returned that will be resolved when the scene is completely loaded.
+    */
    replaceWorld (scene: X3DScene): Promise <void>;
+   /**
+    * The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
+    */
    createX3DFromString (x3dSyntax: string): Promise <X3DScene>;
+   /**
+    * Parse the passed URL into an X3D scene and return a Promise that resolves to an X3DScene object.
+    */
    createX3DFromURL (url: MFString): Promise <X3DScene>;
+   /**
+    * Parse the passed URL into an X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
+    */
    createX3DFromURL (url: MFString, node: SFNode, fieldName: string): void;
+   /**
+    * Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return. The return value is a Promise object, that is resolved when the new scene is loaded.
+    */
    loadURL (url: MFString, parameter?: MFString): Promise <void>;
+   /**
+    * Imports an X3D XML DOM document or fragment, converts it, and returns a Promise that resolves to an X3DScene object.
+    */
    importDocument (dom: HTMLElement | string): Promise <X3DScene>;
+   /**
+    * Imports an X3D JSON document or fragment, converts it, and returns a Promise that resolves to an X3DScene object.
+    */
    importJS (json: string | JSONObject): Promise <X3DScene>;
+   /**
+    * Returns a browser property with the corresponding *name*.
+    */
    getBrowserProperty (name: BrowserProperty): boolean;
+   /**
+    * Returns a browser option with the corresponding *name*.
+    */
    getBrowserOption <T extends keyof BrowserOption> (name: T): BrowserOption [T];
+   /**
+    * Sets a browser option with the corresponding *name* to the given value.
+    */
    setBrowserOption <T extends keyof BrowserOption> (name: T, value: BrowserOption [T]): void;
+   /**
+    * Returns a rendering property with the corresponding *name*.
+    */
    getRenderingProperty <T extends keyof RenderingProperty> (name: T): RenderingProperty [T];
    getContextMenu (): ContextMenu;
+   /**
+    * Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. If *event* is omitted, the callback function is added to all events. The signature of the callback function is `function (event)`, where event can be any value listed below:
+    *
+    * - X3DConstants .CONNECTION_ERROR
+    * - X3DConstants .BROWSER_EVENT
+    * - X3DConstants .INITIALIZED_EVENT
+    * - X3DConstants .SHUTDOWN_EVENT
+    * - X3DConstants .INITIALIZED_ERROR
+    */
    addBrowserCallback (key: any, callback?: (event: number) => void): void;
    addBrowserCallback (key: any, event: number, callback?: (event: number) => void): void;
+   /**
+    * Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callback associated whit key are removed.
+    */
    removeBrowserCallback (key: any, event?: number): void;
+   /**
+    * Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layerNode* is omitted, the active layer is used.
+    */
    viewAll (layer?: SFNode, transitionTime?: number): void;
+   /**
+    * Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+    */
    nextViewpoint (layer?: SFNode): void;
+   /**
+    * Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+    */
    previousViewpoint (layer?: SFNode): void;
+   /**
+    * Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+    */
    firstViewpoint (layer?: SFNode): void;
+   /**
+    * Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
+    */
    lastViewpoint (layer?: SFNode): void;
+   /**
+    * Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
+    */
    changeViewpoint (name: string): void;
    changeViewpoint (layer: SFNode, name: string): void;
+   /**
+    * Prints *args* to the browser's console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object's `toString ()` function.
+    */
    print (... args: any []): void;
+   /**
+    * Prints *args* to the browser’s console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object’s `toString ()` function.
+    */
    printLn (... args: any []): void;
 
    // VRML methods
 
+   /**
+    * A browser-implementation specific string describing the browser.
+    */
    getName (): string;
+   /**
+    * A browser-implementation specific string describing the browser version.
+    */
    getVersion (): string;
+   /**
+    * The current speed of the avatar in m/s.
+    */
    getCurrentSpeed (): number;
+   /**
+    * The current frame rate in frames per second.
+    */
    getCurrentFrameRate (): number;
+   /**
+    * A string containing the URL of this execution context.
+    */
    getWorldURL (): string;
+   /**
+    * Replace the current world with this new nodes that has been loaded or constructed from somewhere.
+    */
    replaceWorld (nodes: MFNode): string;
+   /**
+    * The string may be any valid VRML content.
+    */
    createVrmlFromString (vrmlSyntax: string): MFNode;
+   /**
+    * Parse the passed URL into an VRML scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
+    */
    createVrmlFromURL (url: MFString, node: SFNode, fieldName: string): void;
+   /**
+    * Add a route from the passed *sourceField* to the passed *destinationField*.
+    */
    addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
+   /**
+    * Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
+    */
    deleteRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
+   /**
+    * Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return.
+    */
    loadURL (url: MFString, parameter?: MFString): void;
+   /**
+    * A user-defined String.
+    */
    setDescription (description: string): void;
 }
 
@@ -268,121 +424,378 @@ type UserMenuItem = {
    dataAttr?: Record <string, string>,
 }
 
+/**
+ * A scene is an extension of the execution context services with additional services provided.
+ */
 declare class X3DScene extends X3DExecutionContext
 {
+   /**
+    * When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
+    */
    rootNodes: MFNode;
 
+   /**
+    * Returns the metadata values array associated with *name*.
+    */
    getMetaData (name: string): string [];
+   /**
+    * Creates or updates the metadata with *name* and *value.*
+    */
    setMetaData (name: string, value: string | string []): void;
+   /**
+    * Adds the metadata with *name* and *value.*
+    */
    addMetaData (name: string, value: string): void;
+   /**
+    * Removes the metadata *name.*
+    */
    removeMetaData (name: string): void;
+   /**
+    * Adds *node* to the list of root nodes. If the node already exists, the function silently returns.
+    */
    addRootNode (node: SFNode): void;
+   /**
+    * Removes *node* from the list of root nodes.
+    */
    removeRootNode (node: SFNode): void;
+   /**
+    * Returns a reference to the node with the exported name *exportedName.* If no exported node *exportedName* is found an exception is thrown.
+    */
    getExportedNode (exportedName: string): SFNode;
+   /**
+    * Creates the exported node *exportedName.*
+    */
    addExportedNode (exportedName: string, node: SFNode): void;
+   /**
+    * Creates or updates the exported node *exportedName.*
+    */
    updateExportedNode (exportedName: string, node: SFNode): void;
+   /**
+    * Removes the exported node *exportedName.*
+    */
    removeExportedNode (exportedName: string): void;
+   /**
+    * Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+    *
+    * #### Options
+    *
+    * An object with one or more of these properties:
+    *
+    * - **style:** String, output style, one of: **"TIDY"**, "COMPACT", "SMALL", "CLEAN"
+    * - **indent:** String, initial indent, default: ""
+    * - **precision:** Integer, float precision, default: 7
+    * - **doublePrecision:** Integer, double precision, default: 15
+    * - **html:** Boolean, HTML style, default: false
+    * - **closingTags:** Boolean, use closing tags, default: false
+    */
+   toVRMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D XML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+    *
+    * For *options* see `X3DScene.toVRMLString`.
+    */
+   toXMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D JSON-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+    *
+    * For *options* see `X3DScene.toVRMLString`.
+    */
+   toJSONString (options?: ToStringOptions): string;
 }
 
+/**
+ * This section lists the methods available in the X3DExecutionContext object, which allows scripts to get access to the scene graph.
+ */
 declare class X3DExecutionContext
 {
+   /**
+    * The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.0". This property is read only.
+    */
    readonly specificationVersion: string;
+   /**
+    * The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read only.
+    */
    readonly encoding: "ASCII" | "VRML" | "XML" | "JSON" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE" | "GLTF" | "OBJ" | "STL" | "PLY" | "SVG";
+   /**
+    * A reference to the ProfileInfo object used by this execution context. This property is read only.
+    */
    readonly profile: ProfileInfo | null;
+   /**
+    * A reference to the ComponentInfoArray object used by this execution context. This property is read only.
+    */
    readonly components: ComponentInfoArray;
+   /**
+    * A string containing the URL of this execution context. This property is read only.
+    */
    readonly worldURL: string;
+   /**
+    * A string containing the URL against which relative URLs are resolved. This property is read only.
+    */
    readonly baseURL: string;
+   /**
+    * A reference to the UnitInfoArray object used by this execution context. This property is read only.
+    */
    readonly units: UnitInfoArray;
+   /**
+    * When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
+    */
    readonly rootNodes: MFNode;
+   /**
+    * A reference to the ProtoDeclarationArray object used by this execution context. This property is read only.
+    */
    readonly protos: ProtoDeclarationArray;
+   /**
+    * A reference to the ExternProtoDeclarationArray object used by this execution context. This property is read only.
+    */
    readonly externprotos: ExternProtoDeclarationArray;
+   /**
+    * A reference to the RouteArray object used by this execution context. This property is read only.
+    */
    readonly routes: RouteArray;
 
-   createNode <T extends keyof ConcreteNodesType> (typeName: T): ConcreteNodesType [T];
-   createProto (protoName: string): SFNode;
+   /**
+    * Creates a new default instance of the node given by the *typeName* string containing the name of an X3D node type.
+    */
+   createNode <T extends keyof ConcreteNodeTypes> (typeName: T): ConcreteNodeTypes [T];
+   /**
+    * Creates a new default instance of the prototype given by the *protoName* string containing the name of an prototype or extern prototype of this execution context.
+    */
+   createProto (protoName: string): X3DPrototypeInstanceProxy;
+   /**
+    * Returns a reference to the named node named by the string *name.* If no named node with the name *name* exists an exception is throw.
+    */
    getNamedNode (name: string): SFNode;
+   /**
+    * Creates the named node referenced by *name.* This will give *node* a new name.
+    */
    addNamedNode (name: string, node: SFNode): void;
+   /**
+    * Creates or updates the named node referenced by *name.* This will give *node* a new name.
+    */
    updateNamedNode (name: string, node: SFNode): void;
+   /**
+    * Removes the named node *name.*
+    */
    removeNamedNode (name: string): void;
+   /**
+    * Returns a reference to the imported node named by the string *importedName.* If no imported node with the imported name *importedName* exists an exception is throw.
+    */
    getImportedNode (importedName: string): SFNode;
+   /**
+    * Creates the imported node *importedName.* If not *importedName* is given *exportedName* is used as imported name. The node to import must be an exported node named by *exportedName* in *inlineNode.*
+    */
    addImportedNode (inlineNode: SFNode, exportedName: string, importedName?: string): void;
+   /**
+    * Creates or updates the imported node *importedName.* If not *importedName* is given *exportedName* is used as imported name. The node to import must be an exported node named by *exportedName* in *inlineNode.*
+    */
    updateImportedNode (inlineNode: SFNode, exportedName: string, importedName?: string): void;
+   /**
+    * Removes the imported node *importedName.*
+    */
    removeImportedNode (importedName: string): void;
+   /**
+    * Add a route from the passed *sourceField* to the passed *destinationField.* The return value is an X3DRoute object.
+    */
    addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): X3DRoute;
+   /**
+    * Remove the route if it is connected.
+    */
    deleteRoute (route: X3DRoute): void;
-
-   toVRMLString (options?: ToStringOptions): string;
-   toXMLString (options?: ToStringOptions): string;
-   toJSONString (options?: ToStringOptions): string;
 }
 
 declare class ProfileInfoArray extends X3DInfoArray <ProfileInfo> { }
 
+/**
+ * This object stores information about a particular X3D profile.
+ */
 declare class ProfileInfo
 {
+   /**
+    * A string of the formal name of this profile. This property is read only.
+    */
    readonly name: string;
+   /**
+    * A generic, freeform title string provided by the browser manufacturer. This property is read only.
+    */
    readonly title: string;
+   /**
+    * If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
+    */
    readonly providerURL: string;
+   /**
+    * An ComponentInfoArray object of the ComponentInfo object instances that make up this profile. This property is read only.
+    */
    readonly components: ComponentInfoArray
 }
 
 declare class ComponentInfoArray extends X3DInfoArray <ComponentInfo> { }
 
+/**
+ * The ComponentInfo object stores information about a particular X3D component. The object consists solely of read-only properties. It does not define any additional functions.
+ */
 declare class ComponentInfo
 {
+   /**
+    * A string of the formal name of this profile. This property is read only.
+    */
    readonly name: string;
+   /**
+    * A number of the level of support of this instance. This property is read only.
+    */
    readonly level: number;
+   /**
+    * A generic, freeform title string provided by the browser manufacturer. This property is read only.
+    */
    readonly title: string;
+   /**
+    * If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
+    */
    readonly providerURL: string;
 }
 
 declare class UnitInfoArray extends X3DInfoArray <UnitInfo> { }
 
+/**
+ * The UnitInfo object stores information about a particular unit declaration. The object consists solely of read-only properties. It does not define any additional functions.
+ */
 declare class UnitInfo
 {
+   /**
+    * The category of default unit being modified as defined in the table. This property is read only.
+    */
    readonly category: string;
+   /**
+    * A string of the name assigned to the new default unit. This property is read only.
+    */
    readonly name: string;
+   /**
+    * The double-precision number needed to convert from the new default unit to the initial default unit. This property is read only.
+    */
    readonly conversionFactor: number;
 }
 
 declare class ProtoDeclarationArray extends X3DInfoArray <X3DProtoDeclaration> { }
 
+/**
+ * A PROTO declaration is represented by the X3DProtoDeclaration object. This object can only be fetched using the X3DExecutionContext object.
+ */
 declare class X3DProtoDeclaration
 {
+   /**
+    * A string of the declared name of this prototype. This property is read only.
+    */
    readonly name: string;
+   /**
+    * A reference to FieldDefinitionArray of all the fields defined for this prototype. This property is read only.
+    */
    readonly fields: FieldDefinitionArray;
+   /**
+    * Always has the value of false. This property is read only.
+    */
    readonly isExternProto: false;
 
-   newInstance (): SFNode;
+   /**
+    * Creates a new default instance of the prototype.
+    */
+   newInstance (): X3DPrototypeInstanceProxy;
+   /**
+    * Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toVRMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toXMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toJSONString (options?: ToStringOptions): string;
 }
 
 declare class ExternProtoDeclarationArray extends X3DInfoArray <X3DExternProtoDeclaration> { }
 
+/**
+ * An EXTERNPROTO declaration is represented by the X3DExternProtoDeclaration object. EXTERNPROTO declarations can only be fetched using the X3DExecutionContext object.
+ */
 declare class X3DExternProtoDeclaration
 {
+   /**
+    * A string of the declared name of this extern prototype. This property is read only.
+    */
    readonly name: string;
+   /**
+    * A reference to FieldDefinitionArray of all the fields defined for this extern prototype. This property is read only.
+    */
    readonly fields: FieldDefinitionArray;
+   /**
+    * A MFString array of all the URI's defined for this extern prototype. This property is read only.
+    */
    readonly urls: MFString;
+   /**
+    * Always has the value of true. This property is read only.
+    */
    readonly isExternProto: true;
+   /**
+    * The value is one of the *_STATE* properties defined in the X3DConstants object. This property is read only.
+    */
    readonly loadState: number;
 
-   newInstance (): SFNode;
+   /**
+    * Creates a new default instance of the extern prototype.
+    */
+   newInstance (): X3DPrototypeInstanceProxy;
+   /**
+    * Triggers the loading of the extern prototype. It returns a Promise that is resolved when the extern prototype is completely loaded and all instances are updated.
+    */
    loadNow (): Promise <void>;
+   /**
+    * Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toVRMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toXMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toJSONString (options?: ToStringOptions): string;
 }
 
 declare class RouteArray extends X3DInfoArray <X3DRoute> { }
 
+/**
+ * Routes are represented by the X3DRoute object. Routes can only be created through calls to the addRoute () function of X3DExecutionContext.
+ */
 declare class X3DRoute
 {
+   /**
+    * A reference to the node that is the source of this route.
+    */
    readonly sourceNode: SFNode;
+   /**
+    * A string of the name of the field in the source node.
+    */
    readonly sourceField: string;
+   /**
+    * A reference to the node that is the destination of this route.
+    */
    readonly destinationNode: SFNode;
+   /**
+    * A string of the name of the field in the destination node.
+    */
    readonly destinationField: string;
 }
 
@@ -392,6 +805,13 @@ declare class X3DInfoArray <T>
    readonly length: number;
 }
 
+/**
+ * The X3DConstants object is used to define constants values used throughout this language binding. Each property is defined as a numeric, read-only value. The individual values are not specified; these are implementation-dependent. These constants can be used anywhere that a service request wishes to return some fixed value such as if or switch statements. The list of known values are defined in the table below.
+ *
+ * The X3DConstants object is unique in ECMAScript in that there is exactly one globally available instance of the object, named X3DConstants. Properties can be accessed using the syntax X3DConstants.\<property-name\>.
+ *
+ * The object consists solely of read-only properties. It does not define any additional functions.
+ */
 interface X3DConstants
 {
    // Browser Event Constants
@@ -656,7 +1076,6 @@ interface X3DConstants
    readonly PrimitivePickSensor: number;
    readonly ProgramShader: number;
    readonly ProjectionVolumeStyle: number;
-   readonly ProtoInstance: number;
    readonly ProximitySensor: number;
    readonly QuadSet: number;
    readonly ReceiverPdu: number;
@@ -821,17 +1240,38 @@ interface X3DConstants
 
 declare class FieldDefinitionArray extends X3DInfoArray <X3DFieldDefinition> { }
 
+/**
+ * The X3DFieldDefinition object represents all of the descriptive properties of a single field of a node.
+ */
 declare class X3DFieldDefinition
 {
+   /**
+    * Value from the X3DConstants object describing the accessType (e.g., "X3DConstants.inputOnly"). This property is read only.
+    */
    readonly accessType: number;
+   /**
+    * Value from X3DConstants object describing the field's data type (e.g., "X3DConstants.SFBool"). This property is read only.
+    */
    readonly dataType: number;
+   /**
+    * A string of the field name (e.g., "children"). This property is read only.
+    */
    readonly name: string;
+   /**
+    * A X3DField object holding the default value.
+    */
    readonly value: X3DField;
 }
 
+/**
+ * The X3DField object is the base object of all SF* field and X3DArrayField.
+ */
 declare class X3DField
 {
    copy (): this;
+   /**
+    * Returns true if the passed SF* or MF* *field* of the same type is equals to this object, otherwise false.
+    */
    equals (other: this): boolean;
    assign (other: this): void;
    isDefaultValue (): boolean;
@@ -878,40 +1318,101 @@ declare class SFBool extends X3DField
    valueOf (): boolean;
 }
 
+/**
+ * The SFColor object corresponds to an X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.\<property\>*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (\<argument-list\>)*, where *sfColorObjectName* is an instance of a SFColor object.
+ */
 declare class SFColor extends X3DField
 {
    static readonly typeName: "SFColor";
 
+   /**
+    * A new color initialized with zero values is created and returned.
+    */
    constructor ();
+   /**
+    * *r, g,* and *b* are scalar values with the red, green, and blue values of the color in the range 0–1.
+    */
    constructor (r: number, g: number, b: number);
 
+   /**
+    * Red component of the color.
+    */
    r: number;
+   /**
+    * Green component of the color.
+    */
    g: number;
+   /**
+    * Blue component of the color.
+    */
    b: number;
 
    [index: number]: number;
 
+   /**
+    * Return an array with the components of the color's HSV value.
+    */
    getHSV (): number [];
+   /**
+    * Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
+    *
+    * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
+    */
    setHSV (h: number, s: number, v: number): void;
+   /**
+    * Linearly interpolates in HSV space between source color and destination color by an amount of t.
+    */
    lerp (destination: SFColor, t: number): SFColor;
 }
 
+/**
+ * The SFColorRGBA object corresponds to an X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.\<property\>*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (\<argument-list\>)*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object.
+ */
 declare class SFColorRGBA extends X3DField
 {
    static readonly typeName: "SFColorRGBA";
 
+   /**
+    * A new color initialized with zero values is created and returned.
+    */
    constructor ();
+   /**
+    * *r, g, b* and *a* are scalar values with the red, green and blue values of the color in the range 0–1.
+    */
    constructor (r: number, g: number, b: number, a: number);
 
+   /**
+    * Red component of the color.
+    */
    r: number;
+   /**
+    * Green component of the color.
+    */
    g: number;
+   /**
+    * Blue component of the color.
+    */
    b: number;
+   /**
+    * Alpha component of the color.
+    */
    a: number;
 
    [index: number]: number;
 
+   /**
+    * Return an array with the components of the color's HSVA value.
+    */
    getHSVA (): number [];
+   /**
+    * Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
+    *
+    * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
+    */
    setHSVA (h: number, s: number, v: number): void;
+   /**
+    * Linearly interpolates in HSVA space between source color and destination color by an amount of t.
+    */
    lerp (destination: SFColor, t: number): SFColorRGBA;
 }
 
@@ -935,18 +1436,48 @@ declare class SFFloat extends X3DField
    valueOf (): number;
 }
 
+/**
+ * The SFImage object corresponds to an X3D SFImage field.
+ */
 declare class SFImage extends X3DField
 {
    static readonly typeName: "SFImage";
 
+   /**
+    * A new image initialized with zero values is created and returned.
+    */
    constructor ();
-   constructor (width: number, height: number, components: number, array: MFInt32);
+   /**
+    * @param width is the width in pixels of the image.
+    * @param height is the height in pixels of the image.
+    * @param components are the number of components of the image (0-4).
+    * @param array is a MFInt32 array with pixel data.
+    */
+   constructor (width: number, height: number, components: number, array?: MFInt32);
 
+   /**
+    * Width of the image in pixels.
+    */
    x: number;
+   /**
+    * Height of the image in pixels.
+    */
    y: number;
+   /**
+    * Width of the image in pixels.
+    */
    width: number;
+   /**
+    * Height of the image in pixels.
+    */
    height: number;
+   /**
+    * Number of components.
+    */
    comp: number;
+   /**
+    * A MFInt32 array corresponding to the pixels of the image.
+    */
    array: MFInt32;
 }
 
@@ -960,72 +1491,198 @@ declare class SFInt32 extends X3DField
    valueOf (): number;
 }
 
+/**
+ * The SFMatrix3d/f object provides many useful methods for performing manipulations on 3×3 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix3d/fObjectName[0], ..., sflMatrixObjectName[8]*).
+ */
 declare class SFMatrix3 extends X3DField
 {
+   /**
+    * A new matrix initialized with the identity matrix is created and returned.
+    */
    constructor ();
+   /**
+    * A new matrix initialized with the vectors in *r1* through *r3* of type SFVec3d/f is created and returned.
+    */
    constructor (r1: SFVec3, r2: SFVec3, r3: SFVec3);
-   constructor (a: number, b: number, c: number,
-                d: number, e: number, f: number,
-                g: number, h: number, i: number);
+   /**
+    * A new matrix initialized with the values in *f11* through *f44* is created and returned.
+    */
+   constructor (f11: number, f12: number, f13: number,
+                f21: number, f22: number, f23: number,
+                f31: number, f32: number, f33: number);
 
    [index: number]: number;
 
+   /**
+    * Sets the SFMatrix3d/f to the passed values. *translation* is an SFVec2d/f object, *rotation* is a Number, *scaleFactor* is a SFVec2d/f object, *scaleOrientation* is a Number and *center* is a SFVec2d/f object.
+    *
+    * Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
+    */
    setTransform (translation: SFVec2, rotation: number, scaleFactor: SFVec2, scaleOrientation: number, center: SFVec2): void;
+   /**
+    * Decomposes the SFMatrix3d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*. rotation* is a SFVec3d/f, where x and y are the complex value of the rotation and z is the rotation angle in radians. The other types of the parameters are the same as in **setTransform**.
+    *
+    * Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
+    *
+    * A center of any value can be specified around which the rotation and scaling will take place.
+    */
    getTransform (translation: SFVec2, rotation: SFVec3, scaleFactor: SFVec2, scaleOrientation: SFVec3, center: SFVec2): void;
+   /**
+    * Returns the determinant of this object's matrix.
+    */
    determinant (): number;
+   /**
+    * Returns a SFMatrix whose value is the inverse of this object.
+    */
    inverse (): this;
+   /**
+    * Returns a SFMatrix3d/f whose value is the transpose of this object.
+    */
    transpose (): this;
+   /**
+    * Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the left.
+    */
    multLeft (matrix: this): this;
+   /**
+    * Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the right.
+    */
    multRight (matrix: this): this;
+   /**
+    * Returns a SFVec2d/f whose value is the object multiplied by the passed row vector.
+    */
    multVecMatrix <T extends SFVec2d | SFVec2f> (row: T): T;
+   /**
+    * Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
+    */
    multVecMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
+   /**
+    * Returns a SFVec2d/f whose value is the object multiplied by the passed column vector.
+    */
    multMatrixVec <T extends SFVec2d | SFVec2f> (col: T): T;
+   /**
+    * Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
+    */
    multMatrixVec <T extends SFVec3d | SFVec3f> (col: T): T;
+   /**
+    * Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed row vector.
+    */
    multDirMatrix <T extends SFVec2d | SFVec2f> (row: T): T;
+   /**
+    * Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
+    */
    multMatrixDir <T extends SFVec2d | SFVec2f> (col: T): T;
 }
 
+/**
+ * The SFMatrix3d/f object provides many useful methods for performing manipulations on 3×3 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix3d/fObjectName[0], ..., sflMatrixObjectName[8]*).
+ */
 declare class SFMatrix3d extends SFMatrix3
 {
    static readonly typeName: "SFMatrix3d";
 }
 
+/**
+ * The SFMatrix3d/f object provides many useful methods for performing manipulations on 3×3 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix3d/fObjectName[0], ..., sflMatrixObjectName[8]*).
+ */
 declare class SFMatrix3f extends SFMatrix3
 {
    static readonly typeName: "SFMatrix3f";
 }
 
+/**
+ * The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4d/fObjectName[0], ..., sflMatrixObjectName[15]*).
+ */
 declare class SFMatrix4 extends X3DField
 {
+   /**
+    * A new matrix initialized with the identity matrix is created and returned.
+    */
    constructor ();
+   /**
+    * A new matrix initialized with the vectors in *r1* through *r4* of type SFVec4d/f is created and returned.
+    */
    constructor (r1: SFVec4, r2: SFVec4, r3: SFVec4, r4: SFVec4);
-   constructor (a: number, b: number, c: number, d: number,
-                e: number, f: number, g: number, h: number,
-                i: number, j: number, k: number, l: number,
-                m: number, n: number, o: number, p: number);
+   /**
+    * A new matrix initialized with the values in *f11* through *f44* is created and returned.
+    */
+   constructor (f11: number, f12: number, f13: number, f14: number,
+                f21: number, f22: number, f23: number, f24: number,
+                f31: number, f32: number, f33: number, f34: number,
+                f41: number, f42: number, f43: number, f44: number);
 
    [index: number]: number;
 
+   /**
+    * Sets the SFMatrix4d/f to the passed values. *translation* is an SFVec3d/f object, *rotation* is a SFRotation object, *scaleFactor* is a SFVec3d/f object, *scaleOrientation* is a SFRotation object and *center* is a SFVec3d/f object.
+    *
+    * Any of the rightmost parameters can be omitted. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
+    */
    setTransform (translation: SFVec3, rotation: SFRotation, scaleFactor: SFVec3, scaleOrientation: SFRotation, center: SFVec3): void;
+   /**
+    * Decomposes the SFMatrix4d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects. The types of the parameters are the same as in **setTransform**.
+    *
+    * Any of the rightmost parameters can be omitted. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
+    *
+    * A center of any value can be specified around which the rotation and scaling will take place.
+    */
    getTransform (translation: SFVec3, rotation: SFRotation, scaleFactor: SFVec3, scaleOrientation: SFRotation, center: SFVec3): void;
+   /**
+    * Returns the determinant of this object's matrix.
+    */
    determinant (): number;
+   /**
+    * Returns a SFMatrix whose value is the inverse of this object.
+    */
    inverse (): this;
+   /**
+    * Returns a SFMatrix4d/f whose value is the transpose of this object.
+    */
    transpose (): this;
+   /**
+    * Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the left.
+    */
    multLeft (matrix: this): this;
+   /**
+    * Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the right.
+    */
    multRight (matrix: this): this;
+   /**
+    * Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
+    */
    multVecMatrix <T extends SFVec4d | SFVec4f> (row: T): T;
+   /**
+    * Returns a SFVec4d/f whose value is the object multiplied by the passed row vector.
+    */
    multVecMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
+   /**
+    * Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
+    */
    multMatrixVec <T extends SFVec4d | SFVec4f> (col: T): T;
+   /**
+    * Returns a SFVec4d/f whose value is the object multiplied by the passed column vector.
+    */
    multMatrixVec <T extends SFVec3d | SFVec3f> (col: T): T;
+   /**
+    * Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed row vector.
+    */
    multDirMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
+   /**
+    * Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
+    */
    multMatrixDir <T extends SFVec3d | SFVec3f> (col: T): T;
 }
 
+/**
+ * The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4d/fObjectName[0], ..., sflMatrixObjectName[15]*).
+ */
 declare class SFMatrix4d extends SFMatrix4
 {
    static readonly typeName: "SFMatrix4d";
 }
 
+/**
+ * The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices. Each of element of the matrix can be accessed using C-style array dereferencing (i.e., *sflMatrix4d/fObjectName[0], ..., sflMatrixObjectName[15]*).
+ */
 declare class SFMatrix4f extends SFMatrix4
 {
    static readonly typeName: "SFMatrix4f";
@@ -13290,27 +13947,6 @@ interface ProjectionVolumeStyleProxy extends X3DVolumeRenderStyleNodeProxy
    type: "MAX" | "MIN" | "AVERAGE";
 }
 
-/** ProtoInstance can override field default values via fieldValue initializations. Non-recursive nested ProtoInstance and ProtoDeclare statements are allowed within a ProtoDeclare. */
-interface ProtoInstanceProxy extends X3DPrototypeInstanceProxy, X3DChildNodeProxy
-{
-   /**
-   * Include fieldValue statements if this ProtoInstance overrides default values in any of the original field declarations.
-   *
-   * This field is of access type 'inputOutput' and type MFNode.
-   */
-   fieldValue: MFNode <fieldValueProxy>;
-   /**
-   * This field is of access type 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy | null;
-   /**
-   * name of the prototype node being instanced.
-   *
-   * This field is of access type 'inputOutput' and type SFString.
-   */
-   name: string;
-}
-
 /** ProximitySensor generates events when the viewer enters, exits and moves within a region of space (defined by a box). */
 interface ProximitySensorProxy extends X3DEnvironmentalSensorNodeProxy
 {
@@ -20167,7 +20803,7 @@ interface X3DVolumeRenderStyleNodeProxy extends X3DNodeProxy
    metadata: X3DMetadataObjectProxy | null;
 }
 
-type ConcreteNodesType = {
+type ConcreteNodeTypes = {
    AcousticProperties: AcousticPropertiesProxy,
    Analyser: AnalyserProxy,
    Anchor: AnchorProxy,
@@ -20357,7 +20993,6 @@ type ConcreteNodesType = {
    PrimitivePickSensor: PrimitivePickSensorProxy,
    ProgramShader: ProgramShaderProxy,
    ProjectionVolumeStyle: ProjectionVolumeStyleProxy,
-   ProtoInstance: ProtoInstanceProxy,
    ProximitySensor: ProximitySensorProxy,
    QuadSet: QuadSetProxy,
    ReceiverPdu: ReceiverPduProxy,
@@ -20434,6 +21069,6 @@ type ConcreteNodesType = {
    WorldInfo: WorldInfoProxy,
 }
 &
-{ [name: string]: SFNode } // catch all;
+{ [name: string]: X3DNodeProxy } // catch all;
 
 // NODES END

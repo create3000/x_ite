@@ -11,10 +11,10 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 929:
+/***/ 884:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(234);
+/* provided dependency */ var jQuery = __webpack_require__(78);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -210,7 +210,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 173:
+/***/ 983:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -224,7 +224,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(234)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(78)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -435,7 +435,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 234:
+/***/ 78:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11159,7 +11159,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 445:
+/***/ 159:
 /***/ ((module) => {
 
 /**
@@ -15938,7 +15938,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 32:
+/***/ 49:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19183,7 +19183,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 829:
+/***/ 293:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -24660,7 +24660,7 @@ x_ite_Namespace .add ("SFInt32", "x_ite/Fields/SFInt32", SFInt32_default_);
 
 
 
-function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double)
+function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double)
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
@@ -24772,19 +24772,19 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double
       },
       multVecMatrix (vector)
       {
-         return new SFVec (this .getValue () .multVecMatrix (vector .getValue () .copy ()));
+         return new (vector .constructor) (this .getValue () .multVecMatrix (vector .getValue () .copy ()));
       },
       multMatrixVec (vector)
       {
-         return new SFVec (this .getValue () .multMatrixVec (vector .getValue () .copy ()));
+         return new (vector .constructor) (this .getValue () .multMatrixVec (vector .getValue () .copy ()));
       },
       multDirMatrix (vector)
       {
-         return new SFVec (this .getValue () .multDirMatrix (vector .getValue () .copy ()));
+         return new (vector .constructor) (this .getValue () .multDirMatrix (vector .getValue () .copy ()));
       },
       multMatrixDir (vector)
       {
-         return new SFVec (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
+         return new (vector .constructor) (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
       },
       toStream (generator)
       {
@@ -24841,212 +24841,6 @@ const SFMatrixPrototypeTemplate_default_ = SFMatrixPrototypeTemplate;
 
 x_ite_Namespace .add ("SFMatrixPrototypeTemplate", "x_ite/Fields/SFMatrixPrototypeTemplate", SFMatrixPrototypeTemplate_default_);
 /* harmony default export */ const Fields_SFMatrixPrototypeTemplate = (SFMatrixPrototypeTemplate_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFVecPrototypeTemplate.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
-{
-   const _formatter = double ? "DoubleFormat" : "FloatFormat";
-
-   Object .defineProperties (Constructor,
-   {
-      typeName:
-      {
-         value: TypeName,
-         enumerable: true,
-      },
-   });
-
-   return Object .assign (Object .setPrototypeOf (Constructor .prototype, Base_X3DField .prototype),
-   {
-      *[Symbol .iterator] ()
-      {
-         yield* this .getValue ();
-      },
-      copy ()
-      {
-         return new (this .constructor) (this .getValue () .copy ());
-      },
-      equals (vector)
-      {
-         return this .getValue () .equals (vector .getValue ());
-      },
-      isDefaultValue ()
-      {
-         return this .getValue () .equals (Vector .Zero);
-      },
-      set (value)
-      {
-         this .getValue () .assign (value);
-      },
-      abs ()
-      {
-         return new (this .constructor) (this .getValue () .copy () .abs ());
-      },
-      add (vector)
-      {
-         return new (this .constructor) (this .getValue () .copy () .add (vector .getValue ()));
-      },
-      distance (vector)
-      {
-         return this .getValue () .distance (vector .getValue ());
-      },
-      divide (value)
-      {
-         return new (this .constructor) (this .getValue () .copy () .divide (value));
-      },
-      divVec (vector)
-      {
-         return new (this .constructor) (this .getValue () .copy () .divVec (vector .getValue ()));
-      },
-      dot (vector)
-      {
-         return this .getValue () .dot (vector .getValue ());
-      },
-      inverse ()
-      {
-         return new (this .constructor) (this .getValue () .copy () .inverse ());
-      },
-      length ()
-      {
-         return this .getValue () .magnitude ();
-      },
-      lerp (destination, t)
-      {
-         return new (this .constructor) (this .getValue () .copy () .lerp (destination, t));
-      },
-      max (vector)
-      {
-         return new (this .constructor) (this .getValue () .copy () .max (vector .getValue ()));
-      },
-      min (vector)
-      {
-         return new (this .constructor) (this .getValue () .copy () .min (vector .getValue ()));
-      },
-      multiply (value)
-      {
-         return new (this .constructor) (this .getValue () .copy () .multiply (value));
-      },
-      multVec (vector)
-      {
-         return new (this .constructor) (this .getValue () .copy () .multVec (vector .getValue ()));
-      },
-      negate ()
-      {
-         return new (this .constructor) (this .getValue () .copy () .negate ());
-      },
-      normalize (vector)
-      {
-         return new (this .constructor) (this .getValue () .copy () .normalize ());
-      },
-      subtract (vector)
-      {
-         return new (this .constructor) (this .getValue () .copy () .subtract (vector .getValue ()));
-      },
-      toStream (generator)
-      {
-         const
-            value    = this .getValue (),
-            last     = value .length - 1,
-            category = generator .Unit (this .getUnit ());
-
-         for (let i = 0; i < last; ++ i)
-         {
-            generator .string += generator [_formatter] (generator .ToUnit (category, value [i]));
-            generator .string += generator .Space ();
-         }
-
-         generator .string += generator [_formatter] (generator .ToUnit (category, value [last]));
-      },
-      toVRMLStream (generator)
-      {
-         this .toStream (generator);
-      },
-      toXMLStream (generator)
-      {
-         this .toStream (generator);
-      },
-      toJSONStream (generator)
-      {
-         generator .string += '[';
-         generator .string += generator .TidySpace ();
-
-         this .toJSONStreamValue (generator);
-
-         generator .string += generator .TidySpace ();
-         generator .string += ']';
-      },
-      toJSONStreamValue (generator)
-      {
-         const
-            value    = this .getValue (),
-            last     = value .length - 1,
-            category = generator .Unit (this .getUnit ());
-
-         for (let i = 0; i < last; ++ i)
-         {
-            generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, value [i])));
-            generator .string += ',';
-            generator .string += generator .TidySpace ();
-         }
-
-         generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, value [last])));
-      },
-   });
-}
-
-const SFVecPrototypeTemplate_default_ = SFVecPrototypeTemplate;
-;
-
-x_ite_Namespace .add ("SFVecPrototypeTemplate", "x_ite/Fields/SFVecPrototypeTemplate", SFVecPrototypeTemplate_default_);
-/* harmony default export */ const Fields_SFVecPrototypeTemplate = (SFVecPrototypeTemplate_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Vector2.js
 /*******************************************************************************
  *
@@ -25290,131 +25084,6 @@ const Vector2_default_ = Vector2;
 
 x_ite_Namespace .add ("Vector2", "standard/Math/Numbers/Vector2", Vector2_default_);
 /* harmony default export */ const Numbers_Vector2 = (Vector2_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFVec2.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-function SFVec2Template (TypeName, double)
-{
-   function SFVec2 (x, y)
-   {
-      switch (arguments .length)
-      {
-         case 0:
-            Base_X3DField .call (this, new Numbers_Vector2 (0, 0));
-            break;
-
-         case 1:
-            Base_X3DField .call (this, arguments [0]);
-            break;
-
-         case 2:
-            Base_X3DField .call (this, new Numbers_Vector2 (+x, +y));
-            break;
-
-         default:
-            throw new Error ("Invalid arguments.");
-      }
-   }
-
-   Fields_SFVecPrototypeTemplate (SFVec2, TypeName, Numbers_Vector2, double);
-
-   for (const key of Object .keys (SFVec2 .prototype))
-      Object .defineProperty (SFVec2 .prototype, key, { enumerable: false });
-
-   const x = {
-      get ()
-      {
-         return this .getValue () .x;
-      },
-      set (value)
-      {
-         this .getValue () .x = +value;
-         this .addEvent ();
-      },
-   };
-
-   const y = {
-      get ()
-      {
-         return this .getValue () .y;
-      },
-      set (value)
-      {
-         this .getValue () .y = +value;
-         this .addEvent ();
-      },
-   };
-
-   Object .defineProperties (SFVec2 .prototype,
-   {
-      0: x,
-      1: y,
-      x: Object .assign ({ enumerable: true }, x),
-      y: Object .assign ({ enumerable: true }, y),
-   });
-
-   return SFVec2;
-}
-
-const SFVec2 = {
-   SFVec2d: SFVec2Template ("SFVec2d", true),
-   SFVec2f: SFVec2Template ("SFVec2f", false),
-};
-
-const SFVec2_default_ = SFVec2;
-;
-
-x_ite_Namespace .add ("SFVec2", "x_ite/Fields/SFVec2", SFVec2_default_);
-/* harmony default export */ const Fields_SFVec2 = (SFVec2_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Vector3.js
 /*******************************************************************************
  *
@@ -26918,8 +26587,7 @@ x_ite_Namespace .add ("Matrix3", "standard/Math/Numbers/Matrix3", Matrix3_defaul
 
 
 
-
-function SFMatrix3Template (TypeName, SFVec2, double)
+function SFMatrix3Template (TypeName, double)
 {
    function SFMatrix3 (m00, m01, m02,
                        m10, m11, m12,
@@ -26961,7 +26629,7 @@ function SFMatrix3Template (TypeName, SFVec2, double)
       }
    }
 
-   Object .assign (Fields_SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Numbers_Matrix3, SFVec2, double),
+   Object .assign (Fields_SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Numbers_Matrix3, double),
    {
       setTransform: (function ()
       {
@@ -27017,8 +26685,8 @@ function SFMatrix3Template (TypeName, SFVec2, double)
 }
 
 const SFMatrix3 = {
-   SFMatrix3d: SFMatrix3Template ("SFMatrix3d", Fields_SFVec2 .SFVec2d, true),
-   SFMatrix3f: SFMatrix3Template ("SFMatrix3f", Fields_SFVec2 .SFVec2f, false),
+   SFMatrix3d: SFMatrix3Template ("SFMatrix3d", true),
+   SFMatrix3f: SFMatrix3Template ("SFMatrix3f", false),
 };
 
 const SFMatrix3_default_ = SFMatrix3;
@@ -27026,151 +26694,6 @@ const SFMatrix3_default_ = SFMatrix3;
 
 x_ite_Namespace .add ("SFMatrix3", "x_ite/Fields/SFMatrix3", SFMatrix3_default_);
 /* harmony default export */ const Fields_SFMatrix3 = (SFMatrix3_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Fields/SFVec3.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-function SFVec3Template (TypeName, double)
-{
-   function SFVec3 (x, y, z)
-   {
-      switch (arguments .length)
-      {
-         case 0:
-            Base_X3DField .call (this, new Numbers_Vector3 (0, 0, 0));
-            break;
-
-         case 1:
-            Base_X3DField .call (this, arguments [0]);
-            break;
-
-         case 3:
-            Base_X3DField .call (this, new Numbers_Vector3 (+x, +y, +z));
-            break;
-
-         default:
-            throw new Error ("Invalid arguments.");
-      }
-   }
-
-   Object .assign (Fields_SFVecPrototypeTemplate (SFVec3, TypeName, Numbers_Vector3, double),
-   {
-      cross (vector)
-      {
-         return new (this .constructor) (this .getValue () .copy () .cross (vector .getValue ()));
-      },
-   });
-
-   for (const key of Object .keys (SFVec3 .prototype))
-      Object .defineProperty (SFVec3 .prototype, key, { enumerable: false });
-
-   const x = {
-      get ()
-      {
-         return this .getValue () .x;
-      },
-      set (value)
-      {
-         this .getValue () .x = +value;
-         this .addEvent ();
-      },
-   };
-
-   const y = {
-      get ()
-      {
-         return this .getValue () .y;
-      },
-      set (value)
-      {
-         this .getValue () .y = +value;
-         this .addEvent ();
-      },
-   };
-
-   const z = {
-      get ()
-      {
-         return this .getValue () .z;
-      },
-      set (value)
-      {
-         this .getValue () .z = +value;
-         this .addEvent ();
-      },
-   };
-
-   Object .defineProperties (SFVec3 .prototype,
-   {
-      0: x,
-      1: y,
-      2: z,
-      x: Object .assign ({ enumerable: true }, x),
-      y: Object .assign ({ enumerable: true }, y),
-      z: Object .assign ({ enumerable: true }, z),
-   });
-
-   return SFVec3;
-}
-
-const SFVec3 = {
-   SFVec3d: SFVec3Template ("SFVec3d", true),
-   SFVec3f: SFVec3Template ("SFVec3f", false),
-};
-
-const SFVec3_default_ = SFVec3;
-;
-
-x_ite_Namespace .add ("SFVec3", "x_ite/Fields/SFVec3", SFVec3_default_);
-/* harmony default export */ const Fields_SFVec3 = (SFVec3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Numbers/Vector4.js
 /*******************************************************************************
  *
@@ -29486,8 +29009,7 @@ x_ite_Namespace .add ("Matrix4", "standard/Math/Numbers/Matrix4", Matrix4_defaul
 
 
 
-
-function SFMatrix4Template (TypeName, SFVec3, double)
+function SFMatrix4Template (TypeName, double)
 {
    function SFMatrix4 (m00, m01, m02, m03,
                        m10, m11, m12, m13,
@@ -29533,7 +29055,7 @@ function SFMatrix4Template (TypeName, SFVec3, double)
       }
    }
 
-   Fields_SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Numbers_Matrix4, SFVec3, double);
+   Fields_SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Numbers_Matrix4, double);
 
    for (const key of Object .keys (SFMatrix4 .prototype))
       Object .defineProperty (SFMatrix4 .prototype, key, { enumerable: false });
@@ -29562,9 +29084,9 @@ function SFMatrix4Template (TypeName, SFVec3, double)
 }
 
 const SFMatrix4 = {
-   SFMatrix4d: SFMatrix4Template ("SFMatrix4d", Fields_SFVec3 .SFVec3d, true),
-   SFMatrix4f: SFMatrix4Template ("SFMatrix4f", Fields_SFVec3 .SFVec3f, false),
-   VrmlMatrix: SFMatrix4Template ("VrmlMatrix", Fields_SFVec3 .SFVec3f, false),
+   SFMatrix4d: SFMatrix4Template ("SFMatrix4d", true),
+   SFMatrix4f: SFMatrix4Template ("SFMatrix4f", false),
+   VrmlMatrix: SFMatrix4Template ("VrmlMatrix", false),
 };
 
 const SFMatrix4_default_ = SFMatrix4;
@@ -30152,6 +29674,357 @@ const SFNode_default_ = SFNode;
 
 x_ite_Namespace .add ("SFNode", "x_ite/Fields/SFNode", SFNode_default_);
 /* harmony default export */ const Fields_SFNode = (SFNode_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Fields/SFVecPrototypeTemplate.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
+{
+   const _formatter = double ? "DoubleFormat" : "FloatFormat";
+
+   Object .defineProperties (Constructor,
+   {
+      typeName:
+      {
+         value: TypeName,
+         enumerable: true,
+      },
+   });
+
+   return Object .assign (Object .setPrototypeOf (Constructor .prototype, Base_X3DField .prototype),
+   {
+      *[Symbol .iterator] ()
+      {
+         yield* this .getValue ();
+      },
+      copy ()
+      {
+         return new (this .constructor) (this .getValue () .copy ());
+      },
+      equals (vector)
+      {
+         return this .getValue () .equals (vector .getValue ());
+      },
+      isDefaultValue ()
+      {
+         return this .getValue () .equals (Vector .Zero);
+      },
+      set (value)
+      {
+         this .getValue () .assign (value);
+      },
+      abs ()
+      {
+         return new (this .constructor) (this .getValue () .copy () .abs ());
+      },
+      add (vector)
+      {
+         return new (this .constructor) (this .getValue () .copy () .add (vector .getValue ()));
+      },
+      distance (vector)
+      {
+         return this .getValue () .distance (vector .getValue ());
+      },
+      divide (value)
+      {
+         return new (this .constructor) (this .getValue () .copy () .divide (value));
+      },
+      divVec (vector)
+      {
+         return new (this .constructor) (this .getValue () .copy () .divVec (vector .getValue ()));
+      },
+      dot (vector)
+      {
+         return this .getValue () .dot (vector .getValue ());
+      },
+      inverse ()
+      {
+         return new (this .constructor) (this .getValue () .copy () .inverse ());
+      },
+      length ()
+      {
+         return this .getValue () .magnitude ();
+      },
+      lerp (destination, t)
+      {
+         return new (this .constructor) (this .getValue () .copy () .lerp (destination, t));
+      },
+      max (vector)
+      {
+         return new (this .constructor) (this .getValue () .copy () .max (vector .getValue ()));
+      },
+      min (vector)
+      {
+         return new (this .constructor) (this .getValue () .copy () .min (vector .getValue ()));
+      },
+      multiply (value)
+      {
+         return new (this .constructor) (this .getValue () .copy () .multiply (value));
+      },
+      multVec (vector)
+      {
+         return new (this .constructor) (this .getValue () .copy () .multVec (vector .getValue ()));
+      },
+      negate ()
+      {
+         return new (this .constructor) (this .getValue () .copy () .negate ());
+      },
+      normalize (vector)
+      {
+         return new (this .constructor) (this .getValue () .copy () .normalize ());
+      },
+      subtract (vector)
+      {
+         return new (this .constructor) (this .getValue () .copy () .subtract (vector .getValue ()));
+      },
+      toStream (generator)
+      {
+         const
+            value    = this .getValue (),
+            last     = value .length - 1,
+            category = generator .Unit (this .getUnit ());
+
+         for (let i = 0; i < last; ++ i)
+         {
+            generator .string += generator [_formatter] (generator .ToUnit (category, value [i]));
+            generator .string += generator .Space ();
+         }
+
+         generator .string += generator [_formatter] (generator .ToUnit (category, value [last]));
+      },
+      toVRMLStream (generator)
+      {
+         this .toStream (generator);
+      },
+      toXMLStream (generator)
+      {
+         this .toStream (generator);
+      },
+      toJSONStream (generator)
+      {
+         generator .string += '[';
+         generator .string += generator .TidySpace ();
+
+         this .toJSONStreamValue (generator);
+
+         generator .string += generator .TidySpace ();
+         generator .string += ']';
+      },
+      toJSONStreamValue (generator)
+      {
+         const
+            value    = this .getValue (),
+            last     = value .length - 1,
+            category = generator .Unit (this .getUnit ());
+
+         for (let i = 0; i < last; ++ i)
+         {
+            generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, value [i])));
+            generator .string += ',';
+            generator .string += generator .TidySpace ();
+         }
+
+         generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, value [last])));
+      },
+   });
+}
+
+const SFVecPrototypeTemplate_default_ = SFVecPrototypeTemplate;
+;
+
+x_ite_Namespace .add ("SFVecPrototypeTemplate", "x_ite/Fields/SFVecPrototypeTemplate", SFVecPrototypeTemplate_default_);
+/* harmony default export */ const Fields_SFVecPrototypeTemplate = (SFVecPrototypeTemplate_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Fields/SFVec3.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+function SFVec3Template (TypeName, double)
+{
+   function SFVec3 (x, y, z)
+   {
+      switch (arguments .length)
+      {
+         case 0:
+            Base_X3DField .call (this, new Numbers_Vector3 (0, 0, 0));
+            break;
+
+         case 1:
+            Base_X3DField .call (this, arguments [0]);
+            break;
+
+         case 3:
+            Base_X3DField .call (this, new Numbers_Vector3 (+x, +y, +z));
+            break;
+
+         default:
+            throw new Error ("Invalid arguments.");
+      }
+   }
+
+   Object .assign (Fields_SFVecPrototypeTemplate (SFVec3, TypeName, Numbers_Vector3, double),
+   {
+      cross (vector)
+      {
+         return new (this .constructor) (this .getValue () .copy () .cross (vector .getValue ()));
+      },
+   });
+
+   for (const key of Object .keys (SFVec3 .prototype))
+      Object .defineProperty (SFVec3 .prototype, key, { enumerable: false });
+
+   const x = {
+      get ()
+      {
+         return this .getValue () .x;
+      },
+      set (value)
+      {
+         this .getValue () .x = +value;
+         this .addEvent ();
+      },
+   };
+
+   const y = {
+      get ()
+      {
+         return this .getValue () .y;
+      },
+      set (value)
+      {
+         this .getValue () .y = +value;
+         this .addEvent ();
+      },
+   };
+
+   const z = {
+      get ()
+      {
+         return this .getValue () .z;
+      },
+      set (value)
+      {
+         this .getValue () .z = +value;
+         this .addEvent ();
+      },
+   };
+
+   Object .defineProperties (SFVec3 .prototype,
+   {
+      0: x,
+      1: y,
+      2: z,
+      x: Object .assign ({ enumerable: true }, x),
+      y: Object .assign ({ enumerable: true }, y),
+      z: Object .assign ({ enumerable: true }, z),
+   });
+
+   return SFVec3;
+}
+
+const SFVec3 = {
+   SFVec3d: SFVec3Template ("SFVec3d", true),
+   SFVec3f: SFVec3Template ("SFVec3f", false),
+};
+
+const SFVec3_default_ = SFVec3;
+;
+
+x_ite_Namespace .add ("SFVec3", "x_ite/Fields/SFVec3", SFVec3_default_);
+/* harmony default export */ const Fields_SFVec3 = (SFVec3_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fields/SFRotation.js
 /*******************************************************************************
  *
@@ -30680,6 +30553,131 @@ const SFTime_default_ = SFTime;
 
 x_ite_Namespace .add ("SFTime", "x_ite/Fields/SFTime", SFTime_default_);
 /* harmony default export */ const Fields_SFTime = (SFTime_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Fields/SFVec2.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+function SFVec2Template (TypeName, double)
+{
+   function SFVec2 (x, y)
+   {
+      switch (arguments .length)
+      {
+         case 0:
+            Base_X3DField .call (this, new Numbers_Vector2 (0, 0));
+            break;
+
+         case 1:
+            Base_X3DField .call (this, arguments [0]);
+            break;
+
+         case 2:
+            Base_X3DField .call (this, new Numbers_Vector2 (+x, +y));
+            break;
+
+         default:
+            throw new Error ("Invalid arguments.");
+      }
+   }
+
+   Fields_SFVecPrototypeTemplate (SFVec2, TypeName, Numbers_Vector2, double);
+
+   for (const key of Object .keys (SFVec2 .prototype))
+      Object .defineProperty (SFVec2 .prototype, key, { enumerable: false });
+
+   const x = {
+      get ()
+      {
+         return this .getValue () .x;
+      },
+      set (value)
+      {
+         this .getValue () .x = +value;
+         this .addEvent ();
+      },
+   };
+
+   const y = {
+      get ()
+      {
+         return this .getValue () .y;
+      },
+      set (value)
+      {
+         this .getValue () .y = +value;
+         this .addEvent ();
+      },
+   };
+
+   Object .defineProperties (SFVec2 .prototype,
+   {
+      0: x,
+      1: y,
+      x: Object .assign ({ enumerable: true }, x),
+      y: Object .assign ({ enumerable: true }, y),
+   });
+
+   return SFVec2;
+}
+
+const SFVec2 = {
+   SFVec2d: SFVec2Template ("SFVec2d", true),
+   SFVec2f: SFVec2Template ("SFVec2f", false),
+};
+
+const SFVec2_default_ = SFVec2;
+;
+
+x_ite_Namespace .add ("SFVec2", "x_ite/Fields/SFVec2", SFVec2_default_);
+/* harmony default export */ const Fields_SFVec2 = (SFVec2_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Fields/SFVec4.js
 /*******************************************************************************
  *
@@ -34251,7 +34249,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 x_ite_Namespace .add ("X3DBaseNode", "x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
 /* harmony default export */ const Base_X3DBaseNode = (X3DBaseNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(234);
+/* provided dependency */ var $ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38239,7 +38237,7 @@ const X3DProtoDeclarationNode_default_ = X3DProtoDeclarationNode;
 x_ite_Namespace .add ("X3DProtoDeclarationNode", "x_ite/Prototype/X3DProtoDeclarationNode", X3DProtoDeclarationNode_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclarationNode = (X3DProtoDeclarationNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(234);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39064,7 +39062,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .add ("X3DProtoDeclaration", "x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(234);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41617,7 +41615,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .add ("VRMLParser", "x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(234);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43710,7 +43708,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(234);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47011,7 +47009,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .add ("GLTF2Parser", "x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(234);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47163,7 +47161,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .add ("GLB2Parser", "x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(234);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50518,8 +50516,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .add ("MatrixStack", "standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(234);
-/* provided dependency */ var libtess = __webpack_require__(445);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(78);
+/* provided dependency */ var libtess = __webpack_require__(159);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53287,7 +53285,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .add ("SVGParser", "x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(234);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53624,7 +53622,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .add ("Plane3", "standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(445);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(159);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -61131,7 +61129,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .add ("X3DTexture2DNode", "x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(234);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65718,7 +65716,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .add ("X3DWorld", "x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(234);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89408,7 +89406,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .add ("X3DShaderNode", "x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(234);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95049,7 +95047,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .add ("ShaderCompiler", "x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(234);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95706,7 +95704,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .add ("X3DAppearanceNode", "x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(234);
+/* provided dependency */ var Appearance_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99124,7 +99122,7 @@ const Components_Shape_default_ = {
 x_ite_Namespace .add ("Shape", "x_ite/Components/Shape", Components_Shape_default_);
 /* harmony default export */ const Components_Shape = (Components_Shape_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundProcessingNode.js
-/* provided dependency */ var X3DSoundProcessingNode_$ = __webpack_require__(234);
+/* provided dependency */ var X3DSoundProcessingNode_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99764,7 +99762,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace .add ("X3DSoundSourceNode", "x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(234);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100066,7 +100064,7 @@ const X3DSoundNode_default_ = X3DSoundNode;
 x_ite_Namespace .add ("X3DSoundNode", "x_ite/Components/Sound/X3DSoundNode", X3DSoundNode_default_);
 /* harmony default export */ const Sound_X3DSoundNode = (X3DSoundNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundDestinationNode.js
-/* provided dependency */ var X3DSoundDestinationNode_$ = __webpack_require__(234);
+/* provided dependency */ var X3DSoundDestinationNode_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101716,7 +101714,7 @@ const ListenerPointSource_default_ = ListenerPointSource;
 x_ite_Namespace .add ("ListenerPointSource", "x_ite/Components/Sound/ListenerPointSource", ListenerPointSource_default_);
 /* harmony default export */ const Sound_ListenerPointSource = (ListenerPointSource_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/MicrophoneSource.js
-/* provided dependency */ var MicrophoneSource_$ = __webpack_require__(234);
+/* provided dependency */ var MicrophoneSource_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103385,8 +103383,8 @@ const GifMedia_default_ = GifMedia;
 x_ite_Namespace .add ("GifMedia", "x_ite/Browser/Texturing/GifMedia", GifMedia_default_);
 /* harmony default export */ const Texturing_GifMedia = (GifMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(234);
-/* provided dependency */ var SuperGif = __webpack_require__(829);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(78);
+/* provided dependency */ var SuperGif = __webpack_require__(293);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106661,7 +106659,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace .add ("gettext", "locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(234);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107091,7 +107089,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .add ("TextureQuality", "x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(234);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107681,7 +107679,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .add ("RenderingProperties", "x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(234);
+/* provided dependency */ var Notification_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107804,8 +107802,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .add ("Notification", "x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(929);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(234);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(884);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110553,7 +110551,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .add ("DataStorage", "standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(234);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113080,8 +113078,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .add ("X3DViewer", "x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(173);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(234);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(983);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113953,8 +113951,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .add ("ExamineViewer", "x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(173);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(234);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(983);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114963,8 +114961,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .add ("FlyViewer", "x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(173);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(234);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(983);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115295,8 +115293,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .add ("NoneViewer", "x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(173);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(234);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(983);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116435,8 +116433,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .add ("X3DPickingContext", "x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(173);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(234);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(983);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117715,7 +117713,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .add ("MultiSampleFrameBuffer", "x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(234);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118618,7 +118616,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 x_ite_Namespace .add ("X3DSoundContext", "x_ite/Browser/Sound/X3DSoundContext", X3DSoundContext_default_);
 /* harmony default export */ const Sound_X3DSoundContext = (X3DSoundContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(234);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(78);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -120171,7 +120169,7 @@ const Components_default_ = Components;
 x_ite_Namespace .add ("Components", "x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(234);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(78);
 /*******************************************************************************
  * MIT License
  *
@@ -121310,7 +121308,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace .add ("SupportedProfiles", "x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(234);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122391,7 +122389,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace .add ("X3DBrowser", "x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(234);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122523,8 +122521,8 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 x_ite_Namespace .add ("X3DCanvasElement", "x_ite/X3DCanvasElement", X3DCanvasElement_default_);
 /* harmony default export */ const x_ite_X3DCanvasElement = (X3DCanvasElement_default_);
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(234);
-/* provided dependency */ var pako = __webpack_require__(32);
+/* provided dependency */ var jquery_$ = __webpack_require__(78);
+/* provided dependency */ var pako = __webpack_require__(49);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -122601,14 +122599,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .add ("jquery", "lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(445);
+/* provided dependency */ var libtess_libtess = __webpack_require__(159);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .add ("libtess", "lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(234);
+/* provided dependency */ var X3D_$ = __webpack_require__(78);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
