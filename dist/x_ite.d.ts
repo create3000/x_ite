@@ -801,6 +801,7 @@ declare class X3DRoute
 
 declare class X3DInfoArray <T>
 {
+   [Symbol .iterator](): IterableIterator <T>;
    readonly [index: number]: T;
    readonly length: number;
 }
@@ -1347,6 +1348,7 @@ declare class SFColor extends X3DField
     */
    b: number;
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
    /**
@@ -1398,6 +1400,7 @@ declare class SFColorRGBA extends X3DField
     */
    a: number;
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
    /**
@@ -1479,6 +1482,8 @@ declare class SFImage extends X3DField
     * A MFInt32 array corresponding to the pixels of the image.
     */
    array: MFInt32;
+
+   [Symbol .iterator](): IterableIterator <unknown>;
 }
 
 declare class SFInt32 extends X3DField
@@ -1511,6 +1516,7 @@ declare class SFMatrix3 extends X3DField
                 f21: number, f22: number, f23: number,
                 f31: number, f32: number, f33: number);
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
    /**
@@ -1610,6 +1616,7 @@ declare class SFMatrix4 extends X3DField
                 f31: number, f32: number, f33: number, f34: number,
                 f41: number, f42: number, f43: number, f44: number);
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
    /**
@@ -1688,31 +1695,84 @@ declare class SFMatrix4f extends SFMatrix4
    static readonly typeName: "SFMatrix4f";
 }
 
+/**
+ * The SFNode object corresponds to an X3D SFNode field.
+ */
 declare class SFNode extends X3DField
 {
    static readonly typeName: "SFNode";
 
+   /**
+    * Adds a field callback function, if external browser interface is used. *Key* is a custom key of any type associated with the *callback*. The callback is called when the field has been changed.
+    *
+    * The callback has a signature of `function (value)`, where value is the current value of the field.
+    */
    addFieldCallback (key: any, callback: (value: this) => void): void;
    /**
     * @deprecated Use `node .getField (name) .addFieldCallback (key, callback)`.
     */
    addFieldCallback (name: string, key: any, callback: (value: unknown) => void): void;
+   /**
+    * Returns a list of fields defined for the SFNode object.
+    */
    getFieldDefinitions (): FieldDefinitionArray;
+   /**
+    * Returns the corresponding X3DField object associated with *name*.
+    */
    getField (name: string): X3DField;
+   /**
+    * Returns the node name.
+    */
    getNodeName (): string;
+   /**
+    * Returns the node display name.
+    */
    getNodeDisplayName (): string;
+   /**
+    * Returns, in the array, a list of constant values that indicate node types as provided in the X3DConstants object.
+    */
    getNodeType (): number [];
+   /**
+    * Returns the node type name.
+    */
    getNodeTypeName (): string;
+   /**
+    * Returns a user-data associated with *key*.
+    */
    getNodeUserData (key: any): any;
+   /**
+    * Removes a field callback function associated with *key*.
+    */
    removeFieldCallback (key: any): void;
    /**
     * @deprecated Use `node .getField (name) .removeFieldCallback (key)`.
     */
    removeFieldCallback (name: string, key: any): void;
+   /**
+    * Removes a user-data associated with *key*.
+    */
    removeNodeUserData (key: any): void;
+   /**
+    * Sets a user-data associated with *key*.
+    */
    setNodeUserData (key: any, value: any): void;
+   /**
+    * Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, produce this node.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toVRMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, produce this node.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toXMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, produce this node.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toJSONString (options?: ToStringOptions): string;
 }
 
@@ -1725,30 +1785,87 @@ type ToStringOptions = {
    closingTags?: boolean,
 }
 
+/**
+ * The SFRotation object corresponds to an X3D SFRotation field.
+ */
 declare class SFRotation extends X3DField
 {
    static readonly typeName: "SFRotation";
 
+   /**
+    * A new rotation initialized with the identity rotation is created and returned.
+    */
    constructor ();
+   /**
+    * *x*, *y*, and *z* are the axis of the rotation.
+    * *angle* is the angle of the rotation (in radians). All values are scalar.
+    */
    constructor (x: number, y: number, z: number, angle: number);
+   /**
+    * *axis* is a SFVec3d/f object whose value is the axis of rotation.
+    * *angle* is the scalar angle of the rotation (in radians).
+    */
    constructor (axis: SFVec3, angle: number);
-   constructor (from: SFVec3, to: SFVec3);
+   /**
+    * *fromVector* and *toVector* are SFVec3d/f valued objects. These vectors are normalized and the rotation value that would rotate from the *fromVector* to the *toVector* is stored in the object.
+    */
+   constructor (fromVector: SFVec3, toVector: SFVec3);
+   /**
+    * *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
+    */
    constructor (matrix: SFMatrix3);
 
+   /**
+    * Returns the first value of the axis vector.
+    */
    x: number;
+   /**
+    * Returns the second value of the axis vector.
+    */
    y: number;
+   /**
+    * Returns the third value of the axis vector
+    */
    z: number;
+   /**
+    * A number corresponding to the angle of the rotation (in radians).
+    */
    angle: number;
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
+   /**
+    * Returns the axis of rotation as an SFVec3f object.
+    */
    getAxis (): SFVec3f;
+   /**
+    * Returns the rotation matrix as an SFMatrix3f object.
+    */
    getMatrix (): SFMatrix3f;
+   /**
+    * Returns a SFRotation object whose value is the inverse of this object's rotation.
+    */
    inverse (): SFRotation;
+   /**
+    * Returns an SFRotation whose value is the object multiplied by the passed SFRotation.
+    */
    multiply (rotation: SFRotation): SFRotation;
+   /**
+    * Returns a SFVec3f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's rotation.
+    */
    multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
+   /**
+    * Set the axis of rotation to the vector passed in *vec*.
+    */
    setAxis (axis: SFVec3): void;
+   /**
+    * Set the value of this rotation to the rotation matrix passed in *matrix*.
+    */
    setMatrix (matrix: SFMatrix3): void;
+   /**
+    * Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
+    */
    slerp (destination: SFRotation, t: number): SFRotation;
 }
 
@@ -1774,119 +1891,341 @@ declare class SFTime extends X3DField
    valueOf (): number;
 }
 
+/**
+ * The SFVec2d/f object corresponds to an X3D SFVec2d/f field. Each component of the vector can be accessed using the x and y properties or using C-style array dereferencing (i.e. *sfVec2d/fObjectName[0]* or *sfVec2d/fObjectName[1]).*
+ */
 declare class SFVec2 extends X3DField
 {
+   /**
+    * A new vector initialized with zero values is created and returned.
+    */
    constructor ();
+   /**
+    * Constructs a SFVec2d/f from *x* and *y*, where *x* and *y* are scalar expressions.
+    */
    constructor (x: number, y: number);
 
+   /**
+    * Returns the first value of the vector.
+    */
    x: number;
+   /**
+    * Returns the second value of the vector.
+    */
    y: number;
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
+   /**
+    * Returns an SFVec2d/f whose value is the componentwise absolute value of the object.
+    */
    abs (): this;
+   /**
+    * Returns an SFVec2d/f whose value is the passed SFVec2d/f added, componentwise, to the object.
+    */
    add (other: this): this;
+   /**
+    * Returns the distance of this vector to SFVec2d/f *other*.
+    */
    distance (other: this): number;
+   /**
+    * Returns an SFVec2d/f whose value is the object divided by the passed numeric value.
+    */
    divide (denominator: number): this;
+   /**
+    * Returns an SFVec2d/f whose value is the object divided, componentwise, by the passed SFVec2d/f *other*.
+    */
    divVec (other: this): this;
+   /**
+    * Returns the dot product of this vector and SFVec2d/f *other*.
+    */
    dot (other: this): number;
+   /**
+    * Returns an SFVec2d/f whose value is the componentwise inverse of the object.
+    */
    inverse (): this;
+   /**
+    * Returns the geometric length of this vector.
+    */
    length (): number;
+   /**
+    * Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+    */
    lerp (destination: this, t: number): this;
+   /**
+    * Returns an SFVec2d/f whose value is the componentwise minimum of the passed SFVec2d/f and the object.
+    */
    min (other: this): this;
+   /**
+    * Returns an SFVec2d/f whose value is the componentwise maximum of the passed SFVec2d/f and the object.
+    */
    max (other: this): this;
+   /**
+    * Returns an SFVec2d/f whose value is the object multiplied by the passed numeric value.
+    */
    multiply (factor: number): this;
+   /**
+    * Returns an SFVec2d/f whose value is the passed SFVec2d/f multiplied, componentwise, with the object.
+    */
    multVec (other: this): this;
+   /**
+    * Returns an SFVec2d/f whose value is the componentwise negation of the object.
+    */
    negate (): this;
+   /**
+    * Returns an SFVec2d/f of object converted to unit length.
+    */
    normalize (): this;
+   /**
+    * Returns an SFVec2d/f whose value is the passed SFVec2d/f subtracted, componentwise, from the object.
+    */
    subtract (other: this): this;
 }
 
+/**
+ * The SFVec2d/f object corresponds to an X3D SFVec2d/f field. Each component of the vector can be accessed using the x and y properties or using C-style array dereferencing (i.e. *sfVec2d/fObjectName[0]* or *sfVec2d/fObjectName[1]).*
+ */
 declare class SFVec2d extends SFVec2
 {
    static readonly typeName: "SFVec2d";
 }
 
+/**
+ * The SFVec2d/f object corresponds to an X3D SFVec2d/f field. Each component of the vector can be accessed using the x and y properties or using C-style array dereferencing (i.e. *sfVec2d/fObjectName[0]* or *sfVec2d/fObjectName[1]).*
+ */
 declare class SFVec2f extends SFVec2
 {
    static readonly typeName: "SFVec2f";
 }
 
+/**
+ * The SFVec3d/f object corresponds to an X3D SFVec3d/f field. Each component of the vector can be accessed using the x, y, and z properties or using C-style array dereferencing (i.e. *sfVec3d/fObjectName[0], sfVec3d/fObjectName[1]* or *sfVec3d/fObjectName[2]).*
+ */
 declare class SFVec3 extends X3DField
 {
+   /**
+    * A new vector initialized with zero values is created and returned.
+    */
    constructor ();
+   /**
+    * Constructs a SFVec3d/f from *x*, *y* and *z*, where *x*, *y* and *z* are scalar expressions.
+    */
    constructor (x: number, y: number, z: number);
 
+   /**
+    * Returns the first value of the vector.
+    */
    x: number;
+   /**
+    * Returns the second value of the vector.
+    */
    y: number;
+   /**
+    * Returns the third value of the vector.
+    */
    z: number;
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
+   /**
+    * Returns an SFVec3d/f whose value is the componentwise absolute value of the object.
+    */
    abs (): this;
+   /**
+    * Returns an SFVec3d/f whose value is the passed SFVec3d/f added, componentwise, to the object.
+    */
    add (other: this): this;
+   /**
+    * Returns the cross product of the object and the passed SFVec3d/f *other*.
+    */
    cross (other: this): this;
+   /**
+    * Returns the distance of this vector to SFVec3d/f *other*.
+    */
    distance (other: this): number;
+   /**
+    * Returns an SFVec3d/f whose value is the object divided by the passed numeric value.
+    */
    divide (denominator: number): this;
+   /**
+    * Returns an SFVec3d/f whose value is the object divided, componentwise, by the passed SFVec3d/f *other*.
+    */
    divVec (other: this): this;
+   /**
+    * Returns the dot product of this vector and SFVec3d/f *other*.
+    */
    dot (other: this): number;
+   /**
+    * Returns an SFVec3d/f whose value is the componentwise inverse of the object.
+    */
    inverse (): this;
+   /**
+    * Returns the geometric length of this vector.
+    */
    length (): number;
+   /**
+    * Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+    */
    lerp (destination: this, t: number): this;
+   /**
+    * Returns an SFVec3d/f whose value is the componentwise minimum of the passed SFVec3d/f and the object.
+    */
    min (other: this): this;
+   /**
+    * Returns an SFVec3d/f whose value is the componentwise maximum of the passed SFVec3d/f and the object.
+    */
    max (other: this): this;
+   /**
+    * Returns an SFVec3d/f whose value is the object multiplied by the passed numeric value.
+    */
    multiply (factor: number): this;
+   /**
+    * Returns an SFVec3d/f whose value is the passed SFVec3d/f multiplied, componentwise, with the object.
+    */
    multVec (other: this): this;
+   /**
+    * Returns an SFVec3d/f whose value is the componentwise negation of the object.
+    */
    negate (): this;
+   /**
+    * Returns an SFVec3d/f of object converted to unit length.
+    */
    normalize (): this;
+   /**
+    * Returns an SFVec3d/f whose value is the passed SFVec3d/f subtracted, componentwise, from the object.
+    */
    subtract (other: this): this;
 }
 
+/**
+ * The SFVec3d/f object corresponds to an X3D SFVec3d/f field. Each component of the vector can be accessed using the x, y, and z properties or using C-style array dereferencing (i.e. *sfVec3d/fObjectName[0], sfVec3d/fObjectName[1]* or *sfVec3d/fObjectName[2]).*
+ */
 declare class SFVec3d extends SFVec3
 {
    static readonly typeName: "SFVec3d";
 }
 
+/**
+ * The SFVec3d/f object corresponds to an X3D SFVec3d/f field. Each component of the vector can be accessed using the x, y, and z properties or using C-style array dereferencing (i.e. *sfVec3d/fObjectName[0], sfVec3d/fObjectName[1]* or *sfVec3d/fObjectName[2]).*
+ */
 declare class SFVec3f extends SFVec3
 {
    static readonly typeName: "SFVec3f";
 }
 
+/**
+ * The SFVec4d/f object corresponds to an X3D SFVec4d/f field. Each component of the vector can be accessed using the x, y, z and w properties or using C-style array dereferencing (i.e. *sfVec4d/fObjectName[0], sfVec4d/fObjectName[1], sfVec4d/fObjectName[2]* or *sfVec4d/fObjectName[3]).*
+ */
 declare class SFVec4 extends X3DField
 {
+   /**
+    * A new vector initialized with zero values is created and returned.
+    */
    constructor ();
+   /**
+    * Constructs a SFVec4d/f from *x*, *y*, *z* and *w*, where *x*, *y*, *z* and *w* are scalar expressions.
+    */
    constructor (x: number, y: number, z: number, w: number);
 
+   /**
+    * Returns the first value of the vector.
+    */
    x: number;
+   /**
+    * Returns the second value of the vector.
+    */
    y: number;
+   /**
+    * Returns the third value of the vector.
+    */
    z: number;
+   /**
+    * Returns the fourth value of the vector.
+    */
    w: number;
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
+   /**
+    * Returns an SFVec4d/f whose value is the componentwise absolute value of the object.
+    */
    abs (): this;
+   /**
+    * Returns an SFVec4d/f whose value is the passed SFVec4d/f added, componentwise, to the object.
+    */
    add (other: this): this;
+   /**
+    * Returns the distance of this vector to SFVec4d/f *other*.
+    */
    distance (other: this): number;
+   /**
+    * Returns an SFVec4d/f whose value is the object divided by the passed numeric value.
+    */
    divide (denominator: number): this;
+   /**
+    * Returns an SFVec4d/f whose value is the object divided, componentwise, by the passed SFVec4d/f *other*.
+    */
    divVec (other: this): this;
+   /**
+    * Returns the dot product of this vector and SFVec4d/f *other*.
+    */
    dot (other: this): number;
+   /**
+    * Returns an SFVec4d/f whose value is the componentwise inverse of the object.
+    */
    inverse (): this;
+   /**
+    * Returns the geometric length of this vector.
+    */
    length (): number;
+   /**
+    * Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+    */
    lerp (destination: this, t: number): this;
+   /**
+    * Returns an SFVec4d/f whose value is the componentwise minimum of the passed SFVec4d/f and the object.
+    */
    min (other: this): this;
+   /**
+    * Returns an SFVec4d/f whose value is the componentwise maximum of the passed SFVec4d/f and the object.
+    */
    max (other: this): this;
+   /**
+    * Returns an SFVec4d/f whose value is the object multiplied by the passed numeric value.
+    */
    multiply (factor: number): this;
+   /**
+    * Returns an SFVec4d/f whose value is the passed SFVec4d/f multiplied, componentwise, with the object.
+    */
    multVec (other: this): this;
+   /**
+    * Returns an SFVec4d/f whose value is the componentwise negation of the object.
+    */
    negate (): this;
+   /**
+    * Returns an SFVec4d/f of object converted to unit length.
+    */
    normalize (): this;
+   /**
+    * Returns an SFVec4d/f whose value is the passed SFVec4d/f subtracted, componentwise, from the object.
+    */
    subtract (other: this): this;
 }
 
+/**
+ * The SFVec4d/f object corresponds to an X3D SFVec4d/f field. Each component of the vector can be accessed using the x, y, z and w properties or using C-style array dereferencing (i.e. *sfVec4d/fObjectName[0], sfVec4d/fObjectName[1], sfVec4d/fObjectName[2]* or *sfVec4d/fObjectName[3]).*
+ */
 declare class SFVec4d extends SFVec4
 {
    static readonly typeName: "SFVec4d";
 }
 
+/**
+ * The SFVec4d/f object corresponds to an X3D SFVec4d/f field. Each component of the vector can be accessed using the x, y, z and w properties or using C-style array dereferencing (i.e. *sfVec4d/fObjectName[0], sfVec4d/fObjectName[1], sfVec4d/fObjectName[2]* or *sfVec4d/fObjectName[3]).*
+ */
 declare class SFVec4f extends SFVec4
 {
    static readonly typeName: "SFVec4f";
@@ -1894,9 +2233,16 @@ declare class SFVec4f extends SFVec4
 
 declare class X3DArrayField <T> extends X3DField
 {
+   /**
+    * The creation method can be passed 0 or more single value expressions to initialize the elements of the array.
+    */
    constructor (... elements: T []);
 
+   [Symbol .iterator](): IterableIterator <T>;
    [index: number]: T;
+   /**
+    * An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
+    */
    length: number;
 
    at (index: number): T;

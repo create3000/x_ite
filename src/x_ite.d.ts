@@ -801,6 +801,7 @@ declare class X3DRoute
 
 declare class X3DInfoArray <T>
 {
+   [Symbol .iterator](): IterableIterator <T>;
    readonly [index: number]: T;
    readonly length: number;
 }
@@ -1347,6 +1348,7 @@ declare class SFColor extends X3DField
     */
    b: number;
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
    /**
@@ -1398,6 +1400,7 @@ declare class SFColorRGBA extends X3DField
     */
    a: number;
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
    /**
@@ -1479,6 +1482,8 @@ declare class SFImage extends X3DField
     * A MFInt32 array corresponding to the pixels of the image.
     */
    array: MFInt32;
+
+   [Symbol .iterator](): IterableIterator <unknown>;
 }
 
 declare class SFInt32 extends X3DField
@@ -1511,6 +1516,7 @@ declare class SFMatrix3 extends X3DField
                 f21: number, f22: number, f23: number,
                 f31: number, f32: number, f33: number);
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
    /**
@@ -1610,6 +1616,7 @@ declare class SFMatrix4 extends X3DField
                 f31: number, f32: number, f33: number, f34: number,
                 f41: number, f42: number, f43: number, f44: number);
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
    /**
@@ -1825,6 +1832,7 @@ declare class SFRotation extends X3DField
     */
    angle: number;
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
    /**
@@ -1906,6 +1914,7 @@ declare class SFVec2 extends X3DField
     */
    y: number;
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
    /**
@@ -2017,6 +2026,7 @@ declare class SFVec3 extends X3DField
     */
    z: number;
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
    /**
@@ -2136,6 +2146,7 @@ declare class SFVec4 extends X3DField
     */
    w: number;
 
+   [Symbol .iterator](): IterableIterator <number>;
    [index: number]: number;
 
    /**
@@ -2227,6 +2238,7 @@ declare class X3DArrayField <T> extends X3DField
     */
    constructor (... elements: T []);
 
+   [Symbol .iterator](): IterableIterator <T>;
    [index: number]: T;
    /**
     * An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.

@@ -5,4 +5,4 @@ const scene = browser .currentScene;
 const route = scene .addRoute ();
 const r = scene .rootNodes;
 const n = scene .createNode ("BlendMode");
-n .sourceColorFactor = "O"
+const a = [... n .getFieldDefinitions ()]
