@@ -2222,6 +2222,9 @@ declare class SFVec4f extends SFVec4
 
 declare class X3DArrayField <T> extends X3DField
 {
+   /**
+    * The creation method can be passed 0 or more single value expressions to initialize the elements of the array.
+    */
    constructor (... elements: T []);
 
    [index: number]: T;
