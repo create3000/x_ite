@@ -2225,6 +2225,9 @@ declare class X3DArrayField <T> extends X3DField
    constructor (... elements: T []);
 
    [index: number]: T;
+   /**
+    * An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
+    */
    length: number;
 
    at (index: number): T;
