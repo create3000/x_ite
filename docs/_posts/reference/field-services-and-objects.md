@@ -114,7 +114,7 @@ Returns true if the passed SF* or MF* *field* of the same type is equals to this
 
 Adds a field callback function, if external browser interface is used. *Key* is a custom key of any type associated with the *callback*. The callback is called when the field has been changed.
 
-The callback has a signature of *function (value),* where value is the current value of the field.
+The callback has a signature of `function (value)`, where value is the current value of the field.
 
 #### void **removeFieldCallback** (*key*)
 
@@ -488,17 +488,16 @@ A new rotation initialized with the identity rotation is created and returned.
 
 #### *sfRotationObjectName* = new **SFRotation** (*axis, angle*)
 
-*axis* is a SFVec3f object whose value is the axis of rotation.
+*axis* is a SFVec3d/f object whose value is the axis of rotation.
 *angle* is the scalar angle of the rotation (in radians).
 
 #### *sfRotationObjectName* = new **SFRotation** (*fromVector, toVector*)
 
-*fromVector* and *toVector* are SFVec3f valued objects. These vectors are normalized and the rotation value that would rotate from the
-*fromVector* to the *toVector* is stored in the object.
+*fromVector* and *toVector* are SFVec3d/f valued objects. These vectors are normalized and the rotation value that would rotate from the *fromVector* to the *toVector* is stored in the object.
 
 #### *sfRotationObjectName* = new **SFRotation** (*matrix*)
 
-*matrix* is a SFMatrix3f rotation matrix.
+*matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
 
 ### Properties
 
@@ -516,7 +515,7 @@ Returns the third value of the axis vector
 
 #### **angle**
 
-A SFFloat corresponding to the angle of the rotation (in radians).
+A number corresponding to the angle of the rotation (in radians).
 
 ### Methods
 
@@ -530,7 +529,7 @@ Returns the rotation matrix as an SFMatrix3f object.
 
 #### SFRotation **inverse** ()
 
-Returns a SFRotation object whose value is the inverse of this object's rotation
+Returns a SFRotation object whose value is the inverse of this object's rotation.
 
 #### SFRotation **multiply** *(rotation*)
 
@@ -562,9 +561,9 @@ The SFVec2d/f object corresponds to an X3D SFVec2d/f field. Each component of th
 
 A new vector initialized with zero values is created and returned.
 
-#### *sfVec2d/fObjectName* = new **SFVec2d/f** (*number1, number2*)
+#### *sfVec2d/fObjectName* = new **SFVec2d/f** (*x, y*)
 
-Where *number1* and *number2* are scalar expressions.
+Constructs a SFVec2d/f from *x* and *y*, where *x* and *y* are scalar expressions.
 
 ### Properties
 
@@ -582,25 +581,25 @@ Returns the second value of the vector.
 
 Returns an SFVec2d/f whose value is the componentwise absolute value of the object.
 
-#### SFVec2d/f **add** (*vec*)
+#### SFVec2d/f **add** (*other*)
 
 Returns an SFVec2d/f whose value is the passed SFVec2d/f added, componentwise, to the object.
 
-#### Number **distance** (*vec*)
+#### Number **distance** (*other*)
 
-Returns the distance of this vector to SFVec2d/f *vec*.
+Returns the distance of this vector to SFVec2d/f *other*.
 
-#### SFVec2d/f **divide** (*number*)
+#### SFVec2d/f **divide** (*denominator*)
 
 Returns an SFVec2d/f whose value is the object divided by the passed numeric value.
 
-#### SFVec2d/f **divVec** (*vec*)
+#### SFVec2d/f **divVec** (*other*)
 
-Returns an SFVec2d/f whose value is the object divided, componentwise, by the passed SFVec2d/f *vec*.
+Returns an SFVec2d/f whose value is the object divided, componentwise, by the passed SFVec2d/f *other*.
 
-#### Number **dot** (*vec*)
+#### Number **dot** (*other*)
 
-Returns the dot product of this vector and SFVec2d/f *vec*.
+Returns the dot product of this vector and SFVec2d/f *other*.
 
 #### SFVec2d/f **inverse** ()
 
@@ -610,23 +609,23 @@ Returns an SFVec2d/f whose value is the componentwise inverse of the object.
 
 Returns the geometric length of this vector.
 
-#### SFVec2d/f **lerp** (*destVector, t*)
+#### SFVec2d/f **lerp** (*destination, t*)
 
-Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
 
-#### SFVec2d/f **min** (*vec*)
+#### SFVec2d/f **min** (*other*)
 
 Returns an SFVec2d/f whose value is the componentwise minimum of the passed SFVec2d/f and the object.
 
-#### SFVec2d/f **max** (*vec*)
+#### SFVec2d/f **max** (*other*)
 
 Returns an SFVec2d/f whose value is the componentwise maximum of the passed SFVec2d/f and the object.
 
-#### SFVec2d/f **multiply** (*number*)
+#### SFVec2d/f **multiply** (*factor*)
 
 Returns an SFVec2d/f whose value is the object multiplied by the passed numeric value.
 
-#### SFVec2d/f **multVec** (*vec*)
+#### SFVec2d/f **multVec** (*other*)
 
 Returns an SFVec2d/f whose value is the passed SFVec2d/f multiplied, componentwise, with the object.
 
@@ -638,7 +637,7 @@ Returns an SFVec2d/f whose value is the componentwise negation of the object.
 
 Returns an SFVec2d/f of object converted to unit length.
 
-#### SFVec2d/f **subtract** (*vec*)
+#### SFVec2d/f **subtract** (*other*)
 
 Returns an SFVec2d/f whose value is the passed SFVec2d/f subtracted, componentwise, from the object.
 
@@ -652,9 +651,9 @@ The SFVec3d/f object corresponds to an X3D SFVec3d/f field. Each component of th
 
 A new vector initialized with zero values is created and returned.
 
-#### *sfVec3d/fObjectName* = new **SFVec3d/f** (*number1, number2, number3*)
+#### *sfVec3d/fObjectName* = new **SFVec3d/f** (*x, y, z*)
 
-Where *number1, number2,* and *number3* are scalar expressions.
+Constructs a SFVec3d/f from *x*, *y* and *z*, where *x*, *y* and *z* are scalar expressions.
 
 ### Properties
 
@@ -676,29 +675,29 @@ Returns the third value of the vector.
 
 Returns an SFVec3d/f whose value is the componentwise absolute value of the object.
 
-#### SFVec3d/f **add** (*vec*)
+#### SFVec3d/f **add** (*other*)
 
 Returns an SFVec3d/f whose value is the passed SFVec3d/f added, componentwise, to the object.
 
-#### SFVec3d/f **cross** (*vec*)
+#### SFVec3d/f **cross** (*other*)
 
-Returns the cross product of the object and the passed SFVec3d/f *vec*.
+Returns the cross product of the object and the passed SFVec3d/f *other*.
 
-#### Number **distance** (*vec*)
+#### Number **distance** (*other*)
 
-Returns the distance of this vector to SFVec3d/f *vec*.
+Returns the distance of this vector to SFVec3d/f *other*.
 
-#### SFVec3d/f **divide** (*number*)
+#### SFVec3d/f **divide** (*denominator*)
 
 Returns an SFVec3d/f whose value is the object divided by the passed numeric value.
 
-#### SFVec3d/f **divVec** (*vec*)
+#### SFVec3d/f **divVec** (*other*)
 
-Returns an SFVec3d/f whose value is the object divided, componentwise, by the passed SFVec3d/f *vec*.
+Returns an SFVec3d/f whose value is the object divided, componentwise, by the passed SFVec3d/f *other*.
 
-#### Number **dot** (*vec*)
+#### Number **dot** (*other*)
 
-Returns the dot product of this vector and SFVec3d/f *vec*.
+Returns the dot product of this vector and SFVec3d/f *other*.
 
 #### SFVec3d/f **inverse** ()
 
@@ -708,23 +707,23 @@ Returns an SFVec3d/f whose value is the componentwise inverse of the object.
 
 Returns the geometric length of this vector.
 
-#### SFVec3d/f **lerp** (*destVector, t*)
+#### SFVec3d/f **lerp** (*destination, t*)
 
-Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
 
-#### SFVec3d/f **min** (*vec*)
+#### SFVec3d/f **min** (*other*)
 
 Returns an SFVec3d/f whose value is the componentwise minimum of the passed SFVec3d/f and the object.
 
-#### SFVec3d/f **max** (*vec*)
+#### SFVec3d/f **max** (*other*)
 
 Returns an SFVec3d/f whose value is the componentwise maximum of the passed SFVec3d/f and the object.
 
-#### SFVec3d/f **multiply** (*number*)
+#### SFVec3d/f **multiply** (*factor*)
 
 Returns an SFVec3d/f whose value is the object multiplied by the passed numeric value.
 
-#### SFVec3d/f **multVec** (*vec*)
+#### SFVec3d/f **multVec** (*other*)
 
 Returns an SFVec3d/f whose value is the passed SFVec3d/f multiplied, componentwise, with the object.
 
@@ -736,7 +735,7 @@ Returns an SFVec3d/f whose value is the componentwise negation of the object.
 
 Returns an SFVec3d/f of object converted to unit length
 
-#### SFVec3d/f **subtract** (*vec*)
+#### SFVec3d/f **subtract** (*other*)
 
 Returns an SFVec3d/f whose value is the passed SFVec3d/f subtracted, componentwise, from the object.
 
@@ -752,7 +751,7 @@ A new vector initialized with zero values is created and returned.
 
 #### *sfVec4d/fObjectName* = new **SFVec4d/f** (*number1, number2, number3, number4*)
 
-Where *number1, number2, number3* and *number4* are scalar expressions.
+Constructs a SFVec4d/f from *x*, *y*, *z* and *w*, where *x*, *y*, *z* and *w* are scalar expressions.
 
 ### Properties
 
@@ -778,25 +777,25 @@ Returns the fourth value of the vector.
 
 Returns an SFVec4d/f whose value is the componentwise absolute value of the object.
 
-#### SFVec4d/f **add** (*vec*)
+#### SFVec4d/f **add** (*other*)
 
 Returns an SFVec4d/f whose value is the passed SFVec4d/f added, componentwise, to the object.
 
-#### Number **distance** (*vec*)
+#### Number **distance** (*other*)
 
-Returns the distance of this vector to SFVec4d/f *vec*.
+Returns the distance of this vector to SFVec4d/f *other*.
 
-#### SFVec4d/f **divide** (*number*)
+#### SFVec4d/f **divide** (*denominator*)
 
 Returns an SFVec4d/f whose value is the object divided by the passed numeric value.
 
-#### SFVec4d/f **divVec** (*vec*)
+#### SFVec4d/f **divVec** (*other*)
 
-Returns an SFVec4d/f whose value is the object divided, componentwise, by the passed SFVec4d/f *vec*.
+Returns an SFVec4d/f whose value is the object divided, componentwise, by the passed SFVec4d/f *other*.
 
-#### Number **dot** (*vec*)
+#### Number **dot** (*other*)
 
-Returns the dot product of this vector and SFVec4d/f *vec*.
+Returns the dot product of this vector and SFVec4d/f *other*.
 
 #### SFVec4d/f **inverse** ()
 
@@ -806,23 +805,23 @@ Returns an SFVec4d/f whose value is the componentwise inverse of the object.
 
 Returns the geometric length of this vector.
 
-#### SFVec4d/f **lerp** (*destVector, t*)
+#### SFVec4d/f **lerp** (*destination, t*)
 
-Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
 
-#### SFVec4d/f **min** (*vec*)
+#### SFVec4d/f **min** (*other*)
 
 Returns an SFVec4d/f whose value is the componentwise minimum of the passed SFVec4d/f and the object.
 
-#### SFVec4d/f **max** (*vec*)
+#### SFVec4d/f **max** (*other*)
 
 Returns an SFVec4d/f whose value is the componentwise maximum of the passed SFVec4d/f and the object.
 
-#### SFVec4d/f **multiply** (*number*)
+#### SFVec4d/f **multiply** (*factor*)
 
 Returns an SFVec4d/f whose value is the object multiplied by the passed numeric value.
 
-#### SFVec4d/f **multVec** (*vec*)
+#### SFVec4d/f **multVec** (*other*)
 
 Returns an SFVec4d/f whose value is the passed SFVec4d/f multiplied, componentwise, with the object.
 
@@ -834,7 +833,7 @@ Returns an SFVec4d/f whose value is the componentwise negation of the object.
 
 Returns an SFVec4d/f of object converted to unit length.
 
-#### SFVec4d/f **subtract** (*vec*)
+#### SFVec4d/f **subtract** (*other*)
 
 Returns an SFVec4d/f whose value is the passed SFVec4d/f subtracted, componentwise, from the object.
 
