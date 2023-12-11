@@ -24,7 +24,7 @@
 		"docs-update": "cd docs && bundle update",
 		"docs-components": "node build/docs/components.js",
 		"docs-nodes": "perl build/docs/nodes.pl",
-		"docs-reference": "perl build/docs/reference.pl",
+		"docs-reference": "node build/docs/reference.js",
 		"glTF-samples": "perl build/docs/glTF-samples.pl",
 		"release-docs": "sh build/bin/release-docs.sh",
 		"make-tests": "perl build/bin/tests.pl"
