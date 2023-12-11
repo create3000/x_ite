@@ -139,6 +139,7 @@ function release ()
 
 	systemSync (`npm run docs-components`);
 	systemSync (`npm run docs-nodes`);
+	systemSync (`npm run docs-reference`);
 	systemSync (`npm run glTF-samples`);
 	systemSync (`git add -A`);
 	systemSync (`git commit -am 'Build version ${version}'`);

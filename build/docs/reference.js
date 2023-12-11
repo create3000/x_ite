@@ -26,7 +26,7 @@ let constants = sh ("cat", "docs/_posts/reference/constants-services.md");
 
 function main ()
 {
-   console .log ("Updating TypeScript types ...");
+   console .log ("Updating reference of X3DConstants types ...");
 
    ConcreteNodesConstants ();
    AbstractNodesConstants ();
