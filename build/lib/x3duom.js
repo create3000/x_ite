@@ -21,7 +21,7 @@ const
 
 function xml (string)
 {
-   const { XMLParser } = require ("fast-xml-parser")
+   const { XMLParser } = require ("fast-xml-parser");
 
    const parser = new XMLParser ({
       ignoreAttributes: false,
