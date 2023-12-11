@@ -83,7 +83,9 @@ The object consists solely of read-only properties. It does not define any addit
 
 #### Concrete Node Types
 
-All concrete node types from *Anchor, Appearance, …*  to *WorldInfo.*
+All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
+
+<!-- CONCRETE NODE TYPES START -->
 
 - Anchor
 - Appearance
@@ -307,9 +309,13 @@ All concrete node types from *Anchor, Appearance, …*  to *WorldInfo.*
 - WindPhysicsModel
 - WorldInfo
 
+<!-- CONCRETE NODE TYPES END -->
+
 #### Abstract Node Types
 
 All abstract node types from *X3DAppearanceChildNode, X3DAppearanceNode,* … to *X3DViewportNode.*
+
+<!-- ABSTRACT NODE TYPES START -->
 
 - X3DAppearanceChildNode
 - X3DAppearanceNode
@@ -379,3 +385,5 @@ All abstract node types from *X3DAppearanceChildNode, X3DAppearanceNode,* … to
 - X3DVertexAttributeNode
 - X3DViewpointNode
 - X3DViewportNode
+
+<!-- ABSTRACT NODE TYPES END -->
