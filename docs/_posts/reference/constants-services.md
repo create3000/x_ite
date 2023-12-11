@@ -86,25 +86,38 @@ The object consists solely of read-only properties. It does not define any addit
 All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 
 <!-- CONCRETE NODE TYPES START -->
+<!-- DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED. -->
 
+- AcousticProperties
+- Analyser
 - Anchor
 - Appearance
 - Arc2D
 - ArcClose2D
 - AudioClip
+- AudioDestination
 - Background
 - BallJoint
 - Billboard
+- BiquadFilter
+- BlendedVolumeStyle
+- BlendMode
 - BooleanFilter
 - BooleanSequencer
 - BooleanToggle
 - BooleanTrigger
+- BoundaryEnhancementVolumeStyle
 - BoundedPhysicsModel
 - Box
+- BufferAudioSource
 - CADAssembly
 - CADFace
 - CADLayer
 - CADPart
+- CartoonVolumeStyle
+- ChannelMerger
+- ChannelSelector
+- ChannelSplitter
 - Circle2D
 - ClipPlane
 - CollidableOffset
@@ -121,11 +134,13 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - ComposedCubeMapTexture
 - ComposedShader
 - ComposedTexture3D
+- ComposedVolumeStyle
 - Cone
 - ConeEmitter
 - Contact
 - Contour2D
 - ContourPolyline2D
+- Convolver
 - Coordinate
 - CoordinateChaser
 - CoordinateDamper
@@ -134,13 +149,18 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - CoordinateInterpolator2D
 - Cylinder
 - CylinderSensor
+- Delay
+- DepthMode
+- DirectionalLight
 - DISEntityManager
 - DISEntityTypeMapping
-- DirectionalLight
 - Disk2D
 - DoubleAxisHingeJoint
+- DynamicsCompressor
 - EaseInEaseOut
+- EdgeEnhancementVolumeStyle
 - ElevationGrid
+- EnvironmentLight
 - EspduTransform
 - ExplosionEmitter
 - Extrusion
@@ -150,11 +170,12 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - FogCoordinate
 - FontStyle
 - ForcePhysicsModel
+- Gain
 - GeneratedCubeMapTexture
 - GeoCoordinate
 - GeoElevationGrid
-- GeoLOD
 - GeoLocation
+- GeoLOD
 - GeoMetadata
 - GeoOrigin
 - GeoPositionInterpolator
@@ -166,11 +187,13 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - HAnimDisplacer
 - HAnimHumanoid
 - HAnimJoint
+- HAnimMotion
 - HAnimSegment
 - HAnimSite
 - ImageCubeMapTexture
 - ImageTexture
 - ImageTexture3D
+- ImageTextureAtlas
 - IndexedFaceSet
 - IndexedLineSet
 - IndexedQuadSet
@@ -180,8 +203,8 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - Inline
 - IntegerSequencer
 - IntegerTrigger
+- IsoSurfaceVolumeData
 - KeySensor
-- LOD
 - Layer
 - LayerSet
 - Layout
@@ -190,8 +213,10 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - LinePickSensor
 - LineProperties
 - LineSet
+- ListenerPointSource
 - LoadSensor
 - LocalFog
+- LOD
 - Material
 - Matrix3VertexAttribute
 - Matrix4VertexAttribute
@@ -201,6 +226,7 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - MetadataInteger
 - MetadataSet
 - MetadataString
+- MicrophoneSource
 - MotorJoint
 - MovieTexture
 - MultiTexture
@@ -220,12 +246,16 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - NurbsSwungSurface
 - NurbsTextureCoordinate
 - NurbsTrimmedSurface
+- OpacityMapVolumeStyle
 - OrientationChaser
 - OrientationDamper
 - OrientationInterpolator
 - OrthoViewpoint
+- OscillatorSource
 - PackagedShader
 - ParticleSystem
+- PeriodicWave
+- PhysicalMaterial
 - PickableGroup
 - PixelTexture
 - PixelTexture3D
@@ -233,6 +263,7 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - PointEmitter
 - PointLight
 - PointPickSensor
+- PointProperties
 - PointSet
 - Polyline2D
 - PolylineEmitter
@@ -245,6 +276,7 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - PositionInterpolator2D
 - PrimitivePickSensor
 - ProgramShader
+- ProjectionVolumeStyle
 - ProximitySensor
 - QuadSet
 - ReceiverPdu
@@ -257,13 +289,17 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - ScreenFontStyle
 - ScreenGroup
 - Script
+- SegmentedVolumeData
+- ShadedVolumeStyle
 - ShaderPart
 - ShaderProgram
 - Shape
 - SignalPdu
+- SilhouetteEnhancementVolumeStyle
 - SingleAxisHingeJoint
 - SliderJoint
 - Sound
+- SpatialSound
 - Sphere
 - SphereSensor
 - SplinePositionInterpolator
@@ -272,6 +308,8 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - SpotLight
 - SquadOrientationInterpolator
 - StaticGroup
+- StreamAudioDestination
+- StreamAudioSource
 - StringSensor
 - SurfaceEmitter
 - Switch
@@ -283,13 +321,15 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - TextureCoordinate3D
 - TextureCoordinate4D
 - TextureCoordinateGenerator
+- TextureProjector
+- TextureProjectorParallel
 - TextureProperties
 - TextureTransform
 - TextureTransform3D
 - TextureTransformMatrix3D
 - TimeSensor
 - TimeTrigger
-- TouchGroup
+- ToneMappedVolumeStyle
 - TouchSensor
 - Transform
 - TransformSensor
@@ -300,12 +340,15 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 - TriangleStripSet
 - TwoSidedMaterial
 - UniversalJoint
+- UnlitMaterial
 - Viewpoint
 - ViewpointGroup
 - Viewport
 - VisibilitySensor
+- VolumeData
 - VolumeEmitter
 - VolumePickSensor
+- WaveShaper
 - WindPhysicsModel
 - WorldInfo
 
@@ -316,6 +359,7 @@ All concrete node types from *Anchor, Appearance, …* to *WorldInfo.*
 All abstract node types from *X3DAppearanceChildNode, X3DAppearanceNode,* … to *X3DViewportNode.*
 
 <!-- ABSTRACT NODE TYPES START -->
+<!-- DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED. -->
 
 - X3DAppearanceChildNode
 - X3DAppearanceNode
@@ -325,18 +369,18 @@ All abstract node types from *X3DAppearanceChildNode, X3DAppearanceNode,* … to
 - X3DChaserNode
 - X3DChildNode
 - X3DColorNode
+- X3DComposableVolumeRenderStyleNode
 - X3DComposedGeometryNode
 - X3DCoordinateNode
 - X3DDamperNode
 - X3DDragSensorNode
-- X3DEnvironmentTextureNode
 - X3DEnvironmentalSensorNode
+- X3DEnvironmentTextureNode
 - X3DFogObject
 - X3DFollowerNode
 - X3DFontStyleNode
 - X3DGeometricPropertyNode
 - X3DGeometryNode
-- X3DGeospatialObject
 - X3DGroupingNode
 - X3DInfoNode
 - X3DInterpolatorNode
@@ -344,7 +388,6 @@ All abstract node types from *X3DAppearanceChildNode, X3DAppearanceNode,* … to
 - X3DLayerNode
 - X3DLayoutNode
 - X3DLightNode
-- X3DLineGeometryNode
 - X3DMaterialNode
 - X3DMetadataObject
 - X3DNBodyCollidableNode
@@ -354,11 +397,12 @@ All abstract node types from *X3DAppearanceChildNode, X3DAppearanceNode,* … to
 - X3DNormalNode
 - X3DNurbsControlCurveNode
 - X3DNurbsSurfaceGeometryNode
+- X3DOneSidedMaterialNode
 - X3DParametricGeometryNode
 - X3DParticleEmitterNode
 - X3DParticlePhysicsModelNode
-- X3DPickSensorNode
 - X3DPickableObject
+- X3DPickSensorNode
 - X3DPointingDeviceSensorNode
 - X3DProductStructureChildNode
 - X3DProgrammableShaderObject
@@ -369,21 +413,29 @@ All abstract node types from *X3DAppearanceChildNode, X3DAppearanceNode,* … to
 - X3DSequencerNode
 - X3DShaderNode
 - X3DShapeNode
+- X3DSingleTextureCoordinateNode
+- X3DSingleTextureNode
+- X3DSingleTextureTransformNode
+- X3DSoundChannelNode
+- X3DSoundDestinationNode
 - X3DSoundNode
+- X3DSoundProcessingNode
 - X3DSoundSourceNode
+- X3DStatement
 - X3DTexture2DNode
 - X3DTexture3DNode
 - X3DTextureCoordinateNode
 - X3DTextureNode
+- X3DTextureProjectorNode
 - X3DTextureTransformNode
 - X3DTimeDependentNode
 - X3DTouchSensorNode
-- X3DTransformMatrix3DNode
-- X3DTransformNode
 - X3DTriggerNode
 - X3DUrlObject
 - X3DVertexAttributeNode
 - X3DViewpointNode
 - X3DViewportNode
+- X3DVolumeDataNode
+- X3DVolumeRenderStyleNode
 
 <!-- ABSTRACT NODE TYPES END -->
