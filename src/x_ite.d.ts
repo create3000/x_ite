@@ -603,6 +603,9 @@ declare class X3DExecutionContext
    deleteRoute (route: X3DRoute): void;
 }
 
+/**
+ * ProfileInfoArray is an object that represents an array of ProfileInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *profileInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
 declare class ProfileInfoArray extends X3DInfoArray <ProfileInfo> { }
 
 /**
@@ -628,6 +631,9 @@ declare class ProfileInfo
    readonly components: ComponentInfoArray
 }
 
+/**
+ * ComponentInfoArray is an object that represents an array of ComponentInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *componentInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
 declare class ComponentInfoArray extends X3DInfoArray <ComponentInfo> { }
 
 /**
@@ -653,6 +659,9 @@ declare class ComponentInfo
    readonly providerURL: string;
 }
 
+/**
+ * UnitInfoArray is an object that represents an array of UnitInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *unitInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
 declare class UnitInfoArray extends X3DInfoArray <UnitInfo> { }
 
 /**
@@ -674,6 +683,9 @@ declare class UnitInfo
    readonly conversionFactor: number;
 }
 
+/**
+ * ProtoDeclarationArray is an object that represents an array of X3DProtoDeclaration objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *protoDeclarationArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
 declare class ProtoDeclarationArray extends X3DInfoArray <X3DProtoDeclaration> { }
 
 /**
@@ -718,6 +730,9 @@ declare class X3DProtoDeclaration
    toJSONString (options?: ToStringOptions): string;
 }
 
+/**
+ * ExternProtoDeclarationArray is an object that represents an array of X3DExternProtoDeclaration objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *externProtoDeclarationArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
 declare class ExternProtoDeclarationArray extends X3DInfoArray <X3DExternProtoDeclaration> { }
 
 /**
@@ -774,6 +789,9 @@ declare class X3DExternProtoDeclaration
    toJSONString (options?: ToStringOptions): string;
 }
 
+/**
+ * RouteArray is an object that represents an array of X3DRoute objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *routeArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
 declare class RouteArray extends X3DInfoArray <X3DRoute> { }
 
 /**
@@ -1239,6 +1257,9 @@ interface X3DConstants
    // ABSTRACT NODE TYPES CONSTANTS END
 }
 
+/**
+ * FieldDefinitionArray is an object that represents an array of X3DFieldDefinition objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *fieldDefinitionArrayName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array).
+ */
 declare class FieldDefinitionArray extends X3DInfoArray <X3DFieldDefinition> { }
 
 /**
