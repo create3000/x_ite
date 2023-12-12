@@ -13,10 +13,22 @@ declare const X3D: X3D;
  */
 interface X3D
 {
+   /**
+    * There is the X3D object which is globally available, it expects one function handler that is called when the browsers (\<x3d-canvas\> elements) are ready, and a second function handler, that is called if an error occurred. These two arguments are optional. The return value of the X3D function is a Promise, which can be used instead of the arguments.
+    */
    (callback?: () => void, fallback?: (error: Error) => void): Promise <void>;
 
+   /**
+    * In X_ITE's case, the `X3D` function object is the main entry function. If you need to use another JavaScript library alongside X_ITE, return control of the `X3D` function object back to the other library with a call to `X3D .noConflict ()`. Old references of `X3D` function object are saved during X_ITE initialization; `X3D .noConflict ()` simply restores them. The return value is the `X3D` function object itself.
+    */
    noConflict (): X3D;
+   /**
+    * Creates a new x3d-canvas DOM element, initializes it and returns it. Throws an exception if the browser object cannot be created.
+    */
    createBrowser (): X3DCanvasElement;
+   /**
+    * The selector argument must be a string containing a valid CSS selector expression to match elements against, or a valid X3DCanvasElement. If no selector was given, »x3d-canvas« is used as selector string. The return value is the appropriate X3DBrowser object.
+    */
    getBrowser (selector?: string | X3DCanvasElement): X3DBrowser;
 
    readonly X3DConstants: X3DConstants;
