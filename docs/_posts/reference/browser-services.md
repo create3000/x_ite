@@ -41,11 +41,11 @@ A user-defined String which can be read and written.
 
 #### **supportedProfiles**
 
-The property value cannot be changed, but the properties of the ProfileInfoArray can be.
+Returns the list of all profiles that are supported by this browser.
 
 #### **supportedComponents**
 
-The property value cannot be changed, but the properties of the ComponentInfoArray can be.
+Returns a list of all components that are supported by this browser.
 
 #### **baseURL**
 

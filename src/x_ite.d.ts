@@ -157,13 +157,21 @@ declare class X3DBrowser
     */
    description: string;
    /**
-    * The property value cannot be changed, but the properties of the ProfileInfoArray can be.
+    * Returns the list of all profiles that are supported by this browser.
     */
    readonly supportedProfiles: ProfileInfoArray;
    /**
-    * The property value cannot be changed, but the properties of the ComponentInfoArray can be.
+    * Returns a list of all components that are supported by this browser.
     */
    readonly supportedComponents: ComponentInfoArray;
+   /**
+    * Returns a list of all concrete node classes that are supported by this browser.
+    */
+   readonly concreteNodes: ConcreteNodesArray;
+   /**
+    * Returns a list of all abstract node classes that are supported by this browser.
+    */
+   readonly abstractNodes: AbstractNodesArray;
    /**
     * A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
     */
@@ -445,6 +453,10 @@ declare class X3DScene extends X3DExecutionContext
     * When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
     */
    rootNodes: MFNode;
+   /**
+    * A reference to the ExportedNodesArray object used by this execution context. This property is read only.
+    */
+   readonly exportedNodes: ExportedNodesArray;
 
    /**
     * Returns the metadata values array associated with *name*.
@@ -549,6 +561,14 @@ declare class X3DExecutionContext
     */
    readonly units: UnitInfoArray;
    /**
+    * A reference to the NamedNodesArray object used by this execution context. This property is read only.
+    */
+   readonly namedNodes: NamedNodesArray;
+   /**
+    * A reference to the ImportedNodesArray object used by this execution context. This property is read only.
+    */
+   readonly importedNodes: ImportedNodesArray;
+   /**
     * When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
     */
    readonly rootNodes: MFNode;
@@ -613,6 +633,43 @@ declare class X3DExecutionContext
     * Remove the route if it is connected.
     */
    deleteRoute (route: X3DRoute): void;
+}
+
+/**
+ * ConcreteNodesArray is an object that represents an array of classes derived from X3DNode. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *concreteNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
+declare class ConcreteNodesArray extends X3DInfoArray <X3DConcreteNode> { }
+
+/**
+ * Base interface for all concrete node types.
+ */
+interface X3DConcreteNode extends X3DAbstractNode
+{
+   static readonly containerField: string;
+   static readonly specificationRange:
+   {
+      readonly from: string,
+      readonly to: string,
+   };
+   static readonly fieldDefinitions: FieldDefinitionArray;
+}
+
+/**
+ * AbstractNodesArray is an object that represents an array of classes derived from X3DNode. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *abstractNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
+declare class AbstractNodesArray extends X3DInfoArray <X3DAbstractNode> { }
+
+/**
+ * Base interface for all node types.
+ */
+interface X3DAbstractNode
+{
+   static readonly typeName: string;
+   static readonly componentInfo:
+   {
+      readonly name: string,
+      readonly level: number,
+   };
 }
 
 /**
@@ -693,6 +750,41 @@ declare class UnitInfo
     * The double-precision number needed to convert from the new default unit to the initial default unit. This property is read only.
     */
    readonly conversionFactor: number;
+}
+
+/**
+ * NamedNodesArray is an object that represents an array of SFNode objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *namedNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
+declare class NamedNodesArray extends X3DInfoArray <SFNode> { }
+
+/**
+ * ImportedNodesArray is an object that represents an array of X3DImportedNode objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *importedNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
+declare class ImportedNodesArray extends X3DInfoArray <X3DImportedNode> { }
+
+/**
+ * The X3DImportedNode object stores information about a particular import declaration. The object consists solely of read-only properties. It does not define any additional functions.
+ */
+class X3DImportedNode
+{
+   readonly inlineNode: SFNode;
+   readonly exportedName: string;
+   readonly exportedNode: SFNode;
+   readonly importedName: string;
+}
+
+/**
+ * ExportedNodesArray is an object that represents an array of X3DExportedNode objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *exportedNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
+declare class ExportedNodesArray extends X3DInfoArray <X3DExportedNode> { }
+
+/**
+ * The X3DExportedNode object stores information about a particular export declaration. The object consists solely of read-only properties. It does not define any additional functions.
+ */
+class X3DExportedNode
+{
+   readonly exportedName: string;
+   readonly localNode: SFNode;
 }
 
 /**
