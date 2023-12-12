@@ -364,7 +364,7 @@ The X3DImportedNode object stores information about a particular import declarat
 
 None. This object cannot be instantiated by the user.
 
-### Static Properties
+### Properties
 
 #### **inlineNode**
 
@@ -390,7 +390,7 @@ The X3DExportedNode object stores information about a particular export declarat
 
 None. This object cannot be instantiated by the user.
 
-### Static Properties
+### Properties
 
 #### **exportedName**
 
