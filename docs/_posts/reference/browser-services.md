@@ -47,6 +47,14 @@ Returns the list of all profiles that are supported by this browser.
 
 Returns a list of all components that are supported by this browser.
 
+#### **concreteNodes**
+
+Returns a list of all concrete node classes that are supported by this browser.
+
+#### **abstractNodes**
+
+Returns a list of all abstract node classes that are supported by this browser.
+
 #### **baseURL**
 
 A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
@@ -468,3 +476,79 @@ Load the passed URL, using the passed parameter string to possibly redirect it t
 #### void **setDescription** (*String description*)
 
 A user-defined String.
+
+## X3DConcreteNode
+
+The X3DConcreteNode interface defines an interface for concrete node types, it extends the X3DAbstractNode interface. The object consists solely of read-only properties. It does not define any additional functions.
+
+### Instance Creation Method\(s\)
+
+None. This object cannot be instantiated by the user.
+
+### Static Properties
+
+#### **containerField**
+
+The default container field name for this node. This property is read only.
+
+#### **specificationRange**
+
+Returns an array with two strings defining the first version and last version where this node is specified. This property is read only.
+
+#### **fieldDefinitions**
+
+Returns a list of fields defined for the SFNode object.
+
+## X3DAbstractNode
+
+The X3DAbstractNode interface defines an interface for concrete node types. The object consists solely of read-only properties. It does not define any additional functions.
+
+### Instance Creation Method\(s\)
+
+None. This object cannot be instantiated by the user.
+
+### Static Properties
+
+#### **typeName**
+
+The node type name for this class. This property is read only.
+
+#### **componentInfo**
+
+Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read only.
+
+## ConcreteNodesArray
+
+ConcreteNodesArray is an object that represents an array of classes derived from X3DNode. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *concreteNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+
+### Instance Creation Method(s)
+
+None. This object cannot be instantiated by the user.
+
+### Properties
+
+#### **length**
+
+An integer containing the number of elements in the array. This property is read only.
+
+### Methods
+
+None
+
+## AbstractNodesArray
+
+AbstractNodesArray is an object that represents an array of classes derived from X3DNode. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *abstractNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+
+### Instance Creation Method(s)
+
+None. This object cannot be instantiated by the user.
+
+### Properties
+
+#### **length**
+
+An integer containing the number of elements in the array. This property is read only.
+
+### Methods
+
+None

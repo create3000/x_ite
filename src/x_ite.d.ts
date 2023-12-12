@@ -641,16 +641,25 @@ declare class X3DExecutionContext
 declare class ConcreteNodesArray extends X3DInfoArray <X3DConcreteNode> { }
 
 /**
- * Base interface for all concrete node types.
+ * The X3DConcreteNode interface defines an interface for concrete node types, it extends the X3DAbstractNode interface. The object consists solely of read-only properties. It does not define any additional functions.
  */
 interface X3DConcreteNode extends X3DAbstractNode
 {
+   /**
+    * The default container field name for this node. This property is read only.
+    */
    static readonly containerField: string;
+   /**
+    * Returns an array with two strings defining the first version and last version where this node is specified. This property is read only.
+    */
    static readonly specificationRange:
    {
       readonly from: string,
       readonly to: string,
    };
+   /**
+    * Returns a list of fields defined for the SFNode object.
+    */
    static readonly fieldDefinitions: FieldDefinitionArray;
 }
 
@@ -660,11 +669,17 @@ interface X3DConcreteNode extends X3DAbstractNode
 declare class AbstractNodesArray extends X3DInfoArray <X3DAbstractNode> { }
 
 /**
- * Base interface for all node types.
+ * The X3DAbstractNode interface defines an interface for concrete node types. The object consists solely of read-only properties. It does not define any additional functions.
  */
 interface X3DAbstractNode
 {
+   /**
+    * The node type name for this class. This property is read only.
+    */
    static readonly typeName: string;
+   /**
+    * Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read only.
+    */
    static readonly componentInfo:
    {
       readonly name: string,
@@ -767,9 +782,21 @@ declare class ImportedNodesArray extends X3DInfoArray <X3DImportedNode> { }
  */
 class X3DImportedNode
 {
+   /**
+    * The SFNode object of the Inline node. This property is read only.
+    */
    readonly inlineNode: SFNode;
+   /**
+    * A string of the exported name. This property is read only.
+    */
    readonly exportedName: string;
+   /**
+    * The SFNode object of the exported node. This property is read only.
+    */
    readonly exportedNode: SFNode;
+   /**
+    * A string of the imported name. This property is read only.
+    */
    readonly importedName: string;
 }
 
@@ -783,7 +810,13 @@ declare class ExportedNodesArray extends X3DInfoArray <X3DExportedNode> { }
  */
 class X3DExportedNode
 {
+   /**
+    * A string of the exported name. This property is read only.
+    */
    readonly exportedName: string;
+   /**
+    * The SFNode object of the corresponding node. This property is read only.
+    */
    readonly localNode: SFNode;
 }
 

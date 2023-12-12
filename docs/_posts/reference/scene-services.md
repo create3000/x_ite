@@ -43,6 +43,14 @@ A string containing the URL against which relative URLs are resolved. This prope
 
 A reference to the UnitInfoArray object used by this execution context. This property is read only.
 
+#### **namedNodes**
+
+A reference to the NamedNodesArray object used by this execution context. This property is read only.
+
+#### **importedNodes**
+
+A reference to the ImportedNodesArray object used by this execution context. This property is read only.
+
 #### **rootNodes**
 
 When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
@@ -348,6 +356,50 @@ The double-precision number needed to convert from the new default unit to the i
 
 None.
 
+## X3DImportedNode
+
+The X3DImportedNode object stores information about a particular import declaration. The object consists solely of read-only properties. It does not define any additional functions.
+
+### Instance Creation Method\(s\)
+
+None. This object cannot be instantiated by the user.
+
+### Static Properties
+
+#### **inlineNode**
+
+The SFNode object of the Inline node. This property is read only.
+
+#### **exportedName**
+
+A string of the exported name. This property is read only.
+
+#### **exportedNode**
+
+The SFNode object of the exported node. This property is read only.
+
+#### **importedName**
+
+A string of the imported name. This property is read only.
+
+## X3DExportedNode
+
+The X3DExportedNode object stores information about a particular export declaration. The object consists solely of read-only properties. It does not define any additional functions.
+
+### Instance Creation Method\(s\)
+
+None. This object cannot be instantiated by the user.
+
+### Static Properties
+
+#### **exportedName**
+
+A string of the exported name. This property is read only.
+
+#### **localNode**
+
+The SFNode object of the corresponding node. This property is read only.
+
 ## ProfileInfoArray
 
 ProfileInfoArray is an object that represents an array of ProfileInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *profileInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
@@ -387,6 +439,42 @@ None
 ## UnitInfoArray
 
 UnitInfoArray is an object that represents an array of UnitInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *unitInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+
+### Instance Creation Method\(s\)
+
+None. This object cannot be instantiated by the user.
+
+### Properties
+
+#### **length**
+
+An integer containing the number of elements in the array. This property is read only.
+
+### Methods
+
+None
+
+## ImportedNodesArray
+
+ImportedNodesArray is an object that represents an array of X3DImportedNode objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *importedNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+
+### Instance Creation Method\(s\)
+
+None. This object cannot be instantiated by the user.
+
+### Properties
+
+#### **length**
+
+An integer containing the number of elements in the array. This property is read only.
+
+### Methods
+
+None
+
+## ExportedNodesArray
+
+ExportedNodesArray is an object that represents an array of X3DExportedNode objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *exportedNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
 
 ### Instance Creation Method\(s\)
 
