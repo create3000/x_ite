@@ -1,6 +1,0 @@
-- title: "Basic Tutorials"
-  children:
-    - title: "Hello, World!"
-      url: /tutorials/hello-world
-    - title: "Basic Nodes"
-      url: /tutorials/basic-nodes
