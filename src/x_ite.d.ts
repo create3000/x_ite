@@ -1330,6 +1330,9 @@ declare class X3DField
    dispose (): void;
 }
 
+/**
+ * The SFBool object corresponds to an X3D SFBool field.
+ */
 declare class SFBool extends X3DField
 {
    static readonly typeName: "SFBool";
@@ -1440,6 +1443,9 @@ declare class SFColorRGBA extends X3DField
    lerp (destination: SFColor, t: number): SFColorRGBA;
 }
 
+/**
+ * The SFDouble object corresponds to an X3D SFDouble field.
+ */
 declare class SFDouble extends X3DField
 {
    static readonly typeName: "SFDouble";
@@ -1450,6 +1456,9 @@ declare class SFDouble extends X3DField
    valueOf (): number;
 }
 
+/**
+ * The SFFloat object corresponds to an X3D SFFloat field.
+ */
 declare class SFFloat extends X3DField
 {
    static readonly typeName: "SFFloat";
@@ -1507,6 +1516,9 @@ declare class SFImage extends X3DField
    [Symbol .iterator](): IterableIterator <unknown>;
 }
 
+/**
+ * The SFInt32 object corresponds to an X3D SFInt32 field.
+ */
 declare class SFInt32 extends X3DField
 {
    static readonly typeName: "SFInt32";
@@ -1890,6 +1902,9 @@ declare class SFRotation extends X3DField
    slerp (destination: SFRotation, t: number): SFRotation;
 }
 
+/**
+ * The SFString object corresponds to an X3D SFString field.
+ */
 declare class SFString extends X3DField
 {
    static readonly typeName: "SFString";
@@ -1902,6 +1917,9 @@ declare class SFString extends X3DField
    valueOf (): string;
 }
 
+/**
+ * The SFTime object corresponds to an X3D SFTime field.
+ */
 declare class SFTime extends X3DField
 {
    static readonly typeName: "SFTime";
