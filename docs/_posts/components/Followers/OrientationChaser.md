@@ -31,7 +31,7 @@ The OrientationChaser node belongs to the **Followers** component and requires a
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -89,7 +89,7 @@ Computed output value that approaches within tolerance of destination value, as 
 
 ### Hint
 
-- ROUTE value_changed output events to a \<[Transform](../grouping/transform)\> node's rotation field, for example.
+- ROUTE value_changed output events to a \<[Transform](../grouping/transform/)\> node's rotation field, for example.
 
 ## See Also
 

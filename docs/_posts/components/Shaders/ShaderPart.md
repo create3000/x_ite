@@ -30,7 +30,7 @@ The ShaderPart node belongs to the **Shaders** component and requires at least l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -46,7 +46,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFString [ ] **type** "VERTEX" <small>["VERTEX"|"FRAGMENT"]</small>
 
-*type* indicates whether this [ShaderProgram](../shaders/shaderprogram) is a vertex or fragment (pixel) shader.
+*type* indicates whether this [ShaderProgram](../shaders/shaderprogram/) is a vertex or fragment (pixel) shader.
 
 #### Warning
 
@@ -58,8 +58,8 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hints
 
-- Allows author to design when [Inline](../networking/inline) loading occurs via user interaction, event chains or scripting.
-- Use a separate [LoadSensor](../networking/loadsensor) node to detect when loading is complete.
+- Allows author to design when [Inline](../networking/inline/) loading occurs via user interaction, event chains or scripting.
+- Use a separate [LoadSensor](../networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
@@ -108,9 +108,9 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 
 - ShaderPart can contain a CDATA block of plain-text source code.
 - Embedded ecmascript: source can also be contained in the sourceCode pseudo-field without escape characters, equivalent to last entry in the url list, when using other API codebases and file encodings.
-- Insert an XML Character Data (CDATA) block within the [Script](../scripting/script) node to contain source code embedded within an X3D scene, avoiding the need for escape characters.
+- Insert an XML Character Data (CDATA) block within the [Script](../scripting/script/) node to contain source code embedded within an X3D scene, avoiding the need for escape characters.
 - A contained XML Character Data (CDATA) block for source code protects whitespace, line breaks, and literal characters (such as &amp; for ampersand character, \< for less-than-sign character, and \> for greater-than-sign character) from unintended escape-character modifications by XML parsers.
-- ShaderPart subprograms are written in the same language, which is specified in the parent [ComposedShader](../shaders/composedshader) node.
+- ShaderPart subprograms are written in the same language, which is specified in the parent [ComposedShader](../shaders/composedshader/) node.
 - [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ### Warnings

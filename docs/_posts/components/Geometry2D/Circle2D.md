@@ -29,7 +29,7 @@ The Circle2D node belongs to the **Geometry2D** component and requires at least 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -41,7 +41,7 @@ Circle *radius*.
 
 #### Hint
 
-- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform) node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform/) node instead.
 
 #### Warning
 
@@ -51,7 +51,7 @@ Circle *radius*.
 
 ### Hint
 
-- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
+- Insert a [Shape](../shape/shape/) node before adding geometry or [Appearance](../shape/appearance/).
 
 ### Warning
 

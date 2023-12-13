@@ -31,7 +31,7 @@ The LoadSensor node belongs to the **Networking** component and requires at leas
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -101,7 +101,7 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 
 - If watchList contains multiple USE nodes, output events are only generated when all *children* have loaded successfully or at least one node has failed.
 - If individual load status information is desired for different nodes, multiple LoadSensor nodes may be used, each with a single watchList element.
-- [Anchor](../networking/anchor) nodes can be monitored for binding a target [Viewpoint](../navigation/viewpoint), loading a new scene, or loading a new scene in a new window.
+- [Anchor](../networking/anchor/) nodes can be monitored for binding a target [Viewpoint](../navigation/viewpoint/), loading a new scene, or loading a new scene in a new window.
 
 #### Warning
 
@@ -112,8 +112,8 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 ### Hints
 
 - Use multiple LoadSensor nodes to track multiple loading nodes individually.
-- [Background](../environmentaleffects/background) node is not sensed by LoadSensor due to node typing and multiple-image ambiguity, alternatively utilize [TextureBackground](../environmentaleffects/texturebackground) node with multiple [ImageTexture](../texturing/imagetexture) nodes each referenced inside LoadSensor.
-- Use [Inline](../networking/inline) 'load' field to prompt or defer loading.
+- [Background](../environmentaleffects/background/) node is not sensed by LoadSensor due to node typing and multiple-image ambiguity, alternatively utilize [TextureBackground](../environmentaleffects/texturebackground/) node with multiple [ImageTexture](../texturing/imagetexture/) nodes each referenced inside LoadSensor.
+- Use [Inline](../networking/inline/) 'load' field to prompt or defer loading.
 - [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter12EnvironmentSensorSound){:target="_blank"}
 
 ### Warnings

@@ -30,7 +30,7 @@ The ShadedVolumeStyle node belongs to the **VolumeRendering** component and requ
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -68,7 +68,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ### Hint
 
-- ShadedVolumeStyle can contain a single Texture3D node with `containerField='surfaceNormals'` and a single [Material](../shape/material) node.
+- ShadedVolumeStyle can contain a single Texture3D node with `containerField='surfaceNormals'` and a single [Material](../shape/material/) node.
 
 ### Warning
 

@@ -30,7 +30,7 @@ The LayoutGroup node belongs to the **Layout** component and requires at least l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -106,12 +106,12 @@ Grouping nodes contain an ordered list of *children* nodes.
 ### Hints
 
 - The origin of the node is always in the center of its layout region. Thus, children (with the exception of LayoutGroup) are specified in a coordinate system whose origin is located at the center of the rectangle and can be transformed from that location.
-- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
-- LayoutGroup does not directly have any pixel-dependent concepts. However, it can contain a [Layout](../layout/layout) node that does have pixel-specific options.
+- Insert a [Shape](../shape/shape/) node before adding geometry or [Appearance](../shape/appearance/).
+- LayoutGroup does not directly have any pixel-dependent concepts. However, it can contain a [Layout](../layout/layout/) node that does have pixel-specific options.
 
 ### Warning
 
-- A LayoutGroup can only be a child of a [LayoutLayer](../layout/layoutlayer) node or another LayoutGroup node.
+- A LayoutGroup can only be a child of a [LayoutLayer](../layout/layoutlayer/) node or another LayoutGroup node.
 
 ## See Also
 

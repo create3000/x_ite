@@ -31,7 +31,7 @@ The TextureCoordinate4D node belongs to the **Texturing3D** component and requir
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -53,7 +53,7 @@ The *mapping* label identifies which texture coordinates and transformations are
 
 ### Hint
 
-- Add [Shape](../shape/shape) and then polygonal/planar geometry before adding texture coordinates.
+- Add [Shape](../shape/shape/) and then polygonal/planar geometry before adding texture coordinates.
 
 ### Warning
 

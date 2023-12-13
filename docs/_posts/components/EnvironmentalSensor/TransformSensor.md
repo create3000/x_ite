@@ -31,7 +31,7 @@ The TransformSensor node belongs to the **EnvironmentalSensor** component and re
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -112,7 +112,7 @@ Sends rotation event relative to center whenever the target object is contained 
 
 - Results are undefined if boxes overlap for multiply instanced TransformSensor nodes.
 - A TransformSensor node with a zero-volume box (i.e. any size dimension equal to 0.0) cannot generate events, equivalent to enabled=false.
-- Unlike [TouchSensor](../pointingdevicesensor/touchsensor) nodes, there is no notion of a TransformSensor node lower in the scene graph grabbing events.
+- Unlike [TouchSensor](../pointingdevicesensor/touchsensor/) nodes, there is no notion of a TransformSensor node lower in the scene graph grabbing events.
 
 ## Example
 

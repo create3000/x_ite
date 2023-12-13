@@ -30,7 +30,7 @@ The NurbsSweptSurface node belongs to the **NURBS** component and requires at le
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -69,13 +69,13 @@ Defines cross-section of the surface traced about the trajectoryCurve axis.
 
 ### SFNode [in, out] **trajectoryCurve** NULL <small>[NurbsCurve]</small>
 
-Describes the center-line path using a [NurbsCurve](../nurbs/nurbscurve) node, oriented so that it is defined counterclockwise when looking down the −Y axis, thus defining a concept of inside and outside.
+Describes the center-line path using a [NurbsCurve](../nurbs/nurbscurve/) node, oriented so that it is defined counterclockwise when looking down the −Y axis, thus defining a concept of inside and outside.
 
 ## Advice
 
 ### Hint
 
-- Conceptually it is the NURBS equivalent of [Extrusion](../geometry3d/extrusion) but permits the use of non-closed cross sections.
+- Conceptually it is the NURBS equivalent of [Extrusion](../geometry3d/extrusion/) but permits the use of non-closed cross sections.
 
 ## Example
 

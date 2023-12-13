@@ -29,7 +29,7 @@ The RigidBodyCollection node belongs to the **RigidBodyPhysics** component and r
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -41,7 +41,7 @@ Enables/disables node operation.
 
 ### MFNode [in] **set_contacts** <small class="red">not supported</small>
 
-*set_contacts* input field for [Contact](../rigidbodyphysics/contact) nodes provides per-frame information about *contacts* between bodies.
+*set_contacts* input field for [Contact](../rigidbodyphysics/contact/) nodes provides per-frame information about *contacts* between bodies.
 
 #### Warning
 

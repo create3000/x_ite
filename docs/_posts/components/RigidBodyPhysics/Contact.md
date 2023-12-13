@@ -28,7 +28,7 @@ The Contact node belongs to the **RigidBodyPhysics** component and requires at l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -48,7 +48,7 @@ Information about this node can be contained in a [MetadataBoolean](../core/meta
 
 ### MFString [in, out] **appliedParameters** "BOUNCE"
 
-Default global parameters for collision outputs of rigid body physics system. Contact node can override parent [CollisionCollection](../rigidbodyphysics/collisioncollection) node. Selectable values for array: "BOUNCE" "USER_FRICTION" "FRICTION_COEFFICIENT_2" "ERROR_REDUCTION" "CONSTANT_FORCE" "SPEED_1" "SPEED_2" "SLIP_1" "SLIP_2".
+Default global parameters for collision outputs of rigid body physics system. Contact node can override parent [CollisionCollection](../rigidbodyphysics/collisioncollection/) node. Selectable values for array: "BOUNCE" "USER_FRICTION" "FRICTION_COEFFICIENT_2" "ERROR_REDUCTION" "CONSTANT_FORCE" "SPEED_1" "SPEED_2" "SLIP_1" "SLIP_2".
 
 #### Hint
 
@@ -110,7 +110,7 @@ The body1 and *body2* fields specify two top-level nodes that should be evaluate
 
 ### Hint
 
-- Each Contact node contains two [RigidBody](../rigidbodyphysics/rigidbody) nodes (`containerField='body1'` and `containerField='body2')` as well as two [CollidableShape](../rigidbodyphysics/collidableshape) or [CollidableOffset](../rigidbodyphysics/collidableoffset) nodes (`containerField='geometry1'` and `containerField='geometry2').`
+- Each Contact node contains two [RigidBody](../rigidbodyphysics/rigidbody/) nodes (`containerField='body1'` and `containerField='body2')` as well as two [CollidableShape](../rigidbodyphysics/collidableshape/) or [CollidableOffset](../rigidbodyphysics/collidableoffset/) nodes (`containerField='geometry1'` and `containerField='geometry2').`
 
 ### Warning
 

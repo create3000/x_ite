@@ -29,7 +29,7 @@ The CollisionCollection node belongs to the **RigidBodyPhysics** component and r
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -49,7 +49,7 @@ Enables/disables node operation.
 
 ### MFString [in, out] **appliedParameters** "BOUNCE"
 
-Default global parameters for collision outputs of rigid body physics system. [Contact](../rigidbodyphysics/contact) node can override parent CollisionCollection node. Selectable values for array: "BOUNCE" "USER_FRICTION" "FRICTION_COEFFICIENT_2" "ERROR_REDUCTION" "CONSTANT_FORCE" "SPEED_1" "SPEED_2" "SLIP_1" "SLIP_2".
+Default global parameters for collision outputs of rigid body physics system. [Contact](../rigidbodyphysics/contact/) node can override parent CollisionCollection node. Selectable values for array: "BOUNCE" "USER_FRICTION" "FRICTION_COEFFICIENT_2" "ERROR_REDUCTION" "CONSTANT_FORCE" "SPEED_1" "SPEED_2" "SLIP_1" "SLIP_2".
 
 #### Hint
 
@@ -129,7 +129,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ### Hints
 
-- Contains an array of [CollisionSpace](../rigidbodyphysics/collisionspace), [CollidableShape](../rigidbodyphysics/collidableshape) or [CollidableOffset](../rigidbodyphysics/collidableoffset) nodes (`containerField='collidables').`
+- Contains an array of [CollisionSpace](../rigidbodyphysics/collisionspace/), [CollidableShape](../rigidbodyphysics/collidableshape/) or [CollidableOffset](../rigidbodyphysics/collidableoffset/) nodes (`containerField='collidables').`
 - Content must be visible to be collidable and to be pickable.
 
 ## Example

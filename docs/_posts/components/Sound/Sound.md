@@ -30,7 +30,7 @@ The Sound node belongs to the **Sound** component and requires at least level **
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -67,7 +67,7 @@ Position of sound ellipsoid center, relative to local coordinate system.
 
 #### Hint
 
-- Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical [NavigationInfo](../navigation/navigationinfo) avatarSize height.
+- Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical [NavigationInfo](../navigation/navigationinfo/) avatarSize height.
 
 ### SFVec3f [in, out] **direction** 0 0 1 <small>(-∞,∞)</small>
 
@@ -111,7 +111,7 @@ Player hint [0,1] if needed to choose which sounds to play.
 
 ### SFNode [in, out] **source** NULL <small>[X3DSoundSourceNode]</small>
 
-Sound *source* for the Sound node, either an [AudioClip](../sound/audioclip) node or a [MovieTexture](../texturing/movietexture) node.
+Sound *source* for the Sound node, either an [AudioClip](../sound/audioclip/) node or a [MovieTexture](../texturing/movietexture/) node.
 
 #### Warning
 

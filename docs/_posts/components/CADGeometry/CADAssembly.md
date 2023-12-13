@@ -32,7 +32,7 @@ The CADAssembly node belongs to the **CADGeometry** component and requires at le
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -115,7 +115,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Can also contain Shapes or other grouped content.
 - [Datum reference](https://en.wikipedia.org/wiki/Datum_reference){:target="_blank"}
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/ComputerAidedDesignInterchangeProfile.pdf){:target="_blank"}
-- [ViewpointGroup](../navigation/viewpointgroup) and [OrthoViewpoint](../navigation/orthoviewpoint) require Navigation component level 3, which is higher than CADInterchange profile.
+- [ViewpointGroup](../navigation/viewpointgroup/) and [OrthoViewpoint](../navigation/orthoviewpoint/) require Navigation component level 3, which is higher than CADInterchange profile.
 
 ### Warning
 

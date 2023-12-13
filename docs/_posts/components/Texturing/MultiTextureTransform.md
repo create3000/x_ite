@@ -30,7 +30,7 @@ The MultiTextureTransform node belongs to the **Texturing** component and requir
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -38,7 +38,7 @@ Information about this node can be contained in a [MetadataBoolean](../core/meta
 
 ### MFNode [in, out] **textureTransform** [ ] <small>[X3DTextureTransformNode]</small>
 
-Zero or more contained [TextureTransform](../texturing/texturetransform) nodes, for each of the different texture channels, that define 2D transformation applied to texture coordinates.
+Zero or more contained [TextureTransform](../texturing/texturetransform/) nodes, for each of the different texture channels, that define 2D transformation applied to texture coordinates.
 
 #### Hints
 
@@ -53,9 +53,9 @@ Zero or more contained [TextureTransform](../texturing/texturetransform) nodes, 
 
 ### Hints
 
-- Insert [Shape](../shape/shape) and [Appearance](../shape/appearance) nodes before adding MultiTextureTransform.
+- Insert [Shape](../shape/shape/) and [Appearance](../shape/appearance/) nodes before adding MultiTextureTransform.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
-- Multitexturing is accomplished using [MultiTexture](../texturing/multitexture), [MultiTextureCoordinate](../texturing/multitexturecoordinate) and MultiTextureTransform nodes.
+- Multitexturing is accomplished using [MultiTexture](../texturing/multitexture/), [MultiTextureCoordinate](../texturing/multitexturecoordinate/) and MultiTextureTransform nodes.
 - [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texturing.html#f-Lightmapexample){:target="_blank"}
 - [X3D Texturing component Table 18.2: Comparison of single texture and multitexture attributes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texturing.html#t-SingleAndMultitextureAttrs){:target="_blank"}
 

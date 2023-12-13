@@ -29,7 +29,7 @@ The AcousticProperties node belongs to the **Shape** component and requires at l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -57,7 +57,7 @@ Enables/disables node operation.
 
 ### SFFloat [in, out] **refraction** 0 <small>[0,1]</small>
 
-[Sound](../sound/sound) *refraction* coefficient of a medium, which determines change in propagation direction of sound wave when obliquely crossing boundary between two mediums where its speed is different.
+[Sound](../sound/sound/) *refraction* coefficient of a medium, which determines change in propagation direction of sound wave when obliquely crossing boundary between two mediums where its speed is different.
 
 #### Hint
 
@@ -71,7 +71,7 @@ Specifies the sound *absorption* coefficient of a surface, meaning the ratio of 
 
 ### Hints
 
-- AcousticProperties must have a parent [Appearance](../shape/appearance) node, and only affects geometry within the same [Shape](../shape/shape).
+- AcousticProperties must have a parent [Appearance](../shape/appearance/) node, and only affects geometry within the same [Shape](../shape/shape/).
 - Proxy geometry for acoustic response can be far simpler than geometry needed for visual rendering.
 - [X3D Architecture Figure 16.2 Sound Propagation Phenomena](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/sound.html#f-SoundPropagationPhenomena){:target="_blank"}
 

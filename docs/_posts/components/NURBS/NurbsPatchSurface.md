@@ -31,7 +31,7 @@ The NurbsPatchSurface node belongs to the **NURBS** component and requires at le
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -97,11 +97,11 @@ Vector assigning relative *weight* value to each control point.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode|NurbsTextureCoordinate]</small>
 
-Single contained [NurbsTextureCoordinate](../nurbs/nurbstexturecoordinate), [TextureCoordinate](../texturing/texturecoordinate), [TextureCoordinateGenerator](../texturing/texturecoordinategenerator) or [MultiTextureCoordinate](../texturing/multitexturecoordinate) node that can specify coordinates for texture mapping onto corresponding geometry.
+Single contained [NurbsTextureCoordinate](../nurbs/nurbstexturecoordinate/), [TextureCoordinate](../texturing/texturecoordinate/), [TextureCoordinateGenerator](../texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](../texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
 
-Single contained [Coordinate](../rendering/coordinate) or [CoordinateDouble](../rendering/coordinatedouble) node that can specify control points for NURBS geometry definitions.
+Single contained [Coordinate](../rendering/coordinate/) or [CoordinateDouble](../rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
 
 ## Example
 

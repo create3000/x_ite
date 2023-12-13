@@ -31,7 +31,7 @@ The TextureCoordinate3D node belongs to the **Texturing3D** component and requir
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -53,7 +53,7 @@ Triplets of 3D (s,t,r) texture coordinates, either in range [0,1] or higher if r
 
 ### Hints
 
-- Add [Shape](../shape/shape) and then polygonal/planar geometry before adding texture coordinates.
+- Add [Shape](../shape/shape/) and then polygonal/planar geometry before adding texture coordinates.
 - [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texture3D.html#3DTextureconcepts){:target="_blank"}
 
 ### Warning

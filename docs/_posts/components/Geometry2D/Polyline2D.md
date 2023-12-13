@@ -29,7 +29,7 @@ The Polyline2D node belongs to the **Geometry2D** component and requires at leas
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -41,7 +41,7 @@ Coordinates of vertices connected into contiguous Polyline2D.
 
 #### Hint
 
-- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform) node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform/) node instead.
 
 #### Warning
 
@@ -51,14 +51,14 @@ Coordinates of vertices connected into contiguous Polyline2D.
 
 ### Hints
 
-- [Material](../shape/material) emissiveColor in corresponding [Appearance](../shape/appearance) is used for rendering lines.
-- Adding [LineProperties](../shape/lineproperties) to the corresponding [Appearance](../shape/appearance) node can modify the rendering style of these lines.
+- [Material](../shape/material/) emissiveColor in corresponding [Appearance](../shape/appearance/) is used for rendering lines.
+- Adding [LineProperties](../shape/lineproperties/) to the corresponding [Appearance](../shape/appearance/) node can modify the rendering style of these lines.
 - [Insert a Shape node before adding geometry or Appearance. Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
 
 ### Warnings
 
 - Lines are not lit, are not texture-mapped, and do not participate in collision detection.
-- Use a different [Material](../shape/material) emissiveColor than the [Background](../environmentaleffects/background) color, otherwise geometry is invisible.
+- Use a different [Material](../shape/material/) emissiveColor than the [Background](../environmentaleffects/background/) color, otherwise geometry is invisible.
 
 ## Example
 

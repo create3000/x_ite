@@ -29,7 +29,7 @@ The NurbsSurfaceInterpolator node belongs to the **NURBS** component and require
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -81,7 +81,7 @@ Output values for linear interpolation, each corresponding to knots.
 
 ### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
 
-Single contained [Coordinate](../rendering/coordinate) or [CoordinateDouble](../rendering/coordinatedouble) node that can specify control points for NURBS geometry definitions.
+Single contained [Coordinate](../rendering/coordinate/) or [CoordinateDouble](../rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
 
 ### SFVec3f [out] **normal_changed**
 
@@ -103,7 +103,7 @@ Computationaly interpolated output value determined by current key time and corr
 
 ### Hint
 
-- The SFNode controlPoint field can contain a single [Coordinate](../rendering/coordinate) or [CoordinateDouble](../rendering/coordinatedouble) node.
+- The SFNode controlPoint field can contain a single [Coordinate](../rendering/coordinate/) or [CoordinateDouble](../rendering/coordinatedouble/) node.
 
 ## See Also
 

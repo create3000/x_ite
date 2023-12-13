@@ -30,7 +30,7 @@ The MultiTexture node belongs to the **Texturing** component and requires at lea
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -89,11 +89,11 @@ The *alpha* field defines the *alpha* (1-transparency) base value for mode opera
 
 ### MFNode [in, out] **texture** [ ] <small>[X3DTextureNode]</small>
 
-Contained *texture* nodes ([ImageTexture](../texturing/imagetexture), [MovieTexture](../texturing/movietexture), [PixelTexture](../texturing/pixeltexture)) that map image(s) to surface geometry, defining each of the different *texture* channels.
+Contained *texture* nodes ([ImageTexture](../texturing/imagetexture/), [MovieTexture](../texturing/movietexture/), [PixelTexture](../texturing/pixeltexture/)) that map image(s) to surface geometry, defining each of the different *texture* channels.
 
 #### Hints
 
-- If *texture* node is NULL or unspecified, corresponding [Shape](../shape/shape) geometry for this [Appearance](../shape/appearance) is not textured.
+- If *texture* node is NULL or unspecified, corresponding [Shape](../shape/shape/) geometry for this [Appearance](../shape/appearance/) is not textured.
 - [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images){:target="_blank"}
 - [X3D Architecture 18 Texturing component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texturing.html){:target="_blank"}
 - [X3D Architecture 33 Texturing3D component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texture3D.html){:target="_blank"}
@@ -106,13 +106,13 @@ Contained *texture* nodes ([ImageTexture](../texturing/imagetexture), [MovieText
 
 ### Hints
 
-- Insert [Shape](../shape/shape) and [Appearance](../shape/appearance) nodes before adding texture.
+- Insert [Shape](../shape/shape/) and [Appearance](../shape/appearance/) nodes before adding texture.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
-- Multitexturing is accomplished using MultiTexture, [MultiTextureCoordinate](../texturing/multitexturecoordinate) and [MultiTextureTransform](../texturing/multitexturetransform) nodes.
+- Multitexturing is accomplished using MultiTexture, [MultiTextureCoordinate](../texturing/multitexturecoordinate/) and [MultiTextureTransform](../texturing/multitexturetransform/) nodes.
 - Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
 - [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#f-Lightmapexample){:target="_blank"}
 - [X3D Texturing component Table 18.2: Comparison of single texture and multitexture attributes](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#t-SingleAndMultitextureAttrs){:target="_blank"}
-- MultiTexture does not need to be included in [LoadSensor](../networking/loadsensor) watchList since any child [ImageTexture](../texturing/imagetexture) and [MovieTexture](../texturing/movietexture) nodes of interest can be handled separately.
+- MultiTexture does not need to be included in [LoadSensor](../networking/loadsensor/) watchList since any child [ImageTexture](../texturing/imagetexture/) and [MovieTexture](../texturing/movietexture/) nodes of interest can be handled separately.
 
 ### Warnings
 

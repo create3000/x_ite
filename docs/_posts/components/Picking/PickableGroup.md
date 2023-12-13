@@ -32,7 +32,7 @@ The PickableGroup node belongs to the **Picking** component and requires at leas
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -128,7 +128,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
+- Insert a [Shape](../shape/shape/) node before adding geometry or [Appearance](../shape/appearance/).
 - Content must be visible to be collidable and to be pickable.
 
 ## See Also

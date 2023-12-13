@@ -103,7 +103,7 @@ Cylinder {
 
 - Nodes describe shapes, lights, sounds, etc.
 - Every node has:
-  - A node type ([Shape](../components/shape/shape), [Cylinder](../components/geometry3d/cylinder), etc.)
+  - A node type ([Shape](/x_ite/components/shape/shape), [Cylinder](/x_ite/components/geometry3d/cylinder), etc.)
   - A pair of curly-braces
   - Zero or more fields inside the curly-braces
 
@@ -116,7 +116,7 @@ Node type names are case sensitive:
 
 Some examples:
 
-[Appearance](../components/shape/appearance), [Cylinder](../components/geometry3d/cylinder), [Material](../components/shape/material), [Shape](../components/shape/shape)
+[Appearance](/x_ite/components/shape/appearance), [Cylinder](/x_ite/components/geometry3d/cylinder), [Material](/x_ite/components/shape/material), [Shape](/x_ite/components/shape/shape)
 
 ## Using fields and values
 

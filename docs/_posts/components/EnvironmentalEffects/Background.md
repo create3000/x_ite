@@ -31,7 +31,7 @@ The Background node belongs to the **EnvironmentalEffects** component and requir
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -148,7 +148,7 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 
 ### MFColor [in, out] **skyColor** 0 0 0 <small>[0,1]</small>
 
-[Color](../rendering/color) of the sky at various angles on the sky sphere. First value is color of sky at 0.0 radians representing the zenith (straight up).
+[Color](../rendering/color/) of the sky at various angles on the sky sphere. First value is color of sky at 0.0 radians representing the zenith (straight up).
 
 #### Hints
 
@@ -174,7 +174,7 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 
 ### MFColor [in, out] **groundColor** [ ] <small>[0,1]</small>
 
-[Color](../rendering/color) of the ground at the various angles on the ground partial sphere. First value is color of ground at 0.0 radians representing the nadir (straight down).
+[Color](../rendering/color/) of the ground at the various angles on the ground partial sphere. First value is color of ground at 0.0 radians representing the nadir (straight down).
 
 #### Hints
 
@@ -213,13 +213,13 @@ Event sent when node becomes active/inactive.
 
 ### Hints
 
-- Background, [Fog](../environmentaleffects/fog), [GeoViewpoint](../geospatial/geoviewpoint), [NavigationInfo](../navigation/navigationinfo), [OrthoViewpoint](../navigation/orthoviewpoint), [TextureBackground](../environmentaleffects/texturebackground) and [Viewpoint](../navigation/viewpoint) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
-- Background node is not sensed by [LoadSensor](../networking/loadsensor) due to node typing and multiple-image ambiguity, alternatively utilize [TextureBackground](../environmentaleffects/texturebackground) node with multiple [ImageTexture](../texturing/imagetexture) nodes each referenced inside [LoadSensor](../networking/loadsensor).
+- Background, [Fog](../environmentaleffects/fog/), [GeoViewpoint](../geospatial/geoviewpoint/), [NavigationInfo](../navigation/navigationinfo/), [OrthoViewpoint](../navigation/orthoviewpoint/), [TextureBackground](../environmentaleffects/texturebackground/) and [Viewpoint](../navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- Background node is not sensed by [LoadSensor](../networking/loadsensor/) due to node typing and multiple-image ambiguity, alternatively utilize [TextureBackground](../environmentaleffects/texturebackground/) node with multiple [ImageTexture](../texturing/imagetexture/) nodes each referenced inside [LoadSensor](../networking/loadsensor/).
 - [X3D Example Archives, Basic, Universal Media Panoramas](https://www.web3d.org/x3d/content/examples/Basic/UniversalMediaPanoramas){:target="_blank"}
 
 ### Warning
 
-- Results are undefined if a bindable node (Background, [Fog](../environmentaleffects/fog), [NavigationInfo](../navigation/navigationinfo), [OrthoViewpoint](../navigation/orthoviewpoint), [TextureBackground](../environmentaleffects/texturebackground), [Viewpoint](../navigation/viewpoint)) is a contained descendant node of either [LOD](../navigation/lod) or [Switch](../grouping/switch). Avoid this authoring pattern.
+- Results are undefined if a bindable node (Background, [Fog](../environmentaleffects/fog/), [NavigationInfo](../navigation/navigationinfo/), [OrthoViewpoint](../navigation/orthoviewpoint/), [TextureBackground](../environmentaleffects/texturebackground/), [Viewpoint](../navigation/viewpoint/)) is a contained descendant node of either [LOD](../navigation/lod/) or [Switch](../grouping/switch/). Avoid this authoring pattern.
 
 ## Example
 

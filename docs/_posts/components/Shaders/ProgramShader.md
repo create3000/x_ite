@@ -30,7 +30,7 @@ The ProgramShader node belongs to the **Shaders** component and requires at leas
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -70,7 +70,7 @@ The *language* field indicates to the X3D player which shading *language* is use
 
 ### MFNode [in, out] **programs** [ ] <small>[ShaderProgram]</small>
 
-ProgramShader contains zero or more [ShaderProgram](../shaders/shaderprogram) node instances. In general, only two [ShaderProgram](../shaders/shaderprogram) instances are needed: one each for vertex and fragment processing.
+ProgramShader contains zero or more [ShaderProgram](../shaders/shaderprogram/) node instances. In general, only two [ShaderProgram](../shaders/shaderprogram/) instances are needed: one each for vertex and fragment processing.
 
 #### Hint
 
@@ -80,7 +80,7 @@ ProgramShader contains zero or more [ShaderProgram](../shaders/shaderprogram) no
 
 ### Hint
 
-- Apply default `containerField='shaders'` when parent node is [Appearance](../shape/appearance).
+- Apply default `containerField='shaders'` when parent node is [Appearance](../shape/appearance/).
 
 ### Warning
 

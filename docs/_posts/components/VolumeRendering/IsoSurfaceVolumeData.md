@@ -32,7 +32,7 @@ The IsoSurfaceVolumeData node belongs to the **VolumeRendering** component and r
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -110,11 +110,11 @@ Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurfa
 
 ### SFNode [in, out] **gradients** NULL <small>[X3DTexture3DNode]</small>
 
-Single contained X3DTexture3DNode ([ComposedTexture3D](../texturing3d/composedtexture3d), [ImageTexture3D](../texturing3d/imagetexture3d), [PixelTexture3D](../texturing3d/pixeltexture3d)) that provides explicit per-voxel gradient direction information for determining surface boundaries, rather than having it implicitly calculated by the implementation.
+Single contained X3DTexture3DNode ([ComposedTexture3D](../texturing3d/composedtexture3d/), [ImageTexture3D](../texturing3d/imagetexture3d/), [PixelTexture3D](../texturing3d/pixeltexture3d/)) that provides explicit per-voxel gradient direction information for determining surface boundaries, rather than having it implicitly calculated by the implementation.
 
 ### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
 
-Single contained X3DTexture3DNode ([ComposedTexture3D](../texturing3d/composedtexture3d), [ImageTexture3D](../texturing3d/imagetexture3d), [PixelTexture3D](../texturing3d/pixeltexture3d)) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
+Single contained X3DTexture3DNode ([ComposedTexture3D](../texturing3d/composedtexture3d/), [ImageTexture3D](../texturing3d/imagetexture3d/), [PixelTexture3D](../texturing3d/pixeltexture3d/)) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
 ## Advice
 

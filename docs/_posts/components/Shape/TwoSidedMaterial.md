@@ -33,7 +33,7 @@ The TwoSidedMaterial node belongs to the **Shape** component and requires at lea
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -41,11 +41,11 @@ Information about this node can be contained in a [MetadataBoolean](../core/meta
 
 ### SFBool [in, out] **separateBackColor** FALSE
 
-*separateBackColor* determines whether separate [Material](../shape/material) values are used for back faces.
+*separateBackColor* determines whether separate [Material](../shape/material/) values are used for back faces.
 
 #### Warning
 
-- Backface [Material](../shape/material) values are ignored unless you set *separateBackColor*='true'
+- Backface [Material](../shape/material/) values are ignored unless you set *separateBackColor*='true'
 
 ### SFFloat [in, out] **ambientIntensity** 0.2 <small>[0,1]</small>
 
@@ -57,7 +57,7 @@ How much direct, angle-dependent light is reflected from all light sources.
 
 #### Hint
 
-- Only emissiveColor affects [IndexedLineSet](../rendering/indexedlineset), [LineSet](../rendering/lineset) and [PointSet](../rendering/pointset).
+- Only emissiveColor affects [IndexedLineSet](../rendering/indexedlineset/), [LineSet](../rendering/lineset/) and [PointSet](../rendering/pointset/).
 
 ### SFColor [in, out] **specularColor** 0 0 0 <small>[0,1]</small>
 
@@ -71,7 +71,7 @@ How much glowing light is emitted from this object.
 
 - EmissiveColors glow even when all lights are off.
 - Reset diffuseColor from default (.8 .8 .8) to (0 0 0) to avoid washout.
-- Only *emissiveColor* affects [IndexedLineSet](../rendering/indexedlineset), [LineSet](../rendering/lineset) and [PointSet](../rendering/pointset).
+- Only *emissiveColor* affects [IndexedLineSet](../rendering/indexedlineset/), [LineSet](../rendering/lineset/) and [PointSet](../rendering/pointset/).
 
 #### Warning
 
@@ -95,7 +95,7 @@ How much direct, angle-dependent light is reflected from all light sources.
 
 #### Hint
 
-- Only emissiveColor affects [IndexedLineSet](../rendering/indexedlineset), [LineSet](../rendering/lineset) and [PointSet](../rendering/pointset).
+- Only emissiveColor affects [IndexedLineSet](../rendering/indexedlineset/), [LineSet](../rendering/lineset/) and [PointSet](../rendering/pointset/).
 
 ### SFColor [in, out] **backSpecularColor** 0 0 0 <small>[0,1]</small>
 
@@ -109,7 +109,7 @@ How much glowing light is emitted from this object.
 
 - EmissiveColors glow even when all lights are off.
 - Reset diffuseColor from default (.8 .8 .8) to (0 0 0) to avoid washout.
-- Only emissiveColor affects [IndexedLineSet](../rendering/indexedlineset), [LineSet](../rendering/lineset) and [PointSet](../rendering/pointset).
+- Only emissiveColor affects [IndexedLineSet](../rendering/indexedlineset/), [LineSet](../rendering/lineset/) and [PointSet](../rendering/pointset/).
 
 #### Warning
 
@@ -127,7 +127,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 ### Hints
 
-- Insert [Shape](../shape/shape) and [Appearance](../shape/appearance) nodes before adding material.
+- Insert [Shape](../shape/shape/) and [Appearance](../shape/appearance/) nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 - [X3D Architecture 12.2.3 Two-sided materials](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/shape.html#TwoSidedMaterials){:target="_blank"}
@@ -136,8 +136,8 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 ### Warnings
 
 - Requires X3D `profile='Full'` or else include `<component name='Shape' level='4'/>`
-- Corresponding geometry within the parent [Shape](../shape/shape) must have solid='false' for two-sided rendering, otherwise no reverse-side back geometry is displayed.
-- X3D4 Architecture has deprecated TwoSidedMaterial, preferring use of child backMaterial node in parent [Appearance](../shape/appearance).
+- Corresponding geometry within the parent [Shape](../shape/shape/) must have solid='false' for two-sided rendering, otherwise no reverse-side back geometry is displayed.
+- X3D4 Architecture has deprecated TwoSidedMaterial, preferring use of child backMaterial node in parent [Appearance](../shape/appearance/).
 
 ## Example
 

@@ -33,7 +33,7 @@ The AudioClip node belongs to the **Sound** component and requires at least leve
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -57,8 +57,8 @@ Enables/disables node operation.
 
 #### Hints
 
-- Allows author to design when [Inline](../networking/inline) loading occurs via user interaction, event chains or scripting.
-- Use a separate [LoadSensor](../networking/loadsensor) node to detect when loading is complete.
+- Allows author to design when [Inline](../networking/inline/) loading occurs via user interaction, event chains or scripting.
+- Use a separate [LoadSensor](../networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
@@ -130,7 +130,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor) touchTime or [TimeTrigger](../eventutilities/timetrigger) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
@@ -138,7 +138,7 @@ When *resumeTime* becomes \<= time now, isPaused becomes false and AudioClip bec
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor) touchTime or [TimeTrigger](../eventutilities/timetrigger) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
@@ -146,7 +146,7 @@ When time now \>= *pauseTime*, isPaused becomes true and AudioClip becomes pause
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor) touchTime or [TimeTrigger](../eventutilities/timetrigger) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
@@ -154,12 +154,12 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor) touchTime or [TimeTrigger](../eventutilities/timetrigger) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
 
 #### Warnings
 
-- An active [TimeSensor](../time/timesensor) node ignores set_cycleInterval and set_startTime events.
-- An active [TimeSensor](../time/timesensor) node ignores set_stopTime event values less than or equal to startTime.
+- An active [TimeSensor](../time/timesensor/) node ignores set_cycleInterval and set_startTime events.
+- An active [TimeSensor](../time/timesensor/) node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
 
@@ -217,7 +217,7 @@ Any audio file format supported by the web browser, but at least:
 
 ### Hints
 
-- Add a parent [Sound](../sound/sound) node first.
+- Add a parent [Sound](../sound/sound/) node first.
 - Utilize DEF/USE references for multiple copies of a single AudioClip sound file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
 - Authors can provide multiple audio formats for the same audio track, with each source address listed separately in the url field.
 - Player support for .wav format is required, .midi format is recommended, other formats are optional.

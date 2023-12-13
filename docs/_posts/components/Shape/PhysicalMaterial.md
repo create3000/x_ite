@@ -31,7 +31,7 @@ The PhysicalMaterial node belongs to the **Shape** component and requires at lea
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -66,7 +66,7 @@ How much glowing light is emitted from this object.
 
 - EmissiveColors glow even when all lights are off.
 - Reset diffuseColor from default (.8 .8 .8) to (0 0 0) to avoid washout.
-- Only *emissiveColor* affects [IndexedLineSet](../rendering/indexedlineset), [LineSet](../rendering/lineset) and [PointSet](../rendering/pointset).
+- Only *emissiveColor* affects [IndexedLineSet](../rendering/indexedlineset/), [LineSet](../rendering/lineset/) and [PointSet](../rendering/pointset/).
 
 #### Warning
 
@@ -146,7 +146,7 @@ When applying occlusionStrength for this material node, the contained texture pr
 
 #### Hints
 
-- *normalScale* only affects computation of normalTexture modulations that affect lighting of characteristics of the parent [Material](../shape/material) and has no relation to normal vectors defined by corresponding geometry.
+- *normalScale* only affects computation of normalTexture modulations that affect lighting of characteristics of the parent [Material](../shape/material/) and has no relation to normal vectors defined by corresponding geometry.
 - [NormalTexture techniques apply Bump mapping](https://en.wikipedia.org/wiki/Bump_mapping){:target="_blank"}
 
 ### SFString [in, out] **normalTextureMapping** ""
@@ -175,7 +175,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 ### Hints
 
-- Insert [Shape](../shape/shape) and [Appearance](../shape/appearance) nodes before adding material.
+- Insert [Shape](../shape/shape/) and [Appearance](../shape/appearance/) nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 - [X3D Example Archives, Basic, Universal Media Materials](https://www.web3d.org/x3d/content/examples/Basic/UniversalMediaMaterials){:target="_blank"}

@@ -29,7 +29,7 @@ The ElevationGrid node belongs to the **Geometry3D** component and requires at l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -126,7 +126,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
-Whether [Color](../rendering/color) node color values are applied to each point vertex (true) or per quadrilateral (false).
+Whether [Color](../rendering/color/) node color values are applied to each point vertex (true) or per quadrilateral (false).
 
 #### Hint
 
@@ -134,15 +134,15 @@ Whether [Color](../rendering/color) node color values are applied to each point 
 
 ### SFBool [ ] **normalPerVertex** TRUE
 
-Whether [Normal](../rendering/normal) node vector values are applied to each point vertex (true) or per quadrilateral (false).
+Whether [Normal](../rendering/normal/) node vector values are applied to each point vertex (true) or per quadrilateral (false).
 
 #### Hint
 
-- If no child [Normal](../rendering/normal) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
+- If no child [Normal](../rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 
-Single contained [FloatVertexAttribute](../shaders/floatvertexattribute) node that can specify list of per-vertex attribute information for programmable shaders.
+Single contained [FloatVertexAttribute](../shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
 
 #### Hint
 
@@ -150,23 +150,23 @@ Single contained [FloatVertexAttribute](../shaders/floatvertexattribute) node th
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
 
-Single contained [FogCoordinate](../environmentaleffects/fogcoordinate) node that can specify depth parameters for fog in corresponding geometry.
+Single contained [FogCoordinate](../environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Single contained [Color](../rendering/color) or [ColorRGBA](../rendering/colorrgba) node that can specify *color* values applied to corresponding vertices according to colorPerVertex field.
+Single contained [Color](../rendering/color/) or [ColorRGBA](../rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorPerVertex field.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
 
-Single contained [TextureCoordinate](../texturing/texturecoordinate), [TextureCoordinateGenerator](../texturing/texturecoordinategenerator) or [MultiTextureCoordinate](../texturing/multitexturecoordinate) node that can specify coordinates for texture mapping onto corresponding geometry.
+Single contained [TextureCoordinate](../texturing/texturecoordinate/), [TextureCoordinateGenerator](../texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](../texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
-Single contained [Normal](../rendering/normal) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+Single contained [Normal](../rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
 #### Hint
 
-- Useful for special effects. [Normal](../rendering/normal) vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
+- Useful for special effects. [Normal](../rendering/normal/) vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
 
 #### Warning
 
@@ -191,8 +191,8 @@ Grid array of *height* vertices with upward direction along +Y axis, with xDimen
 
 - The height array defines (xDimension-1)*(zDimension-1) quadrilaterals.
 - Positive direction for normal of each triangle is on same side of the quadrilateral. Triangles are defined either counterclockwise or clockwise depending on value of ccw field.
-- ElevationGrid can contain [Color](../rendering/color) or [ColorRGBA](../rendering/colorrgba), [Normal](../rendering/normal) and [TextureCoordinate](../texturing/texturecoordinate) nodes.
-- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
+- ElevationGrid can contain [Color](../rendering/color/) or [ColorRGBA](../rendering/colorrgba/), [Normal](../rendering/normal/) and [TextureCoordinate](../texturing/texturecoordinate/) nodes.
+- Insert a [Shape](../shape/shape/) node before adding geometry or [Appearance](../shape/appearance/).
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 
 ### Warning

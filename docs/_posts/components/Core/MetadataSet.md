@@ -30,7 +30,7 @@ The MetadataSet node belongs to the **Core** component and requires at least lev
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or MetadataSet node.
 
 #### Hint
 
@@ -67,7 +67,7 @@ The *value* field provides a list of X3DMetadataObject nodes whose meaning is de
 - If present, an IS statement is the first child within any other node.
 - An IS statement precedes any sibling Metadata* node, which in turn precedes any other sibling nodes.
 - MetadataSet can contain other MetadataSet nodes.
-- Comments are not readable when a model file is loaded for viewing, but [WorldInfo](../core/worldinfo) and Metadata* nodes are persistent and inspectable at run time.
+- Comments are not readable when a model file is loaded for viewing, but [WorldInfo](../core/worldinfo/) and Metadata* nodes are persistent and inspectable at run time.
 - [X3D for Web Authors, Chapter 15, Metadata Information](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html){:target="_blank"}
 
 ### Warnings

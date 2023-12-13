@@ -28,7 +28,7 @@ The Contour2D node belongs to the **NURBS** component and requires at least leve
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -54,7 +54,7 @@ The *children* form a closed loop with first point of first child repeated as la
 
 ### Hint
 
-- Contour2D is used as the trimmingContour field of the [NurbsTrimmedSurface](../nurbs/nurbstrimmedsurface) node.
+- Contour2D is used as the trimmingContour field of the [NurbsTrimmedSurface](../nurbs/nurbstrimmedsurface/) node.
 
 ### Warning
 

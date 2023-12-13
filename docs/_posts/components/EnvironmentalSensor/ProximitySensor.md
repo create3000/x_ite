@@ -31,7 +31,7 @@ The ProximitySensor node belongs to the **EnvironmentalSensor** component and re
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -114,7 +114,7 @@ Sends changed centerOfRotation values, likely caused by user interaction.
 ### Hints
 
 - Multiple USEd instances are cumulative, but avoid overlaps.
-- Can first use [Transform](../grouping/transform) to relocate/reorient box.
+- Can first use [Transform](../grouping/transform/) to relocate/reorient box.
 - Surround entire world to start behaviors once scene is loaded.
 
 ## Example

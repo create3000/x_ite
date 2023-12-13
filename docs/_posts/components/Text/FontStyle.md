@@ -29,7 +29,7 @@ The FontStyle node belongs to the **Text** component and requires at least level
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -169,7 +169,7 @@ It is possible to specify in the *family* field a URL of a custom font file of t
 - Full internationalization (i18n) and localization (l10n) features are available for any written language.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes.
 - [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
-- First add a [Text](../text/text) node as a parent node for FontStyle.
+- First add a [Text](../text/text/) node as a parent node for FontStyle.
 - [Wikipedia](https://en.wikipedia.org/wiki/Font){:target="_blank"}
 
 ## Example

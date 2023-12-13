@@ -32,7 +32,7 @@ The TimeSensor node belongs to the **Time** component and requires at least leve
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -72,7 +72,7 @@ When time now \>= *startTime*, isActive becomes true and TimeSensor becomes acti
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor) touchTime or [TimeTrigger](../eventutilities/timetrigger) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
@@ -80,7 +80,7 @@ When *resumeTime* becomes \<= time now, isPaused becomes false and TimeSensor be
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor) touchTime or [TimeTrigger](../eventutilities/timetrigger) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
 
 #### Warning
 
@@ -92,7 +92,7 @@ When time now \>= *pauseTime*, isPaused becomes true and TimeSensor becomes paus
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor) touchTime or [TimeTrigger](../eventutilities/timetrigger) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
 
 #### Warning
 
@@ -104,7 +104,7 @@ When *stopTime* becomes \<= time now, isActive becomes false and TimeSensor beco
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor) touchTime or [TimeTrigger](../eventutilities/timetrigger) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
 
 #### Warnings
 

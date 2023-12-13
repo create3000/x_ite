@@ -30,7 +30,7 @@ The Billboard node belongs to the **Navigation** component and requires at least
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -105,12 +105,12 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- Put Billboard as close to the geometry as possible, nested inside [Transform](../grouping/transform) for local coordinate system.
-- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
+- Put Billboard as close to the geometry as possible, nested inside [Transform](../grouping/transform/) for local coordinate system.
+- Insert a [Shape](../shape/shape/) node before adding geometry or [Appearance](../shape/appearance/).
 
 ### Warning
 
-- Don't put [Viewpoint](../navigation/viewpoint) inside a Billboard.
+- Don't put [Viewpoint](../navigation/viewpoint/) inside a Billboard.
 
 ## Example
 

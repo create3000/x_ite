@@ -29,7 +29,7 @@ The VolumeEmitter node belongs to the **ParticleSystems** component and requires
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -84,7 +84,7 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 ### MFInt32 [ ] **coordIndex** -1 <small>[0,∞) or -1</small>
 
-*coordIndex* indices are applied to contained [Coordinate](../rendering/coordinate) values in order to define randomly generated initial geometry of the particles.
+*coordIndex* indices are applied to contained [Coordinate](../rendering/coordinate/) values in order to define randomly generated initial geometry of the particles.
 
 #### Warning
 
@@ -98,7 +98,7 @@ Coordinates for the geometry used as the emitting volume.
 
 ### Hint
 
-- Otherwise, a VolumeEmitter node acts like a [PolylineEmitter](../particlesystems/polylineemitter) node.
+- Otherwise, a VolumeEmitter node acts like a [PolylineEmitter](../particlesystems/polylineemitter/) node.
 
 ## Example
 

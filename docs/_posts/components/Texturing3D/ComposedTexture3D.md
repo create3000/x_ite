@@ -32,7 +32,7 @@ The ComposedTexture3D node belongs to the **Texturing3D** component and requires
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -60,7 +60,7 @@ Whether to repeat texture along R axis from front to back.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 
-Single contained [TextureProperties](../texturing/textureproperties) node that can specify additional visual attributes applied to corresponding texture images.
+Single contained [TextureProperties](../texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 
 ### MFNode [in, out] **texture** [ ] <small>[X3DTexture2DNode]</small>
 
@@ -70,9 +70,9 @@ Collection of 2D *texture* sources.
 
 ### Hints
 
-- Insert 2^n [ImageTexture](../texturing/imagetexture), [PixelTexture](../texturing/pixeltexture) or [MovieTexture](../texturing/movietexture) child nodes. The first image is at depth 0 and each following image is at an increasing depth value in the R direction.
-- Can contain a single [TextureProperties](../texturing/textureproperties) node.
-- Insert [Shape](../shape/shape) and [Appearance](../shape/appearance) nodes before adding texture.
+- Insert 2^n [ImageTexture](../texturing/imagetexture/), [PixelTexture](../texturing/pixeltexture/) or [MovieTexture](../texturing/movietexture/) child nodes. The first image is at depth 0 and each following image is at an increasing depth value in the R direction.
+- Can contain a single [TextureProperties](../texturing/textureproperties/) node.
+- Insert [Shape](../shape/shape/) and [Appearance](../shape/appearance/) nodes before adding texture.
 - [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texture3D.html#3DTextureconcepts){:target="_blank"}
 
 ### Warning

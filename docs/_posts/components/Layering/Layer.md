@@ -29,7 +29,7 @@ The Layer node belongs to the **Layering** component and requires at least level
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
 
 #### Hint
 
@@ -41,7 +41,7 @@ Information about this node can be contained in a [MetadataBoolean](../core/meta
 
 ### MFString [in, out] **objectType** "ALL" <small>["ALL", "NONE", "TERRAIN", ...]</small>
 
-The *objectType* field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances. Example: labeling a [PickableGroup](../picking/pickablegroup) with the *objectType* value "WATER" and then attempting to intersect a pick sensor with *objectType* value "GROUND" fails since the *objectType* values do not match. Example: the special value "ALL" means that each node is available for picking regardless of the type specified by the pick sensor. Example: the special value "NONE" effectively disables all picking for this node and is the equivalent of setting the pickable field to false.
+The *objectType* field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances. Example: labeling a [PickableGroup](../picking/pickablegroup/) with the *objectType* value "WATER" and then attempting to intersect a pick sensor with *objectType* value "GROUND" fails since the *objectType* values do not match. Example: the special value "ALL" means that each node is available for picking regardless of the type specified by the pick sensor. Example: the special value "NONE" effectively disables all picking for this node and is the equivalent of setting the pickable field to false.
 
 #### Hints
 
@@ -59,7 +59,7 @@ Whether or not renderable content within this node is visually displayed.
 
 ### SFNode [in, out] **viewport** NULL <small>[X3DViewportNode]</small>
 
-The *viewport* field is a single [Viewport](../layering/viewport) node that constrains layer output to a sub-region of the render surface.
+The *viewport* field is a single [Viewport](../layering/viewport/) node that constrains layer output to a sub-region of the render surface.
 
 ### MFNode [in] **addChildren**
 
@@ -75,7 +75,7 @@ Nodes making up this layer.
 
 #### Hints
 
-- No transformations are possible above each [LayerSet](../layering/layerset)/Layer combination in the scene graph hierarchy.
+- No transformations are possible above each [LayerSet](../layering/layerset/)/Layer combination in the scene graph hierarchy.
 - InputOnly MFNode addChildren field can append new X3DChildNode nodes via a ROUTE connection, duplicate input nodes (i.e. matching DEF, USE values) are ignored.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
@@ -84,7 +84,7 @@ Nodes making up this layer.
 
 ### Hints
 
-- No transformations are possible above each [LayerSet](../layering/layerset)/Layer combination in the scene graph hierarchy.
+- No transformations are possible above each [LayerSet](../layering/layerset/)/Layer combination in the scene graph hierarchy.
 - Each Layer node contains its own binding stacks and thus has its own viewpoints and navigation.
 
 ## See Also
