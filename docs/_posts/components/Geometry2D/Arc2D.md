@@ -1,0 +1,98 @@
+---
+title: Arc2D
+date: 2023-01-07
+nav: components-Geometry2D
+categories: [components, Geometry2D]
+tags: [Arc2D, Geometry2D]
+---
+<style>
+.post h3 {
+  word-spacing: 0.2em;
+}
+</style>
+
+## Overview
+
+Arc2D is a line-based geometry node that defines a linear circular arc with center (0,0) in X-Y plane, with angles measured starting at positive x-axis and sweeping towards positive y-axis.
+
+The Arc2D node belongs to the **Geometry2D** component and requires at least level **2,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+
+## Hierarchy
+
+```
++ X3DNode
+  + X3DGeometryNode
+    + Arc2D
+```
+
+## Fields
+
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFFloat [ ] **startAngle** 0 <small>[-2π,2π]</small>
+
+Arc extends from *startAngle* counterclockwise to endAngle, in radians.
+
+#### Hints
+
+- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform) node instead.
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+
+#### Warning
+
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
+
+### SFFloat [ ] **endAngle** π/2 <small>[-2π,2π]</small>
+
+Arc extends from startAngle counterclockwise to *endAngle*, in radians.
+
+#### Hints
+
+- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform) node instead.
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+
+#### Warning
+
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
+
+### SFFloat [ ] **radius** 1 <small>(0,∞)</small>
+
+Circle *radius*, of which the arc is a portion.
+
+#### Hint
+
+- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform) node instead.
+
+#### Warning
+
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
+
+## Advice
+
+### Hints
+
+- [Material](../shape/material) emissiveColor in corresponding [Appearance](../shape/appearance) is used for rendering lines.
+- Adding [LineProperties](../shape/lineproperties) to the corresponding [Appearance](../shape/appearance) node can modify the rendering style of these lines.
+- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
+
+### Warnings
+
+- Lines are not lit, are not texture-mapped, and do not participate in collision detection.
+- Use a different [Material](../shape/material) emissiveColor than the [Background](../environmentaleffects/background) color, otherwise geometry is invisible.
+- [Requires X3D `profile='Full'` or else include `<component name='Geometry2D' level='2'/>` Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
+
+## Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/Geometry2D/Arc2D/Arc2D.x3d" update="auto"></x3d-canvas>
+
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry2D/Arc2D/Arc2D.x3d)
+
+## See Also
+
+- [X3D Specification of Arc2D node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Arc2D){:target="_blank"}

@@ -1,0 +1,136 @@
+---
+title: PrimitivePickSensor
+date: 2023-01-07
+nav: components-Picking
+categories: [components, Picking]
+tags: [PrimitivePickSensor, Picking]
+---
+<style>
+.post h3 {
+  word-spacing: 0.2em;
+}
+</style>
+
+## Overview
+
+PrimitivePickSensor tests picking intersections using one of the basic primitive shapes specified in the pickingGeometry field [Cone or Cylinder or Sphere or Box] against the pickTarget geometry.
+
+The PrimitivePickSensor node belongs to the **Picking** component and requires at least level **2,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+
+## Hierarchy
+
+```
++ X3DNode
+  + X3DChildNode
+    + X3DSensorNode
+      + X3DPickSensorNode
+        + PrimitivePickSensor
+```
+
+## Fields
+
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of the node.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
+
+### SFBool [in, out] **enabled** TRUE
+
+Enables/disables node operation.
+
+### MFString [in, out] **objectType** "ALL" <small>["ALL", "NONE", "TERRAIN", ...]</small>
+
+The *objectType* field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances. Example: labeling a [PickableGroup](../picking/pickablegroup) with the *objectType* value "WATER" and then attempting to intersect a pick sensor with *objectType* value "GROUND" fails since the *objectType* values do not match. Example: the special value "ALL" means that each node is available for picking regardless of the type specified by the pick sensor. Example: the special value "NONE" effectively disables all picking for this node and is the equivalent of setting the pickable field of the corresponding [PickableGroup](../picking/pickablegroup) to false.
+
+#### Hints
+
+- Authors may define any value for *objectType*.
+- MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
+
+### SFString [in, out] **matchCriterion** "MATCH_ANY" <small>["MATCH_ANY"|"MATCH_EVERY"|"MATCH_ONLY_ONE"]</small>
+
+Defines whether the intersection test (i.e. pick) by this X3DPickSensorNode must match one or more objectType. Specifically MATCH_ANY means any match of objectType values is acceptable, MATCH_EVERY means that every objectType value in this node shall match an objectType value in the X3DPickableObject, and MATCH_ONLY_ONE means that one and only one objectType value can match.
+
+### SFString [ ] **intersectionType** "BOUNDS" <small>["GEOMETRY"|"BOUNDS"|...]</small>
+
+*intersectionType* specifies precision of the collision computation.
+
+#### Hint
+
+- *intersectionType* constants may be extended by the browser to provide additional options.
+
+#### Warning
+
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+
+### SFString [ ] **sortOrder** "CLOSEST" <small>["ANY"|"CLOSEST"|"ALL"|"ALL_SORTED"]</small>
+
+The *sortOrder* field determines the order provided for picked output events. Example: ANY means any single object that can satisfy picking conditions for this pick sensor. Consistency of results is not guaranteed. Example: ALL means that every object that satisfies the picking conditions for this pick sensor shall be returned. Example: ALL_SORTED means that every object that satisfies the picking conditions for this pick sensor shall be returned with the order of the output fields provided in a distance-sorted order from closest to farthest away. The exact algorithm for sorting is defined by the individual node definitions. Example: CLOSEST means that the closest object by distance that satisfies the conditions of this pick sensor. *The exact algorithm for distance determination shall be defined by individual node definitions*.
+
+#### Hint
+
+- Browser implementations may define additional values and algorithms beyond these four required values.
+
+#### Warning
+
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+
+### SFBool [out] **isActive**
+
+*isActive* indicates when the intersecting object is picked by the picking geometry. Output event *isActive*=true gets sent once a picked item is found. Output event *isActive*=false gets sent once no picked item is found.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+### SFNode [in, out] **pickingGeometry** NULL <small>[Cone|Cylinder|Sphere|Box]</small>
+
+*pickingGeometry* specifies the exact geometry coordinates that are used to perform the intersection testing of the picking operation.
+
+### MFNode [in, out] **pickTarget** [ ] <small>[X3DGroupingNode|X3DShapeNode|Inline]</small>
+
+*pickTarget* specifies the list of nodes against which picking operations are performed. All nodes declared in this field and their descendents are evaluated for intersections.
+
+### MFNode [out] **pickedGeometry**
+
+Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+## Advice
+
+### Hints
+
+- Sorting is defined based on the primitive type as follows. For [Cone](../geometry3d/cone), the closest picked primitive is defined to be that closest to the vertex point. For [Cylinder](../geometry3d/cylinder), [Box](../geometry3d/box), and [Sphere](../geometry3d/sphere), the closest picked primitive is defined to be that closest to the center.
+- Picking is performed between rendered frames of the event model. An author sets up the picking request in one frame by placing a [LinePickSensor](../picking/linepicksensor) in the desired location. At the start of the next frame, any picking intersections are reported by the pick sensor.
+- Picking notification is performed at the start of the frame for all enabled pick sensors once all other sensors are processed.
+- [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/concepts.html#ExecutionModel){:target="_blank"}
+- [Box](../geometry3d/box), [Cone](../geometry3d/cone), [Cylinder](../geometry3d/cylinder) or [Sphere](../geometry3d/sphere) can be used for pickingGeometry node.
+
+### Warnings
+
+- Boolean fields used to control visibility of primitive pickingGeometry subsections are ignored when evaluating picking intersections. Example: a [Cylinder](../geometry3d/cylinder) without end caps is still treated as an enclosed [Cylinder](../geometry3d/cylinder).
+- Order of contained nodes is significant, single pickingGeometry node must precede pickTarget node array.
+
+## Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/Picking/PrimitivePickSensor/PrimitivePickSensor.x3d" update="auto"></x3d-canvas>
+
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Picking/PrimitivePickSensor/PrimitivePickSensor.x3d)
+
+## See Also
+
+- [X3D Specification of PrimitivePickSensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/picking.html#PrimitivePickSensor){:target="_blank"}

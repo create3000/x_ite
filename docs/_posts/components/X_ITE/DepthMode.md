@@ -1,0 +1,91 @@
+---
+title: DepthMode
+date: 2023-11-21
+nav: components-X_ITE
+categories: [components, X_ITE]
+tags: [DepthMode, X_ITE]
+---
+<style>
+.post h3 {
+  word-spacing: 0.2em;
+}
+</style>
+
+## Overview
+
+DepthMode contains parameters that are specific for depth control, like the value used for depth buffer comparisons.
+
+The DepthMode node belongs to the **X_ITE** component and its default container field is *depthMode.* It is available in X_ITE.
+
+>**Info:** Please note that the functionality of this node is still experimental.
+{: .prompt-info }
+
+## Hierarchy
+
+```
++ X3DNode
+  + X3DChildNode
+    + X3DAppearanceChildNode
+      + DepthMode
+```
+
+## Fields
+
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFVec2f [in, out] **polygonOffset** 0 0 <small>(-∞,∞)</small>
+
+Specifies the scale factors and units to calculate depth values.
+
+The offset is added before the depth test is performed and before the value is written into the depth buffer.
+
+The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0.
+
+The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0.
+
+### SFVec2f [in, out] **depthRange** 0 1 <small>[0,1]</small>
+
+Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.
+
+The first value is *zNear*, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0.
+
+The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1.
+
+### SFBool [in, out] **depthTest** TRUE
+
+Activates depth comparisons and updates to the depth buffer.
+
+### SFString [in, out] **depthFunc** "LESS_EQUAL" <small>["NEVER", "LESS", "EQUAL", "LESS_EQUAL", "GREATER", "NOT_EQUAL", "GREATER_EQUAL", "ALWAYS"]</small>
+
+Specifies a function that compares incoming pixel depth to the current depth buffer value.
+
+Must be one of the following symbolic constants:
+
+* NEVER
+* LESS
+* EQUAL
+* LESS_EQUAL
+* GREATER
+* NOT_EQUAL
+* GREATER_EQUAL
+* ALWAYS
+
+### SFBool [in, out] **depthMask** TRUE
+
+Sets whether writing into the depth buffer is enabled or disabled.
+
+## Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/X_ITE/DepthMode/DepthMode.x3d" update="auto"></x3d-canvas>
+
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/X_ITE/DepthMode/DepthMode.x3d)
+
+## See Also
+
+* [Z-buffering](https://en.wikipedia.org/wiki/Z-buffering){:target="_blank"}

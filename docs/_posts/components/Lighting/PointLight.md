@@ -1,0 +1,117 @@
+---
+title: PointLight
+date: 2023-01-07
+nav: components-Lighting
+categories: [components, Lighting]
+tags: [PointLight, Lighting]
+---
+<style>
+.post h3 {
+  word-spacing: 0.2em;
+}
+</style>
+
+## Overview
+
+PointLight is a single light source that illuminates outwards in all directions. Lighting illuminates all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy. Lights have no visible shape themselves and lighting effects continue through any intermediate geometry.
+
+The PointLight node belongs to the **Lighting** component and requires at least level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+
+## Hierarchy
+
+```
++ X3DNode
+  + X3DChildNode
+    + X3DLightNode
+      + PointLight
+```
+
+## Fields
+
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFBool [in, out] **global** TRUE
+
+Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+
+#### Warning
+
+- [DirectionalLight](../lighting/directionallight) default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. PointLight and [SpotLight](../lighting/spotlight) default *global*=true since their effects are each limited by maximum radius value.
+
+### SFBool [in, out] **on** TRUE
+
+Enables/disables this light source.
+
+### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
+
+*color* of light, applied to colors of objects.
+
+#### Hint
+
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+
+### SFFloat [in, out] **intensity** 1 <small>[0,∞)</small>
+
+Brightness of direct emission from the light.
+
+### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
+
+Brightness of ambient (nondirectional background) emission from the light.
+
+### SFVec3f [in, out] **attenuation** 1 0 0 <small>[0,∞)</small>
+
+Constant, linear-distance and squared-distance dropoff factors as radial distance increases from the source.
+
+#### Hint
+
+- *attenuation* = 1/max(*attenuation*[0] + *attenuation*[1] ⨯ r + *attenuation*[2] ⨯ r2 , 1)
+
+### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
+
+Position of light relative to local coordinate system.
+
+### SFFloat [in, out] **radius** 100 <small>[0,∞)</small>
+
+Maximum effective distance of light relative to local light position, affected by ancestor scaling.
+
+### SFBool [in, out] **shadows** FALSE
+
+*shadows* field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
+
+### SFColor [in, out] **shadowColor** 0 0 0 <small>[0,1]</small> <small class="yellow">non standard</small>
+
+Color of shadow, applied to colors of objects.
+
+### SFFloat [in, out] **shadowIntensity** 1 <small>[0,1]</small>
+
+*shadowIntensity* field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
+
+### SFFloat [in, out] **shadowBias** 0.005 <small>[0,1]</small> <small class="yellow">non standard</small>
+
+The shadowBias value controls the visibility of *shadow acne*.
+
+### SFInt32 [ ] **shadowMapSize** 1024 <small>[0,∞)</small> <small class="yellow">non standard</small>
+
+Size of the shadow map in pixels, must be power of two.
+
+## Advice
+
+### Hint
+
+- The bound [NavigationInfo](../navigation/navigationinfo) controls whether headlight is enabled on/off.
+
+## Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/Lighting/PointLight/PointLight.x3d" update="auto"></x3d-canvas>
+
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Lighting/PointLight/PointLight.x3d)
+
+## See Also
+
+- [X3D Specification of PointLight node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#PointLight){:target="_blank"}

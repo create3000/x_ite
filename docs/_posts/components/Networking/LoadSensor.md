@@ -1,0 +1,133 @@
+---
+title: LoadSensor
+date: 2023-01-07
+nav: components-Networking
+categories: [components, Networking]
+tags: [LoadSensor, Networking]
+---
+<style>
+.post h3 {
+  word-spacing: 0.2em;
+}
+</style>
+
+## Overview
+
+LoadSensor generates events as watchList child nodes are either loaded or fail to load. Changing watchlist child nodes restarts the LoadSensor.
+
+The LoadSensor node belongs to the **Networking** component and requires at least level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+
+## Hierarchy
+
+```
++ X3DNode
+  + X3DChildNode
+    + X3DSensorNode
+      + X3DNetworkSensorNode
+        + LoadSensor
+```
+
+## Fields
+
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of the node.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
+
+### SFBool [in, out] **enabled** TRUE
+
+Enables/disables node operation.
+
+### SFTime [in, out] **timeOut** 0 <small>(0,∞)</small>
+
+Time in seconds of maximum load duration prior to declaring failure. Default value zero means use browser defaults.
+
+### SFBool [out] **isActive**
+
+*isActive* true/false events are sent when sensing starts/stops.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+### SFBool [out] **isLoaded**
+
+Notify when all watchList child nodes are loaded, or at least one has failed. Sends true on successfully loading all watchList child nodes. Sends false on timeOut of any watchList child nodes, failure of any watchList child nodes to load, or no local copies available and no network present.
+
+#### Hint
+
+- Use multiple LoadSensor nodes to track multiple loading nodes individually.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+### SFFloat [out] **progress**
+
+Sends 0.0 on start and 1.0 on completion. Intermediate values are browser dependent and always increasing (may indicate fraction of bytes, fraction of expected time or another metric).
+
+#### Hint
+
+- Only 0 and 1 events are guaranteed.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+### SFTime [out] **loadTime**
+
+Time of successful load complete, not sent on failure.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+### MFNode [in, out] **children** [ ] <small>[X3DUrlObject]</small>
+
+The *children* field monitors one or more USE nodes that contain a valid url field.
+
+#### Hints
+
+- If watchList contains multiple USE nodes, output events are only generated when all *children* have loaded successfully or at least one node has failed.
+- If individual load status information is desired for different nodes, multiple LoadSensor nodes may be used, each with a single watchList element.
+- [Anchor](../networking/anchor) nodes can be monitored for binding a target [Viewpoint](../navigation/viewpoint), loading a new scene, or loading a new scene in a new window.
+
+#### Warning
+
+- [Field originally named 'watchList' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+
+## Advice
+
+### Hints
+
+- Use multiple LoadSensor nodes to track multiple loading nodes individually.
+- [Background](../environmentaleffects/background) node is not sensed by LoadSensor due to node typing and multiple-image ambiguity, alternatively utilize [TextureBackground](../environmentaleffects/texturebackground) node with multiple [ImageTexture](../texturing/imagetexture) nodes each referenced inside LoadSensor.
+- Use [Inline](../networking/inline) 'load' field to prompt or defer loading.
+- [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter12EnvironmentSensorSound){:target="_blank"}
+
+### Warnings
+
+- Children (watchList) child nodes are not rendered, so normally USE copies of other nodes to sense load status.
+- New X3D node, not supported in VRML97.
+- ['children' field originally named 'watchList' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+
+## Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/Networking/LoadSensor/LoadSensor.x3d" update="auto"></x3d-canvas>
+
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/LoadSensor/LoadSensor.x3d)
+
+## See Also
+
+- [X3D Specification of LoadSensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#LoadSensor){:target="_blank"}
