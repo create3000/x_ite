@@ -9,7 +9,7 @@ tags: [DOM, Integration, XHTML, HTML]
 
 DOM integration allows you to integrate 3D content seamlessly into your web page, with just a JavaScript file included, the scene can be written directly into the HTML or XHTML markup and manipulated using common JavaScript DOM manipulation methods.
 
->**Tip:** If you have an X3D file or a [file that can be loaded by X_ITE](#supported-file-formats), then you can convert this file to an HTML document using our [Online X3D File Format Converter](/x_ite/laboratory/x3d-file-converter/).
+>**Tip:** If you have an X3D file or a [file that can be loaded by X_ITE](/x_ite/#supported-file-formats), then you can convert this file to an HTML document using our [Online X3D File Format Converter](/x_ite/laboratory/x3d-file-converter/).
 {: .prompt-tip }
 
 **HTML DOM integration is now an integral part of X_ITE.**

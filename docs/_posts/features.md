@@ -7,7 +7,7 @@ tags: [Features]
 ---
 ## Overview
 
-X_ITE is a fast, small, and feature-rich JavaScript library for displaying and executing X3D files, and other formats like VRML, glTF and [more](#supported-file-formats). It makes things like WebGL programming, document access and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
+X_ITE is a fast, small, and feature-rich JavaScript library for displaying and executing X3D files, and other formats like VRML, glTF and [more](/x_ite/#supported-file-formats). It makes things like WebGL programming, document access and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
 
 X_ITE is freely downloadable for any usage and licensed under the GPL3. You can use them for commercial and noncommercial purposes.
 
