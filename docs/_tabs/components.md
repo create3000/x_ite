@@ -4,7 +4,7 @@ date: 2022-11-28
 nav: components
 tags: [Components]
 layout: post
-icon: fas fa-th-large
+icon: fas fa-solid fa-cubes
 order: 1
 ---
 This index lists the components and nodes in alphabetical order for quick access to the X3D documentation.
