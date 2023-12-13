@@ -6,24 +6,8 @@ categories: [Laboratory]
 tags: [glTF, Sample, Viewer]
 ---
 <style>
-.container,
-main.px-md-4,
-article.px-1,
-.content,
-#tail-wrapper.px-md-4.col-xl-9,
-footer {
-   padding: 0 !important;
+.row {
    margin: 0 !important;
-   width: 100% !important;
-   max-width: 100% !important;
-}
-
-main.col-lg-11 {
-   flex: 0 0 100% !important;
-}
-
-.dynamic-title {
-   display: none;
 }
 
 /* Viewer */

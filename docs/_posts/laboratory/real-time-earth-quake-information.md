@@ -19,11 +19,6 @@ table td {
    padding-right: 2rem;
 }
 
-/* Canvas */
-
-.post x3d-canvas {
-   aspect-ratio: 16 / 9;
-}
 </style>
 
 <script type="module" src="https://create3000.github.io/media/laboratory/earthquakes/earthquakes.mjs"></script>

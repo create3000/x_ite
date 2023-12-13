@@ -1,3 +1,5 @@
+const $ = jQuery;
+
 $("#drop-zone") .on ("dragover", event =>
 {
    event .stopPropagation ();

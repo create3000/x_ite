@@ -28,23 +28,35 @@ layout: page
 }
 
 #main-wrapper,
+.container,
+main.px-md-4,
+article.px-1,
+.content,
+#tail-wrapper.px-md-4.col-xl-9,
 footer {
-   margin: 0;
-}
-
-#main {
-   margin: 0;
-   max-width: unset;
-}
-
-#core-wrapper {
-   flex: 0 0 100%;
-   max-width: unset;
-}
-
-footer > .container {
    padding: 0 !important;
-   max-width: unset;
+   margin: 0 !important;
+   width: 100% !important;
+   max-width: 100% !important;
+}
+
+.row {
+   margin: 0 2rem !important;
+}
+
+main.col-lg-11 {
+   flex: 0 0 100% !important;
+}
+
+.dynamic-title {
+   display: none;
+}
+
+x3d-canvas {
+   display: block;
+   aspect-ratio: 16 / 9;
+   width: 100%;
+   height: 100%;
 }
 </style>
 

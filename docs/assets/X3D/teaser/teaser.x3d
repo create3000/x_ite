@@ -8,9 +8,9 @@
     <meta name='created' content='Sat, 28 Jan 2023 13:31:50 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrise X3D Editor V1.0.8, https://create3000.github.io/sunrise/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.3.2, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/assets/X3D/teaser.x3d'/>
-    <meta name='modified' content='Sat, 28 Jan 2023 14:49:19 GMT'/>
+    <meta name='modified' content='Wed, 13 Dec 2023 03:24:54 GMT'/>
   </head>
   <Scene>
     <NavigationInfo
@@ -21,10 +21,10 @@
         scale='16 5 1'>
       <Shape>
         <Appearance>
-          <Material
-              diffuseColor='0.6 0.6 0.6'/>
+          <UnlitMaterial
+              emissiveColor='0.7372549 0.7372549 0.7372549'/>
           <ImageTexture
-              url='"peakpx.jpg"'/>
+              url='"colors.jpg"'/>
         </Appearance>
         <Rectangle2D/>
       </Shape>
@@ -32,8 +32,11 @@
     <Transform DEF='Text'
         translation='-9 -1 1'>
       <Shape>
-        <Text DEF='_1'
-            string='"X_ITE v8.5.2"'>
+        <Appearance>
+          <UnlitMaterial/>
+        </Appearance>
+        <Text DEF='_2'
+            string='"X_ITE v9.1.8"'>
           <FontStyle
               family='"Michroma-Regular.ttf", "SANS"'
               size='1.2'/>
@@ -50,6 +53,6 @@ function initialize ()
 }
 ]]>
     </Script>
-    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_1' toField='set_string'/>
+    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_2' toField='set_string'/>
   </Scene>
 </X3D>

@@ -6,10 +6,6 @@ categories: [Laboratory]
 tags: [Online, DICOM, NRRD, File, Viewer]
 ---
 <style>
-.row, .post, .post-content {
-   min-height: 100%;
-}
-
 /* Table */
 
 table {
@@ -25,7 +21,7 @@ table td {
 
 /* Canvas */
 
-.post x3d-canvas {
+x3d-canvas {
    height: 60vh;
    width: 100%;
    aspect-ratio: unset;
