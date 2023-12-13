@@ -19,7 +19,7 @@
 		"dist": "node build/bin/dist.js",
 		"release": "node build/bin/release.js",
 		"ts": "node build/bin/ts.js",
-		"predocs": "rm -r docs/_site/",
+		"predocs": "mkdir -p docs/_site/ && rm -r docs/_site/",
 		"docs": "cd docs && bundle exec jekyll serve --incremental --host=`ipconfig getifaddr en0`",
 		"docs-install": "cd docs && bundle install",
 		"docs-update": "cd docs && bundle update",
