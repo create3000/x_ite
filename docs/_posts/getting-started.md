@@ -28,7 +28,7 @@ X_ITE supports custom shaders, clip planes, reflection mapping, script nodes, pr
 >**Tip:** X_ITE runs best in fresh installs of Google Chrome, Chromium, Firefox, Safari, Opera, and Microsoft Edge. X_ITE uses the latest JavaScript standard, but is also compatible with older browser, and is available both on your desktop computer and on your modern smart-phone.
 {: .prompt-tip }
 
-If you ever get into trouble, please [report a bug](/x_ite/report-a-bug/). If you have any questions or need help please [open a new issue](/x_ite/report-a-bug/){:target="_blank"}.
+If you ever get into trouble, please [report a bug](/x_ite/report-a-bug/). If you have any questions or need help please [open a new issue](/x_ite/report-a-bug/).
 
 ### Become a Patreon of X_ITE
 
@@ -726,7 +726,7 @@ A Boolean value (`true` or `false`) to indicate whether additional debug message
 
 ### multisampling
 
-An Integer value that specifies the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of anti-aliasing. Check the [rendering property](/x_ite/reference/browser-services#rendering-properties/) »MaxSamples«, which is browser dependent.
+An Integer value that specifies the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of anti-aliasing. Check the [rendering property](/x_ite/reference/browser-services/#rendering-properties) »MaxSamples«, which is browser dependent.
 
 ### notifications
 
@@ -782,7 +782,7 @@ An MFString value of URLs to load on page load. If no *url* attribute is specifi
 
 ### More Options
 
-More options can be adjusted using the [Browser object](/x_ite/reference/browser-services#browser-object/) and [Browser Options](/x_ite/reference/browser-services#browser-options/) for scene specific adjustments.
+More options can be adjusted using the [Browser object](/x_ite/reference/browser-services/#browser-object) and [Browser Options](/x_ite/reference/browser-services/#browser-options) for scene specific adjustments.
 
 ## Keyboard Shortcuts
 
