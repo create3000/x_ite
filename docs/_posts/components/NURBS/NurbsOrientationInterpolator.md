@@ -29,7 +29,7 @@ The NurbsOrientationInterpolator node belongs to the **NURBS** component and req
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -65,7 +65,7 @@ Output values for computational interpolation, each corresponding to knots.
 
 ### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
 
-Single contained [Coordinate](../rendering/coordinate/) or [CoordinateDouble](../rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
+Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
 
 ### SFRotation [out] **value_changed**
 
@@ -79,7 +79,7 @@ Computationaly interpolated output value determined by current key time and corr
 
 ### Hint
 
-- The SFNode controlPoint field can contain a single [Coordinate](../rendering/coordinate/) or [CoordinateDouble](../rendering/coordinatedouble/) node.
+- The SFNode controlPoint field can contain a single [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node.
 
 ## See Also
 

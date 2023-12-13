@@ -30,7 +30,7 @@ The Transform node belongs to the **Grouping** component and requires at least l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -141,16 +141,16 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Each transformation creates a new coordinate system relative to the parent coordinate system.
 - +Y axis is the up direction. (Similarly some scenes may consider +X is North and +Z is East.)
 - Best authoring approach is to keep +Y axis pointing towards local up direction, supporting scene composability and effective navigation response (which is based on gravity direction).
-- Insert a [Shape](../shape/shape/) node before adding geometry or [Appearance](../shape/appearance/).
+- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - Translation/rotation/scaling field attributes can be defined in any order in the scene. The applied order of translation/rotation/scaling transformation-matrix operations remains consistent.
 - Authors can modify order of translation/rotation/scaling operations by splitting them into separate nested parent/child Transform nodes.
 - [X3D Scene Authoring Hints, Coordinate Systems](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#CoordinateSystems){:target="_blank"}
 - [X3D Scene Authoring Hints, Scale Factors and Unit Conversions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scale){:target="_blank"}
-- Apply `containerField='shape'` if parent node is [CADFace](../cadgeometry/cadface/).
+- Apply `containerField='shape'` if parent node is [CADFace](/x_ite/components/cadgeometry/cadface/).
 
 ### Warning
 
-- Transform contained by [CADFace](../cadgeometry/cadface/) can only hold a single [LOD](../navigation/lod/) or [Shape](../shape/shape/) node.
+- Transform contained by [CADFace](/x_ite/components/cadgeometry/cadface/) can only hold a single [LOD](/x_ite/components/navigation/lod/) or [Shape](/x_ite/components/shape/shape/) node.
 
 ## Example
 

@@ -29,7 +29,7 @@ The Cone node belongs to the **Geometry3D** component and requires at least leve
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -49,7 +49,7 @@ Size in meters.
 
 #### Hint
 
-- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform/) node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](/x_ite/components/grouping/transform/) node instead.
 
 #### Warning
 
@@ -61,7 +61,7 @@ Size in meters.
 
 #### Hint
 
-- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform/) node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](/x_ite/components/grouping/transform/) node instead.
 
 #### Warning
 
@@ -87,7 +87,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 ### Hints
 
 - [Cone](https://en.wikipedia.org/wiki/Cone){:target="_blank"}
-- Insert a [Shape](../shape/shape/) node before adding geometry or [Appearance](../shape/appearance/).
+- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ## Example
 

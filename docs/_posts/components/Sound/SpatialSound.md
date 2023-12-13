@@ -30,7 +30,7 @@ The SpatialSound node belongs to the **Sound** component and requires at least l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -96,7 +96,7 @@ Whether to *spatialize* sound playback relative to viewer.
 
 #### Hints
 
-- Functional support requires player support for [Sound](../sound/sound/) component level 3.
+- Functional support requires player support for [Sound](/x_ite/components/sound/sound/) component level 3.
 - [Wikipedia Doppler effect](https://en.wikipedia.org/wiki/Doppler_effect){:target="_blank"}
 
 ### SFBool [in, out] **enableHRTF** FALSE
@@ -130,7 +130,7 @@ Position of sound ellipsoid center, relative to local coordinate system.
 
 #### Hint
 
-- Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical [NavigationInfo](../navigation/navigationinfo/) avatarSize height.
+- Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical [NavigationInfo](/x_ite/components/navigation/navigationinfo/) avatarSize height.
 
 ### SFFloat [in, out] **maxDistance** 10000 <small>[0,∞)</small>
 
@@ -166,7 +166,7 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 #### Warning
 
-- Contained [AudioClip](../sound/audioclip/) or [MovieTexture](../texturing/movietexture/) nodes must have `containerField='children'` to override otherwise-incorrect defaults.
+- Contained [AudioClip](/x_ite/components/sound/audioclip/) or [MovieTexture](/x_ite/components/texturing/movietexture/) nodes must have `containerField='children'` to override otherwise-incorrect defaults.
 
 ## Advice
 

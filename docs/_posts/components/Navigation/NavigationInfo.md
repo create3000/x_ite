@@ -30,7 +30,7 @@ The NavigationInfo node belongs to the **Navigation** component and requires at 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -56,7 +56,7 @@ Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLO
 
 - For inspection of simple objects, usability often improves with *type*="EXAMINE" "ANY".
 - Types WALK and FLY force strict camera-to-object collision detection.
-- See [Collision](../navigation/collision/) node for further details on camera-to-object collision detection.
+- See [Collision](/x_ite/components/navigation/collision/) node for further details on camera-to-object collision detection.
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." ] Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### MFFloat [in, out] **avatarSize** [ 0.25, 1.6, 0.75 ] <small>[0,∞)</small>
@@ -67,7 +67,7 @@ Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLO
 
 - X3D specification recommends that browsers set near clipping plane to one-half of *avatarSize*.CollisionDistance value.
 - [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"} Interchange profile hint: this field may be ignored, applying the default value regardless.
-- Transformation hierarchy of currently bound [Viewpoint](../navigation/viewpoint/) node scales *avatarSize*, but translations and rotations have no effect.
+- Transformation hierarchy of currently bound [Viewpoint](/x_ite/components/navigation/viewpoint/) node scales *avatarSize*, but translations and rotations have no effect.
 - Content must be visible to be collidable and to be pickable.
 
 #### Warnings
@@ -151,15 +151,15 @@ Event sent reporting timestamp when node becomes active/inactive.
 ### Hints
 
 - For inspection of simple objects, usability often improves with type="EXAMINE" "ANY"
-- [Background](../environmentaleffects/background/), [Fog](../environmentaleffects/fog/), [GeoViewpoint](../geospatial/geoviewpoint/), NavigationInfo, [OrthoViewpoint](../navigation/orthoviewpoint/), [TextureBackground](../environmentaleffects/texturebackground/) and [Viewpoint](../navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- [Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/), NavigationInfo, [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
 - NavigationInfo types '"WALK" "FLY"' support camera-to-object collision detection.
 - Regardless of viewpoint jump value at bind time, the relative viewing transformation between user's view and defined position/orientation is stored for later use when un-jumping (returning to the viewpoint when subsequent viewpoint is unbound).
-- Customizable design pattern for dedicated [Viewpoint](../navigation/viewpoint/)/NavigationInfo pair: \<[Viewpoint](../navigation/viewpoint/) DEF='SpecialView'/\> \<NavigationInfo DEF='SpecialNav'/\> \<ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/\>
+- Customizable design pattern for dedicated [Viewpoint](/x_ite/components/navigation/viewpoint/)/NavigationInfo pair: \<[Viewpoint](/x_ite/components/navigation/viewpoint/) DEF='SpecialView'/\> \<NavigationInfo DEF='SpecialNav'/\> \<ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/\>
 - [X3D Scene Authoring Hints, Viewpoints](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Viewpoints){:target="_blank"}
 
 ### Warning
 
-- Results are undefined if a bindable node ([Background](../environmentaleffects/background/), [Fog](../environmentaleffects/fog/), NavigationInfo, [OrthoViewpoint](../navigation/orthoviewpoint/), [TextureBackground](../environmentaleffects/texturebackground/), [Viewpoint](../navigation/viewpoint/)) is a contained descendant node of either [LOD](../navigation/lod/) or [Switch](../grouping/switch/). Avoid this authoring pattern.
+- Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), NavigationInfo, [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/). Avoid this authoring pattern.
 
 ## Example
 

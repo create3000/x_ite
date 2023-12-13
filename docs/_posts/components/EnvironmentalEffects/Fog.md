@@ -32,7 +32,7 @@ The Fog node belongs to the **EnvironmentalEffects** component and requires at l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -68,7 +68,7 @@ Fog *color*.
 
 #### Hints
 
-- Match [Background](../environmentaleffects/background/) *color* to make objects fade away.
+- Match [Background](/x_ite/components/environmentaleffects/background/) *color* to make objects fade away.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 ### SFFloat [in, out] **visibilityRange** 0 <small>[0,∞)</small>
@@ -103,11 +103,11 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ### Hint
 
-- [Background](../environmentaleffects/background/), Fog, [GeoViewpoint](../geospatial/geoviewpoint/), [NavigationInfo](../navigation/navigationinfo/), [OrthoViewpoint](../navigation/orthoviewpoint/), [TextureBackground](../environmentaleffects/texturebackground/) and [Viewpoint](../navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- [Background](/x_ite/components/environmentaleffects/background/), Fog, [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
 
 ### Warning
 
-- Results are undefined if a bindable node ([Background](../environmentaleffects/background/), Fog, [NavigationInfo](../navigation/navigationinfo/), [OrthoViewpoint](../navigation/orthoviewpoint/), [TextureBackground](../environmentaleffects/texturebackground/), [Viewpoint](../navigation/viewpoint/)) is a contained descendant node of either [LOD](../navigation/lod/) or [Switch](../grouping/switch/). Avoid this authoring pattern.
+- Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), Fog, [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/). Avoid this authoring pattern.
 
 ## Example
 

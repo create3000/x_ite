@@ -32,7 +32,7 @@ The Collision node belongs to the **Navigation** component and requires at least
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -119,7 +119,7 @@ The *proxy* node is used as a substitute for Collision children during collision
 #### Warnings
 
 - The *proxy* node must have `containerField='proxy'` or it is simply treated like other children nodes.
-- Insert a [Shape](../shape/shape/) node before adding geometry or [Appearance](../shape/appearance/).
+- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ### MFNode [in] **addChildren**
 
@@ -146,14 +146,14 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - Collision can contain a single proxy child node for substitute collision-detection geometry. Improve run-time performance by using proxy with simpler contact-calculation geometry.
 - Proxy shapes are not rendered and remain invisible.
-- Apply `containerField='proxy'` to uniquely identify the proxy child [Shape](../shape/shape/) or grouping node.
-- [NavigationInfo](../navigation/navigationinfo/) types '"WALK" "FLY"' support camera-to-object collision detection.
+- Apply `containerField='proxy'` to uniquely identify the proxy child [Shape](/x_ite/components/shape/shape/) or grouping node.
+- [NavigationInfo](/x_ite/components/navigation/navigationinfo/) types '"WALK" "FLY"' support camera-to-object collision detection.
 - Content must be visible to be collidable and to be pickable.
-- Insert a [Shape](../shape/shape/) node before adding geometry or [Appearance](../shape/appearance/).
+- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ### Warning
 
-- [PointSet](../rendering/pointset/), [IndexedLineSet](../rendering/indexedlineset/), [LineSet](../rendering/lineset/) and [Text](../text/text/) are not collidable geometry do not trigger collisions.
+- [PointSet](/x_ite/components/rendering/pointset/), [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [LineSet](/x_ite/components/rendering/lineset/) and [Text](/x_ite/components/text/text/) are not collidable geometry do not trigger collisions.
 
 ## Example
 

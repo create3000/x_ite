@@ -34,7 +34,7 @@ The ImageTexture node belongs to the **Texturing** component and requires at lea
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -54,8 +54,8 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hints
 
-- Allows author to design when [Inline](../networking/inline/) loading occurs via user interaction, event chains or scripting.
-- Use a separate [LoadSensor](../networking/loadsensor/) node to detect when loading is complete.
+- Allows author to design when [Inline](/x_ite/components/networking/inline/) loading occurs via user interaction, event chains or scripting.
+- Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
@@ -107,7 +107,7 @@ Whether to repeat texture along T axis vertically from top to bottom.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 
-Single contained [TextureProperties](../texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
+Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 
 ## Supported File Formats
 
@@ -126,8 +126,8 @@ Any image file format supported by the web browser, but at least:
 
 ### Hints
 
-- Can contain a single [TextureProperties](../texturing/textureproperties/) node.
-- Insert [Shape](../shape/shape/) and [Appearance](../shape/appearance/) nodes before adding texture.
+- Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
+- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - Authors can provide multiple image formats for the same image, with each source address listed separately in the url field.
 - Player support is required for .png and .jpg formats, support is suggested for .gif format. Other image formats are optionally supported.
 - [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images){:target="_blank"}
@@ -139,8 +139,8 @@ Any image file format supported by the web browser, but at least:
 
 ### Warnings
 
-- Bright [Material](../shape/material/) emissiveColor values can wash out some textures.
-- See [ComposedCubeMapTexture](../cubemaptexturing/composedcubemaptexture/) and [TextureBackground](../environmentaleffects/texturebackground/) for special containerField values.
+- Bright [Material](/x_ite/components/shape/material/) emissiveColor values can wash out some textures.
+- See [ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/) and [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) for special containerField values.
 
 ## Example
 

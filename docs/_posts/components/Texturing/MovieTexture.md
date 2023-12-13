@@ -34,7 +34,7 @@ The MovieTexture node belongs to the **Texturing** component and requires at lea
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -58,8 +58,8 @@ Enables/disables node operation.
 
 #### Hints
 
-- Allows author to design when [Inline](../networking/inline/) loading occurs via user interaction, event chains or scripting.
-- Use a separate [LoadSensor](../networking/loadsensor/) node to detect when loading is complete.
+- Allows author to design when [Inline](/x_ite/components/networking/inline/) loading occurs via user interaction, event chains or scripting.
+- Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
@@ -140,7 +140,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
@@ -148,7 +148,7 @@ When *resumeTime* becomes \<= time now, isPaused becomes false and MovieTexture 
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 #### Warning
 
@@ -160,7 +160,7 @@ When time now \>= *pauseTime*, isPaused becomes true and MovieTexture becomes pa
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 #### Warning
 
@@ -172,12 +172,12 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 #### Warnings
 
-- An active [TimeSensor](../time/timesensor/) node ignores set_cycleInterval and set_startTime events.
-- An active [TimeSensor](../time/timesensor/) node ignores set_stopTime event values less than or equal to startTime.
+- An active [TimeSensor](/x_ite/components/time/timesensor/) node ignores set_cycleInterval and set_startTime events.
+- An active [TimeSensor](/x_ite/components/time/timesensor/) node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
 
@@ -233,7 +233,7 @@ Whether to repeat texture along T axis vertically from top to bottom.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 
-Single contained [TextureProperties](../texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
+Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 
 ## Supported File Formats
 
@@ -250,9 +250,9 @@ Any video file format supported by the web browser, but at least:
 
 ### Hints
 
-- Can contain a single [TextureProperties](../texturing/textureproperties/) node.
-- Insert [Shape](../shape/shape/) and [Appearance](../shape/appearance/) nodes before adding texture.
-- Provide a [Viewpoint](../navigation/viewpoint/) that allows a clear view of the MovieTexture so that users can easily see all details.
+- Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
+- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- Provide a [Viewpoint](/x_ite/components/navigation/viewpoint/) that allows a clear view of the MovieTexture so that users can easily see all details.
 - Utilize DEF/USE references for multiple copies of a single MovieTexture video file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
 - Authors can provide multiple video formats for the same video track, with each source address listed separately in the url field.
 - Player support for MPEG-1 video format is required, other formats are optional.
@@ -264,7 +264,7 @@ Any video file format supported by the web browser, but at least:
 
 ### Warning
 
-- MovieTexture has `containerField='texture'` when parent is an [Appearance](../shape/appearance/) node, otherwise `containerField='source'` when parent is a [Sound](../sound/sound/) node.
+- MovieTexture has `containerField='texture'` when parent is an [Appearance](/x_ite/components/shape/appearance/) node, otherwise `containerField='source'` when parent is a [Sound](/x_ite/components/sound/sound/) node.
 
 ## Example
 

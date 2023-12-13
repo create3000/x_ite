@@ -29,7 +29,7 @@ The BoundedPhysicsModel node belongs to the **ParticleSystems** component and re
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -41,7 +41,7 @@ Enables/disables node operation.
 
 ### SFNode [in, out] **geometry** NULL <small>[X3DGeometryNode]</small>
 
-Single contained *geometry* node provides the *geometry* used for each particle when the parent [ParticleSystem](../particlesystems/particlesystem/) node has geometryType=GEOMETRY.
+Single contained *geometry* node provides the *geometry* used for each particle when the parent [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) node has geometryType=GEOMETRY.
 
 #### Hint
 

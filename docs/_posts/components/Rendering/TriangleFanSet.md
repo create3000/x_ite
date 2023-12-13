@@ -30,7 +30,7 @@ The TriangleFanSet node belongs to the **Rendering** component and requires at l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -65,7 +65,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
-Whether [Color](../rendering/color/) or [ColorRGBA](../rendering/colorrgba/) values are applied to each point vertex (true) or to each polygon face (false).
+Whether [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to each point vertex (true) or to each polygon face (false).
 
 #### Hint
 
@@ -74,15 +74,15 @@ Whether [Color](../rendering/color/) or [ColorRGBA](../rendering/colorrgba/) val
 #### Warnings
 
 - The provided value of TriangleFanSet *colorPerVertex* field is ignored and always treated as true.
-- If child [Color](../rendering/color/) or [ColorRGBA](../rendering/colorrgba/) node is not provided, then geometry is rendered using corresponding [Appearance](../shape/appearance/) and material/texture values.
+- If child [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node is not provided, then geometry is rendered using corresponding [Appearance](/x_ite/components/shape/appearance/) and material/texture values.
 
 ### SFBool [ ] **normalPerVertex** TRUE
 
-Whether [Normal](../rendering/normal/) node vector values are applied to each point vertex (true) or to each polygon face (false).
+Whether [Normal](/x_ite/components/rendering/normal/) node vector values are applied to each point vertex (true) or to each polygon face (false).
 
 #### Hint
 
-- If no child [Normal](../rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
+- If no child [Normal](/x_ite/components/rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
 ### MFInt32 [in, out] **fanCount** [ ] <small>[3,∞)</small>
 
@@ -90,7 +90,7 @@ Whether [Normal](../rendering/normal/) node vector values are applied to each po
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 
-Single contained [FloatVertexAttribute](../shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
+Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
 
 #### Hint
 
@@ -98,23 +98,23 @@ Single contained [FloatVertexAttribute](../shaders/floatvertexattribute/) node t
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
 
-Single contained [FogCoordinate](../environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
+Single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Single contained [Color](../rendering/color/) or [ColorRGBA](../rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
 
-Single contained [TextureCoordinate](../texturing/texturecoordinate/), [TextureCoordinateGenerator](../texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](../texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
+Single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
-Single contained [Normal](../rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
 #### Hint
 
-- Useful for special effects. [Normal](../rendering/normal/) vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
+- Useful for special effects. [Normal](/x_ite/components/rendering/normal/) vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
 
 #### Warning
 
@@ -122,14 +122,14 @@ Single contained [Normal](../rendering/normal/) node that can specify perpendicu
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 
-Single contained [Coordinate](../rendering/coordinate/) or [CoordinateDouble](../rendering/coordinatedouble/) node that can specify a list of vertex values.
+Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
 
 ## Advice
 
 ### Hints
 
-- [Color](../rendering/color/), normal and texCoord values are applied in the same order as coord values.
-- Insert a [Shape](../shape/shape/) node before adding geometry or [Appearance](../shape/appearance/).
+- [Color](/x_ite/components/rendering/color/), normal and texCoord values are applied in the same order as coord values.
+- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 
 ## See Also

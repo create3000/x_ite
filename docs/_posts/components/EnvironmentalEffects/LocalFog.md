@@ -31,7 +31,7 @@ The LocalFog node belongs to the **EnvironmentalEffects** component and requires
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -43,7 +43,7 @@ Enables/disables node operation.
 
 ### SFString [in, out] **fogType** "LINEAR" <small>["LINEAR"|"EXPONENTIAL"]</small>
 
-Specifies algorithm for rate of increasing [Fog](../environmentaleffects/fog/), either LINEAR or EXPONENTIAL.
+Specifies algorithm for rate of increasing [Fog](/x_ite/components/environmentaleffects/fog/), either LINEAR or EXPONENTIAL.
 
 #### Hint
 
@@ -55,11 +55,11 @@ Specifies algorithm for rate of increasing [Fog](../environmentaleffects/fog/), 
 
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
 
-[Fog](../environmentaleffects/fog/) *color*.
+[Fog](/x_ite/components/environmentaleffects/fog/) *color*.
 
 #### Hints
 
-- Match [Background](../environmentaleffects/background/) *color* to make objects fade away.
+- Match [Background](/x_ite/components/environmentaleffects/background/) *color* to make objects fade away.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 ### SFFloat [in, out] **visibilityRange** 0 <small>[0,-∞)</small>
@@ -68,7 +68,7 @@ Distance in meters where objects are totally obscured by the fog, using local co
 
 #### Hint
 
-- *visibilityRange* 0 disables [Fog](../environmentaleffects/fog/).
+- *visibilityRange* 0 disables [Fog](/x_ite/components/environmentaleffects/fog/).
 
 ## Advice
 

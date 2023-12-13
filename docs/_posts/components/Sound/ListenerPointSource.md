@@ -31,7 +31,7 @@ The ListenerPointSource node belongs to the **Sound** component and requires at 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -84,7 +84,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Hints
 
-- Functional support requires player support for [Sound](../sound/sound/) component level 3.
+- Functional support requires player support for [Sound](/x_ite/components/sound/sound/) component level 3.
 - [Wikipedia Doppler effect](https://en.wikipedia.org/wiki/Doppler_effect){:target="_blank"}
 
 ### SFFloat [in, out] **interauralDistance** 0 <small>[0,∞)</small>
@@ -101,23 +101,23 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
-When *resumeTime* becomes \<= time now, isPaused becomes false and [AudioClip](../sound/audioclip/) becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When *resumeTime* becomes \<= time now, isPaused becomes false and [AudioClip](/x_ite/components/sound/audioclip/) becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
-When time now \>= *pauseTime*, isPaused becomes true and [AudioClip](../sound/audioclip/) becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= *pauseTime*, isPaused becomes true and [AudioClip](/x_ite/components/sound/audioclip/) becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 ### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
@@ -125,16 +125,16 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](../eventutilities/timetrigger/) triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) touchTime or [TimeTrigger](/x_ite/components/eventutilities/timetrigger/) triggerTime.
 
 #### Warnings
 
-- An active [TimeSensor](../time/timesensor/) node ignores set_cycleInterval and set_startTime events.
-- An active [TimeSensor](../time/timesensor/) node ignores set_stopTime event values less than or equal to startTime.
+- An active [TimeSensor](/x_ite/components/time/timesensor/) node ignores set_cycleInterval and set_startTime events.
+- An active [TimeSensor](/x_ite/components/time/timesensor/) node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
 
-*isPaused* true/false events are sent when [AudioClip](../sound/audioclip/) is paused/resumed.
+*isPaused* true/false events are sent when [AudioClip](/x_ite/components/sound/audioclip/) is paused/resumed.
 
 #### Warning
 
@@ -150,7 +150,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 ### SFTime [out] **elapsedTime**
 
-Current elapsed time since [AudioClip](../sound/audioclip/) activated/running, cumulative in seconds, and not counting any paused time.
+Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activated/running, cumulative in seconds, and not counting any paused time.
 
 #### Hint
 

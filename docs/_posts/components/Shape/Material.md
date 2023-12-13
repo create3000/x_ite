@@ -31,7 +31,7 @@ The Material node belongs to the **Shape** component and requires at least level
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -64,7 +64,7 @@ How much direct, angle-dependent light is reflected from all light sources.
 
 #### Hint
 
-- Only emissiveColor affects [IndexedLineSet](../rendering/indexedlineset/), [LineSet](../rendering/lineset/) and [PointSet](../rendering/pointset/).
+- Only emissiveColor affects [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [LineSet](/x_ite/components/rendering/lineset/) and [PointSet](/x_ite/components/rendering/pointset/).
 
 ### SFString [in, out] **diffuseTextureMapping** ""
 
@@ -112,7 +112,7 @@ How much glowing light is emitted from this object.
 
 - EmissiveColors glow even when all lights are off.
 - Reset diffuseColor from default (.8 .8 .8) to (0 0 0) to avoid washout.
-- Only *emissiveColor* affects [IndexedLineSet](../rendering/indexedlineset/), [LineSet](../rendering/lineset/) and [PointSet](../rendering/pointset/).
+- Only *emissiveColor* affects [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [LineSet](/x_ite/components/rendering/lineset/) and [PointSet](/x_ite/components/rendering/pointset/).
 
 #### Warning
 
@@ -217,7 +217,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 ### Hints
 
-- Insert [Shape](../shape/shape/) and [Appearance](../shape/appearance/) nodes before adding material.
+- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 - [X3D Example Archives, Basic, Universal Media Materials](https://www.web3d.org/x3d/content/examples/Basic/UniversalMediaMaterials){:target="_blank"}

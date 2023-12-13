@@ -93,7 +93,7 @@ sub link_nodes {
       {
          next if $key eq $typeName;
 
-         $line =~ s|(?<!name=')\b$key\b|[$key](../$value/)|g;
+         $line =~ s|(?<!name=')\b$key\b|[$key](/x_ite/components/$value/)|g;
       }
    }
 

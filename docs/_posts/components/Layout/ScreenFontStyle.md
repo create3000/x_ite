@@ -29,7 +29,7 @@ The ScreenFontStyle node belongs to the **Layout** component and requires at lea
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -95,7 +95,7 @@ Pick one of four values for text *style* (PLAIN or BOLD or ITALIC or BOLDITALIC)
 
 #### Hints
 
-- *pointSize* replaces the size field of the [FontStyle](../text/fontstyle/) node.
+- *pointSize* replaces the size field of the [FontStyle](/x_ite/components/text/fontstyle/) node.
 - (X3D version 4.0 ISO.proof draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFFloat [in, out] **spacing** 1 <small>[0,∞)</small>
@@ -166,7 +166,7 @@ It is possible to specify in the *family* field a URL of a custom font file of t
 
 ### Hints
 
-- First add a [Text](../text/text/) node as a parent.
+- First add a [Text](/x_ite/components/text/text/) node as a parent.
 - [Wikipedia](https://en.wikipedia.org/wiki/Font){:target="_blank"}
 
 ## See Also

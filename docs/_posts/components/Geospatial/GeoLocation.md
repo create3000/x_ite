@@ -30,7 +30,7 @@ The GeoLocation node belongs to the **Geospatial** component and requires at lea
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -38,7 +38,7 @@ Information about this node can be contained in a [MetadataBoolean](../core/meta
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 
-Single contained [GeoOrigin](../geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
+Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
 #### Hint
 
@@ -141,7 +141,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 ### Warnings
 
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
-- Avoid having GeoLocation or [GeoTransform](../geospatial/geotransform/) as a parent or ancestor node of each other, since multiple geospatial transformations then occur with unpredictable results.
+- Avoid having GeoLocation or [GeoTransform](/x_ite/components/geospatial/geotransform/) as a parent or ancestor node of each other, since multiple geospatial transformations then occur with unpredictable results.
 
 ## See Also
 

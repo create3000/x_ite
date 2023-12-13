@@ -29,7 +29,7 @@ The BallJoint node belongs to the **RigidBodyPhysics** component and requires at
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -69,11 +69,11 @@ Information about this node can be contained in a [MetadataBoolean](../core/meta
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 
-The *body1* and body2 fields indicate the two [RigidBody](../rigidbodyphysics/rigidbody/) nodes connected by this joint.
+The *body1* and body2 fields indicate the two [RigidBody](/x_ite/components/rigidbodyphysics/rigidbody/) nodes connected by this joint.
 
 ### SFNode [in, out] **body2** NULL <small>[RigidBody]</small>
 
-The body1 and *body2* fields indicate the two [RigidBody](../rigidbodyphysics/rigidbody/) nodes connected by this joint.
+The body1 and *body2* fields indicate the two [RigidBody](/x_ite/components/rigidbodyphysics/rigidbody/) nodes connected by this joint.
 
 ## Advice
 

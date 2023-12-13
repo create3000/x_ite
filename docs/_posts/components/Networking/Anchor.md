@@ -32,7 +32,7 @@ The Anchor node belongs to the **Networking** component and requires at least le
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -52,13 +52,13 @@ The *load* field has no effect, Anchor operation is only triggered by user selec
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
-Address of replacement world, or #ViewpointDEFName within the current scene, or alternate Web resource, activated by the user selecting [Shape](../shape/shape/) geometry within the Anchor children nodes.
+Address of replacement world, or #ViewpointDEFName within the current scene, or alternate Web resource, activated by the user selecting [Shape](/x_ite/components/shape/shape/) geometry within the Anchor children nodes.
 
 #### Hints
 
 - Jump to a world's internal viewpoint by appending viewpoint name (for example, #ViewpointName, someOtherCoolWorld.x3d#GrandTour).
 - Jump to a local viewpoint by only using viewpoint name (for example, #GrandTour).
-- Binding a different [Viewpoint](../navigation/viewpoint/) triggers an isBound event that can initiate other user-arrival reactions via event chains to interpolators or scripts.
+- Binding a different [Viewpoint](/x_ite/components/navigation/viewpoint/) triggers an isBound event that can initiate other user-arrival reactions via event chains to interpolators or scripts.
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in *url* queries with %20 for each blank character.
@@ -148,7 +148,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- Insert a [Shape](../shape/shape/) node before adding geometry or [Appearance](../shape/appearance/).
+- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ## Example

@@ -31,7 +31,7 @@ The TextureTransformMatrix3D node belongs to the **Texturing3D** component and r
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean/), [MetadataDouble](../core/metadatadouble/), [MetadataFloat](../core/metadatafloat/), [MetadataInteger](../core/metadatainteger/), [MetadataString](../core/metadatastring/) or [MetadataSet](../core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -54,7 +54,7 @@ The *mapping* label identifies which texture coordinates and transformations are
 ### Hints
 
 - Order of operations is translation, rotation about center, non-uniform scale about center.
-- Insert [Shape](../shape/shape/) and [Appearance](../shape/appearance/) nodes before adding TextureTransformMatrix3D.
+- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding TextureTransformMatrix3D.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
 
 ### Warnings
