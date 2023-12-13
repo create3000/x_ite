@@ -18,7 +18,7 @@ tags: [glTF, Sample, Viewer]
 	}
 
 	html[data-mode=light] {
-		--list-color: rgba(0, 0, 0, 0.1);
+		--list-color: rgba(0, 0, 0, 0.03);
    }
 }
 
@@ -28,7 +28,7 @@ tags: [glTF, Sample, Viewer]
    }
 
    html:not([data-mode]), html[data-mode=light] {
-      --list-color: rgba(0, 0, 0, 0.1);
+      --list-color: rgba(0, 0, 0, 0.03);
    }
 }
 
