@@ -9,17 +9,17 @@ X_ITE follows the [NPM version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v9.0.0 Released
 
-*Leipzig, 16th October 2023:* We right now released a new version. Unfortunately, in this release images from [ImageTexture](components/texturing/imagetexture) and [MovieTexture](components/texturing/movietexture) are now not flipped at the y-axis anymore, this is now done in the shaders. Custom shaders must be adjusted to reflect these changes. This is a breaking change.
+*Leipzig, 16th October 2023:* We right now released a new version. Unfortunately, in this release images from [ImageTexture](/x_ite/components/texturing/imagetexture) and [MovieTexture](/x_ite/components/texturing/movietexture) are now not flipped at the y-axis anymore, this is now done in the shaders. Custom shaders must be adjusted to reflect these changes. This is a breaking change.
 
 ### New Features
 
-* Implemented a KTX texture loader for [ImageCubeMapTexture](components/cubemaptexturing/imagecubemaptexture), [ImageTexture](components/texturing/imagetexture), and [ImageTexture3D](components/texturing3d/imagetexture3d).
-* [ImageCubeMapTexture](components/cubemaptexturing/imagecubemaptexture) can now load panorama images.
-* Basic implementation of [EnvironmentLight](components/lighting/environmentlight) node.
+* Implemented a KTX texture loader for [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture), [ImageTexture](/x_ite/components/texturing/imagetexture), and [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d).
+* [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture) can now load panorama images.
+* Basic implementation of [EnvironmentLight](/x_ite/components/lighting/environmentlight) node.
 * ES module version of X_ITE named »x_ite.mjs«.
 * Typescript types for IntelliSense.
 * PLY 3d format parser.
-* [TextureProjection component](components/#textureprojection) is now working.
+* [TextureProjection component](/x_ite/components/#textureprojection) is now working.
 
 ## X_ITE v8.10.0 Released
 
