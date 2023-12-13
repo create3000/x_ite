@@ -79,7 +79,7 @@ window .addEventListener ("DOMContentLoaded", () =>
 
 ### application.js
 
-Your browser window environment, where you can do the magic stuff to bring you app alive.
+Your browser window environment, where you can do the magic stuff to bring your app alive.
 
 ```js
 "use strict";
