@@ -35,7 +35,7 @@ All stock browser on **Android** 4.0+ support WebGL and JavaScript ES 6 natively
 iOS has good support since **Safari** on iOS 7+. Simplify your scenes and test them extensively to achieve the best results how you would like it to be.
 <https://www.apple.com/ios/>{:target="_blank"}
 
->**Note:** Any problem with X_ITE in the above browsers should be reported as a bug in X_ITE. See [Report a Bug](report-a-bug).
+>**Note:** Any problem with X_ITE in the above browsers should be reported as a bug in X_ITE. See [Report a Bug](/x_ite/report-a-bug/).
 {: .prompt-info }
 
 We do not support older browsers like Internet Explorer 6-9, Opera 12.1x or Safari 5.1+.

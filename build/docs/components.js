@@ -89,7 +89,7 @@ function updateComponents ()
       {
          const slug = `${component}/${node}` .toLowerCase () .replace (/_/g, "-");
 
-         list += `- [${node}](${slug})\n`;
+         list += `- [${node}](/x_ite/components/${slug}/)\n`;
       }
 
       list += `\n`;

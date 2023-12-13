@@ -726,5 +726,5 @@ main ()
 
 ## See Also
 
-- [ComposedShader](/x_ite/components/shaders/composedshader)
-- [ShaderPart](/x_ite/components/shaders/shaderpart)
+- [ComposedShader](/x_ite/components/shaders/composedshader/)
+- [ShaderPart](/x_ite/components/shaders/shaderpart/)

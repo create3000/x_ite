@@ -154,7 +154,7 @@ The X3D object has several properties, you can use any of the properties below.
 
 #### **X3DConstants**
 
-The X3DConstants object defines values that can be useful for scripting. See also [Constants Services](reference/constants-services).
+The X3DConstants object defines values that can be useful for scripting. See also [Constants Services](/x_ite/reference/constants-services/).
 
 ```js
 function foo (node)
@@ -186,7 +186,7 @@ function foo (node)
 
 #### **X3DFields**
 
-All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be created using the object as constructor. See also [Field Services and Objects](reference/field-services-and-objects).
+All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be created using the object as constructor. See also [Field Services and Objects](/x_ite/reference/field-services-and-objects/).
 
 >**Note:** Scalar objects like SFBool, SFDouble, SFFloat, SFInt32, SFString, and SFTime have no constructor, just use the built-in JavaScript types Boolean, Number, and String.
 {: .prompt-info }
@@ -202,7 +202,7 @@ const
 
 ## Function Reference
 
-A complete function reference for the X3DBrowser object and all other X3D JavaScript objects can be found in [ECMAScript Object and Function Definitions](reference/ecmascript-object-and-function-definitions).
+A complete function reference for the X3DBrowser object and all other X3D JavaScript objects can be found in [ECMAScript Object and Function Definitions](/x_ite/reference/ecmascript-object-and-function-definitions/).
 
 ## Example
 

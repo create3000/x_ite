@@ -28,7 +28,7 @@ X_ITE supports custom shaders, clip planes, reflection mapping, script nodes, pr
 >**Tip:** X_ITE runs best in fresh installs of Google Chrome, Chromium, Firefox, Safari, Opera, and Microsoft Edge. X_ITE uses the latest JavaScript standard, but is also compatible with older browser, and is available both on your desktop computer and on your modern smart-phone.
 {: .prompt-tip }
 
-If you ever get into trouble, please [report a bug](report-a-bug). If you have any questions or need help please [open a new issue](report-a-bug){:target="_blank"}.
+If you ever get into trouble, please [report a bug](/x_ite/report-a-bug/). If you have any questions or need help please [open a new issue](/x_ite/report-a-bug/){:target="_blank"}.
 
 ### Become a Patreon of X_ITE
 
@@ -620,7 +620,7 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_it
 $ npm install x_ite
 ```
 
-Maybe you are curious now [how to use X_ITE with Electron](how-to-use-x-ite-with-electron)?
+Maybe you are curious now [how to use X_ITE with Electron](/x_ite/how-to-use-x-ite-with-electron/)?
 
 ## Embedding X_ITE within a Web Page
 
@@ -647,14 +647,14 @@ x3d-canvas {
 </html>
 ```
 
-To get X_ITE working you need to include the JavaScript file »x_ite.min.js«. Once X_ITE has loaded successfully, a new HTML element \<x3d-canvas\> will be available on your page. You can style the \<x3d-canvas\> element with CSS just like any other HTML element, and you can place it anywhere in the DOM tree. Once the scene is displayed, you may wonder [how to navigate in the scene](tutorials/how-to-navigate-in-a-scene).
+To get X_ITE working you need to include the JavaScript file »x_ite.min.js«. Once X_ITE has loaded successfully, a new HTML element \<x3d-canvas\> will be available on your page. You can style the \<x3d-canvas\> element with CSS just like any other HTML element, and you can place it anywhere in the DOM tree. Once the scene is displayed, you may wonder [how to navigate in the scene](/x_ite/tutorials/how-to-navigate-in-a-scene/).
 
->**Tip:** To test a page locally on your desktop computer, [setup a localhost server](setup-a-localhost-server) to load files via *src* attribute or Inline node, or [directly combine HTML with X3D](dom-integration).
+>**Tip:** To test a page locally on your desktop computer, [setup a localhost server](/x_ite/setup-a-localhost-server/) to load files via *src* attribute or Inline node, or [directly combine HTML with X3D](/x_ite/dom-integration/).
 {: .prompt-tip }
 
 ### Supported File Formats
 
-X_ITE can load several file formats, either directly as the source of the \<x3d-canvas\> element or as the source of an Inline node, as well as using API methods of the [Browser object](reference/browser-services.md). Foreign formats such as glTF are converted internally to X3D and then made available to the scene graph.
+X_ITE can load several file formats, either directly as the source of the \<x3d-canvas\> element or as the source of an Inline node, as well as using API methods of the [Browser object](/x_ite/reference/browser-services/). Foreign formats such as glTF are converted internally to X3D and then made available to the scene graph.
 
 | Encoding         | File Extension | MIME Type       |
 |------------------|----------------|-----------------|
@@ -671,7 +671,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 >**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 {: .prompt-tip }
 
-If you have an own web-server see [how to configure your web server](how-to-configure-your-web-server). If you are looking for an online X3D file format converter [see here](laboratory/x3d-file-converter).
+If you have an own web-server see [how to configure your web server](/x_ite/how-to-configure-your-web-server/). If you are looking for an online X3D file format converter [see here](/x_ite/laboratory/x3d-file-converter/).
 
 ### Fallback Content
 
@@ -726,7 +726,7 @@ A Boolean value (`true` or `false`) to indicate whether additional debug message
 
 ### multisampling
 
-An Integer value that specifies the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of anti-aliasing. Check the [rendering property](reference/browser-services#rendering-properties) »MaxSamples«, which is browser dependent.
+An Integer value that specifies the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of anti-aliasing. Check the [rendering property](/x_ite/reference/browser-services#rendering-properties/) »MaxSamples«, which is browser dependent.
 
 ### notifications
 
@@ -782,7 +782,7 @@ An MFString value of URLs to load on page load. If no *url* attribute is specifi
 
 ### More Options
 
-More options can be adjusted using the [Browser object](reference/browser-services#browser-object) and [Browser Options](reference/browser-services#browser-options) for scene specific adjustments.
+More options can be adjusted using the [Browser object](/x_ite/reference/browser-services#browser-object/) and [Browser Options](/x_ite/reference/browser-services#browser-options/) for scene specific adjustments.
 
 ## Keyboard Shortcuts
 
