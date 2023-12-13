@@ -1,0 +1,52 @@
+---
+layout: page
+---
+<style>
+#sidebar,
+#panel-wrapper {
+   display: none !important;
+}
+
+@media all and (max-width: 849px) {
+   #sidebar,
+   #panel-wrapper {
+      display: block !important;
+   }
+}
+
+#topbar-wrapper {
+   left: 0;
+}
+
+#topbar {
+   margin: 0;
+   max-width: unset;
+}
+
+#search-wrapper {
+   margin: 0;
+}
+
+#main-wrapper,
+footer {
+   margin: 0;
+}
+
+#main {
+   margin: 0;
+   max-width: unset;
+}
+
+#core-wrapper {
+   flex: 0 0 100%;
+   max-width: unset;
+}
+
+footer > .container {
+   padding: 0 !important;
+   max-width: unset;
+}
+</style>
+
+{% include scripts.html %}
+{{ content }}

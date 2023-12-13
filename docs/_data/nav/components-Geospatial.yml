@@ -1,0 +1,24 @@
+- title: "Geospatial"
+  children:
+    - title: "GeoCoordinate"
+      url: /components/geospatial/geocoordinate
+    - title: "GeoElevationGrid"
+      url: /components/geospatial/geoelevationgrid
+    - title: "GeoLOD"
+      url: /components/geospatial/geolod
+    - title: "GeoLocation"
+      url: /components/geospatial/geolocation
+    - title: "GeoMetadata"
+      url: /components/geospatial/geometadata
+    - title: "GeoOrigin"
+      url: /components/geospatial/geoorigin
+    - title: "GeoPositionInterpolator"
+      url: /components/geospatial/geopositioninterpolator
+    - title: "GeoProximitySensor"
+      url: /components/geospatial/geoproximitysensor
+    - title: "GeoTouchSensor"
+      url: /components/geospatial/geotouchsensor
+    - title: "GeoTransform"
+      url: /components/geospatial/geotransform
+    - title: "GeoViewpoint"
+      url: /components/geospatial/geoviewpoint

@@ -1,0 +1,18 @@
+- title: "X3D JavaScript Reference"
+  children:
+    - title: "Script Node Authoring Interface"
+      url: /reference/
+    - title: "ECMAScript Object and Function Definitions"
+      url: /reference/ecmascript-object-and-function-definitions
+    - title: "Browser Services"
+      url: /reference/browser-services
+    - title: "Scene Services"
+      url: /reference/scene-services
+    - title: "Field Services and Objects"
+      url: /reference/field-services-and-objects
+    - title: "Route Services"
+      url: /reference/route-services
+    - title: "Prototype Services"
+      url: /reference/prototype-services
+    - title: "Constants Services"
+      url: /reference/constants-services

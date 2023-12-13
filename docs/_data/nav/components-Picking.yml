@@ -1,0 +1,12 @@
+- title: "Picking"
+  children:
+    - title: "LinePickSensor"
+      url: /components/picking/linepicksensor
+    - title: "PickableGroup"
+      url: /components/picking/pickablegroup
+    - title: "PointPickSensor"
+      url: /components/picking/pointpicksensor
+    - title: "PrimitivePickSensor"
+      url: /components/picking/primitivepicksensor
+    - title: "VolumePickSensor"
+      url: /components/picking/volumepicksensor

@@ -1,0 +1,16 @@
+- title: "Core"
+  children:
+    - title: "MetadataBoolean"
+      url: /components/core/metadataboolean
+    - title: "MetadataDouble"
+      url: /components/core/metadatadouble
+    - title: "MetadataFloat"
+      url: /components/core/metadatafloat
+    - title: "MetadataInteger"
+      url: /components/core/metadatainteger
+    - title: "MetadataSet"
+      url: /components/core/metadataset
+    - title: "MetadataString"
+      url: /components/core/metadatastring
+    - title: "WorldInfo"
+      url: /components/core/worldinfo
