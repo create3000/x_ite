@@ -126,6 +126,7 @@ const ibl_files = [
    "GlassVaseFlowers",
    "Iridescence",
    "Iridescent",
+   "IORTestGrid",
    "MetalRoughSpheres",
    "MosquitoInAmber",
    "NegativeScaleTest",
