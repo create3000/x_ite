@@ -734,7 +734,7 @@ async function loadURL (filename, event)
          $("<br>") .appendTo ($("#animations"));
       }
 
-      $("#animations") .show ();
+      $("#animations") .show () .find ("input") .first () .trigger ("click");
    }
    catch
    { }
