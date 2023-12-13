@@ -140,7 +140,7 @@ x3d-canvas {
     <x3d-canvas>
 ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd ()}
     </x3d-canvas>
-    <p>Made with <a href="https://create3000.github.io/x_ite/laboratory/x3d-file-converter" target="_blank">X_ITE Online File Format Converter.</a></p>
+    <p>Made with <a href="https://create3000.github.io/x_ite/laboratory/x3d-file-converter/" target="_blank">X_ITE Online File Format Converter.</a></p>
   </body>
 </html>`
 }
