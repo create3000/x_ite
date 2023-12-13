@@ -80,4 +80,4 @@ Some words about optimizing a scene
 
 ## Don't Compromise on Development Experience
 
-Use the full power of the modern X3D ecosystem – Titania’s got you covered! Enjoy the intelligent build system, powerful navigation and support for JavaScript, on-the-fly error detection, integrated Route Graph Editor, and X_ITE compatibility.
+Use the full power of the modern X3D ecosystem – Our [editor's](/sunrize/) got you covered! Enjoy the intelligent build system, powerful navigation and support for JavaScript, on-the-fly error detection, integrated Route Graph Editor, and X_ITE compatibility.
