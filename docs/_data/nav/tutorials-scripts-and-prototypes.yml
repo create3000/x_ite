@@ -1,12 +1,12 @@
 - title: "Scripts and Prototypes"
   children:
     - title: "Controlling Detail"
-      url: /tutorials/controlling-detail
+      url: /tutorials/controlling-detail/
     - title: "Introducing Script Use"
-      url: /tutorials/introducing-script-use
+      url: /tutorials/introducing-script-use/
     - title: "Writing Program Scripts with ECMAScript"
-      url: /tutorials/writing-program-scripts-with-ecmascript
+      url: /tutorials/writing-program-scripts-with-ecmascript/
     - title: "Creating New Node Types"
-      url: /tutorials/creating-new-node-types
+      url: /tutorials/creating-new-node-types/
     - title: "Providing Information About Your World"
-      url: /tutorials/providing-information-about-your-world
+      url: /tutorials/providing-information-about-your-world/
