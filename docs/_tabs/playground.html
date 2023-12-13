@@ -378,12 +378,12 @@ window.addEventListener('DOMContentLoaded', () =>
       }
 
       console .log   = output (console .log,   "log");
-      console .info  = output (console .info,  "info");
-      console .warn  = output (console .warn,  "warn");
-      console .error = output (console .error, "error");
+      console .info  = output (console .info,  ["info", "blue"]);
+      console .warn  = output (console .warn,  ["warn", "yellow"]);
+      console .error = output (console .error, ["error", "red"]);
       console .debug = output (console .debug, "debug");
 
-      console .log (X3D .getBrowser () .getWelcomeMessage ());
+      console .info (X3D .getBrowser () .getWelcomeMessage ());
    })();
 
 })(jQuery);
