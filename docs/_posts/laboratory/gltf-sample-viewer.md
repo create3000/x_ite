@@ -71,7 +71,7 @@ x3d-canvas {
    bottom: 5px;
    min-width: 200px;
    padding: 10px 20px;
-   background-color: var(--body-bg);
+   background-color: var(--main-bg);
    border-bottom: 5px solid var(--text-color);
 }
 
