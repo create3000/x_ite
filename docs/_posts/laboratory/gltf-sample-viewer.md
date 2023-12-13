@@ -6,22 +6,20 @@ categories: [Laboratory]
 tags: [glTF, Sample, Viewer]
 ---
 <style>
-#main {
+.container,
+main.px-md-4,
+article.px-1,
+.content,
+#tail-wrapper.px-md-4.col-xl-9,
+footer {
    padding: 0 !important;
-}
-
-#main > .row {
-   height: 100%;
-}
-
-#core-wrapper {
-   padding: 0 !important;
-}
-
-.post, .post-content {
    margin: 0 !important;
-   padding: 0 !important;
-   height: 100%;
+   width: 100% !important;
+   max-width: 100% !important;
+}
+
+main.col-lg-11 {
+   flex: 0 0 100% !important;
 }
 
 .dynamic-title {
@@ -75,7 +73,7 @@ tags: [glTF, Sample, Viewer]
    color: var(--h2-color);
 }
 
-.post x3d-canvas {
+x3d-canvas {
    display: block;
    width: 100%;
    height: 100%;
@@ -121,6 +119,10 @@ tags: [glTF, Sample, Viewer]
 
 <pre style="display: none;">
 <script>
+window.addEventListener('DOMContentLoaded', () =>
+{
+(($) =>
+{
 // EnvironmentLight
 
 const ibl_files = [
@@ -793,5 +795,8 @@ createList ("glTF Draco Sample Models",    draco);
 createList ("glTF Embedded Sample Models", embedded);
 createList ("glTF IBL Sample Models",      ibl);
 createList ("glTF KTX Sample Models",      ktx);
+
+})(jQuery);
+});
 </script>
 </pre>

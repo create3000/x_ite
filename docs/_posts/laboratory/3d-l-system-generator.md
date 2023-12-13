@@ -6,8 +6,28 @@ categories: [Laboratory]
 tags: [3D, L-System, Generator]
 ---
 <style>
-.row, .post, .post-content {
-   min-height: 100%;
+.container,
+main.px-md-4,
+article.px-1,
+.content,
+#tail-wrapper.px-md-4.col-xl-9,
+footer {
+   padding: 0 !important;
+   margin: 0 !important;
+   width: 100% !important;
+   max-width: 100% !important;
+}
+
+.row {
+   margin: 0 2rem !important;
+}
+
+main.col-lg-11 {
+   flex: 0 0 100% !important;
+}
+
+.dynamic-title {
+   display: none;
 }
 
 /* table */
@@ -19,17 +39,17 @@ table {
 
 /* Canvas */
 
-.post x3d-canvas {
+x3d-canvas {
    height: 60vh;
    width: 100%;
    aspect-ratio: unset;
 }
 </style>
 
-<script src="https://create3000.github.io/media/laboratory/l-system/FileSaver.js-2.0.0/dist/FileSaver.min.js"></script>
+<script defer src="https://create3000.github.io/media/laboratory/l-system/FileSaver.js-2.0.0/dist/FileSaver.min.js"></script>
 
 <link rel="stylesheet" href="https://create3000.github.io/media/laboratory/l-system/Huebee/huebee.css">
-<script src="https://create3000.github.io/media/laboratory/l-system/Huebee/huebee.pkgd.min.js"></script>
+<script defer src="https://create3000.github.io/media/laboratory/l-system/Huebee/huebee.pkgd.min.js"></script>
 
 <link rel="stylesheet" href="https://create3000.github.io/media/laboratory/l-system/style.css">
 <script type="module" src="https://create3000.github.io/media/laboratory/l-system/l-system.mjs"></script>
