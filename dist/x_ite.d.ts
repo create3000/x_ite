@@ -13,10 +13,22 @@ declare const X3D: X3D;
  */
 interface X3D
 {
+   /**
+    * There is the X3D object which is globally available, it expects one function handler that is called when the browsers (\<x3d-canvas\> elements) are ready, and a second function handler, that is called if an error occurred. These two arguments are optional. The return value of the X3D function is a Promise, which can be used instead of the arguments.
+    */
    (callback?: () => void, fallback?: (error: Error) => void): Promise <void>;
 
+   /**
+    * In X_ITE's case, the `X3D` function object is the main entry function. If you need to use another JavaScript library alongside X_ITE, return control of the `X3D` function object back to the other library with a call to `X3D .noConflict ()`. Old references of `X3D` function object are saved during X_ITE initialization; `X3D .noConflict ()` simply restores them. The return value is the `X3D` function object itself.
+    */
    noConflict (): X3D;
+   /**
+    * Creates a new x3d-canvas DOM element, initializes it and returns it. Throws an exception if the browser object cannot be created.
+    */
    createBrowser (): X3DCanvasElement;
+   /**
+    * The selector argument must be a string containing a valid CSS selector expression to match elements against, or a valid X3DCanvasElement. If no selector was given, »x3d-canvas« is used as selector string. The return value is the appropriate X3DBrowser object.
+    */
    getBrowser (selector?: string | X3DCanvasElement): X3DBrowser;
 
    readonly X3DConstants: X3DConstants;
@@ -145,13 +157,21 @@ declare class X3DBrowser
     */
    description: string;
    /**
-    * The property value cannot be changed, but the properties of the ProfileInfoArray can be.
+    * Returns the list of all profiles that are supported by this browser.
     */
    readonly supportedProfiles: ProfileInfoArray;
    /**
-    * The property value cannot be changed, but the properties of the ComponentInfoArray can be.
+    * Returns a list of all components that are supported by this browser.
     */
    readonly supportedComponents: ComponentInfoArray;
+   /**
+    * Returns a list of all concrete node classes that are supported by this browser.
+    */
+   readonly concreteNodes: ConcreteNodesArray;
+   /**
+    * Returns a list of all abstract node classes that are supported by this browser.
+    */
+   readonly abstractNodes: AbstractNodesArray;
    /**
     * A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
     */
@@ -433,6 +453,10 @@ declare class X3DScene extends X3DExecutionContext
     * When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
     */
    rootNodes: MFNode;
+   /**
+    * A reference to the ExportedNodesArray object used by this execution context. This property is read only.
+    */
+   readonly exportedNodes: ExportedNodesArray;
 
    /**
     * Returns the metadata values array associated with *name*.
@@ -537,6 +561,14 @@ declare class X3DExecutionContext
     */
    readonly units: UnitInfoArray;
    /**
+    * A reference to the NamedNodesArray object used by this execution context. This property is read only.
+    */
+   readonly namedNodes: NamedNodesArray;
+   /**
+    * A reference to the ImportedNodesArray object used by this execution context. This property is read only.
+    */
+   readonly importedNodes: ImportedNodesArray;
+   /**
     * When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
     */
    readonly rootNodes: MFNode;
@@ -603,6 +635,61 @@ declare class X3DExecutionContext
    deleteRoute (route: X3DRoute): void;
 }
 
+/**
+ * ConcreteNodesArray is an object that represents an array of classes derived from X3DNode. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *concreteNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
+declare class ConcreteNodesArray extends X3DInfoArray <X3DConcreteNode> { }
+
+/**
+ * The X3DConcreteNode interface defines an interface for concrete node types, it extends the X3DAbstractNode interface. The object consists solely of read-only properties. It does not define any additional functions.
+ */
+interface X3DConcreteNode extends X3DAbstractNode
+{
+   /**
+    * The default container field name for this node. This property is read only.
+    */
+   static readonly containerField: string;
+   /**
+    * Returns an array with two strings defining the first version and last version where this node is specified. This property is read only.
+    */
+   static readonly specificationRange:
+   {
+      readonly from: string,
+      readonly to: string,
+   };
+   /**
+    * Returns a list of fields defined for the SFNode object.
+    */
+   static readonly fieldDefinitions: FieldDefinitionArray;
+}
+
+/**
+ * AbstractNodesArray is an object that represents an array of classes derived from X3DNode. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *abstractNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
+declare class AbstractNodesArray extends X3DInfoArray <X3DAbstractNode> { }
+
+/**
+ * The X3DAbstractNode interface defines an interface for concrete node types. The object consists solely of read-only properties. It does not define any additional functions.
+ */
+interface X3DAbstractNode
+{
+   /**
+    * The node type name for this class. This property is read only.
+    */
+   static readonly typeName: string;
+   /**
+    * Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read only.
+    */
+   static readonly componentInfo:
+   {
+      readonly name: string,
+      readonly level: number,
+   };
+}
+
+/**
+ * ProfileInfoArray is an object that represents an array of ProfileInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *profileInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
 declare class ProfileInfoArray extends X3DInfoArray <ProfileInfo> { }
 
 /**
@@ -628,6 +715,9 @@ declare class ProfileInfo
    readonly components: ComponentInfoArray
 }
 
+/**
+ * ComponentInfoArray is an object that represents an array of ComponentInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *componentInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
 declare class ComponentInfoArray extends X3DInfoArray <ComponentInfo> { }
 
 /**
@@ -653,6 +743,9 @@ declare class ComponentInfo
    readonly providerURL: string;
 }
 
+/**
+ * UnitInfoArray is an object that represents an array of UnitInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *unitInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
 declare class UnitInfoArray extends X3DInfoArray <UnitInfo> { }
 
 /**
@@ -674,6 +767,62 @@ declare class UnitInfo
    readonly conversionFactor: number;
 }
 
+/**
+ * NamedNodesArray is an object that represents an array of SFNode objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *namedNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
+declare class NamedNodesArray extends X3DInfoArray <SFNode> { }
+
+/**
+ * ImportedNodesArray is an object that represents an array of X3DImportedNode objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *importedNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
+declare class ImportedNodesArray extends X3DInfoArray <X3DImportedNode> { }
+
+/**
+ * The X3DImportedNode object stores information about a particular import declaration. The object consists solely of read-only properties. It does not define any additional functions.
+ */
+class X3DImportedNode
+{
+   /**
+    * The SFNode object of the Inline node. This property is read only.
+    */
+   readonly inlineNode: SFNode;
+   /**
+    * A string of the exported name. This property is read only.
+    */
+   readonly exportedName: string;
+   /**
+    * The SFNode object of the exported node. This property is read only.
+    */
+   readonly exportedNode: SFNode;
+   /**
+    * A string of the imported name. This property is read only.
+    */
+   readonly importedName: string;
+}
+
+/**
+ * ExportedNodesArray is an object that represents an array of X3DExportedNode objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *exportedNodesArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
+declare class ExportedNodesArray extends X3DInfoArray <X3DExportedNode> { }
+
+/**
+ * The X3DExportedNode object stores information about a particular export declaration. The object consists solely of read-only properties. It does not define any additional functions.
+ */
+class X3DExportedNode
+{
+   /**
+    * A string of the exported name. This property is read only.
+    */
+   readonly exportedName: string;
+   /**
+    * The SFNode object of the corresponding node. This property is read only.
+    */
+   readonly localNode: SFNode;
+}
+
+/**
+ * ProtoDeclarationArray is an object that represents an array of X3DProtoDeclaration objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *protoDeclarationArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
 declare class ProtoDeclarationArray extends X3DInfoArray <X3DProtoDeclaration> { }
 
 /**
@@ -718,6 +867,9 @@ declare class X3DProtoDeclaration
    toJSONString (options?: ToStringOptions): string;
 }
 
+/**
+ * ExternProtoDeclarationArray is an object that represents an array of X3DExternProtoDeclaration objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *externProtoDeclarationArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
 declare class ExternProtoDeclarationArray extends X3DInfoArray <X3DExternProtoDeclaration> { }
 
 /**
@@ -774,6 +926,9 @@ declare class X3DExternProtoDeclaration
    toJSONString (options?: ToStringOptions): string;
 }
 
+/**
+ * RouteArray is an object that represents an array of X3DRoute objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *routeArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+ */
 declare class RouteArray extends X3DInfoArray <X3DRoute> { }
 
 /**
@@ -1239,6 +1394,9 @@ interface X3DConstants
    // ABSTRACT NODE TYPES CONSTANTS END
 }
 
+/**
+ * FieldDefinitionArray is an object that represents an array of X3DFieldDefinition objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *fieldDefinitionArrayName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array).
+ */
 declare class FieldDefinitionArray extends X3DInfoArray <X3DFieldDefinition> { }
 
 /**
@@ -1309,6 +1467,9 @@ declare class X3DField
    dispose (): void;
 }
 
+/**
+ * The SFBool object corresponds to an X3D SFBool field.
+ */
 declare class SFBool extends X3DField
 {
    static readonly typeName: "SFBool";
@@ -1419,6 +1580,9 @@ declare class SFColorRGBA extends X3DField
    lerp (destination: SFColor, t: number): SFColorRGBA;
 }
 
+/**
+ * The SFDouble object corresponds to an X3D SFDouble field.
+ */
 declare class SFDouble extends X3DField
 {
    static readonly typeName: "SFDouble";
@@ -1429,6 +1593,9 @@ declare class SFDouble extends X3DField
    valueOf (): number;
 }
 
+/**
+ * The SFFloat object corresponds to an X3D SFFloat field.
+ */
 declare class SFFloat extends X3DField
 {
    static readonly typeName: "SFFloat";
@@ -1486,6 +1653,9 @@ declare class SFImage extends X3DField
    [Symbol .iterator](): IterableIterator <unknown>;
 }
 
+/**
+ * The SFInt32 object corresponds to an X3D SFInt32 field.
+ */
 declare class SFInt32 extends X3DField
 {
    static readonly typeName: "SFInt32";
@@ -1869,6 +2039,9 @@ declare class SFRotation extends X3DField
    slerp (destination: SFRotation, t: number): SFRotation;
 }
 
+/**
+ * The SFString object corresponds to an X3D SFString field.
+ */
 declare class SFString extends X3DField
 {
    static readonly typeName: "SFString";
@@ -1881,6 +2054,9 @@ declare class SFString extends X3DField
    valueOf (): string;
 }
 
+/**
+ * The SFTime object corresponds to an X3D SFTime field.
+ */
 declare class SFTime extends X3DField
 {
    static readonly typeName: "SFTime";
