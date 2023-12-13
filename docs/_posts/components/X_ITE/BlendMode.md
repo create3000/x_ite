@@ -100,4 +100,4 @@ Specifies the alpha blend equation, how the alpha component of the source and de
 
 ## See Also
 
-- [X3D Visual Blend Mode Online Editor](/x_ite/laboratory/x3d-visual-blend-mode-editor)
+- [X3D Visual Blend Mode Online Editor](/x_ite/laboratory/x3d-visual-blend-mode-editor/)
