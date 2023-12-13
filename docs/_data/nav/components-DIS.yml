@@ -1,14 +1,14 @@
 - title: "DIS"
   children:
     - title: "DISEntityManager"
-      url: /components/dis/disentitymanager
+      url: /components/dis/disentitymanager/
     - title: "DISEntityTypeMapping"
-      url: /components/dis/disentitytypemapping
+      url: /components/dis/disentitytypemapping/
     - title: "EspduTransform"
-      url: /components/dis/espdutransform
+      url: /components/dis/espdutransform/
     - title: "ReceiverPdu"
-      url: /components/dis/receiverpdu
+      url: /components/dis/receiverpdu/
     - title: "SignalPdu"
-      url: /components/dis/signalpdu
+      url: /components/dis/signalpdu/
     - title: "TransmitterPdu"
-      url: /components/dis/transmitterpdu
+      url: /components/dis/transmitterpdu/

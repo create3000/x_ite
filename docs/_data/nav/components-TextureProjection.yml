@@ -1,6 +1,6 @@
 - title: "TextureProjection"
   children:
     - title: "TextureProjector"
-      url: /components/textureprojection/textureprojector
+      url: /components/textureprojection/textureprojector/
     - title: "TextureProjectorParallel"
-      url: /components/textureprojection/textureprojectorparallel
+      url: /components/textureprojection/textureprojectorparallel/

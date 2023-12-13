@@ -1,12 +1,12 @@
 - title: "EnvironmentalEffects"
   children:
     - title: "Background"
-      url: /components/environmentaleffects/background
+      url: /components/environmentaleffects/background/
     - title: "Fog"
-      url: /components/environmentaleffects/fog
+      url: /components/environmentaleffects/fog/
     - title: "FogCoordinate"
-      url: /components/environmentaleffects/fogcoordinate
+      url: /components/environmentaleffects/fogcoordinate/
     - title: "LocalFog"
-      url: /components/environmentaleffects/localfog
+      url: /components/environmentaleffects/localfog/
     - title: "TextureBackground"
-      url: /components/environmentaleffects/texturebackground
+      url: /components/environmentaleffects/texturebackground/

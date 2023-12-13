@@ -1,6 +1,6 @@
 - title: "X_ITE"
   children:
     - title: "BlendMode"
-      url: /components/x-ite/blendmode
+      url: /components/x-ite/blendmode/
     - title: "DepthMode"
-      url: /components/x-ite/depthmode
+      url: /components/x-ite/depthmode/

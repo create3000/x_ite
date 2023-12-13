@@ -1,4 +1,4 @@
 - title: "Time"
   children:
     - title: "TimeSensor"
-      url: /components/time/timesensor
+      url: /components/time/timesensor/

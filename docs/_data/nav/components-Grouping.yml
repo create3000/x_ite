@@ -1,10 +1,10 @@
 - title: "Grouping"
   children:
     - title: "Group"
-      url: /components/grouping/group
+      url: /components/grouping/group/
     - title: "StaticGroup"
-      url: /components/grouping/staticgroup
+      url: /components/grouping/staticgroup/
     - title: "Switch"
-      url: /components/grouping/switch
+      url: /components/grouping/switch/
     - title: "Transform"
-      url: /components/grouping/transform
+      url: /components/grouping/transform/

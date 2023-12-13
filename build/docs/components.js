@@ -68,7 +68,7 @@ function updateNav ()
          const slug = `${component}/${node}` .toLowerCase () .replace (/_/g, "-");
 
          text += `    - title: "${node}"\n`;
-         text += `      url: /components/${slug}\n`;
+         text += `      url: /components/${slug}/\n`;
       }
 
       const yml = path .resolve (nav, `components-${component}.yml`);
