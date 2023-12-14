@@ -12,31 +12,39 @@ To enjoy the best and most secure experience, we recommend you keep your browser
 
 ## Desktop
 
-Since April 2016 **Chrome** supports all WebGL and JavaScript ES 6 features required by X_ITE. We support the current version and the previous version of Chrome, although X_ITE also runs fine in older versions.
-<https://www.google.com/chrome>{:target="_blank"}
+![Chrome Icon](/assets/img/browsers/chrome.png){: .left }
+Since April 2016 **Chrome** supports all WebGL and JavaScript ES 6 features required by X_ITE. We support the current version and the previous version of Chrome, although X_ITE also runs fine in older versions. <https://www.google.com/chrome>{:target="_blank"}
+{: .clear }
 
-**Firefox** as the first browser that supports everything X_ITE needs and is extensively tested since years. We have full support for Firefox.
-<https://www.mozilla.org/firefox/products/>{:target="_blank"}
+![Firefox Icon](/assets/img/browsers/firefox.png){: .left }
+**Firefox** as the first browser that supports everything X_ITE needs and is extensively tested since years. We have full support for Firefox. <https://www.mozilla.org/firefox/products/>{:target="_blank"}
+{: .clear }
 
-**Safari** has excellent support for WebGL and JavaScript ES 6 and is as much popular as other browsers especially on MacOS X. Keep your Mac up to date to have the best experience we can give.
-<https://www.apple.com/safari/>{:target="_blank"}
+![Edge Icon](/assets/img/browsers/edge.png){: .left }
+Starting with Windows 10 X_ITE runs fine in **Microsoft Edge** and is fully supported. Microsoft Edge provides everything X_ITE needs to give you the best performance. <https://www.microsoft.com/windows/microsoft-edge>{:target="_blank"}
+{: .clear }
 
-**Opera** uses the same rendering engine used by Safari and Chrome and is therefore fully supported since April 2016. Always use the latest version of Opera to make your Internet experience more secure and enjoyable.
-<https://www.opera.com/>{:target="_blank"}
+![Opera Icon](/assets/img/browsers/opera.png){: .left }
+**Opera** uses the same rendering engine used by Safari and Chrome and is therefore fully supported since April 2016. Always use the latest version of Opera to make your Internet experience more secure and enjoyable. <https://www.opera.com/>{:target="_blank"}
+{: .clear }
 
-Starting with Windows 10 X_ITE runs fine in **Microsoft Edge** and is fully supported. Microsoft Edge provides everything X_ITE needs to give you the best performance.
-<https://www.microsoft.com/windows/microsoft-edge>{:target="_blank"}
+![Safari Icon](/assets/img/browsers/safari.png){: .left }
+**Safari** has excellent support for WebGL and JavaScript ES 6 and is as much popular as other browsers especially on MacOS X. Keep your Mac up to date to have the best experience we can give. <https://www.apple.com/safari/>{:target="_blank"}
+{: .clear }
 
 ## Mobile
+{: .clear }
 
-All stock browser on **Android** 4.0+ support WebGL and JavaScript ES 6 natively. Always keep in mind to keep your files small in size and always consider to optimize for performance.
-<https://www.android.com/>{:target="_blank"}
+![Adroid Icon](/assets/img/browsers/android.png){: .left }
+All stock browser on **Android** 4.0+ support WebGL and JavaScript ES 6 natively. Always keep in mind to keep your files small in size and always consider to optimize for performance. <https://www.android.com/>{:target="_blank"}
+{: .clear }
 
-iOS has good support since **Safari** on iOS 7+. Simplify your scenes and test them extensively to achieve the best results how you would like it to be.
-<https://www.apple.com/ios/>{:target="_blank"}
+![iOS Icon](/assets/img/browsers/ios.png){: .left }
+iOS has good support since **Safari** on iOS 7+. Simplify your scenes and test them extensively to achieve the best results how you would like it to be. <https://www.apple.com/ios/>{:target="_blank"}
+{: .clear }
 
 >**Note:** Any problem with X_ITE in the above browsers should be reported as a bug in X_ITE. See [Report a Bug](/x_ite/report-a-bug/).
-{: .prompt-info }
+{: .prompt-info .clear }
 
 We do not support older browsers like Internet Explorer 6-9, Opera 12.1x or Safari 5.1+.
 

@@ -1,7 +1,7 @@
 ---
 ---
 
-@import 'main';
+@import "main";
 
 /* append your custom style below */
 
@@ -67,12 +67,24 @@
 
 /* append your custom style below */
 
-#topbar-title {
-  text-transform: uppercase;
+.red {
+  color: var(--system-red) !important;
 }
 
-small, .small {
-  font-size: 60%;
+.green {
+  color: var(--system-green) !important;
+}
+
+.blue {
+  color: var(--system-blue) !important;
+}
+
+.yellow {
+  color: var(--system-yellow) !important;
+}
+
+#topbar-title {
+  text-transform: uppercase;
 }
 
 .nav-wrapper {
@@ -120,20 +132,12 @@ small, .small {
   color: var(--h3-color-strong);
 }
 
-.red {
-  color: var(--system-red) !important;
+.clear {
+  clear: both;
 }
 
-.green {
-  color: var(--system-green) !important;
-}
-
-.blue {
-  color: var(--system-blue) !important;
-}
-
-.yellow {
-  color: var(--system-yellow) !important;
+small, .small {
+  font-size: 60%;
 }
 
 .table-wrapper > table tbody tr td,
