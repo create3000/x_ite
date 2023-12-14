@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import X3DField from "./X3DField.js";
+import shim     from "../../shim.js"
 
 function X3DArrayField (value)
 {
