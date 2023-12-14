@@ -165,7 +165,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setError ({ type: error .message });
       }
    },
-   async setImage ()
+   setImage ()
    {
       if (DEVELOPMENT)
       {
@@ -223,7 +223,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
             // Upload image to GPU.
 
             this .setTextureFromData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
-            this .setTransparent (this .isImageTransparent (await this .getTextureData (this .getTexture (), width, height)));
+            this .setTransparent (this .isImageTransparent (this .getTextureData (this .getTexture (), width, height)));
             this .setLoadState (X3DConstants .COMPLETE_STATE);
             this .addNodeEvent ();
          }
@@ -234,7 +234,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setError ({ type: error .message });
       }
    },
-   async getTextureData (texture, width, height)
+   getTextureData (texture, width, height)
    {
       const
          gl          = this .getBrowser () .getContext (),
@@ -243,7 +243,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
-      await gl .readPixelsAsync (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
+      gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
       gl .deleteFramebuffer (framebuffer);
 
       return data;
