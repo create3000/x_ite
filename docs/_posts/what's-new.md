@@ -5,7 +5,7 @@ nav: main
 categories: []
 tags: [New, Releases]
 ---
-X_ITE follows the [NPM version syntax](https://docs.npmjs.com/about-semantic-versioning){:target="_blank"}. Keep this in mind when choosing a version number.
+X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning){:target="_blank"}. Keep this in mind when choosing a version number.
 
 ## X_ITE v9.0.0 Released
 
@@ -1069,7 +1069,7 @@ Additionally X_ITE is now available via GitHub CDN and jsDelivr CDN.
 - Fixed fog calculation if visibilityRange is 0.
 - Changed handling of fallback css attribute display.
 - Package is now available via code.create3000.de and jsDelivr.
-- NPM is now the package management system.
+- npm is now the package management system.
 
 ## Cobweb 3.3 Released
 

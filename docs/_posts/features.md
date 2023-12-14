@@ -56,7 +56,7 @@ If this is not enough for you have a look at [Supported Nodes](/x_ite/supported-
 
 X_ITE provides meaningful error messages for syntax and scripting problems if you use a [Script](/x_ite/components/scripting/script/) node. The output goes to the developer console of your browser.
 
-![NPM Logo](/assets/img/features/npm.png){: .left }
-We use NPM's package management now, NPM is **the** package manager for JavaScript. That makes it easy for us to keep the code base up to date.
+![npm Logo](/assets/img/features/npm.png){: .left }
+We use npm's package management now, npm is **the** package manager for JavaScript. That makes it easy for us to keep the code base up to date.
 
 We don't uses browser-sniffing. We keep the code consistent that makes our life easier.
