@@ -140,10 +140,24 @@ small, .small {
   font-size: 60%;
 }
 
+.content x3d-canvas,
+.content iframe {
+  border: none;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+.content x3d-canvas.teaser {
+  aspect-ratio: 16 / 5;
+}
+
 .table-wrapper > table tbody tr td,
 .table-wrapper > table thead th {
   white-space: initial;
 }
+
+/* table examples */
 
 .table-wrapper > table.examples tbody tr {
   border: none;
@@ -190,17 +204,7 @@ small, .small {
   }
 }
 
-.content x3d-canvas,
-.content iframe {
-  border: none;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-}
-
-.content x3d-canvas.teaser {
-  aspect-ratio: 16 / 5;
-}
+/* example overlay */
 
 .example {
   z-index: 2;

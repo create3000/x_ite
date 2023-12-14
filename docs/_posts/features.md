@@ -34,18 +34,19 @@ We offer full [X3D ECMAScript](/x_ite/reference/ecmascript-object-and-function-d
 
 X3D comes with a fixed set of objects called *nodes* that will cover most of your needs. But its creators also planned ahead, knowing that sometimes you'll need to create your own objects. The prototyping feature lets you create complex objects that you can reuse, changing certain properties of the objects as you go.
 
-X_ITE works seamlessly with [Sunrize](/sunrize/), because Sunrize is based on X_ITE. This means that everything you create in Sunrize will look exactly the same in X_ITE, including scripts and shaders.
+>**Tip:** X_ITE works seamlessly with our editor [Sunrize](/sunrize/), because Sunrize is based on X_ITE. This means that everything you create in Sunrize will look exactly the same in X_ITE, including scripts and shaders.
+{: .prompt-tip }
 
 ![X3D Logo](/assets/img/features/x3d.png){: .left }
-There is excellent built-in support for Gouraud and Phong shading, as well as PBR shading. Gouraud and Phong shading is the most popular shading algorithm in use today. These methods were developed by Henri Gouraud and Phong Bui-Toung. If the built-in shading methods are not enough for you, there is support for [Custom Shaders](/x_ite/custom-shaders/). Don't worry about *uniform variables, shader compilation and texture loading* The Composed Shader node makes it easy to write your own shader even if you are a beginner, but there is also everything for professionals. There is a standardized shader API similar to GLSL that makes it easy to convert your existing shaders. The built-in shaders support eight simultaneous local lights for each shape node, color nodes attached to a geometry are supported. There is smooth texture mapping adjustable with TextureProperties node and normals can be automatically generated depending on *creaseAngle* if you want smooth shading.
+There is excellent built-in support for Gouraud and Phong shading, as well as PBR shading. Gouraud and Phong shading is the most popular shading algorithm in use today. These methods were developed by Henri Gouraud and Phong Bui-Toung. If the built-in shading methods are not enough for you, there is support for [custom shaders](/x_ite/custom-shaders/). Don't worry about *uniform variables, shader compilation and texture loading* The [ComposedShader](/x_ite/components/shaders/composedshader/) node makes it easy to write your own shader even if you are a beginner, but there is also everything for professionals. There is a standardized shader API similar to GLSL that makes it easy to convert your existing shaders. The built-in shaders support eight simultaneous local lights for each [Shape](/x_ite/components/shape/shape/) node, color nodes attached to a geometry are supported. There is smooth texture mapping adjustable with [TextureProperties](/x_ite/components/texturing/textureproperties/) node and normals can be automatically generated depending on *creaseAngle* if you want smooth shading.
 
 Complex routing graphs can be created. X3D's event model allows the creation of connections between fields (routes), and events are propagated along these connections. The behavior graph collects all these field connections. It can be changed dynamically by rerouting, adding, or disconnecting connections. Events are injected into the system and propagated through the behavior graph in a well-defined order.
 
-Collision detection is also considered, it is unbreakable. In virtual reality environments, collision detection is an algorithm that determines how close a user is to a real physical object and will stop their movement before colliding with the object. If you want, there is terrain following support. Terrain following works by determining the ground beneath the avatar and letting him walk over plains and mountains. Use the NavigationInfo node to enable it.
+Collision detection is also considered, it is unbreakable. In virtual reality environments, collision detection is an algorithm that determines how close a user is to a real physical object and will stop their movement before colliding with the object. If you want, there is terrain following support. Terrain following works by determining the ground beneath the avatar and letting him walk over plains and mountains. Use the [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node to enable it.
 
-To add special effects and environment sound to your scenes there is support for MovieTexture and Sound node with a standardized set of functions. These are easy to use. They use HTML5 \<video\> and \<audio\> elements internally, you don't need to worry about it.
+To add special effects and environment sound to your scenes there is support for MovieTexture and [Sound](/x_ite/components/sound/sound/) node with a standardized set of functions. These are easy to use. They use HTML5 \<video\> and \<audio\> elements internally, you don't need to worry about it.
 
-Create text quickly and easily. Use the Text node, which can load remote font files in TrueType and OpenType format, but there are also built-in fonts.
+Create text quickly and easily. Use the [Text](/x_ite/components/text/text/) node, which can load remote font files in TrueType and OpenType format, but there are also built-in fonts.
 
 With [DOM integration](/x_ite/dom-integration/), X3D content can be used as if it were HTML and manipulated using common JavaScript DOM manipulation methods as used to do from X3DOM.
 
@@ -53,7 +54,7 @@ If this is not enough for you have a look at [Supported Nodes](/x_ite/supported-
 
 ## Code Features
 
-X_ITE provides meaningful error messages for syntax and scripting problems if you use a Script node. The output goes to the developer console of your browser.
+X_ITE provides meaningful error messages for syntax and scripting problems if you use a [Script](/x_ite/components/scripting/script/) node. The output goes to the developer console of your browser.
 
 ![NPM Logo](/assets/img/features/npm.png){: .left }
 We use NPM's package management now, NPM is **the** package manager for JavaScript. That makes it easy for us to keep the code base up to date.
