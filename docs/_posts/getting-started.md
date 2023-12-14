@@ -697,82 +697,64 @@ For example, we could provide a text description of the X3D element or provide a
 
 The HTML **\<x3d-canvas\>** element defines the main content of the X3D document. The \<x3d-canvas\> element has several attributes that define different behaviors. All of these attributes are optional and all can be changed during runtime except *preserveDrawingBuffer*.
 
-### antialiased
-
-A Boolean value (`true` or `false`) to indicate whether rendering should use hardware antialiasing if available. The default value for the *antialiased* attribute is `true`.
+antialiased
+: A Boolean value (`true` or `false`) to indicate whether rendering should use hardware antialiasing if available. The default value for the *antialiased* attribute is `true`.
 
 >**Tip:** Set CSS property »image-rendering« of \<x3d-canvas\> element to »pixelated«, if no filtering is desired in addition.
 {: .prompt-tip }
 
-### baseURL
+baseURL
+: A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with the *src* attribute, or with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
 
-A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with the *src* attribute, or with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
+cache
+: A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the *cache* attribute is `true`. It works by appending "_={timestamp}" to the GET parameters of every request.
 
-### cache
+contentScale
+: A Float value that specifies how much higher the physical resolution of the internal \<canvas\> element is. The default value for the *contentScale* attribute is `1.0`, which is sufficient for most cases. A higher value increases the resolution of the internal \<canvas\> element and can be used to increase the anti-aliasing effect, making the rendered image sharper. If set to `auto`, contentScale will match »window.devicePixelRatio«, which is useful for HiDPI or Retina displays. A value between `0.0` and `1.0` will result in a pixelated image, see also the [antialiased](#antialiased) attribute.
 
-A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the *cache* attribute is `true`. It works by appending "_={timestamp}" to the GET parameters of every request.
+contextMenu
+: A Boolean value (`true` or `false`) to indicate whether a context menu should be displayed on right click. The default value for the *contextMenu* attribute is `true`. The context menu can also be extended, [see here](#extending-the-context-menu).
 
-### contentScale
+debug
+: A Boolean value (`true` or `false`) to indicate whether additional debug message should be printed into the web browsers console and whether additional context menu items should be enabled. The default value for the *debug* attribute is `false`.
 
-A Float value that specifies how much higher the physical resolution of the internal \<canvas\> element is. The default value for the *contentScale* attribute is `1.0`, which is sufficient for most cases. A higher value increases the resolution of the internal \<canvas\> element and can be used to increase the anti-aliasing effect, making the rendered image sharper. If set to `auto`, contentScale will match »window.devicePixelRatio«, which is useful for HiDPI or Retina displays. A value between `0.0` and `1.0` will result in a pixelated image, see also the [antialiased](#antialiased) attribute.
+multisampling
+: An Integer value that specifies the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of anti-aliasing. Check the [rendering property](/x_ite/reference/browser-services/#rendering-properties) »MaxSamples«, which is browser dependent.
 
-### contextMenu
+notifications
+: A Boolean value (`true` or `false`) to indicate whether the notification bubble should be displayed. The default value for the *notifications* attribute is `true`.
 
-A Boolean value (`true` or `false`) to indicate whether a context menu should be displayed on right click. The default value for the *contextMenu* attribute is `true`. The context menu can also be extended, [see here](#extending-the-context-menu).
+onerror
+: Type: script code. This event is sent to an \<x3d-canvas\> element when an error occurs loading a scene.
 
-### debug
+oninitialized, onload
+: Type: script code. This event handler will be called on the \<x3d-canvas\> element when a scene has finished loading. This applies whether the scene is applied via the *src* attribute or when a scene is loaded or replaced by another world. If you change the scene, the event will fire again when the new scene loads. This event will not bubble up the element tree.
 
-A Boolean value (`true` or `false`) to indicate whether additional debug message should be printed into the web browsers console and whether additional context menu items should be enabled. The default value for the *debug* attribute is `false`.
+: The onload event handler will also be called at the very beginning when the initial empty scene is loaded.
 
-### multisampling
+onshutdown
+: Type: script code. This event handler will be called on the \<x3d-canvas\> element when a scene is unloaded or replaced by another world.
 
-An Integer value that specifies the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of anti-aliasing. Check the [rendering property](/x_ite/reference/browser-services/#rendering-properties) »MaxSamples«, which is browser dependent.
+preserveDrawingBuffer
+: A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for the *preserveDrawingBuffer* attribute is `false`. Set *preserveDrawingBuffer* to `true` if you want to save the image from the internal canvas. Keep in mind setting *preserveDrawingBuffer* to true can have performance implications.
 
-### notifications
+orderIndependentTransparency
+: A Boolean value (`true` or `false`) to indicate whether order independent transparency rendering technique should be used. The default value for the *orderIndependentTransparency* attribute is `false`. Can slow down rendering speed if *antialiased* is `true`, but can be used in conjunction with *contentScale*.
 
-A Boolean value (`true` or `false`) to indicate whether the notification bubble should be displayed. The default value for the *notifications* attribute is `true`.
+splashScreen
+: A Boolean value (`true` or `false`) to indicate whether the splash screen should be displayed. The default value for the *splashScreen* attribute is `true`. The display of the splash screen can also be toggled via the browser option »SplashScreen« in JavaScript. Call `Browser .setBrowserOption ("SplashScreen", booleanValue)` to toggle the display of the splash screen.
 
-### onerror
+src
+: A String value containing the URL to load on page load. If no *src* attribute is specified or the *src* attribute is empty, an empty scene will be displayed.
 
-Type: script code. This event is sent to an \<x3d-canvas\> element when an error occurs loading a scene.
+timings
+: A Boolean value (`true` or `false`) to indicate whether the Timings Panel should be displayed. The default value for the *timings* attribute is restored from the previous session, otherwise it is `false`.
 
-### oninitialized, onload
+update
+: A Boolean value (`true`, `false` or `auto`) to indicate whether browser events should be processed. The default value for the *update* attribute is `true`. A value of `true` will enable event processing, a value of `false` will stop event processing. If the value is `auto`, the effective value is determined by the visibility of the \<x3d-canvas\> element.
 
-Type: script code. This event handler will be called on the \<x3d-canvas\> element when a scene has finished loading. This applies whether the scene is applied via the *src* attribute or when a scene is loaded or replaced by another world. If you change the scene, the event will fire again when the new scene loads. This event will not bubble up the element tree.
-
-The onload event handler will also be called at the very beginning when the initial empty scene is loaded.
-
-### onshutdown
-
-Type: script code. This event handler will be called on the \<x3d-canvas\> element when a scene is unloaded or replaced by another world.
-
-### preserveDrawingBuffer
-
-A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for the *preserveDrawingBuffer* attribute is `false`. Set *preserveDrawingBuffer* to `true` if you want to save the image from the internal canvas. Keep in mind setting *preserveDrawingBuffer* to true can have performance implications.
-
-### orderIndependentTransparency
-
-A Boolean value (`true` or `false`) to indicate whether order independent transparency rendering technique should be used. The default value for the *orderIndependentTransparency* attribute is `false`. Can slow down rendering speed if *antialiased* is `true`, but can be used in conjunction with *contentScale*.
-
-### splashScreen
-
-A Boolean value (`true` or `false`) to indicate whether the splash screen should be displayed. The default value for the *splashScreen* attribute is `true`. The display of the splash screen can also be toggled via the browser option »SplashScreen« in JavaScript. Call `Browser .setBrowserOption ("SplashScreen", booleanValue)` to toggle the display of the splash screen.
-
-### src
-
-A String value containing the URL to load on page load. If no *src* attribute is specified or the *src* attribute is empty, an empty scene will be displayed.
-
-### timings
-
-A Boolean value (`true` or `false`) to indicate whether the Timings Panel should be displayed. The default value for the *timings* attribute is restored from the previous session, otherwise it is `false`.
-
-### update
-
-A Boolean value (`true`, `false` or `auto`) to indicate whether browser events should be processed. The default value for the *update* attribute is `true`. A value of `true` will enable event processing, a value of `false` will stop event processing. If the value is `auto`, the effective value is determined by the visibility of the \<x3d-canvas\> element.
-
-### url
-
-An MFString value of URLs to load on page load. If no *url* attribute is specified or the attribute is empty, an empty scene will be displayed. If both *src* and *url* attributes are given, the last given attribute takes precedence.
+url
+: An MFString value of URLs to load on page load. If no *url* attribute is specified or the attribute is empty, an empty scene will be displayed. If both *src* and *url* attributes are given, the last given attribute takes precedence.
 
 ### Example of Use
 
@@ -788,53 +770,41 @@ More options can be adjusted using the [Browser object](/x_ite/reference/browser
 
 If the \<x3d-canvas\> element is focused, the following keyboard shortcuts are available.
 
-### Home (Pos 1)
+Home (Pos 1)
+: Go to first viewpoint.
 
-Go to first viewpoint.
+End
+: Go to last viewpoint.
 
-### End
+Page Up
+: Go to previous viewpoint.
 
-Go to last viewpoint.
+Page Down
+: Go to next viewpoint.
 
-### Page Up
+Ctrl++
+: Display browser timings.
 
-Go to previous viewpoint.
+Shift+F8
+: Copy the the current viewpoint of the active layer to clipboard.
 
-### Page Down
+Ctrl+S
+: If \<x3d-canvas\> attribute *debug* is `true`, toggle begin/end update of browser.
 
-Go to next viewpoint.
+Ctrl+1
+: If \<x3d-canvas\> attribute *debug* is `true`, set shading to POINT.
 
-### Ctrl++
+Ctrl+2
+: If \<x3d-canvas\> attribute *debug* is `true`, set shading to WIREFRAME.
 
-Display browser timings.
+Ctrl+3
+: If \<x3d-canvas\> attribute *debug* is `true`, set shading to FLAT.
 
-### Shift+F8
+Ctrl+4
+: If \<x3d-canvas\> attribute *debug* is `true`, set shading to GOURAUD.
 
-Copy the the current viewpoint of the active layer to clipboard.
-
-### Ctrl+S
-
-If \<x3d-canvas\> attribute *debug* is `true`, toggle begin/end update of browser.
-
-### Ctrl+1
-
-If \<x3d-canvas\> attribute *debug* is `true`, set shading to POINT.
-
-### Ctrl+2
-
-If \<x3d-canvas\> attribute *debug* is `true`, set shading to WIREFRAME.
-
-### Ctrl+3
-
-If \<x3d-canvas\> attribute *debug* is `true`, set shading to FLAT.
-
-### Ctrl+4
-
-If \<x3d-canvas\> attribute *debug* is `true`, set shading to GOURAUD.
-
-### Ctrl+5
-
-If \<x3d-canvas\> attribute *debug* is `true`, set shading to PHONG.
+Ctrl+5
+: If \<x3d-canvas\> attribute *debug* is `true`, set shading to PHONG.
 
 ## Extending the Context Menu
 

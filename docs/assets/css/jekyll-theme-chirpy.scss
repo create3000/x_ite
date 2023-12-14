@@ -116,6 +116,10 @@ small, .small {
   font-weight: bold;
 }
 
+.content dl dt {
+  color: var(--h3-color-strong);
+}
+
 .red {
   color: var(--system-red) !important;
 }
