@@ -7,6 +7,7 @@ tags: [Features]
 ---
 ## Overview
 
+![JavaScript Logo](/assets/img/features/javascript.png){: .left }
 X_ITE is a fast, small, and feature-rich JavaScript library for displaying and executing X3D files, and other formats like VRML, glTF and [more](/x_ite/#supported-file-formats). It makes things like WebGL programming, document access and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
 
 X_ITE is freely downloadable for any usage and licensed under the GPL3. You can use them for commercial and noncommercial purposes.
@@ -15,14 +16,16 @@ Runs completely standalone, ie. there are no other library dependencies. You jus
 
 Competitive performance for most frequently used functions and nodes. All function within X_ITE are optimized to give your the best performance that JavaScript can offer.
 
+![Terser Logo](/assets/img/features/terser.png){: .left }
 The X_ITE package is optimized in size with Terser to achieve the smallest size we can reach. **X_ITE core module has only {{ site.size }}kB in size minified and compressed**, all other modules are loaded on demand.
 
 X_ITE is designed for optimal performance with event driven programming. The flow of the program is determined by events such as user actions (mouse clicks, key presses), sensor outputs, or messages from other scripts.
 
-All code is held by [CREATE3000](https://github.com/create3000) and all contributors are selected and all contributions become verified.
+All code is held by [CREATE3000](https://github.com/create3000){:target="_blank"} and all contributors are selected and all contributions become verified.
 
 ## Core Features
 
+![WebGL Logo](/assets/img/features/webgl.png){: .left }
 Although WebGL acts behind the scenes you do not need any special knowledge about that. There are many of ready to use [X3D nodes](/x_ite/supported-nodes/) that will make life easier. X_ITE provides comprehensive X3D support, which is complete and standard compliant.
 
 X_ITE comes with a high performance JavaScript rendering engine, ie. developers may be completely free of worry about performance optimizations in their code.
@@ -31,9 +34,10 @@ We offer full [X3D ECMAScript](/x_ite/reference/ecmascript-object-and-function-d
 
 X3D comes with a fixed set of objects called *nodes* that will cover most of your needs. But its creators also planned ahead, knowing that sometimes you'll need to create your own objects. The prototyping feature lets you create complex objects that you can reuse, changing certain properties of the objects as you go.
 
-X_ITE works seamlessly with [Sunrize](https://create3000.github.io/sunrize/), because Sunrize is based on X_ITE. This means that everything you create in Sunrize will look exactly the same in X_ITE, including scripts and shaders.
+X_ITE works seamlessly with [Sunrize](/sunrize/), because Sunrize is based on X_ITE. This means that everything you create in Sunrize will look exactly the same in X_ITE, including scripts and shaders.
 
-There is excellent built-in support for Gouraud and Phong shading. Gouraud and Phong shading is the most popular shading algorithm in use today. These methods were developed by Henri Gouraud and Phong Bui-Toung. If the built-in shading methods are not enough for you, there is support for [Custom Shaders](/x_ite/custom-shaders/). Don't worry about *uniform variables, shader compilation and texture loading* The Composed Shader node makes it easy to write your own shader even if you are a beginner, but there is also everything for professionals. There is a standardized shader API similar to GLSL that makes it easy to convert your existing shaders. The built-in shaders support eight simultaneous local lights for each shape node, color nodes attached to a geometry are supported. There is smooth texture mapping adjustable with TextureProperties node and normals can be automatically generated depending on *creaseAngle* if you want smooth shading.
+![X3D Logo](/assets/img/features/x3d.png){: .left }
+There is excellent built-in support for Gouraud and Phong shading, as well as PBR shading. Gouraud and Phong shading is the most popular shading algorithm in use today. These methods were developed by Henri Gouraud and Phong Bui-Toung. If the built-in shading methods are not enough for you, there is support for [Custom Shaders](/x_ite/custom-shaders/). Don't worry about *uniform variables, shader compilation and texture loading* The Composed Shader node makes it easy to write your own shader even if you are a beginner, but there is also everything for professionals. There is a standardized shader API similar to GLSL that makes it easy to convert your existing shaders. The built-in shaders support eight simultaneous local lights for each shape node, color nodes attached to a geometry are supported. There is smooth texture mapping adjustable with TextureProperties node and normals can be automatically generated depending on *creaseAngle* if you want smooth shading.
 
 Complex routing graphs can be created. X3D's event model allows the creation of connections between fields (routes), and events are propagated along these connections. The behavior graph collects all these field connections. It can be changed dynamically by rerouting, adding, or disconnecting connections. Events are injected into the system and propagated through the behavior graph in a well-defined order.
 
@@ -51,6 +55,7 @@ If this is not enough for you have a look at [Supported Nodes](/x_ite/supported-
 
 X_ITE provides meaningful error messages for syntax and scripting problems if you use a Script node. The output goes to the developer console of your browser.
 
-We don't uses browser-sniffing. We keep the code consistent that makes our life easier.
+![NPM Logo](/assets/img/features/npm.png){: .left }
+We use NPM's package management now, NPM is **the** package manager for JavaScript. That makes it easy for us to keep the code base up to date.
 
-We use npm's package management now, npm is **the** package manager for JavaScript. That makes it easy for us to keep the code base up to date.
+We don't uses browser-sniffing. We keep the code consistent that makes our life easier.
