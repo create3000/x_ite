@@ -85,7 +85,7 @@ event
 ## F
 
 flat shading
-: The simplest shading algorithm, called flat shading, consists of using an illumination model to determine the corresponding intensity value for the incident light, then shade the entire polygon according to this value. Flat shading is also known as constant shading or constant intensity shading. Its main advantage is that it is easy it implement. Flat shading produces satisfactory results under the following conditions: 1. The subject is illuminated by ambient light and there are no surface textures or shadows. 2. In the case of curved objects, when the surface changes gradually and the light source and viewer are far from the surface. 3. In general, when there are large numbers of plane surfaces. Figure shows three cases of flat shading of a conical surface. The more polygons, the better the rendering. With ﬂat shading, each triangle of a mesh is ﬁlled with a single color.
+: The simplest shading algorithm, called flat shading, consists of using an illumination model to determine the corresponding intensity value for the incident light, then shade the entire polygon according to this value. Flat shading is also known as constant shading or constant intensity shading. Its main advantage is that it is easy it implement. Flat shading produces satisfactory results under the following conditions: 1. The subject is illuminated by ambient light and there are no surface textures or shadows. 2. In the case of curved objects, when the surface changes gradually and the light source and viewer are far from the surface. 3. In general, when there are large numbers of plane surfaces. Figure shows three cases of flat shading of a conical surface. The more polygons, the better the rendering. With ﬂat shading, each triangle of a mesh is filled with a single color.
 
 field
 : A data element contained in a node. Each field has a name and a value of a particular type.
@@ -107,7 +107,7 @@ index
 : A number associated with an element in a list. Indexed lists in X3D start with 0. In an IndexedFaceSet, for example, each vertex has an associated index (the first point listed has the index 0, the second point has index 1, and so on). The faces of the polygon are formed by connecting the indices in the order specified.
 
 interpolator
-: A node that uses a mathematical formual to »fill in« the values between two specified values, transitioning smoothly from one to the other. The values can be color, position, size, orientation, or normal values.
+: A node that uses a mathematical formula to »fill in« the values between two specified values, transitioning smoothly from one to the other. The values can be color, position, size, orientation, or normal values.
 
 ## J
 
@@ -181,7 +181,7 @@ Phong shading
 : Phong shading refers to an interpolation technique for surface shading in 3D computer graphics. It is also called Phong interpolation or normal-vector interpolation shading. Specifically, it interpolates surface normals across rasterized polygons and computes pixel colors based on the interpolated normals and a reflection model. Phong shading improves upon Gouraud shading and provides a better approximation of the shading of a smooth surface.
 
 piecewise linear
-: Composed of straight-line segments (as pposed to being composed of actual curves). In the Extrusion node, the *crossSection* an *spine* paths are both piecwiese linear.
+: Composed of straight-line segments (as posed to being composed of actual curves). In the Extrusion node, the *crossSection* an *spine* paths are both piecewise linear.
 
 planar
 : Indicates that all of a polygon's vertices are in the same plane.
@@ -218,13 +218,13 @@ script
 : A program, written in a language such as JavaScript, or Java, that is contained in the Script node. A script receives incoming events, process them, and generates outgoing events. It is useful in controlling animations, binding viewpoints, backgrounds, and navigation information, and in manipulating the scene hierarchy.
 
 sensor
-: A node that monitors a particular type of event, processes the input, and generates output events. Some sensors process user input from a pointing device such as a mouse, trackball or touch screen, and generate events. Other sensors respond to the passage of time (TimeSensor) and the location of the viewpoint in the scene (ProxymitySensor).
+: A node that monitors a particular type of event, processes the input, and generates output events. Some sensors process user input from a pointing device such as a mouse, trackball or touch screen, and generate events. Other sensors respond to the passage of time (TimeSensor) and the location of the viewpoint in the scene (ProximitySensor).
 
 server
 : A computer connected to the Internet and dedicated to providing data over the Web.
 
 shading
-: Shading refers to the application of a reflection model over the surface of an object. To use the lighting and reﬂectance model to shade facets of a polygonal mesh — that is, to assign intensities to pixels to give the impression of opaque surfaces rather than wireframes.
+: Shading refers to the application of a reflection model over the surface of an object. To use the lighting and reflectance model to shade facets of a polygonal mesh — that is, to assign intensities to pixels to give the impression of opaque surfaces rather than wireframes.
 
 shape
 : The combination of geometry an appearance properties that describe a 3D object in an X3D scene.
@@ -265,7 +265,7 @@ viewpoint
 ## W
 
 white space
-: Extra space between characters in the X3D file, created by tabs, spaces, and newlines. Commas are also treated as white space. White space adds to the readability of your files but makes them larger and thus require more transmission time. When you compress a file with *GZip,* unnecessry white space is automatically eliminated.
+: Extra space between characters in the X3D file, created by tabs, spaces, and newlines. Commas are also treated as white space. White space adds to the readability of your files but makes them larger and thus require more transmission time. When you compress a file with *GZip,* unnecessary white space is automatically eliminated.
 
 world coordinate system
 : The coordinate system for the entire scene, which is the accumulation of all transformation specified in the scene.
