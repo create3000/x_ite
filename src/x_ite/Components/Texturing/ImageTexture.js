@@ -138,7 +138,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       this .loadNext ();
    },
-   async setKTXTexture (texture)
+   setKTXTexture (texture)
    {
       if (texture .target !== this .getTarget ())
          return this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_2D'." });
