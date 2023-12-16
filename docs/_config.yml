@@ -15,14 +15,15 @@ timezone:
 # ↓ --------------------------
 
 title: X_ITE X3D Browser # the main title
-version: 9.1.10 # x_ite latest version
-size: 288 # size in kb
-x3d_latest_version: 4.0 # x3d latest version
 
 tagline: Ready for X3Dv4! # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML.
+
+version: 9.1.10 # x_ite latest version
+size: 288 # size in kb
+x3d_latest_version: 4.0 # x3d latest version
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
