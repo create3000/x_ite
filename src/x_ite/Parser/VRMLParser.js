@@ -1424,10 +1424,10 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          catch
          {
             // Parse unknown field value.
-            
+
             const lineNumber = this .lineNumber;
 
-            if (this .unknown ())
+            if (this .unknownValue ())
             {
                if (!this .unknownLevel)
                {
@@ -2537,7 +2537,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       return field .length !== 0;
    },
-   unknown ()
+   unknownValue ()
    {
       try
       {
