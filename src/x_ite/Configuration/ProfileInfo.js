@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import X3DObject from "../Base/X3DObject.js";
+import URLs      from "../Browser/Networking/URLs.js";
 
 function ProfileInfo (name, title, providerURL, components)
 {
@@ -53,7 +54,7 @@ function ProfileInfo (name, title, providerURL, components)
    {
       name: { value: name, enumerable: true },
       title: { value: title, enumerable: true },
-      providerURL: { value: providerURL, enumerable: true },
+      providerURL: { value: providerURL || URLs .getProviderURL (), enumerable: true },
       components: { value: components, enumerable: true },
    });
 }
