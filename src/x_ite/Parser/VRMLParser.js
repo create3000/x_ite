@@ -1237,6 +1237,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                -- this .unknownLevel;
 
+               this .comments ();
+
                if (Grammar .CloseBrace .parse (this))
                   return null;
             }
