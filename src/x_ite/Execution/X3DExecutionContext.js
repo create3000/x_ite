@@ -387,7 +387,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    getUniqueImportName (name)
    {
-      return getUniqueName (this [_importedNodes], name);
+      return this .getUniqueName (getUniqueName (this [_importedNodes], name));
    },
    getLocalNode (name)
    {
