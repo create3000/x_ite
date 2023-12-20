@@ -385,6 +385,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       return this [_importedNodes];
    },
+   getUniqueImportName (name)
+   {
+      return getUniqueName (this [_importedNodes], name);
+   },
    getLocalNode (name)
    {
       name = String (name);

@@ -62,6 +62,10 @@ function X3DExportedNode (exportedName, localNode)
 
 Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .prototype),
 {
+   getExecutionContext ()
+   {
+      return this [_localNode] .getValue () .getExecutionContext ();
+   },
    getExportedName ()
    {
       return this [_exportedName];
