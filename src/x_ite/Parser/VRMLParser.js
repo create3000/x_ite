@@ -1632,10 +1632,13 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    sfboolValues (field)
    {
       field .length = 0;
-      field         = field .getTarget ();
+
+      const target = field .getTarget ();
 
       while (this .bool ())
-         field .push (this .value);
+         target .push (this .value);
+
+      return field .length !== 0;
    },
    sfcolorValue (field)
    {
@@ -1704,12 +1707,15 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    sfcolorValues (field)
    {
       field .length = 0;
-      field         = field .getTarget ();
 
-      const value = this .Color3;
+      const
+         target = field .getTarget (),
+         value  = this .Color3;
 
       while (this .sfcolorValue (value))
-         field .push (value);
+         target .push (value);
+
+      return field .length !== 0;
    },
    sfcolorrgbaValue (field)
    {
@@ -1785,12 +1791,15 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    sfcolorrgbaValues (field)
    {
       field .length = 0;
-      field         = field .getTarget ();
 
-      const value = this .Color4;
+      const
+         target = field .getTarget (),
+         value  = this .Color4;
 
       while (this .sfcolorrgbaValue (value))
-         field .push (value);
+         target .push (value);
+
+      return field .length !== 0;
    },
    sfdoubleValue (field)
    {
@@ -1827,12 +1836,15 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    sfdoubleValues (field)
    {
       field .length = 0;
-      field         = field .getTarget ();
 
-      const unit = field .getUnit ();
+      const
+         target = field .getTarget (),
+         unit   = target .getUnit ();
 
       while (this .double ())
-         field .push (this .fromUnit (unit, this .value));
+         target .push (this .fromUnit (unit, this .value));
+
+      return field .length !== 0;
    },
    sfimageValue (field)
    {
@@ -1899,12 +1911,15 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    sfimageValues (field)
    {
       field .length = 0;
-      field         = field .getTarget ();
 
-      const value = this .SFImage;
+      const
+         target = field .getTarget (),
+         value  = this .SFImage;
 
       while (this .sfimageValue (value))
-         field .push (value);
+         target .push (value);
+
+      return field .length !== 0;
    },
    sfint32Value (field)
    {
@@ -1941,10 +1956,13 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    sfint32Values (field)
    {
       field .length = 0;
-      field         = field .getTarget ();
+
+      const target = field .getTarget ();
 
       while (this .int32 ())
-         field .push (this .value);
+         target .push (this .value);
+
+      return field .length !== 0;
    },
    sfmatrix3Value (field)
    {
@@ -2032,12 +2050,15 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    sfmatrix3Values (field)
    {
       field .length = 0;
-      field         = field .getTarget ();
 
-      const value = this .Matrix3;
+      const
+         target = field .getTarget (),
+         value  = this .Matrix3;
 
       while (this .sfmatrix3Value (value))
-         field .push (value);
+         target .push (value);
+
+      return field .length !== 0;
    },
    sfmatrix4Value (field)
    {
@@ -2167,12 +2188,15 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    sfmatrix4Values (field)
    {
       field .length = 0;
-      field         = field .getTarget ();
 
-      const value = this .Matrix4;
+      const
+         target = field .getTarget (),
+         value  = this .Matrix4;
 
       while (this .sfmatrix4Value (value))
-         field .push (value);
+         target .push (value);
+
+      return field .length !== 0;
    },
    sfnodeValue (field)
    {
@@ -2279,12 +2303,15 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    sfrotationValues (field)
    {
       field .length = 0;
-      field         = field .getTarget ();
 
-      const value = this .Rotation4;
+      const
+         target = field .getTarget (),
+         value  = this .Rotation4;
 
       while (this .sfrotationValue (value))
-         field .push (value);
+         target .push (value);
+
+      return field .length !== 0;
    },
    sfstringValue (field)
    {
@@ -2321,10 +2348,13 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    sfstringValues (field)
    {
       field .length = 0;
-      field         = field .getTarget ();
+
+      const target = field .getTarget ();
 
       while (this .string ())
-         field .push (this .value);
+         target .push (this .value);
+
+      return field .length !== 0;
    },
    sfvec2Value (field, unit)
    {
@@ -2370,14 +2400,16 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    sfvec2Values (field)
    {
       field .length = 0;
-      field         = field .getTarget ();
 
       const
-         value = this .Vector2,
-         unit  = field .getUnit ();
+         target = field .getTarget (),
+         value  = this .Vector2,
+         unit   = target .getUnit ();
 
       while (this .sfvec2Value (value, unit))
-         field .push (value);
+         target .push (value);
+
+      return field .length !== 0;
    },
    sfvec3Value (field, unit)
    {
@@ -2429,14 +2461,16 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    sfvec3Values (field)
    {
       field .length = 0;
-      field         = field .getTarget ();
 
       const
-         value = this .Vector3,
-         unit  = field .getUnit ();
+         target = field .getTarget (),
+         value  = this .Vector3,
+         unit   = target .getUnit ();
 
       while (this .sfvec3Value (value, unit))
-         field .push (value);
+         target .push (value);
+
+      return field .length !== 0;
    },
    sfvec4Value (field, unit)
    {
@@ -2494,14 +2528,16 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    sfvec4Values (field)
    {
       field .length = 0;
-      field         = field .getTarget ();
 
       const
-         value = this .Vector4,
-         unit  = field .getUnit ();
+         target = field .getTarget (),
+         value  = this .Vector4,
+         unit   = target .getUnit ();
 
       while (this .sfvec4Value (value, unit))
-         field .push (value);
+         target .push (value);
+
+      return field .length !== 0;
    },
    unknown ()
    {
@@ -2524,11 +2560,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       if (this .sfboolValue (new Fields .SFBool ()))
          return true;
 
-      const d = new Fields .MFFloat ();
-
-      this .sfdoubleValues (d);
-
-      if (d .length)
+      if (this .sfdoubleValues (new Fields .MFFloat ()))
          return true;
 
       if (this .sfstringValue (new Fields .SFString ()))
