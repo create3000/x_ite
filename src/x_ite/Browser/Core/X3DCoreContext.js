@@ -208,10 +208,6 @@ Object .assign (X3DCoreContext .prototype,
    {
       return this [_instanceId];
    },
-   isStrict ()
-   {
-      return false;
-   },
    getElement ()
    {
       return this [_element];

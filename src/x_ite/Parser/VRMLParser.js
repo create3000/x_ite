@@ -187,6 +187,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       SQRT1_2: Math .SQRT1_2,
       SQRT2:   Math .SQRT2,
    },
+   unknownLevel: 0,
    getEncoding ()
    {
       return "STRING";
@@ -219,13 +220,6 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          throw new Error (this .getError (error));
       }
-   },
-   throwOrWarn (string)
-   {
-      if (this .getBrowser () .isStrict ())
-         throw new Error (string);
-
-      console .warn (string);
    },
    getError (error)
    {
@@ -863,7 +857,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             throw new Error ("Expected a name for field.");
          }
 
-         this .Id ()
+         this .Id ();
 
          throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
       }
@@ -888,7 +882,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             throw new Error ("Expected a name for field.");
          }
 
-         this .Id ()
+         this .Id ();
 
          throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
       }
@@ -918,7 +912,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             throw new Error ("Expected a name for field.");
          }
 
-         this .Id ()
+         this .Id ();
 
          throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
       }
@@ -1188,7 +1182,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                               }
                               catch (error)
                               {
-                                 this .throwOrWarn (error .message);
+                                 console .warn (error .message);
 
                                  return true;
                               }
@@ -1227,7 +1221,28 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             ?? this .getExecutionContext () .createProto (nodeTypeId, false);
 
          if (!baseNode)
-            throw new Error (`Unknown node type or proto '${nodeTypeId}', you probably have insufficient component/profile statements, and/or an inappropriate specification version.`);
+         {
+            if (!this .unknownLevel)
+            {
+               console .warn (`Unknown node type or proto '${nodeTypeId}', you probably have insufficient component/profile statements, and/or an inappropriate specification version.`);
+            }
+
+            this .comments ();
+
+            if (Grammar .OpenBrace .parse (this))
+            {
+               ++ this .unknownLevel;
+
+               this .nodeBody (this .getExecutionContext () .createNode ("WorldInfo", false));
+
+               -- this .unknownLevel;
+
+               if (Grammar .CloseBrace .parse (this))
+                  return null;
+            }
+
+            return false;
+         }
 
          if (nodeNameId .length)
          {
@@ -1312,7 +1327,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                            }
                            catch
                            {
-                              this .throwOrWarn (`No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()} interface declaration.`);
+                              console .warn (`No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()} interface declaration.`);
 
                               return true;
                            }
@@ -1404,6 +1419,20 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          }
          catch
          {
+            ++ this .unknownLevel;
+
+            const unknown = this .unknown ();
+
+            -- this .unknownLevel;
+
+            if (unknown)
+            {
+               if (!this .unknownLevel)
+                  console .warn (`Unknown field '${fieldId}' in class '${baseNode .getTypeName ()}'.`);
+
+               return true;
+            }
+
             throw new Error (`Unknown field '${fieldId}' in class '${baseNode .getTypeName ()}'.`);
          }
 
@@ -1423,7 +1452,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   }
                   catch
                   {
-                     this .throwOrWarn (`No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()}`);
+                     console .warn (`No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()}`);
 
                      return true;
                   }
@@ -2467,6 +2496,64 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       while (this .sfvec4Value (value, unit))
          field .push (value);
+   },
+   unknown ()
+   {
+      if (Grammar .IS .parse (this))
+      {
+         if (this .isInsideProtoDefinition ())
+         {
+            if (this .Id ())
+               return true;
+         }
+      }
+
+      if (this .mfunknownValue ())
+         return true;
+
+      return false;
+   },
+   sfunknownValue ()
+   {
+      if (this .sfboolValue (new Fields .SFBool ()))
+         return true;
+
+      const d = new Fields .MFFloat ();
+
+      this .sfdoubleValues (d);
+
+      if (d .length)
+         return true;
+
+      if (this .sfstringValue (new Fields .SFString ()))
+         return true;
+
+      if (this .sfnodeValue (new Fields .SFNode ()))
+         return true;
+
+      return false;
+   },
+   mfunknownValue ()
+   {
+      if (this .sfunknownValue ())
+         return true;
+
+      if (Grammar .OpenBracket .parse (this))
+      {
+         this .sfunknownValues ();
+
+         if (Grammar .CloseBracket .parse (this))
+            return true;
+
+         throw new Error ("Expected ']'.");
+      }
+
+      return false;
+   },
+   sfunknownValues ()
+   {
+      while (this .sfunknownValue ())
+         ;
    },
    accessTypeToString (accessType)
    {
