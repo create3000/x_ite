@@ -1421,15 +1421,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          }
          catch
          {
-            ++ this .unknownLevel;
+            const lineNumber = this .lineNumber;
 
-            const
-               lineNumber = this .lineNumber,
-               unknown    = this .unknown ();
-
-            -- this .unknownLevel;
-
-            if (unknown)
+            if (this .unknown ())
             {
                if (!this .unknownLevel)
                {
@@ -2541,19 +2535,28 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    },
    unknown ()
    {
-      if (Grammar .IS .parse (this))
+      try
       {
-         if (this .isInsideProtoDefinition ())
+         ++ this .unknownLevel;
+
+         if (Grammar .IS .parse (this))
          {
-            if (this .Id ())
-               return true;
+            if (this .isInsideProtoDefinition ())
+            {
+               if (this .Id ())
+                  return true;
+            }
          }
+
+         if (this .mfunknownValue ())
+            return true;
+
+         return false;
       }
-
-      if (this .mfunknownValue ())
-         return true;
-
-      return false;
+      finally
+      {
+         -- this .unknownLevel;
+      }
    },
    sfunknownValue ()
    {
