@@ -492,7 +492,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   }
                   catch (error)
                   {
-                     console .warn (error .message);
+                     console .warn (`Parser error at line ${this .lineNumber}: ${error .message}`);
                      return true;
                   }
                }
@@ -1182,7 +1182,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                               }
                               catch (error)
                               {
-                                 console .warn (error .message);
+                                 console .warn (`Parser error at line ${this .lineNumber}: ${error .message}`);
 
                                  return true;
                               }
@@ -1224,7 +1224,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          {
             if (!this .unknownLevel)
             {
-               console .warn (`Unknown node type or proto '${nodeTypeId}', you probably have insufficient component/profile statements, and/or an inappropriate specification version.`);
+               console .warn (`Parser error at line ${this .lineNumber}: Unknown node type or proto '${nodeTypeId}', you probably have insufficient component/profile statements, and/or an inappropriate specification version.`);
             }
 
             this .comments ();
@@ -1329,7 +1329,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                            }
                            catch
                            {
-                              console .warn (`No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()} interface declaration.`);
+                              console .warn (`Parser error at line ${this .lineNumber}: No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()} interface declaration.`);
 
                               return true;
                            }
@@ -1423,14 +1423,18 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          {
             ++ this .unknownLevel;
 
-            const unknown = this .unknown ();
+            const
+               lineNumber = this .lineNumber,
+               unknown    = this .unknown ();
 
             -- this .unknownLevel;
 
             if (unknown)
             {
                if (!this .unknownLevel)
-                  console .warn (`Unknown field '${fieldId}' in class '${baseNode .getTypeName ()}'.`);
+               {
+                  console .warn (`Parser error at line ${lineNumber}: Unknown field '${fieldId}' in class '${baseNode .getTypeName ()}'.`);
+               }
 
                return true;
             }
@@ -1454,7 +1458,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   }
                   catch
                   {
-                     console .warn (`No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()}`);
+                     console .warn (`Parser error at line ${this .lineNumber}: No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()}`);
 
                      return true;
                   }
