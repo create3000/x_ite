@@ -405,27 +405,15 @@ Object .assign (Generator .prototype,
       if (baseNode .hasRoutes ())
          return true;
 
-      const
-         executionContext = baseNode .getExecutionContext (),
-         index            = this .importedNodesIndex .get (executionContext);
+      const executionContext = baseNode .getExecutionContext ();
 
-      if (index)
-      {
-         if (index .has (baseNode))
-            return true;
-      }
-      else
-      {
-         const index = this .exportedNodesIndex .get (executionContext);
+      if (this .importedNodesIndex .get (executionContext) ?.has (baseNode))
+         return true;
 
-         if (index)
-         {
-            if (index .has (baseNode))
-               return true;
-         }
+      if (this .exportedNodesIndex .get (executionContext) ?.has (baseNode))
+         return true;
 
-         return false;
-      }
+      return false;
    },
    LocalName (baseNode)
    {
