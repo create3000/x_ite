@@ -492,13 +492,11 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                case "ProtoBody":
                case "PROTOBODY":
                {
-                  this .pushPrototype (proto);
                   this .pushExecutionContext (proto .getBody ());
                   this .pushParent (proto);
                   this .protoBodyElement (childNode);
                   this .popParent ();
                   this .popExecutionContext ();
-                  this .popPrototype ();
                   break;
                }
                default:
@@ -590,7 +588,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    },
    isElement (xmlElement)
    {
-      if (this .isInsideProtoDefinition ())
+      if (this .isInsideProtoDeclaration ())
       {
          for (const childNode of xmlElement .childNodes)
             this .isElementChild (childNode);
@@ -625,7 +623,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          const
             node  = this .getParent (),
-            proto = this .getPrototype ();
+            proto = this .getOuterNode ();
 
          if (!(node instanceof X3DNode))
             return;
@@ -673,7 +671,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             this .pushParent (node);
             this .childrenElements (xmlElement);
 
-            if (!this .isInsideProtoDefinition ())
+            if (!this .isInsideProtoDeclaration ())
                node .setup ();
 
             this .popParent ();
@@ -753,7 +751,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          this .nodeAttributes (xmlElement, node);
          this .childrenElements (xmlElement);
 
-         if (!this .isInsideProtoDefinition ())
+         if (!this .isInsideProtoDeclaration ())
             node .setup ();
 
          this .popParent ();

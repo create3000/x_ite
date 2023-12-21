@@ -45,6 +45,8 @@
  *
  ******************************************************************************/
 
+import X3DProtoDeclaration from "../Prototype/X3DProtoDeclaration.js";
+
 function X3DParser (scene)
 {
    this .scene             = scene;
@@ -74,21 +76,13 @@ Object .assign (X3DParser .prototype,
    {
       this .executionContexts .pop ();
    },
-   getPrototype ()
+   getOuterNode ()
    {
-      return this .prototypes .at (-1);
+      return this .getExecutionContext () .getOuterNode ();
    },
-   pushPrototype (prototype)
+   isInsideProtoDeclaration ()
    {
-      return this .prototypes .push (prototype);
-   },
-   popPrototype ()
-   {
-      this .prototypes .pop ();
-   },
-   isInsideProtoDefinition ()
-   {
-      return !! this .prototypes .length;
+      return this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration;
    },
    loadComponents ()
    {

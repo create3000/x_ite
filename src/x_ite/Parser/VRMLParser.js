@@ -738,13 +738,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                      for (const field of interfaceDeclarations)
                         proto .addUserDefinedField (field .getAccessType (), field .getName (), field);
 
-                     this .pushPrototype (proto);
                      this .pushExecutionContext (proto .getBody ());
 
                      this .protoBody (proto .getBody () .rootNodes);
 
                      this .popExecutionContext ();
-                     this .popPrototype ();
 
                      this .comments ();
 
@@ -1276,7 +1274,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
             if (Grammar .CloseBrace .parse (this))
             {
-               if (!this .isInsideProtoDefinition ())
+               if (!this .isInsideProtoDeclaration ())
                   baseNode .setup ();
 
                return baseNode;
@@ -1319,7 +1317,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                   if (Grammar .IS .parse (this))
                   {
-                     if (this .isInsideProtoDefinition ())
+                     if (this .isInsideProtoDeclaration ())
                      {
                         if (this .Id ())
                         {
@@ -1327,11 +1325,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                            try
                            {
-                              var reference = this .getPrototype () .getField (isId);
+                              var reference = this .getOuterNode () .getField (isId);
                            }
                            catch
                            {
-                              console .warn (`Parser error at line ${this .lineNumber}: No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()} interface declaration.`);
+                              console .warn (`Parser error at line ${this .lineNumber}: No such event or field '${isId}' inside PROTO ${this .getOuterNode () .getName ()} interface declaration.`);
 
                               return true;
                            }
@@ -1358,10 +1356,10 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                                  throw new Error (`Couldn't add field '${fieldId}', field already exists with different access type or data type.`);
                               }
 
-                              throw new Error (`Field '${fieldId}' and '${reference .getName ()}' in PROTO '${this .getPrototype () .getName ()}' are incompatible as an IS mapping.`);
+                              throw new Error (`Field '${fieldId}' and '${reference .getName ()}' in PROTO '${this .getOuterNode () .getName ()}' are incompatible as an IS mapping.`);
                            }
 
-                           throw new Error (`Field '${fieldId}' and '${reference .getName ()}' in PROTO '${this .getPrototype () .getName ()}' have different types.`);
+                           throw new Error (`Field '${fieldId}' and '${reference .getName ()}' in PROTO '${this .getOuterNode () .getName ()}' have different types.`);
                         }
 
                         throw new Error ("No name give after IS statement.");
@@ -1444,7 +1442,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          if (Grammar .IS .parse (this))
          {
-            if (this .isInsideProtoDefinition ())
+            if (this .isInsideProtoDeclaration ())
             {
                if (this .Id ())
                {
@@ -1452,11 +1450,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                   try
                   {
-                     var reference = this .getPrototype () .getField (isId);
+                     var reference = this .getOuterNode () .getField (isId);
                   }
                   catch
                   {
-                     console .warn (`Parser error at line ${this .lineNumber}: No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()}`);
+                     console .warn (`Parser error at line ${this .lineNumber}: No such event or field '${isId}' inside PROTO ${this .getOuterNode () .getName ()}`);
 
                      return true;
                   }
@@ -1469,10 +1467,10 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                         return true;
                      }
 
-                     throw new Error (`Field '${field .getName ()}' and '${reference .getName ()}' in PROTO ${this .getPrototype () .getName ()} are incompatible as an IS mapping.`);
+                     throw new Error (`Field '${field .getName ()}' and '${reference .getName ()}' in PROTO ${this .getOuterNode () .getName ()} are incompatible as an IS mapping.`);
                   }
 
-                  throw new Error (`Field '${field .getName ()}' and '${reference .getName ()}' in PROTO ${this .getPrototype () .getName ()} have different types.`);
+                  throw new Error (`Field '${field .getName ()}' and '${reference .getName ()}' in PROTO ${this .getOuterNode () .getName ()} have different types.`);
                }
 
                throw new Error("No name give after IS statement.");
@@ -2545,7 +2543,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          if (Grammar .IS .parse (this))
          {
-            if (this .isInsideProtoDefinition ())
+            if (this .isInsideProtoDeclaration ())
             {
                if (this .Id ())
                   return true;
