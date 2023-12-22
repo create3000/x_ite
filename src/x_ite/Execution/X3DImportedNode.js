@@ -200,6 +200,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
    {
       if (generator .ExistsNode (this .getInlineNode ()))
       {
+         const importedName = generator .ImportedName (this .getImportedName ());
+
          generator .string += generator .Indent ();
          generator .string += "IMPORT";
          generator .string += generator .Space ();
@@ -207,18 +209,18 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
          generator .string += ".";
          generator .string += this .getExportedName ();
 
-         if (this .getImportedName () !== this .getExportedName ())
+         if (importedName !== this .getExportedName ())
          {
             generator .string += generator .Space ();
             generator .string += "AS";
             generator .string += generator .Space ();
-            generator .string += this .getImportedName ();
+            generator .string += importedName;
          }
 
          try
          {
             generator .AddRouteNode (this);
-            generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
+            generator .AddImportedNode (this .getExportedNode (), importedName);
          }
          catch
          {
@@ -268,6 +270,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
    {
       if (generator .ExistsNode (this .getInlineNode ()))
       {
+         const importedName = generator .ImportedName (this .getImportedName ());
+
          generator .string += generator .Indent ();
          generator .string += "<IMPORT";
          generator .string += generator .Space ();
@@ -279,11 +283,11 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
          generator .string += generator .XMLEncode (this .getExportedName ());
          generator .string += "'";
 
-         if (this .getImportedName () !== this .getExportedName ())
+         if (importedName !== this .getExportedName ())
          {
             generator .string += generator .Space ();
             generator .string += "AS='";
-            generator .string += generator .XMLEncode (this .getImportedName ());
+            generator .string += generator .XMLEncode (importedName);
             generator .string += "'";
          }
 
@@ -292,7 +296,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
          try
          {
             generator .AddRouteNode (this);
-            generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
+            generator .AddImportedNode (this .getExportedNode (), importedName);
          }
          catch
          {
@@ -349,6 +353,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
    {
       if (generator .ExistsNode (this .getInlineNode ()))
       {
+         const importedName = generator .ImportedName (this .getImportedName ());
+
          generator .string += generator .Indent ();
          generator .string += '{';
          generator .string += generator .TidySpace ();
@@ -385,7 +391,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
          generator .string += generator .JSONEncode (this .getExportedName ());
          generator .string += '"';
 
-         if (this .getImportedName () !== this .getExportedName ())
+         if (importedName !== this .getExportedName ())
          {
             generator .string += ',';
             generator .string += generator .TidyBreak ();
@@ -396,7 +402,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
             generator .string += ':';
             generator .string += generator .TidySpace ();
             generator .string += '"';
-            generator .string += generator .JSONEncode (this .getImportedName ());
+            generator .string += generator .JSONEncode (importedName);
             generator .string += '"';
             generator .string += generator .TidyBreak ();
          }
@@ -416,7 +422,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
          try
          {
             generator .AddRouteNode (this);
-            generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
+            generator .AddImportedNode (this .getExportedNode (), importedName);
          }
          catch
          {

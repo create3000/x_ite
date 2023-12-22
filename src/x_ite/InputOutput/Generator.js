@@ -415,6 +415,18 @@ Object .assign (Generator .prototype,
 
       return false;
    },
+   ImportedName (name)
+   {
+      const
+         names   = this .names .get (this .ExecutionContext ()),
+         newName = getUniqueName (names, name);
+
+      // Add to indices.
+
+      names .add (newName);
+
+      return newName;
+   },
    LocalName (baseNode)
    {
       const importedName = this .importedNames .get (baseNode);
