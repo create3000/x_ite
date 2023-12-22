@@ -54,7 +54,8 @@ const
    _inlineNode   = Symbol (),
    _exportedName = Symbol (),
    _importedName = Symbol (),
-   _routes       = Symbol ();
+   _routes       = Symbol (),
+   _real         = Symbol ();
 
 function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
 {
@@ -108,14 +109,27 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
    {
       // Add route.
 
-      const route = {
-         sourceNode,
-         sourceField,
-         destinationNode,
-         destinationField,
-      };
+      const route = Object .defineProperties ({ },
+      {
+         sourceNode: {
+            value: sourceNode,
+            writable: false,
+         },
+         sourceField: {
+            value: sourceField,
+            writable: false,
+         },
+         destinationNode: {
+            value: destinationNode,
+            writable: false,
+         },
+         destinationField: {
+            value: destinationField,
+            writable: false,
+         },
+      });
 
-      this [_routes] .push (route);
+      this [_routes] .add (route);
 
       // Try to resolve source or destination node routes.
 
@@ -126,16 +140,12 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
    {
       try
       {
-         const
-            sourceField      = route .sourceField,
-            destinationField = route .destinationField;
+         const { sourceField, destinationField } = route;
 
-         let
-            sourceNode      = route .sourceNode,
-            destinationNode = route .destinationNode;
+         let { sourceNode, destinationNode } = route;
 
-         if (route .real)
-            route .real .dispose ();
+         if (route [_real])
+            route [_real] .dispose ();
 
          if (sourceNode instanceof X3DImportedNode)
             sourceNode = sourceNode .getExportedNode ();
@@ -143,7 +153,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
          if (destinationNode instanceof X3DImportedNode)
             destinationNode = destinationNode .getExportedNode ();
 
-         route .real = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
+         route [_real] = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
       }
       catch (error)
       {
@@ -154,19 +164,19 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
    {
       for (const route of this [_routes])
       {
-         if (route .real === real)
+         if (route [_real] === real)
             this [_routes] .delete (route);
       }
    },
-   deleteRoutes ()
+   deleteRealRoutes ()
    {
       for (const route of this [_routes])
       {
-         const real = route .real
+         const real = route [_real]
 
          if (real)
          {
-            delete route .real;
+            delete route [_real];
             this .getExecutionContext () .deleteSimpleRoute (real);
          }
       }
@@ -182,12 +192,12 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
          case X3DConstants .NOT_STARTED_STATE:
          case X3DConstants .FAILED_STATE:
          {
-            this .deleteRoutes ();
+            this .deleteRealRoutes ();
             break;
          }
          case X3DConstants .COMPLETE_STATE:
          {
-            this .deleteRoutes ();
+            this .deleteRealRoutes ();
 
             for (const route of this [_routes])
                this .resolveRoute (route);
@@ -515,7 +525,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
    {
       this .getInlineNode () ._loadState .removeInterest ("set_loadState__", this);
 
-      this .deleteRoutes ();
+      this .deleteRealRoutes ();
 
       X3DNode .prototype .dispose .call (this);
    },
