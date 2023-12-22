@@ -230,14 +230,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
          {
             // Output unresolved routes.
 
-            for (const route of this [_routes])
+            for (const { sourceNode, sourceField, destinationNode, destinationField } of this [_routes])
             {
-               const
-                  sourceNode       = route .sourceNode,
-                  sourceField      = route .sourceField,
-                  destinationNode  = route .destinationNode,
-                  destinationField = route .destinationField;
-
                if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
                {
                   const sourceNodeName = sourceNode instanceof X3DImportedNode
@@ -306,14 +300,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
          {
             // Output unresolved routes.
 
-            for (const route of this [_routes])
+            for (const { sourceNode, sourceField, destinationNode, destinationField } of this [_routes])
             {
-               const
-                  sourceNode       = route .sourceNode,
-                  sourceField      = route .sourceField,
-                  destinationNode  = route .destinationNode,
-                  destinationField = route .destinationField;
-
                if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
                {
                   const sourceNodeName = sourceNode instanceof X3DImportedNode
@@ -432,14 +420,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
          {
             // Output unresolved routes.
 
-            for (const route of this [_routes])
+            for (const { sourceNode, sourceField, destinationNode, destinationField } of this [_routes])
             {
-               const
-                  sourceNode       = route .sourceNode,
-                  sourceField      = route .sourceField,
-                  destinationNode  = route .destinationNode,
-                  destinationField = route .destinationField;
-
                if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
                {
                   const sourceNodeName = sourceNode instanceof X3DImportedNode
