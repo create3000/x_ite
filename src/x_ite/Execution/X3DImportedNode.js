@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
          destinationField,
       };
 
-      this [_routes] .add (route);
+      this [_routes] .push (route);
 
       // Try to resolve source or destination node routes.
 
