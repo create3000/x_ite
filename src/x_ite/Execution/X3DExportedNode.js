@@ -57,14 +57,14 @@ function X3DExportedNode (exportedName, localNode)
    X3DObject .call (this);
 
    this [_exportedName] = exportedName;
-   this [_localNode]    = SFNodeCache .get (localNode);
+   this [_localNode]    = localNode;
 }
 
 Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .prototype),
 {
    getExecutionContext ()
    {
-      return this [_localNode] .getValue () .getExecutionContext ();
+      return this [_localNode] .getExecutionContext ();
    },
    getExportedName ()
    {
@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    },
    getLocalNode ()
    {
-      return this [_localNode] .getValue ();
+      return this [_localNode];
    },
    toVRMLStream (generator)
    {
@@ -187,7 +187,7 @@ Object .defineProperties (X3DExportedNode .prototype,
    {
       get ()
       {
-         return this [_localNode];
+         return SFNodeCache .get (this [_localNode]);
       },
       enumerable: true,
    },

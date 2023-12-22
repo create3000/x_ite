@@ -61,7 +61,7 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
 {
    X3DNode .call (this, executionContext);
 
-   this [_inlineNode]   = SFNodeCache .get (inlineNode);
+   this [_inlineNode]   = inlineNode;
    this [_exportedName] = exportedName;
    this [_importedName] = importedName;
    this [_routes]       = new Set ();
@@ -74,11 +74,11 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
 {
    getExecutionContext ()
    {
-      return this [_inlineNode] .getValue () .getExecutionContext ();
+      return this [_inlineNode] .getExecutionContext ();
    },
    getInlineNode ()
    {
-      return this [_inlineNode] .getValue ();
+      return this [_inlineNode];
    },
    getExportedName ()
    {
@@ -540,7 +540,7 @@ Object .defineProperties (X3DImportedNode .prototype,
    {
       get ()
       {
-         return this [_inlineNode];
+         return SFNodeCache .get (this [_inlineNode]);
       },
       enumerable: true,
    },

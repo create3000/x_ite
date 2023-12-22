@@ -61,9 +61,9 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
    X3DObject .call (this, executionContext);
 
    this [_executionContext] = executionContext;
-   this [_sourceNode]       = SFNodeCache .get (sourceNode);
+   this [_sourceNode]       = sourceNode;
    this [_sourceField]      = sourceField;
-   this [_destinationNode]  = SFNodeCache .get (destinationNode);
+   this [_destinationNode]  = destinationNode;
    this [_destinationField] = destinationField;
 
    // Must connect in every context, to make X3DBaseNode.hasRoutes work.
@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    getSourceNode ()
    {
       ///  SAI
-      return this [_sourceNode] .getValue ();
+      return this [_sourceNode];
    },
    getSourceField ()
    {
@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    getDestinationNode ()
    {
       ///  SAI
-      return this [_destinationNode] .getValue ();
+      return this [_destinationNode];
    },
    getDestinationField ()
    {
@@ -266,7 +266,7 @@ Object .defineProperties (X3DRoute .prototype,
    {
       get ()
       {
-         return this [_sourceNode];
+         return SFNodeCache .get (this [_sourceNode]);
       },
       enumerable: true,
    },
@@ -282,7 +282,7 @@ Object .defineProperties (X3DRoute .prototype,
    {
       get ()
       {
-         return this [_destinationNode];
+         return SFNodeCache .get (this [_destinationNode]);
       },
       enumerable: true,
    },
