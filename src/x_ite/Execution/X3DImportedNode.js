@@ -109,10 +109,10 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
       // Add route.
 
       const route = {
-         sourceNode: sourceNode,
-         sourceField: sourceField,
-         destinationNode: destinationNode,
-         destinationField: destinationField,
+         sourceNode,
+         sourceField,
+         destinationNode,
+         destinationField,
       };
 
       this [_routes] .add (route);
@@ -170,6 +170,10 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
             this .getExecutionContext () .deleteSimpleRoute (real);
          }
       }
+   },
+   getRoutes ()
+   {
+      return this [_routes];
    },
    set_loadState__ ()
    {
