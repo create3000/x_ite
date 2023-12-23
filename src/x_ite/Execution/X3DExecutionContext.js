@@ -643,10 +643,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
-      // Source and dest node are here X3DBaseNode.
-
       try
       {
+         // Source and dest node must be here X3DNode, no check here.
          // Private function.
          // Create route and return.
 

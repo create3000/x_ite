@@ -94,40 +94,19 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    hasRoutes (baseNode)
    {
-      for (const route of this [_routes])
-      {
-         if (route .sourceNode === baseNode)
-            return true;
-
-         if (route .destinationNode === baseNode)
-            return true;
-      }
-
-      return false;
+      return this [_routes]
+         .some (route => route .sourceNode === baseNode || route .destinationNode === baseNode)
    },
    addRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
       // Add route.
 
-      const route = Object .defineProperties ({ },
-      {
-         sourceNode: {
-            value: sourceNode,
-            enumerable: true,
-         },
-         sourceField: {
-            value: sourceField,
-            enumerable: true,
-         },
-         destinationNode: {
-            value: destinationNode,
-            enumerable: true,
-         },
-         destinationField: {
-            value: destinationField,
-            enumerable: true,
-         },
-      });
+      const route = {
+         sourceNode,
+         sourceField,
+         destinationNode,
+         destinationField,
+      };
 
       this [_routes] .push (route);
 
@@ -179,7 +158,19 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    getRoutes ()
    {
-      return this [_routes];
+      return this [_routes] .map (route =>
+      {
+         return {
+            sourceNode: route .sourceNode instanceof X3DImportedNode
+               ? route .sourceNode
+               : SFNodeCache .get (route .sourceNode),
+            sourceField: route .sourceField,
+            destinationNode: route .destinationNode instanceof X3DImportedNode
+               ? route .destinationNode
+               : SFNodeCache .get (route .destinationNode),
+            destinationField: route .destinationField,
+         };
+      });
    },
    set_loadState__ ()
    {
