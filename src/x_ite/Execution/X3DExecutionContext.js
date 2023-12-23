@@ -716,7 +716,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          // If sourceNode is shared node try to find the corresponding X3DImportedNode.
          if (sourceNode .getValue () .getExecutionContext () !== this)
-            importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
+            importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
       }
       catch
       {
@@ -727,7 +727,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          // If destinationNode is shared node try to find the corresponding X3DImportedNode.
          if (destinationNode .getValue () .getExecutionContext () !== this)
-            importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
+            importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
       }
       catch
       {
