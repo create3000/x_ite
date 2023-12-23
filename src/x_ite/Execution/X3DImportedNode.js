@@ -45,36 +45,36 @@
  *
  ******************************************************************************/
 
-import X3DNode      from "../Components/Core/X3DNode.js";
 import X3DObject    from "../Base/X3DObject.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import SFNodeCache  from "../Fields/SFNodeCache.js";
 
 const
-   _inlineNode   = Symbol (),
-   _exportedName = Symbol (),
-   _importedName = Symbol (),
-   _routes       = Symbol (),
-   _real         = Symbol ();
+   _executionContext = Symbol (),
+   _inlineNode       = Symbol (),
+   _exportedName     = Symbol (),
+   _importedName     = Symbol (),
+   _routes           = Symbol (),
+   _real             = Symbol ();
 
 function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
 {
-   X3DNode .call (this, executionContext);
+   X3DObject .call (this);
 
-   this [_inlineNode]   = inlineNode;
-   this [_exportedName] = exportedName;
-   this [_importedName] = importedName;
-   this [_routes]       = new Set ();
+   this [_executionContext] = executionContext;
+   this [_inlineNode]       = inlineNode;
+   this [_exportedName]     = exportedName;
+   this [_importedName]     = importedName;
+   this [_routes]           = [ ];
 
    this .getInlineNode () ._loadState .addInterest ("set_loadState__", this);
 }
 
-// Must be of type X3DNode, to get routes work.
-Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .prototype),
 {
    getExecutionContext ()
    {
-      return this [_inlineNode] .getExecutionContext ();
+      return this [_executionContext];
    },
    getInlineNode ()
    {
@@ -113,23 +113,23 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
       {
          sourceNode: {
             value: sourceNode,
-            writable: false,
+            enumerable: true,
          },
          sourceField: {
             value: sourceField,
-            writable: false,
+            enumerable: true,
          },
          destinationNode: {
             value: destinationNode,
-            writable: false,
+            enumerable: true,
          },
          destinationField: {
             value: destinationField,
-            writable: false,
+            enumerable: true,
          },
       });
 
-      this [_routes] .add (route);
+      this [_routes] .push (route);
 
       // Try to resolve source or destination node routes.
 
@@ -144,8 +144,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
 
          let { sourceNode, destinationNode } = route;
 
-         if (route [_real])
-            route [_real] .dispose ();
+         route [_real] ?.dispose ();
 
          if (sourceNode instanceof X3DImportedNode)
             sourceNode = sourceNode .getExportedNode ();
@@ -162,11 +161,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
    },
    deleteRoute (real)
    {
-      for (const route of this [_routes])
-      {
-         if (route [_real] === real)
-            this [_routes] .delete (route);
-      }
+      this [_routes] = this [_routes] .filter (route => route [_real] !== real);
    },
    deleteRealRoutes ()
    {
@@ -174,11 +169,12 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
       {
          const real = route [_real]
 
-         if (real)
-         {
-            delete route [_real];
-            this .getExecutionContext () .deleteSimpleRoute (real);
-         }
+         if (!real)
+            continue;
+
+         delete route [_real];
+
+         this .getExecutionContext () .deleteSimpleRoute (real);
       }
    },
    getRoutes ()
@@ -205,10 +201,6 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
             break;
          }
       }
-   },
-   toStream (generator)
-   {
-      X3DObject .prototype .toStream .call (this, generator);
    },
    toVRMLStream (generator)
    {
@@ -527,7 +519,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
 
       this .deleteRealRoutes ();
 
-      X3DNode .prototype .dispose .call (this);
+      X3DObject .prototype .dispose .call (this);
    },
 });
 

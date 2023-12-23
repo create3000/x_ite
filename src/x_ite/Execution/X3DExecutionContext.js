@@ -402,7 +402,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          const importedNode = this [_importedNodes] .get (name);
 
          if (importedNode)
-            return SFNodeCache .get (importedNode);
+            return importedNode;
 
          throw new Error (`Unknown named or imported node '${name}'.`);
       }
@@ -583,28 +583,28 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    addRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
+      let
+         importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
+         importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
+
       sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false);
       sourceField      = String (sourceField);
       destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false);
       destinationField = String (destinationField);
 
-      if (!sourceNode)
+      if (!(sourceNode || importedSourceNode))
          throw new Error ("Bad ROUTE specification: source node must be of type X3DNode.");
 
-      if (!destinationNode)
+      if (!(destinationNode || importedDestinationNode))
          throw new Error ("Bad ROUTE specification: destination node must be of type X3DNode.");
 
       // Imported nodes handling.
 
-      let
-         importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
-         importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
-
       try
       {
          // If sourceNode is shared node try to find the corresponding X3DImportedNode.
-         if (sourceNode .getExecutionContext () !== this)
-            importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
+         if (sourceNode && sourceNode .getExecutionContext () !== this)
+            importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
       }
       catch
       {
@@ -614,8 +614,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       try
       {
          // If destinationNode is shared node try to find the corresponding X3DImportedNode.
-         if (destinationNode .getExecutionContext () !== this)
-            importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
+         if (destinationNode && destinationNode .getExecutionContext () !== this)
+            importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
       }
       catch
       {
@@ -635,14 +635,11 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          importedDestinationNode .addRoute (sourceNode, sourceField, importedDestinationNode, destinationField);
       }
-
-      // If either sourceNode or destinationNode is an X3DImportedNode return here without value.
-      if (importedSourceNode === sourceNode || importedDestinationNode === destinationNode)
-         return;
-
-      // Create route and return.
-
-      return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
+      else
+      {
+         // Create route and return.
+         return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
+      }
    },
    addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField)
    {

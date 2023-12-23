@@ -49,22 +49,24 @@ import X3DObject   from "../Base/X3DObject.js";
 import SFNodeCache from "../Fields/SFNodeCache.js";
 
 const
-   _exportedName = Symbol (),
-   _localNode    = Symbol ();
+   _executionContext = Symbol (),
+   _exportedName     = Symbol (),
+   _localNode        = Symbol ();
 
-function X3DExportedNode (exportedName, localNode)
+function X3DExportedNode (executionContext, exportedName, localNode)
 {
    X3DObject .call (this);
 
-   this [_exportedName] = exportedName;
-   this [_localNode]    = localNode;
+   this [_executionContext] = executionContext;
+   this [_exportedName]     = exportedName;
+   this [_localNode]        = localNode;
 }
 
 Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .prototype),
 {
    getExecutionContext ()
    {
-      return this [_localNode] .getExecutionContext ();
+      return this [_executionContext];
    },
    getExportedName ()
    {

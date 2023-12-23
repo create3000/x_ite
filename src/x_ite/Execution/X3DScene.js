@@ -356,7 +356,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this .removeExportedNode (exportedName);
 
-      const exportedNode = new X3DExportedNode (exportedName, node);
+      const exportedNode = new X3DExportedNode (this, exportedName, node);
 
       this [_exportedNodes] .add (exportedName, exportedNode);
 
