@@ -158,17 +158,17 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    getRoutes ()
    {
-      return this [_routes] .map (route =>
+      return this [_routes] .map (({ sourceNode, sourceField, destinationNode, destinationField }) =>
       {
          return {
-            sourceNode: route .sourceNode instanceof X3DImportedNode
-               ? route .sourceNode
-               : SFNodeCache .get (route .sourceNode),
-            sourceField: route .sourceField,
-            destinationNode: route .destinationNode instanceof X3DImportedNode
-               ? route .destinationNode
-               : SFNodeCache .get (route .destinationNode),
-            destinationField: route .destinationField,
+            sourceNode: sourceNode instanceof X3DImportedNode
+               ? sourceNode
+               : SFNodeCache .get (sourceNode),
+            sourceField,
+            destinationNode: destinationNode instanceof X3DImportedNode
+               ? destinationNode
+               : SFNodeCache .get (destinationNode),
+             destinationField,
          };
       });
    },
