@@ -389,9 +389,30 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       return getUniqueName (this [_importedNodes], name);
    },
-   getLocalNode (name)
+   getLocalNode (nameOrNode)
    {
-      name = String (name);
+      const node = X3DCast (X3DConstants .X3DNode, nameOrNode, false);
+
+      if (node)
+      {
+         if (node .getExecutionContext () === this)
+            return node;
+
+         for (const importedNode of this [_importedNodes])
+         {
+            try
+            {
+               if (importedNode .getExportedNode () === node)
+                  return importedNode;
+            }
+            catch
+            { }
+         }
+
+         throw new Error ("Couldn't get local node: node is shared.");
+      }
+
+      const name = String (nameOrNode);
 
       try
       {
@@ -406,29 +427,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
          throw new Error (`Unknown named or imported node '${name}'.`);
       }
-   },
-   getLocalName (node)
-   {
-      node = X3DCast (X3DConstants .X3DNode, node, false);
-
-      if (!node)
-         throw new Error ("Couldn't get local name: node must be of type X3DNode.");
-
-      if (node .getExecutionContext () === this)
-         return node .getName ();
-
-      for (const importedNode of this [_importedNodes])
-      {
-         try
-         {
-            if (importedNode .getExportedNode () === node)
-               return importedNode .getImportedName ();
-         }
-         catch
-         { }
-      }
-
-      throw new Error ("Couldn't get local name: node is shared.");
    },
    setRootNodes () { },
    getRootNodes ()
@@ -604,7 +602,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          // If sourceNode is shared node try to find the corresponding X3DImportedNode.
          if (sourceNode && sourceNode .getExecutionContext () !== this)
-            importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
+            importedSourceNode = this .getLocalNode (sourceNode);
       }
       catch
       {
@@ -615,7 +613,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          // If destinationNode is shared node try to find the corresponding X3DImportedNode.
          if (destinationNode && destinationNode .getExecutionContext () !== this)
-            importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
+            importedDestinationNode = this .getLocalNode (destinationNode);
       }
       catch
       {
@@ -716,7 +714,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          // If sourceNode is shared node try to find the corresponding X3DImportedNode.
          if (sourceNode .getValue () .getExecutionContext () !== this)
-            importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
+            importedSourceNode = this .getLocalNode (sourceNode);
       }
       catch
       {
@@ -727,7 +725,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          // If destinationNode is shared node try to find the corresponding X3DImportedNode.
          if (destinationNode .getValue () .getExecutionContext () !== this)
-            importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
+            importedDestinationNode = this .getLocalNode (destinationNode);
       }
       catch
       {
