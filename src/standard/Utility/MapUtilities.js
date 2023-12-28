@@ -74,10 +74,10 @@ const MapUtilities =
          {
             let a = values .get (m);
 
-            if (!a)
+            if (a)
+               a .length = 0;
+            else
                values .set (m, a = [ ]);
-
-            a .length = 0;
 
             m .forEach (push, a);
 
