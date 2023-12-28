@@ -64,16 +64,20 @@ const MapUtilities =
    })(),
    values: (() =>
    {
-      function callback (value)
-      {
-         this .push (value);
-      }
+      function push (value) { this .push (value); }
 
-      return function (a, m)
+      const values = new WeakMap ();
+
+      return function (m)
       {
+         let a = values .get (m);
+
+         if (!a)
+            values .set (m, a = [ ]);
+
          a .length = 0;
 
-         m .forEach (callback, a);
+         m .forEach (push, a);
 
          return a;
       };

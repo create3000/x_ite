@@ -239,19 +239,14 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    {
       return this [_referencesCallbacks];
    },
-   processReferencesCallbacks: (() =>
+   processReferencesCallbacks ()
    {
-      const referencesCallbacksTemp = [ ];
-
-      return function ()
+      if (this [_referencesCallbacks] .size)
       {
-         if (this [_referencesCallbacks] .size)
-         {
-            for (const callback of MapUtilities .values (referencesCallbacksTemp, this [_referencesCallbacks]))
-               callback ();
-         }
-      };
-   })(),
+         for (const callback of MapUtilities .values (this [_referencesCallbacks]))
+            callback ();
+      }
+   },
    addFieldInterest (field)
    {
       if (this [_fieldInterests] === X3DField .prototype [_fieldInterests])
@@ -337,70 +332,60 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    {
       return this [_routeCallbacks];
    },
-   processRouteCallbacks: (() =>
+   processRouteCallbacks ()
    {
-      const routeCallbacksTemp = [ ];
-
-      return function ()
+      if (this [_routeCallbacks] .size)
       {
-         if (this [_routeCallbacks] .size)
-         {
-            for (const callback of MapUtilities .values (routeCallbacksTemp, this [_routeCallbacks]))
-               callback ();
-         }
-      };
-   })(),
-   processEvent: (() =>
+         for (const callback of MapUtilities .values (this [_routeCallbacks]))
+            callback ();
+      }
+   },
+   processEvent (event = Events .create (this))
    {
-      const fieldCallbacksTemp = [ ];
+      if (event .has (this))
+         return;
 
-      return function (event = Events .create (this))
+      event .add (this);
+
+      this .setTainted (false);
+
+      const field = event .field;
+
+      if (field !== this)
+         this .set (field .getValue (), field .length);
+
+      // Process interests.
+
+      this .processInterests ();
+
+      // Process routes.
+
+      let first = true;
+
+      for (const field of this [_fieldInterests])
       {
-         if (event .has (this))
-            return;
-
-         event .add (this);
-
-         this .setTainted (false);
-
-         const field = event .field;
-
-         if (field !== this)
-            this .set (field .getValue (), field .length);
-
-         // Process interests.
-
-         this .processInterests ();
-
-         // Process routes.
-
-         let first = true;
-
-         for (const field of this [_fieldInterests])
-         {
-            if (first)
-            {
-               first = false;
-               field .addEventObject (this, event);
-            }
-            else
-            {
-               field .addEventObject (this, Events .copy (event));
-            }
-         }
-
          if (first)
-            Events .push (event);
-
-         // Process field callbacks.
-
-         if (this [_fieldCallbacks] .size)
          {
-            for (const callback of MapUtilities .values (fieldCallbacksTemp, this [_fieldCallbacks]))
-               callback (this .valueOf ());
+            first = false;
+            field .addEventObject (this, event);
          }
-      };
-   })(),
+         else
+         {
+            field .addEventObject (this, Events .copy (event));
+         }
+      }
+
+      if (first)
+         Events .push (event);
+
+      // Process field callbacks.
+
+      if (this [_fieldCallbacks] .size)
+      {
+         for (const callback of MapUtilities .values (this [_fieldCallbacks]))
+            callback (this .valueOf ());
+      }
+   },
    fromString (string, scene)
    {
       // Function will be overridden in VRMLParser.

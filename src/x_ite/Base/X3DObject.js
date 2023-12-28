@@ -61,7 +61,6 @@ Object .assign (X3DObject .prototype,
 {
    [_name]: "",
    [_interests]: new Map (),
-   [_values]: [ ],
    [_userData]: new Map (),
    getId ()
    {
@@ -90,10 +89,7 @@ Object .assign (X3DObject .prototype,
    addInterest (callbackName, object, ... args)
    {
       if (this [_interests] === X3DObject .prototype [_interests])
-      {
          this [_interests] = new Map ();
-         this [_values]    = [ ];
-      }
 
       const
          interestId = X3DObject .getInterestId (callbackName, object),
@@ -113,7 +109,7 @@ Object .assign (X3DObject .prototype,
    {
       if (this [_interests] .size)
       {
-         for (const interest of MapUtilities .values (this [_values], this [_interests]))
+         for (const interest of MapUtilities .values (this [_interests]))
             interest ();
       }
    },

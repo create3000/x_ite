@@ -711,21 +711,16 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       else
          return new Map ([... this [_browserCallbacks]] .flatMap (([event, map]) => [... map]));
    },
-   callBrowserCallbacks: (() =>
+   callBrowserCallbacks (event)
    {
-      const values = [ ];
+      const browserCallbacks = this [_browserCallbacks] .get (event);
 
-      return function (event)
+      if (browserCallbacks .size)
       {
-         const browserCallbacks = this [_browserCallbacks] .get (event);
-
-         if (browserCallbacks .size)
-         {
-            for (const callback of MapUtilities .values (values, browserCallbacks))
-               callback (event);
-         }
-      };
-   })(),
+         for (const callback of MapUtilities .values (browserCallbacks))
+            callback (event);
+      }
+   },
    importDocument (dom)
    {
       const
