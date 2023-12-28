@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
-import X3DObject    from "../Base/X3DObject.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import SFNodeCache  from "../Fields/SFNodeCache.js";
+import X3DObject           from "../Base/X3DObject.js";
+import X3DConstants        from "../Base/X3DConstants.js";
+import X3DProtoDeclaration from "../Prototype/X3DProtoDeclaration.js";
+import SFNodeCache         from "../Fields/SFNodeCache.js";
 
 const
    _executionContext = Symbol (),
@@ -68,10 +69,13 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
 
    // Must connect in every context, to make X3DBaseNode.hasRoutes work.
 
-   sourceField .addFieldInterest (destinationField);
-
    sourceField      .addOutputRoute (this);
    destinationField .addInputRoute (this);
+
+   if (executionContext .getOuterNode () instanceof X3DProtoDeclaration)
+      return;
+
+   sourceField .addFieldInterest (destinationField);
 }
 
 Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototype),
