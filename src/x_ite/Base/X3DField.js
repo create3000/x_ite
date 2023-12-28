@@ -241,11 +241,8 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    processReferencesCallbacks ()
    {
-      if (this [_referencesCallbacks] .size)
-      {
-         for (const callback of MapUtilities .values (this [_referencesCallbacks]))
-            callback ();
-      }
+      for (const callback of MapUtilities .values (this [_referencesCallbacks]))
+         callback ();
    },
    addFieldInterest (field)
    {
@@ -334,11 +331,8 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    processRouteCallbacks ()
    {
-      if (this [_routeCallbacks] .size)
-      {
-         for (const callback of MapUtilities .values (this [_routeCallbacks]))
-            callback ();
-      }
+      for (const callback of MapUtilities .values (this [_routeCallbacks]))
+         callback ();
    },
    processEvent (event = Events .create (this))
    {
@@ -380,11 +374,8 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
 
       // Process field callbacks.
 
-      if (this [_fieldCallbacks] .size)
-      {
-         for (const callback of MapUtilities .values (this [_fieldCallbacks]))
-            callback (this .valueOf ());
-      }
+      for (const callback of MapUtilities .values (this [_fieldCallbacks]))
+         callback (this .valueOf ());
    },
    fromString (string, scene)
    {

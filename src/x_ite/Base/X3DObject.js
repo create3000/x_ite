@@ -107,11 +107,8 @@ Object .assign (X3DObject .prototype,
    },
    processInterests ()
    {
-      if (this [_interests] .size)
-      {
-         for (const interest of MapUtilities .values (this [_interests]))
-            interest ();
-      }
+      for (const interest of MapUtilities .values (this [_interests]))
+         interest ();
    },
    getUserData (key)
    {

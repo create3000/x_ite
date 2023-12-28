@@ -713,13 +713,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    callBrowserCallbacks (event)
    {
-      const browserCallbacks = this [_browserCallbacks] .get (event);
-
-      if (browserCallbacks .size)
-      {
-         for (const callback of MapUtilities .values (browserCallbacks))
-            callback (event);
-      }
+      for (const callback of MapUtilities .values (this [_browserCallbacks] .get (event)))
+         callback (event);
    },
    importDocument (dom)
    {

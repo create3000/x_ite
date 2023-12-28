@@ -49,7 +49,7 @@ const MapUtilities =
 {
    assign: (() =>
    {
-      function callback (value, key)
+      function set (value, key)
       {
          this .set (key, value);
       }
@@ -57,7 +57,7 @@ const MapUtilities =
       return function (m1, m2)
       {
          m1 .clear ();
-         m2 .forEach (callback, m1);
+         m2 .forEach (set, m1);
 
          return m1;
       };
@@ -70,16 +70,23 @@ const MapUtilities =
 
       return function (m)
       {
-         let a = values .get (m);
+         if (m .size)
+         {
+            let a = values .get (m);
 
-         if (!a)
-            values .set (m, a = [ ]);
+            if (!a)
+               values .set (m, a = [ ]);
 
-         a .length = 0;
+            a .length = 0;
 
-         m .forEach (push, a);
+            m .forEach (push, a);
 
-         return a;
+            return a;
+         }
+         else
+         {
+            return m .values ();
+         }
       };
    })(),
 };
