@@ -144,7 +144,7 @@ Object .assign (X3DUrlObject .prototype,
                      reject ();
                      break;
                }
-            })
+            });
          };
 
          const loadState = this .checkLoadState ();
