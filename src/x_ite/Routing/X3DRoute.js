@@ -70,20 +70,7 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
    this [_destinationNode]      = destinationNode;
    this [_destinationFieldName] = destinationField;
 
-   if (sourceNode instanceof X3DImportedNode || destinationNode instanceof X3DImportedNode)
-   {
-      if (sourceNode instanceof X3DImportedNode)
-         sourceNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
-
-      if (destinationNode instanceof X3DImportedNode)
-         destinationNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
-
-      this .reconnect ();
-   }
-   else
-   {
-      this .connect ();
-   }
+   this .reconnect ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototype),
