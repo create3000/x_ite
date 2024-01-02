@@ -390,7 +390,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       return getUniqueName (this [_importedNodes], name);
    },
-   getLocalNode (name)
+   getLocalNode (name /* or node */)
    {
       const
          importedNode = name instanceof X3DImportedNode ? name : null,
