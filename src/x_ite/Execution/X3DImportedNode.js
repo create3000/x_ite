@@ -218,7 +218,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    dispose ()
    {
-      for (const route of Array .from (this [_executionContext] .routes))
+      for (const route of Array .from (this [_executionContext] .getRoutes ()))
       {
          if (route .getSourceNode ()=== this)
          {
