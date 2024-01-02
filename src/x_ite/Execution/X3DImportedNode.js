@@ -220,7 +220,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    {
       for (const route of Array .from (this [_executionContext] .getRoutes ()))
       {
-         if (route .getSourceNode ()=== this)
+         if (route .getSourceNode () === this)
          {
             this [_executionContext] .deleteRoute (route);
             continue;
