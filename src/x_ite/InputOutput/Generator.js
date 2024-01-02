@@ -91,7 +91,6 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .nodes                 = new Set ();
    this .names                 = new Map ();
    this .namesByNode           = new Map ();
-   this .importedNames         = new Map ();
    this .routeNodes            = new Set ();
    this .level                 = 0;
    this .containerFields       = [ ];
@@ -299,9 +298,8 @@ Object .assign (Generator .prototype,
 
       if (this .level === 0)
       {
-         this .nodes         .clear ();
-         this .namesByNode   .clear ();
-         this .importedNames .clear ();
+         this .nodes       .clear ();
+         this .namesByNode .clear ();
       }
    },
    NamedNodes (namedNodes)
@@ -340,17 +338,13 @@ Object .assign (Generator .prototype,
          { }
       }
    },
-   AddImportedNode (exportedNode, importedName)
-   {
-      this .importedNames .set (exportedNode, importedName);
-   },
    AddRouteNode (routeNode)
    {
       this .routeNodes .add (routeNode);
    },
    ExistsRouteNode (routeNode)
    {
-      return this .namesByNode .get (routeNode) || this .routeNodes .has (routeNode);
+      return this .namesByNode .has (routeNode) || this .routeNodes .has (routeNode);
    },
    IsSharedNode (baseNode)
    {

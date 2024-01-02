@@ -94,6 +94,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       if (!generator .ExistsNode (this .getInlineNode ()))
          throw new Error ("X3DImportedNode.toVRMLStream: Inline node does not exist.");
 
+      generator .AddRouteNode (this);
+
       const importedName = generator .ImportedName (this .getImportedName ());
 
       generator .string += generator .Indent ();
@@ -110,17 +112,13 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
          generator .string += generator .Space ();
          generator .string += importedName;
       }
-
-      // try
-      // {
-      //    generator .AddRouteNode (this);
-      //    generator .AddImportedNode (this .getExportedNode (), importedName);
-      // }
    },
    toXMLStream (generator)
    {
       if (!generator .ExistsNode (this .getInlineNode ()))
          throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
+
+      generator .AddRouteNode (this);
 
       const importedName = generator .ImportedName (this .getImportedName ());
 
@@ -149,6 +147,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    {
       if (!generator .ExistsNode (this .getInlineNode ()))
          throw new Error ("X3DImportedNode.toJSONStream: Inline node does not exist.");
+
+      generator .AddRouteNode (this);
 
       const importedName = generator .ImportedName (this .getImportedName ());
 

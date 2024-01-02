@@ -45,11 +45,10 @@
  *
  ******************************************************************************/
 
-import X3DObject       from "../Base/X3DObject.js";
-import X3DConstants    from "../Base/X3DConstants.js";
-import SFNodeCache     from "../Fields/SFNodeCache.js";
-import X3DNode         from "../Components/Core/X3DNode.js";
-import X3DImportedNode from "../Execution/X3DImportedNode.js";
+import X3DObject    from "../Base/X3DObject.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import SFNodeCache  from "../Fields/SFNodeCache.js";
+import X3DNode      from "../Components/Core/X3DNode.js";
 
 const
    _executionContext     = Symbol (),
@@ -157,6 +156,12 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    },
    toVRMLStream (generator)
    {
+      if (!generator .ExistsRouteNode (this [_sourceNode]))
+         throw new Error (`Source node does not exist in scene graph.`);
+
+      if (!generator .ExistsRouteNode (this [_destinationNode]))
+         throw new Error (`Destination node does not exist in scene graph.`);
+
       const sourceNodeName = this [_sourceNode] instanceof X3DNode
          ? generator .Name (this [_sourceNode])
          : this [_sourceNode] .getImportedName ();
@@ -188,6 +193,12 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    },
    toXMLStream (generator)
    {
+      if (!generator .ExistsRouteNode (this [_sourceNode]))
+         throw new Error (`Source node does not exist in scene graph.`);
+
+      if (!generator .ExistsRouteNode (this [_destinationNode]))
+         throw new Error (`Destination node does not exist in scene graph.`);
+
       const sourceNodeName = this [_sourceNode] instanceof X3DNode
          ? generator .Name (this [_sourceNode])
          : this [_sourceNode] .getImportedName ();
@@ -226,6 +237,12 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    },
    toJSONStream (generator)
    {
+      if (!generator .ExistsRouteNode (this [_sourceNode]))
+         throw new Error (`Source node does not exist in scene graph.`);
+
+      if (!generator .ExistsRouteNode (this [_destinationNode]))
+         throw new Error (`Destination node does not exist in scene graph.`);
+
       const sourceNodeName = this [_sourceNode] instanceof X3DNode
          ? generator .Name (this [_sourceNode])
          : this [_sourceNode] .getImportedName ();
