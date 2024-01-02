@@ -64,10 +64,10 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
 {
    X3DObject .call (this, executionContext);
 
-   this [_executionContext] = executionContext;
-   this [_sourceNode]       = sourceNode;
+   this [_executionContext]     = executionContext;
+   this [_sourceNode]           = sourceNode;
    this [_sourceFieldName]      = sourceField;
-   this [_destinationNode]  = destinationNode;
+   this [_destinationNode]      = destinationNode;
    this [_destinationFieldName] = destinationField;
 
    if (sourceNode instanceof X3DImportedNode || destinationNode instanceof X3DImportedNode)
@@ -78,12 +78,7 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
       if (destinationNode instanceof X3DImportedNode)
          destinationNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
 
-      try
-      {
-         this .connect ();
-      }
-      catch
-      { }
+      this .reconnect ();
    }
    else
    {
@@ -121,7 +116,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       ///  SAI
       return this [_destinationFieldName];
    },
-   reconnect (loadState)
+   reconnect ()
    {
       try
       {
@@ -130,8 +125,13 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       }
       catch (error)
       {
-         if (loadState .getValue () === X3DConstants .COMPLETE_STATE)
+         if ((this [_sourceNode] instanceof X3DNode ||
+              this [_sourceNode] .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE) &&
+             (this [_destinationNode] instanceof X3DNode ||
+              this [_destinationNode] .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE))
+         {
             console .warn (error .message);
+         }
       }
    },
    connect ()
