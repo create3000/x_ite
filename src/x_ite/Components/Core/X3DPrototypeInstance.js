@@ -159,11 +159,11 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       // Copy proto.
 
-      this .importExternProtos (proto .getBody () .externprotos);
-      this .importProtos       (proto .getBody () .protos);
-      this .copyRootNodes      (proto .getBody () .rootNodes);
-      this .copyImportedNodes  (proto .getBody (), proto .getBody () .getImportedNodes ());
-      this .copyRoutes         (proto .getBody (), proto .getBody () .routes);
+      this .importExternProtos  (proto .getBody () .externprotos);
+      this .importProtos        (proto .getBody () .protos);
+      this .copyRootNodes       (proto .getBody () .rootNodes);
+      this .importImportedNodes (proto .getBody () .importedNodes);
+      this .copyRoutes          (proto .getBody () .routes);
 
       this [_body] .setup ();
 
@@ -321,32 +321,37 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       for (const node of rootNodes1)
          rootNodes2 .push (node .copy (this));
    },
-   copyImportedNodes (executionContext, importedNodes)
+   importImportedNodes (importedNodes)
    {
       for (const importedNode of importedNodes)
       {
          try
          {
-            const
-               inlineNode   = this [_body] .getNamedNode (importedNode .getInlineNode () .getName ()),
-               importedName = importedNode .getImportedName (),
-               exportedName = importedNode .getExportedName ();
+            const inlineNode = this [_body] .getNamedNode (importedNode .getInlineNode () .getName ());
 
-            this [_body] .addImportedNode (inlineNode, exportedName, importedName);
+            this [_body] .addImportedNode (inlineNode, importedNode .getExportedName (), importedNode .getImportedName ());
          }
          catch (error)
          {
-            console .error ("Bad IMPORT specification in copy: ", error);
+            console .error (error);
          }
       }
    },
-   copyRoutes (executionContext, routes)
+   copyRoutes (routes)
    {
       for (const route of routes)
       {
          try
          {
-            this [_body] .addRoute (route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
+            const sourceNode = route .getSourceNode () instanceof X3DNode
+               ? this [_body] .getLocalNode (route .getSourceNode () .getName ())
+               : this [_body] .getLocalNode (route .getSourceNode () .getImportedName ());
+
+            const destinationNode = route .getDestinationNode () instanceof X3DNode
+               ? this [_body] .getLocalNode (route .getDestinationNode () .getName ())
+               : this [_body] .getLocalNode (route .getDestinationNode () .getImportedName ());
+
+            this [_body] .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
          }
          catch (error)
          {

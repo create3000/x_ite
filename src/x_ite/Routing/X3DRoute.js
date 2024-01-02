@@ -45,10 +45,11 @@
  *
  ******************************************************************************/
 
-import X3DObject    from "../Base/X3DObject.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import SFNodeCache  from "../Fields/SFNodeCache.js";
-import X3DNode      from "../Components/Core/X3DNode.js";
+import X3DObject       from "../Base/X3DObject.js";
+import X3DConstants    from "../Base/X3DConstants.js";
+import SFNodeCache     from "../Fields/SFNodeCache.js";
+import X3DNode         from "../Components/Core/X3DNode.js";
+import X3DImportedNode from "../Execution/X3DImportedNode.js";
 
 const
    _executionContext     = Symbol (),
@@ -68,6 +69,12 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
    this [_sourceFieldName]      = sourceField;
    this [_destinationNode]      = destinationNode;
    this [_destinationFieldName] = destinationField;
+
+   if (sourceNode instanceof X3DImportedNode)
+      sourceNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
+
+   if (destinationNode instanceof X3DImportedNode)
+      destinationNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
 
    this .reconnect ();
 }
@@ -358,7 +365,7 @@ Object .defineProperties (X3DRoute .prototype,
    {
       get ()
       {
-         if (this [_sourceNode] instanceof X3DNode)
+         if (this [_destinationNode] instanceof X3DNode)
             return SFNodeCache .get (this [_destinationNode]);
          else
             return this [_destinationNode];
