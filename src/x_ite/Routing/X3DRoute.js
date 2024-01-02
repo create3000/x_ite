@@ -70,11 +70,7 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
    this [_destinationNode]  = destinationNode;
    this [_destinationFieldName] = destinationField;
 
-   if (sourceNode instanceof X3DNode && destinationNode instanceof X3DNode)
-   {
-      this .connect ();
-   }
-   else
+   if (sourceNode instanceof X3DImportedNode || destinationNode instanceof X3DImportedNode)
    {
       if (sourceNode instanceof X3DImportedNode)
          sourceNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
@@ -88,6 +84,10 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
       }
       catch
       { }
+   }
+   else
+   {
+      this .connect ();
    }
 }
 
@@ -121,7 +121,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       ///  SAI
       return this [_destinationFieldName];
    },
-   reconnect ()
+   reconnect (loadState)
    {
       try
       {
@@ -130,7 +130,8 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       }
       catch (error)
       {
-         console .warn (error .message);
+         if (loadState .getValue () === X3DConstants .COMPLETE_STATE)
+            console .warn (error .message);
       }
    },
    connect ()

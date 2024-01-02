@@ -502,9 +502,9 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
             return true;
       }
 
-      for (const importedNode of this [_executionContext] .getImportedNodes ())
+      for (const route of this [_executionContext] .getRoutes ())
       {
-         if (importedNode .hasRoutes (this))
+         if (route .getSourceNode () === this || route .getDestinationNode () === this)
             return true;
       }
 
