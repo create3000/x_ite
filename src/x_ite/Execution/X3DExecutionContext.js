@@ -392,20 +392,45 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    getLocalNode (name)
    {
-      name = String (name);
+      const
+         importedNode = name instanceof X3DImportedNode ? name : null,
+         node         = X3DCast (X3DConstants .X3DNode, name, false) ?? importedNode;
 
-      try
+      if (node)
       {
-         return this .getNamedNode (name);
+         if (node .getExecutionContext () === this)
+            return node;
+
+         for (const importedNode of this [_importedNodes])
+         {
+            try
+            {
+               if (importedNode .getExportedNode () === node)
+                  return importedNode;
+            }
+            catch
+            { }
+         }
+
+         throw new Error (`No suitable named or imported node found in this execution context.`);
       }
-      catch
+      else
       {
-         const importedNode = this [_importedNodes] .get (name);
+         name = String (name);
 
-         if (importedNode)
-            return importedNode;
+         try
+         {
+            return this .getNamedNode (name);
+         }
+         catch
+         {
+            const importedNode = this [_importedNodes] .get (name);
 
-         throw new Error (`Unknown named or imported node '${name}'.`);
+            if (importedNode)
+               return importedNode;
+
+            throw new Error (`Unknown named or imported node '${name}'.`);
+         }
       }
    },
    setRootNodes () { },
@@ -563,6 +588,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       try
       {
+         // Normalize arguments.
+
          const
             importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
             importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
@@ -578,20 +605,12 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (!destinationNode)
             throw new Error ("destination node must be of type X3DNode or X3DImportedNode.");
 
-         // if (sourceNode instanceof X3DNode)
-         //    sourceField = sourceNode .getField (sourceField);
+         // Resolve imported source and destination node.
 
-         // if (destinationNode instanceof X3DNode)
-         //    destinationField = destinationNode .getField (destinationField);
+         sourceNode      = this .getLocalNode (sourceNode);
+         destinationNode = this .getLocalNode (destinationNode);
 
-         // if (!sourceField .isOutput ())
-         //    throw new Error (`field named '${sourceField .getName ()}' in node named '${sourceNode .getName ()}' of type ${sourceNode .getTypeName ()} is not an output field.`);
-
-         // if (!destinationField .isInput ())
-         //    throw new Error (`field named '${destinationField .getName ()}' in node named '${destinationNode .getName ()}' of type ${destinationNode .getTypeName ()} is not an input field.`);
-
-         // if (sourceField .getType () !== destinationField .getType ())
-         //    throw new Error (`ROUTE types ${sourceField .getTypeName ()} and ${destinationField .getTypeName ()} do not match.`);
+         // Add route.
 
          const
             id    = X3DRoute .getRouteId (sourceNode, sourceField, destinationNode, destinationField),
@@ -633,6 +652,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    getRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
+      // Normalize arguments.
+
       const
          importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
          importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
@@ -647,6 +668,13 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (!destinationNode)
          throw new Error ("Bad ROUTE specification: destinationNode must be of type X3DNode.");
+
+      // Resolve imported source and destination node.
+
+      sourceNode      = this .getLocalNode (sourceNode);
+      destinationNode = this .getLocalNode (destinationNode);
+
+      // Return route.
 
       return this [_routes] .get (X3DRoute .getRouteId (sourceNode, sourceField, destinationNode, destinationField));
    },
