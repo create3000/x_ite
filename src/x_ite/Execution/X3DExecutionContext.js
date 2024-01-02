@@ -47,6 +47,7 @@
 
 import Fields                      from "../Fields.js";
 import X3DBaseNode                 from "../Base/X3DBaseNode.js";
+import X3DNode                     from "../Components/Core/X3DNode.js";
 import { getUniqueName }           from "./NamedNodesHandling.js";
 import NamedNodesArray             from "./NamedNodesArray.js";
 import X3DImportedNode             from "./X3DImportedNode.js";
@@ -407,29 +408,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          throw new Error (`Unknown named or imported node '${name}'.`);
       }
    },
-   getLocalName (node)
-   {
-      node = X3DCast (X3DConstants .X3DNode, node, false);
-
-      if (!node)
-         throw new Error ("Couldn't get local name: node must be of type X3DNode.");
-
-      if (node .getExecutionContext () === this)
-         return node .getName ();
-
-      for (const importedNode of this [_importedNodes])
-      {
-         try
-         {
-            if (importedNode .getExportedNode () === node)
-               return importedNode .getImportedName ();
-         }
-         catch
-         { }
-      }
-
-      throw new Error ("Couldn't get local name: node is shared.");
-   },
    setRootNodes () { },
    getRootNodes ()
    {
@@ -583,98 +561,54 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    addRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
-      let
-         importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
-         importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
-
-      sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false);
-      sourceField      = String (sourceField);
-      destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false);
-      destinationField = String (destinationField);
-
-      if (!(sourceNode || importedSourceNode))
-         throw new Error ("Bad ROUTE specification: source node must be of type X3DNode.");
-
-      if (!(destinationNode || importedDestinationNode))
-         throw new Error ("Bad ROUTE specification: destination node must be of type X3DNode.");
-
-      // Imported nodes handling.
-
       try
       {
-         // If sourceNode is shared node try to find the corresponding X3DImportedNode.
-         if (sourceNode && sourceNode .getExecutionContext () !== this)
-            importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
-      }
-      catch
-      {
-         // Source node is shared but not imported.
-      }
+         const
+            importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
+            importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
 
-      try
-      {
-         // If destinationNode is shared node try to find the corresponding X3DImportedNode.
-         if (destinationNode && destinationNode .getExecutionContext () !== this)
-            importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
-      }
-      catch
-      {
-         // Destination node is shared but not imported.
-      }
+         sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false) ?? importedSourceNode;
+         sourceField      = String (sourceField);
+         destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
+         destinationField = String (destinationField);
 
-      if (importedSourceNode instanceof X3DImportedNode && importedDestinationNode instanceof X3DImportedNode)
-      {
-         importedSourceNode      .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
-         importedDestinationNode .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
-      }
-      else if (importedSourceNode instanceof X3DImportedNode)
-      {
-         importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNode, destinationField);
-      }
-      else if (importedDestinationNode instanceof X3DImportedNode)
-      {
-         importedDestinationNode .addRoute (sourceNode, sourceField, importedDestinationNode, destinationField);
-      }
-      else
-      {
-         // Create route and return.
-         return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
-      }
-   },
-   addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField)
-   {
-      try
-      {
-         // Source and dest node must be here X3DNode, no check here.
-         // Private function.
-         // Create route and return.
+         if (!sourceNode)
+            throw new Error ("source node must be of type X3DNode or X3DImportedNode.");
 
-         sourceField      = sourceNode      .getField (sourceField),
-         destinationField = destinationNode .getField (destinationField);
+         if (!destinationNode)
+            throw new Error ("destination node must be of type X3DNode or X3DImportedNode.");
 
-         if (!sourceField .isOutput ())
-            throw new Error (`Field named '${sourceField .getName ()}' in node named '${sourceNode .getName ()}' of type ${sourceNode .getTypeName ()} is not an output field.`);
+         // if (sourceNode instanceof X3DNode)
+         //    sourceField = sourceNode .getField (sourceField);
 
-         if (!destinationField .isInput ())
-            throw new Error (`Field named '${destinationField .getName ()}' in node named '${destinationNode .getName ()}' of type ${destinationNode .getTypeName ()} is not an input field.`);
+         // if (destinationNode instanceof X3DNode)
+         //    destinationField = destinationNode .getField (destinationField);
 
-         if (sourceField .getType () !== destinationField .getType ())
-            throw new Error (`ROUTE types ${sourceField .getTypeName ()} and ${destinationField .getTypeName ()} do not match.`);
+         // if (!sourceField .isOutput ())
+         //    throw new Error (`field named '${sourceField .getName ()}' in node named '${sourceNode .getName ()}' of type ${sourceNode .getTypeName ()} is not an output field.`);
 
-         const id = X3DRoute .getRouteId (sourceField, destinationField);
+         // if (!destinationField .isInput ())
+         //    throw new Error (`field named '${destinationField .getName ()}' in node named '${destinationNode .getName ()}' of type ${destinationNode .getTypeName ()} is not an input field.`);
 
-         let route = this [_routes] .get (id);
+         // if (sourceField .getType () !== destinationField .getType ())
+         //    throw new Error (`ROUTE types ${sourceField .getTypeName ()} and ${destinationField .getTypeName ()} do not match.`);
+
+         const
+            id    = X3DRoute .getRouteId (sourceNode, sourceField, destinationNode, destinationField),
+            route = this [_routes] .get (id);
 
          if (route)
+         {
             return route;
+         }
+         else
+         {
+            const route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
 
-         route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
+            this [_routes] .add (id, route);
 
-         this [_routes] .add (id, route);
-
-         this ._routes_changed = this .getBrowser () .getCurrentTime ();
-
-         return route;
+            return route;
+         }
       }
       catch (error)
       {
@@ -683,7 +617,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    deleteRoute (route)
    {
-      // sourceNode, sourceField, destinationNode, destinationField
+      // Case: sourceNode, sourceField, destinationNode, destinationField.
       if (arguments .length === 4)
          route = this .getRoute (... arguments);
 
@@ -693,66 +627,19 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (route .getExecutionContext () !== this)
          return;
 
-      this .deleteSimpleRoute (route);
-      this .deleteImportedRoute (route .sourceNode, route .destinationNode, route);
-   },
-   deleteSimpleRoute (route)
-   {
       this [_routes] .remove (route .getRouteId ());
 
       route .disconnect ();
-
-      this ._routes_changed = this .getBrowser () .getCurrentTime ();
-   },
-   deleteImportedRoute (sourceNode, destinationNode, route)
-   {
-      // Imported nodes handling.
-
-      let
-         importedSourceNode      = null,
-         importedDestinationNode = null;
-
-      try
-      {
-         // If sourceNode is shared node try to find the corresponding X3DImportedNode.
-         if (sourceNode .getValue () .getExecutionContext () !== this)
-            importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
-      }
-      catch
-      {
-         // Source node is shared but not imported.
-      }
-
-      try
-      {
-         // If destinationNode is shared node try to find the corresponding X3DImportedNode.
-         if (destinationNode .getValue () .getExecutionContext () !== this)
-            importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
-      }
-      catch
-      {
-         // Destination node is shared but not imported.
-      }
-
-      if (importedSourceNode instanceof X3DImportedNode && importedDestinationNode instanceof X3DImportedNode)
-      {
-         importedSourceNode      .deleteRoute (route);
-         importedDestinationNode .deleteRoute (route);
-      }
-      else if (importedSourceNode instanceof X3DImportedNode)
-      {
-         importedSourceNode .deleteRoute (route);
-      }
-      else if (importedDestinationNode instanceof X3DImportedNode)
-      {
-         importedDestinationNode .deleteRoute (route);
-      }
    },
    getRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
-      sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false);
+      const
+         importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
+         importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
+
+      sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false) ?? importedSourceNode;
       sourceField      = String (sourceField)
-      destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false);
+      destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
       destinationField = String (destinationField)
 
       if (!sourceNode)
@@ -761,10 +648,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (!destinationNode)
          throw new Error ("Bad ROUTE specification: destinationNode must be of type X3DNode.");
 
-      sourceField      = sourceNode      .getField (sourceField);
-      destinationField = destinationNode .getField (destinationField);
-
-      return this [_routes] .get (X3DRoute .getRouteId (sourceField, destinationField));
+      return this [_routes] .get (X3DRoute .getRouteId (sourceNode, sourceField, destinationNode, destinationField));
    },
    getRoutes ()
    {

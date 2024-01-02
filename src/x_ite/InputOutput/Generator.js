@@ -427,18 +427,6 @@ Object .assign (Generator .prototype,
 
       return newName;
    },
-   LocalName (baseNode)
-   {
-      const importedName = this .importedNames .get (baseNode);
-
-      if (importedName !== undefined)
-         return importedName;
-
-      if (this .ExistsNode (baseNode))
-         return this .Name (baseNode);
-
-      throw new Error (`Couldn't get local name for node '${baseNode .getTypeName ()}'.`);
-   },
    PushContainerField (field)
    {
       this .containerFields .push (field);

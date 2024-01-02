@@ -65,9 +65,6 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_inlineNode]       = inlineNode;
    this [_exportedName]     = exportedName;
    this [_importedName]     = importedName;
-   this [_routes]           = [ ];
-
-   this .getInlineNode () ._loadState .addInterest ("set_loadState__", this);
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .prototype),
@@ -92,423 +89,149 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    {
       return this [_importedName];
    },
-   hasRoutes (baseNode)
-   {
-      return this [_routes]
-         .some (route => route .sourceNode === baseNode || route .destinationNode === baseNode)
-   },
-   addRoute (sourceNode, sourceField, destinationNode, destinationField)
-   {
-      // Add route.
-
-      const route = {
-         sourceNode,
-         sourceField,
-         destinationNode,
-         destinationField,
-      };
-
-      this [_routes] .push (route);
-
-      // Try to resolve source or destination node routes.
-
-      if (this .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
-         this .resolveRoute (route);
-   },
-   resolveRoute (route)
-   {
-      try
-      {
-         const { sourceField, destinationField } = route;
-
-         let { sourceNode, destinationNode } = route;
-
-         route [_real] ?.dispose ();
-
-         if (sourceNode instanceof X3DImportedNode)
-            sourceNode = sourceNode .getExportedNode ();
-
-         if (destinationNode instanceof X3DImportedNode)
-            destinationNode = destinationNode .getExportedNode ();
-
-         route [_real] = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
-      }
-      catch (error)
-      {
-         console .error (error .message);
-      }
-   },
-   deleteRoute (real)
-   {
-      this [_routes] = this [_routes] .filter (route => route [_real] !== real);
-   },
-   deleteRealRoutes ()
-   {
-      for (const route of this [_routes])
-      {
-         const real = route [_real]
-
-         if (!real)
-            continue;
-
-         delete route [_real];
-
-         this .getExecutionContext () .deleteSimpleRoute (real);
-      }
-   },
-   getRoutes ()
-   {
-      return this [_routes] .map (({ sourceNode, sourceField, destinationNode, destinationField }) =>
-      {
-         return {
-            sourceNode: sourceNode instanceof X3DImportedNode
-               ? sourceNode
-               : SFNodeCache .get (sourceNode),
-            sourceField,
-            destinationNode: destinationNode instanceof X3DImportedNode
-               ? destinationNode
-               : SFNodeCache .get (destinationNode),
-             destinationField,
-         };
-      });
-   },
-   set_loadState__ ()
-   {
-      switch (this .getInlineNode () .checkLoadState ())
-      {
-         case X3DConstants .NOT_STARTED_STATE:
-         case X3DConstants .FAILED_STATE:
-         {
-            this .deleteRealRoutes ();
-            break;
-         }
-         case X3DConstants .COMPLETE_STATE:
-         {
-            this .deleteRealRoutes ();
-
-            for (const route of this [_routes])
-               this .resolveRoute (route);
-
-            break;
-         }
-      }
-   },
    toVRMLStream (generator)
    {
-      if (generator .ExistsNode (this .getInlineNode ()))
-      {
-         const importedName = generator .ImportedName (this .getImportedName ());
+      if (!generator .ExistsNode (this .getInlineNode ()))
+         throw new Error ("X3DImportedNode.toVRMLStream: Inline node does not exist.");
 
-         generator .string += generator .Indent ();
-         generator .string += "IMPORT";
+      const importedName = generator .ImportedName (this .getImportedName ());
+
+      generator .string += generator .Indent ();
+      generator .string += "IMPORT";
+      generator .string += generator .Space ();
+      generator .string += generator .Name (this .getInlineNode ());
+      generator .string += ".";
+      generator .string += this .getExportedName ();
+
+      if (importedName !== this .getExportedName ())
+      {
          generator .string += generator .Space ();
-         generator .string += generator .Name (this .getInlineNode ());
-         generator .string += ".";
-         generator .string += this .getExportedName ();
-
-         if (importedName !== this .getExportedName ())
-         {
-            generator .string += generator .Space ();
-            generator .string += "AS";
-            generator .string += generator .Space ();
-            generator .string += importedName;
-         }
-
-         try
-         {
-            generator .AddRouteNode (this);
-            generator .AddImportedNode (this .getExportedNode (), importedName);
-         }
-         catch
-         {
-            // Output unresolved routes.
-
-            for (const { sourceNode, sourceField, destinationNode, destinationField } of this [_routes])
-            {
-               if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
-               {
-                  const sourceNodeName = sourceNode instanceof X3DImportedNode
-                     ? sourceNode .getImportedName ()
-                     : generator .Name (sourceNode);
-
-                  const destinationNodeName = destinationNode instanceof X3DImportedNode
-                     ? destinationNode .getImportedName ()
-                     : generator .Name (destinationNode);
-
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .Indent ();
-                  generator .string += "ROUTE";
-                  generator .string += generator .Space ();
-                  generator .string += sourceNodeName;
-                  generator .string += ".";
-                  generator .string += sourceField;
-                  generator .string += generator .Space ();
-                  generator .string += "TO";
-                  generator .string += generator .Space ();
-                  generator .string += destinationNodeName;
-                  generator .string += ".";
-                  generator .string += destinationField;
-               }
-            }
-         }
+         generator .string += "AS";
+         generator .string += generator .Space ();
+         generator .string += importedName;
       }
-      else
-      {
-         throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
-      }
+
+      // try
+      // {
+      //    generator .AddRouteNode (this);
+      //    generator .AddImportedNode (this .getExportedNode (), importedName);
+      // }
    },
    toXMLStream (generator)
    {
-      if (generator .ExistsNode (this .getInlineNode ()))
-      {
-         const importedName = generator .ImportedName (this .getImportedName ());
-
-         generator .string += generator .Indent ();
-         generator .string += "<IMPORT";
-         generator .string += generator .Space ();
-         generator .string += "inlineDEF='";
-         generator .string += generator .XMLEncode (generator .Name (this .getInlineNode ()));
-         generator .string += "'";
-         generator .string += generator .Space ();
-         generator .string += "importedDEF='";
-         generator .string += generator .XMLEncode (this .getExportedName ());
-         generator .string += "'";
-
-         if (importedName !== this .getExportedName ())
-         {
-            generator .string += generator .Space ();
-            generator .string += "AS='";
-            generator .string += generator .XMLEncode (importedName);
-            generator .string += "'";
-         }
-
-         generator .string += generator .closingTags ? "></IMPORT>" : "/>";
-
-         try
-         {
-            generator .AddRouteNode (this);
-            generator .AddImportedNode (this .getExportedNode (), importedName);
-         }
-         catch
-         {
-            // Output unresolved routes.
-
-            for (const { sourceNode, sourceField, destinationNode, destinationField } of this [_routes])
-            {
-               if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
-               {
-                  const sourceNodeName = sourceNode instanceof X3DImportedNode
-                     ? sourceNode .getImportedName ()
-                     : generator .Name (sourceNode);
-
-                  const destinationNodeName = destinationNode instanceof X3DImportedNode
-                     ? destinationNode .getImportedName ()
-                     : generator .Name (destinationNode);
-
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .Indent ();
-                  generator .string += "<ROUTE";
-                  generator .string += generator .Space ();
-                  generator .string += "fromNode='";
-                  generator .string += generator .XMLEncode (sourceNodeName);
-                  generator .string += "'";
-                  generator .string += generator .Space ();
-                  generator .string += "fromField='";
-                  generator .string += generator .XMLEncode (sourceField);
-                  generator .string += "'";
-                  generator .string += generator .Space ();
-                  generator .string += "toNode='";
-                  generator .string += generator .XMLEncode (destinationNodeName);
-                  generator .string += "'";
-                  generator .string += generator .Space ();
-                  generator .string += "toField='";
-                  generator .string += generator .XMLEncode (destinationField);
-                  generator .string += "'";
-                  generator .string += generator .closingTags ? "></ROUTE>" : "/>";
-               }
-            }
-         }
-      }
-      else
-      {
+      if (!generator .ExistsNode (this .getInlineNode ()))
          throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
+
+      const importedName = generator .ImportedName (this .getImportedName ());
+
+      generator .string += generator .Indent ();
+      generator .string += "<IMPORT";
+      generator .string += generator .Space ();
+      generator .string += "inlineDEF='";
+      generator .string += generator .XMLEncode (generator .Name (this .getInlineNode ()));
+      generator .string += "'";
+      generator .string += generator .Space ();
+      generator .string += "importedDEF='";
+      generator .string += generator .XMLEncode (this .getExportedName ());
+      generator .string += "'";
+
+      if (importedName !== this .getExportedName ())
+      {
+         generator .string += generator .Space ();
+         generator .string += "AS='";
+         generator .string += generator .XMLEncode (importedName);
+         generator .string += "'";
       }
+
+      generator .string += generator .closingTags ? "></IMPORT>" : "/>";
    },
    toJSONStream (generator)
    {
-      if (generator .ExistsNode (this .getInlineNode ()))
+      if (!generator .ExistsNode (this .getInlineNode ()))
+         throw new Error ("X3DImportedNode.toJSONStream: Inline node does not exist.");
+
+      const importedName = generator .ImportedName (this .getImportedName ());
+
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "IMPORT";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@inlineDEF";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += generator .JSONEncode (generator .Name (this .getInlineNode ()));
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@importedDEF";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += generator .JSONEncode (this .getExportedName ());
+      generator .string += '"';
+
+      if (importedName !== this .getExportedName ())
       {
-         const importedName = generator .ImportedName (this .getImportedName ());
-
-         generator .string += generator .Indent ();
-         generator .string += '{';
-         generator .string += generator .TidySpace ();
-         generator .string += '"';
-         generator .string += "IMPORT";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .IncIndent ();
-         generator .string += generator .Indent ();
-         generator .string += '{';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .IncIndent ();
-
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "@inlineDEF";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '"';
-         generator .string += generator .JSONEncode (generator .Name (this .getInlineNode ()));
-         generator .string += '"';
          generator .string += ',';
          generator .string += generator .TidyBreak ();
-
          generator .string += generator .Indent ();
          generator .string += '"';
-         generator .string += "@importedDEF";
+         generator .string += "@AS";
          generator .string += '"';
          generator .string += ':';
          generator .string += generator .TidySpace ();
          generator .string += '"';
-         generator .string += generator .JSONEncode (this .getExportedName ());
+         generator .string += generator .JSONEncode (importedName);
          generator .string += '"';
-
-         if (importedName !== this .getExportedName ())
-         {
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@AS";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .JSONEncode (importedName);
-            generator .string += '"';
-            generator .string += generator .TidyBreak ();
-         }
-         else
-         {
-            generator .string += generator .TidyBreak ();
-         }
-
-         generator .string += generator .DecIndent ();
-         generator .string += generator .Indent ();
-         generator .string += '}';
          generator .string += generator .TidyBreak ();
-         generator .string += generator .DecIndent ();
-         generator .string += generator .Indent ();
-         generator .string += '}';
-
-         try
-         {
-            generator .AddRouteNode (this);
-            generator .AddImportedNode (this .getExportedNode (), importedName);
-         }
-         catch
-         {
-            // Output unresolved routes.
-
-            for (const { sourceNode, sourceField, destinationNode, destinationField } of this [_routes])
-            {
-               if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
-               {
-                  const sourceNodeName = sourceNode instanceof X3DImportedNode
-                     ? sourceNode .getImportedName ()
-                     : generator .Name (sourceNode);
-
-                  const destinationNodeName = destinationNode instanceof X3DImportedNode
-                     ? destinationNode .getImportedName ()
-                     : generator .Name (destinationNode);
-
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .Indent ();
-                  generator .string += '{';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += "ROUTE";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .IncIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '{';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .IncIndent ();
-
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@fromNode";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (sourceNodeName);
-                  generator .string += '"';
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@fromField";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (sourceField);
-                  generator .string += '"';
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@toNode";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (destinationNodeName);
-                  generator .string += '"';
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@toField";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (destinationField);
-                  generator .string += '"';
-                  generator .string += generator .TidyBreak ();
-
-                  generator .string += generator .DecIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '}';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .DecIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '}';
-               }
-            }
-         }
       }
       else
       {
-         throw new Error ("X3DImportedNode.toJSONStream: Inline node does not exist.");
+         generator .string += generator .TidyBreak ();
       }
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
    },
    dispose ()
    {
-      this .getInlineNode () ._loadState .removeInterest ("set_loadState__", this);
+      for (const route of Array .from (this [_executionContext] .routes))
+      {
+         if (route .getSourceNode ()=== this)
+         {
+            this [_executionContext] .deleteRoute (route);
+            continue;
+         }
 
-      this .deleteRealRoutes ();
+         if (route .getDestinationNode () === this)
+         {
+            this [_executionContext] .deleteRoute (route);
+            continue;
+         }
+      }
 
       X3DObject .prototype .dispose .call (this);
    },

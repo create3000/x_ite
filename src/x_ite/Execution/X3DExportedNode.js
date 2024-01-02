@@ -78,7 +78,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    },
    toVRMLStream (generator)
    {
-      const localName = generator .LocalName (this .getLocalNode ());
+      const localName = generator .Name (this .getLocalNode ());
 
       generator .string += generator .Indent ();
       generator .string += "EXPORT";
@@ -95,7 +95,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    },
    toXMLStream (generator)
    {
-      const localName = generator .LocalName (this .getLocalNode ());
+      const localName = generator .Name (this .getLocalNode ());
 
       generator .string += generator .Indent ();
       generator .string += "<EXPORT";
@@ -116,7 +116,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    },
    toJSONStream (generator)
    {
-      const localName = generator .LocalName (this .getLocalNode ());
+      const localName = generator .Name (this .getLocalNode ());
 
       generator .string += generator .Indent ();
       generator .string += '{';

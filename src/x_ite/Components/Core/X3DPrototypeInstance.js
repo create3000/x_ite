@@ -346,11 +346,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       {
          try
          {
-            const
-               sourceNode      = this [_body] .getLocalNode (executionContext .getLocalName (route .sourceNode)),
-               destinationNode = this [_body] .getLocalNode (executionContext .getLocalName (route .destinationNode));
-
-            this [_body] .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
+            this [_body] .addRoute (route .sourceNode, route .sourceField, route .destinationNode, route .destinationField);
          }
          catch (error)
          {
