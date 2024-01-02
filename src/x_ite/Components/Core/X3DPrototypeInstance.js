@@ -214,6 +214,9 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          oldField .setAccessType (newField .getAccessType ());
          oldField .setName (newField .getName ());
 
+         // Replace field, ie. reuse old field.
+         this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
+
          const references = new Set (oldField .getReferences ());
 
          // Remove references and routes.
@@ -229,14 +232,27 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
          // Reconnect routes.
          for (const route of oldField .getInputRoutes ())
-            route .getSourceField () .addFieldInterest (route .getDestinationField ());
+         {
+            try
+            {
+               route .dispose ();
+               route .getExecutionContext () .addRoute (route .getSourceNode (), route .getSourceField (), this, oldField .getName ());
+            }
+            catch
+            { }
+         }
 
          // Reconnect routes.
          for (const route of oldField .getOutputRoutes ())
-            route .getSourceField () .addFieldInterest (route .getDestinationField ());
-
-         // Replace field, ie. reuse old field.
-         this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
+         {
+            try
+            {
+               route .dispose ();
+               route .getExecutionContext () .addRoute (this, oldField .getName (), route .getDestinationNode (), route .getDestinationField ());
+            }
+            catch
+            { }
+         }
 
          // Remove from old fields and dispose new field.
          oldFields .delete (oldFieldName);
