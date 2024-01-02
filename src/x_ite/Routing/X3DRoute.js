@@ -178,10 +178,18 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       generator .string += generator .Space ();
       generator .string += sourceNodeName;
       generator .string += ".";
-      generator .string += this [_sourceFieldName];
 
-      if (this [_sourceField] ?.getAccessType () === X3DConstants .inputOutput)
-         generator .string += "_changed";
+      if (this [_sourceField])
+      {
+         generator .string += this [_sourceField] .getName ();
+
+         if (this [_sourceField] .getAccessType () === X3DConstants .inputOutput)
+            generator .string += "_changed";
+      }
+      else
+      {
+         generator .string += this [_sourceFieldName];
+      }
 
       const destinationNodeName = this [_destinationNode] instanceof X3DNode
          ? generator .Name (this [_destinationNode])
@@ -193,10 +201,17 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       generator .string += destinationNodeName;
       generator .string += ".";
 
-      if (this [_destinationField] ?.getAccessType () === X3DConstants .inputOutput)
-         generator .string += "set_";
+      if (this [_destinationField])
+      {
+         if (this [_destinationField] .getAccessType () === X3DConstants .inputOutput)
+            generator .string += "set_";
 
-      generator .string += this [_destinationFieldName];
+         generator .string += this [_destinationField] .getName ();
+      }
+      else
+      {
+         generator .string += this [_destinationFieldName];
+      }
    },
    toXMLStream (generator)
    {
@@ -218,10 +233,18 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "fromField='";
-      generator .string += generator .XMLEncode (this [_sourceFieldName]);
 
-      if (this [_sourceField] ?.getAccessType () === X3DConstants .inputOutput)
-         generator .string += "_changed";
+      if (this [_sourceField])
+      {
+         generator .string += generator .XMLEncode (this [_sourceField] .getName ());
+
+         if (this [_sourceField] .getAccessType () === X3DConstants .inputOutput)
+            generator .string += "_changed";
+      }
+      else
+      {
+         generator .string += generator .XMLEncode (this [_sourceFieldName]);
+      }
 
       const destinationNodeName = this [_destinationNode] instanceof X3DNode
          ? generator .Name (this [_destinationNode])
@@ -235,10 +258,18 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       generator .string += generator .Space ();
       generator .string += "toField='";
 
-      if (this [_destinationField] ?.getAccessType () === X3DConstants .inputOutput)
-         generator .string += "set_";
+      if (this [_destinationField])
+      {
+         if (this [_destinationField] .getAccessType () === X3DConstants .inputOutput)
+            generator .string += "set_";
 
-      generator .string += generator .XMLEncode (this [_destinationFieldName]);
+         generator .string += generator .XMLEncode (this [_destinationField] .getName ());
+      }
+      else
+      {
+         generator .string += generator .XMLEncode (this [_destinationFieldName]);
+      }
+
       generator .string += "'";
       generator .string += generator .closingTags ? "></ROUTE>" : "/>";
    },
@@ -287,7 +318,19 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += generator .JSONEncode (this [_sourceFieldName]);
+
+      if (this [_sourceField])
+      {
+         generator .string += generator .JSONEncode (this [_sourceField] .getName ());
+
+         if (this [_sourceField] .getAccessType () === X3DConstants .inputOutput)
+            generator .string += "_changed";
+      }
+      else
+      {
+         generator .string += generator .JSONEncode (this [_sourceFieldName]);
+      }
+
       generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
@@ -315,7 +358,19 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += generator .JSONEncode (this [_destinationFieldName]);
+
+      if (this [_destinationField])
+      {
+         if (this [_destinationField] .getAccessType () === X3DConstants .inputOutput)
+            generator .string += "set_";
+
+         generator .string += generator .JSONEncode (this [_destinationField] .getName ());
+      }
+      else
+      {
+         generator .string += generator .JSONEncode (this [_destinationFieldName]);
+      }
+
       generator .string += '"';
       generator .string += generator .TidyBreak ();
 
