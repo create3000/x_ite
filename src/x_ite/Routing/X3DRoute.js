@@ -478,15 +478,13 @@ Object .assign (X3DRoute,
 {
    getRouteId (sourceNode, sourceFieldName, destinationNode, destinationFieldName)
    {
-      if (sourceNode instanceof X3DNode)
-         var sourceField = sourceNode .getField (sourceFieldName);
-      else
-         var sourceField = $.try (() => sourceNode .getExportedNode () .getField (sourceFieldName));
+      const sourceField = sourceNode instanceof X3DNode
+         ? sourceNode .getField (sourceFieldName)
+         : $.try (() => sourceNode .getExportedNode () .getField (sourceFieldName));
 
-      if (destinationNode instanceof X3DNode)
-         var destinationField = destinationNode .getField (destinationFieldName);
-      else
-         var destinationField = $.try (() => destinationNode .getExportedNode () .getField (destinationFieldName));
+      const destinationField = destinationNode instanceof X3DNode
+         ? destinationNode .getField (destinationFieldName)
+         : $.try (() => destinationNode .getExportedNode () .getField (destinationFieldName));
 
       if (sourceField)
       {
