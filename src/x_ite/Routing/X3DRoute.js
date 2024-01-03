@@ -129,34 +129,55 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    },
    connect ()
    {
-      const sourceNode = this [_sourceNode] instanceof X3DNode
-         ? this [_sourceNode]
-         : this [_sourceNode] .getExportedNode ();
+      try
+      {
+         var sourceNode = this [_sourceNode] instanceof X3DNode
+            ? this [_sourceNode]
+            : this [_sourceNode] .getExportedNode ();
 
-      const destinationNode = this [_destinationNode] instanceof X3DNode
-         ? this [_destinationNode]
-         : this [_destinationNode] .getExportedNode ();
+         this [_sourceField] = sourceNode .getField (this [_sourceFieldName]);
 
-      this [_sourceField]      = sourceNode      .getField (this [_sourceFieldName]),
-      this [_destinationField] = destinationNode .getField (this [_destinationFieldName]);
+         this [_sourceField] .addOutputRoute (this);
+      }
+      catch
+      { }
 
-      this [_sourceField]      .addOutputRoute (this);
-      this [_destinationField] .addInputRoute (this);
+      try
+      {
+         var destinationNode = this [_destinationNode] instanceof X3DNode
+            ? this [_destinationNode]
+            : this [_destinationNode] .getExportedNode ();
 
-      this [_sourceField] .addFieldInterest (this [_destinationField]);
+         this [_destinationField] = destinationNode .getField (this [_destinationFieldName]);
+
+         this [_destinationField] .addInputRoute (this);
+      }
+      catch
+      { }
+
+      if (this [_sourceField] && this [_destinationField])
+      {
+         this [_sourceField] .addFieldInterest (this [_destinationField]);
+      }
+      else if (sourceNode && !this [_sourceField])
+      {
+         throw new Error (`Field '${this [_sourceFieldName]}' does not exists in node class ${sourceNode .getTypeName ()}`);
+      }
+      else if (destinationNode && !this [_destinationField])
+      {
+         throw new Error (`Field '${this [_destinationFieldName]}' does not exists in node class ${destinationNode .getTypeName ()}`);
+      }
    },
    disconnect ()
    {
-      if (!this [_sourceField])
-         return;
+      if (this [_sourceField])
+         this [_sourceField] .removeOutputRoute (this);
 
-      if (!this [_destinationField])
-         return;
+      if (this [_destinationField])
+         this [_destinationField] .removeInputRoute (this);
 
-      this [_sourceField]      .removeOutputRoute (this);
-      this [_destinationField] .removeInputRoute (this);
-
-      this [_sourceField] .removeFieldInterest (this [_destinationField]);
+      if (this [_sourceField] && this [_destinationField])
+         this [_sourceField] .removeFieldInterest (this [_destinationField]);
 
       this [_sourceField]      = null;
       this [_destinationField] = null;
