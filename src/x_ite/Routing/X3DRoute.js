@@ -151,6 +151,9 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    },
    connect ()
    {
+      if (this [_disposed])
+         return;
+
       try
       {
          const sourceNode = this [_sourceNode] instanceof X3DNode
