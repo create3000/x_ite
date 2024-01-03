@@ -161,11 +161,11 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       }
       else if (sourceNode && !this [_sourceField])
       {
-         throw new Error (`Field '${this [_sourceFieldName]}' does not exists in node class ${sourceNode .getTypeName ()}`);
+         throw new Error (`Field '${this [_sourceFieldName]}' does not exists in node class ${sourceNode .getTypeName ()}.`);
       }
       else if (destinationNode && !this [_destinationField])
       {
-         throw new Error (`Field '${this [_destinationFieldName]}' does not exists in node class ${destinationNode .getTypeName ()}`);
+         throw new Error (`Field '${this [_destinationFieldName]}' does not exists in node class ${destinationNode .getTypeName ()}.`);
       }
    },
    disconnect ()
