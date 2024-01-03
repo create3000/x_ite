@@ -398,9 +398,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (node)
       {
-         if (node .getExecutionContext () === this)
-            return node;
-
          for (const importedNode of this [_importedNodes])
          {
             try
@@ -412,7 +409,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
             { }
          }
 
-         throw new Error (`No suitable named or imported node found in this execution context.`);
+         // Although this node must not be local, we do return this node (SugarSmack).
+         return node;
       }
       else
       {
