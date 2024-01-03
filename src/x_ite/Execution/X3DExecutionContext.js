@@ -643,7 +643,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (!(route instanceof X3DRoute))
          return;
 
-      if (route .getExecutionContext () !== this)
+      if (this [_routes] .get (route .getRouteId ()) !== route)
          return;
 
       this [_routes] .remove (route .getRouteId ());
