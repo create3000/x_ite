@@ -61,15 +61,15 @@ const
    _destinationField     = Symbol (),
    _disposed             = Symbol ();
 
-function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField)
+function X3DRoute (executionContext, sourceNode, sourceFieldName, destinationNode, destinationFieldName)
 {
    X3DObject .call (this, executionContext);
 
    this [_executionContext]     = executionContext;
    this [_sourceNode]           = sourceNode;
-   this [_sourceFieldName]      = sourceField;
+   this [_sourceFieldName]      = sourceFieldName;
    this [_destinationNode]      = destinationNode;
-   this [_destinationFieldName] = destinationField;
+   this [_destinationFieldName] = destinationFieldName;
 
    if (sourceNode instanceof X3DImportedNode)
       sourceNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
@@ -157,7 +157,8 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
             ? this [_sourceNode]
             : this [_sourceNode] .getExportedNode ();
 
-         this [_sourceField] = sourceNode .getField (this [_sourceFieldName]);
+         this [_sourceField]     = sourceNode .getField (this [_sourceFieldName]);
+         this [_sourceFieldName] = this .getSourceField ();
 
          this [_sourceField] .addOutputRoute (this);
       }
@@ -172,7 +173,8 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
             ? this [_destinationNode]
             : this [_destinationNode] .getExportedNode ();
 
-         this [_destinationField] = destinationNode .getField (this [_destinationFieldName]);
+         this [_destinationField]     = destinationNode .getField (this [_destinationFieldName]);
+         this [_destinationFieldName] = this .getDestinationField ();
 
          this [_destinationField] .addInputRoute (this);
       }
