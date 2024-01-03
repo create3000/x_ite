@@ -231,7 +231,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          }
 
          // Reconnect input routes.
-         for (const route of oldField .getInputRoutes ())
+         for (const route of new Set (oldField .getInputRoutes ()))
          {
             try
             {
@@ -245,7 +245,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          }
 
          // Reconnect output routes.
-         for (const route of oldField .getOutputRoutes ())
+         for (const route of new Set (oldField .getOutputRoutes ()))
          {
             try
             {
