@@ -633,6 +633,10 @@ declare class X3DExecutionContext
     * Remove the route if it is connected.
     */
    deleteRoute (route: X3DRoute): void;
+   /**
+    * Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
+    */
+   deleteRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
 }
 
 /**

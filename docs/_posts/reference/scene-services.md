@@ -117,6 +117,10 @@ Add a route from the passed *sourceField* to the passed *destinationField.* The 
 
 Remove the route if it is connected.
 
+#### void **deleteRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
+
+Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
+
 ## X3DScene
 
 A scene is an extension of the execution context services with additional services provided.
