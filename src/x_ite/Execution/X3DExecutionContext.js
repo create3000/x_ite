@@ -390,46 +390,45 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       return getUniqueName (this [_importedNodes], name);
    },
-   getLocalNode (name /* or node */)
+   getLocalNode (name)
    {
-      const
-         importedNode = name instanceof X3DImportedNode ? name : null,
-         node         = X3DCast (X3DConstants .X3DNode, name, false) ?? importedNode;
+      name = String (name);
 
-      if (node)
+      try
       {
-         for (const importedNode of this [_importedNodes])
-         {
-            try
-            {
-               if (importedNode .getExportedNode () === node)
-                  return importedNode;
-            }
-            catch
-            { }
-         }
-
-         // Although this node must not be local, we do return this node (SugarSmack).
-         return node;
+         return this .getNamedNode (name);
       }
-      else
+      catch
       {
-         name = String (name);
+         const importedNode = this [_importedNodes] .get (name);
 
+         if (importedNode)
+            return importedNode;
+
+         throw new Error (`Unknown named or imported node '${name}'.`);
+      }
+   },
+   getLocalizedNode (node)
+   {
+      const importedNode = node instanceof X3DImportedNode ? node : null;
+
+      node = X3DCast (X3DConstants .X3DNode, node, false) ?? importedNode;
+
+      if (!node)
+         throw new Error ("Couldn't get localized node: node must be of type X3DNode.");
+
+      for (const importedNode of this [_importedNodes])
+      {
          try
          {
-            return this .getNamedNode (name);
+            if (importedNode .getExportedNode () === node)
+               return importedNode;
          }
          catch
-         {
-            const importedNode = this [_importedNodes] .get (name);
-
-            if (importedNode)
-               return importedNode;
-
-            throw new Error (`Unknown named or imported node '${name}'.`);
-         }
+         { }
       }
+
+      return node;
    },
    setRootNodes () { },
    getRootNodes ()
@@ -605,8 +604,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
          // Resolve imported source and destination node.
 
-         sourceNode      = this .getLocalNode (sourceNode);
-         destinationNode = this .getLocalNode (destinationNode);
+         sourceNode      = this .getLocalizedNode (sourceNode);
+         destinationNode = this .getLocalizedNode (destinationNode);
 
          // Add route.
 
@@ -669,8 +668,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       // Resolve imported source and destination node.
 
-      sourceNode      = this .getLocalNode (sourceNode);
-      destinationNode = this .getLocalNode (destinationNode);
+      sourceNode      = this .getLocalizedNode (sourceNode);
+      destinationNode = this .getLocalizedNode (destinationNode);
 
       // Return route.
 
