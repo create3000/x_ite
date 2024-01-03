@@ -58,7 +58,8 @@ const
    _sourceField          = Symbol (),
    _destinationNode      = Symbol (),
    _destinationFieldName = Symbol (),
-   _destinationField     = Symbol ();
+   _destinationField     = Symbol (),
+   _disposed             = Symbol ();
 
 function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField)
 {
@@ -355,10 +356,10 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    },
    dispose ()
    {
-      const executionContext = this [_executionContext];
-
-      if (!executionContext)
+      if (this [_disposed])
          return;
+
+      this [_disposed] = true;
 
       this .disconnect ();
 
@@ -368,9 +369,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       if (this [_destinationNode] instanceof X3DImportedNode)
          this [_destinationNode] .getInlineNode () .getLoadState () .removeInterest ("reconnect", this);
 
-      this [_executionContext] = null;
-
-      executionContext .deleteRoute (this);
+      this [_executionContext] .deleteRoute (this);
 
       X3DObject .prototype .dispose .call (this);
    }
