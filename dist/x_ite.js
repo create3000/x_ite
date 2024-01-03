@@ -11,10 +11,10 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 474:
+/***/ 453:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(504);
+/* provided dependency */ var jQuery = __webpack_require__(467);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -210,7 +210,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 918:
+/***/ 985:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -224,7 +224,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(504)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(467)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -435,7 +435,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 504:
+/***/ 467:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11159,7 +11159,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 108:
+/***/ 407:
 /***/ ((module) => {
 
 /**
@@ -15938,7 +15938,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 730:
+/***/ 223:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19183,7 +19183,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 376:
+/***/ 567:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -20909,7 +20909,6 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .nodes                 = new Set ();
    this .names                 = new Map ();
    this .namesByNode           = new Map ();
-   this .importedNames         = new Map ();
    this .routeNodes            = new Set ();
    this .level                 = 0;
    this .containerFields       = [ ];
@@ -21117,9 +21116,8 @@ Object .assign (Generator .prototype,
 
       if (this .level === 0)
       {
-         this .nodes         .clear ();
-         this .namesByNode   .clear ();
-         this .importedNames .clear ();
+         this .nodes       .clear ();
+         this .namesByNode .clear ();
       }
    },
    NamedNodes (namedNodes)
@@ -21158,17 +21156,13 @@ Object .assign (Generator .prototype,
          { }
       }
    },
-   AddImportedNode (exportedNode, importedName)
-   {
-      this .importedNames .set (exportedNode, importedName);
-   },
    AddRouteNode (routeNode)
    {
       this .routeNodes .add (routeNode);
    },
    ExistsRouteNode (routeNode)
    {
-      return this .namesByNode .get (routeNode) || this .routeNodes .has (routeNode);
+      return this .namesByNode .has (routeNode) || this .routeNodes .has (routeNode);
    },
    IsSharedNode (baseNode)
    {
@@ -21244,18 +21238,6 @@ Object .assign (Generator .prototype,
       names .add (newName);
 
       return newName;
-   },
-   LocalName (baseNode)
-   {
-      const importedName = this .importedNames .get (baseNode);
-
-      if (importedName !== undefined)
-         return importedName;
-
-      if (this .ExistsNode (baseNode))
-         return this .Name (baseNode);
-
-      throw new Error (`Couldn't get local name for node '${baseNode .getTypeName ()}'.`);
    },
    PushContainerField (field)
    {
@@ -21462,7 +21444,7 @@ const MapUtilities =
 {
    assign: (() =>
    {
-      function callback (value, key)
+      function set (value, key)
       {
          this .set (key, value);
       }
@@ -21470,25 +21452,36 @@ const MapUtilities =
       return function (m1, m2)
       {
          m1 .clear ();
-         m2 .forEach (callback, m1);
+         m2 .forEach (set, m1);
 
          return m1;
       };
    })(),
    values: (() =>
    {
-      function callback (value)
+      function push (value) { this .push (value); }
+
+      const values = new WeakMap ();
+
+      return function (m)
       {
-         this .push (value);
-      }
+         if (m .size)
+         {
+            let a = values .get (m);
 
-      return function (a, m)
-      {
-         a .length = 0;
+            if (a)
+               a .length = 0;
+            else
+               values .set (m, a = [ ]);
 
-         m .forEach (callback, a);
+            m .forEach (push, a);
 
-         return a;
+            return a;
+         }
+         else
+         {
+            return m .values ();
+         }
       };
    })(),
 };
@@ -21617,7 +21610,6 @@ Object .assign (X3DObject .prototype,
 {
    [_name]: "",
    [_interests]: new Map (),
-   [_values]: [ ],
    [_userData]: new Map (),
    getId ()
    {
@@ -21646,10 +21638,7 @@ Object .assign (X3DObject .prototype,
    addInterest (callbackName, object, ... args)
    {
       if (this [_interests] === X3DObject .prototype [_interests])
-      {
          this [_interests] = new Map ();
-         this [_values]    = [ ];
-      }
 
       const
          interestId = X3DObject .getInterestId (callbackName, object),
@@ -21667,11 +21656,8 @@ Object .assign (X3DObject .prototype,
    },
    processInterests ()
    {
-      if (this [_interests] .size)
-      {
-         for (const interest of Utility_MapUtilities .values (this [_values], this [_interests]))
-            interest ();
-      }
+      for (const interest of Utility_MapUtilities .values (this [_interests]))
+         interest ();
    },
    getUserData (key)
    {
@@ -22999,19 +22985,11 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, Base_X3DChildObject
    {
       return this [_referencesCallbacks];
    },
-   processReferencesCallbacks: (() =>
+   processReferencesCallbacks ()
    {
-      const referencesCallbacksTemp = [ ];
-
-      return function ()
-      {
-         if (this [_referencesCallbacks] .size)
-         {
-            for (const callback of Utility_MapUtilities .values (referencesCallbacksTemp, this [_referencesCallbacks]))
-               callback ();
-         }
-      };
-   })(),
+      for (const callback of Utility_MapUtilities .values (this [_referencesCallbacks]))
+         callback ();
+   },
    addFieldInterest (field)
    {
       if (this [_fieldInterests] === X3DField .prototype [_fieldInterests])
@@ -23097,70 +23075,54 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, Base_X3DChildObject
    {
       return this [_routeCallbacks];
    },
-   processRouteCallbacks: (() =>
+   processRouteCallbacks ()
    {
-      const routeCallbacksTemp = [ ];
-
-      return function ()
-      {
-         if (this [_routeCallbacks] .size)
-         {
-            for (const callback of Utility_MapUtilities .values (routeCallbacksTemp, this [_routeCallbacks]))
-               callback ();
-         }
-      };
-   })(),
-   processEvent: (() =>
+      for (const callback of Utility_MapUtilities .values (this [_routeCallbacks]))
+         callback ();
+   },
+   processEvent (event = Base_Events .create (this))
    {
-      const fieldCallbacksTemp = [ ];
+      if (event .has (this))
+         return;
 
-      return function (event = Base_Events .create (this))
+      event .add (this);
+
+      this .setTainted (false);
+
+      const field = event .field;
+
+      if (field !== this)
+         this .set (field .getValue (), field .length);
+
+      // Process interests.
+
+      this .processInterests ();
+
+      // Process routes.
+
+      let first = true;
+
+      for (const field of this [_fieldInterests])
       {
-         if (event .has (this))
-            return;
-
-         event .add (this);
-
-         this .setTainted (false);
-
-         const field = event .field;
-
-         if (field !== this)
-            this .set (field .getValue (), field .length);
-
-         // Process interests.
-
-         this .processInterests ();
-
-         // Process routes.
-
-         let first = true;
-
-         for (const field of this [_fieldInterests])
-         {
-            if (first)
-            {
-               first = false;
-               field .addEventObject (this, event);
-            }
-            else
-            {
-               field .addEventObject (this, Base_Events .copy (event));
-            }
-         }
-
          if (first)
-            Base_Events .push (event);
-
-         // Process field callbacks.
-
-         if (this [_fieldCallbacks] .size)
          {
-            for (const callback of Utility_MapUtilities .values (fieldCallbacksTemp, this [_fieldCallbacks]))
-               callback (this .valueOf ());
+            first = false;
+            field .addEventObject (this, event);
          }
-      };
-   })(),
+         else
+         {
+            field .addEventObject (this, Base_Events .copy (event));
+         }
+      }
+
+      if (first)
+         Base_Events .push (event);
+
+      // Process field callbacks.
+
+      for (const callback of Utility_MapUtilities .values (this [_fieldCallbacks]))
+         callback (this .valueOf ());
+   },
    fromString (string, scene)
    {
       // Function will be overridden in VRMLParser.
@@ -34191,9 +34153,9 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
             return true;
       }
 
-      for (const importedNode of this [_executionContext] .getImportedNodes ())
+      for (const route of this [_executionContext] .getRoutes ())
       {
-         if (importedNode .hasRoutes (this))
+         if (route .getSourceNode () === this || route .getDestinationNode () === this)
             return true;
       }
 
@@ -34343,7 +34305,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 x_ite_Namespace .add ("X3DBaseNode", "x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
 /* harmony default export */ const Base_X3DBaseNode = (X3DBaseNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(504);
+/* provided dependency */ var $ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -37316,9 +37278,6 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_inlineNode]       = inlineNode;
    this [_exportedName]     = exportedName;
    this [_importedName]     = importedName;
-   this [_routes]           = [ ];
-
-   this .getInlineNode () ._loadState .addInterest ("set_loadState__", this);
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, Base_X3DObject .prototype),
@@ -37343,423 +37302,149 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, Base_X3DObje
    {
       return this [_importedName];
    },
-   hasRoutes (baseNode)
-   {
-      return this [_routes]
-         .some (route => route .sourceNode === baseNode || route .destinationNode === baseNode)
-   },
-   addRoute (sourceNode, sourceField, destinationNode, destinationField)
-   {
-      // Add route.
-
-      const route = {
-         sourceNode,
-         sourceField,
-         destinationNode,
-         destinationField,
-      };
-
-      this [_routes] .push (route);
-
-      // Try to resolve source or destination node routes.
-
-      if (this .getInlineNode () .checkLoadState () === Base_X3DConstants .COMPLETE_STATE)
-         this .resolveRoute (route);
-   },
-   resolveRoute (route)
-   {
-      try
-      {
-         const { sourceField, destinationField } = route;
-
-         let { sourceNode, destinationNode } = route;
-
-         route [_real] ?.dispose ();
-
-         if (sourceNode instanceof X3DImportedNode)
-            sourceNode = sourceNode .getExportedNode ();
-
-         if (destinationNode instanceof X3DImportedNode)
-            destinationNode = destinationNode .getExportedNode ();
-
-         route [_real] = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
-      }
-      catch (error)
-      {
-         console .error (error .message);
-      }
-   },
-   deleteRoute (real)
-   {
-      this [_routes] = this [_routes] .filter (route => route [_real] !== real);
-   },
-   deleteRealRoutes ()
-   {
-      for (const route of this [_routes])
-      {
-         const real = route [_real]
-
-         if (!real)
-            continue;
-
-         delete route [_real];
-
-         this .getExecutionContext () .deleteSimpleRoute (real);
-      }
-   },
-   getRoutes ()
-   {
-      return this [_routes] .map (({ sourceNode, sourceField, destinationNode, destinationField }) =>
-      {
-         return {
-            sourceNode: sourceNode instanceof X3DImportedNode
-               ? sourceNode
-               : Fields_SFNodeCache .get (sourceNode),
-            sourceField,
-            destinationNode: destinationNode instanceof X3DImportedNode
-               ? destinationNode
-               : Fields_SFNodeCache .get (destinationNode),
-             destinationField,
-         };
-      });
-   },
-   set_loadState__ ()
-   {
-      switch (this .getInlineNode () .checkLoadState ())
-      {
-         case Base_X3DConstants .NOT_STARTED_STATE:
-         case Base_X3DConstants .FAILED_STATE:
-         {
-            this .deleteRealRoutes ();
-            break;
-         }
-         case Base_X3DConstants .COMPLETE_STATE:
-         {
-            this .deleteRealRoutes ();
-
-            for (const route of this [_routes])
-               this .resolveRoute (route);
-
-            break;
-         }
-      }
-   },
    toVRMLStream (generator)
    {
-      if (generator .ExistsNode (this .getInlineNode ()))
-      {
-         const importedName = generator .ImportedName (this .getImportedName ());
+      if (!generator .ExistsNode (this .getInlineNode ()))
+         throw new Error ("X3DImportedNode.toVRMLStream: Inline node does not exist.");
 
-         generator .string += generator .Indent ();
-         generator .string += "IMPORT";
+      generator .AddRouteNode (this);
+
+      const importedName = generator .ImportedName (this .getImportedName ());
+
+      generator .string += generator .Indent ();
+      generator .string += "IMPORT";
+      generator .string += generator .Space ();
+      generator .string += generator .Name (this .getInlineNode ());
+      generator .string += ".";
+      generator .string += this .getExportedName ();
+
+      if (importedName !== this .getExportedName ())
+      {
          generator .string += generator .Space ();
-         generator .string += generator .Name (this .getInlineNode ());
-         generator .string += ".";
-         generator .string += this .getExportedName ();
-
-         if (importedName !== this .getExportedName ())
-         {
-            generator .string += generator .Space ();
-            generator .string += "AS";
-            generator .string += generator .Space ();
-            generator .string += importedName;
-         }
-
-         try
-         {
-            generator .AddRouteNode (this);
-            generator .AddImportedNode (this .getExportedNode (), importedName);
-         }
-         catch
-         {
-            // Output unresolved routes.
-
-            for (const { sourceNode, sourceField, destinationNode, destinationField } of this [_routes])
-            {
-               if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
-               {
-                  const sourceNodeName = sourceNode instanceof X3DImportedNode
-                     ? sourceNode .getImportedName ()
-                     : generator .Name (sourceNode);
-
-                  const destinationNodeName = destinationNode instanceof X3DImportedNode
-                     ? destinationNode .getImportedName ()
-                     : generator .Name (destinationNode);
-
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .Indent ();
-                  generator .string += "ROUTE";
-                  generator .string += generator .Space ();
-                  generator .string += sourceNodeName;
-                  generator .string += ".";
-                  generator .string += sourceField;
-                  generator .string += generator .Space ();
-                  generator .string += "TO";
-                  generator .string += generator .Space ();
-                  generator .string += destinationNodeName;
-                  generator .string += ".";
-                  generator .string += destinationField;
-               }
-            }
-         }
-      }
-      else
-      {
-         throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
+         generator .string += "AS";
+         generator .string += generator .Space ();
+         generator .string += importedName;
       }
    },
    toXMLStream (generator)
    {
-      if (generator .ExistsNode (this .getInlineNode ()))
-      {
-         const importedName = generator .ImportedName (this .getImportedName ());
-
-         generator .string += generator .Indent ();
-         generator .string += "<IMPORT";
-         generator .string += generator .Space ();
-         generator .string += "inlineDEF='";
-         generator .string += generator .XMLEncode (generator .Name (this .getInlineNode ()));
-         generator .string += "'";
-         generator .string += generator .Space ();
-         generator .string += "importedDEF='";
-         generator .string += generator .XMLEncode (this .getExportedName ());
-         generator .string += "'";
-
-         if (importedName !== this .getExportedName ())
-         {
-            generator .string += generator .Space ();
-            generator .string += "AS='";
-            generator .string += generator .XMLEncode (importedName);
-            generator .string += "'";
-         }
-
-         generator .string += generator .closingTags ? "></IMPORT>" : "/>";
-
-         try
-         {
-            generator .AddRouteNode (this);
-            generator .AddImportedNode (this .getExportedNode (), importedName);
-         }
-         catch
-         {
-            // Output unresolved routes.
-
-            for (const { sourceNode, sourceField, destinationNode, destinationField } of this [_routes])
-            {
-               if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
-               {
-                  const sourceNodeName = sourceNode instanceof X3DImportedNode
-                     ? sourceNode .getImportedName ()
-                     : generator .Name (sourceNode);
-
-                  const destinationNodeName = destinationNode instanceof X3DImportedNode
-                     ? destinationNode .getImportedName ()
-                     : generator .Name (destinationNode);
-
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .Indent ();
-                  generator .string += "<ROUTE";
-                  generator .string += generator .Space ();
-                  generator .string += "fromNode='";
-                  generator .string += generator .XMLEncode (sourceNodeName);
-                  generator .string += "'";
-                  generator .string += generator .Space ();
-                  generator .string += "fromField='";
-                  generator .string += generator .XMLEncode (sourceField);
-                  generator .string += "'";
-                  generator .string += generator .Space ();
-                  generator .string += "toNode='";
-                  generator .string += generator .XMLEncode (destinationNodeName);
-                  generator .string += "'";
-                  generator .string += generator .Space ();
-                  generator .string += "toField='";
-                  generator .string += generator .XMLEncode (destinationField);
-                  generator .string += "'";
-                  generator .string += generator .closingTags ? "></ROUTE>" : "/>";
-               }
-            }
-         }
-      }
-      else
-      {
+      if (!generator .ExistsNode (this .getInlineNode ()))
          throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
+
+      generator .AddRouteNode (this);
+
+      const importedName = generator .ImportedName (this .getImportedName ());
+
+      generator .string += generator .Indent ();
+      generator .string += "<IMPORT";
+      generator .string += generator .Space ();
+      generator .string += "inlineDEF='";
+      generator .string += generator .XMLEncode (generator .Name (this .getInlineNode ()));
+      generator .string += "'";
+      generator .string += generator .Space ();
+      generator .string += "importedDEF='";
+      generator .string += generator .XMLEncode (this .getExportedName ());
+      generator .string += "'";
+
+      if (importedName !== this .getExportedName ())
+      {
+         generator .string += generator .Space ();
+         generator .string += "AS='";
+         generator .string += generator .XMLEncode (importedName);
+         generator .string += "'";
       }
+
+      generator .string += generator .closingTags ? "></IMPORT>" : "/>";
    },
    toJSONStream (generator)
    {
-      if (generator .ExistsNode (this .getInlineNode ()))
+      if (!generator .ExistsNode (this .getInlineNode ()))
+         throw new Error ("X3DImportedNode.toJSONStream: Inline node does not exist.");
+
+      generator .AddRouteNode (this);
+
+      const importedName = generator .ImportedName (this .getImportedName ());
+
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += "IMPORT";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '{';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .IncIndent ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@inlineDEF";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += generator .JSONEncode (generator .Name (this .getInlineNode ()));
+      generator .string += '"';
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
+
+      generator .string += generator .Indent ();
+      generator .string += '"';
+      generator .string += "@importedDEF";
+      generator .string += '"';
+      generator .string += ':';
+      generator .string += generator .TidySpace ();
+      generator .string += '"';
+      generator .string += generator .JSONEncode (this .getExportedName ());
+      generator .string += '"';
+
+      if (importedName !== this .getExportedName ())
       {
-         const importedName = generator .ImportedName (this .getImportedName ());
-
-         generator .string += generator .Indent ();
-         generator .string += '{';
-         generator .string += generator .TidySpace ();
-         generator .string += '"';
-         generator .string += "IMPORT";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .IncIndent ();
-         generator .string += generator .Indent ();
-         generator .string += '{';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .IncIndent ();
-
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "@inlineDEF";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '"';
-         generator .string += generator .JSONEncode (generator .Name (this .getInlineNode ()));
-         generator .string += '"';
          generator .string += ',';
          generator .string += generator .TidyBreak ();
-
          generator .string += generator .Indent ();
          generator .string += '"';
-         generator .string += "@importedDEF";
+         generator .string += "@AS";
          generator .string += '"';
          generator .string += ':';
          generator .string += generator .TidySpace ();
          generator .string += '"';
-         generator .string += generator .JSONEncode (this .getExportedName ());
+         generator .string += generator .JSONEncode (importedName);
          generator .string += '"';
-
-         if (importedName !== this .getExportedName ())
-         {
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@AS";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .JSONEncode (importedName);
-            generator .string += '"';
-            generator .string += generator .TidyBreak ();
-         }
-         else
-         {
-            generator .string += generator .TidyBreak ();
-         }
-
-         generator .string += generator .DecIndent ();
-         generator .string += generator .Indent ();
-         generator .string += '}';
          generator .string += generator .TidyBreak ();
-         generator .string += generator .DecIndent ();
-         generator .string += generator .Indent ();
-         generator .string += '}';
-
-         try
-         {
-            generator .AddRouteNode (this);
-            generator .AddImportedNode (this .getExportedNode (), importedName);
-         }
-         catch
-         {
-            // Output unresolved routes.
-
-            for (const { sourceNode, sourceField, destinationNode, destinationField } of this [_routes])
-            {
-               if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
-               {
-                  const sourceNodeName = sourceNode instanceof X3DImportedNode
-                     ? sourceNode .getImportedName ()
-                     : generator .Name (sourceNode);
-
-                  const destinationNodeName = destinationNode instanceof X3DImportedNode
-                     ? destinationNode .getImportedName ()
-                     : generator .Name (destinationNode);
-
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .Indent ();
-                  generator .string += '{';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += "ROUTE";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .IncIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '{';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .IncIndent ();
-
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@fromNode";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (sourceNodeName);
-                  generator .string += '"';
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@fromField";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (sourceField);
-                  generator .string += '"';
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@toNode";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (destinationNodeName);
-                  generator .string += '"';
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@toField";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (destinationField);
-                  generator .string += '"';
-                  generator .string += generator .TidyBreak ();
-
-                  generator .string += generator .DecIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '}';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .DecIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '}';
-               }
-            }
-         }
       }
       else
       {
-         throw new Error ("X3DImportedNode.toJSONStream: Inline node does not exist.");
+         generator .string += generator .TidyBreak ();
       }
+
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
+      generator .string += generator .TidyBreak ();
+      generator .string += generator .DecIndent ();
+      generator .string += generator .Indent ();
+      generator .string += '}';
    },
    dispose ()
    {
-      this .getInlineNode () ._loadState .removeInterest ("set_loadState__", this);
+      for (const route of Array .from (this [X3DImportedNode_executionContext] .getRoutes ()))
+      {
+         if (route .getSourceNode () === this)
+         {
+            this [X3DImportedNode_executionContext] .deleteRoute (route);
+            continue;
+         }
 
-      this .deleteRealRoutes ();
+         if (route .getDestinationNode () === this)
+         {
+            this [X3DImportedNode_executionContext] .deleteRoute (route);
+            continue;
+         }
+      }
 
       Base_X3DObject .prototype .dispose .call (this);
    },
@@ -38040,7 +37725,7 @@ Object .assign (X3DUrlObject .prototype,
                      reject ();
                      break;
                }
-            })
+            });
          };
 
          const loadState = this .checkLoadState ();
@@ -38897,7 +38582,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .add ("X3DProtoDeclaration", "x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(504);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39139,7 +38824,7 @@ const Expressions_default_ = Expressions;
 x_ite_Namespace .add ("Expressions", "x_ite/Parser/Expressions", Expressions_default_);
 /* harmony default export */ const Parser_Expressions = (Expressions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(504);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41822,7 +41507,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .add ("VRMLParser", "x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(504);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43913,7 +43598,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(504);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47214,7 +46899,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .add ("GLTF2Parser", "x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(504);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47366,7 +47051,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .add ("GLB2Parser", "x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(504);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50721,8 +50406,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .add ("MatrixStack", "standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(504);
-/* provided dependency */ var libtess = __webpack_require__(108);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(467);
+/* provided dependency */ var libtess = __webpack_require__(407);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53490,7 +53175,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .add ("SVGParser", "x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(504);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53827,7 +53512,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .add ("Plane3", "standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(108);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(407);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -61334,7 +61019,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .add ("X3DTexture2DNode", "x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(504);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65921,7 +65606,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .add ("X3DWorld", "x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(504);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66852,6 +66537,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 x_ite_Namespace .add ("ProtoDeclarationArray", "x_ite/Prototype/ProtoDeclarationArray", ProtoDeclarationArray_default_);
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (ProtoDeclarationArray_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66903,29 +66589,34 @@ x_ite_Namespace .add ("ProtoDeclarationArray", "x_ite/Prototype/ProtoDeclaration
 
 
 
+
+
 const
-   X3DRoute_executionContext = Symbol (),
-   _sourceNode       = Symbol (),
-   _sourceField      = Symbol (),
-   _destinationNode  = Symbol (),
-   _destinationField = Symbol ();
+   X3DRoute_executionContext     = Symbol (),
+   _sourceNode           = Symbol (),
+   _sourceFieldName      = Symbol (),
+   _sourceField          = Symbol (),
+   _destinationNode      = Symbol (),
+   _destinationFieldName = Symbol (),
+   _destinationField     = Symbol ();
 
 function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField)
 {
    Base_X3DObject .call (this, executionContext);
 
-   this [X3DRoute_executionContext] = executionContext;
-   this [_sourceNode]       = sourceNode;
-   this [_sourceField]      = sourceField;
-   this [_destinationNode]  = destinationNode;
-   this [_destinationField] = destinationField;
+   this [X3DRoute_executionContext]     = executionContext;
+   this [_sourceNode]           = sourceNode;
+   this [_sourceFieldName]      = sourceField;
+   this [_destinationNode]      = destinationNode;
+   this [_destinationFieldName] = destinationField;
 
-   // Must connect in every context, to make X3DBaseNode.hasRoutes work.
+   if (sourceNode instanceof Execution_X3DImportedNode)
+      sourceNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
 
-   sourceField .addFieldInterest (destinationField);
+   if (destinationNode instanceof Execution_X3DImportedNode)
+      destinationNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
 
-   sourceField      .addOutputRoute (this);
-   destinationField .addInputRoute (this);
+   this .reconnect ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .prototype),
@@ -66936,7 +66627,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
    },
    getRouteId ()
    {
-      return X3DRoute .getRouteId (this [_sourceField], this [_destinationField]);
+      return X3DRoute .getRouteId (this [_sourceNode], this [_sourceFieldName], this [_destinationNode], this [_destinationFieldName]);
    },
    getSourceNode ()
    {
@@ -66946,7 +66637,18 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
    getSourceField ()
    {
       ///  SAI
-      return this [_sourceField];
+
+      if (this [_sourceField])
+      {
+         return this [_sourceField] .getAccessType () === Base_X3DConstants .inputOutput
+            ? this [_sourceField] .getName () + "_changed"
+            : this [_sourceField] .getName ();
+      }
+      else
+      {
+         return this [_sourceFieldName];
+      }
+
    },
    getDestinationNode ()
    {
@@ -66956,47 +66658,135 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
    getDestinationField ()
    {
       ///  SAI
-      return this [_destinationField];
+
+      if (this [_destinationField])
+      {
+         return this [_destinationField] .getAccessType () === Base_X3DConstants .inputOutput
+            ? "set_" + this [_destinationField] .getName ()
+            : this [_destinationField] .getName ();
+      }
+      else
+      {
+         return this [_destinationFieldName];
+      }
+   },
+   reconnect ()
+   {
+      try
+      {
+         this .disconnect ();
+         this .connect ();
+      }
+      catch (error)
+      {
+         if ((this [_sourceNode] instanceof Core_X3DNode ||
+              this [_sourceNode] .getInlineNode () .checkLoadState () === Base_X3DConstants .COMPLETE_STATE) &&
+             (this [_destinationNode] instanceof Core_X3DNode ||
+              this [_destinationNode] .getInlineNode () .checkLoadState () === Base_X3DConstants .COMPLETE_STATE))
+         {
+            console .warn (error .message);
+         }
+      }
+   },
+   connect ()
+   {
+      try
+      {
+         const sourceNode = this [_sourceNode] instanceof Core_X3DNode
+            ? this [_sourceNode]
+            : this [_sourceNode] .getExportedNode ();
+
+         this [_sourceField] = sourceNode .getField (this [_sourceFieldName]);
+
+         this [_sourceField] .addOutputRoute (this);
+      }
+      catch (error)
+      {
+         var firstError = error;
+      }
+
+      try
+      {
+         const destinationNode = this [_destinationNode] instanceof Core_X3DNode
+            ? this [_destinationNode]
+            : this [_destinationNode] .getExportedNode ();
+
+         this [_destinationField] = destinationNode .getField (this [_destinationFieldName]);
+
+         this [_destinationField] .addInputRoute (this);
+      }
+      catch (error)
+      {
+         var secondError = error;
+      }
+
+      if (this [_sourceField] && this [_destinationField])
+      {
+         if (this [_sourceField] .getFieldInterests () .has (this [_destinationField]))
+            return;
+
+         this [_sourceField] .addFieldInterest (this [_destinationField]);
+      }
+      else
+      {
+         throw firstError ?? secondError;
+      }
    },
    disconnect ()
    {
-      this [_sourceField] .removeFieldInterest (this [_destinationField]);
+      this [_sourceField]      ?.removeOutputRoute (this);
+      this [_destinationField] ?.removeInputRoute (this);
 
-      this [_sourceField]      .removeOutputRoute (this);
-      this [_destinationField] .removeInputRoute (this);
+      if (this [_sourceField] && this [_destinationField])
+         this [_sourceField] .removeFieldInterest (this [_destinationField]);
+
+      this [_sourceField]      = null;
+      this [_destinationField] = null;
    },
    toVRMLStream (generator)
    {
-      const
-         sourceNodeName      = generator .LocalName (this .getSourceNode ()),
-         destinationNodeName = generator .LocalName (this .getDestinationNode ());
+      if (!generator .ExistsRouteNode (this [_sourceNode]))
+         throw new Error (`Source node does not exist in scene graph.`);
+
+      if (!generator .ExistsRouteNode (this [_destinationNode]))
+         throw new Error (`Destination node does not exist in scene graph.`);
+
+      const sourceNodeName = this [_sourceNode] instanceof Core_X3DNode
+         ? generator .Name (this [_sourceNode])
+         : this [_sourceNode] .getImportedName ();
+
+      const destinationNodeName = this [_destinationNode] instanceof Core_X3DNode
+         ? generator .Name (this [_destinationNode])
+         : this [_destinationNode] .getImportedName ();
 
       generator .string += generator .Indent ();
       generator .string += "ROUTE";
       generator .string += generator .Space ();
       generator .string += sourceNodeName;
       generator .string += ".";
-      generator .string += this [_sourceField] .getName ();
-
-      if (this [_sourceField] .getAccessType () === Base_X3DConstants .inputOutput)
-         generator .string += "_changed";
-
+      generator .string += this .getSourceField ();
       generator .string += generator .Space ();
       generator .string += "TO";
       generator .string += generator .Space ();
       generator .string += destinationNodeName;
       generator .string += ".";
-
-      if (this [_destinationField] .getAccessType () === Base_X3DConstants .inputOutput)
-         generator .string += "set_";
-
-      generator .string += this [_destinationField] .getName ();
+      generator .string += this .getDestinationField ();
    },
    toXMLStream (generator)
    {
-      const
-         sourceNodeName      = generator .LocalName (this .getSourceNode ()),
-         destinationNodeName = generator .LocalName (this .getDestinationNode ());
+      if (!generator .ExistsRouteNode (this [_sourceNode]))
+         throw new Error (`Source node does not exist in scene graph.`);
+
+      if (!generator .ExistsRouteNode (this [_destinationNode]))
+         throw new Error (`Destination node does not exist in scene graph.`);
+
+      const sourceNodeName = this [_sourceNode] instanceof Core_X3DNode
+         ? generator .Name (this [_sourceNode])
+         : this [_sourceNode] .getImportedName ();
+
+      const destinationNodeName = this [_destinationNode] instanceof Core_X3DNode
+         ? generator .Name (this [_destinationNode])
+         : this [_destinationNode] .getImportedName ();
 
       generator .string += generator .Indent ();
       generator .string += "<ROUTE";
@@ -67006,11 +66796,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "fromField='";
-      generator .string += generator .XMLEncode (this [_sourceField] .getName ());
-
-      if (this [_sourceField] .getAccessType () === Base_X3DConstants .inputOutput)
-         generator .string += "_changed";
-
+      generator .string += generator .XMLEncode (this .getSourceField ());
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "toNode='";
@@ -67018,19 +66804,25 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "toField='";
-
-      if (this [_destinationField] .getAccessType () === Base_X3DConstants .inputOutput)
-         generator .string += "set_";
-
-      generator .string += generator .XMLEncode (this [_destinationField] .getName ());
+      generator .string += generator .XMLEncode (this .getDestinationField ());
       generator .string += "'";
       generator .string += generator .closingTags ? "></ROUTE>" : "/>";
    },
    toJSONStream (generator)
    {
-      const
-         sourceNodeName      = generator .LocalName (this .getSourceNode ()),
-         destinationNodeName = generator .LocalName (this .getDestinationNode ());
+      if (!generator .ExistsRouteNode (this [_sourceNode]))
+         throw new Error (`Source node does not exist in scene graph.`);
+
+      if (!generator .ExistsRouteNode (this [_destinationNode]))
+         throw new Error (`Destination node does not exist in scene graph.`);
+
+      const sourceNodeName = this [_sourceNode] instanceof Core_X3DNode
+         ? generator .Name (this [_sourceNode])
+         : this [_sourceNode] .getImportedName ();
+
+      const destinationNodeName = this [_destinationNode] instanceof Core_X3DNode
+         ? generator .Name (this [_destinationNode])
+         : this [_destinationNode] .getImportedName ();
 
       generator .string += generator .Indent ();
       generator .string += '{';
@@ -67065,7 +66857,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += generator .JSONEncode (this [_sourceField] .getName ());
+      generator .string += generator .JSONEncode (this .getSourceField ());
       generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
@@ -67089,7 +66881,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += generator .JSONEncode (this [_destinationField] .getName ());
+      generator .string += generator .JSONEncode (this .getDestinationField ());
       generator .string += '"';
       generator .string += generator .TidyBreak ();
 
@@ -67103,9 +66895,22 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
    },
    dispose ()
    {
+      const executionContext = this [X3DRoute_executionContext];
+
+      if (!executionContext)
+         return;
+
       this .disconnect ();
 
-      this [X3DRoute_executionContext] .deleteRoute (this);
+      if (this [_sourceNode] instanceof Execution_X3DImportedNode)
+         this [_sourceNode] .getInlineNode () .getLoadState () .removeInterest ("reconnect", this);
+
+      if (this [_destinationNode] instanceof Execution_X3DImportedNode)
+         this [_destinationNode] .getInlineNode () .getLoadState () .removeInterest ("reconnect", this);
+
+      this [X3DRoute_executionContext] = null;
+
+      executionContext .deleteRoute (this);
 
       Base_X3DObject .prototype .dispose .call (this);
    }
@@ -67120,32 +66925,32 @@ Object .defineProperties (X3DRoute .prototype,
    {
       get ()
       {
-         return Fields_SFNodeCache .get (this [_sourceNode]);
+         if (this [_sourceNode] instanceof Core_X3DNode)
+            return Fields_SFNodeCache .get (this [_sourceNode]);
+         else
+            return this [_sourceNode];
       },
       enumerable: true,
    },
    sourceField:
    {
-      get ()
-      {
-         return this [_sourceField] .getName ();
-      },
+      get: X3DRoute .prototype .getSourceField,
       enumerable: true,
    },
    destinationNode:
    {
       get ()
       {
-         return Fields_SFNodeCache .get (this [_destinationNode]);
+         if (this [_destinationNode] instanceof Core_X3DNode)
+            return Fields_SFNodeCache .get (this [_destinationNode]);
+         else
+            return this [_destinationNode];
       },
       enumerable: true,
    },
    destinationField:
    {
-      get ()
-      {
-         return this [_destinationField] .getName ();
-      },
+      get: X3DRoute .prototype .getDestinationField,
       enumerable: true,
    },
 });
@@ -67161,9 +66966,33 @@ Object .defineProperties (X3DRoute,
 
 Object .assign (X3DRoute,
 {
-   getRouteId (sourceField, destinationField)
+   getRouteId (sourceNode, sourceFieldName, destinationNode, destinationFieldName)
    {
-      return `${sourceField .getId ()}.${destinationField .getId ()}`;
+      const sourceField = sourceNode instanceof Core_X3DNode
+         ? sourceNode .getField (sourceFieldName)
+         : X3DRoute_$.try (() => sourceNode .getExportedNode () .getField (sourceFieldName));
+
+      const destinationField = destinationNode instanceof Core_X3DNode
+         ? destinationNode .getField (destinationFieldName)
+         : X3DRoute_$.try (() => destinationNode .getExportedNode () .getField (destinationFieldName));
+
+      if (sourceField)
+      {
+         sourceFieldName = sourceField .getName ();
+
+         if (sourceField .getAccessType () === Base_X3DConstants .inputOutput)
+            sourceFieldName += "_changed";
+      }
+
+      if (destinationField)
+      {
+         destinationFieldName = destinationField .getName ();
+
+         if (destinationField .getAccessType () === Base_X3DConstants .inputOutput)
+            destinationFieldName = "set_" + destinationFieldName;
+      }
+
+      return `${sourceNode .getId ()}.${sourceFieldName}.${destinationNode .getId ()}.${destinationFieldName}`;
    },
 });
 
@@ -67294,6 +67123,7 @@ x_ite_Namespace .add ("RouteArray", "x_ite/Routing/RouteArray", RouteArray_defau
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -67639,46 +67469,48 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
    {
       return getUniqueName (this [_importedNodes], name);
    },
-   getLocalNode (name)
+   getLocalNode (name /* or node */)
    {
-      name = String (name);
+      const
+         importedNode = name instanceof Execution_X3DImportedNode ? name : null,
+         node         = Base_X3DCast (Base_X3DConstants .X3DNode, name, false) ?? importedNode;
 
-      try
+      if (node)
       {
-         return this .getNamedNode (name);
+         if (node .getExecutionContext () === this)
+            return node;
+
+         for (const importedNode of this [_importedNodes])
+         {
+            try
+            {
+               if (importedNode .getExportedNode () === node)
+                  return importedNode;
+            }
+            catch
+            { }
+         }
+
+         throw new Error (`No suitable named or imported node found in this execution context.`);
       }
-      catch
+      else
       {
-         const importedNode = this [_importedNodes] .get (name);
+         name = String (name);
 
-         if (importedNode)
-            return importedNode;
-
-         throw new Error (`Unknown named or imported node '${name}'.`);
-      }
-   },
-   getLocalName (node)
-   {
-      node = Base_X3DCast (Base_X3DConstants .X3DNode, node, false);
-
-      if (!node)
-         throw new Error ("Couldn't get local name: node must be of type X3DNode.");
-
-      if (node .getExecutionContext () === this)
-         return node .getName ();
-
-      for (const importedNode of this [_importedNodes])
-      {
          try
          {
-            if (importedNode .getExportedNode () === node)
-               return importedNode .getImportedName ();
+            return this .getNamedNode (name);
          }
          catch
-         { }
-      }
+         {
+            const importedNode = this [_importedNodes] .get (name);
 
-      throw new Error ("Couldn't get local name: node is shared.");
+            if (importedNode)
+               return importedNode;
+
+            throw new Error (`Unknown named or imported node '${name}'.`);
+         }
+      }
    },
    setRootNodes () { },
    getRootNodes ()
@@ -67833,98 +67665,48 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
    },
    addRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
-      let
-         importedSourceNode      = sourceNode      instanceof Execution_X3DImportedNode ? sourceNode      : null,
-         importedDestinationNode = destinationNode instanceof Execution_X3DImportedNode ? destinationNode : null;
-
-      sourceNode       = Base_X3DCast (Base_X3DConstants .X3DNode, sourceNode, false);
-      sourceField      = String (sourceField);
-      destinationNode  = Base_X3DCast (Base_X3DConstants .X3DNode, destinationNode, false);
-      destinationField = String (destinationField);
-
-      if (!(sourceNode || importedSourceNode))
-         throw new Error ("Bad ROUTE specification: source node must be of type X3DNode.");
-
-      if (!(destinationNode || importedDestinationNode))
-         throw new Error ("Bad ROUTE specification: destination node must be of type X3DNode.");
-
-      // Imported nodes handling.
-
       try
       {
-         // If sourceNode is shared node try to find the corresponding X3DImportedNode.
-         if (sourceNode && sourceNode .getExecutionContext () !== this)
-            importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
-      }
-      catch
-      {
-         // Source node is shared but not imported.
-      }
+         // Normalize arguments.
 
-      try
-      {
-         // If destinationNode is shared node try to find the corresponding X3DImportedNode.
-         if (destinationNode && destinationNode .getExecutionContext () !== this)
-            importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
-      }
-      catch
-      {
-         // Destination node is shared but not imported.
-      }
+         const
+            importedSourceNode      = sourceNode      instanceof Execution_X3DImportedNode ? sourceNode      : null,
+            importedDestinationNode = destinationNode instanceof Execution_X3DImportedNode ? destinationNode : null;
 
-      if (importedSourceNode instanceof Execution_X3DImportedNode && importedDestinationNode instanceof Execution_X3DImportedNode)
-      {
-         importedSourceNode      .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
-         importedDestinationNode .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
-      }
-      else if (importedSourceNode instanceof Execution_X3DImportedNode)
-      {
-         importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNode, destinationField);
-      }
-      else if (importedDestinationNode instanceof Execution_X3DImportedNode)
-      {
-         importedDestinationNode .addRoute (sourceNode, sourceField, importedDestinationNode, destinationField);
-      }
-      else
-      {
-         // Create route and return.
-         return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
-      }
-   },
-   addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField)
-   {
-      try
-      {
-         // Source and dest node must be here X3DNode, no check here.
-         // Private function.
-         // Create route and return.
+         sourceNode       = Base_X3DCast (Base_X3DConstants .X3DNode, sourceNode, false) ?? importedSourceNode;
+         sourceField      = String (sourceField);
+         destinationNode  = Base_X3DCast (Base_X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
+         destinationField = String (destinationField);
 
-         sourceField      = sourceNode      .getField (sourceField),
-         destinationField = destinationNode .getField (destinationField);
+         if (!sourceNode)
+            throw new Error ("source node must be of type X3DNode or X3DImportedNode.");
 
-         if (!sourceField .isOutput ())
-            throw new Error (`Field named '${sourceField .getName ()}' in node named '${sourceNode .getName ()}' of type ${sourceNode .getTypeName ()} is not an output field.`);
+         if (!destinationNode)
+            throw new Error ("destination node must be of type X3DNode or X3DImportedNode.");
 
-         if (!destinationField .isInput ())
-            throw new Error (`Field named '${destinationField .getName ()}' in node named '${destinationNode .getName ()}' of type ${destinationNode .getTypeName ()} is not an input field.`);
+         // Resolve imported source and destination node.
 
-         if (sourceField .getType () !== destinationField .getType ())
-            throw new Error (`ROUTE types ${sourceField .getTypeName ()} and ${destinationField .getTypeName ()} do not match.`);
+         sourceNode      = this .getLocalNode (sourceNode);
+         destinationNode = this .getLocalNode (destinationNode);
 
-         const id = Routing_X3DRoute .getRouteId (sourceField, destinationField);
+         // Add route.
 
-         let route = this [X3DExecutionContext_routes] .get (id);
+         const
+            id    = Routing_X3DRoute .getRouteId (sourceNode, sourceField, destinationNode, destinationField),
+            route = this [X3DExecutionContext_routes] .get (id);
 
          if (route)
+         {
             return route;
+         }
+         else
+         {
+            const route = new Routing_X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
 
-         route = new Routing_X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
+            this [X3DExecutionContext_routes] .add (id, route);
 
-         this [X3DExecutionContext_routes] .add (id, route);
-
-         this ._routes_changed = this .getBrowser () .getCurrentTime ();
-
-         return route;
+            return route;
+         }
       }
       catch (error)
       {
@@ -67933,76 +67715,31 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
    },
    deleteRoute (route)
    {
-      // sourceNode, sourceField, destinationNode, destinationField
+      // Case: sourceNode, sourceField, destinationNode, destinationField.
       if (arguments .length === 4)
          route = this .getRoute (... arguments);
 
       if (!(route instanceof Routing_X3DRoute))
          return;
 
-      if (route .getExecutionContext () !== this)
+      if (this [X3DExecutionContext_routes] .get (route .getRouteId ()) !== route)
          return;
 
-      this .deleteSimpleRoute (route);
-      this .deleteImportedRoute (route .sourceNode, route .destinationNode, route);
-   },
-   deleteSimpleRoute (route)
-   {
       this [X3DExecutionContext_routes] .remove (route .getRouteId ());
 
-      route .disconnect ();
-
-      this ._routes_changed = this .getBrowser () .getCurrentTime ();
-   },
-   deleteImportedRoute (sourceNode, destinationNode, route)
-   {
-      // Imported nodes handling.
-
-      let
-         importedSourceNode      = null,
-         importedDestinationNode = null;
-
-      try
-      {
-         // If sourceNode is shared node try to find the corresponding X3DImportedNode.
-         if (sourceNode .getValue () .getExecutionContext () !== this)
-            importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
-      }
-      catch
-      {
-         // Source node is shared but not imported.
-      }
-
-      try
-      {
-         // If destinationNode is shared node try to find the corresponding X3DImportedNode.
-         if (destinationNode .getValue () .getExecutionContext () !== this)
-            importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
-      }
-      catch
-      {
-         // Destination node is shared but not imported.
-      }
-
-      if (importedSourceNode instanceof Execution_X3DImportedNode && importedDestinationNode instanceof Execution_X3DImportedNode)
-      {
-         importedSourceNode      .deleteRoute (route);
-         importedDestinationNode .deleteRoute (route);
-      }
-      else if (importedSourceNode instanceof Execution_X3DImportedNode)
-      {
-         importedSourceNode .deleteRoute (route);
-      }
-      else if (importedDestinationNode instanceof Execution_X3DImportedNode)
-      {
-         importedDestinationNode .deleteRoute (route);
-      }
+      route .dispose ();
    },
    getRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
-      sourceNode       = Base_X3DCast (Base_X3DConstants .X3DNode, sourceNode, false);
+      // Normalize arguments.
+
+      const
+         importedSourceNode      = sourceNode      instanceof Execution_X3DImportedNode ? sourceNode      : null,
+         importedDestinationNode = destinationNode instanceof Execution_X3DImportedNode ? destinationNode : null;
+
+      sourceNode       = Base_X3DCast (Base_X3DConstants .X3DNode, sourceNode, false) ?? importedSourceNode;
       sourceField      = String (sourceField)
-      destinationNode  = Base_X3DCast (Base_X3DConstants .X3DNode, destinationNode, false);
+      destinationNode  = Base_X3DCast (Base_X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
       destinationField = String (destinationField)
 
       if (!sourceNode)
@@ -68011,10 +67748,14 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
       if (!destinationNode)
          throw new Error ("Bad ROUTE specification: destinationNode must be of type X3DNode.");
 
-      sourceField      = sourceNode      .getField (sourceField);
-      destinationField = destinationNode .getField (destinationField);
+      // Resolve imported source and destination node.
 
-      return this [X3DExecutionContext_routes] .get (Routing_X3DRoute .getRouteId (sourceField, destinationField));
+      sourceNode      = this .getLocalNode (sourceNode);
+      destinationNode = this .getLocalNode (destinationNode);
+
+      // Return route.
+
+      return this [X3DExecutionContext_routes] .get (Routing_X3DRoute .getRouteId (sourceNode, sourceField, destinationNode, destinationField));
    },
    getRoutes ()
    {
@@ -68449,11 +68190,11 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
 
       // Copy proto.
 
-      this .importExternProtos (proto .getBody () .externprotos);
-      this .importProtos       (proto .getBody () .protos);
-      this .copyRootNodes      (proto .getBody () .rootNodes);
-      this .copyImportedNodes  (proto .getBody (), proto .getBody () .getImportedNodes ());
-      this .copyRoutes         (proto .getBody (), proto .getBody () .routes);
+      this .importExternProtos  (proto .getBody () .externprotos);
+      this .importProtos        (proto .getBody () .protos);
+      this .copyRootNodes       (proto .getBody () .rootNodes);
+      this .importImportedNodes (proto .getBody () .importedNodes);
+      this .copyRoutes          (proto .getBody () .routes);
 
       this [X3DPrototypeInstance_body] .setup ();
 
@@ -68504,6 +68245,9 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
          oldField .setAccessType (newField .getAccessType ());
          oldField .setName (newField .getName ());
 
+         // Replace field, ie. reuse old field.
+         this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
+
          const references = new Set (oldField .getReferences ());
 
          // Remove references and routes.
@@ -68517,16 +68261,33 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
             oldField .addReference (field);
          }
 
-         // Reconnect routes.
+         // Reconnect input routes.
          for (const route of oldField .getInputRoutes ())
-            route .getSourceField () .addFieldInterest (route .getDestinationField ());
+         {
+            try
+            {
+               const { sourceNode, sourceField } = route;
 
-         // Reconnect routes.
+               route .getExecutionContext () .deleteRoute (route);
+               route .getExecutionContext () .addRoute (sourceNode, sourceField, this, oldField .getName ());
+            }
+            catch
+            { }
+         }
+
+         // Reconnect output routes.
          for (const route of oldField .getOutputRoutes ())
-            route .getSourceField () .addFieldInterest (route .getDestinationField ());
+         {
+            try
+            {
+               const { destinationNode, destinationField } = route;
 
-         // Replace field, ie. reuse old field.
-         this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
+               route .getExecutionContext () .deleteRoute (route);
+               route .getExecutionContext () .addRoute (this, oldField .getName (), destinationNode, destinationField );
+            }
+            catch
+            { }
+         }
 
          // Remove from old fields and dispose new field.
          oldFields .delete (oldFieldName);
@@ -68611,34 +68372,35 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
       for (const node of rootNodes1)
          rootNodes2 .push (node .copy (this));
    },
-   copyImportedNodes (executionContext, importedNodes)
+   importImportedNodes (importedNodes)
    {
       for (const importedNode of importedNodes)
       {
          try
          {
-            const
-               inlineNode   = this [X3DPrototypeInstance_body] .getNamedNode (importedNode .getInlineNode () .getName ()),
-               importedName = importedNode .getImportedName (),
-               exportedName = importedNode .getExportedName ();
+            const inlineNode = this [X3DPrototypeInstance_body] .getNamedNode (importedNode .getInlineNode () .getName ());
 
-            this [X3DPrototypeInstance_body] .addImportedNode (inlineNode, exportedName, importedName);
+            this [X3DPrototypeInstance_body] .addImportedNode (inlineNode, importedNode .getExportedName (), importedNode .getImportedName ());
          }
          catch (error)
          {
-            console .error ("Bad IMPORT specification in copy: ", error);
+            console .error (error);
          }
       }
    },
-   copyRoutes (executionContext, routes)
+   copyRoutes (routes)
    {
       for (const route of routes)
       {
          try
          {
-            const
-               sourceNode      = this [X3DPrototypeInstance_body] .getLocalNode (executionContext .getLocalName (route .sourceNode)),
-               destinationNode = this [X3DPrototypeInstance_body] .getLocalNode (executionContext .getLocalName (route .destinationNode));
+            const sourceNode = route .getSourceNode () instanceof Core_X3DNode
+               ? this [X3DPrototypeInstance_body] .getLocalNode (route .getSourceNode () .getName ())
+               : this [X3DPrototypeInstance_body] .getLocalNode (route .getSourceNode () .getImportedName ());
+
+            const destinationNode = route .getDestinationNode () instanceof Core_X3DNode
+               ? this [X3DPrototypeInstance_body] .getLocalNode (route .getDestinationNode () .getName ())
+               : this [X3DPrototypeInstance_body] .getLocalNode (route .getDestinationNode () .getImportedName ());
 
             this [X3DPrototypeInstance_body] .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
          }
@@ -89611,7 +89373,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .add ("X3DShaderNode", "x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(504);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95252,7 +95014,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .add ("ShaderCompiler", "x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(504);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95909,7 +95671,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .add ("X3DAppearanceNode", "x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(504);
+/* provided dependency */ var Appearance_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99327,7 +99089,7 @@ const Components_Shape_default_ = {
 x_ite_Namespace .add ("Shape", "x_ite/Components/Shape", Components_Shape_default_);
 /* harmony default export */ const Components_Shape = (Components_Shape_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundProcessingNode.js
-/* provided dependency */ var X3DSoundProcessingNode_$ = __webpack_require__(504);
+/* provided dependency */ var X3DSoundProcessingNode_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99967,7 +99729,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace .add ("X3DSoundSourceNode", "x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(504);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100269,7 +100031,7 @@ const X3DSoundNode_default_ = X3DSoundNode;
 x_ite_Namespace .add ("X3DSoundNode", "x_ite/Components/Sound/X3DSoundNode", X3DSoundNode_default_);
 /* harmony default export */ const Sound_X3DSoundNode = (X3DSoundNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundDestinationNode.js
-/* provided dependency */ var X3DSoundDestinationNode_$ = __webpack_require__(504);
+/* provided dependency */ var X3DSoundDestinationNode_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101919,7 +101681,7 @@ const ListenerPointSource_default_ = ListenerPointSource;
 x_ite_Namespace .add ("ListenerPointSource", "x_ite/Components/Sound/ListenerPointSource", ListenerPointSource_default_);
 /* harmony default export */ const Sound_ListenerPointSource = (ListenerPointSource_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/MicrophoneSource.js
-/* provided dependency */ var MicrophoneSource_$ = __webpack_require__(504);
+/* provided dependency */ var MicrophoneSource_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103588,8 +103350,8 @@ const GifMedia_default_ = GifMedia;
 x_ite_Namespace .add ("GifMedia", "x_ite/Browser/Texturing/GifMedia", GifMedia_default_);
 /* harmony default export */ const Texturing_GifMedia = (GifMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(504);
-/* provided dependency */ var SuperGif = __webpack_require__(376);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(467);
+/* provided dependency */ var SuperGif = __webpack_require__(567);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106864,7 +106626,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace .add ("gettext", "locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(504);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107294,7 +107056,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .add ("TextureQuality", "x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(504);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107884,7 +107646,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .add ("RenderingProperties", "x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(504);
+/* provided dependency */ var Notification_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108007,8 +107769,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .add ("Notification", "x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(474);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(504);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(453);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109281,7 +109043,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, Base_X3DObje
    },
    toVRMLStream (generator)
    {
-      const localName = generator .LocalName (this .getLocalNode ());
+      const localName = generator .Name (this .getLocalNode ());
 
       generator .string += generator .Indent ();
       generator .string += "EXPORT";
@@ -109298,7 +109060,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, Base_X3DObje
    },
    toXMLStream (generator)
    {
-      const localName = generator .LocalName (this .getLocalNode ());
+      const localName = generator .Name (this .getLocalNode ());
 
       generator .string += generator .Indent ();
       generator .string += "<EXPORT";
@@ -109319,7 +109081,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, Base_X3DObje
    },
    toJSONStream (generator)
    {
-      const localName = generator .LocalName (this .getLocalNode ());
+      const localName = generator .Name (this .getLocalNode ());
 
       generator .string += generator .Indent ();
       generator .string += '{';
@@ -110762,7 +110524,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .add ("DataStorage", "standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(504);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113285,8 +113047,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .add ("X3DViewer", "x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(918);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(504);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(985);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114158,8 +113920,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .add ("ExamineViewer", "x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(918);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(504);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(985);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115168,8 +114930,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .add ("FlyViewer", "x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(918);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(504);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(985);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115500,8 +115262,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .add ("NoneViewer", "x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(918);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(504);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(985);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116640,8 +116402,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .add ("X3DPickingContext", "x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(918);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(504);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(985);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117920,7 +117682,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .add ("MultiSampleFrameBuffer", "x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(504);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118823,7 +118585,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 x_ite_Namespace .add ("X3DSoundContext", "x_ite/Browser/Sound/X3DSoundContext", X3DSoundContext_default_);
 /* harmony default export */ const Sound_X3DSoundContext = (X3DSoundContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(504);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(467);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -120376,7 +120138,7 @@ const Components_default_ = Components;
 x_ite_Namespace .add ("Components", "x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(504);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(467);
 /*******************************************************************************
  * MIT License
  *
@@ -121507,7 +121269,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace .add ("SupportedProfiles", "x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(504);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122221,21 +121983,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
       else
          return new Map ([... this [_browserCallbacks]] .flatMap (([event, map]) => [... map]));
    },
-   callBrowserCallbacks: (() =>
+   callBrowserCallbacks (event)
    {
-      const values = [ ];
-
-      return function (event)
-      {
-         const browserCallbacks = this [_browserCallbacks] .get (event);
-
-         if (browserCallbacks .size)
-         {
-            for (const callback of Utility_MapUtilities .values (values, browserCallbacks))
-               callback (event);
-         }
-      };
-   })(),
+      for (const callback of Utility_MapUtilities .values (this [_browserCallbacks] .get (event)))
+         callback (event);
+   },
    importDocument (dom)
    {
       const
@@ -122588,7 +122340,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace .add ("X3DBrowser", "x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(504);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122720,8 +122472,8 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 x_ite_Namespace .add ("X3DCanvasElement", "x_ite/X3DCanvasElement", X3DCanvasElement_default_);
 /* harmony default export */ const x_ite_X3DCanvasElement = (X3DCanvasElement_default_);
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(504);
-/* provided dependency */ var pako = __webpack_require__(730);
+/* provided dependency */ var jquery_$ = __webpack_require__(467);
+/* provided dependency */ var pako = __webpack_require__(223);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -122798,14 +122550,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .add ("jquery", "lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(108);
+/* provided dependency */ var libtess_libtess = __webpack_require__(407);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .add ("libtess", "lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(504);
+/* provided dependency */ var X3D_$ = __webpack_require__(467);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
