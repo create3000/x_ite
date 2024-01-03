@@ -900,23 +900,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       viewpointNode ._set_bind = true;
    },
-   addRoute (fromNode, fromEventOut, toNode, toEventIn)
+   addRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
-      this .currentScene .addRoute (fromNode, fromEventOut, toNode, toEventIn);
+      this .currentScene .addRoute (sourceNode, sourceField, destinationNode, destinationField);
    },
-   deleteRoute (fromNode, fromEventOut, toNode, toEventIn)
+   deleteRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
-      try
-      {
-         const route = this .currentScene .getRoute (fromNode, fromEventOut, toNode, toEventIn);
-
-         if (route)
-            this .currentScene .deleteRoute (route);
-      }
-      catch (error)
-      {
-         console .error (error);
-      }
+      this .currentScene .deleteRoute (sourceNode, sourceField, destinationNode, destinationField);
    },
    beginUpdate ()
    {
