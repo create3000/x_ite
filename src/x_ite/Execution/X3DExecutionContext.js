@@ -648,7 +648,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_routes] .remove (route .getRouteId ());
 
-      route .disconnect ();
+      route .dispose ();
    },
    getRoute (sourceNode, sourceField, destinationNode, destinationField)
    {

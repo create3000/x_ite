@@ -230,25 +230,29 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
             oldField .addReference (field);
          }
 
-         // Reconnect routes.
+         // Reconnect input routes.
          for (const route of oldField .getInputRoutes ())
          {
             try
             {
-               route .dispose ();
-               route .getExecutionContext () .addRoute (route .getSourceNode (), route .getSourceField (), this, oldField .getName ());
+               const { sourceNode, sourceField } = route;
+
+               route .getExecutionContext () .deleteRoute (route);
+               route .getExecutionContext () .addRoute (sourceNode, sourceField, this, oldField .getName ());
             }
             catch
             { }
          }
 
-         // Reconnect routes.
+         // Reconnect output routes.
          for (const route of oldField .getOutputRoutes ())
          {
             try
             {
-               route .dispose ();
-               route .getExecutionContext () .addRoute (this, oldField .getName (), route .getDestinationNode (), route .getDestinationField ());
+               const { destinationNode, destinationField } = route;
+
+               route .getExecutionContext () .deleteRoute (route);
+               route .getExecutionContext () .addRoute (this, oldField .getName (), destinationNode, destinationField );
             }
             catch
             { }

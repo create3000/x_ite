@@ -131,7 +131,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    {
       try
       {
-         var sourceNode = this [_sourceNode] instanceof X3DNode
+         const sourceNode = this [_sourceNode] instanceof X3DNode
             ? this [_sourceNode]
             : this [_sourceNode] .getExportedNode ();
 
@@ -139,12 +139,14 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
 
          this [_sourceField] .addOutputRoute (this);
       }
-      catch
-      { }
+      catch (error)
+      {
+         var firstError = error;
+      }
 
       try
       {
-         var destinationNode = this [_destinationNode] instanceof X3DNode
+         const destinationNode = this [_destinationNode] instanceof X3DNode
             ? this [_destinationNode]
             : this [_destinationNode] .getExportedNode ();
 
@@ -152,29 +154,27 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
 
          this [_destinationField] .addInputRoute (this);
       }
-      catch
-      { }
+      catch (error)
+      {
+         var secondError = error;
+      }
 
       if (this [_sourceField] && this [_destinationField])
       {
+         if (this [_sourceField] .getFieldInterests () .has (this [_destinationField]))
+            return;
+
          this [_sourceField] .addFieldInterest (this [_destinationField]);
       }
-      else if (sourceNode && !this [_sourceField])
+      else
       {
-         throw new Error (`Field '${this [_sourceFieldName]}' does not exists in node class ${sourceNode .getTypeName ()}.`);
-      }
-      else if (destinationNode && !this [_destinationField])
-      {
-         throw new Error (`Field '${this [_destinationFieldName]}' does not exists in node class ${destinationNode .getTypeName ()}.`);
+         throw firstError ?? secondError;
       }
    },
    disconnect ()
    {
-      if (this [_sourceField])
-         this [_sourceField] .removeOutputRoute (this);
-
-      if (this [_destinationField])
-         this [_destinationField] .removeInputRoute (this);
+      this [_sourceField]      ?.removeOutputRoute (this);
+      this [_destinationField] ?.removeInputRoute (this);
 
       if (this [_sourceField] && this [_destinationField])
          this [_sourceField] .removeFieldInterest (this [_destinationField]);
@@ -405,9 +405,22 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    },
    dispose ()
    {
+      const executionContext = this [_executionContext];
+
+      if (!executionContext)
+         return;
+
       this .disconnect ();
 
-      this [_executionContext] .deleteRoute (this);
+      if (this [_sourceNode] instanceof X3DImportedNode)
+         this [_sourceNode] .getInlineNode () .getLoadState () .removeInterest ("reconnect", this);
+
+      if (this [_destinationNode] instanceof X3DImportedNode)
+         this [_destinationNode] .getInlineNode () .getLoadState () .removeInterest ("reconnect", this);
+
+      this [_executionContext] = null;
+
+      executionContext .deleteRoute (this);
 
       X3DObject .prototype .dispose .call (this);
    }
@@ -431,10 +444,7 @@ Object .defineProperties (X3DRoute .prototype,
    },
    sourceField:
    {
-      get ()
-      {
-         return this [_sourceFieldName];
-      },
+      get: X3DRoute .prototype .getSourceField,
       enumerable: true,
    },
    destinationNode:
@@ -450,10 +460,7 @@ Object .defineProperties (X3DRoute .prototype,
    },
    destinationField:
    {
-      get ()
-      {
-         return this [_destinationFieldName];
-      },
+      get: X3DRoute .prototype .getDestinationField,
       enumerable: true,
    },
 });
@@ -469,9 +476,35 @@ Object .defineProperties (X3DRoute,
 
 Object .assign (X3DRoute,
 {
-   getRouteId (sourceNode, sourceField, destinationNode, destinationField)
+   getRouteId (sourceNode, sourceFieldName, destinationNode, destinationFieldName)
    {
-      return `${sourceNode .getId ()}.${sourceField}.${destinationNode .getId ()}.${destinationField}`;
+      if (sourceNode instanceof X3DNode)
+         var sourceField = sourceNode .getField (sourceFieldName);
+      else
+         var sourceField = $.try (() => sourceNode .getExportedNode () .getField (sourceFieldName));
+
+      if (destinationNode instanceof X3DNode)
+         var destinationField = destinationNode .getField (destinationFieldName);
+      else
+         var destinationField = $.try (() => destinationNode .getExportedNode () .getField (destinationFieldName));
+
+      if (sourceField)
+      {
+         sourceFieldName = sourceField .getName ();
+
+         if (sourceField .getAccessType () === X3DConstants .inputOutput)
+            sourceFieldName += "_changed";
+      }
+
+      if (destinationField)
+      {
+         destinationFieldName = destinationField .getName ();
+
+         if (destinationField .getAccessType () === X3DConstants .inputOutput)
+            destinationFieldName = "set_" + destinationFieldName;
+      }
+
+      return `${sourceNode .getId ()}.${sourceFieldName}.${destinationNode .getId ()}.${destinationFieldName}`;
    },
 });
 
