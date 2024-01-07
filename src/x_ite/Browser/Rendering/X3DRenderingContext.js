@@ -95,7 +95,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       const gl = this .getContext ();
 
-      if (! navigator .userAgent .match (/Firefox/))
+      if (!navigator .userAgent .match (/Firefox/))
       {
          const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
 
@@ -109,7 +109,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       const gl = this .getContext ();
 
-      if (! navigator .userAgent .match (/Firefox/))
+      if (!navigator .userAgent .match (/Firefox/))
       {
          const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
 
@@ -258,16 +258,15 @@ Object .assign (X3DRenderingContext .prototype,
    reshape ()
    {
       const
-         $canvas      = this .getCanvas (),
+         canvas       = this .getCanvas (),
          contentScale = this .getRenderingProperty ("ContentScale"),
          samples      = this .getRenderingProperty ("Multisampling"),
          oit          = this .getBrowserOption ("OrderIndependentTransparency"),
-         width        = $canvas .width () * contentScale,
-         height       = $canvas .height () * contentScale,
-         canvas       = $canvas [0];
+         width        = canvas .width () * contentScale,
+         height       = canvas .height () * contentScale;
 
-      canvas .width  = width;
-      canvas .height = height;
+      canvas .prop ("width",  width);
+      canvas .prop ("height", height);
 
       this [_viewport] [2] = width;
       this [_viewport] [3] = height;
