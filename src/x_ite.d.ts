@@ -630,10 +630,6 @@ declare class X3DExecutionContext
     */
    removeImportedNode (importedName: string): void;
    /**
-    * Returns either a named node or an imported node, preferring named nodes.
-    */
-   getLocalNode (name: string): SFNode | X3DImportedNode;
-   /**
     * Add a route from the passed *sourceField* to the passed *destinationField.* The return value is an X3DRoute object.
     */
    addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): X3DRoute;

@@ -109,10 +109,6 @@ Creates or updates the imported node *importedName.* If not *importedName* is gi
 
 Removes the imported node *importedName.*
 
-#### SFNode|X3DImportedNode **getLocalNode** (*String name|importedName*)
-
-Returns either a named node or an imported node, preferring named nodes.
-
 #### X3DRoute **addRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
 
 Add a route from the passed *sourceField* to the passed *destinationField.* The return value is an X3DRoute object.
