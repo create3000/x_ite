@@ -7,7 +7,7 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning){:target="_blank"}. Keep this in mind when choosing a version number.
 
-## X_ITE v10.0.0 Released
+## X_ITE v9.2.0 Released
 
 *Leipzig, 7th January 2024:* This release comes with improved handling of imported nodes, they will now also work inside X3DPrototypeInstance nodes.
 
