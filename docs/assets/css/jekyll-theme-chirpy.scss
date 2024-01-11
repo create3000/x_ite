@@ -41,7 +41,7 @@
 
   --example-background-color: rgba(235, 235, 255, 0.644);
   --button-background-color: white;
-  
+
   --playground-toolbar-color: rgba(237, 239, 240, 0.7);
   --playground-editor-background: rgba(227, 229, 230, 0.7);
 }
@@ -183,20 +183,6 @@ small, .small {
 
 .table-wrapper > table.examples a.popup {
   margin: 0;
-}
-
-.table-wrapper > table.examples a:hover::before {
-  content: "";
-  position: absolute;
-  background: var(--shimmer-bg);
-  height: 100%;
-  width: 100%;
-  -webkit-animation: shimmer 1s infinite;
-  animation: shimmer 1s infinite;
-}
-
-.table-wrapper > table.examples .shimmer::before {
-  all: unset;
 }
 
 @media all and (max-width: 849px) {
