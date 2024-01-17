@@ -9,17 +9,23 @@ There are various types of viewers available to navigate in a X3D scene to move 
 
 Each of them allow you to navigate in a scene in a different manner:
 
-![examine](https://create3000.github.io/media/tutorials/images/examine.png) Examine Viewer
+![examine](https://create3000.github.io/media/tutorials/images/examine.png){: .normal }
+Examine Viewer
 
-![walk](https://create3000.github.io/media/tutorials/images/walk.png) Walk Viewer
+![walk](https://create3000.github.io/media/tutorials/images/walk.png){: .normal }
+Walk Viewer
 
-![fly](https://create3000.github.io/media/tutorials/images/fly.png) Fly Viewer
+![fly](https://create3000.github.io/media/tutorials/images/fly.png){: .normal }
+Fly Viewer
 
-![plane](https://create3000.github.io/media/tutorials/images/plane.png) Plane Viewer
+![plane](https://create3000.github.io/media/tutorials/images/plane.png){: .normal }
+Plane Viewer
 
-![lookat](https://create3000.github.io/media/tutorials/images/lookat.png) Look At Viewer
+![lookat](https://create3000.github.io/media/tutorials/images/lookat.png){: .normal }
+Look At Viewer
 
-![none](https://create3000.github.io/media/tutorials/images/none.png) None Viewer
+![none](https://create3000.github.io/media/tutorials/images/none.png){: .normal }
+None Viewer
 
 You can choose a viewer from the available viewers in the viewer menu of the context menu. Not all viewers have to be available at the same time. **Note:** This is controlled by the X3D author by setting the *type* field of a [NavigationInfo](/x_ite/components/navigation/navigationinfo) node.
 
