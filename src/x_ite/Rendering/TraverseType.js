@@ -47,14 +47,13 @@
 
 let i = 0;
 
-const TraverseType =
-{
+const TraverseType = Object .freeze ({
    POINTER:   i ++,
    CAMERA:    i ++,
    PICKING:   i ++,
    COLLISION: i ++,
    SHADOW:    i ++,
    DISPLAY:   i ++,
-};
+});
 
 export default TraverseType;
