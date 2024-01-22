@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
       const relative = X3DViewpointNode .prototype .getRelativeTransformation .call (this, fromViewpointNode);
 
       if (fromViewpointNode .constructor === this .constructor)
-         relative .fieldOfView = fromViewpointNode .getFieldOfView ();
+         relative .fieldOfView = fromViewpointNode .getUserFieldOfView ();
 
       return relative;
    },
@@ -82,7 +82,7 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
    {
       if (fromViewpointNode .constructor === this .constructor)
       {
-         const scale = relative .fieldOfView / this .getFieldOfView ();
+         const scale = relative .fieldOfView / this .getUserFieldOfView ();
 
          this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (scale, this ._fieldOfViewScale .getValue ());
 
@@ -101,6 +101,12 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
    },
    getFieldOfView ()
    {
+      const fov = this ._fieldOfView .getValue ();
+
+      return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
+   },
+   getUserFieldOfView ()
+   {
       const fov = this ._fieldOfView .getValue () * this ._fieldOfViewScale .getValue ();
 
       return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
@@ -113,7 +119,7 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
          width  = viewport [2],
          height = viewport [3];
 
-      let size = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
+      let size = Math .abs (point .z) * Math .tan (this .getUserFieldOfView () / 2) * 2;
 
       if (width > height)
          size /= height;
@@ -133,7 +139,7 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
          const
             width  = viewport [2],
             height = viewport [3],
-            size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
+            size   = nearValue * Math .tan (this .getUserFieldOfView () / 2) * 2,
             aspect = width / height;
 
          if (aspect > 1)
@@ -144,11 +150,11 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
    })(),
    getLookAtDistance (bbox)
    {
-      return (bbox .size .magnitude () / 2) / Math .tan (this .getFieldOfView () / 2);
+      return (bbox .size .magnitude () / 2) / Math .tan (this .getUserFieldOfView () / 2);
    },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
-      return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
+      return Camera .perspective (this .getUserFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
    },
 });
 

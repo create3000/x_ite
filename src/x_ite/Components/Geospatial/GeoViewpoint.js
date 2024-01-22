@@ -122,7 +122,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
    },
    getRelativeTransformation: Viewpoint .prototype .getRelativeTransformation,
    setInterpolators: Viewpoint .prototype .setInterpolators,
-   getFieldOfView: Viewpoint .prototype .getFieldOfView,
+   getUserFieldOfView: Viewpoint .prototype .getUserFieldOfView,
    getScreenScale: Viewpoint .prototype .getScreenScale,
    getViewportSize: Viewpoint .prototype .getViewportSize,
    getLookAtDistance: Viewpoint .prototype .getLookAtDistance,
@@ -131,15 +131,6 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
    {
       return this .logarithmicDepthBuffer;
    },
-   setPosition: (() =>
-   {
-      const geoPosition = new Vector3 (0, 0, 0);
-
-      return function (value)
-      {
-         this ._position .setValue (this .getGeoCoord (value, geoPosition));
-      };
-   })(),
    getPosition: (() =>
    {
       const position = new Vector3 (0, 0, 0);
@@ -147,6 +138,15 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
       return function ()
       {
          return this .getCoord (this ._position .getValue (), position);
+      };
+   })(),
+   setPosition: (() =>
+   {
+      const geoPosition = new Vector3 (0, 0, 0);
+
+      return function (value)
+      {
+         this ._position .setValue (this .getGeoCoord (value, geoPosition));
       };
    })(),
    set_position__: (() =>
@@ -158,23 +158,6 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
          this .getCoord (this ._position .getValue (), position);
 
          this .elevation = this .getGeoElevation (position .add (this ._positionOffset .getValue ()));
-      };
-   })(),
-   setOrientation: (() =>
-   {
-      const
-         locationMatrix = new Matrix4 (),
-         geoOrientation = new Rotation4 ();
-
-      return function (value)
-      {
-         ///  Returns the resulting orientation for this viewpoint.
-
-         const rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
-
-         geoOrientation .setMatrix (rotationMatrix);
-
-         this ._orientation .setValue (geoOrientation .inverse () .multLeft (value));
       };
    })(),
    getOrientation: (() =>
@@ -194,6 +177,23 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
          return orientation .multLeft (this ._orientation .getValue ());
       };
    })(),
+   setOrientation: (() =>
+   {
+      const
+         locationMatrix = new Matrix4 (),
+         geoOrientation = new Rotation4 ();
+
+      return function (value)
+      {
+         ///  Returns the resulting orientation for this viewpoint.
+
+         const rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
+
+         geoOrientation .setMatrix (rotationMatrix);
+
+         this ._orientation .setValue (geoOrientation .inverse () .multLeft (value));
+      };
+   })(),
    getCenterOfRotation: (() =>
    {
       const centerOfRotation = new Vector3 (0, 0, 0);
@@ -201,6 +201,15 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
       return function ()
       {
          return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
+      };
+   })(),
+   setCenterOfRotation: (() =>
+   {
+      const geoCenterOfRotation = new Vector3 (0, 0, 0);
+
+      return function (value)
+      {
+         this ._centerOfRotation .setValue (this .getGeoCoord (value, geoCenterOfRotation));
       };
    })(),
    getMaxFarValue ()

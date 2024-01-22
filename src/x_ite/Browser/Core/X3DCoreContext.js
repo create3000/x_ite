@@ -657,7 +657,7 @@ Object .assign (X3DCoreContext .prototype,
                      vp .position         = viewpoint .getUserPosition ();
                      vp .orientation      = viewpoint .getUserOrientation ();
                      vp .centerOfRotation = viewpoint .getUserCenterOfRotation ();
-                     vp .fieldOfView      = viewpoint .getFieldOfView ();
+                     vp .fieldOfView      = viewpoint .getUserFieldOfView ();
                      break;
                   }
                   case "OrthoViewpoint":
@@ -665,7 +665,7 @@ Object .assign (X3DCoreContext .prototype,
                      vp .position         = viewpoint .getUserPosition ();
                      vp .orientation      = viewpoint .getUserOrientation ();
                      vp .centerOfRotation = viewpoint .getUserCenterOfRotation ();
-                     vp .fieldOfView      = new Fields .MFFloat (viewpoint .getMinimumX (), viewpoint .getMinimumY (), viewpoint .getMaximumX (), viewpoint .getMaximumY ());
+                     vp .fieldOfView      = viewpoint .getUserFieldOfView ();
                      break;
                   }
                   case "GeoViewpoint":
@@ -688,7 +688,7 @@ Object .assign (X3DCoreContext .prototype,
                      vp .position         = viewpoint .getGeoCoord (viewpoint .getUserPosition (), geoCoord);
                      vp .orientation      = viewpoint .getUserOrientation ();
                      vp .centerOfRotation = viewpoint .getGeoCoord (viewpoint .getUserCenterOfRotation (), geoCoord);
-                     vp .fieldOfView      = viewpoint .getFieldOfView ();
+                     vp .fieldOfView      = viewpoint .getUserFieldOfView ();
                      break;
                   }
                }

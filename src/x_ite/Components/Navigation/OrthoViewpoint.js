@@ -168,6 +168,24 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    {
       return false;
    },
+   getFieldOfView ()
+   {
+      return [
+         this .getMinimumX (),
+         this .getMinimumY (),
+         this .getMaximumX (),
+         this .getMaximumY (),
+      ];
+   },
+   getUserFieldOfView ()
+   {
+      return [
+         this .getUserMinimumX (),
+         this .getUserMinimumY (),
+         this .getUserMaximumX (),
+         this .getUserMaximumY (),
+      ];
+   },
    getMinimumX ()
    {
       return this ._fieldOfView .length > 0 ? this ._fieldOfView [0] : -1;
