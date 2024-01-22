@@ -102,7 +102,10 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
    },
    getBBox (bbox, shadows)
    {
-      return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
+      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+         return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    traverse (type, renderObject)
    {

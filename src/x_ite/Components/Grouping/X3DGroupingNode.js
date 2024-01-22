@@ -93,14 +93,14 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    getBBox (bbox, shadows)
    {
-      return this .getSubBBox (bbox, shadows);
+      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+         return this .getSubBBox (bbox, shadows);
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    getSubBBox (bbox, shadows)
    {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-         return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadows);
-
-      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadows);
    },
    setAllowedTypes (/* type, ... */)
    {
