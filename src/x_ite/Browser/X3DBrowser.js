@@ -66,7 +66,6 @@ import X3DCast             from "../Base/X3DCast.js";
 import X3DConstants        from "../Base/X3DConstants.js";
 import Features            from "../Features.js";
 import Algorithm           from "../../standard/Math/Algorithm.js";
-import MapUtilities        from "../../standard/Utility/MapUtilities.js";
 import _                   from "../../locale/gettext.js";
 import DEVELOPMENT         from "../DEVELOPMENT.js";
 
@@ -685,24 +684,55 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          {
             const [key, object] = args;
 
-            this [_browserCallbacks] .forEach (map => map .set (key, object));
+            for (const [event, map] of this [_browserCallbacks])
+               this [_browserCallbacks] .set (event, new Map (map) .set (key, object));
+
             break;
          }
          case 3:
          {
-            const [key, event, object] = args;
+            const
+               [key, event, object] = args,
+               map                  = new Map (this [_browserCallbacks] .get (event));
 
-            this [_browserCallbacks] .get (event) .set (key, object);
+            this [_browserCallbacks] .set (event, map);
+
+            map .set (key, object);
             break;
          }
       }
    },
-   removeBrowserCallback (key, event)
+   removeBrowserCallback (... args)
    {
-      if (arguments .length === 2)
-         this [_browserCallbacks] .get (event) .delete (key);
-      else
-         this [_browserCallbacks] .forEach (map => map .delete (key));
+      switch (args .length)
+      {
+         case 1:
+         {
+            const [key] = args;
+
+            for (const [event, original] of this [_browserCallbacks])
+            {
+               const map = new Map (original);
+
+               this [_browserCallbacks] .set (event, map);
+
+               map .delete (key);
+            }
+
+            break;
+         }
+         case 2:
+         {
+            const
+               [key, event] = args,
+               map          = new Map (this [_browserCallbacks] .get (event));
+
+            this [_browserCallbacks] .set (event, map);
+
+            map .delete (key);
+            break;
+         }
+      }
    },
    getBrowserCallbacks (event)
    {
@@ -713,7 +743,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    callBrowserCallbacks (event)
    {
-      for (const callback of MapUtilities .values (this [_browserCallbacks] .get (event)))
+      for (const callback of this [_browserCallbacks] .get (event) .values ())
          callback (event);
    },
    importDocument (dom)

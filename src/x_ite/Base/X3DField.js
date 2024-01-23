@@ -48,7 +48,6 @@
 import X3DChildObject from "./X3DChildObject.js";
 import X3DConstants   from "./X3DConstants.js";
 import Events         from "./Events.js";
-import MapUtilities   from "../../standard/Utility/MapUtilities.js";
 
 const
    _value               = Symbol (),
@@ -226,13 +225,14 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    addReferencesCallback (key, object)
    {
-      if (this [_referencesCallbacks] === X3DField .prototype [_referencesCallbacks])
-         this [_referencesCallbacks] = new Map ();
+      this [_referencesCallbacks] = new Map (this [_referencesCallbacks]);
 
       this [_referencesCallbacks] .set (key, object);
    },
    removeReferencesCallback (key)
    {
+      this [_referencesCallbacks] = new Map (this [_referencesCallbacks]);
+
       this [_referencesCallbacks] .delete (key);
    },
    getReferencesCallbacks ()
@@ -241,7 +241,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    processReferencesCallbacks ()
    {
-      for (const callback of MapUtilities .values (this [_referencesCallbacks]))
+      for (const callback of this [_referencesCallbacks] .values ())
          callback ();
    },
    addFieldInterest (field)
@@ -261,13 +261,14 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    addFieldCallback (key, object)
    {
-      if (this [_fieldCallbacks] === X3DField .prototype [_fieldCallbacks])
-         this [_fieldCallbacks] = new Map ();
+      this [_fieldCallbacks] = new Map (this [_fieldCallbacks]);
 
       this [_fieldCallbacks] .set (key, object);
    },
    removeFieldCallback (key)
    {
+      this [_fieldCallbacks] = new Map (this [_fieldCallbacks]);
+
       this [_fieldCallbacks] .delete (key);
    },
    getFieldCallbacks ()
@@ -316,13 +317,14 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    {
       // Processed if routes are changed.
 
-      if (this [_routeCallbacks] === X3DField .prototype [_routeCallbacks])
-         this [_routeCallbacks] = new Map ();
+      this [_routeCallbacks] = new Map (this [_routeCallbacks]);
 
       this [_routeCallbacks] .set (key, object);
    },
    removeRouteCallback (key)
    {
+      this [_routeCallbacks] = new Map (this [_routeCallbacks]);
+
       this [_routeCallbacks] .delete (key);
    },
    getRouteCallbacks ()
@@ -331,7 +333,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    processRouteCallbacks ()
    {
-      for (const callback of MapUtilities .values (this [_routeCallbacks]))
+      for (const callback of this [_routeCallbacks] .values ())
          callback ();
    },
    processEvent (event = Events .create (this))
@@ -374,7 +376,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
 
       // Process field callbacks.
 
-      for (const callback of MapUtilities .values (this [_fieldCallbacks]))
+      for (const callback of this [_fieldCallbacks] .values ())
          callback (this .valueOf ());
    },
    fromString (string, scene)

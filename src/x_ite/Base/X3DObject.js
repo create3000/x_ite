@@ -45,9 +45,8 @@
  *
  ******************************************************************************/
 
-import Generator    from "../InputOutput/Generator.js";
-import MapUtilities from "../../standard/Utility/MapUtilities.js";
-import DEVELOPMENT  from "../DEVELOPMENT.js";
+import Generator   from "../InputOutput/Generator.js";
+import DEVELOPMENT from "../DEVELOPMENT.js";
 
 const
    _name      = Symbol (),
@@ -88,17 +87,18 @@ Object .assign (X3DObject .prototype,
    },
    addInterest (callbackName, object, ... args)
    {
-      if (this [_interests] === X3DObject .prototype [_interests])
-         this [_interests] = new Map ();
-
       const
          interestId = X3DObject .getInterestId (callbackName, object),
          callback   = object [callbackName];
+
+      this [_interests] = new Map (this [_interests]);
 
       this [_interests] .set (interestId, callback .bind (object, ... args, this));
    },
    removeInterest (callbackName, object)
    {
+      this [_interests] = new Map (this [_interests]);
+
       this [_interests] .delete (X3DObject .getInterestId (callbackName, object));
    },
    getInterests ()
@@ -107,7 +107,7 @@ Object .assign (X3DObject .prototype,
    },
    processInterests ()
    {
-      for (const interest of MapUtilities .values (this [_interests]))
+      for (const interest of this [_interests] .values ())
          interest ();
    },
    getUserData (key)
