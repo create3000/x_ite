@@ -273,14 +273,13 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       // Remove named node.
 
-      this .removeNamedNode (node .getName ());
       this .removeNamedNode (name);
 
       // Update named node.
 
-      node .setName (name);
+      this [_namedNodes] .update (node .getName (), name, SFNodeCache .get (node));
 
-      this [_namedNodes] .add (name, SFNodeCache .get (node));
+      node .setName (name);
 
       this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
