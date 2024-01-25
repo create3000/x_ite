@@ -855,12 +855,6 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    {
       try
       {
-         if (this .getScene () !== this .getExecutionContext ())
-         {
-            console .warn ("XML Parser Error: Export statement not allowed here.");
-            return;
-         }
-
          const
             localNodeName    = xmlElement .getAttribute ("localDEF"),
             exportedNodeName = xmlElement .getAttribute ("AS") || localNodeName;

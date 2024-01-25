@@ -577,13 +577,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                var exportedNodeNameId = localNodeNameId;
             }
 
-            if (this .getScene () === this .getExecutionContext ())
-            {
-               this .getScene () .updateExportedNode (exportedNodeNameId, node);
-               return true;
-            }
-
-            throw new Error ("Export statement not allowed here.");
+            this .getScene () .updateExportedNode (exportedNodeNameId, node);
+            return true;
          }
 
          throw new Error ("No name given after EXPORT.");
