@@ -100,7 +100,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       generator .AddRouteNode (this);
 
-      const importedName = generator .ImportedName (this .getImportedName ());
+      const importedName = generator .ImportedName (this);
 
       generator .string += generator .Indent ();
       generator .string += "IMPORT";
@@ -124,7 +124,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       generator .AddRouteNode (this);
 
-      const importedName = generator .ImportedName (this .getImportedName ());
+      const importedName = generator .ImportedName (this);
 
       generator .string += generator .Indent ();
       generator .string += "<IMPORT";
@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       generator .AddRouteNode (this);
 
-      const importedName = generator .ImportedName (this .getImportedName ());
+      const importedName = generator .ImportedName (this);
 
       generator .string += generator .Indent ();
       generator .string += '{';

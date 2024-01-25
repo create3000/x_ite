@@ -87,6 +87,7 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
 
    this .executionContextStack = [ ];
    this .importedNodesIndex    = new Map ();
+   this .importedNames         = new Map ();
    this .exportedNodesIndex    = new Map ();
    this .nodes                 = new Set ();
    this .names                 = new Map ();
@@ -409,15 +410,19 @@ Object .assign (Generator .prototype,
 
       return false;
    },
-   ImportedName (name)
+   ImportedName (importedNode)
    {
+      if (this .importedNames .has (importedNode))
+         return this .importedNames .get (importedNode);
+
       const
          names   = this .names .get (this .ExecutionContext ()),
-         newName = getUniqueName (names, name);
+         newName = getUniqueName (names, importedNode .getImportedName ());
 
       // Add to indices.
 
       names .add (newName);
+      this .importedNames .set (importedNode, newName);
 
       return newName;
    },

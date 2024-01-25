@@ -217,11 +217,11 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
 
       const sourceNodeName = this [_sourceNode] instanceof X3DNode
          ? generator .Name (this [_sourceNode])
-         : this [_sourceNode] .getImportedName ();
+         : generator .ImportedName (this [_sourceNode]);
 
       const destinationNodeName = this [_destinationNode] instanceof X3DNode
          ? generator .Name (this [_destinationNode])
-         : this [_destinationNode] .getImportedName ();
+         : generator .ImportedName (this [_destinationNode]);
 
       generator .string += generator .Indent ();
       generator .string += "ROUTE";
@@ -246,11 +246,11 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
 
       const sourceNodeName = this [_sourceNode] instanceof X3DNode
          ? generator .Name (this [_sourceNode])
-         : this [_sourceNode] .getImportedName ();
+         : generator .ImportedName (this [_sourceNode]);
 
       const destinationNodeName = this [_destinationNode] instanceof X3DNode
          ? generator .Name (this [_destinationNode])
-         : this [_destinationNode] .getImportedName ();
+         : generator .ImportedName (this [_destinationNode]);
 
       generator .string += generator .Indent ();
       generator .string += "<ROUTE";
@@ -282,11 +282,11 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
 
       const sourceNodeName = this [_sourceNode] instanceof X3DNode
          ? generator .Name (this [_sourceNode])
-         : this [_sourceNode] .getImportedName ();
+         : generator .ImportedName (this [_sourceNode]);
 
       const destinationNodeName = this [_destinationNode] instanceof X3DNode
          ? generator .Name (this [_destinationNode])
-         : this [_destinationNode] .getImportedName ();
+         : generator .ImportedName (this [_destinationNode]);
 
       generator .string += generator .Indent ();
       generator .string += '{';
