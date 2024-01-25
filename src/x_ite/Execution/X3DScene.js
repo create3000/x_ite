@@ -354,11 +354,9 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       //if (node .getExecutionContext () !== this)
       //	throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
 
-      this .removeExportedNode (exportedName);
-
       const exportedNode = new X3DExportedNode (this, exportedName, node);
 
-      this [_exportedNodes] .add (exportedName, exportedNode);
+      this [_exportedNodes] .update (exportedName, exportedName, exportedNode);
 
       this ._exportedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
