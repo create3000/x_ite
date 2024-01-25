@@ -632,14 +632,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                   // Rename existing imported node.
 
-                  try
-                  {
-                     const importedName = this .getExecutionContext () .getUniqueImportName (nodeNameId);
-
-                     this .getExecutionContext () .renameImportedNode (nodeNameId, importedName);
-                  }
-                  catch
-                  { }
+                  this .renameExistingNode (nodeNameId);
 
                   // Add new imported node.
 
@@ -1265,14 +1258,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          if (nodeNameId .length)
          {
-            try
-            {
-               const namedNode = this .getExecutionContext () .getNamedNode (nodeNameId);
-
-               this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (nodeNameId), namedNode);
-            }
-            catch
-            { }
+            this .renameExistingNode (nodeNameId);
 
             this .getExecutionContext () .updateNamedNode (nodeNameId, baseNode);
          }

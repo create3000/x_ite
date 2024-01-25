@@ -846,14 +846,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          // Rename existing imported node.
 
-         try
-         {
-            const importedName = this .getExecutionContext () .getUniqueImportName (localNodeName);
-
-            this .getExecutionContext () .renameImportedNode (localNodeName, importedName);
-         }
-         catch
-         { }
+         this .renameExistingNode (localNodeName);
 
          // Add new imported node.
 
@@ -932,14 +925,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          if (name)
          {
-            try
-            {
-               const namedNode = this .getExecutionContext () .getNamedNode (name);
-
-               this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), namedNode);
-            }
-            catch
-            { }
+            this .renameExistingNode (name);
 
             this .getExecutionContext () .updateNamedNode (name, node);
          }

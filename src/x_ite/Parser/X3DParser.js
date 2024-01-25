@@ -141,6 +141,26 @@ Object .assign (X3DParser .prototype,
 
       return name;
    },
+   renameExistingNode (name)
+   {
+      try
+      {
+         const namedNode = this .getExecutionContext () .getNamedNode (name);
+
+         this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), namedNode);
+      }
+      catch
+      { }
+
+      try
+      {
+         const importedName = this .getExecutionContext () .getUniqueImportName (name);
+
+         this .getExecutionContext () .renameImportedNode (name, importedName);
+      }
+      catch
+      { }
+   },
 });
 
 export default X3DParser;
