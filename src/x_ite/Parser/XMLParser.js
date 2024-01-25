@@ -844,7 +844,23 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          const inlineNode = this .getExecutionContext () .getNamedNode (inlineNodeName);
 
-         this .getExecutionContext () .updateImportedNode (inlineNode, exportedNodeName, localNodeName);
+         // Rename existing imported node.
+
+         const importedNode = this .getExecutionContext () .importedNodes .get (localNodeName);
+
+         if (importedNode)
+         {
+            const importedName = this .getExecutionContext () .getUniqueImportName (localNodeName);
+
+            importedNode .setImportName (importedName);
+
+            this .getExecutionContext () .importedNodes .add (importedName, importedNode);
+            this .getExecutionContext () .importedNodes .remove (localNodeName);
+         }
+
+         // Add new imported node.
+
+         this .getExecutionContext () .addImportedNode (inlineNode, exportedNodeName, localNodeName);
       }
       catch (error)
       {
@@ -863,6 +879,15 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             throw new Error ("Bad EXPORT statement: Expected localDEF attribute.");
 
          const localNode = this .getExecutionContext () .getLocalNode (localNodeName);
+
+         try
+         {
+            const existingNode = this .getScene () .getExportedNode (exportedNodeName);
+
+            this .getScene () .addExportedNode (this .getScene () .getUniqueExportName (exportedNodeName), existingNode);
+         }
+         catch
+         { }
 
          this .getScene () .updateExportedNode (exportedNodeName, localNode);
       }

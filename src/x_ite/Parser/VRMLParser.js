@@ -577,6 +577,15 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                var exportedNodeNameId = localNodeNameId;
             }
 
+            try
+            {
+               const existingNode = this .getScene () .getExportedNode (exportedNodeNameId);
+
+               this .getScene () .addExportedNode (this .getScene () .getUniqueExportName (exportedNodeNameId), existingNode);
+            }
+            catch
+            { }
+
             this .getScene () .updateExportedNode (exportedNodeNameId, node);
             return true;
          }
@@ -621,7 +630,23 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                      var nodeNameId = exportedNodeNameId;
                   }
 
-                  this .getExecutionContext () .updateImportedNode (namedNode, exportedNodeNameId, nodeNameId);
+                  // Rename existing imported node.
+
+                  const importedNode = this .getExecutionContext () .importedNodes .get (nodeNameId);
+
+                  if (importedNode)
+                  {
+                     const importedName = this .getExecutionContext () .getUniqueImportName (nodeNameId);
+
+                     importedNode .setImportName (importedName);
+
+                     this .getExecutionContext () .importedNodes .add (importedName, importedNode);
+                     this .getExecutionContext () .importedNodes .remove (nodeNameId);
+                  }
+
+                  // Add new imported node.
+
+                  this .getExecutionContext () .addImportedNode (namedNode, exportedNodeNameId, nodeNameId);
                   return true;
                }
 

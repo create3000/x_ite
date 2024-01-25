@@ -89,6 +89,10 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    {
       return this [_importedName];
    },
+   setImportName (importName)
+   {
+      this [_importedName] = importName;
+   },
    toVRMLStream (generator)
    {
       if (!generator .ExistsNode (this .getInlineNode ()))
