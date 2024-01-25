@@ -139,6 +139,13 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
 
       return copy;
    },
+   clear ()
+   {
+      this [_array] .length = 0;
+      this [_index] .clear ();
+
+      this .addEvent ();
+   },
    assign (array)
    {
       if (!(array instanceof this .constructor))
