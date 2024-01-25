@@ -356,6 +356,21 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
+   renameImportedNode (oldImportedName, newImportedName)
+   {
+      const importedNode = this [_importedNodes] .get (oldImportedName);
+
+      if (!importedNode)
+         throw new Error ("Couldn't rename imported node: imported node does not exists.");
+
+      if (this [_importedNodes] .get (newImportedName))
+         throw new Error ("Couldn't rename imported node: new imported name does already exists.");
+
+      importedNode [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (newImportedName);
+
+      this [_importedNodes] .add (newImportedName, importedNode);
+      this [_importedNodes] .remove (oldImportedName);
+   },
    removeImportedNode (importedName)
    {
       importedName = String (importedName);
