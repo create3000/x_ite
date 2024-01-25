@@ -577,6 +577,15 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                var exportedNodeNameId = localNodeNameId;
             }
 
+            try
+            {
+               const existingNode = this .getScene () .getExportedNode (exportedNodeNameId);
+
+               this .getScene () .addExportedNode (this .getScene () .getUniqueExportName (exportedNodeNameId), existingNode);
+            }
+            catch
+            { }
+
             this .getScene () .updateExportedNode (exportedNodeNameId, node);
             return true;
          }

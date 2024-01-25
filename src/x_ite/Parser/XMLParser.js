@@ -880,6 +880,15 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          const localNode = this .getExecutionContext () .getLocalNode (localNodeName);
 
+         try
+         {
+            const existingNode = this .getScene () .getExportedNode (exportedNodeName);
+
+            this .getScene () .addExportedNode (this .getScene () .getUniqueExportName (exportedNodeName), existingNode);
+         }
+         catch
+         { }
+
          this .getScene () .updateExportedNode (exportedNodeName, localNode);
       }
       catch (error)
