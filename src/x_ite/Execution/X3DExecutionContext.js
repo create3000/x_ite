@@ -368,8 +368,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       importedNode [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (newImportedName);
 
-      this [_importedNodes] .add (newImportedName, importedNode);
-      this [_importedNodes] .remove (oldImportedName);
+      this [_importedNodes] .update (oldImportedName, newImportedName, importedNode);
    },
    removeImportedNode (importedName)
    {
