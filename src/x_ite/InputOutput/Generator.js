@@ -399,7 +399,7 @@ Object .assign (Generator .prototype,
       if (baseNode .hasRoutes ())
          return true;
 
-      const executionContext = baseNode .getExecutionContext ();
+      const executionContext = this .ExecutionContext ();
 
       if (this .importedNodesIndex .get (executionContext) ?.has (baseNode))
          return true;
