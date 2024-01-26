@@ -906,6 +906,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          {
             const node = this .getExecutionContext () .getNamedNode (name);
 
+            if (xmlElement .nodeName !== node .getNodeTypeName ())
+               console .warn (`DEF/USE mismatch, '${name}', ${xmlElement .nodeName} != ${node .getNodeTypeName ()}.`);
+
             this .addNode (xmlElement, node .getValue ());
             return true;
          }
