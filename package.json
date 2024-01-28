@@ -96,7 +96,7 @@
 		"dicom-parser": "^1.8.21",
 		"fast-xml-parser": "^4.3.3",
 		"jpeg-js": "^0.4.4",
-		"jpeg-lossless-decoder-js": "^2.0.7",
+		"jpeg-lossless-decoder-js": "2.0.7",
 		"jquery": "^3.7.1",
 		"jquery-fullscreen-plugin": "^1.1.5",
 		"jquery-mousewheel": "^3.1.13",
@@ -110,7 +110,7 @@
 		"shell-tools": "^1.1.7",
 		"string-replace-webpack-plugin": "^0.1.3",
 		"terser": "^5.27.0",
-		"webpack": "^5.89.0",
+		"webpack": "^5.90.0",
 		"webpack-cli": "^5.1.4",
 		"webpack-shell-plugin-next": "^2.3.1"
 	}
