@@ -170,7 +170,7 @@ Object .assign (X3DUrlObject .prototype,
 
          const browser = this .getBrowser ();
 
-         if (!browser .getBrowserOption ("LoadUrlObjects") && this .getExecutionContext () !== browser .getPrivateScene () && !this .isExternProto)
+         if (!browser .getBrowserOption ("LoadUrlObjects") && this .getExecutionContext () !== browser .getPrivateScene ())
          {
             resolve ();
             return;
