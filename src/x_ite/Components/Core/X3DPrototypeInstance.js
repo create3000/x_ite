@@ -195,7 +195,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       for (const protoField of this [_protoFields] .keys ())
       {
-         const oldFieldName = oldProtoFields .get (protoField);
+         const oldFieldName = oldProtoFields .get (protoField) ?? protoField .getName ();
 
          if (!oldFieldName)
             continue;
