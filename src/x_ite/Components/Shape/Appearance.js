@@ -430,9 +430,9 @@ Object .defineProperties (Appearance,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "acousticProperties", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "alphaMode",          new Fields .SFString ("AUTO")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "alphaCutoff",        new Fields .SFFloat (0.5)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "acousticProperties", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointProperties",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",     new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",     new Fields .SFNode ()),
