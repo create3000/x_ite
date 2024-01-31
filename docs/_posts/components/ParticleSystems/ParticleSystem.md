@@ -163,15 +163,6 @@ Texture coordinates of the provided texture(s) in the [Appearance](/x_ite/compon
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-### SFBool [in, out] **visible** TRUE
-
-Whether or not renderable content within this node is visually displayed.
-
-#### Hints
-
-- The *visible* field has no effect on animation behaviors, event passing or other non-visual characteristics.
-- Content must be *visible* to be collidable and to be pickable.
-
 ### SFBool [in, out] **castShadow** TRUE
 
 The *castShadow* field defines whether this [Shape](/x_ite/components/shape/shape/) casts shadows as produced by lighting nodes.
@@ -180,6 +171,15 @@ The *castShadow* field defines whether this [Shape](/x_ite/components/shape/shap
 
 - If the visible field is FALSE, then the [Shape](/x_ite/components/shape/shape/) does not cast any shadows, regardless of the *castShadow* value.
 - If prior X3D3 content is loaded into an X3D4 model, then legacy [Shape](/x_ite/components/shape/shape/) nodes have shadows set to true.
+
+### SFBool [in, out] **visible** TRUE
+
+Whether or not renderable content within this node is visually displayed.
+
+#### Hints
+
+- The *visible* field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
 

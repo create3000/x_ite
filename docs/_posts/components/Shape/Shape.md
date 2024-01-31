@@ -36,15 +36,6 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
 
-### SFBool [in, out] **visible** TRUE
-
-Whether or not renderable content within this node is visually displayed.
-
-#### Hints
-
-- The *visible* field has no effect on animation behaviors, event passing or other non-visual characteristics.
-- Content must be *visible* to be collidable and to be pickable.
-
 ### SFBool [in, out] **castShadow** TRUE
 
 *castShadow* defines whether this Shape casts shadows as produced by lighting nodes.
@@ -53,6 +44,15 @@ Whether or not renderable content within this node is visually displayed.
 
 - If the visible field is FALSE, then the Shape does not cast any shadows.
 - If prior X3D3 content is loaded into an X3D4 model, then legacy Shape nodes have shadows set to true.
+
+### SFBool [in, out] **visible** TRUE
+
+Whether or not renderable content within this node is visually displayed.
+
+#### Hints
+
+- The *visible* field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
 
