@@ -47,28 +47,31 @@
 
 const X3DConstants =
 {
+   [Symbol .toStringTag]: "X3DConstants",
+};
+
+let CONSTANT_VALUE = 1000;
+
+Object .defineProperty (X3DConstants, "addConstant",
+{
+   value (name, value)
+   {
+      if (this .hasOwnProperty (name) || this .hasOwnProperty (value))
+         return;
+
+      this [this [name] = value ?? ++ CONSTANT_VALUE] = name;
+   },
+});
+
+Object .entries ({
    // Access types
 
    initializeOnly: 0b001,
    inputOnly:      0b010,
    outputOnly:     0b100,
    inputOutput:    0b111,
-
-   [Symbol .toStringTag]: "X3DConstants",
-};
-
-let CONSTANT_VALUE = 100;
-
-Object .defineProperty (X3DConstants, "addConstant",
-{
-   value (name)
-   {
-      if (this .hasOwnProperty (name))
-         return;
-
-      this [this [name] = ++ CONSTANT_VALUE] = name;
-   },
-});
+})
+.forEach (([name, value]) => X3DConstants .addConstant (name, value));
 
 [
    // Browser events
