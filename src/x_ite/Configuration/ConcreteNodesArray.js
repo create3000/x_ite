@@ -58,14 +58,14 @@ Object .assign (Object .setPrototypeOf (ConcreteNodesArray .prototype, X3DInfoAr
 {
    add (typeName, ConcreteNode)
    {
-      X3DConstants .addNode (ConcreteNode);
+      X3DConstants .addConstant (ConcreteNode .typeName);
       HTMLSupport .addConcreteNode (ConcreteNode);
 
       X3DInfoArray .prototype .add .call (this, typeName, ConcreteNode);
    },
    update (oldTypeName, typeName, ConcreteNode)
    {
-      X3DConstants .addNode (ConcreteNode);
+      X3DConstants .addConstant (ConcreteNode .typeName);
       HTMLSupport .addConcreteNode (ConcreteNode);
 
       X3DInfoArray .prototype .update .call (this, oldTypeName, typeName, ConcreteNode);

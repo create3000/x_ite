@@ -952,6 +952,6 @@ Object .defineProperties (X3DExecutionContext,
    },
 });
 
-X3DConstants .addNode (X3DExecutionContext);
+X3DConstants .addConstant (X3DExecutionContext .typeName);
 
 export default X3DExecutionContext;

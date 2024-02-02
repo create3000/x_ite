@@ -1125,6 +1125,6 @@ Object .defineProperties (X3DScene,
    },
 });
 
-X3DConstants .addNode (X3DScene);
+X3DConstants .addConstant (X3DScene .typeName);
 
 export default X3DScene;

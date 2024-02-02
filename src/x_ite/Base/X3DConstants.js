@@ -45,102 +45,101 @@
  *
  ******************************************************************************/
 
-let
-   BROWSER_EVENT = 0,
-   LOAD_STATE    = 0,
-   FIELD_TYPE    = 0,
-   NODE_TYPE     = 0;
-
 const X3DConstants =
 {
-   // Browser event
-
-   CONNECTION_ERROR:  BROWSER_EVENT ++,
-   BROWSER_EVENT:     BROWSER_EVENT ++,
-   INITIALIZED_EVENT: BROWSER_EVENT ++,
-   SHUTDOWN_EVENT:    BROWSER_EVENT ++,
-   INITIALIZED_ERROR: BROWSER_EVENT ++,
-
-   // Load state
-
-   NOT_STARTED_STATE: LOAD_STATE ++,
-   IN_PROGRESS_STATE: LOAD_STATE ++,
-   COMPLETE_STATE:    LOAD_STATE ++,
-   FAILED_STATE:      LOAD_STATE ++,
-
-   // Access type
+   // Access types
 
    initializeOnly: 0b001,
    inputOnly:      0b010,
    outputOnly:     0b100,
    inputOutput:    0b111,
 
-   // X3DField
-
-   SFBool:      FIELD_TYPE ++,
-   SFColor:     FIELD_TYPE ++,
-   SFColorRGBA: FIELD_TYPE ++,
-   SFDouble:    FIELD_TYPE ++,
-   SFFloat:     FIELD_TYPE ++,
-   SFImage:     FIELD_TYPE ++,
-   SFInt32:     FIELD_TYPE ++,
-   SFMatrix3d:  FIELD_TYPE ++,
-   SFMatrix3f:  FIELD_TYPE ++,
-   SFMatrix4d:  FIELD_TYPE ++,
-   SFMatrix4f:  FIELD_TYPE ++,
-   SFNode:      FIELD_TYPE ++,
-   SFRotation:  FIELD_TYPE ++,
-   SFString:    FIELD_TYPE ++,
-   SFTime:      FIELD_TYPE ++,
-   SFVec2d:     FIELD_TYPE ++,
-   SFVec2f:     FIELD_TYPE ++,
-   SFVec3d:     FIELD_TYPE ++,
-   SFVec3f:     FIELD_TYPE ++,
-   SFVec4d:     FIELD_TYPE ++,
-   SFVec4f:     FIELD_TYPE ++,
-
-   VrmlMatrix:  FIELD_TYPE ++,
-
-   // X3DArrayField
-
-   MFBool:      FIELD_TYPE ++,
-   MFColor:     FIELD_TYPE ++,
-   MFColorRGBA: FIELD_TYPE ++,
-   MFDouble:    FIELD_TYPE ++,
-   MFFloat:     FIELD_TYPE ++,
-   MFImage:     FIELD_TYPE ++,
-   MFInt32:     FIELD_TYPE ++,
-   MFMatrix3d:  FIELD_TYPE ++,
-   MFMatrix3f:  FIELD_TYPE ++,
-   MFMatrix4d:  FIELD_TYPE ++,
-   MFMatrix4f:  FIELD_TYPE ++,
-   MFNode:      FIELD_TYPE ++,
-   MFRotation:  FIELD_TYPE ++,
-   MFString:    FIELD_TYPE ++,
-   MFTime:      FIELD_TYPE ++,
-   MFVec2d:     FIELD_TYPE ++,
-   MFVec2f:     FIELD_TYPE ++,
-   MFVec3d:     FIELD_TYPE ++,
-   MFVec3f:     FIELD_TYPE ++,
-   MFVec4d:     FIELD_TYPE ++,
-   MFVec4f:     FIELD_TYPE ++,
-
-   // Abstract nodes and nodes types are added later.
-
-   X3DBaseNode: NODE_TYPE,
-
    [Symbol .toStringTag]: "X3DConstants",
 };
 
-Object .defineProperty (X3DConstants, "addNode",
+let CONSTANT_VALUE = 100;
+
+Object .defineProperty (X3DConstants, "addConstant",
 {
-   value ({ typeName })
+   value (name)
    {
-      if (this .hasOwnProperty (typeName))
+      if (this .hasOwnProperty (name))
          return;
 
-      this [typeName] = ++ NODE_TYPE;
+      this [this [name] = ++ CONSTANT_VALUE] = name;
    },
 });
+
+[
+   // Browser events
+
+   "CONNECTION_ERROR",
+   "BROWSER_EVENT",
+   "INITIALIZED_EVENT",
+   "SHUTDOWN_EVENT",
+   "INITIALIZED_ERROR",
+
+   // Load states
+
+   "NOT_STARTED_STATE",
+   "IN_PROGRESS_STATE",
+   "COMPLETE_STATE",
+   "FAILED_STATE",
+
+   // X3DField
+
+   "SFBool",
+   "SFColor",
+   "SFColorRGBA",
+   "SFDouble",
+   "SFFloat",
+   "SFImage",
+   "SFInt32",
+   "SFMatrix3d",
+   "SFMatrix3f",
+   "SFMatrix4d",
+   "SFMatrix4f",
+   "SFNode",
+   "SFRotation",
+   "SFString",
+   "SFTime",
+   "SFVec2d",
+   "SFVec2f",
+   "SFVec3d",
+   "SFVec3f",
+   "SFVec4d",
+   "SFVec4f",
+
+   "VrmlMatrix",
+
+   // X3DArrayField
+
+   "MFBool",
+   "MFColor",
+   "MFColorRGBA",
+   "MFDouble",
+   "MFFloat",
+   "MFImage",
+   "MFInt32",
+   "MFMatrix3d",
+   "MFMatrix3f",
+   "MFMatrix4d",
+   "MFMatrix4f",
+   "MFNode",
+   "MFRotation",
+   "MFString",
+   "MFTime",
+   "MFVec2d",
+   "MFVec2f",
+   "MFVec3d",
+   "MFVec3f",
+   "MFVec4d",
+   "MFVec4f",
+
+   // Abstract and concrete nodes and nodes types are added later.
+
+   "X3DBaseNode",
+]
+.forEach (name => X3DConstants .addConstant (name));
 
 export default X3DConstants;

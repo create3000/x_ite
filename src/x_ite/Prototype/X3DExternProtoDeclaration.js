@@ -441,6 +441,6 @@ Object .defineProperties (X3DExternProtoDeclaration,
    },
 });
 
-X3DConstants .addNode (X3DExternProtoDeclaration);
+X3DConstants .addConstant (X3DExternProtoDeclaration .typeName);
 
 export default X3DExternProtoDeclaration;

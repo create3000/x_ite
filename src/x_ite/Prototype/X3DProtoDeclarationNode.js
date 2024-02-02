@@ -107,6 +107,6 @@ Object .defineProperties (X3DProtoDeclarationNode,
    },
 });
 
-X3DConstants .addNode (X3DProtoDeclarationNode);
+X3DConstants .addConstant (X3DProtoDeclarationNode .typeName);
 
 export default X3DProtoDeclarationNode;

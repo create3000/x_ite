@@ -155,6 +155,6 @@ Object .defineProperties (X3DWorld,
    },
 });
 
-X3DConstants .addNode (X3DWorld);
+X3DConstants .addConstant (X3DWorld .typeName);
 
 export default X3DWorld;

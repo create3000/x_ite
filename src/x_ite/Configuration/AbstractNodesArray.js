@@ -57,7 +57,7 @@ Object .assign (Object .setPrototypeOf (AbstractNodesArray .prototype, X3DInfoAr
 {
    add (typeName, AbstractNode)
    {
-      X3DConstants .addNode (AbstractNode);
+      X3DConstants .addConstant (AbstractNode .typeName);
 
       X3DInfoArray .prototype .add .call (this, typeName, AbstractNode);
    },

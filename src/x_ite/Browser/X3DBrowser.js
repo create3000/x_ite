@@ -1080,6 +1080,6 @@ Object .defineProperties (X3DBrowser,
    },
 });
 
-X3DConstants .addNode (X3DBrowser);
+X3DConstants .addConstant (X3DBrowser .typeName);
 
 export default X3DBrowser;
