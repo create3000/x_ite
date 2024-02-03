@@ -59,7 +59,16 @@ Object .defineProperty (X3DConstants, "addConstant",
       if (this .hasOwnProperty (name) || this .hasOwnProperty (value))
          return;
 
-      this [this [name] = value ?? ++ CONSTANT_VALUE] = name;
+      Object .defineProperty (this, name,
+      {
+         value: value ?? ++ CONSTANT_VALUE,
+         enumerable: true,
+      });
+
+      Object .defineProperty (this, this [name],
+      {
+         value: name,
+      });
    },
 });
 

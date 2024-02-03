@@ -1,7 +1,7 @@
 /* X_ITE v9.2.3 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 231:
+/***/ 524:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -13599,7 +13599,7 @@
 	            console.warn('Font file could not be downloaded. Try using a different browser.');
 	        }
 	    } else {
-	        var fs = __webpack_require__(102);
+	        var fs = __webpack_require__(432);
 	        var buffer = arrayBufferToNodeBuffer(arrayBuffer);
 	        fs.writeFileSync(fileName, buffer);
 	    }
@@ -14072,7 +14072,7 @@
 	 * @param  {Function} callback - The function to call when the font load completes
 	 */
 	function loadFromFile(path, callback) {
-	    var fs = __webpack_require__(102);
+	    var fs = __webpack_require__(432);
 	    fs.readFile(path, function(err, buffer) {
 	        if (err) {
 	            return callback(err.message);
@@ -14449,7 +14449,7 @@
 	 * @return {opentype.Font}
 	 */
 	function loadSync(url, opt) {
-	    var fs = __webpack_require__(102);
+	    var fs = __webpack_require__(432);
 	    var buffer = fs.readFileSync(url);
 	    return parseBuffer(nodeBufferToArrayBuffer(buffer), opt);
 	}
@@ -14484,7 +14484,7 @@
 
 /***/ }),
 
-/***/ 355:
+/***/ 72:
 /***/ ((module) => {
 
 "use strict";
@@ -14492,7 +14492,7 @@ module.exports = window [Symbol .for ("X_ITE.X3D-9.2.3")] .require ("lib/jquery"
 
 /***/ }),
 
-/***/ 102:
+/***/ 432:
 /***/ (() => {
 
 /* (ignored) */
@@ -16048,8 +16048,8 @@ const FontStyle_default_ = FontStyle;
 Namespace_default().add ("FontStyle", "x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
-/* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(231);
+/* provided dependency */ var $ = __webpack_require__(72);
+/* provided dependency */ var opentype = __webpack_require__(524);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
