@@ -34,7 +34,7 @@ Information about this node can be contained in a MetadataBoolean, [MetadataDoub
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **name** ""
 

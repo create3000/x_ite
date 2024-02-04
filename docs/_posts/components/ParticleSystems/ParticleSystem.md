@@ -36,7 +36,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -197,8 +197,8 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
-- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
-- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
@@ -207,8 +207,8 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 #### Hints
 
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
-- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
-- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ### SFNode [in, out] **appearance** NULL <small>[X3DAppearanceNode]</small>
 
@@ -237,7 +237,7 @@ Single contained *geometry* node provides *geometry* used for each particle when
 
 ### Hints
 
-- [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/concepts.html#ExecutionModel){:target="_blank"}
+- [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/concepts.html#ExecutionModel){:target="_blank"}
 - [Wikipedia, particle system](https://en.wikipedia.org/wiki/Particle_system){:target="_blank"}
 
 ## Example
