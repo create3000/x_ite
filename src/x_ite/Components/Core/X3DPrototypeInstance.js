@@ -179,36 +179,47 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       const
          oldProtoFields = this [_protoFields],
-         oldFields      = new Map (Array .from (this .getPredefinedFields (), f => [f .getName (), f]));
+         oldFields      = Array .from (this .getPredefinedFields ());
 
-      for (const field of oldFields .values ())
+      for (const field of oldFields)
          this .removePredefinedField (field .getName ());
 
       // Add new fields.
 
-      this [_protoFields] = new Map (Array .from (this [_protoNode] .getUserDefinedFields (), f => [f, f .getName ()]));
+      this [_protoFields] = Array .from (this [_protoNode] .getUserDefinedFields ());
 
       for (const fieldDefinition of this [_protoNode] .getFieldDefinitions ())
          this .addPredefinedField (fieldDefinition);
 
       // Reuse old fields, and therefor routes.
 
-      for (const protoField of this [_protoFields] .keys ())
+      for (const protoField of this [_protoFields])
       {
-         const oldFieldName = oldProtoFields .get (protoField) ?? protoField .getName ();
+         const oldFieldName = oldProtoFields .find (field => field === protoField) ?.getName ()
+            ?? protoField .getName ();
 
          if (!oldFieldName)
             continue;
 
          const
             newField = this .getPredefinedFields () .get (protoField .getName ()),
-            oldField = oldFields .get (oldFieldName);
+            oldField = oldFields .find (field => field .getName () === oldFieldName);
 
          if (!oldField)
             continue;
 
          if (oldField .getType () !== newField .getType ())
             continue;
+
+         // Assign default value.
+         if (oldField .isInitializable ())
+         {
+            if (oldField .getModificationTime () === 0)
+            {
+               oldField .assign (newField);
+					oldField .setModificationTime (0);
+            }
+         }
 
          oldField .addParent (this);
          oldField .setAccessType (newField .getAccessType ());
@@ -217,14 +228,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          // Replace field, ie. reuse old field.
          this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
 
-         // Assign default value.
-         if (oldField .isInitializable () && !oldField .getModificationTime ())
-         {
-            oldField .assign (newField);
-            oldField .setModificationTime (0);
-         }
-
-         const references = new Set (oldField .getReferences ());
+         const references = Array .from (oldField .getReferences ());
 
          // Remove references and routes.
          for (const field of oldField .getFieldInterests ())
@@ -238,7 +242,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          }
 
          // Reconnect input routes.
-         for (const route of new Set (oldField .getInputRoutes ()))
+         for (const route of Array .from (oldField .getInputRoutes ()))
          {
             try
             {
@@ -252,7 +256,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          }
 
          // Reconnect output routes.
-         for (const route of new Set (oldField .getOutputRoutes ()))
+         for (const route of Array .from (oldField .getOutputRoutes ()))
          {
             try
             {
@@ -266,13 +270,13 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          }
 
          // Remove from old fields and dispose new field.
-         oldFields .delete (oldFieldName);
+         oldFields .splice (oldFields .indexOf (oldField), 1);
          newField .dispose ();
       }
 
       // Dispose unused old fields.
 
-      for (const oldField of oldFields .values ())
+      for (const oldField of oldFields)
          oldField .dispose ();
 
       // Construct now.
@@ -300,7 +304,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       // Get fields from new proto node.
 
       this [_protoNode]   = protoNode;
-      this [_protoFields] = new Map (Array .from (protoNode .getUserDefinedFields (), f => [f, f .getName ()]));
+      this [_protoFields] = Array .from (protoNode .getUserDefinedFields ());
 
       protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
 
