@@ -338,9 +338,6 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    processEvent (event = Events .create (this))
    {
-      if (event .has (this))
-         return;
-
       event .add (this);
 
       this .setTainted (false);
@@ -360,6 +357,9 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
 
       for (const field of this [_fieldInterests])
       {
+			if (event .has (field))
+				continue;
+
          if (first)
          {
             first = false;

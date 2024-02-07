@@ -217,6 +217,13 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          // Replace field, ie. reuse old field.
          this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
 
+         // Assign default value.
+         if (oldField .isInitializable () && !oldField .getModificationTime ())
+         {
+            oldField .assign (newField);
+            oldField .setModificationTime (0);
+         }
+
          const references = new Set (oldField .getReferences ());
 
          // Remove references and routes.
