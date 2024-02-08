@@ -186,9 +186,6 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
 
       if (this [_sourceField] && this [_destinationField])
       {
-         if (this [_sourceField] .getFieldInterests () .has (this [_destinationField]))
-            return;
-
          this [_sourceField] .addFieldInterest (this [_destinationField]);
       }
       else

@@ -140,6 +140,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                      }
                   }
                }
+
+               destinationField .setModificationTime (sourceField .getModificationTime ());
             }
             catch (error)
             {
@@ -173,6 +175,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   }
                }
             }
+
+            destinationField .setModificationTime (sourceField .getModificationTime ());
          }
 
          copy .setup ();
