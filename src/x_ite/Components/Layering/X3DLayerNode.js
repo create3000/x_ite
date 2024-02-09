@@ -81,6 +81,7 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    const groupNodes = new Group (executionContext);
 
    groupNodes ._children = [groupNode];
+   groupNodes .setPrivate (true);
 
    this .groupNodes   = groupNodes;
    this .viewportNode = null;
