@@ -157,7 +157,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
          if (this ._global .getValue ())
          {
             lightContainer .set (this,
-                                 renderObject .getLayer () .getGroup (),
+                                 renderObject .getLayer () .getGroups (),
                                  renderObject .getModelViewMatrix () .get ());
 
             renderObject .getGlobalLights () .push (lightContainer);

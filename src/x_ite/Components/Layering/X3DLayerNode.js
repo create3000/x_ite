@@ -50,6 +50,7 @@ import X3DNode         from "../Core/X3DNode.js";
 import X3DRenderObject from "../../Rendering/X3DRenderObject.js";
 import BindableStack   from "../../Execution/BindableStack.js";
 import BindableList    from "../../Execution/BindableList.js";
+import Group           from "../Grouping/Group.js";
 import NavigationInfo  from "../Navigation/NavigationInfo.js";
 import Fog             from "../EnvironmentalEffects/Fog.js";
 import Background      from "../EnvironmentalEffects/Background.js";
@@ -77,7 +78,11 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 
    // Private properties
 
-   this .groupNode    = groupNode;
+   const groupNodes = new Group (executionContext);
+
+   groupNodes ._children = [groupNode];
+
+   this .groupNodes   = groupNodes;
    this .viewportNode = null;
 
    this .defaultNavigationInfo = new NavigationInfo (executionContext);
@@ -143,7 +148,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
    getBBox (bbox, shadows)
    {
-      return this .groupNode .getBBox (bbox, shadows);
+      return this .groupNodes .getBBox (bbox, shadows);
    },
    setLayer0 (value)
    {
@@ -154,13 +159,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       return this;
    },
-   getGroup ()
+   getGroups ()
    {
-      return this .groupNode;
-   },
-   setGroup (value)
-   {
-      this .groupNode = value;
+      return this .groupNodes;
    },
    getViewport ()
    {
@@ -327,7 +328,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
 
       this .viewportNode .push (this);
-      renderObject .render (type, this .groupNode .traverse, this .groupNode);
+      renderObject .render (type, this .groupNodes .traverse, this .groupNodes);
       this .viewportNode .pop (this);
 
       this .getModelViewMatrix () .pop ();
@@ -339,7 +340,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
          this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
 
          this .viewportNode .push (this);
-         this .groupNode .traverse (type, renderObject);
+         this .groupNodes .traverse (type, renderObject);
          this .viewportNode .pop (this);
 
          this .getModelViewMatrix () .pop ();
@@ -359,7 +360,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
          this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
 
          this .viewportNode .push (this);
-         this .groupNode .traverse (type, renderObject);
+         this .groupNodes .traverse (type, renderObject);
          this .viewportNode .pop (this);
 
          this .getModelViewMatrix () .pop ();
@@ -390,7 +391,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
 
             // Render
             this .viewportNode .push (this);
-            renderObject .render (type, this .groupNode .traverse, this .groupNode);
+            renderObject .render (type, this .groupNodes .traverse, this .groupNodes);
             this .viewportNode .pop (this);
 
             this .getModelViewMatrix  () .pop ();
@@ -406,7 +407,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
          this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
 
          this .viewportNode .push (this);
-         renderObject .render (type, this .groupNode .traverse, this .groupNode);
+         renderObject .render (type, this .groupNodes .traverse, this .groupNodes);
          this .viewportNode .pop (this);
 
          this .getModelViewMatrix () .pop ();

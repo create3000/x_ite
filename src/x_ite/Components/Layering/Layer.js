@@ -69,13 +69,18 @@ Object .assign (Object .setPrototypeOf (Layer .prototype, X3DLayerNode .prototyp
    {
       X3DLayerNode .prototype .initialize .call (this);
 
-      this ._addChildren    .addFieldInterest (this .getGroup () ._addChildren);
-      this ._removeChildren .addFieldInterest (this .getGroup () ._removeChildren);
-      this ._children       .addFieldInterest (this .getGroup () ._children);
+      const groupNode = this .getGroups () ._children [0] .getValue ();
 
-      this .getGroup () ._children = this ._children;
-      this .getGroup () .setPrivate (true);
-      this .getGroup () .setup ();
+      this ._addChildren    .addFieldInterest (groupNode ._addChildren);
+      this ._removeChildren .addFieldInterest (groupNode ._removeChildren);
+      this ._children       .addFieldInterest (groupNode ._children);
+
+      groupNode ._children = this ._children;
+
+      groupNode .setPrivate (true);
+      groupNode .setup ();
+
+      this .getGroups () .setup ();
    },
 });
 
