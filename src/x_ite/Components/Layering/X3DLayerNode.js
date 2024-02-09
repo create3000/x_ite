@@ -158,6 +158,10 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       return this .groupNode;
    },
+   setGroup (value)
+   {
+      this .groupNode = value;
+   },
    getViewport ()
    {
       return this .viewportNode;
