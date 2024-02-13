@@ -59,29 +59,37 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .html            = html;
    this .closingTags     = html || closingTags;
 
-   this .floatFormat = new Intl .NumberFormat ("en", {
+   this .floatFormat = new Intl .NumberFormat ("en",
+   {
       notation: "standard",
       maximumSignificantDigits: this .precision,
       useGrouping: false,
-   }) .format;
+   })
+   .format;
 
-   this .floatExponentialFormat = new Intl .NumberFormat ("en", {
+   this .floatExponentialFormat = new Intl .NumberFormat ("en",
+   {
       notation: "scientific",
       maximumSignificantDigits: this .precision,
       useGrouping: false,
-   }) .format;
+   })
+   .format;
 
-   this .doubleFormat = new Intl .NumberFormat ("en", {
+   this .doubleFormat = new Intl .NumberFormat ("en",
+   {
       notation: "standard",
       maximumSignificantDigits: this .doublePrecision,
       useGrouping: false,
-   }) .format;
+   })
+   .format;
 
-   this .doubleExponentialFormat = new Intl .NumberFormat ("en", {
+   this .doubleExponentialFormat = new Intl .NumberFormat ("en",
+   {
       notation: "scientific",
       maximumSignificantDigits: this .doublePrecision,
       useGrouping: false,
-   }) .format;
+   })
+   .format;
 
    this .Style (style);
 
