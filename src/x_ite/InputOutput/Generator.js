@@ -95,7 +95,6 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .routeNodes            = new Set ();
    this .level                 = 0;
    this .containerFields       = [ ];
-   this .units                 = true;
 
    this .PushExecutionContext (null);
 }
@@ -454,20 +453,9 @@ Object .assign (Generator .prototype,
             return "inputOutput";
       }
    },
-   SetUnits (value)
-   {
-      this .units = value;
-   },
-   GetUnits ()
-   {
-      return this .units;
-   },
    ToUnit (category, value)
    {
-      if (this .units)
-         return this .ExecutionContext () ?.toUnit (category, value) ?? value;
-
-      return value;
+      return this .ExecutionContext () ?.toUnit (category, value) ?? value;
    },
    XMLEncode: (() =>
    {
