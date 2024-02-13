@@ -1,7 +1,7 @@
 /* X_ITE v9.2.5 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 256:
+/***/ 691:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 320:
+/***/ 160:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 152:
+/***/ 392:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 288:
+/***/ 112:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=undefined;if(!f&&c)return require(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=undefined,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
@@ -7947,10 +7947,10 @@ Namespace_default().add ("NRRDParser", "x_ite/Browser/Texturing3D/NRRDParser", N
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
 /* provided dependency */ var dicomParser = __webpack_require__(376);
-/* provided dependency */ var JpegImage = __webpack_require__(152);
-/* provided dependency */ var jpeg = __webpack_require__(288);
-/* provided dependency */ var CharLS = __webpack_require__(256);
-/* provided dependency */ var OpenJPEG = __webpack_require__(320);
+/* provided dependency */ var JpegImage = __webpack_require__(392);
+/* provided dependency */ var jpeg = __webpack_require__(112);
+/* provided dependency */ var CharLS = __webpack_require__(691);
+/* provided dependency */ var OpenJPEG = __webpack_require__(160);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

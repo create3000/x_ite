@@ -49,7 +49,7 @@ import X3DConstants      from "../Base/X3DConstants.js";
 import Algorithm         from "../../standard/Math/Algorithm.js";
 import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
-function Generator ({ style = "TIDY", indent = "", precision = 8, doublePrecision = 17, html = false, closingTags = false })
+function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecision = 15, html = false, closingTags = false })
 {
    this .string          = "";
    this .indent          = indent;
@@ -473,20 +473,12 @@ Object .assign (Generator .prototype,
    },
    Unit (category)
    {
-      if (this .unitCategories .length == 0)
-         return category;
-
-      return this .unitCategories .at (-1);
+      return this .unitCategories .at (-1) ?? category;
    },
    ToUnit (category, value)
    {
       if (this .units)
-      {
-         const executionContext = this .ExecutionContext ();
-
-         if (executionContext)
-            return executionContext .toUnit (category, value);
-      }
+         return this .ExecutionContext () ?.toUnit (category, value) ?? value;
 
       return value;
    },
