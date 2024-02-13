@@ -766,7 +766,6 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             if (components === 1)
             {
                value .set (array [0]);
-
                value .toStream (generator);
             }
             else
