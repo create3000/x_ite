@@ -151,7 +151,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
          const
             value    = this .getValue (),
             last     = value .length - 1,
-            category = generator .Unit (this .getUnit ());
+            category = this .getUnit ();
 
          for (let i = 0; i < last; ++ i)
          {
@@ -184,7 +184,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
          const
             value    = this .getValue (),
             last     = value .length - 1,
-            category = generator .Unit (this .getUnit ());
+            category = this .getUnit ();
 
          for (let i = 0; i < last; ++ i)
          {

@@ -750,6 +750,8 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          components = target .getComponents (),
          value      = new (target .getSingleType ()) ();
 
+      value .setUnit (target .getUnit ());
+
       switch (length)
       {
          case 0:
@@ -761,8 +763,6 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          }
          case 1:
          {
-            generator .PushUnitCategory (target .getUnit ());
-
             if (components === 1)
             {
                value .set (array [0]);
@@ -777,13 +777,10 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
                value .toStream (generator);
             }
 
-            generator .PopUnitCategory ();
             break;
          }
          default:
          {
-            generator .PushUnitCategory (target .getUnit ());
-
             generator .string += "[";
             generator .string += generator .ListStart ();
             generator .IncIndent ();
@@ -832,8 +829,6 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             generator .DecIndent ();
             generator .string += generator .ListIndent ();
             generator .string += "]";
-
-            generator .PopUnitCategory ();
             break;
          }
       }
@@ -855,7 +850,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             components = target .getComponents (),
             value      = new (target .getSingleType ()) ();
 
-         generator .PushUnitCategory (target .getUnit ());
+         value .setUnit (target .getUnit ());
 
          if (components === 1)
          {
@@ -890,8 +885,6 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
             value .toXMLStream (generator);
          }
-
-         generator .PopUnitCategory ();
       }
    },
    toJSONStream (generator)
@@ -907,7 +900,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             components = target .getComponents (),
             value      = new (target .getSingleType ()) ();
 
-         generator .PushUnitCategory (target .getUnit ());
+         value .setUnit (target .getUnit ());
 
          generator .string += '[';
          generator .string += generator .ListBreak ();
@@ -958,8 +951,6 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          generator .string += generator .DecIndent ();
          generator .string += generator .ListIndent ();
          generator .string += ']';
-
-         generator .PopUnitCategory ();
       }
       else
       {

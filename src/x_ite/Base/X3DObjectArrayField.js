@@ -423,17 +423,11 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
          }
          case 1:
          {
-            generator .PushUnitCategory (target .getUnit ());
-
             array [0] .toStream (generator);
-
-            generator .PopUnitCategory ();
             break;
          }
          default:
          {
-            generator .PushUnitCategory (target .getUnit ());
-
             generator .string += "[";
             generator .string += generator .ListStart ();
             generator .IncIndent ();
@@ -453,8 +447,6 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
             generator .DecIndent ();
             generator .string += generator .ListIndent ();
             generator .string += "]";
-
-            generator .PopUnitCategory ();
             break;
          }
       }
@@ -473,8 +465,6 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
       {
          const array = target .getValue ();
 
-         generator .PushUnitCategory (target .getUnit ());
-
          for (let i = 0, length = array .length - 1; i < length; ++ i)
          {
             array [i] .toXMLStream (generator);
@@ -483,8 +473,6 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
          }
 
          array .at (-1) .toXMLStream (generator);
-
-         generator .PopUnitCategory ();
       }
    },
    toJSONStream (generator)
@@ -496,8 +484,6 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
       if (length)
       {
          const value = this .getValue ();
-
-         generator .PushUnitCategory (target .getUnit ());
 
          generator .string += '[';
          generator .string += generator .ListBreak ();
@@ -521,8 +507,6 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
          generator .string += generator .DecIndent ();
          generator .string += generator .ListIndent ();
          generator .string += ']';
-
-         generator .PopUnitCategory ();
       }
       else
       {

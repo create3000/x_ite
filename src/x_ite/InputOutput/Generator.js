@@ -96,7 +96,6 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .level                 = 0;
    this .containerFields       = [ ];
    this .units                 = true;
-   this .unitCategories        = [ ];
 
    this .PushExecutionContext (null);
 }
@@ -462,18 +461,6 @@ Object .assign (Generator .prototype,
    GetUnits ()
    {
       return this .units;
-   },
-   PushUnitCategory (category)
-   {
-      this .unitCategories .push (category);
-   },
-   PopUnitCategory ()
-   {
-      this .unitCategories .pop ();
-   },
-   Unit (category)
-   {
-      return this .unitCategories .at (-1) ?? category;
    },
    ToUnit (category, value)
    {

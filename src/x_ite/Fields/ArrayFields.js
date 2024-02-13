@@ -122,17 +122,11 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          }
          case 1:
          {
-            generator .PushUnitCategory (target .getUnit ());
-
             array [0] .toStream (generator);
-
-            generator .PopUnitCategory ();
             break;
          }
          default:
          {
-            generator .PushUnitCategory (target .getUnit ());
-
             generator .string += "[";
             generator .string += generator .TidyBreak ();
             generator .IncIndent ();
@@ -147,8 +141,6 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
             generator .DecIndent ();
             generator .string += generator .Indent ();
             generator .string += "]";
-
-            generator .PopUnitCategory ();
             break;
          }
       }

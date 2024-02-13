@@ -69,7 +69,7 @@ Object .assign (Object .setPrototypeOf (SFFloat .prototype, X3DField .prototype)
    valueOf: X3DField .prototype .getValue,
    toStream (generator)
    {
-      const category = generator .Unit (this .getUnit ());
+      const category = this .getUnit ();
 
       generator .string += generator .FloatFormat (generator .ToUnit (category, this .getValue ()));
    },
@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (SFFloat .prototype, X3DField .prototype)
    },
    toJSONStreamValue (generator)
    {
-      const category = generator .Unit (this .getUnit ());
+      const category = this .getUnit ();
 
       generator .string += generator .JSONNumber (generator .FloatFormat (generator .ToUnit (category, this .getValue ())));
    },
