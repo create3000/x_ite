@@ -2,7 +2,7 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 72:
+/***/ 823:
 /***/ ((module) => {
 
 module.exports = window [Symbol .for ("X_ITE.X3D-9.2.5")] .require ("lib/jquery");
@@ -2031,7 +2031,7 @@ const BVH_default_ = BVH;
 Namespace_default().add ("BVH", "standard/Math/Utility/BVH", BVH_default_);
 /* harmony default export */ const Utility_BVH = (BVH_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ParticleSystem.js
-/* provided dependency */ var $ = __webpack_require__(72);
+/* provided dependency */ var $ = __webpack_require__(823);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

@@ -2,7 +2,7 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 72:
+/***/ 823:
 /***/ ((module) => {
 
 module.exports = window [Symbol .for ("X_ITE.X3D-9.2.5")] .require ("lib/jquery");
@@ -1335,7 +1335,7 @@ var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
 const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.2.5")] .require ("standard/Math/Algorithm");
 var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Layout/ScreenText.js
-/* provided dependency */ var $ = __webpack_require__(72);
+/* provided dependency */ var $ = __webpack_require__(823);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

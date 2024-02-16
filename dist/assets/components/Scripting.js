@@ -2,7 +2,7 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 72:
+/***/ 823:
 /***/ ((module) => {
 
 module.exports = window [Symbol .for ("X_ITE.X3D-9.2.5")] .require ("lib/jquery");
@@ -348,7 +348,7 @@ var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespace
 const SFNodeCache_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.2.5")] .require ("x_ite/Fields/SFNodeCache");
 var SFNodeCache_default = /*#__PURE__*/__webpack_require__.n(SFNodeCache_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Scripting/Script.js
-/* provided dependency */ var $ = __webpack_require__(72);
+/* provided dependency */ var $ = __webpack_require__(823);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
