@@ -332,6 +332,7 @@ const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/NormalTangentMirrorTest/glTF/NormalTangentMirrorTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/NormalTangentTest/glTF/NormalTangentTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/OrientationTest/glTF/OrientationTest.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/PotOfCoals/glTF/PotOfCoals.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/PrimitiveModeNormalsTest/glTF/PrimitiveModeNormalsTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RecursiveSkeletons/glTF/RecursiveSkeletons.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedFigure/glTF/RiggedFigure.gltf",
@@ -372,7 +373,6 @@ const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VirtualCity/glTF/VirtualCity.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/WaterBottle/glTF/WaterBottle.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/XmpMetadataRoundedCube/glTF/XmpMetadataRoundedCube.gltf",
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/glTFPotOfCoals/glTF/glTFPotOfCoals.gltf",
 ];
 
 const glb = [
@@ -504,6 +504,7 @@ const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/NormalTangentMirrorTest/glTF-Binary/NormalTangentMirrorTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/NormalTangentTest/glTF-Binary/NormalTangentTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/OrientationTest/glTF-Binary/OrientationTest.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/PotOfCoals/glTF-Binary/PotOfCoals.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RecursiveSkeletons/glTF-Binary/RecursiveSkeletons.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedFigure/glTF-Binary/RiggedFigure.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedSimple/glTF-Binary/RiggedSimple.glb",
@@ -528,7 +529,6 @@ const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VirtualCity/glTF-Binary/VirtualCity.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/WaterBottle/glTF-Binary/WaterBottle.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/XmpMetadataRoundedCube/glTF-Binary/XmpMetadataRoundedCube.glb",
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/glTFPotOfCoals/glTF-Binary/glTFPotOfCoals.glb",
 ];
 
 const draco = [
