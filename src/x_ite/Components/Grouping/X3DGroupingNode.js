@@ -252,7 +252,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                   {
-                     childNode ._display     .addInterest ("set_displays_",     this);
+                     childNode ._display     .addInterest ("set_displays_",      this);
                      childNode ._bboxDisplay .addInterest ("set_bboxDisplays__", this);
                   }
 
