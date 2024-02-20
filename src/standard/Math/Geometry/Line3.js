@@ -92,7 +92,7 @@ Object .assign (Line3 .prototype,
       matrix .multDirMatrix (this .direction) .normalize ();
       return this;
    },
-   getClosestPointToPoint (point, result)
+   getClosestPointToPoint (point, result = new Vector3 (0, 0, 0))
    {
       const
          r = result .assign (point) .subtract (this .point),
@@ -127,7 +127,7 @@ Object .assign (Line3 .prototype,
    {
       const t = new Vector3 (0, 0, 0);
 
-      return function (point, result)
+      return function (point, result = new Vector3 (0, 0, 0))
       {
          result .assign (this .point) .subtract (point);
 
@@ -140,7 +140,7 @@ Object .assign (Line3 .prototype,
          d  = new Vector3 (0, 0, 0),
          ad = new Vector3 (0, 0, 0);
 
-      return function (line, result)
+      return function (line, result = new Vector3 (0, 0, 0))
       {
          const bd = result;
 

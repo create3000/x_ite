@@ -134,14 +134,19 @@ Object .assign (Plane3 .prototype,
    {
       return point .dot (this .normal) - this .distanceFromOrigin;
    },
-   getPerpendicularVectorToPoint (point)
+   getPerpendicularVectorToPoint (point, result = new Vector3 (0, 0, 0))
    {
-      return this .normal .copy () .multiply (this .getDistanceToPoint (point));
+      return result .assign (this .normal) .multiply (this .getDistanceToPoint (point));
    },
-	getClosestPointToPoint (point)
-	{
-		return point .copy () .add (this .getPerpendicularVectorToPoint (point));
-	},
+	getClosestPointToPoint: (function ()
+   {
+      const p = new Vector3 (0, 0, 0);
+
+      return function (point, result = new Vector3 (0, 0, 0))
+      {
+         return result .assign (point) .add (this .getPerpendicularVectorToPoint (point, p));
+      };
+   })(),
    intersectsLine (line, intersection)
    {
       const { point, direction } = line;
