@@ -512,12 +512,19 @@ Object .assign (X3DRenderObject .prototype,
 
             if (num === this .pointingShapes .length)
             {
-               this .pointingShapes .push ({ renderObject: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ], sensors: [ ] });
+               this .pointingShapes .push ({
+                  renderObject: this,
+                  modelViewMatrix: new Float32Array (16),
+                  viewMatrix: new Float32Array (16),
+                  clipPlanes: [ ],
+                  sensors: [ ],
+               });
             }
 
             const pointingContext = this .pointingShapes [num];
 
             pointingContext .modelViewMatrix .set (modelViewMatrix);
+            pointingContext .viewMatrix      .set (this .getViewMatrix () .get ());
             pointingContext .shapeNode    = shapeNode;
             pointingContext .scissor      = viewVolume .getScissor ();
             pointingContext .humanoidNode = this .humanoids .at (-1);
