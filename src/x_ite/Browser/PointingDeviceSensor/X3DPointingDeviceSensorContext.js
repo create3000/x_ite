@@ -282,7 +282,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          hit .layerNode = pickingContext .renderObject;
          hit .shapeNode = shapeNode;
 
-         hit .viewMatrix      .assign (pickingContext .viewMatrix);
+         hit .viewMatrix      .assign (pickingContext .renderObject .getViewpoint () .getViewMatrix ());
          hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
 
          // A ParticleSystem has only a geometry context.

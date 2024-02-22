@@ -515,7 +515,6 @@ Object .assign (X3DRenderObject .prototype,
                this .pointingShapes .push ({
                   renderObject: this,
                   modelViewMatrix: new Float32Array (16),
-                  viewMatrix: new Float32Array (16),
                   clipPlanes: [ ],
                   sensors: [ ],
                });
@@ -524,7 +523,6 @@ Object .assign (X3DRenderObject .prototype,
             const pointingContext = this .pointingShapes [num];
 
             pointingContext .modelViewMatrix .set (modelViewMatrix);
-            pointingContext .viewMatrix      .set (this .getViewMatrix () .get ());
             pointingContext .shapeNode    = shapeNode;
             pointingContext .scissor      = viewVolume .getScissor ();
             pointingContext .humanoidNode = this .humanoids .at (-1);
@@ -563,7 +561,12 @@ Object .assign (X3DRenderObject .prototype,
 
             if (num === this .collisionShapes .length)
             {
-               this .collisionShapes .push ({ renderObject: this, modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
+               this .collisionShapes .push ({
+                  renderObject: this,
+                  modelViewMatrix: new Float32Array (16),
+                  collisions: [ ],
+                  clipPlanes: [ ]
+               });
             }
 
             const collisionContext = this .collisionShapes [num];
@@ -609,7 +612,11 @@ Object .assign (X3DRenderObject .prototype,
 
             if (num === this .shadowShapes .length)
             {
-               this .shadowShapes .push ({ renderObject: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
+               this .shadowShapes .push ({
+                  renderObject: this,
+                  modelViewMatrix: new Float32Array (16),
+                  clipPlanes: [ ]
+               });
             }
 
             const depthContext = this .shadowShapes [num];
