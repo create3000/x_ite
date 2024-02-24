@@ -1069,6 +1069,22 @@ Object .defineProperties (X3DBrowser .prototype,
       },
       enumerable: true,
    },
+   element:
+   {
+      get ()
+      {
+         return this .getElement () .get (0);
+      },
+      enumerable: true,
+   },
+   canvas:
+   {
+      get ()
+      {
+         return this .getCanvas () .get (0);
+      },
+      enumerable: true,
+   },
 });
 
 Object .defineProperties (X3DBrowser,
