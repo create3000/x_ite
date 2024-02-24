@@ -49,9 +49,13 @@ import DEVELOPMENT from "../../DEVELOPMENT.js";
 
 const Context =
 {
+   excludes: new Set ([
+      "WEBGL_debug_renderer_info",
+      "WEBGL_polygon_mode",
+   ]),
    create (canvas, version, preserveDrawingBuffer, mobile)
    {
-      const options = { preserveDrawingBuffer: preserveDrawingBuffer };
+      const options = { preserveDrawingBuffer };
 
       let gl = null;
 
@@ -88,7 +92,7 @@ const Context =
 
       // Load extensions.
 
-      for (const extension of gl .getSupportedExtensions ())
+      for (const extension of gl .getSupportedExtensions () .filter (extension => !this .excludes .has (extension)))
          gl .getExtension (extension);
 
       // Feature detection:
