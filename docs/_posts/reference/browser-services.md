@@ -63,6 +63,10 @@ A String value containing the URL against which relative URLs are resolved. By d
 
 The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene.
 
+#### **element**
+
+Returns a reference to the corresponding X3DCanvasElement.
+
 ### Methods
 
 #### Promise\<void\> **replaceWorld** (*X3DScene*)

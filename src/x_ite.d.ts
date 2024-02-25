@@ -185,7 +185,7 @@ declare class X3DBrowser
     */
    readonly currentScene: X3DScene;
    /**
-    * Reference to corresponding X3DCanvasElement.
+    * Returns a reference to the corresponding X3DCanvasElement.
     */
    readonly element: X3DCanvasElement;
    /**
