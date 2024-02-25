@@ -245,7 +245,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Warnings
 
-- HAnimJoint can only contain certain nodes: HAnimJoint, [HAnimSegment](/x_ite/components/hanim/hanimsegment/), [HAnimSite](/x_ite/components/hanim/hanimsite/) (with `containerField='children')` and also [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes (with `containerField='displacers').`
+- HAnimJoint can only contain certain nodes: HAnimJoint and [HAnimSegment](/x_ite/components/hanim/hanimsegment/) (with `containerField='children')` and also [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes (with `containerField='displacers').`
 - An HAnimJoint may not be a child of an [HAnimSegment](/x_ite/components/hanim/hanimsegment/).
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
