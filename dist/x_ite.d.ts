@@ -184,7 +184,10 @@ declare class X3DBrowser
     * The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene.
     */
    readonly currentScene: X3DScene;
-
+   /**
+    * Reference to corresponding X3DCanvasElement.
+    */
+   readonly element: X3DCanvasElement;
    /**
     * Replace the current world with this new scene that has been loaded or constructed from somewhere. A Promise is returned that will be resolved when the scene is completely loaded.
     */
