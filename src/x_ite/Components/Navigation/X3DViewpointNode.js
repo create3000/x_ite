@@ -536,7 +536,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
          orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
          orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
 
-         const vector = localZAxis .cross (upVector);
+         const vector = localZAxis .cross (upVector) .normalize ();
 
          // If viewer looks along up vector.
          if (Math .abs (localZAxis .dot (upVector)) >= 1)
