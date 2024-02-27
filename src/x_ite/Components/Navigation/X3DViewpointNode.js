@@ -538,7 +538,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
          const vector = localZAxis .cross (upVector);
 
-         // If viewer looks along the up vector.
+         // If viewer looks along up vector.
          if (Math .abs (localZAxis .dot (upVector)) >= 1)
             return orientation;
 
