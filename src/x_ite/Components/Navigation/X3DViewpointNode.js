@@ -542,12 +542,18 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
          if (Math .abs (localZAxis .dot (upVector)) >= 1)
             return orientation;
 
-         if (Math .abs (vector .dot (localXAxis)) >= 1)
-            return orientation;
+         if (vector .dot (localXAxis) <= -1)
+         {
+            rotation .setAxisAngle (Vector3 .zAxis, Math .PI);
 
-         rotation .setFromToVec (localXAxis, vector);
+            return orientation .multLeft (rotation);
+         }
+         else
+         {
+            rotation .setFromToVec (localXAxis, vector);
 
-         return orientation .multRight (rotation);
+            return orientation .multRight (rotation);
+         }
       };
    })(),
    viewAll (bbox)
