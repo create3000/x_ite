@@ -241,6 +241,7 @@ const X_ITE_TESTS = [
    { path: "PointingDeviceSensor/TouchLines.x3dv" },
    { path: "PointingDeviceSensor/TouchPoints.x3dv" },
    { path: "PointingDeviceSensor/TouchSensor.x3d" },
+   { path: "PointingDeviceSensor/VerifyMotion.x3d" },
    { component: "PROTO" },
    { path: "PROTO/27cubes.x3d" },
    { path: "PROTO/cbx.wrl" },
