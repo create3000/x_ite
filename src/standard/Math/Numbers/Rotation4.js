@@ -390,9 +390,9 @@ Object .assign (Rotation4 .prototype,
          if (Math .abs (localZAxis .dot (upNormal)) >= 1)
             return this;
 
-         const vector = localZAxis .cross (upNormal) .normalize ();
+         const newXAxis = localZAxis .cross (upNormal) .normalize ();
 
-         if (vector .dot (localXAxis) <= -1)
+         if (newXAxis .dot (localXAxis) <= -1)
          {
             rotation .setAxisAngle (Vector3 .zAxis, Math .PI);
 
@@ -400,7 +400,7 @@ Object .assign (Rotation4 .prototype,
          }
          else
          {
-            rotation .setFromToVec (localXAxis, vector);
+            rotation .setFromToVec (localXAxis, newXAxis);
 
             return this .multRight (rotation);
          }
