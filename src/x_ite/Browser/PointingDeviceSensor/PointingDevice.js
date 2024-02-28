@@ -108,7 +108,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             event .stopImmediatePropagation (); // Keeps the rest of the handlers from being executed
 
             browser .setCursor ("HAND");
-            browser .finishedEvents () .addInterest ("onverifymotion", this, x, y);
+            this .onverifymotion (x, y);
          }
       }
    },
@@ -129,8 +129,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
          browser .buttonReleaseEvent ();
          browser .setCursor (this .isOver ? "HAND" : "DEFAULT");
-         browser .finishedEvents () .addInterest ("onverifymotion", this, x, y);
-         browser .addBrowserEvent ();
+         this .onverifymotion (x, y);
 
          this .cursor = "DEFAULT";
       }
@@ -248,12 +247,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    onverifymotion (x, y)
    {
       // Verify isOver state. This is necessary if an Switch changes on buttonReleaseEvent
-      // and the new child has a sensor node inside. This sensor node must be update to
+      // and the new child has a sensor node inside. This sensor node must be updated to
       // reflect the correct isOver state.
 
-      this .getBrowser () .finishedEvents () .removeInterest ("onverifymotion", this);
-
-      this .onmotion (x, y);
+      requestAnimationFrame (() => this .onmotion (x, y));
    },
    showContextMenu (event)
    {
