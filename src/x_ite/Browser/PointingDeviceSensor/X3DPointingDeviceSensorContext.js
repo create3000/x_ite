@@ -67,7 +67,8 @@ const
    _pointingBuffer            = Symbol (),
    _pointingShaders           = Symbol (),
    _id                        = Symbol (),
-   _pointingContexts          = Symbol ();
+   _pointingContexts          = Symbol (),
+   _processEvents             = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
 
 function X3DPointingDeviceSensorContext ()
 {
@@ -221,6 +222,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       for (const sensor of this [_activeSensors])
          sensor .set_active__ (true, hit);
 
+      this [_processEvents] ();
+
       return !! hit .sensors .length;
    },
    buttonReleaseEvent ()
@@ -233,6 +236,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       this [_activeSensors] = Array .prototype;
       this [_pointingLayer] = null;
+
+      this [_processEvents] ();
    },
    motionNotifyEvent (x, y)
    {
@@ -241,6 +246,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       this .touch (x, y);
       this .motion ();
+
+      this [_processEvents] ();
 
       return !! this [_hit] .sensors .length;
    },
