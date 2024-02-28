@@ -524,38 +524,10 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       this .setInterpolators (this, relative);
    },
-   straightenHorizon: (() =>
+   straightenHorizon (orientation, upVector = this .getUpVector (true))
    {
-      const
-         localXAxis  = new Vector3 (0, 0, 0),
-         localZAxis  = new Vector3 (0, 0, 0),
-         rotation    = new Rotation4 ();
-
-      return function (orientation, upVector = this .getUpVector (true))
-      {
-         orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
-         orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
-
-         const vector = localZAxis .cross (upVector) .normalize ();
-
-         // If viewer looks along up vector.
-         if (Math .abs (localZAxis .dot (upVector)) >= 1)
-            return orientation;
-
-         if (vector .dot (localXAxis) <= -1)
-         {
-            rotation .setAxisAngle (Vector3 .zAxis, Math .PI);
-
-            return orientation .multLeft (rotation);
-         }
-         else
-         {
-            rotation .setFromToVec (localXAxis, vector);
-
-            return orientation .multRight (rotation);
-         }
-      };
-   })(),
+      return orientation .straighten (upVector);
+   },
    viewAll (bbox)
    {
       bbox .copy () .multRight (this .modelMatrix .copy () .inverse ());

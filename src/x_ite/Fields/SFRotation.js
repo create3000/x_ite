@@ -153,6 +153,10 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    {
       return new SFRotation (this .getValue () .copy () .slerp (rotation .getValue (), t));
    },
+   straighten (upVector)
+   {
+      return new SFRotation (this .getValue () .copy () .straighten (upVector .getValue ()));
+   },
    toStream (generator)
    {
       const { x, y, z, angle } = this .getValue ();

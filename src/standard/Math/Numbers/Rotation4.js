@@ -368,6 +368,44 @@ Object .assign (Rotation4 .prototype,
       this .update ();
       return this;
    },
+   /**
+    * Straightens the rotation so that the x-axis of this rotation is parallel to the plane spawned by upVector.
+    */
+   straighten: (() =>
+   {
+      const
+         localXAxis = new Vector3 (0, 0, 0),
+         localZAxis = new Vector3 (0, 0, 0),
+         upNormal   = new Vector3 (0, 0, 0),
+         rotation   = new Rotation4 ();
+
+      return function (upVector = Vector3 .yAxis)
+      {
+         upNormal .assign (upVector) .normalize ();
+
+         this .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
+         this .multVecRot (localZAxis .assign (Vector3 .zAxis));
+
+         // If viewer looks along up vector.
+         if (Math .abs (localZAxis .dot (upNormal)) >= 1)
+            return this;
+
+         const vector = localZAxis .cross (upNormal) .normalize ();
+
+         if (vector .dot (localXAxis) <= -1)
+         {
+            rotation .setAxisAngle (Vector3 .zAxis, Math .PI);
+
+            return this .multLeft (rotation);
+         }
+         else
+         {
+            rotation .setFromToVec (localXAxis, vector);
+
+            return this .multRight (rotation);
+         }
+      };
+   })(),
    toString ()
    {
       return this [_x] + " " +

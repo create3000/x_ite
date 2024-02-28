@@ -551,6 +551,10 @@ Set the value of this rotation to the rotation matrix passed in *matrix*.
 
 Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
 
+#### SFRotation **straighten** (*upVector = yAxis*)
+
+Straightens the rotation so that the x-axis of the resulting rotation is parallel to the plane spawned by upVector.
+
 ## SFVec2d/SFVec2f Object
 
 The SFVec2d/f object corresponds to an X3D SFVec2d/f field. Each component of the vector can be accessed using the x and y properties or using C-style array dereferencing (i.e. *sfVec2d/fObjectName[0]* or *sfVec2d/fObjectName[1]).*
