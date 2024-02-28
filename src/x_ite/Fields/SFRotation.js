@@ -155,7 +155,7 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    },
    straighten (upVector)
    {
-      return new SFRotation (this .getValue () .copy () .straighten (upVector .getValue ()));
+      return new SFRotation (this .getValue () .copy () .straighten (upVector ?.getValue ()));
    },
    toStream (generator)
    {
