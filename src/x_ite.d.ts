@@ -2049,7 +2049,7 @@ declare class SFRotation extends X3DField
     */
    slerp (destination: SFRotation, t: number): SFRotation;
    /**
-    * Straightens the rotation so that the x-axis of the resulting rotation is parallel to the plane spawned by upVector. The default  value for *upVector* is the y-Axis.
+    * Straightens the rotation so that the x-axis of the resulting rotation is parallel to the plane spawned by upVector. The default  value for *upVector* is the y-axis.
     */
    straighten (upVector?: SFVec3d | SFVec3f): SFRotation;
 }

@@ -553,7 +553,7 @@ Returns a SFRotation whose value is the spherical linear interpolation between t
 
 #### SFRotation **straighten** (*upVector = new SFVec3f (0, 1, 0)*)
 
-Straightens the rotation so that the x-axis of the resulting rotation is parallel to the plane spawned by upVector. The default  value for *upVector* is the y-Axis.
+Straightens the rotation so that the x-axis of the resulting rotation is parallel to the plane spawned by upVector. The default  value for *upVector* is the y-axis.
 
 ## SFVec2d/SFVec2f Object
 
