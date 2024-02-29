@@ -131,7 +131,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       return this [_executionContext];
    },
-   setExecutionContext (value)
+   setExecutionContext (executionContext)
    {
       // Disconnect interests.
 
@@ -139,7 +139,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       this [_executionContext] .getLive () .removeInterest (_set_live__, this);
 
       // Currently only useful for Scene.
-      this [_executionContext] = value;
+      this [_executionContext] = executionContext;
 
       // Connect interests.
 
