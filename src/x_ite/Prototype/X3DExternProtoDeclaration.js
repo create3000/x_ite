@@ -78,6 +78,12 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       X3DProtoDeclarationNode .prototype .initialize .call (this);
       X3DUrlObject            .prototype .initialize .call (this);
    },
+   set_live__ ()
+   {
+      X3DUrlObject .prototype .set_live__ .call (this);
+
+      this [_scene] ?.setLive (this .getLive () .getValue ());
+   },
    canUserDefinedFields ()
    {
       return true;
@@ -133,7 +139,8 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       if (!proto)
          throw new Error ("PROTO not found");
 
-      this [_scene] .setExecutionContext (this .getExecutionContext ());
+      this [_scene] .setExecutionContext (this .getExecutionContext (), false);
+      this [_scene] .setLive (this .getLive () .getValue ());
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
       this .setProtoDeclaration (proto);

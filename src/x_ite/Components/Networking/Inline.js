@@ -102,6 +102,12 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
+   set_live__ ()
+   {
+      X3DUrlObject .prototype .set_live__ .call (this);
+
+      this .scene .setLive (this .getLive () .getValue ());
+   },
    unloadData ()
    {
       this .abortLoading ();
@@ -145,18 +151,18 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    setInternalScene (scene)
    {
       this .scene .setExecutionContext (this .scene);
-      this .scene .setLive (this .scene !== this .getBrowser () .getDefaultScene ());
+      this .scene .setLive (false);
       this .scene .rootNodes .removeFieldInterest (this .groupNode ._children);
-
-      this .getBrowser () .getDefaultScene ()
 
       // Set new scene.
 
       this .scene = scene;
 
-      this .scene .setExecutionContext (this .getExecutionContext ());
+      this .scene .setExecutionContext (this .getExecutionContext (), false);
       this .scene .rootNodes .addFieldInterest (this .groupNode ._children);
       this .groupNode ._children = this .scene .rootNodes;
+
+      this .set_live__ ();
 
       this .getBrowser () .addBrowserEvent ();
    },

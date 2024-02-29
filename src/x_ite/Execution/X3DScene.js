@@ -981,7 +981,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
 },
 {
-   setExecutionContext (value)
+   setExecutionContext (executionContext, connect = true)
    {
       if (!this .isMainScene ())
       {
@@ -991,7 +991,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
             scene .removeLoadingObject (object);
       }
 
-      X3DExecutionContext .prototype .setExecutionContext .call (this, value);
+      X3DExecutionContext .prototype .setExecutionContext .call (this, executionContext, connect);
 
       if (!this .isMainScene ())
       {
