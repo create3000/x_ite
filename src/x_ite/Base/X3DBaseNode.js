@@ -133,8 +133,23 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    },
    setExecutionContext (value)
    {
+      // Disconnect interests.
+
+      this .getOuterNode ?.() ?.getLive () .removeInterest (_set_live__, this);
+      this [_executionContext] .getLive () .removeInterest (_set_live__, this);
+
       // Currently only useful for Scene.
       this [_executionContext] = value;
+
+      // Connect interests.
+
+      if (this .getOuterNode ?.())
+         this .getOuterNode () .getLive () .addInterest (_set_live__, this);
+
+      else if (this [_executionContext] !== this)
+         this [_executionContext] .getLive () .addInterest (_set_live__, this);
+
+      this [_set_live__] ();
    },
    addType (value)
    {
