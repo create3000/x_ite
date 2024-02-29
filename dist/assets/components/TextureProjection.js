@@ -200,34 +200,10 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3D
          return biasMatrix;
       };
    })(),
-   straightenHorizon: (() =>
+   straightenHorizon (orientation)
    {
-      const
-         localXAxis = new (Vector3_default()) (0, 0, 0),
-         localZAxis = new (Vector3_default()) (0, 0, 0),
-         upVector   = new (Vector3_default()) (0, 0, 0),
-         rotation   = new (Rotation4_default()) ();
-
-      return function (orientation)
-      {
-         orientation .multVecRot (localXAxis .assign ((Vector3_default()).xAxis) .negate ());
-         orientation .multVecRot (localZAxis .assign ((Vector3_default()).zAxis));
-         upVector .assign (this ._upVector .getValue ()) .normalize ();
-
-         const vector = localZAxis .cross (upVector);
-
-         // If viewer looks along the up vector.
-         if (Math .abs (localZAxis .dot (upVector)) >= 1)
-            return orientation;
-
-         if (Math .abs (vector .dot (localXAxis)) >= 1)
-            return orientation;
-
-         rotation .setFromToVec (localXAxis, vector);
-
-         return orientation .multRight (rotation);
-      };
-   })(),
+      return orientation .straighten (this ._upVector .getValue ());
+   },
    set_nearDistance__ ()
    {
       const nearDistance = this ._nearDistance .getValue ();
