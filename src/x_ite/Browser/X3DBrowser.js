@@ -518,7 +518,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       this .addLoadingObject (fileLoader);
 
-      fileLoader .createX3DFromURL (url, null, (scene) =>
+      fileLoader .createX3DFromURL (url, null, scene =>
       {
          this .removeLoadingObject (fileLoader);
 
@@ -553,7 +553,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          this .addLoadingObject (fileLoader);
 
-         fileLoader .createX3DFromURL (url, null, (scene) =>
+         fileLoader .createX3DFromURL (url, null, scene =>
          {
             this .removeLoadingObject (fileLoader);
 
