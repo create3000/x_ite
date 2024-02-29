@@ -114,6 +114,16 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       return false;
    },
+   setExecutionContext (executionContext)
+   {
+      this .getExecutionContext () .getLive () .removeInterest ("setLive", this);
+
+      X3DBaseNode .prototype .setExecutionContext .call (this, executionContext);
+
+      executionContext .getLive () .addInterest ("setLive", this);
+
+      this .setLive (executionContext .isLive ());
+   },
    getOuterNode ()
    {
       // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.

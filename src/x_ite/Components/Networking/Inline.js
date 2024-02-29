@@ -156,7 +156,6 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
       // Set new scene.
 
       this .scene = scene;
-      this .scene .setExecutionContext (this .getExecutionContext ());
 
       this .scene .rootNodes .addFieldInterest (this .groupNode ._children);
       this .groupNode ._children = this .scene .rootNodes;

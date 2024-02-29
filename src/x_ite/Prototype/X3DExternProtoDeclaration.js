@@ -130,6 +130,8 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    setInternalScene (value)
    {
+      this [_scene] ?.setLive (false);
+
       this [_scene] = value;
 
       const
@@ -140,7 +142,6 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          throw new Error ("PROTO not found");
 
       this [_scene] .setLive (this .getLive () .getValue ());
-      this [_scene] .setExecutionContext (this .getExecutionContext ());
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
       this .setProtoDeclaration (proto);
