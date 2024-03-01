@@ -1026,7 +1026,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          browser = this .getBrowser (),
          scene   = this .getScene ();
 
-      if (this === browser .getExecutionContext () || this .loader === browser .loader)
+      if (this === browser .getExecutionContext ())
          browser .addLoadingObject (node);
 
       if (!this .isMainScene ())
@@ -1045,7 +1045,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          browser = this .getBrowser (),
          scene   = this .getScene ();
 
-      if (this === browser .getExecutionContext () || this .loader === browser .loader)
+      if (this === browser .getExecutionContext ())
          browser .removeLoadingObject (node);
 
       if (!this .isMainScene ())

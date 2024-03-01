@@ -113,9 +113,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       {
          const scene = this .browser .createScene ();
 
-         if (this .node instanceof X3DWorld)
-            scene .loader = this;
-         else
+         if (!(this .node instanceof X3DWorld))
             scene .setExecutionContext (this .executionContext);
 
          scene .setWorldURL (new URL (worldURL, this .getBaseURL ()) .href);
@@ -148,8 +146,6 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          return;
 
       scene ._initLoadCount .removeInterest ("set_initLoadCount__", this);
-
-      delete scene .loader;
 
       // Wait for instances to be created.
 
