@@ -95,8 +95,6 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          for (const node of this .getValue ())
             copy .push (node .copy (instance));
 
-         copy .setModificationTime (0);
-
          return copy;
       }
       else

@@ -235,8 +235,6 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
       X3DArrayField .prototype .set .call (copy, copyArray);
 
-      copy .setModificationTime (0);
-
       return copy;
    },
    equals (other)

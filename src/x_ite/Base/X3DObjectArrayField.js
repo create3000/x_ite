@@ -163,7 +163,6 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
          copy   = target .create ();
 
       copy .assign (target);
-      copy .setModificationTime (0);
 
       return copy;
    },

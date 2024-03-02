@@ -533,7 +533,10 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    addEvent (field)
    {
       if (field .isTainted ())
+      {
+         field .setModificationTime (Date .now ());
          return;
+      }
 
       // if (this .getTypeName () === "HAnimMotion")
       // {
@@ -548,6 +551,8 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    addEventObject (field, event)
    {
       const browser = this [_browser];
+
+      field .setModificationTime (Date .now ());
 
       // Register for processEvent
 
