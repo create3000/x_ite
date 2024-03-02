@@ -118,6 +118,11 @@ class X3DCanvasElement extends HTMLElement
    {
       return this .browser ?.getCanvas () [0] .toDataURL (... args);
    }
+
+   get [Symbol .toStringTag] ()
+   {
+      return "X3DCanvasElement";
+   }
 }
 
 // IE fix.
