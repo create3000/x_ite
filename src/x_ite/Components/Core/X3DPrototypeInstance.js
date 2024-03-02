@@ -130,7 +130,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                if (!field .isInitializable ())
                   continue;
 
-               // Is set during parse.
+               // Is set during parse, or already by an route event.
                if (field .getModificationTime ())
                   continue;
 
