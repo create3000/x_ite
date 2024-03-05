@@ -425,12 +425,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   array .push (a);
                }
 
-               value = array .flatMap (v => v);
+               value = array .flat ();
                break;
             }
             default:
             {
-               value = Array .from (value) .flatMap (v => v instanceof X3DField ? Array .from (v) : v);
+               value = Array .from (value, v => v instanceof X3DField ? Array .from (v) : v) .flat ();
                break;
             }
          }
