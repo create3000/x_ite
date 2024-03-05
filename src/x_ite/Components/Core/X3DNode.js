@@ -48,6 +48,7 @@
 import Fields       from "../../Fields.js";
 import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import X3DField     from "../../Base/X3DField.js";
 
 function X3DNode (executionContext)
 {
@@ -231,7 +232,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       return null;
    },
    traverse () { },
-   getMetaData (key)
+   getMetaData (key, field)
    {
       const names = key .split ("/");
 
@@ -239,14 +240,125 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          return;
 
       const
-         last            = names .pop (),
+         last           = names .pop (),
          metadataSet    = this .getMetadataSet (names, true),
          metadataObject = metadataSet .getValue () .getMetaValue (last);
 
-      if (metadataObject)
-         return Array .from (metadataObject .value);
+      if (!metadataObject)
+         return [ ];
 
-      return [ ];
+      if (field instanceof X3DField)
+      {
+         switch (field .getType ())
+         {
+            case X3DConstants .SFBool:
+            case X3DConstants .SFDouble:
+            case X3DConstants .SFFloat:
+            case X3DConstants .SFInt32:
+            case X3DConstants .SFString:
+            case X3DConstants .SFTime:
+               field .setValue (metadataObject .value [0]);
+               break;
+            case X3DConstants .SFNode:
+            case X3DConstants .MFNode:
+               return;
+            case X3DConstants .SFColor:
+            case X3DConstants .SFColorRGBA:
+            case X3DConstants .SFMatrix3d:
+            case X3DConstants .SFMatrix3f:
+            case X3DConstants .SFMatrix4d:
+            case X3DConstants .SFMatrix4f:
+            case X3DConstants .SFRotation:
+            case X3DConstants .SFVec2d:
+            case X3DConstants .SFVec2f:
+            case X3DConstants .SFVec3d:
+            case X3DConstants .SFVec3f:
+            case X3DConstants .SFVec4d:
+            case X3DConstants .SFVec4f:
+            {
+               const value = metadataObject .value;
+
+               let i = 0;
+
+               for (const key in field)
+                  field [key] = value [i ++];
+
+               break;
+            }
+            case X3DConstants .SFImage:
+            {
+               const
+                  value = metadataObject .value,
+                  array = field .array;
+
+               field .width  = value [0];
+               field .height = value [1];
+               field .comp   = value [2];
+
+               const length = field .width * field .height;
+
+               for (let i = 0; i < length; ++ i)
+                  array [i] = value [3 + i];
+
+               break;
+            }
+            case X3DConstants .MFBool:
+            case X3DConstants .MFDouble:
+            case X3DConstants .MFFloat:
+            case X3DConstants .MFInt32:
+            case X3DConstants .MFString:
+            case X3DConstants .MFTime:
+            {
+               const value = metadataObject .value;
+
+               field .length = 0;
+
+               for (const v of value)
+                  field .push (v);
+
+               break;
+            }
+            case X3DConstants .MFColor:
+            case X3DConstants .MFColorRGBA:
+            case X3DConstants .MFMatrix3d:
+            case X3DConstants .MFMatrix3f:
+            case X3DConstants .MFMatrix4d:
+            case X3DConstants .MFMatrix4f:
+            case X3DConstants .MFRotation:
+            case X3DConstants .MFVec2d:
+            case X3DConstants .MFVec2f:
+            case X3DConstants .MFVec3d:
+            case X3DConstants .MFVec3f:
+            case X3DConstants .MFVec4d:
+            case X3DConstants .MFVec4f:
+            {
+               const
+                  value  = metadataObject .value,
+                  length = value .length;
+
+               field .length = 0;
+
+               for (let i = 0; i < length;)
+               {
+                  const v = field [field .length];
+
+                  for (const key in v)
+                     v [key] = value [i ++];
+               }
+
+               break;
+            }
+            case X3DConstants .MFImage:
+            {
+
+               break;
+            }
+         }
+
+         return field;
+      }
+
+      return Array .from (metadataObject .value);
    },
    setMetaData (key, value)
    {
@@ -258,6 +370,27 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       const
          last        = names .pop (),
          metadataSet = this .getMetadataSet (names, true);
+
+      if (value instanceof X3DField)
+      {
+         switch (value .getType ())
+         {
+            case X3DConstants .SFBool:
+            case X3DConstants .SFDouble:
+            case X3DConstants .SFFloat:
+            case X3DConstants .SFInt32:
+            case X3DConstants .SFString:
+            case X3DConstants .SFTime:
+               value = value .valueOf ();
+               break;
+            case X3DConstants .SFNode:
+            case X3DConstants .MFNode:
+               return;
+            default:
+               value = Array .from (value) .flatMap (v => v instanceof X3DField ? Array .from (v) : v);
+               break;
+         }
+      }
 
       metadataSet .getValue () .setMetaValue (last, value);
    },
