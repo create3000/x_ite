@@ -255,10 +255,12 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    clear ()
    {
-      const { context: gl, frameBuffer } = this;
+      const { context: gl, frameBuffer, width, height } = this;
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
+      gl .viewport (0, 0, width, height);
+      gl .scissor  (0, 0, width, height);
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
    },
@@ -377,8 +379,10 @@ Object .assign (Fallback .prototype,
    },
    clear ()
    {
-      const { context: gl } = this;
+      const { context: gl, width, height } = this;
 
+      gl .viewport (0, 0, width, height);
+      gl .scissor  (0, 0, width, height);
       gl .clearColor (0, 0, 0, 1);
       gl .clear (gl .COLOR_BUFFER_BIT);
       gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
