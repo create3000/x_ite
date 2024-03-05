@@ -360,7 +360,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                {
                   const
                      v = field [field .length],
-                     a = field .array;
+                     a = v .array;
 
                   v .width  = value [i ++];
                   v .height = value [i ++];

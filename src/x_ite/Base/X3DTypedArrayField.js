@@ -980,8 +980,19 @@ function createValue (target, index, components, valueType)
       internalValue = value .getValue (),
       i             = index * components;
 
-   value .addEvent = addEvent .bind (target, i, components, internalValue);
-   value .getValue = getValue .bind (target, i, components, internalValue);
+   Object .defineProperties (value,
+   {
+      addEvent:
+      {
+         value: addEvent .bind (target, i, components, internalValue),
+         configurable: true,
+      },
+      getValue:
+      {
+         value: getValue .bind (target, i, components, internalValue),
+         configurable: true,
+      },
+   });
 
    return value;
 }
