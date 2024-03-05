@@ -85,7 +85,7 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
       if (!Array .isArray (value))
          value = [value];
 
-      switch (typeof value [0])
+      switch (value .type ?? (typeof value [0]))
       {
          case "boolean":
          {
@@ -100,6 +100,21 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
                this .getMetadataObject ("MetadataDouble", name, true) .value = value;
 
             return;
+         }
+         case "double":
+         {
+            this .getMetadataObject ("MetadataDouble", name, true) .value = value;
+            break;
+         }
+         case "float":
+         {
+            this .getMetadataObject ("MetadataFloat", name, true) .value = value;
+            break;
+         }
+         case "integer":
+         {
+            this .getMetadataObject ("MetadataInteger", name, true) .value = value;
+            break;
          }
          case "string":
          {

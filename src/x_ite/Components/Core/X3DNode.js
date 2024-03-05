@@ -259,9 +259,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             case X3DConstants .SFTime:
                field .setValue (metadataObject .value [0]);
                break;
-            case X3DConstants .SFNode:
-            case X3DConstants .MFNode:
-               return;
             case X3DConstants .SFColor:
             case X3DConstants .SFColorRGBA:
             case X3DConstants .SFMatrix3d:
@@ -302,6 +299,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
                break;
             }
+            case X3DConstants .SFNode:
+            case X3DConstants .MFNode:
+               return;
             case X3DConstants .MFBool:
             case X3DConstants .MFDouble:
             case X3DConstants .MFFloat:
@@ -394,6 +394,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       if (value instanceof X3DField)
       {
+         const field = value;
+
          switch (value .getType ())
          {
             case X3DConstants .SFBool:
@@ -402,37 +404,90 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             case X3DConstants .SFInt32:
             case X3DConstants .SFString:
             case X3DConstants .SFTime:
-               value = value .valueOf ();
+               value = [field .valueOf ()];
                break;
-            case X3DConstants .SFNode:
-            case X3DConstants .MFNode:
-               return;
             case X3DConstants .SFImage:
             {
-               const array = Array .from (value .array);
-               array .unshift (value .width, value .height, value .comp);
-               value = array;
+               value = Array .from (field .array);
+               value .unshift (field .width, field .height, field .comp);
                break;
             }
             case X3DConstants .MFImage:
             {
-               const array = [ ];
+               value = [ ];
 
-               for (const v of value)
+               for (const v of field)
                {
                   const a = Array .from (v .array);
                   a .unshift (v .width, v .height, v .comp);
-                  array .push (a);
+                  value .push (a);
                }
 
-               value = array .flat ();
+               value = value .flat ();
                break;
             }
+            case X3DConstants .SFNode:
+            case X3DConstants .MFNode:
+               return;
             default:
             {
-               value = Array .from (value, v => v instanceof X3DField ? Array .from (v) : v) .flat ();
+               value = Array .from (field, v => v instanceof X3DField ? Array .from (v) : v) .flat ();
                break;
             }
+         }
+
+         switch (field .getType ())
+         {
+            case X3DConstants .SFBool:
+            case X3DConstants .MFBool:
+               value .type = "boolean";
+               break;
+            case X3DConstants .SFDouble:
+            case X3DConstants .SFMatrix3d:
+            case X3DConstants .SFMatrix4d:
+            case X3DConstants .SFRotation:
+            case X3DConstants .SFTime:
+            case X3DConstants .SFVec2d:
+            case X3DConstants .SFVec3d:
+            case X3DConstants .SFVec4d:
+            case X3DConstants .MFDouble:
+            case X3DConstants .MFMatrix3d:
+            case X3DConstants .MFMatrix4d:
+            case X3DConstants .MFRotation:
+            case X3DConstants .MFTime:
+            case X3DConstants .MFVec2d:
+            case X3DConstants .MFVec3d:
+            case X3DConstants .MFVec4d:
+               value .type = "double";
+               break;
+            case X3DConstants .SFColor:
+            case X3DConstants .SFColorRGBA:
+            case X3DConstants .SFFloat:
+            case X3DConstants .SFMatrix3f:
+            case X3DConstants .SFMatrix4f:
+            case X3DConstants .SFVec2f:
+            case X3DConstants .SFVec3f:
+            case X3DConstants .SFVec4f:
+            case X3DConstants .MFColor:
+            case X3DConstants .MFColorRGBA:
+            case X3DConstants .MFFloat:
+            case X3DConstants .MFMatrix3f:
+            case X3DConstants .MFMatrix4f:
+            case X3DConstants .MFVec2f:
+            case X3DConstants .MFVec3f:
+            case X3DConstants .MFVec4f:
+               value .type = "float";
+               break;
+            case X3DConstants .SFInt32:
+            case X3DConstants .SFImage:
+            case X3DConstants .MFInt32:
+            case X3DConstants .MFImage:
+               value .type = "integer";
+               break;
+            case X3DConstants .SFString:
+            case X3DConstants .MFString:
+               value .type = "string";
+               break;
          }
       }
 
