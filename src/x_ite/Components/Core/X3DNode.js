@@ -252,7 +252,26 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    {
       const names = key .split ("/");
 
+      if (names .length < 2)
+         return;
 
+      function removeMetaData (metadataSet, names)
+      {
+         if (!metadataSet)
+            return false;
+
+         const name = names .shift ();
+
+         if (!names .length || removeMetaData (metadataSet .getValue () .getMetadataNode ("MetadataSet", name), names))
+         {
+            metadataSet .getValue () .removeValue (name);
+         }
+
+         return !metadataSet .value .length;
+      }
+
+      if (removeMetaData (this .getMetadataSet ([names .shift ()]), names))
+         this ._metadata = null;
    },
    getMetadataSet (names, create = false)
    {
