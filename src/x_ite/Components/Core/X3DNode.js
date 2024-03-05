@@ -407,9 +407,32 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             case X3DConstants .SFNode:
             case X3DConstants .MFNode:
                return;
+            case X3DConstants .SFImage:
+            {
+               const array = Array .from (value .array);
+               array .unshift (value .width, value .height, value .comp);
+               value = array;
+               break;
+            }
+            case X3DConstants .MFImage:
+            {
+               const array = [ ];
+
+               for (const v of value)
+               {
+                  const a = Array .from (v .array);
+                  a .unshift (v .width, v .height, v .comp);
+                  array .push (a);
+               }
+
+               value = array .flatMap (v => v);
+               break;
+            }
             default:
+            {
                value = Array .from (value) .flatMap (v => v instanceof X3DField ? Array .from (v) : v);
                break;
+            }
          }
       }
 
