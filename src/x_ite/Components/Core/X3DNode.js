@@ -350,6 +350,27 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             }
             case X3DConstants .MFImage:
             {
+               const
+                  value  = metadataObject .value,
+                  length = value .length;
+
+               field .length = 0;
+
+               for (let i = 0; i < length;)
+               {
+                  const
+                     v = field [field .length],
+                     a = field .array;
+
+                  v .width  = value [i ++];
+                  v .height = value [i ++];
+                  v .comp   = value [i ++];
+
+                  const l = v .width * v .height;
+
+                  for (let k = 0; k < l; ++ k, ++ i)
+                     a [k] = value [i];
+               }
 
                break;
             }
