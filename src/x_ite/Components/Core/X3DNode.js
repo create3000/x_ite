@@ -231,9 +231,22 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       return null;
    },
    traverse () { },
-   getMetaData (key, value)
+   getMetaData (key)
    {
+      const names = key .split ("/");
 
+      if (names .length < 2)
+         return;
+
+      const
+         last            = names .pop (),
+         metadataSet    = this .getMetadataSet (names, true),
+         metadataObject = metadataSet .getValue () .getMetaValue (last);
+
+      if (metadataObject)
+         return Array .from (metadataObject .value);
+
+      return [ ];
    },
    setMetaData (key, value)
    {
@@ -246,7 +259,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          last        = names .pop (),
          metadataSet = this .getMetadataSet (names, true);
 
-      metadataSet .getValue () .setValue (last, value);
+      metadataSet .getValue () .setMetaValue (last, value);
    },
    removeMetaData (key)
    {
@@ -262,9 +275,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          const name = names .shift ();
 
-         if (!names .length || removeMetaData (metadataSet .getValue () .getMetadataNode ("MetadataSet", name), names))
+         if (!names .length || removeMetaData (metadataSet .getValue () .getMetadataObject ("MetadataSet", name), names))
          {
-            metadataSet .getValue () .removeValue (name);
+            metadataSet .getValue () .removeMetaValue (name);
          }
 
          return !metadataSet .value .length;
@@ -289,7 +302,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       }
 
       for (const name of names)
-         metadataSet = metadataSet .getValue () .getMetadataNode ("MetadataSet", name, create);
+         metadataSet = metadataSet .getValue () .getMetadataObject ("MetadataSet", name, create);
 
       return metadataSet;
    },

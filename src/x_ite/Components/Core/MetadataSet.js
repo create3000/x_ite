@@ -76,32 +76,39 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
 
       return X3DNode .prototype .getContainerField .call (this);
    },
-   setValue (name, value)
+   getMetaValue (name)
    {
-      switch (typeof value)
+      return this ._value .find (node => node .name === name);
+   },
+   setMetaValue (name, value)
+   {
+      if (!Array .isArray (value))
+         value = [value];
+
+      switch (typeof value [0])
       {
          case "boolean":
          {
-            this .getMetadataNode ("MetadataBoolean", name, true) .value = [value];
+            this .getMetadataObject ("MetadataBoolean", name, true) .value = value;
             return;
          }
          case "number":
          {
-            this .getMetadataNode ("MetadataDouble", name, true) .value = [value];
+            if (value .every (v => Number .isInteger (v)))
+               this .getMetadataObject ("MetadataInteger", name, true) .value = value;
+            else
+               this .getMetadataObject ("MetadataDouble", name, true) .value = value;
+
             return;
          }
          case "string":
          {
-            this .getMetadataNode ("MetadataString", name, true) .value = [value];
-            return;
-         }
-         case "object":
-         {
+            this .getMetadataObject ("MetadataString", name, true) .value = value;
             return;
          }
       }
    },
-   removeValue (name)
+   removeMetaValue (name)
    {
       const index = this ._value .findIndex (node => node .name === name);
 
@@ -110,9 +117,9 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
 
       this ._value .splice (index, 1);
    },
-   getMetadataNode (typeName, name, create = false)
+   getMetadataObject (typeName, name, create = false)
    {
-      let metadata = this ._value .find (node => node .name === name);
+      let metadata = this .getMetaValue (name);
 
       if (metadata ?.getNodeTypeName () === typeName)
          return metadata;
