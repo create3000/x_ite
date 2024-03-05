@@ -231,6 +231,49 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       return null;
    },
    traverse () { },
+   getMetaData (key, value)
+   {
+
+   },
+   setMetaData (key, value)
+   {
+      const names = key .split ("/");
+
+      if (names .length < 2)
+         return;
+
+      const
+         last        = names .pop (),
+         metadataSet = this .getMetadataSet (names, true);
+
+      metadataSet .getValue () .setValue (last, value);
+   },
+   removeMetaData (key)
+   {
+      const names = key .split ("/");
+
+
+   },
+   getMetadataSet (names, create = false)
+   {
+      const name = names .shift ();
+
+      let metadataSet = this ._metadata .valueOf ();
+
+      if (metadataSet ?.getNodeTypeName () !== "MetadataSet" || metadataSet ?.name !== name)
+      {
+         this ._metadata = this .getExecutionContext () .createNode ("MetadataSet");
+         metadataSet     = this ._metadata .valueOf ();
+
+         metadataSet .reference = "";
+         metadataSet .name      = name;
+      }
+
+      for (const name of names)
+         metadataSet = metadataSet .getValue () .getMetadataNode ("MetadataSet", name, create);
+
+      return metadataSet;
+   },
    toStream (generator)
    {
       generator .string += this .getTypeName () + " { }";

@@ -76,6 +76,62 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
 
       return X3DNode .prototype .getContainerField .call (this);
    },
+   setValue (name, value)
+   {
+      switch (typeof value)
+      {
+         case "boolean":
+         {
+            this .getMetadataNode ("MetadataBoolean", name, true) .value = [value];
+            return;
+         }
+         case "number":
+         {
+            this .getMetadataNode ("MetadataDouble", name, true) .value = [value];
+            return;
+         }
+         case "string":
+         {
+            this .getMetadataNode ("MetadataString", name, true) .value = [value];
+            return;
+         }
+         case "object":
+         {
+            return;
+         }
+      }
+   },
+   removeValue (name)
+   {
+      const index = this ._value .findIndex (node => node .name === name);
+
+      if (index < 0)
+         return;
+
+      this ._value .splice (index, 1);
+   },
+   getMetadataNode (typeName, name, create = false)
+   {
+      let metadata = this ._value .find (node => node .name === name);
+
+      if (metadata ?.getNodeTypeName () === typeName)
+         return metadata;
+
+      if (!create)
+         return null;
+
+      if (metadata)
+         this .removeValue (name);
+
+      metadata = this .getExecutionContext () .createNode (typeName);
+
+      metadata .reference = "";
+      metadata .name      = name;
+
+      this ._value .push (metadata);
+
+      return metadata;
+   },
    dispose ()
    {
       X3DMetadataObject .prototype .dispose .call (this);
