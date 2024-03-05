@@ -128,7 +128,7 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
          return null;
 
       if (metadata)
-         this .removeValue (name);
+         this .removeMetaValue (name);
 
       metadata = this .getExecutionContext () .createNode (typeName);
 
