@@ -590,6 +590,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    removeMetaDataCallback (key, path)
    {
       this [_metaDataCallbacks] .get (path) ?.delete (key);
+
+      if (this [_metaDataCallbacks] .get (path) ?.size === 0)
+         this [_metaDataCallbacks] .delete (path);
    },
    processMetaDataCallback (path)
    {
