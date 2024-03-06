@@ -241,14 +241,14 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       const
          last           = names .pop (),
-         metadataSet    = this .getMetadataSet (names, true),
-         metadataObject = metadataSet .getValue () .getMetaValue (last);
-
-      if (!metadataObject)
-         return [ ];
+         metadataSet    = this .getMetadataSet (names),
+         metadataObject = metadataSet ?.getValue () .getMetaValue (last);
 
       if (field instanceof X3DField)
       {
+         if (!metadataObject)
+            return field;
+
          switch (field .getType ())
          {
             case X3DConstants .SFBool:
@@ -257,8 +257,14 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             case X3DConstants .SFInt32:
             case X3DConstants .SFString:
             case X3DConstants .SFTime:
-               field .setValue (metadataObject .value [0]);
+            {
+               const value = metadataObject .value;
+
+               if (value .length)
+                  field .setValue (value [0]);
+
                break;
+            }
             case X3DConstants .SFColor:
             case X3DConstants .SFColorRGBA:
             case X3DConstants .SFMatrix3d:
@@ -273,29 +279,37 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             case X3DConstants .SFVec4d:
             case X3DConstants .SFVec4f:
             {
-               const value = metadataObject .value;
+               const
+                  value  = metadataObject .value,
+                  length = value .length;
 
                let i = 0;
 
                for (const key in field)
-                  field [key] = value [i ++];
+               {
+                  if (i < length)
+                     field [key] = value [i ++];
+                  else
+                     break;
+               }
 
                break;
             }
             case X3DConstants .SFImage:
             {
                const
-                  value = metadataObject .value,
-                  array = field .array;
+                  value  = metadataObject .value,
+                  length = value .length,
+                  array  = field .array;
 
                field .width  = value [0];
                field .height = value [1];
                field .comp   = value [2];
 
-               const length = field .width * field .height;
+               const l = array .length;
 
-               for (let i = 0; i < length; ++ i)
-                  array [i] = value [3 + i];
+               for (let i = 0, j = 3; i < l && j < length; ++ i, ++ j)
+                  array [i] = value [j];
 
                break;
             }
@@ -309,12 +323,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             case X3DConstants .MFString:
             case X3DConstants .MFTime:
             {
-               const value = metadataObject .value;
+               const
+                  value  = metadataObject .value,
+                  length = value .length;
 
-               field .length = 0;
-
-               for (const v of value)
-                  field .push (v);
+               for (let i = 0; i < length; ++ i)
+                  field [i] = value [i];
 
                break;
             }
@@ -336,14 +350,17 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   value  = metadataObject .value,
                   length = value .length;
 
-               field .length = 0;
-
                for (let i = 0; i < length;)
                {
-                  const v = field [field .length];
+                  const f = field [field .length];
 
-                  for (const key in v)
-                     v [key] = value [i ++];
+                  for (const key in f)
+                  {
+                     if (i < length)
+                        f [key] = value [i ++];
+                     else
+                        break;
+                  }
                }
 
                break;
@@ -354,21 +371,19 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   value  = metadataObject .value,
                   length = value .length;
 
-               field .length = 0;
-
                for (let i = 0; i < length;)
                {
                   const
-                     v = field [field .length],
-                     a = v .array;
+                     f = field [field .length],
+                     a = f .array;
 
-                  v .width  = value [i ++];
-                  v .height = value [i ++];
-                  v .comp   = value [i ++];
+                  f .width  = value [i ++];
+                  f .height = value [i ++];
+                  f .comp   = value [i ++];
 
-                  const l = v .width * v .height;
+                  const l = f .width * f .height;
 
-                  for (let k = 0; k < l; ++ k, ++ i)
+                  for (let k = 0; k < l && i < length; ++ k, ++ i)
                      a [k] = value [i];
                }
 
@@ -379,7 +394,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          return field;
       }
 
-      return Array .from (metadataObject .value);
+      return metadataObject ? Array .from (metadataObject .value) : [ ];
    },
    setMetaData (key, value)
    {
@@ -416,10 +431,10 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             {
                value = [ ];
 
-               for (const v of field)
+               for (const f of field)
                {
-                  const a = Array .from (v .array);
-                  a .unshift (v .width, v .height, v .comp);
+                  const a = Array .from (f .array);
+                  a .unshift (f .width, f .height, f .comp);
                   value .push (a);
                }
 
@@ -431,7 +446,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                throw new Error ("SFNode and MFNode are not supported as metadata value.");
             default:
             {
-               value = Array .from (field, v => v instanceof X3DField ? Array .from (v) : v) .flat ();
+               value = Array .from (field, f => f instanceof X3DField ? Array .from (f) : f) .flat ();
                break;
             }
          }
@@ -526,6 +541,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       if (metadataSet ?.getNodeTypeName () !== "MetadataSet" || metadataSet ?.name !== name)
       {
+         if (!create)
+            return null;
+
          this ._metadata = this .getExecutionContext () .createNode ("MetadataSet");
          metadataSet     = this ._metadata .valueOf ();
 
