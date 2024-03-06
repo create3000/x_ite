@@ -137,7 +137,12 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
       let metadata = this .getMetaValue (name);
 
       if (metadata ?.getNodeTypeName () === typeName)
+      {
+         if (create)
+            metadata .reference = this .getBrowser () .getBrowserOption ("MetadataReference");
+
          return metadata;
+      }
 
       if (!create)
          return null;
