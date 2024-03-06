@@ -50,6 +50,8 @@ import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import X3DField     from "../../Base/X3DField.js";
 
+const _metaDataCallbacks = Symbol ();
+
 function X3DNode (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
@@ -232,9 +234,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       return null;
    },
    traverse () { },
-   hasMetaData (key)
+   hasMetaData (path)
    {
-      const names = key .split ("/");
+      const names = path .split ("/");
 
       if (names .length < 2)
          return false;
@@ -246,9 +248,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       return !!metadataObject;
    },
-   getMetaData (key, field)
+   getMetaData (path, field)
    {
-      const names = key .split ("/");
+      const names = path .split ("/");
 
       if (names .length < 2)
          return;
@@ -410,9 +412,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       return metadataObject ? Array .from (metadataObject .value) : [ ];
    },
-   setMetaData (key, value)
+   setMetaData (path, value)
    {
-      const names = key .split ("/");
+      const names = path .split ("/");
 
       if (names .length < 2)
          return;
@@ -521,10 +523,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       }
 
       metadataSet .getValue () .setMetaValue (last, value);
+
+      this .processMetaDataCallback (path);
    },
-   removeMetaData (key)
+   removeMetaData (path)
    {
-      const names = key .split ("/");
+      const names = path .split ("/");
 
       if (names .length < 2)
          return;
@@ -569,6 +573,33 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          metadataSet = metadataSet .getValue () .getMetadataObject ("MetadataSet", name, create);
 
       return metadataSet;
+   },
+   [_metaDataCallbacks]: new Map (),
+   registerMetaDataCallback (key, path, callback)
+   {
+      if (!this .hasOwnProperty (_metaDataCallbacks))
+         this [_metaDataCallbacks] = new Map ();
+
+      let map = this [_metaDataCallbacks] .get (path);
+
+      if (!map)
+         this [_metaDataCallbacks] .set (path, map = new Map ());
+
+      map .set (key, callback);
+   },
+   removeMetaDataCallback (key, path)
+   {
+      this [_metaDataCallbacks] .get (path) ?.delete (key);
+   },
+   processMetaDataCallback (path)
+   {
+      const map = this [_metaDataCallbacks] .get (path);
+
+      if (!map)
+         return;
+
+      for (const callback of map .values ())
+         callback ();
    },
    toStream (generator)
    {
