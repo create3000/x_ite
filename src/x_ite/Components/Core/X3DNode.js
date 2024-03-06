@@ -435,26 +435,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             case X3DConstants .SFInt32:
             case X3DConstants .SFString:
             case X3DConstants .SFTime:
+            {
                value = [field .valueOf ()];
-               break;
-            case X3DConstants .SFImage:
-            {
-               value = Array .from (field .array);
-               value .unshift (field .width, field .height, field .comp);
-               break;
-            }
-            case X3DConstants .MFImage:
-            {
-               value = [ ];
-
-               for (const f of field)
-               {
-                  const a = Array .from (f .array);
-                  a .unshift (f .width, f .height, f .comp);
-                  value .push (a);
-               }
-
-               value = value .flat ();
                break;
             }
             case X3DConstants .SFNode:

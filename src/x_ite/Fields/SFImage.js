@@ -171,10 +171,10 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
    },
    *[Symbol .iterator] ()
    {
-      yield this .width;
-      yield this .height;
-      yield this .comp;
-      yield this .array;
+      yield  this .width;
+      yield  this .height;
+      yield  this .comp;
+      yield* this .array;
    },
    copy ()
    {
