@@ -85,15 +85,15 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
    {
       return this .activeLayerNode;
    },
+   getLayer0 ()
+   {
+      return this .layerNode0;
+   },
    setLayer0 (value)
    {
       this .layerNode0 = value;
 
       this .set_layers__ ();
-   },
-   getLayer0 ()
-   {
-      return this .layerNode0;
    },
    getLayers ()
    {
