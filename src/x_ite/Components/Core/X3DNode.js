@@ -232,6 +232,20 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       return null;
    },
    traverse () { },
+   hasMetaData (key)
+   {
+      const names = key .split ("/");
+
+      if (names .length < 2)
+         return false;
+
+      const
+         last           = names .pop (),
+         metadataSet    = this .getMetadataSet (names),
+         metadataObject = metadataSet ?.getValue () .getMetaValue (last);
+
+      return !!metadataObject;
+   },
    getMetaData (key, field)
    {
       const names = key .split ("/");
