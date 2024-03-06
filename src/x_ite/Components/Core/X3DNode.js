@@ -547,7 +547,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          this ._metadata = this .getExecutionContext () .createNode ("MetadataSet");
          metadataSet     = this ._metadata .valueOf ();
 
-         metadataSet .reference = "";
+         metadataSet .reference = this .getBrowser () .getBrowserOption ("MetadataReference");
          metadataSet .name      = name;
       }
 
