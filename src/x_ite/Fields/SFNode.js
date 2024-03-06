@@ -66,13 +66,12 @@ const handler =
             return value;
 
          const
-            node       = target .getValue (),
-            field      = node .getField (key),
-            accessType = field .getAccessType ();
+            node  = target .getValue (),
+            field = node .getField (key);
 
          // Specification conform would be: accessType & X3DConstants .outputOnly.
          // But we allow read access to plain fields, too.
-         if (accessType === X3DConstants .inputOnly)
+         if (field .getAccessType () === X3DConstants .inputOnly)
             return undefined;
 
          return field .valueOf ();
@@ -282,6 +281,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          return value .getFieldDefinitions ();
 
       throw new Error ("SFNode.getFieldDefinitions: node is null.");
+   },
+   getFieldDefinition (name)
+   {
+      return this .getFieldDefinitions () .get (name);
    },
    getField (name)
    {
