@@ -301,7 +301,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             }
             case X3DConstants .SFNode:
             case X3DConstants .MFNode:
-               return;
+               throw new Error ("SFNode and MFNode are not supported as metadata value.");
             case X3DConstants .MFBool:
             case X3DConstants .MFDouble:
             case X3DConstants .MFFloat:
@@ -428,7 +428,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             }
             case X3DConstants .SFNode:
             case X3DConstants .MFNode:
-               return;
+               throw new Error ("SFNode and MFNode are not supported as metadata value.");
             default:
             {
                value = Array .from (field, v => v instanceof X3DField ? Array .from (v) : v) .flat ();
