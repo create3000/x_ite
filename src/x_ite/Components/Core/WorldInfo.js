@@ -64,13 +64,16 @@ Object .assign (Object .setPrototypeOf (WorldInfo .prototype, X3DInfoNode .proto
    {
       X3DInfoNode .prototype .initialize .call (this);
 
-      this .getExecutionContext () .addWorldInfo (this);
+      this .setLive (this .isLive ());
    },
-   dispose ()
+   setLive (value)
    {
-      this .getExecutionContext () .removeWorldInfo (this);
+      X3DInfoNode .prototype .setLive .call (this, value);
 
-      X3DInfoNode .prototype .dispose .call (this);
+      if (this .isLive ())
+         this .getExecutionContext () .addWorldInfo (this);
+      else
+         this .getExecutionContext () .removeWorldInfo (this);
    },
 });
 

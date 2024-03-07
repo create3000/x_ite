@@ -698,6 +698,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    addWorldInfo (worldInfoNode)
    {
+      if (this ._worldInfos .some (node => node .getValue () === worldInfoNode))
+         return;
+
       this ._worldInfos .push (worldInfoNode);
    },
    removeWorldInfo (worldInfoNode)
