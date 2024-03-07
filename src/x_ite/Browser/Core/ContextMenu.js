@@ -568,7 +568,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // Reposition menu if to right or to low.
 
-		ul .offset ({ "left": event .pageX, "top": event .pageY }); // Do it again!
+      ul .offset ({ "left": event .pageX, "top": event .pageY }); // Do it again!
 
       if (ul .offset () .left - $(document) .scrollLeft () + ul .outerWidth () > $(window) .width ())
          ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .outerWidth ()) });

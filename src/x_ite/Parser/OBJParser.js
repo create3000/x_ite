@@ -783,7 +783,7 @@ Object .assign (MaterialParser .prototype,
    statements ()
    {
       while (this .statement ())
-		   ;
+         ;
    },
    statement ()
    {

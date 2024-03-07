@@ -134,7 +134,7 @@ function X3DObjectArrayField (values)
    this [_proxy]  = proxy;
 
    for (const value of values)
-   	this .push (value);
+      this .push (value);
 
    return proxy;
 }

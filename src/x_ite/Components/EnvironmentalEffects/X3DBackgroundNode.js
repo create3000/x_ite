@@ -212,7 +212,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
                vAngle .push (Math .PI);
 
             if (vAngle .length === 2)
-						vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2)
+               vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2)
 
             this .buildSphere (RADIUS, vAngle, this ._skyAngle, this ._skyColor, false);
          }

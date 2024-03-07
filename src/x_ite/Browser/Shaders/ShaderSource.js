@@ -55,26 +55,26 @@ const ShaderSource =
 {
    getSource (gl, browser, source, options)
    {
-			const
-				COMMENTS     = "\\s+|/\\*[\\s\\S]*?\\*/|//.*?\\n",
-				LINE         = "#line\\s+.*?\\n",
-				IF           = "#if\\s+.*?\\n",
-				ELIF         = "#elif\\s+.*?\\n",
-				IFDEF        = "#ifdef\\s+.*?\\n",
-				IFNDEF       = "#ifndef\\s+.*?\\n",
-				ELSE         = "#else.*?\\n",
-				ENDIF        = "#endif.*?\\n",
-				DEFINE       = "#define\\s+(?:[^\\n\\\\]|\\\\[^\\r\\n]|\\\\\\r?\\n)*\\n",
-				UNDEF        = "#undef\\s+.*?\\n",
-				PRAGMA       = "#pragma\\s+.*?\\n",
-				PREPROCESSOR =  LINE + "|" + IF + "|" + ELIF + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + UNDEF + "|" + PRAGMA,
-				VERSION      = "#version\\s+.*?\\n",
-				EXTENSION    = "#extension\\s+.*?\\n",
-				ANY          = ".*";
+         const
+            COMMENTS     = "\\s+|/\\*[\\s\\S]*?\\*/|//.*?\\n",
+            LINE         = "#line\\s+.*?\\n",
+            IF           = "#if\\s+.*?\\n",
+            ELIF         = "#elif\\s+.*?\\n",
+            IFDEF        = "#ifdef\\s+.*?\\n",
+            IFNDEF       = "#ifndef\\s+.*?\\n",
+            ELSE         = "#else.*?\\n",
+            ENDIF        = "#endif.*?\\n",
+            DEFINE       = "#define\\s+(?:[^\\n\\\\]|\\\\[^\\r\\n]|\\\\\\r?\\n)*\\n",
+            UNDEF        = "#undef\\s+.*?\\n",
+            PRAGMA       = "#pragma\\s+.*?\\n",
+            PREPROCESSOR =  LINE + "|" + IF + "|" + ELIF + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + UNDEF + "|" + PRAGMA,
+            VERSION      = "#version\\s+.*?\\n",
+            EXTENSION    = "#extension\\s+.*?\\n",
+            ANY          = ".*";
 
-			const
-				GLSL  = new RegExp ("^((?:" + COMMENTS + "|" + PREPROCESSOR + ")*(?:" + VERSION + ")?(?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$", "s"),
-				match = source .match (GLSL);
+         const
+            GLSL  = new RegExp ("^((?:" + COMMENTS + "|" + PREPROCESSOR + ")*(?:" + VERSION + ")?(?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$", "s"),
+            match = source .match (GLSL);
 
       // const
       //    COMMENTS = "\\s+|/\\*.*?\\*/|//.*?\\n",

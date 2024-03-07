@@ -66,8 +66,8 @@ import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
 // Shadow map layout
 // Compact layout:
 //
-// xzXZ		Char: Axis
-// yyYY		Case: Sign
+// xzXZ      Char: Axis
+// yyYY      Case: Sign
 
 const orientationMatrices = [
    new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 1,  0,  0), Vector3 .zAxis)), // left

@@ -180,7 +180,7 @@ function X3DTypedArrayField (values)
    }
 
    for (const value of values)
-   	this .push (value);
+      this .push (value);
 
    return proxy;
 }

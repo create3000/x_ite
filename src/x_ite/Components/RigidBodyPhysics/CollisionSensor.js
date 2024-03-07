@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
                      contactNode ._position                 = position .set (btPosition .x (), btPosition .y (), btPosition .z ());
                      contactNode ._contactNormal            = contactNormal .set (btContactNormal .x (), btContactNormal .y (), btContactNormal .z ());
                      contactNode ._depth                    = -pt .getDistance ();
-//								contactNode ._frictionDirection        = context .frictionDirection;
+                     // contactNode ._frictionDirection        = context .frictionDirection;
                      contactNode ._appliedParameters        = colliderNode ._appliedParameters;
                      contactNode ._bounce                   = colliderNode ._bounce;
                      contactNode ._minBounceSpeed           = colliderNode ._minBounceSpeed;

@@ -357,8 +357,8 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
 
       for (const field of this [_fieldInterests])
       {
-			if (event .has (field))
-				continue;
+         if (event .has (field))
+            continue;
 
          if (first)
          {

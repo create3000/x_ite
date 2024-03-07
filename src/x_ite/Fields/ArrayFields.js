@@ -307,8 +307,8 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
       else
       {
          generator .string += '[';
-			generator .string += generator .TidySpace ();
-			generator .string += ']';
+         generator .string += generator .TidySpace ();
+         generator .string += ']';
       }
    },
    dispose ()

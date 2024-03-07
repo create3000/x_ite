@@ -933,15 +933,15 @@ Object .assign (X3DRenderObject .prototype,
 
                //if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
                //{
-               //	float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
-               //	step = abs (getViewMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
+               //   float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
+               //   step = abs (getViewMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
                //
-               //	Vector3f offset = Vector3f (0, step, 0) * up;
+               //   Vector3f offset = Vector3f (0, step, 0) * up;
                //
-               //	if (math::abs (offset) > math::abs (translation) or getBrowser () -> getCurrentSpeed () == 0)
-               //		offset = translation;
+               //   if (math::abs (offset) > math::abs (translation) or getBrowser () -> getCurrentSpeed () == 0)
+               //      offset = translation;
                //
-               //	getViewpoint () -> positionOffset () += offset;
+               //   getViewpoint () -> positionOffset () += offset;
                //}
                //else
                   viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());

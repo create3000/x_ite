@@ -736,7 +736,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          [9729, "AVG_PIXEL"],
       ]);
 
-	   const BoundaryModes = new Map ([
+      const BoundaryModes = new Map ([
          [33071, "CLAMP_TO_EDGE"],
          [33648, "MIRRORED_REPEAT"],
          [10497, "REPEAT"],

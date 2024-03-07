@@ -217,7 +217,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
             if (oldField .getModificationTime () === 0)
             {
                oldField .assign (newField);
-					oldField .setModificationTime (0);
+               oldField .setModificationTime (0);
             }
          }
 

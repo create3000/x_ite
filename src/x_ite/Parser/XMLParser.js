@@ -773,21 +773,21 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
    },
    scriptElement (element)
-	{
-		const
-			domParser      = new DOMParser (),
-			scriptDocument = domParser .parseFromString (element .outerHTML, "application/xml"),
-			childNodes     = scriptDocument .children [0] .childNodes;
+   {
+      const
+         domParser      = new DOMParser (),
+         scriptDocument = domParser .parseFromString (element .outerHTML, "application/xml"),
+         childNodes     = scriptDocument .children [0] .childNodes;
 
       element .textContent = "// Content moved into childNodes.";
 
-		for (const childNode of childNodes)
-		{
+      for (const childNode of childNodes)
+      {
          // Add elements and cdata.
-			if (childNode .nodeType === 1 || childNode .nodeType === 4)
+         if (childNode .nodeType === 1 || childNode .nodeType === 4)
             element .appendChild (childNode);
-		}
-	},
+      }
+   },
    routeElement (xmlElement)
    {
       try

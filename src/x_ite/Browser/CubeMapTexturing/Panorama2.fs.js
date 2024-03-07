@@ -15,32 +15,32 @@ uniform int       x3d_CurrentFace;
 vec3
 uvToXYZ (const in int face, const in vec2 uv)
 {
-	switch (face)
-	{
-		case 0:  return vec3 ( 1.0,    uv .y,  uv .x);
-		case 1:  return vec3 (-1.0,    uv .y, -uv .x);
-		case 2:  return vec3 ( uv .x,  uv .y, -1.0);
-		case 3:  return vec3 (-uv .x,  uv .y,  1.0);
-		case 4:  return vec3 ( uv .y, -1.0,    uv .x);
-		default: return vec3 (-uv .y,  1.0,    uv .x);
-	}
+   switch (face)
+   {
+      case 0:  return vec3 ( 1.0,    uv .y,  uv .x);
+      case 1:  return vec3 (-1.0,    uv .y, -uv .x);
+      case 2:  return vec3 ( uv .x,  uv .y, -1.0);
+      case 3:  return vec3 (-uv .x,  uv .y,  1.0);
+      case 4:  return vec3 ( uv .y, -1.0,    uv .x);
+      default: return vec3 (-uv .y,  1.0,    uv .x);
+   }
 }
 
 vec2
 dirToUV (const in vec3 dir)
 {
-	return vec2 (0.5 + 0.5 * atan (dir .z, dir .x) / M_PI,
-		          1.0 - acos (dir .y) / M_PI);
+   return vec2 (0.5 + 0.5 * atan (dir .z, dir .x) / M_PI,
+                1.0 - acos (dir .y) / M_PI);
 }
 
 vec3
 panoramaToCubeMap (const in int face, const in vec2 texCoord)
 {
-	vec3 scan      = uvToXYZ (face, texCoord);
-	vec3 direction = normalize (scan);
-	vec2 src       = dirToUV (direction);
+   vec3 scan      = uvToXYZ (face, texCoord);
+   vec3 direction = normalize (scan);
+   vec2 src       = dirToUV (direction);
 
-	return texture (x3d_PanoramaTexture, src) .rgb;
+   return texture (x3d_PanoramaTexture, src) .rgb;
 }
 
 void

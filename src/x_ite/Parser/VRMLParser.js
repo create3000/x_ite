@@ -74,7 +74,7 @@ const Grammar = Expressions ({
    Break:       /\r?\n/g,
 
    // Header
-   Header:	    /^#(VRML|X3D) V(.*?) (utf8)(?:[ \t]+(.*?))?[ \t]*[\n\r]/gy,
+   Header:      /^#(VRML|X3D) V(.*?) (utf8)(?:[ \t]+(.*?))?[ \t]*[\n\r]/gy,
 
    // Keywords
    AS:          /AS/gy,

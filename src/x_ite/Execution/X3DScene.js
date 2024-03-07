@@ -352,7 +352,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          throw new Error ("Couldn't update exported node: node must be of type X3DNode.");
 
       //if (node .getExecutionContext () !== this)
-      //	throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
+      //   throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
 
       const exportedNode = new X3DExportedNode (this, exportedName, node);
 

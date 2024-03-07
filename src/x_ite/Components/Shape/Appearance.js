@@ -77,8 +77,8 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
 
       browser .getRenderingProperties () ._ContentScale .addInterest ("set_contentScale__", this);
 
-      this ._alphaMode  		.addInterest ("set_alphaMode__",        this);
-      this ._alphaCutoff  		.addInterest ("set_alphaCutoff__",      this);
+      this ._alphaMode        .addInterest ("set_alphaMode__",        this);
+      this ._alphaCutoff      .addInterest ("set_alphaCutoff__",      this);
       this ._pointProperties  .addInterest ("set_pointProperties__",  this);
       this ._lineProperties   .addInterest ("set_lineProperties__",   this);
       this ._fillProperties   .addInterest ("set_fillProperties__",   this);

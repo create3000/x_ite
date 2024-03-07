@@ -363,7 +363,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    elements (xmlElement)
    {
       for (const childNode of xmlElement .childNodes)
-		   this .element (childNode);
+         this .element (childNode);
    },
    element (xmlElement)
    {
@@ -1108,7 +1108,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    gradientChild (xmlElement, gradient)
    {
       if (xmlElement .nodeName === "stop")
-		   return this .stopElement (xmlElement, gradient);
+         return this .stopElement (xmlElement, gradient);
    },
    stopElement (xmlElement, gradient)
    {
@@ -1213,8 +1213,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       if (name)
       {
-		   scene .addNamedNode (scene .getUniqueName (name), node);
-		   scene .addExportedNode (scene .getUniqueExportName (name), node);
+         scene .addNamedNode (scene .getUniqueName (name), node);
+         scene .addExportedNode (scene .getUniqueExportName (name), node);
       }
    },
    viewBoxAttribute (attribute, defaultValue)
@@ -1899,7 +1899,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       }
 
       if (points .length > 2)
-		   contours .push (Object .assign (points, { closed: false }));
+         contours .push (Object .assign (points, { closed: false }));
 
       return !! contours .length;
    },
