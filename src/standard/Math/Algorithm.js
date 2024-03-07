@@ -49,10 +49,12 @@ const Algorithm =
 {
    radians (value)
    {
+      // Convert degrees to radians.
       return value * (Math .PI / 180);
    },
    degrees (value)
    {
+      // Convert radians to degrees.
       return value * (180 / Math .PI);
    },
    random (min, max)
