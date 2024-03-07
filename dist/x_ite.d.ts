@@ -1895,6 +1895,10 @@ declare class SFNode extends X3DField
     */
    addFieldCallback (name: string, key: any, callback: (value: unknown) => void): void;
    /**
+    * Returns the corresponding X3DFieldDefinition object associated with *name*.
+    */
+   getFieldDefinition (name: string): X3DFieldDefinition;
+   /**
     * Returns a list of fields defined for the SFNode object.
     */
    getFieldDefinitions (): FieldDefinitionArray;
