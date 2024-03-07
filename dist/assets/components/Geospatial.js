@@ -1854,7 +1854,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometr
       //std::vector <std::vector <float>> attribArrays (attribNodes .size ());
 
       //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
-      //	attribArrays [a] .reserve (coordIndex .size ());
+      //   attribArrays [a] .reserve (coordIndex .size ());
 
       if (texCoordNode)
       {
@@ -1880,7 +1880,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometr
                point = points [index];
 
             //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
-            //	attribNodes [a] -> addValue (attribArrays [a], i);
+            //   attribNodes [a] -> addValue (attribArrays [a], i);
 
             if (colorNode)
             {
