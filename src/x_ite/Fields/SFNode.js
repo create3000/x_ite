@@ -271,6 +271,15 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       throw new Error ("SFNode.getNodeType: node is null.");
    },
+   getFieldDefinition (name)
+   {
+      const fieldDefinition = this .getFieldDefinitions () .get (name);
+
+      if (fieldDefinition)
+         return fieldDefinition;
+
+      throw new Error (`Unknown field '${name}' in node class ${this .getNodeTypeName ()}.`);
+   },
    getFieldDefinitions ()
    {
       const
@@ -281,10 +290,6 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          return value .getFieldDefinitions ();
 
       throw new Error ("SFNode.getFieldDefinitions: node is null.");
-   },
-   getFieldDefinition (name)
-   {
-      return this .getFieldDefinitions () .get (name);
    },
    getField (name)
    {
