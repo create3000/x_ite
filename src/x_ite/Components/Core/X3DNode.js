@@ -274,11 +274,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             case X3DConstants .SFString:
             case X3DConstants .SFTime:
             {
-               const value = metadataObject .value;
-
-               if (value .length)
-                  field .setValue (value [0]);
-
+               field .setValue (metadataObject .value [0]);
                break;
             }
             case X3DConstants .SFColor:
@@ -295,28 +291,20 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             case X3DConstants .SFVec4d:
             case X3DConstants .SFVec4f:
             {
-               const
-                  value  = metadataObject .value,
-                  length = value .length;
+               const value = metadataObject .value;
 
                let i = 0;
 
                for (const key in field)
-               {
-                  if (i < length)
-                     field [key] = value [i ++];
-                  else
-                     break;
-               }
+                  field [key] = value [i ++];
 
                break;
             }
             case X3DConstants .SFImage:
             {
                const
-                  value  = metadataObject .value,
-                  length = value .length,
-                  array  = field .array;
+                  value = metadataObject .value,
+                  array = field .array;
 
                field .width  = value [0];
                field .height = value [1];
@@ -324,14 +312,16 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
                const l = array .length;
 
-               for (let i = 0, j = 3; i < l && j < length; ++ i, ++ j)
-                  array [i] = value [j];
+               for (let i = 0; i < l; ++ i)
+                  array [i] = value [3 + i];
 
                break;
             }
             case X3DConstants .SFNode:
             case X3DConstants .MFNode:
+            {
                throw new Error ("SFNode and MFNode are not supported as metadata value.");
+            }
             case X3DConstants .MFBool:
             case X3DConstants .MFDouble:
             case X3DConstants .MFFloat:
@@ -339,12 +329,10 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             case X3DConstants .MFString:
             case X3DConstants .MFTime:
             {
-               const
-                  value  = metadataObject .value,
-                  length = value .length;
+               field .length = 0;
 
-               for (let i = 0; i < length; ++ i)
-                  field [i] = value [i];
+               for (const v of metadataObject .value)
+                  field .push (v);
 
                break;
             }
@@ -366,17 +354,14 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   value  = metadataObject .value,
                   length = value .length;
 
+               field .length = 0;
+
                for (let i = 0; i < length;)
                {
                   const f = field [field .length];
 
                   for (const key in f)
-                  {
-                     if (i < length)
-                        f [key] = value [i ++];
-                     else
-                        break;
-                  }
+                     f [key] = value [i ++];
                }
 
                break;
@@ -386,6 +371,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                const
                   value  = metadataObject .value,
                   length = value .length;
+
+               field .length = 0;
 
                for (let i = 0; i < length;)
                {
@@ -397,10 +384,10 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   f .height = value [i ++];
                   f .comp   = value [i ++];
 
-                  const l = f .width * f .height;
+                  const l = a .length;
 
-                  for (let k = 0; k < l && i < length; ++ k, ++ i)
-                     a [k] = value [i];
+                  for (let k = 0; k < l; ++ k)
+                     a [k] = value [i ++];
                }
 
                break;
