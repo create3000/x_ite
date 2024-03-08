@@ -63,12 +63,13 @@ import X3DConstants                from "../Base/X3DConstants.js";
 import SFNodeCache                 from "../Fields/SFNodeCache.js";
 
 const
-   _namedNodes     = Symbol (),
-   _importedNodes  = Symbol (),
-   _protos         = Symbol (),
-   _externprotos   = Symbol (),
-   _routes         = Symbol (),
-   _outerNode      = Symbol ();
+   _outerNode     = Symbol (),
+   _namedNodes    = Symbol (),
+   _importedNodes = Symbol (),
+   _protos        = Symbol (),
+   _externprotos  = Symbol (),
+   _routes        = Symbol (),
+   _worldInfos    = Symbol ();
 
 function X3DExecutionContext (executionContext, outerNode = null, browser = executionContext .getBrowser ())
 {
@@ -89,6 +90,7 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
    this [_protos]        = new ProtoDeclarationArray ();
    this [_externprotos]  = new ExternProtoDeclarationArray ();
    this [_routes]        = new RouteArray ();
+   this [_worldInfos]    = new Set ();
 
    this [_namedNodes]     .addParent (this);
    this [_importedNodes]  .addParent (this);
@@ -698,17 +700,23 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    addWorldInfo (worldInfoNode)
    {
-      if (this ._worldInfos .some (node => node .getValue () === worldInfoNode))
+      if (this [_worldInfos] .has (worldInfoNode))
          return;
 
+      this [_worldInfos] .add (worldInfoNode);
       this ._worldInfos .push (worldInfoNode);
    },
    removeWorldInfo (worldInfoNode)
    {
-      for (let i = this ._worldInfos .length - 1; i >= 0; -- i)
+      this [_worldInfos] .delete (worldInfoNode);
+
+      for (const [i, worldInfo] of this ._worldInfos .entries ())
       {
-         if (this ._worldInfos [i] .getValue () === worldInfoNode)
-            this ._worldInfos .splice (i, 1);
+         if (worldInfo .getValue () !== worldInfoNode)
+            continue;
+
+         this ._worldInfos .splice (i, 1);
+         break;
       }
    },
    toVRMLStream (generator)
