@@ -131,7 +131,9 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-None.
+#### **exportedNodes**
+
+A reference to the ExportedNodesArray object used by this execution context. This property is read only.
 
 ### Methods
 
