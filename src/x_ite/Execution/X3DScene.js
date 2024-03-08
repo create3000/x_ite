@@ -321,13 +321,18 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       const values = this [_metadata] .get (name);
 
       if (values)
-         return Array .from (values);
+         return values .slice ();
 
       return undefined;
    },
    getMetaDatas ()
    {
-      return new Map (this [_metadata]);
+      const metadata = new Map ();
+
+      for (const [key, values] of this [_metadata])
+         metadata .set (key, values .slice ());
+
+      return metadata;
    },
    addExportedNode (exportedName, node)
    {
