@@ -433,6 +433,10 @@ Each node may assign values to its inputOnly fields and obtain the last output v
 
 ### Methods
 
+#### X3DFieldDefinition **getFieldDefinition** (*name*)
+
+Returns the corresponding X3DFieldDefinition object associated with *name*.
+
 #### FieldDefinitionArray **getFieldDefinitions** ()
 
 Returns a list of fields defined for the SFNode object.
