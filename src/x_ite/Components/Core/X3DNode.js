@@ -544,7 +544,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       return metadataSet;
    },
    [_metaDataCallbacks]: new Map (),
-   registerMetaDataCallback (key, path, callback)
+   addMetaDataCallback (key, path, callback)
    {
       if (!this .hasOwnProperty (_metaDataCallbacks))
          this [_metaDataCallbacks] = new Map ();
