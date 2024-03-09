@@ -1651,7 +1651,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometr
 
       this .colorNode ?.addInterest ("requestRebuild", this);
 
-      this .setTransparent (this .colorNode ?.isTransparent () ?? false);
+      this .setTransparent (this .colorNode ?.isTransparent ());
    },
    set_texCoord__ ()
    {

@@ -955,7 +955,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
    },
    set_cameraObject__ ()
    {
-      this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
+      this .setCameraObject (this .visibleNode ?.isCameraObject ());
    },
    set_display__ ()
    {
@@ -1286,7 +1286,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    },
    set_cameraObject__ ()
    {
-      this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
+      this .setCameraObject (this .visibleNode ?.isCameraObject ());
    },
    set_display__ ()
    {

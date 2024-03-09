@@ -1353,7 +1353,7 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, (X3DGroupingNo
    },
    set_pickable__ ()
    {
-      this .setPickableObject (!!(this ._pickable .getValue () || this .getTransformSensors () .size));
+      this .setPickableObject (this ._pickable .getValue () || this .getTransformSensors () .size);
    },
    traverse (type, renderObject)
    {

@@ -408,11 +408,11 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
    },
    set_cameraObject__ ()
    {
-      this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
+      this .setCameraObject (this .visibleNode ?.isCameraObject ());
    },
    set_transformSensors__ ()
    {
-      this .setPickableObject (!!this .visibleNode ?.isPickableObject ());
+      this .setPickableObject (this .visibleNode ?.isPickableObject ());
    },
    set_display__ ()
    {
