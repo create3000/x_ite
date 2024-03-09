@@ -3,6 +3,7 @@ const
    madge    = require ("madge"),
    path     = require ("path"),
    fs       = require ("fs"),
+   os       = require ("os"),
    { exec } = require ("child_process");
 
 for (const filename of fs .readdirSync ("./src/assets/lib/") .filter (filename => filename .match (/\.js$/)))
@@ -481,7 +482,9 @@ export default __default__;`;
       })
    }
 
-   targets .parallelism = 4
+   console .log (`Using ${os .cpus () .length} CPUs to package X_ITE.`);
 
-   return targets
-}
+   targets .parallelism = os .cpus () .length;
+
+   return targets;
+};
