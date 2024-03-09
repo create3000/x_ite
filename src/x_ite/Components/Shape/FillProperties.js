@@ -89,7 +89,7 @@ Object .assign (Object .setPrototypeOf (FillProperties .prototype, X3DAppearance
    {
       this .filled = this ._filled .getValue ();
 
-      this .setTransparent (! this .filled);
+      this .setTransparent (!this .filled);
    },
    set_hatched__ ()
    {
@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (FillProperties .prototype, X3DAppearance
    },
    setTransparent (value)
    {
-      if (value !== this ._transparent .getValue ())
+      if (!!value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
    isTransparent ()

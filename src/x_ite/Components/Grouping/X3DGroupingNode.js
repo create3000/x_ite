@@ -457,7 +457,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          }
       }
 
-      this .setCameraObject (!!(cameraObjects .length));
+      this .setCameraObject (cameraObjects .length);
    },
    set_pickableObjects__ ()
    {
@@ -484,7 +484,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    set_transformSensors__ ()
    {
-      this .setPickableObject (!!(this .getTransformSensors () .size || this .pickableSensorNodes .length || this .pickableObjects .length));
+      this .setPickableObject (this .getTransformSensors () .size || this .pickableSensorNodes .length || this .pickableObjects .length);
    },
    set_displayNodes__ ()
    {

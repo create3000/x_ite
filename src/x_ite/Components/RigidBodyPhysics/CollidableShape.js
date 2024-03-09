@@ -191,7 +191,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    },
    set_cameraObject__ ()
    {
-      this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
+      this .setCameraObject (this .visibleNode ?.isCameraObject ());
    },
    set_display__ ()
    {

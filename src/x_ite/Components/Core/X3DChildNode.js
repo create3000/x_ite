@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
 {
    setCameraObject (value)
    {
-      if (value !== this ._isCameraObject .getValue ())
+      if (!!value !== this ._isCameraObject .getValue ())
          this ._isCameraObject = value;
    },
    isCameraObject ()
@@ -75,7 +75,7 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    },
    setPickableObject (value)
    {
-      if (value !== this ._isPickableObject .getValue ())
+      if (!!value !== this ._isPickableObject .getValue ())
          this ._isPickableObject = value;
    },
    isPickableObject ()

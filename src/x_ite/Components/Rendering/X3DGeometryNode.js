@@ -195,7 +195,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    setTransparent (value)
    {
-      if (value !== this ._transparent .getValue ())
+      if (!!value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
    isTransparent ()

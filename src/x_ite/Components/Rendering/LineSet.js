@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (LineSet .prototype, X3DLineGeometryNode 
 
       this .colorNode ?.addInterest ("requestRebuild", this);
 
-      this .setTransparent (this .colorNode ?.isTransparent () ?? false);
+      this .setTransparent (this .colorNode ?.isTransparent ());
    },
    set_normal__ ()
    {

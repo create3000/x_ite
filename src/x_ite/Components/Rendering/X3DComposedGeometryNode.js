@@ -147,7 +147,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       this .colorNode ?.addInterest ("requestRebuild", this);
 
-      this .setTransparent (this .colorNode ?.isTransparent () ?? false);
+      this .setTransparent (this .colorNode ?.isTransparent ());
    },
    set_texCoord__ ()
    {

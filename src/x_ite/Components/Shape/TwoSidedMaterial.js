@@ -217,7 +217,7 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterial
    },
    set_transparent__ ()
    {
-      this .setTransparent (!!(this ._transparency .getValue () || (this ._separateBackColor .getValue () && this ._backTransparency .getValue ())));
+      this .setTransparent (this ._transparency .getValue () || (this ._separateBackColor .getValue () && this ._backTransparency .getValue ()));
    },
    getMaterialKey: Material .prototype .getMaterialKey,
    getBaseTexture: Material .prototype .getBaseTexture,

@@ -128,7 +128,7 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
 
       this .colorNode ?.addInterest ("requestRebuild", this);
 
-      this .setTransparent (this .colorNode ?.isTransparent () ?? false);
+      this .setTransparent (this .colorNode ?.isTransparent ());
    },
    set_normal__ ()
    {

@@ -392,11 +392,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    set_transparent__ ()
    {
-      this .setTransparent (!!(this .stylePropertiesNode [3] ?.isTransparent () ||
-                               this .materialNode ?.isTransparent () ||
-                               this .backMaterialNode ?.isTransparent () ||
-                               this .textureNode ?.isTransparent () ||
-                               this .blendModeNode));
+      this .setTransparent (this .stylePropertiesNode [3] ?.isTransparent () ||
+                            this .materialNode ?.isTransparent () ||
+                            this .backMaterialNode ?.isTransparent () ||
+                            this .textureNode ?.isTransparent () ||
+                            this .blendModeNode);
    },
    traverse (type, renderObject)
    {

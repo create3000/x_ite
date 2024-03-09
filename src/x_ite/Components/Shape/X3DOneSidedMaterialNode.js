@@ -114,7 +114,7 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    },
    set_transparent__ ()
    {
-      this .setTransparent (!! this .transparency);
+      this .setTransparent (this .transparency);
    },
    getBaseTexture ()
    {

@@ -224,7 +224,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    },
    set_transparent__ ()
    {
-      this .setTransparent (!!(this .getTransparency () || this .diffuseTextureNode ?.isTransparent ()));
+      this .setTransparent (this .getTransparency () || this .diffuseTextureNode ?.isTransparent ());
    },
    createShader (key, geometryContext, renderContext)
    {

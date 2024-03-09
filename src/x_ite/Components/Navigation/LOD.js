@@ -150,11 +150,11 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    },
    set_cameraObject__ ()
    {
-      this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
+      this .setCameraObject (this .visibleNode ?.isCameraObject ());
    },
    set_transformSensors__ ()
    {
-      this .setPickableObject (!!(this .getTransformSensors () .size || this .visibleNode ?.isPickableObject ()));
+      this .setPickableObject (this .getTransformSensors () .size || this .visibleNode ?.isPickableObject ());
    },
    set_display__ ()
    {

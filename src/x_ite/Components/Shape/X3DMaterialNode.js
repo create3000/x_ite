@@ -67,7 +67,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 {
    setTransparent (value)
    {
-      if (value !== this ._transparent .getValue ())
+      if (!!value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
    isTransparent ()
