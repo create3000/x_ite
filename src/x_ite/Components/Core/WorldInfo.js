@@ -64,10 +64,14 @@ Object .assign (Object .setPrototypeOf (WorldInfo .prototype, X3DInfoNode .proto
    {
       X3DInfoNode .prototype .initialize .call (this);
 
-      this .setLive (this .isLive ());
+      if (this .isLive ())
+         this .getExecutionContext () .addWorldInfo (this);
    },
    setLive (value)
    {
+      if (!!value .valueOf () === this .isLive ())
+         return;
+
       X3DInfoNode .prototype .setLive .call (this, value);
 
       if (this .isLive ())

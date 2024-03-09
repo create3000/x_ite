@@ -68,8 +68,7 @@ const
    _importedNodes = Symbol (),
    _protos        = Symbol (),
    _externprotos  = Symbol (),
-   _routes        = Symbol (),
-   _worldInfos    = Symbol ();
+   _routes        = Symbol ();
 
 function X3DExecutionContext (executionContext, outerNode = null, browser = executionContext .getBrowser ())
 {
@@ -90,7 +89,6 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
    this [_protos]        = new ProtoDeclarationArray ();
    this [_externprotos]  = new ExternProtoDeclarationArray ();
    this [_routes]        = new RouteArray ();
-   this [_worldInfos]    = new Set ();
 
    this [_namedNodes]     .addParent (this);
    this [_importedNodes]  .addParent (this);
@@ -700,16 +698,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    addWorldInfo (worldInfoNode)
    {
-      if (this [_worldInfos] .has (worldInfoNode))
-         return;
-
-      this [_worldInfos] .add (worldInfoNode);
       this ._worldInfos .push (worldInfoNode);
    },
    removeWorldInfo (worldInfoNode)
    {
-      this [_worldInfos] .delete (worldInfoNode);
-
       for (const [i, worldInfo] of this ._worldInfos .entries ())
       {
          if (worldInfo .getValue () !== worldInfoNode)
