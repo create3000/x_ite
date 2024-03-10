@@ -113,7 +113,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          return;
 
       this ._addChildren .setTainted (true);
-      this ._addChildren .assign (filter (this ._addChildren, this ._children));
+      this ._addChildren = filter (this ._addChildren, this ._children);
 
       if (!this ._children .isTainted ())
       {
@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             this ._children .addInterest ("connectChildren", this);
          }
 
-         this ._children .assign (filter (this ._children, this ._removeChildren));
+         this ._children = filter (this ._children, this ._removeChildren);
          this .remove (this ._removeChildren);
       }
 
@@ -655,7 +655,7 @@ function filter (array, remove)
 {
    const set = new Set (remove);
 
-   return array .filter (value => !set .has (value));
+   return Array .from (array) .filter (value => !set .has (value));
 }
 
 Object .defineProperties (X3DGroupingNode,
