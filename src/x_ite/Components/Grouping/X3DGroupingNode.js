@@ -121,7 +121,9 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          this ._children .addInterest ("connectChildren", this);
       }
 
-      this ._children .splice (this ._children .length, 0, ... this ._addChildren);
+      for (const node of this ._addChildren)
+         this ._children .push (node);
+
       this .add (this ._addChildren);
 
       this ._addChildren .length = 0;
