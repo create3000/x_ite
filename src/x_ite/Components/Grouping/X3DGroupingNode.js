@@ -68,7 +68,7 @@ function X3DGroupingNode (executionContext)
    this .maybePickableSensorNodes  = [ ];
    this .pickableSensorNodes       = [ ];
    this .pickableObjects           = [ ];
-   this .childNodes                = [ ];
+   this .childNodes                = new Set ();
    this .displayNodes              = [ ];
    this .visibleNodes              = [ ];
    this .boundedObjects            = [ ];
@@ -186,7 +186,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this .pointingDeviceSensorNodes .length = 0;
       this .maybeCameraObjects        .length = 0;
       this .maybePickableSensorNodes  .length = 0;
-      this .childNodes                .length = 0;
+      this .childNodes                .clear ();
    },
    add (children)
    {
@@ -257,7 +257,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   }
 
                   this .maybeCameraObjects .push (childNode);
-                  this .childNodes .push (childNode);
+                  this .childNodes .add (childNode);
                   break;
                }
                case X3DConstants .BooleanFilter:
@@ -287,10 +287,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          }
 
          if (childNode .isRenderingRequired ())
-         {
-            if (!this .childNodes .includes (childNode))
-               this .childNodes .push (childNode);
-         }
+            this .childNodes .add (childNode);
       }
 
       this .set_pickableObjects__ ()
@@ -308,12 +305,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             continue;
 
          if (childNode .isRenderingRequired ())
-         {
-            const index = this .childNodes .indexOf (childNode);
-
-            if (index >= 0)
-               this .childNodes .splice (index, 1);
-         }
+            this .childNodes .delete (childNode);
 
          const type = childNode .getType ();
 
@@ -397,11 +389,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   if (index >= 0)
                      this .maybeCameraObjects .splice (index, 1);
 
-                  var index = this .childNodes .indexOf (childNode);
-
-                  if (index >= 0)
-                     this .childNodes .splice (index, 1);
-
+                  this .childNodes .delete (childNode);
                   break;
                }
                case X3DConstants .BooleanFilter:
