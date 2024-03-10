@@ -204,6 +204,9 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             //       continue;
             // }
 
+            if (childNode .isRenderingRequired ())
+               this .childNodes .add (childNode);
+
             switch (type [t])
             {
                case X3DConstants .X3DPointingDeviceSensorNode:
@@ -283,9 +286,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
             break;
          }
-
-         if (childNode .isRenderingRequired ())
-            this .childNodes .add (childNode);
       }
 
       this .set_displays__ ();
