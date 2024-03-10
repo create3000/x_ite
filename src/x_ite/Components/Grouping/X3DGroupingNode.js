@@ -61,15 +61,13 @@ function X3DGroupingNode (executionContext)
    this .allowedTypes              = new Set ();
    this .pointingDeviceSensorNodes = new Set ();
    this .clipPlaneNodes            = new Set ();
-   this .localFogNodes             = new Set ();
-   this .lightNodes                = new Set ();
+   this .displayNodes              = new Set ();
    this .maybeCameraObjects        = new Set ();
    this .cameraObjects             = [ ];
    this .maybePickableSensorNodes  = new Set ();
    this .pickableSensorNodes       = [ ];
    this .pickableObjects           = [ ];
    this .childNodes                = new Set ();
-   this .displayNodes              = [ ];
    this .visibleNodes              = [ ];
    this .boundedObjects            = [ ];
    this .sensors                   = [ ];
@@ -180,10 +178,9 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          }
       }
 
-      this .clipPlaneNodes            .clear ();
-      this .localFogNodes             .clear ();
-      this .lightNodes                .clear ();
       this .pointingDeviceSensorNodes .clear ();
+      this .clipPlaneNodes            .clear ();
+      this .displayNodes              .clear ();
       this .maybeCameraObjects        .clear ();
       this .maybePickableSensorNodes  .clear ();
       this .childNodes                .clear ();
@@ -217,16 +214,17 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .ClipPlane:
                {
                   this .clipPlaneNodes .add (childNode);
+                  this .displayNodes   .add (childNode);
                   break;
                }
                case X3DConstants .LocalFog:
                {
-                  this .localFogNodes .add (childNode);
+                  this .displayNodes .add (childNode);
                   break;
                }
                case X3DConstants .X3DLightNode:
                {
-                  this .lightNodes .add (childNode);
+                  this .displayNodes .add (childNode);
                   break;
                }
                case X3DConstants .X3DBindableNode:
@@ -290,7 +288,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             this .childNodes .add (childNode);
       }
 
-      this .set_displayNodes__ ();
       this .set_displays__ ();
       this .set_bboxDisplays__ ();
    },
@@ -320,16 +317,17 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .ClipPlane:
                {
                   this .clipPlaneNodes .delete (childNode);
+                  this .displayNodes   .delete (childNode);
                   break;
                }
                case X3DConstants .LocalFog:
                {
-                  this .localFogNodes .delete (childNode);
+                  this .displayNodes .delete (childNode);
                   break;
                }
                case X3DConstants .X3DLightNode:
                {
-                  this .lightNodes .delete (childNode);
+                  this .displayNodes .delete (childNode);
                   break;
                }
                case X3DConstants .X3DBindableNode:
@@ -390,7 +388,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          }
       }
 
-      this .set_displayNodes__ ();
       this .set_displays__ ();
       this .set_bboxDisplays__ ();
    },
@@ -444,21 +441,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    set_transformSensors__ ()
    {
       this .setPickableObject (this .getTransformSensors () .size || this .pickableSensorNodes .length || this .pickableObjects .length);
-   },
-   set_displayNodes__ ()
-   {
-      const displayNodes = this .displayNodes;
-
-      displayNodes .length = 0;
-
-      for (const node of this .clipPlaneNodes)
-         displayNodes .push (node);
-
-      for (const node of this .localFogNodes)
-         displayNodes .push (node);
-
-      for (const node of this .lightNodes)
-         displayNodes .push (node);
    },
    set_displays__ ()
    {
