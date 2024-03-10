@@ -286,7 +286,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             break;
          }
 
-         if (childNode .getMustDisplay ())
+         if (childNode .isRenderRequired ())
          {
             if (!this .childNodes .includes (childNode))
                this .childNodes .push (childNode);
@@ -307,7 +307,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          if (!childNode)
             continue;
 
-         if (childNode .getMustDisplay ())
+         if (childNode .isRenderRequired ())
          {
             const index = this .childNodes .indexOf (childNode);
 

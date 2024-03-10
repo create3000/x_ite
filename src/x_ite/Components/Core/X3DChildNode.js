@@ -82,9 +82,14 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    {
       return this ._isPickableObject .getValue ();
    },
-   getMustDisplay ()
+   /**
+    * You will normally overload this function in your derived classes.
+    * @returns {boolean} A boolean value indicating, whether this node
+    * can be visually displayed and therefor should render.
+    */
+   isRenderRequired ()
    {
-      return false
+      return false;
    },
 });
 
