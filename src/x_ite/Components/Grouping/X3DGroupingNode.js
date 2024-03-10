@@ -102,12 +102,10 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    setAllowedTypes (/* type, ... */)
    {
-      const allowedTypes = this .allowedTypes;
-
-      allowedTypes .clear ();
+      this .allowedTypes .clear ();
 
       for (const type of arguments)
-         allowedTypes .add (type);
+         this .allowedTypes .add (type);
    },
    set_addChildren__ ()
    {
