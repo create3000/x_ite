@@ -59,6 +59,7 @@ function X3DGroupingNode (executionContext)
    this .addType (X3DConstants .X3DGroupingNode);
 
    this .allowedTypes              = new Set ();
+   this .children                  = new Set ();
    this .pointingDeviceSensorNodes = new Set ();
    this .clipPlaneNodes            = new Set ();
    this .displayNodes              = new Set ();
@@ -113,7 +114,13 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          return;
 
       this ._addChildren .setTainted (true);
-      this ._addChildren = filter (this ._addChildren, this ._children);
+
+      const addChildren = new Set (this ._addChildren);
+
+      for (const node of this .children)
+         addChildren .delete (node);
+
+      this .add (addChildren);
 
       if (!this ._children .isTainted ())
       {
@@ -121,10 +128,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          this ._children .addInterest ("connectChildren", this);
       }
 
-      for (const node of this ._addChildren)
-         this ._children .push (node);
-
-      this .add (this ._addChildren);
+      for (const child of addChildren)
+         this ._children .push (child);
 
       this ._addChildren .length = 0;
       this ._addChildren .setTainted (false);
@@ -138,14 +143,15 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
       if (this ._children .length > 0)
       {
+         this .remove (this ._removeChildren);
+
          if (!this ._children .isTainted ())
          {
             this ._children .removeInterest ("set_children__", this);
             this ._children .addInterest ("connectChildren", this);
          }
 
-         this ._children = filter (this ._children, this ._removeChildren);
-         this .remove (this ._removeChildren);
+         this ._children = Array .from (this .children);
       }
 
       this ._removeChildren .length = 0;
@@ -178,6 +184,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          }
       }
 
+      this .children                  .clear ();
       this .pointingDeviceSensorNodes .clear ();
       this .clipPlaneNodes            .clear ();
       this .displayNodes              .clear ();
@@ -194,6 +201,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    {
       for (const child of children)
       {
+         this .children .add (child);
+
          const childNode = X3DCast (X3DConstants .X3DChildNode, child);
 
          if (!childNode)
@@ -312,6 +321,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    {
       for (const child of children)
       {
+         this .children .delete (child);
+
          const childNode = X3DCast (X3DConstants .X3DChildNode, child);
 
          if (!childNode)
@@ -652,13 +663,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       X3DChildNode     .prototype .dispose .call (this);
    },
 });
-
-function filter (array, remove)
-{
-   const set = new Set (remove);
-
-   return Array .from (array) .filter (value => !set .has (value));
-}
 
 Object .defineProperties (X3DGroupingNode,
 {
