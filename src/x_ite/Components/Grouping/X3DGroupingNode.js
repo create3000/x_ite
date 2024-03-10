@@ -290,9 +290,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             this .childNodes .add (childNode);
       }
 
-      this .set_pickableObjects__ ()
-      this .set_displayNodes__ ()
-      this .set_displays__ ()
+      this .set_displayNodes__ ();
+      this .set_displays__ ();
       this .set_bboxDisplays__ ();
    },
    remove (children)
