@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
     * @returns {boolean} A boolean value indicating, whether this node
     * can be visually displayed and therefor should render.
     */
-   isRenderRequired ()
+   isRenderingRequired ()
    {
       return false;
    },
