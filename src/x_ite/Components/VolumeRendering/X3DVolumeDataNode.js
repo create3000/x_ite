@@ -129,6 +129,8 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       if (gl .getVersion () < 2)
          return;
 
+      this .getLive () .addInterest ("set_live__", this);
+
       this ._dimensions .addInterest ("set_dimensions__", this);
       this .textureTransformNode .addInterest ("set_textureTransform__", this);
 
@@ -184,7 +186,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       else
          this .getBrowser () .getBrowserOptions () ._TextureQuality .removeInterest ("set_dimensions__", this);
    },
-
    set_dimensions__ ()
    {
       const
