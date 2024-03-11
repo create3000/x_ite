@@ -208,26 +208,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          if (!childNode)
             continue;
 
-         if (childNode .isRenderingRequired ())
-         {
-            childNode ._isCameraObject   .addInterest ("set_cameraObjects__",   this);
-            childNode ._isPickableObject .addInterest ("set_pickableObjects__", this);
-
-            if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
-            {
-               childNode ._display     .addInterest ("set_displays__",     this);
-               childNode ._bboxDisplay .addInterest ("set_bboxDisplays__", this);
-            }
-
-            this .maybeCameraObjects .add (childNode);
-            this .childNodes         .add (childNode);
-
-            this .addCameraObject (childNode);
-            this .addPickableObject (childNode);
-            this .addVisibleNode (childNode);
-            this .addBoundedObject (childNode);
-         }
-
          const type = childNode .getType ();
 
          for (let t = type .length - 1; t >= 0; -- t)
@@ -324,6 +304,9 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   continue;
             }
 
+            if (childNode .isRenderingRequired ())
+               continue;
+
             break;
          }
       }
@@ -341,25 +324,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
          if (!childNode)
             continue;
-
-         if (childNode .isRenderingRequired ())
-         {
-            childNode ._isCameraObject   .removeInterest ("set_cameraObjects__",   this);
-            childNode ._isPickableObject .removeInterest ("set_pickableObjects__", this);
-
-            if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
-            {
-               childNode ._display     .removeInterest ("set_displays__",     this);
-               childNode ._bboxDisplay .removeInterest ("set_bboxDisplays__", this);
-            }
-
-            this .maybeCameraObjects .delete (childNode);
-            this .cameraObjects      .delete (childNode);
-            this .pickableObjects    .delete (childNode);
-            this .childNodes         .delete (childNode);
-            this .visibleNodes       .delete (childNode);
-            this .boundedObjects     .delete (childNode);
-         }
 
          const type = childNode .getType ();
 
@@ -447,6 +411,9 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                default:
                   continue;
             }
+
+            if (childNode .isRenderingRequired ())
+               continue;
 
             break;
          }
