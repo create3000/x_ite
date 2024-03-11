@@ -89,15 +89,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      browser .getBrowserOptions () ._TextureQuality .addInterest ("set_dimensions__", this);
-
-      if (gl .getVersion () >= 2)
-      {
-         this ._dimensions .addInterest ("set_dimensions__", this);
-
-         this .set_dimensions__ ();
-      }
-
       this ._bboxDisplay .addFieldInterest (this .transformNode ._bboxDisplay);
 
       this .proximitySensorNode ._size         = new Fields .SFVec3f (-1, -1, -1);
@@ -135,8 +126,14 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
       this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
       this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
 
+      if (gl .getVersion () < 2)
+         return;
+
+      this ._dimensions .addInterest ("set_dimensions__", this);
       this .textureTransformNode .addInterest ("set_textureTransform__", this);
 
+      this .set_live__ ();
+      this .set_dimensions__ ();
       this .set_textureTransform__ ();
    },
    getBBox (bbox, shadows)
@@ -178,6 +175,16 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
 
       return 200;
    },
+   set_live__ ()
+   {
+       const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+
+       if (this .getLive () .getValue () || alwaysUpdate)
+          this .getBrowser () .getBrowserOptions () ._TextureQuality .addInterest ("set_dimensions__", this);
+      else
+         this .getBrowser () .getBrowserOptions () ._TextureQuality .removeInterest ("set_dimensions__", this);
+   },
+
    set_dimensions__ ()
    {
       const

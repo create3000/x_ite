@@ -72,7 +72,9 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, X3DGeometryNode .
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
-      if (this .getLive () .getValue ())
+      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+
+      if (this .getLive () .getValue () || alwaysUpdate)
          this .getBrowser () .getArcClose2DOptions () .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getArcClose2DOptions () .removeInterest ("requestRebuild", this);

@@ -90,8 +90,10 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
    {
        X3DGeometryNode .prototype .set_live__ .call (this);
 
-      if (this .getLive () .getValue ())
-         this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
+       const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+
+       if (this .getLive () .getValue () || alwaysUpdate)
+          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .removeInterest ("requestRebuild", this);
    },

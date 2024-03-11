@@ -691,7 +691,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    })(),
    set_live__ ()
    {
-      if (this .getLive () .getValue ())
+      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+
+      if (this .getLive () .getValue () || alwaysUpdate)
          this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
       else
          this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
