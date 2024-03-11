@@ -163,6 +163,10 @@ Texture coordinates of the provided texture(s) in the [Appearance](/x_ite/compon
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
+### SFBool [in, out] **pointerEvents** TRUE <small class="yellow">non standard</small>
+
+*pointerEvents* defines whether this Shape becomes target for pointer events.
+
 ### SFBool [in, out] **castShadow** TRUE
 
 The *castShadow* field defines whether this [Shape](/x_ite/components/shape/shape/) casts shadows as produced by lighting nodes.

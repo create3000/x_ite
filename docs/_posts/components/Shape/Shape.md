@@ -36,6 +36,10 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
+### SFBool [in, out] **pointerEvents** TRUE <small class="yellow">non standard</small>
+
+*pointerEvents* defines whether this Shape becomes target for pointer events.
+
 ### SFBool [in, out] **castShadow** TRUE
 
 *castShadow* defines whether this Shape casts shadows as produced by lighting nodes.

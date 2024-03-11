@@ -198,11 +198,11 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    {
       return this [_hit];
    },
-   addPointingShape (pickingContext)
+   addPointingShape (pointingContext)
    {
       const id = ++ this [_id];
 
-      this [_pointingContexts] [id] = pickingContext;
+      this [_pointingContexts] [id] = pointingContext;
 
       return id;
    },
@@ -279,18 +279,18 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [_id])
       {
          const
-            pickingContext  = this [_pointingContexts] [hit .id],
-            shapeNode       = pickingContext .shapeNode,
+            pointingContext = this [_pointingContexts] [hit .id],
+            shapeNode       = pointingContext .shapeNode,
             appearanceNode  = shapeNode .getAppearance (),
             geometryContext = shapeNode .getGeometryContext ();
 
-         hit .hitRay    = pickingContext .renderObject .getHitRay ();
-         hit .sensors   = pickingContext .sensors .slice ();
-         hit .layerNode = pickingContext .renderObject;
+         hit .hitRay    = pointingContext .renderObject .getHitRay ();
+         hit .sensors   = pointingContext .sensors .slice ();
+         hit .layerNode = pointingContext .renderObject;
          hit .shapeNode = shapeNode;
 
-         hit .viewMatrix      .assign (pickingContext .renderObject .getViewpoint () .getViewMatrix ());
-         hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
+         hit .viewMatrix      .assign (pointingContext .renderObject .getViewpoint () .getViewMatrix ());
+         hit .modelViewMatrix .assign (pointingContext .modelViewMatrix);
 
          // A ParticleSystem has only a geometry context.
 
