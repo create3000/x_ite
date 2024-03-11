@@ -210,8 +210,19 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
          if (childNode .isRenderingRequired ())
          {
-            this .childNodes .add (childNode);
+            childNode ._isCameraObject   .addInterest ("set_cameraObjects__",   this);
+            childNode ._isPickableObject .addInterest ("set_pickableObjects__", this);
 
+            if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+            {
+               childNode ._display     .addInterest ("set_displays__",     this);
+               childNode ._bboxDisplay .addInterest ("set_bboxDisplays__", this);
+            }
+
+            this .maybeCameraObjects .add (childNode);
+            this .childNodes         .add (childNode);
+
+            this .addCameraObject (childNode);
             this .addPickableObject (childNode);
             this .addVisibleNode (childNode);
             this .addBoundedObject (childNode);
@@ -333,10 +344,21 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
          if (childNode .isRenderingRequired ())
          {
-            this .pickableObjects .delete (childNode);
-            this .childNodes      .delete (childNode);
-            this .visibleNodes    .delete (childNode);
-            this .boundedObjects  .delete (childNode);
+            childNode ._isCameraObject   .removeInterest ("set_cameraObjects__",   this);
+            childNode ._isPickableObject .removeInterest ("set_pickableObjects__", this);
+
+            if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+            {
+               childNode ._display     .removeInterest ("set_displays__",     this);
+               childNode ._bboxDisplay .removeInterest ("set_bboxDisplays__", this);
+            }
+
+            this .maybeCameraObjects .delete (childNode);
+            this .cameraObjects      .delete (childNode);
+            this .pickableObjects    .delete (childNode);
+            this .childNodes         .delete (childNode);
+            this .visibleNodes       .delete (childNode);
+            this .boundedObjects     .delete (childNode);
          }
 
          const type = childNode .getType ();
