@@ -211,7 +211,10 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          if (childNode .isRenderingRequired ())
          {
             this .childNodes .add (childNode);
+
+            this .addPickableObject (childNode);
             this .addVisibleNode (childNode);
+            this .addBoundedObject (childNode);
          }
 
          const type = childNode .getType ();
@@ -330,8 +333,10 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
          if (childNode .isRenderingRequired ())
          {
-            this .childNodes   .delete (childNode);
-            this .visibleNodes .delete (childNode);
+            this .pickableObjects .delete (childNode);
+            this .childNodes      .delete (childNode);
+            this .visibleNodes    .delete (childNode);
+            this .boundedObjects  .delete (childNode);
          }
 
          const type = childNode .getType ();
