@@ -291,7 +291,6 @@ function addVRMLEncoding (monaco)
       brackets: [
          { open: "{", close: "}", token: "delimiter.curly" },
          { open: "[", close: "]", token: "delimiter.bracket" },
-         { open: "(", close: ")", token: "delimiter.parenthesis" },
       ],
       escapes: /\\(?:[abfnrtv\\"'`]|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
       tokenizer: {
@@ -306,15 +305,14 @@ function addVRMLEncoding (monaco)
                   "@default": "type.identifier",
                },
             }],
-            [/#(?:.*)/, "comment"],
-            [/[{}()\[\]]/, "@brackets"],
+            [/#.*/, "comment"],
+            [/[{}\[\]]/, "@brackets"],
             [/[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/, "number.float"],
             [/0[xX][\da-fA-F]+/, "number.hex"],
             [/[+-]?\d+/, "number"],
             [/"/, "string.quote",  "@string" ],
          ],
          string: [
-            [/[^\\"]+/, "string"],
             [/[^\\"]+/, "string"],
             [/@escapes/, "string.escape"],
             [/\\./, "string.escape.invalid"],
@@ -335,7 +333,6 @@ function addVRMLEncoding (monaco)
       autoClosingPairs: [
         { open: "{", close: "}" },
         { open: "[", close: "]" },
-        { open: "(", close: ")" },
         { open: "\"", close: "\"" },
       ],
    });
