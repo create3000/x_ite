@@ -243,9 +243,8 @@ function updateToolbar (toolbar, canvas, monaco, editor)
       .attr ("title", "Convert to X3D JSON Encoding.")
       .on ("click", () =>
       {
-         monaco .editor .setModelLanguage (editor .getModel (), "json");
-
          editor .setValue (browser .currentScene .toJSONString ());
+         monaco .editor .setModelLanguage (editor .getModel (), "json");
       })
       .appendTo (toolbar);
 
@@ -257,9 +256,8 @@ function updateToolbar (toolbar, canvas, monaco, editor)
       .attr ("title", "Convert to X3D VRML Encoding.")
       .on ("click", () =>
       {
-         monaco .editor .setModelLanguage (editor .getModel (), "vrml");
-
          editor .setValue (browser .currentScene .toVRMLString ());
+         monaco .editor .setModelLanguage (editor .getModel (), "vrml");
       })
       .appendTo (toolbar);
 
@@ -271,9 +269,8 @@ function updateToolbar (toolbar, canvas, monaco, editor)
       .attr ("title", "Convert to X3D XML Encoding.")
       .on ("click", () =>
       {
-         monaco .editor .setModelLanguage (editor .getModel (), "xml");
-
          editor .setValue (browser .currentScene .toXMLString ());
+         monaco .editor .setModelLanguage (editor .getModel (), "xml");
       })
       .appendTo (toolbar);
 }
