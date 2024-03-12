@@ -1,7 +1,5 @@
 const $ = jQuery;
 
-console .info (X3D .getBrowser () .getWelcomeMessage ());
-
 const box = `<X3D profile='Full' version='4.0'>
 <Scene>
    <Viewpoint
@@ -28,6 +26,8 @@ require .config ({ paths: { "vs": "https://cdn.jsdelivr.net/npm/monaco-editor@la
 require (["vs/editor/editor.main"], async () =>
 {
    const darkMode = (window .matchMedia ?.("(prefers-color-scheme: dark)") .matches || $("html") .attr ("data-mode") === "dark") && ($("html") .attr ("data-mode") !== "light");
+
+   addVRMLEncoding (monaco);
 
    const editor = monaco .editor .create (document .getElementById ("editor"),
    {
@@ -267,6 +267,63 @@ function updateToolbar (toolbar, canvas, monaco, editor)
          editor .setValue (browser .currentScene .toXMLString ());
       })
       .appendTo (toolbar);
+}
+
+function addVRMLEncoding (monaco)
+{
+   monaco .languages .setMonarchTokensProvider ("vrml",
+   {
+      keywords: [
+         "PROFILE", "COMPONENT", "UNIT", "META", "DEF", "USE", "EXTERNPROTO", "PROTO", "IS", "ROUTE", "TO", "IMPORT", "EXPORT"
+      ],
+      brackets: [
+         { open: "{", close: "}", token: "delimiter.curly" },
+         { open: "[", close: "]", token: "delimiter.bracket" },
+         { open: "(", close: ")", token: "delimiter.parenthesis" },
+      ],
+      escapes: /\\(?:[abfnrtv\\"'`]|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
+      tokenizer: {
+         root: [
+            [/[,:.]/, "delimiter"],
+            [/TRUE|FALSE/, "constant"],
+            [/[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/, {
+               cases: {
+                  "@keywords": "keyword",
+                  "@default": "type.identifier",
+               },
+            }],
+            [/#(?:.*)/, "comment"],
+            [/[{}()\[\]]/, "@brackets"],
+            [/[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/, "number.float"],
+            [/0[xX][\da-fA-F]+/, "number.hex"],
+            [/[+-]?\d+/, "number"],
+            [/"/, "string.quote",  "@string" ],
+         ],
+         string: [
+            [/[^\\"]+/, "string"],
+            [/[^\\"]+/, "string"],
+            [/@escapes/, "string.escape"],
+            [/\\./, "string.escape.invalid"],
+            [/"/, "string.quote", "@pop"],
+         ],
+      },
+   });
+
+   monaco .languages .register ({
+      id: "vrml",
+      extensions: [".x3dv"],
+      aliases: ["VRML"],
+      mimetypes: ["model/x3d+vrml"],
+   });
+
+   monaco .languages .setLanguageConfiguration ("vrml",
+   {
+      autoClosingPairs: [
+        { open: "{", close: "}" },
+        { open: "[", close: "]" },
+        { open: "(", close: ")" },
+      ],
+   });
 }
 
 (() =>
