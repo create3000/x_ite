@@ -62,29 +62,13 @@ require (["vs/editor/editor.main"], async () =>
       Browser .beginUpdate ();
    }
 
-   editor .getModel () .onDidChangeContent (async (event) =>
+   let timeoutId;
+
+   editor .getModel () .onDidChangeContent (() =>
    {
-      const
-         Browser = X3D .getBrowser (),
-         text    = editor .getValue (),
-         url     = `data:,${encodeURIComponent (text)}`;
+      clearTimeout (timeoutId);
 
-      if (Browser .getActiveViewpoint ())
-      {
-         var
-            positionOffset    = Browser .getActiveViewpoint () ._positionOffset    .copy (),
-            orientationOffset = Browser .getActiveViewpoint () ._orientationOffset .copy ();
-      }
-
-      await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
-
-      if (Browser .getActiveViewpoint ())
-      {
-         Browser .getActiveViewpoint () ._positionOffset    = positionOffset;
-         Browser .getActiveViewpoint () ._orientationOffset = orientationOffset;
-      }
-
-      monaco .editor .setModelLanguage (editor .getModel (), Browser .currentScene .encoding .toLowerCase ());
+      timeoutId = setTimeout (() => applyChanges (monaco, editor), 1000);
    });
 
    if (!url)
@@ -92,6 +76,31 @@ require (["vs/editor/editor.main"], async () =>
 
    updateToolbar ($(".playground .toolbar"), $("x3d-canvas"), monaco, editor);
 });
+
+async function applyChanges (monaco, editor)
+{
+   const
+      Browser = X3D .getBrowser (),
+      text    = editor .getValue (),
+      url     = `data:,${encodeURIComponent (text)}`;
+
+   if (Browser .getActiveViewpoint ())
+   {
+      var
+         positionOffset    = Browser .getActiveViewpoint () ._positionOffset    .copy (),
+         orientationOffset = Browser .getActiveViewpoint () ._orientationOffset .copy ();
+   }
+
+   await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+
+   if (Browser .getActiveViewpoint ())
+   {
+      Browser .getActiveViewpoint () ._positionOffset    = positionOffset;
+      Browser .getActiveViewpoint () ._orientationOffset = orientationOffset;
+   }
+
+   monaco .editor .setModelLanguage (editor .getModel (), Browser .currentScene .encoding .toLowerCase ());
+}
 
 let shading = "PHONG";
 
@@ -274,7 +283,7 @@ function addVRMLEncoding (monaco)
    monaco .languages .setMonarchTokensProvider ("vrml",
    {
       keywords: [
-         "PROFILE", "COMPONENT", "UNIT", "META", "DEF", "USE", "EXTERNPROTO", "PROTO", "IS", "ROUTE", "TO", "IMPORT", "EXPORT"
+         "PROFILE", "COMPONENT", "UNIT", "META", "DEF", "USE", "EXTERNPROTO", "PROTO", "IS", "ROUTE", "TO", "IMPORT", "EXPORT", "AS"
       ],
       brackets: [
          { open: "{", close: "}", token: "delimiter.curly" },
