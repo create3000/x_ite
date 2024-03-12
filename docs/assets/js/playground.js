@@ -336,6 +336,7 @@ function addVRMLEncoding (monaco)
         { open: "{", close: "}" },
         { open: "[", close: "]" },
         { open: "(", close: ")" },
+        { open: "\"", close: "\"" },
       ],
    });
 }
