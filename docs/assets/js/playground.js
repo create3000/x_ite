@@ -90,12 +90,12 @@ require (["vs/editor/editor.main"], async () =>
    if (!url)
       editor .setValue (box .replace (/ {3}/g, "  "));
 
-   updateToolbar ($(".playground .toolbar"), $("x3d-canvas"));
+   updateToolbar ($(".playground .toolbar"), $("x3d-canvas"), monaco, editor);
 });
 
 let shading = "PHONG";
 
-function updateToolbar (toolbar, canvas)
+function updateToolbar (toolbar, canvas, monaco, editor)
 {
    const browser = canvas .prop ("browser");
 
@@ -209,7 +209,7 @@ function updateToolbar (toolbar, canvas)
       .attr ("title", "Set shading to FLAT.")
       .on ("click", () =>
       {
-      browser .setBrowserOption ("Shading", shading = "FLAT");
+         browser .setBrowserOption ("Shading", shading = "FLAT");
       })
       .appendTo (toolbar);
 
@@ -220,11 +220,53 @@ function updateToolbar (toolbar, canvas)
       .attr ("title", "Set shading to PHONG.")
       .on ("click", () =>
       {
-      browser .setBrowserOption ("Shading", shading = "PHONG");
+         browser .setBrowserOption ("Shading", shading = "PHONG");
       })
       .appendTo (toolbar);
 
    browser .setBrowserOption ("Shading", shading);
+
+   // Right side
+
+   $("<span></span>")
+      .text ("JSON")
+      .css ("float", "right")
+      .attr ("title", "Convert to X3D JSON Encoding.")
+      .on ("click", () =>
+      {
+         monaco .editor .setModelLanguage (editor .getModel (), "json");
+
+         editor .setValue (browser .currentScene .toJSONString ());
+      })
+      .appendTo (toolbar);
+
+   $("<span></span>") .css ("float", "right") .addClass ("dot") .appendTo (toolbar);
+
+   $("<span></span>")
+      .text ("VRML")
+      .css ("float", "right")
+      .attr ("title", "Convert to X3D VRML Encoding.")
+      .on ("click", () =>
+      {
+         monaco .editor .setModelLanguage (editor .getModel (), "vrml");
+
+         editor .setValue (browser .currentScene .toVRMLString ());
+      })
+      .appendTo (toolbar);
+
+   $("<span></span>") .css ("float", "right") .addClass ("dot") .appendTo (toolbar);
+
+   $("<span></span>")
+      .text ("XML")
+      .css ("float", "right")
+      .attr ("title", "Convert to X3D XML Encoding.")
+      .on ("click", () =>
+      {
+         monaco .editor .setModelLanguage (editor .getModel (), "xml");
+
+         editor .setValue (browser .currentScene .toXMLString ());
+      })
+      .appendTo (toolbar);
 }
 
 (() =>
