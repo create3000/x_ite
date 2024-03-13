@@ -63,7 +63,10 @@ function OscillatorSource (executionContext)
    const audioContext = this .getBrowser () .getAudioContext ();
 
    this .oscillatorNode = new OscillatorNode (audioContext);
-   this .mergerNode     = new ChannelMergerNode (audioContext, { numberOfInputs: 2 });
+
+   this .oscillatorNode .connect (this .getAudioSource ());
+
+   this .getAudioSource () .channelCountMode = "explicit";
 }
 
 Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSourceNode .prototype),
@@ -132,32 +135,23 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
    },
    set_start ()
    {
-      const audioContext = this .getBrowser () .getAudioContext ();
-
-      this .oscillatorNode = new OscillatorNode (audioContext);
-
       this .set_type__ ();
       this .set_frequency__ ();
       this .set_detune__ ();
-
-      this .oscillatorNode .connect (this .mergerNode, 0, 0);
-      this .oscillatorNode .connect (this .mergerNode, 0, 1);
-      this .mergerNode     .connect (this .getAudioSource ());
 
       this .oscillatorNode .start ();
    },
    set_pause ()
    {
-      this .mergerNode .disconnect ();
+      this .oscillatorNode .stop ();
    },
    set_resume ()
    {
-      this .mergerNode .connect (this .getAudioSource ());
+      this .oscillatorNode .start ();
    },
    set_stop ()
    {
       this .oscillatorNode .stop ();
-      this .oscillatorNode .disconnect ();
    },
 });
 
