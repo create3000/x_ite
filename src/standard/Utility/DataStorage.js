@@ -59,14 +59,12 @@ const handler =
       if (property !== undefined)
          return property;
 
-      const string = target .getStorage () [target .getNameSpace () + key];
+      const value = target .getStorage () [target .getNameSpace () + key];
 
-      if (string === undefined || string === "undefined" || string === null)
+      if (String (value) .match (/^(?:undefined|null)$/))
          return target .getDefaultValue (key);
 
-      const value = JSON .parse (string);
-
-      return value;
+      return JSON .parse (value);
    },
    set (target, key, value)
    {
