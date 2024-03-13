@@ -353,6 +353,7 @@ const X_ITE_TESTS = [
    { path: "Shape/UnlitTexture.x3d" },
    { component: "Sound" },
    { path: "Sound/AudioClip.x3d" },
+   { path: "Sound/AudioClipMono.x3d" },
    { path: "Sound/Sound.x3d" },
    { component: "Text" },
    { path: "Text/charcodes.x3d" },
