@@ -84,21 +84,15 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       X3DSoundNode .prototype .initialize .call (this);
 
       const
-         audioContext  = this .getBrowser () .getAudioContext (),
-         splitterNode  = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 }),
-         mergerNode    = new ChannelMergerNode (audioContext, { numberOfInputs: 2 }),
-         gainLeftNode  = new GainNode (audioContext, { gain: 0 }),
-         gainRightNode = new GainNode (audioContext, { gain: 0 });
+         audioContext = this .getBrowser () .getAudioContext (),
+         gainNode     = new GainNode (audioContext),
+         pannerNode   = new StereoPannerNode (audioContext);
 
-      splitterNode  .connect (gainLeftNode, 0);
-      splitterNode  .connect (gainRightNode, 1);
-      gainLeftNode  .connect (mergerNode, 0, 0);
-      gainRightNode .connect (mergerNode, 0, 1);
-      mergerNode    .connect (audioContext .destination);
+      gainNode   .connect (pannerNode);
+      pannerNode .connect (audioContext .destination);
 
-      this .splitterNode  = splitterNode;
-      this .gainLeftNode  = gainLeftNode;
-      this .gainRightNode = gainRightNode;
+      this .gainNode   = gainNode;
+      this .pannerNode = pannerNode;
 
       this .getLive ()  .addInterest ("set_live__", this);
       this ._traversed .addInterest ("set_live__", this);
@@ -128,10 +122,10 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    {
       return this .currentTraversed;
    },
-   setVolume (volume, pan = 0.5)
+   setVolume (volume, pan = 0)
    {
-      this .gainLeftNode  .gain .value = volume * (1 - pan ** 2);
-      this .gainRightNode .gain .value = volume * (1 - (1 - pan) ** 2);
+      this .gainNode   .gain .value = volume;
+      this .pannerNode .pan  .value = pan;
    },
    set_live__ ()
    {
@@ -184,7 +178,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       }
 
       for (const childNode of this .childNodes)
-         childNode .getAudioSource () .connect (this .splitterNode);
+         childNode .getAudioSource () .connect (this .gainNode);
    },
    update ()
    {
@@ -318,13 +312,13 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       return function (modelViewMatrix)
       {
          if (!this ._spatialize .getValue ())
-            return 0.5;
+            return 0;
 
          const
             direction = modelViewMatrix .multVecMatrix (location .assign (this ._location .getValue ())) .normalize (),
             pan       = Math .acos (Algorithm .clamp (-direction .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
 
-         return pan;
+         return pan * 2 - 1;
       };
    })(),
 });
