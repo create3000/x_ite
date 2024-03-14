@@ -110,10 +110,12 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       this .getLive () .addInterest ("set_live__", this);
       this ._traversed .addInterest ("set_live__", this);
 
-      this ._source   .addInterest ("set_children__", this);
-      this ._children .addInterest ("set_children__", this);
+      this ._intensity .addInterest ("set_intensity__", this);
+      this ._source    .addInterest ("set_children__",  this);
+      this ._children  .addInterest ("set_children__",  this);
 
       this .set_live__ ();
+      this .set_intensity__ ();
       this .set_children__ ();
    },
    setTraversed (value)
@@ -135,11 +137,10 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    {
       return this .currentTraversed;
    },
-   setVolume (volume, pan = 0.5)
+   setGain (gain, pan = 0.5)
    {
-      this .gainNode      .gain .value = volume;
-      this .gainLeftNode  .gain .value = 1 - pan ** 2;
-      this .gainRightNode .gain .value = 1 - (1 - pan) ** 2;
+      this .gainLeftNode  .gain .value = gain * (1 - pan ** 2);
+      this .gainRightNode .gain .value = gain * (1 - (1 - pan) ** 2);
    },
    set_live__ ()
    {
@@ -150,8 +151,12 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       else
       {
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);
-         this .setVolume (0);
+         this .setGain (0);
       }
+   },
+   set_intensity__ ()
+   {
+      this .gainNode .gain .value = Algorithm .clamp (this ._intensity .getValue (), 0, 1);
    },
    set_children__ ()
    {
@@ -197,7 +202,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    update ()
    {
       if (!this .getTraversed ())
-         this .setVolume (0);
+         this .setGain (0);
 
       this .setTraversed (false);
    },
@@ -234,28 +239,25 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
                                          Math .max (this ._minFront .getValue (), 0),
                                          min);
 
-            const
-               intensity = Algorithm .clamp (this ._intensity .getValue (), 0, 1),
-               pan       = this .getPan (modelViewMatrix);
+            const pan = this .getPan (modelViewMatrix);
 
             if (min .distance < 1) // Radius of normalized sphere is 1.
             {
-               this .setVolume (intensity, pan);
+               this .setGain (1, pan);
             }
             else
             {
                const
-                  d1     = max .intersection .magnitude (), // Viewer is here at (0, 0, 0)
-                  d2     = max .intersection .distance (min .intersection),
-                  d      = Math .min (d1 / d2, 1),
-                  volume = intensity * d;
+                  d1 = max .intersection .magnitude (), // Viewer is here at (0, 0, 0)
+                  d2 = max .intersection .distance (min .intersection),
+                  d  = Math .min (d1 / d2, 1);
 
-               this .setVolume (volume, pan);
+               this .setGain (d, pan);
             }
          }
          else
          {
-            this .setVolume (0);
+            this .setGain (0);
          }
       };
    })(),
