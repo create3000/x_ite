@@ -101,7 +101,7 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
          {
             if (this ._pointerEvents .getValue ())
                renderObject .addPointingShape (this);
-            
+
             break;
          }
          case TraverseType .PICKING:
@@ -192,7 +192,7 @@ Object .defineProperties (Shape,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents", new Fields .SFBool (true)), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",    new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",       new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",   new Fields .SFBool ()),

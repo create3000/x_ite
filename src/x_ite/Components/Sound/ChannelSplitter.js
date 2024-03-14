@@ -58,7 +58,13 @@ function ChannelSplitter (executionContext)
    this .addType (X3DConstants .ChannelSplitter);
 }
 
-Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChannelNode .prototype);
+Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChannelNode .prototype),
+{
+   getAudioSource ()
+   {
+
+   },
+});
 
 Object .defineProperties (ChannelSplitter,
 {
@@ -85,9 +91,9 @@ Object .defineProperties (ChannelSplitter,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",              new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",           new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",               new Fields .SFBool (true)),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
 

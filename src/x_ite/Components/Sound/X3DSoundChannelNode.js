@@ -53,9 +53,66 @@ function X3DSoundChannelNode (executionContext)
    X3DSoundNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DSoundChannelNode);
+
+   const audioContext  = this .getBrowser () .getAudioContext ();
+
+   this .childNodes = [ ];
+   this .gainNode   = new GainNode (audioContext, { gain: 0 });
 }
 
-Object .setPrototypeOf (X3DSoundChannelNode .prototype, X3DSoundNode .prototype);
+Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, X3DSoundNode .prototype),
+{
+   initialize ()
+   {
+      X3DSoundNode .prototype .call (this);
+
+      this ._gain     .addInterest ("set_gain__",     this);
+      this ._children .addInterest ("set_children__", this);
+
+      this .set_gain__ ();
+      this .set_children__ ();
+   },
+   set_gain__ ()
+   {
+      this .gainNode .gain .value = this ._gain .getValue ();
+   },
+   set_children__ ()
+   {
+      for (const childNode of this .childNodes)
+         childNode .getAudioSource () .disconnect (this .gainNode);
+
+      this .childNodes .length = 0;
+
+      for (const child of this ._children)
+      {
+         const childNode = X3DCast (X3DConstants .X3DChildNode, child);
+
+         if (!childNode)
+            continue;
+
+         const type = childNode .getType ();
+
+         for (let t = type .length - 1; t >= 0; -- t)
+         {
+            switch (type [t])
+            {
+               case X3DConstants .X3DSoundChannelNode:
+               case X3DConstants .X3DSoundProcessingNode:
+               case X3DConstants .X3DSoundSourceNode:
+                  this .childNodes .push (childNode);
+                  break;
+               default:
+                  continue;
+            }
+
+            break;
+         }
+      }
+
+      for (const childNode of this .childNodes)
+         childNode .getAudioSource () .connect (this .gainNode);
+   },
+});
 
 Object .defineProperties (X3DSoundChannelNode,
 {
