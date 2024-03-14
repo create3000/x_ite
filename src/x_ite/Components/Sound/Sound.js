@@ -85,14 +85,15 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
       const
          audioContext  = this .getBrowser () .getAudioContext (),
-         gainNode      = new GainNode (audioContext),
+         gainNode      = new GainNode (audioContext, { gain: 0 }),
          splitterNode  = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 }),
          mergerNode    = new ChannelMergerNode (audioContext, { numberOfInputs: 2 }),
          gainLeftNode  = new GainNode (audioContext, { gain: 0 }),
          gainRightNode = new GainNode (audioContext, { gain: 0 });
 
-      gainNode .channelCountMode = "explicit";
-      gainNode .channelCount     = 2;
+      gainNode .channelCount          = 2;
+      gainNode .channelCountMode      = "explicit";
+      gainNode .channelInterpretation = "speakers";
 
       gainNode      .connect (splitterNode);
       splitterNode  .connect (gainLeftNode,  0);

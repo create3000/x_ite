@@ -63,8 +63,6 @@ function OscillatorSource (executionContext)
    const audioContext = this .getBrowser () .getAudioContext ();
 
    this .oscillatorNode = new OscillatorNode (audioContext);
-
-   this .oscillatorNode .connect (this .getAudioSource ());
 }
 
 Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSourceNode .prototype),
@@ -133,23 +131,29 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
    },
    set_start ()
    {
+      const audioContext = this .getBrowser () .getAudioContext ();
+
+      this .oscillatorNode = new OscillatorNode (audioContext);
+
       this .set_type__ ();
       this .set_frequency__ ();
       this .set_detune__ ();
 
+      this .oscillatorNode .connect (this .getAudioSource ());
       this .oscillatorNode .start ();
    },
    set_pause ()
    {
-      this .oscillatorNode .stop ();
+      this .oscillatorNode .disconnect ();
    },
    set_resume ()
    {
-      this .oscillatorNode .start ();
+      this .oscillatorNode .connect (this .getAudioSource ());
    },
    set_stop ()
    {
       this .oscillatorNode .stop ();
+      this .oscillatorNode .disconnect ();
    },
 });
 
