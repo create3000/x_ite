@@ -60,11 +60,11 @@ function Analyser (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .analyzerNode       = new AnalyserNode (audioContext);
-   this .byteFrequencyData  = new Uint8Array (this .analyzerNode .frequencyBinCount);
-   this .byteTimeDomainData = new Uint8Array (this .analyzerNode .frequencyBinCount);
+   this .analyserNode       = new AnalyserNode (audioContext);
+   this .byteFrequencyData  = new Uint8Array (this .analyserNode .frequencyBinCount);
+   this .byteTimeDomainData = new Uint8Array (this .analyserNode .frequencyBinCount);
 
-   this .analyzerNode .connect (this .getAudioSource ());
+   this .analyserNode .connect (this .getAudioSource ());
 }
 
 Object .assign (Object .setPrototypeOf (Analyser .prototype, X3DSoundProcessingNode .prototype),
@@ -84,13 +84,13 @@ Object .assign (Object .setPrototypeOf (Analyser .prototype, X3DSoundProcessingN
    },
    getSoundProcessor ()
    {
-      return this .analyzerNode;
+      return this .analyserNode;
    },
    set_fftSize__ ()
    {
-      this .analyzerNode .fftSize = Algorithm .clamp (Algorithm .nextPowerOfTwo (this ._fftSize .getValue ()), 32, 32768);
+      this .analyserNode .fftSize = Algorithm .clamp (Algorithm .nextPowerOfTwo (this ._fftSize .getValue ()), 32, 32768);
 
-      this ._frequencyBinCount = this .analyzerNode .frequencyBinCount;
+      this ._frequencyBinCount = this .analyserNode .frequencyBinCount;
    },
    set_decibels__ ()
    {
@@ -98,20 +98,20 @@ Object .assign (Object .setPrototypeOf (Analyser .prototype, X3DSoundProcessingN
          minDecibels = Math .min (this ._minDecibels .getValue (), 0),
          maxDecibels = Math .min (this ._maxDecibels .getValue (), 0);
 
-      this .analyzerNode .minDecibels = Math .min (minDecibels, maxDecibels);
-      this .analyzerNode .maxDecibels = Math .max (minDecibels, maxDecibels);
+      this .analyserNode .minDecibels = Math .min (minDecibels, maxDecibels);
+      this .analyserNode .maxDecibels = Math .max (minDecibels, maxDecibels);
    },
    set_smoothingTimeConstant__ ()
    {
-      this .analyzerNode .smoothingTimeConstant = Algorithm .clamp (this ._smoothingTimeConstant .getValue (), 0, 1);
+      this .analyserNode .smoothingTimeConstant = Algorithm .clamp (this ._smoothingTimeConstant .getValue (), 0, 1);
    },
    set_time ()
    {
       X3DSoundProcessingNode .prototype .set_time .call (this);
 
       const
-         analyzerNode      = this .analyzerNode,
-         frequencyBinCount = analyzerNode .frequencyBinCount;
+         analyserNode      = this .analyserNode,
+         frequencyBinCount = analyserNode .frequencyBinCount;
 
       if (this .byteFrequencyData .length !== frequencyBinCount)
       {
@@ -124,14 +124,14 @@ Object .assign (Object .setPrototypeOf (Analyser .prototype, X3DSoundProcessingN
       this ._floatFrequencyData  .length = frequencyBinCount;
       this ._floatTimeDomainData .length = frequencyBinCount;
 
-      analyzerNode .getByteFrequencyData  (this .byteFrequencyData);
-      analyzerNode .getByteTimeDomainData (this .byteTimeDomainData);
+      analyserNode .getByteFrequencyData  (this .byteFrequencyData);
+      analyserNode .getByteTimeDomainData (this .byteTimeDomainData);
 
       this ._byteFrequencyData  .getValue () .set (this .byteFrequencyData);
       this ._byteTimeDomainData .getValue () .set (this .byteTimeDomainData);
 
-      analyzerNode .getFloatFrequencyData  (this ._floatFrequencyData  .shrinkToFit ());
-      analyzerNode .getFloatTimeDomainData (this ._floatTimeDomainData .shrinkToFit ());
+      analyserNode .getFloatFrequencyData  (this ._floatFrequencyData  .shrinkToFit ());
+      analyserNode .getFloatTimeDomainData (this ._floatTimeDomainData .shrinkToFit ());
 
       this ._byteFrequencyData   .addEvent ();
       this ._byteTimeDomainData  .addEvent ();
