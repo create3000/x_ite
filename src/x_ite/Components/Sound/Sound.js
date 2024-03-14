@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       this .gainLeftNode  = gainLeftNode;
       this .gainRightNode = gainRightNode;
 
-      this .getLive ()  .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_live__", this);
       this ._traversed .addInterest ("set_live__", this);
 
       this ._source   .addInterest ("set_children__", this);
@@ -234,20 +234,21 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
                                          Math .max (this ._minFront .getValue (), 0),
                                          min);
 
-            const pan = this .getPan (modelViewMatrix);
+            const
+               intensity = Algorithm .clamp (this ._intensity .getValue (), 0, 1),
+               pan       = this .getPan (modelViewMatrix);
 
             if (min .distance < 1) // Radius of normalized sphere is 1.
             {
-               this .setVolume (Algorithm .clamp (this ._intensity .getValue (), 0, 1), pan);
+               this .setVolume (intensity, pan);
             }
             else
             {
                const
-                  d1        = max .intersection .magnitude (), // Viewer is here at (0, 0, 0)
-                  d2        = max .intersection .distance (min .intersection),
-                  d         = Math .min (d1 / d2, 1),
-                  intensity = Algorithm .clamp (this ._intensity .getValue (), 0, 1),
-                  volume    = intensity * d;
+                  d1     = max .intersection .magnitude (), // Viewer is here at (0, 0, 0)
+                  d2     = max .intersection .distance (min .intersection),
+                  d      = Math .min (d1 / d2, 1),
+                  volume = intensity * d;
 
                this .setVolume (volume, pan);
             }
