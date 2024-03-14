@@ -72,8 +72,6 @@ function MovieTexture (executionContext)
    this .mediaStreamDestination = audioContext .createMediaStreamDestination ();
 
    this .sourceNode .connect (this .getAudioSource ()) .connect (this .mediaStreamDestination);
-   
-   this .getAudioSource () .channelCountMode = "explicit";
 
    this .getMatrix () .set ([1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1]); // flipY
 }

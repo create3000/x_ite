@@ -67,8 +67,6 @@ function AudioClip (executionContext)
    this .sourceNode = audioContext .createMediaElementSource (this .audio [0]);
 
    this .sourceNode .connect (this .getAudioSource ());
-
-   this .getAudioSource () .channelCountMode = "explicit";
 }
 
 Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode .prototype),

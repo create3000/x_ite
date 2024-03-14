@@ -65,8 +65,6 @@ function OscillatorSource (executionContext)
    this .oscillatorNode = new OscillatorNode (audioContext);
 
    this .oscillatorNode .connect (this .getAudioSource ());
-
-   this .getAudioSource () .channelCountMode = "explicit";
 }
 
 Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSourceNode .prototype),

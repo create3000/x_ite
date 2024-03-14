@@ -85,17 +85,23 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
       const
          audioContext  = this .getBrowser () .getAudioContext (),
+         gainNode      = new GainNode (audioContext),
          splitterNode  = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 }),
          mergerNode    = new ChannelMergerNode (audioContext, { numberOfInputs: 2 }),
          gainLeftNode  = new GainNode (audioContext, { gain: 0 }),
          gainRightNode = new GainNode (audioContext, { gain: 0 });
 
+      gainNode .channelCountMode = "explicit";
+      gainNode .channelCount     = 2;
+
+      gainNode      .connect (splitterNode);
       splitterNode  .connect (gainLeftNode,  0);
       splitterNode  .connect (gainRightNode, 1);
       gainLeftNode  .connect (mergerNode, 0, 0);
       gainRightNode .connect (mergerNode, 0, 1);
       mergerNode    .connect (audioContext .destination);
 
+      this .gainNode      = gainNode;
       this .splitterNode  = splitterNode;
       this .gainLeftNode  = gainLeftNode;
       this .gainRightNode = gainRightNode;
@@ -130,8 +136,9 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    },
    setVolume (volume, pan = 0.5)
    {
-      this .gainLeftNode  .gain .value = volume * (1 - pan ** 2);
-      this .gainRightNode .gain .value = volume * (1 - (1 - pan) ** 2);
+      this .gainNode      .gain .value = volume;
+      this .gainLeftNode  .gain .value = 1 - pan ** 2;
+      this .gainRightNode .gain .value = 1 - (1 - pan) ** 2;
    },
    set_live__ ()
    {
@@ -184,7 +191,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       }
 
       for (const childNode of this .childNodes)
-         childNode .getAudioSource () .connect (this .splitterNode);
+         childNode .getAudioSource () .connect (this .gainNode);
    },
    update ()
    {
