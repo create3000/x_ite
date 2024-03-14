@@ -72,6 +72,10 @@ Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, X3DSound
       this .set_gain__ ();
       this .set_children__ ();
    },
+   getGain ()
+   {
+      return this .gainNode;
+   },
    set_gain__ ()
    {
       this .gainNode .gain .value = this ._gain .getValue ();

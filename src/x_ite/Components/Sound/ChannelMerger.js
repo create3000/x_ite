@@ -56,13 +56,17 @@ function ChannelMerger (executionContext)
    X3DSoundChannelNode .call (this, executionContext);
 
    this .addType (X3DConstants .ChannelMerger);
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .channelMergerNode = new ChannelMergerNode (audioContext);
 }
 
 Object .assign (Object .setPrototypeOf (ChannelMerger .prototype, X3DSoundChannelNode .prototype),
 {
    getAudioSource ()
    {
-
+      return this .channelMergerNode;
    },
 });
 

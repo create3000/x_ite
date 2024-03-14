@@ -56,13 +56,18 @@ function ChannelSelector (executionContext)
    X3DSoundChannelNode .call (this, executionContext);
 
    this .addType (X3DConstants .ChannelSelector);
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .channelSplitterNode = new ChannelSplitterNode (audioContext);
+   this .audioSourceNode     = new GainNode (audioContext, { gain: 0 });
 }
 
 Object .assign (Object .setPrototypeOf (ChannelSelector .prototype, X3DSoundChannelNode .prototype),
 {
    getAudioSource ()
    {
-
+      return this .audioSourceNode;
    },
 });
 

@@ -56,13 +56,17 @@ function ChannelSplitter (executionContext)
    X3DSoundChannelNode .call (this, executionContext);
 
    this .addType (X3DConstants .ChannelSplitter);
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .channelSplitterNode = new ChannelSplitterNode (audioContext);
 }
 
 Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChannelNode .prototype),
 {
    getAudioSource ()
    {
-
+      return this .getGain ();
    },
 });
 
