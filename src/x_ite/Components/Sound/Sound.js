@@ -161,7 +161,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    set_children__ ()
    {
       for (const childNode of this .childNodes)
-         childNode .getAudioSource () .disconnect (this .splitterNode);
+         childNode .getAudioSource () .disconnect (this .gainNode);
 
       this .childNodes .length = 0;
 
