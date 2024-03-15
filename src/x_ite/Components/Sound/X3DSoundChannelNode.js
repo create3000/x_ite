@@ -190,14 +190,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, X3DSound
       for (const childNode of this .childNodes)
          childNode .getAudioSource () .connect (this .audioDestination);
    },
-   set_disconnect__ ()
-   {
-      for (const childNode of this .childNodes)
-      {
-         $.try (() => childNode .getAudioSource () .disconnect (this .audioSource));
-         $.try (() => childNode .getAudioSource () .disconnect (this .audioDestination));
-      }
-   },
 });
 
 Object .defineProperties (X3DSoundChannelNode,
