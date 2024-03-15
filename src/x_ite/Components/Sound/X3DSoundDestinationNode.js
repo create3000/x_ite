@@ -69,12 +69,18 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
 
       this .getLive () .addInterest ("set_enabled__", this);
 
-      this ._enabled  .addInterest ("set_enabled__",  this);
-      this ._gain     .addInterest ("set_gain__",     this);
-      this ._children .addInterest ("set_children__", this);
+      this ._enabled               .addInterest ("set_enabled__",               this);
+      this ._gain                  .addInterest ("set_gain__",                  this);
+      this ._channelCount          .addInterest ("set_channelCount__",          this);
+      this ._channelCountMode      .addInterest ("set_channelCountMode__",      this);
+      this ._channelInterpretation .addInterest ("set_channelInterpretation__", this);
+      this ._children              .addInterest ("set_children__",              this);
 
       this .set_enabled__ ();
       this .set_gain__ ();
+      this .set_channelCount__ ();
+      this .set_channelCountMode__ ();
+      this .set_channelInterpretation__ ();
       this .set_children__ ();
    },
    getAudioDestination ()
@@ -84,25 +90,9 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
    set_enabled__ ()
    {
       if (this ._enabled .getValue () && this .getLive () .getValue ())
-      {
-         this ._channelCount          .addInterest ("set_channelCount__",          this);
-         this ._channelCountMode      .addInterest ("set_channelCountMode__",      this);
-         this ._channelInterpretation .addInterest ("set_channelInterpretation__", this);
-
          this .audioDestination .connect (this .getSoundDestination ());
-
-         this .set_channelCount__ ();
-         this .set_channelCountMode__ ();
-         this .set_channelInterpretation__ ();
-      }
       else
-      {
-         this ._channelCount          .removeInterest ("set_channelCount__",          this);
-         this ._channelCountMode      .removeInterest ("set_channelCountMode__",      this);
-         this ._channelInterpretation .removeInterest ("set_channelInterpretation__", this);
-
          this .audioDestination .disconnect ();
-      }
 
       this ._isActive = this ._enabled;
    },
