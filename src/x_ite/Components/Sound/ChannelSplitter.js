@@ -50,6 +50,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DSoundChannelNode  from "./X3DSoundChannelNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
 
 function ChannelSplitter (executionContext)
 {
@@ -69,7 +70,7 @@ Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChan
 {
    initialize ()
    {
-      X3DSoundChannelNode .prototype .call (this);
+      X3DSoundChannelNode .prototype .initialize .call (this);
 
       this ._outputs .addInterest ("set_outputs__", this);
 

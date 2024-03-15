@@ -47,6 +47,7 @@
 
 import X3DSoundNode from "./X3DSoundNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast      from "../../Base/X3DCast.js";
 
 function X3DSoundChannelNode (executionContext)
 {
@@ -65,7 +66,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, X3DSound
 {
    initialize ()
    {
-      X3DSoundNode .prototype .call (this);
+      X3DSoundNode .prototype .initialize .call (this);
 
       this ._enabled               .addInterest ("set_enabled__",               this);
       this ._gain                  .addInterest ("set_gain__",                  this);
