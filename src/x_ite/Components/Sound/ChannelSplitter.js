@@ -82,7 +82,7 @@ Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChan
 
       this .outputNodes .length = 0;
 
-      for (const child of this ._children)
+      for (const child of this ._outputs)
       {
          const outputNode = X3DCast (X3DConstants .X3DChildNode, child);
 
