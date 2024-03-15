@@ -62,8 +62,7 @@ function ChannelSplitter (executionContext)
    this .outputNodes         = [ ];
    this .channelSplitterNode = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 });
 
-   this .getAudioDestination () .connect (this .getAudioSource ());
-   this .getAudioDestination () .connect (this .channelSplitterNode);
+   this .getAudioSource () .connect (this .channelSplitterNode);
 }
 
 Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChannelNode .prototype),
@@ -78,8 +77,7 @@ Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChan
    },
    set_outputs__ ()
    {
-      for (const [i, outputNode] of this .outputNodes .entries ())
-         this .channelSplitterNode .disconnect (outputNode .getAudioDestination (), i);
+      this .channelSplitterNode .disconnect ();
 
       this .outputNodes .length = 0;
 
@@ -114,11 +112,11 @@ Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChan
 
       if (this .channelSplitterNode .numberOfOutputs !== numberOfOutputs)
       {
-         this .getAudioDestination () .disconnect (this .channelSplitterNode);
+         this .getAudioSource () .disconnect (this .channelSplitterNode);
 
          this .channelSplitterNode = new ChannelSplitterNode (audioContext, { numberOfOutputs });
 
-         this .getAudioDestination () .connect (this .channelSplitterNode);
+         this .getAudioSource () .connect (this .channelSplitterNode);
       }
 
       for (const [i, outputNode] of this .outputNodes .entries ())

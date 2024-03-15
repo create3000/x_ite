@@ -82,6 +82,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
       this ._channelInterpretation .addInterest ("set_channelInterpretation__", this);
       this ._children              .addInterest ("set_children__",              this);
 
+      this .set_enabled__ ();
       this .set_gain__ ();
       this .set_channelCount__ ();
       this .set_channelCountMode__ ();

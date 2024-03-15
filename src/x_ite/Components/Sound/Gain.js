@@ -56,8 +56,6 @@ function Gain (executionContext)
    X3DSoundProcessingNode .call (this, executionContext);
 
    this .addType (X3DConstants .Gain);
-
-   this .getAudioDestination () .connect (this .getAudioSource ());
 }
 
 Object .setPrototypeOf (Gain .prototype, X3DSoundProcessingNode .prototype);
