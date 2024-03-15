@@ -65,10 +65,6 @@ function ChannelSelector (executionContext)
 
 Object .assign (Object .setPrototypeOf (ChannelSelector .prototype, X3DSoundChannelNode .prototype),
 {
-   getAudioSource ()
-   {
-      return this .audioSourceNode;
-   },
 });
 
 Object .defineProperties (ChannelSelector,

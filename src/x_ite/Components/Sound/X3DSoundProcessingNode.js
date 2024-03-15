@@ -58,13 +58,13 @@ function X3DSoundProcessingNode (executionContext)
 
    this .addType (X3DConstants .X3DSoundProcessingNode);
 
-   this .addChildObjects (X3DConstants .inputOutput, "loop",   new Fields .SFBool (true),
-                          X3DConstants .inputOutput, "active", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool (true));
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .childNodes = [ ];
-   this .gainNode   = new GainNode (audioContext);
+   this .childNodes       = [ ];
+   this .audioDestination = new GainNode (audioContext, { gain: 0 });
+   this .audioSource      = new GainNode (audioContext, { gain: 1 });
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DChildNode .prototype),
@@ -75,13 +75,12 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
       X3DChildNode         .prototype .initialize .call (this);
       X3DTimeDependentNode .prototype .initialize .call (this);
 
-      this ._active                .addInterest ("set_gain__",                  this);
+      this ._enabled               .addInterest ("set_enabled__",               this);
       this ._gain                  .addInterest ("set_gain__",                  this);
       this ._channelCount          .addInterest ("set_channelCount__",          this);
       this ._channelCountMode      .addInterest ("set_channelCountMode__",      this);
       this ._channelInterpretation .addInterest ("set_channelInterpretation__", this);
       this ._children              .addInterest ("set_children__",              this);
-      this ._active                .addInterest ("set_active__",                this);
 
       this .set_gain__ ();
       this .set_channelCount__ ();
@@ -89,21 +88,49 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
       this .set_channelInterpretation__ ();
       this .set_children__ ();
    },
+   getAudioDestination ()
+   {
+      return this .audioDestination;
+   },
    getAudioSource ()
    {
-      return this .gainNode;
+      return this .audioSource;
    },
    getSoundProcessor ()
    {
-      return this .gainNode;
+      return this .audioSource;
+   },
+   set_enabled__ ()
+   {
+      this .audioDestination .disconnect ();
+
+      if (this ._enabled .getValue ())
+      {
+         this .set_gain__ ();
+         this .set_channelCountMode__ ();
+         this .set_channelInterpretation__ ();
+
+         this .audioDestination .connect (this .getSoundProcessor ());
+      }
+      else
+      {
+         this .audioDestination .gain .value           = 1;
+         this .audioDestination .channelCountMode      = "max";
+         this .audioDestination .channelInterpretation = "speakers";
+
+         this .audioDestination .connect (this .audioSource);
+      }
    },
    set_gain__ ()
    {
-      this .gainNode .gain .value = this ._active .getValue () ? this ._gain .getValue () : 1;
+      if (!this ._enabled .getValue ())
+         return;
+
+      this .audioDestination .gain .value = this ._gain .getValue ();
    },
    set_channelCount__ ()
    {
-      this .getSoundProcessor () .channelCount = Math .max (this ._channelCount .getValue (), 1);
+      this .audioDestination .channelCount = Math .max (this ._channelCount .getValue (), 1);
    },
    set_channelCountMode__: (function ()
    {
@@ -111,9 +138,12 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
 
       return function ()
       {
+         if (!this ._enabled .getValue ())
+            return;
+
          const channelCountMode = this ._channelCountMode .getValue () .toLowerCase () .replaceAll ("_", "-");
 
-         this .getSoundProcessor () .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
+         this .audioDestination .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
       };
    })(),
    set_channelInterpretation__: (function ()
@@ -122,14 +152,18 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
 
       return function ()
       {
+         if (!this ._enabled .getValue ())
+            return;
+
          const channelInterpretation = this ._channelInterpretation .getValue () .toLowerCase ();
 
-         this .getSoundProcessor () .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
+         this .audioDestination .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
       };
    })(),
    set_children__ ()
    {
-      this .set_disconnect__ ();
+      for (const childNode of this .childNodes)
+         childNode .getAudioSource () .disconnect (this .audioDestination);
 
       this .childNodes .length = 0;
 
@@ -159,50 +193,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
          }
       }
 
-      this .set_active__ ();
-   },
-   set_disconnect__ ()
-   {
       for (const childNode of this .childNodes)
-         $.try (() => childNode .getAudioSource () .disconnect (this .gainNode));
-
-      for (const childNode of this .childNodes)
-         $.try (() => childNode .getAudioSource () .disconnect (this .getSoundProcessor ()));
-   },
-   set_active__ ()
-   {
-      this .set_disconnect__ ();
-
-      if (this ._active .getValue ())
-      {
-         for (const childNode of this .childNodes)
-            $.try (() => childNode .getAudioSource () .connect (this .getSoundProcessor ()), true);
-      }
-      else
-      {
-         for (const childNode of this .childNodes)
-            $.try (() => childNode .getAudioSource () .connect (this .gainNode), true);
-      }
-   },
-   set_start ()
-   {
-      if (!this ._active .getValue ())
-         this ._active = true;
-   },
-   set_pause ()
-   {
-      if (this ._active .getValue ())
-         this ._active = false;
-   },
-   set_resume ()
-   {
-      if (!this ._active .getValue ())
-         this ._active = true;
-   },
-   set_stop ()
-   {
-      if (this ._active .getValue ())
-         this ._active = false;
+         childNode .getAudioSource () .connect (this .audioDestination);
    },
    set_time ()
    {

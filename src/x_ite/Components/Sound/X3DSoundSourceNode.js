@@ -58,7 +58,7 @@ function X3DSoundSourceNode (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .gainNode     = new GainNode (audioContext);
+   this .audioSource  = new GainNode (audioContext, { gain: 0 });
    this .mediaElement = null;
 }
 
@@ -76,7 +76,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    },
    getAudioSource ()
    {
-      return this .gainNode;
+      return this .audioSource;
    },
    setMediaElement (value)
    {
@@ -118,7 +118,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    },
    set_gain__ ()
    {
-      this .gainNode .gain .value = this ._gain .getValue ();
+      this .audioSource .gain .value = this ._gain .getValue ();
    },
    set_pitch ()
    { },

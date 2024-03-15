@@ -57,8 +57,8 @@ function X3DSoundDestinationNode (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .childNodes = [ ];
-   this .gainNode   = new GainNode (audioContext);
+   this .childNodes       = [ ];
+   this .audioDestination = new GainNode (audioContext, { gain: 0 });
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DSoundNode .prototype),
@@ -77,9 +77,9 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
       this .set_gain__ ();
       this .set_children__ ();
    },
-   getAudioSource ()
+   getAudioDestination ()
    {
-      return this .gainNode;
+      return this .audioDestination;
    },
    set_enabled__ ()
    {
@@ -89,7 +89,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
          this ._channelCountMode      .addInterest ("set_channelCountMode__",      this);
          this ._channelInterpretation .addInterest ("set_channelInterpretation__", this);
 
-         this .gainNode .connect (this .getSoundDestination ());
+         this .audioDestination .connect (this .getSoundDestination ());
 
          this .set_channelCount__ ();
          this .set_channelCountMode__ ();
@@ -101,18 +101,18 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
          this ._channelCountMode      .removeInterest ("set_channelCountMode__",      this);
          this ._channelInterpretation .removeInterest ("set_channelInterpretation__", this);
 
-         this .gainNode .disconnect ();
+         this .audioDestination .disconnect ();
       }
 
       this ._isActive = this ._enabled;
    },
    set_gain__ ()
    {
-      this .gainNode .gain .value = this ._gain .getValue ();
+      this .audioDestination .gain .value = this ._gain .getValue ();
    },
    set_channelCount__ ()
    {
-      this .getSoundDestination () .channelCount = Math .max (this ._channelCount .getValue (), 1);
+      this .audioDestination .channelCount = Math .max (this ._channelCount .getValue (), 1);
    },
    set_channelCountMode__: (function ()
    {
@@ -122,7 +122,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
       {
          const channelCountMode = this ._channelCountMode .getValue () .toLowerCase () .replaceAll ("_", "-");
 
-         this .getSoundDestination () .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
+         this .audioDestination .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
       };
    })(),
    set_channelInterpretation__: (function ()
@@ -133,13 +133,13 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
       {
          const channelInterpretation = this ._channelInterpretation .getValue () .toLowerCase ();
 
-         this .getSoundDestination () .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
+         this .audioDestination .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
       };
    })(),
    set_children__ ()
    {
       for (const childNode of this .childNodes)
-         $.try (() => childNode .getAudioSource () .disconnect (this .gainNode));
+         $.try (() => childNode .getAudioSource () .disconnect (this .audioDestination));
 
       this .childNodes .length = 0;
 
@@ -170,7 +170,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
       }
 
       for (const childNode of this .childNodes)
-         $.try (() => childNode .getAudioSource () .connect (this .gainNode), true);
+         $.try (() => childNode .getAudioSource () .connect (this .audioDestination), true);
    },
 });
 

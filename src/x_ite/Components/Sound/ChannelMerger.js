@@ -64,10 +64,6 @@ function ChannelMerger (executionContext)
 
 Object .assign (Object .setPrototypeOf (ChannelMerger .prototype, X3DSoundChannelNode .prototype),
 {
-   getAudioSource ()
-   {
-      return this .channelMergerNode;
-   },
 });
 
 Object .defineProperties (ChannelMerger,

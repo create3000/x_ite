@@ -59,14 +59,70 @@ function ChannelSplitter (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .channelSplitterNode = new ChannelSplitterNode (audioContext);
+   this .outputNodes         = [ ];
+   this .channelSplitterNode = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 });
+
+   this .getAudioDestination () .connect (this .getAudioSource ());
+   this .getAudioDestination () .connect (this .channelSplitterNode);
 }
 
 Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChannelNode .prototype),
 {
-   getAudioSource ()
+   initialize ()
    {
-      return this .getGain ();
+      X3DSoundChannelNode .prototype .call (this);
+
+      this ._outputs .addInterest ("set_outputs__", this);
+
+      this .set_outputs__ ();
+   },
+   set_outputs__ ()
+   {
+      for (const [i, outputNode] of this .outputNodes .entries ())
+         this .channelSplitterNode .disconnect (outputNode .getAudioDestination (), i);
+
+      this .outputNodes .length = 0;
+
+      for (const child of this ._children)
+      {
+         const outputNode = X3DCast (X3DConstants .X3DChildNode, child);
+
+         if (!outputNode)
+            continue;
+
+         const type = outputNode .getType ();
+
+         for (let t = type .length - 1; t >= 0; -- t)
+         {
+            switch (type [t])
+            {
+               case X3DConstants .X3DSoundChannelNode:
+               case X3DConstants .X3DSoundProcessingNode:
+                  this .outputNodes .push (outputNode);
+                  break;
+               default:
+                  continue;
+            }
+
+            break;
+         }
+      }
+
+      const
+         audioContext    = this .getBrowser () .getAudioContext (),
+         numberOfOutputs = Math .max (this .outputNodes .length, 1);
+
+      if (this .channelSplitterNode .numberOfOutputs !== numberOfOutputs)
+      {
+         this .getAudioDestination () .disconnect (this .channelSplitterNode);
+
+         this .channelSplitterNode = new ChannelSplitterNode (audioContext, { numberOfOutputs });
+
+         this .getAudioDestination () .connect (this .channelSplitterNode);
+      }
+
+      for (const [i, outputNode] of this .outputNodes .entries ())
+         this .channelSplitterNode .connect (outputNode .getAudioDestination (), i);
    },
 });
 
