@@ -50,6 +50,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DSoundChannelNode  from "./X3DSoundChannelNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function ChannelSelector (executionContext)
 {
@@ -60,11 +61,38 @@ function ChannelSelector (executionContext)
    const audioContext = this .getBrowser () .getAudioContext ();
 
    this .channelSplitterNode = new ChannelSplitterNode (audioContext);
-   this .audioSourceNode     = new GainNode (audioContext, { gain: 0 });
 }
 
 Object .assign (Object .setPrototypeOf (ChannelSelector .prototype, X3DSoundChannelNode .prototype),
 {
+   initialize ()
+   {
+      X3DSoundChannelNode .prototype .initialize .call (this);
+
+      this ._channelSelection .addInterest ("set_channelSelection__", this);
+
+      this .set_channelSelection__ ();
+   },
+   getSoundProcessor ()
+   {
+      return this .channelSplitterNode;
+   },
+   set_channelSelection__ ()
+   {
+      const
+         audioContext     = this .getBrowser () .getAudioContext (),
+         channelSelection = Algorithm .clamp (this ._channelSelection .getValue (), 0, 31),
+         numberOfOutputs  = channelSelection + 1;
+
+      this .channelSplitterNode .disconnect ();
+
+      if (this .channelSplitterNode .numberOfOutputs !== numberOfOutputs)
+         this .channelSplitterNode = new ChannelSplitterNode (audioContext, { numberOfOutputs });
+
+      this .channelSplitterNode .connect (this .getAudioSource (), channelSelection);
+
+      this .set_enabled__ ();
+   },
 });
 
 Object .defineProperties (ChannelSelector,
