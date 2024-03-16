@@ -50,6 +50,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DSoundChannelNode  from "./X3DSoundChannelNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function ChannelMerger (executionContext)
 {
@@ -64,6 +65,29 @@ function ChannelMerger (executionContext)
 
 Object .assign (Object .setPrototypeOf (ChannelMerger .prototype, X3DSoundChannelNode .prototype),
 {
+   setChildNodes (childNodes)
+   {
+      const
+         audioContext   = this .getBrowser () .getAudioContext (),
+         numberOfInputs = Algorithm .clamp (childNodes .length, 1, 32);
+
+      this .channelMergerNode .disconnect ();
+
+      if (this .channelMergerNode .numberOfInputs !== numberOfInputs)
+         this .channelMergerNode = new ChannelSplitterNode (audioContext, { numberOfInputs });
+
+      this .channelMergerNode .connect (this .getAudioDestination ());
+   },
+   connectChildNode (i, childNode)
+   {
+      if (i < 32)
+         childNode .getAudioSource () .connect (this .channelMergerNode, 0, i);
+   },
+   disconnectChildNode (i, childNode)
+   {
+      if (i < 32)
+         childNode .getAudioSource () .disconnect (this .channelMergerNode, 0, i);
+   },
 });
 
 Object .defineProperties (ChannelMerger,

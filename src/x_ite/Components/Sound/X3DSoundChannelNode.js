@@ -157,8 +157,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, X3DSound
    })(),
    set_children__ ()
    {
-      for (const childNode of this .childNodes)
-         childNode .getAudioSource () .disconnect (this .audioDestination);
+      for (const [i, childNode] of this .childNodes .entries ())
+         this .disconnectChildNode (i, childNode);
 
       this .childNodes .length = 0;
 
@@ -188,8 +188,20 @@ Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, X3DSound
          }
       }
 
-      for (const childNode of this .childNodes)
-         childNode .getAudioSource () .connect (this .audioDestination);
+      this .setChildNodes (this .childNodes);
+
+      for (const [i, childNode] of this .childNodes .entries ())
+         this .connectChildNode (i, childNode);
+   },
+   setChildNodes ()
+   { },
+   connectChildNode (i, childNode)
+   {
+      childNode .getAudioSource () .connect (this .audioDestination);
+   },
+   disconnectChildNode (i, childNode)
+   {
+      childNode .getAudioSource () .disconnect (this .audioDestination);
    },
 });
 
