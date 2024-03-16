@@ -193,7 +193,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, X3DSound
       for (const [i, childNode] of this .childNodes .entries ())
          this .connectChildNode (i, childNode);
    },
-   setChildNodes ()
+   setChildNodes (childNodes)
    { },
    connectChildNode (i, childNode)
    {
