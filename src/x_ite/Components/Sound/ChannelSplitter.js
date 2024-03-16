@@ -51,6 +51,7 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DSoundChannelNode  from "./X3DSoundChannelNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function ChannelSplitter (executionContext)
 {
@@ -109,7 +110,7 @@ Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChan
 
       const
          audioContext    = this .getBrowser () .getAudioContext (),
-         numberOfOutputs = Math .max (this .outputNodes .length, 1);
+         numberOfOutputs = Algorithm .clamp (this .outputNodes .length, 1, 32);
 
       if (this .channelSplitterNode .numberOfOutputs !== numberOfOutputs)
       {
@@ -120,8 +121,10 @@ Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChan
          this .getAudioSource () .connect (this .channelSplitterNode);
       }
 
-      for (const [i, outputNode] of this .outputNodes .entries ())
-         this .channelSplitterNode .connect (outputNode .getAudioDestination (), i);
+      const length = Math .min (numberOfOutputs, this .outputNodes .length);
+
+      for (let i = 0; i < length; ++ i)
+         this .channelSplitterNode .connect (this .outputNodes [i] .getAudioDestination (), i);
    },
 });
 
