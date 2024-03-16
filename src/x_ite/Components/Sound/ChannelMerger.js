@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (ChannelMerger .prototype, X3DSoundChanne
       this .channelMergerNode .disconnect ();
 
       if (this .channelMergerNode .numberOfInputs !== numberOfInputs)
-         this .channelMergerNode = new ChannelSplitterNode (audioContext, { numberOfInputs });
+         this .channelMergerNode = new ChannelMergerNode (audioContext, { numberOfInputs });
 
       this .channelMergerNode .connect (this .getAudioDestination ());
    },
