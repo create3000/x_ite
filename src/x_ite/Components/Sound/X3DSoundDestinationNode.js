@@ -48,6 +48,7 @@
 import X3DSoundNode from "./X3DSoundNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import X3DCast      from "../../Base/X3DCast.js";
+import Algorithm    from "../../../standard/Math/Algorithm.js";
 
 function X3DSoundDestinationNode (executionContext)
 {
@@ -102,7 +103,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
    },
    set_channelCount__ ()
    {
-      this .audioDestination .channelCount = Math .max (this ._channelCount .getValue (), 1);
+      this .audioDestination .channelCount = Algorithm .clamp (this ._channelCount .getValue (), 1, 32);
    },
    set_channelCountMode__: (function ()
    {
