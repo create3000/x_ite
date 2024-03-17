@@ -418,11 +418,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    async call__ (callback, name)
    {
-      const browser = this .getBrowser ();
-
       try
       {
-         await callback .call (SFNodeCache .get (this), browser .getCurrentTime ());
+         await callback .call (SFNodeCache .get (this), this .getBrowser () .getCurrentTime ());
       }
       catch (error)
       {
@@ -431,11 +429,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    async set_field__ (callback, field)
    {
-      const browser = this .getBrowser ();
-
       try
       {
-         await callback .call (SFNodeCache .get (this), field .valueOf (), browser .getCurrentTime ());
+         await callback .call (SFNodeCache .get (this), field .valueOf (), this .getBrowser () .getCurrentTime ());
       }
       catch (error)
       {
