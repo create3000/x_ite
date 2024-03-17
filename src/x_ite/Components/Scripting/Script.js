@@ -323,9 +323,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          browser .getScriptStack () .pop ();
       }
    },
-   initialize__ (sourceText)
+   async initialize__ (sourceText)
    {
-      this .disconnect ();
+      await this .disconnect ();
 
       const browser = this .getBrowser ();
 
@@ -339,7 +339,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       const shutdown = this .context .get ("shutdown");
 
       if (typeof shutdown === "function")
-         $(window) .on ("unload.Script" + this .getId (), this .call__ .bind (this, shutdown, "shutdown"));
+         $(window) .on (`unload.Script${this .getId ()}`, () => this .call__ (shutdown, "shutdown"));
 
       // Connect prepareEvents.
 
@@ -387,9 +387,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       const initialize = this .context .get ("initialize");
 
       if (typeof initialize === "function")
-         this .call__ (initialize, "initialize");
+         await this .call__ (initialize, "initialize");
    },
-   call__ (callback, name)
+   async call__ (callback, name)
    {
       const browser = this .getBrowser ();
 
@@ -397,7 +397,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       try
       {
-         callback .call (SFNodeCache .get (this), browser .getCurrentTime ());
+         await callback .call (SFNodeCache .get (this), browser .getCurrentTime ());
       }
       catch (error)
       {
@@ -406,7 +406,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       browser .getScriptStack () .pop ();
    },
-   set_field__ (callback, field)
+   async set_field__ (callback, field)
    {
       const browser = this .getBrowser ();
 
@@ -415,7 +415,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       try
       {
-         callback .call (SFNodeCache .get (this), field .valueOf (), browser .getCurrentTime ());
+         await callback .call (SFNodeCache .get (this), field .valueOf (), browser .getCurrentTime ());
       }
       catch (error)
       {
@@ -434,18 +434,18 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       console .error (`JavaScript Error in Script '${this .getName ()}', ${reason}\nworld url is '${worldURL}':`);
       console .error (error);
    },
-   disconnect ()
+   async disconnect ()
    {
       // Call shutdown.
 
       const shutdown = this .context ?.get ("shutdown");
 
       if (typeof shutdown === "function")
-         this .call__ (shutdown, "shutdown");
+         await this .call__ (shutdown, "shutdown");
 
       // Disconnect shutdown.
 
-      $(window) .off (".Script" + this .getId ());
+      $(window) .off (`.Script${this .getId ()}`);
 
       // Disconnect prepareEvents.
 
