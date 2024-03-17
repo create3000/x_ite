@@ -518,23 +518,6 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
                   return target [key];
             }
          },
-         set (target, key, value)
-         {
-            target [key] = value;
-            return true;
-         },
-         has (target, key)
-         {
-            return key in target;
-         },
-         ownKeys (target)
-         {
-            return Reflect .ownKeys (target);
-         },
-         getOwnPropertyDescriptor (target, key)
-         {
-            return Reflect .getOwnPropertyDescriptor (target, key);
-         },
       };
 
       const browser = new Proxy (this .getBrowser (), handler);
