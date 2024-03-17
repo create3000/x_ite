@@ -304,14 +304,14 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
          for (const name of names)
          {
-            if (!(name in globalObject))
+            if (name in globalObject)
+               continue;
+
+            globalObject [name] =
             {
-               globalObject [name] =
-               {
-                  get: field .valueOf .bind (field),
-                  set: field .setValue .bind (field),
-               };
-            }
+               get: field .valueOf .bind (field),
+               set: field .setValue .bind (field),
+            };
          }
       }
 
