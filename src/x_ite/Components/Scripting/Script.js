@@ -431,27 +431,17 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    {
       try
       {
-         switch (field .getType ())
-         {
-            case X3DConstants .SFBool:
-            case X3DConstants .SFDouble:
-            case X3DConstants .SFFloat:
-            case X3DConstants .SFInt32:
-            case X3DConstants .SFNode:
-            case X3DConstants .SFString:
-            case X3DConstants .SFTime:
-               var value = field .valueOf ();
-               break;
-            default:
-               var value = field .copy ();
-               break;
-         }
+         field .setTainted (true);
 
-         await callback .call (SFNodeCache .get (this), value, this .getBrowser () .getCurrentTime ());
+         await callback .call (SFNodeCache .get (this), field .valueOf (), this .getBrowser () .getCurrentTime ());
       }
       catch (error)
       {
          this .setError (`in function '${field .getName ()}'`, error);
+      }
+      finally
+      {
+         field .setTainted (false);
       }
    },
    setError (reason, error)
