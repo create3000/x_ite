@@ -480,12 +480,37 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    {
       return this ._url;
    },
-   unloadData ()
+   async unloadData ()
    {
-      this .initialize__ ("");
+      // Call shutdown.
+
+      const shutdown = this .context ?.get ("shutdown");
+
+      if (typeof shutdown === "function")
+         await this .call__ (shutdown, "shutdown");
+
+      // Disconnect shutdown.
+
+      $(window) .off (`.Script${this .getId ()}`);
+
+      // Disconnect prepareEvents.
+
+      this .getBrowser () .prepareEvents () .removeInterest ("call__", this);
+
+      // Disconnect eventsProcessed.
+
+      this .removeInterest ("call__", this);
+
+      // Disconnect fields.
+
+      for (const field of this .getUserDefinedFields ())
+         field .removeInterest ("set_field__", this);
    },
-   loadData ()
+   async loadData ()
    {
+      // See: 29.2.2 Script execution
+      await this .unloadData ();
+
       new (FileLoader_default()) (this) .loadDocument (this ._url, (data) =>
       {
          if (data === null)
@@ -620,25 +645,22 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
 
       for (const field of this .getUserDefinedFields ())
       {
-         const name = field .getName ();
-
          if (field .getAccessType () === (X3DConstants_default()).inputOnly)
             continue;
 
-         if (!(name in globalObject))
+         const names = [field .getName ()];
+
+         if (field .getAccessType () === (X3DConstants_default()).inputOutput)
+            names .push (field .getName () + "_changed");
+
+         for (const name of names)
          {
+            if (name in globalObject)
+               continue;
+
             globalObject [name] =
             {
                get: field .valueOf .bind (field),
-               set: field .setValue .bind (field),
-            };
-         }
-
-         if (field .getAccessType () === (X3DConstants_default()).inputOutput)
-         {
-            globalObject [name + "_changed"] =
-            {
-               get: field .valueOf  .bind (field),
                set: field .setValue .bind (field),
             };
          }
@@ -683,8 +705,6 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    },
    async initialize__ (sourceText)
    {
-      await this .disconnect ();
-
       const browser = this .getBrowser ();
 
       // Create context.
@@ -749,11 +769,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    },
    async call__ (callback, name)
    {
-      const browser = this .getBrowser ();
-
       try
       {
-         await callback .call (SFNodeCache_default().get (this), browser .getCurrentTime ());
+         await callback .call (SFNodeCache_default().get (this), this .getBrowser () .getCurrentTime ());
       }
       catch (error)
       {
@@ -762,20 +780,20 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    },
    async set_field__ (callback, field)
    {
-      const browser = this .getBrowser ();
-
-      field .setTainted (true);
-
       try
       {
-         await callback .call (SFNodeCache_default().get (this), field .valueOf (), browser .getCurrentTime ());
+         field .setTainted (true);
+
+         await callback .call (SFNodeCache_default().get (this), field .valueOf (), this .getBrowser () .getCurrentTime ());
       }
       catch (error)
       {
-         this .setError (`in function '${field .getName()}'`, error);
+         this .setError (`in function '${field .getName ()}'`, error);
       }
-
-      field .setTainted (false);
+      finally
+      {
+         field .setTainted (false);
+      }
    },
    setError (reason, error)
    {
@@ -786,35 +804,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
       console .error (`JavaScript Error in Script '${this .getName ()}', ${reason}\nworld url is '${worldURL}':`);
       console .error (error);
    },
-   async disconnect ()
+   async dispose ()
    {
-      // Call shutdown.
-
-      const shutdown = this .context ?.get ("shutdown");
-
-      if (typeof shutdown === "function")
-         await this .call__ (shutdown, "shutdown");
-
-      // Disconnect shutdown.
-
-      $(window) .off (`.Script${this .getId ()}`);
-
-      // Disconnect prepareEvents.
-
-      this .getBrowser () .prepareEvents () .removeInterest ("call__", this);
-
-      // Disconnect eventsProcessed.
-
-      this .removeInterest ("call__", this);
-
-      // Disconnect fields.
-
-      for (const field of this .getUserDefinedFields ())
-         field .removeInterest ("set_field__", this);
-   },
-   dispose ()
-   {
-      this .disconnect ();
+      await this .unloadData ();
 
       Scripting_X3DScriptNode .prototype .dispose .call (this);
    },
