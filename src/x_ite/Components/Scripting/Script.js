@@ -413,18 +413,14 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    {
       const browser = this .getBrowser ();
 
-      field .setTainted (true);
-
       try
       {
          await callback .call (SFNodeCache .get (this), field .valueOf (), browser .getCurrentTime ());
       }
       catch (error)
       {
-         this .setError (`in function '${field .getName()}'`, error);
+         this .setError (`in function '${field .getName ()}'`, error);
       }
-
-      field .setTainted (false);
    },
    setError (reason, error)
    {
