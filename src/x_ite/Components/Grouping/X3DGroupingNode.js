@@ -289,7 +289,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .NurbsPositionInterpolator:
                case X3DConstants .NurbsSurfaceInterpolator:
                case X3DConstants .RigidBodyCollection:
-               case X3DConstants .TimeSensor:
                case X3DConstants .X3DFollowerNode:
                case X3DConstants .X3DInfoNode:
                case X3DConstants .X3DInterpolatorNode:
@@ -298,6 +297,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .X3DScriptNode:
                case X3DConstants .X3DSequencerNode:
                case X3DConstants .X3DSoundNode:
+               case X3DConstants .X3DTimeDependentNode:
                case X3DConstants .X3DTriggerNode:
                   break;
                default:
@@ -397,7 +397,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .NurbsPositionInterpolator:
                case X3DConstants .NurbsSurfaceInterpolator:
                case X3DConstants .RigidBodyCollection:
-               case X3DConstants .TimeSensor:
                case X3DConstants .X3DFollowerNode:
                case X3DConstants .X3DInfoNode:
                case X3DConstants .X3DInterpolatorNode:
@@ -406,6 +405,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .X3DScriptNode:
                case X3DConstants .X3DSequencerNode:
                case X3DConstants .X3DSoundNode:
+               case X3DConstants .X3DTimeDependentNode:
                case X3DConstants .X3DTriggerNode:
                   break;
                default:
