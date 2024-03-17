@@ -45,13 +45,13 @@
  *
  ******************************************************************************/
 
-import X3DChildNode         from "../Core/X3DChildNode.js";
+import X3DSoundNode         from "./X3DSoundNode.js";
 import X3DTimeDependentNode from "../Time/X3DTimeDependentNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 function X3DSoundSourceNode (executionContext)
 {
-   X3DChildNode         .call (this, executionContext);
+   X3DSoundNode         .call (this, executionContext);
    X3DTimeDependentNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DSoundSourceNode);
@@ -62,12 +62,12 @@ function X3DSoundSourceNode (executionContext)
    this .mediaElement = null;
 }
 
-Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundNode .prototype),
    X3DTimeDependentNode .prototype,
 {
    initialize ()
    {
-      X3DChildNode         .prototype .initialize .call (this);
+      X3DSoundNode         .prototype .initialize .call (this);
       X3DTimeDependentNode .prototype .initialize .call (this);
 
       this ._gain .addInterest ("set_gain__", this);
@@ -169,7 +169,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    dispose ()
    {
       X3DTimeDependentNode .prototype .dispose .call (this);
-      X3DChildNode         .prototype .dispose .call (this);
+      X3DSoundNode         .prototype .dispose .call (this);
    },
 });
 
