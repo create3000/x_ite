@@ -168,6 +168,7 @@ It is possible to specify in the *family* field a URL of a custom font file of t
 
 - First add a [Text](/x_ite/components/text/text/) node as a parent.
 - [Wikipedia](https://en.wikipedia.org/wiki/Font){:target="_blank"}
+- [Wikipedia](https://en.wikipedia.org/wiki/Typeface){:target="_blank"}
 
 ## See Also
 

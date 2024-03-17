@@ -1,9 +1,9 @@
-/* X_ITE v9.3.1 */var __webpack_modules__ = ({
+/* X_ITE v9.3.2 */var __webpack_modules__ = ({
 
-/***/ 773:
+/***/ 403:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(37);
+/* provided dependency */ var jQuery = __webpack_require__(183);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -199,7 +199,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 693:
+/***/ 287:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -213,7 +213,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(37)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(183)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -424,7 +424,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 37:
+/***/ 183:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11148,7 +11148,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 214:
+/***/ 972:
 /***/ ((module) => {
 
 /**
@@ -15927,7 +15927,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 465:
+/***/ 935:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19172,7 +19172,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 790:
+/***/ 432:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -20299,7 +20299,7 @@ Object .defineProperty (Namespace, "add",
       }
       else
       {
-         const X3D = window [Symbol .for ("X_ITE.X3D-9.3.1")];
+         const X3D = window [Symbol .for ("X_ITE.X3D-9.3.2")];
 
          if (X3D)
             X3D [name] = module;
@@ -34234,7 +34234,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 x_ite_Namespace .add ("X3DBaseNode", "x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
 /* harmony default export */ const Base_X3DBaseNode = (X3DBaseNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(37);
+/* provided dependency */ var $ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34371,7 +34371,7 @@ x_ite_Namespace .add ("Legacy", "x_ite/Browser/Legacy", Legacy_default_);
  *
  ******************************************************************************/
 
-const BROWSER_VERSION_default_ = "9.3.1";
+const BROWSER_VERSION_default_ = "9.3.2";
 ;
 
 x_ite_Namespace .add ("BROWSER_VERSION", "x_ite/BROWSER_VERSION", BROWSER_VERSION_default_);
@@ -37157,9 +37157,14 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, Core_X3DNode .p
    {
       return this ._isPickableObject .getValue ();
    },
-   getMustDisplay ()
+   /**
+    * You will normally overload this function in your derived classes.
+    * @returns {boolean} A boolean value indicating, whether this node
+    * can be visually displayed and therefor should render.
+    */
+   isRenderingRequired ()
    {
-      return false
+      return false;
    },
 });
 
@@ -38947,7 +38952,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .add ("X3DProtoDeclaration", "x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(37);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39209,7 +39214,7 @@ const Expressions_default_ = Expressions;
 x_ite_Namespace .add ("Expressions", "x_ite/Parser/Expressions", Expressions_default_);
 /* harmony default export */ const Parser_Expressions = (Expressions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(37);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41895,7 +41900,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .add ("VRMLParser", "x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(37);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44004,7 +44009,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(37);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47305,7 +47310,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .add ("GLTF2Parser", "x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(37);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47457,7 +47462,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .add ("GLB2Parser", "x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(37);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50812,8 +50817,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .add ("MatrixStack", "standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(37);
-/* provided dependency */ var libtess = __webpack_require__(214);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(183);
+/* provided dependency */ var libtess = __webpack_require__(972);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53581,7 +53586,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .add ("SVGParser", "x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(37);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53931,7 +53936,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .add ("Plane3", "standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(214);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(972);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -58146,19 +58151,18 @@ function X3DGroupingNode (executionContext)
    this .addType (Base_X3DConstants .X3DGroupingNode);
 
    this .allowedTypes              = new Set ();
-   this .clipPlaneNodes            = [ ];
-   this .localFogNodes             = [ ];
-   this .lightNodes                = [ ];
-   this .pointingDeviceSensorNodes = [ ];
-   this .maybeCameraObjects        = [ ];
-   this .cameraObjects             = [ ];
-   this .maybePickableSensorNodes  = [ ];
-   this .pickableSensorNodes       = [ ];
-   this .pickableObjects           = [ ];
-   this .childNodes                = [ ];
-   this .displayNodes              = [ ];
-   this .visibleNodes              = [ ];
-   this .boundedObjects            = [ ];
+   this .children                  = new Set ();
+   this .pointingDeviceSensorNodes = new Set ();
+   this .clipPlaneNodes            = new Set ();
+   this .displayNodes              = new Set ();
+   this .maybeCameraObjects        = new Set ();
+   this .cameraObjects             = new Set ();
+   this .maybePickableSensorNodes  = new Set ();
+   this .pickableSensorNodes       = new Set ();
+   this .pickableObjects           = new Set ();
+   this .childNodes                = new Set ();
+   this .visibleNodes              = new Set ();
+   this .boundedObjects            = new Set ();
    this .sensors                   = [ ];
 }
 
@@ -58191,12 +58195,10 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
    },
    setAllowedTypes (/* type, ... */)
    {
-      const allowedTypes = this .allowedTypes;
-
-      allowedTypes .clear ();
+      this .allowedTypes .clear ();
 
       for (const type of arguments)
-         allowedTypes .add (type);
+         this .allowedTypes .add (type);
    },
    set_addChildren__ ()
    {
@@ -58204,7 +58206,13 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
          return;
 
       this ._addChildren .setTainted (true);
-      this ._addChildren .assign (filter (this ._addChildren, this ._children));
+
+      const addChildren = new Set (this ._addChildren);
+
+      for (const node of this .children)
+         addChildren .delete (node);
+
+      this .add (addChildren);
 
       if (!this ._children .isTainted ())
       {
@@ -58212,8 +58220,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
          this ._children .addInterest ("connectChildren", this);
       }
 
-      this ._children .splice (this ._children .length, 0, ... this ._addChildren);
-      this .add (this ._addChildren);
+      for (const child of addChildren)
+         this ._children .push (child);
 
       this ._addChildren .length = 0;
       this ._addChildren .setTainted (false);
@@ -58227,14 +58235,15 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
 
       if (this ._children .length > 0)
       {
+         this .remove (this ._removeChildren);
+
          if (!this ._children .isTainted ())
          {
             this ._children .removeInterest ("set_children__", this);
             this ._children .addInterest ("connectChildren", this);
          }
 
-         this ._children .assign (filter (this ._children, this ._removeChildren));
-         this .remove (this ._removeChildren);
+         this ._children = Array .from (this ._children) .filter (child => this .children .has (child));
       }
 
       this ._removeChildren .length = 0;
@@ -58262,23 +58271,30 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
 
          if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
          {
-            childNode ._display     .removeInterest ("set_displays_",     this);
+            childNode ._display     .removeInterest ("set_displays__",     this);
             childNode ._bboxDisplay .removeInterest ("set_bboxDisplays__", this);
          }
       }
 
-      this .clipPlaneNodes            .length = 0;
-      this .localFogNodes             .length = 0;
-      this .lightNodes                .length = 0;
-      this .pointingDeviceSensorNodes .length = 0;
-      this .maybeCameraObjects        .length = 0;
-      this .maybePickableSensorNodes  .length = 0;
-      this .childNodes                .length = 0;
+      this .children                  .clear ();
+      this .pointingDeviceSensorNodes .clear ();
+      this .clipPlaneNodes            .clear ();
+      this .displayNodes              .clear ();
+      this .maybeCameraObjects        .clear ();
+      this .cameraObjects             .clear ();
+      this .maybePickableSensorNodes  .clear ();
+      this .pickableSensorNodes       .clear ();
+      this .pickableObjects           .clear ();
+      this .childNodes                .clear ();
+      this .visibleNodes              .clear ();
+      this .boundedObjects            .clear ();
    },
    add (children)
    {
       for (const child of children)
       {
+         this .children .add (child);
+
          const childNode = Base_X3DCast (Base_X3DConstants .X3DChildNode, child);
 
          if (!childNode)
@@ -58298,27 +58314,30 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
             {
                case Base_X3DConstants .X3DPointingDeviceSensorNode:
                {
-                  this .pointingDeviceSensorNodes .push (childNode);
+                  this .pointingDeviceSensorNodes .add (childNode);
                   break;
                }
                case Base_X3DConstants .ClipPlane:
                {
-                  this .clipPlaneNodes .push (childNode);
+                  this .clipPlaneNodes .add (childNode);
+                  this .displayNodes   .add (childNode);
                   break;
                }
                case Base_X3DConstants .LocalFog:
                {
-                  this .localFogNodes .push (childNode);
+                  this .displayNodes .add (childNode);
                   break;
                }
                case Base_X3DConstants .X3DLightNode:
                {
-                  this .lightNodes .push (childNode);
+                  this .displayNodes .add (childNode);
                   break;
                }
                case Base_X3DConstants .X3DBindableNode:
                {
-                  this .maybeCameraObjects .push (childNode);
+                  this .maybeCameraObjects .add (childNode);
+
+                  this .addCameraObject (childNode);
                   break;
                }
                case Base_X3DConstants .TransformSensor:
@@ -58326,7 +58345,9 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
                {
                   childNode ._isPickableObject .addInterest ("set_pickableObjects__", this);
 
-                  this .maybePickableSensorNodes .push (childNode);
+                  this .maybePickableSensorNodes .add (childNode);
+
+                  this .addPickableSensorNode (childNode);
                   break;
                }
                case Base_X3DConstants .Sound:
@@ -58339,12 +58360,17 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
 
                   if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
                   {
-                     childNode ._display     .addInterest ("set_displays_",      this);
+                     childNode ._display     .addInterest ("set_displays__",     this);
                      childNode ._bboxDisplay .addInterest ("set_bboxDisplays__", this);
                   }
 
-                  this .maybeCameraObjects .push (childNode);
-                  this .childNodes .push (childNode);
+                  this .maybeCameraObjects .add (childNode);
+                  this .childNodes         .add (childNode);
+
+                  this .addCameraObject (childNode);
+                  this .addPickableObject (childNode);
+                  this .addVisibleNode (childNode);
+                  this .addBoundedObject (childNode);
                   break;
                }
                case Base_X3DConstants .BooleanFilter:
@@ -58370,37 +58396,26 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
                   continue;
             }
 
-            break;
-         }
+            if (childNode .isRenderingRequired ())
+               continue;
 
-         if (childNode .getMustDisplay ())
-         {
-            if (!this .childNodes .includes (childNode))
-               this .childNodes .push (childNode);
+            break;
          }
       }
 
-      this .set_pickableObjects__ ()
-      this .set_displayNodes__ ()
-      this .set_displays_ ()
-      this .set_bboxDisplays__ ();
+      this .setCameraObject (this .cameraObjects .size);
+      this .set_transformSensors__ ();
    },
    remove (children)
    {
       for (const child of children)
       {
+         this .children .delete (child);
+
          const childNode = Base_X3DCast (Base_X3DConstants .X3DChildNode, child);
 
          if (!childNode)
             continue;
-
-         if (childNode .getMustDisplay ())
-         {
-            const index = this .childNodes .indexOf (childNode);
-
-            if (index >= 0)
-               this .childNodes .splice (index, 1);
-         }
 
          const type = childNode .getType ();
 
@@ -58410,47 +58425,29 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
             {
                case Base_X3DConstants .X3DPointingDeviceSensorNode:
                {
-                  const index = this .pointingDeviceSensorNodes .indexOf (childNode);
-
-                  if (index >= 0)
-                     this .pointingDeviceSensorNodes .splice (index, 1);
-
+                  this .pointingDeviceSensorNodes .delete (childNode);
                   break;
                }
                case Base_X3DConstants .ClipPlane:
                {
-                  const index = this .clipPlaneNodes .indexOf (childNode);
-
-                  if (index >= 0)
-                     this .clipPlaneNodes .splice (index, 1);
-
+                  this .clipPlaneNodes .delete (childNode);
+                  this .displayNodes   .delete (childNode);
                   break;
                }
                case Base_X3DConstants .LocalFog:
                {
-                  const index = this .localFogNodes .indexOf (childNode);
-
-                  if (index >= 0)
-                     this .localFogNodes .splice (index, 1);
-
+                  this .displayNodes .delete (childNode);
                   break;
                }
                case Base_X3DConstants .X3DLightNode:
                {
-                  const index = this .lightNodes .indexOf (childNode);
-
-                  if (index >= 0)
-                     this .lightNodes .splice (index, 1);
-
+                  this .displayNodes .delete (childNode);
                   break;
                }
                case Base_X3DConstants .X3DBindableNode:
                {
-                  const index = this .maybeCameraObjects .indexOf (childNode);
-
-                  if (index >= 0)
-                     this .maybeCameraObjects .splice (index, 1);
-
+                  this .maybeCameraObjects .delete (childNode);
+                  this .cameraObjects      .delete (childNode);
                   break;
                }
                case Base_X3DConstants .TransformSensor:
@@ -58458,11 +58455,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
                {
                   childNode ._isPickableObject .removeInterest ("set_pickableObjects__", this);
 
-                  const index = this .maybePickableSensorNodes .indexOf (childNode);
-
-                  if (index >= 0)
-                     this .maybePickableSensorNodes .splice (index, 1);
-
+                  this .maybePickableSensorNodes .delete (childNode);
+                  this .pickableSensorNodes      .delete (childNode);
                   break;
                }
                case Base_X3DConstants .Sound:
@@ -58475,20 +58469,16 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
 
                   if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
                   {
-                     childNode ._display     .removeInterest ("set_displays_",     this);
+                     childNode ._display     .removeInterest ("set_displays__",     this);
                      childNode ._bboxDisplay .removeInterest ("set_bboxDisplays__", this);
                   }
 
-                  var index = this .maybeCameraObjects .indexOf (childNode);
-
-                  if (index >= 0)
-                     this .maybeCameraObjects .splice (index, 1);
-
-                  var index = this .childNodes .indexOf (childNode);
-
-                  if (index >= 0)
-                     this .childNodes .splice (index, 1);
-
+                  this .maybeCameraObjects .delete (childNode);
+                  this .cameraObjects      .delete (childNode);
+                  this .pickableObjects    .delete (childNode);
+                  this .childNodes         .delete (childNode);
+                  this .visibleNodes       .delete (childNode);
+                  this .boundedObjects     .delete (childNode);
                   break;
                }
                case Base_X3DConstants .BooleanFilter:
@@ -58514,117 +58504,115 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
                   continue;
             }
 
+            if (childNode .isRenderingRequired ())
+               continue;
+
             break;
          }
       }
 
-      this .set_displayNodes__ ();
-      this .set_displays_ ();
-      this .set_bboxDisplays__ ();
+      this .setCameraObject (this .cameraObjects .size);
+      this .set_transformSensors__ ();
+   },
+   set_displays__ ()
+   {
+      this .set_cameraObjects__ ();
+      this .set_pickableObjects__ ();
+      this .set_visibleNodes__ ();
    },
    set_cameraObjects__ ()
    {
-      const cameraObjects = this .cameraObjects;
-
-      cameraObjects .length = 0;
+      this .cameraObjects .clear ();
 
       for (const childNode of this .maybeCameraObjects)
+         this .addCameraObject (childNode);
+
+      this .setCameraObject (this .cameraObjects .size);
+   },
+   addCameraObject (childNode)
+   {
+      if (!childNode .isCameraObject ())
+         return;
+
+      if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
       {
-         if (!childNode .isCameraObject ())
-            continue;
-
-         if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
-         {
-            if (childNode ._display .getValue ())
-               cameraObjects .push (childNode);
-         }
-         else
-         {
-            cameraObjects .push (childNode);
-         }
+         if (childNode ._display .getValue ())
+            this .cameraObjects .add (childNode);
       }
-
-      this .setCameraObject (cameraObjects .length);
+      else
+      {
+         this .cameraObjects .add (childNode);
+      }
    },
    set_pickableObjects__ ()
    {
-      const
-         pickableSensorNodes = this .pickableSensorNodes,
-         pickableObjects     = this .pickableObjects;
+      this .pickableSensorNodes .clear ();
+      this .pickableObjects     .clear ();
 
-      pickableSensorNodes .length = 0;
-      pickableObjects     .length = 0;
+      for (const childNode of this .maybePickableSensorNodes)
+         this .addPickableSensorNode (childNode);
 
-      for (const sensorNode of this .maybePickableSensorNodes)
-      {
-         if (sensorNode .isPickableObject ())
-            pickableSensorNodes .push (sensorNode);
-      }
+      for (const childNode of this .childNodes)
+         this .addPickableObject (childNode);
 
-      for (const childNode of this .visibleNodes)
-      {
-         if (childNode .isPickableObject ())
-            pickableObjects .push (childNode);
-      }
-
-      this .set_transformSensors__ ()
+      this .set_transformSensors__ ();
    },
    set_transformSensors__ ()
    {
-      this .setPickableObject (this .getTransformSensors () .size || this .pickableSensorNodes .length || this .pickableObjects .length);
+      this .setPickableObject (this .getTransformSensors () .size || this .pickableSensorNodes .size || this .pickableObjects .size);
    },
-   set_displayNodes__ ()
+   addPickableSensorNode (childNode)
    {
-      const displayNodes = this .displayNodes;
-
-      displayNodes .length = 0;
-
-      for (const node of this .clipPlaneNodes)
-         displayNodes .push (node);
-
-      for (const node of this .localFogNodes)
-         displayNodes .push (node);
-
-      for (const node of this .lightNodes)
-         displayNodes .push (node);
+      if (childNode .isPickableObject ())
+         this .pickableSensorNodes .add (childNode);
    },
-   set_displays_ ()
+   addPickableObject (childNode)
    {
-      const visibleNodes = this .visibleNodes;
+      if (!childNode .isPickableObject ())
+         return;
 
-      visibleNodes .length = 0;
+      if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
+      {
+         if (childNode ._display .getValue ())
+            this .pickableObjects .add (childNode);
+      }
+      else
+      {
+         this .pickableObjects .add (childNode);
+      }
+   },
+   set_visibleNodes__ ()
+   {
+      this .visibleNodes .clear ();
 
       for (const childNode of this .childNodes)
+         this .addVisibleNode (childNode);
+   },
+   addVisibleNode (childNode)
+   {
+      if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
       {
-         if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
-         {
-            if (childNode ._display .getValue ())
-               visibleNodes .push (childNode);
-         }
-         else
-         {
-            visibleNodes .push (childNode);
-         }
+         if (childNode ._display .getValue ())
+            this .visibleNodes .add (childNode);
       }
-
-      this .set_cameraObjects__ ();
-      this .set_pickableObjects__ ();
+      else
+      {
+         this .visibleNodes .add (childNode);
+      }
    },
    set_bboxDisplays__ ()
    {
-      const boundedObjects = this .boundedObjects;
-
-      boundedObjects .length = 0;
+      this .boundedObjects .clear ();
 
       for (const childNode of this .childNodes)
+         this .addBoundedObject (childNode);
+   },
+   addBoundedObject (childNode)
+   {
+      if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
       {
-         if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
-         {
-            if (childNode ._bboxDisplay .getValue ())
-            {
-               boundedObjects .push (childNode);
-            }
-         }
+         if (childNode ._bboxDisplay .getValue ())
+            this .boundedObjects .add (childNode);
       }
    },
    traverse (type, renderObject)
@@ -58640,7 +58628,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
 
             sensors .length = 0;
 
-            if (pointingDeviceSensorNodes .length)
+            if (pointingDeviceSensorNodes .size)
             {
                for (const pointingDeviceSensorNode of pointingDeviceSensorNodes)
                   pointingDeviceSensorNode .push (renderObject, sensors);
@@ -58761,13 +58749,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
       Core_X3DChildNode     .prototype .dispose .call (this);
    },
 });
-
-function filter (array, remove)
-{
-   const set = new Set (remove);
-
-   return array .filter (value => !set .has (value));
-}
 
 Object .defineProperties (X3DGroupingNode,
 {
@@ -60502,7 +60483,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    })(),
    set_live__ ()
    {
-      if (this .getLive () .getValue ())
+      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+
+      if (this .getLive () .getValue () || alwaysUpdate)
          this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
       else
          this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
@@ -62444,7 +62427,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .add ("X3DTexture2DNode", "x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(37);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66045,7 +66028,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .add ("X3DWorld", "x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(37);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66972,7 +66955,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 x_ite_Namespace .add ("ProtoDeclarationArray", "x_ite/Prototype/ProtoDeclarationArray", ProtoDeclarationArray_default_);
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (ProtoDeclarationArray_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(37);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -74178,7 +74161,9 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, Rendering_X3DGeometryNo
    {
       Rendering_X3DGeometryNode .prototype .set_live__ .call (this);
 
-      if (this .getLive () .getValue ())
+      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+
+      if (this .getLive () .getValue () || alwaysUpdate)
          this .getBrowser () .getConeOptions () .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getConeOptions () .removeInterest ("requestRebuild", this);
@@ -74389,7 +74374,9 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, Rendering_X3DGeomet
    {
       Rendering_X3DGeometryNode .prototype .set_live__ .call (this);
 
-      if (this .getLive () .getValue ())
+      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+
+      if (this .getLive () .getValue () || alwaysUpdate)
          this .getBrowser () .getCylinderOptions () .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getCylinderOptions () .removeInterest ("requestRebuild", this);
@@ -76631,7 +76618,9 @@ Object .assign (Object .setPrototypeOf (Sphere .prototype, Rendering_X3DGeometry
    {
       Rendering_X3DGeometryNode .prototype .set_live__ .call (this);
 
-      if (this .getLive () .getValue ())
+      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+
+      if (this .getLive () .getValue () || alwaysUpdate)
          this .getBrowser () .getSphereOptions () .addInterest ("requestRebuild", this);
       else
          this .getBrowser () .getSphereOptions () .removeInterest ("requestRebuild", this);
@@ -89852,7 +89841,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .add ("X3DShaderNode", "x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(37);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95493,7 +95482,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .add ("ShaderCompiler", "x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(37);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96150,7 +96139,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .add ("X3DAppearanceNode", "x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(37);
+/* provided dependency */ var Appearance_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -98901,7 +98890,9 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, Shape_X3DShapeNode .pr
       {
          case Rendering_TraverseType .POINTER:
          {
-            renderObject .addPointingShape (this);
+            if (this ._pointerEvents .getValue ())
+               renderObject .addPointingShape (this);
+
             break;
          }
          case Rendering_TraverseType .PICKING:
@@ -98991,14 +98982,15 @@ Object .defineProperties (Shape,
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "metadata",    new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "castShadow",  new x_ite_Fields .SFBool (true)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "visible",     new x_ite_Fields .SFBool (true)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "bboxDisplay", new x_ite_Fields .SFBool ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "bboxSize",    new x_ite_Fields .SFVec3f (-1, -1, -1)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "bboxCenter",  new x_ite_Fields .SFVec3f ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "appearance",  new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "geometry",    new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "metadata",      new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "pointerEvents", new x_ite_Fields .SFBool (true)), // skip test
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "castShadow",    new x_ite_Fields .SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "visible",       new x_ite_Fields .SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "bboxDisplay",   new x_ite_Fields .SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "bboxSize",      new x_ite_Fields .SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "bboxCenter",    new x_ite_Fields .SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "appearance",    new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "geometry",      new x_ite_Fields .SFNode ()),
       ]),
       enumerable: true,
    },
@@ -99567,7 +99559,6 @@ const Components_Shape_default_ = {
 x_ite_Namespace .add ("Shape", "x_ite/Components/Shape", Components_Shape_default_);
 /* harmony default export */ const Components_Shape = (Components_Shape_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundProcessingNode.js
-/* provided dependency */ var X3DSoundProcessingNode_$ = __webpack_require__(37);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99621,6 +99612,7 @@ x_ite_Namespace .add ("Shape", "x_ite/Components/Shape", Components_Shape_defaul
 
 
 
+
 function X3DSoundProcessingNode (executionContext)
 {
    Core_X3DChildNode         .call (this, executionContext);
@@ -99628,13 +99620,13 @@ function X3DSoundProcessingNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DSoundProcessingNode);
 
-   this .addChildObjects (Base_X3DConstants .inputOutput, "loop",   new x_ite_Fields .SFBool (true),
-                          Base_X3DConstants .inputOutput, "active", new x_ite_Fields .SFBool ());
+   this .addChildObjects (Base_X3DConstants .inputOutput, "loop", new x_ite_Fields .SFBool (true));
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .childNodes = [ ];
-   this .gainNode   = new GainNode (audioContext);
+   this .childNodes       = [ ];
+   this .audioDestination = new GainNode (audioContext, { gain: 0 });
+   this .audioSource      = new GainNode (audioContext, { gain: 1 });
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, Core_X3DChildNode .prototype),
@@ -99645,35 +99637,63 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, Core_
       Core_X3DChildNode         .prototype .initialize .call (this);
       Time_X3DTimeDependentNode .prototype .initialize .call (this);
 
-      this ._active                .addInterest ("set_gain__",                  this);
+      this ._enabled               .addInterest ("set_enabled__",               this);
       this ._gain                  .addInterest ("set_gain__",                  this);
       this ._channelCount          .addInterest ("set_channelCount__",          this);
       this ._channelCountMode      .addInterest ("set_channelCountMode__",      this);
       this ._channelInterpretation .addInterest ("set_channelInterpretation__", this);
       this ._children              .addInterest ("set_children__",              this);
-      this ._active                .addInterest ("set_active__",                this);
 
+      this .set_enabled__ ();
       this .set_gain__ ();
       this .set_channelCount__ ();
       this .set_channelCountMode__ ();
       this .set_channelInterpretation__ ();
       this .set_children__ ();
    },
+   getAudioDestination ()
+   {
+      return this .audioDestination;
+   },
    getAudioSource ()
    {
-      return this .gainNode;
+      return this .audioSource;
    },
    getSoundProcessor ()
    {
-      return this .gainNode;
+      return this .audioSource;
+   },
+   set_enabled__ ()
+   {
+      this .audioDestination .disconnect ();
+
+      if (this ._enabled .getValue ())
+      {
+         this .set_gain__ ();
+         this .set_channelCountMode__ ();
+         this .set_channelInterpretation__ ();
+
+         this .audioDestination .connect (this .getSoundProcessor ());
+      }
+      else
+      {
+         this .audioDestination .gain .value           = 1;
+         this .audioDestination .channelCountMode      = "max";
+         this .audioDestination .channelInterpretation = "speakers";
+
+         this .audioDestination .connect (this .audioSource);
+      }
    },
    set_gain__ ()
    {
-      this .gainNode .gain .value = this ._active .getValue () ? this ._gain .getValue () : 1;
+      if (!this ._enabled .getValue ())
+         return;
+
+      this .audioDestination .gain .value = this ._gain .getValue ();
    },
    set_channelCount__ ()
    {
-      this .getSoundProcessor () .channelCount = Math .max (this ._channelCount .getValue (), 1);
+      this .audioDestination .channelCount = Math_Algorithm .clamp (this ._channelCount .getValue (), 1, 32);
    },
    set_channelCountMode__: (function ()
    {
@@ -99681,9 +99701,12 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, Core_
 
       return function ()
       {
+         if (!this ._enabled .getValue ())
+            return;
+
          const channelCountMode = this ._channelCountMode .getValue () .toLowerCase () .replaceAll ("_", "-");
 
-         this .getSoundProcessor () .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
+         this .audioDestination .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
       };
    })(),
    set_channelInterpretation__: (function ()
@@ -99692,14 +99715,18 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, Core_
 
       return function ()
       {
+         if (!this ._enabled .getValue ())
+            return;
+
          const channelInterpretation = this ._channelInterpretation .getValue () .toLowerCase ();
 
-         this .getSoundProcessor () .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
+         this .audioDestination .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
       };
    })(),
    set_children__ ()
    {
-      this .set_disconnect__ ();
+      for (const childNode of this .childNodes)
+         childNode .getAudioSource () .disconnect (this .audioDestination);
 
       this .childNodes .length = 0;
 
@@ -99729,50 +99756,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, Core_
          }
       }
 
-      this .set_active__ ();
-   },
-   set_disconnect__ ()
-   {
       for (const childNode of this .childNodes)
-         X3DSoundProcessingNode_$.try (() => childNode .getAudioSource () .disconnect (this .gainNode));
-
-      for (const childNode of this .childNodes)
-         X3DSoundProcessingNode_$.try (() => childNode .getAudioSource () .disconnect (this .getSoundProcessor ()));
-   },
-   set_active__ ()
-   {
-      this .set_disconnect__ ();
-
-      if (this ._active .getValue ())
-      {
-         for (const childNode of this .childNodes)
-            X3DSoundProcessingNode_$.try (() => childNode .getAudioSource () .connect (this .getSoundProcessor ()), true);
-      }
-      else
-      {
-         for (const childNode of this .childNodes)
-            X3DSoundProcessingNode_$.try (() => childNode .getAudioSource () .connect (this .gainNode), true);
-      }
-   },
-   set_start ()
-   {
-      if (!this ._active .getValue ())
-         this ._active = true;
-   },
-   set_pause ()
-   {
-      if (this ._active .getValue ())
-         this ._active = false;
-   },
-   set_resume ()
-   {
-      if (!this ._active .getValue ())
-         this ._active = true;
-   },
-   set_stop ()
-   {
-      if (this ._active .getValue ())
-         this ._active = false;
+         childNode .getAudioSource () .connect (this .audioDestination);
    },
    set_time ()
    {
@@ -99867,11 +99852,12 @@ function Analyser (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .analyzerNode       = new AnalyserNode (audioContext);
-   this .byteFrequencyData  = new Uint8Array (this .analyzerNode .frequencyBinCount);
-   this .byteTimeDomainData = new Uint8Array (this .analyzerNode .frequencyBinCount);
+   this .analyserNode       = new AnalyserNode (audioContext);
+   this .byteFrequencyData  = new Uint8Array (this .analyserNode .frequencyBinCount);
+   this .byteTimeDomainData = new Uint8Array (this .analyserNode .frequencyBinCount);
 
-   this .analyzerNode .connect (this .getAudioSource ());
+   this .getAudioDestination () .connect (this .analyserNode);
+   this .analyserNode .connect (this .getAudioSource ());
 }
 
 Object .assign (Object .setPrototypeOf (Analyser .prototype, Sound_X3DSoundProcessingNode .prototype),
@@ -99891,13 +99877,13 @@ Object .assign (Object .setPrototypeOf (Analyser .prototype, Sound_X3DSoundProce
    },
    getSoundProcessor ()
    {
-      return this .analyzerNode;
+      return this .analyserNode;
    },
    set_fftSize__ ()
    {
-      this .analyzerNode .fftSize = Math_Algorithm .clamp (Math_Algorithm .nextPowerOfTwo (this ._fftSize .getValue ()), 32, 32768);
+      this .analyserNode .fftSize = Math_Algorithm .clamp (Math_Algorithm .nextPowerOfTwo (this ._fftSize .getValue ()), 32, 32768);
 
-      this ._frequencyBinCount = this .analyzerNode .frequencyBinCount;
+      this ._frequencyBinCount = this .analyserNode .frequencyBinCount;
    },
    set_decibels__ ()
    {
@@ -99905,20 +99891,20 @@ Object .assign (Object .setPrototypeOf (Analyser .prototype, Sound_X3DSoundProce
          minDecibels = Math .min (this ._minDecibels .getValue (), 0),
          maxDecibels = Math .min (this ._maxDecibels .getValue (), 0);
 
-      this .analyzerNode .minDecibels = Math .min (minDecibels, maxDecibels);
-      this .analyzerNode .maxDecibels = Math .max (minDecibels, maxDecibels);
+      this .analyserNode .minDecibels = Math .min (minDecibels, maxDecibels);
+      this .analyserNode .maxDecibels = Math .max (minDecibels, maxDecibels);
    },
    set_smoothingTimeConstant__ ()
    {
-      this .analyzerNode .smoothingTimeConstant = Math_Algorithm .clamp (this ._smoothingTimeConstant .getValue (), 0, 1);
+      this .analyserNode .smoothingTimeConstant = Math_Algorithm .clamp (this ._smoothingTimeConstant .getValue (), 0, 1);
    },
    set_time ()
    {
       Sound_X3DSoundProcessingNode .prototype .set_time .call (this);
 
       const
-         analyzerNode      = this .analyzerNode,
-         frequencyBinCount = analyzerNode .frequencyBinCount;
+         analyserNode      = this .analyserNode,
+         frequencyBinCount = analyserNode .frequencyBinCount;
 
       if (this .byteFrequencyData .length !== frequencyBinCount)
       {
@@ -99931,14 +99917,14 @@ Object .assign (Object .setPrototypeOf (Analyser .prototype, Sound_X3DSoundProce
       this ._floatFrequencyData  .length = frequencyBinCount;
       this ._floatTimeDomainData .length = frequencyBinCount;
 
-      analyzerNode .getByteFrequencyData  (this .byteFrequencyData);
-      analyzerNode .getByteTimeDomainData (this .byteTimeDomainData);
+      analyserNode .getByteFrequencyData  (this .byteFrequencyData);
+      analyserNode .getByteTimeDomainData (this .byteTimeDomainData);
 
       this ._byteFrequencyData  .getValue () .set (this .byteFrequencyData);
       this ._byteTimeDomainData .getValue () .set (this .byteTimeDomainData);
 
-      analyzerNode .getFloatFrequencyData  (this ._floatFrequencyData  .shrinkToFit ());
-      analyzerNode .getFloatTimeDomainData (this ._floatTimeDomainData .shrinkToFit ());
+      analyserNode .getFloatFrequencyData  (this ._floatFrequencyData  .shrinkToFit ());
+      analyserNode .getFloatTimeDomainData (this ._floatTimeDomainData .shrinkToFit ());
 
       this ._byteFrequencyData   .addEvent ();
       this ._byteTimeDomainData  .addEvent ();
@@ -100072,7 +100058,7 @@ function X3DSoundSourceNode (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .gainNode     = new GainNode (audioContext);
+   this .audioSource  = new GainNode (audioContext, { gain: 0 });
    this .mediaElement = null;
 }
 
@@ -100090,7 +100076,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, Core_X3DC
    },
    getAudioSource ()
    {
-      return this .gainNode;
+      return this .audioSource;
    },
    setMediaElement (value)
    {
@@ -100132,7 +100118,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, Core_X3DC
    },
    set_gain__ ()
    {
-      this .gainNode .gain .value = this ._gain .getValue ();
+      this .audioSource .gain .value = this ._gain .getValue ();
    },
    set_pitch ()
    { },
@@ -100207,7 +100193,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace .add ("X3DSoundSourceNode", "x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(37);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100509,7 +100495,6 @@ const X3DSoundNode_default_ = X3DSoundNode;
 x_ite_Namespace .add ("X3DSoundNode", "x_ite/Components/Sound/X3DSoundNode", X3DSoundNode_default_);
 /* harmony default export */ const Sound_X3DSoundNode = (X3DSoundNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundDestinationNode.js
-/* provided dependency */ var X3DSoundDestinationNode_$ = __webpack_require__(37);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100561,6 +100546,7 @@ x_ite_Namespace .add ("X3DSoundNode", "x_ite/Components/Sound/X3DSoundNode", X3D
 
 
 
+
 function X3DSoundDestinationNode (executionContext)
 {
    Sound_X3DSoundNode .call (this, executionContext);
@@ -100569,8 +100555,8 @@ function X3DSoundDestinationNode (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .childNodes = [ ];
-   this .gainNode   = new GainNode (audioContext);
+   this .childNodes       = [ ];
+   this .audioDestination = new GainNode (audioContext, { gain: 0 });
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, Sound_X3DSoundNode .prototype),
@@ -100581,50 +100567,40 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, Soun
 
       this .getLive () .addInterest ("set_enabled__", this);
 
-      this ._enabled  .addInterest ("set_enabled__",  this);
-      this ._gain     .addInterest ("set_gain__",     this);
-      this ._children .addInterest ("set_children__", this);
+      this ._enabled               .addInterest ("set_enabled__",               this);
+      this ._gain                  .addInterest ("set_gain__",                  this);
+      this ._channelCount          .addInterest ("set_channelCount__",          this);
+      this ._channelCountMode      .addInterest ("set_channelCountMode__",      this);
+      this ._channelInterpretation .addInterest ("set_channelInterpretation__", this);
+      this ._children              .addInterest ("set_children__",              this);
 
       this .set_enabled__ ();
       this .set_gain__ ();
+      this .set_channelCount__ ();
+      this .set_channelCountMode__ ();
+      this .set_channelInterpretation__ ();
       this .set_children__ ();
    },
-   getAudioSource ()
+   getAudioDestination ()
    {
-      return this .gainNode;
+      return this .audioDestination;
    },
    set_enabled__ ()
    {
       if (this ._enabled .getValue () && this .getLive () .getValue ())
-      {
-         this ._channelCount          .addInterest ("set_channelCount__",          this);
-         this ._channelCountMode      .addInterest ("set_channelCountMode__",      this);
-         this ._channelInterpretation .addInterest ("set_channelInterpretation__", this);
-
-         this .gainNode .connect (this .getSoundDestination ());
-
-         this .set_channelCount__ ();
-         this .set_channelCountMode__ ();
-         this .set_channelInterpretation__ ();
-      }
+         this .audioDestination .connect (this .getSoundDestination ());
       else
-      {
-         this ._channelCount          .removeInterest ("set_channelCount__",          this);
-         this ._channelCountMode      .removeInterest ("set_channelCountMode__",      this);
-         this ._channelInterpretation .removeInterest ("set_channelInterpretation__", this);
-
-         this .gainNode .disconnect ();
-      }
+         this .audioDestination .disconnect ();
 
       this ._isActive = this ._enabled;
    },
    set_gain__ ()
    {
-      this .gainNode .gain .value = this ._gain .getValue ();
+      this .audioDestination .gain .value = this ._gain .getValue ();
    },
    set_channelCount__ ()
    {
-      this .getSoundDestination () .channelCount = Math .max (this ._channelCount .getValue (), 1);
+      this .audioDestination .channelCount = Math_Algorithm .clamp (this ._channelCount .getValue (), 1, 32);
    },
    set_channelCountMode__: (function ()
    {
@@ -100634,7 +100610,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, Soun
       {
          const channelCountMode = this ._channelCountMode .getValue () .toLowerCase () .replaceAll ("_", "-");
 
-         this .getSoundDestination () .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
+         this .audioDestination .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
       };
    })(),
    set_channelInterpretation__: (function ()
@@ -100645,13 +100621,13 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, Soun
       {
          const channelInterpretation = this ._channelInterpretation .getValue () .toLowerCase ();
 
-         this .getSoundDestination () .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
+         this .audioDestination .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
       };
    })(),
    set_children__ ()
    {
       for (const childNode of this .childNodes)
-         X3DSoundDestinationNode_$.try (() => childNode .getAudioSource () .disconnect (this .gainNode));
+         childNode .getAudioSource () .disconnect (this .audioDestination);
 
       this .childNodes .length = 0;
 
@@ -100682,7 +100658,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, Soun
       }
 
       for (const childNode of this .childNodes)
-         X3DSoundDestinationNode_$.try (() => childNode .getAudioSource () .connect (this .gainNode), true);
+         childNode .getAudioSource () .connect (this .audioDestination);
    },
 });
 
@@ -101199,14 +101175,162 @@ x_ite_Namespace .add ("BufferAudioSource", "x_ite/Components/Sound/BufferAudioSo
 
 
 
+
+
 function X3DSoundChannelNode (executionContext)
 {
    Sound_X3DSoundNode .call (this, executionContext);
 
    this .addType (Base_X3DConstants .X3DSoundChannelNode);
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .childNodes       = [ ];
+   this .audioDestination = new GainNode (audioContext, { gain: 0 });
+   this .audioSource      = new GainNode (audioContext, { gain: 1 });
 }
 
-Object .setPrototypeOf (X3DSoundChannelNode .prototype, Sound_X3DSoundNode .prototype);
+Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, Sound_X3DSoundNode .prototype),
+{
+   initialize ()
+   {
+      Sound_X3DSoundNode .prototype .initialize .call (this);
+
+      this ._enabled               .addInterest ("set_enabled__",               this);
+      this ._gain                  .addInterest ("set_gain__",                  this);
+      this ._channelCount          .addInterest ("set_channelCount__",          this);
+      this ._channelCountMode      .addInterest ("set_channelCountMode__",      this);
+      this ._channelInterpretation .addInterest ("set_channelInterpretation__", this);
+      this ._children              .addInterest ("set_children__",              this);
+
+      this .set_enabled__ ();
+      this .set_gain__ ();
+      this .set_channelCount__ ();
+      this .set_channelCountMode__ ();
+      this .set_channelInterpretation__ ();
+      this .set_children__ ();
+   },
+   getAudioDestination ()
+   {
+      return this .audioDestination;
+   },
+   getAudioSource ()
+   {
+      return this .audioSource;
+   },
+   getSoundProcessor ()
+   {
+      return this .audioSource;
+   },
+   set_enabled__ ()
+   {
+      this .audioDestination .disconnect ();
+
+      if (this ._enabled .getValue ())
+      {
+         this .set_gain__ ();
+         this .set_channelCountMode__ ();
+         this .set_channelInterpretation__ ();
+
+         this .audioDestination .connect (this .getSoundProcessor ());
+      }
+      else
+      {
+         this .audioDestination .gain .value           = 1;
+         this .audioDestination .channelCountMode      = "max";
+         this .audioDestination .channelInterpretation = "speakers";
+
+         this .audioDestination .connect (this .audioSource);
+      }
+   },
+   set_gain__ ()
+   {
+      if (!this ._enabled .getValue ())
+         return;
+
+      this .audioDestination .gain .value = this ._gain .getValue ();
+   },
+   set_channelCount__ ()
+   {
+      this .audioDestination .channelCount = Math_Algorithm .clamp (this ._channelCount .getValue (), 1, 32);
+   },
+   set_channelCountMode__: (function ()
+   {
+      const channelCountModes = new Set (["max", "clamped-max", "explicit"]);
+
+      return function ()
+      {
+         if (!this ._enabled .getValue ())
+            return;
+
+         const channelCountMode = this ._channelCountMode .getValue () .toLowerCase () .replaceAll ("_", "-");
+
+         this .audioDestination .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
+      };
+   })(),
+   set_channelInterpretation__: (function ()
+   {
+      const channelInterpretations = new Set (["speakers", "discrete"]);
+
+      return function ()
+      {
+         if (!this ._enabled .getValue ())
+            return;
+
+         const channelInterpretation = this ._channelInterpretation .getValue () .toLowerCase ();
+
+         this .audioDestination .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
+      };
+   })(),
+   set_children__ ()
+   {
+      for (const [i, childNode] of this .childNodes .entries ())
+         this .disconnectChildNode (i, childNode);
+
+      this .childNodes .length = 0;
+
+      for (const child of this ._children)
+      {
+         const childNode = Base_X3DCast (Base_X3DConstants .X3DChildNode, child);
+
+         if (!childNode)
+            continue;
+
+         const type = childNode .getType ();
+
+         for (let t = type .length - 1; t >= 0; -- t)
+         {
+            switch (type [t])
+            {
+               case Base_X3DConstants .X3DSoundChannelNode:
+               case Base_X3DConstants .X3DSoundProcessingNode:
+               case Base_X3DConstants .X3DSoundSourceNode:
+                  this .childNodes .push (childNode);
+                  break;
+               default:
+                  continue;
+            }
+
+            break;
+         }
+      }
+
+      this .setChildNodes (this .childNodes);
+
+      for (const [i, childNode] of this .childNodes .entries ())
+         this .connectChildNode (i, childNode);
+   },
+   setChildNodes (childNodes)
+   { },
+   connectChildNode (i, childNode)
+   {
+      childNode .getAudioSource () .connect (this .audioDestination);
+   },
+   disconnectChildNode (i, childNode)
+   {
+      childNode .getAudioSource () .disconnect (this .audioDestination);
+   },
+});
 
 Object .defineProperties (X3DSoundChannelNode,
 {
@@ -101281,6 +101405,7 @@ x_ite_Namespace .add ("X3DSoundChannelNode", "x_ite/Components/Sound/X3DSoundCha
 
 
 
+
 function ChannelMerger (executionContext)
 {
    Sound_X3DSoundChannelNode .call (this, executionContext);
@@ -101288,7 +101413,59 @@ function ChannelMerger (executionContext)
    this .addType (Base_X3DConstants .ChannelMerger);
 }
 
-Object .setPrototypeOf (ChannelMerger .prototype, Sound_X3DSoundChannelNode .prototype);
+Object .assign (Object .setPrototypeOf (ChannelMerger .prototype, Sound_X3DSoundChannelNode .prototype),
+{
+   initialize ()
+   {
+      Sound_X3DSoundChannelNode .prototype .initialize .call (this);
+
+      this ._enabled .addInterest ("set_children__", this);
+   },
+   setChildNodes (childNodes)
+   {
+      this .channelMergerNode ?.disconnect ();
+
+      if (this ._enabled .getValue ())
+      {
+         const
+            audioContext   = this .getBrowser () .getAudioContext (),
+            numberOfInputs = Math_Algorithm .clamp (childNodes .length, 1, 32);
+
+         if (this .channelMergerNode ?.numberOfInputs !== numberOfInputs)
+            this .channelMergerNode = new ChannelMergerNode (audioContext, { numberOfInputs });
+
+         this .channelMergerNode .connect (this .getAudioDestination ());
+      }
+      else
+      {
+         this .channelMergerNode = null;
+      }
+   },
+   connectChildNode (i, childNode)
+   {
+      if (this .channelMergerNode)
+      {
+         if (i < 32)
+            childNode .getAudioSource () .connect (this .channelMergerNode, 0, i);
+      }
+      else
+      {
+         childNode .getAudioSource () .connect (this .getAudioDestination ());
+      }
+   },
+   disconnectChildNode (i, childNode)
+   {
+      if (this .channelMergerNode)
+      {
+         if (i < 32)
+            childNode .getAudioSource () .disconnect (this .channelMergerNode, 0, i);
+      }
+      else
+      {
+         childNode .getAudioSource () .disconnect (this .getAudioDestination ());
+      }
+   },
+});
 
 Object .defineProperties (ChannelMerger,
 {
@@ -101315,9 +101492,9 @@ Object .defineProperties (ChannelMerger,
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",             new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "description",          new x_ite_Fields .SFString ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "enabled",              new x_ite_Fields .SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",              new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "description",           new x_ite_Fields .SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "enabled",               new x_ite_Fields .SFBool (true)),
 
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "gain",                  new x_ite_Fields .SFFloat (1)),
 
@@ -101390,14 +101567,49 @@ x_ite_Namespace .add ("ChannelMerger", "x_ite/Components/Sound/ChannelMerger", C
 
 
 
+
 function ChannelSelector (executionContext)
 {
    Sound_X3DSoundChannelNode .call (this, executionContext);
 
    this .addType (Base_X3DConstants .ChannelSelector);
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .channelSplitterNode = new ChannelSplitterNode (audioContext);
 }
 
-Object .setPrototypeOf (ChannelSelector .prototype, Sound_X3DSoundChannelNode .prototype);
+Object .assign (Object .setPrototypeOf (ChannelSelector .prototype, Sound_X3DSoundChannelNode .prototype),
+{
+   initialize ()
+   {
+      Sound_X3DSoundChannelNode .prototype .initialize .call (this);
+
+      this ._channelSelection .addInterest ("set_channelSelection__", this);
+
+      this .set_channelSelection__ ();
+   },
+   getSoundProcessor ()
+   {
+      return this .channelSplitterNode;
+   },
+   set_channelSelection__ ()
+   {
+      const
+         audioContext     = this .getBrowser () .getAudioContext (),
+         channelSelection = Math_Algorithm .clamp (this ._channelSelection .getValue (), 0, 31),
+         numberOfOutputs  = channelSelection + 1;
+
+      this .channelSplitterNode .disconnect ();
+
+      if (this .channelSplitterNode .numberOfOutputs !== numberOfOutputs)
+         this .channelSplitterNode = new ChannelSplitterNode (audioContext, { numberOfOutputs });
+
+      this .channelSplitterNode .connect (this .getAudioSource (), channelSelection);
+
+      this .set_enabled__ ();
+   },
+});
 
 Object .defineProperties (ChannelSelector,
 {
@@ -101424,9 +101636,9 @@ Object .defineProperties (ChannelSelector,
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",             new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "description",          new x_ite_Fields .SFString ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "enabled",              new x_ite_Fields .SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",              new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "description",           new x_ite_Fields .SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "enabled",               new x_ite_Fields .SFBool (true)),
 
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "gain",                  new x_ite_Fields .SFFloat (1)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "channelSelection",      new x_ite_Fields .SFInt32 (0)),
@@ -101500,14 +101712,101 @@ x_ite_Namespace .add ("ChannelSelector", "x_ite/Components/Sound/ChannelSelector
 
 
 
+
+
 function ChannelSplitter (executionContext)
 {
    Sound_X3DSoundChannelNode .call (this, executionContext);
 
    this .addType (Base_X3DConstants .ChannelSplitter);
+
+   this .outputNodes = [ ];
 }
 
-Object .setPrototypeOf (ChannelSplitter .prototype, Sound_X3DSoundChannelNode .prototype);
+Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, Sound_X3DSoundChannelNode .prototype),
+{
+   initialize ()
+   {
+      Sound_X3DSoundChannelNode .prototype .initialize .call (this);
+
+      this ._enabled .addInterest ("set_outputs__", this);
+      this ._outputs .addInterest ("set_outputs__", this);
+
+      this .set_outputs__ ();
+   },
+   set_outputs__ ()
+   {
+      if (this .channelSplitterNode)
+      {
+         this .channelSplitterNode .disconnect ();
+      }
+      else
+      {
+         for (const outputNode of this .outputNodes)
+            this .getAudioSource () .disconnect (outputNode .getAudioDestination ());
+      }
+
+      this .outputNodes .length = 0;
+
+      for (const child of this ._outputs)
+      {
+         const outputNode = Base_X3DCast (Base_X3DConstants .X3DChildNode, child);
+
+         if (!outputNode)
+            continue;
+
+         const type = outputNode .getType ();
+
+         for (let t = type .length - 1; t >= 0; -- t)
+         {
+            switch (type [t])
+            {
+               case Base_X3DConstants .X3DSoundChannelNode:
+               case Base_X3DConstants .X3DSoundDestinationNode:
+               case Base_X3DConstants .X3DSoundProcessingNode:
+                  this .outputNodes .push (outputNode);
+                  break;
+               default:
+                  continue;
+            }
+
+            break;
+         }
+      }
+
+      if (this .channelSplitterNode)
+         this .getAudioSource () .disconnect (this .channelSplitterNode);
+
+      if (this ._enabled .getValue ())
+      {
+         const
+            audioContext    = this .getBrowser () .getAudioContext (),
+            numberOfOutputs = Math_Algorithm .clamp (this .outputNodes .length, 1, 32);
+
+         if (this .channelSplitterNode ?.numberOfOutputs !== numberOfOutputs)
+            this .channelSplitterNode = new ChannelSplitterNode (audioContext, { numberOfOutputs });
+
+         this .getAudioSource () .connect (this .channelSplitterNode);
+      }
+      else
+      {
+         this .channelSplitterNode = null;
+      }
+
+      if (this .channelSplitterNode)
+      {
+         const length = Math .min (this .outputNodes .length, 32);
+
+         for (let i = 0; i < length; ++ i)
+            this .channelSplitterNode .connect (this .outputNodes [i] .getAudioDestination (), i);
+      }
+      else
+      {
+         for (const outputNode of this .outputNodes)
+            this .getAudioSource () .connect (outputNode .getAudioDestination ());
+      }
+   },
+});
 
 Object .defineProperties (ChannelSplitter,
 {
@@ -101534,9 +101833,9 @@ Object .defineProperties (ChannelSplitter,
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",             new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "description",          new x_ite_Fields .SFString ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "enabled",              new x_ite_Fields .SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",              new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "description",           new x_ite_Fields .SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "enabled",               new x_ite_Fields .SFBool (true)),
 
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "gain",                  new x_ite_Fields .SFFloat (1)),
 
@@ -102159,7 +102458,7 @@ const ListenerPointSource_default_ = ListenerPointSource;
 x_ite_Namespace .add ("ListenerPointSource", "x_ite/Components/Sound/ListenerPointSource", ListenerPointSource_default_);
 /* harmony default export */ const Sound_ListenerPointSource = (ListenerPointSource_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/MicrophoneSource.js
-/* provided dependency */ var MicrophoneSource_$ = __webpack_require__(37);
+/* provided dependency */ var MicrophoneSource_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102442,7 +102741,6 @@ function OscillatorSource (executionContext)
    const audioContext = this .getBrowser () .getAudioContext ();
 
    this .oscillatorNode = new OscillatorNode (audioContext);
-   this .mergerNode     = new ChannelMergerNode (audioContext, { numberOfInputs: 2 });
 }
 
 Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSoundSourceNode .prototype),
@@ -102488,11 +102786,11 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSo
    })(),
    set_frequency__ ()
    {
-      this .oscillatorNode .frequency .value = this ._frequency .getValue ();
+      this .oscillatorNode .frequency .value = Math .max (this ._frequency .getValue (), 0);
    },
    set_detune__ ()
    {
-      this .oscillatorNode .detune .value = this ._detune .getValue ();
+      this .oscillatorNode .detune .value = Math .max (this ._detune .getValue (), 0);
    },
    set_periodicWave__ ()
    {
@@ -102519,19 +102817,16 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSo
       this .set_frequency__ ();
       this .set_detune__ ();
 
-      this .oscillatorNode .connect (this .mergerNode, 0, 0);
-      this .oscillatorNode .connect (this .mergerNode, 0, 1);
-      this .mergerNode     .connect (this .getAudioSource ());
-
+      this .oscillatorNode .connect (this .getAudioSource ());
       this .oscillatorNode .start ();
    },
    set_pause ()
    {
-      this .mergerNode .disconnect ();
+      this .oscillatorNode .disconnect ();
    },
    set_resume ()
    {
-      this .mergerNode .connect (this .getAudioSource ());
+      this .oscillatorNode .connect (this .getAudioSource ());
    },
    set_stop ()
    {
@@ -102807,28 +103102,37 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
 
       const
          audioContext  = this .getBrowser () .getAudioContext (),
+         gainNode      = new GainNode (audioContext, { gain: 0 }),
          splitterNode  = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 }),
          mergerNode    = new ChannelMergerNode (audioContext, { numberOfInputs: 2 }),
          gainLeftNode  = new GainNode (audioContext, { gain: 0 }),
          gainRightNode = new GainNode (audioContext, { gain: 0 });
 
-      splitterNode  .connect (gainLeftNode, 0);
+      gainNode .channelCount          = 2;
+      gainNode .channelCountMode      = "explicit";
+      gainNode .channelInterpretation = "speakers";
+
+      gainNode      .connect (splitterNode);
+      splitterNode  .connect (gainLeftNode,  0);
       splitterNode  .connect (gainRightNode, 1);
       gainLeftNode  .connect (mergerNode, 0, 0);
       gainRightNode .connect (mergerNode, 0, 1);
       mergerNode    .connect (audioContext .destination);
 
+      this .gainNode      = gainNode;
       this .splitterNode  = splitterNode;
       this .gainLeftNode  = gainLeftNode;
       this .gainRightNode = gainRightNode;
 
-      this .getLive ()  .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_live__", this);
       this ._traversed .addInterest ("set_live__", this);
 
-      this ._source   .addInterest ("set_children__", this);
-      this ._children .addInterest ("set_children__", this);
+      this ._intensity .addInterest ("set_intensity__", this);
+      this ._source    .addInterest ("set_children__",  this);
+      this ._children  .addInterest ("set_children__",  this);
 
       this .set_live__ ();
+      this .set_intensity__ ();
       this .set_children__ ();
    },
    setTraversed (value)
@@ -102850,10 +103154,10 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
    {
       return this .currentTraversed;
    },
-   setVolume (volume, pan = 0.5)
+   setGain (gain, pan = 0.5)
    {
-      this .gainLeftNode  .gain .value = volume * (1 - pan ** 2);
-      this .gainRightNode .gain .value = volume * (1 - (1 - pan) ** 2);
+      this .gainLeftNode  .gain .value = gain * (1 - pan ** 2);
+      this .gainRightNode .gain .value = gain * (1 - (1 - pan) ** 2);
    },
    set_live__ ()
    {
@@ -102864,13 +103168,17 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
       else
       {
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);
-         this .setVolume (0);
+         this .setGain (0);
       }
+   },
+   set_intensity__ ()
+   {
+      this .gainNode .gain .value = Math_Algorithm .clamp (this ._intensity .getValue (), 0, 1);
    },
    set_children__ ()
    {
       for (const childNode of this .childNodes)
-         childNode .getAudioSource () .disconnect (this .splitterNode);
+         childNode .getAudioSource () .disconnect (this .gainNode);
 
       this .childNodes .length = 0;
 
@@ -102906,12 +103214,12 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
       }
 
       for (const childNode of this .childNodes)
-         childNode .getAudioSource () .connect (this .splitterNode);
+         childNode .getAudioSource () .connect (this .gainNode);
    },
    update ()
    {
       if (!this .getTraversed ())
-         this .setVolume (0);
+         this .setGain (0);
 
       this .setTraversed (false);
    },
@@ -102952,23 +103260,21 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
 
             if (min .distance < 1) // Radius of normalized sphere is 1.
             {
-               this .setVolume (Math_Algorithm .clamp (this ._intensity .getValue (), 0, 1), pan);
+               this .setGain (1, pan);
             }
             else
             {
                const
-                  d1        = max .intersection .magnitude (), // Viewer is here at (0, 0, 0)
-                  d2        = max .intersection .distance (min .intersection),
-                  d         = Math .min (d1 / d2, 1),
-                  intensity = Math_Algorithm .clamp (this ._intensity .getValue (), 0, 1),
-                  volume    = intensity * d;
+                  d1 = max .intersection .magnitude (), // Viewer is here at (0, 0, 0)
+                  d2 = max .intersection .distance (min .intersection),
+                  d  = Math .min (d1 / d2, 1);
 
-               this .setVolume (volume, pan);
+               this .setGain (d, pan);
             }
          }
          else
          {
-            this .setVolume (0);
+            this .setGain (0);
          }
       };
    })(),
@@ -103828,8 +104134,8 @@ const GifMedia_default_ = GifMedia;
 x_ite_Namespace .add ("GifMedia", "x_ite/Browser/Texturing/GifMedia", GifMedia_default_);
 /* harmony default export */ const Texturing_GifMedia = (GifMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(37);
-/* provided dependency */ var SuperGif = __webpack_require__(790);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(183);
+/* provided dependency */ var SuperGif = __webpack_require__(432);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107108,7 +107414,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace .add ("gettext", "locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(37);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107538,7 +107844,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .add ("TextureQuality", "x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(37);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107906,6 +108212,8 @@ Object .defineProperties (BrowserOptions,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "QualityWhenMoving",            new x_ite_Fields .SFString ("SAME")),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "Shading",                      new x_ite_Fields .SFString ("GOURAUD")),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "MotionBlur",                   new x_ite_Fields .SFBool ()),
+         // Always update geometries, even if browser is not live.
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "AlwaysUpdateGeometries",       new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "AutoUpdate",                   new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "Cache",                        new x_ite_Fields .SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "ContentScale",                 new x_ite_Fields .SFDouble (1)),
@@ -107914,6 +108222,7 @@ Object .defineProperties (BrowserOptions,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "Gravity",                      new x_ite_Fields .SFDouble (9.80665)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "LoadUrlObjects",               new x_ite_Fields .SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "LogarithmicDepthBuffer",       new x_ite_Fields .SFBool ()),
+         // A string, which is set to the *reference* field of metadata nodes, when they are created.
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "MetadataReference",            new x_ite_Fields .SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "Multisampling",                new x_ite_Fields .SFInt32 (4)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "Notifications",                new x_ite_Fields .SFBool (true)),
@@ -108129,7 +108438,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .add ("RenderingProperties", "x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(37);
+/* provided dependency */ var Notification_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108252,8 +108561,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .add ("Notification", "x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(773);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(37);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(403);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110934,14 +111243,12 @@ const DataStorage_handler =
       if (property !== undefined)
          return property;
 
-      const string = target .getStorage () [target .getNameSpace () + key];
+      const value = target .getStorage () [target .getNameSpace () + key];
 
-      if (string === undefined || string === "undefined" || string === null)
+      if (String (value) .match (/^(?:undefined|null)$/))
          return target .getDefaultValue (key);
 
-      const value = JSON .parse (string);
-
-      return value;
+      return JSON .parse (value);
    },
    set (target, key, value)
    {
@@ -111010,7 +111317,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .add ("DataStorage", "standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(37);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113533,8 +113840,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .add ("X3DViewer", "x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(693);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(37);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(287);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114406,8 +114713,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .add ("ExamineViewer", "x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(693);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(37);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(287);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115416,8 +115723,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .add ("FlyViewer", "x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(693);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(37);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(287);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115748,8 +116055,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .add ("NoneViewer", "x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(693);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(37);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(287);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116888,8 +117195,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .add ("X3DPickingContext", "x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(693);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(37);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(287);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117548,11 +117855,11 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    {
       return this [_hit];
    },
-   addPointingShape (pickingContext)
+   addPointingShape (pointingContext)
    {
       const id = ++ this [_id];
 
-      this [_pointingContexts] [id] = pickingContext;
+      this [_pointingContexts] [id] = pointingContext;
 
       return id;
    },
@@ -117629,18 +117936,18 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [_id])
       {
          const
-            pickingContext  = this [_pointingContexts] [hit .id],
-            shapeNode       = pickingContext .shapeNode,
+            pointingContext = this [_pointingContexts] [hit .id],
+            shapeNode       = pointingContext .shapeNode,
             appearanceNode  = shapeNode .getAppearance (),
             geometryContext = shapeNode .getGeometryContext ();
 
-         hit .hitRay    = pickingContext .renderObject .getHitRay ();
-         hit .sensors   = pickingContext .sensors .slice ();
-         hit .layerNode = pickingContext .renderObject;
+         hit .hitRay    = pointingContext .renderObject .getHitRay ();
+         hit .sensors   = pointingContext .sensors .slice ();
+         hit .layerNode = pointingContext .renderObject;
          hit .shapeNode = shapeNode;
 
-         hit .viewMatrix      .assign (pickingContext .renderObject .getViewpoint () .getViewMatrix ());
-         hit .modelViewMatrix .assign (pickingContext .modelViewMatrix);
+         hit .viewMatrix      .assign (pointingContext .renderObject .getViewpoint () .getViewMatrix ());
+         hit .modelViewMatrix .assign (pointingContext .modelViewMatrix);
 
          // A ParticleSystem has only a geometry context.
 
@@ -118180,7 +118487,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .add ("MultiSampleFrameBuffer", "x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(37);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119082,7 +119389,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 x_ite_Namespace .add ("X3DSoundContext", "x_ite/Browser/Sound/X3DSoundContext", X3DSoundContext_default_);
 /* harmony default export */ const Sound_X3DSoundContext = (X3DSoundContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(37);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(183);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -120635,7 +120942,7 @@ const Components_default_ = Components;
 x_ite_Namespace .add ("Components", "x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(37);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(183);
 /*******************************************************************************
  * MIT License
  *
@@ -121766,7 +122073,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace .add ("SupportedProfiles", "x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(37);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122219,6 +122526,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
          return;
 
       loadCount .removeInterest ("checkLoadCount", this);
+      this .touch (0, 0);
       this .setBrowserLoading (false);
       this .initialized () .set (this .getCurrentTime ());
       this .initialized () .processInterests ();
@@ -122857,7 +123165,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace .add ("X3DBrowser", "x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(37);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122994,8 +123302,8 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 x_ite_Namespace .add ("X3DCanvasElement", "x_ite/X3DCanvasElement", X3DCanvasElement_default_);
 /* harmony default export */ const x_ite_X3DCanvasElement = (X3DCanvasElement_default_);
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(37);
-/* provided dependency */ var pako = __webpack_require__(465);
+/* provided dependency */ var jquery_$ = __webpack_require__(183);
+/* provided dependency */ var pako = __webpack_require__(935);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -123072,14 +123380,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .add ("jquery", "lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(214);
+/* provided dependency */ var libtess_libtess = __webpack_require__(972);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .add ("libtess", "lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(37);
+/* provided dependency */ var X3D_$ = __webpack_require__(183);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -123387,7 +123695,7 @@ Object .assign (X3D,
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-9.3.1")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-9.3.2")] = x_ite_X3D;
 
 customElements .define ("x3d-canvas", x_ite_X3DCanvasElement);
 

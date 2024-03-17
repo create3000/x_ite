@@ -171,6 +171,7 @@ It is possible to specify in the *family* field a URL of a custom font file of t
 - [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
 - First add a [Text](/x_ite/components/text/text/) node as a parent node for FontStyle.
 - [Wikipedia](https://en.wikipedia.org/wiki/Font){:target="_blank"}
+- [Wikipedia](https://en.wikipedia.org/wiki/Typeface){:target="_blank"}
 
 ## Example
 
