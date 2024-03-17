@@ -21,8 +21,8 @@ tagline: Ready for X3Dv4! # it will display as the sub-title
 description: >- # used by seo meta and the atom feed
   X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML.
 
-version: 9.3.1 # x_ite latest version
-size: 289 # size in kb
+version: 9.3.2 # x_ite latest version
+size: 290 # size in kb
 x3d_latest_version: 4.0 # x3d latest version
 
 # Fill in the protocol & hostname for your site.
