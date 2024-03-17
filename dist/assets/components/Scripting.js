@@ -502,7 +502,42 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    },
    createGlobalObject ()
    {
-      const browser = this .getBrowser ();
+      const getScriptNode = () => this;
+
+      const handler =
+      {
+         get (target, key)
+         {
+            switch (key)
+            {
+               case "getScriptNode":
+                  return getScriptNode;
+               case "currentScene":
+                  return getScriptNode () .getExecutionContext ();
+               default:
+                  return target [key];
+            }
+         },
+         set (target, key, value)
+         {
+            target [key] = value;
+            return true;
+         },
+         has (target, key)
+         {
+            return key in target;
+         },
+         ownKeys (target)
+         {
+            return Reflect .ownKeys (target);
+         },
+         getOwnPropertyDescriptor (target, key)
+         {
+            return Reflect .getOwnPropertyDescriptor (target, key);
+         },
+      };
+
+      const browser = new Proxy (this .getBrowser (), handler);
 
       function SFNode (vrmlSyntax)
       {
@@ -658,25 +693,14 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    },
    evaluate (sourceText)
    {
-      const browser = this .getBrowser ();
+      if (!this .globalObject)
+         this .globalObject = this .createGlobalObject ();
 
-      try
-      {
-         browser .getScriptStack () .push (this);
-
-         if (!this .globalObject)
-            this .globalObject = this .createGlobalObject ();
-
-         return Scripting_evaluate (SFNodeCache_default().get (this), this .globalObject, sourceText);
-      }
-      finally
-      {
-         browser .getScriptStack () .pop ();
-      }
+      return Scripting_evaluate (SFNodeCache_default().get (this), this .globalObject, sourceText);
    },
-   initialize__ (sourceText)
+   async initialize__ (sourceText)
    {
-      this .disconnect ();
+      await this .disconnect ();
 
       const browser = this .getBrowser ();
 
@@ -690,7 +714,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
       const shutdown = this .context .get ("shutdown");
 
       if (typeof shutdown === "function")
-         $(window) .on ("unload.Script" + this .getId (), this .call__ .bind (this, shutdown, "shutdown"));
+         $(window) .on (`unload.Script${this .getId ()}`, () => this .call__ (shutdown, "shutdown"));
 
       // Connect prepareEvents.
 
@@ -738,42 +762,36 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
       const initialize = this .context .get ("initialize");
 
       if (typeof initialize === "function")
-         this .call__ (initialize, "initialize");
+         await this .call__ (initialize, "initialize");
    },
-   call__ (callback, name)
+   async call__ (callback, name)
    {
       const browser = this .getBrowser ();
 
-      browser .getScriptStack () .push (this);
-
       try
       {
-         callback .call (SFNodeCache_default().get (this), browser .getCurrentTime ());
+         await callback .call (SFNodeCache_default().get (this), browser .getCurrentTime ());
       }
       catch (error)
       {
          this .setError (`in function '${name}'`, error);
       }
-
-      browser .getScriptStack () .pop ();
    },
-   set_field__ (callback, field)
+   async set_field__ (callback, field)
    {
       const browser = this .getBrowser ();
 
       field .setTainted (true);
-      browser .getScriptStack () .push (this);
 
       try
       {
-         callback .call (SFNodeCache_default().get (this), field .valueOf (), browser .getCurrentTime ());
+         await callback .call (SFNodeCache_default().get (this), field .valueOf (), browser .getCurrentTime ());
       }
       catch (error)
       {
          this .setError (`in function '${field .getName()}'`, error);
       }
 
-      browser .getScriptStack () .pop ();
       field .setTainted (false);
    },
    setError (reason, error)
@@ -785,18 +803,18 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
       console .error (`JavaScript Error in Script '${this .getName ()}', ${reason}\nworld url is '${worldURL}':`);
       console .error (error);
    },
-   disconnect ()
+   async disconnect ()
    {
       // Call shutdown.
 
       const shutdown = this .context ?.get ("shutdown");
 
       if (typeof shutdown === "function")
-         this .call__ (shutdown, "shutdown");
+         await this .call__ (shutdown, "shutdown");
 
       // Disconnect shutdown.
 
-      $(window) .off (".Script" + this .getId ());
+      $(window) .off (`.Script${this .getId ()}`);
 
       // Disconnect prepareEvents.
 

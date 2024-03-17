@@ -151,7 +151,42 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    createGlobalObject ()
    {
-      const browser = this .getBrowser ();
+      const getScriptNode = () => this;
+
+      const handler =
+      {
+         get (target, key)
+         {
+            switch (key)
+            {
+               case "getScriptNode":
+                  return getScriptNode;
+               case "currentScene":
+                  return getScriptNode () .getExecutionContext ();
+               default:
+                  return target [key];
+            }
+         },
+         set (target, key, value)
+         {
+            target [key] = value;
+            return true;
+         },
+         has (target, key)
+         {
+            return key in target;
+         },
+         ownKeys (target)
+         {
+            return Reflect .ownKeys (target);
+         },
+         getOwnPropertyDescriptor (target, key)
+         {
+            return Reflect .getOwnPropertyDescriptor (target, key);
+         },
+      };
+
+      const browser = new Proxy (this .getBrowser (), handler);
 
       function SFNode (vrmlSyntax)
       {
@@ -307,21 +342,10 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    evaluate (sourceText)
    {
-      const browser = this .getBrowser ();
+      if (!this .globalObject)
+         this .globalObject = this .createGlobalObject ();
 
-      try
-      {
-         browser .getScriptStack () .push (this);
-
-         if (!this .globalObject)
-            this .globalObject = this .createGlobalObject ();
-
-         return evaluate (SFNodeCache .get (this), this .globalObject, sourceText);
-      }
-      finally
-      {
-         browser .getScriptStack () .pop ();
-      }
+      return evaluate (SFNodeCache .get (this), this .globalObject, sourceText);
    },
    async initialize__ (sourceText)
    {
@@ -393,8 +417,6 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    {
       const browser = this .getBrowser ();
 
-      browser .getScriptStack () .push (this);
-
       try
       {
          await callback .call (SFNodeCache .get (this), browser .getCurrentTime ());
@@ -403,15 +425,12 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       {
          this .setError (`in function '${name}'`, error);
       }
-
-      browser .getScriptStack () .pop ();
    },
    async set_field__ (callback, field)
    {
       const browser = this .getBrowser ();
 
       field .setTainted (true);
-      browser .getScriptStack () .push (this);
 
       try
       {
@@ -422,7 +441,6 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          this .setError (`in function '${field .getName()}'`, error);
       }
 
-      browser .getScriptStack () .pop ();
       field .setTainted (false);
    },
    setError (reason, error)

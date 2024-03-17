@@ -45,22 +45,17 @@
  *
  ******************************************************************************/
 
-const _scripts = Symbol ();
-
-function X3DScriptingContext ()
-{
-   this [_scripts] = [this];
-}
+function X3DScriptingContext () { }
 
 Object .assign (X3DScriptingContext .prototype,
 {
    isExternal ()
    {
-      return this [_scripts] .length === 1;
+      return !this .getScriptNode ();
    },
-   getScriptStack ()
+   getScriptNode ()
    {
-      return this [_scripts];
+      return null;
    },
 });
 
