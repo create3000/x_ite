@@ -56,14 +56,13 @@ const foreignContentTypes = new Set ([
    "application/xhtml+xml",
 ])
 
-function FileLoader (node, scriptNode = null)
+function FileLoader (node)
 {
    X3DObject .call (this);
 
    this .node             = node;
    this .browser          = node .getBrowser ();
-   this .scriptNode       = scriptNode;
-   this .executionContext = scriptNode ?.getExecutionContext () ?? node .getExecutionContext ();
+   this .executionContext = node .getExecutionContext ();
    this .target           = "";
    this .url              = [ ];
    this .URL              = new URL (this .getBaseURL ());
@@ -85,10 +84,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    getBaseURL ()
    {
       if (this .node instanceof X3DWorld)
-      {
-         if (!this .scriptNode)
-            return this .browser .getBaseURL ();
-      }
+         return this .browser .getBaseURL ();
 
       return this .executionContext .getBaseURL ();
    },

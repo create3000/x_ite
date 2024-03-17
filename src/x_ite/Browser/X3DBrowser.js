@@ -464,7 +464,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          external     = this .isExternal (),
          currentScene = this .currentScene,
          worldURL     = external ? this .getBaseURL () : currentScene .getWorldURL (),
-         fileLoader   = new FileLoader (this .getWorld (), this .getScriptNode ()),
+         fileLoader   = new FileLoader (this .getScriptNode () ?? this .getWorld ()),
          scene        = fileLoader .createX3DFromString (worldURL, `#VRML V2.0 utf8\n\n${vrmlSyntax}`);
 
       if (!external)
@@ -483,7 +483,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          external     = this .isExternal (),
          currentScene = this .currentScene,
          worldURL     = external ? this .getBaseURL () : currentScene .getWorldURL (),
-         fileLoader   = new FileLoader (this .getWorld (), this .getScriptNode ());
+         fileLoader   = new FileLoader (this .getScriptNode () ?? this .getWorld ());
 
       const scene = await new Promise ((resolve, reject) =>
       {
@@ -520,7 +520,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       const
          currentScene = this .currentScene,
          external     = this .isExternal (),
-         fileLoader   = new FileLoader (this .getWorld (), this .getScriptNode ());
+         fileLoader   = new FileLoader (this .getScriptNode () ?? this .getWorld ());
 
       this .addLoadingObject (fileLoader);
 
@@ -558,7 +558,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          const
             currentScene = this .currentScene,
             external     = this .isExternal (),
-            fileLoader   = new FileLoader (this .getWorld (), this .getScriptNode ());
+            fileLoader   = new FileLoader (this .getScriptNode () ?? this .getWorld ());
 
          this .addLoadingObject (fileLoader);
 
@@ -595,7 +595,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          // Start loading.
 
-         const fileLoader = new FileLoader (this .getWorld (), this .getScriptNode ());
+         const fileLoader = new FileLoader (this .getScriptNode () ?? this .getWorld ());
 
          fileLoader .createX3DFromURL (url, parameter, scene =>
          {
