@@ -393,7 +393,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
                const callback = this .context .get (field .getName ());
 
                if (typeof callback === "function")
-                  field .addInterest ("set_field__", this, callback);
+                  field .addInterest ("set_field__", this, callback, [ ]);
 
                break;
             }
@@ -402,7 +402,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
                const callback = this .context .get ("set_" + field .getName ());
 
                if (typeof callback === "function")
-                  field .addInterest ("set_field__", this, callback);
+                  field .addInterest ("set_field__", this, callback, [ ]);
 
                break;
             }
@@ -427,13 +427,15 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          this .setError (`in function '${name}'`, error);
       }
    },
-   async set_field__ (callback, field)
+   async set_field__ (callback, stack, field)
    {
+      const copy = stack .pop () ?? field .create ();
+
       try
       {
-         field .setTainted (true);
+         copy .assign (field);
 
-         await callback .call (SFNodeCache .get (this), field .valueOf (), this .getBrowser () .getCurrentTime ());
+         await callback .call (SFNodeCache .get (this), copy .valueOf (), this .getBrowser () .getCurrentTime ());
       }
       catch (error)
       {
@@ -441,7 +443,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       }
       finally
       {
-         field .setTainted (false);
+         stack .push (copy);
       }
    },
    setError (reason, error)
