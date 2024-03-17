@@ -57,36 +57,59 @@ function ChannelMerger (executionContext)
    X3DSoundChannelNode .call (this, executionContext);
 
    this .addType (X3DConstants .ChannelMerger);
-
-   const audioContext = this .getBrowser () .getAudioContext ();
-
-   this .channelMergerNode = new ChannelMergerNode (audioContext);
 }
 
 Object .assign (Object .setPrototypeOf (ChannelMerger .prototype, X3DSoundChannelNode .prototype),
 {
+   initialize ()
+   {
+      X3DSoundChannelNode .prototype .initialize .call (this);
+
+      this ._enabled .addInterest ("set_children__", this);
+   },
    setChildNodes (childNodes)
    {
-      const
-         audioContext   = this .getBrowser () .getAudioContext (),
-         numberOfInputs = Algorithm .clamp (childNodes .length, 1, 32);
+      this .channelMergerNode ?.disconnect ();
 
-      this .channelMergerNode .disconnect ();
+      if (this ._enabled .getValue ())
+      {
+         const
+            audioContext   = this .getBrowser () .getAudioContext (),
+            numberOfInputs = Algorithm .clamp (childNodes .length, 1, 32);
 
-      if (this .channelMergerNode .numberOfInputs !== numberOfInputs)
-         this .channelMergerNode = new ChannelMergerNode (audioContext, { numberOfInputs });
+         if (this .channelMergerNode ?.numberOfInputs !== numberOfInputs)
+            this .channelMergerNode = new ChannelMergerNode (audioContext, { numberOfInputs });
 
-      this .channelMergerNode .connect (this .getAudioDestination ());
+         this .channelMergerNode .connect (this .getAudioDestination ());
+      }
+      else
+      {
+         this .channelMergerNode = null;
+      }
    },
    connectChildNode (i, childNode)
    {
-      if (i < 32)
-         childNode .getAudioSource () .connect (this .channelMergerNode, 0, i);
+      if (this .channelMergerNode)
+      {
+         if (i < 32)
+            childNode .getAudioSource () .connect (this .channelMergerNode, 0, i);
+      }
+      else
+      {
+         childNode .getAudioSource () .connect (this .getAudioDestination ());
+      }
    },
    disconnectChildNode (i, childNode)
    {
-      if (i < 32)
-         childNode .getAudioSource () .disconnect (this .channelMergerNode, 0, i);
+      if (this .channelMergerNode)
+      {
+         if (i < 32)
+            childNode .getAudioSource () .disconnect (this .channelMergerNode, 0, i);
+      }
+      else
+      {
+         childNode .getAudioSource () .disconnect (this .getAudioDestination ());
+      }
    },
 });
 

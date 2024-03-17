@@ -59,12 +59,7 @@ function ChannelSplitter (executionContext)
 
    this .addType (X3DConstants .ChannelSplitter);
 
-   const audioContext = this .getBrowser () .getAudioContext ();
-
-   this .outputNodes         = [ ];
-   this .channelSplitterNode = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 });
-
-   this .getAudioSource () .connect (this .channelSplitterNode);
+   this .outputNodes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChannelNode .prototype),
@@ -73,13 +68,22 @@ Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChan
    {
       X3DSoundChannelNode .prototype .initialize .call (this);
 
+      this ._enabled .addInterest ("set_outputs__", this);
       this ._outputs .addInterest ("set_outputs__", this);
 
       this .set_outputs__ ();
    },
    set_outputs__ ()
    {
-      this .channelSplitterNode .disconnect ();
+      if (this .channelSplitterNode)
+      {
+         this .channelSplitterNode .disconnect ();
+      }
+      else
+      {
+         for (const outputNode of this .outputNodes)
+            this .getAudioSource () .disconnect (outputNode .getAudioDestination ());
+      }
 
       this .outputNodes .length = 0;
 
@@ -97,6 +101,7 @@ Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChan
             switch (type [t])
             {
                case X3DConstants .X3DSoundChannelNode:
+               case X3DConstants .X3DSoundDestinationNode:
                case X3DConstants .X3DSoundProcessingNode:
                   this .outputNodes .push (outputNode);
                   break;
@@ -108,23 +113,37 @@ Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChan
          }
       }
 
-      const
-         audioContext    = this .getBrowser () .getAudioContext (),
-         numberOfOutputs = Algorithm .clamp (this .outputNodes .length, 1, 32);
-
-      if (this .channelSplitterNode .numberOfOutputs !== numberOfOutputs)
-      {
+      if (this .channelSplitterNode)
          this .getAudioSource () .disconnect (this .channelSplitterNode);
 
-         this .channelSplitterNode = new ChannelSplitterNode (audioContext, { numberOfOutputs });
+      if (this ._enabled .getValue ())
+      {
+         const
+            audioContext    = this .getBrowser () .getAudioContext (),
+            numberOfOutputs = Algorithm .clamp (this .outputNodes .length, 1, 32);
+
+         if (this .channelSplitterNode ?.numberOfOutputs !== numberOfOutputs)
+            this .channelSplitterNode = new ChannelSplitterNode (audioContext, { numberOfOutputs });
 
          this .getAudioSource () .connect (this .channelSplitterNode);
       }
+      else
+      {
+         this .channelSplitterNode = null;
+      }
 
-      const length = Math .min (numberOfOutputs, this .outputNodes .length);
+      if (this .channelSplitterNode)
+      {
+         const length = Math .min (this .outputNodes .length, 32);
 
-      for (let i = 0; i < length; ++ i)
-         this .channelSplitterNode .connect (this .outputNodes [i] .getAudioDestination (), i);
+         for (let i = 0; i < length; ++ i)
+            this .channelSplitterNode .connect (this .outputNodes [i] .getAudioDestination (), i);
+      }
+      else
+      {
+         for (const outputNode of this .outputNodes)
+            this .getAudioSource () .connect (outputNode .getAudioDestination ());
+      }
    },
 });
 
