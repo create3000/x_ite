@@ -20,6 +20,7 @@ const X_ITE_TESTS = [
    { path: "Core/EXPORT.x3dv" },
    { path: "Core/IMPORT.x3d" },
    { path: "Core/IMPORT.x3dv" },
+   { path: "Core/Nodes.x3dv" },
    { path: "Core/proto/TestPrototype.x3d" },
    { path: "Core/Statements.x3d" },
    { path: "Core/units.x3d" },
