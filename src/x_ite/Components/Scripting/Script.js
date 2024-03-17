@@ -129,12 +129,37 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    {
       return this ._url;
    },
-   unloadData ()
+   async unloadData ()
    {
-      this .initialize__ ("");
+      // Call shutdown.
+
+      const shutdown = this .context ?.get ("shutdown");
+
+      if (typeof shutdown === "function")
+         await this .call__ (shutdown, "shutdown");
+
+      // Disconnect shutdown.
+
+      $(window) .off (`.Script${this .getId ()}`);
+
+      // Disconnect prepareEvents.
+
+      this .getBrowser () .prepareEvents () .removeInterest ("call__", this);
+
+      // Disconnect eventsProcessed.
+
+      this .removeInterest ("call__", this);
+
+      // Disconnect fields.
+
+      for (const field of this .getUserDefinedFields ())
+         field .removeInterest ("set_field__", this);
    },
-   loadData ()
+   async loadData ()
    {
+      // See: 29.2.2 Script execution
+      await this .unloadData ()
+
       new FileLoader (this) .loadDocument (this ._url, (data) =>
       {
          if (data === null)
@@ -332,8 +357,6 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    async initialize__ (sourceText)
    {
-      await this .disconnect ();
-
       const browser = this .getBrowser ();
 
       // Create context.
@@ -431,35 +454,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       console .error (`JavaScript Error in Script '${this .getName ()}', ${reason}\nworld url is '${worldURL}':`);
       console .error (error);
    },
-   async disconnect ()
+   async dispose ()
    {
-      // Call shutdown.
-
-      const shutdown = this .context ?.get ("shutdown");
-
-      if (typeof shutdown === "function")
-         await this .call__ (shutdown, "shutdown");
-
-      // Disconnect shutdown.
-
-      $(window) .off (`.Script${this .getId ()}`);
-
-      // Disconnect prepareEvents.
-
-      this .getBrowser () .prepareEvents () .removeInterest ("call__", this);
-
-      // Disconnect eventsProcessed.
-
-      this .removeInterest ("call__", this);
-
-      // Disconnect fields.
-
-      for (const field of this .getUserDefinedFields ())
-         field .removeInterest ("set_field__", this);
-   },
-   dispose ()
-   {
-      this .disconnect ();
+      await this .unloadData ();
 
       X3DScriptNode .prototype .dispose .call (this);
    },
