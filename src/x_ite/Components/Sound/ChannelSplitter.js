@@ -101,7 +101,6 @@ Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChan
             switch (type [t])
             {
                case X3DConstants .X3DSoundChannelNode:
-               case X3DConstants .X3DSoundDestinationNode:
                case X3DConstants .X3DSoundProcessingNode:
                   this .outputNodes .push (outputNode);
                   break;
