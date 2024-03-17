@@ -427,9 +427,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          this .setError (`in function '${name}'`, error);
       }
    },
-   async set_field__ (callback, stack, field)
+   async set_field__ (callback, cache, field)
    {
-      const copy = stack .pop () ?? field .create ();
+      const copy = cache .pop () ?? field .create ();
 
       try
       {
@@ -443,7 +443,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       }
       finally
       {
-         stack .push (copy);
+         cache .push (copy);
       }
    },
    setError (reason, error)
