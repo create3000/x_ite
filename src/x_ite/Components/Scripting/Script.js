@@ -294,27 +294,24 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       for (const field of this .getUserDefinedFields ())
       {
-         const name = field .getName ();
-
          if (field .getAccessType () === X3DConstants .inputOnly)
             continue;
 
-         if (!(name in globalObject))
-         {
-            globalObject [name] =
-            {
-               get: field .valueOf .bind (field),
-               set: field .setValue .bind (field),
-            };
-         }
+         const names = [field .getName ()];
 
          if (field .getAccessType () === X3DConstants .inputOutput)
+            names .push (field .getName () + "_changed");
+
+         for (const name of names)
          {
-            globalObject [name + "_changed"] =
+            if (!(name in globalObject))
             {
-               get: field .valueOf  .bind (field),
-               set: field .setValue .bind (field),
-            };
+               globalObject [name] =
+               {
+                  get: field .valueOf .bind (field),
+                  set: field .setValue .bind (field),
+               };
+            }
          }
       }
 
