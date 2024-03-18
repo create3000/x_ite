@@ -224,8 +224,8 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
                if (!active)
                   return;
 
-               audioBufferSource .disconnect ();
                audioBufferSource .stop ();
+               audioBufferSource .disconnect ();
 
                currentTime = this .currentTime;
                active      = false;
