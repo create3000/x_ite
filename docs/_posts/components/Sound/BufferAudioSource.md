@@ -98,26 +98,6 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
-### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
-
-The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
-
-#### Hint
-
-- Negative *gain* factors negate the input signal.
-
-#### Warning
-
-- Decibel values shall not be used.
-
-### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
-
-The *detune* field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
-
-#### Hint
-
-- ComputedPlaybackRate(t) = playbackRate(t) * pow(2, *detune*(t) / 1200)
-
 ### MFFloat [in, out] **buffer** [ ] <small>[−1,1]</small>
 
 *buffer* is a memory-resident audio asset that can contain one or more channels. *buffer* data format is non-interleaved 32-bit floating-point linear PCM values with a normal range of [−1,1], but values are not limited to this range.
@@ -126,10 +106,6 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 - [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation){:target="_blank"}
 
-### SFInt32 [out] **bufferLength**
-
-*bufferLength* is length of buffer field in sample-frames.
-
 ### SFTime [in, out] **bufferDuration** 0 <small>[0,∞)</small>
 
 *bufferDuration* is duration in seconds to use from buffer field.
@@ -137,6 +113,10 @@ The *detune* field forms a compound field together with playbackRate that togeth
 #### Hint
 
 - Duration is a nonnegative SFTime duration interval, not an absolute clock time.
+
+### SFInt32 [out] **bufferLength**
+
+*bufferLength* is length of buffer field in sample-frames.
 
 ### SFInt32 [in, out] **numberOfChannels** 0 <small>[0,∞)</small>
 
@@ -175,6 +155,26 @@ The *detune* field forms a compound field together with playbackRate that togeth
 #### Hint
 
 - *loopEnd* represents a nonnegative SFTime duration interval, not an absolute clock time.
+
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
+
+The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
+
+#### Hint
+
+- Negative *gain* factors negate the input signal.
+
+#### Warning
+
+- Decibel values shall not be used.
+
+### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
+
+The *detune* field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
+
+#### Hint
+
+- ComputedPlaybackRate(t) = playbackRate(t) * pow(2, *detune*(t) / 1200)
 
 ### SFInt32 [in, out] **channelCount**
 
