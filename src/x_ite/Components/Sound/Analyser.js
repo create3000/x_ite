@@ -170,18 +170,18 @@ Object .defineProperties (Analyser,
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
 
-         new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "fftSize",               new Fields .SFInt32 (2048)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "minDecibels",           new Fields .SFFloat (-100)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "maxDecibels",           new Fields .SFFloat (-30)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "smoothingTimeConstant", new Fields .SFFloat (0.8)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "frequencyBinCount",     new Fields .SFInt32 ()), // skip test
          new X3DFieldDefinition (X3DConstants .outputOnly,  "byteFrequencyData",     new Fields .MFInt32 ()), // experimental
          new X3DFieldDefinition (X3DConstants .outputOnly,  "byteTimeDomainData",    new Fields .MFInt32 ()), // experimental
          new X3DFieldDefinition (X3DConstants .outputOnly,  "floatFrequencyData",    new Fields .MFFloat ()), // experimental
          new X3DFieldDefinition (X3DConstants .outputOnly,  "floatTimeDomainData",   new Fields .MFFloat ()), // experimental
 
+         new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCount",          new Fields .SFInt32 ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("MAX")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("SPEAKERS")),

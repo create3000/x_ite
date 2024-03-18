@@ -61,6 +61,10 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
+### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
+
+*tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
+
 ### MFFloat [in, out] **buffer** [ ] <small>[−1,1]</small>
 
 *buffer* is a memory-resident audio asset that can contain one or more channels. *buffer* data format is non-interleaved 32-bit floating-point linear PCM values with a normal range of [−1,1], but values are not limited to this range.
@@ -72,10 +76,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 ### SFBool [in, out] **normalize** FALSE
 
 *normalize* controls whether or not the impulse response from the buffer is scaled by an equal-power normalization when the buffer field is set
-
-### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
-
-*tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
 
 ### SFInt32 [in, out] **channelCount**
 

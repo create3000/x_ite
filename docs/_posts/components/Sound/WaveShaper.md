@@ -61,6 +61,10 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
+### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
+
+*tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
+
 ### MFFloat [in, out] **curve** [ ] <small>[-1,-1]</small>
 
 The *curve* field is an array of floating-point numbers describing the distortion to apply.
@@ -72,10 +76,6 @@ The *oversample* field is specifies what type of oversampling (if any) should be
 #### Hint
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-oversampletype){:target="_blank"}
-
-### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
-
-*tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
 
 ### SFInt32 [in, out] **channelCount**
 

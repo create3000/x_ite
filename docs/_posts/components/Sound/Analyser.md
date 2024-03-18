@@ -49,18 +49,6 @@ Author-provided prose that describes intended purpose of the url asset.
 
 Enables/disables node operation.
 
-### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
-
-The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
-
-#### Hint
-
-- Negative *gain* factors negate the input signal.
-
-#### Warning
-
-- Decibel values shall not be used.
-
 ### SFInt32 [in, out] **fftSize** 2048 <small>[0,∞)</small>
 
 *fftSize* represents size of Fast Fourier [Transform](/x_ite/components/grouping/transform/) (FFT) used to determine frequency domain.
@@ -81,6 +69,22 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 *smoothingTimeConstant* represents averaging constant during last analysis frame.
 
+### SFInt32 [out] **frequencyBinCount** 1024 <small>[0,∞)</small>
+
+*frequencyBinCount* is half of fftSize and generally equates to number of data values available for the visualization.
+
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
+
+The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
+
+#### Hint
+
+- Negative *gain* factors negate the input signal.
+
+#### Warning
+
+- Decibel values shall not be used.
+
 ### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
 
 *tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
@@ -88,10 +92,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hint
 
 - *tailTime* always has a value of zero for Analyser.
-
-### SFInt32 [out] **frequencyBinCount** 1024 <small>[0,∞)</small>
-
-*frequencyBinCount* is half of fftSize and generally equates to number of data values available for the visualization.
 
 ### SFInt32 [in, out] **channelCount**
 

@@ -61,6 +61,10 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
+### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
+
+*tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
+
 ### SFFloat [in, out] **attack** 0.003 <small>[0,∞)</small>
 
 The *attack* field is the duration of time (in seconds) to reduce the gain by 10dB.
@@ -84,10 +88,6 @@ The *attack* field is the duration of time (in seconds) to reduce the gain by 10
 ### SFFloat [in, out] **threshold** -24 <small>[0,∞)</small>
 
 *threshold* field represents decibel value above which compression starts taking effect.
-
-### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
-
-*tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
 
 ### SFInt32 [in, out] **channelCount**
 

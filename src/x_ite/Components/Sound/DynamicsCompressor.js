@@ -90,13 +90,13 @@ Object .defineProperties (DynamicsCompressor,
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",               new Fields .SFBool (true)),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "attack",                new Fields .SFFloat (0.003)), // TODO: SFTime
          new X3DFieldDefinition (X3DConstants .inputOutput, "knee",                  new Fields .SFFloat (30)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ratio",                 new Fields .SFFloat (12)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "reduction",             new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "release",               new Fields .SFTime (0.25)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "threshold",             new Fields .SFFloat (-24)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCount",          new Fields .SFInt32 ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("MAX")),

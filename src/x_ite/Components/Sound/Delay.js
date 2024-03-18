@@ -90,9 +90,9 @@ Object .defineProperties (Delay,
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "delayTime",             new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "maxDelayTime",          new Fields .SFTime (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCount",          new Fields .SFInt32 ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("MAX")),
