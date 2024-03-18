@@ -201,8 +201,6 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
             {
                if (!active)
                {
-                  audioBufferSource .disconnect ();
-
                   audioBufferSource = new AudioBufferSourceNode (audioContext);
 
                   audioBufferSource .buffer              = audioBuffer;
@@ -225,6 +223,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
             {
                if (active)
                {
+                  audioBufferSource .disconnect ();
                   audioBufferSource .stop ();
 
                   currentTime = this .currentTime;
