@@ -132,6 +132,26 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 - Nyquist frequency is half this *sampleRate* value.
 - [Wikipedia Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency){:target="_blank"}
 
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
+
+The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
+
+#### Hint
+
+- Negative *gain* factors negate the input signal.
+
+#### Warning
+
+- Decibel values shall not be used.
+
+### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
+
+The *detune* field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
+
+#### Hint
+
+- ComputedPlaybackRate(t) = playbackRate(t) * pow(2, *detune*(t) / 1200)
+
 ### SFFloat [in, out] **playbackRate** 1 <small>(-∞,∞)</small>
 
 *playbackRate* field is speed at which to render the audio stream, and forms a compound field together with detune field
@@ -155,26 +175,6 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 #### Hint
 
 - *loopEnd* represents a nonnegative SFTime duration interval, not an absolute clock time.
-
-### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
-
-The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
-
-#### Hint
-
-- Negative *gain* factors negate the input signal.
-
-#### Warning
-
-- Decibel values shall not be used.
-
-### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
-
-The *detune* field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
-
-#### Hint
-
-- ComputedPlaybackRate(t) = playbackRate(t) * pow(2, *detune*(t) / 1200)
 
 ### SFInt32 [in, out] **channelCount**
 

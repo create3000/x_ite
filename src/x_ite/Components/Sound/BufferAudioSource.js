@@ -51,6 +51,7 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DSoundSourceNode   from "./X3DSoundSourceNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import FileLoader           from "../../InputOutput/FileLoader.js";
 
 function BufferAudioSource (executionContext)
 {
@@ -67,6 +68,140 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
    {
       X3DSoundSourceNode .prototype .initialize .call (this);
       X3DUrlObject       .prototype .initialize .call (this);
+
+      this .setMediaElement (this .createMediaElement (this .getAudioSource (), null));
+      this .requestImmediateLoad () .catch (Function .prototype);
+   },
+   unloadData ()
+   {
+      this .audioBufferSource .buffer = null;
+   },
+   loadData ()
+   {
+      new FileLoader (this) .loadDocument (this ._url, async (data, URL) =>
+      {
+         if (data === null)
+         {
+            // No URL could be loaded.
+            this .audioBufferSource .buffer = null;
+
+            this .setLoadState (X3DConstants .FAILED_STATE);
+         }
+         else if (data instanceof ArrayBuffer)
+         {
+            await this .setArrayBuffer (data);
+
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
+         }
+      });
+   },
+   async setArrayBuffer (arrayBuffer)
+   {
+      const
+         audioContext = this .getBrowser () .getAudioContext (),
+         audioBuffer  = await audioContext .decodeAudioData (arrayBuffer),
+         bufferData   = new Float32Array (audioBuffer .length * audioBuffer .numberOfChannels);
+
+      for (let i = 0; i < audioBuffer .numberOfChannels; ++ i)
+         bufferData .set (audioBuffer .getChannelData (i), i * audioBuffer .length);
+
+      this ._buffer           = bufferData;
+      this ._bufferDuration   = audioBuffer .duration;
+      this ._bufferLength     = audioBuffer .length;
+      this ._numberOfChannels = audioBuffer .numberOfChannels;
+      this ._sampleRate       = audioBuffer .sampleRate;
+
+      this .setMediaElement (this .createMediaElement (this .getAudioSource (), audioBuffer));
+   },
+   createMediaElement (audioSource, audioBuffer)
+   {
+      const audioContext = this .getBrowser () .getAudioContext ();
+
+      let
+         audioBufferSource = new AudioBufferSourceNode (audioContext),
+         loop              = false,
+         startTime         = 0,
+         currentTime       = 0,
+         active            = false;
+
+      return Object .defineProperties ({ },
+      {
+         loop:
+         {
+            get ()
+            {
+               return loop;
+            },
+            set (value)
+            {
+               loop                    = value;
+               audioBufferSource .loop = value;
+            },
+         },
+         currentTime:
+         {
+            get ()
+            {
+               return active ? audioContext .currentTime - startTime : currentTime;
+            },
+            set (value)
+            {
+               currentTime = value;
+               startTime   = audioContext .currentTime - currentTime;
+
+               if (!active)
+                  return;
+
+               this .pause ();
+               this .play ();
+            },
+         },
+         duration:
+         {
+            get ()
+            {
+               return this .buffer ?.duration ?? 0;
+            },
+         },
+         play:
+         {
+            value ()
+            {
+
+               console .log ("play", active)
+
+               if (!active)
+               {
+                  audioBufferSource = new AudioBufferSourceNode (audioContext);
+
+                  audioBufferSource .buffer = audioBuffer;
+                  audioBufferSource .loop   = loop;
+
+                  audioBufferSource .connect (audioSource);
+                  audioBufferSource .start (0, currentTime);
+               }
+
+               startTime = audioContext .currentTime - currentTime;
+               active    = true;
+
+               return Promise .resolve ();
+            },
+         },
+         pause:
+         {
+            value ()
+            {
+
+               console .log ("pause", active)
+
+               if (active)
+                  audioBufferSource .stop ();
+
+               currentTime = audioContext .currentTime - startTime;
+               active      = false;
+            },
+         },
+      });
    },
    dispose ()
    {
@@ -114,12 +249,12 @@ Object .defineProperties (BufferAudioSource,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "bufferLength",          new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "numberOfChannels",      new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "sampleRate",            new Fields .SFFloat (0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "playbackRate",          new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "loopStart",             new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "loopEnd",               new Fields .SFTime ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "detune",                new Fields .SFFloat (0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "playbackRate",          new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "loopStart",             new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "loopEnd",               new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCount",          new Fields .SFInt32 ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("MAX")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("SPEAKERS")),

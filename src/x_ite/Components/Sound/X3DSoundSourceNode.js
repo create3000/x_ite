@@ -84,36 +84,36 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundN
 
       this .mediaElement = value;
 
-      if (value)
+      if (!value)
+         return;
+
+      // Init mediaElement.
+
+      this .set_loop ();
+
+      // Handle events.
+
+      this ._duration_changed = this .mediaElement .duration;
+
+      this .resetElapsedTime ();
+
+      if (this ._isActive .getValue ())
       {
-         // Init mediaElement.
-
-         this .set_loop ();
-
-         // Handle events.
-
-         this ._duration_changed = this .mediaElement .duration;
-
-         this .resetElapsedTime ();
-
-         if (this ._isActive .getValue ())
+         if (this ._isPaused .getValue ())
          {
-            if (this ._isPaused .getValue ())
-            {
-               this .set_pause ();
-            }
-            else
-            {
-               if (this .getLiveState ())
-                  this .set_start ();
-               else
-                  this .set_pause ();
-            }
+            this .set_pause ();
          }
          else
          {
-            this .set_stop ();
+            if (this .getLiveState ())
+               this .set_start ();
+            else
+               this .set_pause ();
          }
+      }
+      else
+      {
+         this .set_stop ();
       }
    },
    set_gain__ ()

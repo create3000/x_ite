@@ -250,9 +250,6 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
       {
          this ._isPaused = true;
 
-         if (this .pauseTimeValue !== this .getBrowser () .getCurrentTime ())
-            this .pauseTimeValue = this .getBrowser () .getCurrentTime ();
-
          if (this .getLive () .getValue ())
             this .real_pause ();
       }
@@ -270,9 +267,6 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
       if (this ._isActive .getValue () && this ._isPaused .getValue ())
       {
          this ._isPaused = false;
-
-         if (this .resumeTimeValue !== this .getBrowser () .getCurrentTime ())
-            this .resumeTimeValue = this .getBrowser () .getCurrentTime ();
 
          if (this .getLive () .getValue ())
             this .real_resume ();
