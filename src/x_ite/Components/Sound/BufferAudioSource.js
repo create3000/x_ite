@@ -221,23 +221,23 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
          {
             value ()
             {
-               if (active)
-               {
-                  audioBufferSource .disconnect ();
-                  audioBufferSource .stop ();
+               if (!active)
+                  return;
 
-                  currentTime = this .currentTime;
-                  active      = false;
+               audioBufferSource .disconnect ();
+               audioBufferSource .stop ();
 
-                  // Create 1s silence to clear channels.
+               currentTime = this .currentTime;
+               active      = false;
 
-                  const silence = new AudioBufferSourceNode (audioContext);
+               // Create 1s silence to clear channels.
 
-                  silence .connect (audioSource);
-                  silence .start ();
-                  silence .stop (audioContext .currentTime + 1);
-                  setTimeout (() => silence .disconnect (), 1000);
-               }
+               const silence = new AudioBufferSourceNode (audioContext);
+
+               silence .connect (audioSource);
+               silence .start ();
+               silence .stop (audioContext .currentTime + 1);
+               setTimeout (() => silence .disconnect (), 1000);
             },
          },
       });
