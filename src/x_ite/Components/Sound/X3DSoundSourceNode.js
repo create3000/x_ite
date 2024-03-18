@@ -78,6 +78,10 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundN
    {
       return this .audioSource;
    },
+   getMediaElement ()
+   {
+      return this .mediaElement;
+   },
    setMediaElement (value)
    {
       this .mediaElement ?.pause ();
@@ -124,16 +128,18 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundN
    { },
    set_loop ()
    {
-      if (this .mediaElement)
-         this .mediaElement .loop = this ._loop .getValue ();
+      if (!this .mediaElement)
+         return;
+
+      this .mediaElement .loop = this ._loop .getValue ();
    },
    set_start ()
    {
-      if (this .mediaElement)
-      {
-         this .mediaElement .currentTime = 0;
-         this .getBrowser () .startAudioElement (this .mediaElement);
-      }
+      if (!this .mediaElement)
+         return;
+
+      this .mediaElement .currentTime = 0;
+      this .getBrowser () .startAudioElement (this .mediaElement);
    },
    set_pause ()
    {

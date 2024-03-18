@@ -70,11 +70,25 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       X3DUrlObject       .prototype .initialize .call (this);
 
       this .setMediaElement (this .createMediaElement (this .getAudioSource (), null));
+
+      this ._playbackRate .addInterest ("set_playbackRate__", this);
+
+      this .set_playbackRate__ ();
+
       this .requestImmediateLoad () .catch (Function .prototype);
+   },
+   set_live__ ()
+   {
+      X3DSoundSourceNode .prototype .set_live__ .call (this);
+      X3DUrlObject       .prototype .set_live__ .call (this);
+   },
+   set_playbackRate__ ()
+   {
+      this .getMediaElement () .playbackRate = this ._playbackRate .getValue ();
    },
    unloadData ()
    {
-      this .audioBufferSource .buffer = null;
+      this .setMediaElement (this .createMediaElement (this .getAudioSource (), null));
    },
    loadData ()
    {
@@ -112,6 +126,8 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       this ._sampleRate       = audioBuffer .sampleRate;
 
       this .setMediaElement (this .createMediaElement (this .getAudioSource (), audioBuffer));
+
+      this .set_playbackRate__ ();
    },
    createMediaElement (audioSource, audioBuffer)
    {
@@ -119,6 +135,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
       let
          audioBufferSource = new AudioBufferSourceNode (audioContext),
+         playbackRate      = 1,
          loop              = false,
          startTime         = 0,
          currentTime       = 0,
@@ -126,6 +143,18 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
       return Object .defineProperties ({ },
       {
+         playbackRate:
+         {
+            get ()
+            {
+               return playbackRate;
+            },
+            set (value)
+            {
+               playbackRate                           = value;
+               audioBufferSource .playbackRate .value = value;
+            },
+         },
          loop:
          {
             get ()
@@ -142,7 +171,10 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
          {
             get ()
             {
-               return active ? audioContext .currentTime - startTime : currentTime;
+               if (active)
+                  return this .duration ? (audioContext .currentTime - startTime) % this .duration : 0;
+
+               return currentTime;
             },
             set (value)
             {
@@ -160,7 +192,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
          {
             get ()
             {
-               return this .buffer ?.duration ?? 0;
+               return audioBuffer ?.duration ?? 0;
             },
          },
          play:
@@ -169,10 +201,13 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
             {
                if (!active)
                {
+                  audioBufferSource .disconnect ();
+
                   audioBufferSource = new AudioBufferSourceNode (audioContext);
 
-                  audioBufferSource .buffer = audioBuffer;
-                  audioBufferSource .loop   = loop;
+                  audioBufferSource .buffer              = audioBuffer;
+                  audioBufferSource .loop                = loop;
+                  audioBufferSource .playbackRate .value = playbackRate;
 
                   audioBufferSource .connect (audioSource);
                   audioBufferSource .start (0, currentTime);
@@ -191,7 +226,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
                if (active)
                   audioBufferSource .stop ();
 
-               currentTime = audioContext .currentTime - startTime;
+               currentTime = this .currentTime;
                active      = false;
             },
          },
