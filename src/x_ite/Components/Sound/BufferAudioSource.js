@@ -172,7 +172,17 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
             get ()
             {
                if (active)
-                  return this .duration ? (audioContext .currentTime - startTime) % this .duration : 0;
+               {
+                  if (this .duration)
+                  {
+                     if (this .loop)
+                        return (audioContext .currentTime - startTime) % this .duration;
+
+                     return audioContext .currentTime - startTime;
+                  }
+
+                  return 0;
+               }
 
                return currentTime;
             },
