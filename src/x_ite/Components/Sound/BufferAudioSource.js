@@ -228,6 +228,15 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
                   currentTime = this .currentTime;
                   active      = false;
+
+                  // Create 1s silence to clear channels.
+
+                  const silence = new AudioBufferSourceNode (audioContext);
+
+                  silence .connect (audioSource);
+                  silence .start ();
+                  silence .stop (audioContext .currentTime + 1);
+                  setTimeout (() => silence .disconnect (), 1000);
                }
             },
          },
