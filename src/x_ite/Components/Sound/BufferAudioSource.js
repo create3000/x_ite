@@ -211,10 +211,10 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
                   audioBufferSource .connect (audioSource);
                   audioBufferSource .start (0, currentTime);
-               }
 
-               startTime = audioContext .currentTime - currentTime;
-               active    = true;
+                  startTime = audioContext .currentTime - currentTime;
+                  active    = true;
+               }
 
                return Promise .resolve ();
             },
@@ -224,10 +224,12 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
             value ()
             {
                if (active)
+               {
                   audioBufferSource .stop ();
 
-               currentTime = this .currentTime;
-               active      = false;
+                  currentTime = this .currentTime;
+                  active      = false;
+               }
             },
          },
       });
