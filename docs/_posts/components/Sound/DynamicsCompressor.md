@@ -65,7 +65,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 *tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
 
-### SFFloat [in, out] **attack** 0.003 <small>[0,∞)</small>
+### SFTime [in, out] **attack** 0.003 <small>[0,∞)</small>
 
 The *attack* field is the duration of time (in seconds) to reduce the gain by 10dB.
 
