@@ -167,9 +167,6 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
          {
             value ()
             {
-
-               console .log ("play", active)
-
                if (!active)
                {
                   audioBufferSource = new AudioBufferSourceNode (audioContext);
@@ -191,9 +188,6 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
          {
             value ()
             {
-
-               console .log ("pause", active)
-
                if (active)
                   audioBufferSource .stop ();
 
