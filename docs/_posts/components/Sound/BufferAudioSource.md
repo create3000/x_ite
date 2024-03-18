@@ -126,6 +126,10 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 - [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation){:target="_blank"}
 
+### SFInt32 [out] **bufferLength**
+
+*bufferLength* is length of buffer field in sample-frames.
+
 ### SFTime [in, out] **bufferDuration** 0 <small>[0,∞)</small>
 
 *bufferDuration* is duration in seconds to use from buffer field.
@@ -133,10 +137,6 @@ The *detune* field forms a compound field together with playbackRate that togeth
 #### Hint
 
 - Duration is a nonnegative SFTime duration interval, not an absolute clock time.
-
-### SFInt32 [out] **bufferLength**
-
-*bufferLength* is length of buffer field in sample-frames.
 
 ### SFInt32 [in, out] **numberOfChannels** 0 <small>[0,∞)</small>
 
