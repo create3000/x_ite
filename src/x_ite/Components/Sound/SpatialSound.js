@@ -87,9 +87,9 @@ Object .defineProperties (SpatialSound,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "description", new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",           new Fields .SFBool (true)),
 
          new X3DFieldDefinition (X3DConstants .initializeOnly, "spatialize",        new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coneInnerAngle",    new Fields .SFFloat (6.2832)),
@@ -107,7 +107,7 @@ Object .defineProperties (SpatialSound,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "referenceDistance", new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "rolloffFactor",     new Fields .SFFloat (1)),
 
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",          new Fields .MFNode ()),
       ]),
       enumerable: true,
    },
