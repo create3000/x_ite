@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    {
       return this .currentTraversed;
    },
-   setGain (gain, pan = 0.5)
+   setGain (gain, pan = 0.5, rotation = 0)
    {
       this .gainLeftNode  .gain .value = gain * (1 - pan ** 2);
       this .gainRightNode .gain .value = gain * (1 - (1 - pan) ** 2);
@@ -239,11 +239,11 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
                                          Math .max (this ._minFront .getValue (), 0),
                                          min);
 
-            const pan = this .getPan (modelViewMatrix);
+            const [pan, rotation] = this .getPan (modelViewMatrix);
 
             if (min .distance < 1) // Radius of normalized sphere is 1.
             {
-               this .setGain (1, pan);
+               this .setGain (1, pan, rotation);
             }
             else
             {
@@ -252,7 +252,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
                   d2 = max .intersection .distance (min .intersection),
                   d  = Math .min (d1 / d2, 1);
 
-               this .setGain (d, pan);
+               this .setGain (d, pan, rotation);
             }
          }
          else
@@ -324,18 +324,21 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    })(),
    getPan: (function ()
    {
-      const location = new Vector3 (0, 0, 0);
+      const
+         direction = new Vector3 (0, 0, 0),
+         result    = [ ];
 
       return function (modelViewMatrix)
       {
          if (!this ._spatialize .getValue ())
             return 0.5;
 
-         const
-            direction = modelViewMatrix .multVecMatrix (location .assign (this ._location .getValue ())) .normalize (),
-            pan       = Math .acos (Algorithm .clamp (-direction .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
+         modelViewMatrix .multDirMatrix (direction .assign (this ._direction .getValue ())) .normalize ();
 
-         return pan;
+         result [0] = Math .acos (Algorithm .clamp (direction .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
+         result [1] = Math .acos (Algorithm .clamp (direction .dot (Vector3 .zAxis), -1, 1)) / Math .PI;
+
+         return result;
       };
    })(),
 });
