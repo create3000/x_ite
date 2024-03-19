@@ -84,36 +84,36 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       X3DSoundNode .prototype .initialize .call (this);
 
       const
-         audioContext      = this .getBrowser () .getAudioContext (),
-         gainNode          = new GainNode (audioContext, { gain: 0 }),
-         splitterNode      = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 }),
-         mergerNode        = new ChannelMergerNode (audioContext, { numberOfInputs: 2 }),
-         gainLeftNode      = new GainNode (audioContext, { gain: 0 }),
-         gainRightNode     = new GainNode (audioContext, { gain: 0 }),
-         gainLeftBackNode  = new GainNode (audioContext, { gain: 0 }),
-         gainRightBackNode = new GainNode (audioContext, { gain: 0 });
+         audioContext       = this .getBrowser () .getAudioContext (),
+         gainNode           = new GainNode (audioContext, { gain: 0 }),
+         splitterNode       = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 }),
+         mergerNode         = new ChannelMergerNode (audioContext, { numberOfInputs: 2 }),
+         gainFrontLeftNode  = new GainNode (audioContext, { gain: 0 }),
+         gainFrontRightNode = new GainNode (audioContext, { gain: 0 }),
+         gainBackLeftNode   = new GainNode (audioContext, { gain: 0 }),
+         gainBackRightNode  = new GainNode (audioContext, { gain: 0 });
 
       gainNode .channelCount          = 2;
       gainNode .channelCountMode      = "explicit";
       gainNode .channelInterpretation = "speakers";
 
-      gainNode          .connect (splitterNode);
-      splitterNode      .connect (gainLeftNode,  0);
-      splitterNode      .connect (gainRightNode, 1);
-      splitterNode      .connect (gainRightBackNode, 0);
-      splitterNode      .connect (gainLeftBackNode,  1);
-      gainLeftNode      .connect (mergerNode, 0, 0);
-      gainRightNode     .connect (mergerNode, 0, 1);
-      gainLeftBackNode  .connect (mergerNode, 0, 0);
-      gainRightBackNode .connect (mergerNode, 0, 1);
-      mergerNode        .connect (audioContext .destination);
+      gainNode           .connect (splitterNode);
+      splitterNode       .connect (gainFrontLeftNode,  0);
+      splitterNode       .connect (gainFrontRightNode, 1);
+      splitterNode       .connect (gainBackRightNode, 0);
+      splitterNode       .connect (gainBackLeftNode,  1);
+      gainFrontLeftNode  .connect (mergerNode, 0, 0);
+      gainFrontRightNode .connect (mergerNode, 0, 1);
+      gainBackLeftNode   .connect (mergerNode, 0, 0);
+      gainBackRightNode  .connect (mergerNode, 0, 1);
+      mergerNode         .connect (audioContext .destination);
 
-      this .gainNode          = gainNode;
-      this .splitterNode      = splitterNode;
-      this .gainLeftNode      = gainLeftNode;
-      this .gainRightNode     = gainRightNode;
-      this .gainLeftBackNode  = gainLeftBackNode;
-      this .gainRightBackNode = gainRightBackNode;
+      this .gainNode           = gainNode;
+      this .splitterNode       = splitterNode;
+      this .gainFrontLeftNode  = gainFrontLeftNode;
+      this .gainFrontRightNode = gainFrontRightNode;
+      this .gainBackLeftNode   = gainBackLeftNode;
+      this .gainBackRightNode  = gainBackRightNode;
 
       this .getLive () .addInterest ("set_live__", this);
       this ._traversed .addInterest ("set_live__", this);
@@ -151,11 +151,10 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          left  = (1 - rotation) * (gain * (1 - pan ** 2)),
          right = (1 - rotation) * (gain * (1 - (1 - pan) ** 2));
 
-      this .gainLeftNode  .gain .value = (1 - rotation) * left;
-      this .gainRightNode .gain .value = (1 - rotation) * right;
-
-      this .gainLeftBackNode  .gain .value = rotation * left;
-      this .gainRightBackNode .gain .value = rotation * right;
+      this .gainFrontLeftNode  .gain .value = (1 - rotation) * left;
+      this .gainFrontRightNode .gain .value = (1 - rotation) * right;
+      this .gainBackLeftNode   .gain .value = rotation * left;
+      this .gainBackRightNode  .gain .value = rotation * right;
    },
    set_live__ ()
    {
