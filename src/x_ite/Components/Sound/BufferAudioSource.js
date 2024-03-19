@@ -209,20 +209,20 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
          {
             value ()
             {
-               if (!active)
-               {
-                  audioBufferSource = new AudioBufferSourceNode (audioContext);
+               if (active)
+                  return Promise .resolve ();
 
-                  audioBufferSource .buffer              = audioBuffer;
-                  audioBufferSource .loop                = loop;
-                  audioBufferSource .playbackRate .value = playbackRate;
+               audioBufferSource = new AudioBufferSourceNode (audioContext);
 
-                  audioBufferSource .connect (audioSource);
-                  audioBufferSource .start (0, currentTime);
+               audioBufferSource .buffer              = audioBuffer;
+               audioBufferSource .loop                = loop;
+               audioBufferSource .playbackRate .value = playbackRate;
 
-                  startTime = audioContext .currentTime - currentTime;
-                  active    = true;
-               }
+               audioBufferSource .connect (audioSource);
+               audioBufferSource .start (0, currentTime);
+
+               startTime = audioContext .currentTime - currentTime;
+               active    = true;
 
                return Promise .resolve ();
             },
