@@ -102,7 +102,8 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
          bufferLength     = Math .max (bufferDuration * sampleRate, 1),
          audioBuffer      = audioContext .createBuffer (numberOfChannels, bufferLength, sampleRate);
 
-      this ._buffer .length = bufferLength * numberOfChannels;
+      if (this ._buffer .length < bufferLength * numberOfChannels)
+         this ._buffer .length = bufferLength * numberOfChannels;
 
       const buffer = this ._buffer .getValue ();
 
