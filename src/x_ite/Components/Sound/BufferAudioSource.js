@@ -52,6 +52,7 @@ import X3DSoundSourceNode   from "./X3DSoundSourceNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import FileLoader           from "../../InputOutput/FileLoader.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function BufferAudioSource (executionContext)
 {
@@ -69,12 +70,12 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       X3DSoundSourceNode .prototype .initialize .call (this);
       X3DUrlObject       .prototype .initialize .call (this);
 
-      this .setMediaElement (this .createMediaElement (this .getAudioSource (), null));
-
       this ._buffer       .addInterest ("set_buffer__",       this);
       this ._playbackRate .addInterest ("set_playbackRate__", this);
       this ._loopStart    .addInterest ("set_loopStart__",    this);
       this ._loopEnd      .addInterest ("set_loopEnd__",      this);
+
+      this .setMediaElement (this .createMediaElement (this .getAudioSource (), null));
 
       this .set_buffer__ ();
       this .set_playbackRate__ ();
@@ -93,7 +94,30 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       if (this ._load .getValue ())
          return;
 
+      const
+         audioContext     = this .getBrowser () .getAudioContext (),
+         numberOfChannels = Algorithm .clamp (this ._numberOfChannels .getValue (), 1, 32),
+         bufferDuration   = Math .max (this ._bufferDuration .getValue (), 0),
+         sampleRate       = Math .max (this ._sampleRate .getValue (), 0),
+         bufferLength     = Math .max (bufferDuration * sampleRate, 1),
+         audioBuffer      = audioContext .createBuffer (numberOfChannels, bufferLength, sampleRate);
 
+      this ._buffer .length = bufferLength * numberOfChannels;
+
+      const buffer = this ._buffer .getValue ();
+
+      for (let i = 0; i < numberOfChannels; ++ i)
+      {
+         const channelData = audioBuffer .getChannelData (i);
+
+         channelData .set (buffer .subarray (i * bufferLength, (i + 1) * bufferLength));
+      }
+
+      this .setMediaElement (this .createMediaElement (this .getAudioSource (), audioBuffer));
+
+      this .set_playbackRate__ ();
+      this .set_loopStart__ ();
+      this .set_loopEnd__ ();
    },
    set_playbackRate__ ()
    {
