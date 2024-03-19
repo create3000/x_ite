@@ -320,6 +320,7 @@ X_ITE supports a limited set of nodes defined by the X3D specification. There ar
 * [Analyser](/x_ite/components/sound/analyser/)
 * [AudioClip](/x_ite/components/sound/audioclip/)
 * [AudioDestination](/x_ite/components/sound/audiodestination/)
+* [BufferAudioSource](/x_ite/components/sound/bufferaudiosource/)
 * [ChannelMerger](/x_ite/components/sound/channelmerger/)
 * [ChannelSelector](/x_ite/components/sound/channelselector/)
 * [ChannelSplitter](/x_ite/components/sound/channelsplitter/)
