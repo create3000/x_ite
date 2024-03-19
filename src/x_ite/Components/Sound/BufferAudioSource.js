@@ -193,6 +193,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
       let
          audioBufferSource = new AudioBufferSourceNode (audioContext),
+         duration          = audioBuffer ?.duration ?? 0,
          detune            = 0,
          playbackRate      = 1,
          loopStart         = 0,
@@ -299,7 +300,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
          {
             get ()
             {
-               return audioBuffer ?.duration ?? 0;
+               return duration;
             },
          },
          play:
