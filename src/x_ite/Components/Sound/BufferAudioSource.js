@@ -71,6 +71,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       X3DUrlObject       .prototype .initialize .call (this);
 
       this ._buffer       .addInterest ("set_buffer__",       this);
+      this ._detune       .addInterest ("set_detune__",       this);
       this ._playbackRate .addInterest ("set_playbackRate__", this);
       this ._loopStart    .addInterest ("set_loopStart__",    this);
       this ._loopEnd      .addInterest ("set_loopEnd__",      this);
@@ -78,6 +79,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       this .setMediaElement (this .createMediaElement (this .getAudioSource (), null));
 
       this .set_buffer__ ();
+      this .set_detune__ ();
       this .set_playbackRate__ ();
       this .set_loopStart__ ();
       this .set_loopEnd__ ();
@@ -116,9 +118,14 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
       this .setMediaElement (this .createMediaElement (this .getAudioSource (), audioBuffer));
 
+      this .set_detune__ ();
       this .set_playbackRate__ ();
       this .set_loopStart__ ();
       this .set_loopEnd__ ();
+   },
+   set_detune__ ()
+   {
+      this .getMediaElement () .detune = this ._detune .getValue ();
    },
    set_playbackRate__ ()
    {
@@ -173,6 +180,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
       this .setMediaElement (this .createMediaElement (this .getAudioSource (), audioBuffer));
 
+      this .set_detune__ ();
       this .set_playbackRate__ ();
       this .set_loopStart__ ();
       this .set_loopEnd__ ();
@@ -183,6 +191,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
       let
          audioBufferSource = new AudioBufferSourceNode (audioContext),
+         detune            = 0,
          playbackRate      = 1,
          loopStart         = 0,
          loopEnd           = 0,
@@ -193,6 +202,18 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
       return Object .defineProperties ({ },
       {
+         detune:
+         {
+            get ()
+            {
+               return detune;
+            },
+            set (value)
+            {
+               detune                           = value;
+               audioBufferSource .detune .value = value;
+            },
+         },
          playbackRate:
          {
             get ()
