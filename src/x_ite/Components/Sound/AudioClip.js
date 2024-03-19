@@ -53,6 +53,7 @@ import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import AudioElement         from "../../Browser/Sound/AudioElement.js";
 import FileLoader           from "../../InputOutput/FileLoader.js";
+import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function AudioClip (executionContext)
 {
@@ -94,6 +95,12 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
          else if (data instanceof ArrayBuffer)
          {
             await this .setArrayBuffer (data);
+
+            if (DEVELOPMENT)
+            {
+               if (URL .protocol !== "data:")
+                  console .info (`Done loading audio '${decodeURI (URL .href)}'`);
+            }
 
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
