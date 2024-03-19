@@ -147,11 +147,15 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    },
    setGain (gain, pan = 0.5, rotation = 0)
    {
-      this .gainLeftNode  .gain .value = (1 - rotation) * (gain * (1 - pan ** 2));
-      this .gainRightNode .gain .value = (1 - rotation) * (gain * (1 - (1 - pan) ** 2));
+      const
+         left  = (1 - rotation) * (gain * (1 - pan ** 2)),
+         right = (1 - rotation) * (gain * (1 - (1 - pan) ** 2));
 
-      this .gainLeftBackNode  .gain .value = rotation * (gain * (1 - pan ** 2));
-      this .gainRightBackNode .gain .value = rotation * (gain * (1 - (1 - pan) ** 2));
+      this .gainLeftNode  .gain .value = (1 - rotation) * left;
+      this .gainRightNode .gain .value = (1 - rotation) * right;
+
+      this .gainLeftBackNode  .gain .value = rotation * left;
+      this .gainRightBackNode .gain .value = rotation * right;
    },
    set_live__ ()
    {
