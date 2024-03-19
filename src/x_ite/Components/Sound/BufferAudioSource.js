@@ -52,6 +52,7 @@ import X3DSoundSourceNode   from "./X3DSoundSourceNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import FileLoader           from "../../InputOutput/FileLoader.js";
+import AudioElement         from "../../Browser/Sound/AudioElement.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function BufferAudioSource (executionContext)
@@ -70,13 +71,15 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       X3DSoundSourceNode .prototype .initialize .call (this);
       X3DUrlObject       .prototype .initialize .call (this);
 
+      const audioContext = this .getBrowser () .getAudioContext ();
+
       this ._buffer       .addInterest ("set_buffer__",       this);
       this ._detune       .addInterest ("set_detune__",       this);
       this ._playbackRate .addInterest ("set_playbackRate__", this);
       this ._loopStart    .addInterest ("set_loopStart__",    this);
       this ._loopEnd      .addInterest ("set_loopEnd__",      this);
 
-      this .setMediaElement (this .createMediaElement (this .getAudioSource (), null));
+      this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), null));
 
       this .set_buffer__ ();
       this .set_detune__ ();
@@ -118,7 +121,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
          channelData .set (buffer .subarray (i * bufferLength, (i + 1) * bufferLength));
       }
 
-      this .setMediaElement (this .createMediaElement (this .getAudioSource (), audioBuffer));
+      this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), audioBuffer));
 
       this .set_detune__ ();
       this .set_playbackRate__ ();
@@ -143,7 +146,9 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
    },
    unloadData ()
    {
-      this .setMediaElement (this .createMediaElement (this .getAudioSource (), null));
+      const audioContext = this .getBrowser () .getAudioContext ();
+
+      this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), null));
    },
    loadData ()
    {
@@ -152,9 +157,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
          if (data === null)
          {
             // No URL could be loaded.
-            this .audioBufferSource .buffer = null;
-
-            this .setLoadState (X3DConstants .FAILED_STATE);
+            this .unloadData ();
          }
          else if (data instanceof ArrayBuffer)
          {
@@ -180,176 +183,12 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       this ._numberOfChannels = audioBuffer .numberOfChannels;
       this ._sampleRate       = audioBuffer .sampleRate;
 
-      this .setMediaElement (this .createMediaElement (this .getAudioSource (), audioBuffer));
+      this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), audioBuffer));
 
       this .set_detune__ ();
       this .set_playbackRate__ ();
       this .set_loopStart__ ();
       this .set_loopEnd__ ();
-   },
-   createMediaElement (audioSource, audioBuffer)
-   {
-      const audioContext = this .getBrowser () .getAudioContext ();
-
-      let
-         audioBufferSource = new AudioBufferSourceNode (audioContext),
-         duration          = audioBuffer ?.duration ?? 0,
-         detune            = 0,
-         playbackRate      = 1,
-         loopStart         = 0,
-         loopEnd           = 0,
-         loop              = false,
-         startTime         = 0,
-         currentTime       = 0,
-         active            = false;
-
-      return Object .defineProperties ({ },
-      {
-         detune:
-         {
-            get ()
-            {
-               return detune;
-            },
-            set (value)
-            {
-               detune                           = value;
-               audioBufferSource .detune .value = value;
-            },
-         },
-         playbackRate:
-         {
-            get ()
-            {
-               return playbackRate;
-            },
-            set (value)
-            {
-               playbackRate                           = value;
-               audioBufferSource .playbackRate .value = value;
-            },
-         },
-         loopStart:
-         {
-            get ()
-            {
-               return loopStart;
-            },
-            set (value)
-            {
-               loopStart                    = value;
-               audioBufferSource .loopStart = value;
-            },
-         },
-         loopEnd:
-         {
-            get ()
-            {
-               return loopEnd;
-            },
-            set (value)
-            {
-               loopEnd                    = value;
-               audioBufferSource .loopEnd = value;
-            },
-         },
-         loop:
-         {
-            get ()
-            {
-               return loop;
-            },
-            set (value)
-            {
-               loop                    = value;
-               audioBufferSource .loop = value;
-            },
-         },
-         currentTime:
-         {
-            get ()
-            {
-               if (active)
-               {
-                  if (this .duration)
-                  {
-                     if (this .loop)
-                        return (audioContext .currentTime - startTime) % this .duration;
-
-                     return audioContext .currentTime - startTime;
-                  }
-
-                  return 0;
-               }
-
-               return currentTime;
-            },
-            set (value)
-            {
-               currentTime = value;
-               startTime   = audioContext .currentTime - currentTime;
-
-               if (!active)
-                  return;
-
-               this .pause ();
-               this .play ();
-            },
-         },
-         duration:
-         {
-            get ()
-            {
-               return duration;
-            },
-         },
-         play:
-         {
-            value ()
-            {
-               if (active)
-                  return Promise .resolve ();
-
-               audioBufferSource = new AudioBufferSourceNode (audioContext);
-
-               audioBufferSource .buffer              = audioBuffer;
-               audioBufferSource .loopStart           = loopStart;
-               audioBufferSource .loopEnd             = loopEnd;
-               audioBufferSource .loop                = loop;
-               audioBufferSource .playbackRate .value = playbackRate;
-
-               audioBufferSource .connect (audioSource);
-               audioBufferSource .start (0, currentTime);
-
-               startTime = audioContext .currentTime - currentTime;
-               active    = true;
-
-               return Promise .resolve ();
-            },
-         },
-         pause:
-         {
-            value ()
-            {
-               if (!active)
-                  return;
-
-               audioBufferSource .stop ();
-               audioBufferSource .disconnect ();
-
-               currentTime = this .currentTime;
-               active      = false;
-
-               // Create 1s silence to clear channels.
-
-               const silence = new AudioBufferSourceNode (audioContext);
-
-               silence .connect (audioSource);
-               silence .start ();
-               silence .stop (audioContext .currentTime + 1);
-            },
-         },
-      });
    },
    dispose ()
    {

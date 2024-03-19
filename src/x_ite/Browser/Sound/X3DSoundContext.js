@@ -82,7 +82,7 @@ Object .assign (X3DSoundContext .prototype,
    },
    startAudioElement (audioElement, functionName = "play")
    {
-      audioElement [functionName] () .catch (() =>
+      audioElement ?.[functionName] () .catch (() =>
       {
          const id = `X3DSoundContext-${X3DObject .getId (audioElement)}`;
 

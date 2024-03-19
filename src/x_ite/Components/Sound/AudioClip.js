@@ -51,7 +51,8 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DSoundSourceNode   from "./X3DSoundSourceNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import DEVELOPMENT          from "../../DEVELOPMENT.js";
+import AudioElement         from "../../Browser/Sound/AudioElement.js";
+import FileLoader           from "../../InputOutput/FileLoader.js";
 
 function AudioClip (executionContext)
 {
@@ -59,14 +60,6 @@ function AudioClip (executionContext)
    X3DUrlObject       .call (this, executionContext);
 
    this .addType (X3DConstants .AudioClip);
-
-   const audioContext = this .getBrowser () .getAudioContext ();
-
-   this .urlStack   = new Fields .MFString ();
-   this .audio      = $("<audio></audio>");
-   this .sourceNode = audioContext .createMediaElementSource (this .audio [0]);
-
-   this .sourceNode .connect (this .getAudioSource ());
 }
 
 Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode .prototype),
@@ -77,12 +70,6 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
       X3DSoundSourceNode .prototype .initialize .call (this);
       X3DUrlObject       .prototype .initialize .call (this);
 
-      this .audio
-         .on ("abort error", this .setError .bind (this))
-         .on ("suspend stalled", this .setTimeout .bind (this))
-         .prop ("crossOrigin", "Anonymous")
-         .prop ("preload", "auto");
-
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    set_live__ ()
@@ -92,72 +79,33 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    },
    unloadData ()
    {
-      this .setMediaElement (null);
+      const audioContext = this .getBrowser () .getAudioContext ();
+
+      this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), null));
    },
    loadData ()
    {
-      this .setMediaElement (null);
-      this .urlStack .setValue (this ._url);
-      this .audio .on ("loadeddata", this .setAudio .bind (this));
-      this .loadNext ();
-   },
-   loadNext ()
-   {
-      if (this .urlStack .length === 0)
+      new FileLoader (this) .loadDocument (this ._url, async (data, URL) =>
       {
-         this .audio .off ("loadeddata");
-         this ._duration_changed = -1;
-         this .setLoadState (X3DConstants .FAILED_STATE);
-         return;
-      }
-
-      // Get URL.
-
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-      if (this .URL .protocol !== "data:")
-      {
-         if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
-      }
-
-      this .audio .attr ("src", this .URL .href);
-      this .audio .get (0) .load ();
-   },
-   setTimeout (event)
-   {
-      setTimeout (() =>
-      {
-         if (this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-            this .setError (event);
-      },
-      30_000);
-   },
-   setError (event)
-   {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading audio '${decodeURI (this .URL .href)}'`, event .type);
-
-      this .loadNext ();
-   },
-   setAudio ()
-   {
-      try
-      {
-         if (DEVELOPMENT)
+         if (data === null)
          {
-            if (this .URL .protocol !== "data:")
-               console .info (`Done loading audio '${decodeURI (this .URL .href)}'`);
+            this .setLoadState (X3DConstants .FAILED_STATE);
          }
+         else if (data instanceof ArrayBuffer)
+         {
+            await this .setArrayBuffer (data);
 
-         this .audio .off ("loadeddata");
-         this .setMediaElement (this .audio [0]);
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
-      }
-      catch (error)
-      {
-         this .setError ({ type: error .message });
-      }
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
+         }
+      });
+   },
+   async setArrayBuffer (arrayBuffer)
+   {
+      const
+         audioContext = this .getBrowser () .getAudioContext (),
+         audioBuffer  = await audioContext .decodeAudioData (arrayBuffer);
+
+      this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), audioBuffer));
    },
    dispose ()
    {
