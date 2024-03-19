@@ -337,7 +337,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    {
       const
          direction = new Vector3 (0, 0, 0),
-         result    = [ ];
+         result    = [0.5, 0]; // [pan, rotation]
 
       return function (modelViewMatrix)
       {
