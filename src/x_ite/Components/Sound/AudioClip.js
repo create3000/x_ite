@@ -90,6 +90,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
       {
          if (data === null)
          {
+            this .unloadData ();
             this .setLoadState (X3DConstants .FAILED_STATE);
          }
          else if (data instanceof ArrayBuffer)
