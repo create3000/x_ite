@@ -359,6 +359,7 @@ const X_ITE_TESTS = [
    { path: "Sound/ChannelSelector.x3d" },
    { path: "Sound/ChannelSplitter.x3d" },
    { path: "Sound/ExchangeChannels.x3d" },
+   { path: "Sound/Noise.x3d" },
    { path: "Sound/OscillatorSource.x3d" },
    { path: "Sound/Sound.x3d" },
    { component: "Text" },
