@@ -247,7 +247,6 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
                silence .connect (audioSource);
                silence .start ();
                silence .stop (audioContext .currentTime + 1);
-               setTimeout (() => silence .disconnect (), 1000);
             },
          },
       });
