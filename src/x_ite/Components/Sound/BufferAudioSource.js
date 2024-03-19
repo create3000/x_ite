@@ -71,10 +71,12 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
       this .setMediaElement (this .createMediaElement (this .getAudioSource (), null));
 
+      this ._buffer       .addInterest ("set_buffer__",       this);
       this ._playbackRate .addInterest ("set_playbackRate__", this);
       this ._loopStart    .addInterest ("set_loopStart__",    this);
       this ._loopEnd      .addInterest ("set_loopEnd__",      this);
 
+      this .set_buffer__ ();
       this .set_playbackRate__ ();
       this .set_loopStart__ ();
       this .set_loopEnd__ ();
@@ -85,6 +87,13 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
    {
       X3DSoundSourceNode .prototype .set_live__ .call (this);
       X3DUrlObject       .prototype .set_live__ .call (this);
+   },
+   set_buffer__ ()
+   {
+      if (this ._load .getValue ())
+         return;
+
+
    },
    set_playbackRate__ ()
    {
