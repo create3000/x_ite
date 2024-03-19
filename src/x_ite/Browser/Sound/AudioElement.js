@@ -52,7 +52,6 @@ export default
    {
       let
          audioBufferSource = new AudioBufferSourceNode (audioContext),
-         duration          = audioBuffer ?.duration ?? 0,
          detune            = 0,
          playbackRate      = 1,
          loopStart         = 0,
@@ -157,10 +156,7 @@ export default
          },
          duration:
          {
-            get ()
-            {
-               return duration;
-            },
+            value: audioBuffer ?.duration ?? 0,
          },
          play:
          {
