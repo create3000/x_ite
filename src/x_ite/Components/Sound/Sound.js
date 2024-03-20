@@ -150,8 +150,8 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       const
          panLeft       = 1 - pan ** 2,
          panRight      = 1 - (1 - pan) ** 2,
-         rotationFront = 1 - rotation ** 2,
-         rotationBack  = 1 - (1 - rotation) ** 2;
+         rotationFront = 1 - rotation,
+         rotationBack  = rotation;
 
       this .gainFrontLeftNode  .gain .value = gain * rotationFront * panLeft;
       this .gainFrontRightNode .gain .value = gain * rotationFront * panRight;
