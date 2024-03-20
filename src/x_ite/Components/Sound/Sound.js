@@ -361,9 +361,8 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          rotation .setFromToVec (Vector3 .zAxis, direction) .straighten ();
          rotation .multVecRot (xAxis .assign (Vector3 .xAxis));
 
-         modelViewMatrix .multVecMatrix (location)  .normalize () .negate ();
-         modelViewMatrix .multDirMatrix (direction) .normalize ();
-         modelViewMatrix .multDirMatrix (xAxis)     .normalize ();
+         modelViewMatrix .multVecMatrix (location) .normalize () .negate ();
+         modelViewMatrix .multDirMatrix (xAxis)    .normalize ();
 
          result .pan      = Math .acos (Algorithm .clamp (location .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
          result .rotation = Math .acos (Algorithm .clamp (xAxis    .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
