@@ -349,8 +349,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       {
          if (!this ._spatialize .getValue ())
          {
-            result [0] = 0.5;
-            result [1] = 0;
+            result .length = 0;
             return result;
          }
 
