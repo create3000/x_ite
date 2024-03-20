@@ -340,6 +340,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    {
       const
          rotation  = new Rotation4 (),
+         location  = new Vector3 (0, 0, 0),
          direction = new Vector3 (0, 0, 0),
          xAxis     = new Vector3 (0, 0, 0),
          result    = [ ]; // [pan, rotation]
@@ -353,15 +354,17 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
             return result;
          }
 
+         location .assign (this ._location .getValue ());
          direction .assign (this ._direction .getValue ());
          rotation .setFromToVec (Vector3 .zAxis, direction) .straighten ();
          rotation .multVecRot (xAxis .assign (Vector3 .xAxis));
 
+         modelViewMatrix .multVecMatrix (location) .normalize () .negate ();
          modelViewMatrix .multDirMatrix (direction) .normalize ();
-         modelViewMatrix .multDirMatrix (xAxis)     .normalize ();
+         modelViewMatrix .multDirMatrix (xAxis) .normalize ();
 
-         result [0] = Math .acos (Algorithm .clamp (direction .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
-         result [1] = Math .acos (Algorithm .clamp (xAxis     .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
+         result [0] = Math .acos (Algorithm .clamp (location .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
+         result [1] = Math .acos (Algorithm .clamp (xAxis .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
 
          return result;
       };
