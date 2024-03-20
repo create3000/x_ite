@@ -139,7 +139,7 @@ A new color initialized with zero values is created and returned.
 The `[@@iterator]()` method of SFColor instances implements the iterable protocol and allows SFColor objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
 
 ```js
-const [r, g, b] = color;
+const [r, g, b] = color; // Destructuring using iterator.
 ```
 
 ### Properties
@@ -191,7 +191,7 @@ A new color initialized with zero values is created and returned.
 The `[@@iterator]()` method of SFColorRGBA instances implements the iterable protocol and allows SFColorRGBA objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
 
 ```js
-const [r, g, b, a] = color;
+const [r, g, b, a] = color; // Destructuring using iterator.
 ```
 
 ### Properties
@@ -250,7 +250,7 @@ A new image initialized with zero values is created and returned.
 The `[@@iterator]()` method of SFImage instances implements the iterable protocol and allows SFImage objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
 
 ```js
-const [width, height, comp, array] = image;
+const [width, height, comp, array] = image; // Destructuring using iterator.
 ```
 
 ### Properties
@@ -298,7 +298,7 @@ A new matrix initialized with the values in *f11* through *f44* is created and r
 The `[@@iterator]()` method of SFMatrix3d/f instances implements the iterable protocol and allows SFMatrix3d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
 
 ```js
-const [e0, e1, e2, ...] = matrix;
+const [e0, e1, e2, ...rest] = matrix; // Destructuring using iterator.
 ```
 
 ### Properties
@@ -388,7 +388,7 @@ A new matrix initialized with the values in *f11* through *f44* is created and r
 The `[@@iterator]()` method of SFMatrix4d/f instances implements the iterable protocol and allows SFMatrix4d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
 
 ```js
-const [e0, e1, e2, ...] = matrix;
+const [e0, e1, e2, ...rest] = matrix; // Destructuring using iterator.
 ```
 
 ### Properties
@@ -548,7 +548,7 @@ A new rotation initialized with the identity rotation is created and returned.
 The `[@@iterator]()` method of SFRotation instances implements the iterable protocol and allows SFRotation objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
 
 ```js
-const [x, y, z, angle] = rotation;
+const [x, y, z, angle] = rotation; // Destructuring using iterator.
 ```
 
 ### Properties
@@ -626,7 +626,7 @@ Constructs a SFVec2d/f from *x* and *y*, where *x* and *y* are scalar expression
 The `[@@iterator]()` method of SFVec2d/f instances implements the iterable protocol and allows SFVec2d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
 
 ```js
-const [x, y] = vector;
+const [x, y] = vector; // Destructuring using iterator.
 ```
 
 ### Properties
@@ -724,7 +724,7 @@ Constructs a SFVec3d/f from *x*, *y* and *z*, where *x*, *y* and *z* are scalar 
 The `[@@iterator]()` method of SFVec3d/f instances implements the iterable protocol and allows SFVec3d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
 
 ```js
-const [x, y, z] = vector;
+const [x, y, z] = vector; // Destructuring using iterator.
 ```
 
 ### Properties
@@ -830,7 +830,7 @@ Constructs a SFVec4d/f from *x*, *y*, *z* and *w*, where *x*, *y*, *z* and *w* a
 The `[@@iterator]()` method of SFVec4d/f instances implements the iterable protocol and allows SFVec4d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
 
 ```js
-const [x, y, z, w] = vector;
+const [x, y, z, w] = vector; // Destructuring using iterator.
 ```
 
 ### Properties
@@ -921,7 +921,7 @@ Returns an SFVec4d/f whose value is the passed SFVec4d/f subtracted, componentwi
 
 The X3DArrayField object is the base object of all MF* objects. It is used to store a one-dimensional array of the corresponding SF* objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. X3D*ArrayFieldObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.0.
 
-### Instance Creation Method(s
+### Instance Creation Method(s)
 
 None
 
@@ -930,7 +930,7 @@ None
 The `[@@iterator]()` method of X3DArrayField instances implements the iterable protocol and allows X3DArrayField objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the elements of the array in order.
 
 ```js
-const [e0, e1, e2, ...] = array;
+const [e0, e1, e2, ...rest] = array; // Destructuring using iterator.
 ```
 
 ### Properties
