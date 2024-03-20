@@ -134,6 +134,14 @@ A new color initialized with zero values is created and returned.
 
 *r, g,* and *b* are scalar values with the red, green, and blue values of the color in the range 0–1.
 
+### Iterator
+
+The [@@iterator]() method of SFColor instances implements the iterable protocol and allows SFColor objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
+```js
+const [r, g, b] = color;
+```
+
 ### Properties
 
 #### **r**
@@ -170,13 +178,21 @@ The SFColorRGBA object corresponds to an X3D SFColorRGBA field. All properties a
 
 ### Instance Creation Method(s)
 
-#### *sfColorRGBAObjectName* = new **SFColor** ()
+#### *sfColorRGBAObjectName* = new **SFColorRGBA** ()
 
 A new color initialized with zero values is created and returned.
 
-#### *sfColorRGBAObjectName* = new **SFColor** (*r, g, b, a*)
+#### *sfColorRGBAObjectName* = new **SFColorRGBA** (*r, g, b, a*)
 
 *r, g, b* and *a* are scalar values with the red, green and blue values of the color in the range 0–1.
+
+### Iterator
+
+The [@@iterator]() method of SFColorRGBA instances implements the iterable protocol and allows SFColorRGBA objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
+```js
+const [r, g, b, a] = color;
+```
 
 ### Properties
 
@@ -229,6 +245,14 @@ A new image initialized with zero values is created and returned.
 *components* are the number of components of the image (0-4).
 *array* is a MFInt32 array with pixel data.
 
+### Iterator
+
+The [@@iterator]() method of SFImage instances implements the iterable protocol and allows SFImage objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
+```js
+const [width, height, comp, array] = image;
+```
+
 ### Properties
 
 #### **width**
@@ -268,6 +292,14 @@ A new matrix initialized with the vectors in *r1* through *r3* of type SFVec3d/f
 #### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*f11, f12, f13, f21, f22, f23, f31, f32, f33*)
 
 A new matrix initialized with the values in *f11* through *f44* is created and returned.
+
+### Iterator
+
+The [@@iterator]() method of SFMatrix3d/f instances implements the iterable protocol and allows SFMatrix3d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
+```js
+const [e0, e1, e2, ...] = matrix;
+```
 
 ### Properties
 
@@ -350,6 +382,14 @@ A new matrix initialized with the vectors in *r1* through *r4* of type SFVec4d/f
 #### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*f11, f12, f13, f14, f21, f22, f23, f24, f31, f32, f33, f34, f41, f42, f43, f44*)
 
 A new matrix initialized with the values in *f11* through *f44* is created and returned.
+
+### Iterator
+
+The [@@iterator]() method of SFMatrix4d/f instances implements the iterable protocol and allows SFMatrix4d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
+```js
+const [e0, e1, e2, ...] = matrix;
+```
 
 ### Properties
 
@@ -503,6 +543,14 @@ A new rotation initialized with the identity rotation is created and returned.
 
 *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
 
+### Iterator
+
+The [@@iterator]() method of SFRotation instances implements the iterable protocol and allows SFRotation objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
+```js
+const [x, y, z, angle] = rotation;
+```
+
 ### Properties
 
 #### **x**
@@ -572,6 +620,14 @@ A new vector initialized with zero values is created and returned.
 #### *sfVec2d/fObjectName* = new **SFVec2d/f** (*x, y*)
 
 Constructs a SFVec2d/f from *x* and *y*, where *x* and *y* are scalar expressions.
+
+### Iterator
+
+The [@@iterator]() method of SFVec2d/f instances implements the iterable protocol and allows SFVec2d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
+```js
+const [x, y] = vector;
+```
 
 ### Properties
 
@@ -662,6 +718,14 @@ A new vector initialized with zero values is created and returned.
 #### *sfVec3d/fObjectName* = new **SFVec3d/f** (*x, y, z*)
 
 Constructs a SFVec3d/f from *x*, *y* and *z*, where *x*, *y* and *z* are scalar expressions.
+
+### Iterator
+
+The [@@iterator]() method of SFVec3d/f instances implements the iterable protocol and allows SFVec3d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
+```js
+const [x, y, z] = vector;
+```
 
 ### Properties
 
@@ -761,6 +825,14 @@ A new vector initialized with zero values is created and returned.
 
 Constructs a SFVec4d/f from *x*, *y*, *z* and *w*, where *x*, *y*, *z* and *w* are scalar expressions.
 
+### Iterator
+
+The [@@iterator]() method of SFVec4d/f instances implements the iterable protocol and allows SFVec4d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
+```js
+const [x, y, z, w] = vector;
+```
+
 ### Properties
 
 #### **x**
@@ -852,6 +924,14 @@ The X3DArrayField object is the base object of all MF* objects. It is used to st
 ### Instance Creation Method(s
 
 None
+
+### Iterator
+
+The [@@iterator]() method of X3DArrayField instances implements the iterable protocol and allows X3DArrayField objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the elements of the array in order.
+
+```js
+const [e0, e1, e2, ...] = array;
+```
 
 ### Properties
 
