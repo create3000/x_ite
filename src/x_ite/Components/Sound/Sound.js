@@ -339,8 +339,10 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    getPan: (function ()
    {
       const
+         rotation  = new Rotation4 (),
          direction = new Vector3 (0, 0, 0),
-         result    = [0.5, 0]; // [pan, rotation]
+         xAxis     = new Vector3 (0, 0, 0),
+         result    = [ ]; // [pan, rotation]
 
       return function (modelViewMatrix)
       {
@@ -351,10 +353,15 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
             return result;
          }
 
-         modelViewMatrix .multDirMatrix (direction .assign (this ._direction .getValue ())) .normalize ();
+         direction .assign (this ._direction .getValue ());
+         rotation .setFromToVec (Vector3 .zAxis, direction) .straighten ();
+         rotation .multVecRot (xAxis .assign (Vector3 .xAxis));
+
+         modelViewMatrix .multDirMatrix (direction) .normalize ();
+         modelViewMatrix .multDirMatrix (xAxis)     .normalize ();
 
          result [0] = Math .acos (Algorithm .clamp (direction .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
-         result [1] = Math .acos (Algorithm .clamp (direction .dot (Vector3 .zAxis), -1, 1)) / Math .PI;
+         result [1] = Math .acos (Algorithm .clamp (xAxis     .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
 
          return result;
       };
