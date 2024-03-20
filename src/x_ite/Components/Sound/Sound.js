@@ -148,13 +148,15 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    setGain (gain, pan = 0.5, rotation = 0)
    {
       const
-         left  = gain * (1 - pan ** 2),
-         right = gain * (1 - (1 - pan) ** 2);
+         panLeft       = 1 - pan ** 2,
+         panRight      = 1 - (1 - pan) ** 2,
+         rotationFront = 1 - rotation ** 2,
+         rotationBack  = 1 - (1 - rotation) ** 2;
 
-      this .gainFrontLeftNode  .gain .value = (1 - rotation) * left;
-      this .gainFrontRightNode .gain .value = (1 - rotation) * right;
-      this .gainBackLeftNode   .gain .value = rotation * left;
-      this .gainBackRightNode  .gain .value = rotation * right;
+      this .gainFrontLeftNode  .gain .value = gain * rotationFront * panLeft;
+      this .gainFrontRightNode .gain .value = gain * rotationFront * panRight;
+      this .gainBackLeftNode   .gain .value = gain * rotationBack  * panLeft;
+      this .gainBackRightNode  .gain .value = gain * rotationBack  * panRight;
    },
    set_live__ ()
    {
@@ -253,7 +255,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
                                          Math .max (this ._minFront .getValue (), 0),
                                          min);
 
-            const [pan, rotation] = this .getPan (modelViewMatrix);
+            const { pan, rotation } = this .getPan (modelViewMatrix);
 
             if (min .distance < 1) // Radius of normalized sphere is 1.
             {
@@ -343,14 +345,14 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          location  = new Vector3 (0, 0, 0),
          direction = new Vector3 (0, 0, 0),
          xAxis     = new Vector3 (0, 0, 0),
-         result    = [ ]; // [pan, rotation]
+         result    = { };
 
       return function (modelViewMatrix)
       {
          if (!this ._spatialize .getValue ())
          {
-            result [0] = 0.5;
-            result [1] = 0;
+            result .pan      = 0.5;
+            result .rotation = 0;
             return result;
          }
 
@@ -363,8 +365,8 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          modelViewMatrix .multDirMatrix (direction) .normalize ();
          modelViewMatrix .multDirMatrix (xAxis) .normalize ();
 
-         result [0] = Math .acos (Algorithm .clamp (location .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
-         result [1] = Math .acos (Algorithm .clamp (xAxis .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
+         result .pan      = Math .acos (Algorithm .clamp (location .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
+         result .rotation = Math .acos (Algorithm .clamp (xAxis .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
 
          return result;
       };
