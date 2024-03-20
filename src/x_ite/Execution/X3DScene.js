@@ -984,6 +984,12 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += '}';
       generator .string += generator .TidyBreak ();
    },
+   dispose ()
+   {
+      this .exportedNodes .clear ();
+
+      X3DExecutionContext .prototype .dispose .call (this);
+   },
 },
 {
    setExecutionContext (executionContext)

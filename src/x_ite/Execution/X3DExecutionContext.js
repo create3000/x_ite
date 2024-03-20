@@ -866,8 +866,13 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    dispose ()
    {
-      for (const route of [... this [_routes]])
+      for (const route of Array .from (this [_routes]))
          this .deleteRoute (route);
+
+      this .externprotos  .clear ();
+      this .protos        .clear ();
+      this .importedNodes .clear ();
+      this .routes        .clear ();
 
       X3DBaseNode .prototype .dispose .call (this);
    },
