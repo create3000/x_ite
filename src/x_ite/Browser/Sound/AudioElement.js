@@ -119,6 +119,9 @@ export default
             },
             set (value)
             {
+               if (!value)
+                  startTime = audioContext .currentTime - this .currentTime;
+
                loop                    = value;
                audioBufferSource .loop = value;
             },
