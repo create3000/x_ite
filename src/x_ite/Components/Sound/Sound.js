@@ -236,9 +236,6 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          if (!this .childNodes .length)
             return;
 
-         // if (!this .sourceNode ._isActive .getValue () || this .sourceNode ._isPaused .getValue ())
-         //    return;
-
          this .setTraversed (true);
 
          const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
