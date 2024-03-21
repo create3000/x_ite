@@ -82,6 +82,9 @@ Object .assign (Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessin
    },
    set_curve__ ()
    {
+      if (this ._curve .length < 2)
+         this ._curve .length = 2;
+
       this .waveShaperNode .curve = this ._curve .shrinkToFit ();
    },
    set_oversample__: (function ()

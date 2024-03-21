@@ -333,6 +333,7 @@ X_ITE supports a limited set of nodes defined by the X3D specification. There ar
 * [OscillatorSource](/x_ite/components/sound/oscillatorsource/)
 * [PeriodicWave](/x_ite/components/sound/periodicwave/)
 * [Sound](/x_ite/components/sound/sound/)
+* [StreamAudioDestination](/x_ite/components/sound/streamaudiodestination/)
 * [WaveShaper](/x_ite/components/sound/waveshaper/)
 
 ### Text
