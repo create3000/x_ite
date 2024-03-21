@@ -80,10 +80,6 @@ Object .assign (Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessin
    {
       this .waveShaperNode .curve = this ._curve .shrinkToFit ();
    },
-   set_oversample__ ()
-   {
-      this .waveShaperNode .oversample = ;
-   },
    set_oversample__: (function ()
    {
       const oversampleTypes = new Set (["none", "2x", "4x"]);
