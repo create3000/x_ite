@@ -56,9 +56,50 @@ function WaveShaper (executionContext)
    X3DSoundProcessingNode .call (this, executionContext);
 
    this .addType (X3DConstants .WaveShaper);
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .waveShaperNode = new WaveShaperNode (audioContext);
+
+   this .waveShaperNode .connect (this .getAudioSource ());
 }
 
-Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessingNode .prototype);
+Object .assign (Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessingNode .prototype),
+{
+   initialize ()
+   {
+      X3DSoundProcessingNode .prototype .initialize .call (this);
+
+      this ._curve      .addInterest ("set_curve__",      this);
+      this ._oversample .addInterest ("set_oversample__", this);
+
+      this .set_curve__ ();
+      this .set_oversample__ ();
+   },
+   set_curve__ ()
+   {
+      this .waveShaperNode .curve = this ._curve .shrinkToFit ();
+   },
+   set_oversample__ ()
+   {
+      this .waveShaperNode .oversample = ;
+   },
+   set_oversample__: (function ()
+   {
+      const oversampleTypes = new Set (["none", "2x", "4x"]);
+
+      return function ()
+      {
+         const oversample = this ._oversample .getValue () .toLowerCase ();
+
+         this .waveShaperNode .oversample = oversampleTypes .has (oversample) ? oversample : "none";
+      };
+   })(),
+   getSoundProcessor ()
+   {
+      return this .biquadFilterNode;
+   },
+});
 
 Object .defineProperties (WaveShaper,
 {
