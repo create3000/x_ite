@@ -141,14 +141,14 @@ Object .defineProperties (Convolver,
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",           new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",               new Fields .SFBool (true)),
 
-         new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
-
          new X3DFieldDefinition (X3DConstants .inputOutput, "numberOfChannels",      new Fields .SFInt32 ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "sampleRate",            new Fields .SFFloat ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "bufferDuration",        new Fields .SFTime ()),  // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "buffer",                new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "bufferLength",          new Fields .SFInt32 ()), // skip test
+
+         new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "normalize",             new Fields .SFBool ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCount",          new Fields .SFInt32 ()), // skip test

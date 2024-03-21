@@ -49,22 +49,6 @@ Author-provided prose that describes intended purpose of the url asset.
 
 Enables/disables node operation.
 
-### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
-
-The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
-
-#### Hint
-
-- Negative *gain* factors negate the input signal.
-
-#### Warning
-
-- Decibel values shall not be used.
-
-### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
-
-*tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
-
 ### SFInt32 [in, out] **numberOfChannels** 0 <small>[0,∞)</small>
 
 Input/Output field *numberOfChannels*.
@@ -88,6 +72,22 @@ Input/Output field *bufferDuration*.
 ### SFInt32 [out] **bufferLength**
 
 Output field *bufferLength*.
+
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
+
+The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
+
+#### Hint
+
+- Negative *gain* factors negate the input signal.
+
+#### Warning
+
+- Decibel values shall not be used.
+
+### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
+
+*tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
 
 ### SFBool [in, out] **normalize** FALSE
 
