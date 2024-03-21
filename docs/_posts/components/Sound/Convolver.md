@@ -67,25 +67,15 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 ### SFInt32 [in, out] **numberOfChannels** 0 <small>[0,∞)</small>
 
-*numberOfChannels* is number of audio channels found in this buffer source.
+Input/Output field *numberOfChannels*.
 
 ### SFFloat [in, out] **sampleRate** 0 <small>[0,∞)</small>
 
-*sampleRate* field is sample-frames per second.
-
-#### Hints
-
-- Sample-rate converters (variable speed processors) are not supported in real-time processing.
-- Nyquist frequency is half this *sampleRate* value.
-- [Wikipedia Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency){:target="_blank"}
+Input/Output field *sampleRate*.
 
 ### SFTime [in, out] **bufferDuration** 0 <small>[0,∞)</small>
 
-*bufferDuration* is duration in seconds to use from buffer field.
-
-#### Hint
-
-- Duration is a nonnegative SFTime duration interval, not an absolute clock time.
+Input/Output field *bufferDuration*.
 
 ### MFFloat [in, out] **buffer** [ ] <small>[−1,1]</small>
 
@@ -97,7 +87,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 ### SFInt32 [out] **bufferLength**
 
-*bufferLength* is length of buffer field in sample-frames.
+Output field *bufferLength*.
 
 ### SFBool [in, out] **normalize** FALSE
 
