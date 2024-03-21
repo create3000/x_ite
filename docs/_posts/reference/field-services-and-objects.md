@@ -108,7 +108,7 @@ None
 
 #### Number **getType** ()
 
-Returns one of the **Field Type Constants** from [X3DConstants](../constants-services/#field-type-constants).
+Returns one of the **Field Type Constants** from [X3DConstants](../constants-services/#field-type-constants) object.
 
 #### String **getTypeName** ()
 

@@ -385,7 +385,7 @@ Returns a rendering property with the corresponding *name*.
 
 #### void **addBrowserCallback** (*Any key [, event], Function callback*)
 
-Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. If *event* is omitted, the callback function is added to all events. The signature of the callback function is `function (event)`, where event is one of the **Browser Event Constants** properties defined in the [X3DConstants](../constants-services/#browser-event-constants):
+Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. If *event* is omitted, the callback function is added to all events. The signature of the callback function is `function (event)`, where event is one of the **Browser Event Constants** defined in the [X3DConstants](../constants-services/#browser-event-constants) object:
 
 - X3DConstants .CONNECTION_ERROR
 - X3DConstants .BROWSER_EVENT
