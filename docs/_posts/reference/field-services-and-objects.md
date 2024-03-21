@@ -497,7 +497,7 @@ Returns the corresponding X3DField object associated with *name*.
 
 Returns the node name.
 
-#### Array<Number> **getNodeType** ()
+#### Array\<Number\> **getNodeType** ()
 
 Returns, in the array, a list of constant values that indicate node types as provided in the X3DConstants object.
 
