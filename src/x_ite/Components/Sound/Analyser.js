@@ -64,7 +64,6 @@ function Analyser (executionContext)
    this .byteFrequencyData  = new Uint8Array (this .analyserNode .frequencyBinCount);
    this .byteTimeDomainData = new Uint8Array (this .analyserNode .frequencyBinCount);
 
-   this .getAudioDestination () .connect (this .analyserNode);
    this .analyserNode .connect (this .getAudioSource ());
 }
 

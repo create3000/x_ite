@@ -62,7 +62,6 @@ function DynamicsCompressor (executionContext)
 
    this .dynamicsCompressorNode = new DynamicsCompressorNode (audioContext);
 
-   this .getAudioDestination () .connect (this .dynamicsCompressorNode);
    this .dynamicsCompressorNode .connect (this .getAudioSource ());
 }
 
@@ -83,6 +82,10 @@ Object .assign (Object .setPrototypeOf (DynamicsCompressor .prototype, X3DSoundP
       this .set_ratio__ ();
       this .set_release__ ();
       this .set_threshold__ ();
+   },
+   getSoundProcessor ()
+   {
+      return this .dynamicsCompressorNode;
    },
    set_attack__ ()
    {

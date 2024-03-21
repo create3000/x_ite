@@ -62,7 +62,6 @@ function Convolver (executionContext)
 
    this .convolverNode = new ConvolverNode (audioContext);
 
-   this .getAudioDestination () .connect (this .convolverNode);
    this .convolverNode .connect (this .getAudioSource ());
 }
 
@@ -79,6 +78,10 @@ Object .assign (Object .setPrototypeOf (Convolver .prototype, X3DSoundProcessing
 
       this .set_buffer__ ();
       this .set_normalize__ ();
+   },
+   getSoundProcessor ()
+   {
+      return this .convolverNode;
    },
    set_buffer__ ()
    {

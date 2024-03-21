@@ -62,7 +62,6 @@ function BiquadFilter (executionContext)
 
    this .biquadFilterNode = new BiquadFilterNode (audioContext);
 
-   this .getAudioDestination () .connect (this .biquadFilterNode);
    this .biquadFilterNode .connect (this .getAudioSource ());
 }
 
@@ -81,6 +80,10 @@ Object .assign (Object .setPrototypeOf (BiquadFilter .prototype, X3DSoundProcess
       this .set_type__ ();
       this .set_frequency__ ();
       this .set_qualityFactor__ ();
+   },
+   getSoundProcessor ()
+   {
+      return this .biquadFilterNode;
    },
    set_detune__ ()
    {

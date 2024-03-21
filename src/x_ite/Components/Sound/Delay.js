@@ -62,7 +62,6 @@ function Delay (executionContext)
 
    this .delayNode = new DelayNode (audioContext);
 
-   this .getAudioDestination () .connect (this .delayNode);
    this .delayNode .connect (this .getAudioSource ());
 }
 
@@ -76,6 +75,10 @@ Object .assign (Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode
       this ._maxDelayTime .addInterest ("set_delayTime__", this);
 
       this .set_delayTime__ ();
+   },
+   getSoundProcessor ()
+   {
+      return this .delayNode;
    },
    set_delayTime__ ()
    {
