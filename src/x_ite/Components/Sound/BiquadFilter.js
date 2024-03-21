@@ -50,15 +50,62 @@ import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
 import X3DSoundProcessingNode from "./X3DSoundProcessingNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
+import Algorithm              from "../../../standard/Math/Algorithm.js";
 
 function BiquadFilter (executionContext)
 {
    X3DSoundProcessingNode .call (this, executionContext);
 
    this .addType (X3DConstants .BiquadFilter);
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .biquadFilterNode = new BiquadFilterNode (audioContext);
+
+   this .getAudioDestination () .connect (this .biquadFilterNode);
+   this .biquadFilterNode .connect (this .getAudioSource ());
 }
 
-Object .setPrototypeOf (BiquadFilter .prototype, X3DSoundProcessingNode .prototype);
+Object .assign (Object .setPrototypeOf (BiquadFilter .prototype, X3DSoundProcessingNode .prototype),
+{
+   initialize ()
+   {
+      X3DSoundProcessingNode .prototype .initialize .call (this);
+
+      this ._detune        .addInterest ("set_detune__",        this);
+      this ._type          .addInterest ("set_type__",          this);
+      this ._frequency     .addInterest ("set_frequency__",     this);
+      this ._qualityFactor .addInterest ("set_qualityFactor__", this);
+
+      this .set_detune__ ();
+      this .set_type__ ();
+      this .set_frequency__ ();
+      this .set_qualityFactor__ ();
+   },
+   set_detune__ ()
+   {
+      this .biquadFilterNode .detune .value = this ._detune .getValue ();
+   },
+   set_type__: (function ()
+   {
+      const types = new Set (["lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "peaking", "notch", "allpass"]);
+
+      return function ()
+      {
+         const type = this ._type .getValue () .toLowerCase ();
+
+         this .biquadFilterNode .type = types .has (type) ? type : "lowpass";
+      };
+   })(),
+   set_frequency__ ()
+   {
+      this .biquadFilterNode .frequency .value = Math .max (this ._frequency .getValue (), 0);
+   },
+   set_qualityFactor__ ()
+   {
+      this .biquadFilterNode .Q .value = Algorithm .clamp (this ._qualityFactor .getValue (), 0.0001, 1000);
+   },
+});
 
 Object .defineProperties (BiquadFilter,
 {

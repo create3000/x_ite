@@ -106,13 +106,13 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
          }
       };
    })(),
-   set_frequency__ ()
-   {
-      this .oscillatorNode .frequency .value = Math .max (this ._frequency .getValue (), 0);
-   },
    set_detune__ ()
    {
       this .oscillatorNode .detune .value = Math .max (this ._detune .getValue (), 0);
+   },
+   set_frequency__ ()
+   {
+      this .oscillatorNode .frequency .value = Math .max (this ._frequency .getValue (), 0);
    },
    set_periodicWave__ ()
    {
