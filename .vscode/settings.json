@@ -16,6 +16,7 @@
       "ammojs",
       "bbox",
       "BDRF",
+      "Biquad",
       "Catmull",
       "dicom",
       "fract",

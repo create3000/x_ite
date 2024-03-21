@@ -393,3 +393,4 @@ X_ITE supports a limited set of nodes defined by the X3D specification. There ar
 ### X_ITE
 
 * [BlendMode](/x_ite/components/x-ite/blendmode/)
+* [DepthMode](/x_ite/components/x-ite/depthmode/)
