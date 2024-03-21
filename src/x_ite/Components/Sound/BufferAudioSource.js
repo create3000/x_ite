@@ -73,11 +73,14 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
       const audioContext = this .getBrowser () .getAudioContext ();
 
-      this ._buffer       .addInterest ("set_buffer__",       this);
-      this ._detune       .addInterest ("set_detune__",       this);
-      this ._playbackRate .addInterest ("set_playbackRate__", this);
-      this ._loopStart    .addInterest ("set_loopStart__",    this);
-      this ._loopEnd      .addInterest ("set_loopEnd__",      this);
+      this ._numberOfChannels .addInterest ("set_buffer__",       this);
+      this ._sampleRate       .addInterest ("set_buffer__",       this);
+      this ._bufferDuration   .addInterest ("set_buffer__",       this);
+      this ._buffer           .addInterest ("set_buffer__",       this);
+      this ._detune           .addInterest ("set_detune__",       this);
+      this ._playbackRate     .addInterest ("set_playbackRate__", this);
+      this ._loopStart        .addInterest ("set_loopStart__",    this);
+      this ._loopEnd          .addInterest ("set_loopEnd__",      this);
 
       this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), null));
 
@@ -231,11 +234,11 @@ Object .defineProperties (BufferAudioSource,
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",           new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit",  new Fields .SFTime (3600)),
 
-         new X3DFieldDefinition (X3DConstants .inputOutput, "buffer",                new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "bufferDuration",        new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "bufferLength",          new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "numberOfChannels",      new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "sampleRate",            new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "bufferDuration",        new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "buffer",                new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "bufferLength",          new Fields .SFInt32 ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "detune",                new Fields .SFFloat ()),

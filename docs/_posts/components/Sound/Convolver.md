@@ -65,6 +65,28 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 *tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
 
+### SFInt32 [in, out] **numberOfChannels** 0 <small>[0,∞)</small>
+
+*numberOfChannels* is number of audio channels found in this buffer source.
+
+### SFFloat [in, out] **sampleRate** 0 <small>[0,∞)</small>
+
+*sampleRate* field is sample-frames per second.
+
+#### Hints
+
+- Sample-rate converters (variable speed processors) are not supported in real-time processing.
+- Nyquist frequency is half this *sampleRate* value.
+- [Wikipedia Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency){:target="_blank"}
+
+### SFTime [in, out] **bufferDuration** 0 <small>[0,∞)</small>
+
+*bufferDuration* is duration in seconds to use from buffer field.
+
+#### Hint
+
+- Duration is a nonnegative SFTime duration interval, not an absolute clock time.
+
 ### MFFloat [in, out] **buffer** [ ] <small>[−1,1]</small>
 
 *buffer* is a memory-resident audio asset that can contain one or more channels. *buffer* data format is non-interleaved 32-bit floating-point linear PCM values with a normal range of [−1,1], but values are not limited to this range.
@@ -72,6 +94,10 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hint
 
 - [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation){:target="_blank"}
+
+### SFInt32 [out] **bufferLength**
+
+*bufferLength* is length of buffer field in sample-frames.
 
 ### SFBool [in, out] **normalize** FALSE
 
