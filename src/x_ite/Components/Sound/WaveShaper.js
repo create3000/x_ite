@@ -76,6 +76,10 @@ Object .assign (Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessin
       this .set_curve__ ();
       this .set_oversample__ ();
    },
+   getSoundProcessor ()
+   {
+      return this .waveShaperNode;
+   },
    set_curve__ ()
    {
       this .waveShaperNode .curve = this ._curve .shrinkToFit ();
@@ -91,10 +95,6 @@ Object .assign (Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessin
          this .waveShaperNode .oversample = oversampleTypes .has (oversample) ? oversample : "none";
       };
    })(),
-   getSoundProcessor ()
-   {
-      return this .biquadFilterNode;
-   },
 });
 
 Object .defineProperties (WaveShaper,
