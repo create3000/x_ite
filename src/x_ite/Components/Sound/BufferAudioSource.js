@@ -75,7 +75,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
       this ._numberOfChannels .addInterest ("set_buffer__",       this);
       this ._sampleRate       .addInterest ("set_buffer__",       this);
-      this ._bufferDuration   .addInterest ("set_buffer__",       this);
+      this ._bufferLength     .addInterest ("set_buffer__",       this);
       this ._buffer           .addInterest ("set_buffer__",       this);
       this ._detune           .addInterest ("set_detune__",       this);
       this ._playbackRate     .addInterest ("set_playbackRate__", this);
@@ -105,12 +105,11 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       const
          audioContext     = this .getBrowser () .getAudioContext (),
          numberOfChannels = Algorithm .clamp (this ._numberOfChannels .getValue (), 1, 32),
-         bufferDuration   = Math .max (this ._bufferDuration .getValue (), 0),
-         sampleRate       = Math .max (this ._sampleRate .getValue (), 0),
-         bufferLength     = Math .max (bufferDuration * sampleRate, 1),
+         sampleRate       = Algorithm .clamp (this ._sampleRate .getValue (), 3000, 768000),
+         bufferLength     = Math .max (this ._bufferLength .getValue (), 1),
          audioBuffer      = audioContext .createBuffer (numberOfChannels, bufferLength, sampleRate);
 
-      this ._bufferLength = bufferLength;
+      this ._bufferDuration = bufferLength / sampleRate;
 
       if (this ._buffer .length < bufferLength * numberOfChannels)
          this ._buffer .length = bufferLength * numberOfChannels;
@@ -180,11 +179,11 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       for (let i = 0; i < audioBuffer .numberOfChannels; ++ i)
          bufferData .set (audioBuffer .getChannelData (i), i * audioBuffer .length);
 
-      this ._buffer           = bufferData;
-      this ._bufferDuration   = audioBuffer .duration;
-      this ._bufferLength     = audioBuffer .length;
       this ._numberOfChannels = audioBuffer .numberOfChannels;
       this ._sampleRate       = audioBuffer .sampleRate;
+      this ._bufferLength     = audioBuffer .length;
+      this ._buffer           = bufferData;
+      this ._bufferDuration   = audioBuffer .duration;
 
       this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), audioBuffer));
 
@@ -236,9 +235,9 @@ Object .defineProperties (BufferAudioSource,
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "numberOfChannels",      new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "sampleRate",            new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "bufferDuration",        new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "bufferLength",          new Fields .SFInt32 ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "buffer",                new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "bufferLength",          new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "bufferDuration",        new Fields .SFTime ()),  // skip test
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "detune",                new Fields .SFFloat ()),

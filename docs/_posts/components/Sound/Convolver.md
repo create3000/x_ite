@@ -57,9 +57,9 @@ Input/Output field *numberOfChannels*.
 
 Input/Output field *sampleRate*.
 
-### SFTime [in, out] **bufferDuration** 0 <small>[0,∞)</small>
+### SFInt32 [in, out] **bufferLength**
 
-Input/Output field *bufferDuration*.
+Input/Output field *bufferLength*.
 
 ### MFFloat [in, out] **buffer** [ ] <small>[−1,1]</small>
 
@@ -69,9 +69,9 @@ Input/Output field *bufferDuration*.
 
 - [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation){:target="_blank"}
 
-### SFInt32 [out] **bufferLength**
+### SFTime [out] **bufferDuration** 0 <small>[0,∞)</small>
 
-Output field *bufferLength*.
+Output field *bufferDuration*.
 
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 

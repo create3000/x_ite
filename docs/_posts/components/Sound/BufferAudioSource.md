@@ -112,13 +112,9 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 - Nyquist frequency is half this *sampleRate* value.
 - [Wikipedia Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency){:target="_blank"}
 
-### SFTime [in, out] **bufferDuration** 0 <small>[0,∞)</small>
+### SFInt32 [in, out] **bufferLength**
 
-*bufferDuration* is duration in seconds to use from buffer field.
-
-#### Hint
-
-- Duration is a nonnegative SFTime duration interval, not an absolute clock time.
+*bufferLength* is length of buffer field in sample-frames.
 
 ### MFFloat [in, out] **buffer** [ ] <small>[−1,1]</small>
 
@@ -128,9 +124,13 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 
 - [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation){:target="_blank"}
 
-### SFInt32 [out] **bufferLength**
+### SFTime [out] **bufferDuration** 0 <small>[0,∞)</small>
 
-*bufferLength* is length of buffer field in sample-frames.
+*bufferDuration* is duration in seconds to use from buffer field.
+
+#### Hint
+
+- Duration is a nonnegative SFTime duration interval, not an absolute clock time.
 
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 

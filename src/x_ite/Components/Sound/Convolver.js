@@ -50,6 +50,7 @@ import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
 import X3DSoundProcessingNode from "./X3DSoundProcessingNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
+import Algorithm              from "../../../standard/Math/Algorithm.js";
 
 function Convolver (executionContext)
 {
@@ -72,8 +73,8 @@ Object .assign (Object .setPrototypeOf (Convolver .prototype, X3DSoundProcessing
       X3DSoundProcessingNode .prototype .initialize .call (this);
 
       this ._numberOfChannels .addInterest ("set_buffer__",    this);
-      this ._bufferDuration   .addInterest ("set_buffer__",    this);
       this ._sampleRate       .addInterest ("set_buffer__",    this);
+      this ._bufferLength     .addInterest ("set_buffer__",    this);
       this ._buffer           .addInterest ("set_buffer__",    this);
       this ._normalize        .addInterest ("set_normalize__", this);
 
@@ -85,12 +86,11 @@ Object .assign (Object .setPrototypeOf (Convolver .prototype, X3DSoundProcessing
       const
          audioContext     = this .getBrowser () .getAudioContext (),
          numberOfChannels = Algorithm .clamp (this ._numberOfChannels .getValue (), 1, 32),
-         bufferDuration   = Math .max (this ._bufferDuration .getValue (), 0),
-         sampleRate       = Math .max (this ._sampleRate .getValue (), 0),
-         bufferLength     = Math .max (bufferDuration * sampleRate, 1),
+         sampleRate       = Algorithm .clamp (this ._sampleRate .getValue (), 3000, 768000),
+         bufferLength     = Math .max (this ._bufferLength .getValue (), 1),
          audioBuffer      = audioContext .createBuffer (numberOfChannels, bufferLength, sampleRate);
 
-      this ._bufferLength = bufferLength;
+      this ._bufferDuration = bufferLength / sampleRate;
 
       if (this ._buffer .length < bufferLength * numberOfChannels)
          this ._buffer .length = bufferLength * numberOfChannels;
@@ -104,7 +104,7 @@ Object .assign (Object .setPrototypeOf (Convolver .prototype, X3DSoundProcessing
          channelData .set (buffer .subarray (i * bufferLength, (i + 1) * bufferLength));
       }
 
-      this .convolverNode .buffer = buffer;
+      this .convolverNode .buffer = audioBuffer;
    },
    set_normalize__ ()
    {
@@ -143,9 +143,9 @@ Object .defineProperties (Convolver,
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "numberOfChannels",      new Fields .SFInt32 ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "sampleRate",            new Fields .SFFloat ()), // skip test
-         new X3DFieldDefinition (X3DConstants .inputOutput, "bufferDuration",        new Fields .SFTime ()),  // skip test
+         new X3DFieldDefinition (X3DConstants .inputOutput, "bufferLength",          new Fields .SFInt32 ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "buffer",                new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "bufferLength",          new Fields .SFInt32 ()), // skip test
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "bufferDuration",        new Fields .SFTime ()),  // skip test
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
