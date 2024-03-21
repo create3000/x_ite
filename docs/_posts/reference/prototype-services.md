@@ -79,7 +79,7 @@ Always has the value of true. This property is read only.
 
 #### **loadState**
 
-The value is one of the *_STATE* properties defined in the X3DConstants object. This property is read only.
+The value is one of the *_STATE* properties defined in the [X3DConstants](../constants-services/#load-state-constants) object. This property is read only.
 
 ### Methods
 

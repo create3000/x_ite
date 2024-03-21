@@ -18,6 +18,7 @@ The object consists solely of read-only properties. It does not define any addit
 #### Browser Event Constants
 
 - INITIALIZED_EVENT
+- BROWSER_EVENT
 - SHUTDOWN_EVENT
 - CONNECTION_ERROR
 - INITIALIZED_ERROR

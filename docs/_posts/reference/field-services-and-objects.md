@@ -17,11 +17,11 @@ None.
 
 #### **accessType**
 
-Value from the X3DConstants object describing the accessType (e.g., "X3DConstants.inputOnly"). This property is read only.
+Value from the [X3DConstants](../constants-services/#access-type-constants) object describing the accessType (e.g., "X3DConstants.inputOnly"). This property is read only.
 
 #### **dataType**
 
-Value from X3DConstants object describing the field's data type (e.g., "X3DConstants.SFBool"). This property is read only.
+Value from [X3DConstants](../constants-services/#field-type-constants) object describing the field's data type (e.g., "X3DConstants.SFBool"). This property is read only.
 
 #### **name**
 
@@ -105,6 +105,10 @@ None
 None
 
 ### Methods
+
+#### Number **getType** ()
+
+Return one of the **Field Type Constants** from [X3DConstants](../constants-services/#field-type-constants).
 
 #### X3DField **copy** ()
 
@@ -493,9 +497,11 @@ Returns the corresponding X3DField object associated with *name*.
 
 Returns the node name.
 
-#### Array **getNodeType** ()
+#### Array<Number> **getNodeType** ()
 
 Returns, in the array, a list of constant values that indicate node types as provided in the X3DConstants object.
+
+See [Concrete Node Types](../constants-services/#concrete-node-types) and [Abstract Node Types](../constants-services/#abstract-node-types).
 
 #### String **getNodeTypeName** ()
 
