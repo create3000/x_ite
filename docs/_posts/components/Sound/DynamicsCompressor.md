@@ -77,10 +77,6 @@ The *attack* field is the duration of time (in seconds) to reduce the gain by 10
 
 *ratio* field represents amount of input change, in dB, needed for 1 dB change in output.
 
-### SFFloat [in, out] **reduction** 0 <small>[0,∞)</small>
-
-*reduction* field provides amount of gain *reduction* in dB currently applied by compressor to signal. If fed no signal, then value is 0 (no gain *reduction*)
-
 ### SFTime [in, out] **release** 0.25 <small>[0,∞)</small>
 
 *release* field represents amount of time (in seconds) to increase gain by 10dB.
@@ -88,6 +84,10 @@ The *attack* field is the duration of time (in seconds) to reduce the gain by 10
 ### SFFloat [in, out] **threshold** -24 <small>[0,∞)</small>
 
 *threshold* field represents decibel value above which compression starts taking effect.
+
+### SFFloat [out] **reduction** 0 <small>[0,∞)</small>
+
+*reduction* field provides amount of gain *reduction* in dB currently applied by compressor to signal. If fed no signal, then value is 0 (no gain *reduction*)
 
 ### SFInt32 [in, out] **channelCount**
 

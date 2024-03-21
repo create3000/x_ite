@@ -327,6 +327,7 @@ X_ITE supports a limited set of nodes defined by the X3D specification. There ar
 * [ChannelSplitter](/x_ite/components/sound/channelsplitter/)
 * [Convolver](/x_ite/components/sound/convolver/)
 * [Delay](/x_ite/components/sound/delay/)
+* [DynamicsCompressor](/x_ite/components/sound/dynamicscompressor/)
 * [Gain](/x_ite/components/sound/gain/)
 * [MicrophoneSource](/x_ite/components/sound/microphonesource/)
 * [OscillatorSource](/x_ite/components/sound/oscillatorsource/)
