@@ -50,15 +50,40 @@ import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
 import X3DSoundProcessingNode from "./X3DSoundProcessingNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
+import Algorithm              from "../../../standard/Math/Algorithm.js";
 
 function Delay (executionContext)
 {
    X3DSoundProcessingNode .call (this, executionContext);
 
    this .addType (X3DConstants .Delay);
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .delayNode = new DelayNode (audioContext);
+
+   this .getAudioDestination () .connect (this .delayNode);
+   this .delayNode .connect (this .getAudioSource ());
 }
 
-Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode .prototype);
+Object .assign (Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode .prototype),
+{
+   initialize ()
+   {
+      X3DSoundProcessingNode .prototype .initialize .call (this);
+
+      this ._delayTime    .addInterest ("set_delayTime__", this);
+      this ._maxDelayTime .addInterest ("set_delayTime__", this);
+
+      this .set_delayTime__ ();
+   },
+   set_delayTime__ ()
+   {
+      const maxDelayTime = Math .max (this ._maxDelayTime .getValue (), 0);
+
+      this .delayNode .delayTime .value = Algorithm .clamp (this ._delayTime .getValue (), 0, maxDelayTime);
+   },
+});
 
 Object .defineProperties (Delay,
 {
