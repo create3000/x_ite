@@ -106,6 +106,10 @@ None
 
 ### Methods
 
+#### X3DField **copy** ()
+
+Returns a copy of this X3DField.
+
 #### Boolean **equals** (*field*)
 
 Returns true if the passed SF* or MF* *field* of the same type is equals to this object, otherwise false.
