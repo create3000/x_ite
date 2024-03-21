@@ -61,13 +61,13 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
-### SFFloat [in, out] **frequency** 0 <small>[0,∞)</small>
-
-The *frequency* of oscillation in hertz. The default value 440 Hz is a standard middle-A note.
-
 ### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
 
 The *detune* ffield is an a-rate AudioParam representing detuning of oscillation in cents (though the AudioParam returned is read-only, the value it represents is not).
+
+### SFFloat [in, out] **frequency** 0 <small>[0,∞)</small>
+
+The *frequency* of oscillation in hertz. The default value 440 Hz is a standard middle-A note.
 
 ### SFNode [in, out] **periodicWave** NULL <small>[PeriodicWave]</small>
 

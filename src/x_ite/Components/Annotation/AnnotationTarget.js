@@ -92,7 +92,7 @@ Object .defineProperties (AnnotationTarget,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "referencePoint", new Fields .SFVec3f (0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "referencePoint", new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "leadLineStyle",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "marker",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "annotations",    new Fields .MFNode ()),

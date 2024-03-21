@@ -65,6 +65,14 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 *tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
 
+### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
+
+The *detune* field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
+
+#### Hint
+
+- ComputedPlaybackRate(t) = playbackRate(t) * pow(2, *detune*(t) / 1200)
+
 ### SFString [in, out] **type** "LOWPASS" <small>["LOWPASS", "HIGHPASS", "BANDPASS", "LOWSHELF", "HIGHSHELF", "PEAKING", "NOTCH", "ALLPASS"]</small>
 
 *type* selects which BiquadFilter algorithm is used.
@@ -80,14 +88,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hint
 
 - [Wikipedia Hertz](https://en.wikipedia.org/wiki/Hertz){:target="_blank"}
-
-### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
-
-The *detune* field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
-
-#### Hint
-
-- ComputedPlaybackRate(t) = playbackRate(t) * pow(2, *detune*(t) / 1200)
 
 ### SFFloat [in, out] **qualityFactor** 1 <small>[0,∞)</small>
 

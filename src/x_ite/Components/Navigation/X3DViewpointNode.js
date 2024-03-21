@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .timeSensor .setup ();
 
       this .easeInEaseOut ._key           = new Fields .MFFloat (0, 1);
-      this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+      this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (), new Fields .SFVec2f ());
       this .easeInEaseOut .setup ();
 
       this .positionInterpolator         ._key = new Fields .MFFloat (0, 1);
@@ -338,7 +338,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
             default:
             {
                // LINEAR
-               this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+               this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (), new Fields .SFVec2f ());
                break;
             }
          }

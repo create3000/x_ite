@@ -278,7 +278,7 @@ Object .defineProperties (TextureProjectorParallel,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",        new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "ambientIntensity", new Fields .SFFloat ()),
 
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f (0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",        new Fields .SFVec3f (0, 0, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "upVector",         new Fields .SFVec3f (0, 0, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "fieldOfView",      new Fields .MFFloat (-1, -1, 1, 1)),
