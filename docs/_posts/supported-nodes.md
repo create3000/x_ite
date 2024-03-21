@@ -40,7 +40,7 @@ X_ITE has achieved the [X3D Immersive Profile](https://www.web3d.org/documents/s
 
 This section documents all of supported nodes by X_ITE.
 
-X_ITE supports a limited set of nodes defined by the X3D specification. There are currently 243 of 263 nodes (93 %) implemented. The implementation of these nodes is complete in that that the nodes will support all the required fields and features for that implementation unless otherwise stated.
+X_ITE supports a limited set of nodes defined by the X3D specification. There are currently 248 of 263 nodes (94 %) implemented. The implementation of these nodes is complete in that that the nodes will support all the required fields and features for that implementation unless otherwise stated.
 
 ### CADGeometry
 
