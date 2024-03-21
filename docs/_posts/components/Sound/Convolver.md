@@ -53,10 +53,6 @@ Enables/disables node operation.
 
 Input/Output field *numberOfChannels*.
 
-### SFFloat [in, out] **sampleRate** 0 <small>[0,∞)</small>
-
-Input/Output field *sampleRate*.
-
 ### SFInt32 [in, out] **bufferLength**
 
 Input/Output field *bufferLength*.

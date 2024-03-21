@@ -1439,6 +1439,9 @@ declare class X3DFieldDefinition
  */
 declare class X3DField
 {
+   /**
+    * Returns a copy of this X3DField.
+    */
    copy (): this;
    /**
     * Returns true if the passed SF* or MF* *field* of the same type is equals to this object, otherwise false.
