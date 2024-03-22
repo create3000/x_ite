@@ -42,6 +42,13 @@ This section documents all nodes supported by X_ITE.
 
 X_ITE supports a limited number of nodes defined by the X3D specification. Currently 252 out of 263 nodes (96%) are implemented. The implementation of these nodes is complete in the sense that the nodes support all the fields and functions required for that implementation, unless otherwise specified.
 
+<!--
+Missing:
+- 6 DIS
+- 2 joints from RigidBodyCollection
+- 3 shader nodes from Shaders
+-->
+
 ### CADGeometry
 
 - [CADAssembly](/x_ite/components/cadgeometry/cadassembly/)
