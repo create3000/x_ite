@@ -82,6 +82,10 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSound
       if (!this ._trackCurrentView .getValue ())
          return;
 
+      const
+         audioContext = this .getBrowser () .getAudioContext (),
+         listener     = audioContext .listener;
+
       listener .positionX .value = 0;
       listener .positionY .value = 0;
       listener .positionZ .value = 0;
