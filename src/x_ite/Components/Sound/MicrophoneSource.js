@@ -88,11 +88,11 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
             deviceId: this ._mediaDeviceID .getValue (),
          },
       })
-      .then (stream =>
+      .then (mediaStream =>
       {
          const audioContext = this .getBrowser () .getAudioContext ();
 
-         this .mediaStreamSource = audioContext .createMediaStreamSource (stream);
+         this .mediaStreamAudioSourceNode = new MediaStreamAudioSourceNode (audioContext, { mediaStream });
 
          if (this ._isActive .getValue ())
          {
@@ -113,17 +113,17 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
    },
    set_pause ()
    {
-      if (!this .mediaStreamSource)
+      if (!this .mediaStreamAudioSourceNode)
          return;
 
       if (this .getLive () .getValue ())
       {
-         $.try (() => this .mediaStreamSource .disconnect (this .getAudioSource ()));
+         this .mediaStreamAudioSourceNode .disconnect ();
 
-         for (const track of this .mediaStreamSource .mediaStream .getAudioTracks ())
+         for (const track of this .mediaStreamAudioSourceNode .mediaStream .getAudioTracks ())
             track .enabled = false;
 
-         for (const track of this .mediaStreamSource .mediaStream .getVideoTracks ())
+         for (const track of this .mediaStreamAudioSourceNode .mediaStream .getVideoTracks ())
             track .enabled = false;
       }
       else
@@ -136,32 +136,32 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
       if (this .restore)
          return this .set_start ();
 
-      if (!this .mediaStreamSource)
+      if (!this .mediaStreamAudioSourceNode)
          return;
 
-      this .mediaStreamSource .connect (this .getAudioSource ());
+      this .mediaStreamAudioSourceNode .connect (this .getAudioSource ());
 
-      for (const track of this .mediaStreamSource .mediaStream .getAudioTracks ())
+      for (const track of this .mediaStreamAudioSourceNode .mediaStream .getAudioTracks ())
          track .enabled = true;
 
-      for (const track of this .mediaStreamSource .mediaStream .getVideoTracks ())
+      for (const track of this .mediaStreamAudioSourceNode .mediaStream .getVideoTracks ())
          track .enabled = true;
    },
    set_stop (restore = false)
    {
-      if (!this .mediaStreamSource)
+      if (!this .mediaStreamAudioSourceNode)
          return;
 
-      $.try (() => this .mediaStreamSource .disconnect (this .getAudioSource ()));
+      this .mediaStreamAudioSourceNode .disconnect ();
 
-      for (const track of this .mediaStreamSource .mediaStream .getAudioTracks ())
+      for (const track of this .mediaStreamAudioSourceNode .mediaStream .getAudioTracks ())
          track .stop ();
 
-      for (const track of this .mediaStreamSource .mediaStream .getVideoTracks ())
+      for (const track of this .mediaStreamAudioSourceNode .mediaStream .getVideoTracks ())
          track .stop ();
 
-      this .mediaStreamSource = null;
-      this .restore           = restore;
+      this .mediaStreamAudioSourceNode = null;
+      this .restore                    = restore;
    },
 });
 

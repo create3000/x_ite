@@ -59,7 +59,7 @@ function StreamAudioDestination (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .mediaStreamDestination = audioContext .createMediaStreamDestination ();
+   this .mediaStreamAudioDestinationNode = new MediaStreamAudioDestinationNode (audioContext);
 }
 
 Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSoundDestinationNode .prototype),
@@ -68,11 +68,11 @@ Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSo
    {
       X3DSoundDestinationNode .prototype .initialize .call (this);
 
-      this ._streamIdentifier [0] = this .mediaStreamDestination .stream .id;
+      this ._streamIdentifier = this .mediaStreamAudioDestinationNode .stream .id;
    },
    getSoundDestination ()
    {
-      return this .mediaStreamDestination;
+      return this .mediaStreamAudioDestinationNode;
    },
 });
 
@@ -113,7 +113,7 @@ Object .defineProperties (StreamAudioDestination,
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("SPEAKERS")),
 
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",              new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "streamIdentifier",      new Fields .MFString ()), // skip test
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "streamIdentifier",      new Fields .SFString ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "children",              new Fields .MFNode ()),
       ]),
       enumerable: true,

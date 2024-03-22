@@ -364,6 +364,7 @@ const X_ITE_TESTS = [
    { path: "Sound/Noise.x3d" },
    { path: "Sound/OscillatorSource.x3d" },
    { path: "Sound/Sound.x3d" },
+   { path: "Sound/StreamAudioSource.x3d" },
    { component: "Text" },
    { path: "Text/charcodes.x3d" },
    { path: "Text/date.x3d" },
