@@ -93,7 +93,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - [W3C Audio API](https://www.w3.org/TR/webaudio/#enumdef-panningmodeltype){:target="_blank"}
 - [Wikipedia HRTF](https://en.wikipedia.org/wiki/3D_sound_localization#Head-related_Transfer_Function_(HRTF)){:target="_blank"}
 
-### SFBool [in, out] **dopplerEnabled** FALSE
+### SFBool [in, out] **dopplerEnabled** FALSE <small class="red">not supported</small>
 
 *dopplerEnabled* enables/disables whether real-time Doppler effects (due to relation motion between sources and listeners) are computed by browser between virtual sound sources and active listening locations, then applied to received frequency at active listening locations.
 
