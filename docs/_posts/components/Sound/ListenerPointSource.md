@@ -72,6 +72,8 @@ Rotation (axis, angle in radians) of listening point direction relative to defau
 
 ### SFFloat [in, out] **interauralDistance** 0 <small>[0,∞)</small> <small class="red">not supported</small>
 
+The *interauralDistance* field is .
+
 ### SFBool [in, out] **dopplerEnabled** FALSE <small class="red">not supported</small>
 
 *dopplerEnabled* enables/disables whether real-time Doppler effects (due to relation motion between sources and listeners) are computed by browser between virtual sound sources and active listening locations, then applied to received frequency at active listening locations.
