@@ -50,6 +50,10 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DSoundSourceNode   from "./X3DSoundSourceNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 function ListenerPointSource (executionContext)
 {
@@ -57,12 +61,117 @@ function ListenerPointSource (executionContext)
 
    this .addType (X3DConstants .ListenerPointSource);
 
-   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .inputOutput, "loop",      new Fields .SFBool (),
+                          X3DConstants .outputOnly,  "traversed", new Fields .SFBool (true));
 
    this ._position .setUnit ("length");
+
+   this .currentTraversed = true;
 }
 
-Object .setPrototypeOf (ListenerPointSource .prototype, X3DSoundSourceNode .prototype);
+Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSoundSourceNode .prototype),
+{
+   initialize ()
+   {
+      X3DSoundSourceNode .prototype .initialize .call (this);
+
+      this .getLive () .addInterest ("set_live__", this);
+      this ._traversed .addInterest ("set_live__", this);
+
+      this ._trackCurrentView
+   },
+   setTraversed (value)
+   {
+      if (value)
+      {
+         if (this ._traversed .getValue () === false)
+            this ._traversed = true;
+      }
+      else
+      {
+         if (this .currentTraversed !== this ._traversed .getValue ())
+            this ._traversed = this .currentTraversed;
+      }
+
+      this .currentTraversed = value;
+   },
+   getTraversed ()
+   {
+      return this .currentTraversed;
+   },
+   set_live__ ()
+   {
+      if (this .getLive () .getValue () && this ._traversed .getValue ())
+      {
+         this .getBrowser () .sensorEvents () .addInterest ("update", this);
+      }
+      else
+      {
+         this .getBrowser () .sensorEvents () .removeInterest ("update", this);
+      }
+   },
+   update ()
+   {
+      this .setTraversed (false);
+   },
+   traverse: (() =>
+   {
+      const
+         position        = new Vector3 (0, 0, 0),
+         orientation     = new Rotation4 (),
+         modelViewMatrix = new Matrix4 (),
+         forwardVector   = new Vector3 (0, 0, 0),
+         upVector        = new Vector3 (0, 0, 0);
+
+      return function (type, renderObject)
+      {
+         if (type !== TraverseType .DISPLAY)
+            return;
+
+         this .setTraversed (true);
+
+         const
+            audioContext = this .getBrowser () .getAudioContext (),
+            listener     = audioContext .listener;
+
+         if (this ._trackCurrentView .getValue ())
+         {
+            listener .positionX .value = 0;
+            listener .positionY .value = 0;
+            listener .positionZ .value = 0;
+
+            listener .forwardX .value = 0;
+            listener .forwardY .value = 0;
+            listener .forwardZ .value = -1;
+
+            listener .upX .value = 0;
+            listener .upY .value = 1;
+            listener .upZ .value = 0;
+         }
+         else
+         {
+            modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ());
+            modelViewMatrix .multVecMatrix (position  .assign (this ._position .getValue ()));
+            modelViewMatrix .rotate (this ._orientation .getValue ()) .get (null, orientation);
+
+            orientation .mulVecRot (forwardVector) .negate ();
+            orientation .mulVecRot (upVector);
+
+            listener .positionX .value = position .x;
+            listener .positionY .value = position .y;
+            listener .positionZ .value = position .z;
+
+            listener .forwardX .value = forwardVector .x;
+            listener .forwardY .value = forwardVector .y;
+            listener .forwardZ .value = forwardVector .z;
+
+            listener .upX .value = upVector .x;
+            listener .upY .value = upVector .y;
+            listener .upZ .value = upVector .z;
+         }
+      };
+   })(),
+});
 
 Object .defineProperties (ListenerPointSource,
 {

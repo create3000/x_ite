@@ -40,7 +40,7 @@ X_ITE has achieved the [X3D Immersive Profile](https://www.web3d.org/documents/s
 
 This section documents all nodes supported by X_ITE.
 
-X_ITE supports a limited number of nodes defined by the X3D specification. Currently 250 out of 263 nodes (95%) are implemented. The implementation of these nodes is complete in the sense that the nodes support all the fields and functions required for that implementation, unless otherwise specified.
+X_ITE supports a limited number of nodes defined by the X3D specification. Currently 251 out of 263 nodes (95%) are implemented. The implementation of these nodes is complete in the sense that the nodes support all the fields and functions required for that implementation, unless otherwise specified.
 
 ### CADGeometry
 
@@ -332,6 +332,7 @@ X_ITE supports a limited number of nodes defined by the X3D specification. Curre
 - [Delay](/x_ite/components/sound/delay/)
 - [DynamicsCompressor](/x_ite/components/sound/dynamicscompressor/)
 - [Gain](/x_ite/components/sound/gain/)
+- [ListenerPointSource](/x_ite/components/sound/listenerpointsource/)
 - [MicrophoneSource](/x_ite/components/sound/microphonesource/)
 - [OscillatorSource](/x_ite/components/sound/oscillatorsource/)
 - [PeriodicWave](/x_ite/components/sound/periodicwave/)
