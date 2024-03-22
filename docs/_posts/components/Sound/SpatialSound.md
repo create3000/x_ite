@@ -56,6 +56,38 @@ Whether to *spatialize* sound playback relative to viewer.
 
 - Only effective within the auralization volume.
 
+### SFFloat [in, out] **intensity** 1 <small>[0,1]</small>
+
+Factor [0,1] adjusting loudness (decibels) of emitted sound.
+
+### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
+
+Position of sound ellipsoid center, relative to local coordinate system.
+
+#### Hint
+
+- Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical [NavigationInfo](/x_ite/components/navigation/navigationinfo/) avatarSize height.
+
+### SFVec3f [in, out] **direction** 0 0 1 <small>(-∞,∞)</small>
+
+*direction* of sound axis, relative to local coordinate system.
+
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
+
+The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
+
+#### Hint
+
+- Negative *gain* factors negate the input signal.
+
+#### Warning
+
+- Decibel values shall not be used.
+
+### SFFloat [in, out] **coneOuterGain** 0 <small>(-∞,∞)</small>
+
+*coneOuterGain* is minimum gain value found outside coneOuterAngle.
+
 ### SFFloat [in, out] **coneInnerAngle** 6.2832 <small>[0,2π]</small>
 
 *coneInnerAngle* is centered along direction and defines the inner conical volume, inside of which no source gain reduction occurs.
@@ -74,14 +106,6 @@ Whether to *spatialize* sound playback relative to viewer.
 - *coneOuterAngle* value is greater than or equal to coneInnerAngle.
 - [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/sound.html#f-AudioPannerListenerRelationships){:target="_blank"}
 
-### SFFloat [in, out] **coneOuterGain** 0 <small>(-∞,∞)</small>
-
-*coneOuterGain* is minimum gain value found outside coneOuterAngle.
-
-### SFVec3f [in, out] **direction** 0 0 1 <small>(-∞,∞)</small>
-
-*direction* of sound axis, relative to local coordinate system.
-
 ### SFString [in, out] **distanceModel** "INVERSE" <small>["LINEAR" "INVERSE" "EXPONENTIAL"]</small>
 
 *distanceModel* determines how field specifies which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
@@ -89,6 +113,10 @@ Whether to *spatialize* sound playback relative to viewer.
 #### Hint
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-distancemodeltype){:target="_blank"}
+
+### SFFloat [in, out] **maxDistance** 10000 <small>[0,∞)</small>
+
+*maxDistance* is the maximum distance where sound is renderable between source and listener, after which no reduction in sound volume occurs.
 
 ### SFBool [in, out] **dopplerEnabled** FALSE
 
@@ -108,38 +136,6 @@ Whether to *spatialize* sound playback relative to viewer.
 - [W3C Audio API](https://www.w3.org/TR/webaudio/#enumdef-panningmodeltype){:target="_blank"}
 - [Wikipedia HRTF](https://en.wikipedia.org/wiki/3D_sound_localization#Head-related_Transfer_Function_(HRTF)){:target="_blank"}
 
-### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
-
-The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
-
-#### Hint
-
-- Negative *gain* factors negate the input signal.
-
-#### Warning
-
-- Decibel values shall not be used.
-
-### SFFloat [in, out] **intensity** 1 <small>[0,1]</small>
-
-Factor [0,1] adjusting loudness (decibels) of emitted sound.
-
-### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
-
-Position of sound ellipsoid center, relative to local coordinate system.
-
-#### Hint
-
-- Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical [NavigationInfo](/x_ite/components/navigation/navigationinfo/) avatarSize height.
-
-### SFFloat [in, out] **maxDistance** 10000 <small>[0,∞)</small>
-
-*maxDistance* is the maximum distance where sound is renderable between source and listener, after which no reduction in sound volume occurs.
-
-### SFFloat [in, out] **priority** 0 <small>[0,1]</small>
-
-Player hint [0,1] if needed to choose which sounds to play.
-
 ### SFFloat [in, out] **referenceDistance** 1 <small>[0,∞)</small>
 
 *referenceDistance* for reducing volume as source moves further from the listener. For distances less than this value, volume is not reduced.
@@ -155,6 +151,10 @@ Player hint [0,1] if needed to choose which sounds to play.
 #### Hint
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-pannernode-rollofffactor){:target="_blank"}
+
+### SFFloat [in, out] **priority** 0 <small>[0,1]</small>
+
+Player hint [0,1] if needed to choose which sounds to play.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
