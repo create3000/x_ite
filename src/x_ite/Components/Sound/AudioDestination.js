@@ -76,21 +76,21 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    },
    getSoundDestination ()
    {
-      return this .mediaStreamDestination;
+      return this .mediaStreamAudioDestinationNode;
    },
    set_enabled__ ()
    {
       const active = this ._enabled .getValue () && this .getLive () .getValue ();
 
-      if (!!this .mediaStreamDestination === active)
+      if (!!this .mediaStreamAudioDestinationNode === active)
          return;
 
       if (active)
       {
          const audioContext = this .getBrowser () .getAudioContext ();
 
-         this .mediaStreamDestination  = audioContext .createMediaStreamDestination ();
-         this .audioElement .srcObject = this .mediaStreamDestination .stream;
+         this .mediaStreamAudioDestinationNode = new MediaStreamAudioDestinationNode (audioContext);
+         this .audioElement .srcObject         = this .mediaStreamAudioDestinationNode .stream;
 
          this .getBrowser () .startAudioElement (this .audioElement);
       }
@@ -98,13 +98,13 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
       {
          this .audioElement .pause ();
 
-         for (const track of this .mediaStreamDestination .stream .getAudioTracks ())
+         for (const track of this .mediaStreamAudioDestinationNode .stream .getAudioTracks ())
             track .stop ();
 
-         for (const track of this .mediaStreamDestination .stream .getVideoTracks ())
+         for (const track of this .mediaStreamAudioDestinationNode .stream .getVideoTracks ())
             track .stop ();
 
-         this .mediaStreamDestination = null;
+         this .mediaStreamAudioDestinationNode = null;
       }
 
       X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
