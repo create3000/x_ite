@@ -49,15 +49,15 @@ import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DSoundNode         from "./X3DSoundNode.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Line3                from "../../../standard/Math/Geometry/Line3.js";
 import Sphere3              from "../../../standard/Math/Geometry/Sphere3.js";
-import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function Sound (executionContext)
 {

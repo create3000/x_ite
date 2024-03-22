@@ -50,9 +50,10 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DSoundNode         from "./X3DSoundNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 
 function SpatialSound (executionContext)
 {
