@@ -121,8 +121,8 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSound
             .rotate (this ._orientation .getValue ())
             .get (position, orientation);
 
-         orientation .mulVecRot (forwardVector .assign (Vector3 .zAxis)) .negate ();
-         orientation .mulVecRot (upVector .assign (Vector3 .yAxis));
+         orientation .multVecRot (forwardVector .assign (Vector3 .zAxis) .negate ()) .normalize ();
+         orientation .multVecRot (upVector .assign (Vector3 .yAxis)) .normalize ();
 
          listener .positionX .value = position .x;
          listener .positionY .value = position .y;

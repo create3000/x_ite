@@ -278,7 +278,7 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
          const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
 
          modelViewMatrix .multVecMatrix (location  .assign (this ._location  .getValue ()));
-         modelViewMatrix .multDirMatrix (direction .assign (this ._direction .getValue ()));
+         modelViewMatrix .multDirMatrix (direction .assign (this ._direction .getValue ())) .normalize ();
 
          this .pannerNode .positionX .value = location .x;
          this .pannerNode .positionY .value = location .y;
