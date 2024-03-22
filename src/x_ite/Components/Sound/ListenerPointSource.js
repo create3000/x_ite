@@ -107,8 +107,8 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSound
             modelViewMatrix .multVecMatrix (position  .assign (this ._position .getValue ()));
             modelViewMatrix .rotate (this ._orientation .getValue ()) .get (null, orientation);
 
-            orientation .mulVecRot (forwardVector) .negate ();
-            orientation .mulVecRot (upVector);
+            orientation .mulVecRot (forwardVector .assign (Vector3 .zAxis)) .negate ();
+            orientation .mulVecRot (upVector .assign (Vector3 .yAxis));
 
             listener .positionX .value = position .x;
             listener .positionY .value = position .y;
