@@ -65,55 +65,10 @@ function ListenerPointSource (executionContext)
                           X3DConstants .outputOnly,  "traversed", new Fields .SFBool (true));
 
    this ._position .setUnit ("length");
-
-   this .currentTraversed = true;
 }
 
 Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSoundSourceNode .prototype),
 {
-   initialize ()
-   {
-      X3DSoundSourceNode .prototype .initialize .call (this);
-
-      this .getLive () .addInterest ("set_live__", this);
-      this ._traversed .addInterest ("set_live__", this);
-
-      this ._trackCurrentView
-   },
-   setTraversed (value)
-   {
-      if (value)
-      {
-         if (this ._traversed .getValue () === false)
-            this ._traversed = true;
-      }
-      else
-      {
-         if (this .currentTraversed !== this ._traversed .getValue ())
-            this ._traversed = this .currentTraversed;
-      }
-
-      this .currentTraversed = value;
-   },
-   getTraversed ()
-   {
-      return this .currentTraversed;
-   },
-   set_live__ ()
-   {
-      if (this .getLive () .getValue () && this ._traversed .getValue ())
-      {
-         this .getBrowser () .sensorEvents () .addInterest ("update", this);
-      }
-      else
-      {
-         this .getBrowser () .sensorEvents () .removeInterest ("update", this);
-      }
-   },
-   update ()
-   {
-      this .setTraversed (false);
-   },
    traverse: (() =>
    {
       const
@@ -127,8 +82,6 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSound
       {
          if (type !== TraverseType .DISPLAY)
             return;
-
-         this .setTraversed (true);
 
          const
             audioContext = this .getBrowser () .getAudioContext (),
