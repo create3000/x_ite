@@ -49,6 +49,10 @@ Author-provided prose that describes intended purpose of the url asset.
 
 Enables/disables node operation.
 
+### SFBool [in, out] **trackCurrentView** FALSE
+
+If *trackCurrentView* field is true then position and orientation match avatar's (user's) current view.
+
 ### SFVec3f [in, out] **position** 0 0 0 <small>(-∞,∞)</small>
 
 *position* (x, y, z in meters) relative to local coordinate system.
@@ -77,10 +81,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Warning
 
 - Decibel values shall not be used.
-
-### SFBool [in, out] **trackCurrentView** FALSE
-
-If *trackCurrentView* field is true then position and orientation match avatar's (user's) current view.
 
 ### SFFloat [in, out] **interauralDistance** 0 <small>[0,∞)</small>
 
