@@ -50,6 +50,9 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DSoundNode         from "./X3DSoundNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 
 function SpatialSound (executionContext)
 {
@@ -57,9 +60,14 @@ function SpatialSound (executionContext)
 
    this .addType (X3DConstants .SpatialSound);
 
+   this .addChildObjects (X3DConstants .outputOnly, "traversed", new Fields .SFBool (true));
+
    this ._location       .setUnit ("length");
    this ._coneInnerAngle .setUnit ("angle");
    this ._coneOuterAngle .setUnit ("angle");
+
+   this .childNodes       = [ ];
+   this .currentTraversed = true;
 }
 
 Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .prototype),
@@ -67,7 +75,135 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
    initialize ()
    {
       X3DSoundNode .prototype .initialize .call (this);
+
+      const
+         audioContext = this .getBrowser () .getAudioContext (),
+         gainNode     = new GainNode (audioContext, { gain: 0 }),
+         pannerNode   = new PannerNode (audioContext);
+
+      gainNode .channelCount          = 2;
+      gainNode .channelCountMode      = "explicit";
+      gainNode .channelInterpretation = "speakers";
+
+      gainNode   .connect (pannerNode);
+      pannerNode .connect (audioContext .destination);
+
+      this .gainNode   = gainNode;
+      this .pannerNode = pannerNode;
+
+      this .getLive () .addInterest ("set_live__", this);
+      this ._traversed .addInterest ("set_live__", this);
+
+      this ._intensity .addInterest ("set_intensity__", this);
+      this ._gain      .addInterest ("set_intensity__", this);
+      this ._children  .addInterest ("set_children__",  this);
+
+      this .set_live__ ();
+      this .set_intensity__ ();
+      this .set_children__ ();
    },
+   setTraversed (value)
+   {
+      if (value)
+      {
+         if (this ._traversed .getValue () === false)
+            this ._traversed = true;
+      }
+      else
+      {
+         if (this .currentTraversed !== this ._traversed .getValue ())
+            this ._traversed = this .currentTraversed;
+      }
+
+      this .currentTraversed = value;
+   },
+   getTraversed ()
+   {
+      return this .currentTraversed;
+   },
+   set_live__ ()
+   {
+      this .pannerNode .disconnect ();
+
+      if (this .getLive () .getValue () && this ._traversed .getValue ())
+      {
+         const audioContext = this .getBrowser () .getAudioContext ();
+
+         this .getBrowser () .sensorEvents () .addInterest ("update", this);
+
+         this .pannerNode .connect (audioContext .destination);
+      }
+      else
+      {
+         this .getBrowser () .sensorEvents () .removeInterest ("update", this);
+      }
+   },
+   set_intensity__ ()
+   {
+      this .gainNode .gain .value = Algorithm .clamp (this ._intensity .getValue (), 0, 1) * this ._gain .getValue ();
+   },
+   set_children__ ()
+   {
+      for (const childNode of this .childNodes)
+         childNode .getAudioSource () .disconnect (this .gainNode);
+
+      this .childNodes .length = 0;
+
+      for (const child of this ._children)
+      {
+         const childNode = X3DCast (X3DConstants .X3DChildNode, child);
+
+         if (!childNode)
+            continue;
+
+         const type = childNode .getType ();
+
+         for (let t = type .length - 1; t >= 0; -- t)
+         {
+            switch (type [t])
+            {
+               case X3DConstants .X3DSoundChannelNode:
+               case X3DConstants .X3DSoundProcessingNode:
+               case X3DConstants .X3DSoundSourceNode:
+                  this .childNodes .push (childNode);
+                  break;
+               default:
+                  continue;
+            }
+
+            break;
+         }
+      }
+
+      for (const childNode of this .childNodes)
+         childNode .getAudioSource () .connect (this .gainNode);
+   },
+   update ()
+   {
+      this .setTraversed (false);
+   },
+   traverse: (() =>
+   {
+      const
+         location  = new Vector3 (0, 0, 0),
+         direction = new Vector3 (0, 0, 0),
+         rotation  = new Rotation4 ();
+
+      return function (type, renderObject)
+      {
+         if (type !== TraverseType .DISPLAY)
+            return;
+
+         this .setTraversed (true);
+
+         const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
+
+         modelViewMatrix .multVecMatrix (location  .assign (this ._location  .getValue ()));
+         modelViewMatrix .multDirMatrix (direction .assign (this ._direction .getValue ()));
+
+         rotation .setFromToVec (Vector3 .zAxis, direction) .straighten ();
+      };
+   })(),
 });
 
 Object .defineProperties (SpatialSound,

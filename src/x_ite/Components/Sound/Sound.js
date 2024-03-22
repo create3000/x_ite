@@ -114,6 +114,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       this .gainFrontRightNode = gainFrontRightNode;
       this .gainBackLeftNode   = gainBackLeftNode;
       this .gainBackRightNode  = gainBackRightNode;
+      this .mergerNode         = mergerNode;
 
       this .getLive () .addInterest ("set_live__", this);
       this ._traversed .addInterest ("set_live__", this);
@@ -160,14 +161,19 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    },
    set_live__ ()
    {
+      this .mergerNode .disconnect ();
+
       if (this .getLive () .getValue () && this ._traversed .getValue ())
       {
+         const audioContext = this .getBrowser () .getAudioContext ();
+
          this .getBrowser () .sensorEvents () .addInterest ("update", this);
+
+         this .mergerNode .connect (audioContext .destination);
       }
       else
       {
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);
-         this .setGain (0);
       }
    },
    set_intensity__ ()
@@ -217,9 +223,6 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    },
    update ()
    {
-      if (!this .getTraversed ())
-         this .setGain (0);
-
       this .setTraversed (false);
    },
    traverse: (() =>
