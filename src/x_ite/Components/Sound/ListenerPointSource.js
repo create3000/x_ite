@@ -115,9 +115,11 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSound
             audioContext = this .getBrowser () .getAudioContext (),
             listener     = audioContext .listener;
 
-         modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ());
-         modelViewMatrix .multVecMatrix (position  .assign (this ._position .getValue ()));
-         modelViewMatrix .rotate (this ._orientation .getValue ()) .get (null, orientation);
+         modelViewMatrix
+            .assign (renderObject .getModelViewMatrix () .get ())
+            .translate (this ._position .getValue ())
+            .rotate (this ._orientation .getValue ())
+            .get (position, orientation);
 
          orientation .mulVecRot (forwardVector .assign (Vector3 .zAxis)) .negate ();
          orientation .mulVecRot (upVector .assign (Vector3 .yAxis));
