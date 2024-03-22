@@ -69,6 +69,31 @@ function ListenerPointSource (executionContext)
 
 Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSoundSourceNode .prototype),
 {
+   initialize ()
+   {
+      X3DSoundSourceNode .prototype .initialize .call (this);
+
+      this ._trackCurrentView .addInterest ("set_trackCurrentView__", this);
+
+      this .set_trackCurrentView__ ();
+   },
+   set_trackCurrentView__ ()
+   {
+      if (!this ._trackCurrentView .getValue ())
+         return;
+
+      listener .positionX .value = 0;
+      listener .positionY .value = 0;
+      listener .positionZ .value = 0;
+
+      listener .forwardX .value = 0;
+      listener .forwardY .value = 0;
+      listener .forwardZ .value = -1;
+
+      listener .upX .value = 0;
+      listener .upY .value = 1;
+      listener .upZ .value = 0;
+   },
    traverse: (() =>
    {
       const
@@ -83,45 +108,31 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSound
          if (type !== TraverseType .DISPLAY)
             return;
 
+         if (this ._trackCurrentView .getValue ())
+            return;
+
          const
             audioContext = this .getBrowser () .getAudioContext (),
             listener     = audioContext .listener;
 
-         if (this ._trackCurrentView .getValue ())
-         {
-            listener .positionX .value = 0;
-            listener .positionY .value = 0;
-            listener .positionZ .value = 0;
+         modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ());
+         modelViewMatrix .multVecMatrix (position  .assign (this ._position .getValue ()));
+         modelViewMatrix .rotate (this ._orientation .getValue ()) .get (null, orientation);
 
-            listener .forwardX .value = 0;
-            listener .forwardY .value = 0;
-            listener .forwardZ .value = -1;
+         orientation .mulVecRot (forwardVector .assign (Vector3 .zAxis)) .negate ();
+         orientation .mulVecRot (upVector .assign (Vector3 .yAxis));
 
-            listener .upX .value = 0;
-            listener .upY .value = 1;
-            listener .upZ .value = 0;
-         }
-         else
-         {
-            modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ());
-            modelViewMatrix .multVecMatrix (position  .assign (this ._position .getValue ()));
-            modelViewMatrix .rotate (this ._orientation .getValue ()) .get (null, orientation);
+         listener .positionX .value = position .x;
+         listener .positionY .value = position .y;
+         listener .positionZ .value = position .z;
 
-            orientation .mulVecRot (forwardVector .assign (Vector3 .zAxis)) .negate ();
-            orientation .mulVecRot (upVector .assign (Vector3 .yAxis));
+         listener .forwardX .value = forwardVector .x;
+         listener .forwardY .value = forwardVector .y;
+         listener .forwardZ .value = forwardVector .z;
 
-            listener .positionX .value = position .x;
-            listener .positionY .value = position .y;
-            listener .positionZ .value = position .z;
-
-            listener .forwardX .value = forwardVector .x;
-            listener .forwardY .value = forwardVector .y;
-            listener .forwardZ .value = forwardVector .z;
-
-            listener .upX .value = upVector .x;
-            listener .upY .value = upVector .y;
-            listener .upZ .value = upVector .z;
-         }
+         listener .upX .value = upVector .x;
+         listener .upY .value = upVector .y;
+         listener .upZ .value = upVector .z;
       };
    })(),
 });
