@@ -68,7 +68,7 @@ Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSo
    {
       X3DSoundDestinationNode .prototype .initialize .call (this);
 
-      this ._streamIdentifier = this .mediaStreamAudioDestinationNode .stream .id;
+      this ._streamIdentifier [0] = this .mediaStreamAudioDestinationNode .stream .id;
    },
    getSoundDestination ()
    {
@@ -113,7 +113,7 @@ Object .defineProperties (StreamAudioDestination,
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("SPEAKERS")),
 
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",              new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "streamIdentifier",      new Fields .SFString ()), // skip test
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "streamIdentifier",      new Fields .MFString ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "children",              new Fields .MFNode ()),
       ]),
       enumerable: true,

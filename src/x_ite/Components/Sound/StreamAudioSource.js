@@ -82,7 +82,7 @@ Object .assign (Object .setPrototypeOf (StreamAudioSource .prototype, X3DSoundSo
 
          this .mediaStreamAudioSourceNode = new MediaStreamAudioSourceNode (audioContext, { mediaStream });
 
-         this ._streamIdentifier = mediaStream .id;
+         this ._streamIdentifier [0] = mediaStream .id;
 
          if (this ._isActive .getValue ())
          {
@@ -194,7 +194,7 @@ Object .defineProperties (StreamAudioSource,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",      new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "streamIdentifier", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "streamIdentifier", new Fields .MFString ()),
       ]),
       enumerable: true,
    },

@@ -186,8 +186,7 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
    {
       const
          location  = new Vector3 (0, 0, 0),
-         direction = new Vector3 (0, 0, 0),
-         rotation  = new Rotation4 ();
+         direction = new Vector3 (0, 0, 0);
 
       return function (type, renderObject)
       {
@@ -201,7 +200,13 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
          modelViewMatrix .multVecMatrix (location  .assign (this ._location  .getValue ()));
          modelViewMatrix .multDirMatrix (direction .assign (this ._direction .getValue ()));
 
-         rotation .setFromToVec (Vector3 .zAxis, direction) .straighten ();
+         this .pannerNode .positionX .value = location .x;
+         this .pannerNode .positionY .value = location .y;
+         this .pannerNode .positionZ .value = location .z;
+
+         this .pannerNode .orientationX .value = direction .x;
+         this .pannerNode .orientationY .value = direction .y;
+         this .pannerNode .orientationZ .value = direction .z;
       };
    })(),
 });

@@ -126,7 +126,7 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-### SFString [out] **streamIdentifier** [ ]
+### MFString [out] **streamIdentifier** [ ]
 
 Stream identification TBD
 
