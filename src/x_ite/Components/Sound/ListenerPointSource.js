@@ -48,7 +48,7 @@
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DSoundSourceNode   from "./X3DSoundSourceNode.js";
+import X3DSoundNode         from "./X3DSoundNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
@@ -57,7 +57,7 @@ import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 function ListenerPointSource (executionContext)
 {
-   X3DSoundSourceNode .call (this, executionContext);
+   X3DSoundNode .call (this, executionContext);
 
    this .addType (X3DConstants .ListenerPointSource);
 
@@ -67,11 +67,11 @@ function ListenerPointSource (executionContext)
    this ._position .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSoundSourceNode .prototype),
+Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSoundNode .prototype),
 {
    initialize ()
    {
-      X3DSoundSourceNode .prototype .initialize .call (this);
+      X3DSoundNode .prototype .initialize .call (this);
 
       this ._trackCurrentView .addInterest ("set_trackCurrentView__", this);
 
@@ -176,17 +176,8 @@ Object .defineProperties (ListenerPointSource,
          new X3DFieldDefinition (X3DConstants .inputOutput, "position",             new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",          new Fields .SFRotation ()),
 
-         new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                 new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "interauralDistance",   new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "dopplerEnabled",       new Fields .SFBool ()),
-
-         new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",            new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",           new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",            new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",             new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",             new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",             new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",          new Fields .SFTime ()),
       ]),
       enumerable: true,
    },
