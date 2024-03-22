@@ -57,10 +57,18 @@ function SpatialSound (executionContext)
 
    this .addType (X3DConstants .SpatialSound);
 
-   this ._location .setUnit ("length");
+   this ._location       .setUnit ("length");
+   this ._coneInnerAngle .setUnit ("angle");
+   this ._coneOuterAngle .setUnit ("angle");
 }
 
-Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .prototype);
+Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .prototype),
+{
+   initialize ()
+   {
+      X3DSoundNode .prototype .initialize .call (this);
+   },
+});
 
 Object .defineProperties (SpatialSound,
 {
