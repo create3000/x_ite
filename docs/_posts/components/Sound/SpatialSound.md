@@ -84,6 +84,24 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
+### SFBool [in, out] **enableHRTF** FALSE
+
+*enableHRTF* enables/disables Head Related Transfer Function (HRTF) auralization, if available. SpatialSound enabledHRTF=true corresponds to panningModelType HRTF, enabledHRTF=false corresponds to panningModelType equalpower.
+
+#### Hints
+
+- [W3C Audio API](https://www.w3.org/TR/webaudio/#enumdef-panningmodeltype){:target="_blank"}
+- [Wikipedia HRTF](https://en.wikipedia.org/wiki/3D_sound_localization#Head-related_Transfer_Function_(HRTF)){:target="_blank"}
+
+### SFBool [in, out] **dopplerEnabled** FALSE
+
+*dopplerEnabled* enables/disables whether real-time Doppler effects (due to relation motion between sources and listeners) are computed by browser between virtual sound sources and active listening locations, then applied to received frequency at active listening locations.
+
+#### Hints
+
+- Functional support requires player support for [Sound](/x_ite/components/sound/sound/) component level 3.
+- [Wikipedia Doppler effect](https://en.wikipedia.org/wiki/Doppler_effect){:target="_blank"}
+
 ### SFFloat [in, out] **coneOuterGain** 0 <small>(-∞,∞)</small>
 
 *coneOuterGain* is minimum gain value found outside coneOuterAngle.
@@ -117,24 +135,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 ### SFFloat [in, out] **maxDistance** 10000 <small>[0,∞)</small>
 
 *maxDistance* is the maximum distance where sound is renderable between source and listener, after which no reduction in sound volume occurs.
-
-### SFBool [in, out] **dopplerEnabled** FALSE
-
-*dopplerEnabled* enables/disables whether real-time Doppler effects (due to relation motion between sources and listeners) are computed by browser between virtual sound sources and active listening locations, then applied to received frequency at active listening locations.
-
-#### Hints
-
-- Functional support requires player support for [Sound](/x_ite/components/sound/sound/) component level 3.
-- [Wikipedia Doppler effect](https://en.wikipedia.org/wiki/Doppler_effect){:target="_blank"}
-
-### SFBool [in, out] **enableHRTF** FALSE
-
-*enableHRTF* enables/disables Head Related Transfer Function (HRTF) auralization, if available. SpatialSound enabledHRTF=true corresponds to panningModelType HRTF, enabledHRTF=false corresponds to panningModelType equalpower.
-
-#### Hints
-
-- [W3C Audio API](https://www.w3.org/TR/webaudio/#enumdef-panningmodeltype){:target="_blank"}
-- [Wikipedia HRTF](https://en.wikipedia.org/wiki/3D_sound_localization#Head-related_Transfer_Function_(HRTF)){:target="_blank"}
 
 ### SFFloat [in, out] **referenceDistance** 1 <small>[0,∞)</small>
 
