@@ -78,6 +78,14 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
+### SFBool [in, out] **trackCurrentView** FALSE
+
+If *trackCurrentView* field is true then position and orientation match avatar's (user's) current view.
+
+### SFFloat [in, out] **interauralDistance** 0 <small>[0,∞)</small>
+
+The *interauralDistance* field is .
+
 ### SFBool [in, out] **dopplerEnabled** FALSE
 
 *dopplerEnabled* enables/disables whether real-time Doppler effects (due to relation motion between sources and listeners) are computed by browser between virtual sound sources and active listening locations, then applied to received frequency at active listening locations.
@@ -86,14 +94,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Functional support requires player support for [Sound](/x_ite/components/sound/sound/) component level 3.
 - [Wikipedia Doppler effect](https://en.wikipedia.org/wiki/Doppler_effect){:target="_blank"}
-
-### SFFloat [in, out] **interauralDistance** 0 <small>[0,∞)</small>
-
-The *interauralDistance* field is .
-
-### SFBool [in, out] **trackCurrentView** FALSE
-
-If *trackCurrentView* field is true then position and orientation match avatar's (user's) current view.
 
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
