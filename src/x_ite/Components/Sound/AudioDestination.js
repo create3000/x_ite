@@ -111,11 +111,9 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    },
    set_mediaDeviceID__ ()
    {
-      // Safari has no support yet, as of Aug 2023.
-      if (!this .audioElement .setSinkId)
-         return;
+      // Safari has no support for `setSinkId` yet, as of Aug 2023.
 
-      this .audioElement .setSinkId (this ._mediaDeviceID .getValue ()) .catch (error =>
+      this .audioElement .setSinkId ?.(this ._mediaDeviceID .getValue ()) .catch (error =>
       {
          console .error (error .message);
 
