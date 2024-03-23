@@ -101,7 +101,7 @@ Object .assign (X3DSoundContext .prototype,
          ]
          .map (event => `${event}.${id}`);
 
-         this .getElement () .on (events .join (" "), event =>
+         this .getCanvas () .on (events .join (" "), event =>
          {
             audioElement [functionName] ()
                .then (() => this .getElement () .off (`.${id}`))
