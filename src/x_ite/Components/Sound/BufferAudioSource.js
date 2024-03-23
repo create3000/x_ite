@@ -81,6 +81,8 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       this ._loopStart        .addInterest ("set_loopStart__",    this);
       this ._loopEnd          .addInterest ("set_loopEnd__",      this);
 
+      this .set_buffer__ ();
+
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    set_live__ ()
