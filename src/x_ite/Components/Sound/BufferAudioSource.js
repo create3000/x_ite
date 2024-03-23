@@ -99,29 +99,37 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
          audioContext     = this .getBrowser () .getAudioContext (),
          numberOfChannels = Algorithm .clamp (this ._numberOfChannels .getValue (), 1, 32),
          sampleRate       = Algorithm .clamp (this ._sampleRate .getValue (), 3000, 768000),
-         bufferLength     = Math .max (this ._bufferLength .getValue (), 1),
-         audioBuffer      = audioContext .createBuffer (numberOfChannels, bufferLength, sampleRate);
+         bufferLength     = Math .max (this ._bufferLength .getValue (), 1);
 
-      this ._bufferDuration = bufferLength / sampleRate;
-
-      if (this ._buffer .length < bufferLength * numberOfChannels)
-         this ._buffer .length = bufferLength * numberOfChannels;
-
-      const buffer = this ._buffer .getValue ();
-
-      for (let i = 0; i < numberOfChannels; ++ i)
+      if (bufferLength)
       {
-         const channelData = audioBuffer .getChannelData (i);
+         const audioBuffer = audioContext .createBuffer (numberOfChannels, bufferLength, sampleRate);
 
-         channelData .set (buffer .subarray (i * bufferLength, (i + 1) * bufferLength));
+         this ._bufferDuration = bufferLength / sampleRate;
+
+         if (this ._buffer .length < bufferLength * numberOfChannels)
+            this ._buffer .length = bufferLength * numberOfChannels;
+
+         const buffer = this ._buffer .getValue ();
+
+         for (let i = 0; i < numberOfChannels; ++ i)
+         {
+            const channelData = audioBuffer .getChannelData (i);
+
+            channelData .set (buffer .subarray (i * bufferLength, (i + 1) * bufferLength));
+         }
+
+         this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), audioBuffer));
+
+         this .set_detune__ ();
+         this .set_playbackRate__ ();
+         this .set_loopStart__ ();
+         this .set_loopEnd__ ();
       }
-
-      this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), audioBuffer));
-
-      this .set_detune__ ();
-      this .set_playbackRate__ ();
-      this .set_loopStart__ ();
-      this .set_loopEnd__ ();
+      else
+      {
+         this .setMediaElement (null);
+      }
    },
    set_detune__ ()
    {
@@ -153,7 +161,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
    },
    unloadData ()
    {
-      this .setMediaElement (null);
+      this .set_buffer__ ();
    },
    loadData ()
    {
