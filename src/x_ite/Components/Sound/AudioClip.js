@@ -111,9 +111,12 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    {
       const
          audioContext = this .getBrowser () .getAudioContext (),
-         audioBuffer  = await audioContext .decodeAudioData (arrayBuffer);
+         audioBuffer  = await audioContext .decodeAudioData (arrayBuffer),
+         media        = AudioElement .create (audioContext, this .getAudioSource (), audioBuffer);
 
-      this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), audioBuffer));
+      this ._duration_changed = media .duration;
+
+      this .setMediaElement (media);
    },
    dispose ()
    {

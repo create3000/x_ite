@@ -191,7 +191,9 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          if (gl .getVersion () === 1 && !(Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
             throw new Error ("The movie texture is a non power-of-two texture.");
 
-         this .setMediaElement (this .video [0]);
+         this ._duration_changed = video .duration;
+
+         this .setMediaElement (video);
          this .setTextureFromData (width, height, true, false, video);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 
@@ -209,7 +211,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       {
          GifMedia (gif, this);
 
-         gif .pause ();
+         this ._duration_changed = gif .duration;
 
          this .setMediaElement (gif);
          this .setTextureFromData (gif .get_canvas () .width, gif .get_canvas () .height, true, false, gif .get_frames () [0] .data);

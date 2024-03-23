@@ -120,6 +120,8 @@ function GifMedia (gif, movieTexture)
          },
       },
    });
+
+   gif .pause ();
 }
 
 export default GifMedia;

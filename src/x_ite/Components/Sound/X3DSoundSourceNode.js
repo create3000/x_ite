@@ -97,8 +97,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundN
 
       // Handle events.
 
-      this ._duration_changed = this .mediaElement .duration;
-
       this .resetElapsedTime ();
 
       if (this ._isActive .getValue ())
