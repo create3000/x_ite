@@ -86,6 +86,8 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    },
    loadData ()
    {
+      this .unloadData ();
+
       new FileLoader (this) .loadDocument (this ._url, async (data, URL) =>
       {
          if (data === null)
@@ -97,13 +99,13 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
          {
             await this .setArrayBuffer (data);
 
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
+
             if (DEVELOPMENT)
             {
                if (URL .protocol !== "data:")
                   console .info (`Done loading audio '${decodeURI (URL .href)}'`);
             }
-
-            this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
       });
    },

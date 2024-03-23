@@ -108,10 +108,10 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    unloadData ()
    {
       this .clearTexture ();
+      this .setMediaElement (null);
    },
    loadData ()
    {
-      delete this .gif;
       this .setMediaElement (null);
       this .urlStack .setValue (this ._url);
       this .video .on ("loadeddata", this .setVideo .bind (this));
@@ -207,8 +207,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    {
       try
       {
-         this .gif = gif;
-
          GifMedia (gif, this);
 
          gif .pause ();
@@ -227,10 +225,10 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    },
    set_speed__ ()
    {
-      if (this .gif)
-         this .gif .playbackRate = this ._speed .getValue ();
+      const media = this .getMediaElement ();
 
-      this .video [0] .playbackRate = this ._speed .getValue ();
+      if (media)
+         media .playbackRate = this ._speed .getValue ();
    },
    set_time ()
    {
@@ -239,7 +237,10 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
          return;
 
-      this .updateTextureFromData (this .gif ?.currentFrame .data ?? this .video [0]);
+      const media = this .getMediaElement ();
+
+      if (media)
+         this .updateTextureFromData (media .currentFrame ?.data ?? media);
    },
    traverse: X3DTexture2DNode .prototype .traverse,
    dispose ()
