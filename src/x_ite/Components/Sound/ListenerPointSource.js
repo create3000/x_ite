@@ -70,12 +70,16 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSound
    {
       X3DSoundNode .prototype .initialize .call (this);
 
+      this ._enabled          .addInterest ("set_trackCurrentView__", this)
       this ._trackCurrentView .addInterest ("set_trackCurrentView__", this);
 
       this .set_trackCurrentView__ ();
    },
    set_trackCurrentView__ ()
    {
+      if (!this ._enabled .getValue ())
+         return;
+
       if (!this ._trackCurrentView .getValue ())
          return;
 
@@ -107,6 +111,9 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSound
       return function (type, renderObject)
       {
          if (type !== TraverseType .DISPLAY)
+            return;
+
+         if (!this ._enabled .getValue ())
             return;
 
          if (this ._trackCurrentView .getValue ())
