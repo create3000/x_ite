@@ -72,8 +72,6 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       X3DSoundSourceNode .prototype .initialize .call (this);
       X3DUrlObject       .prototype .initialize .call (this);
 
-      const audioContext = this .getBrowser () .getAudioContext ();
-
       this ._numberOfChannels .addInterest ("set_buffer__",       this);
       this ._sampleRate       .addInterest ("set_buffer__",       this);
       this ._bufferLength     .addInterest ("set_buffer__",       this);
@@ -82,14 +80,6 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       this ._playbackRate     .addInterest ("set_playbackRate__", this);
       this ._loopStart        .addInterest ("set_loopStart__",    this);
       this ._loopEnd          .addInterest ("set_loopEnd__",      this);
-
-      this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), null));
-
-      this .set_buffer__ ();
-      this .set_detune__ ();
-      this .set_playbackRate__ ();
-      this .set_loopStart__ ();
-      this .set_loopEnd__ ();
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
@@ -133,25 +123,35 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
    },
    set_detune__ ()
    {
-      this .getMediaElement () .detune = this ._detune .getValue ();
+      const media = this .getMediaElement ();
+
+      if (media)
+         media .detune = this ._detune .getValue ();
    },
    set_playbackRate__ ()
    {
-      this .getMediaElement () .playbackRate = this ._playbackRate .getValue ();
+      const media = this .getMediaElement ();
+
+      if (media)
+         media .playbackRate = this ._playbackRate .getValue ();
    },
    set_loopStart__ ()
    {
-      this .getMediaElement () .loopStart = Math .max (this ._loopStart .getValue (), 0);
+      const media = this .getMediaElement ();
+
+      if (media)
+         media .loopStart = Math .max (this ._loopStart .getValue (), 0);
    },
    set_loopEnd__ ()
    {
-      this .getMediaElement () .loopEnd = Math .max (this ._loopEnd .getValue (), 0);
+      const media = this .getMediaElement ();
+
+      if (media)
+         media .loopEnd = Math .max (this ._loopEnd .getValue (), 0);
    },
    unloadData ()
    {
-      const audioContext = this .getBrowser () .getAudioContext ();
-
-      this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), null));
+      this .setMediaElement (null);
    },
    loadData ()
    {

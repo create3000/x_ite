@@ -80,9 +80,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    },
    unloadData ()
    {
-      const audioContext = this .getBrowser () .getAudioContext ();
-
-      this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), null));
+      this .setMediaElement (null);
    },
    loadData ()
    {
