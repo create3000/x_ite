@@ -505,7 +505,7 @@
            tmpCanvas.height = h;
            tmpCanvas.style.width = w + 'px';
            tmpCanvas.style.height = h + 'px';
-           tmpCanvas.getContext('2d').setTransform(1, 0, 0, 1, 0, 0);
+           tmpCanvas.getContext('2d', { willReadFrequently: true }).setTransform(1, 0, 0, 1, 0, 0);
        };
 
        var setFrameOffset = function(frame, offset) {
@@ -616,7 +616,7 @@
        };
 
        var doImg = function (img) {
-           if (!frame) frame = tmpCanvas.getContext('2d');
+           if (!frame) frame = tmpCanvas.getContext('2d', { willReadFrequently: true });
 
            var currIdx = frames.length;
 
@@ -769,7 +769,7 @@
 
                offset = frameOffsets[i];
 
-               tmpCanvas.getContext("2d").putImageData(frames[i].data, offset.x, offset.y);
+               tmpCanvas.getContext("2d", { willReadFrequently: true }).putImageData(frames[i].data, offset.x, offset.y);
                ctx.globalCompositeOperation = "copy";
                ctx.drawImage(tmpCanvas, 0, 0);
            };
@@ -864,7 +864,7 @@
 
            var div = document.createElement('div');
            canvas = document.createElement('canvas');
-           ctx = canvas.getContext('2d');
+           ctx = canvas.getContext('2d', { willReadFrequently: true });
            toolbar = document.createElement('div');
 
            tmpCanvas = document.createElement('canvas');
