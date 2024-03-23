@@ -59,7 +59,7 @@ function X3DSoundProcessingNode (executionContext)
 
    this .addType (X3DConstants .X3DSoundProcessingNode);
 
-   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool (true));
+   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool ());
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
@@ -76,7 +76,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DSo
       X3DSoundNode         .prototype .initialize .call (this);
       X3DTimeDependentNode .prototype .initialize .call (this);
 
-      this ._enabled               .addInterest ("set_enabled__",               this);
       this ._gain                  .addInterest ("set_gain__",                  this);
       this ._channelCount          .addInterest ("set_channelCount__",          this);
       this ._channelCountMode      .addInterest ("set_channelCountMode__",      this);
@@ -122,6 +121,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DSo
 
          this .audioDestination .connect (this .audioSource);
       }
+
+      X3DTimeDependentNode .prototype .set_enabled__ .call (this);
    },
    set_gain__ ()
    {
