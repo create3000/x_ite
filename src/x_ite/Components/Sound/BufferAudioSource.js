@@ -167,14 +167,14 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
    },
    loadData ()
    {
-      this .unloadData ();
+      this .setMediaElement (null);
 
       new FileLoader (this) .loadDocument (this ._url, async (data, URL) =>
       {
          if (data === null)
          {
             // No URL could be loaded.
-            this .unloadData ();
+            this .setMediaElement (null);
             this .setLoadState (X3DConstants .FAILED_STATE);
          }
          else if (data instanceof ArrayBuffer)
