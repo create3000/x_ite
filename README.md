@@ -1,7 +1,8 @@
 # [X_ITE](https://create3000.github.io/x_ite/) — X_ITE X3D Browser
 
-![NPM Version](https://img.shields.io/npm/v/x_ite)
+[![NPM Version](https://img.shields.io/npm/v/x_ite)](https://www.npmjs.com/package/x_ite)
 ![NPM Downloads](https://img.shields.io/npm/dw/x_ite)
+![Build Size](https://badgen.net/bundlephobia/minzip/x_ite)
 
 ## Introduction
 
