@@ -72,7 +72,6 @@ Object .assign (Object .setPrototypeOf (Convolver .prototype, X3DSoundProcessing
       X3DSoundProcessingNode .prototype .initialize .call (this);
 
       this ._numberOfChannels .addInterest ("set_buffer__",    this);
-      this ._bufferLength     .addInterest ("set_buffer__",    this);
       this ._buffer           .addInterest ("set_buffer__",    this);
       this ._normalize        .addInterest ("set_normalize__", this);
 
@@ -90,18 +89,17 @@ Object .assign (Object .setPrototypeOf (Convolver .prototype, X3DSoundProcessing
          numberOfChannels = Algorithm .clamp (this ._numberOfChannels .getValue (), 1, 32),
          sampleRate       = audioContext .sampleRate,
          bufferLength     = Math .max (Math .floor (this ._buffer .length / numberOfChannels), 1),
-         audioBuffer      = audioContext .createBuffer (numberOfChannels, bufferLength, sampleRate);
+         audioBuffer      = audioContext .createBuffer (numberOfChannels, bufferLength, sampleRate),
+         buffer           = this ._buffer .getValue ();
 
-      if (this ._buffer .length < bufferLength * numberOfChannels)
-         this ._buffer .length = bufferLength * numberOfChannels;
-
-      const buffer = this ._buffer .getValue ();
-
-      for (let i = 0; i < numberOfChannels; ++ i)
+      if (this ._buffer .length >= bufferLength * numberOfChannels)
       {
-         const channelData = audioBuffer .getChannelData (i);
+         for (let i = 0; i < numberOfChannels; ++ i)
+         {
+            const channelData = audioBuffer .getChannelData (i);
 
-         channelData .set (buffer .subarray (i * bufferLength, (i + 1) * bufferLength));
+            channelData .set (buffer .subarray (i * bufferLength, (i + 1) * bufferLength));
+         }
       }
 
       this .convolverNode .buffer = audioBuffer;

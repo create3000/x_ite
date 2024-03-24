@@ -99,24 +99,24 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
          audioContext     = this .getBrowser () .getAudioContext (),
          numberOfChannels = Algorithm .clamp (this ._numberOfChannels .getValue (), 1, 32),
          sampleRate       = Algorithm .clamp (this ._sampleRate .getValue (), 3000, 768000),
-         bufferLength     = Math .max (this ._bufferLength .getValue (), 1);
+         bufferLength     = Math .max (this ._bufferLength .getValue (), 0);
 
       if (bufferLength)
       {
-         const audioBuffer = audioContext .createBuffer (numberOfChannels, bufferLength, sampleRate);
+         const
+            audioBuffer = audioContext .createBuffer (numberOfChannels, bufferLength, sampleRate),
+            buffer      = this ._buffer .getValue ();
 
          this ._bufferDuration = bufferLength / sampleRate;
 
-         if (this ._buffer .length < bufferLength * numberOfChannels)
-            this ._buffer .length = bufferLength * numberOfChannels;
-
-         const buffer = this ._buffer .getValue ();
-
-         for (let i = 0; i < numberOfChannels; ++ i)
+         if (this ._buffer .length >= bufferLength * numberOfChannels)
          {
-            const channelData = audioBuffer .getChannelData (i);
+            for (let i = 0; i < numberOfChannels; ++ i)
+            {
+               const channelData = audioBuffer .getChannelData (i);
 
-            channelData .set (buffer .subarray (i * bufferLength, (i + 1) * bufferLength));
+               channelData .set (buffer .subarray (i * bufferLength, (i + 1) * bufferLength));
+            }
          }
 
          this .setMediaElement (AudioElement .create (audioContext, this .getAudioSource (), audioBuffer));
@@ -128,6 +128,8 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       }
       else
       {
+         this ._bufferDuration = 0;
+
          this .setMediaElement (null);
       }
    },
