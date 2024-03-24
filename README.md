@@ -1,6 +1,6 @@
 # [X_ITE](https://create3000.github.io/x_ite/) — X_ITE X3D Browser
 
-![NPM Downloads](https://img.shields.io/npm/v/x_itee)
+![NPM Version](https://img.shields.io/npm/v/x_ite)
 
 ## Introduction
 
