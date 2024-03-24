@@ -346,11 +346,12 @@ Missing Nodes:
 - [PeriodicWave](/x_ite/components/sound/periodicwave/)
 - [Sound](/x_ite/components/sound/sound/)
 - [SpatialSound](/x_ite/components/sound/spatialsound/)
+- [WaveShaper](/x_ite/components/sound/waveshaper/)
+
 <!--
 - [StreamAudioDestination](/x_ite/components/sound/streamaudiodestination/)
 - [StreamAudioSource](/x_ite/components/sound/streamaudiosource/)
 -->
-- [WaveShaper](/x_ite/components/sound/waveshaper/)
 
 ### Text
 
