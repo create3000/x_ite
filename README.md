@@ -38,7 +38,7 @@ import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";
 
 ## Usage
 
-This code creates X3D canvas with a scene, a camera, and a geometric cube with default material.
+This code creates a X3D canvas with a scene, a camera, and a geometric cube with default material.
 
 ```html
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
