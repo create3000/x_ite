@@ -121,7 +121,7 @@ Object .assign (X3DSoundContext .prototype,
          .then (disconnect)
          .catch (connect);
 
-      if (functionName === "resume")
+      if (audioElement === this [_audioContext])
          connect ();
    },
 });
