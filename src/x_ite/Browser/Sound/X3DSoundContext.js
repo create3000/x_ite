@@ -101,8 +101,11 @@ Object .assign (X3DSoundContext .prototype,
             "keyup",
             "mousedown",
             "mouseup",
+            "mousewheel",
             "pointerup",
             "touchend",
+            "touchmove",
+            "touchstart",
          ]
          .map (event => `${event}.${id}`);
 
