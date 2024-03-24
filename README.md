@@ -36,6 +36,30 @@ import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";
 
 >**Info:** It is no longer necessary to include the CSS file.
 
+## Usage
+
+This code creates X3D canvas with a scene, a camera, and a geometric cube with default material.
+
+```html
+<script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+<x3d-canvas>
+<X3D profile='Interactive' version='4.0'>
+  <Scene>
+    <Viewpoint
+        description='Initial View'></Viewpoint>
+    <Transform>
+      <Shape>
+        <Appearance>
+          <Material></Material>
+        </Appearance>
+        <Box></Box>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>
+</x3d-canvas>
+```
+
 ## NPM Usage
 
 ```sh
