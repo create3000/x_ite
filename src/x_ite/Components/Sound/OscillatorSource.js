@@ -79,11 +79,12 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
    },
    set_type__: (function ()
    {
-      const types = new Set ([
-         "sine",
-         "square",
-         "sawtooth",
-         "triangle",
+      const types = new Map ([
+         ["SINE",     "sine"],
+         ["SQUARE",   "square"],
+         ["SAWTOOTH", "sawtooth"],
+         ["TRIANGLE", "triangle"],
+         ["CUSTOM",   "custom"],
       ]);
 
       return function ()
@@ -91,7 +92,7 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
          this .periodicWaveNode ._optionsReal .removeInterest ("set_periodicWaveOptions__", this);
          this .periodicWaveNode ._optionsImag .removeInterest ("set_periodicWaveOptions__", this);
 
-         const type = this .periodicWaveNode ._type .getValue () .toLowerCase ();
+         const type = types .get (this .periodicWaveNode ._type .getValue ()) ?? "square";
 
          if (type === "custom")
          {
@@ -102,7 +103,7 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
          }
          else
          {
-            this .oscillatorNode .type = types .has (type) ? type : "square";
+            this .oscillatorNode .type = type;
          }
       };
    })(),
@@ -116,7 +117,9 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
    },
    set_periodicWave__ ()
    {
-      this .periodicWaveNode ?._type .removeInterest ("set_type__", this);
+      this .periodicWaveNode ?._type        .removeInterest ("set_type__",                this);
+      this .periodicWaveNode ?._optionsReal .removeInterest ("set_periodicWaveOptions__", this);
+      this .periodicWaveNode ?._optionsImag .removeInterest ("set_periodicWaveOptions__", this);
 
       this .periodicWaveNode = X3DCast (X3DConstants .PeriodicWave, this ._periodicWave)
          ?? this .getBrowser () .getDefaultPeriodicWave ();

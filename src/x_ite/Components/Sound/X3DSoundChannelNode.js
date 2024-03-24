@@ -129,30 +129,33 @@ Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, X3DSound
    },
    set_channelCountMode__: (function ()
    {
-      const channelCountModes = new Set (["max", "clamped-max", "explicit"]);
+      const channelCountModes = new Map ([
+         ["MAX",         "max"],
+         ["CLAMPED-MAX", "clamped-max"],
+         ["EXPLICIT",    "explicit"],
+      ]);
 
       return function ()
       {
          if (!this ._enabled .getValue ())
             return;
 
-         const channelCountMode = this ._channelCountMode .getValue () .toLowerCase () .replaceAll ("_", "-");
-
-         this .audioDestination .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
+         this .audioDestination .channelCountMode = channelCountModes .get (this ._channelCountMode .getValue ()) ?? "max";
       };
    })(),
    set_channelInterpretation__: (function ()
    {
-      const channelInterpretations = new Set (["speakers", "discrete"]);
+      const channelInterpretations = new Map ([
+         ["SPEAKERS", "speakers"],
+         ["DISCRETE", "discrete"],
+      ]);
 
       return function ()
       {
          if (!this ._enabled .getValue ())
             return;
 
-         const channelInterpretation = this ._channelInterpretation .getValue () .toLowerCase ();
-
-         this .audioDestination .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
+         this .audioDestination .channelInterpretation = channelInterpretations .get (this ._channelInterpretation .getValue ()) ?? "speakers";
       };
    })(),
    set_children__ ()

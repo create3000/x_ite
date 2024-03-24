@@ -91,13 +91,20 @@ Object .assign (Object .setPrototypeOf (BiquadFilter .prototype, X3DSoundProcess
    },
    set_type__: (function ()
    {
-      const types = new Set (["lowpass", "highpass", "bandpass", "lowshelf", "highshelf", "peaking", "notch", "allpass"]);
+      const types = new Map ([
+         ["LOWPASS",   "lowpass"],
+         ["HIGHPASS",  "highpass"],
+         ["BANDPASS",  "bandpass"],
+         ["LOWSHELF",  "lowshelf"],
+         ["HIGHSHELF", "highshelf"],
+         ["PEAKING",   "peaking"],
+         ["NOTCH",     "notch"],
+         ["ALLPASS",   "allpass"],
+      ]);
 
       return function ()
       {
-         const type = this ._type .getValue () .toLowerCase ();
-
-         this .biquadFilterNode .type = types .has (type) ? type : "lowpass";
+         this .biquadFilterNode .type = types .get (this ._type .getValue ()) ?? "lowpass";
       };
    })(),
    set_frequency__ ()

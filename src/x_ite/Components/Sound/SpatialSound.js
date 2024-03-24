@@ -198,13 +198,15 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
    },
    set_distanceModel__: (function ()
    {
-      const distanceModels = new Set (["linear", "inverse", "exponential"]);
+      const distanceModels = new Map ([
+         ["LINEAR",      "linear"],
+         ["INVERSE",     "inverse"],
+         ["EXPONENTIAL", "exponential"],
+      ]);
 
       return function ()
       {
-         const distanceModel = this ._distanceModel .getValue () .toLowerCase ();
-
-         this .pannerNode .distanceModel = distanceModels .has (distanceModel) ? distanceModel : "inverse";
+         this .pannerNode .distanceModel = distanceModels .get (this ._distanceModel .getValue ()) ?? "inverse";
 
          let rolloffFactor = Math .max (this ._rolloffFactor .getValue (), 0);
 

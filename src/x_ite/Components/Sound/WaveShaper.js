@@ -89,13 +89,15 @@ Object .assign (Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessin
    },
    set_oversample__: (function ()
    {
-      const oversampleTypes = new Set (["none", "2x", "4x"]);
+      const oversampleTypes = new Map ([
+         ["NONE", "none"],
+         ["2X",   "2x"],
+         ["4X",   "4x"],
+      ]);
 
       return function ()
       {
-         const oversample = this ._oversample .getValue () .toLowerCase ();
-
-         this .waveShaperNode .oversample = oversampleTypes .has (oversample) ? oversample : "none";
+         this .waveShaperNode .oversample = oversampleTypes .get (this ._oversample .getValue ()) ?? "none";
       };
    })(),
 });
