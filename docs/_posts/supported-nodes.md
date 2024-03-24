@@ -40,7 +40,7 @@ X_ITE has achieved the [X3D Immersive Profile](https://www.web3d.org/documents/s
 
 This section documents all nodes supported by X_ITE.
 
-X_ITE supports a limited number of nodes defined by the X3D specification. Currently 252 out of 263 nodes (96%) are implemented. The implementation of these nodes is complete in the sense that the nodes support all the fields and functions required for that implementation, unless otherwise specified.
+X_ITE supports a limited number of nodes defined by the X3D specification. Currently 250 out of 263 nodes (95%) are implemented. The implementation of these nodes is complete in the sense that the nodes support all the fields and functions required for that implementation, unless otherwise specified.
 
 <!--
 Missing Nodes:
@@ -346,8 +346,10 @@ Missing Nodes:
 - [PeriodicWave](/x_ite/components/sound/periodicwave/)
 - [Sound](/x_ite/components/sound/sound/)
 - [SpatialSound](/x_ite/components/sound/spatialsound/)
+<!--
 - [StreamAudioDestination](/x_ite/components/sound/streamaudiodestination/)
 - [StreamAudioSource](/x_ite/components/sound/streamaudiosource/)
+-->
 - [WaveShaper](/x_ite/components/sound/waveshaper/)
 
 ### Text

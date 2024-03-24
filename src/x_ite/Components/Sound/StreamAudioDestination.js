@@ -56,8 +56,6 @@ function StreamAudioDestination (executionContext)
    X3DSoundDestinationNode .call (this, executionContext);
 
    this .addType (X3DConstants .StreamAudioDestination);
-
-   this .audioElement = new Audio ();
 }
 
 Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSoundDestinationNode .prototype),
@@ -72,51 +70,12 @@ Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSo
    },
    getSoundDestination ()
    {
-      return this .mediaStreamAudioDestinationNode;
+      return;
    },
-   set_enabled__ ()
-   {
-      const active = this ._enabled .getValue () && this .getLive () .getValue ();
-
-      if (!!this .mediaStreamAudioDestinationNode === active)
-         return;
-
-      if (active)
-      {
-         const audioContext = this .getBrowser () .getAudioContext ();
-
-         this .mediaStreamAudioDestinationNode = new MediaStreamAudioDestinationNode (audioContext);
-         this .audioElement .srcObject         = this .mediaStreamAudioDestinationNode .stream;
-
-         this .getBrowser () .startAudioElement (this .audioElement);
-
-         this ._streamIdentifier [0] = this .mediaStreamAudioDestinationNode .stream .id;
-      }
-      else
-      {
-         this .audioElement .pause ();
-
-         for (const track of this .mediaStreamAudioDestinationNode .stream .getAudioTracks ())
-            track .stop ();
-
-         for (const track of this .mediaStreamAudioDestinationNode .stream .getVideoTracks ())
-            track .stop ();
-
-         this .mediaStreamAudioDestinationNode = null;
-      }
-
-      X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
-   },
+   set_enabled__ () { /* remove this function if implemented */ },
    set_mediaDeviceID__ ()
    {
-      // Safari has no support for `setSinkId` yet, as of Aug 2023.
 
-      this .audioElement .setSinkId ?.(this ._mediaDeviceID .getValue ()) .catch (error =>
-      {
-         console .error (error .message);
-
-         this .audioElement .setSinkId ("default") .catch (Function .prototype);
-      });
    },
 });
 
@@ -151,13 +110,13 @@ Object .defineProperties (StreamAudioDestination,
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "mediaDeviceID",         new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "streamIdentifier",      new Fields .MFString ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCount",          new Fields .SFInt32 ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("MAX")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("SPEAKERS")),
 
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",              new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "streamIdentifier",      new Fields .MFString ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "children",              new Fields .MFNode ()),
       ]),
       enumerable: true,

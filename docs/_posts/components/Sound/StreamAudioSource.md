@@ -61,6 +61,14 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
+### MFString [in, out] **streamIdentifier** [ ]
+
+Stream identification TBD
+
+#### Hint
+
+- [W3C Media Capture and Streams](https://www.w3.org/TR/mediacapture-streams){:target="_blank"}
+
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
 Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
@@ -125,14 +133,6 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 #### Warning
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
-
-### MFString [out] **streamIdentifier** [ ]
-
-Stream identification TBD
-
-#### Hint
-
-- [W3C Media Capture and Streams](https://www.w3.org/TR/mediacapture-streams){:target="_blank"}
 
 ## Advice
 

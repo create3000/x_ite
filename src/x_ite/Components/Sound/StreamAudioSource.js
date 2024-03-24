@@ -66,93 +66,6 @@ Object .assign (Object .setPrototypeOf (StreamAudioSource .prototype, X3DSoundSo
    {
       X3DSoundSourceNode .prototype .initialize .call (this);
    },
-   set_start ()
-   {
-      if (!navigator .mediaDevices)
-         return;
-
-      this .restore = false;
-
-      navigator .mediaDevices .getUserMedia ({
-         audio: true,
-      })
-      .then (mediaStream =>
-      {
-         const audioContext = this .getBrowser () .getAudioContext ();
-
-         this .mediaStreamAudioSourceNode = new MediaStreamAudioSourceNode (audioContext, { mediaStream });
-
-         this ._streamIdentifier [0] = mediaStream .id;
-
-         if (this ._isActive .getValue ())
-         {
-            if (this ._isPaused .getValue () || !this .getLive () .getValue ())
-               this .set_pause ();
-            else
-               this .set_resume ();
-         }
-         else
-         {
-            this .set_stop ();
-         }
-      })
-      .catch (error =>
-      {
-         console .error (error .message);
-      });
-   },
-   set_pause ()
-   {
-      if (!this .mediaStreamAudioSourceNode)
-         return;
-
-      if (this .getLive () .getValue ())
-      {
-         this .mediaStreamAudioSourceNode .disconnect ();
-
-         for (const track of this .mediaStreamAudioSourceNode .mediaStream .getAudioTracks ())
-            track .enabled = false;
-
-         for (const track of this .mediaStreamAudioSourceNode .mediaStream .getVideoTracks ())
-            track .enabled = false;
-      }
-      else
-      {
-         this .set_stop (true);
-      }
-   },
-   set_resume ()
-   {
-      if (this .restore)
-         return this .set_start ();
-
-      if (!this .mediaStreamAudioSourceNode)
-         return;
-
-      this .mediaStreamAudioSourceNode .connect (this .getAudioSource ());
-
-      for (const track of this .mediaStreamAudioSourceNode .mediaStream .getAudioTracks ())
-         track .enabled = true;
-
-      for (const track of this .mediaStreamAudioSourceNode .mediaStream .getVideoTracks ())
-         track .enabled = true;
-   },
-   set_stop (restore = false)
-   {
-      if (!this .mediaStreamAudioSourceNode)
-         return;
-
-      this .mediaStreamAudioSourceNode .disconnect ();
-
-      for (const track of this .mediaStreamAudioSourceNode .mediaStream .getAudioTracks ())
-         track .stop ();
-
-      for (const track of this .mediaStreamAudioSourceNode .mediaStream .getVideoTracks ())
-         track .stop ();
-
-      this .mediaStreamAudioSourceNode = null;
-      this .restore                    = restore;
-   },
 });
 
 
@@ -186,6 +99,7 @@ Object .defineProperties (StreamAudioSource,
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",             new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "streamIdentifier", new Fields .MFString ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",        new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",       new Fields .SFTime ()),
@@ -194,7 +108,6 @@ Object .defineProperties (StreamAudioSource,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",      new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "streamIdentifier", new Fields .MFString ()),
       ]),
       enumerable: true,
    },
