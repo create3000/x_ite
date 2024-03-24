@@ -1,10 +1,6 @@
 # [X_ITE](https://create3000.github.io/x_ite/) — X_ITE X3D Browser
 
-[![NPM Package][npm]][npm-url]
-[![Build Size][build-size]][build-size-url]
-[![NPM Downloads][npm-downloads]][npmtrends-url]
-[![DeepScan][deepscan]][deepscan-url]
-[![Discord][discord]][discord-url]
+![NPM Downloads](https://img.shields.io/npm/dw/:x_ite)
 
 ## Introduction
 
