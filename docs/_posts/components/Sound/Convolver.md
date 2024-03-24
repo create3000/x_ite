@@ -53,10 +53,6 @@ Enables/disables node operation.
 
 Input/Output field *numberOfChannels*.
 
-### SFInt32 [in, out] **bufferLength**
-
-Input/Output field *bufferLength*.
-
 ### MFFloat [in, out] **buffer** [ ] <small>[−1,1]</small>
 
 *buffer* is a memory-resident audio asset that can contain one or more channels. *buffer* data format is non-interleaved 32-bit floating-point linear PCM values with a normal range of [−1,1], but values are not limited to this range.
@@ -64,10 +60,6 @@ Input/Output field *bufferLength*.
 #### Hint
 
 - [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation){:target="_blank"}
-
-### SFTime [out] **bufferDuration** 0 <small>[0,∞)</small>
-
-Output field *bufferDuration*.
 
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
