@@ -1,5 +1,11 @@
 # [X_ITE](https://create3000.github.io/x_ite/) — X_ITE X3D Browser
 
+[![NPM Package][npm]][npm-url]
+[![Build Size][build-size]][build-size-url]
+[![NPM Downloads][npm-downloads]][npmtrends-url]
+[![DeepScan][deepscan]][deepscan-url]
+[![Discord][discord]][discord-url]
+
 ## Introduction
 
 X_ITE is a X3D JavaScript WebGL browser. It is a full standard X3D WebGL browser for all major web browsers, which can also be used as a VRML viewer.
