@@ -82,10 +82,15 @@ Object .assign (X3DSoundContext .prototype,
    },
    startAudioElement (audioElement, functionName = "play")
    {
-      audioElement ?.[functionName] () .catch (() =>
-      {
-         const id = `X3DSoundContext-${X3DObject .getId (audioElement)}`;
+      if (!audioElement)
+         return;
 
+      const id = `X3DSoundContext-${X3DObject .getId (audioElement)}`;
+
+      const disconnect = () => this .getCanvas () .off (`.${id}`);
+
+      const connect = () =>
+      {
          const events = [
             "blur",
             "click",
@@ -101,13 +106,20 @@ Object .assign (X3DSoundContext .prototype,
          ]
          .map (event => `${event}.${id}`);
 
-         this .getCanvas () .on (events .join (" "), event =>
+         this .getCanvas () .on (events .join (" "), () =>
          {
             audioElement [functionName] ()
-               .then (() => this .getElement () .off (`.${id}`))
+               .then (disconnect)
                .catch (Function .prototype);
          });
-      });
+      };
+
+      audioElement [functionName] ()
+         .then (disconnect)
+         .catch (connect);
+
+      if (functionName === "resume")
+         connect ();
    },
 });
 
