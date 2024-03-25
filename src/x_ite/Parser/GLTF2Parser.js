@@ -3247,11 +3247,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          td     = times [index1] - times [index0],
          t1     = (time - times [index0]) / td,
          t2     = t1 * t1,
-         t3     = t2 * t1,
-         v0     = values [(index0 + 1) * length + i],
-         b0     = values [(index0 + 2) * length + i],
-         v1     = values [(index1 + 1) * length + i],
-         a1     = values [(index1 + 0) * length + i];
+         t3     = t2 * t1;
+
+      let
+         v0 = values [(index0 + 1) * length + i],
+         b0 = values [(index0 + 2) * length + i],
+         v1 = values [(index1 + 1) * length + i],
+         a1 = values [(index1 + 0) * length + i];
 
       v0 *= 2 * t3 - 3 * t2 + 1;
       b0 *= td * (t3 - 2 * t2 + t1);
