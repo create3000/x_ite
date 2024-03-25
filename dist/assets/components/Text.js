@@ -1,7 +1,7 @@
 /* X_ITE v9.4.1 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 670:
+/***/ 657:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14993,22 +14993,22 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
 var
    bbox        = new (Box2_default()) (),
    lineBBox    = new (Box2_default()) (),
-   min         = new (Vector2_default()) (0, 0),
-   max         = new (Vector2_default()) (0, 0),
-   glyphMin    = new (Vector2_default()) (0, 0),
-   glyphMax    = new (Vector2_default()) (0, 0),
-   min3        = new (Vector3_default()) (0, 0, 0),
-   max3        = new (Vector3_default()) (0, 0, 0),
-   size        = new (Vector2_default()) (0, 0),
-   center      = new (Vector2_default()) (0, 0),
-   size1_2     = new (Vector2_default()) (0, 0),
-   translation = new (Vector2_default()) (0, 0),
-   lineBound   = new (Vector2_default()) (0, 0),
-   origin      = new (Vector3_default()) (0, 0, 0),
-   vector      = new (Vector2_default()) (0, 0),
+   min         = new (Vector2_default()) (),
+   max         = new (Vector2_default()) (),
+   glyphMin    = new (Vector2_default()) (),
+   glyphMax    = new (Vector2_default()) (),
+   min3        = new (Vector3_default()) (),
+   max3        = new (Vector3_default()) (),
+   size        = new (Vector2_default()) (),
+   center      = new (Vector2_default()) (),
+   size1_2     = new (Vector2_default()) (),
+   translation = new (Vector2_default()) (),
+   lineBound   = new (Vector2_default()) (),
+   origin      = new (Vector3_default()) (),
+   vector      = new (Vector2_default()) (),
    box2        = new (Box2_default()) (),
-   zero2       = new (Vector2_default()) (0, 0),
-   zero3       = new (Vector3_default()) (0, 0, 0);
+   zero2       = new (Vector2_default()) (),
+   zero3       = new (Vector3_default()) ();
 
 function X3DTextGeometry (text, fontStyle)
 {
@@ -15016,10 +15016,10 @@ function X3DTextGeometry (text, fontStyle)
    this .text           = text;
    this .fontStyle      = fontStyle;
    this .glyphs         = [ ];
-   this .minorAlignment = new (Vector2_default()) (0, 0);
+   this .minorAlignment = new (Vector2_default()) ();
    this .translations   = [ ];
    this .charSpacings   = [ ];
-   this .bearing        = new (Vector2_default()) (0, 0);
+   this .bearing        = new (Vector2_default()) ();
    this .yPad           = [ ];
    this .bbox           = new (Box3_default()) ();
 }
@@ -15108,7 +15108,7 @@ Object .assign (X3DTextGeometry .prototype,
       // Resize array in grow only fashion.
 
       for (var i = array .length; i < size; ++ i)
-         array .push (new (Vector2_default()) (0, 0));
+         array .push (new (Vector2_default()) ());
 
       array .length = size;
    },
@@ -15639,8 +15639,8 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
    build: (() =>
    {
       const
-         min = new (Vector3_default()) (0, 0, 0),
-         max = new (Vector3_default()) (0, 0, 0);
+         min = new (Vector3_default()) (),
+         max = new (Vector3_default()) ();
 
       return function ()
       {
@@ -16049,7 +16049,7 @@ Namespace_default().add ("FontStyle", "x_ite/Components/Text/FontStyle", FontSty
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(823);
-/* provided dependency */ var opentype = __webpack_require__(670);
+/* provided dependency */ var opentype = __webpack_require__(657);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

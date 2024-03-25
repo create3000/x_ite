@@ -1,9 +1,9 @@
 /* X_ITE v9.4.1 */var __webpack_modules__ = ({
 
-/***/ 115:
+/***/ 982:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(919);
+/* provided dependency */ var jQuery = __webpack_require__(654);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -199,7 +199,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 591:
+/***/ 988:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -213,7 +213,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(919)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(654)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -424,7 +424,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 919:
+/***/ 654:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11148,7 +11148,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 460:
+/***/ 247:
 /***/ ((module) => {
 
 /**
@@ -15927,7 +15927,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 431:
+/***/ 574:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19172,7 +19172,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 968:
+/***/ 921:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -23286,7 +23286,7 @@ const
    _g = Symbol .for ("X_ITE.Color3.g"),
    _b = Symbol .for ("X_ITE.Color3.b");
 
-function Color3 (r, g, b)
+function Color3 (r = 0, g = 0, b = 0)
 {
    this [_r] = clamp (r, 0, 1);
    this [_g] = clamp (g, 0, 1);
@@ -23435,8 +23435,8 @@ Object .defineProperties (Color3 .prototype,
 
 Object .assign (Color3,
 {
-   Black: new Color3 (0, 0, 0),
-   White: new Color3 (1, 1, 1),
+   Black: Object .freeze (new Color3 (0, 0, 0)),
+   White: Object .freeze (new Color3 (1, 1, 1)),
    HSV (h, s, v)
    {
       const color = Object .create (this .prototype);
@@ -23548,7 +23548,7 @@ function SFColor (r, g, b)
    switch (arguments .length)
    {
       case 0:
-         Base_X3DField .call (this, new Numbers_Color3 (0, 0, 0));
+         Base_X3DField .call (this, new Numbers_Color3 ());
          break;
 
       case 1:
@@ -23787,7 +23787,7 @@ const
    Color4_b = Symbol .for ("X_ITE.Color3.b"),
    _a = Symbol ();
 
-function Color4 (r, g, b, a)
+function Color4 (r = 0, g = 0, b = 0, a = 0)
 {
    this [Color4_r] = Color4_clamp (r, 0, 1);
    this [Color4_g] = Color4_clamp (g, 0, 1);
@@ -23896,9 +23896,9 @@ Object .defineProperties (Color4 .prototype,
 
 Object .assign (Color4,
 {
-   Transparent: new Color4 (0, 0, 0, 0),
-   Black: new Color4 (0, 0, 0, 1),
-   White: new Color4 (1, 1, 1, 1),
+   Transparent: Object .freeze (new Color4 (0, 0, 0, 0)),
+   Black: Object .freeze (new Color4 (0, 0, 0, 1)),
+   White: Object .freeze (new Color4 (1, 1, 1, 1)),
    HSVA (h, s, v, a)
    {
       const color = Object .create (this .prototype);
@@ -23978,7 +23978,7 @@ function SFColorRGBA (r, g, b, a)
    switch (arguments .length)
    {
       case 0:
-         Base_X3DField .call (this, new Numbers_Color4 (0, 0, 0, 0));
+         Base_X3DField .call (this, new Numbers_Color4 ());
          break;
 
       case 1:
@@ -24738,7 +24738,7 @@ x_ite_Namespace .add ("SFMatrixPrototypeTemplate", "x_ite/Fields/SFMatrixPrototy
  *
  ******************************************************************************/
 
-function Vector2 (x, y)
+function Vector2 (x = 0, y = 0)
 {
    this .x = x;
    this .y = y;
@@ -24922,10 +24922,10 @@ Object .defineProperties (Vector2 .prototype,
 
 Object .assign (Vector2,
 {
-   Zero: new Vector2 (0, 0),
-   One: new Vector2 (1, 1),
-   xAxis: new Vector2 (1, 0),
-   yAxis: new Vector2 (0, 1),
+   Zero: Object .freeze (new Vector2 (0, 0)),
+   One: Object .freeze (new Vector2 (1, 1)),
+   xAxis: Object .freeze (new Vector2 (1, 0)),
+   yAxis: Object .freeze (new Vector2 (0, 1)),
 });
 
 const Vector2_default_ = Vector2;
@@ -24983,7 +24983,7 @@ x_ite_Namespace .add ("Vector2", "standard/Math/Numbers/Vector2", Vector2_defaul
 
 
 
-function Vector3 (x, y, z)
+function Vector3 (x = 0, y = 0, z = 0)
 {
    this .x = x;
    this .y = y;
@@ -25218,11 +25218,11 @@ Object .defineProperties (Vector3 .prototype,
 
 Object .assign (Vector3,
 {
-   Zero: new Vector3 (0, 0, 0),
-   One: new Vector3 (1, 1, 1),
-   xAxis: new Vector3 (1, 0, 0),
-   yAxis: new Vector3 (0, 1, 0),
-   zAxis: new Vector3 (0, 0, 1),
+   Zero: Object .freeze (new Vector3 (0, 0, 0)),
+   One: Object .freeze (new Vector3 (1, 1, 1)),
+   xAxis: Object .freeze (new Vector3 (1, 0, 0)),
+   yAxis: Object .freeze (new Vector3 (0, 1, 0)),
+   zAxis: Object .freeze (new Vector3 (0, 0, 1)),
 });
 
 const Vector3_default_ = Vector3;
@@ -25502,7 +25502,7 @@ Object .defineProperties (Matrix2 .prototype,
 
 Object .assign (Matrix2,
 {
-   Identity: new Matrix2 (),
+   Identity: Object .freeze (new Matrix2 ()),
 });
 
 const Matrix2_default_ = Matrix2;
@@ -26358,7 +26358,7 @@ Object .defineProperties (Matrix3 .prototype,
 
 Object .assign (Matrix3,
 {
-   Identity: new Matrix3 (),
+   Identity: Object .freeze (new Matrix3 ()),
    Rotation (rotation)
    {
       const
@@ -26591,7 +26591,7 @@ x_ite_Namespace .add ("SFMatrix3", "x_ite/Fields/SFMatrix3", SFMatrix3_default_)
  *
  ******************************************************************************/
 
-function Vector4 (x, y, z, w)
+function Vector4 (x = 0, y = 0, z = 0, w = 0)
 {
    this .x = x;
    this .y = y;
@@ -26842,12 +26842,12 @@ Object .defineProperties (Vector4 .prototype,
 
 Object .assign (Vector4,
 {
-   Zero: new Vector4 (0, 0, 0, 0),
-   One: new Vector4 (1, 1, 1, 1),
-   xAxis: new Vector4 (1, 0, 0, 0),
-   yAxis: new Vector4 (0, 1, 0, 0),
-   zAxis: new Vector4 (0, 0, 1, 0),
-   wAxis: new Vector4 (0, 0, 0, 1),
+   Zero: Object .freeze (new Vector4 (0, 0, 0, 0)),
+   One: Object .freeze (new Vector4 (1, 1, 1, 1)),
+   xAxis: Object .freeze (new Vector4 (1, 0, 0, 0)),
+   yAxis: Object .freeze (new Vector4 (0, 1, 0, 0)),
+   zAxis: Object .freeze (new Vector4 (0, 0, 1, 0)),
+   wAxis: Object .freeze (new Vector4 (0, 0, 0, 1)),
 });
 
 const Vector4_default_ = Vector4;
@@ -27478,7 +27478,7 @@ Object .defineProperties (Quaternion .prototype,
 
 Object .assign (Quaternion,
 {
-   Identity: new Quaternion (0, 0, 0, 1),
+   Identity: Object .freeze (new Quaternion (0, 0, 0, 1)),
    spline: (() =>
    {
       const
@@ -28019,7 +28019,7 @@ Object .defineProperties (Rotation4 .prototype,
 
 Object .assign (Rotation4,
 {
-   Identity: new Rotation4 (),
+   Identity: Object .freeze (new Rotation4 ()),
    fromQuaternion (quaternion)
    {
       return new Rotation4 () .setQuaternion (quaternion);
@@ -28810,7 +28810,7 @@ Object .defineProperties (Matrix4_Matrix4 .prototype,
 
 Object .assign (Matrix4_Matrix4,
 {
-   Identity: new Matrix4_Matrix4 (),
+   Identity: Object .freeze (new Matrix4_Matrix4 ()),
    Rotation (rotation)
    {
       return Object .create (this .prototype) .setQuaternion (rotation .getQuaternion (q));
@@ -29833,7 +29833,7 @@ function SFVec3Template (TypeName, double)
       switch (arguments .length)
       {
          case 0:
-            Base_X3DField .call (this, new Numbers_Vector3 (0, 0, 0));
+            Base_X3DField .call (this, new Numbers_Vector3 ());
             break;
 
          case 1:
@@ -30510,7 +30510,7 @@ function SFVec2Template (TypeName, double)
       switch (arguments .length)
       {
          case 0:
-            Base_X3DField .call (this, new Numbers_Vector2 (0, 0));
+            Base_X3DField .call (this, new Numbers_Vector2 ());
             break;
 
          case 1:
@@ -30635,7 +30635,7 @@ function SFVec4Template (TypeName, double)
       switch (arguments .length)
       {
          case 0:
-            Base_X3DField .call (this, new Numbers_Vector4 (0, 0, 0, 0));
+            Base_X3DField .call (this, new Numbers_Vector4 ());
             break;
 
          case 1:
@@ -34234,7 +34234,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 x_ite_Namespace .add ("X3DBaseNode", "x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
 /* harmony default export */ const Base_X3DBaseNode = (X3DBaseNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(919);
+/* provided dependency */ var $ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38952,7 +38952,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .add ("X3DProtoDeclaration", "x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(919);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39214,7 +39214,7 @@ const Expressions_default_ = Expressions;
 x_ite_Namespace .add ("Expressions", "x_ite/Parser/Expressions", Expressions_default_);
 /* harmony default export */ const Parser_Expressions = (Expressions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(919);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39369,14 +39369,14 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
    SFImage: new x_ite_Fields .SFImage (),
    SFNode: new x_ite_Fields .SFNode (),
    MFString: new x_ite_Fields .MFString (),
-   Color3: new Numbers_Color3 (0, 0, 0),
-   Color4: new Numbers_Color4 (0, 0, 0, 0),
+   Color3: new Numbers_Color3 (),
+   Color4: new Numbers_Color4 (),
    Matrix3: new Numbers_Matrix3 (),
    Matrix4: new Numbers_Matrix4 (),
    Rotation4: new Numbers_Rotation4 (),
-   Vector2: new Numbers_Vector2 (0, 0),
-   Vector3: new Numbers_Vector3 (0, 0, 0),
-   Vector4: new Numbers_Vector4 (0, 0, 0, 0),
+   Vector2: new Numbers_Vector2 (),
+   Vector3: new Numbers_Vector3 (),
+   Vector4: new Numbers_Vector4 (),
    CONSTANTS: {
       NAN: Number .NaN,
       INFINITY: Number .POSITIVE_INFINITY,
@@ -41900,7 +41900,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .add ("VRMLParser", "x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(919);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43753,7 +43753,7 @@ Object .assign (X3DOptimizer .prototype,
       // Combine single Transform nodes.
 
       const
-         translation      = new Numbers_Vector3 (0, 0, 0),
+         translation      = new Numbers_Vector3 (),
          rotation         = new Numbers_Rotation4 (),
          scale            = new Numbers_Vector3 (1, 1, 1),
          scaleOrientation = new Numbers_Rotation4 (),
@@ -44009,7 +44009,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(919);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44921,7 +44921,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          materialNode   = this .refineMaterial (mode, this .createMaterial (material, mode)),
          name           = this .sanitizeName (material .name);
 
-      const emissiveFactor = new Numbers_Color3 (0, 0, 0);
+      const emissiveFactor = new Numbers_Color3 ();
 
       if (this .vectorValue (material .emissiveFactor, emissiveFactor))
          materialNode ._emissiveColor = emissiveFactor;
@@ -45052,8 +45052,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          materialNode = scene .createNode ("PhysicalMaterial", false);
 
       const
-         baseColorFactor = new Numbers_Color4 (0, 0, 0, 0),
-         baseColor       = new Numbers_Color3 (0, 0, 0);
+         baseColorFactor = new Numbers_Color4 (),
+         baseColor       = new Numbers_Color3 ();
 
       if (this .vectorValue (pbrMetallicRoughness .baseColorFactor, baseColorFactor))
       {
@@ -45081,9 +45081,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          materialNode = scene .createNode ("Material", false);
 
       const
-         diffuseFactor  = new Numbers_Color4 (0, 0, 0, 0),
-         diffuseColor   = new Numbers_Color3 (0, 0, 0),
-         specularFactor = new Numbers_Color3 (0, 0, 0);
+         diffuseFactor  = new Numbers_Color4 (),
+         diffuseColor   = new Numbers_Color3 (),
+         specularFactor = new Numbers_Color3 ();
 
       if (this .vectorValue (pbrSpecularGlossiness .diffuseFactor, diffuseFactor))
       {
@@ -45217,7 +45217,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          mapping              = `TEXCOORD_${this .texCoordIndex + this .textureTransformNodes .length + 1}`;
 
       const
-         translation = new Numbers_Vector2 (0, 0),
+         translation = new Numbers_Vector2 (),
          scale       = new Numbers_Vector2 (1, 1),
          matrix      = new Numbers_Matrix4 ();
 
@@ -45667,7 +45667,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       // Set transformation matrix.
 
       const
-         translation      = new Numbers_Vector3 (0, 0, 0),
+         translation      = new Numbers_Vector3 (),
          rotation         = new Numbers_Rotation4 (),
          scale            = new Numbers_Vector3 (1, 1, 1),
          scaleOrientation = new Numbers_Rotation4 (),
@@ -47201,7 +47201,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    },
    applyMorphTargets: (function ()
    {
-      const value = new Numbers_Vector3 (0, 0, 0);
+      const value = new Numbers_Vector3 ();
 
       return function (array, targets, key, weights, normalized)
       {
@@ -47310,7 +47310,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .add ("GLTF2Parser", "x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(919);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47462,7 +47462,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .add ("GLB2Parser", "x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(919);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48200,7 +48200,7 @@ function MaterialParser (scene, input)
    this .material         = scene .createNode ("Material");
    this .materials        = new Map ();
    this .textures         = new Map ();
-   this .color3           = new Numbers_Color3 (0, 0, 0);
+   this .color3           = new Numbers_Color3 ();
    this .id               = "";
 }
 
@@ -49995,7 +49995,7 @@ x_ite_Namespace .add ("PLYBParser", "x_ite/Parser/PLYBParser", PLYBParser_defaul
  *
  ******************************************************************************/
 
-function Complex (real, imag)
+function Complex (real = 0, imag = 0)
 {
    this .real = real;
    this .imag = imag;
@@ -50817,8 +50817,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .add ("MatrixStack", "standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(919);
-/* provided dependency */ var libtess = __webpack_require__(460);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(654);
+/* provided dependency */ var libtess = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53303,7 +53303,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
    },
    colorValue: (() =>
    {
-      const color = new Numbers_Color4 (0, 0, 0, 0);
+      const color = new Numbers_Color4 ();
 
       return function (c)
       {
@@ -53344,7 +53344,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
       const
          transformNode    = scene .createNode ("Transform"),
          matrix           = Numbers_Matrix4 .Matrix3 (m),
-         translation      = new Numbers_Vector3 (0, 0, 0),
+         translation      = new Numbers_Vector3 (),
          rotation         = new Numbers_Rotation4 (),
          scale            = new Numbers_Vector3 (1, 1, 1),
          scaleOrientation = new Numbers_Rotation4 ();
@@ -53586,7 +53586,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .add ("SVGParser", "x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(919);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53936,7 +53936,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .add ("Plane3", "standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(460);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54783,7 +54783,7 @@ Object .assign (TextureBuffer .prototype,
    {
       const
          invProjectionMatrix = new Numbers_Matrix4 (),
-         point               = new Numbers_Vector3 (0, 0, 0);
+         point               = new Numbers_Vector3 ();
 
       return function (projectionMatrix, viewport)
       {
@@ -56649,7 +56649,7 @@ Object .assign (X3DRenderObject .prototype,
          projectionMatrix            = new Numbers_Matrix4 (),
          cameraSpaceProjectionMatrix = new Numbers_Matrix4 (),
          localOrientation            = new Numbers_Rotation4 (),
-         vector                      = new Numbers_Vector3 (0, 0, 0),
+         vector                      = new Numbers_Vector3 (),
          rotation                    = new Numbers_Rotation4 ();
 
       return function (direction)
@@ -56777,8 +56777,8 @@ Object .assign (X3DRenderObject .prototype,
    addPointingShape: (() =>
    {
       const
-         bboxSize   = new Numbers_Vector3 (0, 0, 0),
-         bboxCenter = new Numbers_Vector3 (0, 0, 0);
+         bboxSize   = new Numbers_Vector3 (),
+         bboxCenter = new Numbers_Vector3 ();
 
       return function (shapeNode)
       {
@@ -56826,8 +56826,8 @@ Object .assign (X3DRenderObject .prototype,
    addCollisionShape: (() =>
    {
       const
-         bboxSize   = new Numbers_Vector3 (0, 0, 0),
-         bboxCenter = new Numbers_Vector3 (0, 0, 0);
+         bboxSize   = new Numbers_Vector3 (),
+         bboxCenter = new Numbers_Vector3 ();
 
       return function (shapeNode)
       {
@@ -56877,8 +56877,8 @@ Object .assign (X3DRenderObject .prototype,
    addShadowShape: (() =>
    {
       const
-         bboxSize   = new Numbers_Vector3 (0, 0, 0),
-         bboxCenter = new Numbers_Vector3 (0, 0, 0);
+         bboxSize   = new Numbers_Vector3 (),
+         bboxCenter = new Numbers_Vector3 ();
 
       return function (shapeNode)
       {
@@ -56924,8 +56924,8 @@ Object .assign (X3DRenderObject .prototype,
    addDisplayShape: (() =>
    {
       const
-         bboxSize   = new Numbers_Vector3 (0, 0, 0),
-         bboxCenter = new Numbers_Vector3 (0, 0, 0);
+         bboxSize   = new Numbers_Vector3 (),
+         bboxCenter = new Numbers_Vector3 ();
 
       return function (shapeNode)
       {
@@ -56986,7 +56986,7 @@ Object .assign (X3DRenderObject .prototype,
          renderObject: this,
          transparent: transparent,
          modelViewMatrix: new Float32Array (16),
-         scissor: new Numbers_Vector4 (0, 0, 0, 0),
+         scissor: new Numbers_Vector4 (),
          localObjects: [ ],
          objectsKeys: [ ], // [clip planes, lights]
       };
@@ -57064,7 +57064,7 @@ Object .assign (X3DRenderObject .prototype,
          invModelViewMatrix = new Numbers_Matrix4 (),
          modelViewMatrix    = new Numbers_Matrix4 (),
          collisionBox       = new Geometry_Box3 (Numbers_Vector3 .Zero, Numbers_Vector3 .Zero),
-         collisionSize      = new Numbers_Vector3 (0, 0, 0);
+         collisionSize      = new Numbers_Vector3 ();
 
       return function ()
       {
@@ -57120,7 +57120,7 @@ Object .assign (X3DRenderObject .prototype,
       const
          projectionMatrix            = new Numbers_Matrix4 (),
          cameraSpaceProjectionMatrix = new Numbers_Matrix4 (),
-         translation                 = new Numbers_Vector3 (0, 0, 0),
+         translation                 = new Numbers_Vector3 (),
          rotation                    = new Numbers_Rotation4 ();
 
       return function ()
@@ -59876,8 +59876,8 @@ function X3DGeometryNode (executionContext)
 
    const browser = this .getBrowser ();
 
-   this .min                      = new Numbers_Vector3 (0, 0, 0);
-   this .max                      = new Numbers_Vector3 (0, 0, 0);
+   this .min                      = new Numbers_Vector3 ();
+   this .max                      = new Numbers_Vector3 ();
    this .bbox                     = Geometry_Box3 .Extents (this .min, this .max);
    this .solid                    = true;
    this .primitiveMode            = browser .getContext () .TRIANGLES;
@@ -60175,7 +60175,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    },
    getTexCoordParams: (() =>
    {
-      const texCoordParams = { min: new Numbers_Vector3 (0, 0, 0), Ssize: 0, Sindex: 0, Tindex: 0 };
+      const texCoordParams = { min: new Numbers_Vector3 (), Ssize: 0, Sindex: 0, Tindex: 0 };
 
       return function ()
       {
@@ -60240,7 +60240,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
          {
             const
                P = normals [p],
-               N = new Numbers_Vector3 (0, 0, 0);
+               N = new Numbers_Vector3 ();
 
             for (const q of vertex)
             {
@@ -60273,10 +60273,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
       const
          modelViewMatrix = new Numbers_Matrix4 (),
          uvt             = { u: 0, v: 0, t: 0 },
-         v0              = new Numbers_Vector3 (0, 0, 0),
-         v1              = new Numbers_Vector3 (0, 0, 0),
-         v2              = new Numbers_Vector3 (0, 0, 0),
-         clipPoint       = new Numbers_Vector3 (0, 0, 0);
+         v0              = new Numbers_Vector3 (),
+         v1              = new Numbers_Vector3 (),
+         v2              = new Numbers_Vector3 (),
+         clipPoint       = new Numbers_Vector3 ();
 
       return function (hitRay, matrix, clipPlanes, intersections)
       {
@@ -60340,8 +60340,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    getPlanesWithOffset: (() =>
    {
       const
-         min    = new Numbers_Vector3 (0, 0, 0),
-         max    = new Numbers_Vector3 (0, 0, 0),
+         min    = new Numbers_Vector3 (),
+         max    = new Numbers_Vector3 (),
          planes = [ ];
 
       for (let i = 0; i < 5; ++ i)
@@ -60360,7 +60360,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    })(),
    intersectsBBox: (() =>
    {
-      const intersection = new Numbers_Vector3 (0, 0, 0);
+      const intersection = new Numbers_Vector3 ();
 
       return function (hitRay, offsets)
       {
@@ -60437,11 +60437,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    intersectsBox: (() =>
    {
       const
-         v0        = new Numbers_Vector3 (0, 0, 0),
-         v1        = new Numbers_Vector3 (0, 0, 0),
-         v2        = new Numbers_Vector3 (0, 0, 0),
+         v0        = new Numbers_Vector3 (),
+         v1        = new Numbers_Vector3 (),
+         v2        = new Numbers_Vector3 (),
          invMatrix = new Numbers_Matrix4 (),
-         clipPoint = new Numbers_Vector3 (0, 0, 0);
+         clipPoint = new Numbers_Vector3 ();
 
       return function (box, clipPlanes, modelViewMatrix)
       {
@@ -60495,10 +60495,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    set_shading__: (() =>
    {
       const
-         v0     = new Numbers_Vector3 (0, 0, 0),
-         v1     = new Numbers_Vector3 (0, 0, 0),
-         v2     = new Numbers_Vector3 (0, 0, 0),
-         normal = new Numbers_Vector3 (0, 0, 0);
+         v0     = new Numbers_Vector3 (),
+         v1     = new Numbers_Vector3 (),
+         v2     = new Numbers_Vector3 (),
+         normal = new Numbers_Vector3 ();
 
       return function (shading)
       {
@@ -60563,7 +60563,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    },
    rebuild: (() =>
    {
-      const point = new Numbers_Vector3 (0, 0, 0);
+      const point = new Numbers_Vector3 ();
 
       return function ()
       {
@@ -61422,12 +61422,12 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, Core_X3DBi
       const U_DIMENSION = 20;
 
       const
-         z1 = new Numbers_Complex (0, 0),
-         z2 = new Numbers_Complex (0, 0),
-         y1 = new Numbers_Complex (0, 0),
-         y2 = new Numbers_Complex (0, 0),
-         y3 = new Numbers_Complex (0, 0),
-         y4 = new Numbers_Complex (0, 0);
+         z1 = new Numbers_Complex (),
+         z2 = new Numbers_Complex (),
+         y1 = new Numbers_Complex (),
+         y2 = new Numbers_Complex (),
+         y3 = new Numbers_Complex (),
+         y4 = new Numbers_Complex ();
 
       return function (radius, vAngle, angle, color, bottom)
       {
@@ -61649,7 +61649,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, Core_X3DBi
       const
          modelViewMatrix = new Numbers_Matrix4 (),
          rotation        = new Numbers_Rotation4 (),
-         scale           = new Numbers_Vector3 (0, 0, 0);
+         scale           = new Numbers_Vector3 ();
 
       return function (gl, renderObject, viewport)
       {
@@ -62429,7 +62429,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .add ("X3DTexture2DNode", "x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(919);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -62881,7 +62881,7 @@ Object .defineProperties (Background,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "topUrl",       new x_ite_Fields .MFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "bottomUrl",    new x_ite_Fields .MFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "skyAngle",     new x_ite_Fields .MFFloat ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "skyColor",     new x_ite_Fields .MFColor (new Numbers_Color3 (0, 0, 0))),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "skyColor",     new x_ite_Fields .MFColor (new Numbers_Color3 ())),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "groundAngle",  new x_ite_Fields .MFFloat ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "groundColor",  new x_ite_Fields .MFColor ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "transparency", new x_ite_Fields .SFFloat ()),
@@ -64383,7 +64383,7 @@ Object .assign (Object .setPrototypeOf (PositionInterpolator .prototype, Interpo
    },
    interpolate: (() =>
    {
-      const keyValue = new Numbers_Vector3 (0, 0, 0);
+      const keyValue = new Numbers_Vector3 ();
 
       return function (index0, index1, weight)
       {
@@ -64776,7 +64776,7 @@ function X3DViewpointNode (executionContext)
    this .descriptions         = [ ];
    this .userPosition         = new Numbers_Vector3 (0, 1, 0);
    this .userOrientation      = new Numbers_Rotation4 ();
-   this .userCenterOfRotation = new Numbers_Vector3 (0, 0, 0);
+   this .userCenterOfRotation = new Numbers_Vector3 ();
    this .modelMatrix          = new Numbers_Matrix4 ();
    this .cameraSpaceMatrix    = new Numbers_Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
    this .viewMatrix           = new Numbers_Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
@@ -65098,9 +65098,9 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
    getRelativeTransformation: (() =>
    {
       const
-         position         = new Numbers_Vector3 (0, 0, 0),
+         position         = new Numbers_Vector3 (),
          orientation      = new Numbers_Rotation4 (),
-         scale            = new Numbers_Vector3 (0, 0, 0),
+         scale            = new Numbers_Vector3 (),
          scaleOrientation = new Numbers_Rotation4 ();
 
       return function (fromViewpointNode)
@@ -65123,9 +65123,9 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
    getLookAtRotation: (() =>
    {
       const
-         x = new Numbers_Vector3 (0, 0, 0),
-         y = new Numbers_Vector3 (0, 0, 0),
-         z = new Numbers_Vector3 (0, 0, 0),
+         x = new Numbers_Vector3 (),
+         y = new Numbers_Vector3 (),
+         z = new Numbers_Vector3 (),
          m = new Numbers_Matrix3 (),
          r = new Numbers_Rotation4 ();
 
@@ -65437,7 +65437,7 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, Navigation_X3DView
    },
    getViewportSize: (() =>
    {
-      const viewportSize = new Numbers_Vector2 (0, 0);
+      const viewportSize = new Numbers_Vector2 ();
 
       return function (viewport, nearValue)
       {
@@ -66024,7 +66024,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .add ("X3DWorld", "x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(919);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66947,7 +66947,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 x_ite_Namespace .add ("ProtoDeclarationArray", "x_ite/Prototype/ProtoDeclarationArray", ProtoDeclarationArray_default_);
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (ProtoDeclarationArray_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(919);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70107,7 +70107,7 @@ Object .defineProperties (TextureBackground,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",      new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOnly,   "set_bind",      new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "skyAngle",      new x_ite_Fields .MFFloat ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "skyColor",      new x_ite_Fields .MFColor (new Numbers_Color3 (0, 0, 0))),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "skyColor",      new x_ite_Fields .MFColor (new Numbers_Color3 ())),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "groundAngle",   new x_ite_Fields .MFFloat ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "groundColor",   new x_ite_Fields .MFColor ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "transparency",  new x_ite_Fields .SFFloat ()),
@@ -70424,8 +70424,8 @@ function ProximitySensor (executionContext)
 
    this .setZeroTest (true);
 
-   this .min           = new Numbers_Vector3 (0, 0, 0);
-   this .max           = new Numbers_Vector3 (0, 0, 0);
+   this .min           = new Numbers_Vector3 ();
+   this .max           = new Numbers_Vector3 ();
    this .layerNode     = null;
    this .modelMatrix   = new Numbers_Matrix4 ();
    this .inside        = false;
@@ -70473,9 +70473,9 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, Environmenta
    update: (() =>
    {
       const
-         position               = new Numbers_Vector3 (0, 0, 0),
+         position               = new Numbers_Vector3 (),
          orientation            = new Numbers_Rotation4 (),
-         centerOfRotation       = new Numbers_Vector3 (0, 0, 0),
+         centerOfRotation       = new Numbers_Vector3 (),
          centerOfRotationMatrix = new Numbers_Matrix4 ();
 
       return function ()
@@ -70820,7 +70820,7 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, Environmenta
    process: (() =>
    {
       const
-         position    = new Numbers_Vector3 (0, 0, 0),
+         position    = new Numbers_Vector3 (),
          orientation = new Numbers_Rotation4 ();
 
       return function ()
@@ -71671,10 +71671,10 @@ x_ite_Namespace .add ("X3DChaserNode", "x_ite/Components/Followers/X3DChaserNode
 
 
 var
-   initialValue       = new Numbers_Vector3 (0, 0, 0),
-   initialDestination = new Numbers_Vector3 (0, 0, 0),
-   deltaOut           = new Numbers_Vector3 (0, 0, 0),
-   vector             = new Numbers_Vector3 (0, 0, 0);
+   initialValue       = new Numbers_Vector3 (),
+   initialDestination = new Numbers_Vector3 (),
+   deltaOut           = new Numbers_Vector3 (),
+   vector             = new Numbers_Vector3 ();
 
 function ColorChaser (executionContext)
 {
@@ -71687,7 +71687,7 @@ Object .assign (Object .setPrototypeOf (ColorChaser .prototype, Followers_X3DCha
 {
    getVector ()
    {
-      return new Numbers_Vector3 (0, 0, 0);
+      return new Numbers_Vector3 ();
    },
    getValue ()
    {
@@ -72004,10 +72004,10 @@ x_ite_Namespace .add ("X3DDamperNode", "x_ite/Components/Followers/X3DDamperNode
 
 
 var
-   ColorDamper_a                  = new Numbers_Vector3 (0, 0, 0),
-   ColorDamper_initialValue       = new Numbers_Vector3 (0, 0, 0),
-   ColorDamper_initialDestination = new Numbers_Vector3 (0, 0, 0),
-   ColorDamper_vector             = new Numbers_Vector3 (0, 0, 0);
+   ColorDamper_a                  = new Numbers_Vector3 (),
+   ColorDamper_initialValue       = new Numbers_Vector3 (),
+   ColorDamper_initialDestination = new Numbers_Vector3 (),
+   ColorDamper_vector             = new Numbers_Vector3 ();
 
 function ColorDamper (executionContext)
 {
@@ -72020,7 +72020,7 @@ Object .assign (Object .setPrototypeOf (ColorDamper .prototype, Followers_X3DDam
 {
    getVector ()
    {
-      return new Numbers_Vector3 (0, 0, 0);
+      return new Numbers_Vector3 ();
    },
    getValue ()
    {
@@ -72432,7 +72432,7 @@ Object .assign (Object .setPrototypeOf (CoordinateChaser .prototype, Followers_X
 {
    getVector ()
    {
-      return new Numbers_Vector3 (0, 0, 0);
+      return new Numbers_Vector3 ();
    },
 });
 
@@ -72464,8 +72464,8 @@ Object .defineProperties (CoordinateChaser,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "metadata",           new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOnly,      "set_value",          new x_ite_Fields .MFVec3f ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOnly,      "set_destination",    new x_ite_Fields .MFVec3f ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "initialValue",       new x_ite_Fields .MFVec3f (new Numbers_Vector3 (0, 0, 0))),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "initialDestination", new x_ite_Fields .MFVec3f (new Numbers_Vector3 (0, 0, 0))),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "initialValue",       new x_ite_Fields .MFVec3f (new Numbers_Vector3 ())),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "initialDestination", new x_ite_Fields .MFVec3f (new Numbers_Vector3 ())),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "duration",           new x_ite_Fields .SFTime (1)),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "isActive",           new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "value_changed",      new x_ite_Fields .MFVec3f ()),
@@ -72550,7 +72550,7 @@ Object .assign (Object .setPrototypeOf (CoordinateDamper .prototype, Followers_X
 {
    getVector ()
    {
-      return new Numbers_Vector3 (0, 0, 0);
+      return new Numbers_Vector3 ();
    },
 });
 
@@ -72582,8 +72582,8 @@ Object .defineProperties (CoordinateDamper,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "metadata",           new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOnly,      "set_value",          new x_ite_Fields .MFVec3f ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOnly,      "set_destination",    new x_ite_Fields .MFVec3f ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "initialValue",       new x_ite_Fields .MFVec3f (new Numbers_Vector3 (0, 0, 0))),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "initialDestination", new x_ite_Fields .MFVec3f (new Numbers_Vector3 (0, 0, 0))),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "initialValue",       new x_ite_Fields .MFVec3f (new Numbers_Vector3 ())),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "initialDestination", new x_ite_Fields .MFVec3f (new Numbers_Vector3 ())),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "order",              new x_ite_Fields .SFInt32 (3)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tau",                new x_ite_Fields .SFTime (0.3)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tolerance",          new x_ite_Fields .SFFloat (-1)),
@@ -72939,7 +72939,7 @@ Object .assign (Object .setPrototypeOf (PositionChaser .prototype, Followers_X3D
 {
    getVector ()
    {
-      return new Numbers_Vector3 (0, 0, 0);
+      return new Numbers_Vector3 ();
    },
 });
 
@@ -73052,7 +73052,7 @@ Object .assign (Object .setPrototypeOf (PositionChaser2D .prototype, Followers_X
 {
    getVector ()
    {
-      return new Numbers_Vector2 (0, 0);
+      return new Numbers_Vector2 ();
    },
 });
 
@@ -73165,7 +73165,7 @@ Object .assign (Object .setPrototypeOf (PositionDamper .prototype, Followers_X3D
 {
    getVector ()
    {
-      return new Numbers_Vector3 (0, 0, 0);
+      return new Numbers_Vector3 ();
    },
 });
 
@@ -73280,7 +73280,7 @@ Object .assign (Object .setPrototypeOf (PositionDamper2D .prototype, Followers_X
 {
    getVector ()
    {
-      return new Numbers_Vector2 (0, 0);
+      return new Numbers_Vector2 ();
    },
 });
 
@@ -73672,7 +73672,7 @@ Object .assign (Object .setPrototypeOf (TexCoordChaser2D .prototype, Followers_X
 {
    getVector ()
    {
-      return new Numbers_Vector2 (0, 0);
+      return new Numbers_Vector2 ();
    },
 });
 
@@ -73790,7 +73790,7 @@ Object .assign (Object .setPrototypeOf (TexCoordDamper2D .prototype, Followers_X
 {
    getVector ()
    {
-      return new Numbers_Vector2 (0, 0, 0);
+      return new Numbers_Vector2 ();
    },
 });
 
@@ -74184,7 +74184,7 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, Rendering_X3DGeometryNo
             geometry        = options .getSideGeometry (),
             defaultNormals  = geometry .getNormals (),
             defaultVertices = geometry .getVertices (),
-            v1              = new Numbers_Vector3 (0, 0, 0),
+            v1              = new Numbers_Vector3 (),
             rz              = new Numbers_Rotation4 (1, 0, 0, -Math .atan (bottomRadius / height)),
             rx              = new Numbers_Rotation4 ();
 
@@ -74748,7 +74748,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, Rendering_X3DG
          normalIndex .get (c1) .push (normals .length + 1);
          normalIndex .get (c2) .push (normals .length + 2);
 
-         const normal = Geometry_Triangle3 .normal (points [c0], points [c1], points [c2], new Numbers_Vector3 (0, 0, 0));
+         const normal = Geometry_Triangle3 .normal (points [c0], points [c1], points [c2], new Numbers_Vector3 ());
 
          if (cw)
             normal .negate ();
@@ -75119,16 +75119,16 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
       const rotations = [ ];
 
       const
-         SCPxAxis = new Numbers_Vector3 (0, 0, 0),
-         SCPyAxis = new Numbers_Vector3 (0, 0, 0),
-         SCPzAxis = new Numbers_Vector3 (0, 0, 0);
+         SCPxAxis = new Numbers_Vector3 (),
+         SCPyAxis = new Numbers_Vector3 (),
+         SCPzAxis = new Numbers_Vector3 ();
 
          const
-         SCPyAxisPrevious = new Numbers_Vector3 (0, 0, 0),
-         SCPzAxisPrevious = new Numbers_Vector3 (0, 0, 0);
+         SCPyAxisPrevious = new Numbers_Vector3 (),
+         SCPzAxisPrevious = new Numbers_Vector3 ();
 
          const
-         vector3  = new Numbers_Vector3 (0, 0, 0),
+         vector3  = new Numbers_Vector3 (),
          rotation = new Numbers_Rotation4 ();
 
       return function ()
@@ -75309,9 +75309,9 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
    build: (() =>
    {
       const
-         min     = new Numbers_Vector2 (0, 0, 0),
-         max     = new Numbers_Vector2 (0, 0, 0),
-         vector2 = new Numbers_Vector2 (0, 0, 0);
+         min     = new Numbers_Vector2 (),
+         max     = new Numbers_Vector2 (),
+         vector2 = new Numbers_Vector2 ();
 
       return function ()
       {
@@ -75413,14 +75413,14 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
                if (cw)
                {
                   var
-                     normal1 = Geometry_Triangle3 .normal (p3, p2, p1, new Numbers_Vector3 (0, 0, 0)),
-                     normal2 = Geometry_Triangle3 .normal (p4, p3, p1, new Numbers_Vector3 (0, 0, 0));
+                     normal1 = Geometry_Triangle3 .normal (p3, p2, p1, new Numbers_Vector3 ()),
+                     normal2 = Geometry_Triangle3 .normal (p4, p3, p1, new Numbers_Vector3 ());
                }
                else
                {
                   var
-                     normal1 = Geometry_Triangle3 .normal (p1, p2, p3, new Numbers_Vector3 (0, 0, 0)),
-                     normal2 = Geometry_Triangle3 .normal (p1, p3, p4, new Numbers_Vector3 (0, 0, 0));
+                     normal1 = Geometry_Triangle3 .normal (p1, p2, p3, new Numbers_Vector3 ()),
+                     normal2 = Geometry_Triangle3 .normal (p1, p3, p4, new Numbers_Vector3 ());
                }
 
                // Merge points on the left and right side if spine is coincident for better normal generation.
@@ -75569,7 +75569,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
                   const normal = Geometry_Triangle3 .normal (points [triangles [0]],
                                                     points [triangles [1]],
                                                     points [triangles [2]],
-                                                    new Numbers_Vector3 (0, 0, 0));
+                                                    new Numbers_Vector3 ());
 
                   if (cw)
                      normal .negate ();
@@ -75609,7 +75609,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
                   const normal = Geometry_Triangle3 .normal (points [triangles [0]],
                                                     points [triangles [1]],
                                                     points [triangles [2]],
-                                                    new Numbers_Vector3 (0, 0, 0));
+                                                    new Numbers_Vector3 ());
 
                   if (cw)
                      normal .negate ();
@@ -75699,7 +75699,7 @@ Object .defineProperties (Extrusion,
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "crossSection",     new x_ite_Fields .MFVec2f (new Numbers_Vector2 (1, 1), new Numbers_Vector2 (1, -1), new Numbers_Vector2 (-1, -1), new Numbers_Vector2 (-1, 1), new Numbers_Vector2 (1, 1))),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "orientation",      new x_ite_Fields .MFRotation (new Numbers_Rotation4 ())),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "scale",            new x_ite_Fields .MFVec2f (new Numbers_Vector2 (1, 1))),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "spine",            new x_ite_Fields .MFVec3f (new Numbers_Vector3 (0, 0, 0), new Numbers_Vector3 (0, 1, 0))),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "spine",            new x_ite_Fields .MFVec3f (new Numbers_Vector3 (), new Numbers_Vector3 (0, 1, 0))),
       ]),
       enumerable: true,
    },
@@ -76029,15 +76029,15 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, Rend
    getPolygonNormal: (() =>
    {
       let
-         current = new Numbers_Vector3 (0, 0, 0),
-         next    = new Numbers_Vector3 (0, 0, 0);
+         current = new Numbers_Vector3 (),
+         next    = new Numbers_Vector3 ();
 
       return function (index, verticesPerPolygon, coord)
       {
          // Determine polygon normal.
          // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-         const normal = new Numbers_Vector3 (0, 0, 0);
+         const normal = new Numbers_Vector3 ();
 
          coord .get1Point (this .getPolygonIndex (index), next);
 
@@ -76363,7 +76363,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, Rendering_X3D
             length     = vertices .length;
 
          for (let i = polygon .length; i < length; ++ i)
-            polygon .push (new Numbers_Vector3 (0, 0, 0));
+            polygon .push (new Numbers_Vector3 ());
 
          for (let i = 0; i < length; ++ i)
          {
@@ -76460,15 +76460,15 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, Rendering_X3D
    getPolygonNormal: (() =>
    {
       let
-         current = new Numbers_Vector3 (0, 0, 0),
-         next    = new Numbers_Vector3 (0, 0, 0);
+         current = new Numbers_Vector3 (),
+         next    = new Numbers_Vector3 ();
 
       return function (vertices, coordIndex, coord)
       {
          // Determine polygon normal.
          // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-         const normal = new Numbers_Vector3 (0, 0, 0);
+         const normal = new Numbers_Vector3 ();
 
          coord .get1Point (coordIndex [vertices [0]], next);
 
@@ -78205,8 +78205,8 @@ Object .assign (Object .setPrototypeOf (NormalInterpolator .prototype, Interpola
    interpolate: (() =>
    {
       const
-         keyValue0 = new Numbers_Vector3 (0, 0, 0),
-         keyValue1 = new Numbers_Vector3 (0, 0, 0);
+         keyValue0 = new Numbers_Vector3 (),
+         keyValue1 = new Numbers_Vector3 ();
 
       return function (index0, index1, weight)
       {
@@ -78374,7 +78374,7 @@ Object .assign (Object .setPrototypeOf (PositionInterpolator2D .prototype, Inter
    },
    interpolate:  (() =>
    {
-      const keyValue = new Numbers_Vector2 (0, 0);
+      const keyValue = new Numbers_Vector2 ();
 
       return function (index0, index1, weight)
       {
@@ -78587,7 +78587,7 @@ Object .assign (CatmullRomSplineInterpolator .prototype,
    })(),
    interpolate: (() =>
    {
-      const S = new Numbers_Vector4 (0, 0, 0, 0);
+      const S = new Numbers_Vector4 ();
 
       const H = new Numbers_Matrix4 ( 2, -2,  1,  1,
                              -3,  3, -2, -1,
@@ -79884,7 +79884,7 @@ function Viewport (executionContext)
 
    this .addType (Base_X3DConstants .Viewport);
 
-   this .rectangle = new Numbers_Vector4 (0, 0, 0, 0);
+   this .rectangle = new Numbers_Vector4 ();
 }
 
 Object .assign (Object .setPrototypeOf (Viewport .prototype, Layering_X3DViewportNode .prototype),
@@ -80382,11 +80382,11 @@ const DirectionalLights = Utility_ObjectCache (DirectionalLightContainer);
 
 function DirectionalLightContainer ()
 {
-   this .direction                     = new Numbers_Vector3 (0, 0, 0);
+   this .direction                     = new Numbers_Vector3 ();
    this .shadowBuffer                  = null;
    this .bbox                          = new Geometry_Box3 ();
    this .viewVolume                    = new Geometry_ViewVolume ();
-   this .viewport                      = new Numbers_Vector4 (0, 0, 0, 0);
+   this .viewport                      = new Numbers_Vector4 ();
    this .projectionMatrix              = new Numbers_Matrix4 ();
    this .modelViewMatrix               = new Utility_MatrixStack (Numbers_Matrix4);
    this .modelMatrix                   = new Numbers_Matrix4 ();
@@ -80954,11 +80954,11 @@ const PointLights = Utility_ObjectCache (PointLightContainer);
 
 function PointLightContainer ()
 {
-   this .location                      = new Numbers_Vector3 (0, 0, 0);
+   this .location                      = new Numbers_Vector3 ();
    this .matrixArray                   = new Float32Array (9);
    this .shadowBuffer                  = null;
    this .viewVolume                    = new Geometry_ViewVolume ();
-   this .viewport                      = new Numbers_Vector4 (0, 0, 0, 0);
+   this .viewport                      = new Numbers_Vector4 ();
    this .projectionMatrix              = new Numbers_Matrix4 ();
    this .modelViewMatrix               = new Utility_MatrixStack (Numbers_Matrix4);
    this .modelMatrix                   = new Numbers_Matrix4 ();
@@ -81275,14 +81275,14 @@ const SpotLights = Utility_ObjectCache (SpotLightContainer);
 
 function SpotLightContainer ()
 {
-   this .location                      = new Numbers_Vector3 (0, 0, 0);
-   this .direction                     = new Numbers_Vector3 (0, 0, 0);
+   this .location                      = new Numbers_Vector3 ();
+   this .direction                     = new Numbers_Vector3 ();
    this .matrixArray                   = new Float32Array (9);
    this .renderShadow                  = true;
    this .shadowBuffer                  = null;
    this .bbox                          = new Geometry_Box3 ();
    this .viewVolume                    = new Geometry_ViewVolume ();
-   this .viewport                      = new Numbers_Vector4 (0, 0, 0, 0);
+   this .viewport                      = new Numbers_Vector4 ();
    this .projectionMatrix              = new Numbers_Matrix4 ();
    this .modelViewMatrix               = new Utility_MatrixStack (Numbers_Matrix4);
    this .modelMatrix                   = new Numbers_Matrix4 ();
@@ -81291,8 +81291,8 @@ function SpotLightContainer ()
    this .shadowMatrix                  = new Numbers_Matrix4 ();
    this .shadowMatrixArray             = new Float32Array (16);
    this .rotation                      = new Numbers_Rotation4 ();
-   this .lightBBoxMin                  = new Numbers_Vector3 (0, 0, 0);
-   this .lightBBoxMax                  = new Numbers_Vector3 (0, 0, 0);
+   this .lightBBoxMin                  = new Numbers_Vector3 ();
+   this .lightBBoxMax                  = new Numbers_Vector3 ();
    this .textureUnit                   = undefined;
 }
 
@@ -81728,10 +81728,10 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, Grouping_X3DGroupi
    {
       const
          inverseModelViewMatrix = new Numbers_Matrix4 (),
-         viewerYAxis            = new Numbers_Vector3 (0, 0, 0),
-         y                      = new Numbers_Vector3 (0, 0, 0),
-         N1                     = new Numbers_Vector3 (0, 0, 0),
-         N2                     = new Numbers_Vector3 (0, 0, 0),
+         viewerYAxis            = new Numbers_Vector3 (),
+         y                      = new Numbers_Vector3 (),
+         N1                     = new Numbers_Vector3 (),
+         N2                     = new Numbers_Vector3 (),
          rotation               = new Numbers_Rotation4 ();
 
       return function (modelViewMatrix)
@@ -82643,7 +82643,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
    },
    getViewportSize: (() =>
    {
-      const viewportSize = new Numbers_Vector2 (0, 0);
+      const viewportSize = new Numbers_Vector2 ();
 
       return function (viewport, nearValue)
       {
@@ -83102,7 +83102,7 @@ function PointingDeviceSensorContainer (node, modelViewMatrix, projectionMatrix,
    this .node             = null;
    this .modelViewMatrix  = new Numbers_Matrix4 ();
    this .projectionMatrix = new Numbers_Matrix4 ();
-   this .viewport         = new Numbers_Vector4 (0, 0, 0, 0);
+   this .viewport         = new Numbers_Vector4 ();
 
    this .set (node, modelViewMatrix, projectionMatrix, viewport);
 }
@@ -83346,7 +83346,7 @@ Object .assign (Object .setPrototypeOf (X3DTouchSensorNode .prototype, PointingD
    {
       const
          invModelViewMatrix = new Numbers_Matrix4 (),
-         texCoord           = new Numbers_Vector2 (0, 0);
+         texCoord           = new Numbers_Vector2 ();
 
       return function (over, hit, modelViewMatrix, projectionMatrix, viewport)
       {
@@ -84794,21 +84794,21 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
       this .modelViewMatrix    = new Numbers_Matrix4 ();
       this .invModelViewMatrix = new Numbers_Matrix4 ();
 
-      this .cylinder    = new Geometry_Cylinder3 (new Geometry_Line3 (new Numbers_Vector3 (0, 0, 0), new Numbers_Vector3 (0, 0, 0)), 0);
+      this .cylinder    = new Geometry_Cylinder3 (new Geometry_Line3 (new Numbers_Vector3 (), new Numbers_Vector3 ()), 0);
       this .disk        = false;
       this .yPlane      = null;
       this .zPlane      = null;
       this .sxPlane     = null;
       this .szNormal    = null;
       this .behind      = false;
-      this .fromVector  = new Numbers_Vector3 (0, 0, 0);
+      this .fromVector  = new Numbers_Vector3 ();
       this .startOffset = new Numbers_Rotation4 ();
    },
    isBehind (hitRay, hitPoint)
    {
       const
          enter = new Numbers_Vector3 (0, 0 ,0),
-         exit  = new Numbers_Vector3 (0, 0, 0);
+         exit  = new Numbers_Vector3 ();
 
       this .cylinder .intersectsLine (hitRay, enter, exit);
 
@@ -84816,12 +84816,12 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
    },
    getTrackPoint (hitRay, trackPoint)
    {
-      const zPoint = new Numbers_Vector3 (0, 0, 0);
+      const zPoint = new Numbers_Vector3 ();
 
       this .zPlane .intersectsLine (hitRay, zPoint);
 
       const
-         axisPoint = zPoint .copy () .add (this .cylinder .axis .getPerpendicularVectorToPoint (zPoint, new Numbers_Vector3 (0, 0, 0))),
+         axisPoint = zPoint .copy () .add (this .cylinder .axis .getPerpendicularVectorToPoint (zPoint, new Numbers_Vector3 ())),
          distance  = this .sxPlane .getDistanceToPoint (zPoint) / this .cylinder .radius,
          section   = Math .floor ((distance + 1) / 2);
 
@@ -84838,7 +84838,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
    },
    getAngle (rotation)
    {
-      if (rotation .getAxis (new Numbers_Vector3 (0, 0, 0)) .dot (this .cylinder .axis .direction) > 0)
+      if (rotation .getAxis (new Numbers_Vector3 ()) .dot (this .cylinder .axis .direction) > 0)
          return rotation .angle;
       else
          return -rotation .angle;
@@ -84882,8 +84882,8 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
          cameraBack = this .invModelViewMatrix .multDirMatrix (new Numbers_Vector3 (0, 0, 1)) .normalize ();
 
       const
-         axis   = new Geometry_Line3 (new Numbers_Vector3 (0, 0, 0), yAxis),
-         radius = axis .getPerpendicularVectorToPoint (hitPoint, new Numbers_Vector3 (0, 0, 0)) .magnitude ();
+         axis   = new Geometry_Line3 (new Numbers_Vector3 (), yAxis),
+         radius = axis .getPerpendicularVectorToPoint (hitPoint, new Numbers_Vector3 ()) .magnitude ();
 
       this .cylinder = new Geometry_Cylinder3 (axis, radius);
       this .disk     = Math .abs (cameraBack .dot (yAxis)) > Math .cos (this ._diskAngle .getValue ());
@@ -84896,17 +84896,17 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
          billboardToViewer = this .invModelViewMatrix .origin,
          sxNormal          = yAxis .copy () .cross (billboardToViewer) .normalize ();
 
-      this .sxPlane  = new Geometry_Plane3 (new Numbers_Vector3 (0, 0, 0), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
+      this .sxPlane  = new Geometry_Plane3 (new Numbers_Vector3 (), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
       this .szNormal = sxNormal .copy () .cross (yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
 
-      const trackPoint = new Numbers_Vector3 (0, 0, 0);
+      const trackPoint = new Numbers_Vector3 ();
 
       if (this .disk)
          this .yPlane .intersectsLine (hitRay, trackPoint);
       else
          this .getTrackPoint (hitRay, trackPoint);
 
-      this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Numbers_Vector3 (0, 0, 0)) .negate ();
+      this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Numbers_Vector3 ()) .negate ();
       this .startOffset = new Numbers_Rotation4 (yAxis, this ._offset .getValue ());
 
       this ._trackPoint_changed = trackPoint;
@@ -84923,7 +84923,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
 
       const
          hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-         trackPoint = new Numbers_Vector3 (0, 0, 0);
+         trackPoint = new Numbers_Vector3 ();
 
       if (this .disk)
          this .yPlane .intersectsLine (hitRay, trackPoint);
@@ -84933,7 +84933,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
       this ._trackPoint_changed = trackPoint;
 
       const
-         toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Numbers_Vector3 (0, 0, 0)) .negate (),
+         toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Numbers_Vector3 ()) .negate (),
          rotation = new Numbers_Rotation4 (this .fromVector, toVector);
 
       if (this .disk)
@@ -84965,7 +84965,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
             endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Numbers_Vector3 (0, 0, 1))),
             deltaRotation = new Numbers_Rotation4 (this .startVector, endVector),
             axis          = this ._axisRotation .getValue () .multVecRot (new Numbers_Vector3 (0, 1, 0)),
-            sign          = axis .dot (deltaRotation .getAxis (new Numbers_Vector3 (0, 0, 0))) > 0 ? 1 : -1,
+            sign          = axis .dot (deltaRotation .getAxis (new Numbers_Vector3 ())) > 0 ? 1 : -1,
             min           = this ._minAngle .getValue (),
             max           = this ._maxAngle .getValue ();
 
@@ -85262,7 +85262,7 @@ x_ite_Namespace .add ("Line2", "standard/Math/Geometry/Line2", Line2_default_);
 
 const
    screenLine     = new Geometry_Line2 (Numbers_Vector2 .Zero, Numbers_Vector2 .Zero),
-   trackPoint1    = new Numbers_Vector2 (0, 0, 0),
+   trackPoint1    = new Numbers_Vector2 (),
    trackPointLine = new Geometry_Line3 (Numbers_Vector3 .Zero, Numbers_Vector3 .Zero);
 
 function PlaneSensor (executionContext)
@@ -85295,8 +85295,8 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, PointingDeviceSe
       this .planeSensor = true;
       this .plane       = null;
       this .line        = null;
-      this .startOffset = new Numbers_Vector3 (0, 0, 0);
-      this .startPoint  = new Numbers_Vector3 (0, 0, 0);
+      this .startOffset = new Numbers_Vector3 ();
+      this .startPoint  = new Numbers_Vector3 ();
    },
    getLineTrackPoint (pointer, line, trackPoint)
    {
@@ -85373,13 +85373,13 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, PointingDeviceSe
             this .trackStart (this .startPoint);
          }
 
-         // new Plane3 (new Vector3 (0, 0, 0), this .plane .normal) .intersectsLine (hitRay, trackPoint);
+         // new Plane3 (new Vector3 (), this .plane .normal) .intersectsLine (hitRay, trackPoint);
       }
       else
       {
          if (this .getLineTrackPoint (hit .pointer, this .line, this .startPoint))
          {
-            const trackPoint = new Numbers_Vector3 (0, 0, 0);
+            const trackPoint = new Numbers_Vector3 ();
 
             try
             {
@@ -85411,7 +85411,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, PointingDeviceSe
          {
             const
                hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-               endPoint = new Numbers_Vector3 (0, 0, 0);
+               endPoint = new Numbers_Vector3 ();
 
             if (this .plane .intersectsLine (hitRay, endPoint))
                this .track (endPoint, endPoint .copy ());
@@ -85421,8 +85421,8 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, PointingDeviceSe
          else
          {
             const
-               endPoint   = new Numbers_Vector3 (0, 0, 0),
-               trackPoint = new Numbers_Vector3 (0, 0, 0);
+               endPoint   = new Numbers_Vector3 (),
+               trackPoint = new Numbers_Vector3 ();
 
             if (this .getLineTrackPoint (hit .pointer, this .line, endPoint))
             {
@@ -85798,13 +85798,13 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, PointingDeviceS
       this .sphere      = null;
       this .zPlane      = null;
       this .behind      = false;
-      this .fromVector  = new Numbers_Vector3 (0, 0, 0);
-      this .startPoint  = new Numbers_Vector3 (0, 0, 0);
+      this .fromVector  = new Numbers_Vector3 ();
+      this .startPoint  = new Numbers_Vector3 ();
       this .startOffset = new Numbers_Rotation4 ();
    },
    getTrackPoint (hitRay, trackPoint, behind)
    {
-      const exit = new Numbers_Vector3 (0, 0, 0);
+      const exit = new Numbers_Vector3 ();
 
       if (this .sphere .intersectsLine (hitRay, trackPoint, exit))
       {
@@ -85827,7 +85827,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, PointingDeviceS
 
          const
             hitPoint = this .invModelViewMatrix .multVecMatrix (hit .point .copy ()),
-            center   = new Numbers_Vector3 (0, 0, 0);
+            center   = new Numbers_Vector3 ();
 
          this .zPlane = new Geometry_Plane3 (center, this .invModelViewMatrix .multDirMatrix (new Numbers_Vector3 (0, 0, 1)) .normalize ()); // Screen aligned Z-plane
          this .sphere = new Geometry_Sphere3 (hitPoint .magnitude (), center);
@@ -85850,7 +85850,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, PointingDeviceS
    {
       const
          hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-         trackPoint = new Numbers_Vector3 (0, 0, 0);
+         trackPoint = new Numbers_Vector3 ();
 
       if (this .getTrackPoint (hitRay, trackPoint, this .behind))
       {
@@ -85862,7 +85862,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, PointingDeviceS
       {
          // Find trackPoint on the plane with sphere
 
-         const tangentPoint = new Numbers_Vector3 (0, 0, 0);
+         const tangentPoint = new Numbers_Vector3 ();
 
          this .zPlane .intersectsLine (hitRay, tangentPoint);
 
@@ -85875,7 +85875,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, PointingDeviceS
          // Find trackPoint behind sphere
 
          const
-            triNormal     = Geometry_Triangle3 .normal (this .sphere .center, trackPoint, this .startPoint, new Numbers_Vector3 (0, 0, 0)),
+            triNormal     = Geometry_Triangle3 .normal (this .sphere .center, trackPoint, this .startPoint, new Numbers_Vector3 ()),
             dirFromCenter = trackPoint .copy () .subtract (this .sphere .center) .normalize (),
             normal        = triNormal .copy () .cross (dirFromCenter) .normalize ();
 
@@ -86122,7 +86122,7 @@ function ClipPlane (executionContext)
    this .addType (Base_X3DConstants .ClipPlane);
 
    this .enabled = false;
-   this .plane   = new Numbers_Vector4 (0, 0, 0, 0);
+   this .plane   = new Numbers_Vector4 ();
 }
 
 Object .assign (Object .setPrototypeOf (ClipPlane .prototype, Core_X3DChildNode .prototype),
@@ -86738,9 +86738,9 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, Rendering_
    getNormal: (() =>
    {
       const
-         point1 = new Numbers_Vector3 (0, 0, 0),
-         point2 = new Numbers_Vector3 (0, 0, 0),
-         point3 = new Numbers_Vector3 (0, 0, 0);
+         point1 = new Numbers_Vector3 (),
+         point2 = new Numbers_Vector3 (),
+         point3 = new Numbers_Vector3 ();
 
       return function (index1, index2, index3)
       {
@@ -86753,19 +86753,19 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, Rendering_
             return Geometry_Triangle3 .normal (this .get1Point (index1, point1),
                                       this .get1Point (index2, point2),
                                       this .get1Point (index3, point3),
-                                      new Numbers_Vector3 (0, 0, 0));
+                                      new Numbers_Vector3 ());
          }
 
-         return new Numbers_Vector3 (0, 0, 0);
+         return new Numbers_Vector3 ();
       };
    })(),
    getQuadNormal: (() =>
    {
       const
-         point1 = new Numbers_Vector3 (0, 0, 0),
-         point2 = new Numbers_Vector3 (0, 0, 0),
-         point3 = new Numbers_Vector3 (0, 0, 0),
-         point4 = new Numbers_Vector3 (0, 0, 0);
+         point1 = new Numbers_Vector3 (),
+         point2 = new Numbers_Vector3 (),
+         point3 = new Numbers_Vector3 (),
+         point4 = new Numbers_Vector3 ();
 
       return function (index1, index2, index3, index4)
       {
@@ -86779,10 +86779,10 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, Rendering_
                                           this .get1Point (index2, point2),
                                           this .get1Point (index3, point3),
                                           this .get1Point (index4, point4),
-                                          new Numbers_Vector3 (0, 0, 0));
+                                          new Numbers_Vector3 ());
          }
 
-         return new Numbers_Vector3 (0, 0, 0);
+         return new Numbers_Vector3 ();
       };
    })(),
 });
@@ -87121,10 +87121,10 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
    {
       const
          modelViewProjectionMatrix = new Numbers_Matrix4 (),
-         point0                    = new Numbers_Vector4 (0, 0, 0, 0),
-         point1                    = new Numbers_Vector4 (0, 0, 0, 0),
-         projectedPoint0           = new Numbers_Vector2 (0, 0),
-         projectedPoint1           = new Numbers_Vector2 (0, 0);
+         point0                    = new Numbers_Vector4 (),
+         point1                    = new Numbers_Vector4 (),
+         projectedPoint0           = new Numbers_Vector2 (),
+         projectedPoint1           = new Numbers_Vector2 ();
 
       return function (gl, renderContext)
       {
@@ -89838,7 +89838,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .add ("X3DShaderNode", "x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(919);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95479,7 +95479,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .add ("ShaderCompiler", "x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(919);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96136,7 +96136,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .add ("X3DAppearanceNode", "x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(919);
+/* provided dependency */ var Appearance_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -98614,8 +98614,8 @@ function X3DShapeNode (executionContext)
    this .addType (Base_X3DConstants .X3DShapeNode);
 
    this .bbox       = new Geometry_Box3 ();
-   this .bboxSize   = new Numbers_Vector3 (0, 0, 0);
-   this .bboxCenter = new Numbers_Vector3 (0, 0, 0);
+   this .bboxSize   = new Numbers_Vector3 ();
+   this .bboxCenter = new Numbers_Vector3 ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNode .prototype),
@@ -99703,6 +99703,7 @@ function X3DSoundProcessingNode (executionContext)
    this .childNodes       = [ ];
    this .audioDestination = new GainNode (audioContext, { gain: 0 });
    this .audioSource      = new GainNode (audioContext, { gain: 1 });
+   this .soundProcessor   = this .audioSource;
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, Sound_X3DSoundNode .prototype),
@@ -99736,10 +99737,18 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, Sound
    },
    getSoundProcessor ()
    {
-      return this .audioSource;
+      return this .soundProcessor;
+   },
+   setSoundProcessor (value)
+   {
+      this .soundProcessor = value ?? this .audioSource;
+
+      this .set_enabled__ ();
    },
    set_enabled__ ()
    {
+      Time_X3DTimeDependentNode .prototype .set_enabled__ .call (this);
+
       this .audioDestination .disconnect ();
 
       if (this ._enabled .getValue ())
@@ -99748,7 +99757,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, Sound
          this .set_channelCountMode__ ();
          this .set_channelInterpretation__ ();
 
-         this .audioDestination .connect (this .getSoundProcessor ());
+         this .audioDestination .connect (this .soundProcessor);
       }
       else
       {
@@ -99758,8 +99767,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, Sound
 
          this .audioDestination .connect (this .audioSource);
       }
-
-      Time_X3DTimeDependentNode .prototype .set_enabled__ .call (this);
    },
    set_gain__ ()
    {
@@ -99950,13 +99957,11 @@ Object .assign (Object .setPrototypeOf (Analyser .prototype, Sound_X3DSoundProce
       this ._maxDecibels           .addInterest ("set_decibels__",              this);
       this ._smoothingTimeConstant .addInterest ("set_smoothingTimeConstant__", this);
 
+      this .setSoundProcessor (this .analyserNode);
+
       this .set_fftSize__ ();
       this .set_decibels__ ();
       this .set_smoothingTimeConstant__ ();
-   },
-   getSoundProcessor ()
-   {
-      return this .analyserNode;
    },
    set_fftSize__ ()
    {
@@ -101122,14 +101127,12 @@ Object .assign (Object .setPrototypeOf (BiquadFilter .prototype, Sound_X3DSoundP
       this ._frequency     .addInterest ("set_frequency__",     this);
       this ._qualityFactor .addInterest ("set_qualityFactor__", this);
 
+      this .setSoundProcessor (this .biquadFilterNode);
+
       this .set_detune__ ();
       this .set_type__ ();
       this .set_frequency__ ();
       this .set_qualityFactor__ ();
-   },
-   getSoundProcessor ()
-   {
-      return this .biquadFilterNode;
    },
    set_detune__ ()
    {
@@ -101577,6 +101580,7 @@ function X3DSoundChannelNode (executionContext)
    this .childNodes       = [ ];
    this .audioDestination = new GainNode (audioContext, { gain: 0 });
    this .audioSource      = new GainNode (audioContext, { gain: 1 });
+   this .soundProcessor   = this .audioSource;
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, Sound_X3DSoundNode .prototype),
@@ -101609,7 +101613,13 @@ Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, Sound_X3
    },
    getSoundProcessor ()
    {
-      return this .audioSource;
+      return this .soundProcessor;
+   },
+   setSoundProcessor (value)
+   {
+      this .soundProcessor = value ?? this .audioSource;
+
+      this .set_enabled__ ();
    },
    set_enabled__ ()
    {
@@ -101621,7 +101631,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, Sound_X3
          this .set_channelCountMode__ ();
          this .set_channelInterpretation__ ();
 
-         this .audioDestination .connect (this .getSoundProcessor ());
+         this .audioDestination .connect (this .soundProcessor);
       }
       else
       {
@@ -101965,10 +101975,6 @@ function ChannelSelector (executionContext)
    Sound_X3DSoundChannelNode .call (this, executionContext);
 
    this .addType (Base_X3DConstants .ChannelSelector);
-
-   const audioContext = this .getBrowser () .getAudioContext ();
-
-   this .channelSplitterNode = new ChannelSplitterNode (audioContext);
 }
 
 Object .assign (Object .setPrototypeOf (ChannelSelector .prototype, Sound_X3DSoundChannelNode .prototype),
@@ -101981,10 +101987,6 @@ Object .assign (Object .setPrototypeOf (ChannelSelector .prototype, Sound_X3DSou
 
       this .set_channelSelection__ ();
    },
-   getSoundProcessor ()
-   {
-      return this .channelSplitterNode;
-   },
    set_channelSelection__ ()
    {
       const
@@ -101992,14 +101994,14 @@ Object .assign (Object .setPrototypeOf (ChannelSelector .prototype, Sound_X3DSou
          channelSelection = Math_Algorithm .clamp (this ._channelSelection .getValue (), 0, 31),
          numberOfOutputs  = channelSelection + 1;
 
-      this .channelSplitterNode .disconnect ();
+      this .channelSplitterNode ?.disconnect ();
 
-      if (this .channelSplitterNode .numberOfOutputs !== numberOfOutputs)
+      if (this .channelSplitterNode ?.numberOfOutputs !== numberOfOutputs)
          this .channelSplitterNode = new ChannelSplitterNode (audioContext, { numberOfOutputs });
 
       this .channelSplitterNode .connect (this .getAudioSource (), channelSelection);
 
-      this .set_enabled__ ();
+      this .setSoundProcessor (this .channelSplitterNode);
    },
 });
 
@@ -102324,12 +102326,10 @@ Object .assign (Object .setPrototypeOf (Convolver .prototype, Sound_X3DSoundProc
       this ._buffer           .addInterest ("set_buffer__",    this);
       this ._normalize        .addInterest ("set_normalize__", this);
 
+      this .setSoundProcessor (this .convolverNode);
+
       this .set_buffer__ ();
       this .set_normalize__ ();
-   },
-   getSoundProcessor ()
-   {
-      return this .convolverNode;
    },
    set_buffer__ ()
    {
@@ -102478,12 +102478,6 @@ function Delay (executionContext)
    Sound_X3DSoundProcessingNode .call (this, executionContext);
 
    this .addType (Base_X3DConstants .Delay);
-
-   const audioContext = this .getBrowser () .getAudioContext ();
-
-   this .delayNode = new DelayNode (audioContext);
-
-   this .delayNode .connect (this .getAudioSource ());
 }
 
 Object .assign (Object .setPrototypeOf (Delay .prototype, Sound_X3DSoundProcessingNode .prototype),
@@ -102492,20 +102486,38 @@ Object .assign (Object .setPrototypeOf (Delay .prototype, Sound_X3DSoundProcessi
    {
       Sound_X3DSoundProcessingNode .prototype .initialize .call (this);
 
-      this ._delayTime    .addInterest ("set_delayTime__", this);
-      this ._maxDelayTime .addInterest ("set_delayTime__", this);
+      this ._maxDelayTime .addInterest ("set_maxDelayTime__", this);
+      this ._delayTime    .addInterest ("set_delayTime__",    this);
 
-      this .set_delayTime__ ();
-   },
-   getSoundProcessor ()
-   {
-      return this .delayNode;
+      this .set_maxDelayTime__ ();
    },
    set_delayTime__ ()
    {
-      const maxDelayTime = Math .max (this ._maxDelayTime .getValue (), 0);
+      const
+         maxDelayTime = Math .max (this ._maxDelayTime .getValue (), 0),
+         delayTime    = Math_Algorithm .clamp (this ._delayTime .getValue (), 0, maxDelayTime);
 
-      this .delayNode .delayTime .value = Math_Algorithm .clamp (this ._delayTime .getValue (), 0, maxDelayTime);
+      this .delayNode .delayTime .value = delayTime;
+   },
+   set_maxDelayTime__ ()
+   {
+      this .delayNode ?.disconnect ();
+
+      this .delayNode = this .createSoundProcessor ();
+
+      this .delayNode .connect (this .getAudioSource ());
+
+      this .setSoundProcessor (this .delayNode);
+   },
+   createSoundProcessor ()
+   {
+      const
+         audioContext = this .getBrowser () .getAudioContext (),
+         maxDelayTime = Math .max (this ._maxDelayTime .getValue (), 0),
+         delayTime    = Math_Algorithm .clamp (this ._delayTime .getValue (), 0, maxDelayTime),
+         delayNode    = new DelayNode (audioContext, { maxDelayTime, delayTime });
+
+      return delayNode;
    },
 });
 
@@ -102540,8 +102552,8 @@ Object .defineProperties (Delay,
 
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "gain",                  new x_ite_Fields .SFFloat (1)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "tailTime",              new x_ite_Fields .SFTime ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "delayTime",             new x_ite_Fields .SFTime ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "maxDelayTime",          new x_ite_Fields .SFTime (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "delayTime",             new x_ite_Fields .SFTime ()),
 
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "channelCount",          new x_ite_Fields .SFInt32 ()), // skip test
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "channelCountMode",      new x_ite_Fields .SFString ("MAX")),
@@ -102646,15 +102658,13 @@ Object .assign (Object .setPrototypeOf (DynamicsCompressor .prototype, Sound_X3D
       this ._release   .addInterest ("set_release__",   this);
       this ._threshold .addInterest ("set_threshold__", this);
 
+      this .setSoundProcessor (this .dynamicsCompressorNode);
+
       this .set_attack__ ();
       this .set_knee__ ();
       this .set_ratio__ ();
       this .set_release__ ();
       this .set_threshold__ ();
-   },
-   getSoundProcessor ()
-   {
-      return this .dynamicsCompressorNode;
    },
    set_attack__ ()
    {
@@ -102968,11 +102978,11 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, Sound_X3
    traverse: (() =>
    {
       const
-         position        = new Numbers_Vector3 (0, 0, 0),
+         position        = new Numbers_Vector3 (),
          orientation     = new Numbers_Rotation4 (),
          modelViewMatrix = new Numbers_Matrix4 (),
-         forwardVector   = new Numbers_Vector3 (0, 0, 0),
-         upVector        = new Numbers_Vector3 (0, 0, 0);
+         forwardVector   = new Numbers_Vector3 (),
+         upVector        = new Numbers_Vector3 ();
 
       return function (type, renderObject)
       {
@@ -103337,10 +103347,6 @@ function OscillatorSource (executionContext)
    this .addType (Base_X3DConstants .OscillatorSource);
 
    this .addChildObjects (Base_X3DConstants .inputOutput, "loop", new x_ite_Fields .SFBool ());
-
-   const audioContext = this .getBrowser () .getAudioContext ();
-
-   this .oscillatorNode = new OscillatorNode (audioContext);
 }
 
 Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSoundSourceNode .prototype),
@@ -103355,6 +103361,36 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSo
 
       this .set_periodicWave__ ();
    },
+   set_detune__ ()
+   {
+      if (!this .oscillatorNode)
+         return;
+
+      this .oscillatorNode .detune .value = Math .max (this ._detune .getValue (), 0);
+   },
+   set_frequency__ ()
+   {
+      if (!this .oscillatorNode)
+         return;
+
+      this .oscillatorNode .frequency .value = Math .max (this ._frequency .getValue (), 0);
+   },
+   set_periodicWave__ ()
+   {
+      if (this .periodicWaveNode)
+      {
+         this .periodicWaveNode ._type        .removeInterest ("set_type__",                this);
+         this .periodicWaveNode ._optionsReal .removeInterest ("set_periodicWaveOptions__", this);
+         this .periodicWaveNode ._optionsImag .removeInterest ("set_periodicWaveOptions__", this);
+      }
+
+      this .periodicWaveNode = Base_X3DCast (Base_X3DConstants .PeriodicWave, this ._periodicWave)
+         ?? this .getBrowser () .getDefaultPeriodicWave ();
+
+      this .periodicWaveNode ._type .addInterest ("set_type__", this);
+
+      this .set_type__ ();
+   },
    set_type__: (function ()
    {
       const types = new Map ([
@@ -103367,6 +103403,9 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSo
 
       return function ()
       {
+         if (!this .oscillatorNode)
+            return;
+
          this .periodicWaveNode ._optionsReal .removeInterest ("set_periodicWaveOptions__", this);
          this .periodicWaveNode ._optionsImag .removeInterest ("set_periodicWaveOptions__", this);
 
@@ -103385,27 +103424,6 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSo
          }
       };
    })(),
-   set_detune__ ()
-   {
-      this .oscillatorNode .detune .value = Math .max (this ._detune .getValue (), 0);
-   },
-   set_frequency__ ()
-   {
-      this .oscillatorNode .frequency .value = Math .max (this ._frequency .getValue (), 0);
-   },
-   set_periodicWave__ ()
-   {
-      this .periodicWaveNode ?._type        .removeInterest ("set_type__",                this);
-      this .periodicWaveNode ?._optionsReal .removeInterest ("set_periodicWaveOptions__", this);
-      this .periodicWaveNode ?._optionsImag .removeInterest ("set_periodicWaveOptions__", this);
-
-      this .periodicWaveNode = Base_X3DCast (Base_X3DConstants .PeriodicWave, this ._periodicWave)
-         ?? this .getBrowser () .getDefaultPeriodicWave ();
-
-      this .periodicWaveNode ._type .addInterest ("set_type__", this);
-
-      this .set_type__ ();
-   },
    set_periodicWaveOptions__ ()
    {
       this .oscillatorNode .setPeriodicWave (this .periodicWaveNode .createPeriodicWave ());
@@ -103416,20 +103434,20 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSo
 
       this .oscillatorNode = new OscillatorNode (audioContext);
 
-      this .set_type__ ();
-      this .set_frequency__ ();
       this .set_detune__ ();
+      this .set_frequency__ ();
+      this .set_type__ ();
 
       this .oscillatorNode .connect (this .getAudioSource ());
       this .oscillatorNode .start ();
    },
    set_pause ()
    {
-      this .oscillatorNode .disconnect ();
+      this .set_stop ();
    },
    set_resume ()
    {
-      this .oscillatorNode .connect (this .getAudioSource ());
+      this .set_start ();
    },
    set_stop ()
    {
@@ -103848,8 +103866,8 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
    traverse: (() =>
    {
       const
-         min = { distance: 0, intersection: new Numbers_Vector3 (0, 0, 0) },
-         max = { distance: 0, intersection: new Numbers_Vector3 (0, 0, 0) };
+         min = { distance: 0, intersection: new Numbers_Vector3 () },
+         max = { distance: 0, intersection: new Numbers_Vector3 () };
 
       return function (type, renderObject)
       {
@@ -103900,16 +103918,16 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
    getEllipsoidParameter: (() =>
    {
       const
-         location        = new Numbers_Vector3 (0, 0, 0),
+         location        = new Numbers_Vector3 (),
          sphereMatrix    = new Numbers_Matrix4 (),
          invSphereMatrix = new Numbers_Matrix4 (),
          rotation        = new Numbers_Rotation4 (),
          scale           = new Numbers_Vector3 (1, 1, 1),
          sphere          = new Geometry_Sphere3 (1, Numbers_Vector3 .Zero),
-         normal          = new Numbers_Vector3 (0, 0, 0),
+         normal          = new Numbers_Vector3 (),
          line            = new Geometry_Line3 (Numbers_Vector3 .Zero, Numbers_Vector3 .zAxis),
-         enterPoint      = new Numbers_Vector3 (0, 0, 0),
-         exitPoint       = new Numbers_Vector3 (0, 0, 0);
+         enterPoint      = new Numbers_Vector3 (),
+         exitPoint       = new Numbers_Vector3 ();
 
       return function (modelViewMatrix, back, front, value)
       {
@@ -103962,9 +103980,9 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
    {
       const
          rotation  = new Numbers_Rotation4 (),
-         location  = new Numbers_Vector3 (0, 0, 0),
-         direction = new Numbers_Vector3 (0, 0, 0),
-         xAxis     = new Numbers_Vector3 (0, 0, 0),
+         location  = new Numbers_Vector3 (),
+         direction = new Numbers_Vector3 (),
+         xAxis     = new Numbers_Vector3 (),
          result    = { };
 
       return function (modelViewMatrix)
@@ -104311,8 +104329,8 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, Sound_X3DSoundN
    traverse: (() =>
    {
       const
-         location  = new Numbers_Vector3 (0, 0, 0),
-         direction = new Numbers_Vector3 (0, 0, 0);
+         location  = new Numbers_Vector3 (),
+         direction = new Numbers_Vector3 ();
 
       return function (type, renderObject)
       {
@@ -104721,12 +104739,10 @@ Object .assign (Object .setPrototypeOf (WaveShaper .prototype, Sound_X3DSoundPro
       this ._curve      .addInterest ("set_curve__",      this);
       this ._oversample .addInterest ("set_oversample__", this);
 
+      this .setSoundProcessor (this .waveShaperNode);
+
       this .set_curve__ ();
       this .set_oversample__ ();
-   },
-   getSoundProcessor ()
-   {
-      return this .waveShaperNode;
    },
    set_curve__ ()
    {
@@ -105054,8 +105070,8 @@ const GifMedia_default_ = GifMedia;
 x_ite_Namespace .add ("GifMedia", "x_ite/Browser/Texturing/GifMedia", GifMedia_default_);
 /* harmony default export */ const Texturing_GifMedia = (GifMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(919);
-/* provided dependency */ var SuperGif = __webpack_require__(968);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(654);
+/* provided dependency */ var SuperGif = __webpack_require__(921);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107366,7 +107382,7 @@ Object .assign (Object .setPrototypeOf (TextureTransform .prototype, Texturing_X
    eventsProcessed: (() =>
    {
       const
-         vector  = new Numbers_Vector2 (0, 0),
+         vector  = new Numbers_Vector2 (),
          matrix3 = new Numbers_Matrix3 ();
 
       return function ()
@@ -108337,7 +108353,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace .add ("gettext", "locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(919);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108767,7 +108783,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .add ("TextureQuality", "x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(919);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109361,7 +109377,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .add ("RenderingProperties", "x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(919);
+/* provided dependency */ var Notification_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109484,8 +109500,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .add ("Notification", "x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(115);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(919);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(982);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112246,7 +112262,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .add ("DataStorage", "standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(919);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112921,7 +112937,7 @@ Object .assign (X3DCoreContext .prototype,
                   {
                      const
                         geoOrigin = viewpoint ._geoOrigin,
-                        geoCoord  = new Numbers_Vector3 (0, 0, 0);
+                        geoCoord  = new Numbers_Vector3 ();
 
                      if (geoOrigin .getValue () && geoOrigin .getNodeTypeName () === "GeoOrigin")
                      {
@@ -114659,7 +114675,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, Base_X3DBaseNode .
    },
    isPointerInRectangle: (() =>
    {
-      const pointer = new Numbers_Vector2 (0, 0);
+      const pointer = new Numbers_Vector2 ();
 
       return function (x, y)
       {
@@ -114674,8 +114690,8 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, Base_X3DBaseNode .
    {
       const
          axis     = new Numbers_Vector3 (0, 0, -1),
-         distance = new Numbers_Vector3 (0, 0, 0),
-         far      = new Numbers_Vector3 (0, 0, 0);
+         distance = new Numbers_Vector3 (),
+         far      = new Numbers_Vector3 ();
 
       return function (x, y, result)
       {
@@ -114769,8 +114785,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .add ("X3DViewer", "x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(591);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(919);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(988);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114850,23 +114866,23 @@ function ExamineViewer (executionContext, navigationInfo)
 
    this .button                   = -1;
    this .orientationOffset        = new Numbers_Rotation4 ();
-   this .fromVector               = new Numbers_Vector3 (0, 0, 0);
-   this .toVector                 = new Numbers_Vector3 (0, 0, 0);
-   this .fromPoint                = new Numbers_Vector3 (0, 0, 0);
-   this .toPoint                  = new Numbers_Vector3 (0, 0, 0);
+   this .fromVector               = new Numbers_Vector3 ();
+   this .toVector                 = new Numbers_Vector3 ();
+   this .fromPoint                = new Numbers_Vector3 ();
+   this .toPoint                  = new Numbers_Vector3 ();
    this .rotation                 = new Numbers_Rotation4 ();
-   this .direction                = new Numbers_Vector3 (0, 0, 0);
-   this .axis                     = new Numbers_Vector3 (0, 0, 0);
+   this .direction                = new Numbers_Vector3 ();
+   this .axis                     = new Numbers_Vector3 ();
    this .pressTime                = 0;
    this .motionTime               = 0;
 
    this .touchMode                = 0;
-   this .touch1                   = new Numbers_Vector2 (0, 0);
-   this .touch2                   = new Numbers_Vector2 (0, 0);
+   this .touch1                   = new Numbers_Vector2 ();
+   this .touch2                   = new Numbers_Vector2 ();
    this .tapStart                 = 0;
    this .dblTapInterval           = 0.4;
 
-   this .initialPositionOffset    = new Numbers_Vector3 (0, 0, 0);
+   this .initialPositionOffset    = new Numbers_Vector3 ();
    this .initialOrientationOffset = new Numbers_Rotation4 ();
    this .positionChaser           = new Followers_PositionChaser (executionContext);
    this .centerOfRotationChaser   = new Followers_PositionChaser (executionContext);
@@ -115054,7 +115070,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
    },
    mousemove: (() =>
    {
-      const fromPoint = new Numbers_Vector3 (0, 0, 0);
+      const fromPoint = new Numbers_Vector3 ();
 
       return function (event)
       {
@@ -115107,8 +115123,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
    mousewheel: (() =>
    {
       const
-         step        = new Numbers_Vector3 (0, 0, 0),
-         translation = new Numbers_Vector3 (0, 0, 0);
+         step        = new Numbers_Vector3 (),
+         translation = new Numbers_Vector3 ();
 
       return function (event)
       {
@@ -115236,8 +115252,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
       const
          MOVE_ANGLE   = 0.7,
          ZOOM_ANGLE   = -0.7,
-         touch1Change = new Numbers_Vector2 (0, 0),
-         touch2Change = new Numbers_Vector2 (0, 0);
+         touch1Change = new Numbers_Vector2 (),
+         touch2Change = new Numbers_Vector2 ();
 
       return function (event)
       {
@@ -115407,7 +115423,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
 
          this .axis .assign (axis);
 
-         if (rotation .getAxis (new Numbers_Vector3 (0, 0, 0)) .dot (Numbers_Vector3 .yAxis) < 0 !== rotation .angle < 0)
+         if (rotation .getAxis (new Numbers_Vector3 ()) .dot (Numbers_Vector3 .yAxis) < 0 !== rotation .angle < 0)
             this .axis .negate ();
 
          this .timeSensor ._cycleInterval = Math .PI / (rotationChange .angle * SPIN_FACTOR * 30);
@@ -115427,8 +115443,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
    spin: (() =>
    {
       const
-         direction         = new Numbers_Vector3 (0, 0, 0),
-         positionOffset    = new Numbers_Vector3 (0, 0, 0),
+         direction         = new Numbers_Vector3 (),
+         positionOffset    = new Numbers_Vector3 (),
          orientationOffset = new Numbers_Rotation4 (),
          rotation          = new Numbers_Rotation4 ();
 
@@ -115467,8 +115483,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
    addMove: (() =>
    {
       const
-         positionOffset         = new Numbers_Vector3 (0, 0, 0),
-         centerOfRotationOffset = new Numbers_Vector3 (0, 0, 0);
+         positionOffset         = new Numbers_Vector3 (),
+         centerOfRotationOffset = new Numbers_Vector3 ();
 
       return function (positionOffsetChange, centerOfRotationOffsetChange)
       {
@@ -115518,8 +115534,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
    getPositionOffset: (() =>
    {
       const
-         distance = new Numbers_Vector3 (0, 0, 0),
-         d        = new Numbers_Vector3 (0, 0, 0),
+         distance = new Numbers_Vector3 (),
+         d        = new Numbers_Vector3 (),
          oob      = new Numbers_Rotation4 ();
 
       return function (positionOffsetBefore, orientationOffsetBefore, orientationOffsetAfter)
@@ -115540,7 +115556,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
       const
          userOrientation   = new Numbers_Rotation4 (),
          orientationOffset = new Numbers_Rotation4 (),
-         zAxis             = new Numbers_Vector3 (0, 0, 0);
+         zAxis             = new Numbers_Vector3 ();
 
       return function (rotation, orientationOffsetBefore, _throw)
       {
@@ -115581,7 +115597,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
    })(),
    getHorizonRotation: (() =>
    {
-      const zAxis = new Numbers_Vector3 (0, 0, 0);
+      const zAxis = new Numbers_Vector3 ();
 
       return function (rotation)
       {
@@ -115642,8 +115658,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .add ("ExamineViewer", "x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(591);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(919);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(988);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115727,9 +115743,9 @@ function X3DFlyViewer (executionContext, navigationInfo)
       gl      = browser .getContext ();
 
    this .button                = -1;
-   this .fromVector            = new Numbers_Vector3 (0, 0, 0);
-   this .toVector              = new Numbers_Vector3 (0, 0, 0);
-   this .direction             = new Numbers_Vector3 (0, 0, 0);
+   this .fromVector            = new Numbers_Vector3 ();
+   this .toVector              = new Numbers_Vector3 ();
+   this .direction             = new Numbers_Vector3 ();
    this .startTime             = 0;
    this .event                 = null;
    this .lookAround            = false;
@@ -116057,9 +116073,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
    fly: (() =>
    {
       const
-         upVector           = new Numbers_Vector3 (0, 0, 0),
-         direction          = new Numbers_Vector3 (0, 0, 0),
-         axis               = new Numbers_Vector3 (0, 0, 0),
+         upVector           = new Numbers_Vector3 (),
+         direction          = new Numbers_Vector3 (),
+         axis               = new Numbers_Vector3 (),
          userOrientation    = new Numbers_Rotation4 (),
          orientationOffset  = new Numbers_Rotation4 (),
          rubberBandRotation = new Numbers_Rotation4 ();
@@ -116131,8 +116147,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
    pan: (() =>
    {
       const
-         direction = new Numbers_Vector3 (0, 0, 0),
-         axis      = new Numbers_Vector3 (0, 0, 0);
+         direction = new Numbers_Vector3 (),
+         axis      = new Numbers_Vector3 ();
 
       return function ()
       {
@@ -116273,10 +116289,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
    display: (() =>
    {
       const
-         fromPoint             = new Numbers_Vector3 (0, 0, 0),
-         toPoint               = new Numbers_Vector3 (0, 0, 0),
-         normal                = new Numbers_Vector3 (0, 0, 0),
-         vertex                = new Numbers_Vector3 (0, 0, 0),
+         fromPoint             = new Numbers_Vector3 (),
+         toPoint               = new Numbers_Vector3 (),
+         normal                = new Numbers_Vector3 (),
+         vertex                = new Numbers_Vector3 (),
          projectionMatrix      = new Numbers_Matrix4 (),
          projectionMatrixArray = new Float32Array (Numbers_Matrix4 .Identity),
          modelViewMatrixArray  = new Float32Array (Numbers_Matrix4 .Identity),
@@ -116492,7 +116508,7 @@ Object .assign (Object .setPrototypeOf (WalkViewer .prototype, Navigation_X3DFly
    getTranslationOffset: (() =>
    {
       const
-         localYAxis      = new Numbers_Vector3 (0, 0, 0),
+         localYAxis      = new Numbers_Vector3 (),
          userOrientation = new Numbers_Rotation4 (),
          rotation        = new Numbers_Rotation4 ();
 
@@ -116652,8 +116668,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .add ("FlyViewer", "x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(591);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(919);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(988);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116717,15 +116733,15 @@ const PlaneViewer_SCROLL_FACTOR = PlaneViewer_macOS ? 1 / 160 : 1 / 20;
 const
    PlaneViewer_vector                 = new Numbers_Vector3 (0 ,0, 0),
    positionOffset         = new Numbers_Vector3 (0 ,0, 0),
-   centerOfRotationOffset = new Numbers_Vector3 (0, 0, 0);
+   centerOfRotationOffset = new Numbers_Vector3 ();
 
 function PlaneViewer (executionContext, navigationInfo)
 {
    Navigation_X3DViewer .call (this, executionContext, navigationInfo);
 
    this .button    = -1;
-   this .fromPoint = new Numbers_Vector3 (0, 0, 0);
-   this .toPoint   = new Numbers_Vector3 (0, 0, 0);
+   this .fromPoint = new Numbers_Vector3 ();
+   this .toPoint   = new Numbers_Vector3 ();
 }
 
 Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DViewer .prototype),
@@ -116984,8 +117000,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .add ("NoneViewer", "x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(591);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(919);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(988);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117058,11 +117074,11 @@ function LookAtViewer (executionContext, navigationInfo)
    Navigation_X3DViewer .call (this, executionContext, navigationInfo);
 
    this .button                 = -1;
-   this .fromVector             = new Numbers_Vector3 (0, 0, 0);
-   this .toVector               = new Numbers_Vector3 (0, 0, 0);
+   this .fromVector             = new Numbers_Vector3 ();
+   this .toVector               = new Numbers_Vector3 ();
 
-   this .touch1                 = new Numbers_Vector2 (0, 0);
-   this .touch2                 = new Numbers_Vector2 (0, 0);
+   this .touch1                 = new Numbers_Vector2 ();
+   this .touch2                 = new Numbers_Vector2 ();
    this .tapStart               = 0;
    this .dblTapInterval         = 0.4;
 
@@ -117202,8 +117218,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, Navigation_X3DV
    mousewheel: (() =>
    {
       const
-         step        = new Numbers_Vector3 (0, 0, 0),
-         translation = new Numbers_Vector3 (0, 0, 0);
+         step        = new Numbers_Vector3 (),
+         translation = new Numbers_Vector3 ();
 
       return function (event)
       {
@@ -117303,8 +117319,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, Navigation_X3DV
       const
          MOVE_ANGLE   = 0.7,
          ZOOM_ANGLE   = -0.7,
-         touch1Change = new Numbers_Vector2 (0, 0),
-         touch2Change = new Numbers_Vector2 (0, 0);
+         touch1Change = new Numbers_Vector2 (),
+         touch2Change = new Numbers_Vector2 ();
 
       return function (event)
       {
@@ -117386,8 +117402,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, Navigation_X3DV
    addMove: (() =>
    {
       const
-         positionOffset         = new Numbers_Vector3 (0, 0, 0),
-         centerOfRotationOffset = new Numbers_Vector3 (0, 0, 0);
+         positionOffset         = new Numbers_Vector3 (),
+         centerOfRotationOffset = new Numbers_Vector3 ();
 
       return function (positionOffsetChange, centerOfRotationOffsetChange)
       {
@@ -118124,8 +118140,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .add ("X3DPickingContext", "x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(591);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(919);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(988);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118660,7 +118676,7 @@ function X3DPointingDeviceSensorContext ()
 {
    this [_pointingDevice]            = new PointingDeviceSensor_PointingDevice (this .getPrivateScene ());
    this [_pointingDeviceSensorNodes] = new Set ();
-   this [_pointer]                   = new Numbers_Vector2 (0, 0);
+   this [_pointer]                   = new Numbers_Vector2 ();
    this [_overSensors]               = [ ];
    this [_activeSensors]             = [ ];
    this [_pointingLayer]             = null;
@@ -118676,9 +118692,9 @@ function X3DPointingDeviceSensorContext ()
       sensors: [ ],
       viewMatrix: new Numbers_Matrix4 (),
       modelViewMatrix: new Numbers_Matrix4 (),
-      point: new Numbers_Vector3 (0, 0, 0),
-      normal: new Numbers_Vector3 (0, 0, 0),
-      texCoord: new Numbers_Vector4 (0, 0, 0, 0),
+      point: new Numbers_Vector3 (),
+      normal: new Numbers_Vector3 (),
+      texCoord: new Numbers_Vector4 (),
       layerNode: null,
       shapeNode: null,
       copy ()
@@ -119416,7 +119432,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .add ("MultiSampleFrameBuffer", "x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(919);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120297,8 +120313,11 @@ Object .assign (X3DSoundContext .prototype,
             "keyup",
             "mousedown",
             "mouseup",
+            "mousewheel",
             "pointerup",
             "touchend",
+            "touchmove",
+            "touchstart",
          ]
          .map (event => `${event}.${id}`);
 
@@ -120314,7 +120333,7 @@ Object .assign (X3DSoundContext .prototype,
          .then (disconnect)
          .catch (connect);
 
-      if (functionName === "resume")
+      if (audioElement === this [_audioContext])
          connect ();
    },
 });
@@ -120325,7 +120344,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 x_ite_Namespace .add ("X3DSoundContext", "x_ite/Browser/Sound/X3DSoundContext", X3DSoundContext_default_);
 /* harmony default export */ const Sound_X3DSoundContext = (X3DSoundContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(919);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(654);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -120875,7 +120894,7 @@ function X3DTimeContext ()
 {
    this [_currentTime]      = Date .now () / 1000;
    this [_currentFrameRate] = 60;
-   this [_currentPosition]  = new Numbers_Vector3 (0, 0, 0);
+   this [_currentPosition]  = new Numbers_Vector3 ();
    this [_currentSpeed]     = 0;
 }
 
@@ -120895,7 +120914,7 @@ Object .assign (X3DTimeContext .prototype,
    },
    advanceTime: (() =>
    {
-      const lastPosition = new Numbers_Vector3 (0, 0, 0);
+      const lastPosition = new Numbers_Vector3 ();
 
       return function ()
       {
@@ -121879,7 +121898,7 @@ const Components_default_ = Components;
 x_ite_Namespace .add ("Components", "x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(919);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(654);
 /*******************************************************************************
  * MIT License
  *
@@ -123010,7 +123029,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace .add ("SupportedProfiles", "x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(919);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -124102,7 +124121,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace .add ("X3DBrowser", "x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(919);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -124239,8 +124258,8 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 x_ite_Namespace .add ("X3DCanvasElement", "x_ite/X3DCanvasElement", X3DCanvasElement_default_);
 /* harmony default export */ const x_ite_X3DCanvasElement = (X3DCanvasElement_default_);
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(919);
-/* provided dependency */ var pako = __webpack_require__(431);
+/* provided dependency */ var jquery_$ = __webpack_require__(654);
+/* provided dependency */ var pako = __webpack_require__(574);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -124317,14 +124336,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .add ("jquery", "lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(460);
+/* provided dependency */ var libtess_libtess = __webpack_require__(247);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .add ("libtess", "lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(919);
+/* provided dependency */ var X3D_$ = __webpack_require__(654);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

@@ -1076,19 +1076,19 @@ var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject
 
 
 const
-   vector = new (Vector3_default()) (0, 0, 0),
-   result = new (Vector3_default()) (0, 0, 0),
-   t      = new (Vector3_default()) (0, 0, 0),
-   x      = new (Vector3_default()) (0, 0, 0),
-   y      = new (Vector3_default()) (0, 0, 0),
-   z      = new (Vector3_default()) (0, 0, 0);
+   vector = new (Vector3_default()) (),
+   result = new (Vector3_default()) (),
+   t      = new (Vector3_default()) (),
+   x      = new (Vector3_default()) (),
+   y      = new (Vector3_default()) (),
+   z      = new (Vector3_default()) ();
 
 function X3DGeospatialObject (executionContext)
 {
    this .addType ((X3DConstants_default()).X3DGeospatialObject);
 
    this .radians         = false;
-   this .origin          = new (Vector3_default()) (0, 0, 0);
+   this .origin          = new (Vector3_default()) ();
    this .originMatrix    = new (Matrix4_default()) ();
    this .invOriginMatrix = new (Matrix4_default()) ();
 }
@@ -1376,7 +1376,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (X3DCoordinate
    },
    set1Point: (() =>
    {
-      const result = new (Vector3_default()) (0, 0, 0);
+      const result = new (Vector3_default()) ();
 
       return function (index, point)
       {
@@ -1385,7 +1385,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (X3DCoordinate
    })(),
    get1Point: (() =>
    {
-      const p = new (Vector3_default()) (0, 0, 0);
+      const p = new (Vector3_default()) ();
 
       return function (index, result)
       {
@@ -1406,8 +1406,8 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (X3DCoordinate
    addPoint: (() =>
    {
       const
-         p = new (Vector3_default()) (0, 0, 0),
-         g = new (Vector3_default()) (0, 0, 0);
+         p = new (Vector3_default()) (),
+         g = new (Vector3_default()) ();
 
       return function (index, array)
       {
@@ -1430,8 +1430,8 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (X3DCoordinate
    addPoints: (() =>
    {
       const
-         p = new (Vector3_default()) (0, 0, 0),
-         g = new (Vector3_default()) (0, 0, 0);
+         p = new (Vector3_default()) (),
+         g = new (Vector3_default()) ();
 
       return function (array)
       {
@@ -1452,9 +1452,9 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (X3DCoordinate
    getNormal: (() =>
    {
       const
-         point1 = new (Vector3_default()) (0, 0, 0),
-         point2 = new (Vector3_default()) (0, 0, 0),
-         point3 = new (Vector3_default()) (0, 0, 0);
+         point1 = new (Vector3_default()) (),
+         point2 = new (Vector3_default()) (),
+         point3 = new (Vector3_default()) ();
 
       return function (index1, index2, index3)
       {
@@ -1467,19 +1467,19 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (X3DCoordinate
             return Triangle3_default().normal (this .get1Point (index1, point1),
                                       this .get1Point (index2, point2),
                                       this .get1Point (index3, point3),
-                                      new (Vector3_default()) (0, 0, 0));
+                                      new (Vector3_default()) ());
          }
 
-         return new (Vector3_default()) (0, 0, 0);
+         return new (Vector3_default()) ();
       };
    })(),
    getQuadNormal: (() =>
    {
       const
-         point1 = new (Vector3_default()) (0, 0, 0),
-         point2 = new (Vector3_default()) (0, 0, 0),
-         point3 = new (Vector3_default()) (0, 0, 0),
-         point4 = new (Vector3_default()) (0, 0, 0);
+         point1 = new (Vector3_default()) (),
+         point2 = new (Vector3_default()) (),
+         point3 = new (Vector3_default()) (),
+         point4 = new (Vector3_default()) ();
 
       return function (index1, index2, index3, index4)
       {
@@ -1493,10 +1493,10 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (X3DCoordinate
                                           this .get1Point (index2, point2),
                                           this .get1Point (index3, point3),
                                           this .get1Point (index4, point4),
-                                          new (Vector3_default()) (0, 0, 0));
+                                          new (Vector3_default()) ());
          }
 
-         return new (Vector3_default()) (0, 0, 0);
+         return new (Vector3_default()) ();
       };
    })(),
    dispose ()
@@ -1728,7 +1728,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometr
          normalIndex .get (c1) .push (normals .length + 1);
          normalIndex .get (c2) .push (normals .length + 2);
 
-         const normal = Triangle3_default().normal (points [c0], points [c1], points [c2], new (Vector3_default()) (0, 0, 0));
+         const normal = Triangle3_default().normal (points [c0], points [c1], points [c2], new (Vector3_default()) ());
 
          if (cw)
             normal .negate ();
@@ -2072,7 +2072,7 @@ var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
 
 
 
-var center = new (Vector3_default()) (0, 0, 0);
+var center = new (Vector3_default()) ();
 
 function GeoLOD (executionContext)
 {
@@ -2973,9 +2973,9 @@ Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, (X3D
    interpolate: (() =>
    {
       const
-         keyValue0 = new (Vector3_default()) (0, 0, 0),
-         keyValue1 = new (Vector3_default()) (0, 0, 0),
-         geovalue  = new (Vector3_default()) (0, 0, 0);
+         keyValue0 = new (Vector3_default()) (),
+         keyValue1 = new (Vector3_default()) (),
+         geovalue  = new (Vector3_default()) ();
 
       return function (index0, index1, weight)
       {
@@ -3101,7 +3101,7 @@ var ProximitySensor_default = /*#__PURE__*/__webpack_require__.n(ProximitySensor
 
 
 
-var geoCoord = new (Vector3_default()) (0, 0, 0);
+var geoCoord = new (Vector3_default()) ();
 
 function GeoProximitySensor (executionContext)
 {
@@ -3295,7 +3295,7 @@ Object .assign (Object .setPrototypeOf (GeoTouchSensor .prototype, (X3DTouchSens
    },
    set_over__: (() =>
    {
-      const geoCoords = new (Vector3_default()) (0, 0, 0);
+      const geoCoords = new (Vector3_default()) ();
 
       return function (over, hit, modelViewMatrix, projectionMatrix, viewport)
       {
@@ -3657,7 +3657,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNo
    },
    getPosition: (() =>
    {
-      const position = new (Vector3_default()) (0, 0, 0);
+      const position = new (Vector3_default()) ();
 
       return function ()
       {
@@ -3666,7 +3666,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNo
    })(),
    setPosition: (() =>
    {
-      const geoPosition = new (Vector3_default()) (0, 0, 0);
+      const geoPosition = new (Vector3_default()) ();
 
       return function (value)
       {
@@ -3675,7 +3675,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNo
    })(),
    set_position__: (() =>
    {
-      const position = new (Vector3_default()) (0, 0, 0);
+      const position = new (Vector3_default()) ();
 
       return function ()
       {
@@ -3720,7 +3720,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNo
    })(),
    getCenterOfRotation: (() =>
    {
-      const centerOfRotation = new (Vector3_default()) (0, 0, 0);
+      const centerOfRotation = new (Vector3_default()) ();
 
       return function ()
       {
@@ -3729,7 +3729,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNo
    })(),
    setCenterOfRotation: (() =>
    {
-      const geoCenterOfRotation = new (Vector3_default()) (0, 0, 0);
+      const geoCenterOfRotation = new (Vector3_default()) ();
 
       return function (value)
       {
@@ -3743,8 +3743,8 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNo
    getUpVector: (() =>
    {
       const
-         position = new (Vector3_default()) (0, 0, 0),
-         upVector = new (Vector3_default()) (0, 0, 0);
+         position = new (Vector3_default()) (),
+         upVector = new (Vector3_default()) ();
 
       return function (dynamic = false)
       {

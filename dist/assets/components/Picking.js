@@ -931,17 +931,17 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
       var
          pickingBBox             = new (Box3_default()) (),
          targetBBox              = new (Box3_default()) (),
-         pickingCenter           = new (Vector3_default()) (0, 0, 0),
-         targetCenter            = new (Vector3_default()) (0, 0, 0),
+         pickingCenter           = new (Vector3_default()) (),
+         targetCenter            = new (Vector3_default()) (),
          matrix                  = new (Matrix4_default()) (),
-         point1                  = new (Vector3_default()) (0, 0, 0),
-         point2                  = new (Vector3_default()) (0, 0, 0),
+         point1                  = new (Vector3_default()) (),
+         point2                  = new (Vector3_default()) (),
          line                    = new (Line3_default()) ((Vector3_default()).Zero, (Vector3_default()).zAxis),
-         a                       = new (Vector3_default()) (0, 0, 0),
-         b                       = new (Vector3_default()) (0, 0, 0),
+         a                       = new (Vector3_default()) (),
+         b                       = new (Vector3_default()) (),
          clipPlanes              = [ ],
          intersections           = [ ],
-         texCoord                = new (Vector3_default()) (0, 0, 0),
+         texCoord                = new (Vector3_default()) (),
          pickedTextureCoordinate = new (Fields_default()).MFVec3f (),
          pickedNormal            = new (Fields_default()).MFVec3f (),
          pickedPoint             = new (Fields_default()).MFVec3f ();
@@ -1601,7 +1601,7 @@ Object .assign (VolumePicker .prototype,
    setChildShape: (() =>
    {
       const
-         translation = new (Vector3_default()) (0, 0, 0),
+         translation = new (Vector3_default()) (),
          rotation    = new (Rotation4_default()) (),
          scale       = new (Vector3_default()) (1, 1, 1),
          s           = new (AmmoClass_default()).btVector3 (0, 0, 0);
@@ -1817,7 +1817,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DP
                      var
                         compoundShape = new (AmmoClass_default()).btCompoundShape (),
                         sphereShape   = new (AmmoClass_default()).btSphereShape (0),
-                        point         = coord .get1Point (i, new (Vector3_default()) (0, 0, 0));
+                        point         = coord .get1Point (i, new (Vector3_default()) ());
 
                      compoundShape .point = point;
 
@@ -1847,11 +1847,11 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DP
       var
          pickingBBox   = new (Box3_default()) (),
          targetBBox    = new (Box3_default()) (),
-         pickingCenter = new (Vector3_default()) (0, 0, 0),
-         targetCenter  = new (Vector3_default()) (0, 0, 0),
+         pickingCenter = new (Vector3_default()) (),
+         targetCenter  = new (Vector3_default()) (),
          transform     = new (AmmoClass_default()).btTransform (),
          localScaling  = new (AmmoClass_default()).btVector3 (),
-         translation   = new (Vector3_default()) (0, 0, 0),
+         translation   = new (Vector3_default()) (),
          rotation      = new (Rotation4_default()) (),
          scale         = new (Vector3_default()) (1, 1, 1),
          pickedPoint   = new (Fields_default()).MFVec3f ();
@@ -2156,8 +2156,8 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, Picking_
       var
          pickingBBox   = new (Box3_default()) (),
          targetBBox    = new (Box3_default()) (),
-         pickingCenter = new (Vector3_default()) (0, 0, 0),
-         targetCenter  = new (Vector3_default()) (0, 0, 0);
+         pickingCenter = new (Vector3_default()) (),
+         targetCenter  = new (Vector3_default()) ();
 
       return function ()
       {
@@ -2407,8 +2407,8 @@ Object .assign (Object .setPrototypeOf (VolumePickSensor .prototype, Picking_X3D
       var
          pickingBBox   = new (Box3_default()) (),
          targetBBox    = new (Box3_default()) (),
-         pickingCenter = new (Vector3_default()) (0, 0, 0),
-         targetCenter  = new (Vector3_default()) (0, 0, 0);
+         pickingCenter = new (Vector3_default()) (),
+         targetCenter  = new (Vector3_default()) ();
 
       return function ()
       {

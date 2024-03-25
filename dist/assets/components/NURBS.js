@@ -590,8 +590,8 @@ const NURBS = {
    getClosed: (() =>
    {
       const
-         firstPoint = new (Vector3_default()) (0, 0, 0),
-         lastPoint  = new (Vector3_default()) (0, 0, 0);
+         firstPoint = new (Vector3_default()) (),
+         lastPoint  = new (Vector3_default()) ();
 
       return function (order, knot, weight, controlPointNode)
       {
@@ -623,8 +623,8 @@ const NURBS = {
    getUClosed: (() =>
    {
       const
-         firstPoint = new (Vector3_default()) (0, 0, 0),
-         lastPoint  = new (Vector3_default()) (0, 0, 0);
+         firstPoint = new (Vector3_default()) (),
+         lastPoint  = new (Vector3_default()) ();
 
       return function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
       {
@@ -661,8 +661,8 @@ const NURBS = {
    getVClosed: (() =>
    {
       const
-         firstPoint = new (Vector3_default()) (0, 0, 0),
-         lastPoint  = new (Vector3_default()) (0, 0, 0);
+         firstPoint = new (Vector3_default()) (),
+         lastPoint  = new (Vector3_default()) ();
 
       return function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
       {
@@ -945,7 +945,7 @@ const NURBS = {
          {
             const index = v * uDimension + u;
 
-            cp [v] = controlPointNode .get1Point (index, cp [v] || new (Vector4_default()) (0, 0, 0, 0));
+            cp [v] = controlPointNode .get1Point (index, cp [v] || new (Vector4_default()) ());
          }
 
          cp .length = vDimension;
@@ -3729,9 +3729,9 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    createFaceNormals: (() =>
    {
       const
-         v1 = new (Vector3_default()) (0, 0, 0),
-         v2 = new (Vector3_default()) (0, 0, 0),
-         v3 = new (Vector3_default()) (0, 0, 0);
+         v1 = new (Vector3_default()) (),
+         v2 = new (Vector3_default()) (),
+         v3 = new (Vector3_default()) ();
 
       return function (faces, points)
       {
@@ -3750,7 +3750,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
             v2 .set (points [index2], points [index2 + 1], points [index2 + 2]);
             v3 .set (points [index3], points [index3 + 1], points [index3 + 2]);
 
-            const normal = Triangle3_default().normal (v1, v2 ,v3, normals [i] || new (Vector3_default()) (0, 0, 0));
+            const normal = Triangle3_default().normal (v1, v2 ,v3, normals [i] || new (Vector3_default()) ());
 
             normals [i]     = normal;
             normals [i + 1] = normal;
@@ -4499,10 +4499,10 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, (X3
    set_fraction__: (() =>
    {
       const
-         a     = new (Vector3_default()) (0, 0, 0),
-         b     = new (Vector3_default()) (0, 0, 0),
-         c     = new (Vector3_default()) (0, 0, 0),
-         point = new (Vector3_default()) (0, 0, 0),
+         a     = new (Vector3_default()) (),
+         b     = new (Vector3_default()) (),
+         c     = new (Vector3_default()) (),
+         point = new (Vector3_default()) (),
          line  = new (Line3_default()) ((Vector3_default()).Zero, (Vector3_default()).zAxis),
          uvt   = { };
 

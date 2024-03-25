@@ -173,8 +173,8 @@ Object .assign (X3DLayoutContext .prototype,
    getScreenScaleMatrix: (() =>
    {
       const
-         screenScale  = new (Vector3_default()) (0, 0, 0),
-         screenPoint  = new (Vector3_default()) (0, 0, 0),
+         screenScale  = new (Vector3_default()) (),
+         screenPoint  = new (Vector3_default()) (),
          screenMatrix = new (Matrix4_default()) ();
 
       return function (renderObject, matrix, contentScale, snap)
@@ -423,21 +423,21 @@ function Layout (executionContext)
    this .scaleModeX      = NONE;
    this .scaleModeY      = NONE;
    this .parent          = null;
-   this .rectangleCenter = new (Vector2_default()) (0, 0);
-   this .rectangleSize   = new (Vector2_default()) (0, 0);
+   this .rectangleCenter = new (Vector2_default()) ();
+   this .rectangleSize   = new (Vector2_default()) ();
    this .matrix          = new (Matrix4_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode .prototype),
 {
-   viewportPixel: new (Vector2_default()) (0, 0),
-   pixelSize: new (Vector2_default()) (0, 0),
-   translation: new (Vector3_default()) (0, 0, 0),
-   offset: new (Vector3_default()) (0, 0, 0),
+   viewportPixel: new (Vector2_default()) (),
+   pixelSize: new (Vector2_default()) (),
+   translation: new (Vector3_default()) (),
+   offset: new (Vector3_default()) (),
    scale: new (Vector3_default()) (1, 1, 1),
-   currentTranslation: new (Vector3_default()) (0, 0, 0),
+   currentTranslation: new (Vector3_default()) (),
    currentRotation: new (Rotation4_default()) (),
-   currentScale: new (Vector3_default()) (0, 0, 0),
+   currentScale: new (Vector3_default()) (),
    modelViewMatrix: new (Matrix4_default()) (),
    initialize ()
    {
@@ -1420,7 +1420,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
    update: (() =>
    {
       const
-         min = new (Vector3_default()) (0, 0, 0),
+         min = new (Vector3_default()) (),
          max = new (Vector3_default()) (1, 1, 0);
 
       return function ()
@@ -1483,7 +1483,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
    build: (() =>
    {
       const
-         min = new (Vector3_default()) (0, 0, 0),
+         min = new (Vector3_default()) (),
          max = new (Vector3_default()) (1, 1, 0);
 
       return function ()

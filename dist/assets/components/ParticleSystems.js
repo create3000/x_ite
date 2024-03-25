@@ -724,7 +724,7 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems
    },
    set_direction__: (() =>
    {
-      const direction = new (Vector3_default()) (0, 0, 0);
+      const direction = new (Vector3_default()) ();
 
       return function ()
       {
@@ -1455,7 +1455,7 @@ Object .assign (Object .setPrototypeOf (ForcePhysicsModel .prototype, ParticleSy
 {
    addForce: (() =>
    {
-      const force = new (Vector3_default()) (0, 0, 0);
+      const force = new (Vector3_default()) ();
 
       return function (i, emitterNode, timeByMass, forces)
       {
@@ -2833,8 +2833,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       ];
 
       const
-         vertex = new (Vector3_default()) (0, 0, 0),
-         size   = new (Vector3_default()) (0, 0, 0);
+         vertex = new (Vector3_default()) (),
+         size   = new (Vector3_default()) ();
 
       return function (gl, rotation)
       {
@@ -3036,9 +3036,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
    {
       const
          invModelViewMatrix = new (Matrix4_default()) (),
-         billboardToScreen  = new (Vector3_default()) (0, 0, 0),
-         viewerYAxis        = new (Vector3_default()) (0, 0, 0),
-         y                  = new (Vector3_default()) (0, 0, 0),
+         billboardToScreen  = new (Vector3_default()) (),
+         viewerYAxis        = new (Vector3_default()) (),
+         y                  = new (Vector3_default()) (),
          rotation           = new (Matrix3_default()) (9);
 
       return function (modelViewMatrix)
@@ -3274,7 +3274,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
    },
    set_direction__: (() =>
    {
-      const direction = new (Vector3_default()) (0, 0, 0);
+      const direction = new (Vector3_default()) ();
 
       return function ()
       {
@@ -3286,8 +3286,8 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
    set_polyline: (() =>
    {
       const
-         vertex1 = new (Vector3_default()) (0, 0, 0),
-         vertex2 = new (Vector3_default()) (0, 0, 0);
+         vertex1 = new (Vector3_default()) (),
+         vertex2 = new (Vector3_default()) ();
 
       return function ()
       {
@@ -3527,9 +3527,9 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
    set_geometry__: (() =>
    {
       const
-         vertex1  = new (Vector3_default()) (0, 0, 0),
-         vertex2  = new (Vector3_default()) (0, 0, 0),
-         vertex3  = new (Vector3_default()) (0, 0, 0);
+         vertex1  = new (Vector3_default()) (),
+         vertex2  = new (Vector3_default()) (),
+         vertex3  = new (Vector3_default()) ();
 
       return function ()
       {
@@ -3809,7 +3809,7 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
    },
    set_direction__: (() =>
    {
-      const direction = new (Vector3_default()) (0, 0, 0);
+      const direction = new (Vector3_default()) ();
 
       return function ()
       {
@@ -3821,9 +3821,9 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
    set_geometry__: (() =>
    {
       const
-         vertex1 = new (Vector3_default()) (0, 0, 0),
-         vertex2 = new (Vector3_default()) (0, 0, 0),
-         vertex3 = new (Vector3_default()) (0, 0, 0);
+         vertex1 = new (Vector3_default()) (),
+         vertex2 = new (Vector3_default()) (),
+         vertex3 = new (Vector3_default()) ();
 
       return function ()
       {
@@ -4007,7 +4007,7 @@ function WindPhysicsModel (executionContext)
    // Legacy
 
    if (executionContext .getSpecificationVersion () <= 3.3)
-      this ._direction = new (Vector3_default()) (0, 0, 0);
+      this ._direction = new (Vector3_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, ParticleSystems_X3DParticlePhysicsModelNode .prototype),
@@ -4022,7 +4022,7 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, ParticleSys
    },
    addForce: (() =>
    {
-      const force = new (Vector3_default()) (0, 0, 0);
+      const force = new (Vector3_default()) ();
 
       return function (i, emitterNode, timeByMass, forces)
       {

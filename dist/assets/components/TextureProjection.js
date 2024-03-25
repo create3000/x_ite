@@ -337,9 +337,9 @@ function TextureProjectorContainer ()
    this .modelMatrix                     = new (Matrix4_default()) ();
    this .invTextureSpaceMatrix           = new (Matrix4_default()) ();
    this .invTextureSpaceProjectionMatrix = new (Matrix4_default()) ();
-   this .location                        = new (Vector3_default()) (0, 0, 0);
+   this .location                        = new (Vector3_default()) ();
    this .locationArray                   = new Float32Array (3);
-   this .direction                       = new (Vector3_default()) (0, 0, 0);
+   this .direction                       = new (Vector3_default()) ();
    this .rotation                        = new (Rotation4_default()) ();
    this .matrix                          = new (Matrix4_default()) ();
    this .matrixArray                     = new Float32Array (16);
@@ -586,10 +586,10 @@ function TextureProjectorParallelContainer ()
    this .modelViewMatrix                 = new (MatrixStack_default()) ((Matrix4_default()));
    this .modelMatrix                     = new (Matrix4_default()) ();
    this .invTextureSpaceMatrix           = new (Matrix4_default()) ();
-   this .location                        = new (Vector3_default()) (0, 0, 0);
+   this .location                        = new (Vector3_default()) ();
    this .locationArray                   = new Float32Array (3);
    this .invTextureSpaceProjectionMatrix = new (Matrix4_default()) ();
-   this .direction                       = new (Vector3_default()) (0, 0, 0);
+   this .direction                       = new (Vector3_default()) ();
    this .rotation                        = new (Rotation4_default()) ();
    this .matrix                          = new (Matrix4_default()) ();
    this .matrixArray                     = new Float32Array (16);

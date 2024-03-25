@@ -497,8 +497,8 @@ function BallJoint (executionContext)
 
    this .joint             = null;
    this .outputs           = new Set ();
-   this .localAnchorPoint1 = new (Vector3_default()) (0, 0, 0);
-   this .localAnchorPoint2 = new (Vector3_default()) (0, 0, 0);
+   this .localAnchorPoint1 = new (Vector3_default()) ();
+   this .localAnchorPoint2 = new (Vector3_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype),
@@ -583,7 +583,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
    },
    update1: (() =>
    {
-      var localAnchorPoint1 = new (Vector3_default()) (0, 0, 0);
+      var localAnchorPoint1 = new (Vector3_default()) ();
 
       return function ()
       {
@@ -593,7 +593,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
    })(),
    update2: (() =>
    {
-      var localAnchorPoint2 = new (Vector3_default()) (0, 0, 0);
+      var localAnchorPoint2 = new (Vector3_default()) ();
 
       return function ()
       {
@@ -724,7 +724,7 @@ function X3DNBodyCollidableNode (executionContext)
    // Members
 
    this .compoundShape  = new AmmoClass .btCompoundShape ()
-   this .offset         = new (Vector3_default()) (0, 0, 0);
+   this .offset         = new (Vector3_default()) ();
    this .matrix         = new (Matrix4_default()) ();
 }
 
@@ -2004,8 +2004,8 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (X3DSensorNo
          collisionWorlds      = new Set (),
          intersectionNodes    = new Set (),
          contactNodes         = [ ],
-         position             = new (Vector3_default()) (0, 0, 0),
-         contactNormal        = new (Vector3_default()) (0, 0, 0);
+         position             = new (Vector3_default()) (),
+         contactNormal        = new (Vector3_default()) ();
 
       return function ()
       {
@@ -2676,18 +2676,18 @@ function DoubleAxisHingeJoint (executionContext)
       this .addAlias ("stopConstantForceMix1", this ._stop1ConstantForceMix);
       this .addAlias ("stopErrorCorrection1",  this ._stop1ErrorCorrection);
 
-      this ._axis1 = new (Vector3_default()) (0, 0, 0);
-      this ._axis2 = new (Vector3_default()) (0, 0, 0);
+      this ._axis1 = new (Vector3_default()) ();
+      this ._axis2 = new (Vector3_default()) ();
    }
 
    // Private properties
 
    this .joint             = null;
    this .outputs           = new Set ();
-   this .localAnchorPoint1 = new (Vector3_default()) (0, 0, 0);
-   this .localAnchorPoint2 = new (Vector3_default()) (0, 0, 0);
-   this .localAxis1        = new (Vector3_default()) (0, 0, 0);
-   this .localAxis2        = new (Vector3_default()) (0, 0, 0);
+   this .localAnchorPoint1 = new (Vector3_default()) ();
+   this .localAnchorPoint2 = new (Vector3_default()) ();
+   this .localAxis1        = new (Vector3_default()) ();
+   this .localAxis2        = new (Vector3_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype),
@@ -2703,10 +2703,10 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
    addJoint: (() =>
    {
       var
-         localAnchorPoint1 = new (Vector3_default()) (0, 0, 0),
-         localAnchorPoint2 = new (Vector3_default()) (0, 0, 0),
-         localAxis1        = new (Vector3_default()) (0, 0, 0),
-         localAxis2        = new (Vector3_default()) (0, 0, 0);
+         localAnchorPoint1 = new (Vector3_default()) (),
+         localAnchorPoint2 = new (Vector3_default()) (),
+         localAxis1        = new (Vector3_default()) (),
+         localAxis2        = new (Vector3_default()) ();
 
       return function ()
       {
@@ -2786,8 +2786,8 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
    update1: (() =>
    {
       var
-         localAnchorPoint1 = new (Vector3_default()) (0, 0, 0),
-         localAxis1        = new (Vector3_default()) (0, 0, 0),
+         localAnchorPoint1 = new (Vector3_default()) (),
+         localAxis1        = new (Vector3_default()) (),
          difference        = new (Matrix4_default()) (),
          rotation          = new (Rotation4_default()) ();
 
@@ -2816,8 +2816,8 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
    update2: (() =>
    {
       var
-         localAnchorPoint2 = new (Vector3_default()) (0, 0, 0),
-         localAxis2        = new (Vector3_default()) (0, 0, 0),
+         localAnchorPoint2 = new (Vector3_default()) (),
+         localAxis2        = new (Vector3_default()) (),
          difference        = new (Matrix4_default()) (),
          rotation          = new (Rotation4_default()) ();
 
@@ -2983,9 +2983,9 @@ function MotorJoint (executionContext)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
    {
-      this ._motor1Axis = new (Vector3_default()) (0, 0, 0);
-      this ._motor2Axis = new (Vector3_default()) (0, 0, 0);
-      this ._motor3Axis = new (Vector3_default()) (0, 0, 0);
+      this ._motor1Axis = new (Vector3_default()) ();
+      this ._motor2Axis = new (Vector3_default()) ();
+      this ._motor3Axis = new (Vector3_default()) ();
    }
 }
 
@@ -3144,8 +3144,8 @@ function RigidBody (executionContext)
    this .geometryNodes      = [ ];
    this .otherGeometryNodes = [ ];
    this .matrix             = new (Matrix4_default()) ();
-   this .force              = new (Vector3_default()) (0, 0, 0);
-   this .torque             = new (Vector3_default()) (0, 0, 0);
+   this .force              = new (Vector3_default()) ();
+   this .torque             = new (Vector3_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()).prototype),
@@ -3493,11 +3493,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
    {
       var
          transform       = new AmmoClass .btTransform (),
-         position        = new (Vector3_default()) (0, 0, 0),
+         position        = new (Vector3_default()) (),
          quaternion      = new (Quaternion_default()) (0, 0, 0, 1),
          orientation     = new (Rotation4_default()) (),
-         linearVelocity  = new (Vector3_default()) (0, 0, 0),
-         angularVelocity = new (Vector3_default()) (0, 0, 0);
+         linearVelocity  = new (Vector3_default()) (),
+         angularVelocity = new (Vector3_default()) ();
 
       return function ()
       {
@@ -4080,14 +4080,14 @@ function SingleAxisHingeJoint (executionContext)
    // Legacy
 
    if (executionContext .getSpecificationVersion () <= 3.3)
-      this ._axis = new (Vector3_default()) (0, 0, 0);
+      this ._axis = new (Vector3_default()) ();
 
    // Private properties
 
    this .joint             = null;
    this .outputs           = new Set ();
-   this .localAnchorPoint1 = new (Vector3_default()) (0, 0, 0);
-   this .localAnchorPoint2 = new (Vector3_default()) (0, 0, 0);
+   this .localAnchorPoint1 = new (Vector3_default()) ();
+   this .localAnchorPoint2 = new (Vector3_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype),
@@ -4102,8 +4102,8 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
    addJoint: (() =>
    {
       var
-         localAxis1 = new (Vector3_default()) (0, 0, 0),
-         localAxis2 = new (Vector3_default()) (0, 0, 0);
+         localAxis1 = new (Vector3_default()) (),
+         localAxis2 = new (Vector3_default()) ();
 
       return function ()
       {
@@ -4182,7 +4182,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
    },
    update1: (() =>
    {
-      var localAnchorPoint1 = new (Vector3_default()) (0, 0, 0);
+      var localAnchorPoint1 = new (Vector3_default()) ();
 
       return function ()
       {
@@ -4193,7 +4193,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
    update2: (() =>
    {
       var
-         localAnchorPoint2 = new (Vector3_default()) (0, 0, 0),
+         localAnchorPoint2 = new (Vector3_default()) (),
          difference        = new (Matrix4_default()) (),
          rotation          = new (Rotation4_default()) ();
 
@@ -4572,8 +4572,8 @@ function UniversalJoint (executionContext)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
    {
-      this ._axis1 = new (Vector3_default()) (0, 0, 0);
-      this ._axis2 = new (Vector3_default()) (0, 0, 0);
+      this ._axis1 = new (Vector3_default()) ();
+      this ._axis2 = new (Vector3_default()) ();
    }
 }
 

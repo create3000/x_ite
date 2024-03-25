@@ -415,10 +415,10 @@ Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (X3DBaseNode_d
    {
       const
          half      = new (Complex_default()) (0.5, 0.5),
-         texCoord1 = new (Complex_default()) (0, 0),
-         texCoord2 = new (Complex_default()) (0, 0),
-         point1    = new (Complex_default()) (0, 0),
-         point2    = new (Complex_default()) (0, 0);
+         texCoord1 = new (Complex_default()) (),
+         texCoord2 = new (Complex_default()) (),
+         point1    = new (Complex_default()) (),
+         point2    = new (Complex_default()) ();
 
       return function ()
       {
