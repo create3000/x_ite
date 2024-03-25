@@ -59,10 +59,6 @@ function OscillatorSource (executionContext)
    this .addType (X3DConstants .OscillatorSource);
 
    this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool ());
-
-   const audioContext = this .getBrowser () .getAudioContext ();
-
-   this .oscillatorNode = new OscillatorNode (audioContext);
 }
 
 Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSourceNode .prototype),
@@ -77,6 +73,36 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
 
       this .set_periodicWave__ ();
    },
+   set_detune__ ()
+   {
+      if (!this .oscillatorNode)
+         return;
+
+      this .oscillatorNode .detune .value = Math .max (this ._detune .getValue (), 0);
+   },
+   set_frequency__ ()
+   {
+      if (!this .oscillatorNode)
+         return;
+
+      this .oscillatorNode .frequency .value = Math .max (this ._frequency .getValue (), 0);
+   },
+   set_periodicWave__ ()
+   {
+      if (this .periodicWaveNode)
+      {
+         this .periodicWaveNode ._type        .removeInterest ("set_type__",                this);
+         this .periodicWaveNode ._optionsReal .removeInterest ("set_periodicWaveOptions__", this);
+         this .periodicWaveNode ._optionsImag .removeInterest ("set_periodicWaveOptions__", this);
+      }
+
+      this .periodicWaveNode = X3DCast (X3DConstants .PeriodicWave, this ._periodicWave)
+         ?? this .getBrowser () .getDefaultPeriodicWave ();
+
+      this .periodicWaveNode ._type .addInterest ("set_type__", this);
+
+      this .set_type__ ();
+   },
    set_type__: (function ()
    {
       const types = new Map ([
@@ -89,6 +115,9 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
 
       return function ()
       {
+         if (!this .oscillatorNode)
+            return;
+
          this .periodicWaveNode ._optionsReal .removeInterest ("set_periodicWaveOptions__", this);
          this .periodicWaveNode ._optionsImag .removeInterest ("set_periodicWaveOptions__", this);
 
@@ -107,27 +136,6 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
          }
       };
    })(),
-   set_detune__ ()
-   {
-      this .oscillatorNode .detune .value = Math .max (this ._detune .getValue (), 0);
-   },
-   set_frequency__ ()
-   {
-      this .oscillatorNode .frequency .value = Math .max (this ._frequency .getValue (), 0);
-   },
-   set_periodicWave__ ()
-   {
-      this .periodicWaveNode ?._type        .removeInterest ("set_type__",                this);
-      this .periodicWaveNode ?._optionsReal .removeInterest ("set_periodicWaveOptions__", this);
-      this .periodicWaveNode ?._optionsImag .removeInterest ("set_periodicWaveOptions__", this);
-
-      this .periodicWaveNode = X3DCast (X3DConstants .PeriodicWave, this ._periodicWave)
-         ?? this .getBrowser () .getDefaultPeriodicWave ();
-
-      this .periodicWaveNode ._type .addInterest ("set_type__", this);
-
-      this .set_type__ ();
-   },
    set_periodicWaveOptions__ ()
    {
       this .oscillatorNode .setPeriodicWave (this .periodicWaveNode .createPeriodicWave ());
@@ -138,9 +146,9 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
 
       this .oscillatorNode = new OscillatorNode (audioContext);
 
-      this .set_type__ ();
-      this .set_frequency__ ();
       this .set_detune__ ();
+      this .set_frequency__ ();
+      this .set_type__ ();
 
       this .oscillatorNode .connect (this .getAudioSource ());
       this .oscillatorNode .start ();
