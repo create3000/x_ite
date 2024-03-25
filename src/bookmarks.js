@@ -81,7 +81,7 @@ const Bookmarks = (() =>
                         .addClass ('display-example')
                         .attr ('href', `${server}/${component}/${test}/${test}.x3d`)
                         .attr ('style', `background-image:url(${server}/${component}/${test}/screenshot-small.png)`)
-                        .on ("click", () => this .loadURL (`${server}/${component}/${test}/${test}.x3d`) && false));
+                        .on ("click", () => prevent (this .loadURL (`${server}/${component}/${test}/${test}.x3d`))));
                }
                else if (path)
                {
@@ -98,7 +98,7 @@ const Bookmarks = (() =>
                      .append ($("<a/>")
                         .addClass ('display-example')
                         .attr ('href', server + '/' + path)
-                        .on ("click", () => this .loadURL (server + '/' + path) && false)
+                        .on ("click", () => prevent (this .loadURL (server + '/' + path)))
                         .text (name));
                }
                else if (component)
@@ -140,19 +140,19 @@ const Bookmarks = (() =>
          $("#file") .text (this .browser .getWorldURL ())
             .append ($("<a/>")
             .attr ('href', base + ".x3d")
-            .on ("click", () => this .loadURL (base + ".x3d") && false)
+            .on ("click", () => prevent (this .loadURL (base + ".x3d")))
             .text (".x3d"))
             .append ($("<a/>")
             .attr ('href', base + ".x3dv")
-            .on ("click", () => this .loadURL (base + ".x3dv") && false)
+            .on ("click", () => prevent (this .loadURL (base + ".x3dv")))
             .text (".x3dv"))
             .append ($("<a/>")
             .attr ('href', base + ".x3dj")
-            .on ("click", () => this .loadURL (base + ".x3dj") && false)
+            .on ("click", () => prevent (this .loadURL (base + ".x3dj")))
             .text (".x3dj"))
             .append ($("<a/>")
             .attr ('href', local + ".O.x3d")
-            .on ("click", () => this .loadURL (local + ".O.x3d") && false)
+            .on ("click", () => prevent (this .loadURL (local + ".O.x3d")))
             .text ("local"));
 
          $("#toolbar") .empty ();
@@ -331,6 +331,11 @@ const Bookmarks = (() =>
          return this .environmentLight = environmentLight;
       }
    });
+
+   function prevent ()
+   {
+      return false;
+   }
 
    return Bookmarks;
 }) ();
