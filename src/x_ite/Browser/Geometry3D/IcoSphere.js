@@ -187,7 +187,7 @@ IcoSphere .prototype .refineTriangles = function ()
    // Refine triangles
    for (let o = 0; o < this .order; ++ o)
    {
-      const coordIndex2 = new Fields .MFInt32 ();
+      let coordIndex2 = new Fields .MFInt32 ();
 
       for (let i = 0; i < coordIndex .length; i += 4)
       {
