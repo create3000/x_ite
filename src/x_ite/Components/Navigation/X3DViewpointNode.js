@@ -77,7 +77,7 @@ function X3DViewpointNode (executionContext)
    this .descriptions         = [ ];
    this .userPosition         = new Vector3 (0, 1, 0);
    this .userOrientation      = new Rotation4 ();
-   this .userCenterOfRotation = new Vector3 (0, 0, 0);
+   this .userCenterOfRotation = new Vector3 ();
    this .modelMatrix          = new Matrix4 ();
    this .cameraSpaceMatrix    = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
    this .viewMatrix           = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
@@ -399,9 +399,9 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    getRelativeTransformation: (() =>
    {
       const
-         position         = new Vector3 (0, 0, 0),
+         position         = new Vector3 (),
          orientation      = new Rotation4 (),
-         scale            = new Vector3 (0, 0, 0),
+         scale            = new Vector3 (),
          scaleOrientation = new Rotation4 ();
 
       return function (fromViewpointNode)
@@ -424,9 +424,9 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    getLookAtRotation: (() =>
    {
       const
-         x = new Vector3 (0, 0, 0),
-         y = new Vector3 (0, 0, 0),
-         z = new Vector3 (0, 0, 0),
+         x = new Vector3 (),
+         y = new Vector3 (),
+         z = new Vector3 (),
          m = new Matrix3 (),
          r = new Rotation4 ();
 

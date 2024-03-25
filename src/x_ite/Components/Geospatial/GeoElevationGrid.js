@@ -174,7 +174,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
          normalIndex .get (c1) .push (normals .length + 1);
          normalIndex .get (c2) .push (normals .length + 2);
 
-         const normal = Triangle3 .normal (points [c0], points [c1], points [c2], new Vector3 (0, 0, 0));
+         const normal = Triangle3 .normal (points [c0], points [c1], points [c2], new Vector3 ());
 
          if (cw)
             normal .negate ();

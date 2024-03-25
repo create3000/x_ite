@@ -95,10 +95,10 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
    set_fraction__: (() =>
    {
       const
-         a     = new Vector3 (0, 0, 0),
-         b     = new Vector3 (0, 0, 0),
-         c     = new Vector3 (0, 0, 0),
-         point = new Vector3 (0, 0, 0),
+         a     = new Vector3 (),
+         b     = new Vector3 (),
+         c     = new Vector3 (),
+         point = new Vector3 (),
          line  = new Line3 (Vector3 .Zero, Vector3 .zAxis),
          uvt   = { };
 

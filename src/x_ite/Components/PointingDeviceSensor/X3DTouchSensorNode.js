@@ -70,7 +70,7 @@ Object .assign (Object .setPrototypeOf (X3DTouchSensorNode .prototype, X3DPointi
    {
       const
          invModelViewMatrix = new Matrix4 (),
-         texCoord           = new Vector2 (0, 0);
+         texCoord           = new Vector2 ();
 
       return function (over, hit, modelViewMatrix, projectionMatrix, viewport)
       {

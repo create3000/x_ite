@@ -54,7 +54,7 @@ function SFColorRGBA (r, g, b, a)
    switch (arguments .length)
    {
       case 0:
-         X3DField .call (this, new Color4 (0, 0, 0, 0));
+         X3DField .call (this, new Color4 ());
          break;
 
       case 1:

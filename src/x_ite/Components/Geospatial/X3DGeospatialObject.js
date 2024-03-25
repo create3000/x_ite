@@ -52,19 +52,19 @@ import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4          from "../../../standard/Math/Numbers/Matrix4.js";
 
 const
-   vector = new Vector3 (0, 0, 0),
-   result = new Vector3 (0, 0, 0),
-   t      = new Vector3 (0, 0, 0),
-   x      = new Vector3 (0, 0, 0),
-   y      = new Vector3 (0, 0, 0),
-   z      = new Vector3 (0, 0, 0);
+   vector = new Vector3 (),
+   result = new Vector3 (),
+   t      = new Vector3 (),
+   x      = new Vector3 (),
+   y      = new Vector3 (),
+   z      = new Vector3 ();
 
 function X3DGeospatialObject (executionContext)
 {
    this .addType (X3DConstants .X3DGeospatialObject);
 
    this .radians         = false;
-   this .origin          = new Vector3 (0, 0, 0);
+   this .origin          = new Vector3 ();
    this .originMatrix    = new Matrix4 ();
    this .invOriginMatrix = new Matrix4 ();
 }

@@ -68,8 +68,8 @@ function ProximitySensor (executionContext)
 
    this .setZeroTest (true);
 
-   this .min           = new Vector3 (0, 0, 0);
-   this .max           = new Vector3 (0, 0, 0);
+   this .min           = new Vector3 ();
+   this .max           = new Vector3 ();
    this .layerNode     = null;
    this .modelMatrix   = new Matrix4 ();
    this .inside        = false;
@@ -117,9 +117,9 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
    update: (() =>
    {
       const
-         position               = new Vector3 (0, 0, 0),
+         position               = new Vector3 (),
          orientation            = new Rotation4 (),
-         centerOfRotation       = new Vector3 (0, 0, 0),
+         centerOfRotation       = new Vector3 (),
          centerOfRotationMatrix = new Matrix4 ();
 
       return function ()

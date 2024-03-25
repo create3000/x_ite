@@ -56,7 +56,7 @@ function SFVec4Template (TypeName, double)
       switch (arguments .length)
       {
          case 0:
-            X3DField .call (this, new Vector4 (0, 0, 0, 0));
+            X3DField .call (this, new Vector4 ());
             break;
 
          case 1:

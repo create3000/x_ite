@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
                      var
                         compoundShape = new Ammo .btCompoundShape (),
                         sphereShape   = new Ammo .btSphereShape (0),
-                        point         = coord .get1Point (i, new Vector3 (0, 0, 0));
+                        point         = coord .get1Point (i, new Vector3 ());
 
                      compoundShape .point = point;
 
@@ -157,11 +157,11 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
       var
          pickingBBox   = new Box3 (),
          targetBBox    = new Box3 (),
-         pickingCenter = new Vector3 (0, 0, 0),
-         targetCenter  = new Vector3 (0, 0, 0),
+         pickingCenter = new Vector3 (),
+         targetCenter  = new Vector3 (),
          transform     = new Ammo .btTransform (),
          localScaling  = new Ammo .btVector3 (),
-         translation   = new Vector3 (0, 0, 0),
+         translation   = new Vector3 (),
          rotation      = new Rotation4 (),
          scale         = new Vector3 (1, 1, 1),
          pickedPoint   = new Fields .MFVec3f ();

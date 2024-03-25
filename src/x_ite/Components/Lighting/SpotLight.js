@@ -68,14 +68,14 @@ const SpotLights = ObjectCache (SpotLightContainer);
 
 function SpotLightContainer ()
 {
-   this .location                      = new Vector3 (0, 0, 0);
-   this .direction                     = new Vector3 (0, 0, 0);
+   this .location                      = new Vector3 ();
+   this .direction                     = new Vector3 ();
    this .matrixArray                   = new Float32Array (9);
    this .renderShadow                  = true;
    this .shadowBuffer                  = null;
    this .bbox                          = new Box3 ();
    this .viewVolume                    = new ViewVolume ();
-   this .viewport                      = new Vector4 (0, 0, 0, 0);
+   this .viewport                      = new Vector4 ();
    this .projectionMatrix              = new Matrix4 ();
    this .modelViewMatrix               = new MatrixStack (Matrix4);
    this .modelMatrix                   = new Matrix4 ();
@@ -84,8 +84,8 @@ function SpotLightContainer ()
    this .shadowMatrix                  = new Matrix4 ();
    this .shadowMatrixArray             = new Float32Array (16);
    this .rotation                      = new Rotation4 ();
-   this .lightBBoxMin                  = new Vector3 (0, 0, 0);
-   this .lightBBoxMax                  = new Vector3 (0, 0, 0);
+   this .lightBBoxMin                  = new Vector3 ();
+   this .lightBBoxMax                  = new Vector3 ();
    this .textureUnit                   = undefined;
 }
 

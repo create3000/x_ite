@@ -54,10 +54,10 @@ import Color3               from "../../../standard/Math/Numbers/Color3.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
 var
-   a                  = new Vector3 (0, 0, 0),
-   initialValue       = new Vector3 (0, 0, 0),
-   initialDestination = new Vector3 (0, 0, 0),
-   vector             = new Vector3 (0, 0, 0);
+   a                  = new Vector3 (),
+   initialValue       = new Vector3 (),
+   initialDestination = new Vector3 (),
+   vector             = new Vector3 ();
 
 function ColorDamper (executionContext)
 {
@@ -70,7 +70,7 @@ Object .assign (Object .setPrototypeOf (ColorDamper .prototype, X3DDamperNode .p
 {
    getVector ()
    {
-      return new Vector3 (0, 0, 0);
+      return new Vector3 ();
    },
    getValue ()
    {

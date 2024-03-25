@@ -66,7 +66,7 @@ function WindPhysicsModel (executionContext)
    // Legacy
 
    if (executionContext .getSpecificationVersion () <= 3.3)
-      this ._direction = new Vector3 (0, 0, 0);
+      this ._direction = new Vector3 ();
 }
 
 Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, X3DParticlePhysicsModelNode .prototype),
@@ -81,7 +81,7 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, X3DParticle
    },
    addForce: (() =>
    {
-      const force = new Vector3 (0, 0, 0);
+      const force = new Vector3 ();
 
       return function (i, emitterNode, timeByMass, forces)
       {

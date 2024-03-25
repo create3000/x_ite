@@ -74,7 +74,7 @@ function X3DPointingDeviceSensorContext ()
 {
    this [_pointingDevice]            = new PointingDevice (this .getPrivateScene ());
    this [_pointingDeviceSensorNodes] = new Set ();
-   this [_pointer]                   = new Vector2 (0, 0);
+   this [_pointer]                   = new Vector2 ();
    this [_overSensors]               = [ ];
    this [_activeSensors]             = [ ];
    this [_pointingLayer]             = null;
@@ -90,9 +90,9 @@ function X3DPointingDeviceSensorContext ()
       sensors: [ ],
       viewMatrix: new Matrix4 (),
       modelViewMatrix: new Matrix4 (),
-      point: new Vector3 (0, 0, 0),
-      normal: new Vector3 (0, 0, 0),
-      texCoord: new Vector4 (0, 0, 0, 0),
+      point: new Vector3 (),
+      normal: new Vector3 (),
+      texCoord: new Vector4 (),
       layerNode: null,
       shapeNode: null,
       copy ()

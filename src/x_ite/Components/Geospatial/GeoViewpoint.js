@@ -133,7 +133,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
    },
    getPosition: (() =>
    {
-      const position = new Vector3 (0, 0, 0);
+      const position = new Vector3 ();
 
       return function ()
       {
@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
    })(),
    setPosition: (() =>
    {
-      const geoPosition = new Vector3 (0, 0, 0);
+      const geoPosition = new Vector3 ();
 
       return function (value)
       {
@@ -151,7 +151,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
    })(),
    set_position__: (() =>
    {
-      const position = new Vector3 (0, 0, 0);
+      const position = new Vector3 ();
 
       return function ()
       {
@@ -196,7 +196,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
    })(),
    getCenterOfRotation: (() =>
    {
-      const centerOfRotation = new Vector3 (0, 0, 0);
+      const centerOfRotation = new Vector3 ();
 
       return function ()
       {
@@ -205,7 +205,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
    })(),
    setCenterOfRotation: (() =>
    {
-      const geoCenterOfRotation = new Vector3 (0, 0, 0);
+      const geoCenterOfRotation = new Vector3 ();
 
       return function (value)
       {
@@ -219,8 +219,8 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
    getUpVector: (() =>
    {
       const
-         position = new Vector3 (0, 0, 0),
-         upVector = new Vector3 (0, 0, 0);
+         position = new Vector3 (),
+         upVector = new Vector3 ();
 
       return function (dynamic = false)
       {

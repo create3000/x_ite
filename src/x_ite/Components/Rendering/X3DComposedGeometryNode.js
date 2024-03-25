@@ -316,15 +316,15 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
    getPolygonNormal: (() =>
    {
       let
-         current = new Vector3 (0, 0, 0),
-         next    = new Vector3 (0, 0, 0);
+         current = new Vector3 (),
+         next    = new Vector3 ();
 
       return function (index, verticesPerPolygon, coord)
       {
          // Determine polygon normal.
          // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-         const normal = new Vector3 (0, 0, 0);
+         const normal = new Vector3 ();
 
          coord .get1Point (this .getPolygonIndex (index), next);
 

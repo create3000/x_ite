@@ -47,7 +47,7 @@
 
 import Algorithm from "../Algorithm.js";
 
-function Vector3 (x, y, z)
+function Vector3 (x = 0, y = 0, z = 0)
 {
    this .x = x;
    this .y = y;

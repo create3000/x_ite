@@ -2482,7 +2482,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    },
    colorValue: (() =>
    {
-      const color = new Color4 (0, 0, 0, 0);
+      const color = new Color4 ();
 
       return function (c)
       {
@@ -2523,7 +2523,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       const
          transformNode    = scene .createNode ("Transform"),
          matrix           = Matrix4 .Matrix3 (m),
-         translation      = new Vector3 (0, 0, 0),
+         translation      = new Vector3 (),
          rotation         = new Rotation4 (),
          scale            = new Vector3 (1, 1, 1),
          scaleOrientation = new Rotation4 ();

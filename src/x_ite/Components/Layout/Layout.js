@@ -89,21 +89,21 @@ function Layout (executionContext)
    this .scaleModeX      = NONE;
    this .scaleModeY      = NONE;
    this .parent          = null;
-   this .rectangleCenter = new Vector2 (0, 0);
-   this .rectangleSize   = new Vector2 (0, 0);
+   this .rectangleCenter = new Vector2 ();
+   this .rectangleSize   = new Vector2 ();
    this .matrix          = new Matrix4 ();
 }
 
 Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .prototype),
 {
-   viewportPixel: new Vector2 (0, 0),
-   pixelSize: new Vector2 (0, 0),
-   translation: new Vector3 (0, 0, 0),
-   offset: new Vector3 (0, 0, 0),
+   viewportPixel: new Vector2 (),
+   pixelSize: new Vector2 (),
+   translation: new Vector3 (),
+   offset: new Vector3 (),
    scale: new Vector3 (1, 1, 1),
-   currentTranslation: new Vector3 (0, 0, 0),
+   currentTranslation: new Vector3 (),
    currentRotation: new Rotation4 (),
-   currentScale: new Vector3 (0, 0, 0),
+   currentScale: new Vector3 (),
    modelViewMatrix: new Matrix4 (),
    initialize ()
    {

@@ -82,8 +82,8 @@ function X3DGeometryNode (executionContext)
 
    const browser = this .getBrowser ();
 
-   this .min                      = new Vector3 (0, 0, 0);
-   this .max                      = new Vector3 (0, 0, 0);
+   this .min                      = new Vector3 ();
+   this .max                      = new Vector3 ();
    this .bbox                     = Box3 .Extents (this .min, this .max);
    this .solid                    = true;
    this .primitiveMode            = browser .getContext () .TRIANGLES;
@@ -381,7 +381,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    getTexCoordParams: (() =>
    {
-      const texCoordParams = { min: new Vector3 (0, 0, 0), Ssize: 0, Sindex: 0, Tindex: 0 };
+      const texCoordParams = { min: new Vector3 (), Ssize: 0, Sindex: 0, Tindex: 0 };
 
       return function ()
       {
@@ -446,7 +446,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          {
             const
                P = normals [p],
-               N = new Vector3 (0, 0, 0);
+               N = new Vector3 ();
 
             for (const q of vertex)
             {
@@ -479,10 +479,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       const
          modelViewMatrix = new Matrix4 (),
          uvt             = { u: 0, v: 0, t: 0 },
-         v0              = new Vector3 (0, 0, 0),
-         v1              = new Vector3 (0, 0, 0),
-         v2              = new Vector3 (0, 0, 0),
-         clipPoint       = new Vector3 (0, 0, 0);
+         v0              = new Vector3 (),
+         v1              = new Vector3 (),
+         v2              = new Vector3 (),
+         clipPoint       = new Vector3 ();
 
       return function (hitRay, matrix, clipPlanes, intersections)
       {
@@ -546,8 +546,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    getPlanesWithOffset: (() =>
    {
       const
-         min    = new Vector3 (0, 0, 0),
-         max    = new Vector3 (0, 0, 0),
+         min    = new Vector3 (),
+         max    = new Vector3 (),
          planes = [ ];
 
       for (let i = 0; i < 5; ++ i)
@@ -566,7 +566,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    })(),
    intersectsBBox: (() =>
    {
-      const intersection = new Vector3 (0, 0, 0);
+      const intersection = new Vector3 ();
 
       return function (hitRay, offsets)
       {
@@ -643,11 +643,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    intersectsBox: (() =>
    {
       const
-         v0        = new Vector3 (0, 0, 0),
-         v1        = new Vector3 (0, 0, 0),
-         v2        = new Vector3 (0, 0, 0),
+         v0        = new Vector3 (),
+         v1        = new Vector3 (),
+         v2        = new Vector3 (),
          invMatrix = new Matrix4 (),
-         clipPoint = new Vector3 (0, 0, 0);
+         clipPoint = new Vector3 ();
 
       return function (box, clipPlanes, modelViewMatrix)
       {
@@ -701,10 +701,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    set_shading__: (() =>
    {
       const
-         v0     = new Vector3 (0, 0, 0),
-         v1     = new Vector3 (0, 0, 0),
-         v2     = new Vector3 (0, 0, 0),
-         normal = new Vector3 (0, 0, 0);
+         v0     = new Vector3 (),
+         v1     = new Vector3 (),
+         v2     = new Vector3 (),
+         normal = new Vector3 ();
 
       return function (shading)
       {
@@ -769,7 +769,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    rebuild: (() =>
    {
-      const point = new Vector3 (0, 0, 0);
+      const point = new Vector3 ();
 
       return function ()
       {

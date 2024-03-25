@@ -80,8 +80,8 @@ Object .assign (X3DLayoutContext .prototype,
    getScreenScaleMatrix: (() =>
    {
       const
-         screenScale  = new Vector3 (0, 0, 0),
-         screenPoint  = new Vector3 (0, 0, 0),
+         screenScale  = new Vector3 (),
+         screenPoint  = new Vector3 (),
          screenMatrix = new Matrix4 ();
 
       return function (renderObject, matrix, contentScale, snap)

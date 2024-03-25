@@ -70,11 +70,11 @@ function LookAtViewer (executionContext, navigationInfo)
    X3DViewer .call (this, executionContext, navigationInfo);
 
    this .button                 = -1;
-   this .fromVector             = new Vector3 (0, 0, 0);
-   this .toVector               = new Vector3 (0, 0, 0);
+   this .fromVector             = new Vector3 ();
+   this .toVector               = new Vector3 ();
 
-   this .touch1                 = new Vector2 (0, 0);
-   this .touch2                 = new Vector2 (0, 0);
+   this .touch1                 = new Vector2 ();
+   this .touch2                 = new Vector2 ();
    this .tapStart               = 0;
    this .dblTapInterval         = 0.4;
 
@@ -214,8 +214,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
    mousewheel: (() =>
    {
       const
-         step        = new Vector3 (0, 0, 0),
-         translation = new Vector3 (0, 0, 0);
+         step        = new Vector3 (),
+         translation = new Vector3 ();
 
       return function (event)
       {
@@ -315,8 +315,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
       const
          MOVE_ANGLE   = 0.7,
          ZOOM_ANGLE   = -0.7,
-         touch1Change = new Vector2 (0, 0),
-         touch2Change = new Vector2 (0, 0);
+         touch1Change = new Vector2 (),
+         touch2Change = new Vector2 ();
 
       return function (event)
       {
@@ -398,8 +398,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
    addMove: (() =>
    {
       const
-         positionOffset         = new Vector3 (0, 0, 0),
-         centerOfRotationOffset = new Vector3 (0, 0, 0);
+         positionOffset         = new Vector3 (),
+         centerOfRotationOffset = new Vector3 ();
 
       return function (positionOffsetChange, centerOfRotationOffsetChange)
       {

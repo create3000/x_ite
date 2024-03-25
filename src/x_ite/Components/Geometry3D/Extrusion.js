@@ -140,16 +140,16 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
       const rotations = [ ];
 
       const
-         SCPxAxis = new Vector3 (0, 0, 0),
-         SCPyAxis = new Vector3 (0, 0, 0),
-         SCPzAxis = new Vector3 (0, 0, 0);
+         SCPxAxis = new Vector3 (),
+         SCPyAxis = new Vector3 (),
+         SCPzAxis = new Vector3 ();
 
          const
-         SCPyAxisPrevious = new Vector3 (0, 0, 0),
-         SCPzAxisPrevious = new Vector3 (0, 0, 0);
+         SCPyAxisPrevious = new Vector3 (),
+         SCPzAxisPrevious = new Vector3 ();
 
          const
-         vector3  = new Vector3 (0, 0, 0),
+         vector3  = new Vector3 (),
          rotation = new Rotation4 ();
 
       return function ()
@@ -330,9 +330,9 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
    build: (() =>
    {
       const
-         min     = new Vector2 (0, 0, 0),
-         max     = new Vector2 (0, 0, 0),
-         vector2 = new Vector2 (0, 0, 0);
+         min     = new Vector2 (),
+         max     = new Vector2 (),
+         vector2 = new Vector2 ();
 
       return function ()
       {
@@ -434,14 +434,14 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                if (cw)
                {
                   var
-                     normal1 = Triangle3 .normal (p3, p2, p1, new Vector3 (0, 0, 0)),
-                     normal2 = Triangle3 .normal (p4, p3, p1, new Vector3 (0, 0, 0));
+                     normal1 = Triangle3 .normal (p3, p2, p1, new Vector3 ()),
+                     normal2 = Triangle3 .normal (p4, p3, p1, new Vector3 ());
                }
                else
                {
                   var
-                     normal1 = Triangle3 .normal (p1, p2, p3, new Vector3 (0, 0, 0)),
-                     normal2 = Triangle3 .normal (p1, p3, p4, new Vector3 (0, 0, 0));
+                     normal1 = Triangle3 .normal (p1, p2, p3, new Vector3 ()),
+                     normal2 = Triangle3 .normal (p1, p3, p4, new Vector3 ());
                }
 
                // Merge points on the left and right side if spine is coincident for better normal generation.
@@ -590,7 +590,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                   const normal = Triangle3 .normal (points [triangles [0]],
                                                     points [triangles [1]],
                                                     points [triangles [2]],
-                                                    new Vector3 (0, 0, 0));
+                                                    new Vector3 ());
 
                   if (cw)
                      normal .negate ();
@@ -630,7 +630,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                   const normal = Triangle3 .normal (points [triangles [0]],
                                                     points [triangles [1]],
                                                     points [triangles [2]],
-                                                    new Vector3 (0, 0, 0));
+                                                    new Vector3 ());
 
                   if (cw)
                      normal .negate ();
@@ -720,7 +720,7 @@ Object .defineProperties (Extrusion,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "crossSection",     new Fields .MFVec2f (new Vector2 (1, 1), new Vector2 (1, -1), new Vector2 (-1, -1), new Vector2 (-1, 1), new Vector2 (1, 1))),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "orientation",      new Fields .MFRotation (new Rotation4 ())),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "scale",            new Fields .MFVec2f (new Vector2 (1, 1))),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "spine",            new Fields .MFVec3f (new Vector3 (0, 0, 0), new Vector3 (0, 1, 0))),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "spine",            new Fields .MFVec3f (new Vector3 (), new Vector3 (0, 1, 0))),
       ]),
       enumerable: true,
    },

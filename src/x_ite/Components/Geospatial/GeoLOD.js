@@ -59,7 +59,7 @@ import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3                 from "../../../standard/Math/Geometry/Box3.js";
 
-var center = new Vector3 (0, 0, 0);
+var center = new Vector3 ();
 
 function GeoLOD (executionContext)
 {

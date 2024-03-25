@@ -909,7 +909,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          materialNode   = this .refineMaterial (mode, this .createMaterial (material, mode)),
          name           = this .sanitizeName (material .name);
 
-      const emissiveFactor = new Color3 (0, 0, 0);
+      const emissiveFactor = new Color3 ();
 
       if (this .vectorValue (material .emissiveFactor, emissiveFactor))
          materialNode ._emissiveColor = emissiveFactor;
@@ -1040,8 +1040,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          materialNode = scene .createNode ("PhysicalMaterial", false);
 
       const
-         baseColorFactor = new Color4 (0, 0, 0, 0),
-         baseColor       = new Color3 (0, 0, 0);
+         baseColorFactor = new Color4 (),
+         baseColor       = new Color3 ();
 
       if (this .vectorValue (pbrMetallicRoughness .baseColorFactor, baseColorFactor))
       {
@@ -1069,9 +1069,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          materialNode = scene .createNode ("Material", false);
 
       const
-         diffuseFactor  = new Color4 (0, 0, 0, 0),
-         diffuseColor   = new Color3 (0, 0, 0),
-         specularFactor = new Color3 (0, 0, 0);
+         diffuseFactor  = new Color4 (),
+         diffuseColor   = new Color3 (),
+         specularFactor = new Color3 ();
 
       if (this .vectorValue (pbrSpecularGlossiness .diffuseFactor, diffuseFactor))
       {
@@ -1205,7 +1205,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          mapping              = `TEXCOORD_${this .texCoordIndex + this .textureTransformNodes .length + 1}`;
 
       const
-         translation = new Vector2 (0, 0),
+         translation = new Vector2 (),
          scale       = new Vector2 (1, 1),
          matrix      = new Matrix4 ();
 
@@ -1655,7 +1655,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       // Set transformation matrix.
 
       const
-         translation      = new Vector3 (0, 0, 0),
+         translation      = new Vector3 (),
          rotation         = new Rotation4 (),
          scale            = new Vector3 (1, 1, 1),
          scaleOrientation = new Rotation4 (),
@@ -3189,7 +3189,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    applyMorphTargets: (function ()
    {
-      const value = new Vector3 (0, 0, 0);
+      const value = new Vector3 ();
 
       return function (array, targets, key, weights, normalized)
       {

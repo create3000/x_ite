@@ -238,12 +238,12 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       const U_DIMENSION = 20;
 
       const
-         z1 = new Complex (0, 0),
-         z2 = new Complex (0, 0),
-         y1 = new Complex (0, 0),
-         y2 = new Complex (0, 0),
-         y3 = new Complex (0, 0),
-         y4 = new Complex (0, 0);
+         z1 = new Complex (),
+         z2 = new Complex (),
+         y1 = new Complex (),
+         y2 = new Complex (),
+         y3 = new Complex (),
+         y4 = new Complex ();
 
       return function (radius, vAngle, angle, color, bottom)
       {
@@ -465,7 +465,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       const
          modelViewMatrix = new Matrix4 (),
          rotation        = new Rotation4 (),
-         scale           = new Vector3 (0, 0, 0);
+         scale           = new Vector3 ();
 
       return function (gl, renderObject, viewport)
       {

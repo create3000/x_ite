@@ -93,9 +93,9 @@ Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, X3DI
    interpolate: (() =>
    {
       const
-         keyValue0 = new Vector3 (0, 0, 0),
-         keyValue1 = new Vector3 (0, 0, 0),
-         geovalue  = new Vector3 (0, 0, 0);
+         keyValue0 = new Vector3 (),
+         keyValue1 = new Vector3 (),
+         geovalue  = new Vector3 ();
 
       return function (index0, index1, weight)
       {

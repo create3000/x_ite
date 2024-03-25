@@ -63,7 +63,7 @@ Object .assign (Object .setPrototypeOf (PositionDamper .prototype, X3DDamperNode
 {
    getVector ()
    {
-      return new Vector3 (0, 0, 0);
+      return new Vector3 ();
    },
 });
 

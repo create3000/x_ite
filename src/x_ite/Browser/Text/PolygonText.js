@@ -72,8 +72,8 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
    build: (() =>
    {
       const
-         min = new Vector3 (0, 0, 0),
-         max = new Vector3 (0, 0, 0);
+         min = new Vector3 (),
+         max = new Vector3 ();
 
       return function ()
       {

@@ -63,7 +63,7 @@ import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 const
    screenLine     = new Line2 (Vector2 .Zero, Vector2 .Zero),
-   trackPoint1    = new Vector2 (0, 0, 0),
+   trackPoint1    = new Vector2 (),
    trackPointLine = new Line3 (Vector3 .Zero, Vector3 .Zero);
 
 function PlaneSensor (executionContext)
@@ -96,8 +96,8 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
       this .planeSensor = true;
       this .plane       = null;
       this .line        = null;
-      this .startOffset = new Vector3 (0, 0, 0);
-      this .startPoint  = new Vector3 (0, 0, 0);
+      this .startOffset = new Vector3 ();
+      this .startPoint  = new Vector3 ();
    },
    getLineTrackPoint (pointer, line, trackPoint)
    {
@@ -174,13 +174,13 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
             this .trackStart (this .startPoint);
          }
 
-         // new Plane3 (new Vector3 (0, 0, 0), this .plane .normal) .intersectsLine (hitRay, trackPoint);
+         // new Plane3 (new Vector3 (), this .plane .normal) .intersectsLine (hitRay, trackPoint);
       }
       else
       {
          if (this .getLineTrackPoint (hit .pointer, this .line, this .startPoint))
          {
-            const trackPoint = new Vector3 (0, 0, 0);
+            const trackPoint = new Vector3 ();
 
             try
             {
@@ -212,7 +212,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
          {
             const
                hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-               endPoint = new Vector3 (0, 0, 0);
+               endPoint = new Vector3 ();
 
             if (this .plane .intersectsLine (hitRay, endPoint))
                this .track (endPoint, endPoint .copy ());
@@ -222,8 +222,8 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
          else
          {
             const
-               endPoint   = new Vector3 (0, 0, 0),
-               trackPoint = new Vector3 (0, 0, 0);
+               endPoint   = new Vector3 (),
+               trackPoint = new Vector3 ();
 
             if (this .getLineTrackPoint (hit .pointer, this .line, endPoint))
             {

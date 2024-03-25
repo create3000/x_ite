@@ -82,21 +82,21 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
       this .modelViewMatrix    = new Matrix4 ();
       this .invModelViewMatrix = new Matrix4 ();
 
-      this .cylinder    = new Cylinder3 (new Line3 (new Vector3 (0, 0, 0), new Vector3 (0, 0, 0)), 0);
+      this .cylinder    = new Cylinder3 (new Line3 (new Vector3 (), new Vector3 ()), 0);
       this .disk        = false;
       this .yPlane      = null;
       this .zPlane      = null;
       this .sxPlane     = null;
       this .szNormal    = null;
       this .behind      = false;
-      this .fromVector  = new Vector3 (0, 0, 0);
+      this .fromVector  = new Vector3 ();
       this .startOffset = new Rotation4 ();
    },
    isBehind (hitRay, hitPoint)
    {
       const
          enter = new Vector3 (0, 0 ,0),
-         exit  = new Vector3 (0, 0, 0);
+         exit  = new Vector3 ();
 
       this .cylinder .intersectsLine (hitRay, enter, exit);
 
@@ -104,12 +104,12 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
    },
    getTrackPoint (hitRay, trackPoint)
    {
-      const zPoint = new Vector3 (0, 0, 0);
+      const zPoint = new Vector3 ();
 
       this .zPlane .intersectsLine (hitRay, zPoint);
 
       const
-         axisPoint = zPoint .copy () .add (this .cylinder .axis .getPerpendicularVectorToPoint (zPoint, new Vector3 (0, 0, 0))),
+         axisPoint = zPoint .copy () .add (this .cylinder .axis .getPerpendicularVectorToPoint (zPoint, new Vector3 ())),
          distance  = this .sxPlane .getDistanceToPoint (zPoint) / this .cylinder .radius,
          section   = Math .floor ((distance + 1) / 2);
 
@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
    },
    getAngle (rotation)
    {
-      if (rotation .getAxis (new Vector3 (0, 0, 0)) .dot (this .cylinder .axis .direction) > 0)
+      if (rotation .getAxis (new Vector3 ()) .dot (this .cylinder .axis .direction) > 0)
          return rotation .angle;
       else
          return -rotation .angle;
@@ -170,8 +170,8 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
          cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
 
       const
-         axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
-         radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .magnitude ();
+         axis   = new Line3 (new Vector3 (), yAxis),
+         radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 ()) .magnitude ();
 
       this .cylinder = new Cylinder3 (axis, radius);
       this .disk     = Math .abs (cameraBack .dot (yAxis)) > Math .cos (this ._diskAngle .getValue ());
@@ -184,17 +184,17 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
          billboardToViewer = this .invModelViewMatrix .origin,
          sxNormal          = yAxis .copy () .cross (billboardToViewer) .normalize ();
 
-      this .sxPlane  = new Plane3 (new Vector3 (0, 0, 0), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
+      this .sxPlane  = new Plane3 (new Vector3 (), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
       this .szNormal = sxNormal .copy () .cross (yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
 
-      const trackPoint = new Vector3 (0, 0, 0);
+      const trackPoint = new Vector3 ();
 
       if (this .disk)
          this .yPlane .intersectsLine (hitRay, trackPoint);
       else
          this .getTrackPoint (hitRay, trackPoint);
 
-      this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate ();
+      this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 ()) .negate ();
       this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
 
       this ._trackPoint_changed = trackPoint;
@@ -211,7 +211,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
 
       const
          hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-         trackPoint = new Vector3 (0, 0, 0);
+         trackPoint = new Vector3 ();
 
       if (this .disk)
          this .yPlane .intersectsLine (hitRay, trackPoint);
@@ -221,7 +221,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
       this ._trackPoint_changed = trackPoint;
 
       const
-         toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate (),
+         toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 ()) .negate (),
          rotation = new Rotation4 (this .fromVector, toVector);
 
       if (this .disk)
@@ -253,7 +253,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
             endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1))),
             deltaRotation = new Rotation4 (this .startVector, endVector),
             axis          = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
-            sign          = axis .dot (deltaRotation .getAxis (new Vector3 (0, 0, 0))) > 0 ? 1 : -1,
+            sign          = axis .dot (deltaRotation .getAxis (new Vector3 ())) > 0 ? 1 : -1,
             min           = this ._minAngle .getValue (),
             max           = this ._maxAngle .getValue ();
 

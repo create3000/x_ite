@@ -79,18 +79,18 @@ function DoubleAxisHingeJoint (executionContext)
       this .addAlias ("stopConstantForceMix1", this ._stop1ConstantForceMix);
       this .addAlias ("stopErrorCorrection1",  this ._stop1ErrorCorrection);
 
-      this ._axis1 = new Vector3 (0, 0, 0);
-      this ._axis2 = new Vector3 (0, 0, 0);
+      this ._axis1 = new Vector3 ();
+      this ._axis2 = new Vector3 ();
    }
 
    // Private properties
 
    this .joint             = null;
    this .outputs           = new Set ();
-   this .localAnchorPoint1 = new Vector3 (0, 0, 0);
-   this .localAnchorPoint2 = new Vector3 (0, 0, 0);
-   this .localAxis1        = new Vector3 (0, 0, 0);
-   this .localAxis2        = new Vector3 (0, 0, 0);
+   this .localAnchorPoint1 = new Vector3 ();
+   this .localAnchorPoint2 = new Vector3 ();
+   this .localAxis1        = new Vector3 ();
+   this .localAxis2        = new Vector3 ();
 }
 
 Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigidJointNode .prototype),
@@ -106,10 +106,10 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
    addJoint: (() =>
    {
       var
-         localAnchorPoint1 = new Vector3 (0, 0, 0),
-         localAnchorPoint2 = new Vector3 (0, 0, 0),
-         localAxis1        = new Vector3 (0, 0, 0),
-         localAxis2        = new Vector3 (0, 0, 0);
+         localAnchorPoint1 = new Vector3 (),
+         localAnchorPoint2 = new Vector3 (),
+         localAxis1        = new Vector3 (),
+         localAxis2        = new Vector3 ();
 
       return function ()
       {
@@ -189,8 +189,8 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
    update1: (() =>
    {
       var
-         localAnchorPoint1 = new Vector3 (0, 0, 0),
-         localAxis1        = new Vector3 (0, 0, 0),
+         localAnchorPoint1 = new Vector3 (),
+         localAxis1        = new Vector3 (),
          difference        = new Matrix4 (),
          rotation          = new Rotation4 ();
 
@@ -219,8 +219,8 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
    update2: (() =>
    {
       var
-         localAnchorPoint2 = new Vector3 (0, 0, 0),
-         localAxis2        = new Vector3 (0, 0, 0),
+         localAnchorPoint2 = new Vector3 (),
+         localAxis2        = new Vector3 (),
          difference        = new Matrix4 (),
          rotation          = new Rotation4 ();
 

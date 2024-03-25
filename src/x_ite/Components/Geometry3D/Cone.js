@@ -95,7 +95,7 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, X3DGeometryNode .protot
             geometry        = options .getSideGeometry (),
             defaultNormals  = geometry .getNormals (),
             defaultVertices = geometry .getVertices (),
-            v1              = new Vector3 (0, 0, 0),
+            v1              = new Vector3 (),
             rz              = new Rotation4 (1, 0, 0, -Math .atan (bottomRadius / height)),
             rx              = new Rotation4 ();
 

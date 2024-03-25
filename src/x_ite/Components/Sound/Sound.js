@@ -228,8 +228,8 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    traverse: (() =>
    {
       const
-         min = { distance: 0, intersection: new Vector3 (0, 0, 0) },
-         max = { distance: 0, intersection: new Vector3 (0, 0, 0) };
+         min = { distance: 0, intersection: new Vector3 () },
+         max = { distance: 0, intersection: new Vector3 () };
 
       return function (type, renderObject)
       {
@@ -280,16 +280,16 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    getEllipsoidParameter: (() =>
    {
       const
-         location        = new Vector3 (0, 0, 0),
+         location        = new Vector3 (),
          sphereMatrix    = new Matrix4 (),
          invSphereMatrix = new Matrix4 (),
          rotation        = new Rotation4 (),
          scale           = new Vector3 (1, 1, 1),
          sphere          = new Sphere3 (1, Vector3 .Zero),
-         normal          = new Vector3 (0, 0, 0),
+         normal          = new Vector3 (),
          line            = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-         enterPoint      = new Vector3 (0, 0, 0),
-         exitPoint       = new Vector3 (0, 0, 0);
+         enterPoint      = new Vector3 (),
+         exitPoint       = new Vector3 ();
 
       return function (modelViewMatrix, back, front, value)
       {
@@ -342,9 +342,9 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    {
       const
          rotation  = new Rotation4 (),
-         location  = new Vector3 (0, 0, 0),
-         direction = new Vector3 (0, 0, 0),
-         xAxis     = new Vector3 (0, 0, 0),
+         location  = new Vector3 (),
+         direction = new Vector3 (),
+         xAxis     = new Vector3 (),
          result    = { };
 
       return function (modelViewMatrix)

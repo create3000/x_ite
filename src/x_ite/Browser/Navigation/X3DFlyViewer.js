@@ -81,9 +81,9 @@ function X3DFlyViewer (executionContext, navigationInfo)
       gl      = browser .getContext ();
 
    this .button                = -1;
-   this .fromVector            = new Vector3 (0, 0, 0);
-   this .toVector              = new Vector3 (0, 0, 0);
-   this .direction             = new Vector3 (0, 0, 0);
+   this .fromVector            = new Vector3 ();
+   this .toVector              = new Vector3 ();
+   this .direction             = new Vector3 ();
    this .startTime             = 0;
    this .event                 = null;
    this .lookAround            = false;
@@ -411,9 +411,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    fly: (() =>
    {
       const
-         upVector           = new Vector3 (0, 0, 0),
-         direction          = new Vector3 (0, 0, 0),
-         axis               = new Vector3 (0, 0, 0),
+         upVector           = new Vector3 (),
+         direction          = new Vector3 (),
+         axis               = new Vector3 (),
          userOrientation    = new Rotation4 (),
          orientationOffset  = new Rotation4 (),
          rubberBandRotation = new Rotation4 ();
@@ -485,8 +485,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    pan: (() =>
    {
       const
-         direction = new Vector3 (0, 0, 0),
-         axis      = new Vector3 (0, 0, 0);
+         direction = new Vector3 (),
+         axis      = new Vector3 ();
 
       return function ()
       {
@@ -627,10 +627,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    display: (() =>
    {
       const
-         fromPoint             = new Vector3 (0, 0, 0),
-         toPoint               = new Vector3 (0, 0, 0),
-         normal                = new Vector3 (0, 0, 0),
-         vertex                = new Vector3 (0, 0, 0),
+         fromPoint             = new Vector3 (),
+         toPoint               = new Vector3 (),
+         normal                = new Vector3 (),
+         vertex                = new Vector3 (),
          projectionMatrix      = new Matrix4 (),
          projectionMatrixArray = new Float32Array (Matrix4 .Identity),
          modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),

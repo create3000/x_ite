@@ -77,13 +77,13 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
       this .sphere      = null;
       this .zPlane      = null;
       this .behind      = false;
-      this .fromVector  = new Vector3 (0, 0, 0);
-      this .startPoint  = new Vector3 (0, 0, 0);
+      this .fromVector  = new Vector3 ();
+      this .startPoint  = new Vector3 ();
       this .startOffset = new Rotation4 ();
    },
    getTrackPoint (hitRay, trackPoint, behind)
    {
-      const exit = new Vector3 (0, 0, 0);
+      const exit = new Vector3 ();
 
       if (this .sphere .intersectsLine (hitRay, trackPoint, exit))
       {
@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
 
          const
             hitPoint = this .invModelViewMatrix .multVecMatrix (hit .point .copy ()),
-            center   = new Vector3 (0, 0, 0);
+            center   = new Vector3 ();
 
          this .zPlane = new Plane3 (center, this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ()); // Screen aligned Z-plane
          this .sphere = new Sphere3 (hitPoint .magnitude (), center);
@@ -129,7 +129,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
    {
       const
          hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-         trackPoint = new Vector3 (0, 0, 0);
+         trackPoint = new Vector3 ();
 
       if (this .getTrackPoint (hitRay, trackPoint, this .behind))
       {
@@ -141,7 +141,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
       {
          // Find trackPoint on the plane with sphere
 
-         const tangentPoint = new Vector3 (0, 0, 0);
+         const tangentPoint = new Vector3 ();
 
          this .zPlane .intersectsLine (hitRay, tangentPoint);
 
@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
          // Find trackPoint behind sphere
 
          const
-            triNormal     = Triangle3 .normal (this .sphere .center, trackPoint, this .startPoint, new Vector3 (0, 0, 0)),
+            triNormal     = Triangle3 .normal (this .sphere .center, trackPoint, this .startPoint, new Vector3 ()),
             dirFromCenter = trackPoint .copy () .subtract (this .sphere .center) .normalize (),
             normal        = triNormal .copy () .cross (dirFromCenter) .normalize ();
 

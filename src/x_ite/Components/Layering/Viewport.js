@@ -63,7 +63,7 @@ function Viewport (executionContext)
 
    this .addType (X3DConstants .Viewport);
 
-   this .rectangle = new Vector4 (0, 0, 0, 0);
+   this .rectangle = new Vector4 ();
 }
 
 Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .prototype),

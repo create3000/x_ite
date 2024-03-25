@@ -74,9 +74,9 @@ function MotorJoint (executionContext)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
    {
-      this ._motor1Axis = new Vector3 (0, 0, 0);
-      this ._motor2Axis = new Vector3 (0, 0, 0);
-      this ._motor3Axis = new Vector3 (0, 0, 0);
+      this ._motor1Axis = new Vector3 ();
+      this ._motor2Axis = new Vector3 ();
+      this ._motor3Axis = new Vector3 ();
    }
 }
 

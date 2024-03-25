@@ -672,7 +672,7 @@ Object .assign (X3DCoreContext .prototype,
                   {
                      const
                         geoOrigin = viewpoint ._geoOrigin,
-                        geoCoord  = new Vector3 (0, 0, 0);
+                        geoCoord  = new Vector3 ();
 
                      if (geoOrigin .getValue () && geoOrigin .getNodeTypeName () === "GeoOrigin")
                      {

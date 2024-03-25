@@ -110,8 +110,8 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
       var
          pickingBBox   = new Box3 (),
          targetBBox    = new Box3 (),
-         pickingCenter = new Vector3 (0, 0, 0),
-         targetCenter  = new Vector3 (0, 0, 0);
+         pickingCenter = new Vector3 (),
+         targetCenter  = new Vector3 ();
 
       return function ()
       {

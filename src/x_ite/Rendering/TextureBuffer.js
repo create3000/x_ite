@@ -158,7 +158,7 @@ Object .assign (TextureBuffer .prototype,
    {
       const
          invProjectionMatrix = new Matrix4 (),
-         point               = new Vector3 (0, 0, 0);
+         point               = new Vector3 ();
 
       return function (projectionMatrix, viewport)
       {

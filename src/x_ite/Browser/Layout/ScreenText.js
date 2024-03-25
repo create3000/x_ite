@@ -82,7 +82,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
    update: (() =>
    {
       const
-         min = new Vector3 (0, 0, 0),
+         min = new Vector3 (),
          max = new Vector3 (1, 1, 0);
 
       return function ()
@@ -145,7 +145,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
    build: (() =>
    {
       const
-         min = new Vector3 (0, 0, 0),
+         min = new Vector3 (),
          max = new Vector3 (1, 1, 0);
 
       return function ()

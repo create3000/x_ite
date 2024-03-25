@@ -183,7 +183,7 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
    process: (() =>
    {
       const
-         position    = new Vector3 (0, 0, 0),
+         position    = new Vector3 (),
          orientation = new Rotation4 ();
 
       return function ()

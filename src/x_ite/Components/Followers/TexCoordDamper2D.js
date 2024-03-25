@@ -68,7 +68,7 @@ Object .assign (Object .setPrototypeOf (TexCoordDamper2D .prototype, X3DDamperNo
 {
    getVector ()
    {
-      return new Vector2 (0, 0, 0);
+      return new Vector2 ();
    },
 });
 

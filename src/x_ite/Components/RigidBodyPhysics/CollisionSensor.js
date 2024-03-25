@@ -99,8 +99,8 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
          collisionWorlds      = new Set (),
          intersectionNodes    = new Set (),
          contactNodes         = [ ],
-         position             = new Vector3 (0, 0, 0),
-         contactNormal        = new Vector3 (0, 0, 0);
+         position             = new Vector3 (),
+         contactNormal        = new Vector3 ();
 
       return function ()
       {

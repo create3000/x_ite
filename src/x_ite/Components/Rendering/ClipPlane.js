@@ -100,7 +100,7 @@ function ClipPlane (executionContext)
    this .addType (X3DConstants .ClipPlane);
 
    this .enabled = false;
-   this .plane   = new Vector4 (0, 0, 0, 0);
+   this .plane   = new Vector4 ();
 }
 
 Object .assign (Object .setPrototypeOf (ClipPlane .prototype, X3DChildNode .prototype),

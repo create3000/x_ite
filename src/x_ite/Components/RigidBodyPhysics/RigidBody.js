@@ -85,8 +85,8 @@ function RigidBody (executionContext)
    this .geometryNodes      = [ ];
    this .otherGeometryNodes = [ ];
    this .matrix             = new Matrix4 ();
-   this .force              = new Vector3 (0, 0, 0);
-   this .torque             = new Vector3 (0, 0, 0);
+   this .force              = new Vector3 ();
+   this .torque             = new Vector3 ();
 }
 
 Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype),
@@ -434,11 +434,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    {
       var
          transform       = new Ammo .btTransform (),
-         position        = new Vector3 (0, 0, 0),
+         position        = new Vector3 (),
          quaternion      = new Quaternion (0, 0, 0, 1),
          orientation     = new Rotation4 (),
-         linearVelocity  = new Vector3 (0, 0, 0),
-         angularVelocity = new Vector3 (0, 0, 0);
+         linearVelocity  = new Vector3 (),
+         angularVelocity = new Vector3 ();
 
       return function ()
       {

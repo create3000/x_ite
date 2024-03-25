@@ -53,7 +53,7 @@ function PointingDeviceSensorContainer (node, modelViewMatrix, projectionMatrix,
    this .node             = null;
    this .modelViewMatrix  = new Matrix4 ();
    this .projectionMatrix = new Matrix4 ();
-   this .viewport         = new Vector4 (0, 0, 0, 0);
+   this .viewport         = new Vector4 ();
 
    this .set (node, modelViewMatrix, projectionMatrix, viewport);
 }

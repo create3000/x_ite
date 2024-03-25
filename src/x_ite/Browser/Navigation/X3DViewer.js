@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
    },
    isPointerInRectangle: (() =>
    {
-      const pointer = new Vector2 (0, 0);
+      const pointer = new Vector2 ();
 
       return function (x, y)
       {
@@ -112,8 +112,8 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
    {
       const
          axis     = new Vector3 (0, 0, -1),
-         distance = new Vector3 (0, 0, 0),
-         far      = new Vector3 (0, 0, 0);
+         distance = new Vector3 (),
+         far      = new Vector3 ();
 
       return function (x, y, result)
       {

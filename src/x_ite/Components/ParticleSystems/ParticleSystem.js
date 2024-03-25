@@ -799,8 +799,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       ];
 
       const
-         vertex = new Vector3 (0, 0, 0),
-         size   = new Vector3 (0, 0, 0);
+         vertex = new Vector3 (),
+         size   = new Vector3 ();
 
       return function (gl, rotation)
       {
@@ -1002,9 +1002,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    {
       const
          invModelViewMatrix = new Matrix4 (),
-         billboardToScreen  = new Vector3 (0, 0, 0),
-         viewerYAxis        = new Vector3 (0, 0, 0),
-         y                  = new Vector3 (0, 0, 0),
+         billboardToScreen  = new Vector3 (),
+         viewerYAxis        = new Vector3 (),
+         y                  = new Vector3 (),
          rotation           = new Matrix3 (9);
 
       return function (modelViewMatrix)

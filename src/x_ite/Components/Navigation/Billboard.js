@@ -78,10 +78,10 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .p
    {
       const
          inverseModelViewMatrix = new Matrix4 (),
-         viewerYAxis            = new Vector3 (0, 0, 0),
-         y                      = new Vector3 (0, 0, 0),
-         N1                     = new Vector3 (0, 0, 0),
-         N2                     = new Vector3 (0, 0, 0),
+         viewerYAxis            = new Vector3 (),
+         y                      = new Vector3 (),
+         N1                     = new Vector3 (),
+         N2                     = new Vector3 (),
          rotation               = new Rotation4 ();
 
       return function (modelViewMatrix)

@@ -68,8 +68,8 @@ function UniversalJoint (executionContext)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
    {
-      this ._axis1 = new Vector3 (0, 0, 0);
-      this ._axis2 = new Vector3 (0, 0, 0);
+      this ._axis1 = new Vector3 ();
+      this ._axis2 = new Vector3 ();
    }
 }
 

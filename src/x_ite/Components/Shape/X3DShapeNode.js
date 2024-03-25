@@ -61,8 +61,8 @@ function X3DShapeNode (executionContext)
    this .addType (X3DConstants .X3DShapeNode);
 
    this .bbox       = new Box3 ();
-   this .bboxSize   = new Vector3 (0, 0, 0);
-   this .bboxCenter = new Vector3 (0, 0, 0);
+   this .bboxSize   = new Vector3 ();
+   this .bboxCenter = new Vector3 ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .prototype),

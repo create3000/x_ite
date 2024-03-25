@@ -89,8 +89,8 @@ const NURBS = {
    getClosed: (() =>
    {
       const
-         firstPoint = new Vector3 (0, 0, 0),
-         lastPoint  = new Vector3 (0, 0, 0);
+         firstPoint = new Vector3 (),
+         lastPoint  = new Vector3 ();
 
       return function (order, knot, weight, controlPointNode)
       {
@@ -122,8 +122,8 @@ const NURBS = {
    getUClosed: (() =>
    {
       const
-         firstPoint = new Vector3 (0, 0, 0),
-         lastPoint  = new Vector3 (0, 0, 0);
+         firstPoint = new Vector3 (),
+         lastPoint  = new Vector3 ();
 
       return function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
       {
@@ -160,8 +160,8 @@ const NURBS = {
    getVClosed: (() =>
    {
       const
-         firstPoint = new Vector3 (0, 0, 0),
-         lastPoint  = new Vector3 (0, 0, 0);
+         firstPoint = new Vector3 (),
+         lastPoint  = new Vector3 ();
 
       return function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
       {
@@ -444,7 +444,7 @@ const NURBS = {
          {
             const index = v * uDimension + u;
 
-            cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 (0, 0, 0, 0));
+            cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 ());
          }
 
          cp .length = vDimension;

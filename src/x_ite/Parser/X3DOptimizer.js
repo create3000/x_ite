@@ -220,7 +220,7 @@ Object .assign (X3DOptimizer .prototype,
       // Combine single Transform nodes.
 
       const
-         translation      = new Vector3 (0, 0, 0),
+         translation      = new Vector3 (),
          rotation         = new Rotation4 (),
          scale            = new Vector3 (1, 1, 1),
          scaleOrientation = new Rotation4 (),

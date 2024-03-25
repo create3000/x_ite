@@ -110,10 +110,10 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
    {
       const
          modelViewProjectionMatrix = new Matrix4 (),
-         point0                    = new Vector4 (0, 0, 0, 0),
-         point1                    = new Vector4 (0, 0, 0, 0),
-         projectedPoint0           = new Vector2 (0, 0),
-         projectedPoint1           = new Vector2 (0, 0);
+         point0                    = new Vector4 (),
+         point1                    = new Vector4 (),
+         projectedPoint0           = new Vector2 (),
+         projectedPoint1           = new Vector2 ();
 
       return function (gl, renderContext)
       {

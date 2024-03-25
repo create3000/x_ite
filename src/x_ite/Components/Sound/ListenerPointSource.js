@@ -102,11 +102,11 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSound
    traverse: (() =>
    {
       const
-         position        = new Vector3 (0, 0, 0),
+         position        = new Vector3 (),
          orientation     = new Rotation4 (),
          modelViewMatrix = new Matrix4 (),
-         forwardVector   = new Vector3 (0, 0, 0),
-         upVector        = new Vector3 (0, 0, 0);
+         forwardVector   = new Vector3 (),
+         upVector        = new Vector3 ();
 
       return function (type, renderObject)
       {

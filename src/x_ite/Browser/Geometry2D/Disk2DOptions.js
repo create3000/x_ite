@@ -91,10 +91,10 @@ Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, X3DBaseNode .p
    {
       const
          half      = new Complex (0.5, 0.5),
-         texCoord1 = new Complex (0, 0),
-         texCoord2 = new Complex (0, 0),
-         point1    = new Complex (0, 0),
-         point2    = new Complex (0, 0);
+         texCoord1 = new Complex (),
+         texCoord2 = new Complex (),
+         point1    = new Complex (),
+         point2    = new Complex ();
 
       return function ()
       {

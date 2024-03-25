@@ -53,7 +53,7 @@ function SFColor (r, g, b)
    switch (arguments .length)
    {
       case 0:
-         X3DField .call (this, new Color3 (0, 0, 0));
+         X3DField .call (this, new Color3 ());
          break;
 
       case 1:

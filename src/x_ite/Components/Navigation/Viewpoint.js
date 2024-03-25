@@ -130,7 +130,7 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
    },
    getViewportSize: (() =>
    {
-      const viewportSize = new Vector2 (0, 0);
+      const viewportSize = new Vector2 ();
 
       return function (viewport, nearValue)
       {

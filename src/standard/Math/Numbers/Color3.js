@@ -54,7 +54,7 @@ const
    _g = Symbol .for ("X_ITE.Color3.g"),
    _b = Symbol .for ("X_ITE.Color3.b");
 
-function Color3 (r, g, b)
+function Color3 (r = 0, g = 0, b = 0)
 {
    this [_r] = clamp (r, 0, 1);
    this [_g] = clamp (g, 0, 1);

@@ -61,15 +61,15 @@ const SCROLL_FACTOR = macOS ? 1 / 160 : 1 / 20;
 const
    vector                 = new Vector3 (0 ,0, 0),
    positionOffset         = new Vector3 (0 ,0, 0),
-   centerOfRotationOffset = new Vector3 (0, 0, 0);
+   centerOfRotationOffset = new Vector3 ();
 
 function PlaneViewer (executionContext, navigationInfo)
 {
    X3DViewer .call (this, executionContext, navigationInfo);
 
    this .button    = -1;
-   this .fromPoint = new Vector3 (0, 0, 0);
-   this .toPoint   = new Vector3 (0, 0, 0);
+   this .fromPoint = new Vector3 ();
+   this .toPoint   = new Vector3 ();
 }
 
 Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .prototype),

@@ -282,7 +282,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
             length     = vertices .length;
 
          for (let i = polygon .length; i < length; ++ i)
-            polygon .push (new Vector3 (0, 0, 0));
+            polygon .push (new Vector3 ());
 
          for (let i = 0; i < length; ++ i)
          {
@@ -379,15 +379,15 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
    getPolygonNormal: (() =>
    {
       let
-         current = new Vector3 (0, 0, 0),
-         next    = new Vector3 (0, 0, 0);
+         current = new Vector3 (),
+         next    = new Vector3 ();
 
       return function (vertices, coordIndex, coord)
       {
          // Determine polygon normal.
          // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-         const normal = new Vector3 (0, 0, 0);
+         const normal = new Vector3 ();
 
          coord .get1Point (coordIndex [vertices [0]], next);
 

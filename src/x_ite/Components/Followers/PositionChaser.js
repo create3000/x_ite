@@ -63,7 +63,7 @@ Object .assign (Object .setPrototypeOf (PositionChaser .prototype, X3DChaserNode
 {
    getVector ()
    {
-      return new Vector3 (0, 0, 0);
+      return new Vector3 ();
    },
 });
 

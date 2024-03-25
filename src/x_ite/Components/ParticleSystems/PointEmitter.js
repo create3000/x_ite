@@ -101,7 +101,7 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, X3DParticleEmit
    },
    set_direction__: (() =>
    {
-      const direction = new Vector3 (0, 0, 0);
+      const direction = new Vector3 ();
 
       return function ()
       {

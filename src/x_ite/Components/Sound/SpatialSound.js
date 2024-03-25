@@ -267,8 +267,8 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
    traverse: (() =>
    {
       const
-         location  = new Vector3 (0, 0, 0),
-         direction = new Vector3 (0, 0, 0);
+         location  = new Vector3 (),
+         direction = new Vector3 ();
 
       return function (type, renderObject)
       {

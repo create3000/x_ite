@@ -66,11 +66,11 @@ const DirectionalLights = ObjectCache (DirectionalLightContainer);
 
 function DirectionalLightContainer ()
 {
-   this .direction                     = new Vector3 (0, 0, 0);
+   this .direction                     = new Vector3 ();
    this .shadowBuffer                  = null;
    this .bbox                          = new Box3 ();
    this .viewVolume                    = new ViewVolume ();
-   this .viewport                      = new Vector4 (0, 0, 0, 0);
+   this .viewport                      = new Vector4 ();
    this .projectionMatrix              = new Matrix4 ();
    this .modelViewMatrix               = new MatrixStack (Matrix4);
    this .modelMatrix                   = new Matrix4 ();

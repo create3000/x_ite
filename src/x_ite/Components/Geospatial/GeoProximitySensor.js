@@ -54,7 +54,7 @@ import ProximitySensor            from "../EnvironmentalSensor/ProximitySensor.j
 import X3DConstants               from "../../Base/X3DConstants.js";
 import Vector3                    from "../../../standard/Math/Numbers/Vector3.js";
 
-var geoCoord = new Vector3 (0, 0, 0);
+var geoCoord = new Vector3 ();
 
 function GeoProximitySensor (executionContext)
 {

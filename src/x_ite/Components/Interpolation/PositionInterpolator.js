@@ -78,7 +78,7 @@ Object .assign (Object .setPrototypeOf (PositionInterpolator .prototype, X3DInte
    },
    interpolate: (() =>
    {
-      const keyValue = new Vector3 (0, 0, 0);
+      const keyValue = new Vector3 ();
 
       return function (index0, index1, weight)
       {

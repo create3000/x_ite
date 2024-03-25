@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-function Complex (real, imag)
+function Complex (real = 0, imag = 0)
 {
    this .real = real;
    this .imag = imag;

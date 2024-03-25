@@ -77,23 +77,23 @@ function ExamineViewer (executionContext, navigationInfo)
 
    this .button                   = -1;
    this .orientationOffset        = new Rotation4 ();
-   this .fromVector               = new Vector3 (0, 0, 0);
-   this .toVector                 = new Vector3 (0, 0, 0);
-   this .fromPoint                = new Vector3 (0, 0, 0);
-   this .toPoint                  = new Vector3 (0, 0, 0);
+   this .fromVector               = new Vector3 ();
+   this .toVector                 = new Vector3 ();
+   this .fromPoint                = new Vector3 ();
+   this .toPoint                  = new Vector3 ();
    this .rotation                 = new Rotation4 ();
-   this .direction                = new Vector3 (0, 0, 0);
-   this .axis                     = new Vector3 (0, 0, 0);
+   this .direction                = new Vector3 ();
+   this .axis                     = new Vector3 ();
    this .pressTime                = 0;
    this .motionTime               = 0;
 
    this .touchMode                = 0;
-   this .touch1                   = new Vector2 (0, 0);
-   this .touch2                   = new Vector2 (0, 0);
+   this .touch1                   = new Vector2 ();
+   this .touch2                   = new Vector2 ();
    this .tapStart                 = 0;
    this .dblTapInterval           = 0.4;
 
-   this .initialPositionOffset    = new Vector3 (0, 0, 0);
+   this .initialPositionOffset    = new Vector3 ();
    this .initialOrientationOffset = new Rotation4 ();
    this .positionChaser           = new PositionChaser (executionContext);
    this .centerOfRotationChaser   = new PositionChaser (executionContext);
@@ -281,7 +281,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    },
    mousemove: (() =>
    {
-      const fromPoint = new Vector3 (0, 0, 0);
+      const fromPoint = new Vector3 ();
 
       return function (event)
       {
@@ -334,8 +334,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    mousewheel: (() =>
    {
       const
-         step        = new Vector3 (0, 0, 0),
-         translation = new Vector3 (0, 0, 0);
+         step        = new Vector3 (),
+         translation = new Vector3 ();
 
       return function (event)
       {
@@ -463,8 +463,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       const
          MOVE_ANGLE   = 0.7,
          ZOOM_ANGLE   = -0.7,
-         touch1Change = new Vector2 (0, 0),
-         touch2Change = new Vector2 (0, 0);
+         touch1Change = new Vector2 (),
+         touch2Change = new Vector2 ();
 
       return function (event)
       {
@@ -634,7 +634,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
          this .axis .assign (axis);
 
-         if (rotation .getAxis (new Vector3 (0, 0, 0)) .dot (Vector3 .yAxis) < 0 !== rotation .angle < 0)
+         if (rotation .getAxis (new Vector3 ()) .dot (Vector3 .yAxis) < 0 !== rotation .angle < 0)
             this .axis .negate ();
 
          this .timeSensor ._cycleInterval = Math .PI / (rotationChange .angle * SPIN_FACTOR * 30);
@@ -654,8 +654,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    spin: (() =>
    {
       const
-         direction         = new Vector3 (0, 0, 0),
-         positionOffset    = new Vector3 (0, 0, 0),
+         direction         = new Vector3 (),
+         positionOffset    = new Vector3 (),
          orientationOffset = new Rotation4 (),
          rotation          = new Rotation4 ();
 
@@ -694,8 +694,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    addMove: (() =>
    {
       const
-         positionOffset         = new Vector3 (0, 0, 0),
-         centerOfRotationOffset = new Vector3 (0, 0, 0);
+         positionOffset         = new Vector3 (),
+         centerOfRotationOffset = new Vector3 ();
 
       return function (positionOffsetChange, centerOfRotationOffsetChange)
       {
@@ -745,8 +745,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    getPositionOffset: (() =>
    {
       const
-         distance = new Vector3 (0, 0, 0),
-         d        = new Vector3 (0, 0, 0),
+         distance = new Vector3 (),
+         d        = new Vector3 (),
          oob      = new Rotation4 ();
 
       return function (positionOffsetBefore, orientationOffsetBefore, orientationOffsetAfter)
@@ -767,7 +767,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       const
          userOrientation   = new Rotation4 (),
          orientationOffset = new Rotation4 (),
-         zAxis             = new Vector3 (0, 0, 0);
+         zAxis             = new Vector3 ();
 
       return function (rotation, orientationOffsetBefore, _throw)
       {
@@ -808,7 +808,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    })(),
    getHorizonRotation: (() =>
    {
-      const zAxis = new Vector3 (0, 0, 0);
+      const zAxis = new Vector3 ();
 
       return function (rotation)
       {

@@ -143,9 +143,9 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
    set_geometry__: (() =>
    {
       const
-         vertex1  = new Vector3 (0, 0, 0),
-         vertex2  = new Vector3 (0, 0, 0),
-         vertex3  = new Vector3 (0, 0, 0);
+         vertex1  = new Vector3 (),
+         vertex2  = new Vector3 (),
+         vertex3  = new Vector3 ();
 
       return function ()
       {

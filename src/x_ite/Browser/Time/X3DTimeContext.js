@@ -57,7 +57,7 @@ function X3DTimeContext ()
 {
    this [_currentTime]      = Date .now () / 1000;
    this [_currentFrameRate] = 60;
-   this [_currentPosition]  = new Vector3 (0, 0, 0);
+   this [_currentPosition]  = new Vector3 ();
    this [_currentSpeed]     = 0;
 }
 
@@ -77,7 +77,7 @@ Object .assign (X3DTimeContext .prototype,
    },
    advanceTime: (() =>
    {
-      const lastPosition = new Vector3 (0, 0, 0);
+      const lastPosition = new Vector3 ();
 
       return function ()
       {

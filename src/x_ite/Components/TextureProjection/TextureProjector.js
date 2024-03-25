@@ -66,9 +66,9 @@ function TextureProjectorContainer ()
    this .modelMatrix                     = new Matrix4 ();
    this .invTextureSpaceMatrix           = new Matrix4 ();
    this .invTextureSpaceProjectionMatrix = new Matrix4 ();
-   this .location                        = new Vector3 (0, 0, 0);
+   this .location                        = new Vector3 ();
    this .locationArray                   = new Float32Array (3);
-   this .direction                       = new Vector3 (0, 0, 0);
+   this .direction                       = new Vector3 ();
    this .rotation                        = new Rotation4 ();
    this .matrix                          = new Matrix4 ();
    this .matrixArray                     = new Float32Array (16);

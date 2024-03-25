@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (WalkViewer .prototype, X3DFlyViewer .pro
    getTranslationOffset: (() =>
    {
       const
-         localYAxis      = new Vector3 (0, 0, 0),
+         localYAxis      = new Vector3 (),
          userOrientation = new Rotation4 (),
          rotation        = new Rotation4 ();
 

@@ -91,11 +91,11 @@ const PointLights = ObjectCache (PointLightContainer);
 
 function PointLightContainer ()
 {
-   this .location                      = new Vector3 (0, 0, 0);
+   this .location                      = new Vector3 ();
    this .matrixArray                   = new Float32Array (9);
    this .shadowBuffer                  = null;
    this .viewVolume                    = new ViewVolume ();
-   this .viewport                      = new Vector4 (0, 0, 0, 0);
+   this .viewport                      = new Vector4 ();
    this .projectionMatrix              = new Matrix4 ();
    this .modelViewMatrix               = new MatrixStack (Matrix4);
    this .modelMatrix                   = new Matrix4 ();

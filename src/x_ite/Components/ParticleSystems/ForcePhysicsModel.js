@@ -65,7 +65,7 @@ Object .assign (Object .setPrototypeOf (ForcePhysicsModel .prototype, X3DParticl
 {
    addForce: (() =>
    {
-      const force = new Vector3 (0, 0, 0);
+      const force = new Vector3 ();
 
       return function (i, emitterNode, timeByMass, forces)
       {

@@ -161,7 +161,7 @@ Object .assign (CatmullRomSplineInterpolator .prototype,
    })(),
    interpolate: (() =>
    {
-      const S = new Vector4 (0, 0, 0, 0);
+      const S = new Vector4 ();
 
       const H = new Matrix4 ( 2, -2,  1,  1,
                              -3,  3, -2, -1,

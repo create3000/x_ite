@@ -128,9 +128,9 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometr
    getNormal: (() =>
    {
       const
-         point1 = new Vector3 (0, 0, 0),
-         point2 = new Vector3 (0, 0, 0),
-         point3 = new Vector3 (0, 0, 0);
+         point1 = new Vector3 (),
+         point2 = new Vector3 (),
+         point3 = new Vector3 ();
 
       return function (index1, index2, index3)
       {
@@ -143,19 +143,19 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometr
             return Triangle3 .normal (this .get1Point (index1, point1),
                                       this .get1Point (index2, point2),
                                       this .get1Point (index3, point3),
-                                      new Vector3 (0, 0, 0));
+                                      new Vector3 ());
          }
 
-         return new Vector3 (0, 0, 0);
+         return new Vector3 ();
       };
    })(),
    getQuadNormal: (() =>
    {
       const
-         point1 = new Vector3 (0, 0, 0),
-         point2 = new Vector3 (0, 0, 0),
-         point3 = new Vector3 (0, 0, 0),
-         point4 = new Vector3 (0, 0, 0);
+         point1 = new Vector3 (),
+         point2 = new Vector3 (),
+         point3 = new Vector3 (),
+         point4 = new Vector3 ();
 
       return function (index1, index2, index3, index4)
       {
@@ -169,10 +169,10 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometr
                                           this .get1Point (index2, point2),
                                           this .get1Point (index3, point3),
                                           this .get1Point (index4, point4),
-                                          new Vector3 (0, 0, 0));
+                                          new Vector3 ());
          }
 
-         return new Vector3 (0, 0, 0);
+         return new Vector3 ();
       };
    })(),
 });

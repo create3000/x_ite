@@ -54,22 +54,22 @@ import Vector3       from "../../../standard/Math/Numbers/Vector3.js";
 var
    bbox        = new Box2 (),
    lineBBox    = new Box2 (),
-   min         = new Vector2 (0, 0),
-   max         = new Vector2 (0, 0),
-   glyphMin    = new Vector2 (0, 0),
-   glyphMax    = new Vector2 (0, 0),
-   min3        = new Vector3 (0, 0, 0),
-   max3        = new Vector3 (0, 0, 0),
-   size        = new Vector2 (0, 0),
-   center      = new Vector2 (0, 0),
-   size1_2     = new Vector2 (0, 0),
-   translation = new Vector2 (0, 0),
-   lineBound   = new Vector2 (0, 0),
-   origin      = new Vector3 (0, 0, 0),
-   vector      = new Vector2 (0, 0),
+   min         = new Vector2 (),
+   max         = new Vector2 (),
+   glyphMin    = new Vector2 (),
+   glyphMax    = new Vector2 (),
+   min3        = new Vector3 (),
+   max3        = new Vector3 (),
+   size        = new Vector2 (),
+   center      = new Vector2 (),
+   size1_2     = new Vector2 (),
+   translation = new Vector2 (),
+   lineBound   = new Vector2 (),
+   origin      = new Vector3 (),
+   vector      = new Vector2 (),
    box2        = new Box2 (),
-   zero2       = new Vector2 (0, 0),
-   zero3       = new Vector3 (0, 0, 0);
+   zero2       = new Vector2 (),
+   zero3       = new Vector3 ();
 
 function X3DTextGeometry (text, fontStyle)
 {
@@ -77,10 +77,10 @@ function X3DTextGeometry (text, fontStyle)
    this .text           = text;
    this .fontStyle      = fontStyle;
    this .glyphs         = [ ];
-   this .minorAlignment = new Vector2 (0, 0);
+   this .minorAlignment = new Vector2 ();
    this .translations   = [ ];
    this .charSpacings   = [ ];
-   this .bearing        = new Vector2 (0, 0);
+   this .bearing        = new Vector2 ();
    this .yPad           = [ ];
    this .bbox           = new Box3 ();
 }
@@ -169,7 +169,7 @@ Object .assign (X3DTextGeometry .prototype,
       // Resize array in grow only fashion.
 
       for (var i = array .length; i < size; ++ i)
-         array .push (new Vector2 (0, 0));
+         array .push (new Vector2 ());
 
       array .length = size;
    },

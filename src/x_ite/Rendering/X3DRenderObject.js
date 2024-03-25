@@ -364,7 +364,7 @@ Object .assign (X3DRenderObject .prototype,
          projectionMatrix            = new Matrix4 (),
          cameraSpaceProjectionMatrix = new Matrix4 (),
          localOrientation            = new Rotation4 (),
-         vector                      = new Vector3 (0, 0, 0),
+         vector                      = new Vector3 (),
          rotation                    = new Rotation4 ();
 
       return function (direction)
@@ -492,8 +492,8 @@ Object .assign (X3DRenderObject .prototype,
    addPointingShape: (() =>
    {
       const
-         bboxSize   = new Vector3 (0, 0, 0),
-         bboxCenter = new Vector3 (0, 0, 0);
+         bboxSize   = new Vector3 (),
+         bboxCenter = new Vector3 ();
 
       return function (shapeNode)
       {
@@ -541,8 +541,8 @@ Object .assign (X3DRenderObject .prototype,
    addCollisionShape: (() =>
    {
       const
-         bboxSize   = new Vector3 (0, 0, 0),
-         bboxCenter = new Vector3 (0, 0, 0);
+         bboxSize   = new Vector3 (),
+         bboxCenter = new Vector3 ();
 
       return function (shapeNode)
       {
@@ -592,8 +592,8 @@ Object .assign (X3DRenderObject .prototype,
    addShadowShape: (() =>
    {
       const
-         bboxSize   = new Vector3 (0, 0, 0),
-         bboxCenter = new Vector3 (0, 0, 0);
+         bboxSize   = new Vector3 (),
+         bboxCenter = new Vector3 ();
 
       return function (shapeNode)
       {
@@ -639,8 +639,8 @@ Object .assign (X3DRenderObject .prototype,
    addDisplayShape: (() =>
    {
       const
-         bboxSize   = new Vector3 (0, 0, 0),
-         bboxCenter = new Vector3 (0, 0, 0);
+         bboxSize   = new Vector3 (),
+         bboxCenter = new Vector3 ();
 
       return function (shapeNode)
       {
@@ -701,7 +701,7 @@ Object .assign (X3DRenderObject .prototype,
          renderObject: this,
          transparent: transparent,
          modelViewMatrix: new Float32Array (16),
-         scissor: new Vector4 (0, 0, 0, 0),
+         scissor: new Vector4 (),
          localObjects: [ ],
          objectsKeys: [ ], // [clip planes, lights]
       };
@@ -779,7 +779,7 @@ Object .assign (X3DRenderObject .prototype,
          invModelViewMatrix = new Matrix4 (),
          modelViewMatrix    = new Matrix4 (),
          collisionBox       = new Box3 (Vector3 .Zero, Vector3 .Zero),
-         collisionSize      = new Vector3 (0, 0, 0);
+         collisionSize      = new Vector3 ();
 
       return function ()
       {
@@ -835,7 +835,7 @@ Object .assign (X3DRenderObject .prototype,
       const
          projectionMatrix            = new Matrix4 (),
          cameraSpaceProjectionMatrix = new Matrix4 (),
-         translation                 = new Vector3 (0, 0, 0),
+         translation                 = new Vector3 (),
          rotation                    = new Rotation4 ();
 
       return function ()
