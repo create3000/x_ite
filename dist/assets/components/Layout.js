@@ -322,9 +322,6 @@ const X3DLayoutNode_default_ = X3DLayoutNode;
 
 Namespace_default().add ("X3DLayoutNode", "x_ite/Components/Layout/X3DLayoutNode", X3DLayoutNode_default_);
 /* harmony default export */ const Layout_X3DLayoutNode = (X3DLayoutNode_default_);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("x_ite/Base/X3DCast");
-var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector2\")"
 const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("standard/Math/Numbers/Vector2");
 var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
@@ -378,7 +375,6 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -826,7 +822,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
             break;
          case CENTER:
 
-            if (this .getSizeUnitX === PIXEL && viewportPixel .y & 1)
+            if (this .getSizeUnitX () === PIXEL && viewportPixel .y & 1)
                translation .y = -pixelSize .y / 2;
 
             break;
@@ -981,6 +977,9 @@ Namespace_default().add ("Layout", "x_ite/Components/Layout/Layout", Layout_defa
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
 const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
 var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("x_ite/Base/X3DCast");
+var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/TraverseType\")"
 const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("x_ite/Rendering/TraverseType");
 var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
@@ -1031,7 +1030,6 @@ var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_names
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

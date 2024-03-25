@@ -41,9 +41,6 @@ var __webpack_exports__ = {};
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
 const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
 const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
@@ -94,8 +91,6 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
-
 
 const
    _keyDeviceSensorNodes = Symbol (),
@@ -149,6 +144,9 @@ const __default__ = X3DKeyDeviceSensorContext;
 
 Namespace_default().add ("X3DKeyDeviceSensorContext", "x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext", __default__);
 /* harmony default export */ const KeyDeviceSensor_X3DKeyDeviceSensorContext = (__default__);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("x_ite/Fields");
+var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
 const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);

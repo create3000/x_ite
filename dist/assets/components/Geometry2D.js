@@ -548,7 +548,6 @@ var TextureCoordinate_default = /*#__PURE__*/__webpack_require__.n(TextureCoordi
 
 
 
-
 function Rectangle2DOptions (executionContext)
 {
    X3DBaseNode_default().call (this, executionContext);
@@ -1797,8 +1796,6 @@ Namespace_default().add ("Polypoint2D", "x_ite/Components/Geometry2D/Polypoint2D
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector2\")"
 const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("standard/Math/Numbers/Vector2");
 var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("standard/Math/Numbers/Vector3");
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Rectangle2D.js
 /*******************************************************************************
  *
@@ -1846,7 +1843,6 @@ const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .requir
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 

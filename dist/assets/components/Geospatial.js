@@ -247,12 +247,6 @@ const ReferenceEllipsoids_default_ = ReferenceEllipsoids;
 
 Namespace_default().add ("ReferenceEllipsoids", "standard/Geospatial/ReferenceEllipsoids", ReferenceEllipsoids_default_);
 /* harmony default export */ const Geospatial_ReferenceEllipsoids = (ReferenceEllipsoids_default_);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("standard/Math/Numbers/Vector3");
-var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("standard/Math/Algorithm");
-var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/standard/Geospatial/Geodetic.js
 /*******************************************************************************
  *
@@ -300,9 +294,6 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
-
-
 
 const
    EPS_H = 1e-3,
@@ -438,76 +429,6 @@ Object .assign (Geodetic .prototype,
 
       return result .set (nx, ny, nz);
    },
-   /*
-   lerp (s, d, t)
-   {
-      var
-         source     =  this .source      .assign (s),
-         destination = this .destination .assign (d);
-
-      var
-         RANGE    = this .degrees ? 180 : M_PI,
-         RANGE1_2 = RANGE / 2,
-         RANGE2   = RANGE * 2;
-
-      var range = 0;
-
-      if (this .longitudeFirst)
-      {
-         source .x = Algorithm .interval (source .x, -RANGE,    RANGE);
-         source .y = Algorithm .interval (source .y, -RANGE1_2, RANGE1_2);
-
-         destination .x = Algorithm .interval (destination .x, -RANGE,    RANGE);
-         destination .y = Algorithm .interval (destination .y, -RANGE1_2, RANGE1_2);
-
-         range = Math .abs (destination .x - source .x);
-      }
-      else
-      {
-         source .x = Algorithm .interval (source .x, -RANGE1_2, RANGE1_2);
-         source .y = Algorithm .interval (source .y, -RANGE,    RANGE);
-
-         destination .x = Algorithm .interval (destination .x, -RANGE1_2, RANGE1_2);
-         destination .y = Algorithm .interval (destination .y, -RANGE,    RANGE);
-
-         range = Math .abs (destination .y - source .y);
-      }
-
-      if (range <= RANGE)
-         return source .lerp (destination, t);
-
-      var step = (RANGE2 - range) * t;
-
-      if (this .longitudeFirst)
-      {
-         var longitude = source .x < destination .x ? source .x - step : source .x + step;
-
-         if (longitude < -RANGE)
-            longitude += RANGE2;
-
-         else if (longitude > RANGE)
-            longitude -= RANGE2;
-
-         return source .set (longitude,
-                             source .y + t * (destination .y - source .y),
-                             source .z + t * (destination .z - source .z));
-      }
-
-      var longitude = source .y < destination .y ? source .y - step : source .y + step;
-
-      if (longitude < -RANGE)
-         longitude += RANGE2;
-
-      else if (longitude > RANGE)
-         longitude -= RANGE2;
-
-      return source .set (source .x + t * (destination .x - source .x),
-                          longitude,
-                          source .z + t * (destination .z - source .z));
-   },
-   source: new Vector3 (),
-   destination: new Vector3 (),
-   */
 });
 
 const Geodetic_default_ = Geodetic;
@@ -515,6 +436,9 @@ const Geodetic_default_ = Geodetic;
 
 Namespace_default().add ("Geodetic", "standard/Geospatial/Geodetic", Geodetic_default_);
 /* harmony default export */ const Geospatial_Geodetic = (Geodetic_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
+const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("standard/Math/Algorithm");
+var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/standard/Geospatial/UniversalTransverseMercator.js
 /*******************************************************************************
  *
@@ -562,7 +486,6 @@ Namespace_default().add ("Geodetic", "standard/Geospatial/Geodetic", Geodetic_de
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1018,6 +941,9 @@ Namespace_default().add ("GeospatialObject", "x_ite/Browser/Geospatial/Geospatia
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
 const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("standard/Math/Numbers/Vector3");
+var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
 const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);

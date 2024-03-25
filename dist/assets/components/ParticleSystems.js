@@ -828,9 +828,7 @@ Namespace_default().add ("PointEmitter", "x_ite/Components/ParticleSystems/Point
 
 
 
-const
-   _defaultEmitter = Symbol (),
-   _depthShader    = Symbol ();
+const _defaultEmitter = Symbol ();
 
 function X3DParticleSystemsContext () { }
 

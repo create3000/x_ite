@@ -2112,14 +2112,7 @@ const support_default_ = function (cacheKey, nurbs, accessors, debug, checkBound
 
 Namespace_default().add ("support", "lib/nurbs/src/support", support_default_);
 /* harmony default export */ const support = (support_default_);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Triangle3\")"
-const Triangle3_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("standard/Math/Geometry/Triangle3");
-var Triangle3_default = /*#__PURE__*/__webpack_require__.n(Triangle3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/extras/sample.js
-
-
-
-
 var tmp1 = [ ];
 
 const sample_default_ = function (mesh, surface, opts)
@@ -3385,6 +3378,9 @@ Namespace_default().add ("NurbsOrientationInterpolator", "x_ite/Components/NURBS
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
 const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("standard/Math/Algorithm");
 var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Triangle3\")"
+const Triangle3_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.1")] .require ("standard/Math/Geometry/Triangle3");
+var Triangle3_default = /*#__PURE__*/__webpack_require__.n(Triangle3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js
 /*******************************************************************************
  *
