@@ -182,12 +182,12 @@ IcoSphere .prototype .icosahedron = function ()
 
 IcoSphere .prototype .refineTriangles = function ()
 {
-   const coordIndex = this .coordIndex;
+   let coordIndex = this .coordIndex;
 
    // Refine triangles
    for (let o = 0; o < this .order; ++ o)
    {
-      let coordIndex2 = new Fields .MFInt32 ();
+      const coordIndex2 = new Fields .MFInt32 ();
 
       for (let i = 0; i < coordIndex .length; i += 4)
       {
