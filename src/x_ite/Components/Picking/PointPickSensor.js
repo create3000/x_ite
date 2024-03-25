@@ -108,7 +108,9 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
 
             if (coord)
             {
-               for (let i = 0, length = coord .getSize (); i < length; ++ i)
+               const length = coord .getSize ();
+
+               for (let i = 0; i < length; ++ i)
                {
                   if (i < compoundShapes .length)
                   {
