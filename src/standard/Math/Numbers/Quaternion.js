@@ -620,7 +620,7 @@ Object .defineProperties (Quaternion .prototype,
 
 Object .assign (Quaternion,
 {
-   Identity: new Quaternion (0, 0, 0, 1),
+   Identity: Object .freeze (new Quaternion (0, 0, 0, 1)),
    spline: (() =>
    {
       const

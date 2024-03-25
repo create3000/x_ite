@@ -229,10 +229,10 @@ Object .defineProperties (Vector2 .prototype,
 
 Object .assign (Vector2,
 {
-   Zero: new Vector2 (0, 0),
-   One: new Vector2 (1, 1),
-   xAxis: new Vector2 (1, 0),
-   yAxis: new Vector2 (0, 1),
+   Zero: Object .freeze (new Vector2 (0, 0)),
+   One: Object .freeze (new Vector2 (1, 1)),
+   xAxis: Object .freeze (new Vector2 (1, 0)),
+   yAxis: Object .freeze (new Vector2 (0, 1)),
 });
 
 export default Vector2;

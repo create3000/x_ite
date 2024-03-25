@@ -269,7 +269,7 @@ Object .defineProperties (Matrix2 .prototype,
 
 Object .assign (Matrix2,
 {
-   Identity: new Matrix2 (),
+   Identity: Object .freeze (new Matrix2 ()),
 });
 
 export default Matrix2;

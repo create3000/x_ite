@@ -650,7 +650,7 @@ Object .defineProperties (Matrix3 .prototype,
 
 Object .assign (Matrix3,
 {
-   Identity: new Matrix3 (),
+   Identity: Object .freeze (new Matrix3 ()),
    Rotation (rotation)
    {
       const

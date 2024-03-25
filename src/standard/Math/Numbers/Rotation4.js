@@ -491,7 +491,7 @@ Object .defineProperties (Rotation4 .prototype,
 
 Object .assign (Rotation4,
 {
-   Identity: new Rotation4 (),
+   Identity: Object .freeze (new Rotation4 ()),
    fromQuaternion (quaternion)
    {
       return new Rotation4 () .setQuaternion (quaternion);

@@ -165,9 +165,9 @@ Object .defineProperties (Color4 .prototype,
 
 Object .assign (Color4,
 {
-   Transparent: new Color4 (0, 0, 0, 0),
-   Black: new Color4 (0, 0, 0, 1),
-   White: new Color4 (1, 1, 1, 1),
+   Transparent: Object .freeze (new Color4 (0, 0, 0, 0)),
+   Black: Object .freeze (new Color4 (0, 0, 0, 1)),
+   White: Object .freeze (new Color4 (1, 1, 1, 1)),
    HSVA (h, s, v, a)
    {
       const color = Object .create (this .prototype);

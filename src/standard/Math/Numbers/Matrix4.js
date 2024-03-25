@@ -761,7 +761,7 @@ Object .defineProperties (Matrix4 .prototype,
 
 Object .assign (Matrix4,
 {
-   Identity: new Matrix4 (),
+   Identity: Object .freeze (new Matrix4 ()),
    Rotation (rotation)
    {
       return Object .create (this .prototype) .setQuaternion (rotation .getQuaternion (q));
