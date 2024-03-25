@@ -136,7 +136,7 @@ Object .assign (Object .setPrototypeOf (VolumePickSensor .prototype, X3DPickSens
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
 
-                  if (! this ._pickedGeometry .equals (pickedGeometries))
+                  if (!this ._pickedGeometry .equals (pickedGeometries))
                      this ._pickedGeometry = pickedGeometries;
 
                   break;
@@ -189,7 +189,7 @@ Object .assign (Object .setPrototypeOf (VolumePickSensor .prototype, X3DPickSens
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
 
-                  if (! this ._pickedGeometry .equals (pickedGeometries))
+                  if (!this ._pickedGeometry .equals (pickedGeometries))
                      this ._pickedGeometry = pickedGeometries;
 
                   break;

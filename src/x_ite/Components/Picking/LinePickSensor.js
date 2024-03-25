@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
 
-                  if (! this ._pickedGeometry .equals (pickedGeometries))
+                  if (!this ._pickedGeometry .equals (pickedGeometries))
                      this ._pickedGeometry = pickedGeometries;
 
                   break;
@@ -247,7 +247,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
 
-                  if (! this ._pickedGeometry .equals (pickedGeometries))
+                  if (!this ._pickedGeometry .equals (pickedGeometries))
                      this ._pickedGeometry = pickedGeometries;
 
                   const pickedTargets = this .getPickedTargets ();
@@ -274,13 +274,13 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                      }
                   }
 
-                  if (! this ._pickedTextureCoordinate .equals (pickedTextureCoordinate))
+                  if (!this ._pickedTextureCoordinate .equals (pickedTextureCoordinate))
                      this ._pickedTextureCoordinate = pickedTextureCoordinate;
 
-                  if (! this ._pickedNormal .equals (pickedNormal))
+                  if (!this ._pickedNormal .equals (pickedNormal))
                      this ._pickedNormal = pickedNormal;
 
-                  if (! this ._pickedPoint .equals (pickedPoint))
+                  if (!this ._pickedPoint .equals (pickedPoint))
                      this ._pickedPoint = pickedPoint;
 
                   break;

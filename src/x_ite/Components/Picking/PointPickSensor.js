@@ -216,7 +216,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
 
-                  if (! this ._pickedGeometry .equals (pickedGeometries))
+                  if (!this ._pickedGeometry .equals (pickedGeometries))
                      this ._pickedGeometry = pickedGeometries;
 
                   break;
@@ -280,7 +280,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
 
-                  if (! this ._pickedGeometry .equals (pickedGeometries))
+                  if (!this ._pickedGeometry .equals (pickedGeometries))
                      this ._pickedGeometry = pickedGeometries;
 
                   const pickedTargets = this .getPickedTargets ();
@@ -295,7 +295,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
                         pickedPoint .push (pp [p]);
                   }
 
-                  if (! this ._pickedPoint .equals (pickedPoint))
+                  if (!this ._pickedPoint .equals (pickedPoint))
                      this ._pickedPoint = pickedPoint;
 
                   break;

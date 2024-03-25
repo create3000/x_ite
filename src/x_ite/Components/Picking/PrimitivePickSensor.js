@@ -161,7 +161,7 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
 
-                  if (! this ._pickedGeometry .equals (pickedGeometries))
+                  if (!this ._pickedGeometry .equals (pickedGeometries))
                      this ._pickedGeometry = pickedGeometries;
 
                   break;
@@ -214,7 +214,7 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
 
-                  if (! this ._pickedGeometry .equals (pickedGeometries))
+                  if (!this ._pickedGeometry .equals (pickedGeometries))
                      this ._pickedGeometry = pickedGeometries;
 
                   break;
