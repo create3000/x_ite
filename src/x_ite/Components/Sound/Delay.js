@@ -82,7 +82,9 @@ Object .assign (Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode
    },
    set_delayTime__ ()
    {
-      const delayTime = Math .max (this ._delayTime .getValue (), 0);
+      const
+         maxDelayTime = Math .max (this ._maxDelayTime .getValue (), 0),
+         delayTime    = Algorithm .clamp (this ._delayTime .getValue (), 0, maxDelayTime);
 
       this .delayNode .delayTime .value = delayTime;
    },
@@ -91,7 +93,7 @@ Object .assign (Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode
       const
          audioContext = this .getBrowser () .getAudioContext (),
          maxDelayTime = Math .max (this ._maxDelayTime .getValue (), 0),
-         delayTime    = Math .max (this ._delayTime .getValue (), 0);
+         delayTime    = Algorithm .clamp (this ._delayTime .getValue (), 0, maxDelayTime);
 
       this .delayNode .disconnect ();
 
