@@ -337,6 +337,8 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    set_time: Function .prototype,
    dispose ()
    {
+      this .stop ();
+
       for (const name of [... this .timeouts .keys ()])
          this .removeTimeout (name);
    },

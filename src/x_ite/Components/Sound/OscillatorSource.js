@@ -155,11 +155,11 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
    },
    set_pause ()
    {
-      this .oscillatorNode .disconnect ();
+      this .set_stop ();
    },
    set_resume ()
    {
-      this .oscillatorNode .connect (this .getAudioSource ());
+      this .set_start ();
    },
    set_stop ()
    {
