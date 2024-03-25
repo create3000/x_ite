@@ -203,7 +203,7 @@ Object .defineProperties (Color3 .prototype,
 
 Object .assign (Color3,
 {
-   Black: Object .freeze (new Color3 (0, 0, 0)),
+   Black: Object .freeze (new Color3 ()),
    White: Object .freeze (new Color3 (1, 1, 1)),
    HSV (h, s, v)
    {

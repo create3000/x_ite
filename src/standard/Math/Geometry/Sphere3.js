@@ -102,13 +102,13 @@ Object .assign (Sphere3 .prototype,
    intersectsTriangle: (() =>
    {
       const
-         AB = new Vector3 (0, 0, 0),
-         AC = new Vector3 (0, 0, 0),
-         BC = new Vector3 (0, 0, 0),
-         CA = new Vector3 (0, 0, 0),
-         Q1 = new Vector3 (0, 0, 0),
-         Q2 = new Vector3 (0, 0, 0),
-         Q3 = new Vector3 (0, 0, 0);
+         AB = new Vector3 (),
+         AC = new Vector3 (),
+         BC = new Vector3 (),
+         CA = new Vector3 (),
+         Q1 = new Vector3 (),
+         Q2 = new Vector3 (),
+         Q3 = new Vector3 ();
 
       return function (A, B, C)
       {

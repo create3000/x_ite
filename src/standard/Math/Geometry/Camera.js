@@ -112,8 +112,8 @@ const Camera =
    orthoBox: (() =>
    {
       const
-         min = new Vector3 (0, 0, 0),
-         max = new Vector3 (0, 0, 0);
+         min = new Vector3 (),
+         max = new Vector3 ();
 
       return function (box, matrix)
       {

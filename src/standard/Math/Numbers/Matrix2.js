@@ -239,7 +239,7 @@ Object .defineProperties (Matrix2 .prototype,
    {
       get: (() =>
       {
-         const vector = new Vector2 (0, 0);
+         const vector = new Vector2 ();
 
          return function () { return vector .set (this [0], this [1]); };
       })(),
@@ -248,7 +248,7 @@ Object .defineProperties (Matrix2 .prototype,
    {
       get: (() =>
       {
-         const vector = new Vector2 (0, 0);
+         const vector = new Vector2 ();
 
          return function () { return vector .set (this [2], this [3]); };
       })(),

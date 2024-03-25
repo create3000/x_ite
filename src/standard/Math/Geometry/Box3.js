@@ -134,9 +134,9 @@ Object .assign (Box3 .prototype,
    getAbsoluteExtents: (() =>
    {
       const
-         r1 = new Vector3 (0, 0, 0),
-         p1 = new Vector3 (0, 0, 0),
-         p4 = new Vector3 (0, 0, 0);
+         r1 = new Vector3 (),
+         p1 = new Vector3 (),
+         p4 = new Vector3 ();
 
       return function (min, max)
       {
@@ -172,10 +172,10 @@ Object .assign (Box3 .prototype,
    getPoints: (() =>
    {
       const
-         x  = new Vector3 (0, 0, 0),
-         y  = new Vector3 (0, 0, 0),
-         z  = new Vector3 (0, 0, 0),
-         r1 = new Vector3 (0, 0, 0);
+         x  = new Vector3 (),
+         y  = new Vector3 (),
+         z  = new Vector3 (),
+         r1 = new Vector3 ();
 
       return function (points)
       {
@@ -239,9 +239,9 @@ Object .assign (Box3 .prototype,
    getNormals: (() =>
    {
       const
-         x = new Vector3 (0, 0, 0),
-         y = new Vector3 (0, 0, 0),
-         z = new Vector3 (0, 0, 0);
+         x = new Vector3 (),
+         y = new Vector3 (),
+         z = new Vector3 ();
 
       const axes = [ Vector3 .xAxis, Vector3 .yAxis, Vector3 .zAxis ];
 
@@ -357,10 +357,10 @@ Object .assign (Box3 .prototype,
    add: (() =>
    {
       const
-         lhs_min = new Vector3 (0, 0, 0),
-         lhs_max = new Vector3 (0, 0, 0),
-         rhs_min = new Vector3 (0, 0, 0),
-         rhs_max = new Vector3 (0, 0, 0);
+         lhs_min = new Vector3 (),
+         lhs_max = new Vector3 (),
+         rhs_min = new Vector3 (),
+         rhs_max = new Vector3 ();
 
       return function (box)
       {
@@ -389,8 +389,8 @@ Object .assign (Box3 .prototype,
    containsPoint: (() =>
    {
       const
-         min = new Vector3 (0, 0, 0),
-         max = new Vector3 (0, 0, 0);
+         min = new Vector3 (),
+         max = new Vector3 ();
 
       return function (point)
       {
@@ -407,59 +407,59 @@ Object .assign (Box3 .prototype,
    intersectsBox: (() =>
    {
       const points1 = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
 
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
       ];
 
       const points2 = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
 
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
       ];
 
       const axes1 = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
       ];
 
       const axes2 = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
       ];
 
       const axes9 = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
 
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
 
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
       ];
 
       const normals = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
       ];
 
       return function (other)
@@ -509,51 +509,51 @@ Object .assign (Box3 .prototype,
    intersectsTriangle: (() =>
    {
       const points1 = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
 
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
       ];
 
       const axes1 = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
       ];
 
       const axes9 = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
 
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
 
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
       ];
 
       const normals = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
       ];
 
       const triangle = [ ];
 
-      const triangleNormal = [ new Vector3 (0, 0, 0) ];
+      const triangleNormal = [ new Vector3 () ];
 
       const triangleEdges = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0)
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 ()
       ];
 
       return function (a, b, c)
@@ -640,8 +640,8 @@ Object .defineProperties (Box3 .prototype,
       get: (() =>
       {
          const
-            min = new Vector3 (0, 0, 0),
-            max = new Vector3 (0, 0, 0);
+            min = new Vector3 (),
+            max = new Vector3 ();
 
          return function ()
          {

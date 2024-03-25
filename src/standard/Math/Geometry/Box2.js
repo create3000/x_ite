@@ -120,10 +120,10 @@ Object .assign (Box2 .prototype,
    add: (() =>
    {
       const
-         lhs_min = new Vector2 (0, 0),
-         lhs_max = new Vector2 (0, 0),
-         rhs_min = new Vector2 (0, 0),
-         rhs_max = new Vector2 (0, 0);
+         lhs_min = new Vector2 (),
+         lhs_max = new Vector2 (),
+         rhs_min = new Vector2 (),
+         rhs_max = new Vector2 ();
 
       return function (box)
       {
@@ -158,7 +158,7 @@ Object .assign (Box2 .prototype,
    },
    getAbsoluteExtents: (() =>
    {
-      const p1 = new Vector2 (0, 0);
+      const p1 = new Vector2 ();
 
       return function (min, max)
       {
@@ -184,8 +184,8 @@ Object .assign (Box2 .prototype,
    containsPoint: (() =>
    {
       const
-         min = new Vector2 (0, 0),
-         max = new Vector2 (0, 0);
+         min = new Vector2 (),
+         max = new Vector2 ();
 
       return function (point)
       {
@@ -232,8 +232,8 @@ Object .defineProperties (Box2 .prototype,
       get: (() =>
       {
          const
-            min = new Vector2 (0, 0),
-            max = new Vector2 (0, 0);
+            min = new Vector2 (),
+            max = new Vector2 ();
 
          return function ()
          {

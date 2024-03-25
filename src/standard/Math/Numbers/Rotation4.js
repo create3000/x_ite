@@ -69,7 +69,7 @@ function Rotation4 (x, y, z, angle)
    {
       case 0:
       {
-         this [_quaternion] = new Quaternion (0, 0, 0, 1);
+         this [_quaternion] = new Quaternion ();
          return;
       }
       case 1:
@@ -84,7 +84,7 @@ function Rotation4 (x, y, z, angle)
             arg0 = arguments [0],
             arg1 = arguments [1];
 
-         this [_quaternion] = new Quaternion (0, 0, 0, 1);
+         this [_quaternion] = new Quaternion ();
 
          if (arg1 instanceof Vector3)
             return this .setFromToVec (arg0, arg1);
@@ -98,7 +98,7 @@ function Rotation4 (x, y, z, angle)
       }
       case 4:
       {
-         this [_quaternion] = new Quaternion (0, 0, 0, 1);
+         this [_quaternion] = new Quaternion ();
          this .set (x, y, z, angle);
          return;
       }
@@ -178,7 +178,7 @@ Object .assign (Rotation4 .prototype,
    },
    get: (() =>
    {
-      const result = new Vector4 (0, 0, 0, 0);
+      const result = new Vector4 ();
 
       return function ()
       {
@@ -217,10 +217,10 @@ Object .assign (Rotation4 .prototype,
    setFromToVec: (() =>
    {
       const
-         from = new Vector3 (0, 0, 0),
-         to   = new Vector3 (0, 0, 0),
-         cv   = new Vector3 (0, 0, 0),
-         t    = new Vector3 (0, 0, 0);
+         from = new Vector3 (),
+         to   = new Vector3 (),
+         cv   = new Vector3 (),
+         t    = new Vector3 ();
 
       return function (fromVec, toVec)
       {
@@ -279,7 +279,7 @@ Object .assign (Rotation4 .prototype,
    {
       this .set (vector .x, vector .y, vector .z, this [_angle]);
    },
-   getAxis (axis = new Vector3 (0, 0, 0))
+   getAxis (axis = new Vector3 ())
    {
       return axis .set (this [_x], this [_y], this [_z]);
    },
@@ -289,7 +289,7 @@ Object .assign (Rotation4 .prototype,
       this .update ();
       return this;
    },
-   getQuaternion (quaternion = new Quaternion (0, 0, 0, 1))
+   getQuaternion (quaternion = new Quaternion ())
    {
       return quaternion .assign (this [_quaternion]);
    },
@@ -374,9 +374,9 @@ Object .assign (Rotation4 .prototype,
    straighten: (() =>
    {
       const
-         localXAxis = new Vector3 (0, 0, 0),
-         localZAxis = new Vector3 (0, 0, 0),
-         upNormal   = new Vector3 (0, 0, 0),
+         localXAxis = new Vector3 (),
+         localZAxis = new Vector3 (),
+         upNormal   = new Vector3 (),
          rotation   = new Rotation4 ();
 
       return function (upVector = Vector3 .yAxis)

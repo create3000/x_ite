@@ -121,7 +121,7 @@ Object .assign (Matrix4 .prototype,
    {
       const
          invScaleOrientation = new Rotation4 (),
-         invCenter           = new Vector3 (0, 0, 0);
+         invCenter           = new Vector3 ();
 
       return function (translation, rotation, scale, scaleOrientation, center)
       {
@@ -251,14 +251,14 @@ Object .assign (Matrix4 .prototype,
    get: (() =>
    {
       const
-         dummyTranslation      = new Vector3 (0, 0, 0),
+         dummyTranslation      = new Vector3 (),
          dummyRotation         = new Rotation4 (),
-         dummyScale            = new Vector3 (0, 0, 0),
+         dummyScale            = new Vector3 (),
          dummyScaleOrientation = new Rotation4 (),
-         dummyCenter           = new Vector3 (0, 0, 0),
+         dummyCenter           = new Vector3 (),
          rot                   = new Matrix3 (),
          so                    = new Matrix3 (),
-         c                     = new Vector3 (0, 0, 0);
+         c                     = new Vector3 ();
 
       return function (translation, rotation, scale, scaleOrientation, center)
       {
@@ -674,7 +674,7 @@ Object .defineProperties (Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Vector4 (0, 0, 0, 0);
+         const vector = new Vector4 ();
 
          return function () { return vector .set (this [0], this [1], this [2], this [3]); };
       })(),
@@ -683,7 +683,7 @@ Object .defineProperties (Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Vector4 (0, 0, 0, 0);
+         const vector = new Vector4 ();
 
          return function () { return vector .set (this [4], this [5], this [6], this [7]); };
       })(),
@@ -692,7 +692,7 @@ Object .defineProperties (Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Vector4 (0, 0, 0, 0);
+         const vector = new Vector4 ();
 
          return function () { return vector .set (this [8], this [9], this [10], this [11]); };
       })(),
@@ -701,7 +701,7 @@ Object .defineProperties (Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Vector4 (0, 0, 0, 0);
+         const vector = new Vector4 ();
 
          return function () { return vector .set (this [12], this [13], this [14], this [15]); };
       })(),
@@ -710,7 +710,7 @@ Object .defineProperties (Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Vector3 (0, 0, 0);
+         const vector = new Vector3 ();
 
          return function () { return vector .set (this [0], this [1], this [2]); };
       })(),
@@ -719,7 +719,7 @@ Object .defineProperties (Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Vector3 (0, 0, 0);
+         const vector = new Vector3 ();
 
          return function () { return vector .set (this [4], this [5], this [6]); };
       })(),
@@ -728,7 +728,7 @@ Object .defineProperties (Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Vector3 (0, 0, 0);
+         const vector = new Vector3 ();
 
          return function () { return vector .set (this [8], this [9], this [10]); };
       })(),
@@ -737,7 +737,7 @@ Object .defineProperties (Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Vector3 (0, 0, 0);
+         const vector = new Vector3 ();
 
          return function () { return vector .set (this [12], this [13], this [14]); };
       })(),

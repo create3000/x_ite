@@ -67,40 +67,40 @@ import SAT       from "../Algorithms/SAT.js";
 
 function ViewVolume (projectionMatrix, viewport, scissor)
 {
-   this .viewport = new Vector4 (0, 0, 0, 0);
-   this .scissor  = new Vector4 (0, 0, 0, 0);
+   this .viewport = new Vector4 ();
+   this .scissor  = new Vector4 ();
 
    this .points = [
-      new Vector3 (0, 0, 0),
-      new Vector3 (0, 0, 0),
-      new Vector3 (0, 0, 0),
-      new Vector3 (0, 0, 0),
+      new Vector3 (),
+      new Vector3 (),
+      new Vector3 (),
+      new Vector3 (),
 
-      new Vector3 (0, 0, 0),
-      new Vector3 (0, 0, 0),
-      new Vector3 (0, 0, 0),
-      new Vector3 (0, 0, 0),
+      new Vector3 (),
+      new Vector3 (),
+      new Vector3 (),
+      new Vector3 (),
    ];
 
    this .normals = [
-      new Vector3 (0, 0, 0), // front
-      new Vector3 (0, 0, 0), // left
-      new Vector3 (0, 0, 0), // right
-      new Vector3 (0, 0, 0), // top
-      new Vector3 (0, 0, 0), // bottom
-      new Vector3 (0, 0, 0), // back
+      new Vector3 (), // front
+      new Vector3 (), // left
+      new Vector3 (), // right
+      new Vector3 (), // top
+      new Vector3 (), // bottom
+      new Vector3 (), // back
    ];
 
    this .edges = [
-      new Vector3 (0, 0, 0),
-      new Vector3 (0, 0, 0),
-      new Vector3 (0, 0, 0),
-      new Vector3 (0, 0, 0),
+      new Vector3 (),
+      new Vector3 (),
+      new Vector3 (),
+      new Vector3 (),
 
-      new Vector3 (0, 0, 0),
-      new Vector3 (0, 0, 0),
-      new Vector3 (0, 0, 0),
-      new Vector3 (0, 0, 0),
+      new Vector3 (),
+      new Vector3 (),
+      new Vector3 (),
+      new Vector3 (),
    ];
 
    this .planes = [
@@ -231,33 +231,33 @@ Object .assign (ViewVolume .prototype,
    intersectsBox: (() =>
    {
       const points1 = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
 
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
       ];
 
       const normals1 = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
       ];
 
       const axes1 = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
-         new Vector3 (0, 0, 0),
+         new Vector3 (),
+         new Vector3 (),
+         new Vector3 (),
       ];
 
       const axes = [ ];
 
       for (let i = 0; i < 3 * 8; ++ i)
-         axes .push (new Vector3 (0, 0, 0));
+         axes .push (new Vector3 ());
 
       return function (box)
       {
@@ -312,7 +312,7 @@ Object .assign (ViewVolume,
    })(),
    unProjectPointMatrix: (() =>
    {
-      const vin = new Vector4 (0, 0, 0, 0);
+      const vin = new Vector4 ();
 
       return function (winx, winy, winz, invModelViewProjectionMatrix, viewport, point)
       {
@@ -342,8 +342,8 @@ Object .assign (ViewVolume,
    unProjectRayMatrix: (() =>
    {
       const
-         near = new Vector3 (0, 0, 0),
-         far  = new Vector3 (0, 0, 0);
+         near = new Vector3 (),
+         far  = new Vector3 ();
 
       return function (winx, winy, invModelViewProjectionMatrix, viewport, result)
       {
@@ -355,7 +355,7 @@ Object .assign (ViewVolume,
    })(),
    projectPoint: (() =>
    {
-      const vin = new Vector4 (0, 0, 0, 0);
+      const vin = new Vector4 ();
 
       return function (point, modelViewMatrix, projectionMatrix, viewport, vout)
       {
@@ -375,7 +375,7 @@ Object .assign (ViewVolume,
    })(),
    projectPointMatrix: (() =>
    {
-      const vin = new Vector4 (0, 0, 0, 0);
+      const vin = new Vector4 ();
 
       return function (point, modelViewProjectionMatrix, viewport, vout)
       {
@@ -405,9 +405,9 @@ Object .assign (ViewVolume,
    projectLineMatrix: (() =>
    {
       const
-         near      = new Vector2 (0, 0),
-         far       = new Vector2 (0, 0),
-         direction = new Vector3 (0, 0, 0);
+         near      = new Vector2 (),
+         far       = new Vector2 (),
+         direction = new Vector3 ();
 
       return function (line, modelViewProjectionMatrix, viewport, result)
       {

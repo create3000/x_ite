@@ -92,7 +92,7 @@ Object .assign (Line3 .prototype,
       matrix .multDirMatrix (this .direction) .normalize ();
       return this;
    },
-   getClosestPointToPoint (point, result = new Vector3 (0, 0, 0))
+   getClosestPointToPoint (point, result = new Vector3 ())
    {
       const
          r = result .assign (point) .subtract (this .point),
@@ -102,7 +102,7 @@ Object .assign (Line3 .prototype,
    },
    getClosestPointToLine: (() =>
    {
-      const u = new Vector3 (0, 0, 0);
+      const u = new Vector3 ();
 
       return function (line, point)
       {
@@ -125,9 +125,9 @@ Object .assign (Line3 .prototype,
    })(),
    getPerpendicularVectorToPoint: (() =>
    {
-      const t = new Vector3 (0, 0, 0);
+      const t = new Vector3 ();
 
-      return function (point, result = new Vector3 (0, 0, 0))
+      return function (point, result = new Vector3 ())
       {
          result .assign (this .point) .subtract (point);
 
@@ -137,10 +137,10 @@ Object .assign (Line3 .prototype,
    getPerpendicularVectorToLine: (() =>
    {
       const
-         d  = new Vector3 (0, 0, 0),
-         ad = new Vector3 (0, 0, 0);
+         d  = new Vector3 (),
+         ad = new Vector3 ();
 
-      return function (line, result = new Vector3 (0, 0, 0))
+      return function (line, result = new Vector3 ())
       {
          const bd = result;
 
@@ -165,8 +165,8 @@ Object .assign (Line3 .prototype,
    intersectsTriangle: (() =>
    {
       const
-         pvec = new Vector3 (0, 0, 0),
-         tvec = new Vector3 (0, 0, 0);
+         pvec = new Vector3 (),
+         tvec = new Vector3 ();
 
       return function (A, B, C, uvt)
       {

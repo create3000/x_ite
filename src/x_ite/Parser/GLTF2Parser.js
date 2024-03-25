@@ -440,7 +440,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene      = this .getExecutionContext (),
          lightNode  = scene .createNode ("EnvironmentLight", false),
          name       = `EnvironmentLight${id}`,
-         quaternion = new Quaternion (0, 0, 0, 1);
+         quaternion = new Quaternion ();
 
       scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
       scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
@@ -1659,7 +1659,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          rotation         = new Rotation4 (),
          scale            = new Vector3 (1, 1, 1),
          scaleOrientation = new Rotation4 (),
-         quaternion       = new Quaternion (0, 0, 0, 1),
+         quaternion       = new Quaternion (),
          matrix           = new Matrix4 ();
 
       if (this .vectorValue (node .matrix, matrix))

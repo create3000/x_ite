@@ -50,9 +50,9 @@ import Plane3    from "../Geometry/Plane3.js";
 import QuickSort from "../Algorithms/QuickSort.js";
 
 const
-   v0  = new Vector3 (0, 0, 0),
-   v1  = new Vector3 (0, 0, 0),
-   v2  = new Vector3 (0, 0, 0),
+   v0  = new Vector3 (),
+   v1  = new Vector3 (),
+   v2  = new Vector3 (),
    uvt = { u: 0, v: 0, t: 0 };
 
 // Box normals for bbox / line intersection.
@@ -115,7 +115,7 @@ Object .assign (Triangle .prototype,
          const i = intersections .size ++;
 
          if (i >= intersections .length)
-            intersections .push (new Vector3 (0, 0, 0));
+            intersections .push (new Vector3 ());
 
          intersections [i] .set (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
                                  t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
@@ -124,7 +124,7 @@ Object .assign (Triangle .prototype,
          if (intersectionNormals)
          {
             if (i >= intersectionNormals .length)
-               intersectionNormals .push (new Vector3 (0, 0, 0));
+               intersectionNormals .push (new Vector3 ());
 
             intersectionNormals [i] .set (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
                                           t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
@@ -144,10 +144,10 @@ Object .assign (Triangle .prototype,
 
 function Node (tree, triangles, first, size)
 {
-   this .min          = new Vector3 (0, 0, 0);
-   this .max          = new Vector3 (0, 0, 0);
+   this .min          = new Vector3 ();
+   this .max          = new Vector3 ();
    this .planes       = [ ];
-   this .intersection = new Vector3 (0, 0, 0);
+   this .intersection = new Vector3 ();
 
    const
       vertices = tree .vertices,

@@ -52,8 +52,8 @@ const Triangle3 =
    area: (() =>
    {
       const
-         B = new Vector3 (0, 0, 0),
-         C = new Vector3 (0, 0, 0);
+         B = new Vector3 (),
+         C = new Vector3 ();
 
       return function (a, b, c)
       {

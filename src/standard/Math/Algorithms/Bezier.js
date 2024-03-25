@@ -80,7 +80,7 @@ const Bezier =
    cubic: (() =>
    {
       const
-         v = new Vector4 (0, 0, 0, 0),
+         v = new Vector4 (),
          c = new Matrix4 (1, 0, 0, 0, -3, 3, 0, 0, 3, -6, 3, 0, -1, 3, -3, 1),
          p = new Matrix4 ();
 

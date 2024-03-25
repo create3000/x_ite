@@ -206,7 +206,7 @@ Object .assign (Vector3 .prototype,
    },
    slerp: (() =>
    {
-      const tmp = new Vector3 (0, 0, 0);
+      const tmp = new Vector3 ();
 
       return function (destination, t)
       {
@@ -282,7 +282,7 @@ Object .defineProperties (Vector3 .prototype,
 
 Object .assign (Vector3,
 {
-   Zero: Object .freeze (new Vector3 (0, 0, 0)),
+   Zero: Object .freeze (new Vector3 ()),
    One: Object .freeze (new Vector3 (1, 1, 1)),
    xAxis: Object .freeze (new Vector3 (1, 0, 0)),
    yAxis: Object .freeze (new Vector3 (0, 1, 0)),

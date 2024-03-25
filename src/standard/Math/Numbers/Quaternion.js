@@ -49,7 +49,7 @@ import Vector3   from "./Vector3.js";
 import Matrix3   from "./Matrix3.js";
 import Algorithm from "../Algorithm.js";
 
-function Quaternion (x, y, z, w)
+function Quaternion (x = 0, y = 0, z = 0, w = 1)
 {
    this .x = x;
    this .y = y;
@@ -606,7 +606,7 @@ Object .defineProperties (Quaternion .prototype,
    {
       get: (() =>
       {
-         const result = new Vector3 (0, 0, 0);
+         const result = new Vector3 ();
 
          return function ()
          {
@@ -620,14 +620,14 @@ Object .defineProperties (Quaternion .prototype,
 
 Object .assign (Quaternion,
 {
-   Identity: Object .freeze (new Quaternion (0, 0, 0, 1)),
+   Identity: Object .freeze (new Quaternion ()),
    spline: (() =>
    {
       const
-         q0   = new Quaternion (0, 0, 0, 1),
-         q1   = new Quaternion (0, 0, 0, 1),
-         q2   = new Quaternion (0, 0, 0, 1),
-         q1_i = new Quaternion (0, 0, 0, 1);
+         q0   = new Quaternion (),
+         q1   = new Quaternion (),
+         q2   = new Quaternion (),
+         q1_i = new Quaternion ();
 
       return function (Q0, Q1, Q2)
       {
@@ -657,9 +657,9 @@ Object .assign (Quaternion,
 });
 
 const
-   t1 = new Quaternion (0, 0, 0, 1),
-   t2 = new Quaternion (0, 0, 0, 1),
-   t3 = new Quaternion (0, 0, 0, 1),
+   t1 = new Quaternion (),
+   t2 = new Quaternion (),
+   t3 = new Quaternion (),
    m  = new Matrix3 ();
 
 export default Quaternion;

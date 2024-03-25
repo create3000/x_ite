@@ -49,8 +49,8 @@ import Vector3 from "../Numbers/Vector3.js";
 import Matrix4 from "../Numbers/Matrix4.js";
 
 const
-   normal    = new Vector3 (0, 0, 0),
-   point     = new Vector3 (0, 0, 0),
+   normal    = new Vector3 (),
+   point     = new Vector3 (),
    invMatrix = new Matrix4 ();
 
 function Plane3 (point, normal)
@@ -134,15 +134,15 @@ Object .assign (Plane3 .prototype,
    {
       return point .dot (this .normal) - this .distanceFromOrigin;
    },
-   getPerpendicularVectorToPoint (point, result = new Vector3 (0, 0, 0))
+   getPerpendicularVectorToPoint (point, result = new Vector3 ())
    {
       return result .assign (this .normal) .multiply (this .getDistanceToPoint (point));
    },
 	getClosestPointToPoint: (function ()
    {
-      const p = new Vector3 (0, 0, 0);
+      const p = new Vector3 ();
 
-      return function (point, result = new Vector3 (0, 0, 0))
+      return function (point, result = new Vector3 ())
       {
          return result .assign (point) .add (this .getPerpendicularVectorToPoint (point, p));
       };

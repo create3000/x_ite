@@ -165,7 +165,7 @@ Object .defineProperties (Color4 .prototype,
 
 Object .assign (Color4,
 {
-   Transparent: Object .freeze (new Color4 (0, 0, 0, 0)),
+   Transparent: Object .freeze (new Color4 ()),
    Black: Object .freeze (new Color4 (0, 0, 0, 1)),
    White: Object .freeze (new Color4 (1, 1, 1, 1)),
    HSVA (h, s, v, a)

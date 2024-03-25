@@ -102,7 +102,7 @@ Object .assign (Line2 .prototype,
    },
    getPerpendicularVectorToPoint: (() =>
    {
-      const t = new Vector2 (0, 0);
+      const t = new Vector2 ();
 
       return function (point, result)
       {
@@ -113,7 +113,7 @@ Object .assign (Line2 .prototype,
    })(),
    intersectsLine: (() =>
    {
-      const u = new Vector2 (0, 0);
+      const u = new Vector2 ();
 
       return function (line, point)
       {
