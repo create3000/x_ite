@@ -50,9 +50,6 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DGeometryNode      from "../Rendering/X3DGeometryNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Complex              from "../../../standard/Math/Numbers/Complex.js";
-import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
 function Cylinder (executionContext)
 {

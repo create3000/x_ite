@@ -81,11 +81,11 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
 
       try
       {
-         var
+         const
             node = this ._pickingGeometry .getValue () .getInnerNode (),
             type = node .getType ();
 
-         for (var t = type .length - 1; t >= 0; -- t)
+         for (let t = type .length - 1; t >= 0; -- t)
          {
             switch (type [t])
             {
@@ -105,7 +105,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
    },
    process: (() =>
    {
-      var
+      const
          pickingBBox             = new Box3 (),
          targetBBox              = new Box3 (),
          pickingCenter           = new Vector3 (),
@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
       {
          if (this .pickingGeometryNode)
          {
-            var
+            const
                modelMatrices = this .getModelMatrices (),
                targets       = this .getTargets ();
 
@@ -137,15 +137,15 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                {
                   // Intersect bboxes.
 
-                  for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                  for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
                   {
-                     var modelMatrix = modelMatrices [m];
+                     const modelMatrix = modelMatrices [m];
 
                      pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
-                     for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+                     for (let t = 0, tLength = targets .size; t < tLength; ++ t)
                      {
-                        var target = targets [t];
+                        const target = targets [t];
 
                         targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
 
@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
 
                   // Send events.
 
-                  var
+                  const
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
@@ -180,15 +180,15 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                {
                   // Intersect geometry.
 
-                  for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                  for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
                   {
-                     var modelMatrix = modelMatrices [m];
+                     const modelMatrix = modelMatrices [m];
 
                      pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
-                     for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+                     for (let t = 0, tLength = targets .size; t < tLength; ++ t)
                      {
-                        var
+                        const
                            target       = targets [t],
                            geometryNode = target .geometryNode,
                            vertices     = this .pickingGeometryNode .getVertices ();
@@ -196,7 +196,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                         targetBBox .assign (geometryNode .getBBox ()) .multRight (target .modelMatrix);
                         matrix .assign (target .modelMatrix) .inverse () .multLeft (modelMatrix);
 
-                        for (var v = 0, vLength = vertices .length; v < vLength; v += 8)
+                        for (let v = 0, vLength = vertices .length; v < vLength; v += 8)
                         {
                            matrix .multVecMatrix (point1 .set (vertices [v + 0], vertices [v + 1], vertices [v + 2]));
                            matrix .multVecMatrix (point2 .set (vertices [v + 4], vertices [v + 5], vertices [v + 6]));
@@ -206,16 +206,16 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
 
                            if (geometryNode .intersectsLine (line, target .modelMatrix, clipPlanes, intersections))
                            {
-                              for (var i = 0, iLength = intersections .length; i < iLength; ++ i)
+                              for (let i = 0, iLength = intersections .length; i < iLength; ++ i)
                               {
                                  // Test if intersection.point is between point1 and point2.
 
-                                 var intersection = intersections [i];
+                                 const intersection = intersections [i];
 
                                  a .assign (intersection .point) .subtract (point1);
                                  b .assign (intersection .point) .subtract (point2);
 
-                                 var
+                                 const
                                     c = a .add (b) .magnitude (),
                                     s = point1 .distance (point2);
 
@@ -238,7 +238,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
 
                   // Send events.
 
-                  var
+                  const
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
@@ -250,19 +250,19 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                   if (! this ._pickedGeometry .equals (pickedGeometries))
                      this ._pickedGeometry = pickedGeometries;
 
-                  var pickedTargets = this .getPickedTargets ();
+                  const pickedTargets = this .getPickedTargets ();
 
                   pickedTextureCoordinate .length = 0;
                   pickedNormal            .length = 0;
                   pickedPoint             .length = 0;
 
-                  for (var t = 0, tLength = pickedTargets .length; t < tLength; ++ t)
+                  for (let t = 0, tLength = pickedTargets .length; t < tLength; ++ t)
                   {
-                     var pickedIntersections = pickedTargets [t] .intersections;
+                     const pickedIntersections = pickedTargets [t] .intersections;
 
-                     for (var i = 0, iLength = pickedIntersections .length; i < iLength; ++ i)
+                     for (let i = 0, iLength = pickedIntersections .length; i < iLength; ++ i)
                      {
-                        var
+                        const
                            intersection = pickedIntersections [i],
                            t            = intersection .texCoord;
 

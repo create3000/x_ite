@@ -46,7 +46,6 @@
  ******************************************************************************/
 
 import Geodetic  from "./Geodetic.js";
-import Vector3   from "../Math/Numbers/Vector3.js";
 import Algorithm from "../Math/Algorithm.js";
 
 const

@@ -45,8 +45,6 @@
  *
  ******************************************************************************/
 
-import Fields from "../../Fields.js";
-
 const
    _keyDeviceSensorNodes = Symbol (),
    _keydown              = Symbol (),

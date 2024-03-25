@@ -93,26 +93,26 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
    },
    set_geometry__: (() =>
    {
-      var
+      const
          defaultScale = new Ammo .btVector3 (1, 1, 1),
          o            = new Ammo .btVector3 (),
          t            = new Ammo .btTransform ();
 
       return function ()
       {
-         var compoundShapes = this .compoundShapes;
+         const compoundShapes = this .compoundShapes;
 
          if (this .pickingGeometryNode)
          {
-            var coord = this .pickingGeometryNode .getCoord ();
+            const coord = this .pickingGeometryNode .getCoord ();
 
             if (coord)
             {
-               for (var i = 0, length = coord .getSize (); i < length; ++ i)
+               for (let i = 0, length = coord .getSize (); i < length; ++ i)
                {
                   if (i < compoundShapes .length)
                   {
-                     var
+                     const
                         compoundShape = compoundShapes [i],
                         point         = coord .get1Point (i, compoundShape .point);
 
@@ -124,7 +124,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
                   }
                   else
                   {
-                     var
+                     const
                         compoundShape = new Ammo .btCompoundShape (),
                         sphereShape   = new Ammo .btSphereShape (0),
                         point         = coord .get1Point (i, new Vector3 ());
@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
    })(),
    process: (() =>
    {
-      var
+      const
          pickingBBox   = new Box3 (),
          targetBBox    = new Box3 (),
          pickingCenter = new Vector3 (),
@@ -170,7 +170,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
       {
          if (this .pickingGeometryNode)
          {
-            var
+            const
                modelMatrices = this .getModelMatrices (),
                targets       = this .getTargets ();
 
@@ -180,15 +180,15 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
                {
                   // Intersect bboxes.
 
-                  for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                  for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
                   {
-                     var modelMatrix = modelMatrices [m];
+                     const modelMatrix = modelMatrices [m];
 
                      pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
-                     for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+                     for (let t = 0, tLength = targets .size; t < tLength; ++ t)
                      {
-                        var target = targets [t];
+                        const target = targets [t];
 
                         targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
 
@@ -205,7 +205,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
 
                   // Send events.
 
-                  var
+                  const
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
@@ -223,13 +223,13 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
                {
                   // Intersect geometry.
 
-                  var
+                  const
                      picker         = this .picker,
                      compoundShapes = this .compoundShapes;
 
-                  for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                  for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
                   {
-                     var modelMatrix = modelMatrices [m];
+                     const modelMatrix = modelMatrices [m];
 
                      pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
@@ -238,15 +238,15 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
                      picker .getTransform (translation, rotation, transform);
                      localScaling .setValue (scale .x, scale .y, scale .z);
 
-                     for (var c = 0, cLength = compoundShapes .length; c < cLength; ++ c)
+                     for (let c = 0, cLength = compoundShapes .length; c < cLength; ++ c)
                      {
-                        var compoundShape = compoundShapes [c];
+                        const compoundShape = compoundShapes [c];
 
                         picker .setChildShape1Components (transform, localScaling, compoundShape);
 
-                        for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+                        for (let t = 0, tLength = targets .size; t < tLength; ++ t)
                         {
-                           var
+                           const
                               target      = targets [t],
                               targetShape = this .getPickShape (target .geometryNode);
 
@@ -269,7 +269,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
 
                   // Send events.
 
-                  var
+                  const
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
@@ -281,15 +281,15 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
                   if (! this ._pickedGeometry .equals (pickedGeometries))
                      this ._pickedGeometry = pickedGeometries;
 
-                  var pickedTargets = this .getPickedTargets ();
+                  const pickedTargets = this .getPickedTargets ();
 
                   pickedPoint .length = 0;
 
-                  for (var t = 0, tLength = pickedTargets .length; t < tLength; ++ t)
+                  for (let t = 0, tLength = pickedTargets .length; t < tLength; ++ t)
                   {
-                     var pp = pickedTargets [t] .pickedPoint;
+                     const pp = pickedTargets [t] .pickedPoint;
 
-                     for (var p = 0, pLength = pp .length; p < pLength; ++ p)
+                     for (let p = 0, pLength = pp .length; p < pLength; ++ p)
                         pickedPoint .push (pp [p]);
                   }
 

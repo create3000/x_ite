@@ -94,10 +94,8 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
       }
 
       const
-         numClipPlanes        = objectsKeys .reduce ((a, c) => a + (c === 0), 0),
-         numLights            = objectsKeys .reduce ((a, c) => a + (c === 1), 0),
-         numEnvironmentLights = objectsKeys .reduce ((a, c) => a + (c === 2), 0),
-         numTextureProjectors = objectsKeys .reduce ((a, c) => a + (c === 3), 0);
+         numClipPlanes = objectsKeys .reduce ((a, c) => a + (c === 0), 0),
+         numLights     = objectsKeys .reduce ((a, c) => a + (c === 1), 0);
 
       if (numClipPlanes)
       {

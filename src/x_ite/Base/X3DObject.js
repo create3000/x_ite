@@ -51,7 +51,6 @@ import DEVELOPMENT from "../DEVELOPMENT.js";
 const
    _name      = Symbol (),
    _interests = Symbol (),
-   _values    = Symbol (),
    _userData  = Symbol ();
 
 function X3DObject () { }

@@ -332,7 +332,7 @@ const Bookmarks = (() =>
       }
    });
 
-   function prevent ()
+   function prevent (arg)
    {
       return false;
    }

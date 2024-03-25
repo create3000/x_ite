@@ -45,9 +45,6 @@
  *
  ******************************************************************************/
 
-import Vector3   from "../Math/Numbers/Vector3.js";
-import Algorithm from "../Math/Algorithm.js";
-
 const
    EPS_H = 1e-3,
    EPS_P = 1e-10,
@@ -182,76 +179,6 @@ Object .assign (Geodetic .prototype,
 
       return result .set (nx, ny, nz);
    },
-   /*
-   lerp (s, d, t)
-   {
-      var
-         source     =  this .source      .assign (s),
-         destination = this .destination .assign (d);
-
-      var
-         RANGE    = this .degrees ? 180 : M_PI,
-         RANGE1_2 = RANGE / 2,
-         RANGE2   = RANGE * 2;
-
-      var range = 0;
-
-      if (this .longitudeFirst)
-      {
-         source .x = Algorithm .interval (source .x, -RANGE,    RANGE);
-         source .y = Algorithm .interval (source .y, -RANGE1_2, RANGE1_2);
-
-         destination .x = Algorithm .interval (destination .x, -RANGE,    RANGE);
-         destination .y = Algorithm .interval (destination .y, -RANGE1_2, RANGE1_2);
-
-         range = Math .abs (destination .x - source .x);
-      }
-      else
-      {
-         source .x = Algorithm .interval (source .x, -RANGE1_2, RANGE1_2);
-         source .y = Algorithm .interval (source .y, -RANGE,    RANGE);
-
-         destination .x = Algorithm .interval (destination .x, -RANGE1_2, RANGE1_2);
-         destination .y = Algorithm .interval (destination .y, -RANGE,    RANGE);
-
-         range = Math .abs (destination .y - source .y);
-      }
-
-      if (range <= RANGE)
-         return source .lerp (destination, t);
-
-      var step = (RANGE2 - range) * t;
-
-      if (this .longitudeFirst)
-      {
-         var longitude = source .x < destination .x ? source .x - step : source .x + step;
-
-         if (longitude < -RANGE)
-            longitude += RANGE2;
-
-         else if (longitude > RANGE)
-            longitude -= RANGE2;
-
-         return source .set (longitude,
-                             source .y + t * (destination .y - source .y),
-                             source .z + t * (destination .z - source .z));
-      }
-
-      var longitude = source .y < destination .y ? source .y - step : source .y + step;
-
-      if (longitude < -RANGE)
-         longitude += RANGE2;
-
-      else if (longitude > RANGE)
-         longitude -= RANGE2;
-
-      return source .set (source .x + t * (destination .x - source .x),
-                          longitude,
-                          source .z + t * (destination .z - source .z));
-   },
-   source: new Vector3 (),
-   destination: new Vector3 (),
-   */
 });
 
 export default Geodetic;

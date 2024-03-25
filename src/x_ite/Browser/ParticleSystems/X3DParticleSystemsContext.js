@@ -47,9 +47,7 @@
 
 import PointEmitter from "../../Components/ParticleSystems/PointEmitter.js";
 
-const
-   _defaultEmitter = Symbol (),
-   _depthShader    = Symbol ();
+const _defaultEmitter = Symbol ();
 
 function X3DParticleSystemsContext () { }
 

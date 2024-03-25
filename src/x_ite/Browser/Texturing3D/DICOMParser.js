@@ -279,8 +279,7 @@ Object .assign (DicomParser .prototype,
 
          for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
             bytes [b] = (frame [i] - normalize .offset) * normalize .factor;
-      },
-      this);
+      });
 
       // Invert MONOCHROME1 pixels.
 

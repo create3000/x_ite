@@ -81,11 +81,11 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
 
       try
       {
-         var
+         const
             node = this ._pickingGeometry .getValue () .getInnerNode (),
             type = node .getType ();
 
-         for (var t = type .length - 1; t >= 0; -- t)
+         for (let t = type .length - 1; t >= 0; -- t)
          {
             switch (type [t])
             {
@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
    },
    process: (() =>
    {
-      var
+      const
          pickingBBox   = new Box3 (),
          targetBBox    = new Box3 (),
          pickingCenter = new Vector3 (),
@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
       {
          if (this .pickingGeometryNode)
          {
-            var
+            const
                modelMatrices = this .getModelMatrices (),
                targets       = this .getTargets ();
 
@@ -127,15 +127,15 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
                {
                   // Intersect bboxes.
 
-                  for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                  for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
                   {
-                     var modelMatrix = modelMatrices [m];
+                     const modelMatrix = modelMatrices [m];
 
                      pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
-                     for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+                     for (let t = 0, tLength = targets .size; t < tLength; ++ t)
                      {
-                        var target = targets [t];
+                        const target = targets [t];
 
                         targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
 
@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
 
                   // Send events.
 
-                  var
+                  const
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
@@ -170,11 +170,11 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
                {
                   // Intersect geometry.
 
-                  var picker = this .picker;
+                  const picker = this .picker;
 
-                  for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                  for (let m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
                   {
-                     var
+                     const
                         modelMatrix  = modelMatrices [m],
                         pickingShape = this .getPickShape (this .pickingGeometryNode);
 
@@ -182,9 +182,9 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
 
                      picker .setChildShape1 (modelMatrix, pickingShape .getCompoundShape ());
 
-                     for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+                     for (let t = 0, tLength = targets .size; t < tLength; ++ t)
                      {
-                        var
+                        const
                            target      = targets [t],
                            targetShape = this .getPickShape (target .geometryNode);
 
@@ -205,7 +205,7 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
 
                   // Send events.
 
-                  var
+                  const
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 

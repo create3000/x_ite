@@ -451,7 +451,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
 
-      this .lookAt (layerNode, point, minDistance, transitionTime = 1, factor = 1, straighten = false);
+      this .lookAt (layerNode, point, minDistance, transitionTime, factor, straighten);
    },
    lookAtBBox (layerNode, bbox, transitionTime = 1, factor, straighten)
    {

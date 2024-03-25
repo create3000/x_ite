@@ -1,7 +1,3 @@
-
-import Vector3   from "../../../standard/Math/Numbers/Vector3.js";
-import Triangle3 from "../../../standard/Math/Geometry/Triangle3.js";
-
 var tmp1 = [ ];
 
 export default function (mesh, surface, opts)
