@@ -289,8 +289,10 @@ class DOMIntegration
 
             const X3DElement = $.data (node .getInternalScene (), "X3D");
 
-            if (X3DElement)
-               element .appendChild (X3DElement);
+            if (!X3DElement)
+               break;
+
+            element .appendChild (X3DElement);
 
             // Add Inline elements, and connect to node events.
 

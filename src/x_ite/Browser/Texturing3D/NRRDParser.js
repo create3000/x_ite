@@ -209,7 +209,7 @@ Object .assign (NRRDParser .prototype,
          }
       }
 
-      throw new Error ("Unsupported NRRD dimension '" + result [1] + "', must be 1, 2, 3, or 4.");
+      throw new Error (`Unsupported NRRD dimension '${result ?.[1]}', must be 1, 2, 3, or 4.`);
    },
    getSizes (value)
    {

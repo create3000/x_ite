@@ -492,7 +492,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
             break;
          case CENTER:
 
-            if (this .getSizeUnitX === PIXEL && viewportPixel .y & 1)
+            if (this .getSizeUnitX () === PIXEL && viewportPixel .y & 1)
                translation .y = -pixelSize .y / 2;
 
             break;

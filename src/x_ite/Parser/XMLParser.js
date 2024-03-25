@@ -302,7 +302,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       {
          const
             componentNameIdCharacters = xmlElement .getAttribute ("name"),
-            componentSupportLevel = parseInt (xmlElement .getAttribute ("level"));
+            componentSupportLevel     = xmlElement .getAttribute ("level");
 
          if (componentNameIdCharacters === null)
             return console .warn ("XML Parser: Bad component statement. Expected name attribute.");
@@ -310,7 +310,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          if (componentSupportLevel === null)
             return console .warn ("XML Parser: Bad component statement. Expected level attribute.");
 
-         const component = this .getBrowser () .getComponent (componentNameIdCharacters, componentSupportLevel);
+         const component = this .getBrowser () .getComponent (componentNameIdCharacters, parseInt (componentSupportLevel));
 
          this .getScene () .updateComponent (component);
       }

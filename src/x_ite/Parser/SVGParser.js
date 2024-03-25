@@ -1048,7 +1048,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    {
       const
          g        = this .radialGradientElement (xmlElement, bbox, { stops: [ ] }),
-         gradient = this .context .createRadialGradient (g .fx, g .fy, g. fr, g .cx, g .cy, g .r);
+         gradient = this .context .createRadialGradient (g .fx, g .fy, g .fr, g .cx, g .cy, g .r);
 
       return this .drawGradient (gradient, g, bbox);
    },
