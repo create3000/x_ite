@@ -71,10 +71,10 @@ Object .assign (Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode
    {
       X3DSoundProcessingNode .prototype .initialize .call (this);
 
-      this ._delayTime    .addInterest ("set_delayTime__", this);
-      this ._maxDelayTime .addInterest ("set_delayTime__", this);
+      this ._maxDelayTime .addInterest ("set_maxDelayTime__", this);
+      this ._delayTime    .addInterest ("set_delayTime__",    this);
 
-      this .set_delayTime__ ();
+      this .set_maxDelayTime__ ();
    },
    getSoundProcessor ()
    {
@@ -82,9 +82,24 @@ Object .assign (Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode
    },
    set_delayTime__ ()
    {
-      const maxDelayTime = Math .max (this ._maxDelayTime .getValue (), 0);
+      const delayTime = Math .max (this ._delayTime .getValue (), 0);
 
-      this .delayNode .delayTime .value = Algorithm .clamp (this ._delayTime .getValue (), 0, maxDelayTime);
+      this .delayNode .delayTime .value = delayTime;
+   },
+   set_maxDelayTime__ ()
+   {
+      const
+         audioContext = this .getBrowser () .getAudioContext (),
+         maxDelayTime = Math .max (this ._maxDelayTime .getValue (), 0),
+         delayTime    = Math .max (this ._delayTime .getValue (), 0);
+
+      this .delayNode .disconnect ();
+
+      this .delayNode = new DelayNode (audioContext, { maxDelayTime, delayTime });
+
+      this .delayNode .connect (this .getAudioSource ());
+
+      this .set_enabled__ ();
    },
 });
 
@@ -119,8 +134,8 @@ Object .defineProperties (Delay,
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "delayTime",             new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "maxDelayTime",          new Fields .SFTime (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "delayTime",             new Fields .SFTime ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCount",          new Fields .SFInt32 ()), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("MAX")),
