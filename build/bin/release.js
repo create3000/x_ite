@@ -36,18 +36,14 @@ function zip ()
 
 function docs (version)
 {
-	const contentLength = Math .floor (parseInt (sh ("gzip -5 dist/x_ite.min.js --stdout | wc -c") .trim ()) / 1000);
+	const contentLength = Math .floor (parseInt (sh (`gzip -5 dist/x_ite.min.js --stdout | wc -c`) .trim ()) / 1000);
 
-	let config   = sh ("cat 'docs/_config.yml'");
-	let minified = sh ("cat 'docs/assets/img/minified.svg'")
+	let config = sh (`cat 'docs/_config.yml'`);
 
 	config = config .replace (/\bversion:\s*[\d\.]+/sg, `version: ${version}`);
 	config = config .replace (/\bsize:\s*[\d\.]+/sg, `size: ${contentLength}`);
 
-	minified = minified .replace (/\d+ kB/g, `${contentLength} kB`);
-
 	fs .writeFileSync ("docs/_config.yml", config);
-	fs .writeFileSync ("docs/assets/img/minified.svg", minified)
 }
 
 function commit (version)
