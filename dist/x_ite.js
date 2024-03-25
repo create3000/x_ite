@@ -11,10 +11,10 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 982:
+/***/ 808:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(654);
+/* provided dependency */ var jQuery = __webpack_require__(68);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -210,7 +210,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 988:
+/***/ 826:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -224,7 +224,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(654)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(68)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -435,7 +435,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 654:
+/***/ 68:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11159,7 +11159,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 247:
+/***/ 969:
 /***/ ((module) => {
 
 /**
@@ -15938,7 +15938,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 574:
+/***/ 264:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19183,7 +19183,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 921:
+/***/ 271:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -23447,7 +23447,7 @@ Object .defineProperties (Color3 .prototype,
 
 Object .assign (Color3,
 {
-   Black: Object .freeze (new Color3 (0, 0, 0)),
+   Black: Object .freeze (new Color3 ()),
    White: Object .freeze (new Color3 (1, 1, 1)),
    HSV (h, s, v)
    {
@@ -23908,7 +23908,7 @@ Object .defineProperties (Color4 .prototype,
 
 Object .assign (Color4,
 {
-   Transparent: Object .freeze (new Color4 (0, 0, 0, 0)),
+   Transparent: Object .freeze (new Color4 ()),
    Black: Object .freeze (new Color4 (0, 0, 0, 1)),
    White: Object .freeze (new Color4 (1, 1, 1, 1)),
    HSVA (h, s, v, a)
@@ -24934,7 +24934,7 @@ Object .defineProperties (Vector2 .prototype,
 
 Object .assign (Vector2,
 {
-   Zero: Object .freeze (new Vector2 (0, 0)),
+   Zero: Object .freeze (new Vector2 ()),
    One: Object .freeze (new Vector2 (1, 1)),
    xAxis: Object .freeze (new Vector2 (1, 0)),
    yAxis: Object .freeze (new Vector2 (0, 1)),
@@ -25154,7 +25154,7 @@ Object .assign (Vector3 .prototype,
    },
    slerp: (() =>
    {
-      const tmp = new Vector3 (0, 0, 0);
+      const tmp = new Vector3 ();
 
       return function (destination, t)
       {
@@ -25230,7 +25230,7 @@ Object .defineProperties (Vector3 .prototype,
 
 Object .assign (Vector3,
 {
-   Zero: Object .freeze (new Vector3 (0, 0, 0)),
+   Zero: Object .freeze (new Vector3 ()),
    One: Object .freeze (new Vector3 (1, 1, 1)),
    xAxis: Object .freeze (new Vector3 (1, 0, 0)),
    yAxis: Object .freeze (new Vector3 (0, 1, 0)),
@@ -25484,7 +25484,7 @@ Object .defineProperties (Matrix2 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector2 (0, 0);
+         const vector = new Numbers_Vector2 ();
 
          return function () { return vector .set (this [0], this [1]); };
       })(),
@@ -25493,7 +25493,7 @@ Object .defineProperties (Matrix2 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector2 (0, 0);
+         const vector = new Numbers_Vector2 ();
 
          return function () { return vector .set (this [2], this [3]); };
       })(),
@@ -25834,7 +25834,7 @@ Object .assign (Matrix3 .prototype,
    },
    set: (() =>
    {
-      const invCenter = new Numbers_Vector2 (0, 0);
+      const invCenter = new Numbers_Vector2 ();
 
       return function (translation, rotation, scale, scaleOrientation, center)
       {
@@ -25964,14 +25964,14 @@ Object .assign (Matrix3 .prototype,
    get: (() =>
    {
       const
-         dummyTranslation      = new Numbers_Vector2 (0, 0),
-         dummyRotation         = new Numbers_Vector3 (0, 0, 0),
-         dummyScale            = new Numbers_Vector2 (0, 0),
-         dummyScaleOrientation = new Numbers_Vector3 (0, 0, 0),
-         dummyCenter           = new Numbers_Vector2 (0, 0),
+         dummyTranslation      = new Numbers_Vector2 (),
+         dummyRotation         = new Numbers_Vector3 (),
+         dummyScale            = new Numbers_Vector2 (),
+         dummyScaleOrientation = new Numbers_Vector3 (),
+         dummyCenter           = new Numbers_Vector2 (),
          rotMatrix             = new Numbers_Matrix2 (),
          soMatrix              = new Numbers_Matrix2 (),
-         c                     = new Numbers_Vector2 (0, 0);
+         c                     = new Numbers_Vector2 ();
 
       return function (translation, rotation, scale, scaleOrientation, center)
       {
@@ -26302,7 +26302,7 @@ Object .defineProperties (Matrix3 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector3 (0, 0, 0);
+         const vector = new Numbers_Vector3 ();
 
          return function () { return vector .set (this [0], this [1], this [2]); };
       })(),
@@ -26311,7 +26311,7 @@ Object .defineProperties (Matrix3 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector3 (0, 0, 0);
+         const vector = new Numbers_Vector3 ();
 
          return function () { return vector .set (this [3], this [4], this [5]); };
       })(),
@@ -26320,7 +26320,7 @@ Object .defineProperties (Matrix3 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector3 (0, 0, 0);
+         const vector = new Numbers_Vector3 ();
 
          return function () { return vector .set (this [6], this [7], this [8]); };
       })(),
@@ -26329,7 +26329,7 @@ Object .defineProperties (Matrix3 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector2 (0, 0);
+         const vector = new Numbers_Vector2 ();
 
          return function () { return vector .set (this [0], this [1]); };
       })(),
@@ -26338,7 +26338,7 @@ Object .defineProperties (Matrix3 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector2 (0, 0);
+         const vector = new Numbers_Vector2 ();
 
          return function () { return vector .set (this [3], this [4]); };
       })(),
@@ -26347,7 +26347,7 @@ Object .defineProperties (Matrix3 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector2 (0, 0);
+         const vector = new Numbers_Vector2 ();
 
          return function () { return vector .set (this [6], this [7]); };
       })(),
@@ -26854,7 +26854,7 @@ Object .defineProperties (Vector4 .prototype,
 
 Object .assign (Vector4,
 {
-   Zero: Object .freeze (new Vector4 (0, 0, 0, 0)),
+   Zero: Object .freeze (new Vector4 ()),
    One: Object .freeze (new Vector4 (1, 1, 1, 1)),
    xAxis: Object .freeze (new Vector4 (1, 0, 0, 0)),
    yAxis: Object .freeze (new Vector4 (0, 1, 0, 0)),
@@ -26919,7 +26919,7 @@ x_ite_Namespace .add ("Vector4", "standard/Math/Numbers/Vector4", Vector4_defaul
 
 
 
-function Quaternion (x, y, z, w)
+function Quaternion (x = 0, y = 0, z = 0, w = 1)
 {
    this .x = x;
    this .y = y;
@@ -27476,7 +27476,7 @@ Object .defineProperties (Quaternion .prototype,
    {
       get: (() =>
       {
-         const result = new Numbers_Vector3 (0, 0, 0);
+         const result = new Numbers_Vector3 ();
 
          return function ()
          {
@@ -27490,14 +27490,14 @@ Object .defineProperties (Quaternion .prototype,
 
 Object .assign (Quaternion,
 {
-   Identity: Object .freeze (new Quaternion (0, 0, 0, 1)),
+   Identity: Object .freeze (new Quaternion ()),
    spline: (() =>
    {
       const
-         q0   = new Quaternion (0, 0, 0, 1),
-         q1   = new Quaternion (0, 0, 0, 1),
-         q2   = new Quaternion (0, 0, 0, 1),
-         q1_i = new Quaternion (0, 0, 0, 1);
+         q0   = new Quaternion (),
+         q1   = new Quaternion (),
+         q2   = new Quaternion (),
+         q1_i = new Quaternion ();
 
       return function (Q0, Q1, Q2)
       {
@@ -27527,9 +27527,9 @@ Object .assign (Quaternion,
 });
 
 const
-   t1 = new Quaternion (0, 0, 0, 1),
-   t2 = new Quaternion (0, 0, 0, 1),
-   t3 = new Quaternion (0, 0, 0, 1),
+   t1 = new Quaternion (),
+   t2 = new Quaternion (),
+   t3 = new Quaternion (),
    Quaternion_m  = new Numbers_Matrix3 ();
 
 const Quaternion_default_ = Quaternion;
@@ -27609,7 +27609,7 @@ function Rotation4 (x, y, z, angle)
    {
       case 0:
       {
-         this [_quaternion] = new Numbers_Quaternion (0, 0, 0, 1);
+         this [_quaternion] = new Numbers_Quaternion ();
          return;
       }
       case 1:
@@ -27624,7 +27624,7 @@ function Rotation4 (x, y, z, angle)
             arg0 = arguments [0],
             arg1 = arguments [1];
 
-         this [_quaternion] = new Numbers_Quaternion (0, 0, 0, 1);
+         this [_quaternion] = new Numbers_Quaternion ();
 
          if (arg1 instanceof Numbers_Vector3)
             return this .setFromToVec (arg0, arg1);
@@ -27638,7 +27638,7 @@ function Rotation4 (x, y, z, angle)
       }
       case 4:
       {
-         this [_quaternion] = new Numbers_Quaternion (0, 0, 0, 1);
+         this [_quaternion] = new Numbers_Quaternion ();
          this .set (x, y, z, angle);
          return;
       }
@@ -27718,7 +27718,7 @@ Object .assign (Rotation4 .prototype,
    },
    get: (() =>
    {
-      const result = new Numbers_Vector4 (0, 0, 0, 0);
+      const result = new Numbers_Vector4 ();
 
       return function ()
       {
@@ -27757,10 +27757,10 @@ Object .assign (Rotation4 .prototype,
    setFromToVec: (() =>
    {
       const
-         from = new Numbers_Vector3 (0, 0, 0),
-         to   = new Numbers_Vector3 (0, 0, 0),
-         cv   = new Numbers_Vector3 (0, 0, 0),
-         t    = new Numbers_Vector3 (0, 0, 0);
+         from = new Numbers_Vector3 (),
+         to   = new Numbers_Vector3 (),
+         cv   = new Numbers_Vector3 (),
+         t    = new Numbers_Vector3 ();
 
       return function (fromVec, toVec)
       {
@@ -27819,7 +27819,7 @@ Object .assign (Rotation4 .prototype,
    {
       this .set (vector .x, vector .y, vector .z, this [_angle]);
    },
-   getAxis (axis = new Numbers_Vector3 (0, 0, 0))
+   getAxis (axis = new Numbers_Vector3 ())
    {
       return axis .set (this [_x], this [_y], this [_z]);
    },
@@ -27829,7 +27829,7 @@ Object .assign (Rotation4 .prototype,
       this .update ();
       return this;
    },
-   getQuaternion (quaternion = new Numbers_Quaternion (0, 0, 0, 1))
+   getQuaternion (quaternion = new Numbers_Quaternion ())
    {
       return quaternion .assign (this [_quaternion]);
    },
@@ -27914,9 +27914,9 @@ Object .assign (Rotation4 .prototype,
    straighten: (() =>
    {
       const
-         localXAxis = new Numbers_Vector3 (0, 0, 0),
-         localZAxis = new Numbers_Vector3 (0, 0, 0),
-         upNormal   = new Numbers_Vector3 (0, 0, 0),
+         localXAxis = new Numbers_Vector3 (),
+         localZAxis = new Numbers_Vector3 (),
+         upNormal   = new Numbers_Vector3 (),
          rotation   = new Rotation4 ();
 
       return function (upVector = Numbers_Vector3 .yAxis)
@@ -28182,7 +28182,7 @@ Object .assign (Matrix4_Matrix4 .prototype,
    {
       const
          invScaleOrientation = new Numbers_Rotation4 (),
-         invCenter           = new Numbers_Vector3 (0, 0, 0);
+         invCenter           = new Numbers_Vector3 ();
 
       return function (translation, rotation, scale, scaleOrientation, center)
       {
@@ -28312,14 +28312,14 @@ Object .assign (Matrix4_Matrix4 .prototype,
    get: (() =>
    {
       const
-         dummyTranslation      = new Numbers_Vector3 (0, 0, 0),
+         dummyTranslation      = new Numbers_Vector3 (),
          dummyRotation         = new Numbers_Rotation4 (),
-         dummyScale            = new Numbers_Vector3 (0, 0, 0),
+         dummyScale            = new Numbers_Vector3 (),
          dummyScaleOrientation = new Numbers_Rotation4 (),
-         dummyCenter           = new Numbers_Vector3 (0, 0, 0),
+         dummyCenter           = new Numbers_Vector3 (),
          rot                   = new Numbers_Matrix3 (),
          so                    = new Numbers_Matrix3 (),
-         c                     = new Numbers_Vector3 (0, 0, 0);
+         c                     = new Numbers_Vector3 ();
 
       return function (translation, rotation, scale, scaleOrientation, center)
       {
@@ -28735,7 +28735,7 @@ Object .defineProperties (Matrix4_Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector4 (0, 0, 0, 0);
+         const vector = new Numbers_Vector4 ();
 
          return function () { return vector .set (this [0], this [1], this [2], this [3]); };
       })(),
@@ -28744,7 +28744,7 @@ Object .defineProperties (Matrix4_Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector4 (0, 0, 0, 0);
+         const vector = new Numbers_Vector4 ();
 
          return function () { return vector .set (this [4], this [5], this [6], this [7]); };
       })(),
@@ -28753,7 +28753,7 @@ Object .defineProperties (Matrix4_Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector4 (0, 0, 0, 0);
+         const vector = new Numbers_Vector4 ();
 
          return function () { return vector .set (this [8], this [9], this [10], this [11]); };
       })(),
@@ -28762,7 +28762,7 @@ Object .defineProperties (Matrix4_Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector4 (0, 0, 0, 0);
+         const vector = new Numbers_Vector4 ();
 
          return function () { return vector .set (this [12], this [13], this [14], this [15]); };
       })(),
@@ -28771,7 +28771,7 @@ Object .defineProperties (Matrix4_Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector3 (0, 0, 0);
+         const vector = new Numbers_Vector3 ();
 
          return function () { return vector .set (this [0], this [1], this [2]); };
       })(),
@@ -28780,7 +28780,7 @@ Object .defineProperties (Matrix4_Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector3 (0, 0, 0);
+         const vector = new Numbers_Vector3 ();
 
          return function () { return vector .set (this [4], this [5], this [6]); };
       })(),
@@ -28789,7 +28789,7 @@ Object .defineProperties (Matrix4_Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector3 (0, 0, 0);
+         const vector = new Numbers_Vector3 ();
 
          return function () { return vector .set (this [8], this [9], this [10]); };
       })(),
@@ -28798,7 +28798,7 @@ Object .defineProperties (Matrix4_Matrix4 .prototype,
    {
       get: (() =>
       {
-         const vector = new Numbers_Vector3 (0, 0, 0);
+         const vector = new Numbers_Vector3 ();
 
          return function () { return vector .set (this [12], this [13], this [14]); };
       })(),
@@ -34246,7 +34246,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 x_ite_Namespace .add ("X3DBaseNode", "x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
 /* harmony default export */ const Base_X3DBaseNode = (X3DBaseNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(654);
+/* provided dependency */ var $ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38964,7 +38964,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .add ("X3DProtoDeclaration", "x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(654);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39226,7 +39226,7 @@ const Expressions_default_ = Expressions;
 x_ite_Namespace .add ("Expressions", "x_ite/Parser/Expressions", Expressions_default_);
 /* harmony default export */ const Parser_Expressions = (Expressions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(654);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41912,7 +41912,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .add ("VRMLParser", "x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(654);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44021,7 +44021,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(654);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44464,7 +44464,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          scene      = this .getExecutionContext (),
          lightNode  = scene .createNode ("EnvironmentLight", false),
          name       = `EnvironmentLight${id}`,
-         quaternion = new Numbers_Quaternion (0, 0, 0, 1);
+         quaternion = new Numbers_Quaternion ();
 
       scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
       scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
@@ -45683,7 +45683,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          rotation         = new Numbers_Rotation4 (),
          scale            = new Numbers_Vector3 (1, 1, 1),
          scaleOrientation = new Numbers_Rotation4 (),
-         quaternion       = new Numbers_Quaternion (0, 0, 0, 1),
+         quaternion       = new Numbers_Quaternion (),
          matrix           = new Numbers_Matrix4 ();
 
       if (this .vectorValue (node .matrix, matrix))
@@ -47322,7 +47322,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .add ("GLTF2Parser", "x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(654);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47474,7 +47474,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .add ("GLB2Parser", "x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(654);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50333,10 +50333,10 @@ Object .assign (Box2 .prototype,
    add: (() =>
    {
       const
-         lhs_min = new Numbers_Vector2 (0, 0),
-         lhs_max = new Numbers_Vector2 (0, 0),
-         rhs_min = new Numbers_Vector2 (0, 0),
-         rhs_max = new Numbers_Vector2 (0, 0);
+         lhs_min = new Numbers_Vector2 (),
+         lhs_max = new Numbers_Vector2 (),
+         rhs_min = new Numbers_Vector2 (),
+         rhs_max = new Numbers_Vector2 ();
 
       return function (box)
       {
@@ -50371,7 +50371,7 @@ Object .assign (Box2 .prototype,
    },
    getAbsoluteExtents: (() =>
    {
-      const p1 = new Numbers_Vector2 (0, 0);
+      const p1 = new Numbers_Vector2 ();
 
       return function (min, max)
       {
@@ -50397,8 +50397,8 @@ Object .assign (Box2 .prototype,
    containsPoint: (() =>
    {
       const
-         min = new Numbers_Vector2 (0, 0),
-         max = new Numbers_Vector2 (0, 0);
+         min = new Numbers_Vector2 (),
+         max = new Numbers_Vector2 ();
 
       return function (point)
       {
@@ -50445,8 +50445,8 @@ Object .defineProperties (Box2 .prototype,
       get: (() =>
       {
          const
-            min = new Numbers_Vector2 (0, 0),
-            max = new Numbers_Vector2 (0, 0);
+            min = new Numbers_Vector2 (),
+            max = new Numbers_Vector2 ();
 
          return function ()
          {
@@ -50555,7 +50555,7 @@ const Bezier =
    cubic: (() =>
    {
       const
-         v = new Numbers_Vector4 (0, 0, 0, 0),
+         v = new Numbers_Vector4 (),
          c = new Numbers_Matrix4 (1, 0, 0, 0, -3, 3, 0, 0, 3, -6, 3, 0, -1, 3, -3, 1),
          p = new Numbers_Matrix4 ();
 
@@ -50829,8 +50829,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .add ("MatrixStack", "standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(654);
-/* provided dependency */ var libtess = __webpack_require__(247);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(68);
+/* provided dependency */ var libtess = __webpack_require__(969);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53598,7 +53598,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .add ("SVGParser", "x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(654);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53818,8 +53818,8 @@ x_ite_Namespace .add ("GoldenGate", "x_ite/Parser/GoldenGate", GoldenGate_defaul
 
 
 const
-   normal    = new Numbers_Vector3 (0, 0, 0),
-   point     = new Numbers_Vector3 (0, 0, 0),
+   normal    = new Numbers_Vector3 (),
+   point     = new Numbers_Vector3 (),
    invMatrix = new Numbers_Matrix4 ();
 
 function Plane3 (point, normal)
@@ -53903,15 +53903,15 @@ Object .assign (Plane3 .prototype,
    {
       return point .dot (this .normal) - this .distanceFromOrigin;
    },
-   getPerpendicularVectorToPoint (point, result = new Numbers_Vector3 (0, 0, 0))
+   getPerpendicularVectorToPoint (point, result = new Numbers_Vector3 ())
    {
       return result .assign (this .normal) .multiply (this .getDistanceToPoint (point));
    },
 	getClosestPointToPoint: (function ()
    {
-      const p = new Numbers_Vector3 (0, 0, 0);
+      const p = new Numbers_Vector3 ();
 
-      return function (point, result = new Numbers_Vector3 (0, 0, 0))
+      return function (point, result = new Numbers_Vector3 ())
       {
          return result .assign (point) .add (this .getPerpendicularVectorToPoint (point, p));
       };
@@ -53948,7 +53948,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .add ("Plane3", "standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(247);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(969);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54003,8 +54003,8 @@ const Triangle3 =
    area: (() =>
    {
       const
-         B = new Numbers_Vector3 (0, 0, 0),
-         C = new Numbers_Vector3 (0, 0, 0);
+         B = new Numbers_Vector3 (),
+         C = new Numbers_Vector3 ();
 
       return function (a, b, c)
       {
@@ -54277,40 +54277,40 @@ x_ite_Namespace .add ("SAT", "standard/Math/Algorithms/SAT", SAT_default_);
 
 function ViewVolume (projectionMatrix, viewport, scissor)
 {
-   this .viewport = new Numbers_Vector4 (0, 0, 0, 0);
-   this .scissor  = new Numbers_Vector4 (0, 0, 0, 0);
+   this .viewport = new Numbers_Vector4 ();
+   this .scissor  = new Numbers_Vector4 ();
 
    this .points = [
-      new Numbers_Vector3 (0, 0, 0),
-      new Numbers_Vector3 (0, 0, 0),
-      new Numbers_Vector3 (0, 0, 0),
-      new Numbers_Vector3 (0, 0, 0),
+      new Numbers_Vector3 (),
+      new Numbers_Vector3 (),
+      new Numbers_Vector3 (),
+      new Numbers_Vector3 (),
 
-      new Numbers_Vector3 (0, 0, 0),
-      new Numbers_Vector3 (0, 0, 0),
-      new Numbers_Vector3 (0, 0, 0),
-      new Numbers_Vector3 (0, 0, 0),
+      new Numbers_Vector3 (),
+      new Numbers_Vector3 (),
+      new Numbers_Vector3 (),
+      new Numbers_Vector3 (),
    ];
 
    this .normals = [
-      new Numbers_Vector3 (0, 0, 0), // front
-      new Numbers_Vector3 (0, 0, 0), // left
-      new Numbers_Vector3 (0, 0, 0), // right
-      new Numbers_Vector3 (0, 0, 0), // top
-      new Numbers_Vector3 (0, 0, 0), // bottom
-      new Numbers_Vector3 (0, 0, 0), // back
+      new Numbers_Vector3 (), // front
+      new Numbers_Vector3 (), // left
+      new Numbers_Vector3 (), // right
+      new Numbers_Vector3 (), // top
+      new Numbers_Vector3 (), // bottom
+      new Numbers_Vector3 (), // back
    ];
 
    this .edges = [
-      new Numbers_Vector3 (0, 0, 0),
-      new Numbers_Vector3 (0, 0, 0),
-      new Numbers_Vector3 (0, 0, 0),
-      new Numbers_Vector3 (0, 0, 0),
+      new Numbers_Vector3 (),
+      new Numbers_Vector3 (),
+      new Numbers_Vector3 (),
+      new Numbers_Vector3 (),
 
-      new Numbers_Vector3 (0, 0, 0),
-      new Numbers_Vector3 (0, 0, 0),
-      new Numbers_Vector3 (0, 0, 0),
-      new Numbers_Vector3 (0, 0, 0),
+      new Numbers_Vector3 (),
+      new Numbers_Vector3 (),
+      new Numbers_Vector3 (),
+      new Numbers_Vector3 (),
    ];
 
    this .planes = [
@@ -54441,33 +54441,33 @@ Object .assign (ViewVolume .prototype,
    intersectsBox: (() =>
    {
       const points1 = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
 
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
       ];
 
       const normals1 = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
       ];
 
       const axes1 = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
       ];
 
       const axes = [ ];
 
       for (let i = 0; i < 3 * 8; ++ i)
-         axes .push (new Numbers_Vector3 (0, 0, 0));
+         axes .push (new Numbers_Vector3 ());
 
       return function (box)
       {
@@ -54522,7 +54522,7 @@ Object .assign (ViewVolume,
    })(),
    unProjectPointMatrix: (() =>
    {
-      const vin = new Numbers_Vector4 (0, 0, 0, 0);
+      const vin = new Numbers_Vector4 ();
 
       return function (winx, winy, winz, invModelViewProjectionMatrix, viewport, point)
       {
@@ -54552,8 +54552,8 @@ Object .assign (ViewVolume,
    unProjectRayMatrix: (() =>
    {
       const
-         near = new Numbers_Vector3 (0, 0, 0),
-         far  = new Numbers_Vector3 (0, 0, 0);
+         near = new Numbers_Vector3 (),
+         far  = new Numbers_Vector3 ();
 
       return function (winx, winy, invModelViewProjectionMatrix, viewport, result)
       {
@@ -54565,7 +54565,7 @@ Object .assign (ViewVolume,
    })(),
    projectPoint: (() =>
    {
-      const vin = new Numbers_Vector4 (0, 0, 0, 0);
+      const vin = new Numbers_Vector4 ();
 
       return function (point, modelViewMatrix, projectionMatrix, viewport, vout)
       {
@@ -54585,7 +54585,7 @@ Object .assign (ViewVolume,
    })(),
    projectPointMatrix: (() =>
    {
-      const vin = new Numbers_Vector4 (0, 0, 0, 0);
+      const vin = new Numbers_Vector4 ();
 
       return function (point, modelViewProjectionMatrix, viewport, vout)
       {
@@ -54615,9 +54615,9 @@ Object .assign (ViewVolume,
    projectLineMatrix: (() =>
    {
       const
-         near      = new Numbers_Vector2 (0, 0),
-         far       = new Numbers_Vector2 (0, 0),
-         direction = new Numbers_Vector3 (0, 0, 0);
+         near      = new Numbers_Vector2 (),
+         far       = new Numbers_Vector2 (),
+         direction = new Numbers_Vector3 ();
 
       return function (line, modelViewProjectionMatrix, viewport, result)
       {
@@ -55146,8 +55146,8 @@ const Camera =
    orthoBox: (() =>
    {
       const
-         min = new Numbers_Vector3 (0, 0, 0),
-         max = new Numbers_Vector3 (0, 0, 0);
+         min = new Numbers_Vector3 (),
+         max = new Numbers_Vector3 ();
 
       return function (box, matrix)
       {
@@ -55300,9 +55300,9 @@ Object .assign (Box3 .prototype,
    getAbsoluteExtents: (() =>
    {
       const
-         r1 = new Numbers_Vector3 (0, 0, 0),
-         p1 = new Numbers_Vector3 (0, 0, 0),
-         p4 = new Numbers_Vector3 (0, 0, 0);
+         r1 = new Numbers_Vector3 (),
+         p1 = new Numbers_Vector3 (),
+         p4 = new Numbers_Vector3 ();
 
       return function (min, max)
       {
@@ -55338,10 +55338,10 @@ Object .assign (Box3 .prototype,
    getPoints: (() =>
    {
       const
-         x  = new Numbers_Vector3 (0, 0, 0),
-         y  = new Numbers_Vector3 (0, 0, 0),
-         z  = new Numbers_Vector3 (0, 0, 0),
-         r1 = new Numbers_Vector3 (0, 0, 0);
+         x  = new Numbers_Vector3 (),
+         y  = new Numbers_Vector3 (),
+         z  = new Numbers_Vector3 (),
+         r1 = new Numbers_Vector3 ();
 
       return function (points)
       {
@@ -55405,9 +55405,9 @@ Object .assign (Box3 .prototype,
    getNormals: (() =>
    {
       const
-         x = new Numbers_Vector3 (0, 0, 0),
-         y = new Numbers_Vector3 (0, 0, 0),
-         z = new Numbers_Vector3 (0, 0, 0);
+         x = new Numbers_Vector3 (),
+         y = new Numbers_Vector3 (),
+         z = new Numbers_Vector3 ();
 
       const axes = [ Numbers_Vector3 .xAxis, Numbers_Vector3 .yAxis, Numbers_Vector3 .zAxis ];
 
@@ -55523,10 +55523,10 @@ Object .assign (Box3 .prototype,
    add: (() =>
    {
       const
-         lhs_min = new Numbers_Vector3 (0, 0, 0),
-         lhs_max = new Numbers_Vector3 (0, 0, 0),
-         rhs_min = new Numbers_Vector3 (0, 0, 0),
-         rhs_max = new Numbers_Vector3 (0, 0, 0);
+         lhs_min = new Numbers_Vector3 (),
+         lhs_max = new Numbers_Vector3 (),
+         rhs_min = new Numbers_Vector3 (),
+         rhs_max = new Numbers_Vector3 ();
 
       return function (box)
       {
@@ -55555,8 +55555,8 @@ Object .assign (Box3 .prototype,
    containsPoint: (() =>
    {
       const
-         min = new Numbers_Vector3 (0, 0, 0),
-         max = new Numbers_Vector3 (0, 0, 0);
+         min = new Numbers_Vector3 (),
+         max = new Numbers_Vector3 ();
 
       return function (point)
       {
@@ -55573,59 +55573,59 @@ Object .assign (Box3 .prototype,
    intersectsBox: (() =>
    {
       const points1 = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
 
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
       ];
 
       const points2 = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
 
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
       ];
 
       const axes1 = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
       ];
 
       const axes2 = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
       ];
 
       const axes9 = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
 
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
 
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
       ];
 
       const normals = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
       ];
 
       return function (other)
@@ -55675,51 +55675,51 @@ Object .assign (Box3 .prototype,
    intersectsTriangle: (() =>
    {
       const points1 = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
 
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
       ];
 
       const axes1 = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
       ];
 
       const axes9 = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
 
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
 
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
       ];
 
       const normals = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
       ];
 
       const triangle = [ ];
 
-      const triangleNormal = [ new Numbers_Vector3 (0, 0, 0) ];
+      const triangleNormal = [ new Numbers_Vector3 () ];
 
       const triangleEdges = [
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0),
-         new Numbers_Vector3 (0, 0, 0)
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 ()
       ];
 
       return function (a, b, c)
@@ -55806,8 +55806,8 @@ Object .defineProperties (Box3 .prototype,
       get: (() =>
       {
          const
-            min = new Numbers_Vector3 (0, 0, 0),
-            max = new Numbers_Vector3 (0, 0, 0);
+            min = new Numbers_Vector3 (),
+            max = new Numbers_Vector3 ();
 
          return function ()
          {
@@ -55928,7 +55928,7 @@ Object .assign (Line3 .prototype,
       matrix .multDirMatrix (this .direction) .normalize ();
       return this;
    },
-   getClosestPointToPoint (point, result = new Numbers_Vector3 (0, 0, 0))
+   getClosestPointToPoint (point, result = new Numbers_Vector3 ())
    {
       const
          r = result .assign (point) .subtract (this .point),
@@ -55938,7 +55938,7 @@ Object .assign (Line3 .prototype,
    },
    getClosestPointToLine: (() =>
    {
-      const u = new Numbers_Vector3 (0, 0, 0);
+      const u = new Numbers_Vector3 ();
 
       return function (line, point)
       {
@@ -55961,9 +55961,9 @@ Object .assign (Line3 .prototype,
    })(),
    getPerpendicularVectorToPoint: (() =>
    {
-      const t = new Numbers_Vector3 (0, 0, 0);
+      const t = new Numbers_Vector3 ();
 
-      return function (point, result = new Numbers_Vector3 (0, 0, 0))
+      return function (point, result = new Numbers_Vector3 ())
       {
          result .assign (this .point) .subtract (point);
 
@@ -55973,10 +55973,10 @@ Object .assign (Line3 .prototype,
    getPerpendicularVectorToLine: (() =>
    {
       const
-         d  = new Numbers_Vector3 (0, 0, 0),
-         ad = new Numbers_Vector3 (0, 0, 0);
+         d  = new Numbers_Vector3 (),
+         ad = new Numbers_Vector3 ();
 
-      return function (line, result = new Numbers_Vector3 (0, 0, 0))
+      return function (line, result = new Numbers_Vector3 ())
       {
          const bd = result;
 
@@ -56001,8 +56001,8 @@ Object .assign (Line3 .prototype,
    intersectsTriangle: (() =>
    {
       const
-         pvec = new Numbers_Vector3 (0, 0, 0),
-         tvec = new Numbers_Vector3 (0, 0, 0);
+         pvec = new Numbers_Vector3 (),
+         tvec = new Numbers_Vector3 ();
 
       return function (A, B, C, uvt)
       {
@@ -62441,7 +62441,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .add ("X3DTexture2DNode", "x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(654);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66036,7 +66036,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .add ("X3DWorld", "x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(654);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66959,7 +66959,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 x_ite_Namespace .add ("ProtoDeclarationArray", "x_ite/Prototype/ProtoDeclarationArray", ProtoDeclarationArray_default_);
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (ProtoDeclarationArray_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(654);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -85153,7 +85153,7 @@ Object .assign (Line2 .prototype,
    },
    getPerpendicularVectorToPoint: (() =>
    {
-      const t = new Numbers_Vector2 (0, 0);
+      const t = new Numbers_Vector2 ();
 
       return function (point, result)
       {
@@ -85164,7 +85164,7 @@ Object .assign (Line2 .prototype,
    })(),
    intersectsLine: (() =>
    {
-      const u = new Numbers_Vector2 (0, 0);
+      const u = new Numbers_Vector2 ();
 
       return function (line, point)
       {
@@ -85639,13 +85639,13 @@ Object .assign (Sphere3 .prototype,
    intersectsTriangle: (() =>
    {
       const
-         AB = new Numbers_Vector3 (0, 0, 0),
-         AC = new Numbers_Vector3 (0, 0, 0),
-         BC = new Numbers_Vector3 (0, 0, 0),
-         CA = new Numbers_Vector3 (0, 0, 0),
-         Q1 = new Numbers_Vector3 (0, 0, 0),
-         Q2 = new Numbers_Vector3 (0, 0, 0),
-         Q3 = new Numbers_Vector3 (0, 0, 0);
+         AB = new Numbers_Vector3 (),
+         AC = new Numbers_Vector3 (),
+         BC = new Numbers_Vector3 (),
+         CA = new Numbers_Vector3 (),
+         Q1 = new Numbers_Vector3 (),
+         Q2 = new Numbers_Vector3 (),
+         Q3 = new Numbers_Vector3 ();
 
       return function (A, B, C)
       {
@@ -89850,7 +89850,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .add ("X3DShaderNode", "x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(654);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95491,7 +95491,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .add ("ShaderCompiler", "x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(654);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96148,7 +96148,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .add ("X3DAppearanceNode", "x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(654);
+/* provided dependency */ var Appearance_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105082,8 +105082,8 @@ const GifMedia_default_ = GifMedia;
 x_ite_Namespace .add ("GifMedia", "x_ite/Browser/Texturing/GifMedia", GifMedia_default_);
 /* harmony default export */ const Texturing_GifMedia = (GifMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(654);
-/* provided dependency */ var SuperGif = __webpack_require__(921);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(68);
+/* provided dependency */ var SuperGif = __webpack_require__(271);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108365,7 +108365,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace .add ("gettext", "locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(654);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108795,7 +108795,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .add ("TextureQuality", "x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(654);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109389,7 +109389,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .add ("RenderingProperties", "x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(654);
+/* provided dependency */ var Notification_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109512,8 +109512,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .add ("Notification", "x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(982);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(654);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(808);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112274,7 +112274,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .add ("DataStorage", "standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(654);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114797,8 +114797,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .add ("X3DViewer", "x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(988);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(654);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(826);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115670,8 +115670,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .add ("ExamineViewer", "x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(988);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(654);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(826);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116680,8 +116680,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .add ("FlyViewer", "x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(988);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(654);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(826);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117012,8 +117012,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .add ("NoneViewer", "x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(988);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(654);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(826);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118152,8 +118152,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .add ("X3DPickingContext", "x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(988);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(654);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(826);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119444,7 +119444,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .add ("MultiSampleFrameBuffer", "x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(654);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120356,7 +120356,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 x_ite_Namespace .add ("X3DSoundContext", "x_ite/Browser/Sound/X3DSoundContext", X3DSoundContext_default_);
 /* harmony default export */ const Sound_X3DSoundContext = (X3DSoundContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(654);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(68);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -121910,7 +121910,7 @@ const Components_default_ = Components;
 x_ite_Namespace .add ("Components", "x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(654);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(68);
 /*******************************************************************************
  * MIT License
  *
@@ -123041,7 +123041,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace .add ("SupportedProfiles", "x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(654);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -124133,7 +124133,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace .add ("X3DBrowser", "x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(654);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -124270,8 +124270,8 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 x_ite_Namespace .add ("X3DCanvasElement", "x_ite/X3DCanvasElement", X3DCanvasElement_default_);
 /* harmony default export */ const x_ite_X3DCanvasElement = (X3DCanvasElement_default_);
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(654);
-/* provided dependency */ var pako = __webpack_require__(574);
+/* provided dependency */ var jquery_$ = __webpack_require__(68);
+/* provided dependency */ var pako = __webpack_require__(264);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -124348,14 +124348,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .add ("jquery", "lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(247);
+/* provided dependency */ var libtess_libtess = __webpack_require__(969);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .add ("libtess", "lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(654);
+/* provided dependency */ var X3D_$ = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

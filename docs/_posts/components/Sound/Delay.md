@@ -65,13 +65,13 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 *tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
 
-### SFTime [in, out] **delayTime** 0 <small>[0,∞)</small>
-
-*delayTime* is duration of delay (in seconds) to apply.
-
 ### SFTime [in, out] **maxDelayTime** 1 <small>[0,∞)</small>
 
 *maxDelayTime* is duration of maximum amount of delay (in seconds) that can be applied.
+
+### SFTime [in, out] **delayTime** 0 <small>[0,∞)</small>
+
+*delayTime* is duration of delay (in seconds) to apply.
 
 ### SFInt32 [in, out] **channelCount**
 

@@ -3494,7 +3494,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
       var
          transform       = new AmmoClass .btTransform (),
          position        = new (Vector3_default()) (),
-         quaternion      = new (Quaternion_default()) (0, 0, 0, 1),
+         quaternion      = new (Quaternion_default()) (),
          orientation     = new (Rotation4_default()) (),
          linearVelocity  = new (Vector3_default()) (),
          angularVelocity = new (Vector3_default()) ();
