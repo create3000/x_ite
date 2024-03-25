@@ -75,12 +75,10 @@ Object .assign (Object .setPrototypeOf (Convolver .prototype, X3DSoundProcessing
       this ._buffer           .addInterest ("set_buffer__",    this);
       this ._normalize        .addInterest ("set_normalize__", this);
 
+      this .setSoundProcessor (this .convolverNode);
+
       this .set_buffer__ ();
       this .set_normalize__ ();
-   },
-   getSoundProcessor ()
-   {
-      return this .convolverNode;
    },
    set_buffer__ ()
    {

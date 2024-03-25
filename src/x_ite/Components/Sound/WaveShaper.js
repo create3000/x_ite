@@ -73,12 +73,10 @@ Object .assign (Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessin
       this ._curve      .addInterest ("set_curve__",      this);
       this ._oversample .addInterest ("set_oversample__", this);
 
+      this .setSoundProcessor (this .waveShaperNode);
+
       this .set_curve__ ();
       this .set_oversample__ ();
-   },
-   getSoundProcessor ()
-   {
-      return this .waveShaperNode;
    },
    set_curve__ ()
    {

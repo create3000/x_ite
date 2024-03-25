@@ -57,10 +57,6 @@ function ChannelSelector (executionContext)
    X3DSoundChannelNode .call (this, executionContext);
 
    this .addType (X3DConstants .ChannelSelector);
-
-   const audioContext = this .getBrowser () .getAudioContext ();
-
-   this .channelSplitterNode = new ChannelSplitterNode (audioContext);
 }
 
 Object .assign (Object .setPrototypeOf (ChannelSelector .prototype, X3DSoundChannelNode .prototype),
@@ -73,10 +69,6 @@ Object .assign (Object .setPrototypeOf (ChannelSelector .prototype, X3DSoundChan
 
       this .set_channelSelection__ ();
    },
-   getSoundProcessor ()
-   {
-      return this .channelSplitterNode;
-   },
    set_channelSelection__ ()
    {
       const
@@ -84,14 +76,14 @@ Object .assign (Object .setPrototypeOf (ChannelSelector .prototype, X3DSoundChan
          channelSelection = Algorithm .clamp (this ._channelSelection .getValue (), 0, 31),
          numberOfOutputs  = channelSelection + 1;
 
-      this .channelSplitterNode .disconnect ();
+      this .channelSplitterNode ?.disconnect ();
 
-      if (this .channelSplitterNode .numberOfOutputs !== numberOfOutputs)
+      if (this .channelSplitterNode ?.numberOfOutputs !== numberOfOutputs)
          this .channelSplitterNode = new ChannelSplitterNode (audioContext, { numberOfOutputs });
 
       this .channelSplitterNode .connect (this .getAudioSource (), channelSelection);
 
-      this .set_enabled__ ();
+      this .setSoundProcessor (this .channelSplitterNode);
    },
 });
 

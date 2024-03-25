@@ -77,15 +77,13 @@ Object .assign (Object .setPrototypeOf (DynamicsCompressor .prototype, X3DSoundP
       this ._release   .addInterest ("set_release__",   this);
       this ._threshold .addInterest ("set_threshold__", this);
 
+      this .setSoundProcessor (this .dynamicsCompressorNode);
+
       this .set_attack__ ();
       this .set_knee__ ();
       this .set_ratio__ ();
       this .set_release__ ();
       this .set_threshold__ ();
-   },
-   getSoundProcessor ()
-   {
-      return this .dynamicsCompressorNode;
    },
    set_attack__ ()
    {

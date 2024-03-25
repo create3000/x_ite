@@ -76,14 +76,12 @@ Object .assign (Object .setPrototypeOf (BiquadFilter .prototype, X3DSoundProcess
       this ._frequency     .addInterest ("set_frequency__",     this);
       this ._qualityFactor .addInterest ("set_qualityFactor__", this);
 
+      this .setSoundProcessor (this .biquadFilterNode);
+
       this .set_detune__ ();
       this .set_type__ ();
       this .set_frequency__ ();
       this .set_qualityFactor__ ();
-   },
-   getSoundProcessor ()
-   {
-      return this .biquadFilterNode;
    },
    set_detune__ ()
    {

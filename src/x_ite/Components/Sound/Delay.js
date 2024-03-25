@@ -57,12 +57,6 @@ function Delay (executionContext)
    X3DSoundProcessingNode .call (this, executionContext);
 
    this .addType (X3DConstants .Delay);
-
-   const audioContext = this .getBrowser () .getAudioContext ();
-
-   this .delayNode = new DelayNode (audioContext);
-
-   this .delayNode .connect (this .getAudioSource ());
 }
 
 Object .assign (Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode .prototype),
@@ -76,10 +70,6 @@ Object .assign (Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode
 
       this .set_maxDelayTime__ ();
    },
-   getSoundProcessor ()
-   {
-      return this .delayNode;
-   },
    set_delayTime__ ()
    {
       const
@@ -90,18 +80,23 @@ Object .assign (Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode
    },
    set_maxDelayTime__ ()
    {
-      const
-         audioContext = this .getBrowser () .getAudioContext (),
-         maxDelayTime = Math .max (this ._maxDelayTime .getValue (), 0),
-         delayTime    = Algorithm .clamp (this ._delayTime .getValue (), 0, maxDelayTime);
+      this .delayNode ?.disconnect ();
 
-      this .delayNode .disconnect ();
-
-      this .delayNode = new DelayNode (audioContext, { maxDelayTime, delayTime });
+      this .delayNode = this .createSoundProcessor ();
 
       this .delayNode .connect (this .getAudioSource ());
 
-      this .set_enabled__ ();
+      this .setSoundProcessor (this .delayNode);
+   },
+   createSoundProcessor ()
+   {
+      const
+         audioContext = this .getBrowser () .getAudioContext (),
+         maxDelayTime = Math .max (this ._maxDelayTime .getValue (), 0),
+         delayTime    = Algorithm .clamp (this ._delayTime .getValue (), 0, maxDelayTime),
+         delayNode    = new DelayNode (audioContext, { maxDelayTime, delayTime });
+
+      return delayNode;
    },
 });
 

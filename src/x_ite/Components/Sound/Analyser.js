@@ -78,13 +78,11 @@ Object .assign (Object .setPrototypeOf (Analyser .prototype, X3DSoundProcessingN
       this ._maxDecibels           .addInterest ("set_decibels__",              this);
       this ._smoothingTimeConstant .addInterest ("set_smoothingTimeConstant__", this);
 
+      this .setSoundProcessor (this .analyserNode);
+
       this .set_fftSize__ ();
       this .set_decibels__ ();
       this .set_smoothingTimeConstant__ ();
-   },
-   getSoundProcessor ()
-   {
-      return this .analyserNode;
    },
    set_fftSize__ ()
    {

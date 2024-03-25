@@ -66,6 +66,7 @@ function X3DSoundProcessingNode (executionContext)
    this .childNodes       = [ ];
    this .audioDestination = new GainNode (audioContext, { gain: 0 });
    this .audioSource      = new GainNode (audioContext, { gain: 1 });
+   this .soundProcessor   = this .audioSource;
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DSoundNode .prototype),
@@ -99,10 +100,18 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DSo
    },
    getSoundProcessor ()
    {
-      return this .audioSource;
+      return this .soundProcessor;
+   },
+   setSoundProcessor (value)
+   {
+      this .soundProcessor = value ?? this .audioSource;
+
+      this .set_enabled__ ();
    },
    set_enabled__ ()
    {
+      X3DTimeDependentNode .prototype .set_enabled__ .call (this);
+
       this .audioDestination .disconnect ();
 
       if (this ._enabled .getValue ())
@@ -111,7 +120,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DSo
          this .set_channelCountMode__ ();
          this .set_channelInterpretation__ ();
 
-         this .audioDestination .connect (this .getSoundProcessor ());
+         this .audioDestination .connect (this .soundProcessor);
       }
       else
       {
@@ -121,8 +130,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DSo
 
          this .audioDestination .connect (this .audioSource);
       }
-
-      X3DTimeDependentNode .prototype .set_enabled__ .call (this);
    },
    set_gain__ ()
    {
