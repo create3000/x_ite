@@ -103,23 +103,23 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
       this ._coneOuterGain     .addInterest ("set_coneOuterGain__",     this);
       this ._coneInnerAngle    .addInterest ("set_coneInnerAngle__",    this);
       this ._coneOuterAngle    .addInterest ("set_coneOuterAngle__",    this);
-      this ._distanceModel     .addInterest ("set_distanceModel__",     this);
       this ._maxDistance       .addInterest ("set_maxDistance__",       this);
       this ._referenceDistance .addInterest ("set_referenceDistance__", this);
+      this ._distanceModel     .addInterest ("set_distanceModel__",     this);
       this ._rolloffFactor     .addInterest ("set_distanceModel__",     this);
       this ._children          .addInterest ("set_children__",          this);
 
       this .set_live__ ();
       this .set_spatialize__ ();
       this .set_intensity__ ();
-      this .set_enableHRTF__ ();
-      this .set_dopplerEnabled__ ();
       this .set_coneOuterGain__ ();
       this .set_coneInnerAngle__ ();
       this .set_coneOuterAngle__ ();
-      this .set_distanceModel__ ();
       this .set_maxDistance__ ();
       this .set_referenceDistance__ ();
+      this .set_distanceModel__ ();
+      this .set_enableHRTF__ ();
+      this .set_dopplerEnabled__ ();
       this .set_children__ ();
    },
    setTraversed (value)
@@ -173,17 +173,6 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
    {
       this .gainNode .gain .value = Algorithm .clamp (this ._intensity .getValue (), 0, 1) * this ._gain .getValue ();
    },
-   set_enableHRTF__ ()
-   {
-      if (this ._enableHRTF .getValue ())
-         this .pannerNode .panningModel = "HRTF";
-      else
-         this .pannerNode .panningModel = "equalpower";
-   },
-   set_dopplerEnabled__ ()
-   {
-      // Depreciated: https://github.com/WebAudio/web-audio-api/issues/372.
-   },
    set_coneOuterGain__ ()
    {
       this .pannerNode .coneOuterGain = Algorithm .clamp (this ._coneOuterGain .getValue (), 0, 1);
@@ -195,6 +184,14 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
    set_coneOuterAngle__ ()
    {
       this .pannerNode .coneOuterAngle = Algorithm .clamp (Algorithm .degrees (this ._coneOuterAngle .getValue ()), 0, 360);
+   },
+   set_maxDistance__ ()
+   {
+      this .pannerNode .maxDistance = Math .max (this ._maxDistance .getValue (), 0);
+   },
+   set_referenceDistance__ ()
+   {
+      this .pannerNode .refDistance = Math .max (this ._referenceDistance .getValue (), 0);
    },
    set_distanceModel__: (function ()
    {
@@ -216,13 +213,16 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
          this .pannerNode .rolloffFactor = rolloffFactor;
       };
    })(),
-   set_maxDistance__ ()
+   set_enableHRTF__ ()
    {
-      this .pannerNode .maxDistance = Math .max (this ._maxDistance .getValue (), 0);
+      if (this ._enableHRTF .getValue ())
+         this .pannerNode .panningModel = "HRTF";
+      else
+         this .pannerNode .panningModel = "equalpower";
    },
-   set_referenceDistance__ ()
+   set_dopplerEnabled__ ()
    {
-      this .pannerNode .refDistance = Math .max (this ._referenceDistance .getValue (), 0);
+      // Depreciated: https://github.com/WebAudio/web-audio-api/issues/372.
    },
    set_children__ ()
    {
@@ -327,15 +327,15 @@ Object .defineProperties (SpatialSound,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "location",          new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",         new Fields .SFVec3f (0, 0, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "gain",              new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "enableHRTF",        new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "dopplerEnabled",    new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coneOuterGain",     new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coneInnerAngle",    new Fields .SFFloat (6.2832)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coneOuterAngle",    new Fields .SFFloat (6.2832)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "distanceModel",     new Fields .SFString ("INVERSE")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "maxDistance",       new Fields .SFFloat (10000)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "referenceDistance", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "distanceModel",     new Fields .SFString ("INVERSE")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "rolloffFactor",     new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enableHRTF",        new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "dopplerEnabled",    new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "priority",          new Fields .SFFloat ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput,    "children",          new Fields .MFNode ()),

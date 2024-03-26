@@ -84,24 +84,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
-### SFBool [in, out] **enableHRTF** FALSE
-
-*enableHRTF* enables/disables Head Related Transfer Function (HRTF) auralization, if available. SpatialSound enabledHRTF=true corresponds to panningModelType HRTF, enabledHRTF=false corresponds to panningModelType equalpower.
-
-#### Hints
-
-- [W3C Audio API](https://www.w3.org/TR/webaudio/#enumdef-panningmodeltype){:target="_blank"}
-- [Wikipedia HRTF](https://en.wikipedia.org/wiki/3D_sound_localization#Head-related_Transfer_Function_(HRTF)){:target="_blank"}
-
-### SFBool [in, out] **dopplerEnabled** FALSE <small class="red">not supported</small>
-
-*dopplerEnabled* enables/disables whether real-time Doppler effects (due to relation motion between sources and listeners) are computed by browser between virtual sound sources and active listening locations, then applied to received frequency at active listening locations.
-
-#### Hints
-
-- Functional support requires player support for [Sound](/x_ite/components/sound/sound/) component level 3.
-- [Wikipedia Doppler effect](https://en.wikipedia.org/wiki/Doppler_effect){:target="_blank"}
-
 ### SFFloat [in, out] **coneOuterGain** 0 <small>(-∞,∞)</small>
 
 *coneOuterGain* is minimum gain value found outside coneOuterAngle.
@@ -124,14 +106,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - *coneOuterAngle* value is greater than or equal to coneInnerAngle.
 - [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/sound.html#f-AudioPannerListenerRelationships){:target="_blank"}
 
-### SFString [in, out] **distanceModel** "INVERSE" <small>["LINEAR" "INVERSE" "EXPONENTIAL"]</small>
-
-*distanceModel* determines how field specifies which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
-
-#### Hint
-
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-distancemodeltype){:target="_blank"}
-
 ### SFFloat [in, out] **maxDistance** 10000 <small>[0,∞)</small>
 
 *maxDistance* is the maximum distance where sound is renderable between source and listener, after which no reduction in sound volume occurs.
@@ -144,6 +118,14 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-pannernode-refdistance){:target="_blank"}
 
+### SFString [in, out] **distanceModel** "INVERSE" <small>["LINEAR" "INVERSE" "EXPONENTIAL"]</small>
+
+*distanceModel* determines how field specifies which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
+
+#### Hint
+
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-distancemodeltype){:target="_blank"}
+
 ### SFFloat [in, out] **rolloffFactor** 1 <small>[0,∞)</small>
 
 *rolloffFactor* indicates how quickly volume is reduced as source moves further from listener.
@@ -151,6 +133,24 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hint
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-pannernode-rollofffactor){:target="_blank"}
+
+### SFBool [in, out] **enableHRTF** FALSE
+
+*enableHRTF* enables/disables Head Related Transfer Function (HRTF) auralization, if available. SpatialSound enabledHRTF=true corresponds to panningModelType HRTF, enabledHRTF=false corresponds to panningModelType equalpower.
+
+#### Hints
+
+- [W3C Audio API](https://www.w3.org/TR/webaudio/#enumdef-panningmodeltype){:target="_blank"}
+- [Wikipedia HRTF](https://en.wikipedia.org/wiki/3D_sound_localization#Head-related_Transfer_Function_(HRTF)){:target="_blank"}
+
+### SFBool [in, out] **dopplerEnabled** FALSE <small class="red">not supported</small>
+
+*dopplerEnabled* enables/disables whether real-time Doppler effects (due to relation motion between sources and listeners) are computed by browser between virtual sound sources and active listening locations, then applied to received frequency at active listening locations.
+
+#### Hints
+
+- Functional support requires player support for [Sound](/x_ite/components/sound/sound/) component level 3.
+- [Wikipedia Doppler effect](https://en.wikipedia.org/wiki/Doppler_effect){:target="_blank"}
 
 ### SFFloat [in, out] **priority** 0 <small>[0,1]</small>
 
