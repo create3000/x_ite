@@ -232,12 +232,12 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       this ._url .toXMLStream (generator);
 
       generator .string += "'";
-      generator .string += ">";
 
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length)
       {
+         generator .string += ">";
          generator .string += generator .TidyBreak ();
 
          generator .IncIndent ();
@@ -265,9 +265,12 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          generator .DecIndent ();
 
          generator .string += generator .Indent ();
+         generator .string += "</ExternProtoDeclare>";
       }
-
-      generator .string += "</ExternProtoDeclare>";
+      else
+      {
+         generator .string += generator .closingTags ? "></ExternProtoDeclare>" : "/>";
+      }
    },
    toJSONStream (generator)
    {
