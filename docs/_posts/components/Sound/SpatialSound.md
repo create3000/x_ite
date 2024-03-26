@@ -106,6 +106,14 @@ The *gain* field is a factor that represents the amount of linear amplification 
 - *coneOuterAngle* value is greater than or equal to coneInnerAngle.
 - [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/sound.html#f-AudioPannerListenerRelationships){:target="_blank"}
 
+### SFString [in, out] **distanceModel** "INVERSE" <small>["LINEAR" "INVERSE" "EXPONENTIAL"]</small>
+
+*distanceModel* determines how field specifies which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
+
+#### Hint
+
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-distancemodeltype){:target="_blank"}
+
 ### SFFloat [in, out] **maxDistance** 10000 <small>[0,∞)</small>
 
 *maxDistance* is the maximum distance where sound is renderable between source and listener, after which no reduction in sound volume occurs.
@@ -117,14 +125,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hint
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-pannernode-refdistance){:target="_blank"}
-
-### SFString [in, out] **distanceModel** "INVERSE" <small>["LINEAR" "INVERSE" "EXPONENTIAL"]</small>
-
-*distanceModel* determines how field specifies which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
-
-#### Hint
-
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-distancemodeltype){:target="_blank"}
 
 ### SFFloat [in, out] **rolloffFactor** 1 <small>[0,∞)</small>
 

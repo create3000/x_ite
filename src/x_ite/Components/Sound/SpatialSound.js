@@ -103,9 +103,9 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
       this ._coneOuterGain     .addInterest ("set_coneOuterGain__",     this);
       this ._coneInnerAngle    .addInterest ("set_coneInnerAngle__",    this);
       this ._coneOuterAngle    .addInterest ("set_coneOuterAngle__",    this);
+      this ._distanceModel     .addInterest ("set_distanceModel__",     this);
       this ._maxDistance       .addInterest ("set_maxDistance__",       this);
       this ._referenceDistance .addInterest ("set_referenceDistance__", this);
-      this ._distanceModel     .addInterest ("set_distanceModel__",     this);
       this ._rolloffFactor     .addInterest ("set_distanceModel__",     this);
       this ._children          .addInterest ("set_children__",          this);
 
@@ -115,9 +115,9 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
       this .set_coneOuterGain__ ();
       this .set_coneInnerAngle__ ();
       this .set_coneOuterAngle__ ();
+      this .set_distanceModel__ ();
       this .set_maxDistance__ ();
       this .set_referenceDistance__ ();
-      this .set_distanceModel__ ();
       this .set_enableHRTF__ ();
       this .set_dopplerEnabled__ ();
       this .set_children__ ();
@@ -185,14 +185,6 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
    {
       this .pannerNode .coneOuterAngle = Algorithm .clamp (Algorithm .degrees (this ._coneOuterAngle .getValue ()), 0, 360);
    },
-   set_maxDistance__ ()
-   {
-      this .pannerNode .maxDistance = Math .max (this ._maxDistance .getValue (), 0);
-   },
-   set_referenceDistance__ ()
-   {
-      this .pannerNode .refDistance = Math .max (this ._referenceDistance .getValue (), 0);
-   },
    set_distanceModel__: (function ()
    {
       const distanceModels = new Map ([
@@ -213,6 +205,14 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
          this .pannerNode .rolloffFactor = rolloffFactor;
       };
    })(),
+   set_maxDistance__ ()
+   {
+      this .pannerNode .maxDistance = Math .max (this ._maxDistance .getValue (), 0);
+   },
+   set_referenceDistance__ ()
+   {
+      this .pannerNode .refDistance = Math .max (this ._referenceDistance .getValue (), 0);
+   },
    set_enableHRTF__ ()
    {
       if (this ._enableHRTF .getValue ())
@@ -330,9 +330,9 @@ Object .defineProperties (SpatialSound,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coneOuterGain",     new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coneInnerAngle",    new Fields .SFFloat (6.2832)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coneOuterAngle",    new Fields .SFFloat (6.2832)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "distanceModel",     new Fields .SFString ("INVERSE")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "maxDistance",       new Fields .SFFloat (10000)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "referenceDistance", new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "distanceModel",     new Fields .SFString ("INVERSE")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "rolloffFactor",     new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "enableHRTF",        new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "dopplerEnabled",    new Fields .SFBool ()),
