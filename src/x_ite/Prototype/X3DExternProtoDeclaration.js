@@ -233,35 +233,40 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       generator .string += "'";
       generator .string += ">";
-      generator .string += generator .TidyBreak ();
-
-      generator .IncIndent ();
 
       const userDefinedFields = this .getUserDefinedFields ();
 
-      for (const field of userDefinedFields)
+      if (userDefinedFields .length)
       {
-         generator .string += generator .Indent ();
-         generator .string += "<field";
-         generator .string += generator .Space ();
-         generator .string += "accessType='";
-         generator .string += generator .AccessType (field .getAccessType ());
-         generator .string += "'";
-         generator .string += generator .Space ();
-         generator .string += "type='";
-         generator .string += field .getTypeName ();
-         generator .string += "'";
-         generator .string += generator .Space ();
-         generator .string += "name='";
-         generator .string += generator .XMLEncode (field .getName ());
-         generator .string += "'";
-         generator .string += generator .closingTags ? "></field>" : "/>";
          generator .string += generator .TidyBreak ();
+
+         generator .IncIndent ();
+
+         for (const field of userDefinedFields)
+         {
+            generator .string += generator .Indent ();
+            generator .string += "<field";
+            generator .string += generator .Space ();
+            generator .string += "accessType='";
+            generator .string += generator .AccessType (field .getAccessType ());
+            generator .string += "'";
+            generator .string += generator .Space ();
+            generator .string += "type='";
+            generator .string += field .getTypeName ();
+            generator .string += "'";
+            generator .string += generator .Space ();
+            generator .string += "name='";
+            generator .string += generator .XMLEncode (field .getName ());
+            generator .string += "'";
+            generator .string += generator .closingTags ? "></field>" : "/>";
+            generator .string += generator .TidyBreak ();
+         }
+
+         generator .DecIndent ();
+
+         generator .string += generator .Indent ();
       }
 
-      generator .DecIndent ();
-
-      generator .string += generator .Indent ();
       generator .string += "</ExternProtoDeclare>";
    },
    toJSONStream (generator)
