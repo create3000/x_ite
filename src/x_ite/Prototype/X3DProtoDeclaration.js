@@ -158,12 +158,12 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       generator .string += generator .Space ();
       generator .string += field .getName ();
 
-      if (field .isInitializable ())
-      {
-         generator .string += generator .Space ();
+      if (!field .isInitializable ())
+         return;
 
-         field .toVRMLStream (generator);
-      }
+      generator .string += generator .Space ();
+
+      field .toVRMLStream (generator);
    },
    toXMLStream (generator)
    {
@@ -209,7 +209,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
             generator .string += generator .XMLEncode (field .getName ());
             generator .string += "'";
 
-            if (field .isDefaultValue ())
+            if (field .isDefaultValue () || !field .isInitializable ())
             {
                generator .string += generator .closingTags ? "></field>" : "/>";
                generator .string += generator .TidyBreak ();
@@ -391,7 +391,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
             generator .string += generator .JSONEncode (field .getName ());
             generator .string += '"';
 
-            if (field .isDefaultValue ())
+            if (field .isDefaultValue () || !field .isInitializable ())
             {
                generator .string += generator .TidyBreak ();
             }
