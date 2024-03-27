@@ -408,10 +408,10 @@ Object .assign (Generator .prototype,
 
       const executionContext = this .ExecutionContext ();
 
-      if (this .importedNodesIndex .get (executionContext) ?.has (baseNode))
+      if (this .importedNodesIndex .get (executionContext) .has (baseNode))
          return true;
 
-      if (this .exportedNodesIndex .get (executionContext) ?.has (baseNode))
+      if (this .exportedNodesIndex .get (executionContext) .has (baseNode))
          return true;
 
       return false;
