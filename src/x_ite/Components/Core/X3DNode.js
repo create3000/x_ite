@@ -596,6 +596,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             generator .string += generator .Space ();
             generator .string += name;
 
+            if (generator .style === "CLEAN")
+               generator .string += generator .Space ();
+
             generator .LeaveScope ();
             return;
          }
