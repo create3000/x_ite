@@ -86,6 +86,14 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
    {
       return true;
    },
+   getCloneCount ()
+   {
+      return X3DProtoDeclarationNode .prototype .collectCloneCount .call (this);
+   },
+   collectCloneCount ()
+   {
+      return 1;
+   },
    toVRMLStream (generator)
    {
       generator .string += generator .Indent ();
