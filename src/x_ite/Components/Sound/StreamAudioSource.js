@@ -66,6 +66,28 @@ Object .assign (Object .setPrototypeOf (StreamAudioSource .prototype, X3DSoundSo
    {
       X3DSoundSourceNode .prototype .initialize .call (this);
    },
+   // createPeerConnection ()
+   // {
+   //    const peerConnection = new RTCPeerConnection ();
+
+   //    peerConnection .ontrack = function (event)
+   //    {
+   //       console.log ("Remote Streams", event .streams .length)
+
+   //       const remoteVideo = document .getElementById ("remoteVideo")
+
+   //       for (const stream of event .streams)
+   //       {
+   //          console .log (stream .id)
+
+   //          if (!this .streamIdentifier .include (stream .id))
+   //             continue;
+
+   //          if (remoteVideo .srcObject !== stream)
+   //             remoteVideo .srcObject = stream;
+   //       }
+   //    };
+   // }
 });
 
 

@@ -94,14 +94,14 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .Style (style);
 
    this .executionContextStack = [ ];
+   this .executionContextIndex = new Set ();
    this .importedNodesIndex    = new Map ();
    this .importedNames         = new Map ();
    this .exportedNodesIndex    = new Map ();
-   this .nodes                 = new Set ();
+   this .nodes                 = new Map ();
    this .names                 = new Map ();
    this .namesByNode           = new Map ();
-   this .routeNodes            = new Set ();
-   this .level                 = 0;
+   this .routeNodes            = new Map ();
    this .containerFields       = [ ];
 
    this .PushExecutionContext (null);
@@ -272,48 +272,36 @@ Object .assign (Generator .prototype,
    {
       this .executionContextStack .push (executionContext);
 
-      if (!this .names .has (executionContext))
-         this .names .set (executionContext, new Set ());
+      if (this .executionContextIndex .has (executionContext))
+         return;
 
-      if (!this .importedNodesIndex .has (executionContext))
-         this .importedNodesIndex .set (executionContext, new Set ());
+      this .executionContextIndex .add (executionContext);
 
-      if (!this .exportedNodesIndex .has (executionContext))
-         this .exportedNodesIndex .set (executionContext, new Set ());
+      this .importedNodesIndex .set (executionContext, new Set ());
+      this .importedNames      .set (executionContext, new Map ());
+      this .exportedNodesIndex .set (executionContext, new Set ());
+      this .nodes              .set (executionContext, new Set ());
+      this .names              .set (executionContext, new Set ());
+      this .namesByNode        .set (executionContext, new Map ());
+      this .routeNodes         .set (executionContext, new Set ());
    },
    PopExecutionContext ()
    {
       this .executionContextStack .pop ();
-
-      if (this .ExecutionContext ())
-         return;
-
-      this .importedNodesIndex .clear ();
-      this .exportedNodesIndex .clear ();
    },
    ExecutionContext ()
    {
       return this .executionContextStack .at (-1);
    },
    EnterScope ()
-   {
-      ++ this .level;
-   },
+   { },
    LeaveScope ()
-   {
-      -- this .level;
-
-      if (this .level === 0)
-      {
-         this .nodes       .clear ();
-         this .namesByNode .clear ();
-      }
-   },
+   { },
    NamedNodes (namedNodes)
    {
       const
          names       = this .names .get (this .ExecutionContext ()),
-         namesByNode = this .namesByNode;
+         namesByNode = this .namesByNode .get (this .ExecutionContext ());
 
       for (const node of namedNodes)
       {
@@ -347,11 +335,17 @@ Object .assign (Generator .prototype,
    },
    AddRouteNode (routeNode)
    {
-      this .routeNodes .add (routeNode);
+      const routeNodes = this .routeNodes .get (this .ExecutionContext ());
+
+      routeNodes .add (routeNode);
    },
    ExistsRouteNode (routeNode)
    {
-      return this .namesByNode .has (routeNode) || this .routeNodes .has (routeNode);
+      const
+         namesByNode = this .namesByNode .get (this .ExecutionContext ()),
+         routeNodes  = this .routeNodes .get (this .ExecutionContext ());
+
+      return namesByNode .has (routeNode) || routeNodes .has (routeNode);
    },
    IsSharedNode (baseNode)
    {
@@ -359,19 +353,25 @@ Object .assign (Generator .prototype,
    },
    AddNode (baseNode)
    {
-      this .nodes .add (baseNode);
+      const nodes = this .nodes .get (this .ExecutionContext ());
+
+      nodes .add (baseNode);
 
       this .AddRouteNode (baseNode);
    },
    ExistsNode (baseNode)
    {
-      return this .nodes .has (baseNode);
+      const nodes = this .nodes .get (this .ExecutionContext ());
+
+      return nodes .has (baseNode);
    },
    Name (baseNode)
    {
       // Is the node already in index.
 
-      const name = this .namesByNode .get (baseNode);
+      const
+         namesByNode = this .namesByNode .get (this .ExecutionContext ()),
+         name        = namesByNode .get (baseNode);
 
       if (name !== undefined)
       {
@@ -393,7 +393,7 @@ Object .assign (Generator .prototype,
          // Add to indices.
 
          names .add (newName);
-         this .namesByNode .set (baseNode, newName);
+         namesByNode .set (baseNode, newName);
 
          return newName;
       }
@@ -418,8 +418,10 @@ Object .assign (Generator .prototype,
    },
    ImportedName (importedNode)
    {
-      if (this .importedNames .has (importedNode))
-         return this .importedNames .get (importedNode);
+      const importedNames = this .importedNames .get (this .ExecutionContext ());
+
+      if (importedNames .has (importedNode))
+         return importedNames .get (importedNode);
 
       const
          names   = this .names .get (this .ExecutionContext ()),
@@ -428,7 +430,7 @@ Object .assign (Generator .prototype,
       // Add to indices.
 
       names .add (newName);
-      this .importedNames .set (importedNode, newName);
+      importedNames .set (importedNode, newName);
 
       return newName;
    },
