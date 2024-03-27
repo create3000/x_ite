@@ -127,11 +127,16 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
          generator .IncIndent ();
 
+         const last = userDefinedFields .at (-1);
+
          for (const field of userDefinedFields)
          {
             this .toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength);
 
-            generator .string += generator .Break ();
+            if (field === last)
+               generator .string += generator .TidyBreak ();
+            else
+               generator .string += generator .Break ();
          }
 
          generator .DecIndent ();
@@ -160,9 +165,9 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
    toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength)
    {
       generator .string += generator .Indent ();
-      generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, " ");
+      generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, generator .TidySpace ());
       generator .string += generator .Space ();
-      generator .string += field .getTypeName () .padEnd (fieldTypeLength, " ");
+      generator .string += field .getTypeName () .padEnd (fieldTypeLength, generator .TidySpace ());
       generator .string += generator .Space ();
       generator .string += field .getName ();
 

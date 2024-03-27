@@ -586,6 +586,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    {
       generator .EnterScope ();
 
+      if (generator .string && !generator .string .at (-1) .match (/^[ \t\r\n,\[\]\{\}]$/))
+         generator .string += generator .Space ();
+
       const name = generator .Name (this);
 
       if (name .length)
@@ -604,9 +607,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (name .length)
       {
          generator .AddNode (this);
-
-         if (generator .string && !generator .string .at (-1) .match (/^[ \t\r\n,}]$/))
-            generator .string += generator .Space ();
 
          generator .string += "DEF";
          generator .string += generator .Space ();
@@ -636,10 +636,10 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
             }
 
-            const last = userDefinedFields .at (-1);
-
             generator .string += generator .TidyBreak ();
             generator .IncIndent ();
+
+            const last = userDefinedFields .at (-1);
 
             for (const field of userDefinedFields)
             {
@@ -699,9 +699,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
       {
          generator .string += generator .Indent ();
-         generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, " ");
+         generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, generator .TidySpace ());
          generator .string += generator .Space ();
-         generator .string += field .getTypeName () .padEnd (fieldTypeLength, " ");
+         generator .string += field .getTypeName () .padEnd (fieldTypeLength, generator .TidySpace ());
          generator .string += generator .Space ();
          generator .string += field .getName ();
 
@@ -725,9 +725,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             // Output user defined reference field
 
             generator .string += generator .Indent ();
-            generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, " ");
+            generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, generator .TidySpace ());
             generator .string += generator .Space ();
-            generator .string += field .getTypeName () .padEnd (fieldTypeLength, " ");
+            generator .string += field .getTypeName () .padEnd (fieldTypeLength, generator .TidySpace ());
             generator .string += generator .Space ();
             generator .string += field .getName ();
             generator .string += generator .Space ();
@@ -745,9 +745,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          {
             generator .string += generator .Break ();
             generator .string += generator .Indent ();
-            generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, " ");
+            generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, generator .TidySpace ());
             generator .string += generator .Space ();
-            generator .string += field .getTypeName () .padEnd (fieldTypeLength, " ");
+            generator .string += field .getTypeName () .padEnd (fieldTypeLength, generator .TidySpace ());
             generator .string += generator .Space ();
             generator .string += field .getName ();
 
