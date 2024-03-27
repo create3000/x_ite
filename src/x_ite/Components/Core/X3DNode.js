@@ -596,9 +596,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             generator .string += generator .Space ();
             generator .string += name;
 
-            if (generator .style === "CLEAN")
-               generator .string += generator .Space ();
-
             generator .LeaveScope ();
             return;
          }
@@ -607,6 +604,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (name .length)
       {
          generator .AddNode (this);
+
+         if (generator .string && !generator .string .at (-1) .match (/^[ \t\r\n,}]$/))
+            generator .string += generator .Space ();
 
          generator .string += "DEF";
          generator .string += generator .Space ();

@@ -111,8 +111,6 @@ Object .assign (Generator .prototype,
 {
    Style (style)
    {
-      this .style = style;
-      
       switch (style)
       {
          case "CLEAN":
