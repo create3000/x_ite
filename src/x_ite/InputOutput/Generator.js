@@ -444,10 +444,7 @@ Object .assign (Generator .prototype,
    },
    ContainerField ()
    {
-      if (this .containerFields .length)
-         return this .containerFields [this .containerFields .length - 1];
-
-      return null;
+      return this .containerFields .at (-1);
    },
    AccessType (accessType)
    {
