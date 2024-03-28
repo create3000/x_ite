@@ -294,9 +294,13 @@ Object .assign (Generator .prototype,
       return this .executionContextStack .at (-1);
    },
    EnterScope ()
-   { },
+   {
+      // TODO: remove me.
+   },
    LeaveScope ()
-   { },
+   {
+      // TODO: remove me.
+   },
    NamedNodes (namedNodes)
    {
       const
