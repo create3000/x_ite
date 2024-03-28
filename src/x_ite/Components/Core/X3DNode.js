@@ -586,7 +586,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    {
       generator .EnterScope ();
 
-      if (generator .string && !generator .string .match (/[ \t\r\n,\[\]\{\}]$/))
+      if (!generator .string .match (/^$|[ \t\r\n,\[\]\{\}]$/))
          generator .string += generator .Space ();
 
       const name = generator .Name (this);
