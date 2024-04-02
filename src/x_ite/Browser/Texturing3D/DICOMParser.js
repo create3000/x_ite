@@ -45,6 +45,8 @@
  *
  ******************************************************************************/
 
+import { Decoder } from "../../../../node_modules/jpeg-lossless-decoder-js/release/lossless.js";
+
 function DicomParser ()
 {
    this .dicom = { dicom: false };
@@ -693,7 +695,7 @@ Object .assign (DicomParser .prototype,
     decodeJPEGLossless (pixelData)
     {
       const
-         decoder = new jpeg .lossless .Decoder (),
+         decoder = new Decoder (),
          buffer  = decoder .decompress (pixelData);
 
       return new Uint8Array (buffer);
