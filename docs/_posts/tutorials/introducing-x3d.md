@@ -12,9 +12,9 @@ X3D is:
 - A simple text language for describing 3-D shapes and interactive environments
 - X3D text files use a .x3d, x3dj, x3dv, or .x3db extension
   - .x3d (XML) - save to parse
-  - .x3dj (JSON) - good for scripting
   - .x3dv (VRML) - easy to learn
-  - x3db (Binary) - good for large models
+  - .x3dj (JSON) - good for scripting
+  - .x3db (Binary) - good for large models
 
 >**Note:** All examples are in X3D XML and X3D Classic Encoded file format (.x3d and .x3dv).
 {: .prompt-info }
