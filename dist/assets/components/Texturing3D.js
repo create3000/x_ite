@@ -1,7 +1,7 @@
 /* X_ITE v9.4.4 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 368:
+/***/ 488:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 450:
+/***/ 658:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 58:
+/***/ 834:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4024,11 +4024,11 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /******/ });
 });
-//#
+//# 
 
 /***/ }),
 
-/***/ 234:
+/***/ 986:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -4827,7 +4827,7 @@ var JpegImage = (function jpegImage() {
             readUint16() // skip data length
             readUint16() // Ignore this data since it represents the image height
             break;
-
+            
           case 0xFFDA: // SOS (Start of Scan)
             var scanLength = readUint16();
             var selectorsCount = data[offset++];
@@ -5164,8 +5164,8 @@ function decode(jpegData, userOpts = {}) {
     if (err instanceof RangeError) {
       throw new Error("Could not allocate enough memory for the image. " +
                       "Required: " + bytesNeeded);
-    }
-
+    } 
+    
     if (err instanceof ReferenceError) {
       if (err.message === "Buffer is not defined") {
         throw new Error("Buffer is not globally defined in this environment. " +
@@ -5230,7 +5230,7 @@ module.exports = window [Symbol .for ("X_ITE.X3D-9.4.4")] .require ("lib/jquery"
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -5244,14 +5244,14 @@ module.exports = window [Symbol .for ("X_ITE.X3D-9.4.4")] .require ("lib/jquery"
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -5264,7 +5264,7 @@ module.exports = window [Symbol .for ("X_ITE.X3D-9.4.4")] .require ("lib/jquery"
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -5276,12 +5276,12 @@ module.exports = window [Symbol .for ("X_ITE.X3D-9.4.4")] .require ("lib/jquery"
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
@@ -7332,12 +7332,12 @@ var Decoder = class _Decoder {
   }
 };
 
-//#
+//# 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(58);
-/* provided dependency */ var JpegImage = __webpack_require__(234);
-/* provided dependency */ var CharLS = __webpack_require__(368);
-/* provided dependency */ var OpenJPEG = __webpack_require__(450);
+/* provided dependency */ var dicomParser = __webpack_require__(834);
+/* provided dependency */ var JpegImage = __webpack_require__(986);
+/* provided dependency */ var CharLS = __webpack_require__(488);
+/* provided dependency */ var OpenJPEG = __webpack_require__(658);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -7384,6 +7384,8 @@ var Decoder = class _Decoder {
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
+
 
 function DicomParser ()
 {
