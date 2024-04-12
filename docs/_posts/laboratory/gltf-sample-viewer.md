@@ -449,6 +449,7 @@ const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/VC/glTF-Binary/VC.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/VertexColorTest/glTF-Binary/VertexColorTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/WaterBottle/glTF-Binary/WaterBottle.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/XmpMetadataRoundedCube/glTF-Binary/xmp.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AlphaBlendModeTest/glTF-Binary/AlphaBlendModeTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnimatedMorphCube/glTF-Binary/AnimatedMorphCube.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnisotropyBarnLamp/glTF-Binary/AnisotropyBarnLamp.glb",
