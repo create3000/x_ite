@@ -111,8 +111,8 @@ function updateToolbar (toolbar, canvas, monaco, editor)
    toolbar .empty ();
 
    const play = $("<span></span>")
-      .text ("▶")
       .attr ("title", "Toggle browser update on/off.")
+      .addClass (["fa-solid", "fa-play"])
       .addClass (browser .isLive () ? "selected" : "")
       .on ("click", () =>
       {
