@@ -66,28 +66,93 @@ Object .assign (Object .setPrototypeOf (StreamAudioSource .prototype, X3DSoundSo
    {
       X3DSoundSourceNode .prototype .initialize .call (this);
    },
-   // createPeerConnection ()
-   // {
-   //    const peerConnection = new RTCPeerConnection ();
+   set_start ()
+   {
+      if (!navigator .mediaDevices)
+         return;
 
-   //    peerConnection .ontrack = function (event)
-   //    {
-   //       console.log ("Remote Streams", event .streams .length)
+      this .restore = false;
 
-   //       const remoteVideo = document .getElementById ("remoteVideo")
+      navigator .mediaDevices .getUserMedia ({
+         audio: true,
+      })
+      .then (mediaStream =>
+      {
+         const audioContext = this .getBrowser () .getAudioContext ();
 
-   //       for (const stream of event .streams)
-   //       {
-   //          console .log (stream .id)
+         this .mediaStreamAudioSourceNode = new MediaStreamAudioSourceNode (audioContext, { mediaStream });
 
-   //          if (!this .streamIdentifier .include (stream .id))
-   //             continue;
+         this ._streamIdentifier [0] = mediaStream .id;
 
-   //          if (remoteVideo .srcObject !== stream)
-   //             remoteVideo .srcObject = stream;
-   //       }
-   //    };
-   // }
+         if (this ._isActive .getValue ())
+         {
+            if (this ._isPaused .getValue () || !this .getLive () .getValue ())
+               this .set_pause ();
+            else
+               this .set_resume ();
+         }
+         else
+         {
+            this .set_stop ();
+         }
+      })
+      .catch (error =>
+      {
+         console .error (error .message);
+      });
+   },
+   set_pause ()
+   {
+      if (!this .mediaStreamAudioSourceNode)
+         return;
+
+      if (this .getLive () .getValue ())
+      {
+         this .mediaStreamAudioSourceNode .disconnect ();
+
+         for (const track of this .mediaStreamAudioSourceNode .mediaStream .getAudioTracks ())
+            track .enabled = false;
+
+         for (const track of this .mediaStreamAudioSourceNode .mediaStream .getVideoTracks ())
+            track .enabled = false;
+      }
+      else
+      {
+         this .set_stop (true);
+      }
+   },
+   set_resume ()
+   {
+      if (this .restore)
+         return this .set_start ();
+
+      if (!this .mediaStreamAudioSourceNode)
+         return;
+
+      this .mediaStreamAudioSourceNode .connect (this .getAudioSource ());
+
+      for (const track of this .mediaStreamAudioSourceNode .mediaStream .getAudioTracks ())
+         track .enabled = true;
+
+      for (const track of this .mediaStreamAudioSourceNode .mediaStream .getVideoTracks ())
+         track .enabled = true;
+   },
+   set_stop (restore = false)
+   {
+      if (!this .mediaStreamAudioSourceNode)
+         return;
+
+      this .mediaStreamAudioSourceNode .disconnect ();
+
+      for (const track of this .mediaStreamAudioSourceNode .mediaStream .getAudioTracks ())
+         track .stop ();
+
+      for (const track of this .mediaStreamAudioSourceNode .mediaStream .getVideoTracks ())
+         track .stop ();
+
+      this .mediaStreamAudioSourceNode = null;
+      this .restore                    = restore;
+   },
 });
 
 
