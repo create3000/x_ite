@@ -1,24 +1,26 @@
 const $ = jQuery;
 
-const box = `<X3D profile='Full' version='4.0'>
-<Scene>
-   <Viewpoint
-      description='Initial View'
-      position='4.737889 4.718629 7.435519'
-      orientation='-0.640652763184828 0.744770464531058 0.186764536745701 0.746185800293648'/>
-   <ParticleSystem
-      geometryType='GEOMETRY'
-      maxParticles='10'>
-   <PointEmitter
-         direction='0 0 0'
-         speed='1'/>
-   <Appearance>
-      <Material
-         diffuseColor='0 0.5 1'/>
-   </Appearance>
-   <Box/>
-   </ParticleSystem>
-</Scene>
+const box = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Full' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint
+        description='Initial View'
+        position='4.737889 4.718629 7.435519'
+        orientation='-0.640652763184828 0.744770464531058 0.186764536745701 0.746185800293648'/>
+    <ParticleSystem
+        geometryType='GEOMETRY'
+        maxParticles='10'>
+      <PointEmitter
+          direction='0 0 0'
+          speed='1'/>
+      <Appearance>
+        <Material
+            diffuseColor='0 0.5 1'/>
+      </Appearance>
+      <Box/>
+    </ParticleSystem>
+  </Scene>
 </X3D>
 `;
 
@@ -72,7 +74,7 @@ require (["vs/editor/editor.main"], async () =>
    });
 
    if (!url)
-      editor .setValue (box .replace (/ {3}/g, "  "));
+      editor .setValue (box);
 
    updateToolbar ($(".playground .toolbar"), $("x3d-canvas"), monaco, editor);
 });
