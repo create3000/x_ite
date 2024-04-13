@@ -17,11 +17,11 @@ You can use this [browser extension for Chrome and Edge](https://chrome.google.c
 
 ## Using an Application
 
-There are several applications on the Internet that can create a localhost server. I would like to recommend two of them:
+There are various applications available online for setting up a localhost server. Among them, I would like to highlight here some options:
 
-MacOS users can use [Personal Web Server](https://apps.apple.com/de/app/personal-web-server/id1486323797?mt=12){:target="_blank"}, which can serve files through a web server, and is very easy to use.
+MacOS users have the options to utilize the [Personal Web Server](https://apps.apple.com/de/app/personal-web-server/id1486323797){:target="_blank"} (for Intel-based Macs) or the [Simple Web Server](https://apps.apple.com/us/app/simple-web-server/id1625925255){:target="_blank"} (for Apple Silicon-based Macs). These servers facilitate file serving via a web server and boast user-friendly interfaces. Alternatively, users can employ the provided [Python script below in conjunction with Automator](https://www.macstadium.com/blog/automating-login-and-startup-events-in-macos) for additional flexibility and customization.
 
-Another application is [XAMPP](https://www.apachefriends.org/index.html){:target="_blank"}, which runs on several operating systems and is very popular.
+Another notable application is [XAMPP](https://www.apachefriends.org/index.html){:target="_blank"}, renowned for its versatility across multiple operating systems and widespread popularity among users. It provides a comprehensive suite of web development tools, making it a favored choice for many developers and enthusiasts alike.
 
 ## Using Python
 
@@ -40,7 +40,7 @@ Type in the following command to start the server.
 $ python3 -m http.server
 ```
 
-By default, this will run the contents of the directory on a local web server, on port 8000. You can go to this server by going to the URL http://**localhost**:8000 in your web browser. Here you'll see the contents of the directory listed — click the HTML file you want to run.
+By default, this will run the contents of the directory on a local web server, on port 80. You can go to this server by going to the URL http://**localhost**:80 in your web browser. Here you'll see the contents of the directory listed — click the HTML file you want to run.
 
->**Tip:** If you already have something running on port 8000, you can choose another port by running the server command followed by an alternative port number, e.g. python3 -m http.server 7800. You can then access your content at http://**localhost**:7800.
+>**Tip:** If you already have something running on port 80, you can choose another port by running the server command followed by an alternative port number, e.g. python3 -m http.server 7800. You can then access your content at http://**localhost**:7800.
 {: .prompt-tip }
