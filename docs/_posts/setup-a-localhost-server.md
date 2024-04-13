@@ -30,7 +30,7 @@ If you have [Python](https://www.python.org){:target="_blank"} installed, then i
 Just open a Terminal and go to the directory you want to make available.
 
 ```console
-# Let's make the Desktop directory available.
+$ # Let's make the Desktop directory available.
 $ cd Desktop
 ```
 
