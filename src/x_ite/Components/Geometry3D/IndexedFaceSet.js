@@ -155,23 +155,11 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
             fogCoordNode ?.addDepth (index, fogDepthArray);
 
-            if (colorNode)
-            {
-               if (colorPerVertex)
-                  colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
-               else
-                  colorNode .addColor (this .getColorIndex (face), colorArray);
-            }
+            colorNode ?.addColor (colorPerVertex ? this .getColorPerVertexIndex (i) : this .getColorIndex (face), colorArray);
 
             texCoordNode ?.addPoint (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
 
-            if (normalNode)
-            {
-               if (normalPerVertex)
-                  normalNode .addVector (this .getNormalPerVertexIndex (i), normalArray);
-               else
-                  normalNode .addVector (this .getNormalIndex (face), normalArray);
-            }
+            normalNode ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalIndex (face), normalArray);
 
             coordNode .addPoint (index, vertexArray);
          }
