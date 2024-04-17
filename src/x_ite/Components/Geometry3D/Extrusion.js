@@ -552,8 +552,8 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
          const refinedNormals = this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
 
-         for (const normal of refinedNormals)
-            normalArray .push (normal .x, normal .y, normal .z);
+         for (const { x, y, z } of refinedNormals)
+            normalArray .push (x, y, z);
 
          // Build caps
 
