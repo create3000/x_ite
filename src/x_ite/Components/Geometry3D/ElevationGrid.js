@@ -193,7 +193,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
 
       return texCoords;
    },
-   createNormals (points, coordIndex)
+   createNormals (points, coordIndex, creaseAngle)
    {
       const
          cw          = ! this ._ccw .getValue (),
@@ -227,7 +227,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
       if (!this ._normalPerVertex .getValue ())
          return normals;
 
-      return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
+      return this .refineNormals (normalIndex, normals, creaseAngle ?? this ._creaseAngle .getValue ());
    },
    createCoordIndex ()
    {
