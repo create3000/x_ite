@@ -379,10 +379,8 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
       {
          const normals = this .createNormals (points, coordIndex);
 
-         for (const normal of normals)
-         {
-            normalArray .push (normal .x, normal .y, normal .z);
-         }
+         for (const { x, y, z } of normals)
+            normalArray .push (x, y, z);
       }
 
       this .setSolid (this ._solid .getValue ());
