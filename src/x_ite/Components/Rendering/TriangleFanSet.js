@@ -96,6 +96,14 @@ Object .assign (Object .setPrototypeOf (TriangleFanSet .prototype, X3DComposedGe
    {
       return this .triangleIndex [index];
    },
+   getVerticesPerPolygon ()
+   {
+      return 3;
+   },
+   getNumVertices ()
+   {
+      return this .triangleIndex .length;
+   },
    build ()
    {
       X3DComposedGeometryNode .prototype .build .call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);

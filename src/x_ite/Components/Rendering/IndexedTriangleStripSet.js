@@ -121,6 +121,14 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleStripSet .prototype, X3DC
    {
       return this .triangleIndex [index];
    },
+   getVerticesPerPolygon ()
+   {
+      return 3;
+   },
+   getNumVertices ()
+   {
+      return this .triangleIndex .length;
+   },
    build ()
    {
       X3DComposedGeometryNode .prototype .build .call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);

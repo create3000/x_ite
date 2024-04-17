@@ -64,6 +64,14 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleSet .prototype, X3DCompos
    {
       return this ._index [i];
    },
+   getVerticesPerPolygon ()
+   {
+      return 3;
+   },
+   getNumVertices ()
+   {
+      return this ._index .length;
+   },
    initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);

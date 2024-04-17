@@ -60,9 +60,17 @@ function TriangleSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (TriangleSet .prototype, X3DComposedGeometryNode .prototype),
 {
+   getVerticesPerPolygon ()
+   {
+      return 3;
+   },
+   getNumVertices ()
+   {
+      return this .getCoord () ?.getSize ();
+   },
    build ()
    {
-      if (! this .getCoord ())
+      if (!this .getCoord ())
          return;
 
       X3DComposedGeometryNode .prototype .build .call (this, 3, this .getCoord () .getSize (), 3, this .getCoord () .getSize ());

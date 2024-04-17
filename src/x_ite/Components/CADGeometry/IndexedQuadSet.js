@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, X3DComposedGe
 
       this ._set_index .addFieldInterest (this ._index);
    },
-   getTriangleIndex: function (i)
+   getTriangleIndex (i)
    {
       const mod = i % 6;
 
@@ -75,6 +75,14 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, X3DComposedGe
    getPolygonIndex (i)
    {
       return this ._index [i];
+   },
+   getVerticesPerPolygon ()
+   {
+      return 4;
+   },
+   getNumVertices ()
+   {
+      return this ._index .length;
    },
    build ()
    {
