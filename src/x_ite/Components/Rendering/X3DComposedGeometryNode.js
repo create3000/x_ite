@@ -228,23 +228,11 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
          fogCoordNode ?.addDepth (index, fogDepthArray);
 
-         if (colorNode)
-         {
-            if (colorPerVertex)
-               colorNode .addColor (index, colorArray);
-            else
-               colorNode .addColor (face, colorArray);
-         }
+         colorNode ?.addColor (colorPerVertex ? index : face, colorArray);
 
          texCoordNode ?.addPoint (index, multiTexCoordArray);
 
-         if (normalNode)
-         {
-            if (normalPerVertex)
-               normalNode .addVector (index, normalArray);
-            else
-               normalNode .addVector (face, normalArray);
-         }
+         normalNode ?.addVector (normalPerVertex ? index : face, normalArray);
 
          coordNode .addPoint (index, vertexArray);
       }
@@ -265,9 +253,9 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       for (let i = 0; i < trianglesSize; ++ i)
       {
-         const normal = normals [this .getTriangleIndex (i)];
+         const { x, y, z } = normals [this .getTriangleIndex (i)];
 
-         normalArray .push (normal .x, normal .y, normal .z);
+         normalArray .push (x, y, z);
       }
    },
    createNormals (verticesPerPolygon, polygonsSize)
