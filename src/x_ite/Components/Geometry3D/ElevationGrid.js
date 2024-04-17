@@ -331,8 +331,8 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
          for (let p = 0; p < 6; ++ p, ++ c)
          {
             const
-               index = coordIndex [c],
-               point = points [index];
+               index      = coordIndex [c],
+               { x, y, z} = points [index];
 
             coordIndicesArray .push (index);
 
@@ -355,9 +355,9 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
             }
             else
             {
-               const t = texCoords [index];
+               const { x, y } = texCoords [index];
 
-               texCoordArray .push (t .x, t .y, 0, 1);
+               texCoordArray .push (x, y, 0, 1);
             }
 
             if (normalNode)
@@ -369,7 +369,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
                   normalNode .addVector (face, normalArray);
             }
 
-            vertexArray .push (point .x, point .y, point .z, 1);
+            vertexArray .push (x, y, z, 1);
          }
       }
 
