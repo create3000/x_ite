@@ -353,12 +353,8 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
       {
          const normals = this .createNormals (points, coordIndex);
 
-         for (let i = 0; i < normals .length; ++ i)
-         {
-            const normal = normals [i];
-
-            normalArray .push (normal .x, normal .y, normal .z);
-         }
+         for (const { x, y, z } of normals)
+            normalArray .push (x, y, z);
       }
 
       this .setSolid (this ._solid .getValue ());
