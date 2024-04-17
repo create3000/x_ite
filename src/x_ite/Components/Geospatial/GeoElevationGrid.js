@@ -322,19 +322,13 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
          for (let p = 0; p < 6; ++ p, ++ c)
          {
             const
-               index = coordIndex [c],
-               point = points [index];
+               index       = coordIndex [c],
+               { x, y, z } = points [index];
 
             //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
             //   attribNodes [a] -> addValue (attribArrays [a], i);
 
-            if (colorNode)
-            {
-               if (colorPerVertex)
-                  colorNode .addColor (index, colorArray);
-               else
-                  colorNode .addColor (face, colorArray);
-            }
+            colorNode ?.addColor (colorPerVertex ? index : face, colorArray);
 
             if (texCoordNode)
             {
@@ -342,21 +336,14 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
             }
             else
             {
-               const t = texCoords [index];
+               const { x, y } = texCoords [index];
 
-               texCoordArray .push (t .x, t .y, 0, 1);
+               texCoordArray .push (x, y, 0, 1);
             }
 
-            if (normalNode)
-            {
-               if (normalPerVertex)
-                  normalNode .addVector (index, normalArray);
+            normalNode ?.addVector (normalPerVertex ? index : face, normalArray);
 
-               else
-                  normalNode .addVector (face, normalArray);
-            }
-
-            vertexArray .push (point .x, point .y, point .z, 1);
+            vertexArray .push (x, y, z, 1);
          }
       }
 

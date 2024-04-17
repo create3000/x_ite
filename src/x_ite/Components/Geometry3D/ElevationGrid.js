@@ -340,14 +340,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
                attribNodes [a] .addValue (index, attribArrays [a]);
 
             fogCoordNode ?.addDepth (index, fogDepthArray);
-
-            if (colorNode)
-            {
-               if (colorPerVertex)
-                  colorNode .addColor (index, colorArray);
-               else
-                  colorNode .addColor (face, colorArray);
-            }
+            colorNode ?.addColor (colorPerVertex ? index : face, colorArray);
 
             if (texCoordNode)
             {
@@ -360,14 +353,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
                texCoordArray .push (x, y, 0, 1);
             }
 
-            if (normalNode)
-            {
-               if (normalPerVertex)
-                  normalNode .addVector (index, normalArray);
-
-               else
-                  normalNode .addVector (face, normalArray);
-            }
+            normalNode ?.addVector (normalPerVertex ? index : face, normalArray);
 
             vertexArray .push (x, y, z, 1);
          }
