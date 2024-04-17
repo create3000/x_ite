@@ -7,7 +7,8 @@
 	"exports": {
 		".": {
 			"require": "./dist/x_ite.js",
-			"import": "./dist/x_ite.mjs"
+			"import": "./dist/x_ite.mjs",
+			"types": "./dist/x_ite.d.ts"
 		}
 	},
 	"files": [
