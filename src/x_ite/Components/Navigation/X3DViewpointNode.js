@@ -156,10 +156,10 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    set_viewAll__ ()
    {
-      if (! this ._viewAll .getValue ())
+      if (!this ._viewAll .getValue ())
          return;
 
-      if (! this ._isBound .getValue ())
+      if (!this ._isBound .getValue ())
          return;
 
       this ._set_bind = true;
@@ -289,7 +289,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       {
          const relative = this .getRelativeTransformation (fromViewpointNode);
 
-         if (! this ._retainUserOffsets .getValue ())
+         if (!this ._retainUserOffsets .getValue ())
             this .resetUserOffsets ();
 
          if (this ._viewAll .getValue ())
