@@ -177,6 +177,10 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
          this .getMaximumY (),
       ];
    },
+   setFieldOfView (value)
+   {
+      this ._fieldOfView = value;
+   },
    getUserFieldOfView ()
    {
       return [

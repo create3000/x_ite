@@ -105,6 +105,10 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
 
       return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
    },
+   setFieldOfView (value)
+   {
+      this ._fieldOfView = value;
+   },
    getUserFieldOfView ()
    {
       const fov = this ._fieldOfView .getValue () * this ._fieldOfViewScale .getValue ();
