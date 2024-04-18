@@ -67,6 +67,7 @@ const X_ITE_TESTS = [
    { path: "Geometry2D/Geometry2D.x3d" },
    { component: "Geometry3D" },
    { path: "Geometry3D/1728.x3dv" },
+   { path: "Geometry3D/Beethoven.N.x3dz" },
    { path: "Geometry3D/Beethoven.x3dz" },
    { path: "Geometry3D/box.x3d" },
    { path: "Geometry3D/box.x3dv" },
