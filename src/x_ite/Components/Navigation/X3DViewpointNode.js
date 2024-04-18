@@ -75,7 +75,7 @@ function X3DViewpointNode (executionContext)
                           X3DConstants .inputOutput, "fieldOfViewScale",       new Fields .SFFloat (1));
 
    this .descriptions         = [ ];
-   this .userPosition         = new Vector3 (0, 1, 0);
+   this .userPosition         = new Vector3 ();
    this .userOrientation      = new Rotation4 ();
    this .userCenterOfRotation = new Vector3 ();
    this .modelMatrix          = new Matrix4 ();
