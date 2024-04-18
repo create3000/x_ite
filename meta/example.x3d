@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
+    <meta name='created' content='Thu, 18 Apr 2024 20:11:30 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.6.9, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Thu, 18 Apr 2024 20:15:45 GMT'/>
+  </head>
+  <Scene>
+    <WorldInfo>
+      <MetadataSet containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet
+            name='GridTool'>
+          <MetadataBoolean
+              name='visible'
+              value='true'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <Viewpoint
+        description='Initial View'
+        position='2.869677 3.854335 8.769781'
+        orientation='-0.7765887 0.6177187 0.1238285 28.9476440862198'/>
+    <Transform DEF='Box'
+        rotation='0 1 0 176.184019088745'>
+      <Shape>
+        <Appearance>
+          <Material/>
+        </Appearance>
+        <Box/>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='Timer'
+        cycleInterval='10'
+        loop='true'/>
+    <OrientationInterpolator DEF='Rotor'
+        key='0, 0.25, 0.5, 0.75, 1'
+        keyValue='0 1 0 0, 0 1 0 90, 0 1 0 180, 0 1 0 270, 0 1 0 0'/>
+    <ROUTE fromNode='Timer' fromField='fraction_changed' toNode='Rotor' toField='set_fraction'/>
+    <ROUTE fromNode='Rotor' fromField='value_changed' toNode='Box' toField='set_rotation'/>
+  </Scene>
+</X3D>

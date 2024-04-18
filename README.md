@@ -40,16 +40,22 @@ import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";
 
 ## Usage
 
-This code creates a X3D canvas with a scene, a camera, and a geometric cube with default material.
+This script initializes an X3D canvas, configuring it to include a scene, a camera, and a geometric cube with default material properties. Subsequently, it proceeds to animate the cube's rotation within the scene, ensuring the camera captures the dynamic action.
 
 ```html
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
 <x3d-canvas>
-  <X3D profile='Interactive' version='4.0'>
+  <X3D profile='Interchange' version='4.0'>
+    <head>
+      <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>
+    </head>
     <Scene>
       <Viewpoint
-          description='Initial View'></Viewpoint>
-      <Transform>
+          description='Initial View'
+          position='2.869677 3.854335 8.769781'
+          orientation='-0.7765887 0.6177187 0.1238285 28.9476440862198'></Viewpoint>
+      <Transform DEF='Box'
+          rotation='0 1 0 220.572020530701'>
         <Shape>
           <Appearance>
             <Material></Material>
@@ -57,6 +63,14 @@ This code creates a X3D canvas with a scene, a camera, and a geometric cube with
           <Box></Box>
         </Shape>
       </Transform>
+      <TimeSensor DEF='Timer'
+          cycleInterval='10'
+          loop='true'></TimeSensor>
+      <OrientationInterpolator DEF='Rotor'
+          key='0, 0.25, 0.5, 0.75, 1'
+          keyValue='0 1 0 0, 0 1 0 90, 0 1 0 180, 0 1 0 270, 0 1 0 0'></OrientationInterpolator>
+      <ROUTE fromNode='Timer' fromField='fraction_changed' toNode='Rotor' toField='set_fraction'></ROUTE>
+      <ROUTE fromNode='Rotor' fromField='value_changed' toNode='Box' toField='set_rotation'></ROUTE>
     </Scene>
   </X3D>
 </x3d-canvas>
