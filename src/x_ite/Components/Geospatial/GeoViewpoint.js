@@ -122,6 +122,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
    },
    getRelativeTransformation: Viewpoint .prototype .getRelativeTransformation,
    setInterpolators: Viewpoint .prototype .setInterpolators,
+   getFieldOfView: Viewpoint .prototype .getFieldOfView,
    getUserFieldOfView: Viewpoint .prototype .getUserFieldOfView,
    getScreenScale: Viewpoint .prototype .getScreenScale,
    getViewportSize: Viewpoint .prototype .getViewportSize,
