@@ -243,13 +243,7 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
 
                   fogCoordNode ?.addDepth (index, fogDepthArray);
 
-                  if (colorNode)
-                  {
-                     if (colorPerVertex)
-                        colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
-                     else
-                        colorNode .addColor (this .getColorIndex (face), colorArray);
-                  }
+                  colorNode ?.addColor (colorPerVertex ? this .getColorPerVertexIndex (i) : this .getColorIndex (face), colorArray);
 
                   normalNode ?.addVector (index, normalArray);
 
