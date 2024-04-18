@@ -8,7 +8,7 @@
 
 ## Introduction
 
-X_ITE is a X3D JavaScript WebGL browser. It is a full standard X3D WebGL browser for all major web browsers, which can also be used as a VRML viewer.
+X_ITE is an X3D JavaScript WebGL browser. It is a full standard X3D WebGL browser for all major web browsers, which can also be used as a VRML viewer.
 
 🚀 For more information and a live preview, please visit our [home page](https://create3000.github.io/x_ite/).
 

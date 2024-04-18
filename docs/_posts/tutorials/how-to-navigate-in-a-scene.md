@@ -5,7 +5,7 @@ nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
 tags: [Navigate, Scene]
 ---
-There are various types of viewers available to navigate in a X3D scene to move around quickly and efficiently in a scene. These can be set in the [NavigationInfo](/x_ite/components/navigation/navigationinfo) node *type* field.
+There are various types of viewers available to navigate in an X3D scene to move around quickly and efficiently in a scene. These can be set in the [NavigationInfo](/x_ite/components/navigation/navigationinfo) node *type* field.
 
 Each of them allow you to navigate in a scene in a different manner:
 
