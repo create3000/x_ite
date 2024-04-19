@@ -45,20 +45,13 @@
  *
  ******************************************************************************/
 
-import de from "./de.po.js";
-import fr from "./fr.po.js";
+import de from "./de.js";
+import fr from "./fr.js";
 
-function execAll (regex, string)
-{
-   const matches = [ ];
-
-   let match = null;
-
-   while (match = regex .exec (string))
-      matches .push (match);
-
-   return matches;
-}
+const locales = new Map ([
+   ["de", de],
+   ["fr", fr],
+]);
 
 function getLanguage ()
 {
@@ -73,48 +66,13 @@ function getLanguage ()
    return (navigator .language || navigator .userLanguage) .split ("-") [0];
 }
 
-function setLocale (language)
-{
-   if (locales [language])
-   {
-      const
-         matches = execAll (msg, locales [language]),
-         locale  = locales [language] = { };
-
-      for (var i = 0, length = matches .length; i < length; ++ i)
-      {
-         if (matches [i] [2] .length)
-            locale [matches [i] [1]] = matches [i] [2];
-      }
-   }
-}
-
-const locales =
-{
-   en: "C",
-   de: de,
-   fr: fr,
-};
-
 const
-   msg      = /msgid\s+"(.*?)"\nmsgstr\s+"(.*?)"\n/g,
-   language = getLanguage ();
-
-setLocale (language);
+   language = getLanguage (),
+   locale   = new Map (locales .get (language) ?? [ ]);
 
 function gettext (string)
 {
-   const locale = locales [language];
-
-   if (locale === undefined)
-      return string;
-
-   const translation = locale [string];
-
-   if (translation === undefined)
-      return string;
-
-   return translation;
+   return locale .get (string) || string;
 }
 
 export default gettext;
