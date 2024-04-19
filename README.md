@@ -55,7 +55,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
           position='2.869677 3.854335 8.769781'
           orientation='-0.7765887 0.6177187 0.1238285 28.9476440862198'></Viewpoint>
       <Transform DEF='Box'
-          rotation='0 1 0 220.572020530701'>
+          rotation='0 1 0 0'>
         <Shape>
           <Appearance>
             <Material></Material>
