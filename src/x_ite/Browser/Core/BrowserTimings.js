@@ -320,29 +320,29 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       {
          const shapeNode = shapes [i] .shapeNode;
 
-         let numParticles = 1;
+         let numInstances = 1;
 
          if (shapeNode .getType () .lastIndexOf (X3DConstants .ParticleSystem) > -1)
          {
-            numParticles = shapeNode .getNumParticles ();
+            numInstances = shapeNode .getNumParticles ();
 
             switch (shapeNode .getGeometryType ())
             {
                case GeometryTypes .POINT:
                {
-                  this .primitives .points += numParticles;
+                  this .primitives .points += numInstances;
                   continue;
                }
                case GeometryTypes .LINE:
                {
-                  this .primitives .lines += numParticles;
+                  this .primitives .lines += numInstances;
                   continue;
                }
                case GeometryTypes .TRIANGLE:
                case GeometryTypes .QUAD:
                case GeometryTypes .SPRITE:
                {
-                  this .primitives .triangles += numParticles * 2;
+                  this .primitives .triangles += numInstances * 2;
                   continue;
                }
                case GeometryTypes .GEOMETRY:
@@ -361,7 +361,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
          if (!geometryNode .getExecutionContext () .getCountPrimitives ())
             continue;
 
-         const vertices = geometryNode .getVertices () .length / 4 * numParticles;
+         const vertices = geometryNode .getVertices () .length / 4 * numInstances;
 
          switch (geometryNode .getGeometryType ())
          {
