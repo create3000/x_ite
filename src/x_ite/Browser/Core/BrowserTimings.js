@@ -312,9 +312,9 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
 
          if (shapeNode .getType () .lastIndexOf (X3DConstants .ParticleSystem) > -1)
          {
-            numParticles = shapeNode .numParticles;
+            numParticles = shapeNode .getNumParticles ();
 
-            switch (shapeNode .geometryType)
+            switch (shapeNode .getGeometryType ())
             {
                case GeometryTypes .POINT:
                {

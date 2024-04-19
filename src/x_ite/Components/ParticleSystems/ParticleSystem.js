@@ -221,6 +221,14 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             return this .geometryContext;
       }
    },
+   getGeometryType ()
+   {
+      return this .geometryType;
+   },
+   getNumParticles ()
+   {
+      return this .numParticles;
+   },
    set_bbox__ ()
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
