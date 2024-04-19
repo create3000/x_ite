@@ -62,13 +62,12 @@ import X3DConstants                from "../Base/X3DConstants.js";
 import SFNodeCache                 from "../Fields/SFNodeCache.js";
 
 const
-   _outerNode       = Symbol (),
-   _countPrimitives = Symbol (),
-   _namedNodes      = Symbol (),
-   _importedNodes   = Symbol (),
-   _protos          = Symbol (),
-   _externprotos    = Symbol (),
-   _routes          = Symbol ();
+   _outerNode     = Symbol (),
+   _namedNodes    = Symbol (),
+   _importedNodes = Symbol (),
+   _protos        = Symbol (),
+   _externprotos  = Symbol (),
+   _routes        = Symbol ();
 
 function X3DExecutionContext (executionContext, outerNode = null, browser = executionContext .getBrowser ())
 {
@@ -77,6 +76,7 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
    this .addType (X3DConstants .X3DExecutionContext)
 
    this .addChildObjects (X3DConstants .initializeOnly, "rootNodes",          new Fields .MFNode (),
+                          X3DConstants .inputOutput,    "countPrimitives",    new Fields .SFBool (true),
                           X3DConstants .outputOnly,     "worldInfos",         new Fields .MFNode (),
                           X3DConstants .outputOnly,     "sceneGraph_changed", new Fields .SFTime ())
 
@@ -84,7 +84,6 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
    this ._rootNodes .collectCloneCount = () => 1;
 
    this [_outerNode]       = outerNode;
-   this [_countPrimitives] = true;
    this [_namedNodes]      = new NamedNodesArray ();
    this [_importedNodes]   = new ImportedNodesArray ();
    this [_protos]          = new ProtoDeclarationArray ();
@@ -122,11 +121,11 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    getCountPrimitives ()
    {
-      return this [_countPrimitives];
+      return this ._countPrimitives .getValue ();
    },
    setCountPrimitives (value)
    {
-      this [_countPrimitives] = !!value;
+      this ._countPrimitives = value;
    },
    getSpecificationVersion ()
    {

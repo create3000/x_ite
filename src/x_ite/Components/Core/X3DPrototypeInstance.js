@@ -93,6 +93,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       // Dispose body and assign field definitions.
 
       this [_body] ?.dispose ();
+
       this [_fieldDefinitions] .assign (protoNode .getFieldDefinitions ());
 
       // If there is a proto, the externproto is completely loaded.
@@ -157,7 +158,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       this [_body] = new X3DExecutionContext (proto .getExecutionContext (), this);
 
-      this [_body] .setCountPrimitives (this .getExecutionContext () .getCountPrimitives ());
+      this [_body] ._countPrimitives .addReference (this .getExecutionContext () ._countPrimitives);
 
       // Copy proto.
 
