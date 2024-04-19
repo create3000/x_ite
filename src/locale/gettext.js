@@ -59,7 +59,7 @@ function getLanguage ()
    {
       const language = value .split ("-") [0];
 
-      if (locales [language])
+      if (locales .get (language))
          return language;
    }
 
