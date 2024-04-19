@@ -220,7 +220,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       requestAnimationFrame (() =>
       {
          this .fps .reset ();
-         this .build (true);
+         this .build ();
       });
    },
    update ()
@@ -235,19 +235,19 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
 
       this .fps .start ();
    },
-   build (reset = false)
+   build ()
    {
       const browser = this .getBrowser ();
 
-      if (reset)
+      if (this .fps .elapsedTime)
       {
-         this .frameRate .text (`${f2 (0)} ${_("fps")}`);
-         this .speed .text (`${f2 (this .getSpeed (0))} ${this .getSpeedUnit (0)}`);
+         this .frameRate .text (`${f2 (1000 / this .fps .averageTime)} ${_("fps")}`);
+         this .speed .text (`${f2 (this .getSpeed (browser .currentSpeed ))} ${this .getSpeedUnit (browser .currentSpeed)}`);
       }
       else
       {
-         this .frameRate .text (`${f2 (1000 / this .fps .averageTime)} ${_("fps")}`);
-         this .speed .text (`${f2 (this .getSpeed (browser .currentSpeed ))} ${this .getSpeedUnit (browser .currentSpeed )}`);
+         this .frameRate .text (`${f2 (0)} ${_("fps")}`);
+         this .speed .text (`${f2 (this .getSpeed (0))} ${this .getSpeedUnit (0)}`);
       }
 
       if (this .localStorage .type !== "MORE" || !browser .getWorld ())
