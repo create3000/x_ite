@@ -125,7 +125,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    setCountPrimitives (value)
    {
-      this ._countPrimitives = value;
+      this ._countPrimitives = this .getExecutionContext () .getCountPrimitives () && value;
    },
    getSpecificationVersion ()
    {
