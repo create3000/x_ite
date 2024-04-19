@@ -169,16 +169,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
 
       this .localStorage .type = this .localStorage .type === "MORE" ? "LESS" : "MORE";
 
-      this .getBrowser () .addBrowserCallback (this, X3DConstants .INITIALIZED_EVENT, () =>
-      {
-         this .getBrowser () .addBrowserEvent ();
-
-         requestAnimationFrame (() =>
-         {
-            this .update ();
-            this .build ();
-         });
-      });
+      this .getBrowser () .addBrowserCallback (this, X3DConstants .INITIALIZED_EVENT, () => this .reset ());
 
       this .set_type__ ();
    },
@@ -222,6 +213,16 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
          this .button .text (_("Less Properties"));
       else
          this .button .text (_("More Properties"));
+   },
+   reset ()
+   {
+      this .getBrowser () .addBrowserEvent ();
+
+      requestAnimationFrame (() =>
+      {
+         this .update ();
+         this .build ();
+      });
    },
    update ()
    {
