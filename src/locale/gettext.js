@@ -66,8 +66,6 @@ function getLanguage ()
    return (navigator .language || navigator .userLanguage) .split ("-") [0];
 }
 
-const
-   language = getLanguage (),
-   locale   = new Map (locales .get (language) ?? [ ]);
+const locale = new Map (locales .get (getLanguage ()) ?? [ ]);
 
 export default (string) => locale .get (string) || string;
