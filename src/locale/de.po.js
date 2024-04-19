@@ -60,6 +60,9 @@ msgstr "Kollisionserkennung"
 msgid "Rendering"
 msgstr "Rendering"
 
+msgid "Number of Primitives"
+msgstr "Anzahl der Grundobjekte"
+
 msgid "Number of Shapes"
 msgstr "Anzahl der Formen"
 

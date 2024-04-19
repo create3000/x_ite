@@ -299,10 +299,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .shadowShapes;
    },
-   setNumOpaqueShapes (value)
-   {
-      this .numOpaqueShapes = value;
-   },
    getNumOpaqueShapes ()
    {
       return this .numOpaqueShapes;
@@ -310,10 +306,6 @@ Object .assign (X3DRenderObject .prototype,
    getOpaqueShapes ()
    {
       return this .opaqueShapes;
-   },
-   setNumTransparentShapes (value)
-   {
-      this .numTransparentShapes = value;
    },
    getNumTransparentShapes ()
    {

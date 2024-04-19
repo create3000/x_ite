@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
-import StopWatch   from "../../../standard/Time/StopWatch.js";
-import _           from "../../../locale/gettext.js";
+import X3DBaseNode  from "../../Base/X3DBaseNode.js";
+import StopWatch    from "../../../standard/Time/StopWatch.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import _            from "../../../locale/gettext.js";
 
 function BrowserTimings (executionContext)
 {
@@ -55,6 +56,7 @@ function BrowserTimings (executionContext)
 
    this .localStorage  = this .getBrowser () .getLocalStorage () .addNameSpace ("BrowserTimings.");
    this .fps           = new StopWatch ();
+   this .primitives    = { };
 }
 
 Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .prototype),
@@ -105,6 +107,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       this .pickingTime     = $("<td></td>");
       this .collisionTime   = $("<td></td>");
       this .renderTime      = $("<td></td>");
+      this .numPrimitives   = $("<td></td>");
       this .numShapes       = $("<td></td>");
       this .sensors         = $("<td></td>");
 
@@ -148,6 +151,10 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       this .body .append ($("<tr></tr>")
          .append ($("<td></td>") .text (_("Rendering") + ":"))
          .append (this .renderTime));
+
+      this .body .append ($("<tr></tr>")
+         .append ($("<td></td>") .text (_("Number of Primitives") + ":"))
+         .append (this .numPrimitives));
 
       this .body .append ($("<tr></tr>")
          .append ($("<td></td>") .text (_("Number of Shapes") + ":"))
@@ -234,6 +241,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
          routingTime       = Math .max (0, browser .getBrowserTime () .averageTime - (browser .getCameraTime () .averageTime + browser .getCollisionTime () .averageTime + browser .getDisplayTime () .averageTime)),
          prepareEvents     = browser .prepareEvents () .getInterests () .size - 1,
          sensors           = browser .sensorEvents () .getInterests () .size,
+         primitives        = this .getPrimitives (layers),
          opaqueShapes      = layers .reduce ((n, layer) => n + layer .getNumOpaqueShapes (), 0),
          transparentShapes = layers .reduce ((n, layer) => n + layer .getNumTransparentShapes (), 0);
 
@@ -245,8 +253,9 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       this .pickingTime     .text (`${f2 (browser .getPickingTime () .averageTime)} ${_("ms")}`);
       this .collisionTime   .text (`${f2 (collisionTime)} ${_("ms")}`);
       this .renderTime      .text (`${f2 (browser .getDisplayTime () .averageTime)} ${_("ms")}`);
-      this .numShapes       .text (`${opaqueShapes} + ${transparentShapes}`);
-      this .sensors         .text (prepareEvents + sensors);
+      this .numPrimitives   .text (`${f0 (primitives .points)}; ${f0 (primitives .lines)}; ${f0 (primitives .triangles)}`);
+      this .numShapes       .text (`${f0 (opaqueShapes)} + ${f0 (transparentShapes)}`);
+      this .sensors         .text (f0 (prepareEvents + sensors));
 
       browser .getSystemTime ()    .reset ();
       browser .getBrowserTime ()   .reset ();
@@ -272,6 +281,61 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
 
       return _("km/h");
    },
+   getPrimitives (layerNodes)
+   {
+      this .primitives .points    = 0;
+      this .primitives .lines     = 0;
+      this .primitives .triangles = 0;
+
+      for (const layerNode of layerNodes)
+      {
+         const
+            numOpaqueShapes      = layerNode .getNumOpaqueShapes (),
+            numTransparentShapes = layerNode .getNumTransparentShapes (),
+            opaqueShapes         = layerNode .getOpaqueShapes (),
+            transparentShapes    = layerNode .getTransparentShapes ();
+
+         this .countPrimitives (opaqueShapes,      numOpaqueShapes);
+         this .countPrimitives (transparentShapes, numTransparentShapes);
+      }
+
+      return this .primitives;
+   },
+   countPrimitives (shapes, numShapes)
+   {
+      for (let i = 0; i < numShapes; ++ i)
+      {
+         const geometryNode = shapes [i] .shapeNode .getGeometry ();
+
+         // ParticleSystem nodes may have no geometry.
+         if (!geometryNode)
+            continue;
+
+         const vertices = geometryNode .getVertices () .length / 4;
+
+         switch (geometryNode .getGeometryType ())
+         {
+            case 0:
+            {
+               this .primitives .points += vertices;
+               break;
+            }
+            case 1:
+            {
+               this .primitives .lines += vertices / 2;
+               break;
+            }
+            case 2:
+            case 3:
+            {
+               this .primitives .triangles += vertices / 3;
+               break;
+            }
+            default:
+               continue;
+         }
+      }
+   },
 });
 
 Object .defineProperties (BrowserTimings,
@@ -283,18 +347,22 @@ Object .defineProperties (BrowserTimings,
    },
 });
 
-const f2 = (() =>
+function format (minimumFractionDigits, maximumFractionDigits)
 {
    const format = new Intl .NumberFormat (navigator .language || navigator .userLanguage, {
       notation: "standard",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
+      minimumFractionDigits,
+      maximumFractionDigits,
    }) .format;
 
    return function (value)
    {
       return format (Number .isFinite (value) ? value : 0);
    };
-})();
+}
+
+const
+   f0 = format (0, 0),
+   f2 = format (2, 2);
 
 export default BrowserTimings;

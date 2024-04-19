@@ -65,7 +65,6 @@ import X3DComposedGeometryNode  from "./Rendering/X3DComposedGeometryNode.js";
 import X3DCoordinateNode        from "./Rendering/X3DCoordinateNode.js";
 import X3DGeometricPropertyNode from "./Rendering/X3DGeometricPropertyNode.js";
 import X3DGeometryNode          from "./Rendering/X3DGeometryNode.js";
-import X3DLineGeometryNode      from "./Rendering/X3DLineGeometryNode.js";
 import X3DNormalNode            from "./Rendering/X3DNormalNode.js";
 
 export default {
@@ -95,7 +94,6 @@ export default {
       X3DCoordinateNode,
       X3DGeometricPropertyNode,
       X3DGeometryNode,
-      X3DLineGeometryNode,
       X3DNormalNode,
    ],
 };
