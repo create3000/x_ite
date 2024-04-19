@@ -863,10 +863,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       }
 
       if (this .geometryType === GeometryTypes .GEOMETRY)
-      {
-         if (this .getGeometry ())
-            this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
-      }
+         this .getGeometry () ?.traverse (type, renderObject); // Currently used for ScreenText.
    },
    displaySimple (gl, renderContext, shaderNode)
    {

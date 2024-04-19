@@ -45,10 +45,11 @@
  *
  ******************************************************************************/
 
-import X3DBaseNode  from "../../Base/X3DBaseNode.js";
-import StopWatch    from "../../../standard/Time/StopWatch.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import _            from "../../../locale/gettext.js";
+import X3DBaseNode   from "../../Base/X3DBaseNode.js";
+import StopWatch     from "../../../standard/Time/StopWatch.js";
+import X3DConstants  from "../../Base/X3DConstants.js";
+import GeometryTypes from "../ParticleSystems/GeometryTypes.js";
+import _             from "../../../locale/gettext.js";
 
 function BrowserTimings (executionContext)
 {
@@ -305,7 +306,41 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
    {
       for (let i = 0; i < numShapes; ++ i)
       {
-         const geometryNode = shapes [i] .shapeNode .getGeometry ();
+         const shapeNode = shapes [i] .shapeNode;
+
+         let numParticles = 1;
+
+         if (shapeNode .getType () .lastIndexOf (X3DConstants .ParticleSystem) > -1)
+         {
+            numParticles = shapeNode .numParticles;
+
+            switch (shapeNode .geometryType)
+            {
+               case GeometryTypes .POINT:
+               {
+                  this .primitives .points += numParticles;
+                  continue;
+               }
+               case GeometryTypes .LINE:
+               {
+                  this .primitives .lines += numParticles;
+                  continue;
+               }
+               case GeometryTypes .TRIANGLE:
+               case GeometryTypes .QUAD:
+               case GeometryTypes .SPRITE:
+               {
+                  this .primitives .triangles += numParticles * 2;
+                  continue;
+               }
+               case GeometryTypes .GEOMETRY:
+               {
+                  break;
+               }
+            }
+         }
+
+         const geometryNode = shapeNode .getGeometry ();
 
          // ParticleSystem nodes may have no geometry.
          if (!geometryNode)
@@ -314,7 +349,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
          if (!geometryNode .getExecutionContext () .getCountPrimitives ())
             continue;
 
-         const vertices = geometryNode .getVertices () .length / 4;
+         const vertices = geometryNode .getVertices () .length / 4 * numParticles;
 
          switch (geometryNode .getGeometryType ())
          {
@@ -334,8 +369,6 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
                this .primitives .triangles += vertices / 3;
                break;
             }
-            default:
-               continue;
          }
       }
    },
