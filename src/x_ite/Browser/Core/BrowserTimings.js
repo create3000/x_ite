@@ -242,8 +242,8 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
          prepareEvents     = browser .prepareEvents () .getInterests () .size - 1,
          sensors           = browser .sensorEvents () .getInterests () .size,
          primitives        = this .getPrimitives (layers),
-         opaqueShapes      = layers .reduce ((n, layer) => n + layer .getNumOpaqueShapes (), 0),
-         transparentShapes = layers .reduce ((n, layer) => n + layer .getNumTransparentShapes (), 0);
+         opaqueShapes      = this .getOpaqueShapes (layers),
+         transparentShapes = this .getTransparentShapes (layers);
 
       this .browserTime     .text (`${f2 (browser .getSystemTime () .averageTime)} ${_("ms")}`);
       this .x3dTotal        .text (`${f2 (browser .getBrowserTime () .averageTime)} ${_("ms")}`);
@@ -338,6 +338,28 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
                continue;
          }
       }
+   },
+   getOpaqueShapes (layers)
+   {
+      return layers .reduce ((n, layer) => n + this .countShapes (layer .getOpaqueShapes (), layer .getNumOpaqueShapes ()), 0);
+   },
+   getTransparentShapes (layers)
+   {
+      return layers .reduce ((n, layer) => n + this .countShapes (layer .getTransparentShapes (), layer .getNumTransparentShapes ()), 0);
+   },
+   countShapes (shapes, numShapes)
+   {
+      let count = 0;
+
+      for (let i = 0; i < numShapes; ++ i)
+      {
+         if (!shapes [i] .shapeNode .getExecutionContext () .getCountPrimitives ())
+            continue;
+
+         ++ count;
+      }
+
+      return count;
    },
 });
 
