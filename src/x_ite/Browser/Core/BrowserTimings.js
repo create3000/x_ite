@@ -311,6 +311,9 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
          if (!geometryNode)
             continue;
 
+         if (!geometryNode .getExecutionContext () .getCountPrimitives ())
+            continue;
+
          const vertices = geometryNode .getVertices () .length / 4;
 
          switch (geometryNode .getGeometryType ())

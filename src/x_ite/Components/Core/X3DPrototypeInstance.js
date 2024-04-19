@@ -157,6 +157,8 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       this [_body] = new X3DExecutionContext (proto .getExecutionContext (), this);
 
+      this [_body] .setCountPrimitives (this .getExecutionContext () .getCountPrimitives ());
+
       // Copy proto.
 
       this .importExternProtos  (proto .getBody () .externprotos);

@@ -47,7 +47,6 @@
 
 import Fields                      from "../Fields.js";
 import X3DBaseNode                 from "../Base/X3DBaseNode.js";
-import X3DNode                     from "../Components/Core/X3DNode.js";
 import { getUniqueName }           from "./NamedNodesHandling.js";
 import NamedNodesArray             from "./NamedNodesArray.js";
 import X3DImportedNode             from "./X3DImportedNode.js";
@@ -63,12 +62,13 @@ import X3DConstants                from "../Base/X3DConstants.js";
 import SFNodeCache                 from "../Fields/SFNodeCache.js";
 
 const
-   _outerNode     = Symbol (),
-   _namedNodes    = Symbol (),
-   _importedNodes = Symbol (),
-   _protos        = Symbol (),
-   _externprotos  = Symbol (),
-   _routes        = Symbol ();
+   _outerNode       = Symbol (),
+   _countPrimitives = Symbol (),
+   _namedNodes      = Symbol (),
+   _importedNodes   = Symbol (),
+   _protos          = Symbol (),
+   _externprotos    = Symbol (),
+   _routes          = Symbol ();
 
 function X3DExecutionContext (executionContext, outerNode = null, browser = executionContext .getBrowser ())
 {
@@ -83,12 +83,13 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
    this ._rootNodes .setPrivate (false);
    this ._rootNodes .collectCloneCount = () => 1;
 
-   this [_outerNode]     = outerNode;
-   this [_namedNodes]    = new NamedNodesArray ();
-   this [_importedNodes] = new ImportedNodesArray ();
-   this [_protos]        = new ProtoDeclarationArray ();
-   this [_externprotos]  = new ExternProtoDeclarationArray ();
-   this [_routes]        = new RouteArray ();
+   this [_outerNode]       = outerNode;
+   this [_countPrimitives] = true;
+   this [_namedNodes]      = new NamedNodesArray ();
+   this [_importedNodes]   = new ImportedNodesArray ();
+   this [_protos]          = new ProtoDeclarationArray ();
+   this [_externprotos]    = new ExternProtoDeclarationArray ();
+   this [_routes]          = new RouteArray ();
 
    this [_namedNodes]     .addParent (this);
    this [_importedNodes]  .addParent (this);
@@ -118,6 +119,14 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
       return this [_outerNode];
+   },
+   getCountPrimitives ()
+   {
+      return this [_countPrimitives];
+   },
+   setCountPrimitives (value)
+   {
+      this [_countPrimitives] = !!value;
    },
    getSpecificationVersion ()
    {
