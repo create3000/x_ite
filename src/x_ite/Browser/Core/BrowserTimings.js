@@ -329,7 +329,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
 
          let numInstances = 1;
 
-         if (shapeNode .getType () .lastIndexOf (X3DConstants .ParticleSystem) > -1)
+         if (shapeNode .getType () .at (-1) === X3DConstants .ParticleSystem)
          {
             numInstances = shapeNode .getNumParticles ();
 
