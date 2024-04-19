@@ -70,9 +70,4 @@ const
    language = getLanguage (),
    locale   = new Map (locales .get (language) ?? [ ]);
 
-function gettext (string)
-{
-   return locale .get (string) || string;
-}
-
-export default gettext;
+export default (string) => locale .get (string) || string;
