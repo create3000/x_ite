@@ -169,8 +169,6 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
 
       this .localStorage .type = this .localStorage .type === "MORE" ? "LESS" : "MORE";
 
-      this .getBrowser () .addBrowserCallback (this, X3DConstants .INITIALIZED_EVENT, () => this .reset ());
-
       this .set_type__ ();
    },
    set_enabled__ ()
@@ -179,13 +177,14 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       {
          this .element .stop (true, true) .fadeIn ();
          this .fps .reset ();
+         this .getBrowser () .addBrowserCallback (this, X3DConstants .INITIALIZED_EVENT, () => this .reset ());
          this .getBrowser () .prepareEvents () .addInterest ("update", this);
-         this .update ();
-         this .build ();
+         this .reset ();
       }
       else
       {
          this .element .stop (true, true) .fadeOut ();
+         this .getBrowser () .removeBrowserCallback (this, X3DConstants .INITIALIZED_EVENT);
          this .getBrowser () .prepareEvents () .removeInterest ("update", this);
       }
    },
@@ -220,8 +219,8 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
 
       requestAnimationFrame (() =>
       {
-         this .update ();
-         this .build ();
+         this .fps .reset ();
+         this .build (true);
       });
    },
    update ()
@@ -236,12 +235,20 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
 
       this .fps .start ();
    },
-   build ()
+   build (reset = false)
    {
       const browser = this .getBrowser ();
 
-      this .frameRate .text (`${f2 (1000 / this .fps .averageTime)} ${_("fps")}`);
-      this .speed .text (`${f2 (this .getSpeed (browser .currentSpeed))} ${this .getSpeedUnit (browser .currentSpeed)}`);
+      if (reset)
+      {
+         this .frameRate .text (`${f2 (0)} ${_("fps")}`);
+         this .speed .text (`${f2 (this .getSpeed (0))} ${this .getSpeedUnit (0)}`);
+      }
+      else
+      {
+         this .frameRate .text (`${f2 (1000 / this .fps .averageTime)} ${_("fps")}`);
+         this .speed .text (`${f2 (this .getSpeed (browser .currentSpeed ))} ${this .getSpeedUnit (browser .currentSpeed )}`);
+      }
 
       if (this .localStorage .type !== "MORE" || !browser .getWorld ())
          return;
