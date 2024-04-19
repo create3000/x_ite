@@ -343,7 +343,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this .updateExportedNode (exportedName, node);
 
-      this ._exportedNodes_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
    },
    updateExportedNode (exportedName, node)
    {
@@ -363,7 +363,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this [_exportedNodes] .update (exportedName, exportedName, exportedNode);
 
-      this ._exportedNodes_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
    },
    removeExportedNode (exportedName)
    {
@@ -371,7 +371,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this [_exportedNodes] .remove (exportedName);
 
-      this ._exportedNodes_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
    },
    getExportedNode (exportedName)
    {

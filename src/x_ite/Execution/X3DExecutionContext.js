@@ -84,6 +84,7 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
    this ._rootNodes .collectCloneCount = () => 1;
 
    this ._countPrimitives .addReference (executionContext ._countPrimitives);
+   this ._sceneGraph_changed .addFieldInterest (this ._sceneGraph_changed);
 
    this [_outerNode]       = outerNode;
    this [_namedNodes]      = new NamedNodesArray ();
@@ -101,24 +102,15 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
 
 Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseNode .prototype),
 {
-   initialize ()
-   {
-      X3DBaseNode .prototype .initialize .call (this);
-
-      if (!this .isScene ())
-         this ._sceneGraph_changed .addInterest ("set_sceneGraph", this)
-   },
    setExecutionContext (executionContext)
    {
       this ._countPrimitives .removeReference (this .getExecutionContext () ._countPrimitives);
+      this ._sceneGraph_changed .removeFieldInterest (this .getExecutionContext () ._sceneGraph_changed);
 
       X3DBaseNode .prototype .setExecutionContext .call (this, executionContext);
 
       this ._countPrimitives .addReference (executionContext ._countPrimitives);
-   },
-   set_sceneGraph ()
-   {
-      this .getExecutionContext () ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed .addFieldInterest (executionContext ._sceneGraph_changed);
    },
    isScene ()
    {
@@ -371,7 +363,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_importedNodes] .add (importedName, importedNode);
 
-      this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
    },
    renameImportedNode (oldImportedName, newImportedName)
    {
@@ -386,6 +378,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       importedNode [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (newImportedName);
 
       this [_importedNodes] .update (oldImportedName, newImportedName, importedNode);
+
+      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
    },
    removeImportedNode (importedName)
    {
@@ -400,7 +394,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_importedNodes] .remove (importedName);
 
-      this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
    },
    getImportedNode (importedName)
    {
@@ -501,7 +495,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       this [_protos] .add (name, proto);
       proto .setName (name);
 
-      this ._protos_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
    },
    updateProtoDeclaration (name, proto)
    {
@@ -521,7 +515,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       this [_protos] .update (proto .getName (), name, proto);
       proto .setName (name);
 
-      this ._protos_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
    },
    removeProtoDeclaration (name)
    {
@@ -529,7 +523,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_protos] .remove (name);
 
-      this ._protos_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
    },
    getProtoDeclarations ()
    {
@@ -574,7 +568,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       this [_externprotos] .add (name, externproto);
       externproto .setName (name);
 
-      this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
    },
    updateExternProtoDeclaration (name, externproto)
    {
@@ -594,7 +588,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       this [_externprotos] .update (externproto .getName (), name, externproto);
       externproto .setName (name);
 
-      this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
    },
    removeExternProtoDeclaration (name)
    {
@@ -602,7 +596,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_externprotos] .remove (name);
 
-      this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
+      this ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
    },
    getExternProtoDeclarations ()
    {
