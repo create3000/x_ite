@@ -60,7 +60,7 @@ function InstancedShape (executionContext)
 
    this .addType (X3DConstants .InstancedShape);
 
-   this .addChildObjects (X3DConstants .outputOnly, "matrix", new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "matrices", new Fields .SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode .prototype),
@@ -85,9 +85,9 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       this ._translations .addInterest ("set_transform__", this);
       this ._rotations    .addInterest ("set_transform__", this);
       this ._scales       .addInterest ("set_transform__", this);
-      this ._matrix       .addInterest ("set_matrix__",    this);
+      this ._matrices     .addInterest ("set_matrices__",  this);
 
-      this .set_matrix__ ();
+      this .set_transform__ ();
    },
    getShapeKey ()
    {
@@ -101,9 +101,9 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    { },
    set_transform__ ()
    {
-      this ._matrix = this .getBrowser () .getCurrentTime ();
+      this ._matrices = this .getBrowser () .getCurrentTime ();
    },
-   set_matrix__ ()
+   set_matrices__ ()
    {
       const
          browser       = this .getBrowser (),
