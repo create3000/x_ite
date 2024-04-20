@@ -81,16 +81,16 @@ const Context =
             {
                const ext = gl .getExtension ("OES_vertex_array_object");
 
-               gl .bindVertexArray   =  ext ? ext .bindVertexArrayOES   .bind (ext) : nop;
-               gl .createVertexArray =  ext ? ext .createVertexArrayOES .bind (ext) : nop;
-               gl .deleteVertexArray =  ext ? ext .deleteVertexArrayOES .bind (ext) : nop;
-               gl .isVertexArray     =  ext ? ext .isVertexArrayOES     .bind (ext) : nop;
+               gl .bindVertexArray   =  ext ?.bindVertexArrayOES   .bind (ext) ?? nop;
+               gl .createVertexArray =  ext ?.createVertexArrayOES .bind (ext) ?? nop;
+               gl .deleteVertexArray =  ext ?.deleteVertexArrayOES .bind (ext) ?? nop;
+               gl .isVertexArray     =  ext ?.isVertexArrayOES     .bind (ext) ?? nop;
             }
 
             {
                const ext = gl .getExtension ("ANGLE_instanced_arrays");
 
-               gl .drawArraysInstanced = ext ? ext .drawArraysInstancedANGLE .bind (ext) : nop;
+               gl .drawArraysInstanced = ext ?.drawArraysInstancedANGLE .bind (ext) ?? nop;
             }
          }
       }
