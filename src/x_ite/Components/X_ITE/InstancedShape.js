@@ -156,6 +156,8 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          delete this .traverse;
       else
          this .traverse = Function .prototype;
+
+      this .set_transform__ ();
    },
    intersectsBox (box, clipPlanes, modelViewMatrix)
    { },
