@@ -384,5 +384,6 @@ This index lists the components and nodes in alphabetical order for quick access
 
 - [BlendMode](/x_ite/components/x-ite/blendmode/)
 - [DepthMode](/x_ite/components/x-ite/depthmode/)
+- [InstancedShape](/x_ite/components/x-ite/instancedshape/)
 
 <!-- COMPONENTS END -->

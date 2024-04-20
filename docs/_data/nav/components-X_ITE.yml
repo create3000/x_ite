@@ -4,3 +4,5 @@
       url: /components/x-ite/blendmode/
     - title: "DepthMode"
       url: /components/x-ite/depthmode/
+    - title: "InstancedShape"
+      url: /components/x-ite/instancedshape/
