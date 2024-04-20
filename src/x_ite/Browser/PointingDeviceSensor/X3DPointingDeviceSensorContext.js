@@ -395,6 +395,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          geometryContext = shapeNode .getGeometryContext (),
          options         = [ ];
 
+      options .push ("X3D_NORMALS");
+
       if (numClipPlanes)
       {
          options .push ("X3D_CLIP_PLANES");

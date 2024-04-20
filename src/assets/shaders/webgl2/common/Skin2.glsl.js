@@ -40,6 +40,8 @@ getJointNormalMatrix (const in int joint)
 }
 
 #define getSkinNormal(normal) (skinNormal)
+#else
+   #define getSkinNormal(normal) (normal)
 #endif
 
 vec4
