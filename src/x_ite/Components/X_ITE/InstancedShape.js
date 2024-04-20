@@ -124,8 +124,8 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       X3DShapeNode .prototype .set_bbox__ .call (this);
 
       const
-         bbox          = this .bbox .copy (),
-         instancedBBox = this .bbox .copy ();
+         bbox         = this .bbox .copy (),
+         instanceBBox = this .bbox .copy ();
 
       this .bbox .set ();
 
@@ -145,7 +145,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          data .set (matrix, o);
          data .set (matrix .submatrix .transpose () .inverse (), o + 16);
 
-         this .bbox .add (instancedBBox .assign (bbox) .multRight (matrix));
+         this .bbox .add (instanceBBox .assign (bbox) .multRight (matrix));
       }
 
       this .getBBoxSize ()   .assign (this .bbox .size);
