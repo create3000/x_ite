@@ -38,7 +38,7 @@ out vec3 normal;
 
 #pragma X3D include "common/Utils.glsl"
 #pragma X3D include "common/Skin.glsl"
-#pragma X3D include "common/Particle.glsl"
+#pragma X3D include "common/Instancing.glsl"
 #pragma X3D include "common/PointSize.glsl"
 
 void
@@ -50,11 +50,11 @@ main ()
       midPoint    = x3d_LineStipple .xy;
    #endif
 
-   vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, x3d_Normal));
+   vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, x3d_Normal));
    vec4 position              = x3d_ModelViewMatrix * x3d_TransformedVertex;
 
    vertex = position .xyz;
-   normal = getParticleNormal (getSkinNormal (x3d_Normal));
+   normal = getInstanceNormal (getSkinNormal (x3d_Normal));
 
    #if defined (X3D_GEOMETRY_0D)
       #if defined (X3D_STYLE_PROPERTIES)

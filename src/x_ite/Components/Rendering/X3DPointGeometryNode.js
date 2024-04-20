@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       for (const node of renderModeNodes)
          node .disable (gl);
    },
-   displayParticles (gl, renderContext, particleSystem)
+   displayInstances (gl, renderContext, particleSystem)
    {
       const
          appearanceNode  = renderContext .appearanceNode,
@@ -138,15 +138,15 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
-         const { particleStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
+         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
 
          if (particleOffset !== undefined)
-            shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleOffset, 1);
+            shaderNode .enableParticleAttribute (gl, outputParticles, instancesStride, particleOffset, 1);
 
-         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset, 1);
+         shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, instancesStride, matrixOffset, 1);
 
          if (normalMatrixOffset !== undefined)
-            shaderNode .enableParticleNormalMatrixAttribute (gl, outputParticles, particleStride, normalMatrixOffset, 1);
+            shaderNode .enableInstanceNormalMatrixAttribute (gl, outputParticles, instancesStride, normalMatrixOffset, 1);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       // Wireframes are always solid so only one drawing call is needed.
 
-      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .getNumInstances ());
 
       for (const node of renderModeNodes)
          node .disable (gl);

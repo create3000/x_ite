@@ -86,17 +86,17 @@ out vec3 vertex;
 
 #pragma X3D include "Utils.glsl"
 #pragma X3D include "Skin.glsl"
-#pragma X3D include "Particle.glsl"
+#pragma X3D include "Instancing.glsl"
 #pragma X3D include "PointSize.glsl"
 
 void
 vertex_main ()
 {
    #if defined (X3D_NORMALS)
-      vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, x3d_Normal));
-      vec3 x3d_TransformedNormal = getParticleNormal (getSkinNormal (x3d_Normal));
+      vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, x3d_Normal));
+      vec3 x3d_TransformedNormal = getInstanceNormal (getSkinNormal (x3d_Normal));
    #else
-      vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, vec3 (0.0)));
+      vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, vec3 (0.0)));
    #endif
 
    vec4 position = x3d_ModelViewMatrix * x3d_TransformedVertex;
@@ -130,7 +130,7 @@ vertex_main ()
          ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
          #if X3D_NUM_TEXTURE_COORDINATES > ${i}
-            texCoord${i} = getParticleTexCoord (x3d_TexCoord${i});
+            texCoord${i} = getInstanceTexCoord (x3d_TexCoord${i});
          #endif
 
          `) .join ("\n")}

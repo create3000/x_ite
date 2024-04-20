@@ -236,7 +236,7 @@ Object .assign (X3DRenderingContext .prototype,
       }
 
       if (shapeNode .getShapeKey () > 0)
-         options .push ("X3D_PARTICLE_SYSTEM");
+         options .push ("X3D_INSTANCING");
 
       options .push (`X3D_GEOMETRY_${geometryContext .geometryType}D`);
 

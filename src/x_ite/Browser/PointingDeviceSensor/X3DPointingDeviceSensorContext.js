@@ -410,10 +410,10 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       {
          case 1:
          case 2:
-            options .push ("X3D_PARTICLE_SYSTEM");
+            options .push ("X3D_INSTANCING");
             break;
          case 3:
-            options .push ("X3D_PARTICLE_SYSTEM", "X3D_PARTICLE_NORMAL");
+            options .push ("X3D_INSTANCING", "X3D_INSTANCE_NORMAL");
             break;
       }
 

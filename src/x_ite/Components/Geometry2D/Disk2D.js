@@ -216,8 +216,8 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
       this .buildTexCoords         = base .prototype .buildTexCoords;
       this .displaySimple          = base .prototype .displaySimple;
       this .display                = base .prototype .display;
-      this .displaySimpleParticles = base .prototype .displaySimpleParticles;
-      this .displayParticles       = base .prototype .displayParticles;
+      this .displaySimpleInstances = base .prototype .displaySimpleInstances;
+      this .displayInstances       = base .prototype .displayInstances;
    },
    updateRenderFunctions ()
    { },

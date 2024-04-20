@@ -955,8 +955,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          delete this .displaySimple;
          delete this .display;
-         delete this .displaySimpleParticles;
-         delete this .displayParticles;
+         delete this .displaySimpleInstances;
+         delete this .displayInstances;
       }
       else
       {
@@ -964,8 +964,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          this .displaySimple          = Function .prototype;
          this .display                = Function .prototype;
-         this .displaySimpleParticles = Function .prototype;
-         this .displayParticles       = Function .prototype;
+         this .displaySimpleInstances = Function .prototype;
+         this .displayInstances       = Function .prototype;
       }
    },
    traverse (type, renderObject)
@@ -1094,21 +1094,21 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       for (const node of renderModeNodes)
          node .disable (gl);
    },
-   displaySimpleParticles (gl, shaderNode, particleSystem)
+   displaySimpleInstances (gl, shaderNode, particleSystem)
    {
       const outputParticles = particleSystem .outputParticles;
 
       if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
-         const { particleStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
+         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
 
          if (particleOffset !== undefined)
-            shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleOffset, 1);
+            shaderNode .enableParticleAttribute (gl, outputParticles, instancesStride, particleOffset, 1);
 
-         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset, 1);
+         shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, instancesStride, matrixOffset, 1);
 
          if (normalMatrixOffset !== undefined)
-            shaderNode .enableParticleNormalMatrixAttribute (gl, outputParticles, particleStride, normalMatrixOffset, 1);
+            shaderNode .enableInstanceNormalMatrixAttribute (gl, outputParticles, instancesStride, normalMatrixOffset, 1);
 
          shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
          shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
@@ -1117,9 +1117,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .updateParticles = false;
       }
 
-      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .getNumInstances ());
    },
-   displayParticles (gl, renderContext, particleSystem)
+   displayInstances (gl, renderContext, particleSystem)
    {
       const
          browser        = this .getBrowser (),
@@ -1128,17 +1128,17 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       if (this .solid || !appearanceNode .getBackMaterial () || browser .getWireframe ())
       {
-         this .displayParticlesGeometry (gl, renderContext, appearanceNode, shaderNode, true, true, particleSystem);
+         this .displayInstancesGeometry (gl, renderContext, appearanceNode, shaderNode, true, true, particleSystem);
       }
       else
       {
          const backShaderNode = appearanceNode .getBackShader (this, renderContext);
 
-         this .displayParticlesGeometry (gl, renderContext, appearanceNode, backShaderNode, true,  false, particleSystem);
-         this .displayParticlesGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true,  particleSystem);
+         this .displayInstancesGeometry (gl, renderContext, appearanceNode, backShaderNode, true,  false, particleSystem);
+         this .displayInstancesGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true,  particleSystem);
       }
    },
-   displayParticlesGeometry (gl, renderContext, appearanceNode, shaderNode, back, front, particleSystem)
+   displayInstancesGeometry (gl, renderContext, appearanceNode, shaderNode, back, front, particleSystem)
    {
       const
          browser         = this .getBrowser (),
@@ -1161,15 +1161,15 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
-         const { particleStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
+         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
 
          if (particleOffset !== undefined)
-            shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleOffset, 1);
+            shaderNode .enableParticleAttribute (gl, outputParticles, instancesStride, particleOffset, 1);
 
-         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset, 1);
+         shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, instancesStride, matrixOffset, 1);
 
          if (normalMatrixOffset !== undefined)
-            shaderNode .enableParticleNormalMatrixAttribute (gl, outputParticles, particleStride, normalMatrixOffset, 1);
+            shaderNode .enableInstanceNormalMatrixAttribute (gl, outputParticles, instancesStride, normalMatrixOffset, 1);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -1202,13 +1202,13 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          if (back && !this .solid)
          {
             gl .cullFace (gl .FRONT);
-            gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+            gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .getNumInstances ());
          }
 
          if (front)
          {
             gl .cullFace (gl .BACK);
-            gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+            gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .getNumInstances ());
          }
       }
       else
@@ -1220,7 +1220,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          else
             gl .disable (gl .CULL_FACE);
 
-         gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+         gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .getNumInstances ());
       }
 
       for (const node of renderModeNodes)

@@ -304,8 +304,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "Normal",
          "Vertex",
          "Particle",
-         "ParticleMatrix",
-         "ParticleNormalMatrix",
+         "InstanceMatrix",
+         "InstanceNormalMatrix",
       ];
 
       for (const name of attributes)
@@ -1251,9 +1251,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
       gl .vertexAttribDivisor (location, divisor);
    },
-   enableParticleMatrixAttribute (gl, buffer, stride, offset, divisor)
+   enableInstanceMatrixAttribute (gl, buffer, stride, offset, divisor)
    {
-      const location0 = this .x3d_ParticleMatrix;
+      const location0 = this .x3d_InstanceMatrix;
 
       stride = stride || 64; // 4 Bytes * 16
 
@@ -1268,9 +1268,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          gl .vertexAttribDivisor (location, divisor);
       }
    },
-   enableParticleNormalMatrixAttribute (gl, buffer, stride, offset, divisor)
+   enableInstanceNormalMatrixAttribute (gl, buffer, stride, offset, divisor)
    {
-      const location0 = this .x3d_ParticleNormalMatrix;
+      const location0 = this .x3d_InstanceNormalMatrix;
 
       stride = stride || 36; // 4 Bytes * 9
 

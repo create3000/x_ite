@@ -420,7 +420,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          gl .lineWidth (1);
       };
    })(),
-   displayParticles (gl, renderContext, particleSystem)
+   displayInstances (gl, renderContext, particleSystem)
    {
       const
          browser         = this .getBrowser (),
@@ -445,15 +445,15 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
-         const { particleStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
+         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
 
          if (particleOffset !== undefined)
-            shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleOffset, 1);
+            shaderNode .enableParticleAttribute (gl, outputParticles, instancesStride, particleOffset, 1);
 
-         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset, 1);
+         shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, instancesStride, matrixOffset, 1);
 
          if (normalMatrixOffset !== undefined)
-            shaderNode .enableParticleNormalMatrixAttribute (gl, outputParticles, particleStride, normalMatrixOffset, 1);
+            shaderNode .enableInstanceNormalMatrixAttribute (gl, outputParticles, instancesStride, normalMatrixOffset, 1);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -474,7 +474,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       // Wireframes are always solid so only one drawing call is needed.
 
-      gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+      gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .getNumInstances ());
 
       for (const node of renderModeNodes)
          node .disable (gl);

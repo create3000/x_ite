@@ -69,7 +69,7 @@ import Lighting2              from "../../../assets/shaders/webgl2/common/Lighti
 import Line22                 from "../../../assets/shaders/webgl2/common/Line22.glsl.js";
 import Material2              from "../../../assets/shaders/webgl2/common/Material2.glsl.js";
 import Normal2                from "../../../assets/shaders/webgl2/common/Normal2.glsl.js";
-import Particle2              from "../../../assets/shaders/webgl2/common/Particle2.glsl.js";
+import Instancing2            from "../../../assets/shaders/webgl2/common/Instancing2.glsl.js";
 import Perlin2                from "../../../assets/shaders/webgl2/common/Perlin2.glsl.js";
 import Point2                 from "../../../assets/shaders/webgl2/common/Point2.glsl.js";
 import PointSize2             from "../../../assets/shaders/webgl2/common/PointSize2.glsl.js";
@@ -155,7 +155,7 @@ const ShaderRegistry = {
          Line2: Line22,
          Material: Material2,
          Normal: Normal2,
-         Particle: Particle2,
+         Instancing: Instancing2,
          Perlin: Perlin2,
          Point: Point2,
          PointSize: PointSize2,

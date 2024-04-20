@@ -74,10 +74,10 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          gl      = browser .getContext ();
 
       this .outputParticles    = gl .createBuffer ();
-      this .particleStride     = Float32Array .BYTES_PER_ELEMENT * (4 * 4 + 3 * 3); // 4 x vec4 + 3 * vec3
+      this .instancesStride     = Float32Array .BYTES_PER_ELEMENT * (4 * 4 + 3 * 3); // 4 x vec4 + 3 * vec3
       this .matrixOffset       = 0;
       this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * 16;
-      this .numParticles       = 0;
+      this .numInstances       = 0;
 
       this .outputParticles .vertexArrayObject = new VertexArray (gl);
 
@@ -94,7 +94,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    },
    getNumInstances ()
    {
-      return this .numParticles;
+      return this .numInstances;
    },
    set_bbox__ ()
    { },
@@ -114,12 +114,12 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          numRotations    = rotations .length,
          numScales       = scales .length,
          numInstances    = Math .max (numTranslations, numRotations, numScales),
-         stride          = this .particleStride / Float32Array .BYTES_PER_ELEMENT,
-         length          = this .particleStride * numInstances,
+         stride          = this .instancesStride / Float32Array .BYTES_PER_ELEMENT,
+         length          = this .instancesStride * numInstances,
          data            = new Float32Array (length),
          matrix          = new Matrix4 ();
 
-      this .numParticles = numInstances;
+      this .numInstances = numInstances;
 
       X3DShapeNode .prototype .set_bbox__ .call (this);
 
@@ -213,11 +213,11 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    },
    displaySimple (gl, renderContext, shaderNode)
    {
-      this .getGeometry () .displaySimpleParticles (gl, shaderNode, this);
+      this .getGeometry () .displaySimpleInstances (gl, shaderNode, this);
    },
    display (gl, renderContext)
    {
-      this .getGeometry () .displayParticles (gl, renderContext, this);
+      this .getGeometry () .displayInstances (gl, renderContext, this);
    },
 });
 

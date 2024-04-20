@@ -133,7 +133,7 @@ function ParticleSystem (executionContext)
    this .creationTime             = 0;
    this .pauseTime                = 0;
    this .deltaTime                = 0;
-   this .particleStride           = Float32Array .BYTES_PER_ELEMENT * 7 * 4; // 7 x vec4
+   this .instancesStride          = Float32Array .BYTES_PER_ELEMENT * 7 * 4; // 7 x vec4
    this .particleOffsets          = Array .from ({length: 7}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
    this .particleOffset           = this .particleOffsets [0];
    this .colorOffset              = this .particleOffsets [1];
@@ -674,9 +674,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       const
          gl              = this .getBrowser () .getContext (),
          maxParticles    = this .maxParticles,
-         particleStride  = this .particleStride,
+         instancesStride = this .instancesStride,
          outputParticles = Object .assign (gl .createBuffer (), this .outputParticles),
-         data            = new Uint8Array (maxParticles * particleStride);
+         data            = new Uint8Array (maxParticles * instancesStride);
 
       // Resize input buffer.
 
@@ -688,7 +688,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       gl .bindBuffer (gl .COPY_READ_BUFFER, this .outputParticles);
       gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles);
       gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
-      gl .copyBufferSubData (gl .COPY_READ_BUFFER, gl .ARRAY_BUFFER, 0, 0, Math .min (maxParticles * particleStride, lastNumParticles * particleStride));
+      gl .copyBufferSubData (gl .COPY_READ_BUFFER, gl .ARRAY_BUFFER, 0, 0, Math .min (maxParticles * instancesStride, lastNumParticles * instancesStride));
       gl .deleteBuffer (this .outputParticles);
 
       this .outputParticles = outputParticles;
@@ -889,7 +889,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          {
             case GeometryTypes .GEOMETRY:
             {
-               this .getGeometry () ?.displaySimpleParticles (gl, shaderNode, this);
+               this .getGeometry () ?.displaySimpleInstances (gl, shaderNode, this);
                break;
             }
             case GeometryTypes .SPRITE:
@@ -903,10 +903,10 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
                if (outputParticles .vertexArrayObject .enable (shaderNode .getProgram ()))
                {
-                  const particleStride = this .particleStride;
+                  const instancesStride = this .instancesStride;
 
-                  shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
-                  shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
+                  shaderNode .enableParticleAttribute       (gl, outputParticles, instancesStride, this .particleOffset, 1);
+                  shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, instancesStride, this .matrixOffset,   1);
                   shaderNode .enableVertexAttribute         (gl, this .geometryBuffer, 0, this .verticesOffset);
                }
 
@@ -927,7 +927,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       {
          case GeometryTypes .GEOMETRY:
          {
-            this .getGeometry () ?.displayParticles (gl, renderContext, this);
+            this .getGeometry () ?.displayInstances (gl, renderContext, this);
             break;
          }
          case GeometryTypes .SPRITE:
@@ -977,14 +977,14 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             if (outputParticles .vertexArrayObject .enable (shaderNode .getProgram ()))
             {
-               const particleStride = this .particleStride;
+               const instancesStride = this .instancesStride;
 
-               shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
-               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
+               shaderNode .enableParticleAttribute       (gl, outputParticles, instancesStride, this .particleOffset, 1);
+               shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, instancesStride, this .matrixOffset,   1);
 
                if (this .geometryContext .colorMaterial)
                {
-                  shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
+                  shaderNode .enableColorAttribute (gl, outputParticles, instancesStride, this .colorOffset);
                   shaderNode .colorAttributeDivisor (gl, 1);
                }
 
