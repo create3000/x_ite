@@ -74,10 +74,9 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          gl      = browser .getContext ();
 
       this .outputParticles    = gl .createBuffer ();
-      this .particleStride     = Float32Array .BYTES_PER_ELEMENT * (5 * 4 + 3 * 3); // 5 x vec4 + 3 * vec3
-      this .particleOffset     = 0;
-      this .matrixOffset       = Float32Array .BYTES_PER_ELEMENT * 4;
-      this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * (4 + 16);
+      this .particleStride     = Float32Array .BYTES_PER_ELEMENT * (4 * 4 + 3 * 3); // 4 x vec4 + 3 * vec3
+      this .matrixOffset       = 0;
+      this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * 16;
       this .numParticles       = 0;
 
       this .outputParticles .vertexArrayObject = new VertexArray (gl);
@@ -143,8 +142,8 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          if (numScales)
             matrix .scale (scales [Math .min (i, numScales - 1)] .getValue ());
 
-         data .set (matrix, o + 4);
-         data .set (matrix .submatrix .transpose () .inverse (), o + (4 + 16));
+         data .set (matrix, o);
+         data .set (matrix .submatrix .transpose () .inverse (), o + 16);
 
          this .bbox .add (instancedBBox .assign (bbox) .multRight (matrix));
       }

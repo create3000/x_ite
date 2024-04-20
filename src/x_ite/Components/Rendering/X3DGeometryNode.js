@@ -1102,8 +1102,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       {
          const { particleStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
 
-         shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleOffset, 1);
-         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset,   1);
+         if (particleOffset !== undefined)
+            shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleOffset, 1);
+
+         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset, 1);
 
          if (normalMatrixOffset !== undefined)
             shaderNode .enableParticleNormalMatrixAttribute (gl, outputParticles, particleStride, normalMatrixOffset, 1);
@@ -1161,8 +1163,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       {
          const { particleStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
 
-         shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleOffset, 1);
-         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset,   1);
+         if (particleOffset !== undefined)
+            shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleOffset, 1);
+
+         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset, 1);
 
          if (normalMatrixOffset !== undefined)
             shaderNode .enableParticleNormalMatrixAttribute (gl, outputParticles, particleStride, normalMatrixOffset, 1);
