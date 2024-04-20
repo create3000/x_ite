@@ -1094,13 +1094,13 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       for (const node of renderModeNodes)
          node .disable (gl);
    },
-   displaySimpleInstances (gl, shaderNode, particleSystem)
+   displaySimpleInstances (gl, shaderNode, shapeNode)
    {
-      const instances = particleSystem .getInstances ();
+      const instances = shapeNode .getInstances ();
 
       if (instances .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
-         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
+         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
 
          if (particleOffset !== undefined)
             shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
@@ -1117,9 +1117,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .updateParticles = false;
       }
 
-      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .getNumInstances ());
+      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
    },
-   displayInstances (gl, renderContext, particleSystem)
+   displayInstances (gl, renderContext, shapeNode)
    {
       const
          browser        = this .getBrowser (),
@@ -1128,17 +1128,17 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       if (this .solid || !appearanceNode .getBackMaterial () || browser .getWireframe ())
       {
-         this .displayInstancesGeometry (gl, renderContext, appearanceNode, shaderNode, true, true, particleSystem);
+         this .displayInstancesGeometry (gl, renderContext, appearanceNode, shaderNode, true, true, shapeNode);
       }
       else
       {
          const backShaderNode = appearanceNode .getBackShader (this, renderContext);
 
-         this .displayInstancesGeometry (gl, renderContext, appearanceNode, backShaderNode, true,  false, particleSystem);
-         this .displayInstancesGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true,  particleSystem);
+         this .displayInstancesGeometry (gl, renderContext, appearanceNode, backShaderNode, true,  false, shapeNode);
+         this .displayInstancesGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true,  shapeNode);
       }
    },
-   displayInstancesGeometry (gl, renderContext, appearanceNode, shaderNode, back, front, particleSystem)
+   displayInstancesGeometry (gl, renderContext, appearanceNode, shaderNode, back, front, shapeNode)
    {
       const
          browser         = this .getBrowser (),
@@ -1157,11 +1157,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Setup vertex attributes.
 
-      const instances = particleSystem .getInstances ();
+      const instances = shapeNode .getInstances ();
 
       if (instances .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
-         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
+         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
 
          if (particleOffset !== undefined)
             shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
@@ -1202,13 +1202,13 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          if (back && !this .solid)
          {
             gl .cullFace (gl .FRONT);
-            gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .getNumInstances ());
+            gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
          }
 
          if (front)
          {
             gl .cullFace (gl .BACK);
-            gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .getNumInstances ());
+            gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
          }
       }
       else
@@ -1220,7 +1220,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          else
             gl .disable (gl .CULL_FACE);
 
-         gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .getNumInstances ());
+         gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
       }
 
       for (const node of renderModeNodes)

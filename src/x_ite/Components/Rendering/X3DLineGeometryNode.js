@@ -420,7 +420,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          gl .lineWidth (1);
       };
    })(),
-   displayInstances (gl, renderContext, particleSystem)
+   displayInstances (gl, renderContext, shapeNode)
    {
       const
          browser         = this .getBrowser (),
@@ -441,11 +441,11 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       // Setup vertex attributes.
 
-      const instances = particleSystem .getInstances ();
+      const instances = shapeNode .getInstances ();
 
       if (instances .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
-         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
+         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
 
          if (particleOffset !== undefined)
             shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
@@ -474,7 +474,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       // Wireframes are always solid so only one drawing call is needed.
 
-      gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .getNumInstances ());
+      gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
 
       for (const node of renderModeNodes)
          node .disable (gl);

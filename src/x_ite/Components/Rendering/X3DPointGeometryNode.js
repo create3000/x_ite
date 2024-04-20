@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       for (const node of renderModeNodes)
          node .disable (gl);
    },
-   displayInstances (gl, renderContext, particleSystem)
+   displayInstances (gl, renderContext, shapeNode)
    {
       const
          appearanceNode  = renderContext .appearanceNode,
@@ -134,11 +134,11 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       // Setup vertex attributes.
 
-      const instances = particleSystem .getInstances ();
+      const instances = shapeNode .getInstances ();
 
       if (instances .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
-         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
+         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
 
          if (particleOffset !== undefined)
             shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       // Wireframes are always solid so only one drawing call is needed.
 
-      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .getNumInstances ());
+      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
 
       for (const node of renderModeNodes)
          node .disable (gl);
