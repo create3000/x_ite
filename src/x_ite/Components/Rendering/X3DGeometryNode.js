@@ -1157,9 +1157,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       {
          const { particleStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
 
-         shaderNode .enableParticleAttribute             (gl, outputParticles, particleStride, particleOffset,     1);
-         shaderNode .enableParticleMatrixAttribute       (gl, outputParticles, particleStride, matrixOffset,       1);
-         shaderNode .enableParticleNormalMatrixAttribute (gl, outputParticles, particleStride, normalMatrixOffset, 1);
+         shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleOffset, 1);
+         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset,   1);
+
+         if (normalMatrixOffset !== undefined)
+            shaderNode .enableParticleNormalMatrixAttribute (gl, outputParticles, particleStride, normalMatrixOffset, 1);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
