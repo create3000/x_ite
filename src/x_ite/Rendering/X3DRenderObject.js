@@ -303,6 +303,11 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .numOpaqueShapes;
    },
+   setNumOpaqueShapes (value)
+   {
+      // Needed for StaticGroup.
+      this .numOpaqueShapes = value;
+   },
    getOpaqueShapes ()
    {
       return this .opaqueShapes;
@@ -310,6 +315,11 @@ Object .assign (X3DRenderObject .prototype,
    getNumTransparentShapes ()
    {
       return this .numTransparentShapes;
+   },
+   setNumTransparentShapes (value)
+   {
+      // Needed for StaticGroup.
+      this .numTransparentShapes = value;
    },
    getTransparentShapes ()
    {
