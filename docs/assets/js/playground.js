@@ -10,7 +10,8 @@ const box = `<?xml version="1.0" encoding="UTF-8"?>
         orientation='-0.640652763184828 0.744770464531058 0.186764536745701 0.746185800293648'/>
     <ParticleSystem
         geometryType='GEOMETRY'
-        maxParticles='10'>
+        maxParticles='10'
+        bboxSize='10 10 10'>
       <PointEmitter
           direction='0 0 0'
           speed='1'/>
@@ -124,6 +125,17 @@ function updateToolbar (toolbar, canvas, monaco, editor)
             browser .beginUpdate ();
 
          play .toggleClass ("selected");
+      })
+      .appendTo (toolbar);
+
+   $("<span></span>") .addClass ("dot") .appendTo (toolbar);
+
+   $("<span></span>")
+      .attr ("title", "View all objects in scene.")
+      .addClass (["fa-solid", "fa-arrows-to-eye"])
+      .on ("click", () =>
+      {
+         browser .viewAll ();
       })
       .appendTo (toolbar);
 
