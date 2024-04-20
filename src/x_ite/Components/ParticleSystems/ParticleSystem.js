@@ -225,7 +225,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    {
       return this .geometryType;
    },
-   getNumParticles ()
+   getNumInstances ()
    {
       return this .numParticles;
    },
