@@ -47,6 +47,8 @@
 
 import DEVELOPMENT from "../../DEVELOPMENT.js";
 
+const nop = Function .prototype;
+
 const Context =
 {
    excludes: new Set ([
@@ -79,10 +81,16 @@ const Context =
             {
                const ext = gl .getExtension ("OES_vertex_array_object");
 
-               gl .bindVertexArray   =  ext .bindVertexArrayOES   .bind (ext);
-               gl .createVertexArray =  ext .createVertexArrayOES .bind (ext);
-               gl .deleteVertexArray =  ext .deleteVertexArrayOES .bind (ext);
-               gl .isVertexArray     =  ext .isVertexArrayOES     .bind (ext);
+               gl .bindVertexArray   =  ext ? ext .bindVertexArrayOES   .bind (ext) : nop;
+               gl .createVertexArray =  ext ? ext .createVertexArrayOES .bind (ext) : nop;
+               gl .deleteVertexArray =  ext ? ext .deleteVertexArrayOES .bind (ext) : nop;
+               gl .isVertexArray     =  ext ? ext .isVertexArrayOES     .bind (ext) : nop;
+            }
+
+            {
+               const ext = gl .getExtension ("ANGLE_instanced_arrays");
+
+               gl .drawArraysInstanced = ext ? ext .drawArraysInstancedANGLE .bind (ext) : nop;
             }
          }
       }
@@ -104,7 +112,7 @@ const Context =
 
       if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
       {
-         gl .lineWidth                     = Function .prototype;
+         gl .lineWidth                     = nop;
          gl .HAS_FEATURE_TRANSFORMED_LINES = gl .getVersion () >= 2;
 
          if (DEVELOPMENT)

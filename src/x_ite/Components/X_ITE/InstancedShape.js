@@ -61,17 +61,24 @@ function InstancedShape (executionContext)
    this .addType (X3DConstants .InstancedShape);
 
    this .addChildObjects (X3DConstants .outputOnly, "matrices", new Fields .SFTime ());
+
+   this .traverse = Function .prototype;
 }
 
 Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode .prototype),
 {
    initialize ()
    {
-      X3DShapeNode .prototype .initialize .call (this);
-
       const
          browser = this .getBrowser (),
          gl      = browser .getContext ();
+
+      // Check version.
+
+      if (browser .getContext () .getVersion () < 2)
+         return;
+
+      X3DShapeNode .prototype .initialize .call (this);
 
       this .numInstances       = 0;
       this .instances          = Object .assign (gl .createBuffer (), { vertexArrayObject: new VertexArray (gl) });
