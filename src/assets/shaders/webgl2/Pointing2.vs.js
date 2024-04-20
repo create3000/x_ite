@@ -45,11 +45,11 @@ main ()
       midPoint    = x3d_LineStipple .xy;
    #endif
 
-   vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, vec3 (0.0)));
+   vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, x3d_Normal));
    vec4 position              = x3d_ModelViewMatrix * x3d_TransformedVertex;
 
    vertex = position .xyz;
-   normal = x3d_Normal;
+   normal = getParticleNormal (getSkinNormal (x3d_Normal));
 
    #if defined (X3D_GEOMETRY_0D)
       #if defined (X3D_STYLE_PROPERTIES)

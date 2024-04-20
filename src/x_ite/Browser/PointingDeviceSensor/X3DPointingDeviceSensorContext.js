@@ -401,8 +401,16 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          options .push ("X3D_NUM_CLIP_PLANES " + numClipPlanes);
       }
 
-      if (shapeNode .getShapeKey () > 0)
-         options .push ("X3D_PARTICLE_SYSTEM");
+      switch (shapeNode .getShapeKey ())
+      {
+         case 1:
+         case 2:
+            options .push ("X3D_PARTICLE_SYSTEM");
+            break;
+         case 3:
+            options .push ("X3D_PARTICLE_SYSTEM", "X3D_PARTICLE_NORMAL");
+            break;
+      }
 
       options .push (`X3D_GEOMETRY_${geometryContext .geometryType}D`);
 

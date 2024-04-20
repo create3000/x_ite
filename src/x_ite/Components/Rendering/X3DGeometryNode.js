@@ -1100,13 +1100,17 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
-         const { particleStride, particleOffset, matrixOffset } = particleSystem;
+         const { particleStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
 
          shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleOffset, 1);
          shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset,   1);
-         shaderNode .enableTexCoordAttribute       (gl, this .texCoordBuffers, 0, 0);
-         shaderNode .enableNormalAttribute         (gl, this .normalBuffer,    0, 0);
-         shaderNode .enableVertexAttribute         (gl, this .vertexBuffer,    0, 0);
+
+         if (normalMatrixOffset !== undefined)
+            shaderNode .enableParticleNormalMatrixAttribute (gl, outputParticles, particleStride, normalMatrixOffset, 1);
+
+         shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+         shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+         shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
 
          this .updateParticles = false;
       }
