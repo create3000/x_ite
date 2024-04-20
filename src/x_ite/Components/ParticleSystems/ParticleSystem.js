@@ -229,6 +229,10 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    {
       return this .numParticles;
    },
+   getInstances ()
+   {
+      return this .outputParticles;
+   },
    set_bbox__ ()
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))

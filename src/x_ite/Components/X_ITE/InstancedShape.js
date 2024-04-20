@@ -73,13 +73,13 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      this .outputParticles    = gl .createBuffer ();
-      this .instancesStride     = Float32Array .BYTES_PER_ELEMENT * (4 * 4 + 3 * 3); // 4 x vec4 + 3 * vec3
+      this .instances          = gl .createBuffer ();
+      this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (4 * 4 + 3 * 3); // 4 x vec4 + 3 * vec3
       this .matrixOffset       = 0;
       this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * 16;
       this .numInstances       = 0;
 
-      this .outputParticles .vertexArrayObject = new VertexArray (gl);
+      this .instances .vertexArrayObject = new VertexArray (gl);
 
       this ._translations .addInterest ("set_transform__", this);
       this ._rotations    .addInterest ("set_transform__", this);
@@ -95,6 +95,10 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    getNumInstances ()
    {
       return this .numInstances;
+   },
+   getInstances ()
+   {
+      return this .instances;
    },
    set_bbox__ ()
    { },
@@ -151,7 +155,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       this .getBBoxSize ()   .assign (this .bbox .size);
       this .getBBoxCenter () .assign (this .bbox .center);
 
-      gl .bindBuffer (gl .ARRAY_BUFFER, this .outputParticles);
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .instances);
       gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
    },
    set_geometry__ ()

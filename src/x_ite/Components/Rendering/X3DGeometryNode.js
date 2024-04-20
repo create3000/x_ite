@@ -1096,19 +1096,19 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    displaySimpleInstances (gl, shaderNode, particleSystem)
    {
-      const outputParticles = particleSystem .outputParticles;
+      const instances = particleSystem .getInstances ();
 
-      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
+      if (instances .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
          const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
 
          if (particleOffset !== undefined)
-            shaderNode .enableParticleAttribute (gl, outputParticles, instancesStride, particleOffset, 1);
+            shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
 
-         shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, instancesStride, matrixOffset, 1);
+         shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
 
          if (normalMatrixOffset !== undefined)
-            shaderNode .enableInstanceNormalMatrixAttribute (gl, outputParticles, instancesStride, normalMatrixOffset, 1);
+            shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
 
          shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
          shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
@@ -1157,19 +1157,19 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Setup vertex attributes.
 
-      const outputParticles = particleSystem .outputParticles;
+      const instances = particleSystem .getInstances ();
 
-      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
+      if (instances .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
          const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = particleSystem;
 
          if (particleOffset !== undefined)
-            shaderNode .enableParticleAttribute (gl, outputParticles, instancesStride, particleOffset, 1);
+            shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
 
-         shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, instancesStride, matrixOffset, 1);
+         shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
 
          if (normalMatrixOffset !== undefined)
-            shaderNode .enableInstanceNormalMatrixAttribute (gl, outputParticles, instancesStride, normalMatrixOffset, 1);
+            shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);

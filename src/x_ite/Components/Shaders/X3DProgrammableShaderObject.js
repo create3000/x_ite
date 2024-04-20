@@ -304,13 +304,28 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "Normal",
          "Vertex",
          "Particle",
+         "ParticleMatrix",
+         "ParticleNormalMatrix",
          "InstanceMatrix",
          "InstanceNormalMatrix",
       ];
 
+      const attributeMappings = {
+         "InstanceMatrix": ["ParticleMatrix"],
+         "InstanceNormalMatrix": ["ParticleNormalMatrix"],
+      };
+
       for (const name of attributes)
       {
-         const attribute = gl .getAttribLocation (program, `x3d_${name}`);
+         let attribute = gl .getAttribLocation (program, `x3d_${name}`);
+
+         for (const alias of attributeMappings [name] ?? [ ])
+         {
+            if (attribute === -1)
+               attribute = gl .getAttribLocation (program, `x3d_${alias}`);
+            else
+               break;
+         }
 
          this [`x3d_${name}`] = attribute;
 
