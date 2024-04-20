@@ -93,6 +93,8 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    {
       return 1;
    },
+   set_bbox__ ()
+   { },
    set_transform__ ()
    {
       this ._matrix = this .getBrowser () .getCurrentTime ();
@@ -100,18 +102,26 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    set_matrix__ ()
    {
       const
-         browser      = this .getBrowser (),
-         gl           = browser .getContext (),
-         translations = this ._translations,
-         rotations    = this ._rotations,
-         scales       = this ._scales,
-         numInstances = Math .max (translations .length, rotations .length, scales .length),
-         stride       = this .particleStride / Float32Array .BYTES_PER_ELEMENT,
-         length       = this .particleStride * numInstances,
-         data         = new Float32Array (length),
-         matrix       = new Matrix4 ();
+         browser       = this .getBrowser (),
+         gl            = browser .getContext (),
+         translations  = this ._translations,
+         rotations     = this ._rotations,
+         scales        = this ._scales,
+         numInstances  = Math .max (translations .length, rotations .length, scales .length),
+         stride        = this .particleStride / Float32Array .BYTES_PER_ELEMENT,
+         length        = this .particleStride * numInstances,
+         data          = new Float32Array (length),
+         matrix        = new Matrix4 ();
 
       this .numParticles = numInstances;
+
+      X3DShapeNode .prototype .set_bbox__ .call (this);
+
+      const
+         bbox          = this .bbox .copy (),
+         instancedBBox = this .bbox .copy ();
+
+      this .bbox .set ();
 
       for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
       {
@@ -128,7 +138,12 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
 
          data .set (matrix, o + 4);
          data .set (matrix .submatrix .transpose () .inverse (), o + (4 + 16));
+
+         this .bbox .add (instancedBBox .assign (bbox) .multRight (matrix));
       }
+
+      this .getBBoxSize ()   .assign (this .bbox .size);
+      this .getBBoxCenter () .assign (this .bbox .center);
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .outputParticles);
       gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
@@ -190,8 +205,6 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    },
    display (gl, renderContext)
    {
-      console .log (this .getTypeName ());
-
       this .getGeometry () .displayParticles (gl, renderContext, this);
    },
 });
