@@ -359,34 +359,36 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    },
    getPointingShader (numClipPlanes, shapeNode, humanoidNode)
    {
-      const geometryContext = shapeNode .getGeometryContext ();
+      const { geometryType, hasNormals } = shapeNode .getGeometryContext ();
 
       let key = "";
 
       key += numClipPlanes;
       key += ".";
       key += shapeNode .getShapeKey ();
-      key += geometryContext .geometryType;
+      key += geometryType;
+      key += hasNormals;
       key += ".";
       key += humanoidNode ?.getHumanoidKey () ?? "";
       key += ".";
 
-      if (geometryContext .geometryType >= 2)
+      if (geometryType >= 2)
       {
          key += "0.0.0";
       }
       else
       {
-         const appearanceNode  = shapeNode .getAppearance ();
+         const appearanceNode = shapeNode .getAppearance ();
 
-         key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
+         key += appearanceNode .getStyleProperties (geometryType) ? 1 : 0;
          key += ".";
          key += appearanceNode .getTextureBits () .toString (16); // Textures for point and line.
          key += ".";
          key += appearanceNode .getMaterial () .getTextureBits () .toString (16); // Textures for point and line.
       }
 
-      return this [_pointingShaders] .get (key) || this .createPointingShader (key, numClipPlanes, shapeNode, humanoidNode);
+      return this [_pointingShaders] .get (key)
+         ?? this .createPointingShader (key, numClipPlanes, shapeNode, humanoidNode);
    },
    createPointingShader (key, numClipPlanes, shapeNode, humanoidNode)
    {
@@ -395,7 +397,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          geometryContext = shapeNode .getGeometryContext (),
          options         = [ ];
 
-      options .push ("X3D_NORMALS");
+      if (geometryContext .hasNormals)
+         options .push ("X3D_NORMALS");
 
       if (numClipPlanes)
       {

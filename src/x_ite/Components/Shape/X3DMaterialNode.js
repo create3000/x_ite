@@ -127,7 +127,8 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += textureNode ?.getTextureBits () .toString (16) ?? 0;
       }
 
-      return this .shaderNodes .get (key) ?? this .createShader (key, geometryContext, renderContext);
+      return this .shaderNodes .get (key)
+         ?? this .createShader (key, geometryContext, renderContext);
    },
    getShaderOptions (geometryContext, renderContext)
    {

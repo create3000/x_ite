@@ -8,7 +8,12 @@ uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
 in vec4 x3d_Vertex;
-in vec3 x3d_Normal;
+
+#if defined (X3D_NORMALS)
+   in vec3 x3d_Normal;
+#else
+   const vec3 x3d_Normal = vec3 (0.0, 0.0, 1.0);
+#endif
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
    in vec4 x3d_TexCoord0;

@@ -219,7 +219,8 @@ Object .assign (X3DRenderingContext .prototype,
          key += appearanceNode .getMaterial () .getTextureBits () .toString (16); // Textures for point and line.
       }
 
-      return this [_depthShaders] .get (key) || this .createDepthShader (key, numClipPlanes, shapeNode, humanoidNode);
+      return this [_depthShaders] .get (key)
+         ?? this .createDepthShader (key, numClipPlanes, shapeNode, humanoidNode);
    },
    createDepthShader (key, numClipPlanes, shapeNode, humanoidNode)
    {
