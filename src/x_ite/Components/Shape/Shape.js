@@ -123,13 +123,17 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
          case TraverseType .DISPLAY:
          {
             if (renderObject .addDisplayShape (this))
-               this .getAppearance () .traverse (type, renderObject); // Currently used for GeneratedCubeMapTexture.
+            {
+               // Currently used for GeneratedCubeMapTexture.
+               this .getAppearance () .traverse (type, renderObject);
+            }
 
             break;
          }
       }
 
-      this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
+      // Currently used for ScreenText.
+      this .getGeometry () .traverse (type, renderObject);
    },
    picking (renderObject)
    {
