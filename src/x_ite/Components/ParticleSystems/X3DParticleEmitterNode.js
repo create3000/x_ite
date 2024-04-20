@@ -156,7 +156,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          browser         = this .getBrowser (),
          gl              = browser .getContext (),
          inputParticles  = particleSystem .inputParticles,
-         instancesStride = particleSystem .instancesStride,
+         particlesStride = particleSystem .particlesStride,
          particleOffsets = particleSystem .particleOffsets,
          program         = this .program;
 
@@ -235,7 +235,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          {
             gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles);
             gl .enableVertexAttribArray (attribute);
-            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, instancesStride, particleOffsets [i]);
+            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particlesStride, particleOffsets [i]);
          }
 
          gl .bindBuffer (gl .ARRAY_BUFFER, null);
@@ -255,10 +255,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // DEBUG
 
-      // const data = new Float32Array (particleSystem .numParticles * (instancesStride / 4));
+      // const data = new Float32Array (particleSystem .numParticles * (particlesStride / 4));
       // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
       // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-      // console .log (data .slice (0, instancesStride / 4));
+      // console .log (data .slice (0, particlesStride / 4));
    },
    addSampler (name)
    {
