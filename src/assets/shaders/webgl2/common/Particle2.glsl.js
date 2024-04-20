@@ -1,7 +1,7 @@
 export default /* glsl */ `
 #if defined (X3D_PARTICLE_SYSTEM)
-#if defined (X3D_TEX_COORD_RAMP)
 
+#if defined (X3D_TEX_COORD_RAMP)
 uniform sampler2D x3d_TexCoordRamp;
 
 in vec4 x3d_Particle;
@@ -19,19 +19,24 @@ getParticleTexCoord (const in vec4 texCoord)
    #define getParticleTexCoord(texCoord) (texCoord)
 #endif
 
-in mat4 x3d_ParticleMatrix;
+#if defined (X3D_PARTICLE_NORMAL)
 in mat3 x3d_ParticleNormalMatrix;
-
-vec4
-getParticleVertex (const in vec4 vertex)
-{
-   return x3d_ParticleMatrix * vertex;
-}
 
 vec3
 getParticleNormal (const in vec3 normal)
 {
    return x3d_ParticleNormalMatrix * normal;
+}
+#else
+   #define getParticleNormal(normal) (normal)
+#endif
+
+in mat4 x3d_ParticleMatrix;
+
+vec4
+getParticleVertex (const in vec4 vertex)
+{
+   return x3d_ParticleMatrix * vertex;
 }
 
 #else

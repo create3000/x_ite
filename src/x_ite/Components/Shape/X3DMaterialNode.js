@@ -275,6 +275,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             case 2:
                options .push ("X3D_PARTICLE_SYSTEM", "X3D_TEX_COORD_RAMP");
                break;
+            case 3:
+               options .push ("X3D_PARTICLE_SYSTEM", "X3D_PARTICLE_NORMAL");
+               break;
          }
       }
       else

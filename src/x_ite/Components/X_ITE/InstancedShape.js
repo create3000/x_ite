@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    },
    getShapeKey ()
    {
-      return 1;
+      return 3;
    },
    getNumInstances ()
    {
