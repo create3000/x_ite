@@ -106,16 +106,19 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    set_matrices__ ()
    {
       const
-         browser       = this .getBrowser (),
-         gl            = browser .getContext (),
-         translations  = this ._translations,
-         rotations     = this ._rotations,
-         scales        = this ._scales,
-         numInstances  = Math .max (translations .length, rotations .length, scales .length),
-         stride        = this .particleStride / Float32Array .BYTES_PER_ELEMENT,
-         length        = this .particleStride * numInstances,
-         data          = new Float32Array (length),
-         matrix        = new Matrix4 ();
+         browser         = this .getBrowser (),
+         gl              = browser .getContext (),
+         translations    = this ._translations,
+         rotations       = this ._rotations,
+         scales          = this ._scales,
+         numTranslations = translations .length,
+         numRotations    = rotations .length,
+         numScales       = scales .length,
+         numInstances    = Math .max (numTranslations, numRotations, numScales),
+         stride          = this .particleStride / Float32Array .BYTES_PER_ELEMENT,
+         length          = this .particleStride * numInstances,
+         data            = new Float32Array (length),
+         matrix          = new Matrix4 ();
 
       this .numParticles = numInstances;
 
@@ -129,9 +132,9 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
 
       for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
       {
-         matrix .set (i < translations .length ? translations [Math .min (i, translations .length - 1)] .getValue () : null,
-                      i < rotations    .length ? rotations    [Math .min (i, rotations    .length - 1)] .getValue () : null,
-                      i < scales       .length ? scales       [Math .min (i, scales       .length - 1)] .getValue () : null);
+         matrix .set (numTranslations ? translations [Math .min (i, numTranslations - 1)] .getValue () : null,
+                      numRotations    ? rotations    [Math .min (i, numRotations    - 1)] .getValue () : null,
+                      numScales       ? scales       [Math .min (i, numScales       - 1)] .getValue () : null);
 
          data .set (matrix, o + 4);
          data .set (matrix .submatrix .transpose () .inverse (), o + (4 + 16));
