@@ -129,16 +129,9 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
 
       for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
       {
-         matrix .identity ();
-
-         if (i < translations .length)
-            matrix .translate (translations [i] .getValue ());
-
-         if (i < rotations .length)
-            matrix .rotate (rotations [i] .getValue ());
-
-         if (i < scales .length)
-            matrix .scale (scales [i] .getValue ());
+         matrix .set (i < translations .length ? translations [i] .getValue () : null,
+                      i < rotations    .length ? rotations    [i] .getValue () : null,
+                      i < scales       .length ? scales       [i] .getValue () : null);
 
          data .set (matrix, o + 4);
          data .set (matrix .submatrix .transpose () .inverse (), o + (4 + 16));
