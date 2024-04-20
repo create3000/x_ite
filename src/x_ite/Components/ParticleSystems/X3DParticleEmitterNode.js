@@ -332,6 +332,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       out vec4 output5; // scale rotation matrix
       out vec4 output6; // position
 
+      out vec3 output7; // normal matrix
+      out vec3 output8; // normal matrix
+      out vec3 output9; // normal matrix
+
       // Constants
 
       ${Object .entries (GeometryTypes) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
@@ -865,6 +869,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
                break;
             }
          }
+
+         output7 = vec3 (1.0, 0.0, 0.0);
+         output8 = vec3 (0.0, 1.0, 0.0);
+         output9 = vec3 (0.0, 0.0, 1.0);
       }
       `;
 
@@ -902,7 +910,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       gl .attachShader (program, vertexShader);
       gl .attachShader (program, fragmentShader);
-      gl .transformFeedbackVaryings (program, Array .from ({length: 7}, (_, i) => "output" + i), gl .INTERLEAVED_ATTRIBS);
+      gl .transformFeedbackVaryings (program, Array .from ({length: 10}, (_, i) => "output" + i), gl .INTERLEAVED_ATTRIBS);
       gl .linkProgram (program);
 
       if (!gl .getProgramParameter (program, gl .LINK_STATUS))

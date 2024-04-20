@@ -293,6 +293,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             // {
             //    break;
             // },
+            case "EXT_mesh_gpu_instancing":
+            {
+               const component = browser .getComponent ("X_ITE", 1);
+
+               if (!scene .hasComponent (component))
+                  scene .addComponent (component);
+
+               break;
+            }
             case "KHR_texture_transform":
             {
                const component = browser .getComponent ("Texturing3D", 2);
@@ -1237,7 +1246,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .meshes = meshes;
    },
-   meshObject (mesh, skin)
+   meshObject (mesh, skin, EXT_mesh_gpu_instancing)
    {
       if (!(mesh instanceof Object))
          return;
@@ -1255,7 +1264,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return mesh .shapeNodes;
       }
 
-      const shapeNodes = this .primitivesArray (mesh, skin);
+      const shapeNodes = this .primitivesArray (mesh, skin, EXT_mesh_gpu_instancing);
 
       // Name Shape nodes.
 
@@ -1271,7 +1280,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return mesh .shapeNodes = shapeNodes;
    },
-   primitivesArray ({ primitives, weights }, skin)
+   primitivesArray ({ primitives, weights }, skin, EXT_mesh_gpu_instancing)
    {
       if (!(primitives instanceof Array))
          return [ ];
@@ -1279,11 +1288,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const shapeNodes = [ ];
 
       for (const primitive of primitives)
-         this .primitiveObject (primitive, weights, skin, shapeNodes);
+         this .primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, shapeNodes);
 
       return shapeNodes;
    },
-   primitiveObject (primitive, weights, skin, shapeNodes)
+   primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, shapeNodes)
    {
       if (!(primitive instanceof Object))
          return;
@@ -1296,7 +1305,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .primitiveExtensionsObject (primitive .extensions, primitive)
 
-      shapeNodes .push (primitive .shapeNode = this .createShape (primitive, weights, skin));
+      shapeNodes .push (primitive .shapeNode = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing));
    },
    attributesObject (attributes)
    {
@@ -1686,8 +1695,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       // Add mesh.
 
       const
-         skin       = this .skins [node .skin],
-         shapeNodes = this .meshObject (this .meshes [node .mesh], skin);
+         skin                    = this .skins [node .skin],
+         EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
+         shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
 
       // Add camera.
 
@@ -1707,7 +1717,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       // Add Shape nodes.
 
       if (shapeNodes)
-         transformNode ._children .push (... this .meshInstancing (node .extensions ?.EXT_mesh_gpu_instancing, shapeNodes));
+         transformNode ._children .push (... shapeNodes);
 
       transformNode .setup ();
 
@@ -1775,71 +1785,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       ++ this .usedLights;
 
       transformNode ._children .push (lightNode);
-   },
-   meshInstancing (EXT_mesh_gpu_instancing, shapeNodes)
-   {
-      if (!(EXT_mesh_gpu_instancing instanceof Object))
-         return shapeNodes;
-
-      let
-         attributes  = EXT_mesh_gpu_instancing .attributes,
-         translation = this .accessors [attributes ?.TRANSLATION],
-         rotation    = this .accessors [attributes ?.ROTATION],
-         scale       = this .accessors [attributes ?.SCALE],
-         count       = Math .max (translation ?.count ?? 0, rotation ?.count ?? 0, scale ?.count ?? 0);
-
-      if (!count)
-         return shapeNodes;
-
-      if (translation ?.type !== "VEC3")
-         translation = null;
-
-      if (rotation ?.type !== "VEC4")
-         rotation = null;
-
-      if (scale ?.type !== "VEC3")
-         scale = null;
-
-      const
-         scene          = this .getScene (),
-         transformNodes = [ ],
-         tArray         = translation ?.array,
-         rArray         = rotation ?.normalizedArray,
-         sArray         = scale ?.array;
-
-      for (let i = 0; i < count; ++ i)
-      {
-         const transformNode = scene .createNode ("Transform", false);
-
-         if (translation && i < translation .count)
-         {
-            transformNode ._translation = new Vector3 (tArray [i * 3 + 0],
-                                                       tArray [i * 3 + 1],
-                                                       tArray [i * 3 + 2]);
-         }
-
-         if (rotation && i < rotation .count)
-         {
-            transformNode ._rotation = new Rotation4 (new Quaternion (rArray [i * 4 + 0],
-                                                                      rArray [i * 4 + 1],
-                                                                      rArray [i * 4 + 2],
-                                                                      rArray [i * 4 + 3]));
-         }
-
-         if (scale && i < scale .count)
-         {
-            transformNode ._scale = new Vector3 (sArray [i * 3 + 0],
-                                                 sArray [i * 3 + 1],
-                                                 sArray [i * 3 + 2]);
-         }
-
-         transformNode ._children = shapeNodes;
-
-         transformNode .setup ();
-         transformNodes .push (transformNode);
-      }
-
-      return transformNodes;
    },
    nodeChildrenArray (children)
    {
@@ -2144,11 +2089,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return navigationInfoNode;
    },
-   createShape (primitive, weights, skin)
+   createShape (primitive, weights, skin, EXT_mesh_gpu_instancing)
    {
       const
          scene          = this .getExecutionContext (),
-         shapeNode      = scene .createNode ("Shape", false),
+         shapeNode      = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false),
          appearanceNode = this .materialObject (primitive),
          geometryNode   = this .createGeometry (primitive, weights, skin);
 
@@ -2158,6 +2103,60 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       shapeNode .setup ();
 
       return shapeNode;
+   },
+   meshInstancing (EXT_mesh_gpu_instancing)
+   {
+      if (!(EXT_mesh_gpu_instancing instanceof Object))
+         return null;
+
+      let
+         attributes  = EXT_mesh_gpu_instancing .attributes,
+         translation = this .accessors [attributes ?.TRANSLATION],
+         rotation    = this .accessors [attributes ?.ROTATION],
+         scale       = this .accessors [attributes ?.SCALE],
+         count       = Math .max (translation ?.count ?? 0, rotation ?.count ?? 0, scale ?.count ?? 0);
+
+      if (!count)
+         return null;
+
+      if (translation ?.type !== "VEC3")
+         translation = null;
+
+      if (rotation ?.type !== "VEC4")
+         rotation = null;
+
+      if (scale ?.type !== "VEC3")
+         scale = null;
+
+      const
+         scene              = this .getScene (),
+         instancedShapeNode = scene .createNode ("InstancedShape", false),
+         translationArray   = translation ?.array,
+         rotationArray      = rotation ?.normalizedArray,
+         scaleArray         = scale ?.array;
+
+      if (translationArray)
+         instancedShapeNode ._translations = translationArray;
+
+      if (rotationArray)
+      {
+         const length = rotation .count * 4;
+
+         for (let i = 0; i < length; i += 4)
+         {
+            instancedShapeNode ._rotations .push (new Rotation4 (new Quaternion (rotationArray [i + 0],
+                                                                                 rotationArray [i + 1],
+                                                                                 rotationArray [i + 2],
+                                                                                 rotationArray [i + 3])));
+         }
+      }
+
+      if (scaleArray)
+         instancedShapeNode ._scales = scaleArray;
+
+      instancedShapeNode .setup ();
+
+      return instancedShapeNode;
    },
    getDefaultAppearance (mode)
    {

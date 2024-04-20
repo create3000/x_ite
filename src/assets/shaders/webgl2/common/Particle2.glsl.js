@@ -20,6 +20,7 @@ getParticleTexCoord (const in vec4 texCoord)
 #endif
 
 in mat4 x3d_ParticleMatrix;
+in mat3 x3d_ParticleNormalMatrix;
 
 vec4
 getParticleVertex (const in vec4 vertex)
@@ -27,8 +28,15 @@ getParticleVertex (const in vec4 vertex)
    return x3d_ParticleMatrix * vertex;
 }
 
+vec3
+getParticleNormal (const in vec3 normal)
+{
+   return x3d_ParticleNormalMatrix * normal;
+}
+
 #else
    #define getParticleVertex(vertex) (vertex)
+   #define getParticleNormal(normal) (normal)
    #define getParticleTexCoord(texCoord) (texCoord)
 #endif
 `;

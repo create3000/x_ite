@@ -133,11 +133,12 @@ function ParticleSystem (executionContext)
    this .creationTime             = 0;
    this .pauseTime                = 0;
    this .deltaTime                = 0;
-   this .particleStride           = Float32Array .BYTES_PER_ELEMENT * 7 * 4; // 7 x vec4
-   this .particleOffsets          = Array .from ({length: 7}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
+   this .particleStride           = Float32Array .BYTES_PER_ELEMENT * (7 * 4 + 3 * 3); // 7 x vec4 + 3 * vec3
+   this .particleOffsets          = Array .from ({length: 8}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
    this .particleOffset           = this .particleOffsets [0];
    this .colorOffset              = this .particleOffsets [1];
    this .matrixOffset             = this .particleOffsets [3];
+   this .normalMatrixOffset       = this .particleOffsets [7];
    this .texCoordOffset           = 0;
 }
 
@@ -973,8 +974,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             {
                const particleStride = this .particleStride;
 
-               shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
-               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
+               shaderNode .enableParticleAttribute             (gl, outputParticles, particleStride, this .particleOffset,     1);
+               shaderNode .enableParticleMatrixAttribute       (gl, outputParticles, particleStride, this .matrixOffset,       1);
+               shaderNode .enableParticleNormalMatrixAttribute (gl, outputParticles, particleStride, this .normalMatrixOffset, 1);
 
                if (this .geometryContext .colorMaterial)
                {

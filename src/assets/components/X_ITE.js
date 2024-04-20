@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
-import Components from "../../x_ite/Components.js";
-import BlendMode  from "../../x_ite/Components/X_ITE/BlendMode.js";
-import DepthMode  from "../../x_ite/Components/X_ITE/DepthMode.js";
+import Components     from "../../x_ite/Components.js";
+import BlendMode      from "../../x_ite/Components/X_ITE/BlendMode.js";
+import DepthMode      from "../../x_ite/Components/X_ITE/DepthMode.js";
+import InstancedShape from "../../x_ite/Components/X_ITE/InstancedShape.js";
 
 Components .add ({
    name: "X_ITE",
@@ -55,6 +56,7 @@ Components .add ({
    [
       BlendMode,
       DepthMode,
+      InstancedShape,
    ],
    abstractNodes:
    [

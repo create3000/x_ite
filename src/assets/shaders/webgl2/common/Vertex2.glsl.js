@@ -94,7 +94,7 @@ vertex_main ()
 {
    #if defined (X3D_NORMALS)
       vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, x3d_Normal));
-      vec3 x3d_TransformedNormal = getSkinNormal (x3d_Normal);
+      vec3 x3d_TransformedNormal = getParticleNormal (getSkinNormal (x3d_Normal));
    #else
       vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, vec3 (0.0)));
    #endif

@@ -130,6 +130,10 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .geometryNode;
    },
+   getGeometryContext ()
+   {
+      return this .getGeometry ();
+   },
    set_appearance__ ()
    {
       if (this .appearanceNode)

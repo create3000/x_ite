@@ -48,30 +48,90 @@
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DShapeNode         from "./X3DShapeNode.js";
+import X3DShapeNode         from "../Shape/X3DShapeNode.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import VertexArray          from "../../Rendering/VertexArray.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
-function Shape (executionContext)
+function InstancedShape (executionContext)
 {
    X3DShapeNode .call (this, executionContext);
 
-   this .addType (X3DConstants .Shape);
+   this .addType (X3DConstants .InstancedShape);
+
+   this .addChildObjects (X3DConstants .outputOnly, "matrix", new Fields .SFTime ());
 }
 
-Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototype),
+Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode .prototype),
 {
    initialize ()
    {
       X3DShapeNode .prototype .initialize .call (this);
 
-      this ._transformSensors_changed .addInterest ("set_transformSensors__", this);
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
 
-      this .set_transformSensors__ ();
+      this .outputParticles    = gl .createBuffer ();
+      this .particleStride     = Float32Array .BYTES_PER_ELEMENT * (5 * 4 + 3 * 3); // 5 x vec4 + 3 * vec3
+      this .particleOffset     = 0;
+      this .matrixOffset       = Float32Array .BYTES_PER_ELEMENT * 4;
+      this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * (4 + 16);
+      this .numParticles       = 0;
+
+      this .outputParticles .vertexArrayObject = new VertexArray (gl);
+
+      this ._translations .addInterest ("set_transform__", this);
+      this ._rotations    .addInterest ("set_transform__", this);
+      this ._scales       .addInterest ("set_transform__", this);
+      this ._matrix       .addInterest ("set_matrix__",    this);
+
+      this .set_matrix__ ();
    },
    getShapeKey ()
    {
-      return 0;
+      return 1;
+   },
+   set_transform__ ()
+   {
+      this ._matrix = this .getBrowser () .getCurrentTime ();
+   },
+   set_matrix__ ()
+   {
+      const
+         browser      = this .getBrowser (),
+         gl           = browser .getContext (),
+         translations = this ._translations,
+         rotations    = this ._rotations,
+         scales       = this ._scales,
+         numInstances = Math .max (translations .length, rotations .length, scales .length),
+         stride       = this .particleStride / Float32Array .BYTES_PER_ELEMENT,
+         length       = this .particleStride * numInstances,
+         data         = new Float32Array (length),
+         matrix       = new Matrix4 ();
+
+      this .numParticles = numInstances;
+
+      for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
+      {
+         matrix .identity ();
+
+         if (i < translations .length)
+            matrix .translate (translations [i] .getValue ());
+
+         if (i < rotations .length)
+            matrix .rotate (rotations [i] .getValue ());
+
+         if (i < scales .length)
+            matrix .scale (scales [i] .getValue ());
+
+         data .set (matrix, o + 4);
+         data .set (matrix .submatrix .transpose () .inverse (), o + (4 + 16));
+      }
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .outputParticles);
+      gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
    },
    set_geometry__ ()
    {
@@ -82,14 +142,8 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
       else
          this .traverse = Function .prototype;
    },
-   set_transformSensors__ ()
-   {
-      this .setPickableObject (this .getTransformSensors () .size);
-   },
    intersectsBox (box, clipPlanes, modelViewMatrix)
-   {
-      return this .getGeometry () .intersectsBox (box, clipPlanes, modelViewMatrix);
-   },
+   { },
    traverse (type, renderObject)
    {
       // Always look at ParticleSystem if you do modify something here and there.
@@ -105,7 +159,6 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
          }
          case TraverseType .PICKING:
          {
-            this .picking (renderObject);
             break;
          }
          case TraverseType .COLLISION:
@@ -131,50 +184,28 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
 
       this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
    },
-   picking (renderObject)
-   {
-      const modelMatrix = renderObject .getModelViewMatrix () .get ();
-
-      if (this .getTransformSensors () .size)
-      {
-         for (const transformSensorNode of this .getTransformSensors ())
-            transformSensorNode .collect (modelMatrix);
-      }
-
-      const
-         browser          = this .getBrowser (),
-         pickSensorStack  = browser .getPickSensors (),
-         pickingHierarchy = browser .getPickingHierarchy ();
-
-      pickingHierarchy .push (this);
-
-      for (const pickSensor of pickSensorStack .at (-1))
-      {
-         pickSensor .collect (this .getGeometry (), modelMatrix, pickingHierarchy);
-      }
-
-      pickingHierarchy .pop ();
-   },
    displaySimple (gl, renderContext, shaderNode)
    {
-      this .getGeometry () .displaySimple (gl, renderContext, shaderNode);
+      this .getGeometry () .displaySimpleParticles (gl, shaderNode, this);
    },
    display (gl, renderContext)
    {
-      this .getGeometry () .display (gl, renderContext);
+      console .log (this .getTypeName ());
+
+      this .getGeometry () .displayParticles (gl, renderContext, this);
    },
 });
 
-Object .defineProperties (Shape,
+Object .defineProperties (InstancedShape,
 {
    typeName:
    {
-      value: "Shape",
+      value: "InstancedShape",
       enumerable: true,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -191,7 +222,10 @@ Object .defineProperties (Shape,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents", new Fields .SFBool (true)), // skip test
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "translations",  new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotations",     new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",        new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents", new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",    new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",       new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",   new Fields .SFBool ()),
@@ -204,4 +238,4 @@ Object .defineProperties (Shape,
    },
 });
 
-export default Shape;
+export default InstancedShape;

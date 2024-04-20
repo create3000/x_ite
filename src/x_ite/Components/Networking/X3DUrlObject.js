@@ -58,8 +58,8 @@ function X3DUrlObject (executionContext)
 {
    this .addType (X3DConstants .X3DUrlObject);
 
-   this .addChildObjects (X3DConstants .outputOnly,  "loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
-                          X3DConstants .inputOutput, "loadData",  new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
+                          X3DConstants .outputOnly, "loadData",  new Fields .SFTime ());
 
    this [_cache]                = true;
    this [_autoRefreshStartTime] = Date .now ();
