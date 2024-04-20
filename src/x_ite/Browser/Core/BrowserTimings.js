@@ -325,14 +325,12 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
    {
       for (let i = 0; i < numShapes; ++ i)
       {
-         const shapeNode = shapes [i] .shapeNode;
-
-         let numInstances = 1;
+         const
+            shapeNode    = shapes [i] .shapeNode,
+            numInstances = shapeNode .getNumInstances ();
 
          if (shapeNode .getType () .at (-1) === X3DConstants .ParticleSystem)
          {
-            numInstances = shapeNode .getNumParticles ();
-
             switch (shapeNode .getGeometryType ())
             {
                case GeometryTypes .POINT:

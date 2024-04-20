@@ -93,6 +93,10 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    {
       return 1;
    },
+   getNumInstances ()
+   {
+      return this .numParticles;
+   },
    set_bbox__ ()
    { },
    set_transform__ ()
