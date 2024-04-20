@@ -232,7 +232,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    set_bbox__ ()
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-         this .bbox .set ();
+         this .bbox .set (Vector3 .One, Vector3 .Zero);
       else
          this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
 
