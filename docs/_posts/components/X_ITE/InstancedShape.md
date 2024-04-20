@@ -13,11 +13,12 @@ tags: [InstancedShape, X_ITE]
 
 ## Overview
 
-InstancedShape can appear under any grouping node. InstancedShape can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes).
+InstancedShape can appear under any grouping node. InstancedShape can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided.
 
 The InstancedShape node belongs to the **X_ITE** component and its default container field is *children.* It is available in X_ITE.
 
 >**Info:** Please note that the functionality of this node is still experimental.
+{: .prompt-info }
 
 ## Hierarchy
 
@@ -25,7 +26,7 @@ The InstancedShape node belongs to the **X_ITE** component and its default conta
 + X3DNode
   + X3DChildNode
     + X3DShapeNode
-      + ShaInstancedShapepe
+      + InstancedShape
 ```
 
 ## Fields
