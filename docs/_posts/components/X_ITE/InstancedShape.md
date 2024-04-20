@@ -47,7 +47,7 @@ List of translations, one for each instance.
 
 - If only one value is provided, it is provided to each instance equivalently.
 
-### MFVec3f [in, out] **rotations** [ ] <small>(-∞,∞) or [-1,1]</small>
+### MFRotation [in, out] **rotations** [ ] <small>(-∞,∞) or [-1,1]</small>
 
 List of rotations, one for each instance.
 
