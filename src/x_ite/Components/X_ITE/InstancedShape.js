@@ -133,7 +133,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
       {
          matrix .identity ();
-         
+
          if (numTranslations)
             matrix .translate (translations [Math .min (i, numTranslations - 1)] .getValue ());
 
