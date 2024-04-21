@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
    setMetaValue (name, value)
    {
       if (!Array .isArray (value))
-         value = [value];
+         value = [value .valueOf ()];
 
       switch (value .type ?? (typeof value [0]))
       {

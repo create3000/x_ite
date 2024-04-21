@@ -130,6 +130,9 @@ Object .assign (Color4 .prototype,
    },
 });
 
+for (const key of Object .keys (Color4 .prototype))
+   Object .defineProperty (Color4 .prototype, key, { enumerable: false });
+
 const r = {
    get () { return this [_r]; },
    set (value) { this [_r] = clamp (value, 0, 1); },

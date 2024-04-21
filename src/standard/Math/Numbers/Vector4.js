@@ -269,6 +269,9 @@ Object .assign (Vector4 .prototype,
    },
 });
 
+for (const key of Object .keys (Vector4 .prototype))
+   Object .defineProperty (Vector4 .prototype, key, { enumerable: false });
+
 Object .defineProperties (Vector4 .prototype,
 {
    length: { value: 4 },

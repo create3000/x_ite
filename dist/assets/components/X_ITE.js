@@ -433,6 +433,299 @@ const DepthMode_default_ = DepthMode;
 
 Namespace_default().add ("DepthMode", "x_ite/Components/X_ITE/DepthMode", DepthMode_default_);
 /* harmony default export */ const X_ITE_DepthMode = (DepthMode_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Shape/X3DShapeNode\")"
+const X3DShapeNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.5")] .require ("x_ite/Components/Shape/X3DShapeNode");
+var X3DShapeNode_default = /*#__PURE__*/__webpack_require__.n(X3DShapeNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/TraverseType\")"
+const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.5")] .require ("x_ite/Rendering/TraverseType");
+var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/VertexArray\")"
+const VertexArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.5")] .require ("x_ite/Rendering/VertexArray");
+var VertexArray_default = /*#__PURE__*/__webpack_require__.n(VertexArray_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.4.5")] .require ("standard/Math/Numbers/Matrix4");
+var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/InstancedShape.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+function InstancedShape (executionContext)
+{
+   X3DShapeNode_default().call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).InstancedShape);
+
+   this .addChildObjects ((X3DConstants_default()).outputOnly, "matrices", new (Fields_default()).SFTime ());
+}
+
+Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (X3DShapeNode_default()).prototype),
+{
+   initialize ()
+   {
+      X3DShapeNode_default().prototype .initialize .call (this);
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      // Check version.
+
+      if (browser .getContext () .getVersion () < 2)
+         return;
+
+      this .numInstances       = 0;
+      this .instances          = Object .assign (gl .createBuffer (), { vertexArrayObject: new (VertexArray_default()) (gl) });
+      this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (16 + 9); // mat4 + mat3
+      this .matrixOffset       = 0;
+      this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * 16;
+
+      this ._translations .addInterest ("set_transform__", this);
+      this ._rotations    .addInterest ("set_transform__", this);
+      this ._scales       .addInterest ("set_transform__", this);
+      this ._matrices     .addInterest ("set_matrices__",  this);
+
+      this .set_transform__ ();
+   },
+   getShapeKey ()
+   {
+      return 3;
+   },
+   getNumInstances ()
+   {
+      return this .numInstances;
+   },
+   getInstances ()
+   {
+      return this .instances;
+   },
+   set_bbox__ ()
+   { },
+   set_transform__ ()
+   {
+      this ._matrices = this .getBrowser () .getCurrentTime ();
+   },
+   set_matrices__ ()
+   {
+      const
+         browser         = this .getBrowser (),
+         gl              = browser .getContext (),
+         translations    = this ._translations,
+         rotations       = this ._rotations,
+         scales          = this ._scales,
+         numTranslations = translations .length,
+         numRotations    = rotations .length,
+         numScales       = scales .length,
+         numInstances    = Math .max (numTranslations, numRotations, numScales),
+         stride          = this .instancesStride / Float32Array .BYTES_PER_ELEMENT,
+         length          = this .instancesStride * numInstances,
+         data            = new Float32Array (length),
+         matrix          = new (Matrix4_default()) ();
+
+      this .numInstances = numInstances;
+
+      X3DShapeNode_default().prototype .set_bbox__ .call (this);
+
+      const
+         bbox         = this .bbox .copy (),
+         instanceBBox = this .bbox .copy ();
+
+      this .bbox .set ();
+
+      for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
+      {
+         matrix .identity ();
+
+         if (numTranslations)
+            matrix .translate (translations [Math .min (i, numTranslations - 1)] .getValue ());
+
+         if (numRotations)
+            matrix .rotate (rotations [Math .min (i, numRotations - 1)] .getValue ());
+
+         if (numScales)
+            matrix .scale (scales [Math .min (i, numScales - 1)] .getValue ());
+
+         data .set (matrix, o);
+         data .set (matrix .submatrix .transpose () .inverse (), o + 16);
+
+         this .bbox .add (instanceBBox .assign (bbox) .multRight (matrix));
+      }
+
+      this .getBBoxSize ()   .assign (this .bbox .size);
+      this .getBBoxCenter () .assign (this .bbox .center);
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .instances);
+      gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
+   },
+   set_geometry__ ()
+   {
+      X3DShapeNode_default().prototype .set_geometry__ .call (this);
+
+      if (this .getGeometry ())
+         delete this .traverse;
+      else
+         this .traverse = Function .prototype;
+
+      this .set_transform__ ();
+   },
+   intersectsBox (box, clipPlanes, modelViewMatrix)
+   { },
+   traverse (type, renderObject)
+   {
+      if (!this .numInstances)
+         return;
+
+      // Always look at ParticleSystem if you do modify something here and there.
+
+      switch (type)
+      {
+         case (TraverseType_default()).POINTER:
+         {
+            if (this ._pointerEvents .getValue ())
+               renderObject .addPointingShape (this);
+
+            break;
+         }
+         case (TraverseType_default()).PICKING:
+         {
+            break;
+         }
+         case (TraverseType_default()).COLLISION:
+         {
+            renderObject .addCollisionShape (this);
+            break;
+         }
+         case (TraverseType_default()).SHADOW:
+         {
+            if (this ._castShadow .getValue ())
+               renderObject .addShadowShape (this);
+
+            break;
+         }
+         case (TraverseType_default()).DISPLAY:
+         {
+            if (renderObject .addDisplayShape (this))
+            {
+               // Currently used for GeneratedCubeMapTexture.
+               this .getAppearance () .traverse (type, renderObject);
+            }
+
+            break;
+         }
+      }
+
+      // Currently used for ScreenText and Tools.
+      this .getGeometry () .traverse (type, renderObject);
+   },
+   displaySimple (gl, renderContext, shaderNode)
+   {
+      this .getGeometry () .displaySimpleInstanced (gl, shaderNode, this);
+   },
+   display (gl, renderContext)
+   {
+      this .getGeometry () .displayInstanced (gl, renderContext, this);
+   },
+});
+
+Object .defineProperties (InstancedShape,
+{
+   typeName:
+   {
+      value: "InstancedShape",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "translations",  new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rotations",     new (Fields_default()).MFRotation ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scales",        new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pointerEvents", new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "castShadow",    new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",       new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",   new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",      new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",    new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "appearance",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geometry",      new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const InstancedShape_default_ = InstancedShape;
+;
+
+Namespace_default().add ("InstancedShape", "x_ite/Components/X_ITE/InstancedShape", InstancedShape_default_);
+/* harmony default export */ const X_ITE_InstancedShape = (InstancedShape_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/X_ITE.js
 /*******************************************************************************
  *
@@ -485,12 +778,14 @@ Namespace_default().add ("DepthMode", "x_ite/Components/X_ITE/DepthMode", DepthM
 
 
 
+
 Components_default().add ({
    name: "X_ITE",
    concreteNodes:
    [
       X_ITE_BlendMode,
       X_ITE_DepthMode,
+      X_ITE_InstancedShape,
    ],
    abstractNodes:
    [

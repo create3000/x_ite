@@ -212,6 +212,9 @@ Object .assign (Vector2 .prototype,
    }
 });
 
+for (const key of Object .keys (Vector2 .prototype))
+   Object .defineProperty (Vector2 .prototype, key, { enumerable: false });
+
 Object .defineProperties (Vector2 .prototype,
 {
    length: { value: 2 },

@@ -1667,7 +1667,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometr
       if (!this ._normalPerVertex .getValue ())
          return normals;
 
-      return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
+      return this .refineNormals (normalIndex, normals, creaseAngle ?? this ._creaseAngle .getValue ());
    },
    createCoordIndex ()
    {
@@ -1802,19 +1802,13 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometr
          for (let p = 0; p < 6; ++ p, ++ c)
          {
             const
-               index = coordIndex [c],
-               point = points [index];
+               index       = coordIndex [c],
+               { x, y, z } = points [index];
 
             //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
             //   attribNodes [a] -> addValue (attribArrays [a], i);
 
-            if (colorNode)
-            {
-               if (colorPerVertex)
-                  colorNode .addColor (index, colorArray);
-               else
-                  colorNode .addColor (face, colorArray);
-            }
+            colorNode ?.addColor (colorPerVertex ? index : face, colorArray);
 
             if (texCoordNode)
             {
@@ -1822,21 +1816,14 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometr
             }
             else
             {
-               const t = texCoords [index];
+               const { x, y } = texCoords [index];
 
-               texCoordArray .push (t .x, t .y, 0, 1);
+               texCoordArray .push (x, y, 0, 1);
             }
 
-            if (normalNode)
-            {
-               if (normalPerVertex)
-                  normalNode .addVector (index, normalArray);
+            normalNode ?.addVector (normalPerVertex ? index : face, normalArray);
 
-               else
-                  normalNode .addVector (face, normalArray);
-            }
-
-            vertexArray .push (point .x, point .y, point .z, 1);
+            vertexArray .push (x, y, z, 1);
          }
       }
 
@@ -1846,12 +1833,8 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometr
       {
          const normals = this .createNormals (points, coordIndex);
 
-         for (let i = 0; i < normals .length; ++ i)
-         {
-            const normal = normals [i];
-
-            normalArray .push (normal .x, normal .y, normal .z);
-         }
+         for (const { x, y, z } of normals)
+            normalArray .push (x, y, z);
       }
 
       this .setSolid (this ._solid .getValue ());
@@ -3572,6 +3555,8 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNo
    },
    getRelativeTransformation: (Viewpoint_default()).prototype .getRelativeTransformation,
    setInterpolators: (Viewpoint_default()).prototype .setInterpolators,
+   getFieldOfView: (Viewpoint_default()).prototype .getFieldOfView,
+   setFieldOfView: (Viewpoint_default()).prototype .setFieldOfView,
    getUserFieldOfView: (Viewpoint_default()).prototype .getUserFieldOfView,
    getScreenScale: (Viewpoint_default()).prototype .getScreenScale,
    getViewportSize: (Viewpoint_default()).prototype .getViewportSize,

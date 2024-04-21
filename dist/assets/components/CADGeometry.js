@@ -817,7 +817,7 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, (X3DComposedG
 
       this ._set_index .addFieldInterest (this ._index);
    },
-   getTriangleIndex: function (i)
+   getTriangleIndex (i)
    {
       const mod = i % 6;
 
@@ -826,6 +826,14 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, (X3DComposedG
    getPolygonIndex (i)
    {
       return this ._index [i];
+   },
+   getVerticesPerPolygon ()
+   {
+      return 4;
+   },
+   getNumVertices ()
+   {
+      return this ._index .length;
    },
    build ()
    {
@@ -948,15 +956,23 @@ function QuadSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (QuadSet .prototype, (X3DComposedGeometryNode_default()).prototype),
 {
-   getTriangleIndex: function (i)
+   getTriangleIndex (i)
    {
       const mod = i % 6;
 
       return Math .floor (i / 6) * 4 + mod % 3 + Math .floor (mod / 4);
    },
+   getVerticesPerPolygon ()
+   {
+      return 4;
+   },
+   getNumVertices ()
+   {
+      return this .getCoord () ?.getSize ();
+   },
    build ()
    {
-      if (! this .getCoord ())
+      if (!this .getCoord ())
          return;
 
       let length = this .getCoord () .getSize ();

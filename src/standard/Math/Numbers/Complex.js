@@ -174,6 +174,9 @@ Object .assign (Complex .prototype,
    },
 });
 
+for (const key of Object .keys (Complex .prototype))
+   Object .defineProperty (Complex .prototype, key, { enumerable: false });
+
 Object .defineProperties (Complex .prototype,
 {
    length: { value: 2 },

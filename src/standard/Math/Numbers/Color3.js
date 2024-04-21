@@ -175,6 +175,9 @@ Object .assign (Color3 .prototype,
    },
 });
 
+for (const key of Object .keys (Color3 .prototype))
+   Object .defineProperty (Color3 .prototype, key, { enumerable: false });
+
 const r = {
    get () { return this [_r]; },
    set (value) { this [_r] = clamp (value, 0, 1); },

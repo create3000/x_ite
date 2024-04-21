@@ -504,6 +504,10 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                break;
          }
       }
+      else if (!Array .isArray (value) && value .valueOf () instanceof Object)
+      {
+         value = Array .from (value);
+      }
 
       metadataSet .getValue () .setMetaValue (last, value);
 

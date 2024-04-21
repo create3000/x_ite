@@ -574,6 +574,9 @@ Object .assign (Matrix3 .prototype,
    },
 });
 
+for (const key of Object .keys (Matrix3 .prototype))
+   Object .defineProperty (Matrix3 .prototype, key, { enumerable: false });
+
 Object .defineProperties (Matrix3 .prototype,
 {
    order: { value: 3 },

@@ -231,6 +231,9 @@ Object .assign (Matrix2 .prototype,
    },
 });
 
+for (const key of Object .keys (Matrix2 .prototype))
+   Object .defineProperty (Matrix2 .prototype, key, { enumerable: false });
+
 Object .defineProperties (Matrix2 .prototype,
 {
    order: { value: 2 },

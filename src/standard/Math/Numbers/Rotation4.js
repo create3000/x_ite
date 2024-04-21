@@ -415,6 +415,9 @@ Object .assign (Rotation4 .prototype,
    }
 });
 
+for (const key of Object .keys (Rotation4 .prototype))
+   Object .defineProperty (Rotation4 .prototype, key, { enumerable: false });
+
 const x = {
    get ()
    {

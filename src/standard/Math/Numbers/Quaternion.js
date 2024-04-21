@@ -575,6 +575,9 @@ Object .assign (Quaternion .prototype,
    },
 });
 
+for (const key of Object .keys (Quaternion .prototype))
+   Object .defineProperty (Quaternion .prototype, key, { enumerable: false });
+
 Object .defineProperties (Quaternion .prototype,
 {
    length: { value: 4 },

@@ -260,6 +260,9 @@ Object .assign (Vector3 .prototype,
    }
 });
 
+for (const key of Object .keys (Vector3 .prototype))
+   Object .defineProperty (Vector3 .prototype, key, { enumerable: false });
+
 Object .defineProperties (Vector3 .prototype,
 {
    length: { value: 3 },

@@ -469,11 +469,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
    set_joints__ ()
    {
       const
-         jointNodes            = this .jointNodes,
-         jointBindingMatrices  = this .jointBindingMatrices,
-         jointBindingPositions = this ._jointBindingPositions,
-         jointBindingRotations = this ._jointBindingRotations,
-         jointBindingScales    = this ._jointBindingScales;
+         jointNodes               = this .jointNodes,
+         jointBindingMatrices     = this .jointBindingMatrices,
+         jointBindingPositions    = this ._jointBindingPositions,
+         jointBindingRotations    = this ._jointBindingRotations,
+         jointBindingScales       = this ._jointBindingScales,
+         numJointBindingPositions = jointBindingPositions .length,
+         numJointBindingRotations = jointBindingRotations .length,
+         numJointBindingScales    = jointBindingScales .length;
 
       for (const motionNode of this .motionNodes)
          motionNode .disconnectJoints (jointNodes);
@@ -500,14 +503,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 
          const jointBindingMatrix = new (Matrix4_default()) ();
 
-         if (jointBindingPositions .length)
-            jointBindingMatrix .translate (jointBindingPositions [Math .min (i, jointBindingPositions .length - 1)] .getValue ());
+         if (numJointBindingPositions)
+            jointBindingMatrix .set (jointBindingPositions [Math .min (i, numJointBindingPositions- 1)] .getValue ());
 
-         if (jointBindingRotations .length)
-            jointBindingMatrix .rotate (jointBindingRotations [Math .min (i, jointBindingRotations .length - 1)] .getValue ());
+         if (numJointBindingRotations)
+            jointBindingMatrix .rotate (jointBindingRotations [Math .min (i, numJointBindingRotations - 1)] .getValue ());
 
-         if (jointBindingScales .length)
-            jointBindingMatrix .scale (jointBindingScales [Math .min (i, jointBindingScales .length - 1)] .getValue ());
+         if (numJointBindingScales)
+            jointBindingMatrix .scale (jointBindingScales [Math .min (i, numJointBindingScales - 1)] .getValue ());
 
          jointNodes           .push (jointNode);
          jointBindingMatrices .push (jointBindingMatrix);

@@ -666,6 +666,9 @@ Object .assign (Matrix4 .prototype,
    },
 });
 
+for (const key of Object .keys (Matrix4 .prototype))
+   Object .defineProperty (Matrix4 .prototype, key, { enumerable: false });
+
 Object .defineProperties (Matrix4 .prototype,
 {
    order: { value: 4 },
