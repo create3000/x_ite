@@ -507,6 +507,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       else if (!Array .isArray (value) && value .valueOf () instanceof Object)
       {
          value = Array .from (value);
+         value .type = "double";
       }
 
       metadataSet .getValue () .setMetaValue (last, value);
