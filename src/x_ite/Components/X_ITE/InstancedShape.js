@@ -124,7 +124,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
             this .getGeometryBBox (bbox);
 
             const
-               size1_2 = bbox .size .divide (2) .multVec (this .scale),
+               size1_2 = bbox .size .multiply (this .scale .magnitude () / 2),
                center  = bbox .center;
 
             min .assign (this .min) .add (center) .subtract (size1_2);
