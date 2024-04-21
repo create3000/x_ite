@@ -106,23 +106,6 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .bboxCenter;
    },
-   getGeometryBBox (bbox)
-   {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-      {
-         if (this .getGeometry ())
-            bbox .assign (this .getGeometry () .getBBox ());
-
-         else
-            bbox .set ();
-      }
-      else
-      {
-         bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-      }
-
-      return bbox;
-   },
    isTransparent ()
    {
       return this .transparent;
@@ -150,6 +133,23 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    getGeometryContext ()
    {
       return this .getGeometry ();
+   },
+   getGeometryBBox (bbox)
+   {
+      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      {
+         if (this .getGeometry ())
+            bbox .assign (this .getGeometry () .getBBox ());
+
+         else
+            bbox .set ();
+      }
+      else
+      {
+         bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      }
+
+      return bbox;
    },
    set_appearance__ ()
    {
