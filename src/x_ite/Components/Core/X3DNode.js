@@ -396,6 +396,17 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          return field;
       }
+      else if (field) // Support for Numbers (Vector234, Color34, ...).
+      {
+         const value = metadataObject .value;
+
+         let i = 0;
+
+         for (const key in field)
+            field [key] = value [i ++];
+
+         return field;
+      }
 
       return metadataObject ? Array .from (metadataObject .value) : [ ];
    },
