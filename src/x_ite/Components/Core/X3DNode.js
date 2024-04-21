@@ -398,6 +398,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       }
       else if (field) // Support for Numbers (Vector234, Color34, ...).
       {
+         if (!metadataObject)
+            return field;
+
          const value = metadataObject .value;
 
          let i = 0;
