@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       for (const node of renderModeNodes)
          node .disable (gl);
    },
-   displayInstances (gl, renderContext, shapeNode)
+   displayInstanced (gl, renderContext, shapeNode)
    {
       const
          appearanceNode  = renderContext .appearanceNode,

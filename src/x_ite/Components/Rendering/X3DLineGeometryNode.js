@@ -420,7 +420,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          gl .lineWidth (1);
       };
    })(),
-   displayInstances (gl, renderContext, shapeNode)
+   displayInstanced (gl, renderContext, shapeNode)
    {
       const
          browser         = this .getBrowser (),

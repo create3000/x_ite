@@ -223,11 +223,11 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    },
    displaySimple (gl, renderContext, shaderNode)
    {
-      this .getGeometry () .displaySimpleInstances (gl, shaderNode, this);
+      this .getGeometry () .displaySimpleInstanced (gl, shaderNode, this);
    },
    display (gl, renderContext)
    {
-      this .getGeometry () .displayInstances (gl, renderContext, this);
+      this .getGeometry () .displayInstanced (gl, renderContext, this);
    },
 });
 

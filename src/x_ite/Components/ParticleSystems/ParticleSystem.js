@@ -895,7 +895,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       {
          case GeometryTypes .GEOMETRY:
          {
-            this .getGeometry () ?.displaySimpleInstances (gl, shaderNode, this);
+            this .getGeometry () ?.displaySimpleInstanced (gl, shaderNode, this);
             break;
          }
          case GeometryTypes .SPRITE:
@@ -929,7 +929,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       {
          case GeometryTypes .GEOMETRY:
          {
-            this .getGeometry () ?.displayInstances (gl, renderContext, this);
+            this .getGeometry () ?.displayInstanced (gl, renderContext, this);
             break;
          }
          case GeometryTypes .SPRITE:

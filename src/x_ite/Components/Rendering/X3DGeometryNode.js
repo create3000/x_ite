@@ -955,8 +955,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          delete this .displaySimple;
          delete this .display;
-         delete this .displaySimpleInstances;
-         delete this .displayInstances;
+         delete this .displaySimpleInstanced;
+         delete this .displayInstanced;
       }
       else
       {
@@ -964,8 +964,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          this .displaySimple          = Function .prototype;
          this .display                = Function .prototype;
-         this .displaySimpleInstances = Function .prototype;
-         this .displayInstances       = Function .prototype;
+         this .displaySimpleInstanced = Function .prototype;
+         this .displayInstanced       = Function .prototype;
       }
    },
    traverse (type, renderObject)
@@ -1094,7 +1094,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       for (const node of renderModeNodes)
          node .disable (gl);
    },
-   displaySimpleInstances (gl, shaderNode, shapeNode)
+   displaySimpleInstanced (gl, shaderNode, shapeNode)
    {
       const instances = shapeNode .getInstances ();
 
@@ -1119,7 +1119,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
    },
-   displayInstances (gl, renderContext, shapeNode)
+   displayInstanced (gl, renderContext, shapeNode)
    {
       const
          browser        = this .getBrowser (),
@@ -1128,17 +1128,17 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       if (this .solid || !appearanceNode .getBackMaterial () || browser .getWireframe ())
       {
-         this .displayInstancesGeometry (gl, renderContext, appearanceNode, shaderNode, true, true, shapeNode);
+         this .displayInstancedGeometry (gl, renderContext, appearanceNode, shaderNode, true, true, shapeNode);
       }
       else
       {
          const backShaderNode = appearanceNode .getBackShader (this, renderContext);
 
-         this .displayInstancesGeometry (gl, renderContext, appearanceNode, backShaderNode, true,  false, shapeNode);
-         this .displayInstancesGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true,  shapeNode);
+         this .displayInstancedGeometry (gl, renderContext, appearanceNode, backShaderNode, true,  false, shapeNode);
+         this .displayInstancedGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true,  shapeNode);
       }
    },
-   displayInstancesGeometry (gl, renderContext, appearanceNode, shaderNode, back, front, shapeNode)
+   displayInstancedGeometry (gl, renderContext, appearanceNode, shaderNode, back, front, shapeNode)
    {
       const
          browser         = this .getBrowser (),
