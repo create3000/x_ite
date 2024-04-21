@@ -132,6 +132,7 @@ const ibl_files = [
    "NegativeScaleTest",
    "NormalTangentMirrorTest",
    "NormalTangentTest",
+   "SimpleInstancing",
    "SpecGlossVsMetalRough",
    "SpecularTest",
    "Suzanne",
