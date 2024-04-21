@@ -396,8 +396,10 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          return field;
       }
-      else if (field) // Support for Numbers (Vector234, Color34, ...).
+      else if (field)
       {
+         // Support for Numbers (Vector234, Color34, ...).
+
          if (!metadataObject)
             return field;
 
@@ -506,6 +508,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       }
       else if (!Array .isArray (value) && value .valueOf () instanceof Object)
       {
+         // Support for Numbers (Vector234, Color34, ...).
+         
          value = Array .from (value);
          value .type = "double";
       }
