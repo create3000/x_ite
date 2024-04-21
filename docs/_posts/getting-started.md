@@ -551,6 +551,9 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/X_ITE/DepthMode/DepthMode.x3d" title="X_ITE » DepthMode" componentName="X_ITE" typeName="DepthMode"><img src="https://create3000.github.io/media/examples/X_ITE/DepthMode/screenshot-small.png" alt="DepthMode"/></a>
     </td>
+    <td>
+      <a href="https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.x3d" title="X_ITE » InstancedShape" componentName="X_ITE" typeName="InstancedShape"><img src="https://create3000.github.io/media/examples/X_ITE/InstancedShape/screenshot-small.png" alt="InstancedShape"/></a>
+    </td>
   </tr>
 </table>
 
