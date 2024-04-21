@@ -82,7 +82,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
 
       this .numInstances       = 0;
       this .instances          = Object .assign (gl .createBuffer (), { vertexArrayObject: new VertexArray (gl) });
-      this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (4 * 4 + 3 * 3); // 4 x vec4 + 3 * vec3
+      this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (16 + 9); // mat4 + mat3
       this .matrixOffset       = 0;
       this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * 16;
 
