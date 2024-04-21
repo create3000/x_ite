@@ -64,8 +64,9 @@ function InstancedShape (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "matrices", new Fields .SFTime ());
 
-   this .min = new Vector3 ();
-   this .max = new Vector3 ();
+   this .min   = new Vector3 ();
+   this .max   = new Vector3 ();
+   this .scale = new Vector3 (1, 1, 1);
 
    this .numInstances       = 0;
    this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (16 + 9); // mat4 + mat3
@@ -123,7 +124,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
             this .getGeometryBBox (bbox);
 
             const
-               size1_2 = bbox .size .divide (2),
+               size1_2 = bbox .size .divide (2) .multVec (this .scale),
                center  = bbox .center;
 
             min .assign (this .min) .add (center) .subtract (size1_2);
@@ -164,8 +165,9 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       this .numInstances = numInstances;
 
       const
-         min = this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
-         max = this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+         min   = this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
+         max   = this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY),
+         scale = this .scale .assign (numScales ? max : Vector3 .One);
 
       for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
       {
@@ -178,7 +180,12 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
             matrix .rotate (rotations [Math .min (i, numRotations - 1)] .getValue ());
 
          if (numScales)
-            matrix .scale (scales [Math .min (i, numScales - 1)] .getValue ());
+         {
+            const s = scales [Math .min (i, numScales - 1)] .getValue ();
+
+            matrix .scale (s);
+            scale .max (s);
+         }
 
          data .set (matrix, o);
          data .set (matrix .submatrix .transpose () .inverse (), o + 16);
