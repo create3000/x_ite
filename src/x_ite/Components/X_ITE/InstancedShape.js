@@ -121,16 +121,26 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       {
          if (this .numInstances)
          {
-            this .getGeometryBBox (bbox);
+            if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+            {
+               if (this .getGeometry ())
+                  bbox .assign (this .getGeometry () .getBBox ());
+               else
+                  bbox .set ();
 
-            const
-               size1_2 = bbox .size .multiply (this .scale .magnitude () / 2),
-               center  = bbox .center;
+               const
+                  size1_2 = bbox .size .multiply (this .scale .magnitude () / 2),
+                  center  = bbox .center;
 
-            min .assign (this .min) .add (center) .subtract (size1_2);
-            max .assign (this .max) .add (center) .add      (size1_2);
+               min .assign (this .min) .add (center) .subtract (size1_2);
+               max .assign (this .max) .add (center) .add      (size1_2);
 
-            this .bbox .setExtents (min, max);
+               this .bbox .setExtents (min, max);
+            }
+            else
+            {
+               this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+            }
          }
          else
          {

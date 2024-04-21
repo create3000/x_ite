@@ -84,6 +84,10 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       this .set_appearance__ ();
       this .set_geometry__ ();
    },
+   getNumInstances ()
+   {
+      return 1;
+   },
    getBBox (bbox, shadows)
    {
       if (shadows)
@@ -133,23 +137,6 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    getGeometryContext ()
    {
       return this .getGeometry ();
-   },
-   getGeometryBBox (bbox)
-   {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-      {
-         if (this .getGeometry ())
-            bbox .assign (this .getGeometry () .getBBox ());
-
-         else
-            bbox .set ();
-      }
-      else
-      {
-         bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-      }
-
-      return bbox;
    },
    set_appearance__ ()
    {
@@ -211,7 +198,17 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_bbox__ ()
    {
-      this .getGeometryBBox (this .bbox);
+      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      {
+         if (this .getGeometry ())
+            this .bbox .assign (this .getGeometry () .getBBox ());
+         else
+            this .bbox .set ();
+      }
+      else
+      {
+         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      }
 
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
