@@ -217,7 +217,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          }
       }
 
-      // Currently used for ScreenText.
+      // Currently used for ScreenText and Tools.
       this .getGeometry () .traverse (type, renderObject);
    },
    displaySimple (gl, renderContext, shaderNode)

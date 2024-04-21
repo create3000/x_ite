@@ -880,7 +880,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       if (this .geometryType === GeometryTypes .GEOMETRY)
       {
-         // Currently used for ScreenText.
+         // Currently used for ScreenText and Tools.
          this .getGeometry () ?.traverse (type, renderObject);
       }
    },
