@@ -133,6 +133,12 @@ Single contained *geometry* node that is rendered according to corresponding app
 - [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/lighting.html#Lightingmodel){:target="_blank"}
 - Apply `containerField='shape'` if parent node is [CADFace](/x_ite/components/cadgeometry/cadface/).
 
+## Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.x3d" update="auto"></x3d-canvas>
+
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.x3d)
+
 ## See Also
 
 - [X3D Specification of Shape node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"}
