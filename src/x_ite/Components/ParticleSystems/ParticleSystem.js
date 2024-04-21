@@ -845,6 +845,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    { },
    traverse (type, renderObject)
    {
+      if (!this .numParticles)
+         return;
+
       switch (type)
       {
          case TraverseType .POINTER:
@@ -886,46 +889,40 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    displaySimple (gl, renderContext, shaderNode)
    {
-      if (this .numParticles)
+      // Display geometry.
+
+      switch (this .geometryType)
       {
-         // Display geometry.
-
-         switch (this .geometryType)
+         case GeometryTypes .GEOMETRY:
          {
-            case GeometryTypes .GEOMETRY:
-            {
-               this .getGeometry () ?.displaySimpleInstances (gl, shaderNode, this);
-               break;
-            }
-            case GeometryTypes .SPRITE:
-            {
-               this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
-               // [fall trough]
-            }
-            default:
-            {
-               const outputParticles = this .outputParticles;
+            this .getGeometry () ?.displaySimpleInstances (gl, shaderNode, this);
+            break;
+         }
+         case GeometryTypes .SPRITE:
+         {
+            this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
+            // [fall trough]
+         }
+         default:
+         {
+            const outputParticles = this .outputParticles;
 
-               if (outputParticles .vertexArrayObject .enable (shaderNode .getProgram ()))
-               {
-                  const particlesStride = this .particlesStride;
+            if (outputParticles .vertexArrayObject .enable (shaderNode .getProgram ()))
+            {
+               const particlesStride = this .particlesStride;
 
-                  shaderNode .enableParticleAttribute       (gl, outputParticles, particlesStride, this .particleOffset, 1);
-                  shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, particlesStride, this .matrixOffset,   1);
-                  shaderNode .enableVertexAttribute         (gl, this .geometryBuffer, 0, this .verticesOffset);
-               }
-
-               gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
-               break;
+               shaderNode .enableParticleAttribute       (gl, outputParticles, particlesStride, this .particleOffset, 1);
+               shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, particlesStride, this .matrixOffset,   1);
+               shaderNode .enableVertexAttribute         (gl, this .geometryBuffer, 0, this .verticesOffset);
             }
+
+            gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
+            break;
          }
       }
    },
    display (gl, renderContext)
    {
-      if (!this .numParticles)
-         return;
-
       // Display geometry.
 
       switch (this .geometryType)
