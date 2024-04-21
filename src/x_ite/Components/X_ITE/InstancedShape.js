@@ -52,6 +52,7 @@ import X3DShapeNode         from "../Shape/X3DShapeNode.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import VertexArray          from "../../Rendering/VertexArray.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3                 from "../../../standard/Math/Geometry/Box3.js";
 
@@ -62,6 +63,14 @@ function InstancedShape (executionContext)
    this .addType (X3DConstants .InstancedShape);
 
    this .addChildObjects (X3DConstants .outputOnly, "matrices", new Fields .SFTime ());
+
+   this .min = new Vector3 ();
+   this .max = new Vector3 ();
+
+   this .numInstances       = 0;
+   this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (16 + 9); // mat4 + mat3
+   this .matrixOffset       = 0;
+   this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * 16;
 }
 
 Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode .prototype),
@@ -79,11 +88,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       if (browser .getContext () .getVersion () < 2)
          return;
 
-      this .numInstances       = 0;
-      this .instances          = Object .assign (gl .createBuffer (), { vertexArrayObject: new VertexArray (gl) });
-      this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (16 + 9); // mat4 + mat3
-      this .matrixOffset       = 0;
-      this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * 16;
+      this .instances = Object .assign (gl .createBuffer (), { vertexArrayObject: new VertexArray (gl) });
 
       this ._translations .addInterest ("set_transform__", this);
       this ._rotations    .addInterest ("set_transform__", this);
@@ -104,8 +109,37 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    {
       return this .instances;
    },
-   set_bbox__ ()
-   { },
+   set_bbox__: (function ()
+   {
+      const
+         min  = new Vector3 (),
+         max  = new Vector3 (),
+         bbox = new Box3 ();
+
+      return function ()
+      {
+         if (this .numInstances)
+         {
+            this .getGeometryBBox (bbox);
+
+            const
+               size   = bbox .size .divide (2),
+               center = bbox .center;
+
+            min .assign (this .min) .add (center) .subtract (size);
+            max .assign (this .max) .add (center) .add      (size);
+
+            this .bbox .setExtents (min, max);
+         }
+         else
+         {
+            this .bbox .set ();
+         }
+
+         this .getBBoxSize ()   .assign (this .bbox .size);
+         this .getBBoxCenter () .assign (this .bbox .center);
+      };
+   })(),
    set_transform__ ()
    {
       this ._matrices = this .getBrowser () .getCurrentTime ();
@@ -130,10 +164,8 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       this .numInstances = numInstances;
 
       const
-         bbox          = this .getGeometryBBox (new Box3 ()),
-         instanceBBox  = new Box3 ();
-
-      this .bbox .set ();
+         min = this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
+         max = this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
 
       for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
       {
@@ -151,14 +183,14 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          data .set (matrix, o);
          data .set (matrix .submatrix .transpose () .inverse (), o + 16);
 
-         this .bbox .add (instanceBBox .assign (bbox) .multRight (matrix));
+         min .min (matrix .origin);
+         max .max (matrix .origin);
       }
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .instances);
       gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
 
-      this .getBBoxSize ()   .assign (this .bbox .size);
-      this .getBBoxCenter () .assign (this .bbox .center);
+      this .set_bbox__ ();
    },
    set_geometry__ ()
    {
