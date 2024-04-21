@@ -93,14 +93,6 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
             return;
          }
          case "number":
-         {
-            if (value .every (v => Number .isInteger (v)))
-               this .getMetadataObject ("MetadataInteger", name, true) .value = value;
-            else
-               this .getMetadataObject ("MetadataDouble", name, true) .value = value;
-
-            return;
-         }
          case "double":
          {
             this .getMetadataObject ("MetadataDouble", name, true) .value = value;
