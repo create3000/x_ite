@@ -53,6 +53,7 @@ import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import VertexArray          from "../../Rendering/VertexArray.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+import Box3                 from "../../../standard/Math/Geometry/Box3.js";
 
 function InstancedShape (executionContext)
 {
@@ -128,11 +129,9 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
 
       this .numInstances = numInstances;
 
-      X3DShapeNode .prototype .set_bbox__ .call (this);
-
       const
-         bbox         = this .bbox .copy (),
-         instanceBBox = this .bbox .copy ();
+         bbox          = this .getGeometryBBox (new Box3 ()),
+         instanceBBox  = new Box3 ();
 
       this .bbox .set ();
 
@@ -155,11 +154,11 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          this .bbox .add (instanceBBox .assign (bbox) .multRight (matrix));
       }
 
-      this .getBBoxSize ()   .assign (this .bbox .size);
-      this .getBBoxCenter () .assign (this .bbox .center);
-
       gl .bindBuffer (gl .ARRAY_BUFFER, this .instances);
       gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
+
+      this .getBBoxSize ()   .assign (this .bbox .size);
+      this .getBBoxCenter () .assign (this .bbox .center);
    },
    set_geometry__ ()
    {
