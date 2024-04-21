@@ -73,6 +73,10 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
    {
       return 0;
    },
+   getNumInstances ()
+   {
+      return 1;
+   },
    set_geometry__ ()
    {
       X3DShapeNode .prototype .set_geometry__ .call (this);
