@@ -61,7 +61,7 @@ The second value is *zFar*, a GLclampf specifying the mapping of the far clippin
 
 Activates depth comparisons and updates to the depth buffer.
 
-### SFString [in, out] **depthFunc** "LESS_EQUAL" <small>["NEVER", "LESS", "EQUAL", "LESS_EQUAL", "GREATER", "NOT_EQUAL", "GREATER_EQUAL", "ALWAYS"]</small>
+### SFString [in, out] **depthFunction** "LESS_EQUAL" <small>["NEVER", "LESS", "EQUAL", "LESS_EQUAL", "GREATER", "NOT_EQUAL", "GREATER_EQUAL", "ALWAYS"]</small>
 
 Specifies a function that compares incoming pixel depth to the current depth buffer value.
 
