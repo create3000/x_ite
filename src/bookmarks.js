@@ -163,12 +163,29 @@ const Bookmarks = (() =>
             .on ("click", () => this .browser .viewAll (0))
             .appendTo ($("#toolbar"));
 
+         let environmentLight = null;
+
          $("<span></span>")
             .text ("💡")
             .attr ("title", "Add EnvironmentLight")
             .on ("click", async () =>
             {
-               this .browser .currentScene .rootNodes .push (await this .getEnvironmentLight (this .browser, this .browser .currentScene));
+               if (environmentLight)
+               {
+                  environmentLight .on = !environmentLight .on;
+
+                  console .log ("EnvironmentLight.on", environmentLight .on);
+               }
+               else
+               {
+                  environmentLight = await this .getEnvironmentLight (this .browser, this .browser .currentScene);
+
+                  environmentLight .on = true;
+
+                  this .browser .currentScene .rootNodes .push (environmentLight);
+
+                  console .log ("Added EnvironmentLight.");
+               }
             })
             .appendTo ($("#toolbar"));
 
