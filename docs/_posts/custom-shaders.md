@@ -596,16 +596,28 @@ A ComposedShader defines a number of special variables for the various shader st
 | int   | mode            |
 | float | parameter \[6\] |
 
-### ParticleSystem
+### Instancing
+
+#### ParticleSystem
 
 If the shader node is part of a ParticleSystem node the following attributes and uniforms are available.
 
 | Type              | Name                  | Comment                                                                |
-|------------------ |---------------------- |------------------------------------------------------------------------|
-| in vec4           | x3d_Particle         | vec4 (int life, float lifetime, float elapsedTime, int texCoordIndex0)  |
-| in mat4           | x3d_ParticleMatrix   | particle matrix, should be multiplied with x3d_Vertex                   |
-| uniform sampler2D | x3d_TexCoordRamp     | texture coordinate ramp                                                 |
-| build-in          | gl_InstanceId        | available                                                               |
+|-------------------|-----------------------|------------------------------------------------------------------------|
+| build-in          | gl_InstanceId         | available                                                              |
+| in vec4           | x3d_Particle          | vec4 (int life, float lifetime, float elapsedTime, int texCoordIndex0) |
+| in mat4           | x3d_ParticleMatrix    | particle matrix, should be multiplied with x3d_Vertex                  |
+| uniform sampler2D | x3d_TexCoordRamp      | texture coordinate ramp                                                |
+
+#### InstancedShape
+
+If the shader node is part of a InstancedShape node the following attributes and uniforms are available.
+
+| Type      | Name                     | Comment                                                      |
+|-----------|--------------------------|--------------------------------------------------------------|
+| build-in  | gl_InstanceId            | available                                                    |
+| in mat4   | x3d_InstanceMatrix       | instance matrix, should be multiplied with x3d_Vertex        |
+| in mat3   | x3d_InstanceNormalMatrix | instance normal matrix, should be multiplied with x3d_Normal |
 
 ## Built-in Constants
 
