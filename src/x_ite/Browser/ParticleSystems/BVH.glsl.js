@@ -164,7 +164,7 @@ getIntersections (const in sampler2D volume, const in int verticesIndex, const i
                vec3 n1 = texelFetch (volume, n + 1, 0) .xyz;
                vec3 n2 = texelFetch (volume, n + 2, 0) .xyz;
 
-               normals [count] = save_normalize (r .z * n0 + r .x * n1 + r .y * n2);
+               normals [count] = r .z * n0 + r .x * n1 + r .y * n2;
 
                ++ count;
             }

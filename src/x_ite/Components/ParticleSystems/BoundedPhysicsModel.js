@@ -81,6 +81,8 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, X3DParti
    },
    addGeometry (boundedNormals, boundedVertices)
    {
+      const damping = this ._damping .getValue ();
+
       if (this .geometryNode && this ._enabled .getValue ())
       {
          const
@@ -88,7 +90,7 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, X3DParti
             vertices = this .geometryNode .getVertices () .getValue ();
 
          for (const value of normals)
-            boundedNormals .push (value);
+            boundedNormals .push (value * damping);
 
          for (const value of vertices)
             boundedVertices .push (value);
@@ -123,6 +125,7 @@ Object .defineProperties (BoundedPhysicsModel,
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "damping",  new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "geometry", new Fields .SFNode ()),
       ]),
       enumerable: true,
