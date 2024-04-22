@@ -7,7 +7,7 @@ tags: [Custom, Shaders]
 ---
 ## Overview
 
-When you display your 3D models with X_ITE, by default it will use the Gouraud shader. This is a versatile shader that can cover a lot of your rendering needs. If this is not enough there is also a Phong shader available, adjustable with the browser shading option per scripting.
+When you display your 3D models with X_ITE, by default it will use the Gouraud shader. This is a versatile shader that can cover a lot of your rendering needs. If this is not enough there is also a Phong shader available, adjustable with the [browser option](/x_ite/reference/browser-services/#browser-options) »Shading« per scripting.
 
 However, you will often want to perform special effects or special cases for your materials. To do this you will need to write a custom shader.
 
@@ -21,7 +21,7 @@ However, you will often want to perform special effects or special cases for you
 
 ## Shaders and Shader Definition
 
-WebGL uses the GLSL language to write shaders that can be run across all browsers. With X_ITE you create your own shader using ComposedShader and ShaderPart nodes and than attach the ComposedShader to the *shader* field of an Appearance node and that is a child's play with Titania.
+WebGL uses the GLSL language to write shaders that can be run across all browsers. With X_ITE you create your own shader using [ComposedShader](/x_ite/components/shaders/composedshader/) and [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes and than attach the ComposedShader to the *shader* field of an [Appearance](/x_ite/components/shape/appearance/) node and that is a child's play with Titania.
 
 ### X3D
 
@@ -116,13 +116,13 @@ main ()
 
 ## Lighting and Transparency
 
-Lighting is enabled if a Material node is used and some lights are on.
+Lighting is enabled if a [Material](/x_ite/components/shape/material/) node is used and some lights are on.
 
-Normally the browser automatically determines the alpha treatment based on material, colors, and images, but you can force a alpha mode by setting the *alphaMode* field of a Appearance node.
+Normally the browser automatically determines the alpha treatment based on material, colors, and images, but you can force a alpha mode by setting the *alphaMode* field of a [Appearance](/x_ite/components/shape/appearance/) node.
 
 ## Data Type Mapping
 
-A ComposedShader node provides the capability to define custom fields like the Script node it does, these fields are then mapped to GLSL uniform variables. They are automatically updated and can be of any access type (initializeOnly, inputOnly, outputOnly or inputOutput).
+A [ComposedShader](/x_ite/components/shaders/composedshader/) node provides the capability to define custom fields like the [Script](/x_ite/components/scripting/script/) node it does, these fields are then mapped to GLSL uniform variables. They are automatically updated and can be of any access type (initializeOnly, inputOnly, outputOnly or inputOutput).
 
 ### Node fields
 
@@ -362,7 +362,7 @@ A ComposedShader node provides the capability to define custom fields like the S
 
 ## Built-in Variables
 
-A ComposedShader defines a number of special variables for the various shader stages. These built-in variables have special properties. They are usually for communicating with certain fixed-functionality. By convention, all predefined variables start with »x3d_«; no user-defined variables may start with this.
+A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number of special variables for the various shader stages. These built-in variables have special properties. They are usually for communicating with certain fixed-functionality. By convention, all predefined variables start with »x3d_«; no user-defined variables may start with this.
 
 <table>
    <thead>
@@ -600,7 +600,7 @@ A ComposedShader defines a number of special variables for the various shader st
 
 #### ParticleSystem
 
-If the shader node is part of a ParticleSystem node the following attributes and uniforms are available.
+If the shader node is part of a [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) node the following attributes and uniforms are available.
 
 | Type              | Name                  | Comment                                                                |
 |-------------------|-----------------------|------------------------------------------------------------------------|
@@ -611,7 +611,7 @@ If the shader node is part of a ParticleSystem node the following attributes and
 
 #### InstancedShape
 
-If the shader node is part of a InstancedShape node the following attributes and uniforms are available.
+If the shader node is part of a [InstancedShape](/x_ite/components/x-ite/instancedshape/) node the following attributes and uniforms are available.
 
 | Type      | Name                     | Comment                                                      |
 |-----------|--------------------------|--------------------------------------------------------------|
@@ -622,9 +622,6 @@ If the shader node is part of a InstancedShape node the following attributes and
 ## Built-in Constants
 
 Some built-in variables are enumerated and have special values and meanings. The following table list all of them and their corresponding values.
-
->**Note:** As of version 1.27 these constant are built-in.
-{: .prompt-tip }
 
 <table>
    <thead>
@@ -733,7 +730,7 @@ main ()
 }
 ```
 
->**Note:** Logarithmic depth buffer is automatically enabled if a GeoViewpoint is bound.
+>**Note:** Logarithmic depth buffer is automatically enabled if a [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) node is bound.
 {: .prompt-info }
 
 ## See Also
