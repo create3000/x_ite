@@ -9,8 +9,8 @@ say "Updating glTF examples ...";
 
 $cwd = getcwd ();
 
-$page    = $cwd . "/docs/_posts/laboratory/gltf-sample-viewer.md";
-$viewer  = `cat $page`;
+$script  = $cwd . "/docs/assets/js/gltf-sample-viewer.js";
+$viewer  = `cat $script`;
 $random  = $cwd . "/../media/docs/glTF/";
 $samples = "/Volumes/Home/X3D/glTF/";
 $media   = "https://create3000.github.io/media/glTF";
@@ -88,6 +88,6 @@ $string .= "\n// TESTS_END";
 
 $viewer =~ s|// TESTS_BEGIN.*?// TESTS_END|$string|s;
 
-open PAGE, ">", $page;
-print PAGE $viewer;
-close PAGE;
+open SCRIPT, ">", $script;
+print SCRIPT $viewer;
+close PASCRIPTGE;
