@@ -117,6 +117,8 @@ const ibl_files = [
    "AntiqueCamera",
    "AttenuationTest",
    "BarramundiFish",
+   "BlackDragon",
+   "Bonsai",
    "BoomBox",
    "Box With Spaces",
    "CarbonFibre",
@@ -132,6 +134,7 @@ const ibl_files = [
    "GlassBrokenWindow",
    "GlassHurricaneCandleHolder",
    "GlassVaseFlowers",
+   "GunBot",
    "IORTestGrid",
    "Iridescence",
    "Iridescent",
@@ -141,6 +144,7 @@ const ibl_files = [
    "MetalRoughSpheres",
    "MosquitoInAmber",
    "NegativeScaleTest",
+   "NeilArmstrong",
    "NormalTangentMirrorTest",
    "NormalTangentTest",
    "PotOfCoals",
@@ -153,7 +157,9 @@ const ibl_files = [
    "TextureTransformMultiTest",
    "ToyCar",
    "Transmission",
+   "Walking Alien",
    "WaterBottle",
+   "YetiWarrior",
 ];
 
 // TESTS_BEGIN
