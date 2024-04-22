@@ -348,7 +348,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       this .vertexArrayObject .update ();
 
-      this .updateParticles = true;
+      this .updateInstances = true;
    },
    buildTexCoords ()
    {
@@ -1098,7 +1098,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       const instances = shapeNode .getInstances ();
 
-      if (instances .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
+      if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
       {
          const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
 
@@ -1114,7 +1114,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
          shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
 
-         this .updateParticles = false;
+         this .updateInstances = false;
       }
 
       gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
@@ -1159,7 +1159,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       const instances = shapeNode .getInstances ();
 
-      if (instances .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
+      if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
       {
          const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
 
@@ -1184,7 +1184,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
          shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
 
-         this .updateParticles = false;
+         this .updateInstances = false;
       }
 
       // Draw depending on wireframe, solid and transparent.
