@@ -136,7 +136,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       const instances = shapeNode .getInstances ();
 
-      if (instances .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
+      if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
       {
          const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
 
@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
-         this .updateParticles = false;
+         this .updateInstances = false;
       }
 
       // Wireframes are always solid so only one drawing call is needed.
