@@ -110,6 +110,7 @@ window.addEventListener('DOMContentLoaded', () =>
 // EnvironmentLight
 
 const ibl_files = [
+   "AlphaBlendModeTest",
    "AnimatedCube",
    "Anisotropy",
    "AttenuationTest",
@@ -120,6 +121,7 @@ const ibl_files = [
    "Cube",
    "DamagedHelmet",
    "DragonAttenuation",
+   "EmissiveStrengthTest",
    "EnvironmentTest",
    "GlassBrokenWindow",
    "GlassHurricaneCandleHolder",
