@@ -174,7 +174,7 @@ const Bookmarks = (() =>
                {
                   environmentLight .on = !environmentLight .on;
 
-                  console .log ("EnvironmentLight.on", environmentLight .on);
+                  console .info ("EnvironmentLight.on", environmentLight .on);
                }
                else
                {
@@ -184,7 +184,7 @@ const Bookmarks = (() =>
 
                   this .browser .currentScene .rootNodes .push (environmentLight);
 
-                  console .log ("Added EnvironmentLight.");
+                  console .info ("Added EnvironmentLight.");
                }
             })
             .appendTo ($("#toolbar"));
