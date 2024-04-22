@@ -50,7 +50,7 @@ Dividing a large file into smaller chunks can greatly increase rendering speed, 
 
 ### Create a Nested Hierarchy
 
-The first step in structuring an efficient X3D file is to place each object in its own grouping node (usually Group or Transform). You may already have placed each object in its own group, since Titania allows you to create objects individually.
+The first step in structuring an efficient X3D file is to place each object in its own grouping node (usually Group or Transform). You may already have placed each object in its own group, since [Sunrize](/sunrize/) allows you to create objects individually.
 
 Create hierarchies of objects by nesting groups of objects inside related groups. For example, a large house consist of sides, the staircases, the roof, and so on.
 

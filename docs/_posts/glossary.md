@@ -18,7 +18,7 @@ attenuate
 : To become less intense; to become fainter. The PointLight and SpotLight nodes have *attenuation* fields that allow you to specify how the light drops off as distance from the light source increases.
 
 authoring tool
-: A software application, such as Titania, used by content creators to build X3D worlds. The application has a graphical user interface so that the scene designer does not, in most cases, need to work directly with the X3D file.
+: A software application, such as [Sunrize](/sunrize/), used by content creators to build X3D worlds. The application has a graphical user interface so that the scene designer does not, in most cases, need to work directly with the X3D file.
 
 avatar
 : Geometry within the scene that represents the user. The location of the avatar corresponds to the user's viewing position.

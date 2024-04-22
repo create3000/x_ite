@@ -7,9 +7,9 @@ tags: [Tutorials]
 ---
 ## Overview
 
-We offer here a couple of introductory X3D tutorials on X3D concepts. It serves as background material for Titania and X_ITE.
+We offer here a couple of introductory X3D tutorials on X3D concepts. It serves as background material for [Sunrize](/sunrize/) and X_ITE.
 
-The only hardware and software requirement for most of the tutorials is a computer with the latest version of Titania or your favorite text editor and X_ITE. Titania has extensive documentation. It is the perfect environment to get started in creating sensational X3D scenes.
+The only hardware and software requirement for most of the tutorials is a computer with the latest version of Sunrize or your favorite text editor and X_ITE. Sunrize has extensive documentation. It is the perfect environment to get started in creating sensational X3D scenes.
 
 ## Let’s See What We Can Do…
 

@@ -11,7 +11,7 @@ By this time, you may have spend weeks creating complex and interesting X3D scen
 
 One problem: It takes a long time to download your scene. Another problem: Even on a high-powered computer, navigating through your scene is cumbersome and painful. You move the mouse and it seems to take minutes for the scene to catch up.
 
-This tutorial describes how to optimize your X3D files to decrease download time and increase rendering speed. Once you're familiar with the process, you should incorporate many of these tips in the initial planning and creation of your X3D scenes. If possible, view your world using X\_ITE and see how performance and rendering vary on different platforms. Titania provides tools for implementing some of these optimizations. Others require human inspection and judgment and the creation of additional models for your scene. In all cases, knowledge of these techniques can help you create X3D worlds that are usable and easy to explore as well as visually compelling.
+This tutorial describes how to optimize your X3D files to decrease download time and increase rendering speed. Once you're familiar with the process, you should incorporate many of these tips in the initial planning and creation of your X3D scenes. If possible, view your world using X\_ITE and see how performance and rendering vary on different platforms. [Sunrize](/sunrize/) provides tools for implementing some of these optimizations. Others require human inspection and judgment and the creation of additional models for your scene. In all cases, knowledge of these techniques can help you create X3D worlds that are usable and easy to explore as well as visually compelling.
 
 This tutorial is divided into two parts:
 
@@ -77,13 +77,6 @@ Prototyping objects that are used frequently with a few modifications is another
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
-  <head>
-    <meta name='comment' content='World of Titania'/>
-    <meta name='created' content='Fri, 29 Jun 2018 13:24:34 GMT'/>
-    <meta name='creator' content='Holger Seelig'/>
-    <meta name='identifier' content='file:///home/holger/scene.x3dv'/>
-    <meta name='modified' content='Fri, 29 Jun 2018 13:24:34 GMT'/>
-  </head>
   <Scene>
     <ProtoDeclare name='BooleanSwitch'>
       <ProtoInterface>

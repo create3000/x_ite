@@ -7,7 +7,7 @@ tags: [Basic, Nodes]
 ---
 ## Overview
 
-X3D is capable of representing static and animated objects and it can have hyperlinks to other media such as sound, movies, and image. X\_ITE is a browsers for X3D and available for many different platforms as well as Titania is an authoring tools for the creation X3D files. For programmers there is an JavaScript API interface to access X3D nodes and commonly used 3D application programmer interface features.
+X3D is capable of representing static and animated objects and it can have hyperlinks to other media such as sound, movies, and image. X\_ITE is a browsers for X3D and available for many different platforms as well as [Sunrize](/sunrize/) is an authoring tools for the creation X3D files. For programmers there is an JavaScript API interface to access X3D nodes and commonly used 3D application programmer interface features.
 
 ## Let The Games Begin…
 
