@@ -348,7 +348,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                   // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-                  shaderNode .enableCoordIndexAttribute (gl, this .lineTrianglesBuffer, stride, coordIndexOffset);
+                  shaderNode .enableCoordIndexAttribute  (gl, this .lineTrianglesBuffer, stride, coordIndexOffset);
                   shaderNode .enableLineStippleAttribute (gl, this .lineTrianglesBuffer, stride, lineStippleOffset);
 
                   if (this .hasFogCoords)
@@ -594,7 +594,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                   // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-                  shaderNode .enableCoordIndexAttribute (gl, instances .lineTrianglesBuffer, stride, coordIndexOffset);
+                  shaderNode .enableCoordIndexAttribute  (gl, instances .lineTrianglesBuffer, stride, coordIndexOffset);
                   shaderNode .enableLineStippleAttribute (gl, instances .lineTrianglesBuffer, stride, lineStippleOffset);
 
                   if (this .hasFogCoords)
@@ -638,10 +638,13 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
          {
-            const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset, colorOffset } = shapeNode;
+            const { instancesStride, particleOffset, velocityOffset, matrixOffset, normalMatrixOffset, colorOffset } = shapeNode;
 
             if (particleOffset !== undefined)
                shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
+
+            if (velocityOffset !== undefined)
+               shaderNode .enableParticleVelocityAttribute (gl, instances, instancesStride, velocityOffset, 1);
 
             shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
 

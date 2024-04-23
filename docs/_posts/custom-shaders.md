@@ -606,6 +606,7 @@ If the shader node is part of a [ParticleSystem](/x_ite/components/particlesyste
 |-------------------|-----------------------|------------------------------------------------------------------------|
 | build-in          | gl_InstanceId         | available                                                              |
 | in vec4           | x3d_Particle          | vec4 (int life, float lifetime, float elapsedTime, int texCoordIndex0) |
+| in vec3           | x3d_ParticleVelocity  | velocity vector of particle                                            |
 | in mat4           | x3d_ParticleMatrix    | particle matrix, should be multiplied with x3d_Vertex                  |
 | uniform sampler2D | x3d_TexCoordRamp      | texture coordinate ramp                                                |
 

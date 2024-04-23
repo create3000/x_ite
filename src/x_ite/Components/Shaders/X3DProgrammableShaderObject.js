@@ -304,6 +304,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "Normal",
          "Vertex",
          "Particle",
+         "ParticleVelocity",
          "ParticleMatrix",
          "ParticleNormalMatrix",
          "InstanceMatrix",
@@ -1266,6 +1267,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
+      gl .vertexAttribDivisor (location, divisor);
+   },
+   enableParticleVelocityAttribute (gl, buffer, stride, offset, divisor)
+   {
+      const location = this .x3d_ParticleVelocity;
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+      gl .enableVertexAttribArray (location);
+      gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset);
       gl .vertexAttribDivisor (location, divisor);
    },
    enableInstanceMatrixAttribute (gl, buffer, stride, offset, divisor)
