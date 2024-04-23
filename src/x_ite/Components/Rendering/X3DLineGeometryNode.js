@@ -545,6 +545,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                if (instances .numLines !== numLines)
                {
+                  instances .numLines = numLines;
+
                   gl .bindBuffer (gl .ARRAY_BUFFER, instances .lineTrianglesBuffer);
                   gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
                   gl .bindBuffer (gl .ARRAY_BUFFER, null);
