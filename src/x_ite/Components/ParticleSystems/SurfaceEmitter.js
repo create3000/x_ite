@@ -120,16 +120,16 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
    {
       if (this .surfaceNode)
       {
-         this .surfaceNode ._solid   .removeInterest ("set_solid__",    this);
-         this .surfaceNode ._rebuild .removeInterest ("set_geometry__", this);
+         this .surfaceNode ._solid        .removeInterest ("set_solid__",    this);
+         this .surfaceNode ._bbox_changed .removeInterest ("set_geometry__", this);
       }
 
       this .surfaceNode = X3DCast (X3DConstants .X3DGeometryNode, this ._surface);
 
       if (this .surfaceNode)
       {
-         this .surfaceNode ._solid   .addInterest ("set_solid__",    this);
-         this .surfaceNode ._rebuild .addInterest ("set_geometry__", this);
+         this .surfaceNode ._solid        .addInterest ("set_solid__",    this);
+         this .surfaceNode ._bbox_changed .addInterest ("set_geometry__", this);
       }
 
       this .set_solid__ ();

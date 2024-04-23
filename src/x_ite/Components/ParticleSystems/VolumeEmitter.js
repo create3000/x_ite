@@ -156,7 +156,7 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
       this .volumeNode ._coordIndex  = this ._coordIndex;
       this .volumeNode ._coord       = this ._coord;
 
-      this .volumeNode ._rebuild .addInterest ("set_geometry__", this);
+      this .volumeNode ._bbox_changed .addInterest ("set_geometry__", this);
       this .volumeNode .setPrivate (true);
       this .volumeNode .setup ();
 

@@ -72,12 +72,12 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, X3DParti
    set_geometry__ ()
    {
       if (this .geometryNode)
-         this .geometryNode ._rebuild .removeInterest ("addNodeEvent", this);
+         this .geometryNode ._bbox_changed .removeInterest ("addNodeEvent", this);
 
       this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this ._geometry);
 
       if (this .geometryNode)
-         this .geometryNode ._rebuild .addInterest ("addNodeEvent", this);
+         this .geometryNode ._bbox_changed .addInterest ("addNodeEvent", this);
    },
    addGeometry (boundedNormals, boundedVertices)
    {
