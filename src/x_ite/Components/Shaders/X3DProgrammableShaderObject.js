@@ -1132,7 +1132,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          gl .uniform1i (location, textureUnit);
       }
    },
-   enableFloatAttrib (gl, name, buffer, components, stride, offset)
+   enableFloatAttrib (gl, name, buffer, components, stride, offset, divisor = 0)
    {
       const location = gl .getAttribLocation (this .getProgram (), name);
 
@@ -1142,6 +1142,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, components, gl .FLOAT, false, stride, offset);
+      gl .vertexAttribDivisor (location, divisor);
    },
    enableMatrix3Attrib (gl, name, buffer, stride, offset)
    {

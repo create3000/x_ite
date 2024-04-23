@@ -56,21 +56,14 @@ import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import AlphaMode            from "../../Browser/Shape/AlphaMode.js";
+import LineSet              from "../Rendering/LineSet.js";
+import Coordinate           from "../Rendering/Coordinate.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
 import BVH                  from "../../../standard/Math/Utility/BVH.js";
 
 const PointGeometry = new Float32Array ([0, 0, 0, 1]);
-
-const LineGeometry = new Float32Array ([
-   // TexCoords
-   0, 0, 0, 1,
-   1, 0, 0, 1,
-   // Vertices
-   0, 0, -0.5, 1,
-   0, 0,  0.5, 1,
-]);
 
 // p4 ------ p3
 // |       / |
@@ -204,6 +197,19 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       this .geometryBuffer  = this .createBuffer ();
       this .texCoordBuffers = new Array (browser .getMaxTexCoords ()) .fill (this .geometryBuffer);
+
+      // Create geometry for LINE geometryType.
+
+      this .lineGeometryNode   = new LineSet (this .getExecutionContext ());
+      this .lineCoordinateNode = new Coordinate (this .getExecutionContext ());
+
+      this .lineCoordinateNode ._point = [0, 0, -0.5,   0, 0, 0.5];
+
+      this .lineGeometryNode ._vertexCount = [2];
+      this .lineGeometryNode ._coord       = this .lineCoordinateNode;
+
+      this .lineCoordinateNode .setup ();
+      this .lineGeometryNode   .setup ();
 
       // Init fields.
       // Call order is very important at startup.
@@ -372,7 +378,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             this .geometryContext .geometryType = 0;
             this .geometryContext .hasNormals   = false;
 
-            this .texCoordCount = 0;
+            this .texCoordCount  = 0;
             this .vertexCount    = 1;
             this .hasNormals     = false;
             this .verticesOffset = 0;
@@ -388,16 +394,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             this .geometryContext .geometryType = 1;
             this .geometryContext .hasNormals   = false;
 
-            this .texCoordCount   = 2;
-            this .vertexCount     = 2;
-            this .hasNormals      = false;
-            this .texCoordsOffset = 0;
-            this .verticesOffset  = Float32Array .BYTES_PER_ELEMENT * 8;
-            this .primitiveMode   = gl .LINES;
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, LineGeometry, gl .DYNAMIC_DRAW);
-
+            this .texCoordCount = 0;
             break;
          }
          case GeometryTypes .TRIANGLE:
@@ -653,8 +650,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    updateVertexArrays ()
    {
-      this .inputParticles  .vertexArrayObject  .update ();
-      this .outputParticles .vertexArrayObject  .update ();
+      this .inputParticles  .vertexArrayObject .update ();
+      this .outputParticles .vertexArrayObject .update ();
+
+      this .inputParticles  .thickLinesVertexArrayObject .update ();
+      this .outputParticles .thickLinesVertexArrayObject .update ();
    },
    createTexture ()
    {
@@ -903,6 +903,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       switch (this .geometryType)
       {
+         case GeometryTypes .LINE:
+         {
+            this .lineGeometryNode .displaySimpleInstanced (gl, renderContext, this);
+            break;
+         }
          case GeometryTypes .GEOMETRY:
          {
             this .getGeometry () ?.displaySimpleInstanced (gl, shaderNode, this);
@@ -937,6 +942,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       switch (this .geometryType)
       {
+         case GeometryTypes .LINE:
+         {
+            this .lineGeometryNode .displayInstanced (gl, renderContext, this);
+            break;
+         }
          case GeometryTypes .GEOMETRY:
          {
             this .getGeometry () ?.displayInstanced (gl, renderContext, this);

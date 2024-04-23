@@ -429,9 +429,10 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       {
          const
             browser            = this .getBrowser (),
+            geometryContext    = shapeNode .getGeometryContext (),
             appearanceNode     = renderContext .appearanceNode,
             linePropertiesNode = appearanceNode .getLineProperties (),
-            shaderNode         = appearanceNode .getShader (this, renderContext),
+            shaderNode         = appearanceNode .getShader (geometryContext, renderContext),
             renderModeNodes    = appearanceNode .getRenderModes (),
             attribNodes        = this .getAttrib (),
             attribBuffers      = this .getAttribBuffers ();
@@ -468,7 +469,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (transformShaderNode .getProgram ()))
                {
-                  const { instancesStride, matrixOffset, normalMatrixOffset } = shapeNode;
+                  const { instancesStride, matrixOffset, normalMatrixOffset, colorOffset } = shapeNode;
 
                   transformShaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 2);
 
@@ -511,10 +512,18 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                      transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset1);
                   }
 
-                  if (this .colorMaterial)
+                  if (geometryContext .colorMaterial)
                   {
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
+                     if (geometryContext === this)
+                     {
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
+                     }
+                     else
+                     {
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", instances, 4, instancesStride, colorOffset, 2);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", instances, 4, instancesStride, colorOffset, 2);
+                     }
                   }
 
                   if (this .hasNormals)
@@ -566,7 +575,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                // Setup shader.
 
                shaderNode .enable (gl);
-               shaderNode .setUniforms (gl, this, renderContext);
+               shaderNode .setUniforms (gl, geometryContext, renderContext);
 
                // Setup vertex attributes.
 
@@ -593,7 +602,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                   if (this .hasFogCoords)
                      shaderNode .enableFogDepthAttribute (gl, instances .lineTrianglesBuffer, stride, fogCoordOffset);
 
-                  if (this .colorMaterial)
+                  if (geometryContext .colorMaterial)
                      shaderNode .enableColorAttribute (gl, instances .lineTrianglesBuffer, stride, colorOffset);
 
                    if (this .hasNormals)
@@ -602,6 +611,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                   shaderNode .enableVertexAttribute (gl, instances .lineTrianglesBuffer, stride, vertexOffset);
 
                   gl .bindBuffer (gl .ARRAY_BUFFER, null);
+
+                  this .updateInstances = false;
                }
 
                gl .frontFace (gl .CCW);
