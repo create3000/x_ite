@@ -1771,13 +1771,11 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DP
    },
    set_pickingGeometry__ ()
    {
-      if (this .pickingGeometryNode)
-         this .pickingGeometryNode ._rebuild .removeInterest ("set_geometry__", this);
+      this .pickingGeometryNode ?._rebuild .removeInterest ("set_geometry__", this);
 
       this .pickingGeometryNode = X3DCast_default() ((X3DConstants_default()).PointSet, this ._pickingGeometry);
 
-      if (this .pickingGeometryNode)
-         this .pickingGeometryNode ._rebuild .addInterest ("set_geometry__", this);
+      this .pickingGeometryNode ?._rebuild .addInterest ("set_geometry__", this);
 
       this .set_geometry__ ();
    },

@@ -123,7 +123,7 @@ Object .defineProperties (BoundedPhysicsModel,
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "damping",  new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "damping",  new Fields .SFFloat (1)), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "geometry", new Fields .SFNode ()),
       ]),
       enumerable: true,

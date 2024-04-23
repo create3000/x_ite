@@ -328,6 +328,8 @@ function DepthMode (executionContext)
    X3DAppearanceChildNode_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).DepthMode);
+
+   this .addAlias ("depthFunc", this ._depthFunction);
 }
 
 Object .assign (Object .setPrototypeOf (DepthMode .prototype, (X3DAppearanceChildNode_default()).prototype),
@@ -336,13 +338,13 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, (X3DAppearanceChil
    {
       X3DAppearanceChildNode_default().prototype .initialize .call (this);
 
-      this ._depthFunc .addInterest ("set_depthFunc__", this);
+      this ._depthFunction .addInterest ("set_depthFunction__", this);
 
-      this .set_depthFunc__ ();
+      this .set_depthFunction__ ();
    },
-   set_depthFunc__: (function ()
+   set_depthFunction__: (function ()
    {
-      const depthFuncs = new Map ([
+      const depthFunctions = new Map ([
          ["NEVER",         "NEVER"],
          ["LESS",          "LESS"],
          ["EQUAL",         "EQUAL"],
@@ -357,7 +359,7 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, (X3DAppearanceChil
       {
          const gl = this .getBrowser () .getContext ();
 
-         this .depthFunc = gl [depthFuncs .get (this ._depthFunc .getValue ()) ?? "LEQUAL"];
+         this .depthFunction = gl [depthFunctions .get (this ._depthFunction .getValue ()) ?? "LEQUAL"];
       };
    })(),
    enable (gl)
@@ -373,7 +375,7 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, (X3DAppearanceChil
       else
          gl .disable (gl .DEPTH_TEST);
 
-      gl .depthFunc (this .depthFunc);
+      gl .depthFunc (this .depthFunction);
       gl .depthRange (... this ._depthRange .getValue ());
       gl .depthMask (this ._depthMask .getValue ());
    },
@@ -421,7 +423,7 @@ Object .defineProperties (DepthMode,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "polygonOffset", new (Fields_default()).SFVec2f ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "depthRange",    new (Fields_default()).SFVec2f (0, 1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "depthTest",     new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "depthFunc",     new (Fields_default()).SFString ("LESS_EQUAL")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "depthFunction", new (Fields_default()).SFString ("LESS_EQUAL")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "depthMask",     new (Fields_default()).SFBool (true)),
       ]),
       enumerable: true,
@@ -442,9 +444,15 @@ var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_names
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/VertexArray\")"
 const VertexArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.5.0")] .require ("x_ite/Rendering/VertexArray");
 var VertexArray_default = /*#__PURE__*/__webpack_require__.n(VertexArray_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.5.0")] .require ("standard/Math/Numbers/Vector3");
+var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
 const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.5.0")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Box3\")"
+const Box3_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.5.0")] .require ("standard/Math/Geometry/Box3");
+var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/InstancedShape.js
 /*******************************************************************************
  *
@@ -502,6 +510,8 @@ var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject
 
 
 
+
+
 function InstancedShape (executionContext)
 {
    X3DShapeNode_default().call (this, executionContext);
@@ -509,6 +519,15 @@ function InstancedShape (executionContext)
    this .addType ((X3DConstants_default()).InstancedShape);
 
    this .addChildObjects ((X3DConstants_default()).outputOnly, "matrices", new (Fields_default()).SFTime ());
+
+   this .min   = new (Vector3_default()) ();
+   this .max   = new (Vector3_default()) ();
+   this .scale = new (Vector3_default()) (1, 1, 1);
+
+   this .numInstances       = 0;
+   this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (16 + 9); // mat4 + mat3
+   this .matrixOffset       = 0;
+   this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * 16;
 }
 
 Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (X3DShapeNode_default()).prototype),
@@ -526,11 +545,13 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (X3DShapeNode
       if (browser .getContext () .getVersion () < 2)
          return;
 
-      this .numInstances       = 0;
-      this .instances          = Object .assign (gl .createBuffer (), { vertexArrayObject: new (VertexArray_default()) (gl) });
-      this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (16 + 9); // mat4 + mat3
-      this .matrixOffset       = 0;
-      this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * 16;
+      this .instances = Object .assign (gl .createBuffer (),
+      {
+         vertexArrayObject: new (VertexArray_default()) (gl),
+         thickLinesVertexArrayObject: new (VertexArray_default()) (gl),
+         lineTrianglesBuffer: gl .createBuffer (),
+         numLines: 0,
+      });
 
       this ._translations .addInterest ("set_transform__", this);
       this ._rotations    .addInterest ("set_transform__", this);
@@ -551,8 +572,47 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (X3DShapeNode
    {
       return this .instances;
    },
-   set_bbox__ ()
-   { },
+   set_bbox__: (function ()
+   {
+      const
+         min  = new (Vector3_default()) (),
+         max  = new (Vector3_default()) (),
+         bbox = new (Box3_default()) ();
+
+      return function ()
+      {
+         if (this .numInstances)
+         {
+            if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+            {
+               if (this .getGeometry ())
+                  bbox .assign (this .getGeometry () .getBBox ());
+               else
+                  bbox .set ();
+
+               const
+                  size1_2 = bbox .size .multiply (this .scale .magnitude () / 2),
+                  center  = bbox .center;
+
+               min .assign (this .min) .add (center) .subtract (size1_2);
+               max .assign (this .max) .add (center) .add      (size1_2);
+
+               this .bbox .setExtents (min, max);
+            }
+            else
+            {
+               this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+            }
+         }
+         else
+         {
+            this .bbox .set ();
+         }
+
+         this .getBBoxSize ()   .assign (this .bbox .size);
+         this .getBBoxCenter () .assign (this .bbox .center);
+      };
+   })(),
    set_transform__ ()
    {
       this ._matrices = this .getBrowser () .getCurrentTime ();
@@ -576,13 +636,10 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (X3DShapeNode
 
       this .numInstances = numInstances;
 
-      X3DShapeNode_default().prototype .set_bbox__ .call (this);
-
       const
-         bbox         = this .bbox .copy (),
-         instanceBBox = this .bbox .copy ();
-
-      this .bbox .set ();
+         min   = this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
+         max   = this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY),
+         scale = this .scale .assign (numScales ? max : (Vector3_default()).One);
 
       for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
       {
@@ -595,19 +652,24 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (X3DShapeNode
             matrix .rotate (rotations [Math .min (i, numRotations - 1)] .getValue ());
 
          if (numScales)
-            matrix .scale (scales [Math .min (i, numScales - 1)] .getValue ());
+         {
+            const s = scales [Math .min (i, numScales - 1)] .getValue ();
+
+            matrix .scale (s);
+            scale .max (s);
+         }
 
          data .set (matrix, o);
          data .set (matrix .submatrix .transpose () .inverse (), o + 16);
 
-         this .bbox .add (instanceBBox .assign (bbox) .multRight (matrix));
+         min .min (matrix .origin);
+         max .max (matrix .origin);
       }
-
-      this .getBBoxSize ()   .assign (this .bbox .size);
-      this .getBBoxCenter () .assign (this .bbox .center);
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .instances);
       gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
+
+      this .set_bbox__ ();
    },
    set_geometry__ ()
    {

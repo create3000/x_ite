@@ -4697,13 +4697,11 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, NURBS_X3DP
    },
    set_trajectoryCurve__ ()
    {
-      if (this .trajectoryCurveNode)
-         this .trajectoryCurveNode ._rebuild .removeInterest ("requestRebuild", this);
+      this .trajectoryCurveNode ?._rebuild .removeInterest ("requestRebuild", this);
 
       this .trajectoryCurveNode = X3DCast_default() ((X3DConstants_default()).NurbsCurve, this ._trajectoryCurve);
 
-      if (this .trajectoryCurveNode)
-         this .trajectoryCurveNode ._rebuild .addInterest ("requestRebuild", this);
+      this .trajectoryCurveNode ?._rebuild .addInterest ("requestRebuild", this);
    },
    build ()
    {

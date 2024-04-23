@@ -1306,16 +1306,14 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    },
    set_geometry__ ()
    {
-      if (this .geometryNode)
-         this .geometryNode ._rebuild .removeInterest ("set_collidableGeometry__", this);
+      this .geometryNode ?._rebuild .removeInterest ("set_collidableGeometry__", this);
 
       if (this .shapeNode)
          this .geometryNode = this .shapeNode .getGeometry ();
       else
          this .geometryNode = null;
 
-      if (this .geometryNode)
-         this .geometryNode ._rebuild .addInterest ("set_collidableGeometry__", this);
+      this .geometryNode ?._rebuild .addInterest ("set_collidableGeometry__", this);
 
       this .set_collidableGeometry__ ();
    },
