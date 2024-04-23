@@ -26,9 +26,26 @@ in vec3 x3d_Normal1;
 in vec4 x3d_Vertex1;
 
 // Registered in X3DShapeContext.
-out float coordIndex0; out vec3 lineStipple0; out float fogDepth0; out vec4 color0; out vec3 normal0; out vec4 vertex0;
-out float coordIndex1; out vec3 lineStipple1; out float fogDepth1; out vec4 color1; out vec3 normal1; out vec4 vertex1;
-out float coordIndex2; out vec3 lineStipple2; out float fogDepth2; out vec4 color2; out vec3 normal2; out vec4 vertex2;
+out float coordIndex0;
+out vec3  lineStipple0;
+out float fogDepth0;
+out vec4  color0;
+out vec3  normal0;
+out vec4  vertex0;
+
+out float coordIndex1;
+out vec3  lineStipple1;
+out float fogDepth1;
+out vec4  color1;
+out vec3  normal1;
+out vec4  vertex1;
+
+out float coordIndex2;
+out vec3  lineStipple2;
+out float fogDepth2;
+out vec4  color2;
+out vec3  normal2;
+out vec4  vertex2;
 
 vec3
 projectPoint (const in vec4 point, const in mat4 modelViewProjectionMatrix, const in vec4 viewport)
