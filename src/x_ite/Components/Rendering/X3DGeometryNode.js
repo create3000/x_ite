@@ -984,6 +984,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
             shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
       }
 
       gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
@@ -1041,6 +1043,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
          shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
          shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
       }
 
       // Draw depending on wireframe, solid and transparent.
@@ -1110,9 +1114,14 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          if (normalMatrixOffset !== undefined)
             shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
 
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
          shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
          shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
          shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
 
          this .updateInstances = false;
       }
@@ -1171,6 +1180,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          if (normalMatrixOffset !== undefined)
             shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
 
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
@@ -1183,6 +1195,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
          shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
          shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
 
          this .updateInstances = false;
       }

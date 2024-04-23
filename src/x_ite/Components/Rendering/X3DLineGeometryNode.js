@@ -302,6 +302,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                   transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
                   transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
+
+                  gl .bindBuffer (gl .ARRAY_BUFFER, null);
                }
 
                // Transform lines.
@@ -408,6 +410,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, null);
          }
 
          gl .drawArrays (primitiveMode, 0, this .vertexCount);
@@ -534,6 +538,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                   transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
                   transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
+
+                  gl .bindBuffer (gl .ARRAY_BUFFER, null);
                }
 
                // Create lineTrianglesBuffer
@@ -652,6 +658,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             if (normalMatrixOffset !== undefined)
                shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
 
+            if (this .coordIndices .length)
+               shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
             for (let i = 0, length = attribNodes .length; i < length; ++ i)
                attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
@@ -665,6 +674,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, null);
 
             this .updateInstances = false;
          }

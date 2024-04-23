@@ -15,15 +15,15 @@ in float x3d_LengthSoFar;
 
 in float x3d_CoordIndex0;
 in float x3d_FogDepth0;
-in vec4 x3d_Color0;
-in vec3 x3d_Normal0;
-in vec4 x3d_Vertex0;
+in vec4  x3d_Color0;
+in vec3  x3d_Normal0;
+in vec4  x3d_Vertex0;
 
 in float x3d_CoordIndex1;
 in float x3d_FogDepth1;
-in vec4 x3d_Color1;
-in vec3 x3d_Normal1;
-in vec4 x3d_Vertex1;
+in vec4  x3d_Color1;
+in vec3  x3d_Normal1;
+in vec4  x3d_Vertex1;
 
 // Registered in X3DShapeContext.
 out float coordIndex0;

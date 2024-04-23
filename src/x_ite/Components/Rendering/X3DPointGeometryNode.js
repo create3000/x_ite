@@ -108,6 +108,8 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
             shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
       }
 
       gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
@@ -161,6 +163,8 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
             shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
 
          this .updateInstances = false;
       }
