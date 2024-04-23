@@ -253,24 +253,23 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                if (this .thickLinesVertexArrayObject .enable (transformShaderNode .getProgram ()))
                {
                   const
-                     coordIndexStride   = 2 * Float32Array .BYTES_PER_ELEMENT,
-                     coordIndexOffset0  = 0,
-                     coordIndexOffset1  = 1 * Float32Array .BYTES_PER_ELEMENT,
-                     lengthSoFarStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
-                     lengthSoFarOffset  = 5 * Float32Array .BYTES_PER_ELEMENT,
-                     lineStippleOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT,
-                     fogDepthStride     = 2 * Float32Array .BYTES_PER_ELEMENT,
-                     fogDepthOffset0    = 0,
-                     fogDepthOffset1    = 1 * Float32Array .BYTES_PER_ELEMENT,
-                     colorStride        = 8 * Float32Array .BYTES_PER_ELEMENT,
-                     colorOffset0       = 0,
-                     colorOffset1       = 4 * Float32Array .BYTES_PER_ELEMENT,
-                     normalStride       = 6 * Float32Array .BYTES_PER_ELEMENT,
-                     normalOffset0      = 0,
-                     normalOffset1      = 3 * Float32Array .BYTES_PER_ELEMENT,
-                     vertexStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
-                     vertexOffset0      = 0,
-                     vertexOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT;
+                     coordIndexStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
+                     coordIndexOffset0 = 0,
+                     coordIndexOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     lengthSoFarStride = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     lengthSoFarOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
+                     fogDepthStride    = 2 * Float32Array .BYTES_PER_ELEMENT,
+                     fogDepthOffset0   = 0,
+                     fogDepthOffset1   = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     colorStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     colorOffset0      = 0,
+                     colorOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT,
+                     normalStride      = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     normalOffset0     = 0,
+                     normalOffset1     = 3 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexStride      = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexOffset0     = 0,
+                     vertexOffset1     = 4 * Float32Array .BYTES_PER_ELEMENT;
 
                   // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
