@@ -225,13 +225,13 @@ Object .assign (X3DShapeContext .prototype,
    getDefaultInstanceMatrices ()
    {
       const
-         gl                   = this .getContext (),
-         defaultMatricesArray = new Float32Array ([... new Matrix4 (), ... new Matrix3 ()]);
+         gl   = this .getContext (),
+         data = new Float32Array ([... Matrix4 .Identity, ... Matrix3 .Identity]);
 
       this [_defaultInstanceMatrices] = gl .createBuffer ();
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this [_defaultInstanceMatrices]);
-      gl .bufferData (gl .ARRAY_BUFFER, defaultMatricesArray, gl .STATIC_DRAW);
+      gl .bufferData (gl .ARRAY_BUFFER, data, gl .STATIC_DRAW);
       gl .bindBuffer (gl .ARRAY_BUFFER, null);
 
       this .getDefaultInstanceMatrices = function () { return this [_defaultInstanceMatrices]; };
