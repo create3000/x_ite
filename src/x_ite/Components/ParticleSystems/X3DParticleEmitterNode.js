@@ -729,7 +729,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       }
 
       void
-      bounce (const in vec4 fromPosition, inout vec4 toPosition, inout vec3 velocity)
+      bounce (const in float deltaTime, const in vec4 fromPosition, inout vec4 toPosition, inout vec3 velocity)
       {
          if (boundedHierarchyRoot < 0)
             return;
@@ -761,7 +761,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
             return;
 
          velocity   = reflect (velocity, normal) * damping;
-         toPosition = vec4 (point + reflect (point - fromPosition .xyz, normal), 1.0);
+         toPosition = vec4 (point + velocity * (deltaTime * 0.1), 1.0);
       }
 
       int
@@ -832,7 +832,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
             position .xyz += velocity * deltaTime;
 
-            bounce (input6, position, velocity);
+            bounce (deltaTime, input6, position, velocity);
 
             output0 = vec4 (life, lifetime, elapsedTime, getTexCoordIndex0 (lifetime, elapsedTime));
             output1 = getColor (lifetime, elapsedTime);
