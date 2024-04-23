@@ -272,6 +272,7 @@ const X_ITE_TESTS = [
    { path: "Rendering/PointSet.x3dv" },
    { path: "Rendering/PointSize.x3d" },
    { path: "Rendering/RenderingGeometry.x3dv" },
+   { path: "Rendering/ThickLinesInstanced.x3d" },
    { path: "Rendering/TriangleFanSet.x3dv" },
    { path: "Rendering/TriangleSet.x3dv" },
    { path: "Rendering/TriangleStripSet.x3dv" },

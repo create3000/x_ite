@@ -54,15 +54,16 @@ import TextureProperties from "../../Components/Texturing/TextureProperties.js";
 import URLs              from "../Networking/URLs.js";
 
 const
-   _linetypeTextures          = Symbol (),
-   _hatchStyleTextures        = Symbol (),
-   _defaultAppearance         = Symbol (),
-   _defaultPointProperties    = Symbol (),
-   _defaultLineProperties     = Symbol (),
-   _defaultMaterial           = Symbol (),
-   _lineFillTextureProperties = Symbol (),
-   _lineTransformShaderNode   = Symbol (),
-   _lineTransformFeedback     = Symbol ();
+   _linetypeTextures                 = Symbol (),
+   _hatchStyleTextures               = Symbol (),
+   _defaultAppearance                = Symbol (),
+   _defaultPointProperties           = Symbol (),
+   _defaultLineProperties            = Symbol (),
+   _defaultMaterial                  = Symbol (),
+   _lineFillTextureProperties        = Symbol (),
+   _lineTransformShaderNode          = Symbol (),
+   _lineTransformInstancedShaderNode = Symbol (),
+   _lineTransformFeedback            = Symbol ();
 
 function X3DShapeContext ()
 {
@@ -171,6 +172,26 @@ Object .assign (X3DShapeContext .prototype,
    },
    getLineTransformShader ()
    {
+      this [_lineTransformShaderNode] = this .createLineTransformShader (false);
+
+      this .getLineTransformShader = function () { return this [_lineTransformShaderNode]; };
+
+      Object .defineProperty (this, "getLineTransformShader", { enumerable: false });
+
+      return this [_lineTransformShaderNode];
+   },
+   getLineTransformInstancedShader ()
+   {
+      this [_lineTransformInstancedShaderNode] = this .createLineTransformShader (true);
+
+      this .getLineTransformInstancedShader = function () { return this [_lineTransformInstancedShaderNode]; };
+
+      Object .defineProperty (this, "getLineTransformInstancedShader", { enumerable: false });
+
+      return this [_lineTransformInstancedShaderNode];
+   },
+   createLineTransformShader (instanced)
+   {
       const uniformNames = [
          "viewport",
          "modelViewProjectionMatrix",
@@ -184,13 +205,7 @@ Object .assign (X3DShapeContext .prototype,
          "coordIndex2", "lineStipple2", "fogDepth2", "color2", "normal2", "vertex2",
       ];
 
-      this [_lineTransformShaderNode] = this .createShader ("LineTransform", "LineTransform", "LineTransform", [ ], uniformNames, transformFeedbackVaryings);
-
-      this .getLineTransformShader = function () { return this [_lineTransformShaderNode]; };
-
-      Object .defineProperty (this, "getLineTransformShader", { enumerable: false });
-
-      return this [_lineTransformShaderNode];
+      return this .createShader ("LineTransform", "LineTransform", "LineTransform", instanced ? ["X3D_INSTANCING"] : [ ], uniformNames, transformFeedbackVaryings);
    },
    getLineTransformFeedback ()
    {

@@ -7,16 +7,24 @@ uniform mat4  modelViewProjectionMatrix;
 uniform mat4  invModelViewProjectionMatrix;
 uniform float scale;
 
+#if defined (X3D_INSTANCING)
+   in mat4 x3d_InstanceMatrix;
+#endif
+
 in float x3d_CoordIndex0;
 in vec3 x3d_LineStipple0;
-in float x3d_FogDepth0;
+#if ! defined (X3D_INSTANCING)
+   in float x3d_FogDepth0;
+#endif
 in vec4 x3d_Color0;
 in vec3 x3d_Normal0;
 in vec4 x3d_Vertex0;
 
 in float x3d_CoordIndex1;
 in vec3 x3d_LineStipple1;
-in float x3d_FogDepth1;
+#if ! defined (X3D_INSTANCING)
+   in float x3d_FogDepth1;
+#endif
 in vec4 x3d_Color1;
 in vec3 x3d_Normal1;
 in vec4 x3d_Vertex1;
@@ -49,16 +57,22 @@ unProjectPoint (const in vec3 win, const in mat4 invModelViewProjection, const i
 void
 main ()
 {
-   vec3 projected0 = projectPoint (x3d_Vertex0, modelViewProjectionMatrix, viewport);
-   vec3 projected1 = projectPoint (x3d_Vertex1, modelViewProjectionMatrix, viewport);
-   vec2 direction  = normalize (projected1 .xy - projected0 .xy);
-   vec2 offset     = vec2 (-direction .y, direction .x) * scale;
+   #if defined (X3D_INSTANCING)
+      vec3 projected0 = projectPoint (x3d_InstanceMatrix * x3d_Vertex0, modelViewProjectionMatrix, viewport);
+      vec3 projected1 = projectPoint (x3d_InstanceMatrix * x3d_Vertex1, modelViewProjectionMatrix, viewport);
+   #else
+      vec3 projected0 = projectPoint (x3d_Vertex0, modelViewProjectionMatrix, viewport);
+      vec3 projected1 = projectPoint (x3d_Vertex1, modelViewProjectionMatrix, viewport);
+   #endif
+
+   vec2 direction = normalize (projected1 .xy - projected0 .xy);
+   vec2 offset    = vec2 (-direction .y, direction .x) * scale;
 
    // 0 - 3
    // | \ |
    // 1 - 2
 
-   if (gl_InstanceID == 0)
+   if (gl_InstanceID % 2 == 0)
    {
       vec2 pq0 = projected0 .xy + offset;
       vec2 pq1 = projected0 .xy - offset;
@@ -68,9 +82,9 @@ main ()
       vec4 p1 = unProjectPoint (vec3 (pq1 .xy, projected0 .z), invModelViewProjectionMatrix, viewport);
       vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), invModelViewProjectionMatrix, viewport);
 
-      coordIndex0 = x3d_CoordIndex0; lineStipple0 = x3d_LineStipple0; fogDepth0 = x3d_FogDepth0; color0 = x3d_Color0; normal0 = x3d_Normal0; vertex0 = p0;
-      coordIndex1 = x3d_CoordIndex0; lineStipple1 = x3d_LineStipple0; fogDepth1 = x3d_FogDepth0; color1 = x3d_Color0; normal1 = x3d_Normal0; vertex1 = p1;
-      coordIndex2 = x3d_CoordIndex1; lineStipple2 = x3d_LineStipple1; fogDepth2 = x3d_FogDepth1; color2 = x3d_Color1; normal2 = x3d_Normal1; vertex2 = p2;
+      coordIndex0 = x3d_CoordIndex0; lineStipple0 = x3d_LineStipple0; fogDepth0 = 0.0; color0 = x3d_Color0; normal0 = x3d_Normal0; vertex0 = p0;
+      coordIndex1 = x3d_CoordIndex0; lineStipple1 = x3d_LineStipple0; fogDepth1 = 0.0; color1 = x3d_Color0; normal1 = x3d_Normal0; vertex1 = p1;
+      coordIndex2 = x3d_CoordIndex1; lineStipple2 = x3d_LineStipple1; fogDepth2 = 0.0; color2 = x3d_Color1; normal2 = x3d_Normal1; vertex2 = p2;
    }
    else
    {
@@ -82,9 +96,9 @@ main ()
       vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), invModelViewProjectionMatrix, viewport);
       vec4 p3 = unProjectPoint (vec3 (pq3 .xy, projected1 .z), invModelViewProjectionMatrix, viewport);
 
-      coordIndex0 = x3d_CoordIndex0; lineStipple0 = x3d_LineStipple0; fogDepth0 = x3d_FogDepth0; color0 = x3d_Color0; normal0 = x3d_Normal0; vertex0 = p0;
-      coordIndex1 = x3d_CoordIndex1; lineStipple1 = x3d_LineStipple1; fogDepth1 = x3d_FogDepth1; color1 = x3d_Color1; normal1 = x3d_Normal1; vertex1 = p2;
-      coordIndex2 = x3d_CoordIndex1; lineStipple2 = x3d_LineStipple1; fogDepth2 = x3d_FogDepth1; color2 = x3d_Color1; normal2 = x3d_Normal1; vertex2 = p3;
+      coordIndex0 = x3d_CoordIndex0; lineStipple0 = x3d_LineStipple0; fogDepth0 = 0.0; color0 = x3d_Color0; normal0 = x3d_Normal0; vertex0 = p0;
+      coordIndex1 = x3d_CoordIndex1; lineStipple1 = x3d_LineStipple1; fogDepth1 = 0.0; color1 = x3d_Color1; normal1 = x3d_Normal1; vertex1 = p2;
+      coordIndex2 = x3d_CoordIndex1; lineStipple2 = x3d_LineStipple1; fogDepth2 = 0.0; color2 = x3d_Color1; normal2 = x3d_Normal1; vertex2 = p3;
    }
 }
 `;

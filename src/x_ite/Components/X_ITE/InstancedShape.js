@@ -89,7 +89,12 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       if (browser .getContext () .getVersion () < 2)
          return;
 
-      this .instances = Object .assign (gl .createBuffer (), { vertexArrayObject: new VertexArray (gl) });
+      this .instances = Object .assign (gl .createBuffer (),
+      {
+         vertexArrayObject: new VertexArray (gl),
+         thickVertexArrayObject: new VertexArray (gl),
+         trianglesBuffer: Object .assign (gl .createBuffer (), { numLines: 0 }),
+      });
 
       this ._translations .addInterest ("set_transform__", this);
       this ._rotations    .addInterest ("set_transform__", this);

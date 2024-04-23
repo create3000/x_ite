@@ -50,7 +50,10 @@ import VertexArray     from "../../Rendering/VertexArray.js";
 import ViewVolume      from "../../../standard/Math/Geometry/ViewVolume.js";
 import Vector2         from "../../../standard/Math/Numbers/Vector2.js";
 import Vector4         from "../../../standard/Math/Numbers/Vector4.js";
+import Matrix3         from "../../../standard/Math/Numbers/Matrix3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
+
+const defaultMatricesArray = new Float32Array ([... new Matrix4 (), ... new Matrix3 ()]);
 
 function X3DLineGeometryNode (executionContext)
 {
@@ -65,6 +68,11 @@ function X3DLineGeometryNode (executionContext)
    this .lineStippleBuffer      = gl .createBuffer ();
    this .trianglesBuffer        = gl .createBuffer ();
    this .thickVertexArrayObject = new VertexArray (gl);
+   this .defaultMatrices        = gl .createBuffer ();
+
+   gl .bindBuffer (gl .ARRAY_BUFFER, this .defaultMatrices);
+   gl .bufferData (gl .ARRAY_BUFFER, defaultMatricesArray, gl .STATIC_DRAW);
+   gl .bindBuffer (gl .ARRAY_BUFFER, null);
 
    this .setGeometryType (1);
    this .setPrimitiveMode (gl .LINES);
@@ -420,67 +428,256 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          gl .lineWidth (1);
       };
    })(),
-   displayInstanced (gl, renderContext, shapeNode)
+   displayInstanced: (() =>
    {
       const
-         browser         = this .getBrowser (),
-         appearanceNode  = renderContext .appearanceNode,
-         shaderNode      = appearanceNode .getShader (this, renderContext),
-         renderModeNodes = appearanceNode .getRenderModes (),
-         attribNodes     = this .getAttrib (),
-         attribBuffers   = this .getAttribBuffers (),
-         primitiveMode   = browser .getPrimitiveMode (this .getPrimitiveMode ());
+         matrix                            = new Matrix4 (),
+         modelViewProjectionMatrixArray    = new Float32Array (16),
+         invModelViewProjectionMatrixArray = new Float32Array (16);
 
-      for (const node of renderModeNodes)
-         node .enable (gl);
-
-      // Setup shader.
-
-      shaderNode .enable (gl);
-      shaderNode .setUniforms (gl, this, renderContext);
-
-      // Setup vertex attributes.
-
-      const instances = shapeNode .getInstances ();
-
-      if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
+      return function (gl, renderContext, shapeNode)
       {
-         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
+         const
+            browser            = this .getBrowser (),
+            appearanceNode     = renderContext .appearanceNode,
+            linePropertiesNode = appearanceNode .getLineProperties (),
+            shaderNode         = appearanceNode .getShader (this, renderContext),
+            renderModeNodes    = appearanceNode .getRenderModes (),
+            attribNodes        = this .getAttrib (),
+            attribBuffers      = this .getAttribBuffers ();
 
-         if (particleOffset !== undefined)
-            shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
+         if (linePropertiesNode)
+         {
+            if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
+               this .updateLengthSoFar (gl, renderContext);
 
-         shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
+            if (linePropertiesNode .getTransformLines ())
+            {
+               const
+                  renderObject        = renderContext .renderObject,
+                  viewport            = renderObject .getViewVolume () .getViewport (),
+                  projectionMatrix    = renderObject .getProjectionMatrix () .get (),
+                  primitiveMode       = browser .getWireframe () ? gl .TRIANGLES : browser .getPrimitiveMode (gl .TRIANGLES),
+                  transformShaderNode = browser .getLineTransformInstancedShader ();
 
-         if (normalMatrixOffset !== undefined)
-            shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
+               modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));
+               invModelViewProjectionMatrixArray .set (matrix .inverse ());
 
-         for (let i = 0, length = attribNodes .length; i < length; ++ i)
-            attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+               // Start
 
-         if (this .hasFogCoords)
-            shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+               transformShaderNode .enable (gl);
 
-         if (this .colorMaterial)
-            shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+               gl .uniform4f (transformShaderNode .viewport, viewport .x, viewport .y, viewport .z, viewport .w);
+               gl .uniformMatrix4fv (transformShaderNode .modelViewProjectionMatrix,    false, modelViewProjectionMatrixArray);
+               gl .uniformMatrix4fv (transformShaderNode .invModelViewProjectionMatrix, false, invModelViewProjectionMatrixArray);
+               gl .uniform1f (transformShaderNode .scale, linePropertiesNode .getLinewidthScaleFactor () / 2);
 
-         if (this .hasNormals)
-            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+               // Setup vertex attributes.
 
-         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+               const instances = shapeNode .getInstances ();
 
-         this .updateInstances = false;
-      }
+               if (instances .thickVertexArrayObject .update (this .updateInstances) .enable (transformShaderNode .getProgram ()))
+               {
+                  const { instancesStride, matrixOffset, normalMatrixOffset } = shapeNode;
 
-      // Wireframes are always solid so only one drawing call is needed.
+                  transformShaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 2);
 
-      gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
+                  if (normalMatrixOffset !== undefined)
+                     transformShaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 2);
 
-      for (const node of renderModeNodes)
-         node .disable (gl);
+                  const
+                     coordIndexStride   = 2 * Float32Array .BYTES_PER_ELEMENT,
+                     coordIndexOffset0  = 0,
+                     coordIndexOffset1  = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     lineStippleStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     lineStippleOffset0 = 0,
+                     lineStippleOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT,
+                     fogDepthStride     = 2 * Float32Array .BYTES_PER_ELEMENT,
+                     fogDepthOffset0    = 0,
+                     fogDepthOffset1    = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     colorStride        = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     colorOffset0       = 0,
+                     colorOffset1       = 4 * Float32Array .BYTES_PER_ELEMENT,
+                     normalStride       = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     normalOffset0      = 0,
+                     normalOffset1      = 3 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexOffset0      = 0,
+                     vertexOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT;
 
-      gl .lineWidth (1);
-   },
+                  // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                  if (this .coordIndices .length)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex0", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
+                  }
+
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple0", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset0);
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple1", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset1);
+
+                  if (this .hasFogCoords)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth0", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset1);
+                  }
+
+                  if (this .colorMaterial)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
+                  }
+
+                  if (this .hasNormals)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
+                  }
+
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
+               }
+
+               // Create trianglesBuffer
+
+               const numLines = this .getVertices () .length / 8 * shapeNode .getNumInstances ();
+
+               if (instances .numLines !== numLines)
+               {
+                  gl .bindBuffer (gl .ARRAY_BUFFER, instances .trianglesBuffer);
+                  gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
+                  gl .bindBuffer (gl .ARRAY_BUFFER, null);
+               }
+
+               // Transform lines.
+
+               gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
+               gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, instances .trianglesBuffer);
+               gl .enable (gl .RASTERIZER_DISCARD);
+               gl .beginTransformFeedback (gl .POINTS);
+               gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2 * shapeNode .getNumInstances ());
+               gl .endTransformFeedback ();
+               gl .disable (gl .RASTERIZER_DISCARD);
+               gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
+
+               // DEBUG
+
+               // const data = new Float32Array (16 * 6 * this .vertexCount / 2);
+               // gl .bindBuffer (gl .ARRAY_BUFFER, instances .trianglesBuffer);
+               // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
+               // console .log (data);
+
+               // Render triangles.
+
+               for (const node of renderModeNodes)
+                  node .enable (gl);
+
+               // Setup shader.
+
+               shaderNode .enable (gl);
+               shaderNode .setUniforms (gl, this, renderContext);
+
+               // Setup vertex attributes.
+
+               if (instances .thickVertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
+               {
+                  shaderNode .enableInstanceMatrixAttribute       (gl, this .defaultMatrices, 100,  0, 1);
+                  shaderNode .enableInstanceNormalMatrixAttribute (gl, this .defaultMatrices, 100, 64, 1);
+
+                  const
+                     stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
+                     coordIndexOffset  = 0,
+                     lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     fogCoordOffset    = 4 * Float32Array .BYTES_PER_ELEMENT,
+                     colorOffset       = 5 * Float32Array .BYTES_PER_ELEMENT,
+                     normalOffset      = 9 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexOffset      = 12 * Float32Array .BYTES_PER_ELEMENT;
+
+                  // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                  shaderNode .enableCoordIndexAttribute (gl, instances .trianglesBuffer, stride, coordIndexOffset);
+                  shaderNode .enableLineStippleAttribute (gl, instances .trianglesBuffer, stride, lineStippleOffset);
+
+                  if (this .hasFogCoords)
+                     shaderNode .enableFogDepthAttribute (gl, instances .trianglesBuffer, stride, fogCoordOffset);
+
+                  if (this .colorMaterial)
+                     shaderNode .enableColorAttribute (gl, instances .trianglesBuffer, stride, colorOffset);
+
+                   if (this .hasNormals)
+                     shaderNode .enableNormalAttribute (gl, instances .trianglesBuffer, stride, normalOffset);
+
+                  shaderNode .enableVertexAttribute (gl, instances .trianglesBuffer, stride, vertexOffset);
+
+                  gl .bindBuffer (gl .ARRAY_BUFFER, null);
+               }
+
+               gl .frontFace (gl .CCW);
+               gl .enable (gl .CULL_FACE);
+               gl .drawArrays (primitiveMode, 0, this .vertexCount * 3 * shapeNode .getNumInstances ());
+
+               for (const node of renderModeNodes)
+                  node .disable (gl);
+
+               return;
+            }
+         }
+
+         const primitiveMode = browser .getPrimitiveMode (this .getPrimitiveMode ());
+
+         for (const node of renderModeNodes)
+            node .enable (gl);
+
+         // Setup shader.
+
+         shaderNode .enable (gl);
+         shaderNode .setUniforms (gl, this, renderContext);
+
+         // Setup vertex attributes.
+
+         const instances = shapeNode .getInstances ();
+
+         if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
+         {
+            const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
+
+            if (particleOffset !== undefined)
+               shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
+
+            shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
+
+            if (normalMatrixOffset !== undefined)
+               shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
+
+            for (let i = 0, length = attribNodes .length; i < length; ++ i)
+               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+            if (this .hasFogCoords)
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+
+            if (this .colorMaterial)
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+            if (this .hasNormals)
+               shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+
+            this .updateInstances = false;
+         }
+
+         // Wireframes are always solid so only one drawing call is needed.
+
+         gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
+
+         for (const node of renderModeNodes)
+            node .disable (gl);
+
+         gl .lineWidth (1);
+      };
+   })(),
 });
 
 Object .defineProperties (X3DLineGeometryNode,
