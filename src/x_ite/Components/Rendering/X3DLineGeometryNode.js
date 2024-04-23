@@ -176,8 +176,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                   shaderNode .enableNormalAttribute (gl, this .lineTrianglesBuffer, stride, normalOffset);
 
                shaderNode .enableVertexAttribute (gl, this .lineTrianglesBuffer, stride, vertexOffset);
-
-               gl .bindBuffer (gl .ARRAY_BUFFER, null);
             }
 
             gl .frontFace (gl .CCW);
@@ -303,11 +301,11 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                   transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
                   transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
 
-                  gl .bindBuffer (gl .ARRAY_BUFFER, null);
                }
 
                // Transform lines.
 
+               gl .bindBuffer (gl .ARRAY_BUFFER, null);
                gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
                gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .lineTrianglesBuffer);
                gl .enable (gl .RASTERIZER_DISCARD);
@@ -363,8 +361,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                      shaderNode .enableNormalAttribute (gl, this .lineTrianglesBuffer, stride, normalOffset);
 
                   shaderNode .enableVertexAttribute (gl, this .lineTrianglesBuffer, stride, vertexOffset);
-
-                  gl .bindBuffer (gl .ARRAY_BUFFER, null);
                }
 
                gl .frontFace (gl .CCW);
@@ -410,8 +406,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, null);
          }
 
          gl .drawArrays (primitiveMode, 0, this .vertexCount);
@@ -538,8 +532,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                   transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
                   transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
-
-                  gl .bindBuffer (gl .ARRAY_BUFFER, null);
                }
 
                // Create lineTrianglesBuffer
@@ -552,11 +544,11 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                   gl .bindBuffer (gl .ARRAY_BUFFER, instances .lineTrianglesBuffer);
                   gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
-                  gl .bindBuffer (gl .ARRAY_BUFFER, null);
                }
 
                // Transform lines.
 
+               gl .bindBuffer (gl .ARRAY_BUFFER, null);
                gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
                gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, instances .lineTrianglesBuffer);
                gl .enable (gl .RASTERIZER_DISCARD);
@@ -616,8 +608,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                   shaderNode .enableVertexAttribute (gl, instances .lineTrianglesBuffer, stride, vertexOffset);
 
-                  gl .bindBuffer (gl .ARRAY_BUFFER, null);
-
                   this .updateInstances = false;
                }
 
@@ -674,8 +664,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, null);
 
             this .updateInstances = false;
          }

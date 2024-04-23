@@ -237,13 +237,12 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
             gl .enableVertexAttribArray (attribute);
             gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particlesStride, particleOffsets [i]);
          }
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, null);
       }
 
       // Transform particles.
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, null); // Prevent texture feedback loop error, see NYC in Firefox.
+      gl .bindBuffer (gl .ARRAY_BUFFER, null);
       gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedback);
       gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, particleSystem .outputParticles);
       gl .enable (gl .RASTERIZER_DISCARD);
