@@ -1206,13 +1206,14 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 1, gl .FLOAT, false, stride, offset);
    },
-   enableColorAttribute (gl, buffer, stride, offset)
+   enableColorAttribute (gl, buffer, stride, offset, divisor = 0)
    {
       const location = this .x3d_Color;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
+      gl .vertexAttribDivisor (location, divisor)
    },
    colorAttributeDivisor (gl, divisor)
    {

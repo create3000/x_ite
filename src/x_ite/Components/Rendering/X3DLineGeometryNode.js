@@ -662,7 +662,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                if (geometryContext === this)
                   shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
                else
-                  shaderNode .enableFloatAttrib (gl, "x3d_Color", instances, 4, instancesStride, colorOffset, 1);
+                  shaderNode .enableColorAttribute (gl, instances, instancesStride, colorOffset, 1);
             }
 
             if (this .hasNormals)
