@@ -180,15 +180,15 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .inputParticles = Object .assign (gl .createBuffer (),
       {
          vertexArrayObject: new VertexArray (gl),
-         thickVertexArrayObject: new VertexArray (gl),
-         trianglesBuffer: Object .assign (gl .createBuffer (), { numLines: 0 }),
+         thickLinesVertexArrayObject: new VertexArray (gl),
+         lineTrianglesBuffer: Object .assign (gl .createBuffer (), { numLines: 0 }),
       });
 
       this .outputParticles = Object .assign (gl .createBuffer (),
       {
          vertexArrayObject: new VertexArray (gl),
-         thickVertexArrayObject: new VertexArray (gl),
-         trianglesBuffer: Object .assign (gl .createBuffer (), { numLines: 0 }),
+         thickLinesVertexArrayObject: new VertexArray (gl),
+         lineTrianglesBuffer: Object .assign (gl .createBuffer (), { numLines: 0 }),
       });
 
       // Create forces stuff.

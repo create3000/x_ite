@@ -92,8 +92,8 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       this .instances = Object .assign (gl .createBuffer (),
       {
          vertexArrayObject: new VertexArray (gl),
-         thickVertexArrayObject: new VertexArray (gl),
-         trianglesBuffer: Object .assign (gl .createBuffer (), { numLines: 0 }),
+         thickLinesVertexArrayObject: new VertexArray (gl),
+         lineTrianglesBuffer: Object .assign (gl .createBuffer (), { numLines: 0 }),
       });
 
       this ._translations .addInterest ("set_transform__", this);
