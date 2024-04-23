@@ -761,7 +761,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
             return;
 
          velocity   = reflect (velocity, normal) * damping;
-         toPosition = vec4 (point + velocity * 0.001, 1.0);
+         toPosition = vec4 (point + save_normalize (velocity) * 0.0001, 1.0);
       }
 
       int
