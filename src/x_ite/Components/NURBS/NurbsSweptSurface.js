@@ -101,12 +101,12 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, X3DParamet
    set_trajectoryCurve__ ()
    {
       if (this .trajectoryCurveNode)
-         this .trajectoryCurveNode ._rebuild .removeInterest ("requestRebuild", this);
+         this .trajectoryCurveNode ._bbox_changed .removeInterest ("requestRebuild", this);
 
       this .trajectoryCurveNode = X3DCast (X3DConstants .NurbsCurve, this ._trajectoryCurve);
 
       if (this .trajectoryCurveNode)
-         this .trajectoryCurveNode ._rebuild .addInterest ("requestRebuild", this);
+         this .trajectoryCurveNode ._bbox_changed .addInterest ("requestRebuild", this);
    },
    build ()
    {
