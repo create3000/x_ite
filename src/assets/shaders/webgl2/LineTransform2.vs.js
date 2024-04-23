@@ -5,7 +5,7 @@ precision highp float;
 uniform vec4  viewport;
 uniform mat4  modelViewProjectionMatrix;
 uniform mat4  invModelViewProjectionMatrix;
-uniform float scale;
+uniform float linewidthScaleFactor1_2;
 
 #if defined (X3D_INSTANCING)
    in mat4 x3d_InstanceMatrix;
@@ -62,7 +62,7 @@ main ()
    #endif
 
    vec2 direction = normalize (projected1 .xy - projected0 .xy);
-   vec2 offset    = vec2 (-direction .y, direction .x) * scale;
+   vec2 offset    = vec2 (-direction .y, direction .x) * linewidthScaleFactor1_2;
 
    vec3 l0 = vec3 (projected1 .xy, x3d_LengthSoFar);
    vec3 l1 = vec3 (projected0 .xy, x3d_LengthSoFar);

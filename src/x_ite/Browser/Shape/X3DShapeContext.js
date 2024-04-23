@@ -199,7 +199,7 @@ Object .assign (X3DShapeContext .prototype,
          "viewport",
          "modelViewProjectionMatrix",
          "invModelViewProjectionMatrix",
-         "scale",
+         "linewidthScaleFactor1_2",
       ];
 
       const transformFeedbackVaryings = [
