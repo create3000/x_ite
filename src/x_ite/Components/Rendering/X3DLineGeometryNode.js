@@ -91,12 +91,12 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
    {
       // Line stipple support.
 
-      if (this .lineStipples .length / 6 === this .getVertices () .length / 8)
+      const numLines = this .getVertices () .length / 8;
+
+      if (this .lineStipples .length / 6 === numLines)
          return;
 
-      const
-         gl       = this .getBrowser () .getContext (),
-         numLines = this .getVertices () .length / 8;
+      const gl = this .getBrowser () .getContext ();
 
       this .lineStipples = new Float32Array (numLines * 6);
 
@@ -256,8 +256,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                      coordIndexStride   = 2 * Float32Array .BYTES_PER_ELEMENT,
                      coordIndexOffset0  = 0,
                      coordIndexOffset1  = 1 * Float32Array .BYTES_PER_ELEMENT,
-                     lineStippleStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
-                     lineStippleOffset0 = 0,
+                     lengthSoFarStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     lengthSoFarOffset  = 5 * Float32Array .BYTES_PER_ELEMENT,
                      lineStippleOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT,
                      fogDepthStride     = 2 * Float32Array .BYTES_PER_ELEMENT,
                      fogDepthOffset0    = 0,
@@ -281,8 +281,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                      transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
                   }
 
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple0", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset0);
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple1", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset1);
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_LengthSoFar", this .lineStippleBuffer, 1, lengthSoFarStride, lengthSoFarOffset);
 
                   if (this .hasFogCoords)
                   {
@@ -478,24 +477,23 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                      transformShaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 2);
 
                   const
-                     coordIndexStride   = 2 * Float32Array .BYTES_PER_ELEMENT,
-                     coordIndexOffset0  = 0,
-                     coordIndexOffset1  = 1 * Float32Array .BYTES_PER_ELEMENT,
-                     lineStippleStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
-                     lineStippleOffset0 = 0,
-                     lineStippleOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT,
-                     fogDepthStride     = 2 * Float32Array .BYTES_PER_ELEMENT,
-                     fogDepthOffset0    = 0,
-                     fogDepthOffset1    = 1 * Float32Array .BYTES_PER_ELEMENT,
-                     colorStride        = 8 * Float32Array .BYTES_PER_ELEMENT,
-                     colorOffset0       = 0,
-                     colorOffset1       = 4 * Float32Array .BYTES_PER_ELEMENT,
-                     normalStride       = 6 * Float32Array .BYTES_PER_ELEMENT,
-                     normalOffset0      = 0,
-                     normalOffset1      = 3 * Float32Array .BYTES_PER_ELEMENT,
-                     vertexStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
-                     vertexOffset0      = 0,
-                     vertexOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT;
+                     coordIndexStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
+                     coordIndexOffset0 = 0,
+                     coordIndexOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     lengthSoFarStride = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     lengthSoFarOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
+                     fogDepthStride    = 2 * Float32Array .BYTES_PER_ELEMENT,
+                     fogDepthOffset0   = 0,
+                     fogDepthOffset1   = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     colorStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     colorOffset0      = 0,
+                     colorOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT,
+                     normalStride      = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     normalOffset0     = 0,
+                     normalOffset1     = 3 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexStride      = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexOffset0     = 0,
+                     vertexOffset1     = 4 * Float32Array .BYTES_PER_ELEMENT;
 
                   // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -506,8 +504,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                      transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
                   }
 
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple0", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset0);
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple1", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset1);
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_LengthSoFar", this .lineStippleBuffer, 1, lengthSoFarStride, lengthSoFarOffset);
 
                   if (this .hasFogCoords)
                   {
