@@ -638,7 +638,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
          {
-            const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
+            const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset, colorOffset } = shapeNode;
 
             if (particleOffset !== undefined)
                shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
@@ -657,8 +657,13 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             if (this .hasFogCoords)
                shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
-            if (this .colorMaterial)
-               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+            if (geometryContext .colorMaterial)
+            {
+               if (geometryContext === this)
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+               else
+                  shaderNode .enableFloatAttrib (gl, "x3d_Color", instances, 4, instancesStride, colorOffset, 1);
+            }
 
             if (this .hasNormals)
                shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
