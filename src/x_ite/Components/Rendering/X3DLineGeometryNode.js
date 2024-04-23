@@ -50,10 +50,7 @@ import VertexArray     from "../../Rendering/VertexArray.js";
 import ViewVolume      from "../../../standard/Math/Geometry/ViewVolume.js";
 import Vector2         from "../../../standard/Math/Numbers/Vector2.js";
 import Vector4         from "../../../standard/Math/Numbers/Vector4.js";
-import Matrix3         from "../../../standard/Math/Numbers/Matrix3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
-
-const defaultMatricesArray = new Float32Array ([... new Matrix4 (), ... new Matrix3 ()]);
 
 function X3DLineGeometryNode (executionContext)
 {
@@ -68,11 +65,6 @@ function X3DLineGeometryNode (executionContext)
    this .lineStippleBuffer           = gl .createBuffer ();
    this .lineTrianglesBuffer         = gl .createBuffer ();
    this .thickLinesVertexArrayObject = new VertexArray (gl);
-   this .defaultMatrices             = gl .createBuffer ();
-
-   gl .bindBuffer (gl .ARRAY_BUFFER, this .defaultMatrices);
-   gl .bufferData (gl .ARRAY_BUFFER, defaultMatricesArray, gl .STATIC_DRAW);
-   gl .bindBuffer (gl .ARRAY_BUFFER, null);
 
    this .setGeometryType (1);
    this .setPrimitiveMode (gl .LINES);
@@ -584,8 +576,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
                {
-                  shaderNode .enableInstanceMatrixAttribute       (gl, this .defaultMatrices, 100,  0, 1);
-                  shaderNode .enableInstanceNormalMatrixAttribute (gl, this .defaultMatrices, 100, 64, 1);
+                  shaderNode .enableInstanceMatrixAttribute       (gl, browser .getDefaultInstanceMatrices (), 100,  0, 1);
+                  shaderNode .enableInstanceNormalMatrixAttribute (gl, browser .getDefaultInstanceMatrices (), 100, 64, 1);
 
                   const
                      stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
