@@ -308,7 +308,7 @@ declare class X3DBrowser
    /**
     * Replace the current world with this new nodes that has been loaded or constructed from somewhere.
     */
-   replaceWorld (nodes: MFNode): string;
+   replaceWorld (nodes: MFNode): Promise <void>;
    /**
     * The string may be any valid VRML content.
     */
