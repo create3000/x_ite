@@ -161,6 +161,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this ._maxParticles      .addInterest ("set_enabled__",           this);
       this ._particleLifetime  .addInterest ("set_particleLifetime__",  this);
       this ._lifetimeVariation .addInterest ("set_lifetimeVariation__", this);
+      this ._particleSize      .addInterest ("set_particleSize__",      this);
       this ._emitter           .addInterest ("set_emitter__",           this);
       this ._physics           .addInterest ("set_physics__",           this);
       this ._colorKey          .addInterest ("set_color__",             this);
@@ -220,6 +221,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .set_createParticles__ ();
       this .set_particleLifetime__ ();
       this .set_lifetimeVariation__ ();
+      this .set_particleSize__ ();
       this .set_physics__ ();
       this .set_colorRamp__ ();
       this .set_texCoordRamp__ ();
@@ -451,6 +453,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    set_lifetimeVariation__ ()
    {
       this .lifetimeVariation = this ._lifetimeVariation .getValue ();
+   },
+   set_particleSize__ ()
+   {
+      this .lineCoordinateNode ._point [0] .z = -this ._particleSize .y / 2;
+      this .lineCoordinateNode ._point [1] .z = +this ._particleSize .y / 2;
    },
    set_emitter__ ()
    {

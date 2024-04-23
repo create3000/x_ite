@@ -855,9 +855,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
             }
             case LINE:
             {
-               mat3 r = Matrix3 (Quaternion (vec3 (0.0, 0.0, 1.0), output2 .xyz));
-               mat3 s = mat3 (1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, particleSize .y);
-               mat3 m = r * s;
+               mat3 m = Matrix3 (Quaternion (vec3 (0.0, 0.0, 1.0), output2 .xyz));
 
                output3 = vec4 (m [0], 0.0);
                output4 = vec4 (m [1], 0.0);
