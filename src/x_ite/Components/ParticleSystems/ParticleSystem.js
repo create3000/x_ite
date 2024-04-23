@@ -905,7 +905,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       {
          case GeometryTypes .LINE:
          {
-            this .lineGeometryNode .displaySimpleInstanced (gl, renderContext, this);
+            this .lineGeometryNode .displaySimpleInstanced (gl, shaderNode, this);
             break;
          }
          case GeometryTypes .GEOMETRY:
