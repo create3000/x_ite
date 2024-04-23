@@ -81,13 +81,11 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
    },
    set_pickingGeometry__ ()
    {
-      if (this .pickingGeometryNode)
-         this .pickingGeometryNode ._bbox_changed .removeInterest ("set_geometry__", this);
+      this .pickingGeometryNode ?._rebuild .removeInterest ("set_geometry__", this);
 
       this .pickingGeometryNode = X3DCast (X3DConstants .PointSet, this ._pickingGeometry);
 
-      if (this .pickingGeometryNode)
-         this .pickingGeometryNode ._bbox_changed .addInterest ("set_geometry__", this);
+      this .pickingGeometryNode ?._rebuild .addInterest ("set_geometry__", this);
 
       this .set_geometry__ ();
    },

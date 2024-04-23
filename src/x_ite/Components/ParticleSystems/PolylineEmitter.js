@@ -135,9 +135,9 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
       this .polylinesNode ._coordIndex = this ._coordIndex;
       this .polylinesNode ._coord      = this ._coord;
 
-      this .polylinesNode ._bbox_changed .addInterest ("set_polylines__", this);
       this .polylinesNode .setPrivate (true);
       this .polylinesNode .setup ();
+      this .polylinesNode ._rebuild .addInterest ("set_polylines__", this);
 
       this .set_direction__ ();
       this .set_polylines__ ();
