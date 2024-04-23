@@ -751,17 +751,19 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          if (index == -1)
             return;
 
-         vec3  point   = points [index] .xyz;
-         vec3  normal  = save_normalize (normals [index]);
-         float damping = length (normals [index]);
+         vec3 point  = points [index] .xyz;
+         vec3 normal = save_normalize (normals [index]);
 
          Plane3 plane2 = plane3 (point, normal);
 
          if (sign (plane_distance (plane2, fromPosition .xyz)) == sign (plane_distance (plane2, toPosition .xyz)))
             return;
 
-         velocity   = reflect (velocity, normal) * damping;
+         float damping = length (normals [index]);
+
+         velocity   = reflect (velocity, normal);
          toPosition = vec4 (point + save_normalize (velocity) * 0.0001, 1.0);
+         velocity  *= damping;
       }
 
       int
