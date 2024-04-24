@@ -106,6 +106,7 @@ const X_ITE_TESTS = [
    { path: "Grouping/NegativeScale.x3d" },
    { path: "Grouping/StaticGroup.x3d" },
    { component: "HAnim" },
+   { path: "HAnim/BeeParticleSystem.x3d" },
    { path: "HAnim/BoxManC.x3d" },
    { path: "HAnim/BoxManCInstanced.x3d" },
    { path: "HAnim/Displacers.x3d" },
