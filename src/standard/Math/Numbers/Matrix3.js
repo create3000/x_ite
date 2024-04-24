@@ -268,8 +268,8 @@ Object .assign (Matrix3 .prototype,
    {
       const
          s  = new Vector2 (),
-         so = new Matrix2 (),
          si = new Matrix2 (),
+         so = new Matrix2 (),
          b  = new Matrix2 ();
 
       const eigen = { values: [ ], vectors: [[ ], [ ]] };

@@ -312,8 +312,8 @@ Object .assign (Matrix4 .prototype,
    {
       const
          s  = new Vector3 (),
-         so = new Matrix3 (),
          si = new Matrix3 (),
+         so = new Matrix3 (),
          b  = new Matrix3 ();
 
       const eigen = { values: [ ], vectors: [[ ], [ ], [ ]] };
