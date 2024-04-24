@@ -88,15 +88,15 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double)
 
          return function (translation, rotation, scale, scaleOrientation, center)
          {
-            args .push (translation      ?.getValue () ?? null,
-                        rotation         ?.getValue () ?? null,
-                        scale            ?.getValue () ?? null,
-                        scaleOrientation ?.getValue () ?? null,
-                        center           ?.getValue () ?? null);
+            args .push (translation      ?.getValue (),
+                        rotation         ?.getValue (),
+                        scale            ?.getValue (),
+                        scaleOrientation ?.getValue (),
+                        center           ?.getValue ());
 
             for (let i = args .length - 1; i > -1; -- i)
             {
-               if (args [i] !== null)
+               if (args [i])
                   break;
 
                args .pop ();
@@ -113,15 +113,15 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double)
 
          return function (translation, rotation, scale, scaleOrientation, center)
          {
-            args .push (translation      ?.getValue () ?? null,
-                        rotation         ?.getValue () ?? null,
-                        scale            ?.getValue () ?? null,
-                        scaleOrientation ?.getValue () ?? null,
-                        center           ?.getValue () ?? null);
+            args .push (translation      ?.getValue (),
+                        rotation         ?.getValue (),
+                        scale            ?.getValue (),
+                        scaleOrientation ?.getValue (),
+                        center           ?.getValue ());
 
             for (let i = args .length - 1; i > -1; -- i)
             {
-               if (args [i] !== null)
+               if (args [i])
                   break;
 
                args .pop ();

@@ -122,10 +122,6 @@ Object .assign (Matrix3 .prototype,
 
          switch (arguments .length)
          {
-            case 0:
-            {
-               break;
-            }
             case 1:
             {
                if (translation)
