@@ -67,6 +67,7 @@ const X_ITE_EXAMPLES = [
    { component: "NURBS", test: "NurbsCurve" },
    { component: "NURBS", test: "NurbsPatchSurface" },
    { component: "NURBS", test: "NurbsSweptSurface" },
+   { component: "ParticleSystems", test: "BoundedPhysicsModel" },
    { component: "ParticleSystems", test: "ConeEmitter" },
    { component: "ParticleSystems", test: "ExplosionEmitter" },
    { component: "ParticleSystems", test: "ForcePhysicsModel" },
