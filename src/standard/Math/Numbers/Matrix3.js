@@ -118,110 +118,94 @@ Object .assign (Matrix3 .prototype,
 
       return function (translation, rotation, scale, scaleOrientation, center)
       {
+         this .identity ();
+
          switch (arguments .length)
          {
             case 0:
             {
-               this .identity ();
                break;
             }
             case 1:
             {
-               if (translation === null) translation = Vector2 .Zero;
+               if (translation)
+                  this .translate (translation);
 
-               this .identity ();
-               this .translate (translation);
                break;
             }
             case 2:
             {
-               if (translation === null) translation = Vector2 .Zero;
-               if (rotation    === null) rotation    = 0;
+               if (translation)
+                  this .translate (translation);
 
-               this .identity ();
-               this .translate (translation);
-
-               if (rotation !== 0)
+               if (rotation)
                   this .rotate (rotation);
 
                break;
             }
             case 3:
             {
-               if (translation === null) translation = Vector2 .Zero;
-               if (rotation    === null) rotation    = 0;
-               if (scale       === null) scale       = Vector2 .One;
+               if (translation)
+                  this .translate (translation);
 
-               this .identity ();
-               this .translate (translation);
-
-               if (rotation !== 0)
+               if (rotation)
                   this .rotate (rotation);
 
-               if (! scale .equals (Vector2 .One))
+               if (scale && !scale .equals (Vector2 .One))
                   this .scale  (scale);
 
                break;
             }
             case 4:
             {
-               if (translation      === null) translation      = Vector2 .Zero;
-               if (rotation         === null) rotation         = 0;
-               if (scale            === null) scale            = Vector2 .One;
-               if (scaleOrientation === null) scaleOrientation = 0;
+               if (translation)
+                  this .translate (translation);
 
-               this .identity ();
-               this .translate (translation);
-
-               if (rotation !== 0)
+               if (rotation)
                   this .rotate (rotation);
 
-               if (! scale .equals (Vector2 .One))
+               if (scale && !scale .equals (Vector2 .One))
                {
-                  const hasScaleOrientation = scaleOrientation !== 0;
-
-                  if (hasScaleOrientation)
+                  if (scaleOrientation)
                   {
                      this .rotate (scaleOrientation);
                      this .scale (scale);
                      this .rotate (-scaleOrientation);
                   }
                   else
+                  {
                      this .scale (scale);
+                  }
                }
 
                break;
             }
             case 5:
             {
-               if (translation      === null) translation      = Vector2 .Zero;
-               if (rotation         === null) rotation         = 0;
-               if (scale            === null) scale            = Vector2 .One;
-               if (scaleOrientation === null) scaleOrientation = 0;
-               if (center           === null) center           = Vector2 .Zero;
-
                // P' = T * C * R * SR * S * -SR * -C * P
-               this .identity ();
-               this .translate (translation);
+               if (translation)
+                  this .translate (translation);
 
-               const hasCenter = ! center .equals (Vector2 .Zero);
+               const hasCenter = center && !center .equals (Vector2 .Zero);
 
                if (hasCenter)
                   this .translate (center);
 
-               if (rotation !== 0)
+               if (rotation)
                   this .rotate (rotation);
 
-               if (! scale .equals (Vector2 .One))
+               if (scale && !scale .equals (Vector2 .One))
                {
-                  if (scaleOrientation !== 0)
+                  if (scaleOrientation)
                   {
                      this .rotate (scaleOrientation);
                      this .scale (scale);
                      this .rotate (-scaleOrientation);
                   }
                   else
+                  {
                      this .scale (scale);
+                  }
                }
 
                if (hasCenter)

@@ -187,21 +187,12 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
 
       for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
       {
-         matrix .identity ();
-
-         if (numTranslations)
-            matrix .translate (translations [Math .min (i, numTranslations - 1)] .getValue ());
-
-         if (numRotations)
-            matrix .rotate (rotations [Math .min (i, numRotations - 1)] .getValue ());
+         matrix .set (numTranslations ? translations [Math .min (i, numTranslations - 1)] .getValue () : null,
+                      numRotations    ? rotations    [Math .min (i, numRotations    - 1)] .getValue () : null,
+                      numScales       ? scales       [Math .min (i, numScales       - 1)] .getValue () : null);
 
          if (numScales)
-         {
-            const s = scales [Math .min (i, numScales - 1)] .getValue ();
-
-            matrix .scale (s);
-            scale .max (s);
-         }
+            scale .max (scales [Math .min (i, numScales - 1)] .getValue ());
 
          data .set (matrix, o);
          data .set (matrix .submatrix .transpose () .inverse (), o + 16);
