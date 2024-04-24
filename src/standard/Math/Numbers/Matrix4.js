@@ -350,13 +350,13 @@ Object .assign (Matrix4 .prototype,
 
          scale ?.assign (s);
 
-         // (5) Compute U = !R ~S R A.
          if (rotation)
          {
             si [0] = 1 / s .x;
             si [4] = 1 / s .y;
             si [8] = 1 / s .z;
 
+            // (5) Compute U = !R ~S R A.
             rotation .setMatrix (a .multLeft (so) .multLeft (si) .multLeft (so .transpose ()));
          }
       };
