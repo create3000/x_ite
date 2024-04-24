@@ -243,24 +243,10 @@ Object .assign (Matrix3 .prototype,
    })(),
    get: (() =>
    {
-      const
-         dummyTranslation      = new Vector2 (),
-         dummyRotation         = new Vector3 (),
-         dummyScale            = new Vector2 (),
-         dummyScaleOrientation = new Vector3 (),
-         dummyCenter           = new Vector2 (),
-         rotMatrix             = new Matrix2 (),
-         soMatrix              = new Matrix2 (),
-         c                     = new Vector2 ();
+      const c = new Vector2 ();
 
       return function (translation, rotation, scale, scaleOrientation, center)
       {
-         if (translation      === null) translation      = dummyTranslation;
-         if (rotation         === null) rotation         = dummyRotation;
-         if (scale            === null) scale            = dummyScale;
-         if (scaleOrientation === null) scaleOrientation = dummyScaleOrientation;
-         if (center           === null) center           = dummyCenter;
-
          switch (arguments .length)
          {
             case 1:
@@ -269,42 +255,26 @@ Object .assign (Matrix3 .prototype,
                break;
             }
             case 2:
-            {
-               this .factor (translation, rotMatrix, dummyScale, soMatrix);
-
-               rotation [0] = rotMatrix [0];
-               rotation [1] = rotMatrix [1];
-               rotation [2] = Math .atan2 (rotMatrix [1], rotMatrix [0]);
-               break;
-            }
             case 3:
-            {
-               this .factor (translation, rotMatrix, scale, soMatrix);
-
-               rotation [0] = rotMatrix [0];
-               rotation [1] = rotMatrix [1];
-               rotation [2] = Math .atan2 (rotMatrix [1], rotMatrix [0]);
-               break;
-            }
             case 4:
             {
-               this .factor (translation, rotMatrix, scale, soMatrix);
-
-               rotation [0] = rotMatrix [0];
-               rotation [1] = rotMatrix [1];
-               rotation [2] = Math .atan2 (rotMatrix [1], rotMatrix [0]);
-
-               scaleOrientation [0] = soMatrix [0];
-               scaleOrientation [1] = soMatrix [1];
-               scaleOrientation [2] = Math .atan2 (soMatrix [1], soMatrix [0]);
+               this .factor (translation, rotation, scale, scaleOrientation);
                break;
             }
             case 5:
             {
-               m .set (c .assign (center) .negate ());
-               m .multLeft (this);
-               m .translate (center);
-               m .get (translation, rotation, scale, scaleOrientation);
+               if (center)
+               {
+                  m .set (c .assign (center) .negate ());
+                  m .multLeft (this);
+                  m .translate (center);
+                  m .get (translation, rotation, scale, scaleOrientation);
+               }
+               else
+               {
+                  this .factor (translation, rotation, scale, scaleOrientation);
+               }
+
                break;
             }
          }
@@ -313,8 +283,9 @@ Object .assign (Matrix3 .prototype,
    factor: (() =>
    {
       const
+         s  = new Vector2 (),
+         so = new Matrix2 (),
          si = new Matrix2 (),
-         u  = new Matrix2 (),
          b  = new Matrix2 ();
 
       const eigen = { values: [ ], vectors: [[ ], [ ]] };
@@ -322,7 +293,7 @@ Object .assign (Matrix3 .prototype,
       return function (translation, rotation, scale, scaleOrientation)
       {
          // (1) Get translation.
-         translation .set (this [6], this [7]);
+         translation ?.set (this [6], this [7]);
 
          // (2) Create 3x3 matrix.
          const a = this .submatrix;
@@ -337,19 +308,35 @@ Object .assign (Matrix3 .prototype,
 
          // Find min / max eigenvalues and do ratio test to determine singularity.
 
-         scaleOrientation .set (e .vectors [0] [0], e .vectors [1] [0],
-                                e .vectors [0] [1], e .vectors [1] [1]);
+         so .set (e .vectors [0] [0], e .vectors [1] [0],
+                  e .vectors [0] [1], e .vectors [1] [1]);
+
+         if (scaleOrientation)
+         {
+            scaleOrientation [0] = so [0];
+            scaleOrientation [1] = so [1];
+            scaleOrientation [2] = Math .atan2 (so [1], so [0]);
+         }
 
          // Compute s = sqrt(evalues), with sign. Set si = s-inverse
 
-         scale .x = det_sign * Math .sqrt (e .values [0]);
-         scale .y = det_sign * Math .sqrt (e .values [1]);
+         s .set (det_sign * Math .sqrt (e .values [0]),
+                 det_sign * Math .sqrt (e .values [1]));
 
-         si [0] = 1 / scale .x;
-         si [3] = 1 / scale .y;
+         scale ?.assign (s);
+
+         si [0] = 1 / s .x;
+         si [3] = 1 / s .y;
 
          // (5) Compute U = !R ~S R A.
-         rotation .assign (u .assign (scaleOrientation) .transpose () .multRight (si) .multRight (scaleOrientation) .multRight (a));
+         if (rotation)
+         {
+            a .multLeft (so) .multLeft (si) .multLeft (so .transpose ());
+
+            rotation [0] = a [0];
+            rotation [1] = a [1];
+            rotation [2] = Math .atan2 (a [1], a [0]);
+         }
       };
    })(),
    determinant2 ()

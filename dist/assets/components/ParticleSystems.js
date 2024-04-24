@@ -2107,6 +2107,7 @@ function ParticleSystem (executionContext)
    this .particleOffsets          = Array .from ({length: 7}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
    this .particleOffset           = this .particleOffsets [0];
    this .colorOffset              = this .particleOffsets [1];
+   this .velocityOffset           = this .particleOffsets [2];
    this .matrixOffset             = this .particleOffsets [3];
    this .texCoordOffset           = 0;
    this .instancesStride          = this .particlesStride;
@@ -2983,10 +2984,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
             if (outputParticles .vertexArrayObject .enable (shaderNode .getProgram ()))
             {
-               const particlesStride = this .particlesStride;
+               const { particlesStride } = this;
 
-               shaderNode .enableParticleAttribute       (gl, outputParticles, particlesStride, this .particleOffset, 1);
-               shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, particlesStride, this .matrixOffset,   1);
+               shaderNode .enableParticleAttribute         (gl, outputParticles, particlesStride, this .particleOffset, 1);
+               shaderNode .enableParticleVelocityAttribute (gl, outputParticles, particlesStride, this .velocityOffset, 1);
+               shaderNode .enableInstanceMatrixAttribute   (gl, outputParticles, particlesStride, this .matrixOffset,   1);
 
                if (this .geometryContext .colorMaterial)
                {

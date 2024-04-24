@@ -250,24 +250,10 @@ Object .assign (Matrix4 .prototype,
    })(),
    get: (() =>
    {
-      const
-         dummyTranslation      = new Vector3 (),
-         dummyRotation         = new Rotation4 (),
-         dummyScale            = new Vector3 (),
-         dummyScaleOrientation = new Rotation4 (),
-         dummyCenter           = new Vector3 (),
-         rot                   = new Matrix3 (),
-         so                    = new Matrix3 (),
-         c                     = new Vector3 ();
+      const c = new Vector3 ();
 
       return function (translation, rotation, scale, scaleOrientation, center)
       {
-         if (translation      === null) translation      = dummyTranslation;
-         if (rotation         === null) rotation         = dummyRotation;
-         if (scale            === null) scale            = dummyScale;
-         if (scaleOrientation === null) scaleOrientation = dummyScaleOrientation;
-         if (center           === null) center           = dummyCenter;
-
          switch (arguments .length)
          {
             case 1:
@@ -276,30 +262,26 @@ Object .assign (Matrix4 .prototype,
                break;
             }
             case 2:
-            {
-               this .factor (translation, rot, dummyScale, so);
-               rotation .setMatrix (rot);
-               break;
-            }
             case 3:
-            {
-               this .factor (translation, rot, scale, so);
-               rotation .setMatrix (rot);
-               break;
-            }
             case 4:
             {
-               this .factor (translation, rot, scale, so);
-               rotation         .setMatrix (rot);
-               scaleOrientation .setMatrix (so);
+               this .factor (translation, rotation, scale, scaleOrientation);
                break;
             }
             case 5:
             {
-               m .set (c .assign (center) .negate ());
-               m .multLeft (this);
-               m .translate (center);
-               m .get (translation, rotation, scale, scaleOrientation);
+               if (center)
+               {
+                  m .set (c .assign (center) .negate ());
+                  m .multLeft (this);
+                  m .translate (center);
+                  m .get (translation, rotation, scale, scaleOrientation);
+               }
+               else
+               {
+                  this .factor (translation, rotation, scale, scaleOrientation);
+               }
+
                break;
             }
          }
@@ -345,8 +327,9 @@ Object .assign (Matrix4 .prototype,
    factor: (() =>
    {
       const
+         s  = new Vector3 (),
+         so = new Matrix3 (),
          si = new Matrix3 (),
-         u  = new Matrix3 (),
          b  = new Matrix3 ();
 
       const eigen = { values: [ ], vectors: [[ ], [ ], [ ]] };
@@ -354,7 +337,7 @@ Object .assign (Matrix4 .prototype,
       return function (translation, rotation, scale, scaleOrientation)
       {
          // (1) Get translation.
-         translation .set (this [12], this [13], this [14]);
+         translation ?.set (this [12], this [13], this [14]);
 
          // (2) Create 3x3 matrix.
          const a = this .submatrix;
@@ -369,22 +352,26 @@ Object .assign (Matrix4 .prototype,
 
          // Find min / max eigenvalues and do ratio test to determine singularity.
 
-         scaleOrientation .set (e .vectors [0] [0], e .vectors [1] [0], e .vectors [2] [0],
-                                e .vectors [0] [1], e .vectors [1] [1], e .vectors [2] [1],
-                                e .vectors [0] [2], e .vectors [1] [2], e .vectors [2] [2]);
+         so .set (e .vectors [0] [0], e .vectors [1] [0], e .vectors [2] [0],
+                  e .vectors [0] [1], e .vectors [1] [1], e .vectors [2] [1],
+                  e .vectors [0] [2], e .vectors [1] [2], e .vectors [2] [2]);
+
+         scaleOrientation ?.setMatrix (so);
 
          // Compute s = sqrt(evalues), with sign. Set si = s-inverse
 
-         scale .x = det_sign * Math .sqrt (e .values [0]);
-         scale .y = det_sign * Math .sqrt (e .values [1]);
-         scale .z = det_sign * Math .sqrt (e .values [2]);
+         s .set (det_sign * Math .sqrt (e .values [0]),
+                 det_sign * Math .sqrt (e .values [1]),
+                 det_sign * Math .sqrt (e .values [2]));
 
-         si [0] = 1 / scale .x;
-         si [4] = 1 / scale .y;
-         si [8] = 1 / scale .z;
+         scale ?.assign (s);
+
+         si [0] = 1 / s .x;
+         si [4] = 1 / s .y;
+         si [8] = 1 / s .z;
 
          // (5) Compute U = !R ~S R A.
-         rotation .assign (u .assign (scaleOrientation) .transpose () .multRight (si) .multRight (scaleOrientation) .multRight (a));
+         rotation ?.setMatrix (a .multLeft (so) .multLeft (si) .multLeft (so .transpose ()));
       };
    })(),
    determinant3 ()
