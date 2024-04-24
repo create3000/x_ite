@@ -214,6 +214,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       return this .transformNode .getBBox (bbox, shadows);
    },
+   getSubBBox (bbox, shadows)
+   {
+      return this .transformNode .getSubBBox (bbox, shadows);
+   },
    getMatrix ()
    {
       return this .transformNode .getMatrix ();

@@ -62,6 +62,17 @@ function X3DTransformMatrix3DNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3DGroupingNode .prototype),
 {
+   getBBox (bbox, shadows)
+   {
+      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+         return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
+   getMatrix ()
+   {
+      return this .matrix;
+   },
    setMatrix (matrix)
    {
       if (matrix .equals (Matrix4 .Identity))
@@ -79,10 +90,6 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
          delete this .traverse;
       }
    },
-   getMatrix ()
-   {
-      return this .matrix;
-   },
    setTransform (t, r, s, so, c)
    {
       if (t .equals (Vector3 .Zero) && r .equals (Rotation4 .Identity) && s .equals (Vector3 .One))
@@ -99,13 +106,6 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
          delete this .getBBox;
          delete this .traverse;
       }
-   },
-   getBBox (bbox, shadows)
-   {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-         return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
-
-      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    traverse (type, renderObject)
    {
