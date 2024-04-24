@@ -39,6 +39,8 @@ const X_ITE_EXAMPLES = [
    { component: "Grouping", test: "Switch" },
    { component: "Grouping", test: "Transform" },
    { component: "HAnim", test: "HAnimHumanoid" },
+   { component: "HAnim", test: "HAnimInstancedShape" },
+   { component: "HAnim", test: "HAnimParticleSystem" },
    { component: "Interpolation", test: "ColorInterpolator" },
    { component: "Interpolation", test: "CoordinateInterpolator" },
    { component: "Interpolation", test: "OrientationInterpolator" },
