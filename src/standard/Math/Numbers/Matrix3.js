@@ -309,12 +309,12 @@ Object .assign (Matrix3 .prototype,
 
          scale ?.assign (s);
 
-         si [0] = 1 / s .x;
-         si [3] = 1 / s .y;
-
          // (5) Compute U = !R ~S R A.
          if (rotation)
          {
+            si [0] = 1 / s .x;
+            si [3] = 1 / s .y;
+
             a .multLeft (so) .multLeft (si) .multLeft (so .transpose ());
 
             rotation [0] = a [0];
