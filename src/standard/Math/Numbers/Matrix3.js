@@ -302,7 +302,7 @@ Object .assign (Matrix3 .prototype,
             scaleOrientation [2] = Math .atan2 (so [1], so [0]);
          }
 
-         // Compute s = sqrt(evalues), with sign. Set si = s-inverse
+         // Compute s = sqrt(eigen values), with sign. Set si = s-inverse
 
          s .set (det_sign * Math .sqrt (e .values [0]),
                  det_sign * Math .sqrt (e .values [1]));

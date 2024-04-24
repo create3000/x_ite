@@ -342,7 +342,7 @@ Object .assign (Matrix4 .prototype,
 
          scaleOrientation ?.setMatrix (so);
 
-         // Compute s = sqrt(evalues), with sign. Set si = s-inverse
+         // Compute s = sqrt(eigen values), with sign. Set si = s-inverse
 
          s .set (det_sign * Math .sqrt (e .values [0]),
                  det_sign * Math .sqrt (e .values [1]),
