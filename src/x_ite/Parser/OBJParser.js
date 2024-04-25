@@ -363,7 +363,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
                scene .getRootNodes () .push (this .object);
             }
 
-            if (name)
+            if (name && !this .object .getValue () .getName ())
             {
                scene .addNamedNode (scene .getUniqueName (name), this .object);
                scene .addExportedNode (scene .getUniqueExportName (name), this .object);
@@ -407,7 +407,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
             this .groups .set (id, this .group);
 
-            if (name)
+            if (name && !this .group .getValue () .getName ())
             {
                scene .addNamedNode (scene .getUniqueName (name), this .group);
                scene .addExportedNode (scene .getUniqueExportName (name), this .group);
