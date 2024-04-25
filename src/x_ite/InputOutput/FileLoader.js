@@ -51,7 +51,7 @@ import GoldenGate  from "../Parser/GoldenGate.js";
 import X3DWorld    from "../Execution/X3DWorld.js";
 import DEVELOPMENT from "../DEVELOPMENT.js";
 
-const foreignContentTypes = new Set ([
+const foreignMimeType = new Set ([
    "text/html",
    "application/xhtml+xml",
 ])
@@ -262,15 +262,15 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       // Load URL async
 
       const
-         options     = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
-         response    = this .checkResponse (await fetch (this .URL, options)),
-         contentType = response .headers .get ("content-type") ?.replace (/;.*$/, "");
+         options  = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
+         response = this .checkResponse (await fetch (this .URL, options)),
+         mimeType = response .headers .get ("content-type") ?.replace (/;.*$/, "");
 
       if (this .foreign)
       {
-         // console .log (contentType);
+         // console .log (mimeType);
 
-         if (foreignContentTypes .has (contentType))
+         if (foreignMimeType .has (mimeType))
             return this .foreign (this .URL .href, this .target);
       }
 
