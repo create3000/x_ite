@@ -19,9 +19,15 @@ You can use this [browser extension for Chrome and Edge](https://chrome.google.c
 
 There are various applications available online for setting up a localhost server. Among them, I would like to highlight here some options:
 
-MacOS users have the options to utilize the [Personal Web Server](https://apps.apple.com/de/app/personal-web-server/id1486323797){:target="_blank"} (for Intel-based Macs) or the [Simple Web Server](https://apps.apple.com/us/app/simple-web-server/id1625925255){:target="_blank"} (for Apple Silicon-based Macs). These servers facilitate file serving via a web server and boast user-friendly interfaces. Alternatively, users can employ the provided [Python script below in conjunction with Automator](https://www.macstadium.com/blog/automating-login-and-startup-events-in-macos) for additional flexibility and customization.
+MacOS users have the options to utilize the [Personal Web Server](https://apps.apple.com/de/app/personal-web-server/id1486323797){:target="_blank"} (for Intel-based Macs) or the [Simple Web Server](https://apps.apple.com/us/app/simple-web-server/id1625925255){:target="_blank"} (for Apple Silicon-based Macs). These servers facilitate file serving via a web server and boast user-friendly interfaces. Alternatively, users can employ the provided [Node or Python script below in conjunction with Automator](https://www.macstadium.com/blog/automating-login-and-startup-events-in-macos) for additional flexibility and customization.
 
 Another notable application is [XAMPP](https://www.apachefriends.org/index.html){:target="_blank"}, renowned for its versatility across multiple operating systems and widespread popularity among users. It provides a comprehensive suite of web development tools, making it a favored choice for many developers and enthusiasts alike.
+
+## Using Node
+
+The npm [http-server](https://www.npmjs.com/package/http-server){:target="_blank"} is a straightforward yet powerful tool for serving static resources over HTTP. It's a command-line program that allows quick and easy access to local file directories via a local web server. With npm http-server, developers can swiftly set up a local development environment to test web applications or host static websites. Thanks to its user-friendly interface and configuration options, npm http-server is a popular choice for developers seeking a fast and uncomplicated way to serve local files over the HTTP protocol.
+
+Follow the instructions on their [website](https://www.npmjs.com/package/http-server){:target="_blank"} to get it up and running.
 
 ## Using Python
 
@@ -44,10 +50,3 @@ By default, this will run the contents of the directory on a local web server, o
 
 >**Tip:** If you already have something running on port 80, you can choose another port by running the server command followed by an alternative port number, e.g. python3 -m http.server 7800. You can then access your content at http://**localhost**:7800.
 {: .prompt-tip }
-
-
-## Using Node
-
-The npm [http-server](https://www.npmjs.com/package/http-server){:target="_blank"} is a straightforward yet powerful tool for serving static resources over HTTP. It's a command-line program that allows quick and easy access to local file directories via a local web server. With npm http-server, developers can swiftly set up a local development environment to test web applications or host static websites. Thanks to its user-friendly interface and configuration options, npm http-server is a popular choice for developers seeking a fast and uncomplicated way to serve local files over the HTTP protocol.
-
-Follow the instructions on their [website](https://www.npmjs.com/package/http-server){:target="_blank"} to get it up and running.
