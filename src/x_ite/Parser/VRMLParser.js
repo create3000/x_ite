@@ -1600,9 +1600,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          if (Grammar .doubleQuotes .parse (this))
          {
-            this .value = Fields .SFString .unescape (value);
+            this .lines (value);
 
-            this .lines (this .value);
+            this .value = Fields .SFString .unescape (value);
 
             return true;
          }
