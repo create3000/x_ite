@@ -119,9 +119,10 @@ const Grammar = Expressions ({
    FieldType: /([SM]F(?:Bool|ColorRGBA|Color|Double|Float|Image|Int32|Matrix3d|Matrix3f|Matrix4d|Matrix4f|Node|Rotation|String|Time|Vec2d|Vec2f|Vec3d|Vec3f|Vec4d|Vec4f))/gy,
 
    // Values
-   int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
+   int32: /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
    double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
-   string: /"((?:[^\\"]|\\\\|\\")*)"/gy,
+   doubleQuotes: /"/gy,
+   noDoubleQuotes: /[^"]+/gy,
 
    CONSTANTS: /([+-]?)\b(NAN|INFINITY|INF|PI|PI2|PI1_4|PI2_4|PI3_4|PI4_4|PI5_4|PI6_4|PI7_4|PI8_4|PI1_2|PI2_2|PI3_2|PI4_2|PI1_3|PI2_3|PI3_3|PI4_3|PI5_3|PI6_3|SQRT1_2|SQRT2)\b/igy,
    HTMLColor: /([a-zA-Z]+|0[xX][\da-fA-F]+|rgba?\(.*?\))/gy,
@@ -238,7 +239,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (line .length > 80)
       {
-         line     = line .substr (linePos - 40, 80);
+         line     = line .substring (linePos - 40, linePos + 40);
          lastLine = "";
          linePos  = 40;
       }
@@ -389,13 +390,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    })(),
    headerStatement ()
    {
-      Grammar .Header .lastIndex = 0;
-
-      const result = Grammar .Header .exec (this .input);
-
-      if (result)
+      if (Grammar .Header .parse (this))
       {
-         this .getScene () .setSpecificationVersion (result [2]);
+         this .getScene () .setSpecificationVersion (this .result [2]);
          this .getScene () .setEncoding             ("VRML");
          return true;
       }
@@ -1585,13 +1582,33 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    {
       this .comments ();
 
-      if (Grammar .string .parse (this))
+      if (Grammar .doubleQuotes .parse (this))
       {
-         this .value = Fields .SFString .unescape (this .result [1]);
+         let
+            lastIndex = this .lastIndex,
+            value     = "";
 
-         this .lines (this .value);
+         while (Grammar .noDoubleQuotes .parse (this))
+         {
+            value += this .input .substring (lastIndex, this .lastIndex);
 
-         return true;
+            if (value .at (-1) !== "\\")
+               break;
+
+            Grammar .doubleQuotes .parse (this);
+
+            value    += "\"";
+            lastIndex = this .lastIndex;
+         }
+
+         if (Grammar .doubleQuotes .parse (this))
+         {
+            this .value = Fields .SFString .unescape (value);
+
+            this .lines (this .value);
+
+            return true;
+         }
       }
 
       return false;
