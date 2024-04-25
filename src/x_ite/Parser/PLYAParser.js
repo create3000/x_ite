@@ -68,7 +68,7 @@ const Grammar = Expressions ({
    elementName: /\b\S+\b/gy,
    property: /\bproperty\b/gy,
    propertyList: /\blist\b/gy,
-   propertyType: /\bchar|uchar|short|ushort|int|uint|float|double|int8|uint8|int16|uint16|int32|uint32|float32|float64\b/gy,
+   propertyType: /\b(?:char|uchar|short|ushort|int|uint|float|double|int8|uint8|int16|uint16|int32|uint32|float32|float64)\b/gy,
    propertyName: /\b\S+\b/gy,
    endHeader: /\bend_header\b/gy,
 
