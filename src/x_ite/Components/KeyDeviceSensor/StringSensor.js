@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (StringSensor .prototype, X3DKeyDeviceSen
                if (this ._deletionAllowed .getValue ())
                {
                   if (this ._enteredText .length)
-                     this ._enteredText  = this ._enteredText .getValue () .substr (0, this ._enteredText .length - 1);
+                     this ._enteredText  = this ._enteredText .getValue () .substring (0, this ._enteredText .length - 1);
                }
             }
 

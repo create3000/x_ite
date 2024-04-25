@@ -140,10 +140,10 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
          if (typeof object [key] === "object")
          {
             if (isNaN (parseInt (key)))
-               this .convertObject (key, object, element, parentkey .substr (1));
+               this .convertObject (key, object, element, parentkey .substring (1));
 
             else
-               this .convertToDOM (object[ key], key, element, parentkey .substr (1));
+               this .convertToDOM (object[ key], key, element, parentkey .substring (1));
          }
       }
    },
@@ -191,11 +191,11 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
 
       if (object !== null && typeof object [key] === "object")
       {
-         if (key .substr (0, 1) === "@")
+         if (key [0] === "@")
          {
             this .convertToDOM (object [key], key, element);
          }
-         else if (key .substr (0, 1) === "-")
+         else if (key [0] === "-")
          {
             this .convertChildren (key, object [key], element);
          }
@@ -347,7 +347,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
                }
                case "number":
                {
-                  this .elementSetAttribute (element, key .substr (1), object [key]);
+                  this .elementSetAttribute (element, key .substring (1), object [key]);
                   break;
                }
                case "string":
@@ -355,7 +355,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
                   if (key !== "#comment")
                   {
                      // ordinary string attributes
-                     this .elementSetAttribute (element, key .substr (1), this .JSONStringToXML (object [key]));
+                     this .elementSetAttribute (element, key .substring (1), this .JSONStringToXML (object [key]));
                   }
                   else
                   {
@@ -368,7 +368,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
                }
                case "boolean":
                {
-                  this .elementSetAttribute (element, key .substr (1), object [key]);
+                  this .elementSetAttribute (element, key .substring (1), object [key]);
                   break;
                }
                case "undefined":
@@ -386,7 +386,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
 
       if (isArray)
       {
-         if (parentkey .substr (0,1) === "@")
+         if (parentkey [0] === "@")
          {
             if (arrayOfStrings)
             {
@@ -395,12 +395,12 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
                for (const str in localArray)
                   localArray [str] = this .SFStringToXML (localArray [str]);
 
-               this .elementSetAttribute (element, parentkey .substr (1), '"' + localArray .join ('" "') + '"');
+               this .elementSetAttribute (element, parentkey .substring (1), '"' + localArray .join ('" "') + '"');
             }
             else
             {
                // if non string array
-               this .elementSetAttribute (element, parentkey .substr (1), localArray .join (" "));
+               this .elementSetAttribute (element, parentkey .substring (1), localArray .join (" "));
             }
          }
 

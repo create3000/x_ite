@@ -241,7 +241,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
              this .URL .pathname === referer .pathname &&
              this .URL .hash)
          {
-            this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
+            this .bindViewpoint (decodeURIComponent (this .URL .hash .substring (1)));
             return;
          }
       }
