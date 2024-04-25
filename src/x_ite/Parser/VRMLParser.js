@@ -1584,21 +1584,18 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .doubleQuotes .parse (this))
       {
-         let
-            lastIndex = this .lastIndex,
-            value     = "";
+         let value = "";
 
          while (Grammar .noDoubleQuotes .parse (this))
          {
-            value += this .input .substring (lastIndex, this .lastIndex);
+            value += this .result [0];
 
             if (value .at (-1) !== "\\")
                break;
 
             Grammar .doubleQuotes .parse (this);
 
-            value    += "\"";
-            lastIndex = this .lastIndex;
+            value += "\"";
          }
 
          if (Grammar .doubleQuotes .parse (this))
