@@ -65,7 +65,7 @@ const Grammar = Expressions ({
    format: /format ascii 1.0/gy,
    comment: /\bcomment\b/gy,
    element: /\belement\b/gy,
-   elementName: /\b(\S+)\b/gy,
+   elementName: /\b\S+\b/gy,
    property: /\bproperty\b/gy,
    propertyList: /\blist\b/gy,
    propertyType: /\bchar|uchar|short|ushort|int|uint|float|double|int8|uint8|int16|uint16|int32|uint32|float32|float64\b/gy,
@@ -261,7 +261,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          if (Grammar .elementName .parse (this))
          {
-            const name = this .result [1];
+            const name = this .result [0];
 
             if (this .int32 ())
             {
