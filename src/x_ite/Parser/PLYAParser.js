@@ -57,7 +57,7 @@ const Grammar = Expressions ({
    // General
    whitespaces: /[\x20\n\t\r]+/gy,
    whitespacesNoLineTerminator: /[\x20\t]+/gy,
-   untilEndOfLine: /([^\r\n]+)/gy,
+   untilEndOfLine: /[^\r\n]+/gy,
    line: /.*?\r?\n/gy,
 
    // Keywords
@@ -68,12 +68,12 @@ const Grammar = Expressions ({
    elementName: /\b(\S+)\b/gy,
    property: /\bproperty\b/gy,
    propertyList: /\blist\b/gy,
-   propertyType: /\b(char|uchar|short|ushort|int|uint|float|double|int8|uint8|int16|uint16|int32|uint32|float32|float64)\b/gy,
-   propertyName: /\b(\S+)\b/gy,
+   propertyType: /\bchar|uchar|short|ushort|int|uint|float|double|int8|uint8|int16|uint16|int32|uint32|float32|float64\b/gy,
+   propertyName: /\b\S+\b/gy,
    endHeader: /\bend_header\b/gy,
 
-   double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
-   int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
+   int32:  /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/gy,
 });
 
 /*
@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    {
       if (Grammar .comment .parse (this) && Grammar .untilEndOfLine .parse (this))
       {
-         this .comments .push (this .result [1] .trim ());
+         this .comments .push (this .result [0] .trim ());
          return true;
       }
 
@@ -174,7 +174,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       if (Grammar .double .parse (this))
       {
-         this .value = parseFloat (this .result [1]);
+         this .value = parseFloat (this .result [0]);
 
          return true;
       }
@@ -187,7 +187,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       if (Grammar .int32 .parse (this))
       {
-         this .value = parseInt (this .result [1]);
+         this .value = parseInt (this .result [0]);
 
          return true;
       }
@@ -298,14 +298,14 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          if (Grammar .propertyType .parse (this))
          {
             const
-               type  = this .result [1],
+               type  = this .result [0],
                value = this .typeMapping .get (type);
 
             this .whitespacesNoLineTerminator ();
 
             if (Grammar .propertyName .parse (this))
             {
-               const name = this .result [1];
+               const name = this .result [0];
 
                properties .push ({ type, value, name });
                return true;
@@ -318,21 +318,21 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
             if (Grammar .propertyType .parse (this))
             {
-               const count = this .typeMapping .get (this .result [1]);
+               const count = this .typeMapping .get (this .result [0]);
 
                this .whitespacesNoLineTerminator ();
 
                if (Grammar .propertyType .parse (this))
                {
                   const
-                     type  = this .result [1],
+                     type  = this .result [0],
                      value = this .typeMapping .get (type);
 
                   this .whitespacesNoLineTerminator ();
 
                   if (Grammar .propertyName .parse (this))
                   {
-                     const name = this .result [1];
+                     const name = this .result [0];
 
                      properties .push ({ count, type, value, name });
                      return true;

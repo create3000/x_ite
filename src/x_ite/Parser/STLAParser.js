@@ -62,7 +62,7 @@ const Grammar = Expressions ({
    whitespaces: /[\x20\n\t\r]+/gy,
    whitespacesNoLineTerminator: /[\x20\t]+/gy,
    comment: /;.*?(?=[\n\r])/gy,
-   untilEndOfLine: /([^\r\n]+)/gy,
+   untilEndOfLine: /[^\r\n]+/gy,
 
    // Keywords
    solid: /solid/gy,
@@ -76,8 +76,8 @@ const Grammar = Expressions ({
    endsolid: /endsolid/gy,
 
    // Values
-   name: /(\w+)/gy,
-   double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
+   name: /\w+/gy,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
    constants: /([+-])((?:NAN|INF|INFINITY))/igy,
 });
 
@@ -191,7 +191,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
             geometry   = scene .createNode ("TriangleSet"),
             normal     = scene .createNode ("Normal"),
             coordinate = scene .createNode ("Coordinate"),
-            name       = this .sanitizeName (Grammar .name .parse (this) ? this .result [1] : "");
+            name       = this .sanitizeName (Grammar .name .parse (this) ? this .result [0] : "");
 
          Grammar .untilEndOfLine .parse (this);
 
@@ -355,7 +355,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
 
       if (Grammar .double .parse (this))
       {
-         this .value = parseFloat (this .result [1]);
+         this .value = parseFloat (this .result [0]);
 
          return true;
       }

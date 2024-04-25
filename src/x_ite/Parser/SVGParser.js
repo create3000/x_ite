@@ -75,12 +75,12 @@ const Grammar = Expressions ({
    closeParenthesis: /\)/gy,
 
    // Units
-   length: /(em|ex|px|in|cm|mm|pt|pc|%)/gy,
+   length: /em|ex|px|in|cm|mm|pt|pc|%/gy,
    percent: /%/gy,
 
    // Values
-   int32: /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
-   double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
+   int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/gy,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
    constants: /([+-])((?:NAN|INF|INFINITY))/igy,
    matrix: /matrix/gy,
    translate: /translate/gy,
@@ -88,9 +88,9 @@ const Grammar = Expressions ({
    scale: /scale/gy,
    skewX: /skewX/gy,
    skewY: /skewY/gy,
-   color: /([a-zA-Z]+|#[\da-fA-F]+|rgba?\(.*?\))/gy,
+   color: /[a-zA-Z]+|#[\da-fA-F]+|rgba?\(.*?\)/gy,
    url: /url\("?(.*?)"?\)/gy,
-   path: /([mMlLhHvVqQtTcCsSaAzZ])/gy,
+   path: /[mMlLhHvVqQtTcCsSaAzZ]/gy,
 });
 
 /*
@@ -1276,7 +1276,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
          if (Grammar .length .parse (this))
          {
-            switch (this .result [1])
+            switch (this .result [0])
             {
                case "em":
                   value *= EM;
@@ -1402,7 +1402,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
             break;
 
          previous = command;
-         command  = this .result [1];
+         command  = this .result [0];
          relative = command === command .toLowerCase ();
 
          switch (command)
@@ -2450,7 +2450,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       if (Grammar .int32 .parse (this))
       {
-         this .value = parseInt (this .result [1]);
+         this .value = parseInt (this .result [0]);
 
          return true;
       }
@@ -2463,7 +2463,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       if (Grammar .double .parse (this))
       {
-         this .value = parseFloat (this .result [1]);
+         this .value = parseFloat (this .result [0]);
 
          return true;
       }
@@ -2491,7 +2491,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
          const defaultColor = this .cssColor (c);
 
-         this .value = color .set (... this .convertColor (this .result [1], defaultColor));
+         this .value = color .set (... this .convertColor (this .result [0], defaultColor));
 
          return true;
       };
