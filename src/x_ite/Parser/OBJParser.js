@@ -66,7 +66,7 @@ const Grammar = Expressions ({
    whitespaces: /[\x20\n\t\r]+/gy,
    whitespacesNoLineTerminator: /[\x20\t]+/gy,
    comment: /#.*?(?=[\n\r])/gy,
-   untilEndOfLine: /([^\r\n]+)/gy,
+   untilEndOfLine: /[^\r\n]+/gy,
 
    // Keywords
    mtllib: /\bmtllib\b/gy,
@@ -91,8 +91,8 @@ const Grammar = Expressions ({
    slash: /\//gy,
 
    // Values
-   int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
-   double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
+   int32:  /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/gy,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
    constants: /([+-])((?:NAN|INF|INFINITY))/igy,
 });
 
@@ -259,7 +259,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
          if (Grammar .untilEndOfLine .parse (this))
          {
-            const mtllibs = this .result [1] .trim () .split (/\s+/);
+            const mtllibs = this .result [0] .trim () .split (/\s+/);
 
             await Promise .all (mtllibs .map (path => this .mtllib (path)));
          }
@@ -324,7 +324,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
          if (Grammar .untilEndOfLine .parse (this))
          {
-            const id = this .result [1];
+            const id = this .result [0];
 
             this .material = this .materials .get (id) || this .defaultMaterial;
             this .texture  = this .textures .get (id);
@@ -352,7 +352,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          {
             const
                scene = this .getExecutionContext (),
-               name  = this .sanitizeName (this .result [1]);
+               name  = this .sanitizeName (this .result [0]);
 
             if (this .group .children .length)
             {
@@ -387,7 +387,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          {
             const
                scene = this .getExecutionContext (),
-               id    = this .result [1],
+               id    = this .result [0],
                name  = this .sanitizeName (id),
                group = this .groups .get (id);
 
@@ -659,7 +659,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       if (Grammar .int32 .parse (this))
       {
-         this .value = parseInt (this .result [1]);
+         this .value = parseInt (this .result [0]);
 
          return true;
       }
@@ -672,7 +672,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       if (Grammar .double .parse (this))
       {
-         this .value = parseFloat (this .result [1]);
+         this .value = parseFloat (this .result [0]);
 
          return true;
       }
@@ -833,7 +833,7 @@ Object .assign (MaterialParser .prototype,
 
          if (Grammar .untilEndOfLine .parse (this))
          {
-            this .id = this .result [1];
+            this .id = this .result [0];
 
             this .material = this .executionContext .createNode ("Material");
 
@@ -1000,7 +1000,7 @@ Object .assign (MaterialParser .prototype,
 
          if (Grammar .untilEndOfLine .parse (this))
          {
-            const string = this .result [1];
+            const string = this .result [0];
 
             if (string .length && this .id .length)
             {
@@ -1035,7 +1035,7 @@ Object .assign (MaterialParser .prototype,
 
       if (Grammar .int32 .parse (this))
       {
-         this .value = parseInt (this .result [1]);
+         this .value = parseInt (this .result [0]);
 
          return true;
       }
@@ -1048,7 +1048,7 @@ Object .assign (MaterialParser .prototype,
 
       if (Grammar .double .parse (this))
       {
-         this .value = parseFloat (this .result [1]);
+         this .value = parseFloat (this .result [0]);
 
          return true;
       }
