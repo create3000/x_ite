@@ -406,6 +406,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
    {
       return this .transformNode .getBBox (bbox, shadows);
    },
+   getSubBBox (bbox, shadows)
+   {
+      return this .transformNode .getSubBBox (bbox, shadows);
+   },
    getMatrix ()
    {
       return this .transformNode .getMatrix ();
@@ -501,19 +505,13 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
          if (!jointNode)
             continue;
 
-         const jointBindingMatrix = new (Matrix4_default()) ();
-
-         if (numJointBindingPositions)
-            jointBindingMatrix .set (jointBindingPositions [Math .min (i, numJointBindingPositions- 1)] .getValue ());
-
-         if (numJointBindingRotations)
-            jointBindingMatrix .rotate (jointBindingRotations [Math .min (i, numJointBindingRotations - 1)] .getValue ());
-
-         if (numJointBindingScales)
-            jointBindingMatrix .scale (jointBindingScales [Math .min (i, numJointBindingScales - 1)] .getValue ());
+         const
+            t = numJointBindingPositions ? jointBindingPositions [Math .min (i, numJointBindingPositions- 1)] .getValue () : null,
+            r = numJointBindingRotations ? jointBindingRotations [Math .min (i, numJointBindingRotations - 1)] .getValue () : null,
+            s = numJointBindingScales ? jointBindingScales [Math .min (i, numJointBindingScales - 1)] .getValue () : null;
 
          jointNodes           .push (jointNode);
-         jointBindingMatrices .push (jointBindingMatrix);
+         jointBindingMatrices .push (new (Matrix4_default()) () .set (t, r, s));
       }
 
       for (const jointNode of jointNodes)
