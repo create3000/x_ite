@@ -212,33 +212,30 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
          {
             this .createCDATA (document, element, object [key] .join ("\n"));
          }
-         else
+         else if (key === "connect" || key === "fieldValue" || key === "field" || key === "meta" || key === "component" || key === "unit")
          {
-            if (key === "connect" || key === "fieldValue" || key === "field" || key === "meta" || key === "component" || key === "unit")
+            for (const childkey in object [key])
             {
-               for (const childkey in object [key])
+               // for each field
+               if (typeof object [key] [childkey] === "object")
                {
-                  // for each field
-                  if (typeof object [key] [childkey] === "object")
-                  {
-                     const child = this .createElement (key, containerField);
+                  const child = this .createElement (key, containerField);
 
-                     this .convertToDOM (object [key] [childkey], childkey, child);
+                  this .convertToDOM (object [key] [childkey], childkey, child);
 
-                     element .appendChild (child);
-                     element .appendChild (document .createTextNode ("\n"));
-                  }
+                  element .appendChild (child);
+                  element .appendChild (document .createTextNode ("\n"));
                }
             }
-            else
-            {
-               const child = this .createElement (key, containerField);
+         }
+         else
+         {
+            const child = this .createElement (key, containerField);
 
-               this .convertToDOM (object [key], key, child);
+            this .convertToDOM (object [key], key, child);
 
-               element .appendChild (child);
-               element .appendChild (document .createTextNode ("\n"));
-            }
+            element .appendChild (child);
+            element .appendChild (document .createTextNode ("\n"));
          }
       }
    },
