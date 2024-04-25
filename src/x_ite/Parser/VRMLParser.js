@@ -69,7 +69,7 @@ import DEVELOPMENT               from "../DEVELOPMENT.js";
 // VRML lexical elements
 const Grammar = Expressions ({
    // General
-   Whitespaces: /([\x20\n,\t\r]+)/gy,
+   Whitespaces: /[\x20\n,\t\r]+/gy,
    Comment:     /#(.*?)(?=[\n\r])/gy,
    Break:       /\r?\n/g,
 
@@ -103,8 +103,8 @@ const Grammar = Expressions ({
    Period:       /\./gy,
    Colon:        /\:/gy,
 
-   Id: /([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*)/gy,
-   ComponentNameId: /([^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*)/gy,
+   Id: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/gy,
+   ComponentNameId: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*/gy,
 
    initializeOnly: /initializeOnly/gy,
    inputOnly:      /inputOnly/gy,
@@ -116,16 +116,16 @@ const Grammar = Expressions ({
    eventOut:     /eventOut/gy,
    exposedField: /exposedField/gy,
 
-   FieldType: /([SM]F(?:Bool|ColorRGBA|Color|Double|Float|Image|Int32|Matrix3d|Matrix3f|Matrix4d|Matrix4f|Node|Rotation|String|Time|Vec2d|Vec2f|Vec3d|Vec3f|Vec4d|Vec4f))/gy,
+   FieldType: /[SM]F(?:Bool|ColorRGBA|Color|Double|Float|Image|Int32|Matrix3d|Matrix3f|Matrix4d|Matrix4f|Node|Rotation|String|Time|Vec2d|Vec2f|Vec3d|Vec3f|Vec4d|Vec4f)/gy,
 
    // Values
-   int32: /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
-   double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
+   int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/gy,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
    doubleQuotes: /"/gy,
    noDoubleQuotes: /[^"]+/gy,
 
    CONSTANTS: /([+-]?)\b(NAN|INFINITY|INF|PI|PI2|PI1_4|PI2_4|PI3_4|PI4_4|PI5_4|PI6_4|PI7_4|PI8_4|PI1_2|PI2_2|PI3_2|PI4_2|PI1_3|PI2_3|PI3_3|PI4_3|PI5_3|PI6_3|SQRT1_2|SQRT2)\b/igy,
-   HTMLColor: /([a-zA-Z]+|0[xX][\da-fA-F]+|rgba?\(.*?\))/gy,
+   HTMLColor: /[a-zA-Z]+|0[xX][\da-fA-F]+|rgba?\(.*?\)/gy,
 });
 
 /*
@@ -314,7 +314,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    {
       if (Grammar .Whitespaces .parse (this))
       {
-         this .lines (this .result [1]);
+         this .lines (this .result [0]);
 
          return true;
       }
@@ -407,7 +407,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          if (this .profileNameId ())
          {
-            const profile = this .getBrowser () .getProfile (this .result [1]);
+            const profile = this .getBrowser () .getProfile (this .result [0]);
 
             this .getScene () .setProfile (profile);
             return;
@@ -431,7 +431,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          if (this .componentNameId ())
          {
-            const componentNameIdCharacters = this .result [1];
+            const componentNameIdCharacters = this .result [0];
 
             this .comments ();
 
@@ -472,11 +472,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          if (this .categoryNameId ())
          {
-            const categoryNameId = this .result [1];
+            const categoryNameId = this .result [0];
 
             if (this .unitNameId ())
             {
-               const unitNameId = this .result [1];
+               const unitNameId = this .result [0];
 
                if (this .unitConversionFactor ())
                {
@@ -556,7 +556,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          if (this .nodeNameId ())
          {
-            const localNodeNameId = this .result [1];
+            const localNodeNameId = this .result [0];
 
             this .comments ();
 
@@ -565,7 +565,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             if (Grammar .AS .parse (this))
             {
                if (this .exportedNodeNameId ())
-                  var exportedNodeNameId = this .result [1];
+                  var exportedNodeNameId = this .result [0];
                else
                   throw new Error ("No name given after AS.");
             }
@@ -601,7 +601,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          if (this .nodeNameId ())
          {
             const
-               inlineNodeNameId = this .result [1],
+               inlineNodeNameId = this .result [0],
                namedNode        = this .getExecutionContext () .getNamedNode (inlineNodeNameId);
 
             this .comments ();
@@ -610,14 +610,14 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             {
                if (this .exportedNodeNameId ())
                {
-                  const exportedNodeNameId = this .result [1];
+                  const exportedNodeNameId = this .result [0];
 
                   this .comments ();
 
                   if (Grammar .AS .parse (this))
                   {
                      if (this .nodeNameId ())
-                        var nodeNameId = this .result [1];
+                        var nodeNameId = this .result [0];
 
                      else
                         throw new Error ("No name given after AS.");
@@ -683,7 +683,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       if (Grammar .DEF .parse (this))
       {
          if (this .nodeNameId ())
-            return this .node (this .result [1]);
+            return this .node (this .result [0]);
 
          throw new Error ("No name given after DEF.");
       }
@@ -691,7 +691,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       if (Grammar .USE .parse (this))
       {
          if (this .nodeNameId ())
-            return this .getExecutionContext () .getNamedNode (this .result [1]) .getValue ();
+            return this .getExecutionContext () .getNamedNode (this .result [0]) .getValue ();
 
          throw new Error ("No name given after USE.");
       }
@@ -724,7 +724,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          if (this .nodeTypeId ())
          {
-            const nodeTypeId = this .result [1];
+            const nodeTypeId = this .result [0];
 
             this .comments ();
 
@@ -846,12 +846,12 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          if (this .fieldType ())
          {
-            const fieldType = this .result [1];
+            const fieldType = this .result [0];
 
             if (this .inputOnlyId ())
             {
                const
-                  fieldId = this .result [1],
+                  fieldId = this .result [0],
                   field   = new (Fields [fieldType]) ();
 
                field .setAccessType (X3DConstants .inputOnly);
@@ -864,19 +864,19 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ();
 
-         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
+         throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
 
       if (Grammar .outputOnly .parse (this) || Grammar .eventOut .parse (this))
       {
          if (this .fieldType ())
          {
-            const fieldType = this .result [1];
+            const fieldType = this .result [0];
 
             if (this .outputOnlyId ())
             {
                const
-                  fieldId = this .result [1],
+                  fieldId = this .result [0],
                   field   = new (Fields [fieldType]) ();
 
                field .setAccessType (X3DConstants .outputOnly);
@@ -889,19 +889,19 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ();
 
-         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
+         throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
 
       if (Grammar .initializeOnly .parse (this) || Grammar .field .parse (this))
       {
          if (this .fieldType ())
          {
-            const fieldType = this .result [1];
+            const fieldType = this .result [0];
 
             if (this .initializeOnlyId ())
             {
                const
-                  fieldId = this .result [1],
+                  fieldId = this .result [0],
                   field   = new (Fields [fieldType]) ();
 
                if (this .fieldValue (field))
@@ -919,7 +919,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ();
 
-         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
+         throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
 
       return null;
@@ -937,12 +937,12 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          if (this .fieldType ())
          {
-            const fieldType = this .result [1];
+            const fieldType = this .result [0];
 
             if (this .inputOutputId ())
             {
                const
-                  fieldId = this .result [1],
+                  fieldId = this .result [0],
                   field   = new (Fields [fieldType]) ();
 
                if (this .fieldValue (field))
@@ -960,7 +960,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ();
 
-         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
+         throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
 
       return null;
@@ -973,7 +973,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          if (this .nodeTypeId ())
          {
-            const nodeTypeId = this .result [1];
+            const nodeTypeId = this .result [0];
 
             this .comments ();
 
@@ -1040,12 +1040,12 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          if (this .fieldType ())
          {
-            const fieldType = this .result [1];
+            const fieldType = this .result [0];
 
             if (this .inputOnlyId ())
             {
                const
-                  fieldId = this .result [1],
+                  fieldId = this .result [0],
                   field   = new (Fields [fieldType]) ();
 
                field .setAccessType (X3DConstants .inputOnly);
@@ -1058,19 +1058,19 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ()
 
-         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
+         throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
 
       if (Grammar .outputOnly .parse (this) || Grammar .eventOut .parse (this))
       {
          if (this .fieldType ())
          {
-            const fieldType = this .result [1];
+            const fieldType = this .result [0];
 
             if (this .outputOnlyId ())
             {
                const
-                  fieldId = this .result [1],
+                  fieldId = this .result [0],
                   field   = new (Fields [fieldType]) ();
 
                field .setAccessType (X3DConstants .outputOnly);
@@ -1083,19 +1083,19 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ()
 
-         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
+         throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
 
       if (Grammar .initializeOnly .parse (this) || Grammar .field .parse (this))
       {
          if (this .fieldType ())
          {
-            const fieldType = this .result [1];
+            const fieldType = this .result [0];
 
             if (this .initializeOnlyId ())
             {
                const
-                  fieldId = this .result [1],
+                  fieldId = this .result [0],
                   field   = new (Fields [fieldType]) ();
 
                field .setAccessType (X3DConstants .initializeOnly);
@@ -1108,19 +1108,19 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ()
 
-         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
+         throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
 
       if (Grammar .inputOutput .parse (this) || Grammar .exposedField .parse (this))
       {
          if (this .fieldType ())
          {
-            const fieldType = this .result [1];
+            const fieldType = this .result [0];
 
             if (this .inputOutputId ())
             {
                const
-                  fieldId = this .result [1],
+                  fieldId = this .result [0],
                   field   = new (Fields [fieldType]) ();
 
                field .setAccessType (X3DConstants .inputOutput);
@@ -1133,7 +1133,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ()
 
-         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
+         throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
 
       return null;
@@ -1151,7 +1151,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          if (this .nodeNameId ())
          {
             const
-               fromNodeId = this .result [1],
+               fromNodeId = this .result [0],
                fromNode   = this .getExecutionContext () .getLocalNode (fromNodeId);
 
             this .comments ();
@@ -1160,7 +1160,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             {
                if (this .outputOnlyId ())
                {
-                  const eventOutId = this .result [1];
+                  const eventOutId = this .result [0];
 
                   this .comments ();
 
@@ -1169,7 +1169,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                      if (this .nodeNameId ())
                      {
                         const
-                           toNodeId = this .result [1],
+                           toNodeId = this .result [0],
                            toNode   = this .getExecutionContext () .getLocalNode (toNodeId);
 
                         this .comments ();
@@ -1180,7 +1180,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                            {
                               try
                               {
-                                 const eventInId = this .result [1];
+                                 const eventInId = this .result [0];
 
                                  this .getExecutionContext () .addRoute (fromNode, eventOutId, toNode, eventInId);
                                  return true;
@@ -1220,7 +1220,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    {
       if (this .nodeTypeId ())
       {
-         const nodeTypeId = this .result [1];
+         const nodeTypeId = this .result [0];
 
          const baseNode = this .getExecutionContext () .createNode (nodeTypeId, false)
             ?? this .getExecutionContext () .createProto (nodeTypeId, false);
@@ -1301,17 +1301,17 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (this .Id ())
       {
-         const accessType = this .accessTypes [this .result [1]];
+         const accessType = this .accessTypes [this .result [0]];
 
          if (accessType)
          {
             if (this .fieldType ())
             {
-               const fieldType = this .result [1];
+               const fieldType = this .result [0];
 
                if (this .Id ())
                {
-                  const fieldId = this .result [1];
+                  const fieldId = this .result [0];
 
                   this .comments ();
 
@@ -1321,7 +1321,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                      {
                         if (this .Id ())
                         {
-                           const isId = this .result [1];
+                           const isId = this .result [0];
 
                            try
                            {
@@ -1413,7 +1413,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (this .Id ())
       {
-         const fieldId = this .result [1];
+         const fieldId = this .result [0];
 
          try
          {
@@ -1446,7 +1446,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             {
                if (this .Id ())
                {
-                  const isId = this .result [1];
+                  const isId = this .result [0];
 
                   try
                   {
@@ -1548,7 +1548,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .double .parse (this))
       {
-         this .value = parseFloat (this .result [1]);
+         this .value = parseFloat (this .result [0]);
          return true;
       }
 
@@ -1559,7 +1559,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          this .value = this .CONSTANTS [this .result [2] .toUpperCase ()];
 
          if (this .result [1] === "-")
-            this .value = - this .value;
+            this .value = -this .value;
 
          return true;
       }
@@ -1572,7 +1572,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .int32 .parse (this))
       {
-         this .value = parseInt (this .result [1]);
+         this .value = parseInt (this .result [0]);
          return true;
       }
 
@@ -1684,7 +1684,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .HTMLColor .parse (this))
       {
-         const color = this .convertColor (this .result [1] .replace (/0x/i, "#"));
+         const color = this .convertColor (this .result [0] .replace (/0x/i, "#"));
 
          field .r = color [0];
          field .g = color [1];
@@ -1767,7 +1767,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .HTMLColor .parse (this))
       {
-         const color = this .convertColor (this .result [1] .replace (/0x/i, "#"));
+         const color = this .convertColor (this .result [0] .replace (/0x/i, "#"));
 
          field .r = color [0];
          field .g = color [1];
