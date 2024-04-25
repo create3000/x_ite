@@ -259,7 +259,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          throw new Error (`Couldn't add named node: node named '${name}' is already in use.`);
 
       if (this [_namedNodes] .get (node .getName ()) ?.getValue () === node)
-         throw new Error (`Couldn't add named node: node named '${node .getName ()}' is already added.`);
+         throw new Error (`Couldn't add named node: node named '${node .getName ()}' already has a name.`);
 
       // Add named node.
 
