@@ -234,20 +234,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setError ({ type: error .message });
       }
    },
-   getTextureData (texture = this .getTexture (), width = this .getWidth (), height = this .getHeight ())
-   {
-      const
-         gl          = this .getBrowser () .getContext (),
-         framebuffer = gl .createFramebuffer (),
-         data        = new Uint8Array (width * height * 4);
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
-      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
-      gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
-      gl .deleteFramebuffer (framebuffer);
-
-      return data;
-   },
    dispose ()
    {
       X3DUrlObject     .prototype .dispose .call (this);

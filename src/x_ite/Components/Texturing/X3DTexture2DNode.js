@@ -101,6 +101,20 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    {
       this .setTextureFromData (1, 1, false, false, defaultData);
    },
+   getTextureData (texture = this .getTexture (), width = this .getWidth (), height = this .getHeight ())
+   {
+      const
+         gl          = this .getBrowser () .getContext (),
+         framebuffer = gl .createFramebuffer (),
+         data        = new Uint8Array (width * height * 4);
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
+      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
+      gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
+      gl .deleteFramebuffer (framebuffer);
+
+      return data;
+   },
    setTextureFromData (width, height, colorSpaceConversion, transparent, data)
    {
       this .width  = width;
