@@ -234,7 +234,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setError ({ type: error .message });
       }
    },
-   getTextureData (texture, width, height)
+   getTextureData (texture = this .getTexture (), width = this .getWidth (), height = this .getHeight ())
    {
       const
          gl          = this .getBrowser () .getContext (),
