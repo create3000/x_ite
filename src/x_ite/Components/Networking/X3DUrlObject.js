@@ -184,8 +184,8 @@ Object .assign (X3DUrlObject .prototype,
 
          if (this ._url .length === 0)
          {
-            resolve ();
             this .unloadData ();
+            resolve ();
             return;
          }
 
