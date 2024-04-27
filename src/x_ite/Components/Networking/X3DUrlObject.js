@@ -123,63 +123,51 @@ Object .assign (X3DUrlObject .prototype,
    {
       return this [_cache] && this .getBrowser () .getBrowserOption ("Cache");
    },
-   requestImmediateLoad (cache = true)
+   async requestImmediateLoad (cache = true)
    {
-      return new Promise ((resolve, reject) =>
+      const loadState = this .checkLoadState ();
+
+      switch (loadState)
       {
-         const loadState = this .checkLoadState ();
-
-         switch (loadState)
+         case X3DConstants .IN_PROGRESS_STATE:
          {
-            case X3DConstants .IN_PROGRESS_STATE:
-            {
-               this .loading () .then (resolve) .catch (reject);
-               return;
-            }
-            case X3DConstants .COMPLETE_STATE:
-            {
-               resolve ();
-               return;
-            }
-            case X3DConstants .FAILED_STATE:
-            {
-               reject (new Error (`Failed loading ${this .getTypeName ()}.`));
-               return;
-            }
-         }
-
-         const browser = this .getBrowser ();
-
-         if (!browser .getBrowserOption ("LoadUrlObjects") && this .getExecutionContext () !== browser .getPrivateScene ())
-         {
-            resolve ();
+            await this .loading ();
             return;
          }
-
-         if (!this ._load .getValue ())
+         case X3DConstants .COMPLETE_STATE:
          {
-            reject (new Error (`${this .getTypeName ()}.load is false.`));
             return;
          }
-
-         if (this ._url .length === 0)
+         case X3DConstants .FAILED_STATE:
          {
-            this .unloadData ();
-            resolve ();
-            return;
+            throw new Error (`Failed loading ${this .getTypeName ()}.`);
          }
+      }
 
-         this .setCache (cache);
-         this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
+      const browser = this .getBrowser ();
 
-         if (this .isInitialized ())
-            // Buffer prevents double load of the scene if load and url field are set at the same time.
-            this ._loadData = this .getBrowser () .getCurrentTime ();
-         else
-            this .loadData ();
+      if (!browser .getBrowserOption ("LoadUrlObjects") && this .getExecutionContext () !== browser .getPrivateScene ())
+         return;
 
-         this .loading () .then (resolve) .catch (reject);
-      });
+      if (!this ._load .getValue ())
+         throw new Error (`${this .getTypeName ()}.load is false.`);
+
+      if (this ._url .length === 0)
+      {
+         this .unloadData ();
+         return;
+      }
+
+      this .setCache (cache);
+      this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
+
+      if (this .isInitialized ())
+         // Buffer prevents double load of the scene if load and url field are set at the same time.
+         this ._loadData = this .getBrowser () .getCurrentTime ();
+      else
+         this .loadData ();
+
+      await this .loading ();
    },
    loading ()
    {
