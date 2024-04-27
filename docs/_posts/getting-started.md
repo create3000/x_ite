@@ -628,6 +628,10 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_it
 
 ### You can also get it from npm
 
+You can find more information about x_ite on its [npm page](https://www.npmjs.com/package/x_ite){:target="_blank"}.
+
+To install, use the following command:
+
 ```console
 $ npm install x_ite
 ```
