@@ -131,7 +131,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTe
       if (gl .getVersion () < 2)
          return;
 
-      // If the texture is updated with different data, it is not displayed right, so we create a new texture here.
+      // If the texture is updated with different data, it will not display correctly, so we will create a new texture here.
       this .setTexture (gl .createTexture ());
 
       gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
