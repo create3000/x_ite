@@ -125,9 +125,7 @@ Object .assign (X3DUrlObject .prototype,
    },
    async requestImmediateLoad (cache = true)
    {
-      const loadState = this .checkLoadState ();
-
-      switch (loadState)
+      switch (this .checkLoadState ())
       {
          case X3DConstants .IN_PROGRESS_STATE:
          {
