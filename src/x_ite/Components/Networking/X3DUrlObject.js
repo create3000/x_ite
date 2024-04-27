@@ -143,7 +143,7 @@ Object .assign (X3DUrlObject .prototype,
             }
             case X3DConstants .FAILED_STATE:
             {
-               reject ();
+               reject (new Error (`Failed loading ${this .getTypeName ()}.`));
                return;
             }
          }
@@ -158,7 +158,7 @@ Object .assign (X3DUrlObject .prototype,
 
          if (!this ._load .getValue ())
          {
-            reject ();
+            reject (new Error (`${this .getTypeName ()}.load is false.`));
             return;
          }
 
@@ -197,7 +197,7 @@ Object .assign (X3DUrlObject .prototype,
                   break;
                case X3DConstants .FAILED_STATE:
                   this ._loadState .removeFieldCallback (_loading);
-                  reject ();
+                  reject (new Error (`Failed loading ${this .getTypeName ()}.`));
                   break;
             }
          });
