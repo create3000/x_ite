@@ -236,7 +236,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
             data = new Uint8Array (cx2 .getImageData (0, 0, width, height) .data .buffer);
          }
 
-         this .setTextureFromData (width, height, true, transparent, data);
+         this .setTextureData (width, height, true, transparent, data);
          this ._loadState = X3DConstants .COMPLETE_STATE;
       }
       else

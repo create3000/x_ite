@@ -213,7 +213,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
             // Upload image to GPU.
 
-            this .setTextureFromData (width, height, false, transparent, data);
+            this .setTextureData (width, height, false, transparent, data);
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
          else
@@ -222,7 +222,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
             // Upload image to GPU.
 
-            this .setTextureFromData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
+            this .setTextureData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
             this .setTransparent (this .isImageTransparent (this .getTextureData (this .getTexture (), width, height)));
             this .setLoadState (X3DConstants .COMPLETE_STATE);
             this .addNodeEvent ();

@@ -194,7 +194,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          this ._duration_changed = video .duration;
 
          this .setMediaElement (video);
-         this .setTextureFromData (width, height, true, false, video);
+         this .setTextureData (width, height, true, false, video);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 
          this .set_speed__ ();
@@ -214,7 +214,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          this ._duration_changed = gif .duration;
 
          this .setMediaElement (gif);
-         this .setTextureFromData (gif .get_canvas () .width, gif .get_canvas () .height, true, false, gif .get_frames () [0] .data);
+         this .setTextureData (gif .get_canvas () .width, gif .get_canvas () .height, true, false, gif .get_frames () [0] .data);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 
          this .set_speed__ ();
@@ -242,7 +242,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       const media = this .getMediaElement ();
 
       if (media)
-         this .updateTextureFromData (media .currentFrame ?.data ?? media);
+         this .updateTextureData (media .currentFrame ?.data ?? media);
    },
    traverse: X3DTexture2DNode .prototype .traverse,
    dispose ()
