@@ -178,13 +178,17 @@ Object .assign (X3DUrlObject .prototype,
             switch (this .checkLoadState ())
             {
                case X3DConstants .COMPLETE_STATE:
+               {
                   this ._loadState .removeFieldCallback (_loading);
                   resolve ();
                   break;
+               }
                case X3DConstants .FAILED_STATE:
+               {
                   this ._loadState .removeFieldCallback (_loading);
                   reject (new Error (`Failed loading ${this .getTypeName ()}.`));
                   break;
+               }
             }
          });
       });
