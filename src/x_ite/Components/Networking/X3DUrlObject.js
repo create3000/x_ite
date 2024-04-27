@@ -127,33 +127,13 @@ Object .assign (X3DUrlObject .prototype,
    {
       return new Promise ((resolve, reject) =>
       {
-         const loading = () =>
-         {
-            const _loading = Symbol ();
-
-            this ._loadState .addFieldCallback (_loading, () =>
-            {
-               switch (this .checkLoadState ())
-               {
-                  case X3DConstants .COMPLETE_STATE:
-                     this ._loadState .removeFieldCallback (_loading);
-                     resolve ();
-                     break;
-                  case X3DConstants .FAILED_STATE:
-                     this ._loadState .removeFieldCallback (_loading);
-                     reject ();
-                     break;
-               }
-            });
-         };
-
          const loadState = this .checkLoadState ();
 
          switch (loadState)
          {
             case X3DConstants .IN_PROGRESS_STATE:
             {
-               loading ();
+               this .loading () .then (resolve) .catch (reject);
                return;
             }
             case X3DConstants .COMPLETE_STATE:
@@ -198,7 +178,29 @@ Object .assign (X3DUrlObject .prototype,
          else
             this .loadData ();
 
-         loading ();
+         this .loading () .then (resolve) .catch (reject);
+      });
+   },
+   loading ()
+   {
+      return new Promise ((resolve, reject) =>
+      {
+         const _loading = Symbol ();
+
+         this ._loadState .addFieldCallback (_loading, () =>
+         {
+            switch (this .checkLoadState ())
+            {
+               case X3DConstants .COMPLETE_STATE:
+                  this ._loadState .removeFieldCallback (_loading);
+                  resolve ();
+                  break;
+               case X3DConstants .FAILED_STATE:
+                  this ._loadState .removeFieldCallback (_loading);
+                  reject ();
+                  break;
+            }
+         });
       });
    },
    loadNow ()
