@@ -75,7 +75,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 - Mnemonic "this geometry is *solid* like a brick" (you don't render the inside of a brick).
 - If in doubt, use *solid*='false' for maximum visibility.
-- (X3D version 4.0 ISO.proof draft) accessType relaxed to inputOutput in order to support animation and visualization.
+- AccessType relaxed to inputOutput in order to support animation and visualization.
 
 #### Warnings
 
