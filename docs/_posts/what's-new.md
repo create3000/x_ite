@@ -24,7 +24,7 @@ In addition to these changes, we have added a »damping« field to BoundedPhysic
 
 Every time a particle collides with the model, the velocity is multiplied by the damping factor, which now makes it possible to create more realistic simulations.
 
-Also, X_ITE can now parse extremely long strings, which is important when using a data URLs.
+Also, X_ITE can now parse extremely long strings, which is important when using a data URLs. In addition, the [LineProperties](/x_ite/components/shape/lineproperties/) node can now be used with ParticleSystem, which was not possible before.
 
 In the meantime, further improvements have of course been made, but these are not listed here.
 
