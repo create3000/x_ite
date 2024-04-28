@@ -7,6 +7,25 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning){:target="_blank"}. Keep this in mind when choosing a version number.
 
+## X_ITE v9.5.2 Released
+
+*Leipzig, 28th April 2024:* Progress continues...
+
+The InstancedShape node can now be used in conjunction with the HAnimHumanoid node and this is now also possible with the ParticleSystem node.
+
+I have created two examples here to show the potential of this connection, both of which can be seen in the X_ITE Playground:
+
+* [Open HAnimInstancedShape in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/HAnim/HAnimInstancedShape/HAnimInstancedShape.x3d)
+* [Open HAnimParticleSystem in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/HAnim/HAnimParticleSystem/HAnimParticleSystem.x3d)
+
+In addition to these changes, I have added a »damping« field to BoundedPhysicsModel which makes this possible:
+
+* [Open BoundedPhysicsModel in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/BoundedPhysicsModel/BoundedPhysicsModel.x3d)
+
+Every time a particle collides with the model, the velocity is multiplied by the damping factor, which now makes it possible to create more realistic simulations.
+
+Also, X_ITE can now parse extremely long strings, which is important when using a data URLs.
+
 ## X_ITE v9.2.0 Released
 
 *Leipzig, 7th January 2024:* This release comes with improved handling of imported nodes, they will now also work inside X3DPrototypeInstance nodes.
