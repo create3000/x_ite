@@ -11,7 +11,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 *Leipzig, 28th April 2024:* Progress continues...
 
-The InstancedShape node can now be used in conjunction with the HAnimHumanoid node and this is now also possible with the ParticleSystem node.
+The [InstancedShape](/x_ite/components/x-ite/instancedshape/) node can now be used in conjunction with the [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) node and this is now also possible with the [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) node.
 
 I have created two examples here to show the potential of this connection, both of which can be seen in the X_ITE Playground:
 
