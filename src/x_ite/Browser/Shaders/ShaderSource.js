@@ -188,7 +188,7 @@ const ShaderSource =
 
       const lines = (match [1] .match (/\n/g) || [ ]) .length + 1;
 
-      return `${match [1]}${constants}${definitions}${types}#line ${lines + 1} -1\n${source .substr (match [0] .length)}`;
+      return `${match [1]}${constants}${definitions}${types}#line ${lines + 1} -1\n${source .substring (match [0] .length)}`;
    },
 };
 
