@@ -177,10 +177,10 @@ const ShaderSource =
       // Adjust precision of struct types;
 
       const
-         matchFloat       = source .match (/\s*precision\s+(lowp|mediump|highp)\s+float\s*;/),
-         matchInt         = source .match (/\s*precision\s+(lowp|mediump|highp)\s+int\s*;/),
-         precisionFloat   = matchFloat ? matchFloat [1] : "mediump",
-         precisionInt     = matchInt   ? matchInt   [1] : "mediump";
+         matchFloat     = source .match (/\s*precision\s+(lowp|mediump|highp)\s+float\s*;/),
+         matchInt       = source .match (/\s*precision\s+(lowp|mediump|highp)\s+int\s*;/),
+         precisionFloat = matchFloat ?.[1] ?? "mediump",
+         precisionInt   = matchInt   ?.[1] ?? "mediump";
 
       const types = Types
          .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, precisionFloat + " $1")
@@ -188,7 +188,7 @@ const ShaderSource =
 
       const lines = (match [1] .match (/\n/g) || [ ]) .length + 1;
 
-      return match [1] + constants + definitions + types + "#line " + (lines + 1) + " -1\n" + source .substr (match [0] .length);
+      return `${match [1]}${constants}${definitions}${types}#line ${lines + 1} -1\n${source .substr (match [0] .length)}`;
    },
 };
 
