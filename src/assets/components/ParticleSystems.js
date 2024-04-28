@@ -55,6 +55,7 @@ import ParticleSystem              from "../../x_ite/Components/ParticleSystems/
 import PointEmitter                from "../../x_ite/Components/ParticleSystems/PointEmitter.js";
 import PolylineEmitter             from "../../x_ite/Components/ParticleSystems/PolylineEmitter.js";
 import SurfaceEmitter              from "../../x_ite/Components/ParticleSystems/SurfaceEmitter.js";
+import VariationPhysicsModel       from "../../x_ite/Components/ParticleSystems/VariationPhysicsModel.js";
 import VolumeEmitter               from "../../x_ite/Components/ParticleSystems/VolumeEmitter.js";
 import WindPhysicsModel            from "../../x_ite/Components/ParticleSystems/WindPhysicsModel.js";
 import X3DParticleEmitterNode      from "../../x_ite/Components/ParticleSystems/X3DParticleEmitterNode.js";
@@ -72,6 +73,7 @@ Components .add ({
       PointEmitter,
       PolylineEmitter,
       SurfaceEmitter,
+      VariationPhysicsModel,
       VolumeEmitter,
       WindPhysicsModel,
    ],
