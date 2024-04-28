@@ -202,11 +202,11 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       // Script
       {
-         const result = url .match (/^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s);
+         const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s);
 
          if (result)
          {
-            this .callback (result [1]);
+            this .callback (url .substring (result [0] .length));
             return;
          }
       }
