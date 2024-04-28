@@ -55,7 +55,6 @@ const Grammar = Expressions ({
    field: /([\w\s]+):\s*(.+?)\n/gy,
    comment: /#[^\n]*\n/gy,
    newLine: /\n/gy,
-   data: /.*$/sgy,
 });
 
 // Parser
@@ -312,11 +311,13 @@ Object .assign (NRRDParser .prototype,
 
       this .nrrd .data = data;
 
-      if (!Grammar .data .parse (this))
+      const rest = this .input .substring (this .lastIndex);
+
+      if (!rest .length)
          return;
 
       const
-         numbers    = this .result [0] .trim () .split (/\s+/),
+         numbers    = rest .trim () .split (/\s+/),
          numNumbers = numbers .length;
 
       switch (this .byteType)
@@ -416,9 +417,11 @@ Object .assign (NRRDParser .prototype,
    },
    hex ()
    {
-      if (Grammar .data .parse (this))
+      const rest = this .input .substring (this .lastIndex);
+
+      if (rest .length)
       {
-         const match = this .result [0] .match (/([0-9a-fA-F]{2})/g);
+         const match = rest .match (/([0-9a-fA-F]{2})/g);
 
          if (match)
          {
