@@ -69,11 +69,10 @@ const ShaderSource =
             PRAGMA       = "#pragma\\s+.*?\\n",
             PREPROCESSOR =  LINE + "|" + IF + "|" + ELIF + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + UNDEF + "|" + PRAGMA,
             VERSION      = "#version\\s+.*?\\n",
-            EXTENSION    = "#extension\\s+.*?\\n",
-            ANY          = ".*";
+            EXTENSION    = "#extension\\s+.*?\\n";
 
          const
-            GLSL  = new RegExp ("^((?:" + COMMENTS + "|" + PREPROCESSOR + ")*(?:" + VERSION + ")?(?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$", "s"),
+            GLSL  = new RegExp ("^((?:" + COMMENTS + "|" + PREPROCESSOR + ")*(?:" + VERSION + ")?(?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)", "s"),
             match = source .match (GLSL);
 
       // const
@@ -189,7 +188,7 @@ const ShaderSource =
 
       const lines = (match [1] .match (/\n/g) || [ ]) .length + 1;
 
-      return match [1] + constants + definitions + types + "#line " + (lines + 1) + " -1\n" + match [2];
+      return match [1] + constants + definitions + types + "#line " + (lines + 1) + " -1\n" + source .substr (match [0] .length);
    },
 };
 
