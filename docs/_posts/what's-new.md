@@ -18,7 +18,7 @@ I have created two examples here to show the potential of this connection, both 
 * [Open HAnimInstancedShape in Playground.](/x_ite/playground/?url=https://create3000.github.io/media/examples/HAnim/HAnimInstancedShape/HAnimInstancedShape.x3d)
 * [Open HAnimParticleSystem in Playground.](/x_ite/playground/?url=https://create3000.github.io/media/examples/HAnim/HAnimParticleSystem/HAnimParticleSystem.x3d)
 
-In addition to these changes, I have added a »damping« field to BoundedPhysicsModel which makes this possible:
+In addition to these changes, we have added a »damping« field to BoundedPhysicsModel which makes this possible:
 
 * [Open BoundedPhysicsModel in Playground.](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/BoundedPhysicsModel/BoundedPhysicsModel.x3d)
 
