@@ -26,6 +26,8 @@ Every time a particle collides with the model, the velocity is multiplied by the
 
 Also, X_ITE can now parse extremely long strings, which is important when using a data URLs.
 
+In the meantime, further improvements have of course been made, but these are not listed here.
+
 ## X_ITE v9.2.0 Released
 
 *Leipzig, 7th January 2024:* This release comes with improved handling of imported nodes, they will now also work inside X3DPrototypeInstance nodes.
