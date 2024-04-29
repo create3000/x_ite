@@ -183,6 +183,7 @@ export default __default__;`;
                   // Licenses
                   `cp LICENSE.md dist/LICENSE.md`,
                   `echo '\`\`\`' >> dist/LICENSE.md`,
+                  `touch dist/x_ite.min.js.LICENSE.txt`,
                   `cat dist/x_ite.min.js.LICENSE.txt >> dist/LICENSE.md`,
                   `rm dist/x_ite.min.js.LICENSE.txt`,
                   `echo '\`\`\`' >> dist/LICENSE.md`,
@@ -317,6 +318,7 @@ export default __default__;`;
                   // Debug
                   `perl -p0i -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEVELOPMENT.js`,
                   // License
+                  `touch dist/x_ite.min.mjs.LICENSE.txt`,
                   `rm dist/x_ite.min.mjs.LICENSE.txt`,
                ],
                blocking: false,
