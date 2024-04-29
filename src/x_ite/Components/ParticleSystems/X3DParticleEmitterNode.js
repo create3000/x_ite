@@ -297,7 +297,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       key += numForces
       key += ".";
       key += boundedHierarchyRoot;
-      key += ".";
 
       return this .programs .get (key) ??
          this .createProgram (key, particleSystem);
@@ -306,7 +305,15 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
    {
       const
          browser = this .getBrowser (),
-         gl      = browser .getContext ();
+         gl      = browser .getContext (),
+         defines = this .defines .slice ();
+
+      defines .push (`#define X3D_GEOMETRY_TYPE ${particleSystem .geometryType}`)
+      defines .push (`${particleSystem .createParticles && this .on ? "#define X3D_CREATE_PARTICLES" : ""}`);
+      defines .push (`#define X3D_NUM_COLORS ${particleSystem .numColors}`);
+      defines .push (`#define X3D_NUM_TEX_COORDS ${particleSystem .numTexCoords}`);
+      defines .push (`#define X3D_NUM_FORCES ${particleSystem .numForces}`);
+      defines .push (`${particleSystem .boundedHierarchyRoot > -1 ? "#define X3D_BOUNDED_VOLUME" : ""}`);
 
       const vertexShaderSource = /* glsl */ `#version 300 es
 
@@ -314,14 +321,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       precision highp int;
       precision highp sampler2D;
 
-      ${this .defines .join ("\n")}
-
-      #define X3D_GEOMETRY_TYPE ${particleSystem .geometryType}
-      ${particleSystem .createParticles && this .on ? "#define X3D_CREATE_PARTICLES" : ""}
-      #define X3D_NUM_COLORS ${particleSystem .numColors}
-      #define X3D_NUM_TEX_COORDS ${particleSystem .numTexCoords}
-      #define X3D_NUM_FORCES ${particleSystem .numForces}
-      ${particleSystem .boundedHierarchyRoot > -1 ? "#define X3D_BOUNDED_VOLUME" : ""}
+      ${defines .join ("\n")}
 
       uniform int   randomSeed;
       uniform float particleLifetime;
@@ -341,10 +341,14 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          uniform sampler2D boundedVolume;
       #endif
 
-      uniform sampler2D colorRamp;
+      #if X3D_NUM_COLORS > 0
+         uniform sampler2D colorRamp;
+      #endif
 
-      uniform int       texCoordCount;
-      uniform sampler2D texCoordRamp;
+      #if X3D_NUM_TEX_COORDS > 0
+         uniform int       texCoordCount;
+         uniform sampler2D texCoordRamp;
+      #endif
 
       ${Array .from (this .uniforms .values ()) .join ("\n")}
 
@@ -931,7 +935,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       gl .linkProgram (program);
 
       if (!gl .getProgramParameter (program, gl .LINK_STATUS))
+      {
          console .error ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
+         // console .error (vertexShaderSource);
+      }
 
       program .inputs = [
          [0, gl .getAttribLocation (program, "input0")],
