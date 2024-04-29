@@ -982,7 +982,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       browser .resetTextureUnits ();
 
-      // Field Uniforms
+      // Field uniforms
 
       for (const callback of this .callbacks)
          callback .call (this);
