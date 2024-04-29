@@ -271,6 +271,8 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
          this .set_normalsIndex__ ();
          this .set_hierarchyIndex__ ();
          this .set_hierarchyRoot__ ();
+
+         this .addNodeEvent ();
       };
    })(),
    activateTextures (gl, program)
