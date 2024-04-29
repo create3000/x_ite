@@ -66,7 +66,7 @@ function X3DParticleEmitterNode (executionContext)
    this .defines   = [ ];
    this .samplers  = [ ];
    this .uniforms  = new Map ();
-   this .callbacks = new Set ();
+   this .callbacks = [ ];
    this .functions = [ ];
    this .programs  = new Map ();
 
@@ -275,7 +275,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
    },
    addCallback (callback)
    {
-      this .callbacks .add (callback);
+      this .callbacks .push (callback);
    },
    addFunction (func)
    {
