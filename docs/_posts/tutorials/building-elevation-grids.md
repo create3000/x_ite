@@ -167,7 +167,7 @@ Shape {
   <img src="https://create3000.github.io/media/tutorials/scenes/elevation-grid/screenshot.png" alt="Elevation Grid"/>
 </x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/elevation-grid/elevation-grid.zip) · [View Source in Playground](https://create3000.github.io/media/tutorials/scenes/elevation-grid/elevation-grid.x3dv)
+[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/elevation-grid/elevation-grid.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/elevation-grid/elevation-grid.x3dv)
 
 ## Summary
 

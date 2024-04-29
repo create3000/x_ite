@@ -122,7 +122,7 @@ LOD {
   <img src="https://create3000.github.io/media/tutorials/scenes/lod/screenshot.png" alt="LOD"/>
 </x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/lod/lod.zip) · [View Source in Playground](https://create3000.github.io/media/tutorials/scenes/lod/lod.x3dv)
+[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/lod/lod.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/lod/lod.x3dv)
 
 ## Summary
 
