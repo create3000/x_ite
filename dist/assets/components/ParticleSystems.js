@@ -201,7 +201,7 @@ function X3DParticleEmitterNode (executionContext)
    this .defines   = [ ];
    this .samplers  = [ ];
    this .uniforms  = new Map ();
-   this .callbacks = new Set ();
+   this .callbacks = [ ];
    this .functions = [ ];
    this .programs  = new Map ();
 
@@ -410,7 +410,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
    },
    addCallback (callback)
    {
-      this .callbacks .add (callback);
+      this .callbacks .push (callback);
    },
    addFunction (func)
    {
@@ -716,28 +716,6 @@ function PointEmitter (executionContext)
    this .addType ((X3DConstants_default()).PointEmitter);
 
    this ._position .setUnit ("length");
-
-   this .addDefine ("#define X3D_POINT_EMITTER");
-
-   this .addUniform ("position",  "uniform vec3 position;");
-   this .addUniform ("direction", "uniform vec3 direction;");
-
-   this .addCallback (this .set_position__);
-   this .addCallback (this .set_direction__);
-
-   this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
-   {
-      if (direction == vec3 (0.0))
-         return getRandomSphericalVelocity ();
-
-      else
-         return direction * getRandomSpeed ();
-   }`);
-
-   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
-   {
-      return vec4 (position, 1.0);
-   }`);
 }
 
 Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems_X3DParticleEmitterNode .prototype),
@@ -752,8 +730,27 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems
       this ._position  .addInterest ("set_position__",  this);
       this ._direction .addInterest ("set_direction__", this);
 
-      this .set_position__ ();
-      this .set_direction__ ();
+      this .addDefine ("#define X3D_POINT_EMITTER");
+
+      this .addUniform ("position",  "uniform vec3 position;");
+      this .addUniform ("direction", "uniform vec3 direction;");
+
+      this .addCallback (this .set_position__);
+      this .addCallback (this .set_direction__);
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         if (direction == vec3 (0.0))
+            return getRandomSphericalVelocity ();
+
+         else
+            return direction * getRandomSpeed ();
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return vec4 (position, 1.0);
+      }`);
    },
    set_position__ ()
    {
@@ -1178,36 +1175,6 @@ function ConeEmitter (executionContext)
 
    this ._position .setUnit ("length");
    this ._angle    .setUnit ("angle");
-
-   this .addDefine ("#define X3D_CONE_EMITTER");
-
-   this .addUniform ("position",  "uniform vec3  position;");
-   this .addUniform ("direction", "uniform vec3  direction;");
-   this .addUniform ("angle",     "uniform float angle;");
-
-   this .addCallback (this .set_position__);
-   this .addCallback (this .set_direction__);
-   this .addCallback (this .set_angle__);
-
-   this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
-   {
-      if (direction == vec3 (0.0))
-      {
-         return getRandomSphericalVelocity ();
-      }
-      else
-      {
-         vec3  normal = getRandomNormalWithDirectionAndAngle (direction, angle);
-         float speed  = getRandomSpeed ();
-
-         return normal * speed;
-      }
-   }`);
-
-   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
-   {
-      return vec4 (position, 1.0);
-   }`);
 }
 
 Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, ParticleSystems_X3DParticleEmitterNode .prototype),
@@ -1223,9 +1190,35 @@ Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, ParticleSystems_
       this ._direction .addInterest ("set_direction__", this);
       this ._angle     .addInterest ("set_angle__", this);
 
-      this .set_position__ ();
-      this .set_direction__ ();
-      this .set_angle__ ();
+      this .addDefine ("#define X3D_CONE_EMITTER");
+
+      this .addUniform ("position",  "uniform vec3  position;");
+      this .addUniform ("direction", "uniform vec3  direction;");
+      this .addUniform ("angle",     "uniform float angle;");
+
+      this .addCallback (this .set_position__);
+      this .addCallback (this .set_direction__);
+      this .addCallback (this .set_angle__);
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         if (direction == vec3 (0.0))
+         {
+            return getRandomSphericalVelocity ();
+         }
+         else
+         {
+            vec3  normal = getRandomNormalWithDirectionAndAngle (direction, angle);
+            float speed  = getRandomSpeed ();
+
+            return normal * speed;
+         }
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return vec4 (position, 1.0);
+      }`);
    },
    set_position__ ()
    {
@@ -1350,20 +1343,6 @@ function ExplosionEmitter (executionContext)
    this .addType ((X3DConstants_default()).ExplosionEmitter);
 
    this ._position .setUnit ("length");
-
-   this .addDefine ("#define X3D_EXPLOSION_EMITTER");
-   this .addUniform ("position", "uniform vec3 position;");
-   this .addCallback (this .set_position__);
-
-   this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
-   {
-      return getRandomSphericalVelocity ();
-   }`);
-
-   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
-   {
-      return vec4 (position, 1.0);
-   }`);
 }
 
 Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, ParticleSystems_X3DParticleEmitterNode .prototype),
@@ -1377,7 +1356,19 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, ParticleSys
 
       this ._position .addInterest ("set_position__", this);
 
-      this .set_position__ ();
+      this .addDefine ("#define X3D_EXPLOSION_EMITTER");
+      this .addUniform ("position", "uniform vec3 position;");
+      this .addCallback (this .set_position__);
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         return getRandomSphericalVelocity ();
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return vec4 (position, 1.0);
+      }`);
    },
    isExplosive ()
    {
@@ -3286,56 +3277,6 @@ function PolylineEmitter (executionContext)
    this .verticesIndex  = -1;
    this .polylinesNode  = new (IndexedLineSet_default()) (executionContext);
    this .polylinesArray = new Float32Array ();
-
-   this .addDefine ("#define X3D_POLYLINE_EMITTER");
-   this .addSampler ("polylines");
-
-   this .addUniform ("direction",     "uniform vec3 direction;");
-   this .addUniform ("verticesIndex", "uniform int verticesIndex;");
-   this .addUniform ("polylines",     "uniform sampler2D polylines;");
-
-   this .addCallback (this .set_direction__);
-   this .addCallback (this .set_verticesIndex__);
-
-   this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
-   {
-      if (direction == vec3 (0.0))
-         return getRandomSphericalVelocity ();
-
-      else
-         return direction * getRandomSpeed ();
-   }`);
-
-   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
-   {
-      if (verticesIndex < 0)
-      {
-         return vec4 (NaN);
-      }
-      else
-      {
-         // Determine index0, index1 and weight.
-
-         float lastLengthSoFar = texelFetch (polylines, verticesIndex - 1, 0) .x;
-         float fraction        = random () * lastLengthSoFar;
-
-         int   index0 = 0;
-         int   index1 = 0;
-         float weight = 0.0;
-
-         interpolate (polylines, verticesIndex, fraction, index0, index1, weight);
-
-         // Interpolate and return position.
-
-         index0 *= 2;
-         index1  = index0 + 1;
-
-         vec4 vertex0 = texelFetch (polylines, verticesIndex + index0, 0);
-         vec4 vertex1 = texelFetch (polylines, verticesIndex + index1, 0);
-
-         return mix (vertex0, vertex1, weight);
-      }
-   }`);
 }
 
 Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSystems_X3DParticleEmitterNode .prototype),
@@ -3368,7 +3309,56 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
       this .polylinesNode .setup ();
       this .polylinesNode ._rebuild .addInterest ("set_polylines__", this);
 
-      this .set_direction__ ();
+      this .addDefine ("#define X3D_POLYLINE_EMITTER");
+      this .addSampler ("polylines");
+
+      this .addUniform ("direction",     "uniform vec3 direction;");
+      this .addUniform ("verticesIndex", "uniform int verticesIndex;");
+      this .addUniform ("polylines",     "uniform sampler2D polylines;");
+
+      this .addCallback (this .set_direction__);
+      this .addCallback (this .set_verticesIndex__);
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         if (direction == vec3 (0.0))
+            return getRandomSphericalVelocity ();
+
+         else
+            return direction * getRandomSpeed ();
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         if (verticesIndex < 0)
+         {
+            return vec4 (NaN);
+         }
+         else
+         {
+            // Determine index0, index1 and weight.
+
+            float lastLengthSoFar = texelFetch (polylines, verticesIndex - 1, 0) .x;
+            float fraction        = random () * lastLengthSoFar;
+
+            int   index0 = 0;
+            int   index1 = 0;
+            float weight = 0.0;
+
+            interpolate (polylines, verticesIndex, fraction, index0, index1, weight);
+
+            // Interpolate and return position.
+
+            index0 *= 2;
+            index1  = index0 + 1;
+
+            vec4 vertex0 = texelFetch (polylines, verticesIndex + index0, 0);
+            vec4 vertex1 = texelFetch (polylines, verticesIndex + index1, 0);
+
+            return mix (vertex0, vertex1, weight);
+         }
+      }`);
+
       this .set_polylines__ ();
    },
    set_direction__: (() =>
@@ -3553,42 +3543,6 @@ function SurfaceEmitter (executionContext)
    this .normalsIndex  = -1;
    this .surfaceNode   = null;
    this .surfaceArray  = new Float32Array ();
-
-   this .addDefine ("#define X3D_SURFACE_EMITTER");
-   this .addSampler ("surface");
-
-   this .addUniform ("solid",         "uniform bool solid;");
-   this .addUniform ("verticesIndex", "uniform int verticesIndex;");
-   this .addUniform ("normalsIndex",  "uniform int normalsIndex;");
-   this .addUniform ("surface",       "uniform sampler2D surface;");
-
-   this .addCallback (this .set_solid__);
-   this .addCallback (this .set_verticesIndex__);
-   this .addCallback (this .set_normalsIndex__);
-
-   this .addFunction (/* glsl */ `vec4 position; vec3 getRandomVelocity ()
-   {
-      if (verticesIndex < 0)
-      {
-         return vec3 (0.0);
-      }
-      else
-      {
-         vec3 normal;
-
-         getRandomPointOnSurface (surface, verticesIndex, normalsIndex, position, normal);
-
-         if (solid == false && random () > 0.5)
-            normal = -normal;
-
-         return normal * getRandomSpeed ();
-      }
-   }`);
-
-   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
-   {
-      return verticesIndex < 0 ? vec4 (NaN) : position;
-   }`);
 }
 
 Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSystems_X3DParticleEmitterNode .prototype),
@@ -3609,6 +3563,42 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
       // Initialize fields.
 
       this ._surface .addInterest ("set_surface__", this);
+
+      this .addDefine ("#define X3D_SURFACE_EMITTER");
+      this .addSampler ("surface");
+
+      this .addUniform ("solid",         "uniform bool solid;");
+      this .addUniform ("verticesIndex", "uniform int verticesIndex;");
+      this .addUniform ("normalsIndex",  "uniform int normalsIndex;");
+      this .addUniform ("surface",       "uniform sampler2D surface;");
+
+      this .addCallback (this .set_solid__);
+      this .addCallback (this .set_verticesIndex__);
+      this .addCallback (this .set_normalsIndex__);
+
+      this .addFunction (/* glsl */ `vec4 position; vec3 getRandomVelocity ()
+      {
+         if (verticesIndex < 0)
+         {
+            return vec3 (0.0);
+         }
+         else
+         {
+            vec3 normal;
+
+            getRandomPointOnSurface (surface, verticesIndex, normalsIndex, position, normal);
+
+            if (solid == false && random () > 0.5)
+               normal = -normal;
+
+            return normal * getRandomSpeed ();
+         }
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return verticesIndex < 0 ? vec4 (NaN) : position;
+      }`);
 
       this .set_surface__ ();
    },
@@ -3833,76 +3823,6 @@ function VolumeEmitter (executionContext)
    this .hierarchyRoot  = -1;
    this .volumeNode     = new (IndexedFaceSet_default()) (executionContext);
    this .volumeArray    = new Float32Array ();
-
-   this .addDefine ("#define X3D_VOLUME_EMITTER");
-   this .addSampler ("volume");
-
-   this .addUniform ("direction",      "uniform vec3 direction;");
-   this .addUniform ("verticesIndex",  "uniform int verticesIndex;");
-   this .addUniform ("normalsIndex",   "uniform int normalsIndex;");
-   this .addUniform ("hierarchyIndex", "uniform int hierarchyIndex;");
-   this .addUniform ("hierarchyRoot",  "uniform int hierarchyRoot;");
-   this .addUniform ("volume",         "uniform sampler2D volume;");
-
-   this .addCallback (this .set_direction__);
-   this .addCallback (this .set_verticesIndex__);
-   this .addCallback (this .set_normalsIndex__);
-   this .addCallback (this .set_hierarchyIndex__);
-   this .addCallback (this .set_hierarchyRoot__);
-
-   this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
-   {
-      if (hierarchyRoot < 0)
-      {
-         return vec3 (0.0);
-      }
-      else
-      {
-         if (direction == vec3 (0.0))
-            return getRandomSphericalVelocity ();
-
-         else
-            return direction * getRandomSpeed ();
-      }
-   }`);
-
-   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
-   {
-      if (hierarchyRoot < 0)
-      {
-         return vec4 (NaN);
-      }
-      else
-      {
-         vec4 point;
-         vec3 normal;
-
-         getRandomPointOnSurface (volume, verticesIndex, normalsIndex, point, normal);
-
-         Line3 line = Line3 (point .xyz, getRandomSurfaceNormal (normal));
-
-         vec4 points [ARRAY_SIZE];
-
-         int numIntersections = getIntersections (volume, verticesIndex, hierarchyIndex, hierarchyRoot, line, points);
-
-         numIntersections -= numIntersections % 2; // We need an even count of intersections.
-
-         switch (numIntersections)
-         {
-            case 0:
-               return vec4 (0.0);
-            case 2:
-               break;
-            default:
-               sort (points, numIntersections, plane3 (line .point, line .direction));
-               break;
-         }
-
-         int index = int (fract (random ()) * float (numIntersections / 2)) * 2; // Select random intersection.
-
-         return mix (points [index], points [index + 1], random ());
-      }
-   }`);
 }
 
 Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystems_X3DParticleEmitterNode .prototype),
@@ -3937,7 +3857,76 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
       this .volumeNode .setup ();
       this .volumeNode ._rebuild .addInterest ("set_geometry__", this);
 
-      this .set_direction__ ();
+      this .addDefine ("#define X3D_VOLUME_EMITTER");
+      this .addSampler ("volume");
+
+      this .addUniform ("direction",      "uniform vec3 direction;");
+      this .addUniform ("verticesIndex",  "uniform int verticesIndex;");
+      this .addUniform ("normalsIndex",   "uniform int normalsIndex;");
+      this .addUniform ("hierarchyIndex", "uniform int hierarchyIndex;");
+      this .addUniform ("hierarchyRoot",  "uniform int hierarchyRoot;");
+      this .addUniform ("volume",         "uniform sampler2D volume;");
+
+      this .addCallback (this .set_direction__);
+      this .addCallback (this .set_verticesIndex__);
+      this .addCallback (this .set_normalsIndex__);
+      this .addCallback (this .set_hierarchyIndex__);
+      this .addCallback (this .set_hierarchyRoot__);
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         if (hierarchyRoot < 0)
+         {
+            return vec3 (0.0);
+         }
+         else
+         {
+            if (direction == vec3 (0.0))
+               return getRandomSphericalVelocity ();
+
+            else
+               return direction * getRandomSpeed ();
+         }
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         if (hierarchyRoot < 0)
+         {
+            return vec4 (NaN);
+         }
+         else
+         {
+            vec4 point;
+            vec3 normal;
+
+            getRandomPointOnSurface (volume, verticesIndex, normalsIndex, point, normal);
+
+            Line3 line = Line3 (point .xyz, getRandomSurfaceNormal (normal));
+
+            vec4 points [ARRAY_SIZE];
+
+            int numIntersections = getIntersections (volume, verticesIndex, hierarchyIndex, hierarchyRoot, line, points);
+
+            numIntersections -= numIntersections % 2; // We need an even count of intersections.
+
+            switch (numIntersections)
+            {
+               case 0:
+                  return vec4 (0.0);
+               case 2:
+                  break;
+               default:
+                  sort (points, numIntersections, plane3 (line .point, line .direction));
+                  break;
+            }
+
+            int index = int (fract (random ()) * float (numIntersections / 2)) * 2; // Select random intersection.
+
+            return mix (points [index], points [index + 1], random ());
+         }
+      }`);
+
       this .set_geometry__ ();
    },
    set_direction__: (() =>
