@@ -63,6 +63,7 @@ function PolylineEmitter (executionContext)
    this .polylinesNode  = new IndexedLineSet (executionContext);
    this .polylinesArray = new Float32Array ();
 
+   this .addDefine ("#define X3D_POLYLINE_EMITTER");
    this .addSampler ("polylines");
 
    this .addUniform ("direction",     "uniform vec3 direction;");

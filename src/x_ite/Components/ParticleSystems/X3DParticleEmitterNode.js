@@ -171,7 +171,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       // Uniforms
 
       gl .uniform1i (program .randomSeed,        Math .random () * 0xffffffff);
-      gl .uniform1i (program .createParticles,   particleSystem .createParticles && this .on);
       gl .uniform1f (program .particleLifetime,  particleSystem .particleLifetime);
       gl .uniform1f (program .lifetimeVariation, particleSystem .lifetimeVariation);
       gl .uniform1f (program .deltaTime,         deltaTime);
@@ -284,11 +283,12 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
    },
    getProgram (particleSystem)
    {
-      const { geometryType, numColors, numTexCoords, numForces, boundedHierarchyRoot } = particleSystem;
+      const { geometryType, createParticles, numColors, numTexCoords, numForces, boundedHierarchyRoot } = particleSystem;
 
       let key = "";
 
       key += geometryType;
+      key += createParticles && this .on ? 1 : 0;
       key += ".";
       key += numColors
       key += ".";
@@ -317,13 +317,13 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       ${this .defines .join ("\n")}
 
       #define X3D_GEOMETRY_TYPE ${particleSystem .geometryType}
+      ${particleSystem .createParticles && this .on ? "#define X3D_CREATE_PARTICLES" : ""}
       #define X3D_NUM_COLORS ${particleSystem .numColors}
       #define X3D_NUM_TEX_COORDS ${particleSystem .numTexCoords}
       #define X3D_NUM_FORCES ${particleSystem .numForces}
       ${particleSystem .boundedHierarchyRoot > -1 ? "#define X3D_BOUNDED_VOLUME" : ""}
 
       uniform int   randomSeed;
-      uniform bool  createParticles;
       uniform float particleLifetime;
       uniform float lifetimeVariation;
       uniform float deltaTime;
@@ -665,6 +665,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          }
       }
 
+      #if defined (X3D_SURFACE_EMITTER) || defined (X3D_VOLUME_EMITTER)
       vec3
       getRandomBarycentricCoord ()
       {
@@ -722,6 +723,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          position = r .z * vertex0 + r .x * vertex1 + r .y * vertex2;
          normal   = save_normalize (r .z * normal0 + r .x * normal1 + r .y * normal2);
       }
+      #endif
 
       // Functions
 
@@ -832,18 +834,15 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
             output0 = vec4 (max (life + 1, 1), lifetime, elapsedTime, getTexCoordIndex0 (lifetime, elapsedTime));
 
-            if (createParticles)
-            {
+            #if defined (X3D_CREATE_PARTICLES)
                output1 = getColor (lifetime, elapsedTime);
                output2 = vec4 (getRandomVelocity (), 0.0);
                output6 = getRandomPosition ();
-            }
-            else
-            {
+            #else
                output1 = vec4 (0.0);
                output2 = vec4 (0.0);
                output6 = vec4 (NaN);
-            }
+            #endif
          }
          else
          {
@@ -941,7 +940,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       ];
 
       program .randomSeed        = gl .getUniformLocation (program, "randomSeed");
-      program .createParticles   = gl .getUniformLocation (program, "createParticles");
       program .particleLifetime  = gl .getUniformLocation (program, "particleLifetime");
       program .lifetimeVariation = gl .getUniformLocation (program, "lifetimeVariation");
       program .deltaTime         = gl .getUniformLocation (program, "deltaTime");

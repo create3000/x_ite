@@ -59,6 +59,7 @@ function ExplosionEmitter (executionContext)
 
    this ._position .setUnit ("length");
 
+   this .addDefine ("#define X3D_EXPLOSION_EMITTER");
    this .addUniform ("position", "uniform vec3 position;");
    this .addCallback (this .set_position__);
 

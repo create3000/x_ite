@@ -60,6 +60,8 @@ function PointEmitter (executionContext)
 
    this ._position .setUnit ("length");
 
+   this .addDefine ("#define X3D_POINT_EMITTER");
+
    this .addUniform ("position",  "uniform vec3 position;");
    this .addUniform ("direction", "uniform vec3 direction;");
 

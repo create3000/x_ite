@@ -60,6 +60,8 @@ function ConeEmitter (executionContext)
    this ._position .setUnit ("length");
    this ._angle    .setUnit ("angle");
 
+   this .addDefine ("#define X3D_CONE_EMITTER");
+
    this .addUniform ("position",  "uniform vec3  position;");
    this .addUniform ("direction", "uniform vec3  direction;");
    this .addUniform ("angle",     "uniform float angle;");

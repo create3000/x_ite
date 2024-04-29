@@ -65,6 +65,7 @@ function SurfaceEmitter (executionContext)
    this .surfaceNode   = null;
    this .surfaceArray  = new Float32Array ();
 
+   this .addDefine ("#define X3D_SURFACE_EMITTER");
    this .addSampler ("surface");
 
    this .addUniform ("solid",         "uniform bool solid;");
