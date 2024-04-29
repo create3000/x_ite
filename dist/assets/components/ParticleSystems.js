@@ -115,10 +115,19 @@ const Box3_glsl_default_ = /* glsl */ `bool intersects(const in vec3 min,const i
 Namespace_default().add ("Box3.glsl", "x_ite/Browser/ParticleSystems/Box3.glsl", Box3_glsl_default_);
 /* harmony default export */ const Box3_glsl = (Box3_glsl_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/BVH.glsl.js
-const BVH_glsl_default_ = /* glsl */ `#define BVH_NODE 0
+const BVH_glsl_default_ = /* glsl */ `#if defined(X3D_VOLUME_EMITTER)||defined(X3D_BOUNDED_VOLUME)
+#define BVH_NODE 0
 #define BVH_TRIANGLE 1
 #define BVH_STACK_SIZE 32
-int bvhNodeIndex=0;void setBVHIndex(const in int index){bvhNodeIndex=index;}int getBVHRoot(const in sampler2D volume,const in int hierarchyIndex,const in int rootIndex){return int(texelFetch(volume,rootIndex,0).x)+hierarchyIndex;}int getBVHType(const in sampler2D volume){return int(texelFetch(volume,bvhNodeIndex,0).x);}vec3 getBVHMin(const in sampler2D volume){return texelFetch(volume,bvhNodeIndex+1,0).xyz;}vec3 getBVHMax(const in sampler2D volume){return texelFetch(volume,bvhNodeIndex+2,0).xyz;}int getBVHLeft(const in sampler2D volume,const in int hierarchyIndex){return int(texelFetch(volume,bvhNodeIndex,0).y)+hierarchyIndex;}int getBVHRight(const in sampler2D volume,const in int hierarchyIndex){return int(texelFetch(volume,bvhNodeIndex,0).z)+hierarchyIndex;}int getBVHTriangle(const in sampler2D volume){return int(texelFetch(volume,bvhNodeIndex,0).y);}int getIntersections(const in sampler2D volume,const in int verticesIndex,const in int hierarchyIndex,const in int rootIndex,const in Line3 line,out vec4 points[ARRAY_SIZE]){int current=getBVHRoot(volume,hierarchyIndex,rootIndex);int count=0;int stackIndex=-1;int stack[BVH_STACK_SIZE];while(stackIndex>=0||current>=0){if(current>=0){setBVHIndex(current);if(getBVHType(volume)==BVH_NODE){if(intersects(getBVHMin(volume),getBVHMax(volume),line)){stack[++stackIndex]=current;current=getBVHLeft(volume,hierarchyIndex);}else{current=-1;}}else{int t=getBVHTriangle(volume);int v=verticesIndex+t;vec3 r=vec3(0.0);vec3 a=texelFetch(volume,v,0).xyz;vec3 b=texelFetch(volume,v+1,0).xyz;vec3 c=texelFetch(volume,v+2,0).xyz;if(intersects(line,a,b,c,r))points[count++]=vec4(r.z*a+r.x*b+r.y*c,1.0);current=-1;}}else{setBVHIndex(stack[stackIndex--]);current=getBVHRight(volume,hierarchyIndex);}}return count;}int getIntersections(const in sampler2D volume,const in int verticesIndex,const in int normalsIndex,const in int hierarchyIndex,const in int rootIndex,const in Line3 line,out vec4 points[ARRAY_SIZE],out vec3 normals[ARRAY_SIZE]){int current=getBVHRoot(volume,hierarchyIndex,rootIndex);int count=0;int stackIndex=-1;int stack[BVH_STACK_SIZE];while(stackIndex>=0||current>=0){if(current>=0){setBVHIndex(current);if(getBVHType(volume)==BVH_NODE){if(intersects(getBVHMin(volume),getBVHMax(volume),line)){stack[++stackIndex]=current;current=getBVHLeft(volume,hierarchyIndex);}else{current=-1;}}else{int t=getBVHTriangle(volume);int v=verticesIndex+t;vec3 r=vec3(0.0);vec3 a=texelFetch(volume,v,0).xyz;vec3 b=texelFetch(volume,v+1,0).xyz;vec3 c=texelFetch(volume,v+2,0).xyz;if(intersects(line,a,b,c,r)){points[count]=vec4(r.z*a+r.x*b+r.y*c,1.0);int n=normalsIndex+t;vec3 n0=texelFetch(volume,n,0).xyz;vec3 n1=texelFetch(volume,n+1,0).xyz;vec3 n2=texelFetch(volume,n+2,0).xyz;normals[count]=r.z*n0+r.x*n1+r.y*n2;++count;}current=-1;}}else{setBVHIndex(stack[stackIndex--]);current=getBVHRight(volume,hierarchyIndex);}}return count;}`
+int bvhNodeIndex=0;void setBVHIndex(const in int index){bvhNodeIndex=index;}int getBVHRoot(const in sampler2D volume,const in int hierarchyIndex,const in int rootIndex){return int(texelFetch(volume,rootIndex,0).x)+hierarchyIndex;}int getBVHType(const in sampler2D volume){return int(texelFetch(volume,bvhNodeIndex,0).x);}vec3 getBVHMin(const in sampler2D volume){return texelFetch(volume,bvhNodeIndex+1,0).xyz;}vec3 getBVHMax(const in sampler2D volume){return texelFetch(volume,bvhNodeIndex+2,0).xyz;}int getBVHLeft(const in sampler2D volume,const in int hierarchyIndex){return int(texelFetch(volume,bvhNodeIndex,0).y)+hierarchyIndex;}int getBVHRight(const in sampler2D volume,const in int hierarchyIndex){return int(texelFetch(volume,bvhNodeIndex,0).z)+hierarchyIndex;}int getBVHTriangle(const in sampler2D volume){return int(texelFetch(volume,bvhNodeIndex,0).y);}
+#if defined(X3D_VOLUME_EMITTER)
+int getIntersections(const in sampler2D volume,const in int verticesIndex,const in int hierarchyIndex,const in int rootIndex,const in Line3 line,out vec4 points[ARRAY_SIZE]){int current=getBVHRoot(volume,hierarchyIndex,rootIndex);int count=0;int stackIndex=-1;int stack[BVH_STACK_SIZE];while(stackIndex>=0||current>=0){if(current>=0){setBVHIndex(current);if(getBVHType(volume)==BVH_NODE){if(intersects(getBVHMin(volume),getBVHMax(volume),line)){stack[++stackIndex]=current;current=getBVHLeft(volume,hierarchyIndex);}else{current=-1;}}else{int t=getBVHTriangle(volume);int v=verticesIndex+t;vec3 r=vec3(0.0);vec3 a=texelFetch(volume,v,0).xyz;vec3 b=texelFetch(volume,v+1,0).xyz;vec3 c=texelFetch(volume,v+2,0).xyz;if(intersects(line,a,b,c,r))points[count++]=vec4(r.z*a+r.x*b+r.y*c,1.0);current=-1;}}else{setBVHIndex(stack[stackIndex--]);current=getBVHRight(volume,hierarchyIndex);}}return count;}
+#endif
+#if defined(X3D_BOUNDED_VOLUME)
+int getIntersections(const in sampler2D volume,const in int verticesIndex,const in int normalsIndex,const in int hierarchyIndex,const in int rootIndex,const in Line3 line,out vec4 points[ARRAY_SIZE],out vec3 normals[ARRAY_SIZE]){int current=getBVHRoot(volume,hierarchyIndex,rootIndex);int count=0;int stackIndex=-1;int stack[BVH_STACK_SIZE];while(stackIndex>=0||current>=0){if(current>=0){setBVHIndex(current);if(getBVHType(volume)==BVH_NODE){if(intersects(getBVHMin(volume),getBVHMax(volume),line)){stack[++stackIndex]=current;current=getBVHLeft(volume,hierarchyIndex);}else{current=-1;}}else{int t=getBVHTriangle(volume);int v=verticesIndex+t;vec3 r=vec3(0.0);vec3 a=texelFetch(volume,v,0).xyz;vec3 b=texelFetch(volume,v+1,0).xyz;vec3 c=texelFetch(volume,v+2,0).xyz;if(intersects(line,a,b,c,r)){points[count]=vec4(r.z*a+r.x*b+r.y*c,1.0);int n=normalsIndex+t;vec3 n0=texelFetch(volume,n,0).xyz;vec3 n1=texelFetch(volume,n+1,0).xyz;vec3 n2=texelFetch(volume,n+2,0).xyz;normals[count]=r.z*n0+r.x*n1+r.y*n2;++count;}current=-1;}}else{setBVHIndex(stack[stackIndex--]);current=getBVHRight(volume,hierarchyIndex);}}return count;}
+#endif
+#endif
+`
 ;
 
 Namespace_default().add ("BVH.glsl", "x_ite/Browser/ParticleSystems/BVH.glsl", BVH_glsl_default_);
@@ -189,10 +198,12 @@ function X3DParticleEmitterNode (executionContext)
    this ._mass        .setUnit ("mass");
    this ._surfaceArea .setUnit ("area");
 
+   this .defines   = [ ];
    this .samplers  = [ ];
-   this .uniforms  = { };
+   this .uniforms  = new Map ();
+   this .callbacks = new Set ();
    this .functions = [ ];
-   this .program   = null;
+   this .programs  = new Map ();
 
    this .addSampler ("forces");
    this .addSampler ("boundedVolume");
@@ -201,6 +212,9 @@ function X3DParticleEmitterNode (executionContext)
 
    this .addUniform ("speed",     "uniform float speed;");
    this .addUniform ("variation", "uniform float variation;");
+
+   this .addCallback (this .set_speed__);
+   this .addCallback (this .set_variation__);
 
    this .addFunction (Line3_glsl);
    this .addFunction (Plane3_glsl);
@@ -221,7 +235,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
 
       // Create program.
 
-      this .program           = this .createProgram ();
       this .transformFeedback = gl .createTransformFeedback ();
 
       // Initialize fields.
@@ -284,7 +297,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
          inputParticles  = particleSystem .inputParticles,
          particlesStride = particleSystem .particlesStride,
          particleOffsets = particleSystem .particleOffsets,
-         program         = this .program;
+         program         = this .getProgram (particleSystem);
 
       // Start
 
@@ -293,16 +306,12 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
       // Uniforms
 
       gl .uniform1i (program .randomSeed,        Math .random () * 0xffffffff);
-      gl .uniform1i (program .geometryType,      particleSystem .geometryType);
-      gl .uniform1i (program .createParticles,   particleSystem .createParticles && this .on);
       gl .uniform1f (program .particleLifetime,  particleSystem .particleLifetime);
       gl .uniform1f (program .lifetimeVariation, particleSystem .lifetimeVariation);
       gl .uniform1f (program .deltaTime,         deltaTime);
       gl .uniform2f (program .particleSize,      particleSystem ._particleSize .x, particleSystem ._particleSize .y);
 
       // Forces
-
-      gl .uniform1i (program .numForces, particleSystem .numForces);
 
       if (particleSystem .numForces)
       {
@@ -312,11 +321,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
 
       // Bounded Physics
 
-      if (particleSystem .boundedHierarchyRoot < 0)
-      {
-         gl .uniform1i (program .boundedHierarchyRoot, -1);
-      }
-      else
+      if (particleSystem .boundedHierarchyRoot > -1)
       {
          gl .uniform1i (program .boundedVerticesIndex,  particleSystem .boundedVerticesIndex);
          gl .uniform1i (program .boundedNormalsIndex,   particleSystem .boundedNormalsIndex);
@@ -329,8 +334,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
 
       // Colors
 
-      gl .uniform1i (program .numColors, particleSystem .numColors);
-
       if (particleSystem .numColors)
       {
          gl .activeTexture (gl .TEXTURE0 + program .colorRampTextureUnit);
@@ -338,8 +341,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
       }
 
       // TexCoords
-
-      gl .uniform1i (program .numTexCoords, particleSystem .numTexCoords);
 
       if (particleSystem .numTexCoords)
       {
@@ -385,41 +386,133 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
       // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
       // console .log (data .slice (0, particlesStride / 4));
    },
+   addDefine (define)
+   {
+      this .defines .push (define);
+   },
    addSampler (name)
    {
       this .samplers .push (name);
    },
    addUniform (name, uniform)
    {
-      this .uniforms [name] = uniform;
+      this .uniforms .set (name, uniform);
    },
    setUniform (func, name, value1, value2, value3)
    {
-      const
-         gl      = this .getBrowser () .getContext (),
-         program = this .program;
+      const gl = this .getBrowser () .getContext ();
 
-      gl .useProgram (program);
-      gl [func] (program [name], value1, value2, value3);
+      for (const program of this .programs .values ())
+      {
+         gl .useProgram (program);
+         gl [func] (program [name], value1, value2, value3);
+      }
+   },
+   addCallback (callback)
+   {
+      this .callbacks .add (callback);
    },
    addFunction (func)
    {
       this .functions .push (func);
    },
-   createProgram ()
+   getProgram (particleSystem)
+   {
+      const { geometryType, createParticles, numColors, numTexCoords, numForces, boundedHierarchyRoot } = particleSystem;
+
+      let key = "";
+
+      key += geometryType;
+      key += createParticles && this .on ? 1 : 0;
+      key += ".";
+      key += numColors
+      key += ".";
+      key += numTexCoords;
+      key += ".";
+      key += numForces
+      key += ".";
+      key += boundedHierarchyRoot;
+
+      return this .programs .get (key) ??
+         this .createProgram (key, particleSystem);
+   },
+   createProgram (key, particleSystem)
    {
       const
          browser = this .getBrowser (),
-         gl      = browser .getContext ();
+         gl      = browser .getContext (),
+         defines = this .defines .slice ();
+
+      defines .push (`#define X3D_GEOMETRY_TYPE ${particleSystem .geometryType}`)
+      defines .push (`${particleSystem .createParticles && this .on ? "#define X3D_CREATE_PARTICLES" : ""}`);
+      defines .push (`#define X3D_NUM_COLORS ${particleSystem .numColors}`);
+      defines .push (`#define X3D_NUM_TEX_COORDS ${particleSystem .numTexCoords}`);
+      defines .push (`#define X3D_NUM_FORCES ${particleSystem .numForces}`);
+      defines .push (`${particleSystem .boundedHierarchyRoot > -1 ? "#define X3D_BOUNDED_VOLUME" : ""}`);
 
       const vertexShaderSource = /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;uniform int randomSeed;uniform int geometryType;uniform bool createParticles;uniform float particleLifetime;uniform float lifetimeVariation;uniform float deltaTime;uniform vec2 particleSize;uniform int numForces;uniform sampler2D forces;uniform int boundedVerticesIndex;uniform int boundedNormalsIndex;uniform int boundedHierarchyIndex;uniform int boundedHierarchyRoot;uniform sampler2D boundedVolume;uniform int numColors;uniform sampler2D colorRamp;uniform int texCoordCount;uniform int numTexCoords;uniform sampler2D texCoordRamp;
-${Object .values (this .uniforms) .join ("\n")}
+precision highp float;precision highp int;precision highp sampler2D;
+${defines .join ("\n")}
+ uniform int randomSeed;uniform float particleLifetime;uniform float lifetimeVariation;uniform float deltaTime;uniform vec2 particleSize;
+#if X3D_NUM_FORCES>0
+uniform sampler2D forces;
+#endif
+#if defined(X3D_BOUNDED_VOLUME)
+uniform int boundedVerticesIndex;uniform int boundedNormalsIndex;uniform int boundedHierarchyIndex;uniform int boundedHierarchyRoot;uniform sampler2D boundedVolume;
+#endif
+#if X3D_NUM_COLORS>0
+uniform sampler2D colorRamp;
+#endif
+#if X3D_NUM_TEX_COORDS>0
+uniform int texCoordCount;uniform sampler2D texCoordRamp;
+#endif
+
+${Array .from (this .uniforms .values ()) .join ("\n")}
  in vec4 input0;in vec4 input2;in vec4 input6;out vec4 output0;out vec4 output1;out vec4 output2;out vec4 output3;out vec4 output4;out vec4 output5;out vec4 output6;
 ${Object .entries ((GeometryTypes_default())) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
- const int ARRAY_SIZE=32;const float M_PI=3.14159265359;uniform float NaN;vec4 texelFetch(const in sampler2D sampler,const in int index,const in int lod){int x=textureSize(sampler,lod).x;ivec2 p=ivec2(index % x,index/x);vec4 t=texelFetch(sampler,p,lod);return t;}vec3 save_normalize(const in vec3 vector){float l=length(vector);if(l==0.0)return vec3(0.0);return vector/l;}vec4 Quaternion(const in vec3 fromVector,const in vec3 toVector){vec3 from=save_normalize(fromVector);vec3 to=save_normalize(toVector);float cos_angle=dot(from,to);vec3 cross_vec=cross(from,to);float cross_len=length(cross_vec);if(cross_len==0.0){if(cos_angle>0.0){return vec4(0.0,0.0,0.0,1.0);}else{vec3 t=cross(from,vec3(1.0,0.0,0.0));if(dot(t,t)==0.0)t=cross(from,vec3(0.0,1.0,0.0));t=save_normalize(t);return vec4(t,0.0);}}else{float s=sqrt(abs(1.0-cos_angle)*0.5);cross_vec=save_normalize(cross_vec);return vec4(cross_vec*s,sqrt(abs(1.0+cos_angle)*0.5));}}vec3 multVecQuat(const in vec3 v,const in vec4 q){float a=q.w*q.w-q.x*q.x-q.y*q.y-q.z*q.z;float b=2.0*(v.x*q.x+v.y*q.y+v.z*q.z);float c=2.0*q.w;vec3 r=a*v.xyz+b*q.xyz+c*(q.yzx*v.zxy-q.zxy*v.yzx);return r;}mat3 Matrix3(const in vec4 quaternion){float x=quaternion.x;float y=quaternion.y;float z=quaternion.z;float w=quaternion.w;float A=y*y;float B=z*z;float C=x*y;float D=z*w;float E=z*x;float F=y*w;float G=x*x;float H=y*z;float I=x*w;return mat3(1.0-2.0*(A+B),2.0*(C+D),2.0*(E-F),2.0*(C-D),1.0-2.0*(B+G),2.0*(H+I),2.0*(E+F),2.0*(H-I),1.0-2.0*(A+G));}uint seed=1u;void srand(const in int value){seed=uint(value);}float random(){seed=seed*1103515245u+12345u;return float(seed)/4294967295.0;}float getRandomValue(const in float min,const in float max){return min+random()*(max-min);}float getRandomLifetime(){float v=particleLifetime*lifetimeVariation;float min_=max(0.0,particleLifetime-v);float max_=particleLifetime+v;return getRandomValue(min_,max_);}float getRandomSpeed(){float v=speed*variation;float min_=max(0.0,speed-v);float max_=speed+v;return getRandomValue(min_,max_);}vec3 getRandomNormal(){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(-1.0,1.0);float r=sqrt(1.0-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithAngle(const in float angle){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(cos(angle),1.0);float r=sqrt(1.0-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithDirectionAndAngle(const in vec3 direction,const in float angle){vec4 rotation=Quaternion(vec3(0.0,0.0,1.0),direction);vec3 normal=getRandomNormalWithAngle(angle);return multVecQuat(normal,rotation);}vec3 getRandomSurfaceNormal(const in vec3 direction){float theta=getRandomValue(-M_PI,M_PI);float cphi=pow(random(),1.0/3.0);float r=sqrt(1.0-cphi*cphi);vec3 normal=vec3(sin(theta)*r,cos(theta)*r,cphi);vec4 rotation=Quaternion(vec3(0.0,0.0,1.0),direction);return multVecQuat(normal,rotation);}vec3 getRandomSphericalVelocity(){vec3 normal=getRandomNormal();float speed=getRandomSpeed();return normal*speed;}int upperBound(const in sampler2D sampler,in int count,const in float value){int first=0;int step=0;while(count>0){int index=first;step=count>>1;index+=step;if(value<texelFetch(sampler,index,0).x){count=step;}else{first=++index;count-=step+1;}}return first;}void interpolate(const in sampler2D sampler,const in int count,const in float fraction,out int index0,out int index1,out float weight){if(count==1||fraction<=texelFetch(sampler,0,0).x){index0=0;index1=0;weight=0.0;}else if(fraction>=texelFetch(sampler,count-1,0).x){index0=count-2;index1=count-1;weight=1.0;}else{int index=upperBound(sampler,count,fraction);if(index<count){index1=index;index0=index-1;float key0=texelFetch(sampler,index0,0).x;float key1=texelFetch(sampler,index1,0).x;weight=clamp((fraction-key0)/(key1-key0),0.0,1.0);}else{index0=0;index1=0;weight=0.0;}}}void interpolate(const in sampler2D sampler,const in int count,const in float fraction,out int index0){if(count==1||fraction<=texelFetch(sampler,0,0).x){index0=0;}else if(fraction>=texelFetch(sampler,count-1,0).x){index0=count-2;}else{int index=upperBound(sampler,count,fraction);if(index<count)index0=index-1;else index0=0;}}vec3 getRandomBarycentricCoord(){float u=random();float v=random();if(u+v>1.0){u=1.0-u;v=1.0-v;}float t=1.0-u-v;return vec3(t,u,v);}void getRandomPointOnSurface(const in sampler2D surface,const in int verticesIndex,const in int normalsIndex,out vec4 position,out vec3 normal){float lastAreaSoFar=texelFetch(surface,verticesIndex-1,0).x;float fraction=random()*lastAreaSoFar;int index0;int index1;int index2;float weight;interpolate(surface,verticesIndex,fraction,index0,index1,weight);index0*=3;index1=index0+1;index2=index0+2;vec4 vertex0=texelFetch(surface,verticesIndex+index0,0);vec4 vertex1=texelFetch(surface,verticesIndex+index1,0);vec4 vertex2=texelFetch(surface,verticesIndex+index2,0);vec3 normal0=texelFetch(surface,normalsIndex+index0,0).xyz;vec3 normal1=texelFetch(surface,normalsIndex+index1,0).xyz;vec3 normal2=texelFetch(surface,normalsIndex+index2,0).xyz;vec3 r=getRandomBarycentricCoord();position=r.z*vertex0+r.x*vertex1+r.y*vertex2;normal=save_normalize(r.z*normal0+r.x*normal1+r.y*normal2);}
+ const int ARRAY_SIZE=32;const float M_PI=3.14159265359;uniform float NaN;vec4 texelFetch(const in sampler2D sampler,const in int index,const in int lod){int x=textureSize(sampler,lod).x;ivec2 p=ivec2(index % x,index/x);vec4 t=texelFetch(sampler,p,lod);return t;}vec3 save_normalize(const in vec3 vector){float l=length(vector);if(l==0.0)return vec3(0.0);return vector/l;}vec4 Quaternion(const in vec3 fromVector,const in vec3 toVector){vec3 from=save_normalize(fromVector);vec3 to=save_normalize(toVector);float cos_angle=dot(from,to);vec3 cross_vec=cross(from,to);float cross_len=length(cross_vec);if(cross_len==0.0){if(cos_angle>0.0){return vec4(0.0,0.0,0.0,1.0);}else{vec3 t=cross(from,vec3(1.0,0.0,0.0));if(dot(t,t)==0.0)t=cross(from,vec3(0.0,1.0,0.0));t=save_normalize(t);return vec4(t,0.0);}}else{float s=sqrt(abs(1.0-cos_angle)*0.5);cross_vec=save_normalize(cross_vec);return vec4(cross_vec*s,sqrt(abs(1.0+cos_angle)*0.5));}}vec3 multVecQuat(const in vec3 v,const in vec4 q){float a=q.w*q.w-q.x*q.x-q.y*q.y-q.z*q.z;float b=2.0*(v.x*q.x+v.y*q.y+v.z*q.z);float c=2.0*q.w;vec3 r=a*v.xyz+b*q.xyz+c*(q.yzx*v.zxy-q.zxy*v.yzx);return r;}mat3 Matrix3(const in vec4 quaternion){float x=quaternion.x;float y=quaternion.y;float z=quaternion.z;float w=quaternion.w;float A=y*y;float B=z*z;float C=x*y;float D=z*w;float E=z*x;float F=y*w;float G=x*x;float H=y*z;float I=x*w;return mat3(1.0-2.0*(A+B),2.0*(C+D),2.0*(E-F),2.0*(C-D),1.0-2.0*(B+G),2.0*(H+I),2.0*(E+F),2.0*(H-I),1.0-2.0*(A+G));}uint seed=1u;void srand(const in int value){seed=uint(value);}float random(){seed=seed*1103515245u+12345u;return float(seed)/4294967295.0;}float getRandomValue(const in float min,const in float max){return min+random()*(max-min);}float getRandomLifetime(){float v=particleLifetime*lifetimeVariation;float min_=max(0.0,particleLifetime-v);float max_=particleLifetime+v;return getRandomValue(min_,max_);}float getRandomSpeed(){float v=speed*variation;float min_=max(0.0,speed-v);float max_=speed+v;return getRandomValue(min_,max_);}vec3 getRandomNormal(){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(-1.0,1.0);float r=sqrt(1.0-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithAngle(const in float angle){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(cos(angle),1.0);float r=sqrt(1.0-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithDirectionAndAngle(const in vec3 direction,const in float angle){vec4 rotation=Quaternion(vec3(0.0,0.0,1.0),direction);vec3 normal=getRandomNormalWithAngle(angle);return multVecQuat(normal,rotation);}vec3 getRandomSurfaceNormal(const in vec3 direction){float theta=getRandomValue(-M_PI,M_PI);float cphi=pow(random(),1.0/3.0);float r=sqrt(1.0-cphi*cphi);vec3 normal=vec3(sin(theta)*r,cos(theta)*r,cphi);vec4 rotation=Quaternion(vec3(0.0,0.0,1.0),direction);return multVecQuat(normal,rotation);}vec3 getRandomSphericalVelocity(){vec3 normal=getRandomNormal();float speed=getRandomSpeed();return normal*speed;}int upperBound(const in sampler2D sampler,in int count,const in float value){int first=0;int step=0;while(count>0){int index=first;step=count>>1;index+=step;if(value<texelFetch(sampler,index,0).x){count=step;}else{first=++index;count-=step+1;}}return first;}void interpolate(const in sampler2D sampler,const in int count,const in float fraction,out int index0,out int index1,out float weight){if(count==1||fraction<=texelFetch(sampler,0,0).x){index0=0;index1=0;weight=0.0;}else if(fraction>=texelFetch(sampler,count-1,0).x){index0=count-2;index1=count-1;weight=1.0;}else{int index=upperBound(sampler,count,fraction);if(index<count){index1=index;index0=index-1;float key0=texelFetch(sampler,index0,0).x;float key1=texelFetch(sampler,index1,0).x;weight=clamp((fraction-key0)/(key1-key0),0.0,1.0);}else{index0=0;index1=0;weight=0.0;}}}void interpolate(const in sampler2D sampler,const in int count,const in float fraction,out int index0){if(count==1||fraction<=texelFetch(sampler,0,0).x){index0=0;}else if(fraction>=texelFetch(sampler,count-1,0).x){index0=count-2;}else{int index=upperBound(sampler,count,fraction);if(index<count)index0=index-1;else index0=0;}}
+#if defined(X3D_SURFACE_EMITTER)||defined(X3D_VOLUME_EMITTER)
+vec3 getRandomBarycentricCoord(){float u=random();float v=random();if(u+v>1.0){u=1.0-u;v=1.0-v;}float t=1.0-u-v;return vec3(t,u,v);}void getRandomPointOnSurface(const in sampler2D surface,const in int verticesIndex,const in int normalsIndex,out vec4 position,out vec3 normal){float lastAreaSoFar=texelFetch(surface,verticesIndex-1,0).x;float fraction=random()*lastAreaSoFar;int index0;int index1;int index2;float weight;interpolate(surface,verticesIndex,fraction,index0,index1,weight);index0*=3;index1=index0+1;index2=index0+2;vec4 vertex0=texelFetch(surface,verticesIndex+index0,0);vec4 vertex1=texelFetch(surface,verticesIndex+index1,0);vec4 vertex2=texelFetch(surface,verticesIndex+index2,0);vec3 normal0=texelFetch(surface,normalsIndex+index0,0).xyz;vec3 normal1=texelFetch(surface,normalsIndex+index1,0).xyz;vec3 normal2=texelFetch(surface,normalsIndex+index2,0).xyz;vec3 r=getRandomBarycentricCoord();position=r.z*vertex0+r.x*vertex1+r.y*vertex2;normal=save_normalize(r.z*normal0+r.x*normal1+r.y*normal2);}
+#endif
+
 ${this .functions .join ("\n")}
- vec4 getColor(const in float lifetime,const in float elapsedTime){if(numColors>0){float fraction=elapsedTime/lifetime;int index0;int index1;float weight;interpolate(colorRamp,numColors,fraction,index0,index1,weight);vec4 color0=texelFetch(colorRamp,numColors+index0,0);vec4 color1=texelFetch(colorRamp,numColors+index1,0);return mix(color0,color1,weight);}else{return vec4(1.0);}}void bounce(const in float deltaTime,const in vec4 fromPosition,inout vec4 toPosition,inout vec3 velocity){if(boundedHierarchyRoot<0)return;Line3 line=Line3(fromPosition.xyz,save_normalize(velocity));vec4 points[ARRAY_SIZE];vec3 normals[ARRAY_SIZE];int numIntersections=getIntersections(boundedVolume,boundedVerticesIndex,boundedNormalsIndex,boundedHierarchyIndex,boundedHierarchyRoot,line,points,normals);if(numIntersections==0)return;Plane3 plane1=plane3(line.point,line.direction);int index=min_index(points,numIntersections,0.0,plane1);if(index==-1)return;vec3 point=points[index].xyz;vec3 normal=save_normalize(normals[index]);Plane3 plane2=plane3(point,normal);if(sign(plane_distance(plane2,fromPosition.xyz))==sign(plane_distance(plane2,toPosition.xyz)))return;float damping=length(normals[index]);velocity=reflect(velocity,normal);toPosition=vec4(point+save_normalize(velocity)*0.0001,1.0);velocity*=damping;}int getTexCoordIndex0(const in float lifetime,const in float elapsedTime){if(numTexCoords==0){return-1;}else{float fraction=elapsedTime/lifetime;int index0=0;interpolate(texCoordRamp,numTexCoords,fraction,index0);return numTexCoords+index0*texCoordCount;}}void main(){int life=int(input0[0]);float lifetime=input0[1];float elapsedTime=input0[2]+deltaTime;srand((gl_VertexID+randomSeed)*randomSeed);if(elapsedTime>lifetime){lifetime=getRandomLifetime();elapsedTime=0.0;output0=vec4(max(life+1,1),lifetime,elapsedTime,getTexCoordIndex0(lifetime,elapsedTime));if(createParticles){output1=getColor(lifetime,elapsedTime);output2=vec4(getRandomVelocity(),0.0);output6=getRandomPosition();}else{output1=vec4(0.0);output2=vec4(0.0);output6=vec4(NaN);}}else{vec3 velocity=input2.xyz;vec4 position=input6;for(int i=0;i<numForces;++i){vec4 force=texelFetch(forces,i,0);float turbulence=force.w;vec3 normal=getRandomNormalWithDirectionAndAngle(force.xyz,turbulence);float speed=length(force.xyz);velocity+=normal*speed;}position.xyz+=velocity*deltaTime;bounce(deltaTime,input6,position,velocity);output0=vec4(life,lifetime,elapsedTime,getTexCoordIndex0(lifetime,elapsedTime));output1=getColor(lifetime,elapsedTime);output2=vec4(velocity,0.0);output6=position;}switch(geometryType){case POINT:case SPRITE:case GEOMETRY:{output3=vec4(1.0,0.0,0.0,0.0);output4=vec4(0.0,1.0,0.0,0.0);output5=vec4(0.0,0.0,1.0,0.0);break;}case LINE:{mat3 m=Matrix3(Quaternion(vec3(0.0,0.0,1.0),output2.xyz));output3=vec4(m[0],0.0);output4=vec4(m[1],0.0);output5=vec4(m[2],0.0);break;}default:{output3=vec4(particleSize.x,0.0,0.0,0.0);output4=vec4(0.0,particleSize.y,0.0,0.0);output5=vec4(0.0,0.0,1.0,0.0);break;}}}`
+ 
+#if X3D_NUM_COLORS>0
+vec4 getColor(const in float lifetime,const in float elapsedTime){float fraction=elapsedTime/lifetime;int index0;int index1;float weight;interpolate(colorRamp,X3D_NUM_COLORS,fraction,index0,index1,weight);vec4 color0=texelFetch(colorRamp,X3D_NUM_COLORS+index0,0);vec4 color1=texelFetch(colorRamp,X3D_NUM_COLORS+index1,0);return mix(color0,color1,weight);}
+#else
+vec4 getColor(const in float lifetime,const in float elapsedTime){return vec4(1.0);}
+#endif
+#if defined(X3D_BOUNDED_VOLUME)
+void bounce(const in float deltaTime,const in vec4 fromPosition,inout vec4 toPosition,inout vec3 velocity){Line3 line=Line3(fromPosition.xyz,save_normalize(velocity));vec4 points[ARRAY_SIZE];vec3 normals[ARRAY_SIZE];int numIntersections=getIntersections(boundedVolume,boundedVerticesIndex,boundedNormalsIndex,boundedHierarchyIndex,boundedHierarchyRoot,line,points,normals);if(numIntersections==0)return;Plane3 plane1=plane3(line.point,line.direction);int index=min_index(points,numIntersections,0.0,plane1);if(index==-1)return;vec3 point=points[index].xyz;vec3 normal=save_normalize(normals[index]);Plane3 plane2=plane3(point,normal);if(sign(plane_distance(plane2,fromPosition.xyz))==sign(plane_distance(plane2,toPosition.xyz)))return;float damping=length(normals[index]);velocity=reflect(velocity,normal);toPosition=vec4(point+save_normalize(velocity)*0.0001,1.0);velocity*=damping;}
+#endif
+#if X3D_NUM_TEX_COORDS>0
+int getTexCoordIndex0(const in float lifetime,const in float elapsedTime){float fraction=elapsedTime/lifetime;int index0=0;interpolate(texCoordRamp,X3D_NUM_TEX_COORDS,fraction,index0);return X3D_NUM_TEX_COORDS+index0*texCoordCount;}
+#else
+int getTexCoordIndex0(const in float lifetime,const in float elapsedTime){return-1;}
+#endif
+void main(){int life=int(input0[0]);float lifetime=input0[1];float elapsedTime=input0[2]+deltaTime;srand((gl_VertexID+randomSeed)*randomSeed);if(elapsedTime>lifetime){lifetime=getRandomLifetime();elapsedTime=0.0;output0=vec4(max(life+1,1),lifetime,elapsedTime,getTexCoordIndex0(lifetime,elapsedTime));
+#if defined(X3D_CREATE_PARTICLES)
+output1=getColor(lifetime,elapsedTime);output2=vec4(getRandomVelocity(),0.0);output6=getRandomPosition();
+#else
+output1=vec4(0.0);output2=vec4(0.0);output6=vec4(NaN);
+#endif
+}else{vec3 velocity=input2.xyz;vec4 position=input6;
+#if X3D_NUM_FORCES>0
+for(int i=0;i<X3D_NUM_FORCES;++i){vec4 force=texelFetch(forces,i,0);float turbulence=force.w;vec3 normal=getRandomNormalWithDirectionAndAngle(force.xyz,turbulence);float speed=length(force.xyz);velocity+=normal*speed;}
+#endif
+position.xyz+=velocity*deltaTime;
+#if defined(X3D_BOUNDED_VOLUME)
+bounce(deltaTime,input6,position,velocity);
+#endif
+output0=vec4(life,lifetime,elapsedTime,getTexCoordIndex0(lifetime,elapsedTime));output1=getColor(lifetime,elapsedTime);output2=vec4(velocity,0.0);output6=position;}
+#if X3D_GEOMETRY_TYPE==POINT||X3D_GEOMETRY_TYPE==SPRITE||X3D_GEOMETRY_TYPE==GEOMETRY
+output3=vec4(1.0,0.0,0.0,0.0);output4=vec4(0.0,1.0,0.0,0.0);output5=vec4(0.0,0.0,1.0,0.0);
+#elif X3D_GEOMETRY_TYPE==LINE
+mat3 m=Matrix3(Quaternion(vec3(0.0,0.0,1.0),output2.xyz));output3=vec4(m[0],0.0);output4=vec4(m[1],0.0);output5=vec4(m[2],0.0);
+#else
+output3=vec4(particleSize.x,0.0,0.0,0.0);output4=vec4(0.0,particleSize.y,0.0,0.0);output5=vec4(0.0,0.0,1.0,0.0);
+#endif
+}`
 
       const fragmentShaderSource = /* glsl */ `#version 300 es
 precision highp float;void main(){}`
@@ -454,7 +547,10 @@ precision highp float;void main(){}`
       gl .linkProgram (program);
 
       if (!gl .getProgramParameter (program, gl .LINK_STATUS))
+      {
          console .error ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
+         // console .error (vertexShaderSource);
+      }
 
       program .inputs = [
          [0, gl .getAttribLocation (program, "input0")],
@@ -463,15 +559,12 @@ precision highp float;void main(){}`
       ];
 
       program .randomSeed        = gl .getUniformLocation (program, "randomSeed");
-      program .geometryType      = gl .getUniformLocation (program, "geometryType");
-      program .createParticles   = gl .getUniformLocation (program, "createParticles");
       program .particleLifetime  = gl .getUniformLocation (program, "particleLifetime");
       program .lifetimeVariation = gl .getUniformLocation (program, "lifetimeVariation");
       program .deltaTime         = gl .getUniformLocation (program, "deltaTime");
       program .particleSize      = gl .getUniformLocation (program, "particleSize");
 
-      program .numForces = gl .getUniformLocation (program, "numForces");
-      program .forces    = gl .getUniformLocation (program, "forces");
+      program .forces = gl .getUniformLocation (program, "forces");
 
       program .boundedVerticesIndex  = gl .getUniformLocation (program, "boundedVerticesIndex");
       program .boundedNormalsIndex   = gl .getUniformLocation (program, "boundedNormalsIndex");
@@ -479,14 +572,12 @@ precision highp float;void main(){}`
       program .boundedHierarchyRoot  = gl .getUniformLocation (program, "boundedHierarchyRoot");
       program .boundedVolume         = gl .getUniformLocation (program, "boundedVolume");
 
-      program .numColors = gl .getUniformLocation (program, "numColors");
       program .colorRamp = gl .getUniformLocation (program, "colorRamp");
 
       program .texCoordCount = gl .getUniformLocation (program, "texCoordCount");
-      program .numTexCoords  = gl .getUniformLocation (program, "numTexCoords");
       program .texCoordRamp  = gl .getUniformLocation (program, "texCoordRamp");
 
-      for (const name of Object .keys (this .uniforms))
+      for (const name of this .uniforms .keys ())
          program [name] = gl .getUniformLocation (program, name);
 
       program .NaN = gl .getUniformLocation (program, "NaN");
@@ -503,6 +594,11 @@ precision highp float;void main(){}`
       gl .uniform1f (program .NaN, NaN);
 
       browser .resetTextureUnits ();
+
+      this .programs .set (key, program);
+
+      for (const callback of this .callbacks)
+         callback .call (this);
 
       return program;
    },
@@ -621,8 +717,13 @@ function PointEmitter (executionContext)
 
    this ._position .setUnit ("length");
 
+   this .addDefine ("#define X3D_POINT_EMITTER");
+
    this .addUniform ("position",  "uniform vec3 position;");
    this .addUniform ("direction", "uniform vec3 direction;");
+
+   this .addCallback (this .set_position__);
+   this .addCallback (this .set_direction__);
 
    this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {
@@ -1078,9 +1179,15 @@ function ConeEmitter (executionContext)
    this ._position .setUnit ("length");
    this ._angle    .setUnit ("angle");
 
+   this .addDefine ("#define X3D_CONE_EMITTER");
+
    this .addUniform ("position",  "uniform vec3  position;");
    this .addUniform ("direction", "uniform vec3  direction;");
    this .addUniform ("angle",     "uniform float angle;");
+
+   this .addCallback (this .set_position__);
+   this .addCallback (this .set_direction__);
+   this .addCallback (this .set_angle__);
 
    this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {
@@ -1244,7 +1351,9 @@ function ExplosionEmitter (executionContext)
 
    this ._position .setUnit ("length");
 
+   this .addDefine ("#define X3D_EXPLOSION_EMITTER");
    this .addUniform ("position", "uniform vec3 position;");
+   this .addCallback (this .set_position__);
 
    this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {
@@ -3174,14 +3283,19 @@ function PolylineEmitter (executionContext)
 
    this .addType ((X3DConstants_default()).PolylineEmitter);
 
+   this .verticesIndex  = -1;
    this .polylinesNode  = new (IndexedLineSet_default()) (executionContext);
    this .polylinesArray = new Float32Array ();
 
+   this .addDefine ("#define X3D_POLYLINE_EMITTER");
    this .addSampler ("polylines");
 
    this .addUniform ("direction",     "uniform vec3 direction;");
    this .addUniform ("verticesIndex", "uniform int verticesIndex;");
    this .addUniform ("polylines",     "uniform sampler2D polylines;");
+
+   this .addCallback (this .set_direction__);
+   this .addCallback (this .set_verticesIndex__);
 
    this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {
@@ -3268,6 +3382,10 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
          this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
       };
    })(),
+   set_verticesIndex__ ()
+   {
+      this .setUniform ("uniform1i", "verticesIndex", this .verticesIndex);
+   },
    set_polylines__: (() =>
    {
       const
@@ -3302,13 +3420,15 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
 
          polylinesArray .set (vertices, verticesIndex * 4);
 
-         this .setUniform ("uniform1i", "verticesIndex", numVertices ? verticesIndex : -1);
+         this .verticesIndex = numVertices ? verticesIndex : -1;
 
          if (polylineArraySize)
          {
             gl .bindTexture (gl .TEXTURE_2D, this .polylinesTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, polylineArraySize, polylineArraySize, 0, gl .RGBA, gl .FLOAT, polylinesArray);
          }
+
+         this .set_verticesIndex__ ();
       };
    })(),
    activateTextures (gl, program)
@@ -3429,15 +3549,22 @@ function SurfaceEmitter (executionContext)
 
    this .addType ((X3DConstants_default()).SurfaceEmitter);
 
-   this .surfaceNode  = null;
-   this .surfaceArray = new Float32Array ();
+   this .verticesIndex = -1;
+   this .normalsIndex  = -1;
+   this .surfaceNode   = null;
+   this .surfaceArray  = new Float32Array ();
 
+   this .addDefine ("#define X3D_SURFACE_EMITTER");
    this .addSampler ("surface");
 
    this .addUniform ("solid",         "uniform bool solid;");
    this .addUniform ("verticesIndex", "uniform int verticesIndex;");
    this .addUniform ("normalsIndex",  "uniform int normalsIndex;");
    this .addUniform ("surface",       "uniform sampler2D surface;");
+
+   this .addCallback (this .set_solid__);
+   this .addCallback (this .set_verticesIndex__);
+   this .addCallback (this .set_normalsIndex__);
 
    this .addFunction (/* glsl */ `vec4 position; vec3 getRandomVelocity ()
    {
@@ -3506,8 +3633,15 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
    },
    set_solid__ ()
    {
-      if (this .surfaceNode)
-         this .setUniform ("uniform1i", "solid", this .surfaceNode ._solid .getValue ());
+      this .setUniform ("uniform1i", "solid", this .surfaceNode ?._solid .getValue () ?? true);
+   },
+   set_verticesIndex__ ()
+   {
+      this .setUniform ("uniform1i", "verticesIndex", this .verticesIndex);
+   },
+   set_normalsIndex__ ()
+   {
+      this .setUniform ("uniform1i", "normalsIndex", this .normalsIndex);
    },
    set_geometry__: (() =>
    {
@@ -3558,8 +3692,8 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
                surfaceArray [s + 2] = normals [n + 2];
             }
 
-            this .setUniform ("uniform1i", "verticesIndex", numVertices ? verticesIndex : -1);
-            this .setUniform ("uniform1i", "normalsIndex",  numVertices ? normalsIndex  : -1);
+            this .verticesIndex = numVertices ? verticesIndex : -1;
+            this .normalsIndex  = numVertices ? normalsIndex  : -1;
 
             if (surfaceArraySize)
             {
@@ -3569,9 +3703,12 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
          }
          else
          {
-            this .setUniform ("uniform1i", "verticesIndex", -1);
-            this .setUniform ("uniform1i", "normalsIndex",  -1);
+            this .verticesIndex = -1;
+            this .normalsIndex  = -1;
          }
+
+         this .set_verticesIndex__ ();
+         this .set_normalsIndex__ ();
       };
    })(),
    activateTextures (gl, program)
@@ -3690,9 +3827,14 @@ function VolumeEmitter (executionContext)
 
    this .addType ((X3DConstants_default()).VolumeEmitter);
 
-   this .volumeNode  = new (IndexedFaceSet_default()) (executionContext);
-   this .volumeArray = new Float32Array ();
+   this .verticesIndex  = -1;
+   this .normalsIndex   = -1;
+   this .hierarchyIndex = -1;
+   this .hierarchyRoot  = -1;
+   this .volumeNode     = new (IndexedFaceSet_default()) (executionContext);
+   this .volumeArray    = new Float32Array ();
 
+   this .addDefine ("#define X3D_VOLUME_EMITTER");
    this .addSampler ("volume");
 
    this .addUniform ("direction",      "uniform vec3 direction;");
@@ -3701,6 +3843,12 @@ function VolumeEmitter (executionContext)
    this .addUniform ("hierarchyIndex", "uniform int hierarchyIndex;");
    this .addUniform ("hierarchyRoot",  "uniform int hierarchyRoot;");
    this .addUniform ("volume",         "uniform sampler2D volume;");
+
+   this .addCallback (this .set_direction__);
+   this .addCallback (this .set_verticesIndex__);
+   this .addCallback (this .set_normalsIndex__);
+   this .addCallback (this .set_hierarchyIndex__);
+   this .addCallback (this .set_hierarchyRoot__);
 
    this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {
@@ -3803,6 +3951,22 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
          this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
       };
    })(),
+   set_verticesIndex__ ()
+   {
+      this .setUniform ("uniform1i", "verticesIndex", this .verticesIndex);
+   },
+   set_normalsIndex__ ()
+   {
+      this .setUniform ("uniform1i", "normalsIndex", this .normalsIndex);
+   },
+   set_hierarchyIndex__ ()
+   {
+      this .setUniform ("uniform1i", "hierarchyIndex", this .hierarchyIndex);
+   },
+   set_hierarchyRoot__ ()
+   {
+      this .setUniform ("uniform1i", "hierarchyRoot", this .hierarchyRoot);
+   },
    set_geometry__: (() =>
    {
       const
@@ -3855,16 +4019,21 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
 
          volumeArray .set (hierarchy, hierarchyIndex * 4);
 
-         this .setUniform ("uniform1i", "verticesIndex",  verticesIndex);
-         this .setUniform ("uniform1i", "normalsIndex",   normalsIndex);
-         this .setUniform ("uniform1i", "hierarchyIndex", hierarchyIndex);
-         this .setUniform ("uniform1i", "hierarchyRoot",  hierarchyIndex + hierarchyLength - 1);
+         this .verticesIndex  = verticesIndex;
+         this .normalsIndex   = normalsIndex;
+         this .hierarchyIndex = hierarchyIndex;
+         this .hierarchyRoot  = hierarchyIndex + hierarchyLength - 1;
 
          if (volumeArraySize)
          {
             gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, volumeArraySize, volumeArraySize, 0, gl .RGBA, gl .FLOAT, volumeArray);
          }
+
+         this .set_verticesIndex__ ();
+         this .set_normalsIndex__ ();
+         this .set_hierarchyIndex__ ();
+         this .set_hierarchyRoot__ ();
       };
    })(),
    activateTextures (gl, program)
