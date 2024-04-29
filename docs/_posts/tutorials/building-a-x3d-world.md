@@ -60,7 +60,7 @@ Shape {
   <img src="https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.png" alt="Cylinder"/>
 </x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.zip)
+[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.zip) · [View Source in Playground](https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.x3dv)
 
 ## Understanding the header
 

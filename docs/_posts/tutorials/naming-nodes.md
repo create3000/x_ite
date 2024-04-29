@@ -160,7 +160,7 @@ Transform {
   <img src="https://create3000.github.io/media/tutorials/scenes/dinette/screenshot.png" alt="Dinette"/>
 </x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/dinette/dinette.zip)
+[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/dinette/dinette.zip) · [View Source in Playground](https://create3000.github.io/media/tutorials/scenes/dinette/dinette.x3dv)
 
 ## Summary
 

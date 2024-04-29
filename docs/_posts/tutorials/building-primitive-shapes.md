@@ -135,7 +135,7 @@ Shape {
   <img src="https://create3000.github.io/media/tutorials/scenes/cylinder1/screenshot.png" alt="Cylinder"/>
 </x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.zip)
+[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.zip) · [View Source in Playground](https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.x3dv)
 
 ## Building multiple shapes
 
@@ -202,7 +202,7 @@ Shape {
   <img src="https://create3000.github.io/media/tutorials/scenes/multiple-shapes/screenshot.png" alt="Multiple Shapes"/>
 </x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/multiple-shapes/multiple-shapes.zip)
+[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/multiple-shapes/multiple-shapes.zip) · [View Source in Playground](https://create3000.github.io/media/tutorials/scenes/multiple-shapes/multiple-shapes.x3dv)
 
 ## Summary
 

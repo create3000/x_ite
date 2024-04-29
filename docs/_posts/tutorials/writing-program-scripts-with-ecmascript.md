@@ -452,7 +452,7 @@ ROUTE Bouncer.value_changed  TO Ball.set_translation
   <img src="https://create3000.github.io/media/tutorials/scenes/bouncer/screenshot.png" alt="Bouncer"/>
 </x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/bouncer/bouncer.zip)
+[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/bouncer/bouncer.zip) · [View Source in Playground](https://create3000.github.io/media/tutorials/scenes/bouncer/bouncer.x3dv)
 
 ## Building user interfaces
 

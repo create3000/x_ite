@@ -23,7 +23,7 @@ In this tutorial, you will learn how to create a simple hello world scene with X
   <img src="https://create3000.github.io/media/tutorials/hello-world/screenshot.png" alt="Hello World Image"/>
 </x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/tutorials/hello-world/hello-world.zip)
+[Download ZIP Archive](https://create3000.github.io/media/tutorials/hello-world/hello-world.zip) · [View Source in Playground](https://create3000.github.io/media/tutorials/hello-world/hello-world.x3d)
 
 As first a very easy example, we will create a sphere with a texture and a text below the sphere. Let's start with the sphere:
 
