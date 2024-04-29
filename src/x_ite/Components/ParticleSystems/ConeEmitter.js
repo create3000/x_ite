@@ -114,6 +114,8 @@ Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, X3DParticleEmitt
       const { x, y, z } = this ._position .getValue ();
 
       this .setUniform ("uniform3f", "position", x, y, z );
+
+      this ._bbox_changed .addEvent ();
    },
    set_direction__ ()
    {

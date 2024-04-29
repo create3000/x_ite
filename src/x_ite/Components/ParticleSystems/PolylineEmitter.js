@@ -209,7 +209,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
 
          this .set_verticesIndex__ ();
 
-         this .addNodeEvent ();
+         this ._bbox_changed .addEvent ();
       };
    })(),
    activateTextures (gl, program)

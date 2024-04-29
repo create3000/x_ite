@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import Fields        from "../../Fields.js";
 import X3DNode       from "../Core/X3DNode.js";
 import GeometryTypes from "../../Browser/ParticleSystems/GeometryTypes.js";
 import X3DConstants  from "../../Base/X3DConstants.js";
@@ -58,6 +59,8 @@ function X3DParticleEmitterNode (executionContext)
    X3DNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DParticleEmitterNode);
+
+   this .addChildObjects (X3DConstants .outputOnly, "bbox_changed", new Fields .SFTime ());
 
    this ._speed       .setUnit ("speed");
    this ._mass        .setUnit ("mass");

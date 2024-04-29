@@ -227,8 +227,8 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
 
          this .set_verticesIndex__ ();
          this .set_normalsIndex__ ();
-         
-         this .addNodeEvent ();
+
+         this ._bbox_changed .addEvent ();
       };
    })(),
    activateTextures (gl, program)

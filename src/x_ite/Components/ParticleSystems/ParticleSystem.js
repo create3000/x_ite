@@ -456,12 +456,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    set_emitter__ ()
    {
-      this .emitterNode ?.removeInterest ("set_bbox__", this);
+      this .emitterNode ?._bbox_changed .removeInterest ("set_bbox__", this);
 
       this .emitterNode = X3DCast (X3DConstants .X3DParticleEmitterNode, this ._emitter)
          ?? this .getBrowser () .getDefaultEmitter ();
 
-      this .emitterNode .addInterest ("set_bbox__", this);
+      this .emitterNode ._bbox_changed .addInterest ("set_bbox__", this);
 
       this .set_bbox__ ();
    },

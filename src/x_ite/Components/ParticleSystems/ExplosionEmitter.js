@@ -99,6 +99,8 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, X3DParticle
       const { x, y, z } = this ._position .getValue ();
 
       this .setUniform ("uniform3f", "position", x, y, z);
+
+      this ._bbox_changed .addEvent ();
    },
 });
 
