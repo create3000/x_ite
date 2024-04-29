@@ -69,22 +69,6 @@ function X3DParticleEmitterNode (executionContext)
    this .callbacks = [ ];
    this .functions = [ ];
    this .programs  = new Map ();
-
-   this .addSampler ("forces");
-   this .addSampler ("boundedVolume");
-   this .addSampler ("colorRamp");
-   this .addSampler ("texCoordRamp");
-
-   this .addUniform ("speed",     "uniform float speed;");
-   this .addUniform ("variation", "uniform float variation;");
-
-   this .addCallback (this .set_speed__);
-   this .addCallback (this .set_variation__);
-
-   this .addFunction (Line3Source);
-   this .addFunction (Plane3Source);
-   this .addFunction (Box3Source);
-   this .addFunction (BVHSource);
 }
 
 Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNode .prototype),
@@ -109,9 +93,23 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       this ._variation .addInterest ("set_variation__", this);
       this ._mass      .addInterest ("set_mass__",      this);
 
+      this .addSampler ("forces");
+      this .addSampler ("boundedVolume");
+      this .addSampler ("colorRamp");
+      this .addSampler ("texCoordRamp");
+
+      this .addUniform ("speed",     "uniform float speed;");
+      this .addUniform ("variation", "uniform float variation;");
+
+      this .addCallback (this .set_speed__);
+      this .addCallback (this .set_variation__);
+
+      this .addFunction (Line3Source);
+      this .addFunction (Plane3Source);
+      this .addFunction (Box3Source);
+      this .addFunction (BVHSource);
+
       this .set_on__ ();
-      this .set_speed__ ();
-      this .set_variation__ ();
       this .set_mass__ ();
    },
    isExplosive ()
