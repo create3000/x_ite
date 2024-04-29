@@ -480,7 +480,7 @@ ${this .functions .join ("\n")}
 #if X3D_NUM_COLORS>0
 vec4 getColor(const in float lifetime,const in float elapsedTime){float fraction=elapsedTime/lifetime;int index0;int index1;float weight;interpolate(colorRamp,X3D_NUM_COLORS,fraction,index0,index1,weight);vec4 color0=texelFetch(colorRamp,X3D_NUM_COLORS+index0,0);vec4 color1=texelFetch(colorRamp,X3D_NUM_COLORS+index1,0);return mix(color0,color1,weight);}
 #else
-vec4 getColor(const in float lifetime,const in float elapsedTime){return vec4(1.0);}
+#define getColor(lifetime,elapsedTime)(vec4(1.0))
 #endif
 #if defined(X3D_BOUNDED_VOLUME)
 void bounce(const in float deltaTime,const in vec4 fromPosition,inout vec4 toPosition,inout vec3 velocity){Line3 line=Line3(fromPosition.xyz,save_normalize(velocity));vec4 points[ARRAY_SIZE];vec3 normals[ARRAY_SIZE];int numIntersections=getIntersections(boundedVolume,boundedVerticesIndex,boundedNormalsIndex,boundedHierarchyIndex,boundedHierarchyRoot,line,points,normals);if(numIntersections==0)return;Plane3 plane1=plane3(line.point,line.direction);int index=min_index(points,numIntersections,0.0,plane1);if(index==-1)return;vec3 point=points[index].xyz;vec3 normal=save_normalize(normals[index]);Plane3 plane2=plane3(point,normal);if(sign(plane_distance(plane2,fromPosition.xyz))==sign(plane_distance(plane2,toPosition.xyz)))return;float damping=length(normals[index]);velocity=reflect(velocity,normal);toPosition=vec4(point+save_normalize(velocity)*0.0001,1.0);velocity*=damping;}
@@ -488,7 +488,7 @@ void bounce(const in float deltaTime,const in vec4 fromPosition,inout vec4 toPos
 #if X3D_NUM_TEX_COORDS>0
 int getTexCoordIndex0(const in float lifetime,const in float elapsedTime){float fraction=elapsedTime/lifetime;int index0=0;interpolate(texCoordRamp,X3D_NUM_TEX_COORDS,fraction,index0);return X3D_NUM_TEX_COORDS+index0*texCoordCount;}
 #else
-int getTexCoordIndex0(const in float lifetime,const in float elapsedTime){return-1;}
+#define getTexCoordIndex0(lifetime,elapsedTime)(-1)
 #endif
 void main(){int life=int(input0[0]);float lifetime=input0[1];float elapsedTime=input0[2]+deltaTime;srand((gl_VertexID+randomSeed)*randomSeed);if(elapsedTime>lifetime){lifetime=getRandomLifetime();elapsedTime=0.0;output0=vec4(max(life+1,1),lifetime,elapsedTime,getTexCoordIndex0(lifetime,elapsedTime));
 #if defined(X3D_CREATE_PARTICLES)
