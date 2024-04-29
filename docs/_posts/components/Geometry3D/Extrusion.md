@@ -224,7 +224,7 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Geometry3D/Extrusion/Extrusion.x3d" update="auto"></x3d-canvas>
 
-[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry3D/Extrusion/Extrusion.x3d)
+[Download ZIP Archive](https://create3000.github.io/media/examples/Geometry3D/Extrusion/Extrusion.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry3D/Extrusion/Extrusion.x3d)
 
 ## See Also
 

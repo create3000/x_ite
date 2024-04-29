@@ -103,7 +103,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Grouping/Group/Group.x3d" update="auto"></x3d-canvas>
 
-[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Grouping/Group/Group.x3d)
+[Download ZIP Archive](https://create3000.github.io/media/examples/Grouping/Group/Group.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Grouping/Group/Group.x3d)
 
 ## See Also
 

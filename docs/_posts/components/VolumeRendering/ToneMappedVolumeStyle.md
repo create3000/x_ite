@@ -75,7 +75,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 <x3d-canvas src="https://create3000.github.io/media/examples/VolumeRendering/ToneMappedVolumeStyle/ToneMappedVolumeStyle.x3d" update="auto"></x3d-canvas>
 
-[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/VolumeRendering/ToneMappedVolumeStyle/ToneMappedVolumeStyle.x3d)
+[Download ZIP Archive](https://create3000.github.io/media/examples/VolumeRendering/ToneMappedVolumeStyle/ToneMappedVolumeStyle.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/VolumeRendering/ToneMappedVolumeStyle/ToneMappedVolumeStyle.x3d)
 
 ## See Also
 

@@ -79,7 +79,7 @@ The *layers* list defines a list of [Layer](/x_ite/components/layering/layer/) n
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Layering/LayerSet/LayerSet.x3d" update="auto"></x3d-canvas>
 
-[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Layering/LayerSet/LayerSet.x3d)
+[Download ZIP Archive](https://create3000.github.io/media/examples/Layering/LayerSet/LayerSet.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Layering/LayerSet/LayerSet.x3d)
 
 ## See Also
 

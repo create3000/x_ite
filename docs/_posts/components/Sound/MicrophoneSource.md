@@ -144,7 +144,7 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d" update="auto"></x3d-canvas>
 
-[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d)
+[Download ZIP Archive](https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d)
 
 ## See Also
 

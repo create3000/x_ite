@@ -129,7 +129,7 @@ Output event containing the node or nodes that have been found to intersect with
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Picking/PrimitivePickSensor/PrimitivePickSensor.x3d" update="auto"></x3d-canvas>
 
-[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Picking/PrimitivePickSensor/PrimitivePickSensor.x3d)
+[Download ZIP Archive](https://create3000.github.io/media/examples/Picking/PrimitivePickSensor/PrimitivePickSensor.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Picking/PrimitivePickSensor/PrimitivePickSensor.x3d)
 
 ## See Also
 

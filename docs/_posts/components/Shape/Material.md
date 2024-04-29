@@ -230,7 +230,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Shape/Material/Material.x3d" update="auto"></x3d-canvas>
 
-[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/Material/Material.x3d)
+[Download ZIP Archive](https://create3000.github.io/media/examples/Shape/Material/Material.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/Material/Material.x3d)
 
 ## See Also
 
