@@ -132,9 +132,7 @@ function ParticleSystem (executionContext)
    this .colorOffset              = this .particleOffsets [1];
    this .velocityOffset           = this .particleOffsets [2];
    this .matrixOffset             = this .particleOffsets [3];
-   /*
    this .particleValuesOffset     = this .particleOffsets [4];
-   */
    this .texCoordOffset           = 0;
    this .instancesStride          = this .particlesStride;
 }
@@ -939,10 +937,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                const particlesStride = this .particlesStride;
 
                shaderNode .enableParticleAttribute       (gl, outputParticles, particlesStride, this .particleOffset, 1);
-		/*
-               shaderNode .enableParticleValuesAttribute (gl, outputParticles, particlesStride, this .particleValuesOffset, 1);
-	       */
                shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, particlesStride, this .matrixOffset,   1);
+               shaderNode .enableParticleValuesAttribute (gl, outputParticles, particlesStride, this .particleValuesOffset, 1);
                shaderNode .enableVertexAttribute         (gl, this .geometryBuffer, 0, this .verticesOffset);
             }
 
@@ -1019,9 +1015,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                shaderNode .enableParticleAttribute         (gl, outputParticles, particlesStride, this .particleOffset, 1);
                shaderNode .enableParticleVelocityAttribute (gl, outputParticles, particlesStride, this .velocityOffset, 1);
                shaderNode .enableInstanceMatrixAttribute   (gl, outputParticles, particlesStride, this .matrixOffset,   1);
-		    /*
                shaderNode .enableParticleValuesAttribute   (gl, outputParticles, particlesStride, this .particleValuesOffset, 1);
-	       */
 
                if (this .geometryContext .colorMaterial)
                {
