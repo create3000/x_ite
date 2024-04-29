@@ -204,22 +204,6 @@ function X3DParticleEmitterNode (executionContext)
    this .callbacks = [ ];
    this .functions = [ ];
    this .programs  = new Map ();
-
-   this .addSampler ("forces");
-   this .addSampler ("boundedVolume");
-   this .addSampler ("colorRamp");
-   this .addSampler ("texCoordRamp");
-
-   this .addUniform ("speed",     "uniform float speed;");
-   this .addUniform ("variation", "uniform float variation;");
-
-   this .addCallback (this .set_speed__);
-   this .addCallback (this .set_variation__);
-
-   this .addFunction (Line3_glsl);
-   this .addFunction (Plane3_glsl);
-   this .addFunction (Box3_glsl);
-   this .addFunction (BVH_glsl);
 }
 
 Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DNode_default()).prototype),
@@ -244,9 +228,23 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
       this ._variation .addInterest ("set_variation__", this);
       this ._mass      .addInterest ("set_mass__",      this);
 
+      this .addSampler ("forces");
+      this .addSampler ("boundedVolume");
+      this .addSampler ("colorRamp");
+      this .addSampler ("texCoordRamp");
+
+      this .addUniform ("speed",     "uniform float speed;");
+      this .addUniform ("variation", "uniform float variation;");
+
+      this .addCallback (this .set_speed__);
+      this .addCallback (this .set_variation__);
+
+      this .addFunction (Line3_glsl);
+      this .addFunction (Plane3_glsl);
+      this .addFunction (Box3_glsl);
+      this .addFunction (BVH_glsl);
+
       this .set_on__ ();
-      this .set_speed__ ();
-      this .set_variation__ ();
       this .set_mass__ ();
    },
    isExplosive ()
