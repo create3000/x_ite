@@ -64,42 +64,6 @@ function SurfaceEmitter (executionContext)
    this .normalsIndex  = -1;
    this .surfaceNode   = null;
    this .surfaceArray  = new Float32Array ();
-
-   this .addDefine ("#define X3D_SURFACE_EMITTER");
-   this .addSampler ("surface");
-
-   this .addUniform ("solid",         "uniform bool solid;");
-   this .addUniform ("verticesIndex", "uniform int verticesIndex;");
-   this .addUniform ("normalsIndex",  "uniform int normalsIndex;");
-   this .addUniform ("surface",       "uniform sampler2D surface;");
-
-   this .addCallback (this .set_solid__);
-   this .addCallback (this .set_verticesIndex__);
-   this .addCallback (this .set_normalsIndex__);
-
-   this .addFunction (/* glsl */ `vec4 position; vec3 getRandomVelocity ()
-   {
-      if (verticesIndex < 0)
-      {
-         return vec3 (0.0);
-      }
-      else
-      {
-         vec3 normal;
-
-         getRandomPointOnSurface (surface, verticesIndex, normalsIndex, position, normal);
-
-         if (solid == false && random () > 0.5)
-            normal = -normal;
-
-         return normal * getRandomSpeed ();
-      }
-   }`);
-
-   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
-   {
-      return verticesIndex < 0 ? vec4 (NaN) : position;
-   }`);
 }
 
 Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEmitterNode .prototype),
@@ -120,6 +84,42 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
       // Initialize fields.
 
       this ._surface .addInterest ("set_surface__", this);
+
+      this .addDefine ("#define X3D_SURFACE_EMITTER");
+      this .addSampler ("surface");
+
+      this .addUniform ("solid",         "uniform bool solid;");
+      this .addUniform ("verticesIndex", "uniform int verticesIndex;");
+      this .addUniform ("normalsIndex",  "uniform int normalsIndex;");
+      this .addUniform ("surface",       "uniform sampler2D surface;");
+
+      this .addCallback (this .set_solid__);
+      this .addCallback (this .set_verticesIndex__);
+      this .addCallback (this .set_normalsIndex__);
+
+      this .addFunction (/* glsl */ `vec4 position; vec3 getRandomVelocity ()
+      {
+         if (verticesIndex < 0)
+         {
+            return vec3 (0.0);
+         }
+         else
+         {
+            vec3 normal;
+
+            getRandomPointOnSurface (surface, verticesIndex, normalsIndex, position, normal);
+
+            if (solid == false && random () > 0.5)
+               normal = -normal;
+
+            return normal * getRandomSpeed ();
+         }
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return verticesIndex < 0 ? vec4 (NaN) : position;
+      }`);
 
       this .set_surface__ ();
    },

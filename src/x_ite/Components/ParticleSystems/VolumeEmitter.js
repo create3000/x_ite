@@ -67,76 +67,6 @@ function VolumeEmitter (executionContext)
    this .hierarchyRoot  = -1;
    this .volumeNode     = new IndexedFaceSet (executionContext);
    this .volumeArray    = new Float32Array ();
-
-   this .addDefine ("#define X3D_VOLUME_EMITTER");
-   this .addSampler ("volume");
-
-   this .addUniform ("direction",      "uniform vec3 direction;");
-   this .addUniform ("verticesIndex",  "uniform int verticesIndex;");
-   this .addUniform ("normalsIndex",   "uniform int normalsIndex;");
-   this .addUniform ("hierarchyIndex", "uniform int hierarchyIndex;");
-   this .addUniform ("hierarchyRoot",  "uniform int hierarchyRoot;");
-   this .addUniform ("volume",         "uniform sampler2D volume;");
-
-   this .addCallback (this .set_direction__);
-   this .addCallback (this .set_verticesIndex__);
-   this .addCallback (this .set_normalsIndex__);
-   this .addCallback (this .set_hierarchyIndex__);
-   this .addCallback (this .set_hierarchyRoot__);
-
-   this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
-   {
-      if (hierarchyRoot < 0)
-      {
-         return vec3 (0.0);
-      }
-      else
-      {
-         if (direction == vec3 (0.0))
-            return getRandomSphericalVelocity ();
-
-         else
-            return direction * getRandomSpeed ();
-      }
-   }`);
-
-   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
-   {
-      if (hierarchyRoot < 0)
-      {
-         return vec4 (NaN);
-      }
-      else
-      {
-         vec4 point;
-         vec3 normal;
-
-         getRandomPointOnSurface (volume, verticesIndex, normalsIndex, point, normal);
-
-         Line3 line = Line3 (point .xyz, getRandomSurfaceNormal (normal));
-
-         vec4 points [ARRAY_SIZE];
-
-         int numIntersections = getIntersections (volume, verticesIndex, hierarchyIndex, hierarchyRoot, line, points);
-
-         numIntersections -= numIntersections % 2; // We need an even count of intersections.
-
-         switch (numIntersections)
-         {
-            case 0:
-               return vec4 (0.0);
-            case 2:
-               break;
-            default:
-               sort (points, numIntersections, plane3 (line .point, line .direction));
-               break;
-         }
-
-         int index = int (fract (random ()) * float (numIntersections / 2)) * 2; // Select random intersection.
-
-         return mix (points [index], points [index + 1], random ());
-      }
-   }`);
 }
 
 Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmitterNode .prototype),
@@ -171,7 +101,76 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
       this .volumeNode .setup ();
       this .volumeNode ._rebuild .addInterest ("set_geometry__", this);
 
-      this .set_direction__ ();
+      this .addDefine ("#define X3D_VOLUME_EMITTER");
+      this .addSampler ("volume");
+
+      this .addUniform ("direction",      "uniform vec3 direction;");
+      this .addUniform ("verticesIndex",  "uniform int verticesIndex;");
+      this .addUniform ("normalsIndex",   "uniform int normalsIndex;");
+      this .addUniform ("hierarchyIndex", "uniform int hierarchyIndex;");
+      this .addUniform ("hierarchyRoot",  "uniform int hierarchyRoot;");
+      this .addUniform ("volume",         "uniform sampler2D volume;");
+
+      this .addCallback (this .set_direction__);
+      this .addCallback (this .set_verticesIndex__);
+      this .addCallback (this .set_normalsIndex__);
+      this .addCallback (this .set_hierarchyIndex__);
+      this .addCallback (this .set_hierarchyRoot__);
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         if (hierarchyRoot < 0)
+         {
+            return vec3 (0.0);
+         }
+         else
+         {
+            if (direction == vec3 (0.0))
+               return getRandomSphericalVelocity ();
+
+            else
+               return direction * getRandomSpeed ();
+         }
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         if (hierarchyRoot < 0)
+         {
+            return vec4 (NaN);
+         }
+         else
+         {
+            vec4 point;
+            vec3 normal;
+
+            getRandomPointOnSurface (volume, verticesIndex, normalsIndex, point, normal);
+
+            Line3 line = Line3 (point .xyz, getRandomSurfaceNormal (normal));
+
+            vec4 points [ARRAY_SIZE];
+
+            int numIntersections = getIntersections (volume, verticesIndex, hierarchyIndex, hierarchyRoot, line, points);
+
+            numIntersections -= numIntersections % 2; // We need an even count of intersections.
+
+            switch (numIntersections)
+            {
+               case 0:
+                  return vec4 (0.0);
+               case 2:
+                  break;
+               default:
+                  sort (points, numIntersections, plane3 (line .point, line .direction));
+                  break;
+            }
+
+            int index = int (fract (random ()) * float (numIntersections / 2)) * 2; // Select random intersection.
+
+            return mix (points [index], points [index + 1], random ());
+         }
+      }`);
+
       this .set_geometry__ ();
    },
    set_direction__: (() =>

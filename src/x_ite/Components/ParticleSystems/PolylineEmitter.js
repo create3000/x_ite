@@ -62,56 +62,6 @@ function PolylineEmitter (executionContext)
    this .verticesIndex  = -1;
    this .polylinesNode  = new IndexedLineSet (executionContext);
    this .polylinesArray = new Float32Array ();
-
-   this .addDefine ("#define X3D_POLYLINE_EMITTER");
-   this .addSampler ("polylines");
-
-   this .addUniform ("direction",     "uniform vec3 direction;");
-   this .addUniform ("verticesIndex", "uniform int verticesIndex;");
-   this .addUniform ("polylines",     "uniform sampler2D polylines;");
-
-   this .addCallback (this .set_direction__);
-   this .addCallback (this .set_verticesIndex__);
-
-   this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
-   {
-      if (direction == vec3 (0.0))
-         return getRandomSphericalVelocity ();
-
-      else
-         return direction * getRandomSpeed ();
-   }`);
-
-   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
-   {
-      if (verticesIndex < 0)
-      {
-         return vec4 (NaN);
-      }
-      else
-      {
-         // Determine index0, index1 and weight.
-
-         float lastLengthSoFar = texelFetch (polylines, verticesIndex - 1, 0) .x;
-         float fraction        = random () * lastLengthSoFar;
-
-         int   index0 = 0;
-         int   index1 = 0;
-         float weight = 0.0;
-
-         interpolate (polylines, verticesIndex, fraction, index0, index1, weight);
-
-         // Interpolate and return position.
-
-         index0 *= 2;
-         index1  = index0 + 1;
-
-         vec4 vertex0 = texelFetch (polylines, verticesIndex + index0, 0);
-         vec4 vertex1 = texelFetch (polylines, verticesIndex + index1, 0);
-
-         return mix (vertex0, vertex1, weight);
-      }
-   }`);
 }
 
 Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleEmitterNode .prototype),
@@ -144,7 +94,56 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
       this .polylinesNode .setup ();
       this .polylinesNode ._rebuild .addInterest ("set_polylines__", this);
 
-      this .set_direction__ ();
+      this .addDefine ("#define X3D_POLYLINE_EMITTER");
+      this .addSampler ("polylines");
+
+      this .addUniform ("direction",     "uniform vec3 direction;");
+      this .addUniform ("verticesIndex", "uniform int verticesIndex;");
+      this .addUniform ("polylines",     "uniform sampler2D polylines;");
+
+      this .addCallback (this .set_direction__);
+      this .addCallback (this .set_verticesIndex__);
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         if (direction == vec3 (0.0))
+            return getRandomSphericalVelocity ();
+
+         else
+            return direction * getRandomSpeed ();
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         if (verticesIndex < 0)
+         {
+            return vec4 (NaN);
+         }
+         else
+         {
+            // Determine index0, index1 and weight.
+
+            float lastLengthSoFar = texelFetch (polylines, verticesIndex - 1, 0) .x;
+            float fraction        = random () * lastLengthSoFar;
+
+            int   index0 = 0;
+            int   index1 = 0;
+            float weight = 0.0;
+
+            interpolate (polylines, verticesIndex, fraction, index0, index1, weight);
+
+            // Interpolate and return position.
+
+            index0 *= 2;
+            index1  = index0 + 1;
+
+            vec4 vertex0 = texelFetch (polylines, verticesIndex + index0, 0);
+            vec4 vertex1 = texelFetch (polylines, verticesIndex + index1, 0);
+
+            return mix (vertex0, vertex1, weight);
+         }
+      }`);
+
       this .set_polylines__ ();
    },
    set_direction__: (() =>

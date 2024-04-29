@@ -58,20 +58,6 @@ function ExplosionEmitter (executionContext)
    this .addType (X3DConstants .ExplosionEmitter);
 
    this ._position .setUnit ("length");
-
-   this .addDefine ("#define X3D_EXPLOSION_EMITTER");
-   this .addUniform ("position", "uniform vec3 position;");
-   this .addCallback (this .set_position__);
-
-   this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
-   {
-      return getRandomSphericalVelocity ();
-   }`);
-
-   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
-   {
-      return vec4 (position, 1.0);
-   }`);
 }
 
 Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, X3DParticleEmitterNode .prototype),
@@ -85,7 +71,19 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, X3DParticle
 
       this ._position .addInterest ("set_position__", this);
 
-      this .set_position__ ();
+      this .addDefine ("#define X3D_EXPLOSION_EMITTER");
+      this .addUniform ("position", "uniform vec3 position;");
+      this .addCallback (this .set_position__);
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         return getRandomSphericalVelocity ();
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return vec4 (position, 1.0);
+      }`);
    },
    isExplosive ()
    {

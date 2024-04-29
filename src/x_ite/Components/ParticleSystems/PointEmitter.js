@@ -59,28 +59,6 @@ function PointEmitter (executionContext)
    this .addType (X3DConstants .PointEmitter);
 
    this ._position .setUnit ("length");
-
-   this .addDefine ("#define X3D_POINT_EMITTER");
-
-   this .addUniform ("position",  "uniform vec3 position;");
-   this .addUniform ("direction", "uniform vec3 direction;");
-
-   this .addCallback (this .set_position__);
-   this .addCallback (this .set_direction__);
-
-   this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
-   {
-      if (direction == vec3 (0.0))
-         return getRandomSphericalVelocity ();
-
-      else
-         return direction * getRandomSpeed ();
-   }`);
-
-   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
-   {
-      return vec4 (position, 1.0);
-   }`);
 }
 
 Object .assign (Object .setPrototypeOf (PointEmitter .prototype, X3DParticleEmitterNode .prototype),
@@ -95,8 +73,27 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, X3DParticleEmit
       this ._position  .addInterest ("set_position__",  this);
       this ._direction .addInterest ("set_direction__", this);
 
-      this .set_position__ ();
-      this .set_direction__ ();
+      this .addDefine ("#define X3D_POINT_EMITTER");
+
+      this .addUniform ("position",  "uniform vec3 position;");
+      this .addUniform ("direction", "uniform vec3 direction;");
+
+      this .addCallback (this .set_position__);
+      this .addCallback (this .set_direction__);
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         if (direction == vec3 (0.0))
+            return getRandomSphericalVelocity ();
+
+         else
+            return direction * getRandomSpeed ();
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return vec4 (position, 1.0);
+      }`);
    },
    set_position__ ()
    {
