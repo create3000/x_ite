@@ -1,4 +1,5 @@
 export default /* glsl*/ `
+#if defined (X3D_VOLUME_EMITTER) || defined (X3D_BOUNDED_VOLUME)
 #define BVH_NODE        0
 #define BVH_TRIANGLE    1
 #define BVH_STACK_SIZE  32
@@ -55,6 +56,7 @@ getBVHTriangle (const in sampler2D volume)
 
 /* Ray triangle intersection test */
 
+#if defined (X3D_VOLUME_EMITTER)
 int
 getIntersections (const in sampler2D volume, const in int verticesIndex, const in int hierarchyIndex, const in int rootIndex, const in Line3 line, out vec4 points [ARRAY_SIZE])
 {
@@ -112,7 +114,9 @@ getIntersections (const in sampler2D volume, const in int verticesIndex, const i
 
    return count;
 }
+#endif
 
+#if defined (X3D_BOUNDED_VOLUME)
 int
 getIntersections (const in sampler2D volume, const in int verticesIndex, const in int normalsIndex, const in int hierarchyIndex, const in int rootIndex, const in Line3 line, out vec4 points [ARRAY_SIZE], out vec3 normals [ARRAY_SIZE])
 {
@@ -182,4 +186,6 @@ getIntersections (const in sampler2D volume, const in int verticesIndex, const i
 
    return count;
 }
+#endif
+#endif
 `;

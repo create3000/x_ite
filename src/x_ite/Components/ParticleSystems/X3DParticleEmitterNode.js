@@ -63,6 +63,7 @@ function X3DParticleEmitterNode (executionContext)
    this ._mass        .setUnit ("mass");
    this ._surfaceArea .setUnit ("area");
 
+   this .defines   = [ ];
    this .samplers  = [ ];
    this .uniforms  = new Map ();
    this .callbacks = new Set ();
@@ -170,7 +171,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       // Uniforms
 
       gl .uniform1i (program .randomSeed,        Math .random () * 0xffffffff);
-      gl .uniform1i (program .geometryType,      particleSystem .geometryType);
       gl .uniform1i (program .createParticles,   particleSystem .createParticles && this .on);
       gl .uniform1f (program .particleLifetime,  particleSystem .particleLifetime);
       gl .uniform1f (program .lifetimeVariation, particleSystem .lifetimeVariation);
@@ -178,8 +178,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       gl .uniform2f (program .particleSize,      particleSystem ._particleSize .x, particleSystem ._particleSize .y);
 
       // Forces
-
-      gl .uniform1i (program .numForces, particleSystem .numForces);
 
       if (particleSystem .numForces)
       {
@@ -189,11 +187,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // Bounded Physics
 
-      if (particleSystem .boundedHierarchyRoot < 0)
-      {
-         gl .uniform1i (program .boundedHierarchyRoot, -1);
-      }
-      else
+      if (particleSystem .boundedHierarchyRoot > -1)
       {
          gl .uniform1i (program .boundedVerticesIndex,  particleSystem .boundedVerticesIndex);
          gl .uniform1i (program .boundedNormalsIndex,   particleSystem .boundedNormalsIndex);
@@ -206,8 +200,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // Colors
 
-      gl .uniform1i (program .numColors, particleSystem .numColors);
-
       if (particleSystem .numColors)
       {
          gl .activeTexture (gl .TEXTURE0 + program .colorRampTextureUnit);
@@ -215,8 +207,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       }
 
       // TexCoords
-
-      gl .uniform1i (program .numTexCoords, particleSystem .numTexCoords);
 
       if (particleSystem .numTexCoords)
       {
@@ -262,6 +252,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
       // console .log (data .slice (0, particlesStride / 4));
    },
+   addDefine (define)
+   {
+      this .defines .push (define);
+   },
    addSampler (name)
    {
       this .samplers .push (name);
@@ -290,9 +284,20 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
    },
    getProgram (particleSystem)
    {
+      const { geometryType, numColors, numTexCoords, numForces, boundedHierarchyRoot } = particleSystem;
+
       let key = "";
 
-
+      key += geometryType;
+      key += ".";
+      key += numColors
+      key += ".";
+      key += numTexCoords;
+      key += ".";
+      key += numForces
+      key += ".";
+      key += boundedHierarchyRoot;
+      key += ".";
 
       return this .programs .get (key) ??
          this .createProgram (key, particleSystem);
@@ -309,28 +314,36 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       precision highp int;
       precision highp sampler2D;
 
+      ${this .defines .join ("\n")}
+
+      #define X3D_GEOMETRY_TYPE ${particleSystem .geometryType}
+      #define X3D_NUM_COLORS ${particleSystem .numColors}
+      #define X3D_NUM_TEX_COORDS ${particleSystem .numTexCoords}
+      #define X3D_NUM_FORCES ${particleSystem .numForces}
+      ${particleSystem .boundedHierarchyRoot > -1 ? "#define X3D_BOUNDED_VOLUME" : ""}
+
       uniform int   randomSeed;
-      uniform int   geometryType;
       uniform bool  createParticles;
       uniform float particleLifetime;
       uniform float lifetimeVariation;
       uniform float deltaTime;
       uniform vec2  particleSize;
 
-      uniform int       numForces;
-      uniform sampler2D forces;
+      #if X3D_NUM_FORCES > 0
+         uniform sampler2D forces;
+      #endif
 
-      uniform int       boundedVerticesIndex;
-      uniform int       boundedNormalsIndex;
-      uniform int       boundedHierarchyIndex;
-      uniform int       boundedHierarchyRoot;
-      uniform sampler2D boundedVolume;
+      #if defined (X3D_BOUNDED_VOLUME)
+         uniform int       boundedVerticesIndex;
+         uniform int       boundedNormalsIndex;
+         uniform int       boundedHierarchyIndex;
+         uniform int       boundedHierarchyRoot;
+         uniform sampler2D boundedVolume;
+      #endif
 
-      uniform int       numColors;
       uniform sampler2D colorRamp;
 
       uniform int       texCoordCount;
-      uniform int       numTexCoords;
       uniform sampler2D texCoordRamp;
 
       ${Array .from (this .uniforms .values ()) .join ("\n")}
@@ -716,40 +729,39 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // Current values
 
+      #if X3D_NUM_COLORS > 0
       vec4
       getColor (const in float lifetime, const in float elapsedTime)
       {
-         if (numColors > 0)
-         {
-            // Determine index0, index1 and weight.
+         // Determine index0, index1 and weight.
 
-            float fraction = elapsedTime / lifetime;
+         float fraction = elapsedTime / lifetime;
 
-            int   index0;
-            int   index1;
-            float weight;
+         int   index0;
+         int   index1;
+         float weight;
 
-            interpolate (colorRamp, numColors, fraction, index0, index1, weight);
+         interpolate (colorRamp, X3D_NUM_COLORS, fraction, index0, index1, weight);
 
-            // Interpolate and return color.
+         // Interpolate and return color.
 
-            vec4 color0 = texelFetch (colorRamp, numColors + index0, 0);
-            vec4 color1 = texelFetch (colorRamp, numColors + index1, 0);
+         vec4 color0 = texelFetch (colorRamp, X3D_NUM_COLORS + index0, 0);
+         vec4 color1 = texelFetch (colorRamp, X3D_NUM_COLORS + index1, 0);
 
-            return mix (color0, color1, weight);
-         }
-         else
-         {
-            return vec4 (1.0);
-         }
+         return mix (color0, color1, weight);
       }
+      #else
+      vec4
+      getColor (const in float lifetime, const in float elapsedTime)
+      {
+         return vec4 (1.0);
+      }
+      #endif
 
+      #if defined (X3D_BOUNDED_VOLUME)
       void
       bounce (const in float deltaTime, const in vec4 fromPosition, inout vec4 toPosition, inout vec3 velocity)
       {
-         if (boundedHierarchyRoot < 0)
-            return;
-
          Line3 line = Line3 (fromPosition .xyz, save_normalize (velocity));
 
          vec4 points  [ARRAY_SIZE];
@@ -781,24 +793,26 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          toPosition = vec4 (point + save_normalize (velocity) * 0.0001, 1.0);
          velocity  *= damping;
       }
+      #endif
 
+      #if X3D_NUM_TEX_COORDS > 0
       int
       getTexCoordIndex0 (const in float lifetime, const in float elapsedTime)
       {
-         if (numTexCoords == 0)
-         {
-            return -1;
-         }
-         else
-         {
-            float fraction = elapsedTime / lifetime;
-            int   index0   = 0;
+         float fraction = elapsedTime / lifetime;
+         int   index0   = 0;
 
-            interpolate (texCoordRamp, numTexCoords, fraction, index0);
+         interpolate (texCoordRamp, X3D_NUM_TEX_COORDS, fraction, index0);
 
-            return numTexCoords + index0 * texCoordCount;
-         }
+         return X3D_NUM_TEX_COORDS + index0 * texCoordCount;
       }
+      #else
+      int
+      getTexCoordIndex0 (const in float lifetime, const in float elapsedTime)
+      {
+         return -1;
+      }
+      #endif
 
       void
       main ()
@@ -838,19 +852,23 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
             vec3 velocity = input2 .xyz;
             vec4 position = input6;
 
-            for (int i = 0; i < numForces; ++ i)
-            {
-               vec4  force      = texelFetch (forces, i, 0);
-               float turbulence = force .w;
-               vec3  normal     = getRandomNormalWithDirectionAndAngle (force .xyz, turbulence);
-               float speed      = length (force .xyz);
+            #if X3D_NUM_FORCES > 0
+               for (int i = 0; i < X3D_NUM_FORCES; ++ i)
+               {
+                  vec4  force      = texelFetch (forces, i, 0);
+                  float turbulence = force .w;
+                  vec3  normal     = getRandomNormalWithDirectionAndAngle (force .xyz, turbulence);
+                  float speed      = length (force .xyz);
 
-               velocity += normal * speed;
-            }
+                  velocity += normal * speed;
+               }
+            #endif
 
             position .xyz += velocity * deltaTime;
 
-            bounce (deltaTime, input6, position, velocity);
+            #if defined (X3D_BOUNDED_VOLUME)
+               bounce (deltaTime, input6, position, velocity);
+            #endif
 
             output0 = vec4 (life, lifetime, elapsedTime, getTexCoordIndex0 (lifetime, elapsedTime));
             output1 = getColor (lifetime, elapsedTime);
@@ -858,34 +876,21 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
             output6 = position;
          }
 
-         switch (geometryType)
-         {
-            case POINT:
-            case SPRITE:
-            case GEOMETRY:
-            {
-               output3 = vec4 (1.0, 0.0, 0.0, 0.0);
-               output4 = vec4 (0.0, 1.0, 0.0, 0.0);
-               output5 = vec4 (0.0, 0.0, 1.0, 0.0);
-               break;
-            }
-            case LINE:
-            {
-               mat3 m = Matrix3 (Quaternion (vec3 (0.0, 0.0, 1.0), output2 .xyz));
+         #if X3D_GEOMETRY_TYPE == POINT || X3D_GEOMETRY_TYPE == SPRITE || X3D_GEOMETRY_TYPE == GEOMETRY
+            output3 = vec4 (1.0, 0.0, 0.0, 0.0);
+            output4 = vec4 (0.0, 1.0, 0.0, 0.0);
+            output5 = vec4 (0.0, 0.0, 1.0, 0.0);
+         #elif X3D_GEOMETRY_TYPE == LINE
+            mat3 m = Matrix3 (Quaternion (vec3 (0.0, 0.0, 1.0), output2 .xyz));
 
-               output3 = vec4 (m [0], 0.0);
-               output4 = vec4 (m [1], 0.0);
-               output5 = vec4 (m [2], 0.0);
-               break;
-            }
-            default: // QUAD, TRIANGLE
-            {
-               output3 = vec4 (particleSize .x, 0.0, 0.0, 0.0);
-               output4 = vec4 (0.0, particleSize .y, 0.0, 0.0);
-               output5 = vec4 (0.0, 0.0, 1.0, 0.0);
-               break;
-            }
-         }
+            output3 = vec4 (m [0], 0.0);
+            output4 = vec4 (m [1], 0.0);
+            output5 = vec4 (m [2], 0.0);
+         #else
+            output3 = vec4 (particleSize .x, 0.0, 0.0, 0.0);
+            output4 = vec4 (0.0, particleSize .y, 0.0, 0.0);
+            output5 = vec4 (0.0, 0.0, 1.0, 0.0);
+         #endif
       }
       `;
 
@@ -936,15 +941,13 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       ];
 
       program .randomSeed        = gl .getUniformLocation (program, "randomSeed");
-      program .geometryType      = gl .getUniformLocation (program, "geometryType");
       program .createParticles   = gl .getUniformLocation (program, "createParticles");
       program .particleLifetime  = gl .getUniformLocation (program, "particleLifetime");
       program .lifetimeVariation = gl .getUniformLocation (program, "lifetimeVariation");
       program .deltaTime         = gl .getUniformLocation (program, "deltaTime");
       program .particleSize      = gl .getUniformLocation (program, "particleSize");
 
-      program .numForces = gl .getUniformLocation (program, "numForces");
-      program .forces    = gl .getUniformLocation (program, "forces");
+      program .forces = gl .getUniformLocation (program, "forces");
 
       program .boundedVerticesIndex  = gl .getUniformLocation (program, "boundedVerticesIndex");
       program .boundedNormalsIndex   = gl .getUniformLocation (program, "boundedNormalsIndex");
@@ -952,11 +955,9 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       program .boundedHierarchyRoot  = gl .getUniformLocation (program, "boundedHierarchyRoot");
       program .boundedVolume         = gl .getUniformLocation (program, "boundedVolume");
 
-      program .numColors = gl .getUniformLocation (program, "numColors");
       program .colorRamp = gl .getUniformLocation (program, "colorRamp");
 
       program .texCoordCount = gl .getUniformLocation (program, "texCoordCount");
-      program .numTexCoords  = gl .getUniformLocation (program, "numTexCoords");
       program .texCoordRamp  = gl .getUniformLocation (program, "texCoordRamp");
 
       for (const name of this .uniforms .keys ())

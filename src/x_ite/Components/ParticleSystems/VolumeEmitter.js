@@ -63,11 +63,12 @@ function VolumeEmitter (executionContext)
 
    this .verticesIndex  = -1;
    this .normalsIndex   = -1;
-   this .hierarchyIndex = 0;
-   this .hierarchyRoot  = 0;
+   this .hierarchyIndex = -1;
+   this .hierarchyRoot  = -1;
    this .volumeNode     = new IndexedFaceSet (executionContext);
    this .volumeArray    = new Float32Array ();
 
+   this .addDefine ("#define X3D_VOLUME_EMITTER");
    this .addSampler ("volume");
 
    this .addUniform ("direction",      "uniform vec3 direction;");
