@@ -933,11 +933,19 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          // console .error (vertexShaderSource);
       }
 
+      this .programs .set (key, program);
+
+      gl .useProgram (program);
+
+      // Attributes
+
       program .inputs = [
          [0, gl .getAttribLocation (program, "input0")],
          [2, gl .getAttribLocation (program, "input2")],
          [6, gl .getAttribLocation (program, "input6")],
       ];
+
+      // Uniforms
 
       program .randomSeed        = gl .getUniformLocation (program, "randomSeed");
       program .particleLifetime  = gl .getUniformLocation (program, "particleLifetime");
@@ -963,7 +971,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       program .NaN = gl .getUniformLocation (program, "NaN");
 
-      gl .useProgram (program);
+      // Samplers
 
       for (const name of this .samplers)
       {
@@ -976,10 +984,12 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       browser .resetTextureUnits ();
 
-      this .programs .set (key, program);
+      // Field Uniforms
 
       for (const callback of this .callbacks)
          callback .call (this);
+
+      // Return
 
       return program;
    },
