@@ -63,6 +63,9 @@ function PointEmitter (executionContext)
    this .addUniform ("position",  "uniform vec3 position;");
    this .addUniform ("direction", "uniform vec3 direction;");
 
+   this .addCallback (this .set_position__);
+   this .addCallback (this .set_direction__);
+
    this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {
       if (direction == vec3 (0.0))

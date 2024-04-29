@@ -60,6 +60,7 @@ function ExplosionEmitter (executionContext)
    this ._position .setUnit ("length");
 
    this .addUniform ("position", "uniform vec3 position;");
+   this .addCallback (this .set_position__);
 
    this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {

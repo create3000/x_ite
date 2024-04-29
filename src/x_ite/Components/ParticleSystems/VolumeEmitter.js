@@ -61,8 +61,12 @@ function VolumeEmitter (executionContext)
 
    this .addType (X3DConstants .VolumeEmitter);
 
-   this .volumeNode  = new IndexedFaceSet (executionContext);
-   this .volumeArray = new Float32Array ();
+   this .verticesIndex  = -1;
+   this .normalsIndex   = -1;
+   this .hierarchyIndex = 0;
+   this .hierarchyRoot  = 0;
+   this .volumeNode     = new IndexedFaceSet (executionContext);
+   this .volumeArray    = new Float32Array ();
 
    this .addSampler ("volume");
 
@@ -72,6 +76,12 @@ function VolumeEmitter (executionContext)
    this .addUniform ("hierarchyIndex", "uniform int hierarchyIndex;");
    this .addUniform ("hierarchyRoot",  "uniform int hierarchyRoot;");
    this .addUniform ("volume",         "uniform sampler2D volume;");
+
+   this .addCallback (this .set_direction__);
+   this .addCallback (this .set_verticesIndex__);
+   this .addCallback (this .set_normalsIndex__);
+   this .addCallback (this .set_hierarchyIndex__);
+   this .addCallback (this .set_hierarchyRoot__);
 
    this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {
@@ -174,6 +184,22 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
          this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
       };
    })(),
+   set_verticesIndex__ ()
+   {
+      this .setUniform ("uniform1i", "verticesIndex", this .verticesIndex);
+   },
+   set_normalsIndex__ ()
+   {
+      this .setUniform ("uniform1i", "normalsIndex", this .normalsIndex);
+   },
+   set_hierarchyIndex__ ()
+   {
+      this .setUniform ("uniform1i", "hierarchyIndex", this .hierarchyIndex);
+   },
+   set_hierarchyRoot__ ()
+   {
+      this .setUniform ("uniform1i", "hierarchyRoot", this .hierarchyRoot);
+   },
    set_geometry__: (() =>
    {
       const
@@ -226,16 +252,21 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
 
          volumeArray .set (hierarchy, hierarchyIndex * 4);
 
-         this .setUniform ("uniform1i", "verticesIndex",  verticesIndex);
-         this .setUniform ("uniform1i", "normalsIndex",   normalsIndex);
-         this .setUniform ("uniform1i", "hierarchyIndex", hierarchyIndex);
-         this .setUniform ("uniform1i", "hierarchyRoot",  hierarchyIndex + hierarchyLength - 1);
+         this .verticesIndex  = verticesIndex;
+         this .normalsIndex   = normalsIndex;
+         this .hierarchyIndex = hierarchyIndex;
+         this .hierarchyRoot  = hierarchyIndex + hierarchyLength - 1;
 
          if (volumeArraySize)
          {
             gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, volumeArraySize, volumeArraySize, 0, gl .RGBA, gl .FLOAT, volumeArray);
          }
+
+         this .set_verticesIndex__ ();
+         this .set_normalsIndex__ ();
+         this .set_hierarchyIndex__ ();
+         this .set_hierarchyRoot__ ();
       };
    })(),
    activateTextures (gl, program)

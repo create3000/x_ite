@@ -64,9 +64,10 @@ function X3DParticleEmitterNode (executionContext)
    this ._surfaceArea .setUnit ("area");
 
    this .samplers  = [ ];
-   this .uniforms  = { };
+   this .uniforms  = new Map ();
+   this .callbacks = new Set ();
    this .functions = [ ];
-   this .program   = null;
+   this .programs  = new Map ();
 
    this .addSampler ("forces");
    this .addSampler ("boundedVolume");
@@ -75,6 +76,9 @@ function X3DParticleEmitterNode (executionContext)
 
    this .addUniform ("speed",     "uniform float speed;");
    this .addUniform ("variation", "uniform float variation;");
+
+   this .addCallback (this .set_speed__);
+   this .addCallback (this .set_variation__);
 
    this .addFunction (Line3Source);
    this .addFunction (Plane3Source);
@@ -95,7 +99,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // Create program.
 
-      this .program           = this .createProgram ();
       this .transformFeedback = gl .createTransformFeedback ();
 
       // Initialize fields.
@@ -158,7 +161,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          inputParticles  = particleSystem .inputParticles,
          particlesStride = particleSystem .particlesStride,
          particleOffsets = particleSystem .particleOffsets,
-         program         = this .program;
+         program         = this .getProgram (particleSystem);
 
       // Start
 
@@ -265,22 +268,36 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
    },
    addUniform (name, uniform)
    {
-      this .uniforms [name] = uniform;
+      this .uniforms .set (name, uniform);
    },
    setUniform (func, name, value1, value2, value3)
    {
-      const
-         gl      = this .getBrowser () .getContext (),
-         program = this .program;
+      const gl = this .getBrowser () .getContext ();
 
-      gl .useProgram (program);
-      gl [func] (program [name], value1, value2, value3);
+      for (const program of this .programs .values ())
+      {
+         gl .useProgram (program);
+         gl [func] (program [name], value1, value2, value3);
+      }
+   },
+   addCallback (callback)
+   {
+      this .callbacks .add (callback);
    },
    addFunction (func)
    {
       this .functions .push (func);
    },
-   createProgram ()
+   getProgram (particleSystem)
+   {
+      let key = "";
+
+
+
+      return this .programs .get (key) ??
+         this .createProgram (key, particleSystem);
+   },
+   createProgram (key, particleSystem)
    {
       const
          browser = this .getBrowser (),
@@ -316,7 +333,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       uniform int       numTexCoords;
       uniform sampler2D texCoordRamp;
 
-      ${Object .values (this .uniforms) .join ("\n")}
+      ${Array .from (this .uniforms .values ()) .join ("\n")}
 
       in vec4 input0; // (life, lifetime, elapsedTime, texCoordIndex0)
       in vec4 input2; // (velocity, 0.0)
@@ -942,7 +959,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       program .numTexCoords  = gl .getUniformLocation (program, "numTexCoords");
       program .texCoordRamp  = gl .getUniformLocation (program, "texCoordRamp");
 
-      for (const name of Object .keys (this .uniforms))
+      for (const name of this .uniforms .keys ())
          program [name] = gl .getUniformLocation (program, name);
 
       program .NaN = gl .getUniformLocation (program, "NaN");
@@ -959,6 +976,11 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       gl .uniform1f (program .NaN, NaN);
 
       browser .resetTextureUnits ();
+
+      this .programs .set (key, program);
+
+      for (const callback of this .callbacks)
+         callback .call (this);
 
       return program;
    },

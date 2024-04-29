@@ -59,6 +59,7 @@ function PolylineEmitter (executionContext)
 
    this .addType (X3DConstants .PolylineEmitter);
 
+   this .verticesIndex  = -1;
    this .polylinesNode  = new IndexedLineSet (executionContext);
    this .polylinesArray = new Float32Array ();
 
@@ -67,6 +68,9 @@ function PolylineEmitter (executionContext)
    this .addUniform ("direction",     "uniform vec3 direction;");
    this .addUniform ("verticesIndex", "uniform int verticesIndex;");
    this .addUniform ("polylines",     "uniform sampler2D polylines;");
+
+   this .addCallback (this .set_direction__);
+   this .addCallback (this .set_verticesIndex__);
 
    this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {
@@ -153,6 +157,10 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
          this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
       };
    })(),
+   set_verticesIndex__ ()
+   {
+      this .setUniform ("uniform1i", "verticesIndex", this .verticesIndex);
+   },
    set_polylines__: (() =>
    {
       const
@@ -187,13 +195,15 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
 
          polylinesArray .set (vertices, verticesIndex * 4);
 
-         this .setUniform ("uniform1i", "verticesIndex", numVertices ? verticesIndex : -1);
+         this .verticesIndex = numVertices ? verticesIndex : -1;
 
          if (polylineArraySize)
          {
             gl .bindTexture (gl .TEXTURE_2D, this .polylinesTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, polylineArraySize, polylineArraySize, 0, gl .RGBA, gl .FLOAT, polylinesArray);
          }
+
+         this .set_verticesIndex__ ();
       };
    })(),
    activateTextures (gl, program)

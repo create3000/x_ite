@@ -64,6 +64,10 @@ function ConeEmitter (executionContext)
    this .addUniform ("direction", "uniform vec3  direction;");
    this .addUniform ("angle",     "uniform float angle;");
 
+   this .addCallback (this .set_position__);
+   this .addCallback (this .set_direction__);
+   this .addCallback (this .set_angle__);
+
    this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {
       if (direction == vec3 (0.0))

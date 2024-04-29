@@ -60,8 +60,10 @@ function SurfaceEmitter (executionContext)
 
    this .addType (X3DConstants .SurfaceEmitter);
 
-   this .surfaceNode  = null;
-   this .surfaceArray = new Float32Array ();
+   this .verticesIndex = -1;
+   this .normalsIndex  = -1;
+   this .surfaceNode   = null;
+   this .surfaceArray  = new Float32Array ();
 
    this .addSampler ("surface");
 
@@ -69,6 +71,10 @@ function SurfaceEmitter (executionContext)
    this .addUniform ("verticesIndex", "uniform int verticesIndex;");
    this .addUniform ("normalsIndex",  "uniform int normalsIndex;");
    this .addUniform ("surface",       "uniform sampler2D surface;");
+
+   this .addCallback (this .set_solid__);
+   this .addCallback (this .set_verticesIndex__);
+   this .addCallback (this .set_normalsIndex__);
 
    this .addFunction (/* glsl */ `vec4 position; vec3 getRandomVelocity ()
    {
@@ -137,8 +143,15 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
    },
    set_solid__ ()
    {
-      if (this .surfaceNode)
-         this .setUniform ("uniform1i", "solid", this .surfaceNode ._solid .getValue ());
+      this .setUniform ("uniform1i", "solid", this .surfaceNode ?._solid .getValue () ?? true);
+   },
+   set_verticesIndex__ ()
+   {
+      this .setUniform ("uniform1i", "verticesIndex", this .verticesIndex);
+   },
+   set_normalsIndex__ ()
+   {
+      this .setUniform ("uniform1i", "normalsIndex", this .normalsIndex);
    },
    set_geometry__: (() =>
    {
@@ -189,8 +202,8 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
                surfaceArray [s + 2] = normals [n + 2];
             }
 
-            this .setUniform ("uniform1i", "verticesIndex", numVertices ? verticesIndex : -1);
-            this .setUniform ("uniform1i", "normalsIndex",  numVertices ? normalsIndex  : -1);
+            this .verticesIndex = numVertices ? verticesIndex : -1;
+            this .normalsIndex  = numVertices ? normalsIndex  : -1;
 
             if (surfaceArraySize)
             {
@@ -200,9 +213,12 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
          }
          else
          {
-            this .setUniform ("uniform1i", "verticesIndex", -1);
-            this .setUniform ("uniform1i", "normalsIndex",  -1);
+            this .verticesIndex = -1;
+            this .normalsIndex  = -1;
          }
+
+         this .set_verticesIndex__ ();
+         this .set_normalsIndex__ ();
       };
    })(),
    activateTextures (gl, program)
