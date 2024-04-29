@@ -757,11 +757,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          return mix (color0, color1, weight);
       }
       #else
-      vec4
-      getColor (const in float lifetime, const in float elapsedTime)
-      {
-         return vec4 (1.0);
-      }
+      #define getColor(lifetime, elapsedTime) (vec4 (1.0))
       #endif
 
       #if defined (X3D_BOUNDED_VOLUME)
@@ -813,11 +809,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          return X3D_NUM_TEX_COORDS + index0 * texCoordCount;
       }
       #else
-      int
-      getTexCoordIndex0 (const in float lifetime, const in float elapsedTime)
-      {
-         return -1;
-      }
+      #define getTexCoordIndex0(lifetime, elapsedTime) (-1)
       #endif
 
       void
