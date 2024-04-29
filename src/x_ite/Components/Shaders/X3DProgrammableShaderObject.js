@@ -304,9 +304,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "Normal",
          "Vertex",
          "Particle",
-	      /*
          "ParticleValues",
-	 */
          "ParticleVelocity",
          "ParticleMatrix",
          "ParticleNormalMatrix",

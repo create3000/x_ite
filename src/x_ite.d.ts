@@ -10441,7 +10441,7 @@ interface KeySensorProxy extends X3DKeyDeviceSensorNodeProxy
 }
 
 /** Layer contains a list of children nodes that define the contents of the layer. */
-interface LayerProxy extends X3DLayerNodeProxy
+interface LayerProxy extends X3DLayerNodeProxy, X3DBoundedObjectProxy
 {
    /**
    * This field is of access type 'inputOnly' and type MFNode.
@@ -10627,7 +10627,7 @@ interface LayoutGroupProxy extends X3DNodeProxy, X3DGroupingNodeProxy
 }
 
 /** LayoutLayer is a Grouping node that can contain most nodes. */
-interface LayoutLayerProxy extends X3DLayerNodeProxy
+interface LayoutLayerProxy extends X3DLayerNodeProxy, X3DBoundedObjectProxy
 {
    /**
    * This field is of access type 'inputOnly' and type MFNode.
@@ -19030,6 +19030,35 @@ interface UnlitMaterialProxy extends X3DOneSidedMaterialNodeProxy
    transparency: number;
 }
 
+/** VariationPhysicsModel applies a variation effect to the particles. */
+interface VariationPhysicsModelProxy extends X3DParticlePhysicsModelNodeProxy
+{
+   /**
+   * Enables/disables node operation.
+   *
+   * This field is of access type 'inputOutput' and type SFBool.
+   */
+   enabled: boolean;
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: X3DMetadataObjectProxy | null;
+   /**
+   * Center values of possible variations
+   *
+   * This field is of access type 'inputOutput' and type MFFloat.
+   */
+   values: MFFloat;
+   /**
+   * Variations plus or minus around central values
+   *
+   * This field is of access type 'inputOutput' and type MFFloat.
+   */
+   variations: MFFloat;
+}
+
 /** Viewpoint provides a specific location and direction where the user may view the scene. */
 interface ViewpointProxy extends X3DViewpointNodeProxy
 {
@@ -19619,35 +19648,6 @@ interface WindPhysicsModelProxy extends X3DParticlePhysicsModelNodeProxy
    * This field is of access type 'inputOutput' and type SFFloat.
    */
    turbulence: number;
-}
-
-/** VariationPhysicsModel applies a wind effect to the particles. */
-interface VariationPhysicsModelProxy extends X3DParticlePhysicsModelNodeProxy
-{
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type 'inputOutput' and type SFBool.
-   */
-   enabled: boolean;
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy | null;
-   /**
-   * Values to vary from
-   *
-   * This field is of access type 'inputOutput' and type MFFloat.
-   */
-   values: MFFloat;
-   /**
-   * variations from values in plus and minus values
-   *
-   * This field is of access type 'inputOutput' and type MFFloat.
-   */
-   variations: MFFloat;
 }
 
 /** WorldInfo contains a title and simple persistent metadata information about an X3D scene. This node is strictly for documentation purposes and has no effect on the visual appearance or behaviour of the world. */
