@@ -155,12 +155,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
    animate (particleSystem, deltaTime)
    {
       const
-         browser         = this .getBrowser (),
-         gl              = browser .getContext (),
-         inputParticles  = particleSystem .inputParticles,
-         particlesStride = particleSystem .particlesStride,
-         particleOffsets = particleSystem .particleOffsets,
-         program         = this .getProgram (particleSystem);
+         browser        = this .getBrowser (),
+         gl             = browser .getContext (),
+         program        = this .getProgram (particleSystem),
+         inputParticles = particleSystem .inputParticles;
 
       // Start
 
@@ -221,6 +219,8 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       if (inputParticles .vertexArrayObject .enable (program))
       {
+         const { particlesStride, particleOffsets } = particleSystem;
+
          for (const [i, attribute] of program .inputs)
          {
             gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles);
@@ -244,10 +244,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // DEBUG
 
-      // const data = new Float32Array (particleSystem .numParticles * (particlesStride / 4));
+      // const data = new Float32Array (particleSystem .numParticles * (particleSystem .particlesStride / 4));
       // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
       // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-      // console .log (data .slice (0, particlesStride / 4));
+      // console .log (data .slice (0, particleSystem .particlesStride / 4));
    },
    addDefine (define)
    {
