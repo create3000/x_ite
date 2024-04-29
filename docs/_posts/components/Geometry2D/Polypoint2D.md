@@ -57,7 +57,9 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Geometry2D/Polypoint2D/Polypoint2D.x3d" update="auto"></x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/examples/Geometry2D/Polypoint2D/Polypoint2D.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry2D/Polypoint2D/Polypoint2D.x3d)
+- [Download ZIP Archive](https://create3000.github.io/media/examples/Geometry2D/Polypoint2D/Polypoint2D.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry2D/Polypoint2D/Polypoint2D.x3d)
+{: .example-links }
 
 ## See Also
 

@@ -51,7 +51,9 @@ The *color* field defines an array of 3-tuple RGB colors.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Rendering/Color/Color.x3d" update="auto"></x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/examples/Rendering/Color/Color.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Rendering/Color/Color.x3d)
+- [Download ZIP Archive](https://create3000.github.io/media/examples/Rendering/Color/Color.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Rendering/Color/Color.x3d)
+{: .example-links }
 
 ## See Also
 

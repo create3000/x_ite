@@ -141,7 +141,9 @@ DEF Summer Background {
   <img src="https://create3000.github.io/media/tutorials/scenes/background1/screenshot.png" alt="Background 1"/>
 </x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/background1/background1.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/background1/background1.x3dv)
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/background1/background1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/background1/background1.x3dv)
+{: .example-links }
 
 ## Syntax: Background
 
@@ -261,7 +263,9 @@ DEF Summer Background {
   <img src="https://create3000.github.io/media/tutorials/scenes/background2/screenshot.png" alt="Background 1"/>
 </x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/background2/background2.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/background2/background2.x3dv)
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/background2/background2.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/background2/background2.x3dv)
+{: .example-links }
 
 ## Summary
 

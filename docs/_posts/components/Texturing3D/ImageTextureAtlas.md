@@ -146,7 +146,9 @@ An example image can be found [here](/x_ite/assets/img/components/scan1.png).
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/ImageTextureAtlas.x3d" update="auto"></x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/ImageTextureAtlas.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/ImageTextureAtlas.x3d)
+- [Download ZIP Archive](https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/ImageTextureAtlas.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/ImageTextureAtlas.x3d)
+{: .example-links }
 
 ## See Also
 

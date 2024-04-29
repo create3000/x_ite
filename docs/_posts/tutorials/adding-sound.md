@@ -245,7 +245,9 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
   <img src="https://create3000.github.io/media/tutorials/scenes/sound/screenshot.png" alt="Sound"/>
 </x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/sound/sound.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/sound/sound.x3dv)
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/sound/sound.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/sound/sound.x3dv)
+{: .example-links }
 
 ## Creating continuous localized sounds
 

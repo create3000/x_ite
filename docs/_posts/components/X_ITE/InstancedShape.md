@@ -137,7 +137,9 @@ Single contained *geometry* node that is rendered according to corresponding app
 
 <x3d-canvas src="https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.x3d" update="auto"></x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.x3d)
+- [Download ZIP Archive](https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.x3d)
+{: .example-links }
 
 ## See Also
 

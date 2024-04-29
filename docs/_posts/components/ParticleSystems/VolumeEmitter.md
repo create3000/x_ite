@@ -104,7 +104,9 @@ Coordinates for the geometry used as the emitting volume.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/ParticleSystems/VolumeEmitter/VolumeEmitter.x3d" update="auto"></x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/examples/ParticleSystems/VolumeEmitter/VolumeEmitter.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/VolumeEmitter/VolumeEmitter.x3d)
+- [Download ZIP Archive](https://create3000.github.io/media/examples/ParticleSystems/VolumeEmitter/VolumeEmitter.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/VolumeEmitter/VolumeEmitter.x3d)
+{: .example-links }
 
 ## See Also
 

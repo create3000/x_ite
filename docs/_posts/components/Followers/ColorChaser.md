@@ -96,7 +96,9 @@ Computed output value that approaches within tolerance of destination value, as 
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.x3d" update="auto"></x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.x3d)
+- [Download ZIP Archive](https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.x3d)
+{: .example-links }
 
 ## See Also
 

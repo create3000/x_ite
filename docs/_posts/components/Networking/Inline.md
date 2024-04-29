@@ -173,7 +173,9 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" update="auto"></x3d-canvas>
 
-[Download ZIP Archive](https://create3000.github.io/media/examples/Networking/Inline/Inline.zip) · [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d)
+- [Download ZIP Archive](https://create3000.github.io/media/examples/Networking/Inline/Inline.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d)
+{: .example-links }
 
 ## See Also
 

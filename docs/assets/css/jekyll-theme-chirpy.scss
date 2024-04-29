@@ -305,3 +305,17 @@ small, .small {
   top: -16px;
   background: var(--button-background-color);
 }
+
+.example-links {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.example-links li {
+  display: inline-block;
+}
+
+.example-links li:not(:first-child)::before {
+  content: "·";
+  margin: 0 7px 0 4px;
+}
