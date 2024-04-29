@@ -56,21 +56,14 @@ import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import AlphaMode            from "../../Browser/Shape/AlphaMode.js";
+import LineSet              from "../Rendering/LineSet.js";
+import Coordinate           from "../Rendering/Coordinate.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
 import BVH                  from "../../../standard/Math/Utility/BVH.js";
 
 const PointGeometry = new Float32Array ([0, 0, 0, 1]);
-
-const LineGeometry = new Float32Array ([
-   // TexCoords
-   0, 0, 0, 1,
-   1, 0, 0, 1,
-   // Vertices
-   0, 0, -0.5, 1,
-   0, 0,  0.5, 1,
-]);
 
 // p4 ------ p3
 // |       / |
@@ -133,12 +126,15 @@ function ParticleSystem (executionContext)
    this .creationTime             = 0;
    this .pauseTime                = 0;
    this .deltaTime                = 0;
-   this .particlesStride          = Float32Array .BYTES_PER_ELEMENT * 13 * 4; // 13 x vec4
-   this .particleOffsets          = Array .from ({length: 13}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
+   this .particlesStride          = Float32Array .BYTES_PER_ELEMENT * 7 * 4; // 7 x vec4
+   this .particleOffsets          = Array .from ({length: 7}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
    this .particleOffset           = this .particleOffsets [0];
-   this .particleValuesOffset     = this .particleOffsets [1];
-   this .colorOffset              = this .particleOffsets [7];
-   this .matrixOffset             = this .particleOffsets [8];
+   this .colorOffset              = this .particleOffsets [1];
+   this .velocityOffset           = this .particleOffsets [2];
+   this .matrixOffset             = this .particleOffsets [3];
+   /*
+   this .particleValuesOffset     = this .particleOffsets [4];
+   */
    this .texCoordOffset           = 0;
    this .instancesStride          = this .particlesStride;
 }
@@ -169,6 +165,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this ._maxParticles      .addInterest ("set_enabled__",           this);
       this ._particleLifetime  .addInterest ("set_particleLifetime__",  this);
       this ._lifetimeVariation .addInterest ("set_lifetimeVariation__", this);
+      this ._particleSize      .addInterest ("set_particleSize__",      this);
       this ._emitter           .addInterest ("set_emitter__",           this);
       this ._physics           .addInterest ("set_physics__",           this);
       this ._colorKey          .addInterest ("set_color__",             this);
@@ -178,11 +175,21 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       // Create particles stuff.
 
-      this .inputParticles  = this .createBuffer ();
-      this .outputParticles = this .createBuffer ();
+      this .inputParticles = Object .assign (gl .createBuffer (),
+      {
+         vertexArrayObject: new VertexArray (gl),
+         thickLinesVertexArrayObject: new VertexArray (gl),
+         lineTrianglesBuffer: gl .createBuffer (),
+         numLines: 0,
+      });
 
-      this .inputParticles  .vertexArrayObject = new VertexArray (gl);
-      this .outputParticles .vertexArrayObject = new VertexArray (gl);
+      this .outputParticles = Object .assign (gl .createBuffer (),
+      {
+         vertexArrayObject: new VertexArray (gl),
+         thickLinesVertexArrayObject: new VertexArray (gl),
+         lineTrianglesBuffer: gl .createBuffer (),
+         numLines: 0,
+      });
 
       // Create forces stuff.
 
@@ -196,6 +203,19 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .geometryBuffer  = this .createBuffer ();
       this .texCoordBuffers = new Array (browser .getMaxTexCoords ()) .fill (this .geometryBuffer);
 
+      // Create geometry for LINE geometryType.
+
+      this .lineGeometryNode   = new LineSet (this .getExecutionContext ());
+      this .lineCoordinateNode = new Coordinate (this .getExecutionContext ());
+
+      this .lineCoordinateNode ._point = [0, 0, -0.5,   0, 0, 0.5];
+
+      this .lineGeometryNode ._vertexCount = [2];
+      this .lineGeometryNode ._coord       = this .lineCoordinateNode;
+
+      this .lineCoordinateNode .setup ();
+      this .lineGeometryNode   .setup ();
+
       // Init fields.
       // Call order is very important at startup.
 
@@ -205,6 +225,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .set_createParticles__ ();
       this .set_particleLifetime__ ();
       this .set_lifetimeVariation__ ();
+      this .set_particleSize__ ();
       this .set_physics__ ();
       this .set_colorRamp__ ();
       this .set_texCoordRamp__ ();
@@ -363,7 +384,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             this .geometryContext .geometryType = 0;
             this .geometryContext .hasNormals   = false;
 
-            this .texCoordCount = 0;
+            this .texCoordCount  = 0;
             this .vertexCount    = 1;
             this .hasNormals     = false;
             this .verticesOffset = 0;
@@ -379,16 +400,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             this .geometryContext .geometryType = 1;
             this .geometryContext .hasNormals   = false;
 
-            this .texCoordCount   = 2;
-            this .vertexCount     = 2;
-            this .hasNormals      = false;
-            this .texCoordsOffset = 0;
-            this .verticesOffset  = Float32Array .BYTES_PER_ELEMENT * 8;
-            this .primitiveMode   = gl .LINES;
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, LineGeometry, gl .DYNAMIC_DRAW);
-
+            this .texCoordCount = 0;
             break;
          }
          case GeometryTypes .TRIANGLE:
@@ -445,6 +457,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    set_lifetimeVariation__ ()
    {
       this .lifetimeVariation = this ._lifetimeVariation .getValue ();
+   },
+   set_particleSize__ ()
+   {
+      this .lineCoordinateNode ._point [0] .z = -this ._particleSize .y / 2;
+      this .lineCoordinateNode ._point [1] .z = +this ._particleSize .y / 2;
    },
    set_emitter__ ()
    {
@@ -645,8 +662,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    updateVertexArrays ()
    {
-      this .inputParticles  .vertexArrayObject  .update ();
-      this .outputParticles .vertexArrayObject  .update ();
+      this .inputParticles  .vertexArrayObject .update ();
+      this .outputParticles .vertexArrayObject .update ();
+
+      this .inputParticles  .thickLinesVertexArrayObject .update ();
+      this .outputParticles .thickLinesVertexArrayObject .update ();
    },
    createTexture ()
    {
@@ -895,6 +915,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       switch (this .geometryType)
       {
+         case GeometryTypes .LINE:
+         {
+            this .lineGeometryNode .displaySimpleInstanced (gl, shaderNode, this);
+            break;
+         }
          case GeometryTypes .GEOMETRY:
          {
             this .getGeometry () ?.displaySimpleInstanced (gl, shaderNode, this);
@@ -914,7 +939,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                const particlesStride = this .particlesStride;
 
                shaderNode .enableParticleAttribute       (gl, outputParticles, particlesStride, this .particleOffset, 1);
+		/*
                shaderNode .enableParticleValuesAttribute (gl, outputParticles, particlesStride, this .particleValuesOffset, 1);
+	       */
                shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, particlesStride, this .matrixOffset,   1);
                shaderNode .enableVertexAttribute         (gl, this .geometryBuffer, 0, this .verticesOffset);
             }
@@ -930,6 +957,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       switch (this .geometryType)
       {
+         case GeometryTypes .LINE:
+         {
+            this .lineGeometryNode .displayInstanced (gl, renderContext, this);
+            break;
+         }
          case GeometryTypes .GEOMETRY:
          {
             this .getGeometry () ?.displayInstanced (gl, renderContext, this);
@@ -982,11 +1014,14 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             if (outputParticles .vertexArrayObject .enable (shaderNode .getProgram ()))
             {
-               const particlesStride = this .particlesStride;
+               const { particlesStride } = this;
 
-               shaderNode .enableParticleAttribute       (gl, outputParticles, particlesStride, this .particleOffset, 1);
-               shaderNode .enableParticleValuesAttribute (gl, outputParticles, particlesStride, this .particleValuesOffset, 1);
-               shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, particlesStride, this .matrixOffset,   1);
+               shaderNode .enableParticleAttribute         (gl, outputParticles, particlesStride, this .particleOffset, 1);
+               shaderNode .enableParticleVelocityAttribute (gl, outputParticles, particlesStride, this .velocityOffset, 1);
+               shaderNode .enableInstanceMatrixAttribute   (gl, outputParticles, particlesStride, this .matrixOffset,   1);
+		    /*
+               shaderNode .enableParticleValuesAttribute   (gl, outputParticles, particlesStride, this .particleValuesOffset, 1);
+	       */
 
                if (this .geometryContext .colorMaterial)
                {

@@ -1308,6 +1308,7 @@ interface X3DConstants
    readonly TwoSidedMaterial: number;
    readonly UniversalJoint: number;
    readonly UnlitMaterial: number;
+   readonly VariationPhysicsModel: number;
    readonly Viewpoint: number;
    readonly ViewpointGroup: number;
    readonly Viewport: number;
@@ -19620,6 +19621,35 @@ interface WindPhysicsModelProxy extends X3DParticlePhysicsModelNodeProxy
    turbulence: number;
 }
 
+/** VariationPhysicsModel applies a wind effect to the particles. */
+interface VariationPhysicsModelProxy extends X3DParticlePhysicsModelNodeProxy
+{
+   /**
+   * Enables/disables node operation.
+   *
+   * This field is of access type 'inputOutput' and type SFBool.
+   */
+   enabled: boolean;
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: X3DMetadataObjectProxy | null;
+   /**
+   * Values to vary from
+   *
+   * This field is of access type 'inputOutput' and type MFFloat.
+   */
+   values: MFFloat;
+   /**
+   * variations from values in plus and minus values
+   *
+   * This field is of access type 'inputOutput' and type MFFloat.
+   */
+   variations: MFFloat;
+}
+
 /** WorldInfo contains a title and simple persistent metadata information about an X3D scene. This node is strictly for documentation purposes and has no effect on the visual appearance or behaviour of the world. */
 interface WorldInfoProxy extends X3DInfoNodeProxy
 {
@@ -21605,6 +21635,7 @@ type ConcreteNodeTypes = {
    TwoSidedMaterial: TwoSidedMaterialProxy,
    UniversalJoint: UniversalJointProxy,
    UnlitMaterial: UnlitMaterialProxy,
+   VariationPhysicsModel: VariationPhysicsModelProxy,
    Viewpoint: ViewpointProxy,
    ViewpointGroup: ViewpointGroupProxy,
    Viewport: ViewportProxy,

@@ -112,7 +112,7 @@ Object .defineProperties (VariationPhysicsModel,
    },
    specificationRange:
    {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

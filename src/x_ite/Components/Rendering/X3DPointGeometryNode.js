@@ -136,20 +136,23 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       const instances = shapeNode .getInstances ();
 
-      if (instances .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
+      if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
       {
-         const { instancesStride, particleOffset, particleValuesOffset, matrixOffset, normalMatrixOffset } = shapeNode;
+         const { instancesStride, particleOffset, velocityOffset, matrixOffset, normalMatrixOffset /*, particleValuesOffset */} = shapeNode;
 
          if (particleOffset !== undefined)
             shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
 
-         if (particleValuesOffset !== undefined)
-            shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleValuesOffset, 1);
+         if (velocityOffset !== undefined)
+            shaderNode .enableParticleVelocityAttribute (gl, instances, instancesStride, velocityOffset, 1);
 
          shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
 
          if (normalMatrixOffset !== undefined)
             shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
+
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -165,7 +168,13 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
-         this .updateParticles = false;
+	      /*
+         if (particleValuesOffset !== undefined)
+            shaderNode .enableParticleValuesAttribute (gl, instances, instancesStride, particleValuesOffset, 1);
+	    */
+
+
+         this .updateInstances = false;
       }
 
       // Wireframes are always solid so only one drawing call is needed.
