@@ -91,9 +91,9 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, X3DParticle
    },
    set_position__ ()
    {
-      const position = this ._position .getValue ();
+      const { x, y, z } = this ._position .getValue ();
 
-      this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
+      this .setUniform ("uniform3f", "position", x, y, z);
    },
 });
 

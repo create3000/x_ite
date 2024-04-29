@@ -106,15 +106,15 @@ Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, X3DParticleEmitt
    },
    set_position__ ()
    {
-      const position = this ._position .getValue ();
+      const { x, y, z } = this ._position .getValue ();
 
-      this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
+      this .setUniform ("uniform3f", "position", x, y, z );
    },
    set_direction__ ()
    {
-      const direction = this ._direction .getValue ();
+      const { x, y, z } = this ._direction .getValue ();
 
-      this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+      this .setUniform ("uniform3f", "direction", x, y, z );
    },
    set_angle__ ()
    {

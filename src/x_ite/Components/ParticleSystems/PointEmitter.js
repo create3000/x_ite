@@ -97,9 +97,9 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, X3DParticleEmit
    },
    set_position__ ()
    {
-      const position = this ._position .getValue ();
+      const { x, y, z } = this ._position .getValue ();
 
-      this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
+      this .setUniform ("uniform3f", "position", x, y, z);
    },
    set_direction__: (() =>
    {
@@ -107,9 +107,9 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, X3DParticleEmit
 
       return function ()
       {
-         direction .assign (this ._direction .getValue ()) .normalize ();
+         const { x, y, z } = direction .assign (this ._direction .getValue ()) .normalize ();
 
-         this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+         this .setUniform ("uniform3f", "direction", x, y, z);
       };
    })(),
 });

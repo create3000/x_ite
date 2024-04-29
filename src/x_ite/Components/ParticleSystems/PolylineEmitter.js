@@ -152,9 +152,9 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
 
       return function ()
       {
-         direction .assign (this ._direction .getValue ()) .normalize ();
+         const { x, y, z } = direction .assign (this ._direction .getValue ()) .normalize ();
 
-         this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+         this .setUniform ("uniform3f", "direction", x, y, z);
       };
    })(),
    set_verticesIndex__ ()
