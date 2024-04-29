@@ -78,7 +78,9 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 
 ## NPM Usage
 
-```sh
+To install, use the following command:
+
+```console
 $ npm install x_ite
 ```
 
