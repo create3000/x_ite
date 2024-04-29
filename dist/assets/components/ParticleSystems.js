@@ -290,12 +290,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
    animate (particleSystem, deltaTime)
    {
       const
-         browser         = this .getBrowser (),
-         gl              = browser .getContext (),
-         inputParticles  = particleSystem .inputParticles,
-         particlesStride = particleSystem .particlesStride,
-         particleOffsets = particleSystem .particleOffsets,
-         program         = this .getProgram (particleSystem);
+         browser        = this .getBrowser (),
+         gl             = browser .getContext (),
+         program        = this .getProgram (particleSystem),
+         inputParticles = particleSystem .inputParticles;
 
       // Start
 
@@ -356,6 +354,8 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
 
       if (inputParticles .vertexArrayObject .enable (program))
       {
+         const { particlesStride, particleOffsets } = particleSystem;
+
          for (const [i, attribute] of program .inputs)
          {
             gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles);
@@ -379,10 +379,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
 
       // DEBUG
 
-      // const data = new Float32Array (particleSystem .numParticles * (particlesStride / 4));
+      // const data = new Float32Array (particleSystem .numParticles * (particleSystem .particlesStride / 4));
       // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
       // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-      // console .log (data .slice (0, particlesStride / 4));
+      // console .log (data .slice (0, particleSystem .particlesStride / 4));
    },
    addDefine (define)
    {
@@ -750,11 +750,15 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems
          return vec4 (position, 1.0);
       }`);
    },
+   getBBox (bbox)
+   {
+      return bbox .set ((Vector3_default()).One, this ._position .getValue ());
+   },
    set_position__ ()
    {
-      const position = this ._position .getValue ();
+      const { x, y, z } = this ._position .getValue ();
 
-      this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
+      this .setUniform ("uniform3f", "position", x, y, z);
    },
    set_direction__: (() =>
    {
@@ -762,9 +766,9 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems
 
       return function ()
       {
-         direction .assign (this ._direction .getValue ()) .normalize ();
+         const { x, y, z } = direction .assign (this ._direction .getValue ()) .normalize ();
 
-         this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+         this .setUniform ("uniform3f", "direction", x, y, z);
       };
    })(),
 });
@@ -1165,6 +1169,7 @@ Namespace_default().add ("BoundedPhysicsModel", "x_ite/Components/ParticleSystem
 
 
 
+
 function ConeEmitter (executionContext)
 {
    ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
@@ -1218,17 +1223,21 @@ Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, ParticleSystems_
          return vec4 (position, 1.0);
       }`);
    },
+   getBBox (bbox)
+   {
+      return bbox .set ((Vector3_default()).One, this ._position .getValue ());
+   },
    set_position__ ()
    {
-      const position = this ._position .getValue ();
+      const { x, y, z } = this ._position .getValue ();
 
-      this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
+      this .setUniform ("uniform3f", "position", x, y, z );
    },
    set_direction__ ()
    {
-      const direction = this ._direction .getValue ();
+      const { x, y, z } = this ._direction .getValue ();
 
-      this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+      this .setUniform ("uniform3f", "direction", x, y, z );
    },
    set_angle__ ()
    {
@@ -1334,6 +1343,7 @@ Namespace_default().add ("ConeEmitter", "x_ite/Components/ParticleSystems/ConeEm
 
 
 
+
 function ExplosionEmitter (executionContext)
 {
    ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
@@ -1368,15 +1378,19 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, ParticleSys
          return vec4 (position, 1.0);
       }`);
    },
+   getBBox (bbox)
+   {
+      return bbox .set ((Vector3_default()).One, this ._position .getValue ());
+   },
    isExplosive ()
    {
       return true;
    },
    set_position__ ()
    {
-      const position = this ._position .getValue ();
+      const { x, y, z } = this ._position .getValue ();
 
-      this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
+      this .setUniform ("uniform3f", "position", x, y, z);
    },
 });
 
@@ -2231,7 +2245,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       this .getLive () .addInterest ("set_live__", this);
 
       this ._enabled           .addInterest ("set_enabled__",           this);
-      this ._createParticles   .addInterest ("set_createParticles__",   this);
       this ._geometryType      .addInterest ("set_geometryType__",      this);
       this ._geometryType      .addInterest ("set_texCoord__",          this);
       this ._maxParticles      .addInterest ("set_enabled__",           this);
@@ -2294,7 +2307,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       this .set_emitter__ ();
       this .set_enabled__ ();
       this .set_geometryType__ ();
-      this .set_createParticles__ ();
       this .set_particleLifetime__ ();
       this .set_lifetimeVariation__ ();
       this .set_particleSize__ ();
@@ -2331,7 +2343,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
    set_bbox__ ()
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-         this .bbox .set ((Vector3_default()).One, (Vector3_default()).Zero);
+         this .emitterNode ?.getBBox (this .bbox);
       else
          this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
 
@@ -2399,7 +2411,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
    {
       if (this ._enabled .getValue () && this ._maxParticles .getValue ())
       {
-         if (! this ._isActive .getValue ())
+         if (!this ._isActive .getValue ())
          {
             if (this .getLive () .getValue ())
             {
@@ -2432,10 +2444,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       }
 
       this .set_maxParticles__ ();
-   },
-   set_createParticles__ ()
-   {
-      this .createParticles = this ._createParticles .getValue ();
    },
    set_geometryType__ ()
    {
@@ -2516,7 +2524,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       this .maxParticles = maxParticles;
       this .numParticles = Math .min (lastNumParticles, maxParticles);
 
-      if (! this .emitterNode .isExplosive ())
+      if (!this .emitterNode .isExplosive ())
          this .creationTime = Date .now () / 1000;
 
       this .resizeBuffers (lastNumParticles);
@@ -2537,12 +2545,14 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
    },
    set_emitter__ ()
    {
-      this .emitterNode = X3DCast_default() ((X3DConstants_default()).X3DParticleEmitterNode, this ._emitter);
+      this .emitterNode ?.removeInterest ("set_bbox__", this);
 
-      if (! this .emitterNode)
-         this .emitterNode = this .getBrowser () .getDefaultEmitter ();
+      this .emitterNode = X3DCast_default() ((X3DConstants_default()).X3DParticleEmitterNode, this ._emitter)
+         ?? this .getBrowser () .getDefaultEmitter ();
 
-      this .createParticles = this ._createParticles .getValue ();
+      this .emitterNode .addInterest ("set_bbox__", this);
+
+      this .set_bbox__ ();
    },
    set_physics__ ()
    {
@@ -2830,6 +2840,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       }
       else
       {
+         this .createParticles = this ._createParticles .getValue ();
+
          if (this .numParticles < this .maxParticles)
          {
             const
@@ -2863,7 +2875,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
          for (let i = 0; i < numForces; ++ i)
          {
-            disabledForces += ! forcePhysicsModelNodes [i] .addForce (i - disabledForces, emitterNode, timeByMass, forces);
+            disabledForces += !forcePhysicsModelNodes [i] .addForce (i - disabledForces, emitterNode, timeByMass, forces);
          }
 
          this .numForces = numForces -= disabledForces;
@@ -3359,15 +3371,19 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
 
       this .set_polylines__ ();
    },
+   getBBox (bbox)
+   {
+      return bbox .assign (this .polylinesNode .getBBox ());
+   },
    set_direction__: (() =>
    {
       const direction = new (Vector3_default()) ();
 
       return function ()
       {
-         direction .assign (this ._direction .getValue ()) .normalize ();
+         const { x, y, z } = direction .assign (this ._direction .getValue ()) .normalize ();
 
-         this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+         this .setUniform ("uniform3f", "direction", x, y, z);
       };
    })(),
    set_verticesIndex__ ()
@@ -3599,6 +3615,13 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
       }`);
 
       this .set_surface__ ();
+   },
+   getBBox (bbox)
+   {
+      if (this .surfaceNode)
+         return bbox .assign (this .surfaceNode .getBBox ());
+
+      return bbox .set ();
    },
    set_surface__ ()
    {
@@ -3927,15 +3950,19 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
 
       this .set_geometry__ ();
    },
+   getBBox (bbox)
+   {
+      return bbox .assign (this .volumeNode .getBBox ());
+   },
    set_direction__: (() =>
    {
       const direction = new (Vector3_default()) ();
 
       return function ()
       {
-         direction .assign (this ._direction .getValue ()) .normalize ();
+         const { x, y, z } = direction .assign (this ._direction .getValue ()) .normalize ();
 
-         this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+         this .setUniform ("uniform3f", "direction", x, y, z);
       };
    })(),
    set_verticesIndex__ ()
