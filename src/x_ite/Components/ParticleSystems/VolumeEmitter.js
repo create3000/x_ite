@@ -173,6 +173,10 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
 
       this .set_geometry__ ();
    },
+   getBBox (bbox)
+   {
+      return bbox .assign (this .volumeNode .getBBox ());
+   },
    set_direction__: (() =>
    {
       const direction = new Vector3 ();

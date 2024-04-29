@@ -50,6 +50,7 @@ import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
 import X3DParticleEmitterNode from "./X3DParticleEmitterNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
+import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
 
 function ExplosionEmitter (executionContext)
 {
@@ -84,6 +85,10 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, X3DParticle
       {
          return vec4 (position, 1.0);
       }`);
+   },
+   getBBox (bbox)
+   {
+      return bbox .set (Vector3 .One, this ._position .getValue ());
    },
    isExplosive ()
    {

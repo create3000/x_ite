@@ -156,7 +156,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .getLive () .addInterest ("set_live__", this);
 
       this ._enabled           .addInterest ("set_enabled__",           this);
-      this ._createParticles   .addInterest ("set_createParticles__",   this);
       this ._geometryType      .addInterest ("set_geometryType__",      this);
       this ._geometryType      .addInterest ("set_texCoord__",          this);
       this ._maxParticles      .addInterest ("set_enabled__",           this);
@@ -219,7 +218,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .set_emitter__ ();
       this .set_enabled__ ();
       this .set_geometryType__ ();
-      this .set_createParticles__ ();
       this .set_particleLifetime__ ();
       this .set_lifetimeVariation__ ();
       this .set_particleSize__ ();
@@ -256,7 +254,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    set_bbox__ ()
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-         this .bbox .set (Vector3 .One, Vector3 .Zero);
+         this .emitterNode ?.getBBox (this .bbox);
       else
          this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
 
@@ -324,7 +322,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    {
       if (this ._enabled .getValue () && this ._maxParticles .getValue ())
       {
-         if (! this ._isActive .getValue ())
+         if (!this ._isActive .getValue ())
          {
             if (this .getLive () .getValue ())
             {
@@ -357,10 +355,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       }
 
       this .set_maxParticles__ ();
-   },
-   set_createParticles__ ()
-   {
-      this .createParticles = this ._createParticles .getValue ();
    },
    set_geometryType__ ()
    {
@@ -441,7 +435,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .maxParticles = maxParticles;
       this .numParticles = Math .min (lastNumParticles, maxParticles);
 
-      if (! this .emitterNode .isExplosive ())
+      if (!this .emitterNode .isExplosive ())
          this .creationTime = Date .now () / 1000;
 
       this .resizeBuffers (lastNumParticles);
@@ -462,12 +456,14 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    set_emitter__ ()
    {
-      this .emitterNode = X3DCast (X3DConstants .X3DParticleEmitterNode, this ._emitter);
+      this .emitterNode ?.removeInterest ("set_bbox__", this);
 
-      if (! this .emitterNode)
-         this .emitterNode = this .getBrowser () .getDefaultEmitter ();
+      this .emitterNode = X3DCast (X3DConstants .X3DParticleEmitterNode, this ._emitter)
+         ?? this .getBrowser () .getDefaultEmitter ();
 
-      this .createParticles = this ._createParticles .getValue ();
+      this .emitterNode .addInterest ("set_bbox__", this);
+
+      this .set_bbox__ ();
    },
    set_physics__ ()
    {
@@ -755,6 +751,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       }
       else
       {
+         this .createParticles = this ._createParticles .getValue ();
+
          if (this .numParticles < this .maxParticles)
          {
             const
@@ -788,7 +786,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
          for (let i = 0; i < numForces; ++ i)
          {
-            disabledForces += ! forcePhysicsModelNodes [i] .addForce (i - disabledForces, emitterNode, timeByMass, forces);
+            disabledForces += !forcePhysicsModelNodes [i] .addForce (i - disabledForces, emitterNode, timeByMass, forces);
          }
 
          this .numForces = numForces -= disabledForces;

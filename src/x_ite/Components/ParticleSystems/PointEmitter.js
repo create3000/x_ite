@@ -95,6 +95,10 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, X3DParticleEmit
          return vec4 (position, 1.0);
       }`);
    },
+   getBBox (bbox)
+   {
+      return bbox .set (Vector3 .One, this ._position .getValue ());
+   },
    set_position__ ()
    {
       const { x, y, z } = this ._position .getValue ();

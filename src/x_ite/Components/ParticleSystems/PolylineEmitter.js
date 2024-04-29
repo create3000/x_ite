@@ -146,6 +146,10 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
 
       this .set_polylines__ ();
    },
+   getBBox (bbox)
+   {
+      return bbox .assign (this .polylinesNode .getBBox ());
+   },
    set_direction__: (() =>
    {
       const direction = new Vector3 ();

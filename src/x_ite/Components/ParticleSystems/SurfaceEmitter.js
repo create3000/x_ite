@@ -123,6 +123,13 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
 
       this .set_surface__ ();
    },
+   getBBox (bbox)
+   {
+      if (this .surfaceNode)
+         return bbox .assign (this .surfaceNode .getBBox ());
+
+      return bbox .set ();
+   },
    set_surface__ ()
    {
       if (this .surfaceNode)
