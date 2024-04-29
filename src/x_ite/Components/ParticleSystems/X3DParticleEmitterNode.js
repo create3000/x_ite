@@ -969,7 +969,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       for (const name of this .uniforms .keys ())
          program [name] = gl .getUniformLocation (program, name);
 
-      program .NaN = gl .getUniformLocation (program, "NaN");
+      gl .uniform1f (gl .getUniformLocation (program, "NaN"), NaN);
 
       // Samplers
 
@@ -979,8 +979,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
          gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTexture2DUnit ());
       }
-
-      gl .uniform1f (program .NaN, NaN);
 
       browser .resetTextureUnits ();
 
