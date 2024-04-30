@@ -74,8 +74,8 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, X3DParticle
    getRandomSpeed (emitterNode)
    {
       const
-         speed     = Math .max (0, this ._speed .getValue ()),
-         variation = speed * Math .max (0, this ._gustiness .getValue ());
+         speed     = Math .max (this ._speed .getValue (), 0),
+         variation = speed * Math .max (this ._gustiness .getValue (), 0);
 
       return emitterNode .getRandomValue (Math .max (0, speed - variation), speed + variation);
    },
@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, X3DParticle
          if (this ._enabled .getValue ())
          {
             const
-               surfaceArea = emitterNode ._surfaceArea .getValue (),
+               surfaceArea = emitterNode .getSurfaceArea (),
                speed       = this .getRandomSpeed (emitterNode),
                pressure    = 10 ** (2 * Math .log (speed)) * 0.64615;
 

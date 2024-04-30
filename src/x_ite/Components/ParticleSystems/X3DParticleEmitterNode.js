@@ -91,10 +91,11 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // Initialize fields.
 
-      this ._on        .addInterest ("set_on__",        this);
-      this ._speed     .addInterest ("set_speed__",     this);
-      this ._variation .addInterest ("set_variation__", this);
-      this ._mass      .addInterest ("set_mass__",      this);
+      this ._on          .addInterest ("set_on__",          this);
+      this ._speed       .addInterest ("set_speed__",       this);
+      this ._variation   .addInterest ("set_variation__",   this);
+      this ._mass        .addInterest ("set_mass__",        this);
+      this ._surfaceArea .addInterest ("set_surfaceArea__", this);
 
       this .addSampler ("forces");
       this .addSampler ("boundedVolume");
@@ -114,6 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       this .set_on__ ();
       this .set_mass__ ();
+      this .set_surfaceArea__ ();
    },
    isExplosive ()
    {
@@ -123,21 +125,29 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
    {
       return this .mass;
    },
+   getSurfaceArea ()
+   {
+      return this .surfaceArea;
+   }
    set_on__ ()
    {
       this .on = this ._on .getValue ();
    },
    set_speed__ ()
    {
-      this .setUniform ("uniform1f", "speed", this ._speed .getValue ());
+      this .setUniform ("uniform1f", "speed", Math .max (this ._speed .getValue (), 0));
    },
    set_variation__ ()
    {
-      this .setUniform ("uniform1f", "variation", this ._variation .getValue ());
+      this .setUniform ("uniform1f", "variation", Math .max (this ._variation .getValue (), 0));
    },
    set_mass__ ()
    {
-      this .mass = this ._mass .getValue ();
+      this .mass = Math .max (this ._mass .getValue (), 0);
+   },
+   set_surfaceArea__ ()
+   {
+      this .surfaceArea = Math .max (this ._surfaceArea .getValue (), 0);
    },
    getRandomValue (min, max)
    {

@@ -466,11 +466,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    set_particleLifetime__ ()
    {
-      this .particleLifetime = this ._particleLifetime .getValue ();
+      this .particleLifetime = Math .max (this ._particleLifetime .getValue (), 0);
    },
    set_lifetimeVariation__ ()
    {
-      this .lifetimeVariation = this ._lifetimeVariation .getValue ();
+      this .lifetimeVariation = Math .max (this ._lifetimeVariation .getValue (), 0);
    },
    set_particleSize__ ()
    {
