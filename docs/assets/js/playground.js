@@ -83,20 +83,21 @@ require (["vs/editor/editor.main"], async () =>
 async function applyChanges (monaco, editor)
 {
    const
-      Browser = X3D .getBrowser (),
-      text    = editor .getValue (),
-      url     = `data:,${text}`;
+      Browser         = X3D .getBrowser (),
+      activeViewpoint = Browser .getActiveViewpoint (),
+      text            = editor .getValue (),
+      url             = `data:,${text}`;
 
-   if (Browser .getActiveViewpoint ())
+   if (activeViewpoint)
    {
       var
-         positionOffset    = Browser .getActiveViewpoint () ._positionOffset    .copy (),
-         orientationOffset = Browser .getActiveViewpoint () ._orientationOffset .copy ();
+         positionOffset    = activeViewpoint ._positionOffset    .copy (),
+         orientationOffset = activeViewpoint ._orientationOffset .copy ();
    }
 
    await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
-   if (Browser .getActiveViewpoint ())
+   if (activeViewpoint && Browser .getActiveViewpoint ())
    {
       Browser .getActiveViewpoint () ._positionOffset    = positionOffset;
       Browser .getActiveViewpoint () ._orientationOffset = orientationOffset;
