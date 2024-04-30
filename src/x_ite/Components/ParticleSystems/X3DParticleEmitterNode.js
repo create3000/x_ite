@@ -128,7 +128,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
    getSurfaceArea ()
    {
       return this .surfaceArea;
-   }
+   },
    set_on__ ()
    {
       this .on = this ._on .getValue ();
