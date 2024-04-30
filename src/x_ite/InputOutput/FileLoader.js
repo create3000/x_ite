@@ -223,8 +223,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
             let data = url .substring (result [0] .length);
 
-            data = decodeURIComponent (data);  // Decode data.
-            data = data .replace (/^ï»¿/, ""); // Remove BOM.
+            data = $.try (() => decodeURIComponent (data)) ?? data; // Decode data.
+            data = data .replace (/^ï»¿/, "");                      // Remove BOM.
 
             this .callback (data);
             return;
