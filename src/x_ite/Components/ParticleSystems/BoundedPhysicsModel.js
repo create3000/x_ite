@@ -69,6 +69,10 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, X3DParti
 
       this .set_geometry__ ();
    },
+   getBBox ()
+   {
+      return this .geometryNode ?.getBBox ();
+   },
    set_geometry__ ()
    {
       this .geometryNode ?._rebuild .removeInterest ("addNodeEvent", this);
@@ -79,11 +83,10 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, X3DParti
    },
    addGeometry (boundedNormals, boundedVertices)
    {
-      const damping = this ._damping .getValue ();
-
       if (this .geometryNode && this ._enabled .getValue ())
       {
          const
+            damping  = this ._damping .getValue (),
             normals  = this .geometryNode .getNormals ()  .getValue (),
             vertices = this .geometryNode .getVertices () .getValue ();
 

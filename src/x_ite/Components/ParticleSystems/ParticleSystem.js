@@ -254,9 +254,28 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    set_bbox__ ()
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-         this .emitterNode ?.getBBox (this .bbox);
+      {
+         this .bbox .set ();
+
+         if (this .boundedPhysicsModelNodes .length)
+         {
+            for (const boundedPhysicsModelNode of this .boundedPhysicsModelNodes)
+            {
+               const bbox = boundedPhysicsModelNode .getBBox ();
+
+               if (bbox)
+                  this .bbox .add (bbox);
+            }
+         }
+         else
+         {
+            this .emitterNode ?.getBBox (this .bbox);
+         }
+      }
       else
+      {
          this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      }
 
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
@@ -562,6 +581,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          gl .bindTexture (gl .TEXTURE_2D, this .boundedTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedArraySize, boundedArraySize, 0, gl .RGBA, gl .FLOAT, boundedArray);
       }
+
+      this .set_bbox__ ();
     },
    set_colorRamp__ ()
    {
