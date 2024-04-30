@@ -188,11 +188,14 @@ Namespace_default().add ("BVH.glsl", "x_ite/Browser/ParticleSystems/BVH.glsl", B
 
 
 
+
 function X3DParticleEmitterNode (executionContext)
 {
    X3DNode_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).X3DParticleEmitterNode);
+
+   this .addChildObjects ((X3DConstants_default()).outputOnly, "bbox_changed", new (Fields_default()).SFTime ());
 
    this ._speed       .setUnit ("speed");
    this ._mass        .setUnit ("mass");
@@ -223,10 +226,11 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
 
       // Initialize fields.
 
-      this ._on        .addInterest ("set_on__",        this);
-      this ._speed     .addInterest ("set_speed__",     this);
-      this ._variation .addInterest ("set_variation__", this);
-      this ._mass      .addInterest ("set_mass__",      this);
+      this ._on          .addInterest ("set_on__",          this);
+      this ._speed       .addInterest ("set_speed__",       this);
+      this ._variation   .addInterest ("set_variation__",   this);
+      this ._mass        .addInterest ("set_mass__",        this);
+      this ._surfaceArea .addInterest ("set_surfaceArea__", this);
 
       this .addSampler ("forces");
       this .addSampler ("boundedVolume");
@@ -246,6 +250,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
 
       this .set_on__ ();
       this .set_mass__ ();
+      this .set_surfaceArea__ ();
    },
    isExplosive ()
    {
@@ -255,21 +260,29 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
    {
       return this .mass;
    },
+   getSurfaceArea ()
+   {
+      return this .surfaceArea;
+   },
    set_on__ ()
    {
       this .on = this ._on .getValue ();
    },
    set_speed__ ()
    {
-      this .setUniform ("uniform1f", "speed", this ._speed .getValue ());
+      this .setUniform ("uniform1f", "speed", Math .max (this ._speed .getValue (), 0));
    },
    set_variation__ ()
    {
-      this .setUniform ("uniform1f", "variation", this ._variation .getValue ());
+      this .setUniform ("uniform1f", "variation", Math .max (this ._variation .getValue (), 0));
    },
    set_mass__ ()
    {
-      this .mass = this ._mass .getValue ();
+      this .mass = Math .max (this ._mass .getValue (), 0);
+   },
+   set_surfaceArea__ ()
+   {
+      this .surfaceArea = Math .max (this ._surfaceArea .getValue (), 0);
    },
    getRandomValue (min, max)
    {
@@ -550,11 +563,19 @@ precision highp float;void main(){}`
          // console .error (vertexShaderSource);
       }
 
+      this .programs .set (key, program);
+
+      gl .useProgram (program);
+
+      // Attributes
+
       program .inputs = [
          [0, gl .getAttribLocation (program, "input0")],
          [2, gl .getAttribLocation (program, "input2")],
          [6, gl .getAttribLocation (program, "input6")],
       ];
+
+      // Uniforms
 
       program .randomSeed        = gl .getUniformLocation (program, "randomSeed");
       program .particleLifetime  = gl .getUniformLocation (program, "particleLifetime");
@@ -578,9 +599,9 @@ precision highp float;void main(){}`
       for (const name of this .uniforms .keys ())
          program [name] = gl .getUniformLocation (program, name);
 
-      program .NaN = gl .getUniformLocation (program, "NaN");
+      gl .uniform1f (gl .getUniformLocation (program, "NaN"), NaN);
 
-      gl .useProgram (program);
+      // Samplers
 
       for (const name of this .samplers)
       {
@@ -589,14 +610,14 @@ precision highp float;void main(){}`
          gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTexture2DUnit ());
       }
 
-      gl .uniform1f (program .NaN, NaN);
-
       browser .resetTextureUnits ();
 
-      this .programs .set (key, program);
+      // Field uniforms
 
       for (const callback of this .callbacks)
          callback .call (this);
+
+      // Return
 
       return program;
    },
@@ -750,15 +771,27 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems
          return vec4 (position, 1.0);
       }`);
    },
-   getBBox (bbox)
+   getBBox: (function ()
    {
-      return bbox .set ((Vector3_default()).One, this ._position .getValue ());
-   },
+      const bboxSize = new (Vector3_default()) ();
+
+      return function (bbox, { particleLifetime, lifetimeVariation })
+      {
+         const
+            maxParticleLifetime = particleLifetime * (1 + lifetimeVariation),
+            maxSpeed            = this ._speed .getValue () * (1 + this ._variation .getValue ()),
+            s                   = maxParticleLifetime * maxSpeed * 2;
+
+         return bbox .set (bboxSize .set (s, s, s), this ._position .getValue ());
+      };
+   })(),
    set_position__ ()
    {
       const { x, y, z } = this ._position .getValue ();
 
       this .setUniform ("uniform3f", "position", x, y, z);
+
+      this ._bbox_changed .addEvent ();
    },
    set_direction__: (() =>
    {
@@ -1049,6 +1082,10 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, Particle
 
       this .set_geometry__ ();
    },
+   getBBox ()
+   {
+      return this .geometryNode ?.getBBox ();
+   },
    set_geometry__ ()
    {
       this .geometryNode ?._rebuild .removeInterest ("addNodeEvent", this);
@@ -1059,20 +1096,22 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, Particle
    },
    addGeometry (boundedNormals, boundedVertices)
    {
-      const damping = this ._damping .getValue ();
+      if (!this .geometryNode)
+         return;
 
-      if (this .geometryNode && this ._enabled .getValue ())
-      {
-         const
-            normals  = this .geometryNode .getNormals ()  .getValue (),
-            vertices = this .geometryNode .getVertices () .getValue ();
+      if (!this ._enabled .getValue ())
+         return;
 
-         for (const value of normals)
-            boundedNormals .push (value * damping);
+      const
+         damping  = this ._damping .getValue (),
+         normals  = this .geometryNode .getNormals ()  .getValue (),
+         vertices = this .geometryNode .getVertices () .getValue ();
 
-         for (const value of vertices)
-            boundedVertices .push (value);
-      }
+      for (const value of normals)
+         boundedNormals .push (value * damping);
+
+      for (const value of vertices)
+         boundedVertices .push (value);
    },
 });
 
@@ -1223,15 +1262,27 @@ Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, ParticleSystems_
          return vec4 (position, 1.0);
       }`);
    },
-   getBBox (bbox)
+   getBBox: (function ()
    {
-      return bbox .set ((Vector3_default()).One, this ._position .getValue ());
-   },
+      const bboxSize = new (Vector3_default()) ();
+
+      return function (bbox, { particleLifetime, lifetimeVariation })
+      {
+         const
+            maxParticleLifetime = particleLifetime * (1 + lifetimeVariation),
+            maxSpeed            = this ._speed .getValue () * (1 + this ._variation .getValue ()),
+            s                   = maxParticleLifetime * maxSpeed * 2;
+
+         return bbox .set (bboxSize .set (s, s, s), this ._position .getValue ());
+      };
+   })(),
    set_position__ ()
    {
       const { x, y, z } = this ._position .getValue ();
 
       this .setUniform ("uniform3f", "position", x, y, z );
+
+      this ._bbox_changed .addEvent ();
    },
    set_direction__ ()
    {
@@ -1378,10 +1429,20 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, ParticleSys
          return vec4 (position, 1.0);
       }`);
    },
-   getBBox (bbox)
+   getBBox: (function ()
    {
-      return bbox .set ((Vector3_default()).One, this ._position .getValue ());
-   },
+      const bboxSize = new (Vector3_default()) ();
+
+      return function (bbox, { particleLifetime, lifetimeVariation })
+      {
+         const
+            maxParticleLifetime = particleLifetime * (1 + lifetimeVariation),
+            maxSpeed            = this ._speed .getValue () * (1 + this ._variation .getValue ()),
+            s                   = maxParticleLifetime * maxSpeed * 2;
+
+         return bbox .set (bboxSize .set (s, s, s), this ._position .getValue ());
+      };
+   })(),
    isExplosive ()
    {
       return true;
@@ -1391,6 +1452,8 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, ParticleSys
       const { x, y, z } = this ._position .getValue ();
 
       this .setUniform ("uniform3f", "position", x, y, z);
+
+      this ._bbox_changed .addEvent ();
    },
 });
 
@@ -2249,9 +2312,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       this ._geometryType      .addInterest ("set_texCoord__",          this);
       this ._maxParticles      .addInterest ("set_enabled__",           this);
       this ._particleLifetime  .addInterest ("set_particleLifetime__",  this);
+      this ._particleLifetime  .addInterest ("set_bbox__",              this);
       this ._lifetimeVariation .addInterest ("set_lifetimeVariation__", this);
+      this ._lifetimeVariation .addInterest ("set_bbox__",              this);
       this ._particleSize      .addInterest ("set_particleSize__",      this);
       this ._emitter           .addInterest ("set_emitter__",           this);
+      this ._emitter           .addInterest ("set_bbox__",              this);
       this ._physics           .addInterest ("set_physics__",           this);
       this ._colorKey          .addInterest ("set_color__",             this);
       this ._color             .addInterest ("set_colorRamp__",         this);
@@ -2313,6 +2379,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       this .set_physics__ ();
       this .set_colorRamp__ ();
       this .set_texCoordRamp__ ();
+      this .set_bbox__ ();
    },
    getShapeKey ()
    {
@@ -2343,9 +2410,28 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
    set_bbox__ ()
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-         this .emitterNode ?.getBBox (this .bbox);
+      {
+         if (this .boundedPhysicsModelNodes .length)
+         {
+            this .bbox .set ();
+
+            for (const boundedPhysicsModelNode of this .boundedPhysicsModelNodes)
+            {
+               const bbox = boundedPhysicsModelNode .getBBox ();
+
+               if (bbox)
+                  this .bbox .add (bbox);
+            }
+         }
+         else
+         {
+            this .emitterNode ?.getBBox (this .bbox, this);
+         }
+      }
       else
+      {
          this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      }
 
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
@@ -2532,11 +2618,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
    },
    set_particleLifetime__ ()
    {
-      this .particleLifetime = this ._particleLifetime .getValue ();
+      this .particleLifetime = Math .max (this ._particleLifetime .getValue (), 0);
    },
    set_lifetimeVariation__ ()
    {
-      this .lifetimeVariation = this ._lifetimeVariation .getValue ();
+      this .lifetimeVariation = Math .max (this ._lifetimeVariation .getValue (), 0);
    },
    set_particleSize__ ()
    {
@@ -2545,14 +2631,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
    },
    set_emitter__ ()
    {
-      this .emitterNode ?.removeInterest ("set_bbox__", this);
+      this .emitterNode ?._bbox_changed .removeInterest ("set_bbox__", this);
 
       this .emitterNode = X3DCast_default() ((X3DConstants_default()).X3DParticleEmitterNode, this ._emitter)
          ?? this .getBrowser () .getDefaultEmitter ();
 
-      this .emitterNode .addInterest ("set_bbox__", this);
-
-      this .set_bbox__ ();
+      this .emitterNode ._bbox_changed .addInterest ("set_bbox__", this);
    },
    set_physics__ ()
    {
@@ -2561,8 +2645,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
          forcePhysicsModelNodes   = this .forcePhysicsModelNodes,
          boundedPhysicsModelNodes = this .boundedPhysicsModelNodes;
 
-      for (let i = 0, length = boundedPhysicsModelNodes .length; i < length; ++ i)
-         boundedPhysicsModelNodes [i] .removeInterest ("set_boundedPhysics__", this);
+      for (const boundedPhysicsModelNode of boundedPhysicsModelNodes)
+      {
+         boundedPhysicsModelNode .removeInterest ("set_boundedPhysics__", this);
+         boundedPhysicsModelNode .removeInterest ("set_bbox__",           this);
+      }
 
       forcePhysicsModelNodes   .length = 0;
       boundedPhysicsModelNodes .length = 0;
@@ -2587,7 +2674,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
                   }
                   case (X3DConstants_default()).BoundedPhysicsModel:
                   {
-                     innerNode .addInterest ("set_boundedPhysics__", this);
                      boundedPhysicsModelNodes .push (innerNode);
                      break;
                   }
@@ -2600,6 +2686,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
          }
          catch
          { }
+      }
+
+      for (const boundedPhysicsModelNode of boundedPhysicsModelNodes)
+      {
+         boundedPhysicsModelNode .addInterest ("set_boundedPhysics__", this);
+         boundedPhysicsModelNode .addInterest ("set_bbox__",           this);
       }
 
       this .set_boundedPhysics__ ();
@@ -2651,7 +2743,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
          gl .bindTexture (gl .TEXTURE_2D, this .boundedTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedArraySize, boundedArraySize, 0, gl .RGBA, gl .FLOAT, boundedArray);
       }
-    },
+   },
    set_colorRamp__ ()
    {
       if (this .colorRampNode)
@@ -3371,10 +3463,21 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
 
       this .set_polylines__ ();
    },
-   getBBox (bbox)
+   getBBox: (function ()
    {
-      return bbox .assign (this .polylinesNode .getBBox ());
-   },
+      const bboxSize = new (Vector3_default()) ();
+
+      return function (bbox, { particleLifetime, lifetimeVariation })
+      {
+         const
+            maxParticleLifetime = particleLifetime * (1 + lifetimeVariation),
+            maxSpeed            = this ._speed .getValue () * (1 + this ._variation .getValue ()),
+            s                   = maxParticleLifetime * maxSpeed * 2;
+
+         return bbox .set (bboxSize .set (s, s, s), this .polylinesNode .getBBox () .center)
+            .add (this .polylinesNode .getBBox ());
+      };
+   })(),
    set_direction__: (() =>
    {
       const direction = new (Vector3_default()) ();
@@ -3433,6 +3536,8 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
          }
 
          this .set_verticesIndex__ ();
+
+         this ._bbox_changed .addEvent ();
       };
    })(),
    activateTextures (gl, program)
@@ -3616,13 +3721,24 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
 
       this .set_surface__ ();
    },
-   getBBox (bbox)
+   getBBox: (function ()
    {
-      if (this .surfaceNode)
-         return bbox .assign (this .surfaceNode .getBBox ());
+      const bboxSize = new (Vector3_default()) ();
 
-      return bbox .set ();
-   },
+      return function (bbox, { particleLifetime, lifetimeVariation })
+      {
+         if (!this .surfaceNode)
+            return bbox .set ();
+
+         const
+            maxParticleLifetime = particleLifetime * (1 + lifetimeVariation),
+            maxSpeed            = this ._speed .getValue () * (1 + this ._variation .getValue ()),
+            s                   = maxParticleLifetime * maxSpeed * 2;
+
+         return bbox .set (bboxSize .set (s, s, s), this .surfaceNode .getBBox () .center)
+            .add (this .surfaceNode .getBBox ());
+      };
+   })(),
    set_surface__ ()
    {
       if (this .surfaceNode)
@@ -3720,6 +3836,8 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
 
          this .set_verticesIndex__ ();
          this .set_normalsIndex__ ();
+
+         this ._bbox_changed .addEvent ();
       };
    })(),
    activateTextures (gl, program)
@@ -3950,10 +4068,21 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
 
       this .set_geometry__ ();
    },
-   getBBox (bbox)
+   getBBox: (function ()
    {
-      return bbox .assign (this .volumeNode .getBBox ());
-   },
+      const bboxSize = new (Vector3_default()) ();
+
+      return function (bbox, { particleLifetime, lifetimeVariation })
+      {
+         const
+            maxParticleLifetime = particleLifetime * (1 + lifetimeVariation),
+            maxSpeed            = this ._speed .getValue () * (1 + this ._variation .getValue ()),
+            s                   = maxParticleLifetime * maxSpeed * 2;
+
+         return bbox .set (bboxSize .set (s, s, s), this .volumeNode .getBBox () .center)
+            .add (this .volumeNode .getBBox ());
+      };
+   })(),
    set_direction__: (() =>
    {
       const direction = new (Vector3_default()) ();
@@ -4048,6 +4177,8 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
          this .set_normalsIndex__ ();
          this .set_hierarchyIndex__ ();
          this .set_hierarchyRoot__ ();
+
+         this ._bbox_changed .addEvent ();
       };
    })(),
    activateTextures (gl, program)
@@ -4183,8 +4314,8 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, ParticleSys
    getRandomSpeed (emitterNode)
    {
       const
-         speed     = Math .max (0, this ._speed .getValue ()),
-         variation = speed * Math .max (0, this ._gustiness .getValue ());
+         speed     = Math .max (this ._speed .getValue (), 0),
+         variation = speed * Math .max (this ._gustiness .getValue (), 0);
 
       return emitterNode .getRandomValue (Math .max (0, speed - variation), speed + variation);
    },
@@ -4197,7 +4328,7 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, ParticleSys
          if (this ._enabled .getValue ())
          {
             const
-               surfaceArea = emitterNode ._surfaceArea .getValue (),
+               surfaceArea = emitterNode .getSurfaceArea (),
                speed       = this .getRandomSpeed (emitterNode),
                pressure    = 10 ** (2 * Math .log (speed)) * 0.64615;
 
