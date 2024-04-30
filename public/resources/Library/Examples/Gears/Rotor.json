@@ -1,0 +1,267 @@
+{ "X3D": {
+    "encoding":"UTF-8",
+    "@profile":"Full",
+    "@version":"3.3",
+    "@xsd:noNamespaceSchemaLocation":"http://www.web3d.org/specifications/x3d-3.3.xsd",
+    "JSON schema":"http://www.web3d.org/specifications/x3d-3.3-JSONSchema.json",
+    "head": {
+        "meta": [
+          {
+            "@name":"comment",
+            "@content":"World of Titania"
+          },
+          {
+            "@name":"created",
+            "@content":"Mon, 14 Sep 2015 20:59:23 GMT"
+          },
+          {
+            "@name":"creator",
+            "@content":"Holger Seelig"
+          },
+          {
+            "@name":"generator",
+            "@content":"Titania V1.1.0, http://titania.create3000.de"
+          },
+          {
+            "@name":"modified",
+            "@content":"Mon, 14 Sep 2015 20:59:23 GMT"
+          },
+          {
+            "@name":"translated",
+            "@content":"02 May 2017"
+          },
+          {
+            "@name":"generator",
+            "@content":"X3dToJson.xslt, http://www.web3d.org/x3d/stylesheets/X3dToJson.html"
+          },
+          {
+            "@name":"reference",
+            "@content":"X3D JSON encoding: http://www.web3d.org/wiki/index.php/X3D_JSON_Encoding"
+          }
+        ]
+    },
+    "Scene": {
+        "-children":[
+          { "ProtoDeclare":
+            {
+              "@name":"Rotor",
+              "ProtoInterface": {
+                  "field": [
+                    {
+                      "@name":"enabled",
+                      "@accessType":"inputOutput",
+                      "@type":"SFBool",
+                      "@value":true
+                    },
+                    {
+                      "@name":"cycleInterval",
+                      "@accessType":"inputOutput",
+                      "@type":"SFTime",
+                      "@value":1
+                    },
+                    {
+                      "@name":"axis",
+                      "@accessType":"inputOutput",
+                      "@type":"SFVec3f",
+                      "@value":[0,0,1]
+                    },
+                    {
+                      "@name":"angle",
+                      "@accessType":"inputOutput",
+                      "@type":"SFFloat"
+                    },
+                    {
+                      "@name":"loop",
+                      "@accessType":"inputOutput",
+                      "@type":"SFBool"
+                    },
+                    {
+                      "@name":"startTime",
+                      "@accessType":"inputOutput",
+                      "@type":"SFTime"
+                    },
+                    {
+                      "@name":"pauseTime",
+                      "@accessType":"inputOutput",
+                      "@type":"SFTime"
+                    },
+                    {
+                      "@name":"resumeTime",
+                      "@accessType":"inputOutput",
+                      "@type":"SFTime"
+                    },
+                    {
+                      "@name":"stopTime",
+                      "@accessType":"inputOutput",
+                      "@type":"SFTime"
+                    },
+                    {
+                      "@name":"isActive",
+                      "@accessType":"outputOnly",
+                      "@type":"SFBool"
+                    },
+                    {
+                      "@name":"cycleTime",
+                      "@accessType":"outputOnly",
+                      "@type":"SFTime"
+                    },
+                    {
+                      "@name":"rotation_changed",
+                      "@accessType":"outputOnly",
+                      "@type":"SFRotation"
+                    }
+                  ]
+              },
+              "ProtoBody": {
+                  "-children":[
+                    { "TimeSensor":
+                      {
+                        "@DEF":"Timer",
+                        "IS": {
+                            "connect": [
+                              {
+                                "@nodeField":"enabled",
+                                "@protoField":"enabled"
+                              },
+                              {
+                                "@nodeField":"cycleInterval",
+                                "@protoField":"cycleInterval"
+                              },
+                              {
+                                "@nodeField":"loop",
+                                "@protoField":"loop"
+                              },
+                              {
+                                "@nodeField":"startTime",
+                                "@protoField":"startTime"
+                              },
+                              {
+                                "@nodeField":"pauseTime",
+                                "@protoField":"pauseTime"
+                              },
+                              {
+                                "@nodeField":"resumeTime",
+                                "@protoField":"resumeTime"
+                              },
+                              {
+                                "@nodeField":"stopTime",
+                                "@protoField":"stopTime"
+                              },
+                              {
+                                "@nodeField":"isActive",
+                                "@protoField":"isActive"
+                              },
+                              {
+                                "@nodeField":"cycleTime",
+                                "@protoField":"cycleTime"
+                              }
+                            ]
+                        }
+                      }
+                    },
+                    { "OrientationInterpolator":
+                      {
+                        "@DEF":"Interpolator",
+                        "@key":[0,0.25,0.5,0.75,1],
+                        "@keyValue":[0,0,1,0,0,0,1,1.5708,0,0,1,3.14159,0,0,1,4.71239,0,0,1,0],
+                        "IS": {
+                            "connect": [
+                              {
+                                "@nodeField":"value_changed",
+                                "@protoField":"rotation_changed"
+                              }
+                            ]
+                        }
+                      }
+                    },
+                    { "Script":
+                      {
+                        "@DEF":"Rotor",
+                        "field": [
+                          {
+                            "@name":"set_axis",
+                            "@accessType":"inputOnly",
+                            "@type":"SFVec3f"
+                          },
+                          {
+                            "@name":"set_angle",
+                            "@accessType":"inputOnly",
+                            "@type":"SFFloat"
+                          },
+                          {
+                            "@name":"axis",
+                            "@accessType":"inputOutput",
+                            "@type":"SFVec3f"
+                          },
+                          {
+                            "@name":"angle",
+                            "@accessType":"inputOutput",
+                            "@type":"SFFloat"
+                          },
+                          {
+                            "@name":"interpolator",
+                            "@accessType":"initializeOnly",
+                            "@type":"SFNode",
+                            "-children":[
+                              { "OrientationInterpolator":
+                                {
+                                  "@USE":"Interpolator"
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "IS": {
+                            "connect": [
+                              {
+                                "@nodeField":"axis",
+                                "@protoField":"axis"
+                              },
+                              {
+                                "@nodeField":"angle",
+                                "@protoField":"angle"
+                              }
+                            ]
+                        },
+                        "#sourceCode":[
+"vrmlscript:",
+"",
+"function initialize ()",
+"{",
+"\teventsProcessed ();",
+"}",
+"",
+"function set_axis ()",
+"{ }",
+"",
+"function set_angle ()",
+"{ }",
+"",
+"function eventsProcessed ()",
+"{",
+"\tvar keyValue = interpolator .keyValue;",
+"",
+"\tfor (var i = 0; i < 4; ++ i)",
+"\t\tkeyValue [i] = new SFRotation (axis, angle + 2 * Math .PI / 4 * i);",
+"\t",
+"\tkeyValue [4] = keyValue [0];",
+"}"
+]
+                      }
+                    },
+                    { "ROUTE":
+                      {
+                        "@fromNode":"Timer",
+                        "@fromField":"fraction_changed",
+                        "@toNode":"Interpolator",
+                        "@toField":"set_fraction"
+                      }
+                    }
+                  ]
+              }
+            }
+          }
+        ]
+    }
+  }
+}

@@ -1,0 +1,717 @@
+{ "X3D": {
+    "encoding":"UTF-8",
+    "@profile":"Full",
+    "@version":"3.0",
+    "@xsd:noNamespaceSchemaLocation":"http://www.web3d.org/specifications/x3d-3.0.xsd",
+    "JSON schema":"http://www.web3d.org/specifications/x3d-3.3-JSONSchema.json",
+    "head": {
+        "meta": [
+          {
+            "@name":"comment",
+            "@content":"World of Titania"
+          },
+          {
+            "@name":"created",
+            "@content":"Mon, 14 Sep 2015 21:00:05 GMT"
+          },
+          {
+            "@name":"creator",
+            "@content":"Holger Seelig"
+          },
+          {
+            "@name":"generator",
+            "@content":"Titania V1.1.0, http://titania.create3000.de"
+          },
+          {
+            "@name":"icon",
+            "@content":"../../ui/icons/icon-bw.svg"
+          },
+          {
+            "@name":"modified",
+            "@content":"Mon, 14 Sep 2015 21:00:05 GMT"
+          },
+          {
+            "@name":"title",
+            "@content":"about:gears"
+          },
+          {
+            "@name":"translated",
+            "@content":"02 May 2017"
+          },
+          {
+            "@name":"generator",
+            "@content":"X3dToJson.xslt, http://www.web3d.org/x3d/stylesheets/X3dToJson.html"
+          },
+          {
+            "@name":"reference",
+            "@content":"X3D JSON encoding: http://www.web3d.org/wiki/index.php/X3D_JSON_Encoding"
+          }
+        ]
+    },
+    "Scene": {
+        "-children":[
+          { "ExternProtoDeclare":
+            {
+              "@name":"Rotor",
+              "@url":["Rotor.json"],
+              "field": [
+                {
+                  "@name":"enabled",
+                  "@accessType":"inputOutput",
+                  "@type":"SFBool"
+                },
+                {
+                  "@name":"cycleInterval",
+                  "@accessType":"inputOutput",
+                  "@type":"SFTime"
+                },
+                {
+                  "@name":"axis",
+                  "@accessType":"inputOutput",
+                  "@type":"SFVec3f"
+                },
+                {
+                  "@name":"angle",
+                  "@accessType":"inputOutput",
+                  "@type":"SFFloat"
+                },
+                {
+                  "@name":"loop",
+                  "@accessType":"inputOutput",
+                  "@type":"SFBool"
+                },
+                {
+                  "@name":"startTime",
+                  "@accessType":"inputOutput",
+                  "@type":"SFTime"
+                },
+                {
+                  "@name":"pauseTime",
+                  "@accessType":"inputOutput",
+                  "@type":"SFTime"
+                },
+                {
+                  "@name":"resumeTime",
+                  "@accessType":"inputOutput",
+                  "@type":"SFTime"
+                },
+                {
+                  "@name":"stopTime",
+                  "@accessType":"inputOutput",
+                  "@type":"SFTime"
+                },
+                {
+                  "@name":"isActive",
+                  "@accessType":"outputOnly",
+                  "@type":"SFBool"
+                },
+                {
+                  "@name":"cycleTime",
+                  "@accessType":"outputOnly",
+                  "@type":"SFTime"
+                },
+                {
+                  "@name":"rotation_changed",
+                  "@accessType":"outputOnly",
+                  "@type":"SFRotation"
+                }
+              ]
+            }
+          },
+          { "ProtoDeclare":
+            {
+              "@name":"Gear",
+              "ProtoInterface": {
+                  "field": [
+                    {
+                      "@name":"teeth",
+                      "@accessType":"inputOutput",
+                      "@type":"SFFloat",
+                      "@value":10
+                    },
+                    {
+                      "@name":"toothDepth",
+                      "@accessType":"inputOutput",
+                      "@type":"SFFloat",
+                      "@value":2
+                    },
+                    {
+                      "@name":"innerRadius",
+                      "@accessType":"inputOutput",
+                      "@type":"SFFloat",
+                      "@value":1
+                    },
+                    {
+                      "@name":"outerRadius",
+                      "@accessType":"inputOutput",
+                      "@type":"SFFloat",
+                      "@value":4
+                    },
+                    {
+                      "@name":"width",
+                      "@accessType":"inputOutput",
+                      "@type":"SFFloat",
+                      "@value":1
+                    },
+                    {
+                      "@name":"creaseAngle",
+                      "@accessType":"initializeOnly",
+                      "@type":"SFFloat"
+                    }
+                  ]
+              },
+              "ProtoBody": {
+                  "-children":[
+                    { "IndexedFaceSet":
+                      {
+                        "@DEF":"Gear",
+                        "IS": {
+                            "connect": [
+                              {
+                                "@nodeField":"creaseAngle",
+                                "@protoField":"creaseAngle"
+                              }
+                            ]
+                        },
+                        "-coord":
+                          { "Coordinate":
+                            {
+                            }
+                          }
+                      }
+                    },
+                    { "Script":
+                      {
+                        "@directOutput":true,
+                        "field": [
+                          {
+                            "@name":"teeth",
+                            "@accessType":"inputOutput",
+                            "@type":"SFFloat"
+                          },
+                          {
+                            "@name":"toothDepth",
+                            "@accessType":"inputOutput",
+                            "@type":"SFFloat"
+                          },
+                          {
+                            "@name":"innerRadius",
+                            "@accessType":"inputOutput",
+                            "@type":"SFFloat"
+                          },
+                          {
+                            "@name":"outerRadius",
+                            "@accessType":"inputOutput",
+                            "@type":"SFFloat"
+                          },
+                          {
+                            "@name":"width",
+                            "@accessType":"inputOutput",
+                            "@type":"SFFloat"
+                          },
+                          {
+                            "@name":"gear",
+                            "@accessType":"initializeOnly",
+                            "@type":"SFNode",
+                            "-children":[
+                              { "IndexedFaceSet":
+                                {
+                                  "@USE":"Gear"
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "IS": {
+                            "connect": [
+                              {
+                                "@nodeField":"teeth",
+                                "@protoField":"teeth"
+                              },
+                              {
+                                "@nodeField":"toothDepth",
+                                "@protoField":"toothDepth"
+                              },
+                              {
+                                "@nodeField":"innerRadius",
+                                "@protoField":"innerRadius"
+                              },
+                              {
+                                "@nodeField":"outerRadius",
+                                "@protoField":"outerRadius"
+                              },
+                              {
+                                "@nodeField":"width",
+                                "@protoField":"width"
+                              }
+                            ]
+                        },
+                        "#sourceCode":[
+"vrmlscript:",
+"",
+"function initialize ()",
+"{",
+"\teventsProcessed ();",
+"}",
+"",
+"function eventsProcessed ()",
+"{",
+"\tprint ('### Generating gear ...');",
+"",
+"\tvar indices = new MFInt32 ();",
+"\tvar points  = new MFVec3f ();",
+"",
+"\tvar cos = Math .cos;",
+"\tvar sin = Math .sin;",
+"",
+"\t// Radien and tooth angle",
+"",
+"\tvar radius0 = innerRadius;",
+"\tvar radius1 = outerRadius - toothDepth / 2;",
+"\tvar radius2 = outerRadius + toothDepth / 2;",
+"\tvar da = 2 * Math .PI / teeth / 4;",
+"",
+"\t// Front vectors",
+"",
+"\tvar vectorf0 = new SFVec3f (radius0, 0, width * 0.5);",
+"\tvar vectorf1 = new SFVec3f (radius1, 0, width * 0.5);",
+"\tvar vectorf2 = new SFVec3f (radius2, 0, width * 0.5);",
+"",
+"\t// Back vectors",
+"",
+"\tvar vectorb0 = new SFVec3f (radius0, 0, -width * 0.5);",
+"\tvar vectorb1 = new SFVec3f (radius1, 0, -width * 0.5);",
+"\tvar vectorb2 = new SFVec3f (radius2, 0, -width * 0.5);",
+"",
+"\t// Generate front face indices",
+"",
+"\tfor (var i = 0; i < teeth; ++ i)",
+"\t{",
+"\t\tvar index = i * 3;",
+"",
+"\t\tindices [indices .length] = index;",
+"\t\tindices [indices .length] = index + 1;",
+"\t\tindices [indices .length] = index + 2;",
+"\t\tindices [indices .length] = index + 4;",
+"\t\tindices [indices .length] = index + 3;",
+"\t\tindices [indices .length] = -1;",
+"\t}",
+"",
+"\t// Generate front face points",
+"",
+"\tfor (var i = 0; i < teeth + 1; ++ i)",
+"\t{",
+"\t\tvar angle = i * 2 * Math .PI / teeth;",
+"",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorf0);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorf1);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorf1);",
+"\t}",
+"",
+"\tpoints .length = points .length - 1;",
+"",
+"\tpoints [points .length] = new SFVec3f ();",
+"\tpoints [points .length] = new SFVec3f ();",
+"\tpoints [points .length] = new SFVec3f ();",
+"",
+"",
+"\t// Generate front sides of teeth indices",
+"",
+"\tfor (var i = 0; i < teeth; ++ i)",
+"\t{",
+"\t\tvar index = i * 4;",
+"",
+"\t\tindices [indices .length] = points .length + index;",
+"\t\tindices [indices .length] = points .length + index + 1;",
+"\t\tindices [indices .length] = points .length + index + 2;",
+"\t\tindices [indices .length] = points .length + index + 3;",
+"\t\tindices [indices .length] = -1;",
+"\t}",
+"",
+"\t// Generate front sides of teeth points",
+"",
+"\tfor (var i = 0; i < teeth; ++ i)",
+"\t{",
+"\t\tvar angle = i * 2 * Math .PI / teeth;",
+"",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorf1);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + da)     .multVec (vectorf2);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + 2 * da) .multVec (vectorf2);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorf1);",
+"\t}",
+"",
+"",
+"\t// Generate back face indices",
+"",
+"\tfor (var i = 0; i < teeth; ++ i)",
+"\t{",
+"\t\tvar index = i * 3;",
+"",
+"\t\tindices [indices .length] = points .length + index;",
+"\t\tindices [indices .length] = points .length + index + 3;",
+"\t\tindices [indices .length] = points .length + index + 4;",
+"\t\tindices [indices .length] = points .length + index + 2;",
+"\t\tindices [indices .length] = points .length + index + 1;",
+"\t\tindices [indices .length] = -1;",
+"\t}",
+"",
+"\t// Generate back face points",
+"",
+"\tfor (var i = 0; i < teeth + 1; ++ i)",
+"\t{",
+"\t\tvar angle = i * 2 * Math .PI / teeth;",
+"",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorb0);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorb1);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorb1);",
+"\t}",
+"",
+"\tpoints .length = points .length - 1;",
+"",
+"",
+"\t// Generate back sides of teeth indices",
+"",
+"\tfor (var i = 0; i < teeth; ++ i)",
+"\t{",
+"\t\tvar index = i * 4;",
+"",
+"\t\tindices [indices .length] = points .length + index;",
+"\t\tindices [indices .length] = points .length + index + 1;",
+"\t\tindices [indices .length] = points .length + index + 2;",
+"\t\tindices [indices .length] = points .length + index + 3;",
+"\t\tindices [indices .length] = -1;",
+"\t}",
+"",
+"\t// Generate front sides of teeth points",
+"",
+"\tfor (var i = 0; i < teeth; ++ i)",
+"\t{",
+"\t\tvar angle = i * 2 * Math .PI / teeth;",
+"",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorb1);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + 2 * da) .multVec (vectorb2);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + da)     .multVec (vectorb2);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorb1);",
+"\t}",
+"",
+"",
+"\t// Generate outward faces of teeth indices",
+"",
+"\tfor (var i = 0; i < teeth * 4; ++ i)",
+"\t{",
+"\t\tvar index = i * 2;",
+"",
+"\t\tindices [indices .length] = points .length + index;",
+"\t\tindices [indices .length] = points .length + index + 1;",
+"\t\tindices [indices .length] = points .length + index + 3;",
+"\t\tindices [indices .length] = points .length + index + 2;",
+"\t\tindices [indices .length] = -1;",
+"\t}",
+"",
+"\tindices [indices .length - 3] = points .length + 1;",
+"\tindices [indices .length - 2] = points .length;",
+"",
+"\t// Generate outward faces of teeth points",
+"",
+"\tfor (var i = 0; i < teeth; ++ i)",
+"\t{",
+"\t   var angle = i * 2 * Math .PI / teeth;",
+"",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle) .multVec (vectorf1);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle) .multVec (vectorb1);",
+"",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + da) .multVec (vectorf2);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + da) .multVec (vectorb2);",
+"",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + 2 * da) .multVec (vectorf2);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + 2 * da) .multVec (vectorb2);",
+"",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorf1);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorb1);",
+"\t}",
+"",
+"",
+"\t// Generate inside radius cylinder points",
+"",
+"\tfor (var i = 0; i < teeth; ++ i)",
+"\t{",
+"\t\tvar index = i * 2;",
+"",
+"\t\tindices [indices .length] = points .length + index;",
+"\t\tindices [indices .length] = points .length + index + 1;",
+"\t\tindices [indices .length] = points .length + index + 3;",
+"\t\tindices [indices .length] = points .length + index + 2;",
+"\t\tindices [indices .length] = -1;",
+"\t}",
+"",
+"\tindices [indices .length - 3] = points .length + 1;",
+"\tindices [indices .length - 2] = points .length;",
+"",
+"\t// Generate inside radius cylinder indices",
+"",
+"\tfor (var i = 0; i < teeth + 1; ++ i)",
+"\t{",
+"\t\tvar angle = i * 2 * Math .PI / teeth;",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle) .multVec (vectorb0);",
+"\t\tpoints [points .length] = new SFRotation (0, 0, 1, angle) .multVec (vectorf0);",
+"\t}",
+"",
+"\tprint ('### Generating gear done.');",
+"",
+"\tgear .coord .point   = points;",
+"\tgear .set_coordIndex = indices;",
+"}"
+]
+                      }
+                    }
+                  ]
+              }
+            }
+          },
+          { "Viewpoint":
+            {
+              "@description":"Home",
+              "@position":[0,0,20]
+            }
+          },
+          { "ProtoInstance":
+            {
+              "@name":"Rotor",
+              "@DEF":"RedRotor",
+              "fieldValue": [
+                {
+                  "@name":"cycleInterval",
+                  "@value":10
+                },
+                {
+                  "@name":"loop",
+                  "@value":true
+                }
+              ]
+            }
+          },
+          { "ProtoInstance":
+            {
+              "@name":"Rotor",
+              "@DEF":"GreenRotor",
+              "fieldValue": [
+                {
+                  "@name":"cycleInterval",
+                  "@value":5
+                },
+                {
+                  "@name":"loop",
+                  "@value":true
+                }
+              ]
+            }
+          },
+          { "ProtoInstance":
+            {
+              "@name":"Rotor",
+              "@DEF":"BlueRotor",
+              "fieldValue": [
+                {
+                  "@name":"cycleInterval",
+                  "@value":5
+                },
+                {
+                  "@name":"loop",
+                  "@value":true
+                }
+              ]
+            }
+          },
+          { "Transform":
+            {
+              "@DEF":"RedGear_1",
+              "@translation":[-2.59808,-2.39242,0.725499],
+              "@rotation":[0.543846,0.826436,0.145723,0.627057],
+              "-children":[
+                { "Transform":
+                  {
+                    "@DEF":"Gear_1",
+                    "-children":[
+                      { "Shape":
+                        {
+                          "-appearance":
+                            { "Appearance":
+                              {
+                                "-material":
+                                  { "Material":
+                                    {
+                                      "@diffuseColor":[0.8,0.1,0]
+                                    }
+                                  }
+                              }
+                            },
+                          "-geometry":
+                            { "ProtoInstance":
+                              {
+                                "@name":"Gear",
+                                "fieldValue": [
+                                  {
+                                    "@name":"teeth",
+                                    "@value":20
+                                  },
+                                  {
+                                    "@name":"toothDepth",
+                                    "@value":0.7
+                                  },
+                                  {
+                                    "@name":"creaseAngle",
+                                    "@value":0.6
+                                  }
+                                ]
+                              }
+                            }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          { "Transform":
+            {
+              "@DEF":"GreenGear_1",
+              "@translation":[2.68468,-1.34925,-2.14056],
+              "@rotation":[0.111593,0.985198,0.130124,3.70575],
+              "-children":[
+                { "Transform":
+                  {
+                    "@DEF":"Gear_2",
+                    "-children":[
+                      { "Shape":
+                        {
+                          "-appearance":
+                            { "Appearance":
+                              {
+                                "-material":
+                                  { "Material":
+                                    {
+                                      "@diffuseColor":[0,0.8,0.2]
+                                    }
+                                  }
+                              }
+                            },
+                          "-geometry":
+                            { "ProtoInstance":
+                              {
+                                "@name":"Gear",
+                                "fieldValue": [
+                                  {
+                                    "@name":"toothDepth",
+                                    "@value":0.7
+                                  },
+                                  {
+                                    "@name":"innerRadius",
+                                    "@value":0.5
+                                  },
+                                  {
+                                    "@name":"outerRadius",
+                                    "@value":2
+                                  },
+                                  {
+                                    "@name":"width",
+                                    "@value":2
+                                  },
+                                  {
+                                    "@name":"creaseAngle",
+                                    "@value":0.7
+                                  }
+                                ]
+                              }
+                            }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          { "Transform":
+            {
+              "@DEF":"BlueGear_1",
+              "@translation":[-2.68468,3.41658,2.89301],
+              "@rotation":[-0.0562884,0.982778,0.176007,3.65356],
+              "-children":[
+                { "Transform":
+                  {
+                    "@DEF":"Gear_3",
+                    "-children":[
+                      { "Shape":
+                        {
+                          "-appearance":
+                            { "Appearance":
+                              {
+                                "-material":
+                                  { "Material":
+                                    {
+                                      "@diffuseColor":[0.2,0.2,1]
+                                    }
+                                  }
+                              }
+                            },
+                          "-geometry":
+                            { "ProtoInstance":
+                              {
+                                "@name":"Gear",
+                                "fieldValue": [
+                                  {
+                                    "@name":"toothDepth",
+                                    "@value":0.7
+                                  },
+                                  {
+                                    "@name":"innerRadius",
+                                    "@value":1.3
+                                  },
+                                  {
+                                    "@name":"outerRadius",
+                                    "@value":2
+                                  },
+                                  {
+                                    "@name":"width",
+                                    "@value":0.5
+                                  }
+                                ]
+                              }
+                            }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          { "ROUTE":
+            {
+              "@fromNode":"RedRotor",
+              "@fromField":"rotation_changed",
+              "@toNode":"Gear_1",
+              "@toField":"set_rotation"
+            }
+          },
+          { "ROUTE":
+            {
+              "@fromNode":"GreenRotor",
+              "@fromField":"rotation_changed",
+              "@toNode":"Gear_2",
+              "@toField":"set_rotation"
+            }
+          },
+          { "ROUTE":
+            {
+              "@fromNode":"BlueRotor",
+              "@fromField":"rotation_changed",
+              "@toNode":"Gear_3",
+              "@toField":"set_rotation"
+            }
+          }
+        ]
+    }
+  }
+}

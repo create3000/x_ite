@@ -1,0 +1,960 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.2//EN" "http://www.web3d.org/specifications/x3d-3.2.dtd">
+<X3D profile='Immersive' version='3.2' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.2.xsd'>
+  <head>
+    <component level='2' name='xj3d_RigidBodyPhysics'/>
+    <component level='2' name='xj3d_IODevice'/>
+    <!-- TODO: upgrade component <component level='2' name='RigidBodyPhysics'/> -->
+    <meta content='CarDemoMain.x3d' name='title'/>
+    <meta content='Example scene for RigidBodyPhysics component, runnable as Xj3D application and invoked using shell script runogl' name='description'/>
+    <meta content='Alan Hudson and Justin Couch' name='creator'/>
+    <meta content='Don Brutzman' name='translator'/>
+    <meta content='1 January 2008' name='created'/>
+    <meta content='30 December 2008' name='translated'/>
+    <meta content='2 May 2017' name='modified'/>
+    <meta content='http://www.xj3d.org/extensions/index.html#Physics' name='reference'/>
+    <meta content='Test scene includes custom Xj3D components and elements, will not validate' name='warning'/>
+    <meta content='Test scene under development, runogl fails http://bugzilla.xj3d.org/show_bug.cgi?id=556' name='warning'/>
+    <meta content='originals/car/runogl' name='reference'/>
+    <meta content='originals/car/main.x3dv' name='reference'/>
+    <meta content='originals/car/worldModel.x3dv' name='reference'/>
+    <meta content='originals/car/CameraControl.java' name='reference'/>
+    <meta content='originals/car/CarControlScript.java' name='reference'/>
+    <meta content='http://www.xj3d.org/extensions/rigid_physics_examples.html' name='reference'/>
+    <meta content='http://www.web3d.org/x3d/specifications/ISO-IEC-FDIS-19775-1.2-X3D-AbstractSpecification/Part01/components/rigid_physics.html' name='reference'/>
+    <meta content='http://www.web3d.org/x3d/content/examples/Basic/RigidBodyPhysics/CarDemoMain.x3d' name='identifier'/>
+    <meta content='X3D-Edit 3.3, https://savage.nps.edu/X3D-Edit' name='generator'/>
+    <meta content='Xj3D converter, http://www.xj3d.org' name='generator'/>
+    <meta content='../../license.html' name='license'/>
+  </head>
+  <Scene>
+    <Group>
+      <Group DEF='CAR-CONTAINER'>
+        <Switch DEF='DEBUG-GEOM' whichChoice='0'>
+          <Group>
+            <Transform DEF='ACTIVE-SECTOR-INDICATOR'>
+              <Shape>
+                <Appearance>
+                  <Material emissiveColor='1.0 1.0 0.0' transparency='0.5'/>
+                </Appearance>
+              </Shape>
+            </Transform>
+            <Transform DEF='FRONT-LEFT-WHEEL-TX-DEBUG-HINGE' translation='-1.1 0.5 -1.5'>
+              <Shape DEF='FRONT-LEFT-DEBUG-POINTER'>
+                <Appearance DEF='DEBUG-POINTER-APP'>
+                  <Material/>
+                  <LineProperties linetype='2'/>
+                </Appearance>
+                <LineSet vertexCount='2'>
+                  <Coordinate point='0.0 0.0 0.0 1.0 0.0 0.0'/>
+                  <Color color='1.0 1.0 1.0 1.0 1.0 1.0'/>
+                </LineSet>
+              </Shape>
+            </Transform>
+            <Transform DEF='FRONT-RIGHT-WHEEL-TX-DEBUG-HINGE' translation='-1.1 0.5 -1.5'>
+              <Shape DEF='FRONT-RIGHT-DEBUG-POINTER'>
+                <Appearance USE='DEBUG-POINTER-APP'/>
+                <LineSet vertexCount='2'>
+                  <Coordinate point='0.0 0.0 0.0 -1.0 0.0 0.0'/>
+                  <Color color='1.0 1.0 1.0 1.0 1.0 1.0'/>
+                </LineSet>
+              </Shape>
+            </Transform>
+            <Transform DEF='FRONT-LEFT-WHEEL-TX-DEBUG-MIN' translation='-1.1 0.5 -1.5'>
+              <Shape DEF='FRONT-LEFT-TX-DEBUG-POINTER'>
+                <Appearance USE='DEBUG-POINTER-APP'/>
+                <LineSet vertexCount='2'>
+                  <Coordinate point='0.0 0.0 0.0 1.0 0.0 0.0'/>
+                  <Color color='1.0 1.0 0.0 1.0 1.0 0.0'/>
+                </LineSet>
+              </Shape>
+            </Transform>
+            <Transform DEF='FRONT-RIGHT-WHEEL-TX-DEBUG-MIN' translation='-1.1 0.5 -1.5'>
+              <Shape DEF='FRONT-RIGHT-TX-DEBUG-POINTER'>
+                <Appearance USE='DEBUG-POINTER-APP'/>
+                <LineSet vertexCount='2'>
+                  <Coordinate point='0.0 0.0 0.0 -1.0 0.0 0.0'/>
+                  <Color color='0.0 0.0 1.0 0.0 0.0 1.0'/>
+                </LineSet>
+              </Shape>
+            </Transform>
+            <Transform DEF='FRONT-LEFT-WHEEL-TX-DEBUG-MAX' translation='-1.1 0.5 -1.5'>
+              <Shape>
+                <Appearance USE='DEBUG-POINTER-APP'/>
+                <LineSet vertexCount='2'>
+                  <Coordinate point='0.0 0.0 0.0 1.0 0.0 0.0'/>
+                  <Color color='0.0 0.0 1.0 0.0 0.0 1.0'/>
+                </LineSet>
+              </Shape>
+            </Transform>
+            <Transform DEF='FRONT-RIGHT-WHEEL-TX-DEBUG-MAX' translation='-1.1 0.5 -1.5'>
+              <Shape>
+                <Appearance USE='DEBUG-POINTER-APP'/>
+                <LineSet vertexCount='2'>
+                  <Coordinate point='0.0 0.0 0.0 -1.0 0.0 0.0'/>
+                  <Color color='1.0 1.0 1.0 1.0 1.0 1.0'/>
+                </LineSet>
+              </Shape>
+            </Transform>
+          </Group>
+        </Switch>
+        <Transform DEF='FRONT-LEFT-WHEEL-TX' translation='-1.1 0.5 -1.5'>
+          <Transform DEF='WHEEL-SHAPE' rotation='0.0 0.0 1.0 1.572'>
+            <Shape>
+              <Appearance>
+                <Material emissiveColor='1.0 0.0 1.0'/>
+              </Appearance>
+              <Cylinder height='0.1' radius='0.5'/>
+            </Shape>
+          </Transform>
+          <Group DEF='JOINT-INDICATOR-LEFT'>
+            <Shape>
+              <LineSet vertexCount='2 2'>
+                <Coordinate point='0.0 0.0 0.0 -1.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0'/>
+                <Color color='1.0 1.0 0.0 1.0 1.0 0.0 1.0 1.0 1.0 1.0 1.0 1.0'/>
+              </LineSet>
+            </Shape>
+            <Shape DEF='JOINT-SPHERE'>
+              <Appearance>
+                <Material emissiveColor='0.0 1.0 1.0'/>
+              </Appearance>
+              <Sphere radius='0.1'/>
+            </Shape>
+          </Group>
+        </Transform>
+        <Transform DEF='FRONT-RIGHT-WHEEL-TX' translation='1.1 0.5 -1.5'>
+          <Transform USE='WHEEL-SHAPE'/>
+          <Group DEF='JOINT-INDICATOR-RIGHT'>
+            <Shape>
+              <LineSet vertexCount='2 2'>
+                <Coordinate point='0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0 0.0'/>
+                <Color color='1.0 1.0 0.0 1.0 1.0 0.0 1.0 1.0 1.0 1.0 1.0 1.0'/>
+              </LineSet>
+            </Shape>
+            <Shape USE='JOINT-SPHERE'/>
+          </Group>
+        </Transform>
+        <Transform DEF='BACK-LEFT-WHEEL-TX' translation='-1.1 0.5 1.5'>
+          <Transform USE='WHEEL-SHAPE'/>
+          <Group USE='JOINT-INDICATOR-LEFT'/>
+        </Transform>
+        <Transform DEF='BACK-RIGHT-WHEEL-TX' translation='1.1 0.5 1.5'>
+          <Transform USE='WHEEL-SHAPE'/>
+          <Group USE='JOINT-INDICATOR-RIGHT'/>
+        </Transform>
+        <Transform DEF='CAR-BODY-TX'>
+          <Shape>
+            <Appearance>
+              <Material emissiveColor='0.8 0.8 0.0'/>
+            </Appearance>
+            <Box DEF='CHASSIS-BOX' size='2.2 0.05 5.0'/>
+          </Shape>
+          <Transform DEF='SPEED-INDICATOR' translation='1.2 1.0 0.0'>
+            <Shape>
+              <Appearance>
+                <Material DEF='SPEED-INDICATOR-COLOR'/>
+              </Appearance>
+              <Box size='0.1 1.0 0.1'/>
+            </Shape>
+          </Transform>
+          <Transform translation='0.0 0.4 0.0'>
+            <Shape>
+              <Appearance>
+                <Material emissiveColor='0.0 0.0 0.8' transparency='0.5'/>
+              </Appearance>
+              <Box DEF='CHASSIS-PROXY-GEOM' size='2.25 0.4 5.1'/>
+            </Shape>
+            <Transform translation='1.0 0.1 2.65'>
+              <Shape DEF='BRAKE-LIGHT-GEOM'>
+                <Appearance>
+                  <Material DEF='BRAKE-LIGHT-COLOR' diffuseColor='0.1 0.0 0.0' emissiveColor='0.1 0.0 0.0'/>
+                </Appearance>
+                <Box size='0.1 0.2 0.1'/>
+              </Shape>
+            </Transform>
+            <Transform translation='-1.0 0.1 2.65'>
+              <Shape USE='BRAKE-LIGHT-GEOM'/>
+            </Transform>
+            <Transform translation='0.9 0.1 2.65'>
+              <Shape DEF='REVERSE-LIGHT-GEOM'>
+                <Appearance>
+                  <Material DEF='REVERSE-LIGHT-COLOR' diffuseColor='0.1 0.1 0.1' emissiveColor='0.1 0.1 0.1'/>
+                </Appearance>
+                <Box size='0.1 0.1 0.1'/>
+              </Shape>
+            </Transform>
+            <Transform translation='-0.9 0.1 2.65'>
+              <Shape USE='REVERSE-LIGHT-GEOM'/>
+            </Transform>
+          </Transform>
+        </Transform>
+        <Transform DEF='CAMERA-TX'>
+          <Transform>
+            <Viewpoint DEF='Camera03' description='AutoCam' position='0.0 0.0 0.0'/>
+          </Transform>
+        </Transform>
+      </Group>
+    </Group>
+    <NavigationInfo speed='10.0' type='"NONE"'/>
+    <Inline/>
+    <Shape DEF='ENEMY-GEOM'/>
+    <Transform DEF='carGroup' rotation='0.006813 -0.9999 0.01227 -4.155' translation='-82.59 6.8 -48.1'>
+      <Transform DEF='carCamTransform' translation='0.0 1.0 5.0'>
+        <Viewpoint DEF='Camera03-OLD' description='Car 3rd Person' position='0.0 0.0 5.0'/>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF='cam_car_chase-TIMER' cycleInterval='120.0' enabled='false' loop='true'/>
+    <PositionInterpolator DEF='cam_car_chase-POS-INTERP' key='0.0 0.0050 0.01 0.015 0.02 0.025 0.03 0.035 0.04 0.045 0.05 0.055 0.06 0.065 0.07 0.075 0.08 0.085 0.09 0.095 0.1 0.105 0.11 0.115 0.12 0.125 0.13 0.135 0.14 0.145 0.15 0.155 0.16 0.165 0.17 0.175 0.18 0.185 0.19 0.195 0.2 0.205 0.21 0.215 0.22 0.225 0.23 0.235 0.24 0.245 0.25 0.255 0.26 0.265 0.27 0.275 0.28 0.285 0.29 0.295 0.3 0.305 0.31 0.315 0.32 0.325 0.33 0.335 0.34 0.345 0.35 0.355 0.36 0.365 0.37 0.375 0.38 0.385 0.39 0.395 0.4 0.405 0.41 0.415 0.42 0.425 0.43 0.435 0.44 0.445 0.45 0.455 0.46 0.465 0.47 0.475 0.48 0.485 0.49 0.495 0.5 0.505 0.51 0.515 0.52 0.525 0.53 0.535 0.54 0.545 0.55 0.555 0.56 0.565 0.57 0.575 0.58 0.585 0.59 0.595 0.6 0.605 0.61 0.615 0.62 0.625 0.63 0.635 0.64 0.645 0.65 0.655 0.66 0.665 0.67 0.675 0.68 0.685 0.69 0.695 0.7 0.705 0.71 0.715 0.72 0.725 0.73 0.735 0.74 0.745 0.75 0.755 0.76 0.765 0.77 0.775 0.78 0.785 0.79 0.795 0.8 0.805 0.81 0.815 0.82 0.825 0.83 0.835 0.84 0.845 0.85 0.855 0.86 0.865 0.87 0.875 0.88 0.885 0.89 0.895 0.9 0.905 0.91 0.915 0.92 0.925 0.93 0.935 0.94 0.945 0.95 0.955 0.96 0.965 0.97 0.975 0.98 0.985 0.99 0.995 1.0' keyValue='-82.59 6.8 -46.1 -62.37 7.482 -34.12 -45.75 8.077 -24.49 -30.63 8.902 -15.22 -14.28 9.772 -7.022 2.577 10.66 0.2272 19.5 11.58 7.357 36.34 12.33 14.35 53.06 12.96 21.47 69.88 13.31 28.19 86.65 13.45 34.39 103.0 13.08 41.36 120.3 12.53 47.38 137.9 11.52 53.08 156.0 11.13 55.74 174.3 10.82 56.99 192.6 10.72 59.23 210.8 10.17 59.67 229.1 9.332 58.07 247.3 7.655 57.25 265.2 6.045 56.14 283.9 3.88 56.28 305.8 3.112 54.26 324.5 3.111 54.26 340.3 3.338 51.85 353.7 3.376 40.25 367.0 2.986 24.67 368.9 2.698 4.603 367.0 2.426 -16.23 352.9 2.476 -24.65 333.0 2.496 -27.47 313.1 2.5 -26.23 296.2 2.472 -22.66 278.8 2.428 -17.45 260.8 2.399 -12.16 243.0 2.371 -7.717 225.0 2.348 -3.115 206.7 2.312 -2.477 188.5 2.288 -3.483 169.7 2.239 -1.287 149.8 2.275 -3.75 131.7 2.358 -8.071 114.9 2.463 -14.18 100.4 2.562 -25.71 90.72 2.614 -41.85 86.37 2.654 -60.62 85.63 2.678 -79.14 89.62 2.695 -96.48 93.92 2.706 -114.4 98.32 2.705 -132.4 102.4 2.704 -150.0 106.6 2.701 -168.2 109.9 2.699 -186.9 113.2 2.697 -205.0 116.3 2.703 -223.3 119.5 2.677 -242.2 124.6 2.671 -260.7 136.0 2.586 -274.3 147.6 2.655 -286.3 162.2 2.934 -297.0 180.1 3.192 -305.3 198.0 3.424 -311.6 216.3 3.605 -313.4 234.2 3.771 -315.6 252.3 3.92 -317.4 270.7 4.05 -318.9 289.1 4.156 -319.6 307.5 4.109 -319.7 325.9 4.208 -318.6 344.3 4.346 -316.6 362.7 4.906 -314.4 380.4 5.254 -311.4 397.7 5.339 -306.8 415.4 5.254 -302.2 432.7 5.108 -297.5 449.9 4.975 -292.7 467.4 4.904 -287.6 485.2 4.894 -282.0 503.5 4.918 -276.8 521.7 4.979 -272.2 539.2 5.025 -264.4 559.5 5.217 -261.1 577.1 5.521 -259.7 592.7 5.536 -260.0 609.2 5.673 -266.6 625.8 5.681 -275.3 637.2 5.98 -287.9 643.5 6.524 -304.4 647.8 7.731 -322.9 649.2 8.83 -341.2 645.5 9.758 -359.2 641.8 10.57 -377.1 637.5 11.32 -394.9 633.8 12.09 -413.0 630.2 12.87 -431.1 626.9 13.65 -449.2 623.2 14.43 -467.1 619.5 15.2 -484.9 615.9 15.99 -502.7 612.4 16.78 -520.8 609.1 17.56 -538.7 606.3 18.33 -556.6 603.1 19.09 -574.6 600.8 19.84 -592.7 596.6 20.53 -610.0 590.4 21.21 -626.5 586.1 21.66 -643.9 578.2 22.27 -660.2 565.8 23.26 -673.1 551.5 23.85 -684.5 537.3 24.29 -693.4 522.5 24.88 -701.2 502.6 26.11 -708.5 483.1 27.4 -715.0 465.6 28.76 -718.8 447.7 30.48 -721.0 429.6 32.79 -721.6 411.5 35.32 -721.8 393.4 38.14 -721.8 375.3 41.01 -721.1 357.2 43.63 -720.4 338.9 45.85 -719.5 320.6 47.65 -720.0 302.5 49.12 -721.8 284.2 49.91 -722.0 266.1 50.75 -721.8 248.0 51.6 -721.1 229.9 52.98 -719.5 211.4 54.62 -717.8 193.6 55.88 -716.9 181.0 56.93 -715.5 170.3 57.06 -717.5 159.7 57.14 -721.0 147.3 57.03 -725.2 134.0 56.99 -730.3 119.9 57.01 -733.3 106.6 57.88 -737.3 93.7 58.32 -738.9 79.87 57.82 -736.2 79.41 56.84 -725.4 77.53 54.88 -714.7 76.89 51.27 -700.9 68.47 48.1 -691.1 59.62 45.34 -683.6 47.72 44.12 -676.4 30.01 41.79 -672.2 11.54 39.43 -669.3 -6.463 36.79 -672.5 -24.68 34.26 -675.1 -42.89 31.75 -677.3 -61.71 29.48 -681.1 -85.61 27.17 -677.3 -108.9 25.76 -662.8 -126.4 24.6 -648.0 -139.1 23.79 -629.3 -144.8 22.49 -606.4 -147.4 21.33 -586.7 -145.9 20.34 -568.9 -142.3 19.44 -553.3 -130.3 18.0 -528.6 -113.8 15.9 -492.6 -104.1 14.73 -472.3 -97.49 13.85 -457.7 -91.04 12.82 -440.9 -86.09 11.67 -422.3 -85.55 10.82 -402.1 -87.88 10.06 -383.9 -95.84 9.198 -368.4 -107.3 8.613 -354.6 -121.1 8.209 -342.7 -137.0 8.053 -333.2 -153.3 7.908 -324.3 -170.0 7.788 -316.4 -186.6 7.674 -308.6 -203.2 7.56 -300.9 -220.1 7.47 -293.7 -236.8 7.35 -285.5 -253.0 7.234 -276.5 -269.2 6.995 -268.4 -284.8 6.757 -259.6 -300.1 6.612 -253.3 -313.8 6.511 -248.3 -327.9 6.508 -238.7 -328.8 6.546 -225.6 -324.0 6.535 -213.0 -314.0 6.51 -201.5 -299.1 6.324 -190.4 -283.3 6.095 -180.7 -267.9 5.805 -170.6 -252.8 5.539 -160.5 -237.7 5.251 -150.2 -222.7 5.056 -139.5 -207.9 4.936 -128.7 -192.7 4.93 -118.5 -177.7 4.997 -108.3 -162.6 5.143 -97.98 -147.5 5.369 -87.61 -132.3 5.653 -77.38 -116.4 6.003 -67.74 -100.5 6.361 -57.64 -82.59 6.8 -46.1'/>
+    <OrientationInterpolator DEF='cam_car_chase-ROT-INTERP' key='0.0 0.0050 0.01 0.015 0.02 0.025 0.03 0.035 0.04 0.045 0.05 0.055 0.06 0.065 0.07 0.075 0.08 0.085 0.09 0.095 0.1 0.105 0.11 0.115 0.12 0.125 0.13 0.135 0.14 0.145 0.15 0.155 0.16 0.165 0.17 0.175 0.18 0.185 0.19 0.195 0.2 0.205 0.21 0.215 0.22 0.225 0.23 0.235 0.24 0.245 0.25 0.255 0.26 0.265 0.27 0.275 0.28 0.285 0.29 0.295 0.3 0.305 0.31 0.315 0.32 0.325 0.33 0.335 0.34 0.345 0.35 0.355 0.36 0.365 0.37 0.375 0.38 0.385 0.39 0.395 0.4 0.405 0.41 0.415 0.42 0.425 0.43 0.435 0.44 0.445 0.45 0.455 0.46 0.465 0.47 0.475 0.48 0.485 0.49 0.495 0.5 0.505 0.51 0.515 0.52 0.525 0.53 0.535 0.54 0.545 0.55 0.555 0.56 0.565 0.57 0.575 0.58 0.585 0.59 0.595 0.6 0.605 0.61 0.615 0.62 0.625 0.63 0.635 0.64 0.645 0.65 0.655 0.66 0.665 0.67 0.675 0.68 0.685 0.69 0.695 0.7 0.705 0.71 0.715 0.72 0.725 0.73 0.735 0.74 0.745 0.75 0.755 0.76 0.765 0.77 0.775 0.78 0.785 0.79 0.795 0.8 0.805 0.81 0.815 0.82 0.825 0.83 0.835 0.84 0.845 0.85 0.855 0.86 0.865 0.87 0.875 0.88 0.885 0.89 0.895 0.9 0.905 0.91 0.915 0.92 0.925 0.93 0.935 0.94 0.945 0.95 0.955 0.96 0.965 0.97 0.975 0.98 0.985 0.99 0.995 1.0' keyValue='0.006813 -0.9999 0.01227 -4.155 0.008468 -0.9999 0.01499 -4.17 0.0112 -0.9997 0.01951 -4.184 0.012 -0.9997 0.01954 -4.243 0.01241 -0.9997 0.01934 -4.282 0.0113 -0.9998 0.01751 -4.287 0.00833 -0.9999 0.01283 -4.293 0.005032 -1.0 0.007728 -4.296 1.064E-4 -1.0 1.6E-4 -4.315 -0.004939 -1.0 -0.007298 -4.331 -0.01123 -0.9998 -0.01653 -4.335 -0.01465 -0.9997 -0.0202 -4.396 -0.01819 -0.9996 -0.02355 -4.457 -0.01259 -0.9998 -0.01455 -4.568 -0.01216 -0.9998 -0.01333 -4.621 -0.01397 -0.9998 -0.01528 -4.623 0.02539 0.9993 0.02583 -1.589 0.0371 0.9987 0.0355 -1.528 0.04743 0.9978 0.04625 -1.548 0.04668 0.9979 0.04507 -1.538 0.04263 0.9982 0.04123 -1.539 0.01831 0.9997 0.01608 -1.442 0.002981 1.0 0.002377 -1.346 0.003686 1.0 0.002119 -1.044 0.0197 0.9998 0.006598 -0.6466 0.06883 0.9976 0.01236 -0.3561 0.1277 -0.9918 -0.009755 -0.1537 0.0265 -0.9996 -0.007593 -0.5582 0.00428 -1.0 -0.002994 -1.221 0.003623 -1.0 -0.003378 -1.501 0.003552 -1.0 -0.003945 -1.676 0.003677 -1.0 -0.004492 -1.77 0.003642 -1.0 -0.004669 -1.817 0.003532 -1.0 -0.004394 -1.787 0.003678 -1.0 -0.004347 -1.737 0.003838 -1.0 -0.004295 -1.683 0.00444 -1.0 -0.004325 -1.545 0.004366 -1.0 -0.004015 -1.487 0.003943 -1.0 -0.003682 -1.502 0.002829 -1.0 -0.002169 -1.308 0.001765 -1.0 -0.001138 -1.145 0.001966 -1.0 -9.92E-4 -0.9346 0.004464 -1.0 -0.001472 -0.6368 0.01489 -0.9999 -0.002438 -0.3246 0.0684 -0.9977 -0.002774 -0.08126 0.05839 0.9983 0.003113 -0.1067 0.02621 0.9997 0.003279 -0.249 0.02607 0.9997 0.003471 -0.2649 0.02794 0.9996 0.003665 -0.261 0.02929 0.9996 0.003668 -0.2492 0.03071 0.9995 0.003686 -0.239 0.03326 0.9994 0.003678 -0.2204 0.03103 0.9995 0.00367 -0.2355 0.02881 0.9996 0.00366 -0.2528 0.02226 0.9997 0.00383 -0.3409 0.01283 0.9999 0.003359 -0.5122 0.006523 1.0 0.002811 -0.8137 -0.001283 1.0 -6.491E-4 -0.9365 -0.005889 1.0 -0.003555 -1.086 -0.003506 1.0 -0.002509 -1.242 -0.002375 1.0 -0.001917 -1.358 -0.00105 1.0 -9.75E-4 -1.497 -5.828E-4 1.0 -5.423E-4 -1.499 0.0 1.0 0.0 -1.523 6.321E-4 1.0 6.21E-4 -1.553 -0.001247 -1.0 -0.001276 -4.689 -0.002221 -1.0 -0.002371 -4.647 6.834E-4 -1.0 7.693E-4 -4.594 0.002608 -1.0 0.003065 -4.552 0.005679 -1.0 0.00685 -4.526 0.001657 -1.0 0.002102 -4.476 -0.002623 -1.0 -0.003525 -4.421 -0.004588 -1.0 -0.006159 -4.422 -0.005234 -1.0 -0.007088 -4.414 -0.004443 -1.0 -0.006067 -4.406 -0.003333 -1.0 -0.004585 -4.399 -0.002337 -1.0 -0.003232 -4.394 -0.001732 -1.0 -0.002339 -4.417 -0.001067 -1.0 -0.001414 -4.434 -4.932E-4 -1.0 -6.638E-4 -4.42 0.00133 -1.0 0.001463 -4.617 -0.002762 1.0 -0.002598 -1.51 1.712E-4 1.0 1.324E-4 -1.317 -0.003318 1.0 -0.001938 -1.057 -0.008097 1.0 -0.003699 -0.857 -0.04174 0.9991 -0.01169 -0.5467 -0.1274 0.9917 -0.01805 -0.2839 -0.3406 0.9399 -0.0244 -0.1521 -0.9828 -0.1844 0.004405 -0.04859 -0.2223 -0.9748 0.01955 -0.18 -0.1959 -0.9805 0.01769 -0.1837 -0.1755 -0.9843 0.01672 -0.1929 -0.2006 -0.9795 0.01711 -0.1737 -0.2069 -0.9782 0.01709 -0.1686 -0.213 -0.9769 0.01709 -0.1639 -0.2005 -0.9796 0.01736 -0.1764 -0.2025 -0.9791 0.01743 -0.1754 -0.2127 -0.977 0.01741 -0.1671 -0.222 -0.9749 0.01722 -0.1588 -0.2296 -0.9731 0.01704 -0.1522 -0.2331 -0.9723 0.01676 -0.1476 -0.2018 -0.9793 0.01638 -0.1654 -0.1775 -0.984 0.01591 -0.1816 -0.1088 -0.9939 0.01501 -0.2757 -0.07828 -0.9968 0.01412 -0.3581 -0.0632 -0.9979 0.01267 -0.3964 -0.05145 -0.9986 0.01578 -0.5959 -0.04383 -0.9989 0.01929 -0.8299 -0.02789 -0.9995 0.01431 -0.9485 -0.02498 -0.9996 0.01456 -1.056 -0.03264 -0.9993 0.02078 -1.135 -0.04034 -0.9988 0.02832 -1.225 -0.04472 -0.9984 0.03358 -1.29 -0.05088 -0.9978 0.04226 -1.388 -0.05779 -0.997 0.05194 -1.467 -0.06605 -0.9958 0.06289 -1.526 -0.06953 -0.9953 0.06736 -1.544 -0.07211 -0.9949 0.07119 -1.563 -0.0676 -0.9954 0.06765 -1.576 -0.06018 -0.9964 0.05985 -1.569 -0.0499 -0.9976 0.049 -1.555 -0.04129 -0.9984 0.03873 -1.509 -0.03193 -0.9991 0.02935 -1.488 -0.02117 -0.9996 0.02068 -1.548 -0.02214 -0.9995 0.02215 -1.572 -0.02553 -0.9993 0.02612 -1.594 -0.03197 -0.9989 0.03307 -1.606 -0.03325 -0.9989 0.0339 -1.591 -0.0253 -0.9994 0.02416 -1.525 -0.01739 -0.9997 0.0154 -1.45 0.002328 -1.0 -0.001778 -1.304 0.005608 -1.0 -0.00414 -1.272 0.0096 -0.9999 -0.007223 -1.29 0.007995 -0.9999 -0.006446 -1.357 0.008529 -0.9999 -0.007984 -1.505 0.009671 -0.9999 -0.01052 -1.655 0.02633 -0.9989 -0.03954 -1.968 0.02941 -0.9971 -0.0705 -2.353 0.01406 -0.9956 -0.09264 -2.842 0.02508 -0.993 -0.1156 -2.717 0.03637 -0.9909 -0.1293 -2.598 0.05382 -0.993 -0.105 -2.2 0.05445 -0.9947 -0.08679 -2.026 0.04423 -0.9972 -0.06055 -1.882 0.06106 -0.9958 -0.06866 -1.692 0.06938 -0.9952 -0.06964 -1.579 0.08475 -0.9938 -0.07195 -1.414 0.07884 -0.9945 -0.06865 -1.438 0.07166 -0.9953 -0.06499 -1.478 0.05672 -0.9968 -0.05656 -1.571 0.0359 -0.9983 -0.04621 -1.822 0.01567 -0.9994 -0.02997 -2.178 0.01129 -0.9995 -0.02859 -2.39 0.006174 -0.9997 -0.02543 -2.665 0.003213 -0.9995 -0.03158 -2.939 4.052E-4 -0.9995 -0.03242 -3.117 -0.002454 -0.9995 -0.03144 -3.297 -0.004565 -0.9995 -0.03087 -3.435 -0.006414 -0.9995 -0.02982 -3.565 -0.006017 -0.9995 -0.03018 -3.535 -0.005782 -0.9995 -0.03043 -3.517 -0.004953 -0.9995 -0.03145 -3.454 -0.00336 -0.9995 -0.03152 -3.354 -0.001179 -0.9995 -0.03065 -3.218 0.001952 -0.9997 -0.02531 -2.988 0.004557 -0.9997 -0.02433 -2.771 0.007829 -0.9997 -0.02317 -2.49 0.007298 -0.9998 -0.0166 -2.313 0.006208 -0.9999 -0.01167 -2.164 0.004698 -1.0 -0.007807 -2.058 0.00454 -1.0 -0.007213 -2.018 0.004463 -1.0 -0.006813 -1.982 0.00443 -1.0 -0.006738 -1.978 0.004412 -1.0 -0.006705 -1.978 0.004378 -1.0 -0.006671 -1.98 0.004624 -1.0 -0.007342 -2.018 0.004843 -1.0 -0.007982 -2.051 0.005715 -0.9999 -0.00945 -2.054 0.005056 -0.9999 -0.008898 -2.108 0.003634 -1.0 -0.006937 -2.177 0.002201 -1.0 -0.005743 -2.41 6.766E-4 -1.0 -0.00403 -2.809 -6.182E-4 -1.0 -0.004311 -3.426 -0.001735 -1.0 -0.005669 -3.736 -0.002944 -1.0 -0.00691 -3.947 -0.004618 -0.9999 -0.009269 -4.066 -0.005489 -0.9999 -0.01031 -4.12 -0.005622 -0.9999 -0.01089 -4.094 -0.005248 -0.9999 -0.01027 -4.086 -0.004855 -0.9999 -0.00961 -4.077 -0.003567 -1.0 -0.007168 -4.065 -0.002444 -1.0 -0.004901 -4.067 -0.001167 -1.0 -0.002277 -4.089 -1.237E-4 -1.0 -2.417E-4 -4.088 9.202E-4 -1.0 0.001799 -4.087 0.001855 -1.0 0.003596 -4.094 0.002665 -1.0 0.005084 -4.107 0.003413 -1.0 0.006335 -4.13 0.003873 -1.0 0.00724 -4.124 0.004619 -1.0 0.008618 -4.126 0.006813 -0.9999 0.01227 -4.155'/>
+    <KeySensor DEF='keysensor' enabled='true'/>
+    <Switch DEF='DEBUG_TERRAIN' whichChoice='0'>
+      <Group DEF='TERRAIN-CONTAINER'>
+        <CollidableShape DEF='Road-v-001' translation='124.936 -0.5 -461.607'>
+          <Shape containerField='shape'>
+            <Appearance DEF='ROAD-APP'>
+              <Material emissiveColor='1.0 0.0 0.0'/>
+            </Appearance>
+            <Box size='1250.0 1.0 800.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='Road-v-002' translation='-417.631 -0.5 24.7947'>
+          <Shape containerField='shape'>
+            <Appearance USE='ROAD-APP'/>
+            <Box size='200.0 1.0 250.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='Road-v-003' translation='675.143 -0.5 17.6217'>
+          <Shape containerField='shape'>
+            <Appearance USE='ROAD-APP'/>
+            <Box size='200.0 1.0 250.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='Road-v-004' translation='138.008 -0.5 23.1087'>
+          <Shape containerField='shape'>
+            <Appearance USE='ROAD-APP'/>
+            <Box size='1000.0 1.0 60.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='Road-v-006' rotation='0.0 0.0 -1.0 0.135494' translation='347.056 4.87479 -376.17'>
+          <Shape containerField='shape'>
+            <Appearance DEF='RAMP_APP'>
+              <Material diffuseColor='0.0 0.0 1.0'/>
+              <ImageTexture url='"originals/car/textures/wall-stone-001.jpg" "http://www.web3d.org/x3d/content/examples/Basic/RigidBodyPhysics/originals/car/textures/wall-stone-001.jpg"'/>
+            </Appearance>
+            <Box size='90.0 1.0 70.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='Road-v-007' translation='301.193 1.4 -376.315'>
+          <Shape containerField='shape'>
+            <Appearance USE='ROAD-APP'/>
+            <Box size='3.0 20.0 70.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='Sand-v-001' translation='101.232 -0.55 -31.8107'>
+          <Shape containerField='shape'>
+            <Appearance DEF='SAND-APP'>
+              <Material ambientIntensity='0.258621' diffuseColor='0.58 0.27 0.01' shininess='0.07' specularColor='0.43 0.2 0.0'/>
+              <ImageTexture/>
+            </Appearance>
+            <Box size='1000.0 1.0 60.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='Sand-v-002' translation='108.906 -0.55 93.8712'>
+          <Shape containerField='shape'>
+            <Appearance USE='SAND-APP'/>
+            <Box size='1000.0 1.0 100.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='WALL-v-001a' translation='750.0 10.0 -360.0'>
+          <Shape containerField='shape'>
+            <Appearance DEF='WALL-APP'>
+              <Material emissiveColor='0.5 0.5 0.5' transparency='0.2'/>
+            </Appearance>
+            <Box size='1.0 20.0 1000.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='WALL-v-001b' translation='-500.0 10.0 -360.0'>
+          <Shape containerField='shape'>
+            <Appearance USE='WALL-APP'/>
+            <Box size='1.0 20.0 1000.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='WALL-v-001c' translation='125.0 10.0 140.99'>
+          <Shape containerField='shape'>
+            <Appearance USE='WALL-APP'/>
+            <Box size='1250.0 20.0 1.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='WALL-v-001d' translation='125.0 10.0 -859.733'>
+          <Shape containerField='shape'>
+            <Appearance USE='WALL-APP'/>
+            <Box size='1250.0 20.0 1.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='Wall-v-002' translation='-163.362 24.0 -589.528'>
+          <Shape containerField='shape'>
+            <Appearance USE='WALL-APP'/>
+            <Box size='40.0 48.0 40.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='Wall-v-003' translation='-100.093 19.0 -587.841'>
+          <Shape DEF='SmallBulding' containerField='shape'>
+            <Appearance USE='WALL-APP'/>
+            <Box size='40.0 38.0 40.0'/>
+          </Shape>
+        </CollidableShape>
+        <CollidableShape DEF='Wall-v-004' translation='-314.972 19.0 -656.376'>
+          <Shape USE='SmallBulding' containerField='shape'/>
+        </CollidableShape>
+        <CollidableShape DEF='Wall-v-005' translation='-314.723 19.0 -580.647'>
+          <Shape USE='SmallBulding' containerField='shape'/>
+        </CollidableShape>
+        <CollidableShape DEF='Wall-v-006' translation='-269.737 19.0 -452.626'>
+          <Shape USE='SmallBulding' containerField='shape'/>
+        </CollidableShape>
+        <CollidableShape DEF='Wall-v-007' translation='-217.782 19.0 -450.082'>
+          <Shape USE='SmallBulding' containerField='shape'/>
+        </CollidableShape>
+        <CollidableShape DEF='Wall-v-008' translation='-83.8395 19.0 -351.859'>
+          <Shape USE='SmallBulding' containerField='shape'/>
+        </CollidableShape>
+        <CollidableShape DEF='Wall-v-009' translation='-348.799 19.0 -511.969'>
+          <Shape USE='SmallBulding' containerField='shape'/>
+        </CollidableShape>
+        <CollidableShape DEF='Wall-v-010' translation='-23.9812 19.0 -501.768'>
+          <Shape USE='SmallBulding' containerField='shape'/>
+        </CollidableShape>
+        <CollidableShape DEF='Wall-v-011' translation='-101.759 19.0 -451.126'>
+          <Shape USE='SmallBulding' containerField='shape'/>
+        </CollidableShape>
+      </Group>
+    </Switch>
+    <Script DEF='physicsSectorScript'>
+      <field accessType='inputOnly' name='sector1' type='SFTime'/>
+      <field accessType='inputOnly' name='sector2' type='SFTime'/>
+      <field accessType='inputOnly' name='sector3' type='SFTime'/>
+      <field accessType='inputOnly' name='sector4' type='SFTime'/>
+      <field accessType='inputOnly' name='sector5' type='SFTime'/>
+      <field accessType='inputOnly' name='sector6' type='SFTime'/>
+      <field accessType='inputOnly' name='sector7' type='SFTime'/>
+      <field accessType='inputOnly' name='sector8' type='SFTime'/>
+      <field accessType='inputOnly' name='sector9' type='SFTime'/>
+      <field accessType='outputOnly' name='sector1Enabled' type='SFBool'/>
+      <field accessType='outputOnly' name='sector2Enabled' type='SFBool'/>
+      <field accessType='outputOnly' name='sector3Enabled' type='SFBool'/>
+      <field accessType='outputOnly' name='sector4Enabled' type='SFBool'/>
+      <field accessType='outputOnly' name='sector5Enabled' type='SFBool'/>
+      <field accessType='outputOnly' name='sector6Enabled' type='SFBool'/>
+      <field accessType='outputOnly' name='sector7Enabled' type='SFBool'/>
+      <field accessType='outputOnly' name='sector8Enabled' type='SFBool'/>
+      <field accessType='outputOnly' name='sector9Enabled' type='SFBool'/>
+      <![CDATA[
+ecmascript:
+    function sector1(val) {
+       if (val) {
+Browser.println('Physics Sector1');
+        sector1Enabled = true;
+        sector2Enabled = true;
+        sector3Enabled = false;
+        sector4Enabled = false;
+        sector5Enabled = false;
+        sector6Enabled = false;
+        sector7Enabled = false;
+        sector8Enabled = false;
+        sector9Enabled = false;
+       }
+    }
+    function sector2(val) {
+       if (val) {
+Browser.println('Physics Sector2');
+        sector1Enabled = true;
+        sector2Enabled = true;
+        sector3Enabled = true;
+        sector4Enabled = false;
+        sector5Enabled = false;
+        sector6Enabled = false;
+        sector7Enabled = false;
+        sector8Enabled = false;
+        sector9Enabled = false;
+       }
+    }
+    function sector3(val) {
+       if (val) {
+Browser.println('Physics Sector3');
+        sector1Enabled = false;
+        sector2Enabled = true;
+        sector3Enabled = true;
+        sector4Enabled = true;
+        sector5Enabled = false;
+        sector6Enabled = false;
+        sector7Enabled = false;
+        sector8Enabled = false;
+        sector9Enabled = false;
+       }
+    }
+    function sector4(val) {
+       if (val) {
+Browser.println('Physics Sector4');
+        sector1Enabled = false;
+        sector2Enabled = false;
+        sector3Enabled = true;
+        sector4Enabled = true;
+        sector5Enabled = true;
+        sector6Enabled = false;
+        sector7Enabled = false;
+        sector8Enabled = false;
+        sector9Enabled = false;
+       }
+    }
+    function sector5(val) {
+       if (val) {
+Browser.println('Physics Sector5');
+        sector1Enabled = false;
+        sector2Enabled = false;
+        sector3Enabled = false;
+        sector4Enabled = true;
+        sector5Enabled = true;
+        sector6Enabled = true;
+        sector7Enabled = false;
+        sector8Enabled = false;
+        sector9Enabled = false;
+       }
+    }
+    function sector6(val) {
+       if (val) {
+Browser.println('Physics Sector6');
+        sector1Enabled = false;
+        sector2Enabled = false;
+        sector3Enabled = false;
+        sector4Enabled = false;
+        sector5Enabled = true;
+        sector6Enabled = true;
+        sector7Enabled = true;
+        sector8Enabled = false;
+        sector9Enabled = false;
+       }
+    }
+    function sector7(val) {
+       if (val) {
+Browser.println('Physics Sector7');
+        sector1Enabled = false;
+        sector2Enabled = false;
+        sector3Enabled = false;
+        sector4Enabled = false;
+        sector5Enabled = false;
+        sector6Enabled = true;
+        sector7Enabled = true;
+        sector8Enabled = true;
+        sector9Enabled = false;
+       }
+    }
+    function sector8(val) {
+       if (val) {
+Browser.println('Physics Sector8');
+
+        sector1Enabled = false;
+        sector2Enabled = false;
+        sector3Enabled = false;
+        sector4Enabled = false;
+        sector5Enabled = false;
+        sector6Enabled = false;
+        sector7Enabled = true;
+        sector8Enabled = true;
+        sector9Enabled = true;
+       }
+    }
+    function sector9(val) {
+       if (val) {
+Browser.println('Physics Sector9');
+
+        sector1Enabled = true;
+        sector2Enabled = false;
+        sector3Enabled = false;
+        sector4Enabled = false;
+        sector5Enabled = false;
+        sector6Enabled = false;
+        sector7Enabled = false;
+        sector8Enabled = true;
+        sector9Enabled = true;
+       }
+    }
+
+    function sector9(val) {
+       if (val) {
+Browser.println('Physics Sector9');
+
+        sector1Enabled = true;
+        sector2Enabled = false;
+        sector3Enabled = false;
+        sector4Enabled = false;
+        sector5Enabled = false;
+        sector6Enabled = false;
+        sector7Enabled = false;
+        sector8Enabled = true;
+        sector9Enabled = true;
+       }
+    }
+]]>
+    </Script>
+    <RigidBodyCollection DEF='BODY-COLLECTION' constantForceMix='0.0050' contactSurfaceThickness='0.0010' enabled='false' iterations='20'>
+      <RigidBody DEF='CAR-BODY' autoDamp='true' containerField='bodies' enabled='false' finiteRotationAxis='0 1 0' mass='900.0' position='0.0 1.25 0.0'>
+        <Box USE='CHASSIS-BOX' containerField='massDensityModel'/>
+        <CollidableShape DEF='CAR-BODY-GEOM' containerField='geometry'>
+          <Shape containerField='shape'>
+            <Box USE='CHASSIS-BOX'/>
+          </Shape>
+        </CollidableShape>
+      </RigidBody>
+      <RigidBody DEF='FRONT-LEFT-WHEEL-BODY' angularDampingFactor='0' autoDamp='true' containerField='bodies' enabled='false' finiteRotationAxis='0 1 0' mass='20.0' position='-0.9 1.5 -2.5' useFiniteRotation='true'>
+        <Sphere USE='WHEEL-MASS' containerField='massDensityModel'/>
+        <CollidableShape DEF='FRONT-LEFT-WHEEL-GEOM' containerField='geometry'>
+          <Shape DEF='WHEEL-GEOM' containerField='shape'>
+            <Sphere DEF='WHEEL-MASS' radius='0.5'/>
+          </Shape>
+        </CollidableShape>
+      </RigidBody>
+      <RigidBody DEF='FRONT-RIGHT-WHEEL-BODY' angularDampingFactor='0' autoDamp='true' containerField='bodies' enabled='false' finiteRotationAxis='0 1 0' mass='20.0' position='0.9 1.5 -2.5' useFiniteRotation='true'>
+        <Sphere USE='WHEEL-MASS' containerField='massDensityModel'/>
+        <CollidableShape DEF='FRONT-RIGHT-WHEEL-GEOM' containerField='geometry'>
+          <Shape USE='WHEEL-GEOM' containerField='shape'/>
+        </CollidableShape>
+      </RigidBody>
+      <RigidBody DEF='BACK-LEFT-WHEEL-BODY' angularDampingFactor='0' autoDamp='true' containerField='bodies' enabled='false' finiteRotationAxis='0 1 0' mass='20.0' position='-0.9 1.5 2.5' useFiniteRotation='true'>
+        <Sphere USE='WHEEL-MASS' containerField='massDensityModel'/>
+        <CollidableShape DEF='BACK-LEFT-WHEEL-GEOM' containerField='geometry'>
+          <Shape USE='WHEEL-GEOM' containerField='shape'/>
+        </CollidableShape>
+      </RigidBody>
+      <RigidBody DEF='BACK-RIGHT-WHEEL-BODY' angularDampingFactor='0' autoDamp='true' containerField='bodies' enabled='false' finiteRotationAxis='0 1 0' mass='20.0' position='0.9 1.5 2.5' useFiniteRotation='true'>
+        <Sphere USE='WHEEL-MASS' containerField='massDensityModel'/>
+        <CollidableShape DEF='BACK-RIGHT-WHEEL-GEOM' containerField='geometry'>
+          <Shape USE='WHEEL-GEOM' containerField='shape'/>
+        </CollidableShape>
+      </RigidBody>
+    </RigidBodyCollection>
+    <CollisionSensor DEF='COLLISION-OUTPUT'>
+      <CollisionCollection DEF='COLLISION-GROUP' appliedParameters='"BOUNCE"' bounce='0.3' containerField='collider' enabled='false' frictionCoefficients='500.0 500.0' minBounceSpeed='0.3' softnessConstantForceMix='0.0010'>
+        <CollidableShape USE='FRONT-LEFT-WHEEL-GEOM' containerField='collidables'/>
+        <CollidableShape USE='FRONT-RIGHT-WHEEL-GEOM' containerField='collidables'/>
+        <CollidableShape USE='BACK-LEFT-WHEEL-GEOM' containerField='collidables'/>
+        <CollidableShape USE='BACK-RIGHT-WHEEL-GEOM' containerField='collidables'/>
+        <CollidableShape USE='CAR-BODY-GEOM' containerField='collidables'/>
+        <CollidableShape USE='Road-v-001' containerField='collidables'/>
+        <CollidableShape USE='Road-v-002' containerField='collidables'/>
+        <CollidableShape USE='Road-v-003' containerField='collidables'/>
+        <CollidableShape USE='Road-v-004' containerField='collidables'/>
+        <CollidableShape USE='Road-v-006' containerField='collidables'/>
+        <CollidableShape USE='Road-v-007' containerField='collidables'/>
+        <CollidableShape USE='Sand-v-001' containerField='collidables'/>
+        <CollidableShape USE='Sand-v-002' containerField='collidables'/>
+        <CollidableShape USE='WALL-v-001a' containerField='collidables'/>
+        <CollidableShape USE='WALL-v-001b' containerField='collidables'/>
+        <CollidableShape USE='WALL-v-001c' containerField='collidables'/>
+        <CollidableShape USE='WALL-v-001d' containerField='collidables'/>
+        <CollidableShape USE='Wall-v-002' containerField='collidables'/>
+        <CollidableShape USE='Wall-v-003' containerField='collidables'/>
+        <CollidableShape USE='Wall-v-004' containerField='collidables'/>
+        <CollidableShape USE='Wall-v-005' containerField='collidables'/>
+        <CollidableShape USE='Wall-v-006' containerField='collidables'/>
+        <CollidableShape USE='Wall-v-007' containerField='collidables'/>
+        <CollidableShape USE='Wall-v-008' containerField='collidables'/>
+        <CollidableShape USE='Wall-v-009' containerField='collidables'/>
+        <CollidableShape USE='Wall-v-010' containerField='collidables'/>
+        <CollidableShape USE='Wall-v-011' containerField='collidables'/>
+      </CollisionCollection>
+    </CollisionSensor>
+    <Script DEF='CAR-CONTROL-SCRIPT' directOutput='true' url='"originals/car/CarControlScript.class" "http://www.web3d.org/x3d/content/examples/Basic/RigidBodyPhysics/originals/car/CarControlScript.class"'>
+      <field accessType='inputOnly' name='resetRequest' type='SFBool'/>
+      <field accessType='inputOutput' name='startingPosition' type='SFVec3f'/>
+      <field accessType='inputOutput' name='startingOrientation' type='SFRotation'/>
+      <field accessType='initializeOnly' name='wheelBodyRadius' type='SFFloat'/>
+      <field accessType='initializeOnly' name='chassisBodyDimensions' type='SFVec3f'/>
+      <field accessType='initializeOnly' name='speedLimit' type='SFFloat'/>
+      <field accessType='initializeOnly' name='steeringLimitAngle' type='SFFloat'/>
+      <field accessType='initializeOnly' name='steeringDeadspot' type='SFFloat'/>
+      <field accessType='initializeOnly' name='maxEngineTorque' type='SFFloat'/>
+      <field accessType='initializeOnly' name='maxBrakingTorque' type='SFFloat'/>
+      <field accessType='initializeOnly' name='maxEngineRevs' type='SFFloat'/>
+      <field accessType='inputOutput' name='roadFrictionCoefficient' type='SFFloat'/>
+      <field accessType='inputOutput' name='wallFrictionCoefficient' type='SFFloat'/>
+      <field accessType='inputOutput' name='sandFrictionCoefficient' type='SFFloat'/>
+      <field accessType='inputOutput' name='grassFrictionCoefficient' type='SFFloat'/>
+      <field accessType='inputOutput' name='otherFrictionCoefficient' type='SFFloat'/>
+      <field accessType='inputOutput' name='sideSlipCoefficient' type='SFFloat'/>
+      <field accessType='inputOutput' name='brakeBias' type='SFFloat'/>
+      <field accessType='inputOutput' name='engineFrontPercentage' type='SFFloat'/>
+      <field accessType='inputOutput' name='engineRearPercentage' type='SFFloat'/>
+      <field accessType='inputOutput' name='dragCoefficient' type='SFFloat'/>
+      <field accessType='inputOutput' name='downforceCoefficient' type='SFFloat'/>
+      <field accessType='inputOnly' name='reverseSelected' type='SFBool'/>
+      <field accessType='inputOnly' name='carVelocity' type='SFVec3f'/>
+      <field accessType='inputOnly' name='carOrientation' type='SFRotation'/>
+      <field accessType='inputOnly' name='currentSteeringAngle' type='SFFloat'/>
+      <field accessType='inputOnly' name='wheelAcceleratorInput' type='SFFloat'/>
+      <field accessType='inputOnly' name='wheelDirectionInput' type='SFFloat'/>
+      <field accessType='inputOnly' name='frontWheelOrientation' type='SFVec3f'/>
+      <field accessType='inputOnly' name='rearWheelOrientation' type='SFVec3f'/>
+      <field accessType='outputOnly' name='correctedChassisOrientation' type='SFRotation'/>
+      <field accessType='outputOnly' name='frontWheelMinStop' type='SFFloat'/>
+      <field accessType='outputOnly' name='frontWheelMaxStop' type='SFFloat'/>
+      <field accessType='outputOnly' name='frontLeftWheelSpeed' type='SFFloat'/>
+      <field accessType='outputOnly' name='frontRightWheelSpeed' type='SFFloat'/>
+      <field accessType='outputOnly' name='rearLeftWheelSpeed' type='SFFloat'/>
+      <field accessType='outputOnly' name='rearRightWheelSpeed' type='SFFloat'/>
+      <field accessType='outputOnly' name='frontWheelTorque' type='SFFloat'/>
+      <field accessType='outputOnly' name='rearWheelTorque' type='SFFloat'/>
+      <field accessType='outputOnly' name='frontLeftAxleAxis' type='SFVec3f'/>
+      <field accessType='outputOnly' name='frontRightAxleAxis' type='SFVec3f'/>
+      <field accessType='outputOnly' name='rearLeftAxleAxis' type='SFVec3f'/>
+      <field accessType='outputOnly' name='rearRightAxleAxis' type='SFVec3f'/>
+      <field accessType='outputOnly' name='frictionForces' type='MFVec3f'/>
+      <field accessType='outputOnly' name='chassisPosition_reset' type='SFVec3f'/>
+      <field accessType='outputOnly' name='chassisOrientation_reset' type='SFRotation'/>
+      <field accessType='outputOnly' name='frontLeftWheelPosition_reset' type='SFVec3f'/>
+      <field accessType='outputOnly' name='frontLeftWheelOrientation_reset' type='SFRotation'/>
+      <field accessType='outputOnly' name='frontRightWheelPosition_reset' type='SFVec3f'/>
+      <field accessType='outputOnly' name='frontRightWheelOrientation_reset' type='SFRotation'/>
+      <field accessType='outputOnly' name='backLeftWheelPosition_reset' type='SFVec3f'/>
+      <field accessType='outputOnly' name='backLeftWheelOrientation_reset' type='SFRotation'/>
+      <field accessType='outputOnly' name='backRightWheelPosition_reset' type='SFVec3f'/>
+      <field accessType='outputOnly' name='backRightWheelOrientation_reset' type='SFRotation'/>
+      <field accessType='outputOnly' name='enablePhysics' type='SFBool'/>
+      <field accessType='outputOnly' name='speed' type='SFFloat'/>
+      <field accessType='outputOnly' name='revs' type='SFFloat'/>
+      <field accessType='outputOnly' name='brakesApplied' type='SFBool'/>
+      <field accessType='outputOnly' name='reversing' type='SFBool'/>
+      <field accessType='initializeOnly' name='chassis' type='SFNode'>
+        <CollidableShape USE='CAR-BODY-GEOM'/>
+      </field>
+      <field accessType='initializeOnly' name='frontLeftWheel' type='SFNode'>
+        <CollidableShape USE='FRONT-LEFT-WHEEL-GEOM'/>
+      </field>
+      <field accessType='initializeOnly' name='frontRightWheel' type='SFNode'>
+        <CollidableShape USE='FRONT-RIGHT-WHEEL-GEOM'/>
+      </field>
+      <field accessType='initializeOnly' name='backLeftWheel' type='SFNode'>
+        <CollidableShape USE='BACK-LEFT-WHEEL-GEOM'/>
+      </field>
+      <field accessType='initializeOnly' name='backRightWheel' type='SFNode'>
+        <CollidableShape USE='BACK-RIGHT-WHEEL-GEOM'/>
+      </field>
+      <field accessType='initializeOnly' name='bigTerrainBox' type='MFNode'/>
+      <field accessType='initializeOnly' name='roadTerrain' type='MFNode'>
+        <CollidableShape USE='Road-v-001'/>
+        <CollidableShape USE='Road-v-002'/>
+        <CollidableShape USE='Road-v-003'/>
+        <CollidableShape USE='Road-v-004'/>
+        <CollidableShape USE='Road-v-006'/>
+        <CollidableShape USE='Road-v-007'/>
+      </field>
+      <field accessType='initializeOnly' name='sandTerrain' type='MFNode'>
+        <CollidableShape USE='Sand-v-001'/>
+        <CollidableShape USE='Sand-v-002'/>
+      </field>
+      <field accessType='initializeOnly' name='grassTerrain' type='MFNode'/>
+      <field accessType='initializeOnly' name='wallTerrain' type='MFNode'>
+        <CollidableShape USE='WALL-v-001a'/>
+        <CollidableShape USE='WALL-v-001b'/>
+        <CollidableShape USE='WALL-v-001c'/>
+        <CollidableShape USE='WALL-v-001d'/>
+        <CollidableShape USE='Wall-v-002'/>
+        <CollidableShape USE='Wall-v-003'/>
+        <CollidableShape USE='Wall-v-004'/>
+        <CollidableShape USE='Wall-v-005'/>
+        <CollidableShape USE='Wall-v-006'/>
+        <CollidableShape USE='Wall-v-007'/>
+        <CollidableShape USE='Wall-v-008'/>
+        <CollidableShape USE='Wall-v-009'/>
+        <CollidableShape USE='Wall-v-010'/>
+        <CollidableShape USE='Wall-v-011'/>
+      </field>
+      <field accessType='initializeOnly' name='bodies' type='MFNode'>
+        <RigidBody USE='CAR-BODY' containerField='bodies'/>
+        <RigidBody USE='FRONT-LEFT-WHEEL-BODY' containerField='bodies'/>
+        <RigidBody USE='FRONT-RIGHT-WHEEL-BODY' containerField='bodies'/>
+        <RigidBody USE='BACK-LEFT-WHEEL-BODY' containerField='bodies'/>
+        <RigidBody USE='BACK-RIGHT-WHEEL-BODY' containerField='bodies'/>
+      </field>
+      <field accessType='initializeOnly' name='joints' type='MFNode'>
+        <DoubleAxisHingeJoint DEF='FRONT-LEFT-JOINT' anchorPoint='-0.9 1.5 -2.5' axis1='0.0 1.0 0.0' axis2='-1.0 0.0 0.0' containerField='joints' forceOutput='"body2Axis" "hinge1Angle"' maxAngle1='0.0' maxTorque2='100.0' minAngle1='0.0' stop1Bounce='0' stop1ConstantForceMix='0.001' stop1ErrorCorrection='0.98' suspensionErrorCorrection='0.9' suspensionForce='0.0030'>
+          <RigidBody USE='CAR-BODY' containerField='body1'/>
+          <RigidBody USE='FRONT-LEFT-WHEEL-BODY' containerField='body2'/>
+        </DoubleAxisHingeJoint>
+        <DoubleAxisHingeJoint DEF='FRONT-RIGHT-JOINT' anchorPoint='0.9 1.5 -2.5' axis1='0.0 1.0 0.0' axis2='1.0 0.0 0.0' containerField='joints' forceOutput='"body2Axis" "hinge1Angle"' maxAngle1='0.0' maxTorque2='100.0' minAngle1='0.0' stop1Bounce='0' stop1ConstantForceMix='0.001' stop1ErrorCorrection='0.98' suspensionErrorCorrection='0.9' suspensionForce='0.0030'>
+          <RigidBody USE='CAR-BODY' containerField='body1'/>
+          <RigidBody USE='FRONT-RIGHT-WHEEL-BODY' containerField='body2'/>
+        </DoubleAxisHingeJoint>
+        <DoubleAxisHingeJoint DEF='BACK-LEFT-JOINT' anchorPoint='-0.9 1.5 2.5' axis1='0.0 1.0 0.0' axis2='-1.0 0.0 0.0' containerField='joints' forceOutput='"body2Axis"' maxAngle1='0.0' maxTorque2='100.0' minAngle1='0.0' stop1Bounce='0' stop1ConstantForceMix='0.001' stop1ErrorCorrection='0.98' suspensionErrorCorrection='0.9' suspensionForce='0.0030'>
+          <RigidBody USE='CAR-BODY' containerField='body1'/>
+          <RigidBody USE='BACK-LEFT-WHEEL-BODY' containerField='body2'/>
+        </DoubleAxisHingeJoint>
+        <DoubleAxisHingeJoint DEF='BACK-RIGHT-JOINT' anchorPoint='0.9 1.5 2.5' axis1='0.0 1.0 0.0' axis2='1.0 0.0 0.0' containerField='joints' forceOutput='"body2Axis"' maxAngle1='0.0' maxTorque2='100.0' minAngle1='0.0' stop1Bounce='0' stop1ConstantForceMix='0.001' stop1ErrorCorrection='0.98' suspensionErrorCorrection='0.9' suspensionForce='0.0030'>
+          <RigidBody USE='CAR-BODY' containerField='body1'/>
+          <RigidBody USE='BACK-RIGHT-WHEEL-BODY' containerField='body2'/>
+        </DoubleAxisHingeJoint>
+      </field>
+      <field accessType='inputOnly' name='collisionContacts' type='MFNode'/>
+      <field accessType='outputOnly' name='correctedContacts' type='MFNode'/>
+      <field accessType='outputOnly' name='connectJoints' type='MFNode'/>
+    </Script>
+    <WheelSensor DEF='WHEEL' name='Wheel-0'/>
+    <GamepadSensor DEF='GAMEPAD' name='Gamepad-0'/>
+    <KeySensor DEF='KEYS' enabled='true'/>
+    <TimeSensor DEF='KEYTIMER' loop='true'/>
+    <Script DEF='KEYSC'>
+      <field accessType='inputOnly' name='actionKeyPress' type='SFInt32'/>
+      <field accessType='inputOnly' name='decay' type='SFFloat'/>
+      <field accessType='outputOnly' name='dir' type='SFFloat'/>
+      <field accessType='outputOnly' name='accel' type='SFFloat'/>
+      <field accessType='outputOnly' name='reverse' type='SFBool'/>
+      <field accessType='outputOnly' name='reset' type='SFBool'/>
+      <![CDATA[
+ecmascript:
+    var accelVar = 0;
+    var dirVar = 0;
+    var accelFactor = 0.1;
+    var dirFactor = 0.5;
+    var decayVar = 0.1;
+    var applyDecay = false;
+    
+    function decay(val) {
+       if (!applyDecay)
+          return;
+          
+       if (dir >= decayVar) {
+          dir = dir - decayVar;          
+          if (dir < -1)
+             dir = -1;
+       } else if (dir <= -decayVar) {
+          dir = dir + decayVar;
+          
+          if (dir > 1)
+             dir = 1;
+       } else {
+          dir = 0;
+          
+          applyDecay = false;
+       }   
+    }
+    
+    function actionKeyPress(val) {
+        applyDecay = true;
+        
+    	if (val == 17) {
+    	   accelVar = accelVar + accelFactor;
+    	   
+    	   if (accelVar > 1)
+    	      accelVar = 1.0;
+    	      
+    	   accel = accelVar;
+    	} else if (val == 18) {
+    	   accelVar = accelVar - accelFactor;
+    	   
+    	   if (accelVar < -1)
+    	      accelVar = -1.0;
+    	      
+    	   accel = accelVar;
+    	} else if (val == 19) {
+    	   dirVar = dirVar - dirFactor;
+    	   
+    	   if (dirVar < -1)
+    	      dirVar = -1.0;
+    	      
+    	   dir = dirVar;
+    	} else if (val == 20) {
+    	   dirVar = dirVar + dirFactor;
+    	   
+    	   if (dirVar > 1)
+    	      dirVar = 1.0;
+    	      
+    	   dir = dirVar;
+    	} else {
+    	   dir = 0;
+    	   accel = 0;
+    	}
+    }
+]]>
+    </Script>
+    <Script DEF='UI-CONTROL-SCRIPT'>
+      <field accessType='inputOnly' name='speed' type='SFFloat'/>
+      <field accessType='inputOnly' name='revs' type='SFFloat'/>
+      <field accessType='inputOnly' name='brakesApplied' type='SFBool'/>
+      <field accessType='inputOnly' name='reversing' type='SFBool'/>
+      <field accessType='initializeOnly' name='maxSpeed' type='SFFloat'/>
+      <field accessType='outputOnly' name='brakeLightColor' type='SFColor'/>
+      <field accessType='outputOnly' name='reverseLightColor' type='SFColor'/>
+      <field accessType='outputOnly' name='speedScale' type='SFVec3f'/>
+      <field accessType='outputOnly' name='speedFraction' type='SFFloat'/>
+      <![CDATA[
+ecmascript:
+    function brakesApplied(val) {
+      if(val)
+        brakeLightColor.r = 1;
+      else
+        brakeLightColor.r = 0.1;
+    }
+
+    function reversing(val) {
+      if(val) {
+        reverseLightColor.r = 1;
+        reverseLightColor.g = 1;
+        reverseLightColor.b = 1;
+      } else {
+        reverseLightColor.r = 0.1;
+        reverseLightColor.g = 0.1;
+        reverseLightColor.b = 0.1;
+      }
+    }
+
+    function speed(val) {
+      speedScale.x = 1;
+      speedScale.y = val / maxSpeed;
+      speedScale.z = 1;
+      speedFraction = val / maxSpeed;
+    }
+]]>
+    </Script>
+    <ColorInterpolator DEF='SPEED-COLOR' key='0.0 0.8 0.9 1.0' keyValue='0.0 0.0 0.0 1.0 1.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0'/>
+    <OrientationInterpolator DEF='FRONT-LEFT-HINGE-WHEEL-INTERP' key='-1.0 0.0 1.0' keyValue='0.0 1.0 0.0 0.5236 0.0 1.0 0.0 0.0 0.0 1.0 0.0 -0.5236'/>
+    <OrientationInterpolator DEF='FRONT-RIGHT-HINGE-WHEEL-INTERP' key='-1.0 0.0 1.0' keyValue='0.0 1.0 0.0 0.5236 0.0 1.0 0.0 0.0 0.0 1.0 0.0 -0.5236'/>
+    <OrientationInterpolator DEF='FRONT-LEFT-HINGE-ANGLE-INTERP' key='-0.5236 0.0 0.5236' keyValue='0.0 1.0 0.0 0.5236 0.0 1.0 0.0 0.0 0.0 1.0 0.0 -0.5236'/>
+    <OrientationInterpolator DEF='FRONT-RIGHT-HINGE-ANGLE-INTERP' key='-0.5236 0.0 0.5236' keyValue='0.0 1.0 0.0 0.5236 0.0 1.0 0.0 0.0 0.0 1.0 0.0 -0.5236'/>
+    <OrientationInterpolator DEF='FRONT-LEFT-MAXSTOP-ANGLE-INTERP' key='-0.5236 0.0 0.5236' keyValue='0.0 1.0 0.0 0.5236 0.0 1.0 0.0 0.0 0.0 1.0 0.0 -0.5236'/>
+    <OrientationInterpolator DEF='FRONT-RIGHT-MAXSTOP-ANGLE-INTERP' key='-0.5236 0.0 0.5236' keyValue='0.0 1.0 0.0 0.5236 0.0 1.0 0.0 0.0 0.0 1.0 0.0 -0.5236'/>
+    <OrientationInterpolator DEF='FRONT-LEFT-MINSTOP-ANGLE-INTERP' key='-0.5236 0.0 0.5236' keyValue='0.0 1.0 0.0 0.5236 0.0 1.0 0.0 0.0 0.0 1.0 0.0 -0.5236'/>
+    <OrientationInterpolator DEF='FRONT-RIGHT-MINSTOP-ANGLE-INTERP' key='-0.5236 0.0 0.5236' keyValue='0.0 1.0 0.0 0.5236 0.0 1.0 0.0 0.0 0.0 1.0 0.0 -0.5236'/>
+    <Viewpoint description='Other position' position='0.0 2.0 10.0'/>
+    <Viewpoint description='Top down view of starting position' orientation='1.0 0.0 0.0 -1.5712' position='-114.86 20.0 -66.1922'/>
+    <Viewpoint DEF='CHASSIS-VIEW' description='Chassis starting position' position='0.0 0.0 0.0'/>
+    <Background skyAngle='1.5712 3.1416' skyColor='0.0 1.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0'/>
+    <NavigationInfo type='"NONE"'/>
+    <Script DEF='CAMERA-CONTROL-SCRIPT' url='"originals/car/CameraControl.class" "http://www.web3d.org/x3d/content/examples/Basic/RigidBodyPhysics/originals/car/CameraControl.class"'>
+      <field accessType='inputOnly' name='carPosition' type='SFVec3f'/>
+      <field accessType='inputOnly' name='resetPosition' type='SFVec3f'/>
+      <field accessType='inputOnly' name='resetOrientation' type='SFRotation'/>
+      <field accessType='outputOnly' name='cameraTranslation' type='SFVec3f'/>
+      <field accessType='outputOnly' name='cameraRotation' type='SFRotation'/>
+      <field accessType='initializeOnly' name='height' type='SFFloat'/>
+      <field accessType='initializeOnly' name='chainLength' type='SFFloat'/>
+    </Script>
+    <ROUTE fromField='fraction_changed' fromNode='cam_car_chase-TIMER' toField='set_fraction' toNode='cam_car_chase-POS-INTERP'/>
+    <ROUTE fromField='value_changed' fromNode='cam_car_chase-POS-INTERP' toField='translation' toNode='carGroup'/>
+    <ROUTE fromField='fraction_changed' fromNode='cam_car_chase-TIMER' toField='set_fraction' toNode='cam_car_chase-ROT-INTERP'/>
+    <ROUTE fromField='value_changed' fromNode='cam_car_chase-ROT-INTERP' toField='rotation' toNode='carGroup'/>
+    <ROUTE fromField='value_changed' fromNode='cam_car_chase-POS-INTERP' toField='translation' toNode='CAR-BODY-TX'/>
+    <ROUTE fromField='value_changed' fromNode='cam_car_chase-ROT-INTERP' toField='rotation' toNode='CAR-BODY-TX'/>
+    <ROUTE fromField='position' fromNode='FRONT-LEFT-WHEEL-BODY' toField='translation' toNode='FRONT-LEFT-WHEEL-TX'/>
+    <ROUTE fromField='orientation' fromNode='FRONT-LEFT-WHEEL-BODY' toField='rotation' toNode='FRONT-LEFT-WHEEL-TX'/>
+    <ROUTE fromField='position' fromNode='FRONT-RIGHT-WHEEL-BODY' toField='translation' toNode='FRONT-RIGHT-WHEEL-TX'/>
+    <ROUTE fromField='orientation' fromNode='FRONT-RIGHT-WHEEL-BODY' toField='rotation' toNode='FRONT-RIGHT-WHEEL-TX'/>
+    <ROUTE fromField='position' fromNode='BACK-LEFT-WHEEL-BODY' toField='translation' toNode='BACK-LEFT-WHEEL-TX'/>
+    <ROUTE fromField='orientation' fromNode='BACK-LEFT-WHEEL-BODY' toField='rotation' toNode='BACK-LEFT-WHEEL-TX'/>
+    <ROUTE fromField='position' fromNode='BACK-RIGHT-WHEEL-BODY' toField='translation' toNode='BACK-RIGHT-WHEEL-TX'/>
+    <ROUTE fromField='orientation' fromNode='BACK-RIGHT-WHEEL-BODY' toField='rotation' toNode='BACK-RIGHT-WHEEL-TX'/>
+    <ROUTE fromField='position' fromNode='CAR-BODY' toField='translation' toNode='CAR-BODY-TX'/>
+    <ROUTE fromField='orientation' fromNode='CAR-BODY' toField='rotation' toNode='CAR-BODY-TX'/>
+    <ROUTE fromField='wheelX' fromNode='WHEEL' toField='wheelDirectionInput' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='throttleSlider' fromNode='WHEEL' toField='wheelAcceleratorInput' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='button2' fromNode='WHEEL' toField='reverseSelected' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='button3' fromNode='WHEEL' toField='resetRequest' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='leftStickX' fromNode='GAMEPAD' toField='wheelDirectionInput' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='rightStickY' fromNode='GAMEPAD' toField='wheelAcceleratorInput' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='l1Button' fromNode='GAMEPAD' toField='reverseSelected' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='r1Button' fromNode='GAMEPAD' toField='resetRequest' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='actionKeyPress' fromNode='KEYS' toField='actionKeyPress' toNode='KEYSC'/>
+    <ROUTE fromField='fraction_changed' fromNode='KEYTIMER' toField='decay' toNode='KEYSC'/>
+    <ROUTE fromField='dir' fromNode='KEYSC' toField='wheelDirectionInput' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='accel' fromNode='KEYSC' toField='wheelAcceleratorInput' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='reverse' fromNode='KEYSC' toField='reverseSelected' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='reset' fromNode='KEYSC' toField='resetRequest' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='contacts' fromNode='COLLISION-OUTPUT' toField='collisionContacts' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='linearVelocity' fromNode='CAR-BODY' toField='carVelocity' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='orientation' fromNode='CAR-BODY' toField='carOrientation' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='body2Axis' fromNode='FRONT-LEFT-JOINT' toField='frontWheelOrientation' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='body2Axis' fromNode='BACK-LEFT-JOINT' toField='rearWheelOrientation' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='hinge1Angle' fromNode='FRONT-LEFT-JOINT' toField='currentSteeringAngle' toNode='CAR-CONTROL-SCRIPT'/>
+    <ROUTE fromField='body2Axis' fromNode='FRONT-LEFT-JOINT' toField='finiteRotationAxis' toNode='FRONT-LEFT-WHEEL-BODY'/>
+    <ROUTE fromField='body2Axis' fromNode='FRONT-RIGHT-JOINT' toField='finiteRotationAxis' toNode='FRONT-RIGHT-WHEEL-BODY'/>
+    <ROUTE fromField='body2Axis' fromNode='BACK-LEFT-JOINT' toField='finiteRotationAxis' toNode='BACK-LEFT-WHEEL-BODY'/>
+    <ROUTE fromField='body2Axis' fromNode='BACK-RIGHT-JOINT' toField='finiteRotationAxis' toNode='BACK-RIGHT-WHEEL-BODY'/>
+    <ROUTE fromField='enablePhysics' fromNode='CAR-CONTROL-SCRIPT' toField='enabled' toNode='BODY-COLLECTION'/>
+    <ROUTE fromField='enablePhysics' fromNode='CAR-CONTROL-SCRIPT' toField='enabled' toNode='COLLISION-GROUP'/>
+    <ROUTE fromField='enablePhysics' fromNode='CAR-CONTROL-SCRIPT' toField='enabled' toNode='CAR-BODY'/>
+    <ROUTE fromField='enablePhysics' fromNode='CAR-CONTROL-SCRIPT' toField='enabled' toNode='FRONT-LEFT-WHEEL-BODY'/>
+    <ROUTE fromField='enablePhysics' fromNode='CAR-CONTROL-SCRIPT' toField='enabled' toNode='FRONT-RIGHT-WHEEL-BODY'/>
+    <ROUTE fromField='enablePhysics' fromNode='CAR-CONTROL-SCRIPT' toField='enabled' toNode='BACK-LEFT-WHEEL-BODY'/>
+    <ROUTE fromField='enablePhysics' fromNode='CAR-CONTROL-SCRIPT' toField='enabled' toNode='BACK-RIGHT-WHEEL-BODY'/>
+    <ROUTE fromField='chassisPosition_reset' fromNode='CAR-CONTROL-SCRIPT' toField='position' toNode='CAR-BODY'/>
+    <ROUTE fromField='chassisOrientation_reset' fromNode='CAR-CONTROL-SCRIPT' toField='orientation' toNode='CAR-BODY'/>
+    <ROUTE fromField='frontLeftWheelPosition_reset' fromNode='CAR-CONTROL-SCRIPT' toField='position' toNode='FRONT-LEFT-WHEEL-BODY'/>
+    <ROUTE fromField='frontLeftWheelPosition_reset' fromNode='CAR-CONTROL-SCRIPT' toField='anchorPoint' toNode='FRONT-LEFT-JOINT'/>
+    <ROUTE fromField='frontLeftWheelOrientation_reset' fromNode='CAR-CONTROL-SCRIPT' toField='orientation' toNode='FRONT-LEFT-WHEEL-BODY'/>
+    <ROUTE fromField='frontRightWheelPosition_reset' fromNode='CAR-CONTROL-SCRIPT' toField='position' toNode='FRONT-RIGHT-WHEEL-BODY'/>
+    <ROUTE fromField='frontRightWheelPosition_reset' fromNode='CAR-CONTROL-SCRIPT' toField='anchorPoint' toNode='FRONT-RIGHT-JOINT'/>
+    <ROUTE fromField='frontRightWheelOrientation_reset' fromNode='CAR-CONTROL-SCRIPT' toField='orientation' toNode='FRONT-RIGHT-WHEEL-BODY'/>
+    <ROUTE fromField='backLeftWheelPosition_reset' fromNode='CAR-CONTROL-SCRIPT' toField='position' toNode='BACK-LEFT-WHEEL-BODY'/>
+    <ROUTE fromField='backLeftWheelPosition_reset' fromNode='CAR-CONTROL-SCRIPT' toField='anchorPoint' toNode='BACK-LEFT-JOINT'/>
+    <ROUTE fromField='backLeftWheelOrientation_reset' fromNode='CAR-CONTROL-SCRIPT' toField='orientation' toNode='BACK-LEFT-WHEEL-BODY'/>
+    <ROUTE fromField='backRightWheelPosition_reset' fromNode='CAR-CONTROL-SCRIPT' toField='position' toNode='BACK-RIGHT-WHEEL-BODY'/>
+    <ROUTE fromField='backRightWheelPosition_reset' fromNode='CAR-CONTROL-SCRIPT' toField='anchorPoint' toNode='BACK-RIGHT-JOINT'/>
+    <ROUTE fromField='backRightWheelOrientation_reset' fromNode='CAR-CONTROL-SCRIPT' toField='orientation' toNode='BACK-RIGHT-WHEEL-BODY'/>
+    <ROUTE fromField='frontWheelMinStop' fromNode='CAR-CONTROL-SCRIPT' toField='minAngle1' toNode='FRONT-LEFT-JOINT'/>
+    <ROUTE fromField='frontWheelMinStop' fromNode='CAR-CONTROL-SCRIPT' toField='minAngle1' toNode='FRONT-RIGHT-JOINT'/>
+    <ROUTE fromField='frontWheelMaxStop' fromNode='CAR-CONTROL-SCRIPT' toField='maxAngle1' toNode='FRONT-LEFT-JOINT'/>
+    <ROUTE fromField='frontWheelMaxStop' fromNode='CAR-CONTROL-SCRIPT' toField='maxAngle1' toNode='FRONT-RIGHT-JOINT'/>
+    <ROUTE fromField='frontLeftWheelSpeed' fromNode='CAR-CONTROL-SCRIPT' toField='desiredAngularVelocity2' toNode='FRONT-LEFT-JOINT'/>
+    <ROUTE fromField='frontRightWheelSpeed' fromNode='CAR-CONTROL-SCRIPT' toField='desiredAngularVelocity2' toNode='FRONT-RIGHT-JOINT'/>
+    <ROUTE fromField='rearLeftWheelSpeed' fromNode='CAR-CONTROL-SCRIPT' toField='desiredAngularVelocity2' toNode='BACK-LEFT-JOINT'/>
+    <ROUTE fromField='rearRightWheelSpeed' fromNode='CAR-CONTROL-SCRIPT' toField='desiredAngularVelocity2' toNode='BACK-RIGHT-JOINT'/>
+    <ROUTE fromField='frontWheelTorque' fromNode='CAR-CONTROL-SCRIPT' toField='maxTorque2' toNode='FRONT-LEFT-JOINT'/>
+    <ROUTE fromField='frontWheelTorque' fromNode='CAR-CONTROL-SCRIPT' toField='maxTorque2' toNode='FRONT-RIGHT-JOINT'/>
+    <ROUTE fromField='rearWheelTorque' fromNode='CAR-CONTROL-SCRIPT' toField='maxTorque2' toNode='BACK-LEFT-JOINT'/>
+    <ROUTE fromField='rearWheelTorque' fromNode='CAR-CONTROL-SCRIPT' toField='maxTorque2' toNode='BACK-RIGHT-JOINT'/>
+    <ROUTE fromField='frontLeftAxleAxis' fromNode='CAR-CONTROL-SCRIPT' toField='axis2' toNode='FRONT-LEFT-JOINT'/>
+    <ROUTE fromField='frontRightAxleAxis' fromNode='CAR-CONTROL-SCRIPT' toField='axis2' toNode='FRONT-RIGHT-JOINT'/>
+    <ROUTE fromField='rearLeftAxleAxis' fromNode='CAR-CONTROL-SCRIPT' toField='axis2' toNode='BACK-LEFT-JOINT'/>
+    <ROUTE fromField='rearRightAxleAxis' fromNode='CAR-CONTROL-SCRIPT' toField='axis2' toNode='BACK-RIGHT-JOINT'/>
+    <ROUTE fromField='frictionForces' fromNode='CAR-CONTROL-SCRIPT' toField='forces' toNode='CAR-BODY'/>
+    <ROUTE fromField='correctedContacts' fromNode='CAR-CONTROL-SCRIPT' toField='set_contacts' toNode='BODY-COLLECTION'/>
+    <ROUTE fromField='correctedChassisOrientation' fromNode='CAR-CONTROL-SCRIPT' toField='orientation' toNode='CAR-BODY'/>
+    <ROUTE fromField='connectJoints' fromNode='CAR-CONTROL-SCRIPT' toField='joints' toNode='BODY-COLLECTION'/>
+    <ROUTE fromField='speed' fromNode='CAR-CONTROL-SCRIPT' toField='speed' toNode='UI-CONTROL-SCRIPT'/>
+    <ROUTE fromField='revs' fromNode='CAR-CONTROL-SCRIPT' toField='revs' toNode='UI-CONTROL-SCRIPT'/>
+    <ROUTE fromField='brakesApplied' fromNode='CAR-CONTROL-SCRIPT' toField='brakesApplied' toNode='UI-CONTROL-SCRIPT'/>
+    <ROUTE fromField='reversing' fromNode='CAR-CONTROL-SCRIPT' toField='reversing' toNode='UI-CONTROL-SCRIPT'/>
+    <ROUTE fromField='brakeLightColor' fromNode='UI-CONTROL-SCRIPT' toField='emissiveColor' toNode='BRAKE-LIGHT-COLOR'/>
+    <ROUTE fromField='reverseLightColor' fromNode='UI-CONTROL-SCRIPT' toField='emissiveColor' toNode='REVERSE-LIGHT-COLOR'/>
+    <ROUTE fromField='speedScale' fromNode='UI-CONTROL-SCRIPT' toField='scale' toNode='SPEED-INDICATOR'/>
+    <ROUTE fromField='speedFraction' fromNode='UI-CONTROL-SCRIPT' toField='set_fraction' toNode='SPEED-COLOR'/>
+    <ROUTE fromField='value_changed' fromNode='SPEED-COLOR' toField='emissiveColor' toNode='SPEED-INDICATOR-COLOR'/>
+    <ROUTE fromField='wheelX' fromNode='WHEEL' toField='set_fraction' toNode='FRONT-LEFT-HINGE-WHEEL-INTERP'/>
+    <ROUTE fromField='value_changed' fromNode='FRONT-LEFT-HINGE-WHEEL-INTERP' toField='rotation' toNode='FRONT-LEFT-WHEEL-TX-DEBUG-HINGE'/>
+    <ROUTE fromField='wheelX' fromNode='WHEEL' toField='set_fraction' toNode='FRONT-RIGHT-HINGE-WHEEL-INTERP'/>
+    <ROUTE fromField='value_changed' fromNode='FRONT-RIGHT-HINGE-WHEEL-INTERP' toField='rotation' toNode='FRONT-RIGHT-WHEEL-TX-DEBUG-HINGE'/>
+    <ROUTE fromField='hinge1Angle' fromNode='FRONT-LEFT-JOINT' toField='set_fraction' toNode='FRONT-LEFT-HINGE-ANGLE-INTERP'/>
+    <ROUTE fromField='value_changed' fromNode='FRONT-LEFT-HINGE-ANGLE-INTERP' toField='rotation' toNode='FRONT-LEFT-WHEEL-TX-DEBUG-HINGE'/>
+    <ROUTE fromField='hinge1Angle' fromNode='FRONT-RIGHT-JOINT' toField='set_fraction' toNode='FRONT-RIGHT-HINGE-ANGLE-INTERP'/>
+    <ROUTE fromField='value_changed' fromNode='FRONT-RIGHT-HINGE-ANGLE-INTERP' toField='rotation' toNode='FRONT-RIGHT-WHEEL-TX-DEBUG-HINGE'/>
+    <ROUTE fromField='maxAngle1' fromNode='FRONT-LEFT-JOINT' toField='set_fraction' toNode='FRONT-LEFT-MAXSTOP-ANGLE-INTERP'/>
+    <ROUTE fromField='value_changed' fromNode='FRONT-LEFT-MAXSTOP-ANGLE-INTERP' toField='rotation' toNode='FRONT-LEFT-WHEEL-TX-DEBUG-MAX'/>
+    <ROUTE fromField='maxAngle1' fromNode='FRONT-RIGHT-JOINT' toField='set_fraction' toNode='FRONT-RIGHT-MAXSTOP-ANGLE-INTERP'/>
+    <ROUTE fromField='value_changed' fromNode='FRONT-RIGHT-MAXSTOP-ANGLE-INTERP' toField='rotation' toNode='FRONT-RIGHT-WHEEL-TX-DEBUG-MAX'/>
+    <ROUTE fromField='minAngle1' fromNode='FRONT-LEFT-JOINT' toField='set_fraction' toNode='FRONT-LEFT-MINSTOP-ANGLE-INTERP'/>
+    <ROUTE fromField='value_changed' fromNode='FRONT-LEFT-MINSTOP-ANGLE-INTERP' toField='rotation' toNode='FRONT-LEFT-WHEEL-TX-DEBUG-MIN'/>
+    <ROUTE fromField='minAngle1' fromNode='FRONT-RIGHT-JOINT' toField='set_fraction' toNode='FRONT-RIGHT-MINSTOP-ANGLE-INTERP'/>
+    <ROUTE fromField='value_changed' fromNode='FRONT-RIGHT-MINSTOP-ANGLE-INTERP' toField='rotation' toNode='FRONT-RIGHT-WHEEL-TX-DEBUG-MIN'/>
+    <ROUTE fromField='position' fromNode='FRONT-LEFT-WHEEL-BODY' toField='translation' toNode='FRONT-LEFT-WHEEL-TX-DEBUG-HINGE'/>
+    <ROUTE fromField='position' fromNode='FRONT-RIGHT-WHEEL-BODY' toField='translation' toNode='FRONT-RIGHT-WHEEL-TX-DEBUG-HINGE'/>
+    <ROUTE fromField='position' fromNode='FRONT-LEFT-WHEEL-BODY' toField='translation' toNode='FRONT-LEFT-WHEEL-TX-DEBUG-MAX'/>
+    <ROUTE fromField='position' fromNode='FRONT-RIGHT-WHEEL-BODY' toField='translation' toNode='FRONT-RIGHT-WHEEL-TX-DEBUG-MAX'/>
+    <ROUTE fromField='position' fromNode='FRONT-LEFT-WHEEL-BODY' toField='translation' toNode='FRONT-LEFT-WHEEL-TX-DEBUG-MIN'/>
+    <ROUTE fromField='position' fromNode='FRONT-RIGHT-WHEEL-BODY' toField='translation' toNode='FRONT-RIGHT-WHEEL-TX-DEBUG-MIN'/>
+    <ROUTE fromField='chassisPosition_reset' fromNode='CAR-CONTROL-SCRIPT' toField='position' toNode='CHASSIS-VIEW'/>
+    <ROUTE fromField='chassisOrientation_reset' fromNode='CAR-CONTROL-SCRIPT' toField='orientation' toNode='CHASSIS-VIEW'/>
+    <ROUTE fromField='position' fromNode='CAR-BODY' toField='carPosition' toNode='CAMERA-CONTROL-SCRIPT'/>
+    <ROUTE fromField='chassisPosition_reset' fromNode='CAR-CONTROL-SCRIPT' toField='resetPosition' toNode='CAMERA-CONTROL-SCRIPT'/>
+    <ROUTE fromField='chassisOrientation_reset' fromNode='CAR-CONTROL-SCRIPT' toField='resetOrientation' toNode='CAMERA-CONTROL-SCRIPT'/>
+    <ROUTE fromField='cameraTranslation' fromNode='CAMERA-CONTROL-SCRIPT' toField='translation' toNode='CAMERA-TX'/>
+    <ROUTE fromField='cameraRotation' fromNode='CAMERA-CONTROL-SCRIPT' toField='rotation' toNode='CAMERA-TX'/>
+  </Scene>
+</X3D>

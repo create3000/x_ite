@@ -1,0 +1,348 @@
+#X3D V3.0 utf8 Titania
+
+META "icon" "../../ui/icons/icon-bw.svg"
+META "title" "about:gears"
+
+EXTERNPROTO Rotor [
+  inputOutput SFBool     enabled
+  inputOutput SFTime     cycleInterval
+  inputOutput SFVec3f    axis
+  inputOutput SFFloat    angle
+  inputOutput SFBool     loop
+  inputOutput SFTime     startTime
+  inputOutput SFTime     pauseTime
+  inputOutput SFTime     resumeTime
+  inputOutput SFTime     stopTime
+  outputOnly  SFBool     isActive
+  outputOnly  SFTime     cycleTime
+  outputOnly  SFRotation rotation_changed
+]
+"Rotor.x3dv"
+
+PROTO Gear [
+  inputOutput    SFFloat teeth 10
+  inputOutput    SFFloat toothDepth 2
+  inputOutput    SFFloat innerRadius 1
+  inputOutput    SFFloat outerRadius 4
+  inputOutput    SFFloat width 1
+  initializeOnly SFFloat creaseAngle 0
+]
+{
+  DEF Gear IndexedFaceSet {
+    creaseAngle IS creaseAngle
+    coord Coordinate { }
+  }
+
+  Script {
+    inputOutput    SFFloat teeth IS teeth
+    inputOutput    SFFloat toothDepth IS toothDepth
+    inputOutput    SFFloat innerRadius IS innerRadius
+    inputOutput    SFFloat outerRadius IS outerRadius
+    inputOutput    SFFloat width IS width
+    initializeOnly SFNode  gear USE Gear
+
+    url "vrmlscript:
+
+function initialize ()
+{
+	eventsProcessed ();
+}
+
+function eventsProcessed ()
+{
+	print ('### Generating gear ...');
+
+	var indices = new MFInt32 ();
+	var points  = new MFVec3f ();
+
+	var cos = Math .cos;
+	var sin = Math .sin;
+
+	// Radien and tooth angle
+
+	var radius0 = innerRadius;
+	var radius1 = outerRadius - toothDepth / 2;
+	var radius2 = outerRadius + toothDepth / 2;
+	var da = 2 * Math .PI / teeth / 4;
+
+	// Front vectors
+
+	var vectorf0 = new SFVec3f (radius0, 0, width * 0.5);
+	var vectorf1 = new SFVec3f (radius1, 0, width * 0.5);
+	var vectorf2 = new SFVec3f (radius2, 0, width * 0.5);
+
+	// Back vectors
+
+	var vectorb0 = new SFVec3f (radius0, 0, -width * 0.5);
+	var vectorb1 = new SFVec3f (radius1, 0, -width * 0.5);
+	var vectorb2 = new SFVec3f (radius2, 0, -width * 0.5);
+
+	// Generate front face indices
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var index = i * 3;
+
+		indices [indices .length] = index;
+		indices [indices .length] = index + 1;
+		indices [indices .length] = index + 2;
+		indices [indices .length] = index + 4;
+		indices [indices .length] = index + 3;
+		indices [indices .length] = -1;
+	}
+
+	// Generate front face points
+
+	for (var i = 0; i < teeth + 1; ++ i)
+	{
+		var angle = i * 2 * Math .PI / teeth;
+
+		points [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorf0);
+		points [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorf1);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorf1);
+	}
+
+	points .length = points .length - 1;
+
+	points [points .length] = new SFVec3f ();
+	points [points .length] = new SFVec3f ();
+	points [points .length] = new SFVec3f ();
+
+
+	// Generate front sides of teeth indices
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var index = i * 4;
+
+		indices [indices .length] = points .length + index;
+		indices [indices .length] = points .length + index + 1;
+		indices [indices .length] = points .length + index + 2;
+		indices [indices .length] = points .length + index + 3;
+		indices [indices .length] = -1;
+	}
+
+	// Generate front sides of teeth points
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var angle = i * 2 * Math .PI / teeth;
+
+		points [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorf1);
+		points [points .length] = new SFRotation (0, 0, 1, angle + da)     .multVec (vectorf2);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 2 * da) .multVec (vectorf2);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorf1);
+	}
+
+
+	// Generate back face indices
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var index = i * 3;
+
+		indices [indices .length] = points .length + index;
+		indices [indices .length] = points .length + index + 3;
+		indices [indices .length] = points .length + index + 4;
+		indices [indices .length] = points .length + index + 2;
+		indices [indices .length] = points .length + index + 1;
+		indices [indices .length] = -1;
+	}
+
+	// Generate back face points
+
+	for (var i = 0; i < teeth + 1; ++ i)
+	{
+		var angle = i * 2 * Math .PI / teeth;
+
+		points [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorb0);
+		points [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorb1);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorb1);
+	}
+
+	points .length = points .length - 1;
+
+
+	// Generate back sides of teeth indices
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var index = i * 4;
+
+		indices [indices .length] = points .length + index;
+		indices [indices .length] = points .length + index + 1;
+		indices [indices .length] = points .length + index + 2;
+		indices [indices .length] = points .length + index + 3;
+		indices [indices .length] = -1;
+	}
+
+	// Generate front sides of teeth points
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var angle = i * 2 * Math .PI / teeth;
+
+		points [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorb1);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 2 * da) .multVec (vectorb2);
+		points [points .length] = new SFRotation (0, 0, 1, angle + da)     .multVec (vectorb2);
+		points [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorb1);
+	}
+
+
+	// Generate outward faces of teeth indices
+
+	for (var i = 0; i < teeth * 4; ++ i)
+	{
+		var index = i * 2;
+
+		indices [indices .length] = points .length + index;
+		indices [indices .length] = points .length + index + 1;
+		indices [indices .length] = points .length + index + 3;
+		indices [indices .length] = points .length + index + 2;
+		indices [indices .length] = -1;
+	}
+
+	indices [indices .length - 3] = points .length + 1;
+	indices [indices .length - 2] = points .length;
+
+	// Generate outward faces of teeth points
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+	   var angle = i * 2 * Math .PI / teeth;
+
+		points [points .length] = new SFRotation (0, 0, 1, angle) .multVec (vectorf1);
+		points [points .length] = new SFRotation (0, 0, 1, angle) .multVec (vectorb1);
+
+		points [points .length] = new SFRotation (0, 0, 1, angle + da) .multVec (vectorf2);
+		points [points .length] = new SFRotation (0, 0, 1, angle + da) .multVec (vectorb2);
+
+		points [points .length] = new SFRotation (0, 0, 1, angle + 2 * da) .multVec (vectorf2);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 2 * da) .multVec (vectorb2);
+
+		points [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorf1);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorb1);
+	}
+
+
+	// Generate inside radius cylinder points
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var index = i * 2;
+
+		indices [indices .length] = points .length + index;
+		indices [indices .length] = points .length + index + 1;
+		indices [indices .length] = points .length + index + 3;
+		indices [indices .length] = points .length + index + 2;
+		indices [indices .length] = -1;
+	}
+
+	indices [indices .length - 3] = points .length + 1;
+	indices [indices .length - 2] = points .length;
+
+	// Generate inside radius cylinder indices
+
+	for (var i = 0; i < teeth + 1; ++ i)
+	{
+		var angle = i * 2 * Math .PI / teeth;
+		points [points .length] = new SFRotation (0, 0, 1, angle) .multVec (vectorb0);
+		points [points .length] = new SFRotation (0, 0, 1, angle) .multVec (vectorf0);
+	}
+
+	print ('### Generating gear done.');
+
+	gear .coord .point   = points;
+	gear .set_coordIndex = indices;
+}
+"
+    directOutput TRUE
+  }
+}
+
+Viewpoint {
+  description "Home"
+  position 0 0 20
+}
+
+DEF RedRotor Rotor {
+  cycleInterval 10
+  loop TRUE
+}
+
+DEF GreenRotor Rotor {
+  cycleInterval 5
+  loop TRUE
+}
+
+DEF BlueRotor Rotor {
+  cycleInterval 5
+  loop TRUE
+}
+
+DEF RedGear_1 Transform {
+  translation -2.59808 -2.39242 0.725499
+  rotation 0.543846 0.826436 0.145723 0.627057
+  children DEF Gear_1 Transform {
+    rotation 0 0 1 0.580734
+    children Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.8 0.1 0
+        }
+      }
+      geometry Gear {
+        teeth 20
+        toothDepth 0.7
+        creaseAngle 0.6
+      }
+    }
+  }
+}
+
+DEF GreenGear_1 Transform {
+  translation 2.68468 -1.34925 -2.14056
+  rotation 0.111593 0.985198 0.130124 3.70575
+  children DEF Gear_2 Transform {
+    rotation 0 0 1 1.16147
+    children Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0 0.8 0.2
+        }
+      }
+      geometry Gear {
+        toothDepth 0.7
+        innerRadius 0.5
+        outerRadius 2
+        width 2
+        creaseAngle 0.7
+      }
+    }
+  }
+}
+
+DEF BlueGear_1 Transform {
+  translation -2.68468 3.41658 2.89301
+  rotation -0.0562884 0.982778 0.176007 3.65356
+  children DEF Gear_3 Transform {
+    rotation 0 0 1 1.16147
+    children Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.2 0.2 1
+        }
+      }
+      geometry Gear {
+        toothDepth 0.7
+        innerRadius 1.3
+        outerRadius 2
+        width 0.5
+      }
+    }
+  }
+}
+
+ROUTE RedRotor.rotation_changed TO Gear_1.set_rotation
+ROUTE GreenRotor.rotation_changed TO Gear_2.set_rotation
+ROUTE BlueRotor.rotation_changed TO Gear_3.set_rotation
