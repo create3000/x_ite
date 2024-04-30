@@ -86,7 +86,7 @@ async function applyChanges (monaco, editor)
       Browser         = X3D .getBrowser (),
       activeViewpoint = Browser .getActiveViewpoint (),
       text            = editor .getValue (),
-      url             = `data:,${text}`;
+      url             = encodeURI (`data:,${text}`);
 
    if (activeViewpoint)
    {
