@@ -163,6 +163,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this ._lifetimeVariation .addInterest ("set_lifetimeVariation__", this);
       this ._particleSize      .addInterest ("set_particleSize__",      this);
       this ._emitter           .addInterest ("set_emitter__",           this);
+      this ._emitter           .addInterest ("set_bbox__",              this);
       this ._physics           .addInterest ("set_physics__",           this);
       this ._colorKey          .addInterest ("set_color__",             this);
       this ._color             .addInterest ("set_colorRamp__",         this);
@@ -224,6 +225,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .set_physics__ ();
       this .set_colorRamp__ ();
       this .set_texCoordRamp__ ();
+      this .set_bbox__ ();
    },
    getShapeKey ()
    {
@@ -255,10 +257,10 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
       {
-         this .bbox .set ();
-
          if (this .boundedPhysicsModelNodes .length)
          {
+            this .bbox .set ();
+
             for (const boundedPhysicsModelNode of this .boundedPhysicsModelNodes)
             {
                const bbox = boundedPhysicsModelNode .getBBox ();
@@ -481,8 +483,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          ?? this .getBrowser () .getDefaultEmitter ();
 
       this .emitterNode ._bbox_changed .addInterest ("set_bbox__", this);
-
-      this .set_bbox__ ();
    },
    set_physics__ ()
    {
@@ -491,8 +491,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          forcePhysicsModelNodes   = this .forcePhysicsModelNodes,
          boundedPhysicsModelNodes = this .boundedPhysicsModelNodes;
 
-      for (let i = 0, length = boundedPhysicsModelNodes .length; i < length; ++ i)
-         boundedPhysicsModelNodes [i] .removeInterest ("set_boundedPhysics__", this);
+      for (const boundedPhysicsModelNode of boundedPhysicsModelNodes)
+      {
+         boundedPhysicsModelNode .removeInterest ("set_boundedPhysics__", this);
+         boundedPhysicsModelNode .removeInterest ("set_bbox__",           this);
+      }
 
       forcePhysicsModelNodes   .length = 0;
       boundedPhysicsModelNodes .length = 0;
@@ -517,7 +520,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                   }
                   case X3DConstants .BoundedPhysicsModel:
                   {
-                     innerNode .addInterest ("set_boundedPhysics__", this);
                      boundedPhysicsModelNodes .push (innerNode);
                      break;
                   }
@@ -530,6 +532,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          }
          catch
          { }
+      }
+
+      for (const boundedPhysicsModelNode of boundedPhysicsModelNodes)
+      {
+         boundedPhysicsModelNode .addInterest ("set_boundedPhysics__", this);
+         boundedPhysicsModelNode .addInterest ("set_bbox__",           this);
       }
 
       this .set_boundedPhysics__ ();
@@ -581,9 +589,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          gl .bindTexture (gl .TEXTURE_2D, this .boundedTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedArraySize, boundedArraySize, 0, gl .RGBA, gl .FLOAT, boundedArray);
       }
-
-      this .set_bbox__ ();
-    },
+   },
    set_colorRamp__ ()
    {
       if (this .colorRampNode)
