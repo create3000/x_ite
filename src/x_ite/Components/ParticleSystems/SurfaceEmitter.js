@@ -123,13 +123,24 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
 
       this .set_surface__ ();
    },
-   getBBox (bbox)
+   getBBox: (function ()
    {
-      if (this .surfaceNode)
-         return bbox .assign (this .surfaceNode .getBBox ());
+      const bboxSize = new Vector3 ();
 
-      return bbox .set ();
-   },
+      return function (bbox, { particleLifetime, lifetimeVariation })
+      {
+         if (!this .surfaceNode)
+            return bbox .set ();
+
+         const
+            maxParticleLifetime = particleLifetime * (1 + lifetimeVariation),
+            maxSpeed            = this ._speed .getValue () * (1 + this ._variation .getValue ()),
+            s                   = maxParticleLifetime * maxSpeed * 2;
+
+         return bbox .set (bboxSize .set (s, s, s), this .surfaceNode .getBBox () .center)
+            .add (this .surfaceNode .getBBox ());
+      };
+   })(),
    set_surface__ ()
    {
       if (this .surfaceNode)

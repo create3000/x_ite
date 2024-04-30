@@ -146,10 +146,21 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
 
       this .set_polylines__ ();
    },
-   getBBox (bbox)
+   getBBox: (function ()
    {
-      return bbox .assign (this .polylinesNode .getBBox ());
-   },
+      const bboxSize = new Vector3 ();
+
+      return function (bbox, { particleLifetime, lifetimeVariation })
+      {
+         const
+            maxParticleLifetime = particleLifetime * (1 + lifetimeVariation),
+            maxSpeed            = this ._speed .getValue () * (1 + this ._variation .getValue ()),
+            s                   = maxParticleLifetime * maxSpeed * 2;
+
+         return bbox .set (bboxSize .set (s, s, s), this .polylinesNode .getBBox () .center)
+            .add (this .polylinesNode .getBBox ());
+      };
+   })(),
    set_direction__: (() =>
    {
       const direction = new Vector3 ();

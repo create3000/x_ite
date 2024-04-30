@@ -173,10 +173,21 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
 
       this .set_geometry__ ();
    },
-   getBBox (bbox)
+   getBBox: (function ()
    {
-      return bbox .assign (this .volumeNode .getBBox ());
-   },
+      const bboxSize = new Vector3 ();
+
+      return function (bbox, { particleLifetime, lifetimeVariation })
+      {
+         const
+            maxParticleLifetime = particleLifetime * (1 + lifetimeVariation),
+            maxSpeed            = this ._speed .getValue () * (1 + this ._variation .getValue ()),
+            s                   = maxParticleLifetime * maxSpeed * 2;
+
+         return bbox .set (bboxSize .set (s, s, s), this .volumeNode .getBBox () .center)
+            .add (this .volumeNode .getBBox ());
+      };
+   })(),
    set_direction__: (() =>
    {
       const direction = new Vector3 ();

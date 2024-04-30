@@ -160,7 +160,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this ._geometryType      .addInterest ("set_texCoord__",          this);
       this ._maxParticles      .addInterest ("set_enabled__",           this);
       this ._particleLifetime  .addInterest ("set_particleLifetime__",  this);
+      this ._particleLifetime  .addInterest ("set_bbox__",              this);
       this ._lifetimeVariation .addInterest ("set_lifetimeVariation__", this);
+      this ._lifetimeVariation .addInterest ("set_bbox__",              this);
       this ._particleSize      .addInterest ("set_particleSize__",      this);
       this ._emitter           .addInterest ("set_emitter__",           this);
       this ._emitter           .addInterest ("set_bbox__",              this);
@@ -271,7 +273,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          }
          else
          {
-            this .emitterNode ?.getBBox (this .bbox);
+            this .emitterNode ?.getBBox (this .bbox, this);
          }
       }
       else

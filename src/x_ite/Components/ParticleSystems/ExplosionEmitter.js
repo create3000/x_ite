@@ -86,10 +86,20 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, X3DParticle
          return vec4 (position, 1.0);
       }`);
    },
-   getBBox (bbox)
+   getBBox: (function ()
    {
-      return bbox .set (Vector3 .One, this ._position .getValue ());
-   },
+      const bboxSize = new Vector3 ();
+
+      return function (bbox, { particleLifetime, lifetimeVariation })
+      {
+         const
+            maxParticleLifetime = particleLifetime * (1 + lifetimeVariation),
+            maxSpeed            = this ._speed .getValue () * (1 + this ._variation .getValue ()),
+            s                   = maxParticleLifetime * maxSpeed * 2;
+
+         return bbox .set (bboxSize .set (s, s, s), this ._position .getValue ());
+      };
+   })(),
    isExplosive ()
    {
       return true;
