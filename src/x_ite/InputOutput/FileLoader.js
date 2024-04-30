@@ -219,7 +219,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
          if (result && result [3] !== "base64")
          {
-            // const mimeType = result [1];
+            // const mimeType = result [1] || "text/plain"";
 
             let data = url .substring (result [0] .length);
 
