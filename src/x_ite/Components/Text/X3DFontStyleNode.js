@@ -54,30 +54,29 @@ import X3DConstants  from "../../Base/X3DConstants.js";
 import URLs          from "../../Browser/Networking/URLs.js";
 
 /*
- * Font paths for default SERIF, SANS and TYPWRITER families.
+ * Font paths for default SERIF, SANS and TYPEWRITER families.
  */
 
-const Fonts =
-{
-   SERIF: {
-      PLAIN:      URLs .getFontsURL ("DroidSerif-Regular.ttf"),
-      ITALIC:     URLs .getFontsURL ("DroidSerif-Italic.ttf"),
-      BOLD:       URLs .getFontsURL ("DroidSerif-Bold.ttf"),
-      BOLDITALIC: URLs .getFontsURL ("DroidSerif-BoldItalic.ttf"),
-   },
-   SANS: {
-      PLAIN:      URLs .getFontsURL ("Ubuntu-R.ttf"),
-      ITALIC:     URLs .getFontsURL ("Ubuntu-RI.ttf"),
-      BOLD:       URLs .getFontsURL ("Ubuntu-B.ttf"),
-      BOLDITALIC: URLs .getFontsURL ("Ubuntu-BI.ttf"),
-   },
-   TYPEWRITER: {
-      PLAIN:      URLs .getFontsURL ("UbuntuMono-R.ttf"),
-      ITALIC:     URLs .getFontsURL ("UbuntuMono-RI.ttf"),
-      BOLD:       URLs .getFontsURL ("UbuntuMono-B.ttf"),
-      BOLDITALIC: URLs .getFontsURL ("UbuntuMono-BI.ttf"),
-   },
-};
+const Fonts = new Map ([
+   ["SERIF", new Map ([
+      ["PLAIN",      URLs .getFontsURL ("DroidSerif-Regular.ttf")],
+      ["ITALIC",     URLs .getFontsURL ("DroidSerif-Italic.ttf")],
+      ["BOLD",       URLs .getFontsURL ("DroidSerif-Bold.ttf")],
+      ["BOLDITALIC", URLs .getFontsURL ("DroidSerif-BoldItalic.ttf")],
+   ])],
+   ["SANS", new Map ([
+      ["PLAIN",      URLs .getFontsURL ("Ubuntu-R.ttf")],
+      ["ITALIC",     URLs .getFontsURL ("Ubuntu-RI.ttf")],
+      ["BOLD",       URLs .getFontsURL ("Ubuntu-B.ttf")],
+      ["BOLDITALIC", URLs .getFontsURL ("Ubuntu-BI.ttf")],
+   ])],
+   ["TYPEWRITER", new Map ([
+      ["PLAIN",      URLs .getFontsURL ("UbuntuMono-R.ttf")],
+      ["ITALIC",     URLs .getFontsURL ("UbuntuMono-RI.ttf")],
+      ["BOLD",       URLs .getFontsURL ("UbuntuMono-B.ttf")],
+      ["BOLDITALIC", URLs .getFontsURL ("UbuntuMono-BI.ttf")],
+   ])],
+]);
 
 function X3DFontStyleNode (executionContext)
 {
@@ -179,10 +178,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
    getDefaultFont (familyName)
    {
-      const family = Fonts [familyName];
+      const family = Fonts .get (familyName);
 
       if (family)
-         return family [this ._style .getValue ()] || family .PLAIN;
+         return family .get (this ._style .getValue ()) ?? family .get ("PLAIN");
 
       return;
    },
