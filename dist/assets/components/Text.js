@@ -1,7 +1,7 @@
 /* X_ITE v9.5.2 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 943:
+/***/ 726:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14712,30 +14712,29 @@ var URLs_default = /*#__PURE__*/__webpack_require__.n(URLs_namespaceObject);
 
 
 /*
- * Font paths for default SERIF, SANS and TYPWRITER families.
+ * Font paths for default SERIF, SANS and TYPEWRITER families.
  */
 
-const Fonts =
-{
-   SERIF: {
-      PLAIN:      URLs_default().getFontsURL ("DroidSerif-Regular.ttf"),
-      ITALIC:     URLs_default().getFontsURL ("DroidSerif-Italic.ttf"),
-      BOLD:       URLs_default().getFontsURL ("DroidSerif-Bold.ttf"),
-      BOLDITALIC: URLs_default().getFontsURL ("DroidSerif-BoldItalic.ttf"),
-   },
-   SANS: {
-      PLAIN:      URLs_default().getFontsURL ("Ubuntu-R.ttf"),
-      ITALIC:     URLs_default().getFontsURL ("Ubuntu-RI.ttf"),
-      BOLD:       URLs_default().getFontsURL ("Ubuntu-B.ttf"),
-      BOLDITALIC: URLs_default().getFontsURL ("Ubuntu-BI.ttf"),
-   },
-   TYPEWRITER: {
-      PLAIN:      URLs_default().getFontsURL ("UbuntuMono-R.ttf"),
-      ITALIC:     URLs_default().getFontsURL ("UbuntuMono-RI.ttf"),
-      BOLD:       URLs_default().getFontsURL ("UbuntuMono-B.ttf"),
-      BOLDITALIC: URLs_default().getFontsURL ("UbuntuMono-BI.ttf"),
-   },
-};
+const Fonts = new Map ([
+   ["SERIF", new Map ([
+      ["PLAIN",      URLs_default().getFontsURL ("DroidSerif-Regular.ttf")],
+      ["ITALIC",     URLs_default().getFontsURL ("DroidSerif-Italic.ttf")],
+      ["BOLD",       URLs_default().getFontsURL ("DroidSerif-Bold.ttf")],
+      ["BOLDITALIC", URLs_default().getFontsURL ("DroidSerif-BoldItalic.ttf")],
+   ])],
+   ["SANS", new Map ([
+      ["PLAIN",      URLs_default().getFontsURL ("Ubuntu-R.ttf")],
+      ["ITALIC",     URLs_default().getFontsURL ("Ubuntu-RI.ttf")],
+      ["BOLD",       URLs_default().getFontsURL ("Ubuntu-B.ttf")],
+      ["BOLDITALIC", URLs_default().getFontsURL ("Ubuntu-BI.ttf")],
+   ])],
+   ["TYPEWRITER", new Map ([
+      ["PLAIN",      URLs_default().getFontsURL ("UbuntuMono-R.ttf")],
+      ["ITALIC",     URLs_default().getFontsURL ("UbuntuMono-RI.ttf")],
+      ["BOLD",       URLs_default().getFontsURL ("UbuntuMono-B.ttf")],
+      ["BOLDITALIC", URLs_default().getFontsURL ("UbuntuMono-BI.ttf")],
+   ])],
+]);
 
 function X3DFontStyleNode (executionContext)
 {
@@ -14837,10 +14836,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (X3DNode_de
    },
    getDefaultFont (familyName)
    {
-      const family = Fonts [familyName];
+      const family = Fonts .get (familyName);
 
       if (family)
-         return family [this ._style .getValue ()] || family .PLAIN;
+         return family .get (this ._style .getValue ()) ?? family .get ("PLAIN");
 
       return;
    },
@@ -14857,7 +14856,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (X3DNode_de
       this .familyStack .length = 0;
 
       for (const familyName of family)
-         this .familyStack .push (this .getDefaultFont (familyName) || familyName);
+         this .familyStack .push (this .getDefaultFont (familyName) ?? familyName);
 
       this .loadNext ();
    },
@@ -15891,7 +15890,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
 
       tessy .gluTessCallback ((libtess_default()).gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
       tessy .gluTessCallback ((libtess_default()).gluEnum .GLU_TESS_COMBINE,      combineCallback);
-      tessy .gluTessProperty ((libtess_default()).gluEnum .GLU_TESS_WINDING_RULE, (libtess_default()).windingRule .GLU_TESS_WINDING_ODD);
+      tessy .gluTessProperty ((libtess_default()).gluEnum .GLU_TESS_WINDING_RULE, (libtess_default()).windingRule .GLU_TESS_WINDING_NONZERO);
       tessy .gluTessNormal (0, 0, 1);
 
       return function (contours, triangles)
@@ -16049,7 +16048,7 @@ Namespace_default().add ("FontStyle", "x_ite/Components/Text/FontStyle", FontSty
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(823);
-/* provided dependency */ var opentype = __webpack_require__(943);
+/* provided dependency */ var opentype = __webpack_require__(726);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
