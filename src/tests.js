@@ -371,6 +371,7 @@ const X_ITE_TESTS = [
    { path: "Text/charcodes.x3d" },
    { path: "Text/date.x3d" },
    { path: "Text/default.x3d" },
+   { path: "Text/Fonts.x3d" },
    { path: "Text/horizontal.x3d" },
    { path: "Text/scrolling-text.x3d" },
    { path: "Text/test.x3d" },
