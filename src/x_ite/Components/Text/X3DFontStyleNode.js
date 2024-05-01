@@ -198,7 +198,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
       this .familyStack .length = 0;
 
       for (const familyName of family)
-         this .familyStack .push (this .getDefaultFont (familyName) || familyName);
+         this .familyStack .push (this .getDefaultFont (familyName) ?? familyName);
 
       this .loadNext ();
    },
