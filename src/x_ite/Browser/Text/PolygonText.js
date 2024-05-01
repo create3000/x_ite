@@ -324,7 +324,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
 
       tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
       tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
-      tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
+      tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_NONZERO);
       tessy .gluTessNormal (0, 0, 1);
 
       return function (contours, triangles)
