@@ -215,7 +215,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       // Data URL
       {
-         const result = url .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
+         const result = url .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
 
          if (result && result [3] !== "base64")
          {
