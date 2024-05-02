@@ -616,6 +616,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          return first;
       }
 
+      #if X3D_NUM_COLORS > 0 || defined (X3D_POLYLINE_EMITTER) || defined (X3D_SURFACE_EMITTER) || defined (X3D_VOLUME_EMITTER)
       void
       interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0, out int index1, out float weight)
       {
@@ -655,7 +656,9 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
             }
          }
       }
+      #endif
 
+      #if X3D_NUM_TEX_COORDS > 0
       void
       interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0)
       {
@@ -679,6 +682,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
                index0 = 0;
          }
       }
+      #endif
 
       #if defined (X3D_SURFACE_EMITTER) || defined (X3D_VOLUME_EMITTER)
       vec3

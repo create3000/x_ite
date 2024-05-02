@@ -1,4 +1,5 @@
 export default /* glsl*/ `
+#if defined (X3D_BOUNDED_VOLUME) || defined (X3D_VOLUME_EMITTER)
 struct Plane3
 {
    vec3  normal;
@@ -100,7 +101,6 @@ sort (inout vec4 points [ARRAY_SIZE], const in int count, const in Plane3 plane)
    }
 }
 
-
 // /* CombSort: sort points and normals in distance to a plane. */
 // void
 // sort (inout vec4 points [ARRAY_SIZE], inout vec3 normals [ARRAY_SIZE], const in int count, const in Plane3 plane)
@@ -159,4 +159,5 @@ min_index (const in vec4 points [ARRAY_SIZE], const in int count, const in float
 
    return index;
 }
+#endif
 `;

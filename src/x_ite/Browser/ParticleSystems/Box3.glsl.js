@@ -1,4 +1,5 @@
 export default /* glsl*/ `
+#if defined (X3D_VOLUME_EMITTER) || defined (X3D_BOUNDED_VOLUME)
 bool
 intersects (const in vec3 min, const in vec3 max, const in Line3 line)
 {
@@ -46,4 +47,5 @@ intersects (const in vec3 min, const in vec3 max, const in Line3 line)
 
    return false;
 }
+#endif
 `;

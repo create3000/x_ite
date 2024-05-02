@@ -1,4 +1,5 @@
 export default /* glsl*/ `
+#if defined (X3D_BOUNDED_VOLUME) || defined (X3D_VOLUME_EMITTER)
 struct Line3 {
    vec3 point;
    vec3 direction;
@@ -11,7 +12,6 @@ struct Line3 {
 // }
 
 /* Line intersect triangle */
-
 bool
 intersects (const in Line3 line, const in vec3 a, const in vec3 b, const in vec3 c, out vec3 r)
 {
@@ -54,4 +54,5 @@ intersects (const in Line3 line, const in vec3 a, const in vec3 b, const in vec3
 
    return true;
 }
+#endif
 `;
