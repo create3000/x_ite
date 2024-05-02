@@ -137,6 +137,9 @@ interpolatorNode .keyValue [2] = new X3D .SFRotation (0, 1, 0, Math .PI);
 interpolatorNode .keyValue [3] = new X3D .SFRotation (0, 1, 0, Math .PI * 3 / 2);
 interpolatorNode .keyValue [4] = new X3D .SFRotation ();
 
+scene .rootNodes .push (timeSensorNode);
+scene .rootNodes .push (interpolatorNode);
+
 // Routes
 
 scene .addRoute (timeSensorNode,   "fraction_changed", interpolatorNode, "set_fraction");
