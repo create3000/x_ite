@@ -76,6 +76,75 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 </x3d-canvas>
 ```
 
+The same scene can also be created using pure JavaScript:
+
+```html
+<script type="module">
+import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";
+
+const
+   browser = X3D .getBrowser (),
+   scene   = browser .currentScene;
+
+// Viewpoint
+
+const viewpointNode = scene .createNode ("Viewpoint");
+
+viewpointNode .set_bind    = true;
+viewpointNode .description = "Initial View";
+viewpointNode .position    = new X3D .SFVec3f (2.869677, 3.854335, 8.769781);
+viewpointNode .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.1238285, 0.5052317);
+
+scene .rootNodes .push (viewpointNode);
+
+// Box
+
+const
+   transformNode  = scene .createNode ("Transform"),
+   shapeNode      = scene .createNode ("Shape"),
+   appearanceNode = scene .createNode ("Appearance"),
+   materialNode   = scene .createNode ("Material"),
+   boxNode        = scene .createNode ("Box");
+
+appearanceNode .material = materialNode;
+
+shapeNode .appearance = appearanceNode;
+shapeNode .geometry   = boxNode;
+
+transformNode .children .push (shapeNode);
+
+scene .rootNodes .push (transformNode);
+scene .addNamedNode ("Box", transformNode);
+
+// Animation
+
+const
+   timeSensorNode   = scene .createNode ("TimeSensor"),
+   interpolatorNode = scene .createNode ("OrientationInterpolator");
+
+timeSensorNode .cycleInterval = 10;
+timeSensorNode .loop          = true;
+
+interpolatorNode .key [0] = 0;
+interpolatorNode .key [1] = 0.25;
+interpolatorNode .key [2] = 0.5;
+interpolatorNode .key [3] = 0.75;
+interpolatorNode .key [4] = 1;
+
+interpolatorNode .keyValue [0] = new X3D .SFRotation ();
+interpolatorNode .keyValue [1] = new X3D .SFRotation (0, 1, 0, Math .PI / 2);
+interpolatorNode .keyValue [2] = new X3D .SFRotation (0, 1, 0, Math .PI);
+interpolatorNode .keyValue [3] = new X3D .SFRotation (0, 1, 0, Math .PI * 3 / 2);
+interpolatorNode .keyValue [4] = new X3D .SFRotation ();
+
+// Routes
+
+scene .addRoute (timeSensorNode,   "fraction_changed", interpolatorNode, "set_fraction");
+scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_rotation");
+</script>
+<x3d-canvas></x3d-canvas>
+```
+
 ## NPM Usage
 
 To install, use the following command:
