@@ -67,10 +67,6 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureCoordinateNode .prototyp
       // Must use new array, because there can be cloned texture coordinate nodes.
       multiArray .push (X3DGeometryNode .createArray ());
    },
-   set1Point (index, point)
-   {
-      this ._point [index] = point;
-   },
    addPoint (index, multiArray)
    {
       this .addPointToChannel (index, multiArray [0]);

@@ -50,7 +50,6 @@ import X3DFieldDefinition             from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray           from "../../Base/FieldDefinitionArray.js";
 import X3DSingleTextureCoordinateNode from "../Texturing/X3DSingleTextureCoordinateNode.js";
 import X3DConstants                   from "../../Base/X3DConstants.js";
-import Vector4                        from "../../../standard/Math/Numbers/Vector4.js";
 
 function TextureCoordinate4D (executionContext)
 {
@@ -96,6 +95,10 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate4D .prototype, X3DSingl
       {
          return result .set (0, 0, 0, 1);
       }
+   },
+   set1Point (index, point)
+   {
+      this ._point [index] = point;
    },
    addPointToChannel (index, array)
    {
