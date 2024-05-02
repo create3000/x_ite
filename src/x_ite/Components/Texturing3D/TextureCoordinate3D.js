@@ -101,7 +101,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, X3DSingl
    {
       const point = new Vector3 ();
 
-      return (index, { x, y, z, w })
+      return function (index, { x, y, z, w })
       {
          this ._point [index] = point .set (x, y, z) .divide (w);
       };
