@@ -114,6 +114,8 @@ shapeNode .geometry   = boxNode;
 transformNode .children .push (shapeNode);
 
 scene .rootNodes .push (transformNode);
+
+// Give the node a name if you wish.
 scene .addNamedNode ("Box", transformNode);
 
 // Animation
