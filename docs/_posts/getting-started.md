@@ -34,7 +34,7 @@ If you ever get into trouble, please [report a bug](/x_ite/report-a-bug/). If yo
 
 Yeah, tell me!
 
-X_ITE needs your support, with a small contribution you can make a big difference. To support us, have a look at [https://patreon.com/X_ITE](https://patreon.com/X_ITE).
+X_ITE needs your support, with a small contribution you can make a big difference. To support us, have a look at [https://patreon.com/X_ITE](https://patreon.com/X_ITE){:target="_blank"}.
 
 ## X3D Examples
 

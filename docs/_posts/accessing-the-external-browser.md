@@ -379,6 +379,6 @@ function spin ()
 
 The init function is called when the scene is loaded and installs a field callback that is called when the models are clicked. The various callback functions first obtains the different nodes and then alter a field of the nodes.
 
-### The X3D
+### The HTML and X3D
 
-The scene defines different named nodes with the »DEF« attribute, which can be accessed later. Download [adrenaline.x3d](https://create3000.github.io/media/x_ite/external-browser/adrenaline.x3d).
+The scene defines different named nodes with the »DEF« attribute, which can be accessed later. Download [adrenaline.html](https://create3000.github.io/media/x_ite/external-browser/adrenaline.html){:target="_blank"} and [adrenaline.x3d](https://create3000.github.io/media/x_ite/external-browser/adrenaline.x3d).
