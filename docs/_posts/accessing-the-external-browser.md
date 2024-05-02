@@ -12,78 +12,112 @@ X_ITE is designed to provide access to the internal X3D browser and its containe
 
 If you want combine DOM access with X3D access in your JavaScript functions then you probably want to access the external browser object if you want include an external JavaScript file in your HTML page and you don't wanna do it directly a in Script node.
 
-## Introduction
+## Usage
 
-There is the X3D object which is globally available, it expects one function handler that is called when the browsers (\<x3d-canvas\> elements) are ready, and a second function handler, that is called if an error occurred. These two arguments are optional. The return value of the X3D function is a Promise, which can be used instead of the arguments.
-
-```js
-Promise<void> X3D ([callback[, errorCallback]]);
-```
-
-The callback function is called when the browser is available. The callback function takes no arguments. The error callback is called if an error occurred, it has one argument *error.*
-
-```js
-function callback ()
-function errorCallback (error)
-```
-
-The external browser can be accessed by calling the `X3D .getBrowser (selector)` function, *selector* can be any CSS selector, if you have only one \<x3d-canvas\> element on your page, you can omit the selector argument:
+This script initializes an X3D canvas within an HTML page, configuring it to contain a scene, a camera and a geometric cube with default material properties. It then animates the rotation of the cube within the scene, ensuring that the camera captures the dynamic action.
 
 ```html
-<script>
-
-X3D (function ()
-{
-  // Now, X3D is ready. We can get access to the browser object.
-
-  const Browser = X3D .getBrowser ();
-
-  Browser .loadURL (new X3D .MFNode ("/path/to/your/world.x3dv"),
-                    new X3D .MFNode ());
-});
-
-</script>
+<script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+<x3d-canvas>
+  <X3D profile='Interchange' version='4.0'>
+    <head>
+      <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>
+    </head>
+    <Scene>
+      <Viewpoint
+          description='Initial View'
+          position='2.869677 3.854335 8.769781'
+          orientation='-0.7765887 0.6177187 0.1238285 28.9476440862198'></Viewpoint>
+      <Transform DEF='Box'
+          rotation='0 1 0 0'>
+        <Shape>
+          <Appearance>
+            <Material></Material>
+          </Appearance>
+          <Box></Box>
+        </Shape>
+      </Transform>
+      <TimeSensor DEF='Timer'
+          cycleInterval='10'
+          loop='true'></TimeSensor>
+      <OrientationInterpolator DEF='Rotor'
+          key='0, 0.25, 0.5, 0.75, 1'
+          keyValue='0 1 0 0, 0 1 0 90, 0 1 0 180, 0 1 0 270, 0 1 0 0'></OrientationInterpolator>
+      <ROUTE fromNode='Timer' fromField='fraction_changed' toNode='Rotor' toField='set_fraction'></ROUTE>
+      <ROUTE fromNode='Rotor' fromField='value_changed' toNode='Box' toField='set_rotation'></ROUTE>
+    </Scene>
+  </X3D>
+</x3d-canvas>
 ```
 
-If something went wrong, the error callback is called:
+The same scene can also be created using pure JavaScript:
 
 ```html
-<script>
+<script type="module">
+import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";
 
-X3D (function ()
-{
-  const
-    Browser      = X3D .getBrowser (),                         // X3DBrowser object
-    currentScene = Browser .currentScene,                      // X3DScene object
-    header       = currentScene .getNamedNode ("HeaderText");  // Text node
+const
+   browser = X3D .getBrowser (),
+   scene   = browser .currentScene;
 
-  // Set string field of Text node to new value.
-  header .string [0] = "Welcome to X_ITE!";
+// Viewpoint
 
-  ...
-},
-function (error)
-{
-  // Error callback, no browser.
-  console .error (error);
-});
+const viewpointNode = scene .createNode ("Viewpoint");
 
+viewpointNode .set_bind    = true;
+viewpointNode .description = "Initial View";
+viewpointNode .position    = new X3D .SFVec3f (2.869677, 3.854335, 8.769781);
+viewpointNode .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.1238285, 0.5052317);
+
+scene .rootNodes .push (viewpointNode);
+
+// Box
+
+const
+   transformNode  = scene .createNode ("Transform"),
+   shapeNode      = scene .createNode ("Shape"),
+   appearanceNode = scene .createNode ("Appearance"),
+   materialNode   = scene .createNode ("Material"),
+   boxNode        = scene .createNode ("Box");
+
+appearanceNode .material = materialNode;
+
+shapeNode .appearance = appearanceNode;
+shapeNode .geometry   = boxNode;
+
+transformNode .children .push (shapeNode);
+
+scene .rootNodes .push (transformNode);
+scene .addNamedNode ("Box", transformNode);
+
+// Animation
+
+const
+   timeSensorNode   = scene .createNode ("TimeSensor"),
+   interpolatorNode = scene .createNode ("OrientationInterpolator");
+
+timeSensorNode .cycleInterval = 10;
+timeSensorNode .loop          = true;
+
+interpolatorNode .key [0] = 0;
+interpolatorNode .key [1] = 0.25;
+interpolatorNode .key [2] = 0.5;
+interpolatorNode .key [3] = 0.75;
+interpolatorNode .key [4] = 1;
+
+interpolatorNode .keyValue [0] = new X3D .SFRotation ();
+interpolatorNode .keyValue [1] = new X3D .SFRotation (0, 1, 0, Math .PI / 2);
+interpolatorNode .keyValue [2] = new X3D .SFRotation (0, 1, 0, Math .PI);
+interpolatorNode .keyValue [3] = new X3D .SFRotation (0, 1, 0, Math .PI * 3 / 2);
+interpolatorNode .keyValue [4] = new X3D .SFRotation ();
+
+// Routes
+
+scene .addRoute (timeSensorNode,   "fraction_changed", interpolatorNode, "set_fraction");
+scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_rotation");
 </script>
-```
-
-### Async use of X3D object
-
-```js
-async function foo (url)
-{
-  await X3D ();
-
-  const Browser = X3D .getBrowser ();
-
-  await Browser .loadURL (new MFString (url));
-
-  console .log (`Done loading scene '${Browser .currentScene .worldURL}'.`);
-}
+<!-- x3d-canvas element comes here: -->
+<x3d-canvas></x3d-canvas>
 ```
 
 ## X3D Object

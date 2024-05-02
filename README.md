@@ -142,6 +142,7 @@ interpolatorNode .keyValue [4] = new X3D .SFRotation ();
 scene .addRoute (timeSensorNode,   "fraction_changed", interpolatorNode, "set_fraction");
 scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_rotation");
 </script>
+<!-- x3d-canvas element comes here: -->
 <x3d-canvas></x3d-canvas>
 ```
 
