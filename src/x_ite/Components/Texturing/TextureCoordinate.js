@@ -82,6 +82,21 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate .prototype, X3DSingleT
    {
       return this .length;
    },
+   get1Point (index, result)
+   {
+      if (index < this .length)
+      {
+         const point = this .point;
+
+         index *= 2;
+
+         return result .set (point [index], point [index + 1], 0, 1);
+      }
+      else
+      {
+         return result .set (0, 0, 0, 1);
+      }
+   },
    addPointToChannel (index, array)
    {
       if (index >= 0 && this .length)
