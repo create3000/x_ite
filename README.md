@@ -29,10 +29,10 @@ GitCDN serves raw files directly from GitHub with proper Content-Type headers an
 If you are a developer or you always wanna be up to date:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/x_ite/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite/dist/x_ite.min.mjs";
 </script>
 ```
 
@@ -45,7 +45,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 ### Declarative Syntax
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/x_ite/dist/x_ite.min.js"></script>
 <x3d-canvas>
   <X3D profile='Interchange' version='4.0'>
     <head>
@@ -84,7 +84,7 @@ The same scene can also be created using pure JavaScript:
 
 ```html
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite/dist/x_ite.min.mjs";
 
 const
    browser = X3D .getBrowser (),
