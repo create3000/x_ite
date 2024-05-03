@@ -583,21 +583,6 @@ CDNs can offer a performance benefit by hosting X_ITE on servers spread across t
 
 Open Source CDN, free, fast, and reliable.
 
-#### Snipped
-
-You can always replace »latest« by the version number you prefer.
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
-<!-- or as ES module for use in scripts -->
-<script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
-</script>
-```
-
->**Info:** It is no longer necessary to include the CSS file.
-{: .prompt-info }
-
 #### For Production
 
 If you use X_ITE for production and everything works well, you should use a fixed version. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions){:target="_blank"}.
@@ -607,6 +592,21 @@ If you use X_ITE for production and everything works well, you should use a fixe
 <!-- or as ES module for use in scripts -->
 <script type="module">
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_ite.min.mjs";
+</script>
+```
+
+>**Info:** It is no longer necessary to include the CSS file.
+{: .prompt-info }
+
+#### Latest Stable Version
+
+You can always replace »latest« by the version number you prefer.
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
+<!-- or as ES module for use in scripts -->
+<script type="module">
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
 </script>
 ```
 
