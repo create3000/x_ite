@@ -1,7 +1,7 @@
 /* X_ITE v9.5.2 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 938:
+/***/ 461:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 524:
+/***/ 383:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 536:
+/***/ 575:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 956:
+/***/ 607:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -7341,10 +7341,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(536);
-/* provided dependency */ var JpegImage = __webpack_require__(956);
-/* provided dependency */ var CharLS = __webpack_require__(938);
-/* provided dependency */ var OpenJPEG = __webpack_require__(524);
+/* provided dependency */ var dicomParser = __webpack_require__(575);
+/* provided dependency */ var JpegImage = __webpack_require__(607);
+/* provided dependency */ var CharLS = __webpack_require__(461);
+/* provided dependency */ var OpenJPEG = __webpack_require__(383);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9154,8 +9154,9 @@ Namespace_default().add ("PixelTexture3D", "x_ite/Components/Texturing3D/PixelTe
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode\")"
 const X3DSingleTextureCoordinateNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.5.2")] .require ("x_ite/Components/Texturing/X3DSingleTextureCoordinateNode");
 var X3DSingleTextureCoordinateNode_default = /*#__PURE__*/__webpack_require__.n(X3DSingleTextureCoordinateNode_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector4\")"
-const Vector4_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.5.2")] .require ("standard/Math/Numbers/Vector4");
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.5.2")] .require ("standard/Math/Numbers/Vector3");
+var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/TextureCoordinate3D.js
 /*******************************************************************************
  *
@@ -9241,6 +9242,30 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, (X3DSing
    {
       return this .length;
    },
+   get1Point (index, result)
+   {
+      if (index < this .length)
+      {
+         const point = this .point;
+
+         index *= 3;
+
+         return result .set (point [index], point [index + 1], point [index + 2], 1);
+      }
+      else
+      {
+         return result .set (0, 0, 0, 1);
+      }
+   },
+   set1Point: (function ()
+   {
+      const point = new (Vector3_default()) ();
+
+      return function (index, { x, y, z, w })
+      {
+         this ._point [index] = point .set (x, y, z) .divide (w);
+      };
+   })(),
    addPointToChannel (index, array)
    {
       if (index >= 0 && this .length)
@@ -9361,7 +9386,6 @@ Namespace_default().add ("TextureCoordinate3D", "x_ite/Components/Texturing3D/Te
 
 
 
-
 function TextureCoordinate4D (executionContext)
 {
    X3DSingleTextureCoordinateNode_default().call (this, executionContext);
@@ -9391,6 +9415,25 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate4D .prototype, (X3DSing
    getSize ()
    {
       return this .length;
+   },
+   get1Point (index, result)
+   {
+      if (index < this .length)
+      {
+         const point = this .point;
+
+         index *= 4;
+
+         return result .set (point [index], point [index + 1], point [index + 2], point [index + 3]);
+      }
+      else
+      {
+         return result .set (0, 0, 0, 1);
+      }
+   },
+   set1Point (index, point)
+   {
+      this ._point [index] = point;
    },
    addPointToChannel (index, array)
    {
@@ -9461,9 +9504,6 @@ Namespace_default().add ("TextureCoordinate4D", "x_ite/Components/Texturing3D/Te
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Texturing/X3DSingleTextureTransformNode\")"
 const X3DSingleTextureTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.5.2")] .require ("x_ite/Components/Texturing/X3DSingleTextureTransformNode");
 var X3DSingleTextureTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DSingleTextureTransformNode_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.5.2")] .require ("standard/Math/Numbers/Vector3");
-var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
 const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.5.2")] .require ("standard/Math/Numbers/Rotation4");
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
