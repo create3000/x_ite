@@ -579,25 +579,6 @@ There is a ZIP archive available to locally install X_ITE on your server. Compre
 
 CDNs can offer a performance benefit by hosting X_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X_ITE from the same CDN, it won't have to be re-downloaded. To use the X_ITE CDN, just reference the CSS and JavaScript file in the script element directly from the GitHub CDN or jsDelivr CDN domain.
 
-### GitHub CDN
-
-GitCDN serves raw files directly from GitHub with proper Content-Type headers and a super fast CDN!
-
-#### Latest Stable Version
-
-If you are a developer or you always wanna be up to date:
-
-```html
-<script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
-<!-- or as ES module for use in scripts -->
-<script type="module">
-import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";
-</script>
-```
-
->**Info:** It is no longer necessary to include the CSS file.
-{: .prompt-info }
-
 ### jsDelivr CDN
 
 Open Source CDN, free, fast, and reliable.
@@ -614,6 +595,9 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
 </script>
 ```
 
+>**Info:** It is no longer necessary to include the CSS file.
+{: .prompt-info }
+
 #### For Production
 
 If you use X_ITE for production and everything works well, you should use a fixed version. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions){:target="_blank"}.
@@ -623,6 +607,22 @@ If you use X_ITE for production and everything works well, you should use a fixe
 <!-- or as ES module for use in scripts -->
 <script type="module">
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_ite.min.mjs";
+</script>
+```
+
+### GitHub CDN
+
+GitCDN serves raw files directly from GitHub with proper Content-Type headers and a super fast CDN!
+
+#### Latest Stable Version
+
+If you are a developer or you always wanna be up to date:
+
+```html
+<script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+<!-- or as ES module for use in scripts -->
+<script type="module">
+import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";
 </script>
 ```
 
@@ -649,7 +649,7 @@ The HTML5 page is quite easy to create, the HTML5 code below shows you the minim
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
     <style>
 x3d-canvas {
   width: 768px;
