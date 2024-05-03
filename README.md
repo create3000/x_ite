@@ -22,7 +22,7 @@ X_ITE is a robust X3D JavaScript WebGL browser that is compatible with all major
 
 ## jsDelivr CDN
 
-Open Source CDN, free, fast, and reliable.
+jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
 ### Latest Stable Version
 

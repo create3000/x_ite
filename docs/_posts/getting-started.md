@@ -581,7 +581,7 @@ CDNs can offer a performance benefit by hosting X_ITE on servers spread across t
 
 ### jsDelivr CDN
 
-Open Source CDN, free, fast, and reliable.
+jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
 #### For Production
 
