@@ -600,7 +600,7 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_it
 
 #### Latest Stable Version
 
-You can always replace »latest« by the version number you prefer.
+You can opt for the »latest« tag to ensure you always have the most current version, instead of using a fixed version number.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
