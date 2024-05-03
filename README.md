@@ -42,6 +42,8 @@ import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";
 
 This script initializes an X3D canvas within an HTML page, configuring it to contain a scene, a camera and a geometric cube with default material properties. It then animates the rotation of the cube within the scene, ensuring that the camera captures the dynamic action.
 
+### Declarative Syntax
+
 ```html
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
 <x3d-canvas>
@@ -75,6 +77,8 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
   </X3D>
 </x3d-canvas>
 ```
+
+### Pure JavaScript
 
 The same scene can also be created using pure JavaScript:
 
