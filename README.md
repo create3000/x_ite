@@ -119,7 +119,7 @@ transformNode .children .push (shapeNode);
 
 scene .rootNodes .push (transformNode);
 
-// Give the node a name if you wish.
+// Give the node a name if you like.
 scene .addNamedNode ("Box", transformNode);
 
 // Animation
