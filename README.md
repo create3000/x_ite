@@ -137,8 +137,7 @@ for (let i = 0; i < 5; ++ i)
   interpolatorNode .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI * i / 2);
 }
 
-scene .rootNodes .push (timeSensorNode);
-scene .rootNodes .push (interpolatorNode);
+scene .rootNodes .push (timeSensorNode, interpolatorNode);
 
 // Routes
 
