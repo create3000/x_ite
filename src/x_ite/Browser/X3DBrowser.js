@@ -475,7 +475,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       return scene .rootNodes;
    },
-   createX3DFromString: async function (x3dSyntax)
+   async createX3DFromString (x3dSyntax)
    {
       x3dSyntax = String (x3dSyntax);
 
@@ -738,11 +738,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       for (const callback of this [_browserCallbacks] .get (event) .values ())
          callback (event);
    },
-   importDocument (dom)
+   async importDocument (dom)
    {
       const
          currentScene = this .currentScene,
-         scene        = this .createScene (),
+         scene        = new X3DScene (this),
          external     = this .isExternal ();
 
       if (!external)
@@ -752,13 +752,17 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       parser .setInput (dom)
 
-      return new Promise (parser .parseIntoScene .bind (parser));
+      await new Promise (parser .parseIntoScene .bind (parser));
+
+      scene .isLive (true);
+
+      return scene;
    },
-   importJS (json)
+   async importJS (json)
    {
       const
          currentScene = this .currentScene,
-         scene        = this .createScene (),
+         scene        = new X3DScene (this),
          external     = this .isExternal ();
 
       if (!external)
@@ -768,7 +772,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       parser .setInput (json);
 
-      return new Promise (parser .parseIntoScene .bind (parser));
+      await new Promise (parser .parseIntoScene .bind (parser));
+
+      scene .isLive (true);
+
+      return scene;
    },
    getBrowserProperty (name)
    {
