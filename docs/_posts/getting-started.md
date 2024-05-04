@@ -640,7 +640,7 @@ Maybe you are curious now [how to use X_ITE with Electron](/x_ite/how-to-use-x-i
 
 ## Embedding X_ITE within a Web Page
 
-To display your X3D scene in a HTML5 page, first save your scene as X3D XML Encoded file, X3D JSON Encoded file, or as X3D Classic Encoded file, i.e. create a file with the extension .x3d, .x3dj, .x3dv, or .wrl.
+To display your X3D scene in a HTML5 page, you must first obtain a file in one of the [supported formats](#supported-file-formats).
 
 The HTML5 page is quite easy to create, the HTML5 code below shows you the minimum requirements. The path to the X3D scene is specified in the *src* attribute of the \<x3d-canvas\> element.
 
