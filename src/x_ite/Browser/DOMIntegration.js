@@ -25,7 +25,6 @@
 
 import XMLParser    from "../Parser/XMLParser.js"
 import X3DConstants from "../Base/X3DConstants.js";
-import X3DScene     from "../Execution/X3DScene.js";
 import SFNodeCache  from "../Fields/SFNodeCache.js";
 
 class DOMIntegration
@@ -66,7 +65,7 @@ class DOMIntegration
 
             // Now also attached node property to each node element.
 
-            const scene = new X3DScene (browser);
+            const scene = browser .createScene ();
 
             this .parser = new XMLParser (scene);
 

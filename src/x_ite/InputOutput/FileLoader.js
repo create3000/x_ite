@@ -112,7 +112,6 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          if (!(this .node instanceof X3DWorld))
             scene .setExecutionContext (this .executionContext);
 
-         scene .setLive (false);
          scene .setWorldURL (new URL (worldURL, this .getBaseURL ()) .href);
 
          if (resolve)

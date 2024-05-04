@@ -214,6 +214,7 @@ Object .assign (X3DNetworkingContext .prototype,
       // Inline node's empty scene.
 
       this [_defaultScene] = this .createScene ();
+      this [_defaultScene] .setLive (true);
 
       this .getDefaultScene = function () { return this [_defaultScene]; };
 
