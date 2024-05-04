@@ -745,14 +745,14 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          scene        = new X3DScene (this),
          external     = this .isExternal ();
 
-      if (!external)
-         scene .setExecutionContext (currentScene);
-
       const parser = new XMLParser (scene);
 
       parser .setInput (dom)
 
       await new Promise (parser .parseIntoScene .bind (parser));
+
+      if (!external)
+         scene .setExecutionContext (currentScene);
 
       scene .isLive (true);
 
@@ -765,14 +765,14 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          scene        = new X3DScene (this),
          external     = this .isExternal ();
 
-      if (!external)
-         scene .setExecutionContext (currentScene);
-
       const parser = new JSONParser (scene);
 
       parser .setInput (json);
 
       await new Promise (parser .parseIntoScene .bind (parser));
+
+      if (!external)
+         scene .setExecutionContext (currentScene);
 
       scene .isLive (true);
 
