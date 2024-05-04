@@ -616,7 +616,7 @@ GitCDN serves raw files directly from GitHub with proper Content-Type headers an
 
 #### Latest Stable Version
 
-If you are a developer or you always wanna be up to date:
+By making sure you have the latest stable version, you can take advantage of the latest features, enhancements and bug fixes to keep your work at the highest level of performance and functionality.
 
 ```html
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
