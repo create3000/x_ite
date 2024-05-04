@@ -77,8 +77,6 @@ Replace the current world with this new scene that has been loaded or constructe
 
 The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 
-When using this and other functions that return an X3DScene from the external browser (not inside a [Script](/x_ite/components/scripting/script/) node), it may be necessary to call `scene .setLive (true)`. This will start animations and activate sensors.
-
 #### void **createX3DFromURL** (*MFString url, Node node, String event*)
 
 Parse the passed URL into an X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.

@@ -385,6 +385,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       }
 
       scene .setup ();
+      scene .setLive (true);
 
       return scene;
    },
@@ -468,10 +469,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          scene        = fileLoader .createX3DFromString (worldURL, `#VRML V2.0 utf8\n\n${vrmlSyntax}`);
 
       if (!external)
-      {
          scene .setExecutionContext (currentScene);
-         scene .setLive (true);
-      }
+
+      scene .setLive (true);
 
       return scene .rootNodes;
    },
@@ -491,10 +491,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       });
 
       if (!external)
-      {
          scene .setExecutionContext (currentScene);
-         scene .setLive (true);
-      }
+
+      scene .setLive (true);
 
       return scene;
    },
@@ -533,10 +532,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             // Handle getLive for script scenes here:
 
             if (!external)
-            {
                scene .setExecutionContext (currentScene);
-               scene .setLive (true);
-            }
+
+            scene .setLive (true);
 
             // Wait until scene is completely loaded, scene ._loadCount must be 0.
             field .setValue (scene .rootNodes);
@@ -569,10 +567,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             if (scene)
             {
                if (!external)
-               {
                   scene .setExecutionContext (currentScene);
-                  scene .setLive (true);
-               }
+
+               scene .setLive (true);
 
                resolve (scene);
             }
@@ -749,10 +746,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          external     = this .isExternal ();
 
       if (!external)
-      {
          scene .setExecutionContext (currentScene);
-         scene .setLive (true);
-      }
 
       const parser = new XMLParser (scene);
 
@@ -768,10 +762,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          external     = this .isExternal ();
 
       if (!external)
-      {
          scene .setExecutionContext (currentScene);
-         scene .setLive (true);
-      }
 
       const parser = new JSONParser (scene);
 
