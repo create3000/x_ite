@@ -28,6 +28,7 @@
 		"docs-nodes": "perl build/docs/nodes.pl",
 		"docs-reference": "node build/docs/reference.js",
 		"glTF-samples": "perl build/docs/glTF-samples.pl",
+		"purge-camo": "perl build/docs/purge-camo.js",
 		"release-docs": "sh build/bin/release-docs.sh",
 		"make-tests": "perl build/bin/tests.pl"
 	},
