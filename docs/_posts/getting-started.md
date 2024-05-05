@@ -573,11 +573,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 
 There is a ZIP archive available to locally install X_ITE on your server. Compressed and uncompressed copies of X_ITE files are available. The uncompressed file (x_ite.js) is best used during development or debugging; the compressed file (x_ite.min.js) saves bandwidth and improves performance in production.
 
-[Download X_ITE ZIP archive](https://create3000.github.io/code/x_ite/latest/x_ite.zip)
+[Download X_ITE ZIP archive](https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.zip)
 
 ### Using X_ITE with a CDN
 
-CDNs can offer a performance benefit by hosting X_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X_ITE from the same CDN, it won't have to be re-downloaded. To use the X_ITE CDN, just reference the CSS and JavaScript file in the script element directly from the GitHub CDN or jsDelivr CDN domain.
+CDNs can offer a performance benefit by hosting X_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X_ITE from the same CDN, it won't have to be re-downloaded. To use the X_ITE CDN, just reference the JavaScript file in the script element directly from the jsDelivr CDN or GitHub CDN domain.
 
 ### jsDelivr CDN
 
