@@ -1,3 +1,5 @@
+X_ITE .then (X3D =>
+{
 $("table.examples a") .on ("click", function ()
 {
    let
@@ -155,3 +157,4 @@ function updateToolbar (toolbar, canvas)
       })
       .appendTo (toolbar);
 }
+});
