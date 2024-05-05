@@ -26,7 +26,7 @@ jsDelivr is an open-source content delivery network (CDN) renowned for its no-co
 
 ### Latest Stable Version
 
-If you are a developer or you always wanna be up to date:
+You can opt for the »latest« tag to ensure you always have the most current version, instead of using a fixed version number. But consider to use a fixed version if you use X_ITE for production.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
@@ -37,8 +37,6 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
 ```
 
 >**Info:** It is no longer necessary to include the CSS file.
-
-But consider to use a fixed version if you use X_ITE for production.
 
 ## Usage
 
