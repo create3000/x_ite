@@ -569,11 +569,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 >**Note:** The VolumeRendering examples are only working if your browser supports WebGL 2, otherwise the examples left black.
 {: .prompt-info }
 
-## Download X_ITE v{{ site.version }}
+## Download X_ITE v{{ site.x_ite_latest_version }}
 
 There is a ZIP archive available to locally install X_ITE on your server. Compressed and uncompressed copies of X_ITE files are available. The uncompressed file (x_ite.js) is best used during development or debugging; the compressed file (x_ite.min.js) saves bandwidth and improves performance in production.
 
-[Download X_ITE ZIP archive](https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.zip)
+[Download X_ITE ZIP archive](https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.zip)
 
 ### Using X_ITE with a CDN
 
@@ -588,10 +588,10 @@ jsDelivr is an open-source content delivery network (CDN) renowned for its no-co
 If you use X_ITE for production and everything works well, you should use a fixed version. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions){:target="_blank"}.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_ite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
 </script>
 ```
 

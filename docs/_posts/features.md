@@ -17,7 +17,7 @@ Runs completely standalone, ie. there are no other library dependencies. You jus
 Competitive performance for most frequently used functions and nodes. All function within X_ITE are optimized to give your the best performance that JavaScript can offer.
 
 ![Terser Logo](/assets/img/features/terser.png){: .left }
-The X_ITE package is optimized in size with Terser to achieve the smallest size we can reach. **X_ITE core module has only {{ site.size }}kB in size minified and compressed**, all other modules are loaded on demand.
+The X_ITE package is optimized in size with Terser to achieve the smallest size we can reach. **X_ITE core module has only {{ site.x_ite_compressed_size }}kB in size minified and compressed**, all other modules are loaded on demand.
 
 X_ITE is designed for optimal performance with event driven programming. The flow of the program is determined by events such as user actions (mouse clicks, key presses), sensor outputs, or messages from other scripts.
 

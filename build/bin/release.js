@@ -40,8 +40,8 @@ function docs (version)
 
 	let config = sh (`cat 'docs/_config.yml'`);
 
-	config = config .replace (/\bversion:\s*[\d\.]+/sg, `version: ${version}`);
-	config = config .replace (/\bsize:\s*[\d\.]+/sg, `size: ${contentLength}`);
+	config = config .replace (/\x_ite_latest_version:\s*[\d\.]+/sg, `x_ite_latest_version: ${version}`);
+	config = config .replace (/\x_ite_compressed_size:\s*[\d\.]+/sg, `x_ite_compressed_size: ${contentLength}`);
 
 	fs .writeFileSync ("docs/_config.yml", config);
 }
