@@ -1,9 +1,13 @@
-if (typeof X3D === "undefined")
+if (typeof X3D !== "undefined")
 {
-   const $ = jQuery;
+   window .X_ITE = Promise .resolve (X3D);
+}
+else
+{
+   window .X_ITE = new Promise (async resolve =>
+   {
+      const { default: X3D } = await import ("https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs");
 
-   console .log ("Using fallback URL.");
-
-   $("head") .append ($("<script></script>")
-      .attr ("src", "https://create3000.github.io/code/x_ite/latest/x_ite.min.js"));
+      resolve (X3D);
+   });
 }

@@ -1,3 +1,5 @@
+X_ITE .then (X3D =>
+{
 const $ = jQuery;
 
 $("#drop-zone") .on ("dragover", event =>
@@ -163,3 +165,4 @@ function download (mimeType, name, x3dSyntax)
 
    return false;
 }
+});

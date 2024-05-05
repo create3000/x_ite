@@ -1,3 +1,5 @@
+X_ITE .then (X3D =>
+{
 const $ = jQuery;
 
 const box = `<?xml version="1.0" encoding="UTF-8"?>
@@ -387,3 +389,4 @@ function addVRMLEncoding (monaco)
 
    console .info (X3D .getBrowser () .getWelcomeMessage ());
 })();
+});
