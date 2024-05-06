@@ -73,11 +73,28 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    {
       return this .constructor .specificationRange;
    },
+   create (executionContext = this [_executionContext])
+   {
+      return new (this .constructor) (executionContext);
+   },
    copy (instance)
    {
       if (!instance || instance .getType () .includes (X3DConstants .X3DExecutionContext))
       {
-         return X3DBaseNode .prototype .copy .call (this, instance);
+         const copy = this .create (instance);
+
+         for (const field of this .getPredefinedFields ())
+            copy .getPredefinedFields () .get (field .getName ()) .assign (field);
+
+         if (this .canUserDefinedFields ())
+         {
+            for (const field of this .getUserDefinedFields ())
+               copy .addUserDefinedField (field .getAccessType (), field .getName (), field .copy ());
+         }
+
+         copy .setup ();
+
+         return copy;
       }
       else
       {
@@ -217,6 +234,30 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             if (exportedNode .getLocalNode () === this)
                return true;
          }
+      }
+
+      return false;
+   },
+   hasRoutes ()
+   {
+      ///  Returns true if there are any routes from or to fields of this node, otherwise false.
+
+      for (const field of this .getPredefinedFields ())
+      {
+         if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
+            return true;
+      }
+
+      for (const field of this .getUserDefinedFields ())
+      {
+         if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
+            return true;
+      }
+
+      for (const route of this .getExecutionContext () .getRoutes ())
+      {
+         if (route .getSourceNode () === this || route .getDestinationNode () === this)
+            return true;
       }
 
       return false;

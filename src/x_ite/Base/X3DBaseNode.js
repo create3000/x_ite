@@ -153,37 +153,6 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       return this [_type];
    },
-   create (executionContext = this [_executionContext])
-   {
-      return new (this .constructor) (executionContext);
-   },
-   copy (executionContext)
-   {
-      const copy = this .create (executionContext);
-
-      for (const field of this [_predefinedFields])
-         copy .getPredefinedFields () .get (field .getName ()) .assign (field);
-
-      if (this .canUserDefinedFields ())
-      {
-         for (const field of this [_userDefinedFields])
-            copy .addUserDefinedField (field .getAccessType (), field .getName (), field .copy ());
-      }
-
-      copy .setup ();
-
-      return copy;
-   },
-   // replaceWith (replacement, cache = false)
-   // {
-   //    cache = cache && SFNodeCache .get (this);
-
-   //    for (const parent of new Set (this .getParents ()))
-   //    {
-   //       if (parent instanceof Fields .SFNode && parent !== cache)
-   //          parent .setValue (replacement)
-   //    }
-   // },
    setup ()
    {
       Object .freeze (this [_type]);
@@ -494,30 +463,6 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       }
 
       return !field .getModificationTime ();
-   },
-   hasRoutes ()
-   {
-      ///  Returns true if there are any routes from or to fields of this node, otherwise false.
-
-      for (const field of this [_predefinedFields])
-      {
-         if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
-            return true;
-      }
-
-      for (const field of this [_userDefinedFields])
-      {
-         if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
-            return true;
-      }
-
-      for (const route of this [_executionContext] .getRoutes ())
-      {
-         if (route .getSourceNode () === this || route .getDestinationNode () === this)
-            return true;
-      }
-
-      return false;
    },
    getExtendedEventHandling ()
    {
