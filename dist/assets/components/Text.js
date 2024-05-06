@@ -1,7 +1,7 @@
 /* X_ITE v9.6.0 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 927:
+/***/ 131:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -16048,7 +16048,7 @@ Namespace_default().add ("FontStyle", "x_ite/Components/Text/FontStyle", FontSty
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(823);
-/* provided dependency */ var opentype = __webpack_require__(927);
+/* provided dependency */ var opentype = __webpack_require__(131);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
