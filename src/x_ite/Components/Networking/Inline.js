@@ -150,9 +150,8 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    },
    setInternalScene (scene)
    {
-      this .scene .setExecutionContext (null);
-      this .scene .setLive (false);
-      this .scene .rootNodes .removeFieldInterest (this .groupNode ._children);
+      if (this .scene !== this .getBrowser () .getDefaultScene ())
+         this .scene .dispose ();
 
       // Set new scene.
 
