@@ -257,7 +257,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          if (this .getOuterNode ?.())
             this .getOuterNode () .getLive () .addInterest (_set_live__, this);
 
-         else
+         else if (this !== this [_browser])
             this [_executionContext] ?.getLive () .addInterest (_set_live__, this);
 
          // Return field.
@@ -272,7 +272,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       if (this .getOuterNode ?.())
          return this [_live] && this .getOuterNode () .getLive () .getValue ();
 
-      else if (this [_executionContext])
+      else if (this [_executionContext] && this !== this [_browser])
          return this [_live] && this [_executionContext] .getLive () .getValue ();
 
       return this [_live];
