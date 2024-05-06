@@ -94,11 +94,8 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       if (proto)
       {
-         for (const field of Array .from (this .getUserDefinedFields ()))
-            this .removeUserDefinedField (field .getName ())
-
-         for (const field of proto .getUserDefinedFields ())
-            this .addUserDefinedField (field .getAccessType (), field .getName (), field);
+         this .getFieldDefinitions ()  .assign (proto .getFieldDefinitions ());
+         this .getUserDefinedFields () .assign (proto .getUserDefinedFields ());
       }
 
       this .updateInstances ();
