@@ -66,9 +66,7 @@ function X3DPrototypeInstance (executionContext, protoNode)
 
    this .addType (X3DConstants .X3DPrototypeInstance);
 
-   // If the instance is not initialized, only update fields.
-   if (protoNode .isExternProto)
-      protoNode .getFieldDefinitions () .addInterest ("updateFields", this);
+   this .setProtoNode (protoNode, true);
 }
 
 Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode .prototype),
@@ -85,7 +83,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    {
       X3DNode .prototype .initialize .call (this);
 
-      this .setProtoNode (this [_protoNode]);
+      this .realize ();
    },
    construct ()
    {
@@ -114,8 +112,61 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
             return;
          }
 
-         this .updateFields ();
+         for (const protoField of proto .getUserDefinedFields ())
+         {
+            try
+            {
+               const field = this .getField (protoField .getName ());
+
+               // Continue if different.
+               if (field .getAccessType () !== protoField .getAccessType ())
+                  continue;
+
+               // Continue if different.
+               if (field .getType () !== protoField .getType ())
+                  continue;
+
+               // Continue if field is eventIn or eventOut.
+               if (!field .isInitializable ())
+                  continue;
+
+               // Is set during parse, or already changed by an route event.
+               if (field .getModificationTime ())
+                  continue;
+
+               // Has IS references.
+               if (field .hasReferences ())
+                  continue;
+
+               // Default value of protoField is different from field.
+               if (field .equals (protoField))
+                  continue;
+
+               // Update default value of field.
+               field .assign (protoField);
+            }
+            catch
+            {
+               // Definition exists in proto but does not exist in extern proto.
+               this .addPredefinedField (proto .getFieldDefinitions () .get (protoField .getName ()));
+            }
+         }
       }
+
+      if (this .isInitialized ())
+         this .realize ();
+
+      protoNode ._updateInstances .removeInterest ("construct", this);
+      protoNode ._updateInstances .addInterest ("update", this);
+   },
+   realize ()
+   {
+      const
+         protoNode = this [_protoNode],
+         proto     = protoNode .getProtoDeclaration ();
+
+      if (protoNode .isExternProto && protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+         return;
 
       // Create execution context.
 
@@ -131,60 +182,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       this [_body] .setup ();
 
-      if (this .isInitialized ())
-         X3DChildObject .prototype .addEvent .call (this);
-
-      protoNode ._updateInstances .removeInterest ("construct", this);
-      protoNode ._updateInstances .addInterest ("update", this);
-   },
-   updateFields ()
-   {
-      const
-         protoNode = this [_protoNode],
-         proto     = protoNode .getProtoDeclaration ();
-
-      if (protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
-         return;
-
-      for (const protoField of proto .getUserDefinedFields ())
-      {
-         try
-         {
-            const field = this .getField (protoField .getName ());
-
-            // Continue if different.
-            if (field .getAccessType () !== protoField .getAccessType ())
-               continue;
-
-            // Continue if different.
-            if (field .getType () !== protoField .getType ())
-               continue;
-
-            // Continue if field is eventIn or eventOut.
-            if (!field .isInitializable ())
-               continue;
-
-            // Is set during parse, or already changed by an route event.
-            if (field .getModificationTime ())
-               continue;
-
-            // Has IS references.
-            if (field .hasReferences ())
-               continue;
-
-            // Default value of protoField is different from field.
-            if (field .equals (protoField))
-               continue;
-
-            // Update default value of field.
-            field .assign (protoField);
-         }
-         catch
-         {
-            // Definition exists in proto but does not exist in extern proto.
-            this .addPredefinedField (proto .getFieldDefinitions () .get (protoField .getName ()));
-         }
-      }
+      X3DChildObject .prototype .addEvent .call (this);
    },
    update ()
    {
@@ -304,13 +302,12 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    {
       return this [_protoNode];
    },
-   setProtoNode (protoNode)
+   setProtoNode (protoNode, construct = false)
    {
       // Disconnect old proto node.
 
       const oldProtoNode = this [_protoNode];
 
-      oldProtoNode .getFieldDefinitions () .removeInterest ("updateFields", this);
       oldProtoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
       oldProtoNode ._updateInstances .removeInterest ("construct", this);
       oldProtoNode ._updateInstances .removeInterest ("update",    this);
@@ -323,7 +320,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
 
-      protoNode === oldProtoNode ? this .construct () : this .update ();
+      construct ? this .construct () : this .update ();
    },
    getBody ()
    {
