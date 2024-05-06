@@ -60,7 +60,7 @@ const
 function X3DPrototypeInstance (executionContext, protoNode)
 {
    this [_protoNode]        = protoNode;
-   this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
+   this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
    this [_body]             = null;
 
    X3DNode .call (this, executionContext);
@@ -93,8 +93,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       // Dispose body and assign field definitions.
 
       this [_body] ?.dispose ();
-
-      this [_fieldDefinitions] .assign (protoNode .getFieldDefinitions ());
 
       // If there is a proto, the externproto is completely loaded.
 
