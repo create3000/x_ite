@@ -113,9 +113,6 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       let executionContext = this [_executionContext];
 
-      if (!executionContext)
-         return null;
-
       while (!executionContext .isScene ())
          executionContext = executionContext .getExecutionContext ();
 

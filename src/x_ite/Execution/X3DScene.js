@@ -112,6 +112,10 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       return true;
    },
+   getScene ()
+   {
+      return this;
+   },
    setSpecificationVersion (specificationVersion)
    {
       this [_specificationVersion] = String (specificationVersion);
@@ -990,7 +994,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       if (this .getExecutionContext ())
       {
-         const scene = this .getScene ();
+         const scene = this .getExecutionContext () .getScene ();
 
          for (const object of this [_loadingObjects])
             scene .removeLoadingObject (object);
@@ -1000,7 +1004,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       if (this .getExecutionContext ())
       {
-         const scene = this .getScene ();
+         const scene = this .getExecutionContext () .getScene ();
 
          for (const object of this [_loadingObjects])
             scene .addLoadingObject (object);
@@ -1032,7 +1036,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       if (this === browser .getExecutionContext ())
          browser .addLoadingObject (node);
 
-      this .getScene () ?.addLoadingObject (node);
+      this .getExecutionContext () ?.getScene () .addLoadingObject (node);
    },
    removeLoadingObject (node)
    {
@@ -1048,7 +1052,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       if (this === browser .getExecutionContext ())
          browser .removeLoadingObject (node);
 
-      this .getScene () ?.removeLoadingObject (node);
+      this .getExecutionContext () ?.getScene () .removeLoadingObject (node);
    },
 });
 
