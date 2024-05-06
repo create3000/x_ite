@@ -84,7 +84,7 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .pr
                node  = this .nodes [i],
                scene = node .getExecutionContext () .getOuterNode () ?.getScene () ?? node .getScene ();
 
-            if (!enableInlineBindables && !scene .isMainScene ())
+            if (!enableInlineBindables && scene .getExecutionContext ())
                continue;
 
             if (node .getName () == name)
@@ -100,7 +100,7 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .pr
             node  = this .nodes [i],
             scene = node .getExecutionContext () .getOuterNode () ?.getScene () ?? node .getScene ();
 
-         if (!enableInlineBindables && !scene .isMainScene ())
+         if (!enableInlineBindables && scene .getExecutionContext ())
             continue;
 
          if (node ._isBound .getValue ())
@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .pr
             node  = this .nodes [i],
             scene = node .getExecutionContext () .getOuterNode () ?.getScene () ?? node .getScene ();
 
-         if (!enableInlineBindables && !scene .isMainScene ())
+         if (!enableInlineBindables && scene .getExecutionContext ())
             continue;
 
          return node;

@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    setInternalScene (value)
    {
-      this [_scene] ?.setExecutionContext (this [_scene]);
+      this [_scene] ?.setExecutionContext (null);
       this [_scene] ?.setLive (false);
 
       this [_scene] = value;

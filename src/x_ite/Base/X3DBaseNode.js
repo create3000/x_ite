@@ -109,18 +109,12 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       return this [_browser];
    },
-   getMainScene ()
-   {
-      let scene = this [_executionContext] .getScene ();
-
-      while (!scene .isMainScene ())
-         scene = scene .getScene ();
-
-      return scene;
-   },
    getScene ()
    {
       let executionContext = this [_executionContext];
+
+      if (!executionContext)
+         return null;
 
       while (!executionContext .isScene ())
          executionContext = executionContext .getExecutionContext ();
@@ -135,8 +129,8 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       // Disconnect interests.
 
-      this .getOuterNode ?.() ?.getLive () .removeInterest (_set_live__, this);
-      this [_executionContext] .getLive () .removeInterest (_set_live__, this);
+      this .getOuterNode ?.()  ?.getLive () .removeInterest (_set_live__, this);
+      this [_executionContext] ?.getLive () .removeInterest (_set_live__, this);
 
       // Currently only useful for Scene.
       this [_executionContext] = executionContext;
@@ -146,8 +140,8 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       if (this .getOuterNode ?.())
          this .getOuterNode () .getLive () .addInterest (_set_live__, this);
 
-      else if (this [_executionContext] !== this)
-         this [_executionContext] .getLive () .addInterest (_set_live__, this);
+      else
+         this [_executionContext] ?.getLive () .addInterest (_set_live__, this);
 
       this [_set_live__] ();
    },
@@ -263,8 +257,8 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          if (this .getOuterNode ?.())
             this .getOuterNode () .getLive () .addInterest (_set_live__, this);
 
-         else if (this [_executionContext] !== this)
-            this [_executionContext] .getLive () .addInterest (_set_live__, this);
+         else
+            this [_executionContext] ?.getLive () .addInterest (_set_live__, this);
 
          // Return field.
 
@@ -278,7 +272,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       if (this .getOuterNode ?.())
          return this [_live] && this .getOuterNode () .getLive () .getValue ();
 
-      else if (this !== this [_executionContext])
+      else if (this [_executionContext])
          return this [_live] && this [_executionContext] .getLive () .getValue ();
 
       return this [_live];
@@ -589,8 +583,10 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       const time = this [_browser] .getCurrentTime ();
 
-      this [_executionContext] ._sceneGraph_changed = time;
-      this ._parents_changed                        = time;
+      if (this [_executionContext])
+         this [_executionContext] ._sceneGraph_changed = time;
+
+      this ._parents_changed = time;
    },
    dispose ()
    {

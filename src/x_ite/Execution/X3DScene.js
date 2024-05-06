@@ -72,7 +72,7 @@ const
 
 function X3DScene (browser)
 {
-   X3DExecutionContext .call (this, this, null, browser);
+   X3DExecutionContext .call (this, null, null, browser);
 
    this .addType (X3DConstants .X3DScene)
 
@@ -108,10 +108,6 @@ function X3DScene (browser)
 
 Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext .prototype),
 {
-   isMainScene ()
-   {
-      return this === this .getExecutionContext ();
-   },
    isScene ()
    {
       return true;
@@ -144,10 +140,8 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       if (this [_worldURL] .match (/^(?:data|blob):/))
       {
-         if (this .isMainScene ())
-            return this .getBrowser () .getBaseURL ();
-
-         return this .getExecutionContext () .getBaseURL ();
+         return this .getExecutionContext () ?.getBaseURL ()
+            ?? this .getBrowser () .getBaseURL ();
       }
 
       return this [_worldURL];
@@ -994,7 +988,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 {
    setExecutionContext (executionContext)
    {
-      if (!this .isMainScene ())
+      if (this .getExecutionContext ())
       {
          const scene = this .getScene ();
 
@@ -1004,7 +998,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       X3DExecutionContext .prototype .setExecutionContext .call (this, executionContext);
 
-      if (!this .isMainScene ())
+      if (this .getExecutionContext ())
       {
          const scene = this .getScene ();
 
@@ -1033,15 +1027,12 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this ._loadCount = this [_loadingObjects] .size;
 
-      const
-         browser = this .getBrowser (),
-         scene   = this .getScene ();
+      const browser = this .getBrowser ();
 
       if (this === browser .getExecutionContext ())
          browser .addLoadingObject (node);
 
-      if (!this .isMainScene ())
-         scene .addLoadingObject (node);
+      this .getScene () ?.addLoadingObject (node);
    },
    removeLoadingObject (node)
    {
@@ -1052,15 +1043,12 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this ._loadCount = this [_loadingObjects] .size;
 
-      const
-         browser = this .getBrowser (),
-         scene   = this .getScene ();
+      const browser = this .getBrowser ();
 
       if (this === browser .getExecutionContext ())
          browser .removeLoadingObject (node);
 
-      if (!this .isMainScene ())
-         scene .removeLoadingObject (node);
+      this .getScene () ?.removeLoadingObject (node);
    },
 });
 

@@ -83,7 +83,7 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
    this ._rootNodes .setPrivate (false);
    this ._rootNodes .collectCloneCount = () => 1;
 
-   if (executionContext !== this)
+   if (executionContext)
    {
       this ._countPrimitives .addReference (executionContext ._countPrimitives);
       this ._sceneGraph_changed .addFieldInterest (executionContext ._sceneGraph_changed);
@@ -107,12 +107,15 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 {
    setExecutionContext (executionContext)
    {
-      this ._countPrimitives .removeReference (this .getExecutionContext () ._countPrimitives);
-      this ._sceneGraph_changed .removeFieldInterest (this .getExecutionContext () ._sceneGraph_changed);
+      if (this .getExecutionContext ())
+      {
+         this ._countPrimitives .removeReference (this .getExecutionContext () ._countPrimitives);
+         this ._sceneGraph_changed .removeFieldInterest (this .getExecutionContext () ._sceneGraph_changed);
+      }
 
       X3DBaseNode .prototype .setExecutionContext .call (this, executionContext);
 
-      if (executionContext !== this)
+      if (executionContext)
       {
          this ._countPrimitives .addReference (executionContext ._countPrimitives);
          this ._sceneGraph_changed .addFieldInterest (executionContext ._sceneGraph_changed);
@@ -133,7 +136,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    setCountPrimitives (value)
    {
-      this ._countPrimitives = this .getExecutionContext () .getCountPrimitives () && value;
+      this ._countPrimitives = (this .getExecutionContext () ?.getCountPrimitives () ?? true) && value;
    },
    getSpecificationVersion ()
    {

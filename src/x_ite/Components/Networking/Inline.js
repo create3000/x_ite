@@ -150,7 +150,7 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    },
    setInternalScene (scene)
    {
-      this .scene .setExecutionContext (this .scene);
+      this .scene .setExecutionContext (null);
       this .scene .setLive (false);
       this .scene .rootNodes .removeFieldInterest (this .groupNode ._children);
 

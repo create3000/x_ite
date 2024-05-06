@@ -509,7 +509,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       else if (!Array .isArray (value) && value .valueOf () instanceof Object)
       {
          // Support for Numbers (Vector234, Color34, ...).
-         
+
          value = Array .from (value);
          value .type = "double";
       }
@@ -1677,7 +1677,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       {
          // Remove imported node if any.
 
-         if (!executionContext .isMainScene ())
+         if (executionContext .getExecutionContext ())
          {
             const parentContext = executionContext .getExecutionContext ();
 

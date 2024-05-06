@@ -429,7 +429,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          // Detach scene from parent.
 
-         scene .setExecutionContext (scene);
+         scene .setExecutionContext (null);
          scene .setLive (this .isLive ());
 
          // Replace.
