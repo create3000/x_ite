@@ -127,7 +127,8 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    setInternalScene (value)
    {
-      this [_scene] ?.dispose ();
+      if (this [_scene] !== this .getBrowser () .getPrivateScene ())
+         this [_scene] ?.dispose ();
 
       this [_scene] = value;
 

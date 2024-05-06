@@ -157,10 +157,17 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
 
       this .scene = scene;
 
-      this .scene .setExecutionContext (this .getExecutionContext ());
-      this .scene .setLive (this .getLive () .getValue ());
-      this .scene .rootNodes .addFieldInterest (this .groupNode ._children);
-      this .groupNode ._children = this .scene .rootNodes;
+      if (this .scene !== this .getBrowser () .getDefaultScene ())
+      {
+         this .scene .setExecutionContext (this .getExecutionContext ());
+         this .scene .setLive (this .getLive () .getValue ());
+         this .scene .rootNodes .addFieldInterest (this .groupNode ._children);
+         this .groupNode ._children = this .scene .rootNodes;
+      }
+      else
+      {
+         this .groupNode ._children .length = 0;
+      }
 
       this .getBrowser () .addBrowserEvent ();
    },
