@@ -511,7 +511,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
       // See: 29.2.2 Script execution
       await this .unloadData ();
 
-      new (FileLoader_default()) (this) .loadDocument (this ._url, (data) =>
+      new (FileLoader_default()) (this) .loadDocument (this ._url, data =>
       {
          if (data === null)
          {
