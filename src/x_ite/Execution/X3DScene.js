@@ -1087,6 +1087,11 @@ Object .defineProperties (X3DScene .prototype,
       get: X3DScene .prototype .getWorldURL,
       enumerable: true,
    },
+   baseURL:
+   {
+      get: X3DScene .prototype .getBaseURL,
+      enumerable: true,
+   },
    units:
    {
       get: X3DScene .prototype .getUnits,
