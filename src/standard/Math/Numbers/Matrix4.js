@@ -131,14 +131,14 @@ Object .assign (Matrix4 .prototype,
          {
             case 1:
             {
-               if (translation)
+               if (translation && !translation .equals (Vector3 .Zero))
                   this .translate (translation);
 
                break;
             }
             case 2:
             {
-               if (translation)
+               if (translation && !translation .equals (Vector3 .Zero))
                   this .translate (translation);
 
                if (rotation && !rotation .equals (Rotation4 .Identity))
@@ -148,7 +148,7 @@ Object .assign (Matrix4 .prototype,
             }
             case 3:
             {
-               if (translation)
+               if (translation && !translation .equals (Vector3 .Zero))
                   this .translate (translation);
 
                if (rotation && !rotation .equals (Rotation4 .Identity))
@@ -161,7 +161,7 @@ Object .assign (Matrix4 .prototype,
             }
             case 4:
             {
-               if (translation)
+               if (translation && !translation .equals (Vector3 .Zero))
                   this .translate (translation);
 
                if (rotation && !rotation .equals (Rotation4 .Identity))
@@ -186,7 +186,7 @@ Object .assign (Matrix4 .prototype,
             case 5:
             {
                // P' = T * C * R * SR * S * -SR * -C * P
-               if (translation)
+               if (translation && !translation .equals (Vector3 .Zero))
                   this .translate (translation);
 
                const hasCenter = center && !center .equals (Vector3 .Zero);
