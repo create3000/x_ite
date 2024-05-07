@@ -62,6 +62,7 @@ import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
 import BVH                  from "../../../standard/Math/Utility/BVH.js";
+import VariationPhysicsModel from "./VariationPhysicsModel.js";
 
 const PointGeometry = new Float32Array ([0, 0, 0, 1]);
 
@@ -112,6 +113,7 @@ function ParticleSystem (executionContext)
    // Private properties
 
    const browser = this .getBrowser ();
+   browser.addConcreteNode(VariationPhysicsModel);
 
    this .maxParticles             = 0;
    this .numParticles             = 0;
