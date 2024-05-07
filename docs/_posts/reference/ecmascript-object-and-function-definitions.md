@@ -10,12 +10,12 @@ tags: [ECMAScript, Object, Function, Definitions]
 There are a fixed set of objects in ECMAScript, each of which have a fixed set of properties (i.e. values) and methods (i.e. functions). For all object types except Math, there are functions to create an instance of the object. The supported set of objects are:
 
 * [X3DCanvasElement](#x3dcanvaselement)
-* [Browser Services](/x_ite/reference/browser-services)
-* [Scene Services](/x_ite/reference/scene-services)
-* [Field Services and Objects](/x_ite/reference/field-services-and-objects)
-* [Route Services](/x_ite/reference/route-services)
-* [Prototype Services](/x_ite/reference/prototype-services)
-* [Constants Services](/x_ite/reference/constants-services)
+* [Browser Services](/x_ite/reference/browser-services/)
+* [Scene Services](/x_ite/reference/scene-services/)
+* [Field Services and Objects](/x_ite/reference/field-services-and-objects/)
+* [Route Services](/x_ite/reference/route-services/)
+* [Prototype Services](/x_ite/reference/prototype-services/)
+* [Constants Services](/x_ite/reference/constants-services/)
 
 ## X3DCanvasElement
 
