@@ -19,7 +19,7 @@ You can control a shape's
 
 ## Syntax: Shape
 
-Recall that [Shape](/x_ite/components/shape/shape) nodes describe:
+Recall that [Shape](/x_ite/components/shape/shape/) nodes describe:
 
 - *appearance* - color and texture
 - *geometry* - form, or structure
@@ -44,7 +44,7 @@ Shape {
 
 ## Syntax: Appearance
 
-An [Appearance](/x_ite/components/shape/appearance) node describes overall shape appearance
+An [Appearance](/x_ite/components/shape/appearance/) node describes overall shape appearance
 
 - *material* properties - color, transparency, etc.
 
@@ -72,7 +72,7 @@ Shape {
 
 ## Syntax: Material
 
-A [Material](/x_ite/components/shape/material) node controls shape material attributes
+A [Material](/x_ite/components/shape/material/) node controls shape material attributes
 
 - *diffuseColor* - main shading color
 - *emissiveColor* - glowing color
@@ -130,7 +130,7 @@ Colors specify:
 
 ## Syntax: Material
 
-A [Material](/x_ite/components/shape/material) node also controls shape shininess
+A [Material](/x_ite/components/shape/material/) node also controls shape shininess
 
 - *specularColor* - highlightcolor
 - *shininess* - highlightsize
@@ -184,9 +184,9 @@ Shape {
 
 ## Summary
 
-The [Appearance](/x_ite/components/shape/appearance) node controls overall shape appearance
+The [Appearance](/x_ite/components/shape/appearance/) node controls overall shape appearance
 
-The [Material](/x_ite/components/shape/material) node controls overall material properties including:
+The [Material](/x_ite/components/shape/material/) node controls overall material properties including:
 
 - Shading color
 - Glow color

@@ -37,7 +37,7 @@ and more
 
 ## Syntax: Group
 
-The [Group](/x_ite/components/grouping/group) node creates a basic grouping.
+The [Group](/x_ite/components/grouping/group/) node creates a basic grouping.
 
 - Every child node in the group is displayed.
 
@@ -59,7 +59,7 @@ Group {
 
 ## Syntax: Switch
 
-The [Switch](/x_ite/components/grouping/switch) group node creates a switched group
+The [Switch](/x_ite/components/grouping/switch/) group node creates a switched group
 
 - Only one child node in the group is displayed
 - You select which child
@@ -86,7 +86,7 @@ Switch {
 
 ## Syntax: Transform
 
-The [Transform](/x_ite/components/grouping/transform) group node creates a group with its own coordinate system.
+The [Transform](/x_ite/components/grouping/transform/) group node creates a group with its own coordinate system.
 
 - Every child node in the group is displayed.
 
@@ -114,7 +114,7 @@ Transform {
 
 ## Syntax: Billboard
 
-The [Billboard](/x_ite/components/navigation/billboard) group node creates a group with a special coordinate system.
+The [Billboard](/x_ite/components/navigation/billboard/) group node creates a group with a special coordinate system.
 
 - Every child node in the group is displayed.
 - The coordinate system is turned to face viewer.
@@ -183,7 +183,7 @@ Billboard {
 
 ## Syntax: Anchor
 
-An [Anchor](/x_ite/components/networking/anchor) node creates a group that acts as a clickable anchor
+An [Anchor](/x_ite/components/networking/anchor/) node creates a group that acts as a clickable anchor
 
 - Every child node in the group is displayed
 - Clicking any child follows a URL
@@ -211,7 +211,7 @@ Anchor {
 
 ## Syntax: Inline
 
-An [Inline](/x_ite/components/networking/inline) node creates a special group from another X3D file's contents
+An [Inline](/x_ite/components/networking/inline/) node creates a special group from another X3D file's contents
 
 - Children read from file selected by a URL
 - Every child node in group is displayed
@@ -233,10 +233,10 @@ Inline {
 
 ## Summary
 
-- The [Group](/x_ite/components/grouping/group) node creates a basic group
-- The [Switch](/x_ite/components/grouping/switch) node creates a group with 1 choice used
-- The [Transform](/x_ite/components/grouping/transform) node creates a group with a new coordinate system
-- The [Billboard](/x_ite/components/navigation/billboard) node creates a group with a coordinate system that rotates to face the viewer
-- The [Anchor](/x_ite/components/networking/anchor) node creates a clickable group
+- The [Group](/x_ite/components/grouping/group/) node creates a basic group
+- The [Switch](/x_ite/components/grouping/switch/) node creates a group with 1 choice used
+- The [Transform](/x_ite/components/grouping/transform/) node creates a group with a new coordinate system
+- The [Billboard](/x_ite/components/navigation/billboard/) node creates a group with a coordinate system that rotates to face the viewer
+- The [Anchor](/x_ite/components/networking/anchor/) node creates a clickable group
   - Clicking any child in the group loads a URL
-- The [Inline](/x_ite/components/networking/inline) node creates a special group loaded from another X3D file
+- The [Inline](/x_ite/components/networking/inline/) node creates a special group loaded from another X3D file

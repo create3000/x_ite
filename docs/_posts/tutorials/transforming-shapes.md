@@ -33,7 +33,7 @@ Shapes built in the new coordinate system are positioned, rotated, and scaled al
 
 ## Syntax: Transform
 
-The [Transform](/x_ite/components/grouping/transform) group node creates a group with its own coordinate system
+The [Transform](/x_ite/components/grouping/transform/) group node creates a group with its own coordinate system
 
 - *translation* - position
 - *rotation* - orientation
@@ -268,8 +268,8 @@ Transform {
 ## Summary
 
 - All shapes are built in a coordinate system
-- The [Transform](/x_ite/components/grouping/transform) node creates a new coordinate system relative to its parent
-- [Transform](/x_ite/components/grouping/transform) node fields do
+- The [Transform](/x_ite/components/grouping/transform/) node creates a new coordinate system relative to its parent
+- [Transform](/x_ite/components/grouping/transform/) node fields do
   - *translation*
   - *rotation*
   - *scale*

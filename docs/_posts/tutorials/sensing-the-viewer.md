@@ -13,19 +13,19 @@ Sensing the viewer enables you to trigger animations:
 - when the viewer is within a region
 - when the viewer collides with a shape
 
-The [LOD](/x_ite/components/navigation/lod) and [Billboard](/x_ite/components/navigation/billboard) nodes are special-purpose viewer sensors with built-in responses.
+The [LOD](/x_ite/components/navigation/lod/) and [Billboard](/x_ite/components/navigation/billboard/) nodes are special-purpose viewer sensors with built-in responses.
 
 ## Sensing the viewer
 
 There are three types of viewer sensors:
 
-- A [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor) node senses if the viewer can see a region
-- A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor) node senses if the viewer is within a region
-- A [Collision](/x_ite/components/navigation/collision) node senses if the viewer has collided with shapes
+- A [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) node senses if the viewer can see a region
+- A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node senses if the viewer is within a region
+- A [Collision](/x_ite/components/navigation/collision/) node senses if the viewer has collided with shapes
 
 ## Using visibility and proximity sensors
 
-[VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor) and [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor) nodes sense a box-shaped region:
+[VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) and [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) nodes sense a box-shaped region:
 
 - *center* - region center
 - *size* - region dimensions
@@ -38,7 +38,7 @@ Both nodes have similar outputs:
 
 ## Syntax: VisibilitySensor
 
-A [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor) node senses if the viewer sees or stops seeing a region:
+A [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) node senses if the viewer sees or stops seeing a region:
 
 - *center* and *size* - the region's location and size
 - *enterTime* and *exitTime* - sends time on entry/exit
@@ -67,7 +67,7 @@ ROUTE Sensor.enterTime TO Clock.set_startTime
 
 ## Syntax: ProximitySensor
 
-A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor) node senses if the viewer enters or leaves a region:
+A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node senses if the viewer enters or leaves a region:
 
 - *center* and *size* - the region's location and size
 - *enterTime* and *exitTime* - sends time on entry/exit
@@ -94,7 +94,7 @@ DEF Sensor ProximitySensor {
 ROUTE Sensor.enterTime TO Clock.set_startTime
 ```
 
-A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor) node senses the viewer while in a region:
+A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node senses the viewer while in a region:
 
 - *position* and *orientation* - sends position and orientation while viewer is in the region
 
@@ -116,14 +116,14 @@ ROUTE Sensor.position_changed TO PetRobotFollower.set_translation
 
 ## Detecting viewer-shape collision
 
-A [Collision](/x_ite/components/navigation/collision) grouping node senses shapes within the group:
+A [Collision](/x_ite/components/navigation/collision/) grouping node senses shapes within the group:
 
 - Detects if the viewer collides with any shape in the group
 - Automatically stops the viewer from going through the shape
 
 Collision occurs when the viewer's avatar gets close to a shape:
 
-- Collision distance is controlled by the avatar size in the [NavigationInfo](/x_ite/components/navigation/navigationinfo) node
+- Collision distance is controlled by the avatar size in the [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node
 
 ## Creating collision groups
 
@@ -139,7 +139,7 @@ A collision group with a proxy shape, but no children, creates an invisible coll
 
 ## Syntax: Collision
 
-A [Collision](/x_ite/components/navigation/collision) grouping node senses if the viewer collides with group shapes:
+A [Collision](/x_ite/components/navigation/collision/) grouping node senses if the viewer collides with group shapes:
 
 - *enabled* - enable/disable sensor
 - *proxy* - simple shape to sense instead of children
@@ -191,20 +191,20 @@ Any number of sensors can sense at the same time:
 
 ## Summary
 
-A [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor) node checks if a region is visible to the viewer:
+A [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) node checks if a region is visible to the viewer:
 
 - The region is described by a center and a size
 - Time is sent on entry and exit of visibility
 - True/false is sent on entry and exit of visibility
 
-A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor) node checks if the viewer is within a region:
+A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node checks if the viewer is within a region:
 
 - The region is described by a center and a size
 - Time is sent on viewer entry and exit
 - True/false is sent on viewer entry and exit
 - Position and orientation of the viewer is sent while within the sensed region
 
-A [Collision](/x_ite/components/navigation/collision) grouping node checks if the viewer has run into a shape:
+A [Collision](/x_ite/components/navigation/collision/) grouping node checks if the viewer has run into a shape:
 
 - The shapes are defined by the group's children or a proxy
 - Collision time is sent on contact

@@ -7,12 +7,12 @@ tags: [Controlling, Color, Coordinate, Geometry]
 ---
 ## Motivation
 
-- The [Material](/x_ite/components/shape/material) node gives an entire shape the same color
-- You can provide colors for individual parts of a shape using a [Color](/x_ite/components/rendering/color) node
+- The [Material](/x_ite/components/shape/material/) node gives an entire shape the same color
+- You can provide colors for individual parts of a shape using a [Color](/x_ite/components/rendering/color/) node
 
 ## Syntax: Color
 
-A [Color](/x_ite/components/rendering/color) node contains a list of RGB values (similar to a Coordinate node):
+A [Color](/x_ite/components/rendering/color/) node contains a list of RGB values (similar to a Coordinate node):
 
 ### XML Encoding
 
@@ -29,7 +29,7 @@ Color {
 }
 ```
 
-Used as the color field value of [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset), [IndexedLineSet](/x_ite/components/rendering/indexedlineset), [PointSet](/x_ite/components/rendering/pointset) or [ElevationGrid](/x_ite/components/geometry3d/elevationgrid) nodes.
+Used as the color field value of [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [PointSet](/x_ite/components/rendering/pointset/) or [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) nodes.
 
 ## Binding colors
 
@@ -40,7 +40,7 @@ Used as the color field value of [IndexedFaceSet](/x_ite/components/geometry3d/i
 
 ## Syntax: PointSet
 
-A [PointSet](/x_ite/components/rendering/pointset) geometry node creates geometry out of points:
+A [PointSet](/x_ite/components/rendering/pointset/) geometry node creates geometry out of points:
 
 - *color* - provides a list of colors
 - Always binds one color to each point, in order
@@ -71,7 +71,7 @@ Shape {
 
 ## Syntax: IndexedLineSet
 
-An [IndexedLineSet](/x_ite/components/rendering/indexedlineset) geometry node creates geometry out of lines:
+An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node creates geometry out of lines:
 
 - *color* - list of colors
 - *colorIndex* - selects colors from list
@@ -116,7 +116,7 @@ The *colorPerVertex* field controls how color indexes are used:
 
 ## Syntax: IndexedFaceSet
 
-An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset) geometry node creates geometry out of faces:
+An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node creates geometry out of faces:
 
 - *color* - list of colors
 - *colorIndex* - selects colors from list
@@ -161,7 +161,7 @@ The *colorPerVertex* field controls how color indexes are used (similar to line 
 
 ## Syntax: ElevationGrid
 
-An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid) geometry node creates terrains:
+An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node creates terrains:
 
 - *color* - list of colors
 - *colorPerVertex* - control color binding
@@ -204,10 +204,10 @@ The *colorPerVertex* field controls how color indexes are used (similar to line 
 
 ## Summary
 
-The [Color](/x_ite/components/rendering/color) node lists colors to use for parts of a shape:
+The [Color](/x_ite/components/rendering/color/) node lists colors to use for parts of a shape:
 
 - Used as the value of the color field
 - Color indexes select colors to use
-- Colors override [Material](/x_ite/components/shape/material) node
+- Colors override [Material](/x_ite/components/shape/material/) node
 
 The *colorPerVertex* field selects color per line/face/grid square or color per coordinate.

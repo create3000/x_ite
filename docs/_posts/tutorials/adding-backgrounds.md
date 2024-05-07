@@ -36,7 +36,7 @@ How does the background look like:
 
 ## Syntax: Background
 
-A [Background](/x_ite/components/environmentaleffects/background) node describes background colors;
+A [Background](/x_ite/components/environmentaleffects/background/) node describes background colors;
 
 - *skyColor* and *skyAngle* - sky gradation
 - *groundColor* and *groundAngle* - ground gradation
@@ -147,7 +147,7 @@ DEF Summer Background {
 
 ## Syntax: Background
 
-A [Background](/x_ite/components/environmentaleffects/background) node describes background images:
+A [Background](/x_ite/components/environmentaleffects/background/) node describes background images:
 
 - *frontUrl,* etc - texture image URLs for box
 

@@ -177,9 +177,9 @@ BouncingBall {
 
 Recall that node use must be appropriate for the context:
 
-- A [Shape](/x_ite/components/shape/shape) node specifies shape, not color
-- A [Material](/x_ite/components/shape/material) node specifies color, not shape
-- A [Box](/x_ite/components/geometry3d/box) node specifies geometry, not shape or color
+- A [Shape](/x_ite/components/shape/shape/) node specifies shape, not color
+- A [Material](/x_ite/components/shape/material/) node specifies color, not shape
+- A [Box](/x_ite/components/geometry3d/box/) node specifies geometry, not shape or color
 
 The context for a new node type depends upon the first node in the **PROTO** body.
 

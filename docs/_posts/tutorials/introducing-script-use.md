@@ -20,7 +20,7 @@ You can create new sensors, interpolators, etc., using program scripts written i
 
 ## Syntax: Script
 
-A [Script](/x_ite/components/scripting/script) node selects a program script to run:
+A [Script](/x_ite/components/scripting/script/) node selects a program script to run:
 
 - *url* - choice of program script
 
@@ -123,7 +123,7 @@ ROUTE Bouncer.value_changed  TO Ball.set_translation
 
 ## Summary
 
-The [Script](/x_ite/components/scripting/script) node selects a program script, specified by a URL.
+The [Script](/x_ite/components/scripting/script/) node selects a program script, specified by a URL.
 
 Program scripts have field and event interface declarations, each with:
 

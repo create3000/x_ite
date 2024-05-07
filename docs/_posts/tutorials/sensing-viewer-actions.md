@@ -22,12 +22,12 @@ What can you do:
 
 There are four main action sensor types:
 
-- [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor) senses touch
-- [SphereSensor](/x_ite/components/pointingdevicesensor/spheresensor) senses drags
-- [CylinderSensor](/x_ite/components/pointingdevicesensor/cylindersensor) senses drags
-- [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor) senses drags
+- [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) senses touch
+- [SphereSensor](/x_ite/components/pointingdevicesensor/spheresensor/) senses drags
+- [CylinderSensor](/x_ite/components/pointingdevicesensor/cylindersensor/) senses drags
+- [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) senses drags
 
-The [Anchor](/x_ite/components/networking/anchor) node is a special-purpose action sensor with a built-in response.
+The [Anchor](/x_ite/components/networking/anchor/) node is a special-purpose action sensor with a built-in response.
 
 ## Sensing shapes
 
@@ -36,7 +36,7 @@ The [Anchor](/x_ite/components/networking/anchor) node is a special-purpose acti
 
 ## Syntax: TouchSensor
 
-A [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor) node senses the cursor's touch:
+A [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) node senses the cursor's touch:
 
 - *isOver* - send true/false when cursor over/not over
 - *isActive* - send true/false when mouse button pressed/released
@@ -106,7 +106,7 @@ ROUTE Rot1.value_changed      TO Frame1.set_rotation
 
 ## Syntax: SphereSensor
 
-A [SphereSensor](/x_ite/components/pointingdevicesensor/spheresensor) node senses a cursor drag and generates rotations as if rotating a ball:
+A [SphereSensor](/x_ite/components/pointingdevicesensor/spheresensor/) node senses a cursor drag and generates rotations as if rotating a ball:
 
 - *isActive* - sends true/false when mouse button pressed/released
 - *rotation\_changed* - sends rotation during a drag
@@ -135,7 +135,7 @@ ROUTE Rotator.rotation_changed TO RotateMe.set_rotation
 
 ## Syntax: CylinderSensor
 
-A [CylinderSensor](/x_ite/components/pointingdevicesensor/cylindersensor) node senses a cursor drag and generates rotations as if rotating a cylinder:
+A [CylinderSensor](/x_ite/components/pointingdevicesensor/cylindersensor/) node senses a cursor drag and generates rotations as if rotating a cylinder:
 
 - *isActive* - sends true/false when mouse button pressed/released
 - *rotation\_changed* - sends rotation during a drag
@@ -164,7 +164,7 @@ ROUTE Rotator.rotation_changed TO RotateMe.set_rotation
 
 ## Syntax: PlaneSensor
 
-A [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor) node senses a cursor drag and generates translations as if sliding on a plane:
+A [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) node senses a cursor drag and generates translations as if sliding on a plane:
 
 - *isActive* - sends true/false when mouse button pressed/released
 - *translation\_changed* - sends translations during a drag

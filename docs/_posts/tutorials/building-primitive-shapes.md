@@ -9,16 +9,16 @@ tags: [Building, Primitive, Shapes]
 
 Shapes are the building blocks of an X3D world. Primitive Shapes are standard building blocks:
 
-- [Box](/x_ite/components/geometry3d/box)
-- [Cone](/x_ite/components/geometry3d/cone)
-- [Cylinder](/x_ite/components/geometry3d/cylinder)
-- [Sphere](/x_ite/components/geometry3d/sphere)
-- [Text](/x_ite/components/text/text)
-- and more from the [CADGeometry](/x_ite/components//cadgeometry)**,** [Geometry2D](/x_ite/components//geometry2d)**,** and [Rendering](/x_ite/components//rendering) component
+- [Box](/x_ite/components/geometry3d/box/)
+- [Cone](/x_ite/components/geometry3d/cone/)
+- [Cylinder](/x_ite/components/geometry3d/cylinder/)
+- [Sphere](/x_ite/components/geometry3d/sphere/)
+- [Text](/x_ite/components/text/text/)
+- and more from the [CADGeometry](/x_ite/components/cadgeometry/)**,** [Geometry2D](/x_ite/components/geometry2d/)**,** and [Rendering](/x_ite/components/rendering/) component
 
 ## Syntax: Shape
 
-- A [Shape](/x_ite/components/shape/shape) node builds a shape
+- A [Shape](/x_ite/components/shape/shape/) node builds a shape
   - *appearance* - color and texture
   - *geometry* - form, or structure
 
@@ -42,7 +42,7 @@ Shape {
 
 ## Specifying appearance
 
-- [Shape](/x_ite/components/shape/shape) appearance is described by appearance nodes
+- [Shape](/x_ite/components/shape/shape/) appearance is described by appearance nodes
 - For now, we'll use nodes to create a shaded white appearance:
 
 ### XML Encoding
@@ -69,7 +69,7 @@ Shape {
 
 ## Specifying geometry
 
-[Shape](/x_ite/components/shape/shape) geometry is built with geometry nodes:
+[Shape](/x_ite/components/shape/shape/) geometry is built with geometry nodes:
 
 ### XML Encoding
 
@@ -210,6 +210,6 @@ Shape {
 
 ## Summary
 
-- Shapes are built using a [Shape](/x_ite/components/shape/shape) node
-- [Shape](/x_ite/components/shape/shape) geometry is built using geometry nodes, such as [Box](/x_ite/components/geometry3d/box), [Cone](/x_ite/components/geometry3d/cone), [Cylinder](/x_ite/components/geometry3d/cylinder), [Sphere](/x_ite/components/geometry3d/sphere), and [Text](/x_ite/components/text/text)
-- Text fonts are controlled using a [FontStyle](/x_ite/components/text/fontstyle) node
+- Shapes are built using a [Shape](/x_ite/components/shape/shape/) node
+- [Shape](/x_ite/components/shape/shape/) geometry is built using geometry nodes, such as [Box](/x_ite/components/geometry3d/box/), [Cone](/x_ite/components/geometry3d/cone/), [Cylinder](/x_ite/components/geometry3d/cylinder/), [Sphere](/x_ite/components/geometry3d/sphere/), and [Text](/x_ite/components/text/text/)
+- Text fonts are controlled using a [FontStyle](/x_ite/components/text/fontstyle/) node

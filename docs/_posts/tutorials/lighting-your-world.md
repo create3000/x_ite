@@ -43,7 +43,7 @@ Directional lights and spot lights also have:
 
 ## Syntax: PointLight
 
-A [PointLight](/x_ite/components/lighting/pointlight) node illuminates radially from a point:
+A [PointLight](/x_ite/components/lighting/pointlight/) node illuminates radially from a point:
 
 ### XML Encoding
 
@@ -66,7 +66,7 @@ PointLight {
 
 ## Syntax: DirectionalLight
 
-A [DirectionalLight](/x_ite/components/lighting/directionallight) node illuminates in one direction from infinitely far away:
+A [DirectionalLight](/x_ite/components/lighting/directionallight/) node illuminates in one direction from infinitely far away:
 
 ### XML Encoding
 
@@ -89,7 +89,7 @@ DirectionalLight {
 
 ## Syntax: SpotLight
 
-A [SpotLight](/x_ite/components/lighting/spotlight) node illuminates from a point, in one direction, within a cone:
+A [SpotLight](/x_ite/components/lighting/spotlight/) node illuminates from a point, in one direction, within a cone:
 
 ### XML Encoding
 

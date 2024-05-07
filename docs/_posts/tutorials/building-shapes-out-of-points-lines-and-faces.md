@@ -28,7 +28,7 @@ A coordinate specifies a 3-D dot location. Measured relative to a coordinate sys
 
 ## Syntax: Coordinate
 
-A [Coordinate](/x_ite/components/rendering/coordinate) node contains a list of coordinates for use in building a shape.
+A [Coordinate](/x_ite/components/rendering/coordinate/) node contains a list of coordinates for use in building a shape.
 
 ### XML Encoding
 
@@ -55,15 +55,15 @@ Coordinate {
 
 Build coordinate-based shapes using geometry nodes:
 
-- [PointSet](/x_ite/components/rendering/pointset)
-- [IndexedLineSet](/x_ite/components/rendering/indexedlineset)
-- [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset)
+- [PointSet](/x_ite/components/rendering/pointset/)
+- [IndexedLineSet](/x_ite/components/rendering/indexedlineset/)
+- [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/)
 
-For all three nodes, use a [Coordinate](/x_ite/components/rendering/coordinate) node as the value of the coord field.
+For all three nodes, use a [Coordinate](/x_ite/components/rendering/coordinate/) node as the value of the coord field.
 
 ## Syntax: PointSet
 
-A [PointSet](/x_ite/components/rendering/pointset) geometry node creates geometry out of points:
+A [PointSet](/x_ite/components/rendering/pointset/) geometry node creates geometry out of points:
 
 - One point (a dot) is placed at each coordinate
 
@@ -94,7 +94,7 @@ Shape {
 
 ## Syntax: IndexedLineSet
 
-An [IndexedLineSet](/x_ite/components/rendering/indexedlineset) geometry node creates geometry out of lines:
+An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node creates geometry out of lines:
 
 - A straight line is drawn between pairs of selected coordinates
 
@@ -127,7 +127,7 @@ Shape {
 
 ## Using line set coordinate indexes
 
-Each coordinate in a [Coordinate](/x_ite/components/rendering/coordinate) node is implicitly numbered
+Each coordinate in a [Coordinate](/x_ite/components/rendering/coordinate/) node is implicitly numbered
 
 - Index 0 is the first coordinate
 - Index **1** is the second coordinate, etc.
@@ -135,7 +135,7 @@ Each coordinate in a [Coordinate](/x_ite/components/rendering/coordinate) node i
 To build a line shape:
 
 - Make a list of coordinates, using their indexes
-- List coordinate indexes in the *coordIndex* field of the [IndexedLineSet](/x_ite/components/rendering/indexedlineset) node
+- List coordinate indexes in the *coordIndex* field of the [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) node
 
 A line is drawn between pairs of coordinate indexes:
 
@@ -151,7 +151,7 @@ A line is drawn between pairs of coordinate indexes:
 
 ## Syntax: IndexedFaceSet
 
-An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset) geometry node creates geometry out of faces:
+An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node creates geometry out of faces:
 
 - A flat face (polygon) is drawn using an outline specified by coordinate indexes
 
@@ -187,7 +187,7 @@ Shape {
 To build a face shape
 
 - Make a list of coordinates, using their indexes
-- List coordinate indexes in the *coordIndex* field of the [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset) node
+- List coordinate indexes in the *coordIndex* field of the [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) node
 
 A triangle is drawn connecting sequences of coordinate indexes:
 
@@ -204,7 +204,7 @@ A triangle is drawn connecting sequences of coordinate indexes:
 
 ## Syntax: IndexedFaceSet
 
-An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset) geometry node creates geometry out of faces:
+An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node creates geometry out of faces:
 
 - *solid* - shape is solid
 - *ccw* - faces are counter-clockwise
@@ -257,7 +257,7 @@ Faces are assumed to be convex
 
 ## Syntax: CoordinateInterpolator
 
-A [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolator) node describes a coordinate path:
+A [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolator/) node describes a coordinate path:
 
 - *keys* - key fractions
 - *keyValues* - key coordinate lists (X, Y, Z lists)
@@ -279,11 +279,11 @@ CoordinateInterpolator {
 }
 ```
 
-Typically route into a [Coordinate](/x_ite/components/rendering/coordinate) node's set\_point input.
+Typically route into a [Coordinate](/x_ite/components/rendering/coordinate/) node's set\_point input.
 
 ## Interpolating coordinate lists
 
-A [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolator) node interpolates lists of coordinates:
+A [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolator/) node interpolates lists of coordinates:
 
 - Each output is a list of coordinates
 
@@ -294,22 +294,22 @@ If n output coordinates are needed for t fractional times:
 ## Summary
 
 - Shapes are built by connecting together coordinates
-- Coordinates are listed in a [Coordinate](/x_ite/components/rendering/coordinate) node
+- Coordinates are listed in a [Coordinate](/x_ite/components/rendering/coordinate/) node
 - Coordinates are implicitly numbers starting at 0
 - Coordinate index lists give the order in which to use coordinates
 
-The [PointSet](/x_ite/components/rendering/pointset) node draws a dot at every coordinate:
+The [PointSet](/x_ite/components/rendering/pointset/) node draws a dot at every coordinate:
 
 - The *coord* field value is a Coordinate node
 
-The [IndexedLineSet](/x_ite/components/rendering/indexedlineset) node draws lines between coordinates:
-
-- The *coord* field value is a Coordinate node
-- The *coordIndex* field value is a list of coordinate indexes
-
-The [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset) node draws faces outlined by coordinates:
+The [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) node draws lines between coordinates:
 
 - The *coord* field value is a Coordinate node
 - The *coordIndex* field value is a list of coordinate indexes
 
-The [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolator) node converts times to coordinates.
+The [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) node draws faces outlined by coordinates:
+
+- The *coord* field value is a Coordinate node
+- The *coordIndex* field value is a list of coordinate indexes
+
+The [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolator/) node converts times to coordinates.

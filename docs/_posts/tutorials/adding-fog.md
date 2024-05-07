@@ -36,7 +36,7 @@ The visibility range selects the distance where the fog reaches maximum thicknes
 
 ## Syntax: Fog
 
-A [Fog](/x_ite/components/environmentaleffects/fog) node creates colored fog
+A [Fog](/x_ite/components/environmentaleffects/fog/) node creates colored fog
 
 - *color* - fog color
 - *fogType* - **LINEAR** or **EXPONENTIAL**

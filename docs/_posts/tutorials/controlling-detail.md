@@ -29,14 +29,14 @@ Usually, two or three different versions is enough, but you can have as many as 
 
 ## Controlling level of detail
 
-Group the shape versions as levels in an [LOD](/x_ite/components/navigation/lod) grouping node:
+Group the shape versions as levels in an [LOD](/x_ite/components/navigation/lod/) grouping node:
 
 - LOD is short for Level of Detail
 - List them from highest to lowest detail
 
 ## Syntax: LOD
 
-An [LOD](/x_ite/components/navigation/lod) grouping node creates a group of shapes describing different levels (versions) of the same shape:
+An [LOD](/x_ite/components/navigation/lod/) grouping node creates a group of shapes describing different levels (versions) of the same shape:
 
 - *center* - the center of the shape
 - *range* - a list of level switch ranges
@@ -133,7 +133,7 @@ Increase performance by making multiple levels of shapes:
 - High detail for close up viewing
 - Lower detail for more distant viewing
 
-Group the levels in an [LOD](/x_ite/components/navigation/lod) node:
+Group the levels in an [LOD](/x_ite/components/navigation/lod/) node:
 
 - Ordered from high detail to low detail
 - Ranges to select switching distances

@@ -24,11 +24,11 @@ Sounds have two components:
 
 ## Syntax: AudioClip
 
-An [AudioClip](/x_ite/components/sound/audioclip) node creates a digital sound source:
+An [AudioClip](/x_ite/components/sound/audioclip/) node creates a digital sound source:
 
 - *url* - a sound file URL
 - *pitch* - playback speed
-- playback controls, like a [TimeSensor](/x_ite/components/time/timesensor) node
+- playback controls, like a [TimeSensor](/x_ite/components/time/timesensor/) node
 
 ### XML Encoding
 
@@ -59,11 +59,11 @@ Sound {
 
 ## Syntax: MovieTexture
 
-A [MovieTexture](/x_ite/components/texturing/movietexture) node creates a movie sound source:
+A [MovieTexture](/x_ite/components/texturing/movietexture/) node creates a movie sound source:
 
 - *url* - a texture movie file URL
 - *speed* - playback speed
-- playback controls, like a [TimeSensor](/x_ite/components/time/timesensor) node
+- playback controls, like a [TimeSensor](/x_ite/components/time/timesensor/) node
 
 ### XML Encoding
 
@@ -94,21 +94,21 @@ Sound {
 
 ## Selecting sound source types
 
-Supported by the [AudioClip](/x_ite/components/sound/audioclip) node:
+Supported by the [AudioClip](/x_ite/components/sound/audioclip/) node:
 
 - MP3 or WAV - digital sound files
   Good for sound effects
 
-Supported by the [MovieTexture](/x_ite/components/texturing/movietexture) node:
+Supported by the [MovieTexture](/x_ite/components/texturing/movietexture/) node:
 
 - MP4 - movie file with sound
   Good for virtual TVs
 
 ## Syntax: Sound
 
-A [Sound](/x_ite/components/sound/sound) node describes a sound emitter:
+A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
-- *source* - [AudioClip](/x_ite/components/sound/audioclip) or [MovieTexture](/x_ite/components/texturing/movietexture) node
+- *source* - [AudioClip](/x_ite/components/sound/audioclip/) or [MovieTexture](/x_ite/components/texturing/movietexture/) node
 - *location* and *direction* - emitter placement
 
 ### XML Encoding
@@ -131,7 +131,7 @@ Sound {
 }
 ```
 
-A [Sound](/x_ite/components/sound/sound) node describes a sound emitter:
+A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 - *intensity* - volume
 - *spatialize* - use spatialize processing
@@ -159,7 +159,7 @@ Sound {
 }
 ```
 
-A [Sound](/x_ite/components/sound/sound) node describes a sound emitter:
+A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 - *minFront, minBack* - inner ellipsoid
 - *maxFront, maxBack* - outer ellipsoid
@@ -174,12 +174,12 @@ A [Sound](/x_ite/components/sound/sound) node describes a sound emitter:
 
 ## Creating triggered sounds
 
-[AudioClip](/x_ite/components/sound/audioclip) node:
+[AudioClip](/x_ite/components/sound/audioclip/) node:
 
 - *loop* **FALSE**
 - Set *startTime* from a sensor node
 
-[Sound](/x_ite/components/sound/sound) node:
+[Sound](/x_ite/components/sound/sound/) node:
 
 - *spatialize* **TRUE**
 - *minFront* etc. with small values
@@ -251,13 +251,13 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 
 ## Creating continuous localized sounds
 
-[AudioClip](/x_ite/components/sound/audioclip) node:
+[AudioClip](/x_ite/components/sound/audioclip/) node:
 
 - *loop* **TRUE**
 - *startTime* 0.0 (default)
 - *stopTime* 0.0 (default)
 
-[Sound](/x_ite/components/sound/sound) node:
+[Sound](/x_ite/components/sound/sound/) node:
 
 - *spatialize* **TRUE** (default)
 - *minFront* etc. with medium values
@@ -310,13 +310,13 @@ Transform {
 
 ## Creating continuous background sounds
 
-[AudioClip](/x_ite/components/sound/audioclip) node:
+[AudioClip](/x_ite/components/sound/audioclip/) node:
 
 - *loop* **TRUE**
 - *startTime* 0.0 (default)
 - *stopTime* 0.0 (default)
 
-[Sound](/x_ite/components/sound/sound) node:
+[Sound](/x_ite/components/sound/sound/) node:
 
 - *spatialize* **FALSE** (default)
 - *minFront* etc. with large values
@@ -324,12 +324,12 @@ Transform {
 
 ## Summary
 
-An [AudioClip](/x_ite/components/sound/audioclip) node or a [MovieTexture](/x_ite/components/texturing/movietexture) node describe a sound source:
+An [AudioClip](/x_ite/components/sound/audioclip/) node or a [MovieTexture](/x_ite/components/texturing/movietexture/) node describe a sound source:
 
 - A URL gives the sound file
 - Looping, start time, and stop time control playback
 
-A [Sound](/x_ite/components/sound/sound) node describes a sound emitter:
+A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 - A source node provides the sound
 - Range fields describe the sound volume

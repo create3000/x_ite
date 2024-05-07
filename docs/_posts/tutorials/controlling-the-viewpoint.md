@@ -21,7 +21,7 @@ tags: [Controlling, Viewpoint]
 
 ## Syntax: Viewpoint
 
-A [Viewpoint](/x_ite/components/navigation/viewpoint) node specifies a named viewing location:
+A [Viewpoint](/x_ite/components/navigation/viewpoint/) node specifies a named viewing location:
 
 - *position* and *orientation* - viewing location
 - *fieldOfView* - camera lens angle
@@ -50,5 +50,5 @@ Viewpoint {
 
 ## Summary
 
-- Specify favorite viewpoints in [Viewpoint](/x_ite/components/navigation/viewpoint) nodes
+- Specify favorite viewpoints in [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes
 - The first viewpoint in the file is the entry viewpoint

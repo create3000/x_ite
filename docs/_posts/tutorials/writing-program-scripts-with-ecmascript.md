@@ -7,7 +7,7 @@ tags: [Program, Scripts, ECMAScript, Javascript]
 ---
 ## Motivation
 
-A program script implements the [Script](/x_ite/components/scripting/script) node using values from the interface:
+A program script implements the [Script](/x_ite/components/scripting/script/) node using values from the interface:
 
 - The script responds to inputs and sends outputs
 
@@ -59,7 +59,7 @@ function initialize ()
 
 Initialization occurs when:
 
-- the [Script](/x_ite/components/scripting/script) node is created (typically when the browser loads the world)
+- the [Script](/x_ite/components/scripting/script/) node is created (typically when the browser loads the world)
 
 ## Shutting down a program script
 
@@ -74,7 +74,7 @@ function shutdown ()
 
 Shutdown occurs when:
 
-- the [Script](/x_ite/components/scripting/script) node is deleted
+- the [Script](/x_ite/components/scripting/script/) node is deleted
 - the browser loads a new world
 
 ## Responding to events
@@ -471,7 +471,7 @@ Program scripts can be used to help create 3D user interface widgets:
 
 A toggle script turns on at 1st touch, off at 2nd:
 
-- A [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor) node can supply touch events
+- A [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) node can supply touch events
 
 ### XML Encoding
 

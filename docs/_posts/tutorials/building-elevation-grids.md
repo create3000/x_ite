@@ -10,12 +10,12 @@ tags: [Building, Elevation grids]
 - Building terrains is very common
   - Hills, valleys, mountains
   - Other tricky uses...
-- You can build a terrain using an [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset) node
-- You can build terrains more efficiently using an [ElevationGrid](/x_ite/components/geometry3d/elevationgrid) node
+- You can build a terrain using an [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) node
+- You can build terrains more efficiently using an [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) node
 
 ## Syntax: ElevationGrid
 
-An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid) geometry node creates terrains:
+An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node creates terrains:
 
 - *xDimension* and *zDimension* - grid size
 - *xSpacing* and *zSpacing* - row and column distances
@@ -49,7 +49,7 @@ Shape {
 }
 ```
 
-An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid) geometry node creates terrains:
+An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node creates terrains:
 
 - *height* - elevations at grid points
 
@@ -80,7 +80,7 @@ Shape {
 }
 ```
 
-An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid) geometry node creates terrains
+An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node creates terrains
 
 - *solid* - shape is solid
 - *ccw* - faces are counter-clockwise
@@ -173,7 +173,7 @@ Shape {
 
 ## Summary
 
-- An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid) node efficiently creates a terrain
+- An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) node efficiently creates a terrain
 - Grid size is specified in the *xDimension* and *zDimension* fields
 - Grid spacing is specified in the *xSpacing* and *zSpacing* field
 - Elevations at each grid point are specified in the *height* field

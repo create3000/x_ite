@@ -12,7 +12,7 @@ tags: [Providing, Information, World]
 
 ## Syntax: WorldInfo
 
-A [WorldInfo](/x_ite/components/core/worldinfo) node provides title and description information for your world:
+A [WorldInfo](/x_ite/components/core/worldinfo/) node provides title and description information for your world:
 
 - *title* - the name for your world
 - *info* - any additional information

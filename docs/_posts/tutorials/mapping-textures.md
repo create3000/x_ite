@@ -52,7 +52,7 @@ Movie texture:
 
 ## Syntax: Appearance
 
-An [Appearance](/x_ite/components/shape/appearance) node describes overall shape appearance:
+An [Appearance](/x_ite/components/shape/appearance/) node describes overall shape appearance:
 
 - *texture* - texture source
 
@@ -82,7 +82,7 @@ Shape {
 
 ## Syntax: ImageTexture
 
-An [ImageTexture](/x_ite/components/texturing/imagetexture) node selects a texture image for texture mapping:
+An [ImageTexture](/x_ite/components/texturing/imagetexture/) node selects a texture image for texture mapping:
 
 - *url* - texture image file URL
 
@@ -115,7 +115,7 @@ Shape {
 
 ## Syntax: PixelTexture
 
-A [PixelTexture](/x_ite/components/texturing/pixeltexture) node specifies texture image pixels for texture mapping:
+A [PixelTexture](/x_ite/components/texturing/pixeltexture/) node specifies texture image pixels for texture mapping:
 
 - *image* - texture image pixels
 - Image data - width, height, bytes/pixel, pixel values
@@ -151,7 +151,7 @@ Shape {
 
 ## Syntax: MovieTexture
 
-A [MovieTexture](/x_ite/components/texturing/movietexture) node selects a texture movie for texture mapping:
+A [MovieTexture](/x_ite/components/texturing/movietexture/) node selects a texture movie for texture mapping:
 
 - *url* - texture movie file URL
 - When to play the movie, and how quickly (like a TimeSensor node)
@@ -193,7 +193,7 @@ Shape {
 
 ## Using materials with textures
 
-- Color textures override the color in a [Material](/x_ite/components/shape/material) node
+- Color textures override the color in a [Material](/x_ite/components/shape/material/) node
 - Grayscale textures multiply with the Material node color
   - Good for colorizing grayscale textures
 - If there is no Material node, the texture is applied emissively
@@ -212,6 +212,6 @@ Pixel transparency enables you to make parts of a shape transparent:
 ## Summary
 
 - A texture is like a decal pasted to a shape
-- Specify the texture using an [ImageTexture](/x_ite/components/texturing/imagetexture), [PixelTexture](/x_ite/components/texturing/pixeltexture), or [MovieTexture](/x_ite/components/texturing/movietexture) node in an [Appearance](/x_ite/components/shape/appearance) node
+- Specify the texture using an [ImageTexture](/x_ite/components/texturing/imagetexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), or [MovieTexture](/x_ite/components/texturing/movietexture/) node in an [Appearance](/x_ite/components/shape/appearance/) node
 - Color textures override material, grayscale textures multiply
 - Textures with transparency create holes

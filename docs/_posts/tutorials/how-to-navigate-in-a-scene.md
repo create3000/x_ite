@@ -5,7 +5,7 @@ nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
 tags: [Navigate, Scene]
 ---
-There are various types of viewers available to navigate in an X3D scene to move around quickly and efficiently in a scene. These can be set in the [NavigationInfo](/x_ite/components/navigation/navigationinfo) node *type* field.
+There are various types of viewers available to navigate in an X3D scene to move around quickly and efficiently in a scene. These can be set in the [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node *type* field.
 
 Each of them allow you to navigate in a scene in a different manner:
 
@@ -27,7 +27,7 @@ Look At Viewer
 ![none](https://create3000.github.io/media/tutorials/images/none.png){: .normal }
 None Viewer
 
-You can choose a viewer from the available viewers in the viewer menu of the context menu. Not all viewers have to be available at the same time. **Note:** This is controlled by the X3D author by setting the *type* field of a [NavigationInfo](/x_ite/components/navigation/navigationinfo) node.
+You can choose a viewer from the available viewers in the viewer menu of the context menu. Not all viewers have to be available at the same time. **Note:** This is controlled by the X3D author by setting the *type* field of a [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node.
 
 ## Examine Viewer
 
@@ -80,18 +80,18 @@ See Walk Viewer to learn how movement is controlled.
 
 ## Plane Viewer
 
-The Plane Viewer is useful especially for 2D scenes and in conjunction with the [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint) node.
+The Plane Viewer is useful especially for 2D scenes and in conjunction with the [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) node.
 
 ### Viewer Controls
 
 - **Pan:** Drag while holding down the middle mouse button (or scroll wheel) to move the scene. Alternatively hold down the *Alt* or *Option*-key and drag to move the scene.
 - **Zoom:** Scroll the mouse wheel to move closer or farther away.
 
-An X3D author can enable the Plane Viewer by setting the *type* field of the [NavigationInfo](/x_ite/components/navigation/navigationinfo) node to "PLANE_create3000.github.io" or "PLANE".
+An X3D author can enable the Plane Viewer by setting the *type* field of the [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node to "PLANE_create3000.github.io" or "PLANE".
 
 ## None Viewer
 
-The None Viewer disables all navigation controls. No user movement is possible. An X3D author can enable the None Viewer by setting the *type* field of the [NavigationInfo](/x_ite/components/navigation/navigationinfo) node to "NONE".
+The None Viewer disables all navigation controls. No user movement is possible. An X3D author can enable the None Viewer by setting the *type* field of the [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node to "NONE".
 
 ## Look At Viewer
 

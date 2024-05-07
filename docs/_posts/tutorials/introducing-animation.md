@@ -7,7 +7,7 @@ tags: [Introducing, Animations]
 ---
 ## Motivation
 
-- Nodes like [Billboard](/x_ite/components/navigation/billboard) and [Anchor](/x_ite/components/networking/anchor) have built-in behavior
+- Nodes like [Billboard](/x_ite/components/navigation/billboard/) and [Anchor](/x_ite/components/networking/anchor/) have built-in behavior
 - You can create your own behaviors to make shapes move, rotate, scale, blink, and more
 - We need a means to trigger, time, and respond to a sequence of events in order to provide better user/world interactions
 
@@ -28,11 +28,11 @@ An event is a message sent between nodes
 
 To spin a shape:
 
-- Connect a node that sends rotation events to a [Transform](/x_ite/components/grouping/transform) node's *rotation* field
+- Connect a node that sends rotation events to a [Transform](/x_ite/components/grouping/transform/) node's *rotation* field
 
 To blink a shape:
 
-- Connect a node that sends color events to a [Material](/x_ite/components/shape/material) node's *diffuseColor* field
+- Connect a node that sends color events to a [Material](/x_ite/components/shape/material/) node's *diffuseColor* field
 
 ## Routing events
 
@@ -56,13 +56,13 @@ An inputOutput field is a short-hand for a initializeOnly, inputOnly, and output
 
 ## Sample inputs
 
-A [Transform](/x_ite/components/grouping/transform) node has these input fields:
+A [Transform](/x_ite/components/grouping/transform/) node has these input fields:
 
 - *set\_translation*
 - *set\_rotation*
 - *set\_scale*
 
-A [Material](/x_ite/components/shape/material) node has these input fields:
+A [Material](/x_ite/components/shape/material/) node has these input fields:
 
 - *set\_diffuseColor*
 - *set\_emissiveColor*
@@ -70,15 +70,15 @@ A [Material](/x_ite/components/shape/material) node has these input fields:
 
 ## Sample outputs
 
-An [OrientationInterpolator](/x_ite/components/interpolation/orientationinterpolator) node has this output field:
+An [OrientationInterpolator](/x_ite/components/interpolation/orientationinterpolator/) node has this output field:
 
 - *value\_changed* to send rotation values
 
-A [PositionInterpolator](/x_ite/components/interpolation/positioninterpolator) node has this output field:
+A [PositionInterpolator](/x_ite/components/interpolation/positioninterpolator/) node has this output field:
 
 - *value\_changed* to send position (translation) values
 
-A [TimeSensor](/x_ite/components/time/timesensor) node has this output field:
+A [TimeSensor](/x_ite/components/time/timesensor/) node has this output field:
 
 - *time* to send time values
 
@@ -151,7 +151,7 @@ If the inputOutput field name is *xxx*, then:
 - *xxx\_changed* is an output that sends when the field changes
 - The *set\_* and *\_changed* sufixes are optional but recommended for clarity
 
-The [Transform](/x_ite/components/grouping/transform) node has:
+The [Transform](/x_ite/components/grouping/transform/) node has:
 
 - *rotation* field
 - *set\_rotation* input

@@ -72,7 +72,7 @@ Be careful! X3D is a case sensitive language.
 
 ## Key Concept
 
-Now we can start to add information to the file. The first node to deal with is the [WorldInfo](/x_ite/components/core/worldinfo) node. This node contains general information about the world, such as a *title* for the world. [WorldInfo](/x_ite/components/core/worldinfo) can also contain an *info* field, which contain other information about the file such as copyright information. You can put what you like in it. A sample [WorldInfo](/x_ite/components/core/worldinfo) node is shown below:
+Now we can start to add information to the file. The first node to deal with is the [WorldInfo](/x_ite/components/core/worldinfo/) node. This node contains general information about the world, such as a *title* for the world. [WorldInfo](/x_ite/components/core/worldinfo/) can also contain an *info* field, which contain other information about the file such as copyright information. You can put what you like in it. A sample [WorldInfo](/x_ite/components/core/worldinfo/) node is shown below:
 
 ### XML Encoding
 
@@ -98,7 +98,7 @@ You can have multiple strings in the *info* field, by putting them all inside sq
 
 ## Shape
 
-A [Shape](/x_ite/components/shape/shape) node is the node to specify material and geometry properties. We add a Shape node to the world now, as shown below.
+A [Shape](/x_ite/components/shape/shape/) node is the node to specify material and geometry properties. We add a Shape node to the world now, as shown below.
 
 ### XML Encoding
 
@@ -126,20 +126,20 @@ Shape {
 
 There are a lot geometry nodes defined in X3D. The basic geometry nodes are:
 
-- [Box](/x_ite/components/geometry3d/box)
-- [Cone](/x_ite/components/geometry3d/cone)
-- [Cylinder](/x_ite/components/geometry3d/cylinder)
-- [ElevationGrid](/x_ite/components/geometry3d/elevationgrid)
-- [Extrusion](/x_ite/components/geometry3d/extrusion)
-- [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset)
-- [Sphere](/x_ite/components/geometry3d/sphere)
-- [Text](/x_ite/components/text/text)
+- [Box](/x_ite/components/geometry3d/box/)
+- [Cone](/x_ite/components/geometry3d/cone/)
+- [Cylinder](/x_ite/components/geometry3d/cylinder/)
+- [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/)
+- [Extrusion](/x_ite/components/geometry3d/extrusion/)
+- [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/)
+- [Sphere](/x_ite/components/geometry3d/sphere/)
+- [Text](/x_ite/components/text/text/)
 
-The most important to define various geometries is probably the [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset) node.
+The most important to define various geometries is probably the [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) node.
 
 ## Transform
 
-In order to make our world any use at all, we need to be able to transform objects. X3D has three types of transformations we can apply to objects. These are *translation, rotation, and scale.* These are used in a [Transform](/x_ite/components/grouping/transform) node. A Transform node doesn't have to have all three in it. You can just have a *rotation,* for instance. The transformations within a Transform apply to the children of the node. This is called nesting, where a node can have any number of child nodes. The syntax for this is shown in the example below, along with the syntax for a Transform node.
+In order to make our world any use at all, we need to be able to transform objects. X3D has three types of transformations we can apply to objects. These are *translation, rotation, and scale.* These are used in a [Transform](/x_ite/components/grouping/transform/) node. A Transform node doesn't have to have all three in it. You can just have a *rotation,* for instance. The transformations within a Transform apply to the children of the node. This is called nesting, where a node can have any number of child nodes. The syntax for this is shown in the example below, along with the syntax for a Transform node.
 
 ### XML Encoding
 
@@ -169,7 +169,7 @@ A Transform node can have another Transform nested inside it as a child, which a
 
 ## Anchor
 
-In X3D, you navigate between pages the same way as in HTML. You have an object that, when the user clicks on it, links to another page. Exactly what you're all used to. In X3D, this is done with the [Anchor](/x_ite/components/networking/anchor) node.
+In X3D, you navigate between pages the same way as in HTML. You have an object that, when the user clicks on it, links to another page. Exactly what you're all used to. In X3D, this is done with the [Anchor](/x_ite/components/networking/anchor/) node.
 
 ### XML Encoding
 
@@ -211,7 +211,7 @@ parameter [ "target=_blank" ]
 
 ## Background
 
-There are two ways we can change the background of our scene. One is to specify colors for the [Background](/x_ite/components/environmentaleffects/background), and the other is to provide images to be mapped onto the background. Both of these are implemented with the Background node. First of all, I'll describe how to add color to the background of your scene.
+There are two ways we can change the background of our scene. One is to specify colors for the [Background](/x_ite/components/environmentaleffects/background/), and the other is to provide images to be mapped onto the background. Both of these are implemented with the Background node. First of all, I'll describe how to add color to the background of your scene.
 
 ### XML Encoding
 
@@ -232,7 +232,7 @@ This will display a gray background. You can also make the background transparen
 
 ## Viewpoint
 
-To give the world camera another position or orientation there is a [Viewpoint](/x_ite/components/navigation/viewpoint) node. The viewpoint node can be placed anywhere within the scene graph.
+To give the world camera another position or orientation there is a [Viewpoint](/x_ite/components/navigation/viewpoint/) node. The viewpoint node can be placed anywhere within the scene graph.
 
 ### XML Encoding
 
@@ -251,9 +251,9 @@ DEF LookAtHouse Viewpoint {
 }
 ```
 
-Beside the Viewpoint node there is also an [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint) node to define an orthographic camera.
+Beside the Viewpoint node there is also an [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) node to define an orthographic camera.
 
-If you define more than once viewpoint in an X3D file, the first viewpoint defined will be bound if the world is loaded. To bind one of the other viewpoints send a *set\_bind* event with the value TRUE to the viewpoint. You must use a [Script](/x_ite/components/scripting/script) node for that or use a Anchor node with the name of the viewpoint in the *url* field preceded by '#'.
+If you define more than once viewpoint in an X3D file, the first viewpoint defined will be bound if the world is loaded. To bind one of the other viewpoints send a *set\_bind* event with the value TRUE to the viewpoint. You must use a [Script](/x_ite/components/scripting/script/) node for that or use a Anchor node with the name of the viewpoint in the *url* field preceded by '#'.
 
 ### XML Encoding
 
@@ -274,7 +274,7 @@ Anchor {
 
 The first thing to mention is the way that the X3D lighting model works. All lights have the following fields: *color, ambientIntensity,* and *intensity.* Each light has an intensity, which a value between 0 and 1 corresponding to its brightness. It also has an ambient intensity, also between 0 and 1, which is how much light it contributes to the general ambient light in the scene. Because of this, the more lights in the scene, the brighter the ambient illumination, which makes sense. Ambient light is light that shines on every surface in the scene, simulating light scattered from other objects. Each light also has a *color* field associated with it, which is the color of the light it emits. The direct light emitted by a light source is calculated by *intensity × color.* The ambient light contributed to the scene is *ambientIntensity × color.* Each light source also has an area of effect, so as to keep X3D worlds enclosed and scalable. The method of doing this varies between the different types.
 
-When using Gouraud shading browsers calculate lighting by working it out for each corner of a face, and interpolating the shading between these vertices. By default, X3D worlds will have the user's headlight ON. Remember to turn it off if you feel it necessary. Use a [NavigationInfo](/x_ite/components/navigation/navigationinfo) node to do that.
+When using Gouraud shading browsers calculate lighting by working it out for each corner of a face, and interpolating the shading between these vertices. By default, X3D worlds will have the user's headlight ON. Remember to turn it off if you feel it necessary. Use a [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node to do that.
 
 ### XML Encoding
 
@@ -293,20 +293,20 @@ NavigationInfo {
 
 There are three different light nodes that can be used within a scene.
 
-- [DirectionalLight](/x_ite/components/lighting/directionallight)
-- [PointLight](/x_ite/components/lighting/pointlight)
-- [SpotLight](/x_ite/components/lighting/spotlight)
+- [DirectionalLight](/x_ite/components/lighting/directionallight/)
+- [PointLight](/x_ite/components/lighting/pointlight/)
+- [SpotLight](/x_ite/components/lighting/spotlight/)
 
-You can place any light node within a grouping node (e.g. [Group](/x_ite/components/grouping/group), [Transform](/x_ite/components/grouping/transform), [Switch](/x_ite/components/grouping/switch)) and set the global field to **FALSE** to define a local light.
+You can place any light node within a grouping node (e.g. [Group](/x_ite/components/grouping/group/), [Transform](/x_ite/components/grouping/transform/), [Switch](/x_ite/components/grouping/switch/)) and set the global field to **FALSE** to define a local light.
 
 ## Grouping Nodes
 
 The following nodes are the most important grouping nodes (there are much more in X3D) which means that they can contain other nodes in their children field.
 
-- [Anchor](/x_ite/components/networking/anchor)
-- [Billboard](/x_ite/components/navigation/billboard)
-- [Collision](/x_ite/components/navigation/collision)
-- [Group](/x_ite/components/grouping/group)
-- [LOD](/x_ite/components/navigation/lod)
-- [Switch](/x_ite/components/grouping/switch)
-- [Transform](/x_ite/components/grouping/transform)
+- [Anchor](/x_ite/components/networking/anchor/)
+- [Billboard](/x_ite/components/navigation/billboard/)
+- [Collision](/x_ite/components/navigation/collision/)
+- [Group](/x_ite/components/grouping/group/)
+- [LOD](/x_ite/components/navigation/lod/)
+- [Switch](/x_ite/components/grouping/switch/)
+- [Transform](/x_ite/components/grouping/transform/)

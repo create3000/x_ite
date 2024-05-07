@@ -74,7 +74,7 @@ Bind the texture to a face (stretch the cookie and stick it):
 
 ## Syntax: TextureCoordinate
 
-A [TextureCoordinate](/x_ite/components/texturing/texturecoordinate) node contains a list of texture coordinates:
+A [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) node contains a list of texture coordinates:
 
 ### XML Encoding
 
@@ -91,11 +91,11 @@ TextureCoordinate {
 }
 ```
 
-Used as the *texCoord* field value of [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset) or [ElevationGrid](/x_ite/components/geometry3d/elevationgrid) nodes.
+Used as the *texCoord* field value of [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) or [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) nodes.
 
 ## Syntax: IndexedFaceSet
 
-An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset) geometry node creates geometry out of faces:
+An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node creates geometry out of faces:
 
 - texCoord and texCoordIndex - specify texture pieces
 
@@ -129,7 +129,7 @@ Shape {
 
 ## Syntax: ElevationGrid
 
-An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid) geometry node creates terrains:
+An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node creates terrains:
 
 - *texCoord* - specify texture pieces
 - Automatically generated texture coordinate indexes
@@ -160,7 +160,7 @@ Shape {
 
 ## Syntax: Appearance
 
-An [Appearance](/x_ite/components/shape/appearance) node describes overall shape appearance:
+An [Appearance](/x_ite/components/shape/appearance/) node describes overall shape appearance:
 
 - *textureTransform* - transform
 
@@ -192,7 +192,7 @@ Shape {
 
 ## Syntax: TextureTransform
 
-A [TextureTransform](/x_ite/components/texturing/texturetransform) node transforms texture coordinates:
+A [TextureTransform](/x_ite/components/texturing/texturetransform/) node transforms texture coordinates:
 
 - *translation* - position
 - *rotation* - orientation

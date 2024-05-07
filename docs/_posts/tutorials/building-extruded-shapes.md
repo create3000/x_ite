@@ -14,8 +14,8 @@ Extruded shapes are very common
 
 How can you do it:
 
-- You can build extruded shapes using an [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset) node.
-- You can build extruded shapes more easily and efficiently using an [Extrusion](/x_ite/components/geometry3d/extrusion) node.
+- You can build extruded shapes using an [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) node.
+- You can build extruded shapes more easily and efficiently using an [Extrusion](/x_ite/components/geometry3d/extrusion/) node.
 
 ## Creating extruded shapes
 
@@ -31,7 +31,7 @@ Extruded shapes are like long bubbles created with a bubble wand:
 
 ## Syntax: Extrusion
 
-An [Extrusion](/x_ite/components/geometry3d/extrusion) geometry node creates extruded geometry:
+An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates extruded geometry:
 
 - *crossSection* - 2-D cross-section
 - *spine* - 3-D sweep path
@@ -66,7 +66,7 @@ Shape {
 }
 ```
 
-An [Extrusion](/x_ite/components/geometry3d/extrusion) geometry node creates extruded geometry:
+An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates extruded geometry:
 
 - *solid* - shape is solid
 - *ccw* - faces are counter-clockwise
@@ -112,7 +112,7 @@ You can rotate the cross-section along the spine
 
 ## Syntax: Extrusion
 
-An [Extrusion](/x_ite/components/geometry3d/extrusion) geometry node creates geometry using:
+An [Extrusion](/x_ite/components/geometry3d/extrusion/) geometry node creates geometry using:
 
 - *scale* - cross-section scaling per spine point
 - *orientation* - cross-section rotation per spine point
@@ -144,7 +144,7 @@ Shape {
 
 ## Summary
 
-- An [Extrusion](/x_ite/components/geometry3d/extrusion) node efficiently creates extruded shapes
+- An [Extrusion](/x_ite/components/geometry3d/extrusion/) node efficiently creates extruded shapes
 - The *crossSection* field specifies the cross-section
 - The *spine* field specifies the sweep path
 - The *scale* and *orientation* fields specify scaling and rotation at each spine point
