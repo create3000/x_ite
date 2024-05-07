@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Full" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+    <head>
+	<component name='EnvironmentalEffects' level='3'></component>
+	<component name='Shaders' level='1'></component>
+	<component name='CubeMapTexturing' level='1'></component>
+	<component name='Texturing' level='1'></component>
+	<component name='Rendering' level='1'></component>
+	<component name='Grouping' level='3'></component>
+	<component name='Core' level='1'></component>
+	<component name='ParticleSystems' level='3'></component>
+	<meta name="title" content="variationalflowers.x3d"></meta>
+	<meta name="creator" content="John Carlson"></meta>
+	<meta name="description" content="A flower particle system"></meta>
+	<meta name="identifier" content="https://coderextreme.net/X3DJSONLD/src/main/data/variationalflowers.x3d"></meta>
+    </head>
+    <Scene>
+    	<WorldInfo title='variationalflowers.x3d'/>
+        <NavigationInfo type='"ANY" "EXAMINE" "FLY" "LOOKAT"'/>
+        <Viewpoint description='Tour Views' position="0 0 12"/>
+        <Background
+		backUrl='"../resources/images/all_probes/stpeters_cross/stpeters_back.png"'
+		bottomUrl='"../resources/images/all_probes/stpeters_cross/stpeters_bottom.png"'
+		frontUrl='"../resources/images/all_probes/stpeters_cross/stpeters_front.png"'
+		leftUrl='"../resources/images/all_probes/stpeters_cross/stpeters_left.png"'
+		rightUrl='"../resources/images/all_probes/stpeters_cross/stpeters_right.png"'
+		topUrl='"../resources/images/all_probes/stpeters_cross/stpeters_top.png"'
+        ></Background>
+        <Transform>
+                    <ParticleSystem maxParticles="20" geometryType="GEOMETRY">
+			    <!--
+			    values - array of MFFloats to pass to ComposedShader
+			    variations in values - array of MFFloats to pass to ComposedShader that varies values
+			    -->
+			<VariationPhysicsModel values="2 2 5 5 0 0" variations="0.2 0.1 0.3 0.3 0.01 0.01">
+			</VariationPhysicsModel>
+			<ExplosionEmitter speed="1"  variation="0.75"/>
+            <Sphere/>
+            <Appearance>
+                <Material diffuseColor='0.7 0.7 0.7' specularColor='0.5 0.5 0.5'/>
+                <ComposedCubeMapTexture DEF="texture">
+			<ImageTexture url='"../resources/images/all_probes/stpeters_cross/stpeters_back.png"' containerField="backTexture"/>
+			<ImageTexture url='"../resources/images/all_probes/stpeters_cross/stpeters_bottom.png"' containerField="bottomTexture"/>
+			<ImageTexture url='"../resources/images/all_probes/stpeters_cross/stpeters_front.png"' containerField="frontTexture"/>
+			<ImageTexture url='"../resources/images/all_probes/stpeters_cross/stpeters_left.png"' containerField="leftTexture"/>
+			<ImageTexture url='"../resources/images/all_probes/stpeters_cross/stpeters_right.png"' containerField="rightTexture"/>
+			<ImageTexture url='"../resources/images/all_probes/stpeters_cross/stpeters_top.png"' containerField="topTexture"/>
+                </ComposedCubeMapTexture>  
+                <ComposedShader DEF="x_ite" language='GLSL'>
+		  <field name='chromaticDispertion' accessType='initializeOnly' type='SFVec3f' value='0.98 1 1.033'></field>
+		  <field name='cube' type='SFNode' accessType="initializeOnly">
+			<ComposedCubeMapTexture USE="texture"></ComposedCubeMapTexture>
+		  </field>
+		  <field name='bias' accessType='initializeOnly' type='SFFloat' value='0.5'></field>
+		  <field name='scale' accessType='initializeOnly' type='SFFloat' value='0.5'></field>
+		  <field name='power' accessType='initializeOnly' type='SFFloat' value='2'></field>
+                  <field name='x3d_ParticleValues' type='MFFloat' accessType='inputOutput' value='2 1 4 4 0 0'></field>
+		  <ShaderPart url='"../shaders/x_ite_variations.vs"' type="VERTEX" containerField='parts'></ShaderPart>
+		  <ShaderPart url='"../shaders/commonnew.fs"' containerField='parts' type='FRAGMENT'></ShaderPart>
+                </ComposedShader>
+		    </Appearance>
+	        </ParticleSystem>
+		<!--
+                <Script DEF='Animate'>
+		  <field name="set_fraction" accessType="inputOnly" type="SFFloat"></field>
+		  <field name='values' type='MFFloat' accessType='inputOutput' value='2 2 5 5 0 0'></field>
+		  <field name='variations' type='MFFloat' accessType='inputOutput' value='0.2 0.1 0.3 0.3 0.01 0.01'></field>
+		  <field name='lastframe' type='SFFloat' accessType='inputOutput' value='0'></field>
+		  <field name='updaterate' type='SFFloat' accessType='inputOutput' value='0.1'></field>
+<![CDATA[
+ecmascript:
+			function set_fraction(f, tm) {
+			    if (lastframe + updaterate < tm) {
+			  	lastframe = tm;
+				for (let v in values) {
+					values[v] = values[v] + (2 * Math.random() - 1) * variations[v];
+				}
+			    }
+			}
+]]>
+</Script>
+	    <TimeSensor DEF='TourTime' cycleInterval='45' loop='true'></TimeSensor>
+            <ROUTE fromNode="TourTime" fromField="fraction_changed" toNode="Animate" toField="set_fraction"></ROUTE>
+            <ROUTE fromNode='Animate' fromField='values' toNode='x_ite' toField='x3d_ParticleValues'/>
+		    -->
+            </Transform>
+    </Scene>
+</X3D>

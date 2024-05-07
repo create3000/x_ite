@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Full' version='3.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+  <head>
+    <meta name='comment' content='World of Titania'/>
+    <meta name='created' content='Mon, 14 Sep 2015 21:00:05 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Titania V1.1.0, http://titania.create3000.de'/>
+    <meta name='icon' content='../../ui/icons/icon-bw.svg'/>
+    <meta name='modified' content='Mon, 14 Sep 2015 21:00:05 GMT'/>
+    <meta name='title' content='about:gears'/>
+  </head>
+  <Scene>
+    <ExternProtoDeclare name='Rotor' url='"Rotor.x3d"'>
+      <field accessType='inputOutput' type='SFBool' name='enabled'/>
+      <field accessType='inputOutput' type='SFTime' name='cycleInterval'/>
+      <field accessType='inputOutput' type='SFVec3f' name='axis'/>
+      <field accessType='inputOutput' type='SFFloat' name='angle'/>
+      <field accessType='inputOutput' type='SFBool' name='loop'/>
+      <field accessType='inputOutput' type='SFTime' name='startTime'/>
+      <field accessType='inputOutput' type='SFTime' name='pauseTime'/>
+      <field accessType='inputOutput' type='SFTime' name='resumeTime'/>
+      <field accessType='inputOutput' type='SFTime' name='stopTime'/>
+      <field accessType='outputOnly' type='SFBool' name='isActive'/>
+      <field accessType='outputOnly' type='SFTime' name='cycleTime'/>
+      <field accessType='outputOnly' type='SFRotation' name='rotation_changed'/>
+    </ExternProtoDeclare>
+    <ProtoDeclare name='Gear'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFFloat' name='teeth' value='10'/>
+        <field accessType='inputOutput' type='SFFloat' name='toothDepth' value='2'/>
+        <field accessType='inputOutput' type='SFFloat' name='innerRadius' value='1'/>
+        <field accessType='inputOutput' type='SFFloat' name='outerRadius' value='4'/>
+        <field accessType='inputOutput' type='SFFloat' name='width' value='1'/>
+        <field accessType='initializeOnly' type='SFFloat' name='creaseAngle'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <IndexedFaceSet DEF='Gear'>
+          <IS>
+            <connect nodeField='creaseAngle' protoField='creaseAngle'/>
+          </IS>
+          <Coordinate/>
+        </IndexedFaceSet>
+        <Script
+            directOutput='true'>
+          <field accessType='inputOutput' type='SFFloat' name='teeth'/>
+          <field accessType='inputOutput' type='SFFloat' name='toothDepth'/>
+          <field accessType='inputOutput' type='SFFloat' name='innerRadius'/>
+          <field accessType='inputOutput' type='SFFloat' name='outerRadius'/>
+          <field accessType='inputOutput' type='SFFloat' name='width'/>
+          <field accessType='initializeOnly' type='SFNode' name='gear'>
+            <IndexedFaceSet USE='Gear'/>
+          </field>
+          <IS>
+            <connect nodeField='teeth' protoField='teeth'/>
+            <connect nodeField='toothDepth' protoField='toothDepth'/>
+            <connect nodeField='innerRadius' protoField='innerRadius'/>
+            <connect nodeField='outerRadius' protoField='outerRadius'/>
+            <connect nodeField='width' protoField='width'/>
+          </IS>
+<![CDATA[vrmlscript:
+
+function initialize ()
+{
+	eventsProcessed ();
+}
+
+function eventsProcessed ()
+{
+	print ('### Generating gear ...');
+
+	var indices = new MFInt32 ();
+	var points  = new MFVec3f ();
+
+	var cos = Math .cos;
+	var sin = Math .sin;
+
+	// Radien and tooth angle
+
+	var radius0 = innerRadius;
+	var radius1 = outerRadius - toothDepth / 2;
+	var radius2 = outerRadius + toothDepth / 2;
+	var da = 2 * Math .PI / teeth / 4;
+
+	// Front vectors
+
+	var vectorf0 = new SFVec3f (radius0, 0, width * 0.5);
+	var vectorf1 = new SFVec3f (radius1, 0, width * 0.5);
+	var vectorf2 = new SFVec3f (radius2, 0, width * 0.5);
+
+	// Back vectors
+
+	var vectorb0 = new SFVec3f (radius0, 0, -width * 0.5);
+	var vectorb1 = new SFVec3f (radius1, 0, -width * 0.5);
+	var vectorb2 = new SFVec3f (radius2, 0, -width * 0.5);
+
+	// Generate front face indices
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var index = i * 3;
+
+		indices [indices .length] = index;
+		indices [indices .length] = index + 1;
+		indices [indices .length] = index + 2;
+		indices [indices .length] = index + 4;
+		indices [indices .length] = index + 3;
+		indices [indices .length] = -1;
+	}
+
+	// Generate front face points
+
+	for (var i = 0; i < teeth + 1; ++ i)
+	{
+		var angle = i * 2 * Math .PI / teeth;
+
+		points [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorf0);
+		points [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorf1);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorf1);
+	}
+
+	points .length = points .length - 1;
+
+	points [points .length] = new SFVec3f ();
+	points [points .length] = new SFVec3f ();
+	points [points .length] = new SFVec3f ();
+
+
+	// Generate front sides of teeth indices
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var index = i * 4;
+
+		indices [indices .length] = points .length + index;
+		indices [indices .length] = points .length + index + 1;
+		indices [indices .length] = points .length + index + 2;
+		indices [indices .length] = points .length + index + 3;
+		indices [indices .length] = -1;
+	}
+
+	// Generate front sides of teeth points
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var angle = i * 2 * Math .PI / teeth;
+
+		points [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorf1);
+		points [points .length] = new SFRotation (0, 0, 1, angle + da)     .multVec (vectorf2);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 2 * da) .multVec (vectorf2);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorf1);
+	}
+
+
+	// Generate back face indices
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var index = i * 3;
+
+		indices [indices .length] = points .length + index;
+		indices [indices .length] = points .length + index + 3;
+		indices [indices .length] = points .length + index + 4;
+		indices [indices .length] = points .length + index + 2;
+		indices [indices .length] = points .length + index + 1;
+		indices [indices .length] = -1;
+	}
+
+	// Generate back face points
+
+	for (var i = 0; i < teeth + 1; ++ i)
+	{
+		var angle = i * 2 * Math .PI / teeth;
+
+		points [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorb0);
+		points [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorb1);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorb1);
+	}
+
+	points .length = points .length - 1;
+
+
+	// Generate back sides of teeth indices
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var index = i * 4;
+
+		indices [indices .length] = points .length + index;
+		indices [indices .length] = points .length + index + 1;
+		indices [indices .length] = points .length + index + 2;
+		indices [indices .length] = points .length + index + 3;
+		indices [indices .length] = -1;
+	}
+
+	// Generate front sides of teeth points
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var angle = i * 2 * Math .PI / teeth;
+
+		points [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorb1);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 2 * da) .multVec (vectorb2);
+		points [points .length] = new SFRotation (0, 0, 1, angle + da)     .multVec (vectorb2);
+		points [points .length] = new SFRotation (0, 0, 1, angle)          .multVec (vectorb1);
+	}
+
+
+	// Generate outward faces of teeth indices
+
+	for (var i = 0; i < teeth * 4; ++ i)
+	{
+		var index = i * 2;
+
+		indices [indices .length] = points .length + index;
+		indices [indices .length] = points .length + index + 1;
+		indices [indices .length] = points .length + index + 3;
+		indices [indices .length] = points .length + index + 2;
+		indices [indices .length] = -1;
+	}
+
+	indices [indices .length - 3] = points .length + 1;
+	indices [indices .length - 2] = points .length;
+
+	// Generate outward faces of teeth points
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+	   var angle = i * 2 * Math .PI / teeth;
+
+		points [points .length] = new SFRotation (0, 0, 1, angle) .multVec (vectorf1);
+		points [points .length] = new SFRotation (0, 0, 1, angle) .multVec (vectorb1);
+
+		points [points .length] = new SFRotation (0, 0, 1, angle + da) .multVec (vectorf2);
+		points [points .length] = new SFRotation (0, 0, 1, angle + da) .multVec (vectorb2);
+
+		points [points .length] = new SFRotation (0, 0, 1, angle + 2 * da) .multVec (vectorf2);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 2 * da) .multVec (vectorb2);
+
+		points [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorf1);
+		points [points .length] = new SFRotation (0, 0, 1, angle + 3 * da) .multVec (vectorb1);
+	}
+
+
+	// Generate inside radius cylinder points
+
+	for (var i = 0; i < teeth; ++ i)
+	{
+		var index = i * 2;
+
+		indices [indices .length] = points .length + index;
+		indices [indices .length] = points .length + index + 1;
+		indices [indices .length] = points .length + index + 3;
+		indices [indices .length] = points .length + index + 2;
+		indices [indices .length] = -1;
+	}
+
+	indices [indices .length - 3] = points .length + 1;
+	indices [indices .length - 2] = points .length;
+
+	// Generate inside radius cylinder indices
+
+	for (var i = 0; i < teeth + 1; ++ i)
+	{
+		var angle = i * 2 * Math .PI / teeth;
+		points [points .length] = new SFRotation (0, 0, 1, angle) .multVec (vectorb0);
+		points [points .length] = new SFRotation (0, 0, 1, angle) .multVec (vectorf0);
+	}
+
+	print ('### Generating gear done.');
+
+	gear .coord .point   = points;
+	gear .set_coordIndex = indices;
+}
+]]> 
+        </Script>
+      </ProtoBody>
+    </ProtoDeclare>
+    <Viewpoint
+        description='Home'
+        position='0 0 20'/>
+    <ProtoInstance name='Rotor' DEF='RedRotor'>
+      <fieldValue name='cycleInterval' value='10'/>
+      <fieldValue name='loop' value='true'/>
+    </ProtoInstance>
+    <ProtoInstance name='Rotor' DEF='GreenRotor'>
+      <fieldValue name='cycleInterval' value='5'/>
+      <fieldValue name='loop' value='true'/>
+    </ProtoInstance>
+    <ProtoInstance name='Rotor' DEF='BlueRotor'>
+      <fieldValue name='cycleInterval' value='5'/>
+      <fieldValue name='loop' value='true'/>
+    </ProtoInstance>
+    <Transform DEF='RedGear_1'
+        translation='-2.59808 -2.39242 0.725499'
+        rotation='0.543846 0.826436 0.145723 0.627057'>
+      <Transform DEF='Gear_1'>
+        <Shape>
+          <Appearance>
+            <Material
+                diffuseColor='0.8 0.1 0'/>
+          </Appearance>
+          <ProtoInstance name='Gear' containerField='geometry'>
+            <fieldValue name='teeth' value='20'/>
+            <fieldValue name='toothDepth' value='0.7'/>
+            <fieldValue name='creaseAngle' value='0.6'/>
+          </ProtoInstance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <Transform DEF='GreenGear_1'
+        translation='2.68468 -1.34925 -2.14056'
+        rotation='0.111593 0.985198 0.130124 3.70575'>
+      <Transform DEF='Gear_2'>
+        <Shape>
+          <Appearance>
+            <Material
+                diffuseColor='0 0.8 0.2'/>
+          </Appearance>
+          <ProtoInstance name='Gear' containerField='geometry'>
+            <fieldValue name='toothDepth' value='0.7'/>
+            <fieldValue name='innerRadius' value='0.5'/>
+            <fieldValue name='outerRadius' value='2'/>
+            <fieldValue name='width' value='2'/>
+            <fieldValue name='creaseAngle' value='0.7'/>
+          </ProtoInstance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <Transform DEF='BlueGear_1'
+        translation='-2.68468 3.41658 2.89301'
+        rotation='-0.0562884 0.982778 0.176007 3.65356'>
+      <Transform DEF='Gear_3'>
+        <Shape>
+          <Appearance>
+            <Material
+                diffuseColor='0.2 0.2 1'/>
+          </Appearance>
+          <ProtoInstance name='Gear' containerField='geometry'>
+            <fieldValue name='toothDepth' value='0.7'/>
+            <fieldValue name='innerRadius' value='1.3'/>
+            <fieldValue name='outerRadius' value='2'/>
+            <fieldValue name='width' value='0.5'/>
+          </ProtoInstance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='RedRotor' fromField='rotation_changed' toNode='Gear_1' toField='set_rotation'/>
+    <ROUTE fromNode='GreenRotor' fromField='rotation_changed' toNode='Gear_2' toField='set_rotation'/>
+    <ROUTE fromNode='BlueRotor' fromField='rotation_changed' toNode='Gear_3' toField='set_rotation'/>
+  </Scene>
+</X3D>

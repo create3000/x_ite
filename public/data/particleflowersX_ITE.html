@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>particleflowers.x3d (X_ITE)</title>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+      <meta name="generator"
+             content="https://www.web3d.org/x3d/stylesheets/X3dToX3domX_ITE.xslt"/>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- X_ITE developer site: https://create3000.github.io/x_ite -->
+        <link rel="icon"
+             type="image/png"
+             href="https://create3000.github.io/x_ite/assets/img/favicons/favicon-32x32.png"/>
+      <link rel="icon"
+             type="image/png"
+             sizes="32x32"
+             href="https://create3000.github.io/x_ite/assets/img/favicons/favicon-32x32.png"/>
+      <link rel="icon"
+             type="image/png"
+             sizes="16x16"
+             href="https://create3000.github.io/x_ite/assets/img/favicons/favicon-16x16.png"/>
+        <script type="text/javascript" src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+<style type="text/css">
+         @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
+         html, body {
+         margin: 0px;
+         padding: 0px;
+         border: 0px;
+         height: 100%;
+         }
+         body {
+         font-family: PT Sans, sans;
+         line-height: 1.3;
+         color: white;
+         background: #313131;
+         }
+         h1, h2 {
+         margin-top: 0px;
+         }
+         a {
+         text-decoration: none;
+         color: #ffe32d;
+         outline: 0;
+         }
+         a:hover {
+         text-decoration: underline;
+         }
+         a:before {
+         display: inline-block;
+         width: 0;
+         height: 0;
+         border-style: solid;
+         border-width: 3px 0 3px 5px;
+         border-color: transparent transparent transparent #ffe32d;
+         }
+         #main {
+         background: #414141;
+         width: 768px;
+         min-height: 100%;
+         border-right: 80px solid #313131;
+         outline: 40px solid #414141;
+         }
+         .frame {
+         }
+         .browser {
+         box-shadow: 0px 2px 12px 1px rgba(0, 0, 0, 0.95);
+         }
+         x3d-canvas {
+         /* Format 16:9 */
+         width: 100%;
+         height: 432px;
+         }
+         .references {
+         padding: 5px;
+         background: black;
+         }
+         .references p {
+         margin: 0;
+         }
+         .x_ite-console {
+         font-family: monospace;
+         margin-bottom: 0px;
+         }
+         .maximize {
+         background: none;
+         border: none;
+         }
+</style>
+      <script type="text/javascript">
+         var fullscreen = false;
+         
+         function toggleFullscreen ()
+         {
+           fullscreen = !fullscreen;
+           
+           if (fullscreen)
+           {
+             jQuery (".frame")
+               .css ("position", "fixed")
+               .css ("top", "0px")
+               .css ("left", "0px")
+               .css ("bottom", "0px")
+               .css ("right", "0px")
+               .css ("background", "#313131");
+                
+             jQuery (".maximize") .attr ("title", "Reduce frame, show console");
+         
+             jQuery (".browser") .css ("height", "100%");
+             jQuery ("x3d-canvas") .css ("height", "90%");
+           }
+           else
+           {
+             jQuery (".frame")
+               .css ("position", "inherit")
+               .css ("background", "none");
+               
+             jQuery (".maximize") .attr ("title", "Full Frame");
+         
+             jQuery (".browser") .css ("height", "initial");
+             jQuery ("x3d-canvas") .css ("height", "432px");
+           }
+         }
+</script>
+   </head>
+   <body id="htmlBody" onload="toggleFullscreen ();">
+      <div id="main" style="margin-left: 40px;">
+         <h2>particleflowers.x3d</h2>
+         <div class="frame">
+            <div class="browser">
+               <table>
+                  <tr>
+                     <td>
+                        <span class="references">
+                           <button title="Maximize Frame"
+                                    class="maximize"
+                                    onclick="toggleFullscreen ();">
+                              <img alt="Maximize Frame"
+                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH4QQNFQk1i7oCawAAALhJREFUGJWV0TFKA2EQBeBn1iqptBJvEFsVjxR0LyB4txQSRCzEeAexsLCJydr4WWQWwjbGBwPzv3nDP/Mm+EBXscAhggb3xW/wGaxt8Y2rEvZxWTx0wWqn4R3HJTzCW/FrbEZJnpKcJ3lJcpLkOlvMkpwmeU1ykeSxny0Yox2M0WLS73CA7ItRkqbycZJ2UL9JMqm8CeaY4rmWuatvb+u9xBnm/3Ij+PrD527X5178g4fBBRfFQ/cL8YlBv40R0JoAAAAASUVORK5CYII="/>
+                           </button>
+                           <a href="https://create3000.github.io/x_ite"
+                               target=""
+                               title="X_ITE website">X_ITE X3D Player</a> </span>
+                     </td>
+                     <td>
+                        <span class="webfont"> A flower particle system</span>
+                     </td>
+                  </tr>
+               </table>
+<x3d-canvas src='particleflowers.x3d'>
+	<p><b>Display error: X3D model not shown.</b></p>
+	<p>Your HTML browser does not appear to support all features required by the
+	<a href="https://create3000.github.io/x_ite" target="_blank">X_ITE</a> X3D player!</p>
+</x3d-canvas>
+<div class="references">Original X3D scene: <a href="&#34;particleflowers.x3d&#34; &#34;C:/Users/john/x_ite/public/data/particleflowers.x3d&#34;"
+                      target=""
+                      title="&#34;particleflowers.x3d&#34; &#34;C:/Users/john/x_ite/public/data/particleflowers.x3d&#34;">"particleflowers.x3d" "C:/Users/john/x_ite/public/data/particleflowers.x3d"</a>
+               </div>
+            </div>
+         </div>
+         <div>
+            <h3>X_ITE Console</h3>
+            <pre class="x_ite-console"/>
+         </div>
+      </div>
+   </body>
+</html>

@@ -5,6 +5,7 @@ export default /* glsl */ `
 uniform sampler2D x3d_TexCoordRamp;
 
 in vec4 x3d_Particle;
+in float[6] x3d_ParticleValues;
 
 vec4
 getInstanceTexCoord (const in vec4 texCoord)

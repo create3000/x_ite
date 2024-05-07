@@ -77,6 +77,7 @@ const X_ITE_EXAMPLES = [
    { component: "ParticleSystems", test: "PointEmitter" },
    { component: "ParticleSystems", test: "PolylineEmitter" },
    { component: "ParticleSystems", test: "SurfaceEmitter" },
+   { component: "ParticleSystems", test: "VariationPhysicsModel" },
    { component: "ParticleSystems", test: "VolumeEmitter" },
    { component: "ParticleSystems", test: "WindPhysicsModel" },
    { component: "Picking", test: "LinePickSensor" },

@@ -62,6 +62,7 @@ import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
 import BVH                  from "../../../standard/Math/Utility/BVH.js";
+import VariationPhysicsModel from "./VariationPhysicsModel.js";
 
 const PointGeometry = new Float32Array ([0, 0, 0, 1]);
 
@@ -112,6 +113,7 @@ function ParticleSystem (executionContext)
    // Private properties
 
    const browser = this .getBrowser ();
+   browser.addConcreteNode(VariationPhysicsModel);
 
    this .maxParticles             = 0;
    this .numParticles             = 0;
@@ -132,6 +134,7 @@ function ParticleSystem (executionContext)
    this .colorOffset              = this .particleOffsets [1];
    this .velocityOffset           = this .particleOffsets [2];
    this .matrixOffset             = this .particleOffsets [3];
+   this .particleValuesOffset     = this .particleOffsets [4];
    this .texCoordOffset           = 0;
    this .instancesStride          = this .particlesStride;
 }
@@ -515,6 +518,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                switch (type [t])
                {
                   case X3DConstants .ForcePhysicsModel:
+                  case X3DConstants .VariationPhysicsModel:
                   case X3DConstants .WindPhysicsModel:
                   {
                      forcePhysicsModelNodes .push (innerNode);
@@ -963,6 +967,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
                shaderNode .enableParticleAttribute       (gl, outputParticles, particlesStride, this .particleOffset, 1);
                shaderNode .enableInstanceMatrixAttribute (gl, outputParticles, particlesStride, this .matrixOffset,   1);
+               shaderNode .enableParticleValuesAttribute (gl, outputParticles, particlesStride, this .particleValuesOffset, 1);
                shaderNode .enableVertexAttribute         (gl, this .geometryBuffer, 0, this .verticesOffset);
             }
 
@@ -1039,6 +1044,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                shaderNode .enableParticleAttribute         (gl, outputParticles, particlesStride, this .particleOffset, 1);
                shaderNode .enableParticleVelocityAttribute (gl, outputParticles, particlesStride, this .velocityOffset, 1);
                shaderNode .enableInstanceMatrixAttribute   (gl, outputParticles, particlesStride, this .matrixOffset,   1);
+               shaderNode .enableParticleValuesAttribute   (gl, outputParticles, particlesStride, this .particleValuesOffset, 1);
 
                if (this .geometryContext .colorMaterial)
                {

@@ -638,7 +638,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
          {
-            const { instancesStride, particleOffset, velocityOffset, matrixOffset, normalMatrixOffset, colorOffset } = shapeNode;
+            const { instancesStride, particleOffset, velocityOffset, matrixOffset, particleValuesOffset, normalMatrixOffset, colorOffset } = shapeNode;
 
             if (particleOffset !== undefined)
                shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
@@ -647,6 +647,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                shaderNode .enableParticleVelocityAttribute (gl, instances, instancesStride, velocityOffset, 1);
 
             shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
+
+            if (particleValuesOffset !== undefined)
+               shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleValuesOffset, 1);
 
             if (normalMatrixOffset !== undefined)
                shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);

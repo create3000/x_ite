@@ -1100,12 +1100,15 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
       {
-         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
+         const { instancesStride, particleOffset, matrixOffset, particleValuesOffset, normalMatrixOffset } = shapeNode;
 
          if (particleOffset !== undefined)
             shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
 
          shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
+
+         if (particleValuesOffset !== undefined)
+            shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleValuesOffset, 1);
 
          if (normalMatrixOffset !== undefined)
             shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
@@ -1164,7 +1167,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
       {
-         const { instancesStride, particleOffset, velocityOffset, matrixOffset, normalMatrixOffset } = shapeNode;
+         const { instancesStride, particleOffset, velocityOffset, matrixOffset, particleValuesOffset, normalMatrixOffset } = shapeNode;
 
          if (particleOffset !== undefined)
             shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
@@ -1173,6 +1176,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
             shaderNode .enableParticleVelocityAttribute (gl, instances, instancesStride, velocityOffset, 1);
 
          shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
+
+         if (particleValuesOffset !== undefined)
+            shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleValuesOffset, 1);
 
          if (normalMatrixOffset !== undefined)
             shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
