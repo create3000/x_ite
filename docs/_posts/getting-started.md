@@ -752,7 +752,7 @@ onshutdown
 : Type: script code. This event handler will be called on the \<x3d-canvas\> element when a scene is unloaded or replaced by another world.
 
 preserveDrawingBuffer
-: A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for the *preserveDrawingBuffer* attribute is `false`. Set *preserveDrawingBuffer* to `true` if you want to save the image from the internal canvas. Keep in mind setting *preserveDrawingBuffer* to true can have performance implications.
+: A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for the *preserveDrawingBuffer* attribute is `false`. Set *preserveDrawingBuffer* to `true` if you want to save images from the internal canvas. Keep in mind setting *preserveDrawingBuffer* to true can have performance implications.
 
 orderIndependentTransparency
 : A Boolean value (`true` or `false`) to indicate whether order independent transparency rendering technique should be used. The default value for the *orderIndependentTransparency* attribute is `false`. Can slow down rendering speed if *antialiased* is `true`, but can be used in conjunction with *contentScale*.
