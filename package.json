@@ -9,7 +9,8 @@
       "require": "./dist/x_ite.js",
       "import": "./dist/x_ite.mjs",
       "types": "./dist/x_ite.d.ts"
-    }
+    },
+		"./x_ite.d.ts": "./dist/x_ite.d.ts"
   },
   "files": [
     "dist/*"
