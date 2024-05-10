@@ -993,7 +993,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          {
             if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
             {
-               if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
+               if (!Array .from (field .getReferences ()) .some (reference => reference .isInitializable ()))
                   mustOutputValue = !this .isDefaultValue (field);
             }
          }
@@ -1091,7 +1091,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                {
                   if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
                   {
-                     if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
+                     if (!Array .from (field .getReferences ()) .some (reference => reference .isInitializable ()))
                         mustOutputValue = true;
                   }
                }
@@ -1350,7 +1350,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             {
                if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
                {
-                  if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
+                  if (!Array .from (field .getReferences ()) .some (reference => reference .isInitializable ()))
                      mustOutputValue = !this .isDefaultValue (field);
                }
             }
@@ -1479,7 +1479,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             {
                if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
                {
-                  if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
+                  if (!Array .from (field .getReferences ()) .some (reference => reference .isInitializable ()))
                      mustOutputValue = true;
                }
             }
@@ -1634,7 +1634,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          for (const field of references)
          {
-            const protoFields = [... field .getReferences ()];
+            const protoFields = Array .from (field .getReferences ());
 
             for (const protoField of protoFields)
             {
@@ -1709,6 +1709,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    {
       const executionContext = this .getExecutionContext ();
 
+      if (!executionContext)
+         return;
+
       // Remove named node if any.
 
       if (this .getName ())
@@ -1718,11 +1721,11 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       {
          // Remove imported node if any.
 
-         if (executionContext .getExecutionContext ())
-         {
-            const parentContext = executionContext .getExecutionContext ();
+         const parentContext = executionContext .getExecutionContext ();
 
-            for (const importedNode of [... parentContext .getImportedNodes ()])
+         if (parentContext)
+         {
+            for (const importedNode of Array .from (parentContext .getImportedNodes ()))
             {
                try
                {
@@ -1738,7 +1741,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          // Remove exported node if any.
 
-         for (const exportedNode of [... executionContext .getExportedNodes ()])
+         for (const exportedNode of Array .from (executionContext .getExportedNodes ()))
          {
             if (exportedNode .getLocalNode () === this)
                executionContext .removeExportedNode (exportedNode .getExportedName ());
@@ -1757,7 +1760,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             if (!(secondParent instanceof Fields .MFNode))
                continue;
 
-            secondParent .setValue ([... secondParent] .filter (node => node ?.getValue () !== this))
+            secondParent .setValue (Array .from (secondParent) .filter (node => node ?.getValue () !== this))
          }
       }
 
