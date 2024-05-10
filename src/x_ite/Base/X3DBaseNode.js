@@ -127,6 +127,9 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    },
    setExecutionContext (executionContext)
    {
+      if (!this [_type] .includes (X3DConstants .X3DScene))
+         throw new Error (`${this .getTypeName ()}.setExecutionContext is not supported.`);
+
       // Disconnect interests.
 
       this .getOuterNode ?.()  ?.getLive () .removeInterest (_set_live__, this);
