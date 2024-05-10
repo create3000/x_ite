@@ -79,7 +79,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    },
    copy (instance)
    {
-      if (!instance || instance .getType () .includes (X3DConstants .X3DExecutionContext))
+      if (instance ?.getType () .includes (X3DConstants .X3DExecutionContext) ?? true)
       {
          const copy = this .create (instance);
 
