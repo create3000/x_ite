@@ -535,8 +535,10 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    },
    dispose ()
    {
+      this .getOuterNode ?.()  ?.getLive () .removeInterest (_set_live__, this);
+      this [_executionContext] ?.getLive () .removeInterest (_set_live__, this);
+
       this .setLive (false);
-      this .setExecutionContext (null);
 
       for (const field of this [_childObjects])
          field .dispose ();
