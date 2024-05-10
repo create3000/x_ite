@@ -980,8 +980,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    dispose ()
    {
-      this .setExecutionContext (null);
-
       this .exportedNodes .clear ();
 
       X3DExecutionContext .prototype .dispose .call (this);
