@@ -1709,9 +1709,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    {
       const executionContext = this .getExecutionContext ();
 
-      if (!executionContext)
-         return;
-
       // Remove named node if any.
 
       if (this .getName ())
