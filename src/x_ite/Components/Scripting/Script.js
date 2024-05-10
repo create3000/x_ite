@@ -129,14 +129,14 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    {
       return this ._url;
    },
-   async unloadData ()
+   unloadData ()
    {
       // Call shutdown.
 
       const shutdown = this .context ?.get ("shutdown");
 
       if (typeof shutdown === "function")
-         await this .call__ (shutdown, "shutdown");
+         this .call__ (shutdown, "shutdown");
 
       // Disconnect shutdown.
 
@@ -455,9 +455,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       console .error (`JavaScript Error in Script '${this .getName ()}', ${reason}\nworld url is '${worldURL}':`);
       console .error (error);
    },
-   async dispose ()
+   dispose ()
    {
-      await this .unloadData ();
+      this .unloadData ();
 
       X3DScriptNode .prototype .dispose .call (this);
    },
