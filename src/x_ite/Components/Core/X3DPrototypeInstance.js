@@ -135,7 +135,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   continue;
 
                // Has IS references.
-               if (field .hasReferences ())
+               if (field .getReferences () .size)
                   continue;
 
                // Default value of protoField is different from field.

@@ -128,7 +128,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             {
                const destinationField = copy .getPredefinedField (sourceField .getName ());
 
-               if (sourceField .hasReferences ())
+               if (sourceField .getReferences () .size)
                {
                   // IS relationship
 
@@ -179,7 +179,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                                        sourceField .getName (),
                                        destinationField);
 
-            if (sourceField .hasReferences ())
+            if (sourceField .getReferences () .size)
             {
                // IS relationship
 

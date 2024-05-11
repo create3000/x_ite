@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
-import X3DChildObject from "./X3DChildObject.js";
-import X3DConstants   from "./X3DConstants.js";
-import Events         from "./Events.js";
+import X3DChildObject  from "./X3DChildObject.js";
+import X3DConstants    from "./X3DConstants.js";
+import Events          from "./Events.js";
+import IterableWeakSet from "./IterableWeakSet.js";
 
 const
    _value               = Symbol (),
@@ -74,9 +75,9 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    [_value]: null,
    [_accessType]: X3DConstants .initializeOnly,
    [_unit]: null,
-   [_references]: new Set (),
+   [_references]: new IterableWeakSet (),
    [_referencesCallbacks]: new Map (),
-   [_fieldInterests]: new Set (),
+   [_fieldInterests]: new IterableWeakSet (),
    [_fieldCallbacks]: new Map (),
    [_inputRoutes]: new Set (),
    [_outputRoutes]: new Set (),
@@ -151,22 +152,19 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    {
       return this [_unit];
    },
-   hasReferences ()
-   {
-      return this [_references] .size !== 0;
-   },
    isReference (accessType)
    {
       return accessType === this [_accessType] || accessType === X3DConstants .inputOutput;
    },
    addReference (reference)
    {
-      const references = this .getReferences ();
+      if (this [_references] === X3DField .prototype [_references])
+         this [_references] = new IterableWeakSet ();
 
-      if (references .has (reference))
+      if (this [_references] .has (reference))
          return;
 
-      references .add (reference);
+      this [_references] .add (reference);
 
       // Create IS relationship
 
@@ -218,9 +216,6 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    getReferences ()
    {
-      if (this [_references] === X3DField .prototype [_references])
-         this [_references] = new Set ();
-
       return this [_references];
    },
    addReferencesCallback (key, object)
@@ -247,7 +242,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    addFieldInterest (field)
    {
       if (this [_fieldInterests] === X3DField .prototype [_fieldInterests])
-         this [_fieldInterests] = new Set ();
+         this [_fieldInterests] = new IterableWeakSet ();
 
       this [_fieldInterests] .add (field);
    },
