@@ -45,245 +45,114 @@
  *
  ******************************************************************************/
 
-import X3DObject   from "./X3DObject.js";
-import DEVELOPMENT from "../DEVELOPMENT.js";
+import X3DObject       from "./X3DObject.js";
+import IterableWeakSet from "./IterableWeakSet.js";
 
 const
    _modificationTime = Symbol (),
    _tainted          = Symbol (),
    _parents          = Symbol (),
-   _private          = Symbol (),
-   _registry         = Symbol ();
+   _private          = Symbol ();
 
 function X3DChildObject ()
 {
    X3DObject .call (this);
 }
 
-if (DEVELOPMENT)
+Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .prototype),
 {
-   Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .prototype),
+   [_modificationTime]: 0,
+   [_tainted]: false,
+   [_parents]: new IterableWeakSet (),
+   [_private]: false,
+   isInitializable ()
    {
-      [_modificationTime]: 0,
-      [_tainted]: false,
-      [_parents]: new Map (),
-      [_private]: false,
-      [_registry]: new FinalizationRegistry (Function .prototype),
-      isInitializable ()
-      {
-         return true;
-      },
-      isInput ()
-      {
-         return false;
-      },
-      isOutput ()
-      {
-         return false;
-      },
-      setModificationTime (value)
-      {
-         this [_modificationTime] = value;
-      },
-      getModificationTime ()
-      {
-         return this [_modificationTime];
-      },
-      setTainted (value)
-      {
-         this [_tainted] = value;
-      },
-      isTainted ()
-      {
-         return this [_tainted];
-      },
-      addEvent ()
-      {
-         for (const parent of this [_parents] .values ())
-            parent .deref () ?.addEvent (this);
-      },
-      addEventObject (field, event)
-      {
-         for (const parent of this [_parents] .values ())
-            parent .deref () ?.addEventObject (this, event);
-      },
-      processEvent ()
-      {
-         this .setTainted (false);
-         this .processInterests ();
-      },
-      isPrivate ()
-      {
-         return this [_private];
-      },
-      setPrivate (value)
-      {
-         this [_private] = value;
-      },
-      collectCloneCount ()
-      {
-         let cloneCount = 0;
-
-         for (const weakRef of this [_parents] .values ())
-         {
-            const parent = weakRef .deref ();
-
-            if (!parent)
-               continue;
-
-            if (parent [_private])
-               continue;
-
-            cloneCount += parent .collectCloneCount ();
-         }
-
-         return cloneCount;
-      },
-      addParent (parent)
-      {
-         if (this [_parents] === X3DChildObject .prototype [_parents])
-         {
-            this [_parents]  = new Map ();
-            this [_registry] = new FinalizationRegistry (id =>
-            {
-               this [_parents] .delete (id);
-               this .parentsChanged ();
-            });
-         }
-
-         this [_parents] .set (parent .getId (), new WeakRef (parent));
-         this [_registry] .register (parent, parent .getId (), parent);
-
-         this .parentsChanged ();
-      },
-      removeParent (parent)
-      {
-         this [_parents] .delete (parent .getId ());
-         this [_registry] .unregister (parent);
-
-         this .parentsChanged ();
-      },
-      getParents ()
-      {
-         const parents = new Set ();
-
-         for (const weakRef of this [_parents] .values ())
-            parents .add (weakRef .deref ())
-
-         parents .delete (undefined);
-
-         return parents;
-      },
-      parentsChanged () { },
-      dispose ()
-      {
-         this [_parents] .clear ();
-
-         X3DObject .prototype .dispose .call (this);
-      },
-   });
-}
-else
-{
-   Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .prototype),
+      return true;
+   },
+   isInput ()
    {
-      [_modificationTime]: 0,
-      [_tainted]: false,
-      [_parents]: new Set (),
-      [_private]: false,
-      isInitializable ()
-      {
-         return true;
-      },
-      isInput ()
-      {
-         return false;
-      },
-      isOutput ()
-      {
-         return false;
-      },
-      setModificationTime (value)
-      {
-         this [_modificationTime] = value;
-      },
-      getModificationTime ()
-      {
-         return this [_modificationTime];
-      },
-      setTainted (value)
-      {
-         this [_tainted] = value;
-      },
-      isTainted ()
-      {
-         return this [_tainted];
-      },
-      addEvent ()
-      {
-         for (const parent of this [_parents])
-            parent .addEvent (this);
-      },
-      addEventObject (field, event)
-      {
-         for (const parent of this [_parents])
-            parent .addEventObject (this, event);
-      },
-      processEvent ()
-      {
-         this .setTainted (false);
-         this .processInterests ();
-      },
-      isPrivate ()
-      {
-         return this [_private];
-      },
-      setPrivate (value)
-      {
-         this [_private] = value;
-      },
-      collectCloneCount ()
-      {
-         let cloneCount = 0;
+      return false;
+   },
+   isOutput ()
+   {
+      return false;
+   },
+   setModificationTime (value)
+   {
+      this [_modificationTime] = value;
+   },
+   getModificationTime ()
+   {
+      return this [_modificationTime];
+   },
+   setTainted (value)
+   {
+      this [_tainted] = value;
+   },
+   isTainted ()
+   {
+      return this [_tainted];
+   },
+   addEvent ()
+   {
+      for (const parent of this [_parents])
+         parent .addEvent (this);
+   },
+   addEventObject (field, event)
+   {
+      for (const parent of this [_parents])
+         parent .addEventObject (this, event);
+   },
+   processEvent ()
+   {
+      this .setTainted (false);
+      this .processInterests ();
+   },
+   isPrivate ()
+   {
+      return this [_private];
+   },
+   setPrivate (value)
+   {
+      this [_private] = value;
+   },
+   collectCloneCount ()
+   {
+      let cloneCount = 0;
 
-         for (const parent of this [_parents])
-         {
-            if (parent [_private])
-               continue;
-
-            cloneCount += parent .collectCloneCount ();
-         }
-
-         return cloneCount;
-      },
-      addParent (parent)
+      for (const parent of this [_parents])
       {
-         if (this [_parents] === X3DChildObject .prototype [_parents])
-            this [_parents] = new Set ();
+         if (parent [_private])
+            continue;
 
-         this [_parents] .add (parent);
+         cloneCount += parent .collectCloneCount ();
+      }
 
-         this .parentsChanged ();
-      },
-      removeParent (parent)
-      {
-         this [_parents] .delete (parent);
+      return cloneCount;
+   },
+   addParent (parent)
+   {
+      if (this [_parents] === X3DChildObject .prototype [_parents])
+         this [_parents] = new IterableWeakSet (() => this .parentsChanged ());
 
-         this .parentsChanged ();
-      },
-      getParents ()
-      {
-         return this [_parents];
-      },
-      parentsChanged () { },
-      dispose ()
-      {
-         this [_parents] .clear ();
+      this [_parents] .add (parent);
+   },
+   removeParent (parent)
+   {
+      this [_parents] .delete (parent);
+   },
+   getParents ()
+   {
+      return this [_parents];
+   },
+   parentsChanged () { },
+   dispose ()
+   {
+      this [_parents] .clear ();
 
-         X3DObject .prototype .dispose .call (this);
-      },
-   });
-}
+      X3DObject .prototype .dispose .call (this);
+   },
+});
 
 for (const key of Object .keys (X3DChildObject .prototype))
    Object .defineProperty (X3DChildObject .prototype, key, { enumerable: false });
