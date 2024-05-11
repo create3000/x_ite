@@ -96,6 +96,7 @@ Object .assign (X3DObject .prototype,
 
       const weakRef = new WeakRef (object);
 
+      // Copy interests in case of this function is called during a `processInterests` call.
       this [_interests] = new Map (this [_interests]);
 
       this [_interests] .set (interestId, { callback, weakRef, args });
@@ -103,6 +104,7 @@ Object .assign (X3DObject .prototype,
    },
    removeInterest (callbackName, object)
    {
+      // Copy interests in case of this function is called during a `processInterests` call.
       this [_interests] = new Map (this [_interests]);
 
       this [_interests] .delete (X3DObject .getInterestId (callbackName, object));
