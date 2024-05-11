@@ -98,6 +98,12 @@ export default typeof FinalizationRegistry === "undefined" || typeof WeakRef ===
       this .#callback ?.();
    }
 
+   forEach (callbackFn, thisArg)
+   {
+      for (const object of this .values ())
+         callbackFn .call (thisArg, object, object, this);
+   }
+
    has (object)
    {
       return this .#map .has (object .getId ());
