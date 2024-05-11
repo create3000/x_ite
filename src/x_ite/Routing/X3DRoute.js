@@ -59,6 +59,7 @@ const
    _destinationNode      = Symbol (),
    _destinationFieldName = Symbol (),
    _destinationField     = Symbol (),
+   _registry             = Symbol (),
    _disposed             = Symbol ();
 
 function X3DRoute (executionContext, sourceNode, sourceFieldName, destinationNode, destinationFieldName)
@@ -70,6 +71,10 @@ function X3DRoute (executionContext, sourceNode, sourceFieldName, destinationNod
    this [_sourceFieldName]      = sourceFieldName;
    this [_destinationNode]      = new WeakRef (destinationNode);
    this [_destinationFieldName] = destinationFieldName;
+   this [_registry]             = new FinalizationRegistry (() => this .dispose ());
+
+   this [_registry] .register (sourceNode);
+   this [_registry] .register (destinationNode);
 
    if (sourceNode instanceof X3DImportedNode)
       sourceNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
@@ -93,7 +98,13 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    getSourceNode ()
    {
       ///  SAI
-      return this [_sourceNode] .deref () ?? null;
+
+      const sourceNode = this [_sourceNode] .deref ();
+
+      if (sourceNode)
+         return sourceNode;
+
+      throw new Error ("Route is already disposed.");
    },
    getSourceField ()
    {
@@ -111,12 +122,17 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       {
          return this [_sourceFieldName];
       }
-
    },
    getDestinationNode ()
    {
       ///  SAI
-      return this [_destinationNode] .deref () ?? null;
+
+      const destinationNode = this [_destinationNode] .deref ();
+
+      if (destinationNode)
+         return destinationNode;
+
+      throw new Error ("Route is already disposed.");
    },
    getDestinationField ()
    {
