@@ -66,9 +66,9 @@ function X3DRoute (executionContext, sourceNode, sourceFieldName, destinationNod
    X3DObject .call (this, executionContext);
 
    this [_executionContext]     = executionContext;
-   this [_sourceNode]           = sourceNode;
+   this [_sourceNode]           = new WeakRef (sourceNode);
    this [_sourceFieldName]      = sourceFieldName;
-   this [_destinationNode]      = destinationNode;
+   this [_destinationNode]      = new WeakRef (destinationNode);
    this [_destinationFieldName] = destinationFieldName;
 
    if (sourceNode instanceof X3DImportedNode)
@@ -88,22 +88,24 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    },
    getRouteId ()
    {
-      return X3DRoute .getRouteId (this [_sourceNode], this [_sourceFieldName], this [_destinationNode], this [_destinationFieldName]);
+      return X3DRoute .getRouteId (this .getSourceNode (), this [_sourceFieldName], this .getDestinationNode (), this [_destinationFieldName]);
    },
    getSourceNode ()
    {
       ///  SAI
-      return this [_sourceNode];
+      return this [_sourceNode] .deref () ?? null;
    },
    getSourceField ()
    {
       ///  SAI
 
-      if (this [_sourceField])
+      const sourceField = this [_sourceField] ?.deref ();
+
+      if (sourceField)
       {
-         return this [_sourceField] .getAccessType () === X3DConstants .inputOutput
-            ? this [_sourceField] .getName () + "_changed"
-            : this [_sourceField] .getName ();
+         return sourceField .getAccessType () === X3DConstants .inputOutput
+            ? sourceField .getName () + "_changed"
+            : sourceField .getName ();
       }
       else
       {
@@ -114,17 +116,19 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    getDestinationNode ()
    {
       ///  SAI
-      return this [_destinationNode];
+      return this [_destinationNode] .deref () ?? null;
    },
    getDestinationField ()
    {
       ///  SAI
 
-      if (this [_destinationField])
+      const destinationField = this [_destinationField] ?.deref ();
+
+      if (destinationField)
       {
-         return this [_destinationField] .getAccessType () === X3DConstants .inputOutput
-            ? "set_" + this [_destinationField] .getName ()
-            : this [_destinationField] .getName ();
+         return destinationField .getAccessType () === X3DConstants .inputOutput
+            ? "set_" + destinationField .getName ()
+            : destinationField .getName ();
       }
       else
       {
@@ -140,12 +144,14 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       }
       catch (error)
       {
-         if ((this [_sourceNode] instanceof X3DNode ||
-              this [_sourceNode] .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE) &&
-             (this [_destinationNode] instanceof X3DNode ||
-              this [_destinationNode] .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE))
+         const
+            sourceNode      = this [_sourceNode] ?.deref (),
+            destinationNode = this [_destinationNode] ?.deref ();
+
+         if ((sourceNode instanceof X3DNode || sourceNode ?.getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE) &&
+             (destinationNode instanceof X3DNode || destinationNode ?.getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE))
          {
-            console .warn (error .message);
+            console .error (error);
          }
       }
    },
@@ -154,39 +160,51 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       if (this [_disposed])
          return;
 
+      const
+         sourceNode      = this [_sourceNode] .deref (),
+         destinationNode = this [_destinationNode] .deref ();
+
       try
       {
-         const sourceNode = this [_sourceNode] instanceof X3DNode
-            ? this [_sourceNode]
-            : this [_sourceNode] .getExportedNode ();
+         const
+            node  = sourceNode instanceof X3DNode ? sourceNode : sourceNode .getExportedNode (),
+            field = node .getField (this [_sourceFieldName]);
 
-         this [_sourceField] = sourceNode .getField (this [_sourceFieldName]);
+         this [_sourceField] = new WeakRef (field);
 
-         this [_sourceField] .addOutputRoute (this);
+         field .addOutputRoute (this);
       }
       catch (error)
       {
          var firstError = error;
+
+         this [_sourceField] = null;
       }
 
       try
       {
-         const destinationNode = this [_destinationNode] instanceof X3DNode
-            ? this [_destinationNode]
-            : this [_destinationNode] .getExportedNode ();
+         const
+            node  = destinationNode instanceof X3DNode ? destinationNode : destinationNode .getExportedNode (),
+            field = node .getField (this [_destinationFieldName]);
 
-         this [_destinationField] = destinationNode .getField (this [_destinationFieldName]);
+         this [_destinationField] = new WeakRef (field);
 
-         this [_destinationField] .addInputRoute (this);
+         field .addInputRoute (this);
       }
       catch (error)
       {
          var secondError = error;
+
+         this [_destinationField] = null;
       }
 
-      if (this [_sourceField] && this [_destinationField])
+      const
+         sourceField      = this [_sourceField] ?.deref (),
+         destinationField = this [_destinationField] ?.deref ();
+
+      if (sourceField && destinationField)
       {
-         this [_sourceField] .addFieldInterest (this [_destinationField]);
+         sourceField .addFieldInterest (destinationField);
       }
       else
       {
@@ -195,30 +213,38 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    },
    disconnect ()
    {
-      this [_sourceField]      ?.removeOutputRoute (this);
-      this [_destinationField] ?.removeInputRoute (this);
+      const
+         sourceField      = this [_sourceField] ?.deref (),
+         destinationField = this [_destinationField] ?.deref ();
 
-      if (this [_sourceField] && this [_destinationField])
-         this [_sourceField] .removeFieldInterest (this [_destinationField]);
+      sourceField ?.removeOutputRoute (this);
+      destinationField ?.removeInputRoute (this);
+
+      if (sourceField && destinationField)
+         sourceField .removeFieldInterest (destinationField);
 
       this [_sourceField]      = null;
       this [_destinationField] = null;
    },
    toVRMLStream (generator)
    {
-      if (!generator .ExistsRouteNode (this [_sourceNode]))
+      const
+         sourceNode      = this [_sourceNode] .deref (),
+         destinationNode = this [_destinationNode] .deref ();
+
+      if (!generator .ExistsRouteNode (sourceNode))
          throw new Error (`Source node does not exist in scene graph.`);
 
-      if (!generator .ExistsRouteNode (this [_destinationNode]))
+      if (!generator .ExistsRouteNode (destinationNode))
          throw new Error (`Destination node does not exist in scene graph.`);
 
-      const sourceNodeName = this [_sourceNode] instanceof X3DNode
-         ? generator .Name (this [_sourceNode])
-         : generator .ImportedName (this [_sourceNode]);
+      const sourceNodeName = sourceNode instanceof X3DNode
+         ? generator .Name (sourceNode)
+         : generator .ImportedName (sourceNode);
 
-      const destinationNodeName = this [_destinationNode] instanceof X3DNode
-         ? generator .Name (this [_destinationNode])
-         : generator .ImportedName (this [_destinationNode]);
+      const destinationNodeName = destinationNode instanceof X3DNode
+         ? generator .Name (destinationNode)
+         : generator .ImportedName (destinationNode);
 
       generator .string += generator .Indent ();
       generator .string += "ROUTE";
@@ -235,19 +261,23 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    },
    toXMLStream (generator)
    {
-      if (!generator .ExistsRouteNode (this [_sourceNode]))
+      const
+         sourceNode      = this [_sourceNode] .deref (),
+         destinationNode = this [_destinationNode] .deref ();
+
+      if (!generator .ExistsRouteNode (sourceNode))
          throw new Error (`Source node does not exist in scene graph.`);
 
-      if (!generator .ExistsRouteNode (this [_destinationNode]))
+      if (!generator .ExistsRouteNode (destinationNode))
          throw new Error (`Destination node does not exist in scene graph.`);
 
-      const sourceNodeName = this [_sourceNode] instanceof X3DNode
-         ? generator .Name (this [_sourceNode])
-         : generator .ImportedName (this [_sourceNode]);
+      const sourceNodeName = sourceNode instanceof X3DNode
+         ? generator .Name (sourceNode)
+         : generator .ImportedName (sourceNode);
 
-      const destinationNodeName = this [_destinationNode] instanceof X3DNode
-         ? generator .Name (this [_destinationNode])
-         : generator .ImportedName (this [_destinationNode]);
+      const destinationNodeName = destinationNode instanceof X3DNode
+         ? generator .Name (destinationNode)
+         : generator .ImportedName (destinationNode);
 
       generator .string += generator .Indent ();
       generator .string += "<ROUTE";
@@ -271,19 +301,23 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    },
    toJSONStream (generator)
    {
-      if (!generator .ExistsRouteNode (this [_sourceNode]))
+      const
+         sourceNode      = this [_sourceNode] .deref (),
+         destinationNode = this [_destinationNode] .deref ();
+
+      if (!generator .ExistsRouteNode (sourceNode))
          throw new Error (`Source node does not exist in scene graph.`);
 
-      if (!generator .ExistsRouteNode (this [_destinationNode]))
+      if (!generator .ExistsRouteNode (destinationNode))
          throw new Error (`Destination node does not exist in scene graph.`);
 
-      const sourceNodeName = this [_sourceNode] instanceof X3DNode
-         ? generator .Name (this [_sourceNode])
-         : generator .ImportedName (this [_sourceNode]);
+      const sourceNodeName = sourceNode instanceof X3DNode
+         ? generator .Name (sourceNode)
+         : generator .ImportedName (sourceNode);
 
-      const destinationNodeName = this [_destinationNode] instanceof X3DNode
-         ? generator .Name (this [_destinationNode])
-         : generator .ImportedName (this [_destinationNode]);
+      const destinationNodeName = destinationNode instanceof X3DNode
+         ? generator .Name (destinationNode)
+         : generator .ImportedName (destinationNode);
 
       generator .string += generator .Indent ();
       generator .string += '{';
@@ -363,11 +397,15 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
 
       this .disconnect ();
 
-      if (this [_sourceNode] instanceof X3DImportedNode)
-         this [_sourceNode] .getInlineNode () .getLoadState () .removeInterest ("reconnect", this);
+      const
+         sourceNode      = this [_sourceNode] .deref (),
+         destinationNode = this [_destinationNode] .deref ();
 
-      if (this [_destinationNode] instanceof X3DImportedNode)
-         this [_destinationNode] .getInlineNode () .getLoadState () .removeInterest ("reconnect", this);
+      if (sourceNode instanceof X3DImportedNode)
+         sourceNode .getInlineNode () .getLoadState () .removeInterest ("reconnect", this);
+
+      if (destinationNode instanceof X3DImportedNode)
+         destinationNode .getInlineNode () .getLoadState () .removeInterest ("reconnect", this);
 
       this [_executionContext] .deleteRoute (this);
 
@@ -384,10 +422,12 @@ Object .defineProperties (X3DRoute .prototype,
    {
       get ()
       {
-         if (this [_sourceNode] instanceof X3DNode)
-            return SFNodeCache .get (this [_sourceNode]);
-         else
-            return this [_sourceNode];
+         const sourceNode = this .getSourceNode ();
+
+         if (sourceNode instanceof X3DNode)
+            return SFNodeCache .get (sourceNode);
+
+         return sourceNode;
       },
       enumerable: true,
    },
@@ -400,10 +440,12 @@ Object .defineProperties (X3DRoute .prototype,
    {
       get ()
       {
-         if (this [_destinationNode] instanceof X3DNode)
-            return SFNodeCache .get (this [_destinationNode]);
-         else
-            return this [_destinationNode];
+         const destinationNode = this .getDestinationNode ();
+
+         if (destinationNode instanceof X3DNode)
+            return SFNodeCache .get (destinationNode);
+
+         return destinationNode;
       },
       enumerable: true,
    },

@@ -91,19 +91,20 @@ Object .assign (X3DObject .prototype,
          interestId = X3DObject .getInterestId (callbackName, object),
          callback   = object [callbackName];
 
-      if (this [_interests] === X3DObject .prototype [_interests])
-      {
-         this [_interests] = new Map ();
-         this [_registry]  = new FinalizationRegistry (interestId => this [_interests] .delete (interestId));
-      }
+      if (this [_registry] === X3DObject .prototype [_registry])
+         this [_registry] = new FinalizationRegistry (interestId => this [_interests] .delete (interestId));
 
       const weakRef = new WeakRef (object);
+
+      this [_interests] = new Map (this [_interests]);
 
       this [_interests] .set (interestId, { callback, weakRef, args });
       this [_registry] .register (object, interestId, object);
    },
    removeInterest (callbackName, object)
    {
+      this [_interests] = new Map (this [_interests]);
+
       this [_interests] .delete (X3DObject .getInterestId (callbackName, object));
       this [_registry] .unregister (object);
    },

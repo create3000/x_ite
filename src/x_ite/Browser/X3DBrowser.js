@@ -527,18 +527,18 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       {
          this .removeLoadingObject (fileLoader);
 
-         if (scene)
-         {
-            // Handle getLive for script scenes here:
+         if (!scene)
+            return;
 
-            if (!external)
-               scene .setExecutionContext (currentScene);
+         // Handle getLive for script scenes here:
 
-            scene .setLive (true);
+         if (!external)
+            scene .setExecutionContext (currentScene);
 
-            // Wait until scene is completely loaded, scene ._loadCount must be 0.
-            field .setValue (scene .rootNodes);
-         }
+         scene .setLive (true);
+
+         // Wait until scene is completely loaded, scene ._loadCount must be 0.
+         field .setValue (scene .rootNodes);
       });
    },
    createX3DFromURL (url, node, event)
