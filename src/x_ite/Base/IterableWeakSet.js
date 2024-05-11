@@ -45,6 +45,9 @@
  *
  ******************************************************************************/
 
+/**
+ * IterableWeakSet is a writable set-like object.
+ */
 export default typeof FinalizationRegistry === "undefined" || typeof WeakRef === "undefined" ? Set : class IterableWeakSet
 {
    #callback = undefined;
