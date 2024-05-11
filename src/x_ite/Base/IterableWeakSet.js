@@ -47,8 +47,8 @@
 
 export default typeof FinalizationRegistry === "undefined" || typeof WeakRef === "undefined" ? Set : class IterableWeakSet
 {
-   #map      = new Map ();
    #callback = undefined;
+   #map      = new Map ();
    #registry = new FinalizationRegistry (id =>
    {
       this .#map .delete (id);
@@ -67,12 +67,7 @@ export default typeof FinalizationRegistry === "undefined" || typeof WeakRef ===
 
    get size ()
    {
-      let size = 0;
-
-      for (const object of this .values ())
-         ++ size;
-
-      return size;
+      return this .#map .size;
    }
 
    add (object)
