@@ -114,7 +114,12 @@ Object .assign (X3DObject .prototype,
    processInterests ()
    {
       for (const { callback, weakRef, args } of this [_interests] .values ())
-         callback .call (weakRef .deref (), ... args, this);
+      {
+         const object = weakRef .deref ();
+
+         if (object)
+            callback .call (object, ... args, this);
+      }
    },
    getUserData (key)
    {
