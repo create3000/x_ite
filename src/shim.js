@@ -78,4 +78,35 @@
    }
 })();
 
+
+(() =>
+{
+   if (!window .WeakRef)
+   {
+      window .WeakRef = class WeakRef
+      {
+         #object;
+
+         constructor (object)
+         {
+            this .#object = object;
+         }
+
+         deref ()
+         {
+            return this .#object;
+         }
+      };
+   }
+
+   if (!window .FinalizationRegistry)
+   {
+      window .FinalizationRegistry = class FinalizationRegistry
+      {
+         register () { }
+         unregister () { }
+      };
+   }
+})();
+
 export default undefined;

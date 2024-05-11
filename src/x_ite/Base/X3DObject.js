@@ -45,12 +45,12 @@
  *
  ******************************************************************************/
 
-import Generator   from "../InputOutput/Generator.js";
-import DEVELOPMENT from "../DEVELOPMENT.js";
+import Generator from "../InputOutput/Generator.js";
 
 const
    _name      = Symbol (),
    _interests = Symbol (),
+   _registry  = Symbol (),
    _userData  = Symbol ();
 
 function X3DObject () { }
@@ -59,6 +59,7 @@ Object .assign (X3DObject .prototype,
 {
    [_name]: "",
    [_interests]: new Map (),
+   [_registry]: new FinalizationRegistry (Function .prototype),
    [_userData]: new Map (),
    getId ()
    {
@@ -90,15 +91,21 @@ Object .assign (X3DObject .prototype,
          interestId = X3DObject .getInterestId (callbackName, object),
          callback   = object [callbackName];
 
-      this [_interests] = new Map (this [_interests]);
+      if (this [_interests] === X3DObject .prototype [_interests])
+      {
+         this [_interests] = new Map ();
+         this [_registry]  = new FinalizationRegistry (interestId => this [_interests] .delete (interestId));
+      }
 
-      this [_interests] .set (interestId, callback .bind (object, ... args, this));
+      const weakRef = new WeakRef (object);
+
+      this [_interests] .set (interestId, { callback, weakRef, args });
+      this [_registry] .register (object, interestId, object);
    },
    removeInterest (callbackName, object)
    {
-      this [_interests] = new Map (this [_interests]);
-
       this [_interests] .delete (X3DObject .getInterestId (callbackName, object));
+      this [_registry] .unregister (object);
    },
    getInterests ()
    {
@@ -106,8 +113,8 @@ Object .assign (X3DObject .prototype,
    },
    processInterests ()
    {
-      for (const interest of this [_interests] .values ())
-         interest ();
+      for (const { callback, weakRef, args } of this [_interests] .values ())
+         callback .call (weakRef .deref (), ... args, this);
    },
    getUserData (key)
    {
@@ -206,7 +213,7 @@ Object .defineProperties (X3DObject .prototype,
 
 Object .assign (X3DObject,
 {
-   getId: DEVELOPMENT ? (() =>
+   getId: typeof FinalizationRegistry !== "undefined" ? (() =>
    {
       const
          map      = new WeakMap (),

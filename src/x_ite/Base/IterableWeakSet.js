@@ -45,12 +45,15 @@
  *
  ******************************************************************************/
 
-export default typeof FinalizationRegistry === "undefined" ? Set : class IterableWeakSet
+const d = new Map ();
+
+export default typeof FinalizationRegistry === "undefined" || typeof WeakRef === "undefined" ? Set : class IterableWeakSet
 {
    #map      = new Map ();
    #callback = undefined;
    #registry = new FinalizationRegistry (id =>
    {
+      console .log ("removed", d .get (id))
       this .#map .delete (id);
       this .#callback ?.();
    });
@@ -77,6 +80,8 @@ export default typeof FinalizationRegistry === "undefined" ? Set : class Iterabl
 
    add (object)
    {
+      d .set (object .getId (), `${object .getTypeName ()}, ${object .getName ()}`);
+
       this .#map .set (object .getId (), new WeakRef (object));
       this .#registry .register (object, object .getId (), object);
       this .#callback ?.();

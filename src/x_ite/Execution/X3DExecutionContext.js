@@ -890,10 +890,12 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       for (const route of Array .from (this [_routes]))
          this .deleteRoute (route);
 
-      this .externprotos  .clear ();
-      this .protos        .clear ();
-      this .importedNodes .clear ();
-      this .routes        .clear ();
+      this [_outerNode] = null;
+      this [_namedNodes]    .clear ();
+      this [_importedNodes] .clear ();
+      this [_protos]        .clear ();
+      this [_externprotos]  .clear ();
+      this [_routes]        .clear ();
 
       X3DBaseNode .prototype .dispose .call (this);
    },
