@@ -79,8 +79,8 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    [_referencesCallbacks]: new Map (),
    [_fieldInterests]: new IterableWeakSet (),
    [_fieldCallbacks]: new Map (),
-   [_inputRoutes]: new Set (),
-   [_outputRoutes]: new Set (),
+   [_inputRoutes]: new IterableWeakSet (),
+   [_outputRoutes]: new IterableWeakSet (),
    [_routeCallbacks]: new Map (),
    [_uniformLocation]: null,
    create ()
@@ -273,7 +273,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    addInputRoute (route)
    {
       if (this [_inputRoutes] === X3DField .prototype [_inputRoutes])
-         this [_inputRoutes] = new Set ();
+         this [_inputRoutes] = new IterableWeakSet ();
 
       this [_inputRoutes] .add (route);
 
@@ -292,7 +292,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    addOutputRoute (route)
    {
       if (this [_outputRoutes] === X3DField .prototype [_outputRoutes])
-         this [_outputRoutes] = new Set ();
+         this [_outputRoutes] = new IterableWeakSet ();
 
       this [_outputRoutes] .add (route);
 
