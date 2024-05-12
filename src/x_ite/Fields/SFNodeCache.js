@@ -45,42 +45,11 @@
  *
  ******************************************************************************/
 
-import SFNode   from "./SFNode.js";
-import Features from "../Features.js";
+import SFNode from "./SFNode.js";
 
 const cache = new WeakMap ();
 
-const SFNodeCache = Features .WEAK_REF ?
-{
-   get (baseNode)
-   {
-      const node = cache .get (baseNode) ?.deref ();
-
-      if (node)
-      {
-         return node;
-      }
-      else
-      {
-         const node = new SFNode (baseNode);
-
-         node .dispose = dispose;
-
-         cache .set (baseNode, new WeakRef (node));
-
-         return node;
-      }
-   },
-   add (baseNode, node)
-   {
-      cache .set (baseNode, new WeakRef (node));
-   },
-   delete (baseNode)
-   {
-      cache .delete (baseNode);
-   },
-}
-:
+const SFNodeCache =
 {
    get (baseNode)
    {
@@ -94,15 +63,15 @@ const SFNodeCache = Features .WEAK_REF ?
       {
          const node = new SFNode (baseNode);
 
-         node .dispose = dispose;
-
-         cache .set (baseNode, node);
+         this .add (baseNode, node);
 
          return node;
       }
    },
    add (baseNode, node)
    {
+      node .dispose = dispose;
+
       cache .set (baseNode, node);
    },
    delete (baseNode)
