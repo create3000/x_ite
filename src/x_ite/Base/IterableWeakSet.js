@@ -47,8 +47,7 @@
 
 import Features from "../Features.js";
 
-export default Features .WEAK_REF && Features .FINALIZATION_REGISTRY
-?
+export default Features .WEAK_REF && Features .FINALIZATION_REGISTRY ?
 /**
  * IterableWeakSet is a writable set-like class.
  */
