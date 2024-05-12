@@ -94,7 +94,7 @@ function dispose ()
 
    SFNode .prototype .dispose .call (this);
 
-   cache .delete (value);
+   SFNodeCache .delete (value);
 }
 
 export default SFNodeCache;

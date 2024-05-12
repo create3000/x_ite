@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    {
       return this .constructor .specificationRange;
    },
-   create (executionContext = this [_executionContext])
+   create (executionContext = this .getExecutionContext ())
    {
       return new (this .constructor) (executionContext);
    },
