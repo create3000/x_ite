@@ -568,6 +568,9 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          length     = target [_length],
          components = target .getComponents ();
 
+      if (newLength < 0)
+         throw new RangeError ("Invalid array length");
+
       let array = target .getValue ();
 
       if (newLength < length)

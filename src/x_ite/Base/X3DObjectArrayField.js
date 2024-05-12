@@ -347,6 +347,9 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
          array  = target .getValue (),
          length = array .length;
 
+      if (size < 0)
+         throw new RangeError ("Invalid array length");
+
       if (size < length)
       {
          for (let i = size; i < length; ++ i)
