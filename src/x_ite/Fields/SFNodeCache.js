@@ -49,6 +49,8 @@ import SFNode from "./SFNode.js";
 
 const cache = new WeakMap ();
 
+// const r = new FinalizationRegistry (t => console .error (`object deleted ${t}`));
+
 const SFNodeCache =
 {
    get (baseNode)
@@ -64,6 +66,9 @@ const SFNodeCache =
          const node = new SFNode (baseNode);
 
          this .set (baseNode, node);
+
+         // r .register (baseNode, `baseNode ${baseNode .getTypeName ()} ${baseNode .getName ()}`);
+         // r .register (node, "node");
 
          return node;
       }
