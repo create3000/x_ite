@@ -63,12 +63,12 @@ const SFNodeCache =
       {
          const node = new SFNode (baseNode);
 
-         this .add (baseNode, node);
+         this .set (baseNode, node);
 
          return node;
       }
    },
-   add (baseNode, node)
+   set (baseNode, node)
    {
       node .dispose = dispose;
 
