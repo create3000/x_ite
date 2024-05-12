@@ -340,29 +340,29 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
 
       return result;
    },
-   resize (size, value, silently)
+   resize (newLength, value, silently)
    {
       const
          target = this [_target],
          array  = target .getValue (),
          length = array .length;
 
-      if (size < 0)
+      if (newLength < 0)
          throw new RangeError ("Invalid array length");
 
-      if (size < length)
+      if (newLength < length)
       {
-         for (let i = size; i < length; ++ i)
+         for (let i = newLength; i < length; ++ i)
             target .removeChildObject (array [i]);
 
-         array .length = size;
+         array .length = newLength;
 
          if (!silently)
             target .addEvent ();
       }
-      else if (size > length)
+      else if (newLength > length)
       {
-         for (let i = length; i < size; ++ i)
+         for (let i = length; i < newLength; ++ i)
          {
             const field = new (target .getSingleType ()) ();
 
@@ -383,7 +383,6 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
    },
    removeChildObject (value)
    {
-      value .removeParent (this [_proxy]);
       value .dispose ();
    },
    reverse ()
