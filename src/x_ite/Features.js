@@ -105,6 +105,9 @@ const Features =
 {
    if (!Features .WEAK_REF)
    {
+      if (DEVELOPMENT)
+         console .info ("Add shim for WeakRef.");
+
       window .WeakRef = class WeakRef
       {
          #object;
@@ -123,6 +126,9 @@ const Features =
 
    if (!Features .FINALIZATION_REGISTRY)
    {
+      if (DEVELOPMENT)
+         console .info ("Add shim for FinalizationRegistry.");
+
       window .FinalizationRegistry = class FinalizationRegistry
       {
          register () { }
