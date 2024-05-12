@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import Generator from "../InputOutput/Generator.js";
+import Features  from "../Features.js";
 
 const
    _name      = Symbol (),
@@ -221,7 +222,7 @@ Object .defineProperties (X3DObject .prototype,
 
 Object .assign (X3DObject,
 {
-   getId: typeof FinalizationRegistry !== "undefined" ? (() =>
+   getId: Features .FINALIZATION_REGISTRY ? (() =>
    {
       const
          map      = new WeakMap (),

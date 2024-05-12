@@ -45,10 +45,14 @@
  *
  ******************************************************************************/
 
+import Features from "../Features.js";
+
+export default Features .WEAK_REF && Features .FINALIZATION_REGISTRY
+?
 /**
- * IterableWeakSet is a writable set-like object.
+ * IterableWeakSet is a writable set-like class.
  */
-export default typeof FinalizationRegistry === "undefined" || typeof WeakRef === "undefined" ? Set : class IterableWeakSet
+class IterableWeakSet
 {
    #callback = undefined;
    #map      = new Map ();
@@ -127,5 +131,13 @@ export default typeof FinalizationRegistry === "undefined" || typeof WeakRef ===
          if (object)
             yield object;
       }
+   }
+}
+:
+class IterableWeakSet extends Set
+{
+   constructor ()
+   {
+      super ();
    }
 };

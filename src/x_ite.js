@@ -47,7 +47,7 @@
 
 import X3D              from "./x_ite/X3D.js";
 import X3DCanvasElement from "./x_ite/X3DCanvasElement.js";
-import shim             from "./shim.js";
+import Features         from "./x_ite/Features.js";
 
 // Assign X3D to global namespace.
 

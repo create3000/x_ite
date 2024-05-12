@@ -45,12 +45,12 @@
  *
  ******************************************************************************/
 
-import SFNode      from "./SFNode.js";
-import DEVELOPMENT from "../DEVELOPMENT.js";
+import SFNode   from "./SFNode.js";
+import Features from "../Features.js";
 
 const cache = new WeakMap ();
 
-const SFNodeCache = DEVELOPMENT ?
+const SFNodeCache = Features .WEAK_REF ?
 {
    get (baseNode)
    {
@@ -79,7 +79,8 @@ const SFNodeCache = DEVELOPMENT ?
    {
       cache .delete (baseNode);
    },
-} :
+}
+:
 {
    get (baseNode)
    {
