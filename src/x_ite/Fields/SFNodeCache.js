@@ -69,7 +69,7 @@ const SFNodeCache =
          this .set (baseNode, node);
 
          // i += 2;
-         // console .warn (`baseNode ${++i} ${baseNode .getTypeName ()}`);
+         // console .warn (`baseNode ${i} ${baseNode .getTypeName ()}`);
          // r .register (baseNode, `baseNode ${baseNode .getTypeName ()}`);
          // r .register (node, `node ${baseNode .getTypeName ()}`);
 
