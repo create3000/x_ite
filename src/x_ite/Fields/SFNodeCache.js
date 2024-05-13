@@ -82,6 +82,7 @@ const SFNodeCache =
 
       // WeakMap allows associating data to objects in a way that doesn't prevent
       // the key objects from being collected, even if the values reference the keys.
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap
       cache .set (baseNode, node);
    },
    delete (baseNode)
