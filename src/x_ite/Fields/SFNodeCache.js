@@ -49,7 +49,8 @@ import SFNode from "./SFNode.js";
 
 const cache = new WeakMap ();
 
-// const r = new FinalizationRegistry (t => console .error (`object deleted ${t}`));
+// const r = new FinalizationRegistry (t => console .error (`object deleted ${--i} ${t}`));
+// let i = 0;
 
 const SFNodeCache =
 {
@@ -67,9 +68,10 @@ const SFNodeCache =
 
          this .set (baseNode, node);
 
-         // console .warn (`baseNode ${baseNode .getTypeName ()}`);
+         // i += 2;
+         // console .warn (`baseNode ${++i} ${baseNode .getTypeName ()}`);
          // r .register (baseNode, `baseNode ${baseNode .getTypeName ()}`);
-         // r .register (node, "node");
+         // r .register (node, `node ${baseNode .getTypeName ()}`);
 
          return node;
       }
@@ -78,6 +80,8 @@ const SFNodeCache =
    {
       node .dispose = dispose;
 
+      // WeakMap allows associating data to objects in a way that doesn't prevent
+      // the key objects from being collected, even if the values reference the keys.
       cache .set (baseNode, node);
    },
    delete (baseNode)
