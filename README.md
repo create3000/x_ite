@@ -1,4 +1,4 @@
-# [X_ITE](https://create3000.github.io/x_ite/) — X_ITE X3D Browser
+# [X_ITE](https://create3000.github.io/x_ite/) X3D Browser
 
 [![npm Version](https://badgen.net/npm/v/x_ite)](https://www.npmjs.com/package/x_ite)
 [![Build Size](https://badgen.net/bundlephobia/minzip/x_ite)](https://bundlephobia.com/package/x_ite)
