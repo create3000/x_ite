@@ -223,7 +223,7 @@ tags: [X3D, Visual, Blend Mode, Editor]
    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/blendEquationSeparate" target="_blank">WebGLRenderingContext.blendEquationSeparate()</a></li>
 </ul>
 
-<script>
+<script type="module">
 new Tabby ("[data-image-presets-tabs]");
 new Tabby ("[data-encoding-tabs]");
 </script>
