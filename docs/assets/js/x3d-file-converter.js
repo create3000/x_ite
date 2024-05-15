@@ -1,7 +1,3 @@
-X_ITE .then (X3D =>
-{
-const $ = jQuery;
-
 $("#drop-zone") .on ("dragover", event =>
 {
    event .stopPropagation ();
@@ -165,4 +161,3 @@ function download (mimeType, name, x3dSyntax)
 
    return false;
 }
-});

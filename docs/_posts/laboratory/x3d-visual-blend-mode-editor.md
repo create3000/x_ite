@@ -6,9 +6,10 @@ categories: [Laboratory]
 tags: [X3D, Visual, Blend Mode, Editor]
 ---
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/cferdinandi/tabby@12.0.0/dist/css/tabby-ui.min.css">
-<script src="https://cdn.jsdelivr.net/gh/cferdinandi/tabby@12.0.0/dist/js/tabby.polyfills.min.js"></script>
-<script type="module" src="https://create3000.github.io/media/laboratory/blend-mode/blend-mode.mjs"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/cferdinandi/tabby@12.0.0/dist/js/tabby.polyfills.min.js"></script>
+
 <link rel="stylesheet" href="https://create3000.github.io/media/laboratory/blend-mode/style.css">
+<script type="module" src="https://create3000.github.io/media/laboratory/blend-mode/blend-mode.mjs"></script>
 
 <table class="blend-mode">
    <tbody>

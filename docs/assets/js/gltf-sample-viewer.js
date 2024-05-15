@@ -1,7 +1,3 @@
-X_ITE .then (X3D =>
-{
-const $ = jQuery;
-
 // EnvironmentLight
 
 const ibl_files = [
@@ -714,4 +710,3 @@ createList ("glTF Draco Sample Models",    draco);
 createList ("glTF Embedded Sample Models", embedded);
 createList ("glTF IBL Sample Models",      ibl);
 createList ("glTF KTX Sample Models",      ktx);
-});

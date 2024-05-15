@@ -1,5 +1,5 @@
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-{% if content contains '<x3d-canvas' or page.x_ite %}
-<script src="/x_ite/assets/js/x_ite.js" version="{{ site.x_ite_latest_version }}"></script>
-{% endif %}
+<script defer src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
 <script defer src="/x_ite/assets/js/links.js"></script>
+{% if content contains '<x3d-canvas' or page.x_ite %}
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
+{% endif %}
