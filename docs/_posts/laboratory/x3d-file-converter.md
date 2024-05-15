@@ -75,4 +75,4 @@ Your converted files will appear here.
 
 ## Command Line Tool
 
-If you are looking for a command line tool to convert files, have a look at [x3d-tidy](https://www.npmjs.com/package/x3d-tidy){:target="_blank"}. It is a [Node](https://nodejs.org/) program and it can be run via `npx x3d-tidy`.
+If you are looking for a command line tool to convert files, have a look at [x3d-tidy](https://www.npmjs.com/package/x3d-tidy){:target="_blank"}. It is a [Node](https://nodejs.org/){:target="_blank"} program and it can be run via `npx x3d-tidy`.
