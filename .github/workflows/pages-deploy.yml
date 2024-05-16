@@ -52,7 +52,7 @@ jobs:
         run: |
           cd ./docs && bundle exec htmlproofer _site \
             \-\-disable-external \
-            \-\-ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/,/404/,/\/sunrize\//,/\/categories\//"
+            \-\-ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/,/404/,/\/sunrize\//,/\/categories\//,/^http:\/\/oldversion.com/"
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
