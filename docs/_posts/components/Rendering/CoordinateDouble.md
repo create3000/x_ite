@@ -1,9 +1,9 @@
 ---
 title: CoordinateDouble
 date: 2023-01-07
-nav: components-NURBS
-categories: [components, NURBS]
-tags: [CoordinateDouble, NURBS]
+nav: components-Rendering
+categories: [components, Rendering]
+tags: [CoordinateDouble, Rendering]
 ---
 <style>
 .post h3 {
