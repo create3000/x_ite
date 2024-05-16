@@ -81,6 +81,19 @@ sub node {
    close FILE;
 }
 
+sub fix_links {
+   @lines = @_;
+
+   s|http://www.w3.org|https://www.w3.org|sgo foreach @lines;
+   s|http://www.loc.gov|https://www.loc.gov|sgo foreach @lines;
+   s|http://xml.coverpages.org|https://xml.coverpages.org|sgo foreach @lines;
+   s|http://teem.sourceforge.net|https://teem.sourceforge.net|sgo foreach @lines;
+   s|http://paulbourke.net|https://paulbourke.net|sgo foreach @lines;
+   s|http://www.ecma-international.org|https://www.ecma-international.org|sgo foreach @lines;
+
+   return @lines;
+}
+
 sub link_nodes {
    $typeName = shift;
    @lines    = @_;
@@ -172,17 +185,8 @@ sub update_node {
    s/(:|\s*at)\]/]/sgo foreach @hints;
    s/(:|\s*at)\]/]/sgo foreach @warnings;
 
-   s|http://www.w3.org|https://www.w3.org|sgo foreach @hints;
-   s|http://www.w3.org|https://www.w3.org|sgo foreach @warnings;
-   s|http://www.loc.gov|https://www.loc.gov|sgo foreach @hints;
-   s|http://www.loc.gov|https://www.loc.gov|sgo foreach @warnings;
-   s|http://xml.coverpages.org|https://xml.coverpages.org|sgo foreach @hints;
-   s|http://xml.coverpages.org|https://xml.coverpages.org|sgo foreach @warnings;
-   s|http://teem.sourceforge.net|https://teem.sourceforge.net|sgo foreach @hints;
-   s|http://teem.sourceforge.net|https://teem.sourceforge.net|sgo foreach @warnings;
-   s|http://paulbourke.net|https://paulbourke.net|sgo foreach @hints;
-   s|http://paulbourke.net|https://paulbourke.net|sgo foreach @warnings;
-
+   @hints    = fix_links @hints;
+   @warnings = fix_links @warnings;
    @hints    = link_nodes $typeName, @hints;
    @warnings = link_nodes $typeName, @warnings;
 
@@ -431,17 +435,8 @@ sub update_field {
       s/(:|\s*at)\]/]/sgo foreach @hints;
       s/(:|\s*at)\]/]/sgo foreach @warnings;
 
-      s|http://www.w3.org|https://www.w3.org|sgo foreach @hints;
-      s|http://www.w3.org|https://www.w3.org|sgo foreach @warnings;
-      s|http://www.loc.gov|https://www.loc.gov|sgo foreach @hints;
-      s|http://www.loc.gov|https://www.loc.gov|sgo foreach @warnings;
-      s|http://xml.coverpages.org|https://xml.coverpages.org|sgo foreach @hints;
-      s|http://xml.coverpages.org|https://xml.coverpages.org|sgo foreach @warnings;
-      s|http://teem.sourceforge.net|https://teem.sourceforge.net|sgo foreach @hints;
-      s|http://teem.sourceforge.net|https://teem.sourceforge.net|sgo foreach @warnings;
-      s|http://paulbourke.net|https://paulbourke.net|sgo foreach @hints;
-      s|http://paulbourke.net|https://paulbourke.net|sgo foreach @warnings;
-
+      @hints       = fix_links @hints;
+      @warnings    = fix_links @warnings;
       @description = link_nodes $typeName, @description;
       @hints       = link_nodes $typeName, @hints;
       @warnings    = link_nodes $typeName, @warnings;
