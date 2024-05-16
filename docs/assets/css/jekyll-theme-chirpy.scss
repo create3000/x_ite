@@ -1,7 +1,11 @@
 ---
 ---
 
-@import "main";
+@import 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
 
 /* append your custom style below */
 
@@ -137,6 +141,14 @@
 
 .content dl dt {
   color: var(--h3-color-strong);
+}
+
+.post-tail-wrapper .nav-wrapper h2 {
+  font-size: 1rem;
+}
+
+.post-tail-wrapper .nav-wrapper a {
+  font-size: var(--bs-body-font-size);
 }
 
 .clear {

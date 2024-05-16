@@ -1,8 +1,9 @@
-name: "Build and Deploy Pages"
+name: "Build and Deploy"
 on:
   push:
     branches:
       - main
+      - master
     paths:
       - docs/**
 
@@ -34,23 +35,29 @@ jobs:
 
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v4
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3
+          ruby-version: 3.3
           bundler-cache: true
 
       - name: Build site
-        run: cd ./docs && bundle install && bundle exec jekyll b
+        run: cd ./docs && bundle install && bundle exec jekyll b -d "_site${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: "production"
 
+      - name: Test site
+        run: |
+          cd ./docs && bundle exec htmlproofer _site \
+            \-\-disable-external \
+            \-\-ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/,/404/,/\/sunrize\//,/\/categories\//"
+
       - name: Upload site artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: "./docs/_site"
+          path: "docs/_site${{ steps.pages.outputs.base_path }}"
 
   deploy:
     environment:
@@ -61,4 +68,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
