@@ -37,7 +37,7 @@ The ImageTextureAtlas node belongs to the **Texturing3D** component and its defa
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../../core/metadataboolean), [MetadataDouble](../../core/metadatadouble), [MetadataFloat](../../core/metadatafloat), [MetadataInteger](../../core/metadatainteger), [MetadataString](../../core/metadatastring) or [MetadataSet](../../core/metadataset) node.
 
 #### Hint
 
@@ -57,8 +57,8 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hints
 
-- Allows author to design when [Inline](../networking/inline) loading occurs via user interaction, event chains or scripting.
-- Use a separate [LoadSensor](../networking/loadsensor) node to detect when loading is complete.
+- Allows author to design when [Inline](../../networking/inline) loading occurs via user interaction, event chains or scripting.
+- Use a separate [LoadSensor](../../networking/loadsensor) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 

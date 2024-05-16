@@ -109,11 +109,11 @@ Zero or more contained programmable shader nodes ([ComposedShader](/x_ite/compon
 
 ### SFNode [in, out] **blendMode** NULL <small>[BlendMode]</small> <small class="yellow">non standard</small>
 
-Single contained [BlendMode](../x-ite/blendmode) node that defines blend mode properties.
+Single contained [BlendMode](../../x-ite/blendmode) node that defines blend mode properties.
 
 ### SFNode [in, out] **depthMode** NULL <small>[DepthMode]</small> <small class="yellow">non standard</small>
 
-Single contained [DepthMode](../x-ite/depthmode) node that defines depth mode properties.
+Single contained [DepthMode](../../x-ite/depthmode) node that defines depth mode properties.
 
 ## Advice
 

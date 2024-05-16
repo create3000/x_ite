@@ -216,7 +216,7 @@ tags: [X3D, Visual, Blend Mode, Editor]
 
 <h2>See Also</h2>
 <ul>
-   <li><a href="../components/x-ite/blendmode">BlendMode</a></li>
+   <li><a href="../../components/x-ite/blendmode/">BlendMode</a></li>
    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/blendFunc" target="_blank">WebGLRenderingContext.blendFunc()</a></li>
    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/blendFuncSeparate" target="_blank">WebGLRenderingContext.blendFuncSeparate()</a></li>
    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/blendEquation" target="_blank">WebGLRenderingContext.blendEquation()</a></li>
