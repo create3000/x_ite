@@ -49,7 +49,11 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **ambientIntensity** 0.2 <small>[0,1]</small>
 
-How much ambient omnidirectional light is reflected from all light sources. Interchange profile hint: this field may be ignored, applying the default value regardless.
+How much ambient omnidirectional light is reflected from all light sources. Interchange profile
+
+#### Hint
+
+- This field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **diffuseColor** 0.8 0.8 0.8 <small>[0,1]</small>
 
@@ -61,7 +65,11 @@ How much direct, angle-dependent light is reflected from all light sources.
 
 ### SFColor [in, out] **specularColor** 0 0 0 <small>[0,1]</small>
 
-Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile hint: this field may be ignored, applying the default value regardless.
+Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile
+
+#### Hint
+
+- This field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **emissiveColor** 0 0 0 <small>[0,1]</small>
 
@@ -79,15 +87,27 @@ How much glowing light is emitted from this object.
 
 ### SFFloat [in, out] **shininess** 0.2 <small>[0,1]</small>
 
-Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile hint: this field may be ignored, applying the default value regardless.
+Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile
+
+#### Hint
+
+- This field may be ignored, applying the default value regardless.
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 
-How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: *transparency* \< .5 opaque, *transparency* \> .5 transparent.
+How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
+
+#### Hint
+
+- *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
 ### SFFloat [in, out] **backAmbientIntensity** 0.2 <small>[0,1]</small>
 
-How much ambient omnidirectional light is reflected from all light sources. Interchange profile hint: this field may be ignored, applying the default value regardless.
+How much ambient omnidirectional light is reflected from all light sources. Interchange profile
+
+#### Hint
+
+- This field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **backDiffuseColor** 0.8 0.8 0.8 <small>[0,1]</small>
 
@@ -99,7 +119,11 @@ How much direct, angle-dependent light is reflected from all light sources.
 
 ### SFColor [in, out] **backSpecularColor** 0 0 0 <small>[0,1]</small>
 
-Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile hint: this field may be ignored, applying the default value regardless.
+Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile
+
+#### Hint
+
+- This field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **backEmissiveColor** 0 0 0 <small>[0,1]</small>
 
@@ -117,11 +141,19 @@ How much glowing light is emitted from this object.
 
 ### SFFloat [in, out] **backShininess** 0.2 <small>[0,1]</small>
 
-Lower shininess values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile hint: this field may be ignored, applying the default value regardless.
+Lower shininess values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile
+
+#### Hint
+
+- This field may be ignored, applying the default value regardless.
 
 ### SFFloat [in, out] **backTransparency** 0 <small>[0,1]</small>
 
-How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: transparency \< .5 opaque, transparency \> .5 transparent.
+How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
+
+#### Hint
+
+- Transparency \< .5 opaque, transparency \> .5 transparent.
 
 ## Advice
 

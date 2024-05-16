@@ -57,7 +57,8 @@ Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLO
 - For inspection of simple objects, usability often improves with *type*="EXAMINE" "ANY".
 - Types WALK and FLY force strict camera-to-object collision detection.
 - See [Collision](/x_ite/components/navigation/collision/) node for further details on camera-to-object collision detection.
-- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." ] Interchange profile hint: this field may be ignored, applying the default value regardless.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." ] Interchange profile
+- This field may be ignored, applying the default value regardless.
 
 ### MFFloat [in, out] **avatarSize** [ 0.25, 1.6, 0.75 ] <small>[0,∞)</small>
 
@@ -66,7 +67,8 @@ Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLO
 #### Hints
 
 - X3D specification recommends that browsers set near clipping plane to one-half of *avatarSize*.CollisionDistance value.
-- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"} Interchange profile hint: this field may be ignored, applying the default value regardless.
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"} Interchange profile
+- This field may be ignored, applying the default value regardless.
 - Transformation hierarchy of currently bound [Viewpoint](/x_ite/components/navigation/viewpoint/) node scales *avatarSize*, but translations and rotations have no effect.
 - Content must be visible to be collidable and to be pickable.
 
@@ -79,9 +81,13 @@ Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLO
 
 Default rate at which viewer travels through scene, meters/second.
 
+#### Hint
+
+- This field may be ignored, applying the default value regardless.
+
 #### Warning
 
-- Default 1 m/s usually seems slow for ordinary navigation. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Default 1 m/s usually seems slow for ordinary navigation. Interchange profile
 
 ### SFBool [in, out] **headlight** TRUE
 
@@ -96,7 +102,8 @@ Geometry beyond the *visibilityLimit* may not be rendered (far clipping plane of
 - *visibilityLimit*=0.0 indicates an infinite visibility limit (no far clipping plane).
 - Set *visibilityLimit* to appropriate positive value in meters to define far culling plane of view frustum.
 - X3D specification recommends that browsers set near clipping plane to one-half of avatarSize.CollisionDistance value.
-- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"} Interchange profile hint: this field may be ignored, applying the default value regardless.
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"} Interchange profile
+- This field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -114,13 +121,18 @@ Camera transition between viewpoints. Enter one or more quoted SFString values: 
 
 *transitionTime* defines the expected duration of viewpoint transition in seconds.
 
-#### Hint
+#### Hints
 
-- If transitionType is "ANIMATE", *transitionTime* provides browser-dependent animation parameters. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- If transitionType is "ANIMATE", *transitionTime* provides browser-dependent animation parameters. Interchange profile
+- This field may be ignored, applying the default value regardless.
 
 ### SFBool [out] **transitionComplete**
 
-Event signaling viewpoint transition complete. Interchange profile hint: this field may be ignored.
+Event signaling viewpoint transition complete. Interchange profile
+
+#### Hint
+
+- This field may be ignored.
 
 #### Warning
 

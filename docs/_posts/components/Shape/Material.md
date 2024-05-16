@@ -39,7 +39,11 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **ambientIntensity** 0.2 <small>[0,1]</small>
 
-How much ambient omnidirectional light is reflected from all light sources. Interchange profile hint: this field may be ignored, applying the default value regardless.
+How much ambient omnidirectional light is reflected from all light sources. Interchange profile
+
+#### Hint
+
+- This field may be ignored, applying the default value regardless.
 
 ### SFString [in, out] **ambientTextureMapping** ""
 
@@ -85,7 +89,11 @@ When applying diffuseColor for this material node, the contained texture provide
 
 ### SFColor [in, out] **specularColor** 0 0 0 <small>[0,1]</small>
 
-Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile hint: this field may be ignored, applying the default value regardless.
+Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile
+
+#### Hint
+
+- This field may be ignored, applying the default value regardless.
 
 ### SFString [in, out] **specularTextureMapping** ""
 
@@ -137,7 +145,11 @@ When applying emissiveColor for this material node, the contained texture provid
 
 ### SFFloat [in, out] **shininess** 0.2 <small>[0,1]</small>
 
-Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile hint: this field may be ignored, applying the default value regardless.
+Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile
+
+#### Hint
+
+- This field may be ignored, applying the default value regardless.
 
 ### SFString [in, out] **shininessTextureMapping** ""
 
@@ -211,7 +223,11 @@ When applying normalScale for this material node, the contained texture modulate
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 
-How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: *transparency* \< .5 opaque, *transparency* \> .5 transparent.
+How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
+
+#### Hint
+
+- *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
 ## Advice
 

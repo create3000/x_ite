@@ -66,10 +66,11 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 ### MFInt32 [in] **set_normalIndex** <small>[0,∞) or -1</small>
 
-*normalIndex* values define the order in which normal vectors are applied to polygons (or vertices). Interchange profile hint: this field may be ignored, applying the default value regardless.
+*normalIndex* values define the order in which normal vectors are applied to polygons (or vertices). Interchange profile
 
-#### Hint
+#### Hints
 
+- This field may be ignored, applying the default value regardless.
 - This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
@@ -122,7 +123,8 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 
 #### Hints
 
-- Concave is the opposite of *convex*. Interchange profile hint: only *convex*=true IndexedFaceSets have guaranteed support.
+- Concave is the opposite of *convex*. Interchange profile
+- Only *convex*=true IndexedFaceSets have guaranteed support.
 - Select *convex*=false (i.e. concave) and solid=false (i.e. two-sided display) for greatest visibility of geometry.
 - [*convex* polygon](https://en.wikipedia.org/wiki/Convex_polygon){:target="_blank"}
 - [Tessellation](https://en.wikipedia.org/wiki/Tessellation){:target="_blank"}
@@ -133,10 +135,11 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 
 ### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
 
-*creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than *creaseAngle*, smooth shading is rendered across the shared line segment. Interchange profile hint: only 0 and π radians supported.
+*creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than *creaseAngle*, smooth shading is rendered across the shared line segment. Interchange profile
 
 #### Hints
 
+- Only 0 and π radians supported.
 - *creaseAngle*=0 means render all edges sharply, *creaseAngle*=3.14159 means render all edges smoothly.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
 
@@ -191,7 +194,8 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 - If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
-- If no child [Normal](/x_ite/components/rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- If no child [Normal](/x_ite/components/rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices. Interchange profile
+- This field may be ignored, applying the default value regardless.
 
 #### Warning
 

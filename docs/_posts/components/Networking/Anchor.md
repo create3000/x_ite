@@ -77,7 +77,8 @@ If provided, *parameter* tells the X3D player where to to redirect the loaded ur
 
 - Set *parameter* value as target=_blank to load the target url into a new browser frame.
 - Set *parameter* value as target=frame_name to load target url into another browser frame.
-- MFString arrays can have multiple values, so separate each individual string by quote marks. "https://www.web3d.org" "https://www.web3d.org/about" "etc." Interchange profile hint: this field may be ignored, applying the default value regardless.
+- MFString arrays can have multiple values, so separate each individual string by quote marks. "https://www.web3d.org" "https://www.web3d.org/about" "etc." Interchange profile
+- This field may be ignored, applying the default value regardless.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 

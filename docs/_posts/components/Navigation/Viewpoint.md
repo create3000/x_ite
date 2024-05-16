@@ -90,14 +90,15 @@ Rotation (axis, angle in radians) of Viewpoint, relative to default -Z axis dire
 
 Preferred minimum viewing angle from this viewpoint in radians, providing minimum height or minimum width (whichever is smaller). Small field of view roughly corresponds to a telephoto lens, large field of view roughly corresponds to a wide-angle lens.
 
-#### Hint
+#### Hints
 
 - Modifying Viewpoint distance to object may be better for zooming.
+- This field may be ignored, applying the default value regardless.
 
 #### Warnings
 
 - *fieldOfView* may not be correct for different window sizes and aspect ratios.
-- For VR/AR/MAR users wearing a head-mounted display (HMD), animating this field may induce motion sickness. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- For VR/AR/MAR users wearing a head-mounted display (HMD), animating this field may induce motion sickness. Interchange profile
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 

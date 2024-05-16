@@ -107,7 +107,7 @@ The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle
 
 - [String (computer science)](https://en.wikipedia.org/wiki/String_(computer_science)){:target="_blank"}
 - Full internationalization (i18n) and localization (l10n) features are available for any written language.
-- [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 

@@ -57,7 +57,8 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
-- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile
+- This field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -71,7 +72,8 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
-- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile
+- This field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -85,7 +87,8 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
-- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile
+- This field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -99,7 +102,8 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
-- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile
+- This field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -113,7 +117,8 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
-- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile
+- This field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -127,7 +132,8 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
-- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile
+- This field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -137,14 +143,15 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (horizon) to π=3.14159 (nadir).
 
-#### Hint
+#### Hints
 
+- This field may be ignored, applying the default value regardless.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
 
 #### Warnings
 
 - You must have one more skyColor value than *skyAngle* values.
-- Colors at *skyAngle*=0 are ignored. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Colors at *skyAngle*=0 are ignored. Interchange profile
 
 ### MFColor [in, out] **skyColor** 0 0 0 <small>[0,1]</small>
 
@@ -153,24 +160,26 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 #### Hints
 
 - Setting the same color at two consecutive angles produces a solid color band.
+- Only one color might be rendered, others can be ignored.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 #### Warning
 
-- You must have one more *skyColor* value than skyAngle values. Interchange profile hint: only one color might be rendered, others can be ignored.
+- You must have one more *skyColor* value than skyAngle values. Interchange profile
 
 ### MFFloat [in, out] **groundAngle** [ ] <small>[0,π/2]</small>
 
 The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 (horizon).
 
-#### Hint
+#### Hints
 
+- This field may be ignored, applying the default value regardless.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
 
 #### Warnings
 
 - You must have one more groundColor value than *groundAngle* values.
-- Colors at *groundAngle*=0 are ignored. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Colors at *groundAngle*=0 are ignored. Interchange profile
 
 ### MFColor [in, out] **groundColor** [ ] <small>[0,1]</small>
 
@@ -179,15 +188,20 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 #### Hints
 
 - Setting the same color at two consecutive angles produces a solid color band.
+- This field may be ignored, applying the default value regardless.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 #### Warning
 
-- You must have one more *groundColor* value than groundAngle values. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- You must have one more *groundColor* value than groundAngle values. Interchange profile
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 
-How "clear" the background is, allows underlying page to show through: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: *transparency* \< .5 opaque, *transparency* \> .5 transparent.
+How "clear" the background is, allows underlying page to show through: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
+
+#### Hint
+
+- *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
 ### SFBool [out] **isBound**
 

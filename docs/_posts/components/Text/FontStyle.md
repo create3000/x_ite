@@ -168,7 +168,7 @@ It is possible to specify in the *family* field a URL of a custom font file of t
 
 - Full internationalization (i18n) and localization (l10n) features are available for any written language.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes.
-- [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
 - First add a [Text](/x_ite/components/text/text/) node as a parent node for FontStyle.
 - [Wikipedia](https://en.wikipedia.org/wiki/Font){:target="_blank"}
 - [Wikipedia](https://en.wikipedia.org/wiki/Typeface){:target="_blank"}
