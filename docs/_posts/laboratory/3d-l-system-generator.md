@@ -149,15 +149,15 @@ x3d-canvas {
 
 <h3>Predefined L-Systems</h3>
 
-<img class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image1.png">
-<img class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image2.png">
-<img class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image3.png">
-<img class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image4.png">
-<img class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image5.png">
-<img class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image6.png">
-<img class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image7.png">
-<img class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image8.png">
-<img class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image9.png">
+<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image1.png">
+<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image2.png">
+<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image3.png">
+<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image4.png">
+<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image5.png">
+<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image6.png">
+<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image7.png">
+<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image8.png">
+<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image9.png">
 
 <h2>See Also</h2>
 <ul>

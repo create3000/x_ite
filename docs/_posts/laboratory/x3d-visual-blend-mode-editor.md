@@ -20,7 +20,7 @@ tags: [X3D, Visual, Blend Mode, Editor]
          <td style="width: 30%; padding-left: 1.5rem;">
             <small class="small">Source (foreground):</small>
             <br>
-            <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/color-wheel.png">
+            <img alt="color wheel" src="https://create3000.github.io/media/laboratory/blend-mode/assets/color-wheel.png">
             <select id="source-color">
                <option>ZERO</option>
                <option>ONE</option>
@@ -39,7 +39,7 @@ tags: [X3D, Visual, Blend Mode, Editor]
                <option>ONE_MINUS_CONSTANT_ALPHA</option>
             </select>
             <br>
-            <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/contrast.png">
+            <img alt="contrast" src="https://create3000.github.io/media/laboratory/blend-mode/assets/contrast.png">
             <select id="source-alpha">
                <option>ZERO</option>
                <option selected="selected">ONE</option>
@@ -60,7 +60,7 @@ tags: [X3D, Visual, Blend Mode, Editor]
             <br>
             <small class="small">Destination (background):</small>
             <br>
-            <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/color-wheel.png">
+            <img alt="color wheel" src="https://create3000.github.io/media/laboratory/blend-mode/assets/color-wheel.png">
             <select id="destination-color">
                <option>ZERO</option><option>ONE</option>
                <option>SRC_COLOR</option>
@@ -78,7 +78,7 @@ tags: [X3D, Visual, Blend Mode, Editor]
                <option>ONE_MINUS_CONSTANT_ALPHA</option>
             </select>
             <br>
-            <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/contrast.png">
+            <img alt="contrast" src="https://create3000.github.io/media/laboratory/blend-mode/assets/contrast.png">
             <select id="destination-alpha">
                <option>ZERO</option>
                <option>ONE</option>
@@ -99,7 +99,7 @@ tags: [X3D, Visual, Blend Mode, Editor]
             <br>
             <small class="small">Blend equation:</small>
             <br>
-            <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/color-wheel.png">
+            <img alt="color wheel" src="https://create3000.github.io/media/laboratory/blend-mode/assets/color-wheel.png">
             <select id="equation-color">
                <option selected="selected">FUNC_ADD</option>
                <option>FUNC_SUBTRACT</option>
@@ -107,7 +107,7 @@ tags: [X3D, Visual, Blend Mode, Editor]
                <option>MIN</option><option>MAX</option>
             </select>
             <br>
-            <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/contrast.png">
+            <img alt="contrast" src="https://create3000.github.io/media/laboratory/blend-mode/assets/contrast.png">
             <select id="equation-alpha">
                <option selected="selected">FUNC_ADD</option>
                <option>FUNC_SUBTRACT</option>
@@ -150,35 +150,35 @@ tags: [X3D, Visual, Blend Mode, Editor]
 <div id="preset-images">
    <small class="small">Foreground:</small>
    <div id="foreground-images">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/lena.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/earth.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/panther.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/flower.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/cloud.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/forest.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/city.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/death-star.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/colors.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/golden-gate-bridge.jpeg">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/water.jpeg">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/sunset.jpeg">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/night-sky.jpeg">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/lena.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/earth.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/panther.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/flower.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/cloud.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/forest.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/city.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/death-star.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/colors.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/golden-gate-bridge.jpeg">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/water.jpeg">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/sunset.jpeg">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/night-sky.jpeg">
    </div>
    <small class="small">Background:</small>
    <div id="background-images">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/lena.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/earth.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/panther.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/flower.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/cloud.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/forest.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/city.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/death-star.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/colors.png">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/lake.jpeg">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/desktop.jpeg">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/city-night.jpeg">
-      <img src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/castle.jpeg">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/lena.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/earth.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/panther.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/flower.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/cloud.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/forest.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/city.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/death-star.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/colors.png">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/lake.jpeg">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/desktop.jpeg">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/city-night.jpeg">
+      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/castle.jpeg">
    </div>
 </div>
 <div id="image-urls">

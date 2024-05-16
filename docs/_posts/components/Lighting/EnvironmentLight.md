@@ -33,7 +33,7 @@ The EnvironmentLight node belongs to the **Lighting** component and its default 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](../../core/metadataboolean), [MetadataDouble](../../core/metadatadouble), [MetadataFloat](../../core/metadatafloat), [MetadataInteger](../../core/metadatainteger), [MetadataString](../../core/metadatastring) or [MetadataSet](../../core/metadataset) node.
 
 #### Hint
 
@@ -45,7 +45,7 @@ Global lights illuminate all objects within their volume of lighting influence. 
 
 #### Warning
 
-- [DirectionalLight](../lighting/directionallight) default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. [PointLight](../lighting/pointlight) and [SpotLight](../lighting/spotlight) default *global*=true since their effects are each limited by maximum radius value.
+- [DirectionalLight](../../lighting/directionallight) default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. [PointLight](../../lighting/pointlight) and [SpotLight](../../lighting/spotlight) default *global*=true since their effects are each limited by maximum radius value.
 
 ### SFBool [in, out] **on** TRUE
 
