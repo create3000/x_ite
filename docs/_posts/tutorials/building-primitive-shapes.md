@@ -14,7 +14,7 @@ Shapes are the building blocks of an X3D world. Primitive Shapes are standard bu
 - [Cylinder](/x_ite/components/geometry3d/cylinder/)
 - [Sphere](/x_ite/components/geometry3d/sphere/)
 - [Text](/x_ite/components/text/text/)
-- and more from the [CADGeometry](/x_ite/components/cadgeometry/)**,** [Geometry2D](/x_ite/components/geometry2d/)**,** and [Rendering](/x_ite/components/rendering/) component
+- and more from the [CADGeometry](/x_ite/components/#cadgeometry)**,** [Geometry2D](/x_ite/components/#geometry2d)**,** and [Rendering](/x_ite/components/#rendering) component
 
 ## Syntax: Shape
 

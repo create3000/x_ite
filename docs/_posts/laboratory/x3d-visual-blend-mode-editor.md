@@ -3,7 +3,7 @@ title: X3D Visual Blend Mode Editor
 date: 2023-02-21
 layout: wide
 categories: [Laboratory]
-tags: [X3D, Visual, Blend Mode, Editor]
+tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
 ---
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/cferdinandi/tabby@12.0.0/dist/css/tabby-ui.min.css">
 <script defer src="https://cdn.jsdelivr.net/gh/cferdinandi/tabby@12.0.0/dist/js/tabby.polyfills.min.js"></script>

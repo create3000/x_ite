@@ -73,7 +73,7 @@ Some words about optimizing a scene
 
 ### See Also
 
-- [Script Node Authoring Interface](../reference/script-node-authoring-interface/)
+- [Script Node Authoring Interface](../reference/)
 - [ECMAScript Object and Function Definitions](../reference/ecmascript-object-and-function-definitions/)
 - [Custom Shaders](../custom-shaders/)
 

@@ -3,7 +3,7 @@ title: 3D L-System Generator
 date: 2023-02-21
 layout: wide
 categories: [Laboratory]
-tags: [3D, L-System, Generator]
+tags: [3D, L-System, Generator, Laboratory]
 ---
 <style>
 /* table */

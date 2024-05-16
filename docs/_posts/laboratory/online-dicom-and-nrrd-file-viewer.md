@@ -3,7 +3,7 @@ title: Online DICOM and NRRD file Viewer
 date: 2023-02-21
 layout: wide
 categories: [Laboratory]
-tags: [Online, DICOM, NRRD, File, Viewer]
+tags: [Online, DICOM, NRRD, File, Viewer, Laboratory]
 ---
 <style>
 /* Table */

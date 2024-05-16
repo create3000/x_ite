@@ -3,7 +3,7 @@ title: glTF Sample Viewer
 date: 2023-02-21
 layout: wide
 categories: [Laboratory]
-tags: [glTF, Sample, Viewer]
+tags: [glTF, Sample, Viewer, Laboratory]
 ---
 <style>
 .row {

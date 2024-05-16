@@ -3,7 +3,7 @@ title: Real Time Earth Quake Information
 date: 2023-02-21
 layout: wide
 categories: [Laboratory]
-tags: [Real Time, Earth Quake]
+tags: [Real Time, Earth Quake, Laboratory]
 ---
 <style>
 /* Table */

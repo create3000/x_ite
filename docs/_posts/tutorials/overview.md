@@ -3,7 +3,7 @@ title: Tutorials
 date: 2022-11-28
 nav: none
 categories: [Tutorials]
-tags: [Tutorials]
+tags: [Tutorials, Overview]
 ---
 ## Overview
 
@@ -70,7 +70,7 @@ Some words about optimizing a scene
 
 ### See Also
 
-- [Script Node Authoring Interface](/x_ite/reference/script-node-authoring-interface/)
+- [Script Node Authoring Interface](/x_ite/reference/)
 - [ECMAScript Object and Function Definitions](/x_ite/reference/ecmascript-object-and-function-definitions/)
 - [Custom Shaders](/x_ite/custom-shaders/)
 
