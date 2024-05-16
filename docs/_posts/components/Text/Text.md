@@ -44,7 +44,7 @@ Single or multiple *string* values to present as Text. Each value in the *string
 - MFString arrays can have multiple values, so separate each individual *string* by quote marks.
 - Strings can contain quote marks by first escaping them with a backslash example: "say \"hello\" please"
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
-- [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"} [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextIndex.html){:target="_blank"} [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextSpecialCharactersIndex.html){:target="_blank"}
+- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"} [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextIndex.html){:target="_blank"} [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextSpecialCharactersIndex.html){:target="_blank"}
 
 ### MFFloat [in, out] **length** [ ] <small>[0,∞)</small>
 

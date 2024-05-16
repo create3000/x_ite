@@ -425,6 +425,11 @@ sub update_field {
       s/(:|\s*at)\]/]/sgo foreach @hints;
       s/(:|\s*at)\]/]/sgo foreach @warnings;
 
+      s|http://www.w3.org|https://www.w3.org|sgo foreach @hints;
+      s|http://www.w3.org|https://www.w3.org|sgo foreach @warnings;
+      s|http://www.loc.gov|https://www.loc.gov|sgo foreach @hints;
+      s|http://www.loc.gov|https://www.loc.gov|sgo foreach @warnings;
+
       @description = link_nodes $typeName, @description;
       @hints       = link_nodes $typeName, @hints;
       @warnings    = link_nodes $typeName, @warnings;
