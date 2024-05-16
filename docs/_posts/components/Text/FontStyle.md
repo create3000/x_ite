@@ -43,7 +43,7 @@ Language codes consist of a primary code and a (possibly empty) series of subcod
 
 - [See ISO639.2 Codes for the Representation of Names of Languages](https://www.loc.gov/standards/iso639-2/php/code_list.php){:target="_blank"}
 - [See RFC3066 Tags for the Identification of Languages](https://tools.ietf.org/html/rfc3066){:target="_blank"}
-- [See ISO3166 or](http://xml.coverpages.org/languageIdentifiers.html){:target="_blank"}
+- [See ISO3166 or](https://xml.coverpages.org/languageIdentifiers.html){:target="_blank"}
 - [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 

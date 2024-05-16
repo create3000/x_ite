@@ -176,6 +176,12 @@ sub update_node {
    s|http://www.w3.org|https://www.w3.org|sgo foreach @warnings;
    s|http://www.loc.gov|https://www.loc.gov|sgo foreach @hints;
    s|http://www.loc.gov|https://www.loc.gov|sgo foreach @warnings;
+   s|http://xml.coverpages.org|https://xml.coverpages.org|sgo foreach @hints;
+   s|http://xml.coverpages.org|https://xml.coverpages.org|sgo foreach @warnings;
+   s|http://teem.sourceforge.net|https://teem.sourceforge.net|sgo foreach @hints;
+   s|http://teem.sourceforge.net|https://teem.sourceforge.net|sgo foreach @warnings;
+   s|http://paulbourke.net|https://paulbourke.net|sgo foreach @hints;
+   s|http://paulbourke.net|https://paulbourke.net|sgo foreach @warnings;
 
    @hints    = link_nodes $typeName, @hints;
    @warnings = link_nodes $typeName, @warnings;
@@ -429,6 +435,12 @@ sub update_field {
       s|http://www.w3.org|https://www.w3.org|sgo foreach @warnings;
       s|http://www.loc.gov|https://www.loc.gov|sgo foreach @hints;
       s|http://www.loc.gov|https://www.loc.gov|sgo foreach @warnings;
+      s|http://xml.coverpages.org|https://xml.coverpages.org|sgo foreach @hints;
+      s|http://xml.coverpages.org|https://xml.coverpages.org|sgo foreach @warnings;
+      s|http://teem.sourceforge.net|https://teem.sourceforge.net|sgo foreach @hints;
+      s|http://teem.sourceforge.net|https://teem.sourceforge.net|sgo foreach @warnings;
+      s|http://paulbourke.net|https://paulbourke.net|sgo foreach @hints;
+      s|http://paulbourke.net|https://paulbourke.net|sgo foreach @warnings;
 
       @description = link_nodes $typeName, @description;
       @hints       = link_nodes $typeName, @hints;
