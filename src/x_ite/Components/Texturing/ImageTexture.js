@@ -188,9 +188,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
                canvas = document .createElement ("canvas"),
                cx     = canvas .getContext ("2d", { willReadFrequently: true });
 
-            let
-               width  = image .width,
-               height = image .height;
+            let { width, height } = image;
 
             if (!(Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
             {
