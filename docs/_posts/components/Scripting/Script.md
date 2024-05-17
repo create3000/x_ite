@@ -137,3 +137,4 @@ If *mustEvaluate* false, then the X3D player may delay sending input events to S
 ## See Also
 
 - [X3D Specification of Script node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/scripting.html#Script){:target="_blank"}
+- [Script Node Authoring Interface](/x_ite/reference/script-node-authoring-interface/)
