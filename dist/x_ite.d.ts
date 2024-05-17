@@ -533,6 +533,10 @@ declare class X3DScene extends X3DExecutionContext
     * For *options* see `X3DScene.toVRMLString`.
     */
    toJSONString (options?: ToStringOptions): string;
+   /**
+    * Disposes this object.
+    */
+   dispose (): void;
 }
 
 /**
@@ -1479,6 +1483,9 @@ declare class X3DField
    addRouteCallback (key: any, callback: () => void): void;
    removeRouteCallback (key: any): void;
    getRouteCallbacks (): Map <any, () => void>;
+   /**
+    * Disposes this object.
+    */
    dispose (): void;
 }
 
