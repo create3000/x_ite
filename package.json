@@ -10,6 +10,10 @@
       "import": "./dist/x_ite.mjs",
       "types": "./dist/x_ite.d.ts"
     },
+    "./x_ite.js": "./dist/x_ite.js",
+    "./x_ite.min.js": "./dist/x_ite.min.js",
+    "./x_ite.mjs": "./dist/x_ite.mjs",
+    "./x_ite.min.mjs": "./dist/x_ite.min.mjs",
     "./x_ite.d.ts": "./dist/x_ite.d.ts"
   },
   "files": [
