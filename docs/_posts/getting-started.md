@@ -755,7 +755,7 @@ preserveDrawingBuffer
 : A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for the *preserveDrawingBuffer* attribute is `false`. Set *preserveDrawingBuffer* to `true` if you want to save images from the internal canvas. Keep in mind setting *preserveDrawingBuffer* to true can have performance implications.
 
 orderIndependentTransparency
-: A Boolean value (`true` or `false`) to indicate whether order independent transparency rendering technique should be used. The default value for the *orderIndependentTransparency* attribute is `false`. Can slow down rendering speed if *antialiased* is `true`, but can be used in conjunction with *contentScale*.
+: A Boolean value (`true` or `false`) to indicate whether order independent transparency rendering technique should be used. The default value for the *orderIndependentTransparency* attribute is `false`.
 
 splashScreen
 : A Boolean value (`true` or `false`) to indicate whether the splash screen should be displayed. The default value for the *splashScreen* attribute is `true`. The display of the splash screen can also be toggled via the browser option »SplashScreen« in JavaScript. Call `Browser .setBrowserOption ("SplashScreen", booleanValue)` to toggle the display of the splash screen.
