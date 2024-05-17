@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          .then (resolve)
          .catch (reject);
    },
-   rootObject: async function (glTF)
+   async rootObject (glTF)
    {
       if (!(glTF instanceof Object))
          return;
@@ -507,14 +507,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return light .node = lightNode;
    },
-   buffersArray: async function (buffers)
+   async buffersArray (buffers)
    {
       if (!(buffers instanceof Array))
          return;
 
       this .buffers = await Promise .all (buffers .map ((buffer, i) => this .bufferObject (buffer, i)));
    },
-   bufferObject: async function (buffer, i)
+   async bufferObject (buffer, i)
    {
       if (!(buffer instanceof Object))
          return;
@@ -796,14 +796,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          });
       };
    })(),
-   imagesArray: async function (images)
+   async imagesArray (images)
    {
       if (!(images instanceof Array))
          return;
 
       this .images = await Promise .all (images .map (image => this .imageObject (image)));
    },
-   imageObject: async function (image)
+   async imageObject (image)
    {
       if (!(image instanceof Object))
          return;
@@ -1466,7 +1466,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          draco .destroy (buffer);
       }
    },
-   createDraco: async function ()
+   async createDraco ()
    {
       if (this .constructor .draco)
       {

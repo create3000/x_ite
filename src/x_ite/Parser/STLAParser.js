@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
          .then (resolve)
          .catch (reject);
    },
-   stl: async function ()
+   async stl ()
    {
       // Set profile and components.
 

@@ -193,7 +193,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       this .loadDocumentAsync (this .url .shift ())
          .catch (this .loadDocumentError .bind (this));
    },
-   loadDocumentAsync: async function (url)
+   async loadDocumentAsync (url)
    {
       if (url .length === 0)
       {

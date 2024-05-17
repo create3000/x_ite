@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          .then (resolve)
          .catch (reject);
    },
-   ply: async function ()
+   async ply ()
    {
       // Set profile and components.
 

@@ -187,7 +187,7 @@ const Context =
       //          setTimeout (check);
       //       });
       //    },
-      //    getBufferSubDataAsync: async function (target, buffer, srcByteOffset, dstBuffer, /* optional */ dstOffset, /* optional */ length)
+      //    async getBufferSubDataAsync (target, buffer, srcByteOffset, dstBuffer, /* optional */ dstOffset, /* optional */ length)
       //    {
       //       const sync = this .fenceSync (this .SYNC_GPU_COMMANDS_COMPLETE, 0);
 
@@ -201,7 +201,7 @@ const Context =
       //       this .getBufferSubData (target, srcByteOffset, dstBuffer, dstOffset, length);
       //       this .bindBuffer (target, null);
       //    },
-      //    readPixelsAsync: async function (x, y, w, h, format, type, dest, dstOffset)
+      //    async readPixelsAsync (x, y, w, h, format, type, dest, dstOffset)
       //    {
       //       const buffer = this .createBuffer ();
 

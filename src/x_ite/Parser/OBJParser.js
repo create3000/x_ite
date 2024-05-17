@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          .then (resolve)
          .catch (reject);
    },
-   obj: async function ()
+   async obj ()
    {
       // Set profile and components.
 
@@ -208,12 +208,12 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    {
       Grammar .whitespacesNoLineTerminator .parse (this);
    },
-   statements: async function ()
+   async statements ()
    {
       while (await this .statement ())
          ;
    },
-   statement: async function ()
+   async statement ()
    {
       if (await this .mtllibs ())
          return true;
@@ -249,7 +249,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       return false;
    },
-   mtllibs: async function ()
+   async mtllibs ()
    {
       this .comments ();
 
@@ -269,7 +269,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       return false;
    },
-   mtllib: async function (path)
+   async mtllib (path)
    {
       try
       {

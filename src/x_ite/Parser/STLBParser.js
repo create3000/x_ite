@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
          .then (resolve)
          .catch (reject);
    },
-   stl: async function ()
+   async stl ()
    {
       // Set profile and components.
 

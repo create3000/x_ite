@@ -237,7 +237,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          .then (resolve)
          .catch (reject);
    },
-   xmlElement: async function (xmlElement)
+   async xmlElement (xmlElement)
    {
       switch (xmlElement .nodeName)
       {
@@ -259,7 +259,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       return this .getScene ();
    },
-   svgElement: async function (xmlElement)
+   async svgElement (xmlElement)
    {
       const
          browser = this .getBrowser (),

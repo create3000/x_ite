@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
          .then (resolve)
          .catch (reject);
    },
-   glb: async function ()
+   async glb ()
    {
       this .chunks ();
 
