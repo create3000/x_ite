@@ -67,7 +67,7 @@ class GoldenGate extends X3DParser
       this .inputs = new Map ();
    }
 
-   static Parser = [
+   static #parsers = [
       SVGParser,
       XMLParser,
       GLTF2Parser,
@@ -81,19 +81,29 @@ class GoldenGate extends X3DParser
       PLYBParser,
    ];
 
-   static addParser (... args)
+   static addParsers (... args)
    {
-      this .Parser .push (... args);
+      this .#parsers .push (... args);
    }
 
-   static removeParser (... args)
+   static removeParsers (... args)
    {
-      this .Parser = this .Parser .filter (parser => !args .includes (parser));
+      this .#parsers = this .#parsers .filter (parser => !args .includes (parser));
    }
+
+   static getParsers ()
+   {
+      return this .#parsers .slice ();
+   }
+
+   /**
+    * @deprecated Use `GoldenGate.add/remove/getParsers`.
+    */
+   static get Parser () { return this .#parsers; }
 
    parseIntoScene (x3dSyntax, resolve, reject)
    {
-      for (const Parser of GoldenGate .Parser)
+      for (const Parser of GoldenGate .#parsers)
       {
          try
          {
