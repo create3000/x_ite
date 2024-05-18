@@ -96,7 +96,7 @@ Minimum and maximum extents of projection texture in units of local coordinate s
 #### Warnings
 
 - Minimum corner values must remain less than maximum corner values.
-- This field differs for TextureProjectorParallel and [TextureProjector](/x_ite/components/textureprojector/textureprojector/).
+- This field differs for TextureProjectorParallel and [TextureProjector](/x_ite/components/textureprojection/textureprojector/).
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 

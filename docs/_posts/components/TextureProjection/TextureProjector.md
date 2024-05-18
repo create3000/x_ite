@@ -91,7 +91,7 @@ Preferred minimum viewing angle for this projection in radians, providing minimu
 
 #### Warning
 
-- This field differs for [TextureProjectorParallel](/x_ite/components/textureprojector/textureprojectorparallel/) and TextureProjector.
+- This field differs for [TextureProjectorParallel](/x_ite/components/textureprojection/textureprojectorparallel/) and TextureProjector.
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 
