@@ -58,15 +58,39 @@ import PLYAParser  from "./PLYAParser.js";
 import PLYBParser  from "./PLYBParser.js";
 import SVGParser   from "./SVGParser.js";
 
-function GoldenGate (scene)
+class GoldenGate extends X3DParser
 {
-   X3DParser .call (this, scene);
+   constructor (scene)
+   {
+      super (scene);
 
-   this .inputs = new Map ();
-}
+      this .inputs = new Map ();
+   }
 
-Object .assign (Object .setPrototypeOf (GoldenGate .prototype, X3DParser .prototype),
-{
+   static Parser = [
+      SVGParser,
+      XMLParser,
+      GLTF2Parser,
+      GLB2Parser,
+      JSONParser,
+      VRMLParser,
+      OBJParser,
+      STLAParser,
+      STLBParser,
+      PLYAParser,
+      PLYBParser,
+   ];
+
+   static addParser (... args)
+   {
+      this .Parser .push (... args);
+   }
+
+   static removeParser (... args)
+   {
+      this .Parser = this .Parser .filter (parser => !args .includes (parser));
+   }
+
    parseIntoScene (x3dSyntax, resolve, reject)
    {
       for (const Parser of GoldenGate .Parser)
@@ -104,7 +128,8 @@ Object .assign (Object .setPrototypeOf (GoldenGate .prototype, X3DParser .protot
          throw new Error ("Couldn't parse X3D. No suitable file handler found for 'data:' URL.");
       else
          throw new Error (`Couldn't parse X3D. No suitable file handler found for '${this .getScene () .worldURL}'.`);
-   },
+   }
+
    getInput (encoding, x3dSyntax)
    {
       if (Array .isArray (encoding))
@@ -122,7 +147,8 @@ Object .assign (Object .setPrototypeOf (GoldenGate .prototype, X3DParser .protot
 
          return input;
       }
-   },
+   }
+
    createInput (encoding, x3dSyntax)
    {
       try
@@ -143,21 +169,7 @@ Object .assign (Object .setPrototypeOf (GoldenGate .prototype, X3DParser .protot
       {
          return undefined;
       }
-   },
-});
-
-GoldenGate .Parser = [
-   SVGParser,
-   XMLParser,
-   GLTF2Parser,
-   GLB2Parser,
-   JSONParser,
-   VRMLParser,
-   OBJParser,
-   STLAParser,
-   STLBParser,
-   PLYAParser,
-   PLYBParser,
-];
+   }
+}
 
 export default GoldenGate;
