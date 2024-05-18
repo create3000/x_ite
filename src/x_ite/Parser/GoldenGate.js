@@ -60,11 +60,11 @@ import SVGParser   from "./SVGParser.js";
 
 class GoldenGate extends X3DParser
 {
+   #inputs = new Map ();
+
    constructor (scene)
    {
       super (scene);
-
-      this .inputs = new Map ();
    }
 
    static #parsers = [
@@ -148,12 +148,12 @@ class GoldenGate extends X3DParser
       }
       else
       {
-         if (this .inputs .has (encoding))
-            return this .inputs .get (encoding);
+         if (this .#inputs .has (encoding))
+            return this .#inputs .get (encoding);
 
          const input = this .createInput (encoding, x3dSyntax);
 
-         this .inputs .set (encoding, input);
+         this .#inputs .set (encoding, input);
 
          return input;
       }
