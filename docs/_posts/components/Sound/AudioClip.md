@@ -211,7 +211,7 @@ Any audio file format supported by the web browser, but at least:
 |----------|----------------|------------|
 | MP3      | .mp3           | audio/mp3  |
 | WAV      | .wav           | audio/wav  |
-| OGG      | .ogg           | audio/ogg  |
+| OGG      | .oga, .ogg     | audio/ogg  |
 
 ## Advice
 

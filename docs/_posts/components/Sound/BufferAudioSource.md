@@ -269,6 +269,16 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
+## Supported File Formats
+
+Any audio file format supported by the web browser, but at least:
+
+| Encoding | File Extension | MIME Type  |
+|----------|----------------|------------|
+| MP3      | .mp3           | audio/mp3  |
+| WAV      | .wav           | audio/wav  |
+| OGG      | .oga, .ogg     | audio/ogg  |
+
 ## Advice
 
 ### Hint
