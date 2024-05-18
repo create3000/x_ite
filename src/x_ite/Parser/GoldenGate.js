@@ -62,11 +62,6 @@ class GoldenGate extends X3DParser
 {
    #inputs = new Map ();
 
-   constructor (scene)
-   {
-      super (scene);
-   }
-
    static #parsers = [
       SVGParser,
       XMLParser,
