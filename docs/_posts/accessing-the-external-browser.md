@@ -64,6 +64,11 @@ const
    browser = X3D .getBrowser (),
    scene   = browser .currentScene;
 
+scene .setProfile (browser .getProfile ("Interchange"));
+scene .addComponent (browser .getComponent ("Interpolation", 1));
+
+await browser .loadComponents (scene);
+
 // Viewpoint
 
 const viewpointNode = scene .createNode ("Viewpoint");
