@@ -269,7 +269,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       scene .setProfile (browser .getProfile ("Interchange"));
       scene .addComponent (browser .getComponent ("Geometry2D", 2));
 
-      await this .loadComponents ();
+      await browser .loadComponents (scene);
 
       // Init nodes.
 

@@ -134,7 +134,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       scene .setEncoding ("STL");
       scene .setProfile (browser .getProfile ("Interchange"));
 
-      await this .loadComponents ();
+      await browser .loadComponents (scene);
 
       // Create nodes.
 

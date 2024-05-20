@@ -361,7 +361,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          if (this .resolve)
          {
-            this .loadComponents () .then (() =>
+            browser .loadComponents (scene) .then (() =>
             {
                try
                {

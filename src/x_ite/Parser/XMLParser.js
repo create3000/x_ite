@@ -115,18 +115,26 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    },
    parseIntoScene (resolve, reject)
    {
+      const
+         browser = this .getBrowser (),
+         scene   = this .getScene ();
+
       this .resolve = resolve;
       this .reject  = reject;
 
-      this .getScene () .setEncoding ("XML");
-      this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
+      scene .setEncoding ("XML");
+      scene .setProfile (browser .getProfile ("Full"));
 
       this .xmlElement (this .input);
    },
    xmlElement (xmlElement)
    {
+      const
+         browser = this .getBrowser (),
+         scene   = this .getScene ();
+
       if (xmlElement === null)
-         return this .resolve ?.(this .getScene ());
+         return this .resolve ?.(scene);
 
       switch (xmlElement .nodeName)
       {
@@ -143,10 +151,10 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             {
                if (this .resolve)
                {
-                  this .loadComponents () .then (() =>
+                  browser .loadComponents (scene) .then (() =>
                   {
                      this .childrenElements (xmlElement);
-                     this .resolve (this .getScene ());
+                     this .resolve (scene);
                   })
                   .catch (this .reject);
                }
@@ -168,10 +176,10 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          {
             if (this .resolve)
             {
-               this .loadComponents () .then (() =>
+               browser .loadComponents (scene) .then (() =>
                {
                   this .sceneElement (xmlElement);
-                  this .resolve (this .getScene ());
+                  this .resolve (scene);
                })
                .catch (this .reject);
             }
@@ -186,10 +194,10 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          {
             if (this .resolve)
             {
-               this .loadComponents () .then (() =>
+               browser .loadComponents (scene) .then (() =>
                {
                   this .childrenElements (xmlElement);
-                  this .resolve (this .getScene ());
+                  this .resolve (scene);
                })
                .catch (this .reject);
             }
@@ -204,17 +212,21 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    },
    x3dElement (xmlElement)
    {
+      const
+         browser = this .getBrowser (),
+         scene   = this .getScene ();
+
       try
       {
          // Profile
 
          const
             profileNameId = xmlElement .getAttribute ("profile"),
-            profile       = this .getBrowser () .getProfile (profileNameId || "Full");
+            profile       = browser .getProfile (profileNameId || "Full");
 
          $.data (this .scene, "X3D", xmlElement);
 
-         this .getScene () .setProfile (profile);
+         scene .setProfile (profile);
       }
       catch (error)
       {
@@ -226,7 +238,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       const specificationVersion = xmlElement .getAttribute ("version");
 
       if (specificationVersion)
-         this .getScene () .setSpecificationVersion (specificationVersion);
+         scene .setSpecificationVersion (specificationVersion);
 
       // Process child nodes
 
@@ -238,12 +250,12 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
       if (this .resolve)
       {
-         this .loadComponents () .then (() =>
+         browser .loadComponents (scene) .then (() =>
          {
             for (const childNode of xmlElement .childNodes)
                this .x3dElementChildScene (childNode)
 
-            this .resolve (this .getScene ());
+            this .resolve (scene);
          })
          .catch (this .reject);
       }

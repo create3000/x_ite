@@ -138,7 +138,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       scene .setEncoding ("PLY");
       scene .setProfile (browser .getProfile ("Interchange"));
 
-      await this .loadComponents ();
+      await browser .loadComponents (scene);
       await this .processElements (this .header ([ ]))
 
       // Create nodes.
@@ -413,6 +413,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    async parseVertices ({ count, properties })
    {
       const
+         browser    = this .getBrowser (),
          scene      = this .getScene (),
          colors     = [ ],
          texCoord   = scene .createNode ("TextureCoordinate"),
@@ -473,7 +474,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       {
          scene .addComponent (this .getBrowser () .getComponent ("Shaders", 1));
 
-         await this .loadComponents ();
+         await browser .loadComponents (scene);
 
          for (const [name, value] of attributes)
          {

@@ -191,7 +191,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .extensionsArray  (glTF .extensionsRequired, this .extensions);
       this .extensionsObject (glTF .extensions);
 
-      await this .loadComponents ();
+      await browser .loadComponents (scene);
       await this .buffersArray (glTF .buffers);
 
       if (this .extensions .has ("KHR_draco_mesh_compression"))

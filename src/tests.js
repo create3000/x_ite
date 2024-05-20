@@ -318,6 +318,7 @@ const X_ITE_TESTS = [
    { path: "Shaders/ComposedShaderUniformRotation.x3d" },
    { path: "Shaders/Fields.x3d" },
    { path: "Shaders/FloatVertexAttribute.x3d" },
+   { path: "Shaders/flow.x3d" },
    { path: "Shaders/images.x3d" },
    { path: "Shaders/LineFloatVertexAttribute.x3d" },
    { path: "Shaders/LineMatrix3VertexAttribute.x3d" },

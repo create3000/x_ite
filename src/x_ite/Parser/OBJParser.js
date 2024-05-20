@@ -163,7 +163,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       scene .setEncoding ("OBJ");
       scene .setProfile (browser .getProfile ("Interchange"));
 
-      await this .loadComponents ();
+      await browser .loadComponents (scene);
 
       // Init nodes.
 
