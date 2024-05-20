@@ -298,7 +298,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          for (const arg of args)
          {
             if (arg instanceof X3DScene)
-               component .push (... (arg .profile ?.components ?? [ ]), ... arg .components);
+               component .push (... (arg .profile ?? this .getProfile ("Full")) .components, ... arg .components);
 
             else if (arg instanceof ProfileInfo)
                component .push (... arg .components);
@@ -310,7 +310,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
                component .push (arg);
 
             else if (typeof arg === "string")
-               component .push (this [_supportedComponents] .get (arg))
+               component .push (this .getComponent (arg))
          }
 
          // Load array of component names.

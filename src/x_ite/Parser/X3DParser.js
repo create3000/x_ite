@@ -86,14 +86,7 @@ Object .assign (X3DParser .prototype,
    },
    loadComponents ()
    {
-      const
-         browser = this .getBrowser (),
-         scene   = this .getScene ();
-
-      return Promise .all ([
-         browser .loadComponents (scene .getProfile () || browser .getProfile ("Full")),
-         browser .loadComponents (scene .getComponents ()),
-      ]);
+      return this .getBrowser () .loadComponents (this .getScene ());
    },
    setUnits (units)
    {
