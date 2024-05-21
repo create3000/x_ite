@@ -84,6 +84,9 @@ Object .assign (X3DParser .prototype,
    {
       return this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration;
    },
+   /**
+    * @deprecated Directly use `browser.loadComponents`.
+    */
    loadComponents ()
    {
       return this .getBrowser () .loadComponents (this .getScene ());
