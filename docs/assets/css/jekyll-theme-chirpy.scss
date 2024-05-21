@@ -176,6 +176,16 @@ small, .small {
   white-space: initial;
 }
 
+/* Patreon link  */
+
+.patreon {
+  display: block;
+  border: 1px solid !important;
+  border-radius: .625rem;
+  padding: .5rem;
+  text-align: center;
+}
+
 /* table examples */
 
 .table-wrapper > table.examples tbody tr {
