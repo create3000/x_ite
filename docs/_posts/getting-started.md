@@ -579,7 +579,7 @@ There is a ZIP archive available to locally install X_ITE on your server. Compre
 
 ### Using X_ITE with a CDN
 
-CDNs can offer a performance benefit by hosting X_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X_ITE from the same CDN, it won't have to be re-downloaded. To use the X_ITE CDN, just reference the JavaScript file in the script element directly from the jsDelivr CDN or GitHub CDN domain.
+CDNs can offer a performance benefit by hosting X_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X_ITE from the same CDN, it won't have to be re-downloaded. To use the X_ITE CDN, just reference the JavaScript file in the script element directly from the [jsDelivr](https://www.jsdelivr.com){:target="_blank"} or [UNPKG](https://www.unpkg.com){:target="_blank"} CDN domain.
 
 ### jsDelivr CDN
 
@@ -614,6 +614,19 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
 </script>
 ```
 
+### UNPKG CDN
+
+UNPKG CDN is a free content delivery network that serves files from npm packages, enabling developers to quickly and easily load any file from any npm package using a simple URL format​.
+
+```html
+<script src="https://www.unpkg.com/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
+<!-- or as ES module for use in scripts -->
+<script type="module">
+import X3D from "https://www.unpkg.com/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
+</script>
+```
+
+<!--
 ### GitHub CDN
 
 GitCDN serves raw files directly from GitHub with proper Content-Type headers and a super fast CDN!
@@ -626,11 +639,12 @@ You should **NOT** use this in a production environment.
 
 ```html
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
-<!-- or as ES module for use in scripts -->
+<!-- or as ES module for use in scripts - ->
 <script type="module">
 import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";
 </script>
 ```
+-->
 
 ### You can also get it from npm
 
