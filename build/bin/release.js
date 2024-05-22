@@ -61,7 +61,7 @@ function commit (version)
 	systemSync (`git push origin`);
 }
 
-function publish (version)
+function tags (version)
 {
 	systemSync (`git tag --delete ${version}`);
 	systemSync (`git push --delete origin ${version}`);
@@ -75,7 +75,7 @@ function update (release)
 	const
 		cwd  = process .cwd (),
 		dist = `${cwd}/dist`,
-		code = `${cwd}/../code/docs/x_ite/${release}`;
+		code = `${cwd}/../code/x_ite`;
 
 	console .log (`Uploading ${release}`);
 
@@ -83,7 +83,10 @@ function update (release)
 	systemSync (`cp -r '${dist}' '${code}'`);
 
 	if (release === "latest")
-		systemSync (`cp -r '${dist}' '${code}/dist'`); // legacy
+	{
+		systemSync (`cp -r '${dist}' '${code}/${release}'`); // legacy
+		systemSync (`cp -r '${dist}' '${code}/${release}/dist'`); // legacy
+	}
 }
 
 function upload (version)
@@ -97,8 +100,8 @@ function upload (version)
 	systemSync (`git add -A`);
 	systemSync (`git commit -am 'Published version ${version}'`);
 	systemSync (`git push origin`);
-	
-	publish (version);
+
+	tags (version);
 
 	process .chdir (cwd);
 
@@ -169,12 +172,12 @@ function release ()
 	// tags
 
 	commit (version);
-	publish ("alpha");
+	tags ("alpha");
 
 	if (!version .endsWith ("a"))
 	{
-		publish (version);
-		publish ("latest");
+		tags (version);
+		tags ("latest");
 	}
 
 	// code
