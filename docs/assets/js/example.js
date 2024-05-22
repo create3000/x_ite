@@ -52,7 +52,8 @@ $("table.examples a") .on ("click", function ()
 
    if ($(this) .attr ("doc") === "true")
    {
-      $("<a>&nbsp;&nbsp;#</a>")
+      $("<a></a>")
+         .text ("#")
          .attr ("href", `/x_ite/components/${$(this) .attr ("componentName") .replace (/[_]/g, "-") .toLowerCase ()}/${$(this) .attr ("typeName") .toLowerCase ()}/`)
          .appendTo (header);
    }
