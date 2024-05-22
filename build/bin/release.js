@@ -61,7 +61,7 @@ function commit (version)
 	systemSync (`git push origin`);
 }
 
-function tags (version)
+function publish (version)
 {
 	systemSync (`git tag --delete ${version}`);
 	systemSync (`git push --delete origin ${version}`);
@@ -101,7 +101,7 @@ function upload (version)
 	systemSync (`git commit -am 'Published version ${version}'`);
 	systemSync (`git push origin`);
 
-	tags (version);
+	publish (version);
 
 	process .chdir (cwd);
 
@@ -172,12 +172,12 @@ function release ()
 	// tags
 
 	commit (version);
-	tags ("alpha");
+	publish ("alpha");
 
 	if (!version .endsWith ("a"))
 	{
-		tags (version);
-		tags ("latest");
+		publish (version);
+		publish ("latest");
 	}
 
 	// code
