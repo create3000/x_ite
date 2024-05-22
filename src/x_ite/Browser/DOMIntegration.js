@@ -23,7 +23,9 @@
  * SOFTWARE.
  ******************************************************************************/
 
+import XMLParser    from "../Parser/XMLParser.js"
 import X3DConstants from "../Base/X3DConstants.js";
+import X3DScene     from "../Execution/X3DScene.js";
 import SFNodeCache  from "../Fields/SFNodeCache.js";
 
 class DOMIntegration
@@ -62,9 +64,15 @@ class DOMIntegration
             browser .setBrowserLoading (true);
             browser .addLoadingObject (this);
 
-            // Now also attach node property to each node element.
+            // Now also attached node property to each node element.
 
-            const scene = await browser .importDocument (rootElement);
+            const scene = new X3DScene (browser);
+
+            this .parser = new XMLParser (scene);
+
+            this .parser .setInput (rootElement);
+
+            await new Promise (this .parser .parseIntoScene .bind (this .parser));
 
             browser .replaceWorld (scene);
 
@@ -146,7 +154,7 @@ class DOMIntegration
 
          const
             parentNode = element .parentNode,
-             node       = $.data (parentNode, "node");
+            node       = $.data (parentNode, "node");
 
          if (node)
          {
