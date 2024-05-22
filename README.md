@@ -24,7 +24,7 @@ X_ITE is a robust X3D JavaScript WebGL browser that is compatible with all major
 
 jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
-#### For Production
+### For Production
 
 If you are using X_ITE for production and everything is working well, you should use a fixed version. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions).
 
