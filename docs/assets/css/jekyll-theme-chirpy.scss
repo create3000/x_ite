@@ -238,7 +238,11 @@ small, .small {
 }
 
 .example .header:hover a {
-  color: var(--bs-link-hover-color-rgb);
+  color: var(--text-color);
+}
+
+.example .header a:hover {
+  color: #d2603a;
 }
 
 .example p {

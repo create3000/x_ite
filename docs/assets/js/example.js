@@ -15,11 +15,8 @@ $("table.examples a") .on ("click", function ()
    }
    else
    {
-      div = $("<div></div>") .addClass ("example") .appendTo ("body");
-
-      const header = $("<p></p>") .addClass ("header") .appendTo (div);
-
-      title   = $("<span></span>") .addClass ("title") .appendTo (header);
+      div     = $("<div></div>") .addClass ("example") .appendTo ("body");
+      title   = $("<p></p>") .addClass ("header") .appendTo (div);
       toolbar = $("<p></p>") .addClass ("toolbar") .appendTo (div);
       canvas  = $("<x3d-canvas></x3d-canvas>") .appendTo (div);
 
