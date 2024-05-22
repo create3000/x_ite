@@ -25,46 +25,52 @@ WebGL uses the GLSL language to write shaders that can be run across all browser
 
 ### X3D
 
-```js
-#X3D V{{ site.x3d_latest_version }} utf8
-
-DEF Timer TimeSensor {
-  loop TRUE
-}
-
-Transform {
-  children Shape {
-    appearance Appearance {
-      texture ImageTexture {
-        url "image.png"
-      }
-      shaders DEF Shader ComposedShader {
-        inputOnly SFTime set_time
-        language "GLSL"
-        parts [
-          ShaderPart {
-            url "data:x-shader/x-vertex,#version 300 es
+```xml
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "http://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
+<X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shaders' level='1'/>
+  </head>
+  <Scene>
+    <Viewpoint
+        position='9.279771 8.706816 16.22163'
+        orientation='-0.83432609774564 0.526445494105168 0.163569876068002 0.712985187365762'
+        centerOfRotation='4.5 0 4.5'/>
+    <TimeSensor DEF='Timer'
+        loop='true'/>
+    <Transform>
+      <Shape>
+        <Appearance>
+          <ImageTexture
+              url='"image.png"'/>
+          <ComposedShader DEF='Shader'
+              language='GLSL'>
+            <field accessType='inputOnly' type='SFTime' name='set_time'/>
+            <ShaderPart>
+<![CDATA[data:x-shader/x-vertex,#version 300 es
 // Vertex Shader
 ...
 uniform float set_time
 ...
-"
-          }
-          ShaderPart {
-            type "FRAGMENT"
-            url "data:x-shader/x-fragment,#version 300 es
+]]>
+            </ShaderPart>
+            <ShaderPart
+                type='FRAGMENT'>
+<![CDATA[data:x-shader/x-fragment,#version 300 es
 // Fragment Shader
 ...
-"
-          }
-        ]
-      }
-    }
-    geometry ElevationGrid { }
-  }
-}
-
-ROUTE Timer.elapsedTime TO Shader.set_time
+]]>
+            </ShaderPart>
+          </ComposedShader>
+        </Appearance>
+        <ElevationGrid
+            xDimension='10'
+            zDimension='10'/>
+      </Shape>
+    </Transform>
+    <ROUTE fromNode='Timer' fromField='elapsedTime' toNode='Shader' toField='set_time'/>
+  </Scene>
+</X3D>
 ```
 
 Once the X3D is defined we can now write the vertex and the fragment shader source. This is a simple example where a texture is applied to the geometry.
