@@ -629,7 +629,6 @@ import X3D from "https://www.unpkg.com/x_ite@{{ site.x_ite_latest_version }}/dis
 <!--
 ### GitHub CDN
 
-
 GitCDN serves raw files directly from GitHub with proper Content-Type headers and a super fast CDN!
 
 #### Latest Stable Version
