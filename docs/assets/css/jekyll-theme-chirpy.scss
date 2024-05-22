@@ -196,10 +196,10 @@ small, .small {
 .table-wrapper > table.examples tbody tr td {
   border: 3px solid var(--tb-odd-bg);
   padding: 0;
+  line-height: 1rem;
 }
 
 .table-wrapper > table.examples a.img-link {
-  position: relative;
   display: block;
 }
 
