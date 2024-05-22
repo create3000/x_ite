@@ -2,7 +2,7 @@ $("table.examples a") .on ("click", function ()
 {
    let
       div     = $("div.example"),
-      title   = div .find (".title"),
+      header  = div .find (".header"),
       toolbar = div .find (".toolbar"),
       canvas  = div .find ("x3d-canvas"),
       zip     = div .find (".zip"),
@@ -16,7 +16,7 @@ $("table.examples a") .on ("click", function ()
    else
    {
       div     = $("<div></div>") .addClass ("example") .appendTo ("body");
-      title   = $("<p></p>") .addClass ("header") .appendTo (div);
+      header  = $("<p></p>") .addClass ("header") .appendTo (div);
       toolbar = $("<p></p>") .addClass ("toolbar") .appendTo (div);
       canvas  = $("<x3d-canvas></x3d-canvas>") .appendTo (div);
 
@@ -45,16 +45,16 @@ $("table.examples a") .on ("click", function ()
 
    canvas .prop ("browser") .getBrowserOptions () .reset ();
 
-   title  .text ($(this) .attr ("title"));
+   header .text ($(this) .attr ("title"));
    canvas .attr ("src", $(this) .attr ("href"));
    zip    .attr ("href", $(this) .attr ("href") .replace (/\.x3d$/, ".zip"));
    source .attr ("href", `/x_ite/playground/?url=${$(this) .attr ("href")}`);
 
-   if ($(this) .attr ("componentName") !== "X3D")
+   if ($(this) .attr ("doc") === "true")
    {
       $("<a> #</a>")
          .attr ("href", `/x_ite/components/${$(this) .attr ("componentName") .replace (/[_]/g, "-") .toLowerCase ()}/${$(this) .attr ("typeName") .toLowerCase ()}/`)
-         .appendTo (title);
+         .appendTo (header);
    }
 
    console .log (`Loading ${$(this) .attr ("title")} ...`);
