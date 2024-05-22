@@ -587,7 +587,7 @@ jsDelivr is an open-source content delivery network (CDN) renowned for its no-co
 
 #### For Production
 
-If you use X_ITE for production and everything works well, you should use a fixed version. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions){:target="_blank"}.
+If you are using X_ITE for production and everything is working well, you should use a fixed version. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions){:target="_blank"}.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
@@ -604,6 +604,8 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version
 
 You can opt for the »latest« tag to ensure you always have the most recent version, instead of using a fixed version number.
 
+You should **NOT** use this in a production environment.
+
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
@@ -619,6 +621,8 @@ GitCDN serves raw files directly from GitHub with proper Content-Type headers an
 #### Latest Stable Version
 
 By making sure you have the latest stable version, you can take advantage of the latest features, enhancements and bug fixes to keep your work at the highest level of performance and functionality.
+
+You should **NOT** use this in a production environment.
 
 ```html
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
