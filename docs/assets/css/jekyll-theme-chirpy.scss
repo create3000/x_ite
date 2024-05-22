@@ -233,6 +233,14 @@ small, .small {
   box-shadow: 0px 0px 10px black;
 }
 
+.example .header a {
+  color: var(--text-muted-color);
+}
+
+.example .header:hover a {
+  color: var(--bs-link-hover-color-rgb);
+}
+
 .example p {
   margin-top: 0;
   margin-bottom: 0;

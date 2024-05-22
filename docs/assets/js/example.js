@@ -53,15 +53,11 @@ $("table.examples a") .on ("click", function ()
    zip    .attr ("href", $(this) .attr ("href") .replace (/\.x3d$/, ".zip"));
    source .attr ("href", `/x_ite/playground/?url=${$(this) .attr ("href")}`);
 
-   if ($(this) .attr ("componentName") === "X3D")
+   if ($(this) .attr ("componentName") !== "X3D")
    {
-      title .css ("cursor", "unset") .off ("click");
-   }
-   else
-   {
-      title
-         .css ("cursor", "pointer")
-         .on ("click", () => window .location = `/x_ite/components/${$(this) .attr ("componentName") .replace (/[_]/g, "-") .toLowerCase ()}/${$(this) .attr ("typeName") .toLowerCase ()}/`);
+      $("<a> #</a>")
+         .attr ("href", `/x_ite/components/${$(this) .attr ("componentName") .replace (/[_]/g, "-") .toLowerCase ()}/${$(this) .attr ("typeName") .toLowerCase ()}/`)
+         .appendTo (title);
    }
 
    console .log (`Loading ${$(this) .attr ("title")} ...`);
