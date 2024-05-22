@@ -24,15 +24,15 @@ X_ITE is a robust X3D JavaScript WebGL browser that is compatible with all major
 
 jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
-### Latest Stable Version
+#### For Production
 
-You can opt for the »latest« tag to ensure you always have the most current version, instead of using a fixed version number. But consider to use a fixed version if you use X_ITE for production.
+If you are using X_ITE for production and everything is working well, you should use a fixed version. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions).
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/x_ite@9.6.2/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@9.6.2/dist/x_ite.min.mjs";
 </script>
 ```
 
@@ -45,7 +45,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 ### Declarative Syntax
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/x_ite@9.6.2/dist/x_ite.min.js"></script>
 <x3d-canvas>
   <X3D profile='Interchange' version='4.0'>
     <head>
@@ -84,7 +84,7 @@ The same scene can also be created using pure JavaScript:
 
 ```html
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@9.6.2/dist/x_ite.min.mjs";
 
 const
    browser = X3D .getBrowser (),

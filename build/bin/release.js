@@ -34,6 +34,15 @@ function zip ()
 	systemSync (`rm -r x_ite-${version}`);
 }
 
+function readme (version)
+{
+	let readme = sh (`cat 'README.md'`);
+
+	readme = readme .replace (/x_ite@[\d\.]+/sg, `x_ite@${version}`);
+
+	fs .writeFileSync ("README.md", readme);
+}
+
 function docs (version)
 {
 	const contentLength = Math .floor (parseInt (sh (`gzip -5 dist/x_ite.min.js --stdout | wc -c`) .trim ()) / 1000);
@@ -150,7 +159,10 @@ function release ()
 	// docs
 
 	if (!version .endsWith ("a"))
+	{
+		readme (version);
 		docs (version);
+	}
 
 	// tags
 
