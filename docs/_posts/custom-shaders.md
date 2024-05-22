@@ -50,7 +50,7 @@ WebGL uses the GLSL language to write shaders that can be run across all browser
 <![CDATA[data:x-shader/x-vertex,#version 300 es
 // Vertex Shader
 ...
-uniform float set_time
+uniform float set_time; // value from set_time field
 ...
 ]]>
             </ShaderPart>
@@ -58,6 +58,8 @@ uniform float set_time
                 type='FRAGMENT'>
 <![CDATA[data:x-shader/x-fragment,#version 300 es
 // Fragment Shader
+...
+uniform sampler2D x3d_Texture2D [1]; // image from ImageTexture node
 ...
 ]]>
             </ShaderPart>
