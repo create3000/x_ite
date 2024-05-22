@@ -26,7 +26,7 @@ jsDelivr is an open-source content delivery network (CDN) renowned for its no-co
 
 ### For Production
 
-If you are using X_ITE for production and everything is working well, you should use a fixed version. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions).
+If you are going to use X_ITE in a production environment, you should use a fixed version of X_ITE. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions).
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@9.6.2/dist/x_ite.min.js"></script>
