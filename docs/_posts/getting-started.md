@@ -655,7 +655,7 @@ The HTML5 page is quite easy to create, the HTML5 code below shows you the minim
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
     <style>
 x3d-canvas {
   width: 768px;

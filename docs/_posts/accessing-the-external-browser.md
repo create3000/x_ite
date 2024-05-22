@@ -19,7 +19,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 ### Declarative Syntax
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
 <x3d-canvas>
   <X3D profile='Interchange' version='4.0'>
     <head>
@@ -58,7 +58,7 @@ The same scene can also be created using pure JavaScript:
 
 ```html
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
 
 const
    browser = X3D .getBrowser (),
