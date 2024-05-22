@@ -371,6 +371,7 @@ class DOMIntegration
       if (!node)
          return;
 
+      // Unfortunately `getEventListeners` is not available all the time.
       // if (!getEventListeners (element) .hasOwnProperty (field .getName ()))
       //    return;
 
