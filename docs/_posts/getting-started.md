@@ -604,7 +604,7 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version
 
 You can opt for the »latest« tag to ensure you always have the most recent version, instead of using a fixed version number.
 
-You should **NOT** use this in a production environment.
+You should **NOT** use this in a production environment, as there may be breaking changes between major releases.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
