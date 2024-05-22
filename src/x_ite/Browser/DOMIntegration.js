@@ -371,6 +371,9 @@ class DOMIntegration
       if (!node)
          return;
 
+      // if (!getEventListeners (element) .hasOwnProperty (field .getName ()))
+      //    return;
+
       const event = new CustomEvent (field .getName (),
       {
          detail: {
