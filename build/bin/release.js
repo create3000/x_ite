@@ -97,6 +97,8 @@ function upload (version)
 	systemSync (`git add -A`);
 	systemSync (`git commit -am 'Published version ${version}'`);
 	systemSync (`git push origin`);
+	
+	publish (version);
 
 	process .chdir (cwd);
 
