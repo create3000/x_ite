@@ -75,7 +75,7 @@ function update (release)
 	const
 		cwd  = process .cwd (),
 		dist = `${cwd}/dist`,
-		code = `${cwd}/../code/x_ite`;
+		code = `${cwd}/../code/docs/x_ite/${release}`;
 
 	console .log (`Uploading ${release}`);
 
@@ -83,10 +83,7 @@ function update (release)
 	systemSync (`cp -r '${dist}' '${code}'`);
 
 	if (release === "latest")
-	{
-		systemSync (`cp -r '${dist}' '${code}/${release}'`); // legacy
-		systemSync (`cp -r '${dist}' '${code}/${release}/dist'`); // legacy
-	}
+		systemSync (`cp -r '${dist}' '${code}/dist'`); // legacy
 }
 
 function upload (version)
