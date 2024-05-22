@@ -28,7 +28,7 @@ X_ITE supports custom shaders, clip planes, reflection mapping, script nodes, pr
 >**Tip:** X_ITE runs best in fresh installs of Google Chrome, Chromium, Firefox, Safari, Opera, and Microsoft Edge. X_ITE uses the latest JavaScript standard, but is also compatible with older browser, and is available both on your desktop computer and on your modern smart-phone.
 {: .prompt-tip }
 
-If you ever get into trouble, please [report a bug](/x_ite/report-a-bug/). If you have any questions or need help please [open a new issue](/x_ite/report-a-bug/).
+If you ever get into trouble, please [report a bug or just ask a question](/x_ite/report-a-bug/).
 
 ### Become a Patreon of X_ITE
 
