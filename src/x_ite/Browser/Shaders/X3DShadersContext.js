@@ -49,6 +49,7 @@ import Shading        from "../Core/Shading.js";
 import Shaders        from "./ShaderRegistry.js";
 import ComposedShader from "../../Components/Shaders/ComposedShader.js";
 import ShaderPart     from "../../Components/Shaders/ShaderPart.js";
+import DEVELOPMENT    from "../../DEVELOPMENT.js";
 
 const
    _wireframe      = Symbol (),
@@ -151,7 +152,7 @@ Object .assign (X3DShadersContext .prototype,
    },
    createShader (name, vs, fs = vs, options = [ ], uniformNames = [ ], transformFeedbackVaryings = [ ])
    {
-      if (this .getBrowserOption ("Debug"))
+      if (DEVELOPMENT)
          console .info (`Initializing ${name}Shader.`);
 
       const
