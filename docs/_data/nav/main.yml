@@ -4,6 +4,8 @@
       url: /
     - title: "What's New"
       url: /what-s-new/
+    - title: "Releases"
+      url: /releases/
     - title: "Features"
       url: /features/
     - title: "Browser Support"

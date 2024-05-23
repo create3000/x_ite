@@ -581,13 +581,13 @@ There is a ZIP archive available to locally install X_ITE on your server. Compre
 
 CDNs can offer a performance benefit by hosting X_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X_ITE from the same CDN, it won't have to be re-downloaded. To use the X_ITE CDN, just reference the JavaScript file in the script element directly from the [jsDelivr](https://www.jsdelivr.com){:target="_blank"} or [UNPKG](https://www.unpkg.com){:target="_blank"} CDN domain.
 
-### jsDelivr CDN
-
-jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
-
-#### For Production
+### For Production
 
 If you are going to use X_ITE in a production environment, you should use a fixed version of X_ITE. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions){:target="_blank"}.
+
+#### jsDelivr CDN
+
+jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
@@ -600,21 +600,7 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version
 >**Info:** It is no longer necessary to include the CSS file.
 {: .prompt-info }
 
-#### Latest Stable Version
-
-You can opt for the »latest« tag to ensure you always have the most recent version, instead of using a fixed version number.
-
-You should **NOT** use this in a production environment, as there may be breaking changes between major releases.
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
-<!-- or as ES module for use in scripts -->
-<script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
-</script>
-```
-
-### UNPKG CDN
+#### UNPKG CDN
 
 UNPKG CDN is a free, open-source content delivery network that serves files from npm packages, enabling developers to quickly and easily load any file from any npm package using a simple URL format​.
 
@@ -625,26 +611,6 @@ UNPKG CDN is a free, open-source content delivery network that serves files from
 import X3D from "https://www.unpkg.com/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
 </script>
 ```
-
-<!--
-### GitHub CDN
-
-GitCDN serves raw files directly from GitHub with proper Content-Type headers and a super fast CDN!
-
-#### Latest Stable Version
-
-By making sure you have the latest stable version, you can take advantage of the latest features, enhancements and bug fixes to keep your work at the highest level of performance and functionality.
-
-You should **NOT** use this in a production environment.
-
-```html
-<script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
-<!-- or as ES module for use in scripts - ->
-<script type="module">
-import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";
-</script>
-```
--->
 
 ### You can also get it from npm
 
