@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
    },
    setImage ()
    {
-      if (DEVELOPMENT)
+      if (DEVELOPMENT || this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading image '${decodeURI (this .URL .href)}'`);
@@ -193,7 +193,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
       }
       catch (error)
       {
-         if (DEVELOPMENT)
+         if (DEVELOPMENT || this .getBrowser () .getBrowserOption ("Debug"))
             console .log (error)
 
          // Catch security error from cross origin requests.

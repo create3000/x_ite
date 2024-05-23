@@ -161,7 +161,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          }
       });
 
-      if (DEVELOPMENT)
+      if (DEVELOPMENT || this .browser .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading scene '${decodeURI (this .URL .href)}'`);

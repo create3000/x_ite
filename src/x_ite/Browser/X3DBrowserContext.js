@@ -401,8 +401,12 @@ Object .assign (X3DBrowserContext,
          }
       }
 
+      let debug = false;
+
       for (const browser of browsers)
       {
+         debug = debug || browser .getBrowserOption ("Debug");
+
          if (concreteNodes)
          {
             for (const ConcreteNode of concreteNodes)
@@ -426,7 +430,7 @@ Object .assign (X3DBrowserContext,
          }
       }
 
-      if (external && DEVELOPMENT)
+      if (external && (DEVELOPMENT || debug))
          console .info (`Done loading external component '${name}'.`);
    },
 });

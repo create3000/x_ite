@@ -143,7 +143,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (texture .target !== this .getTarget ())
          return this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_2D'." });
 
-      if (DEVELOPMENT)
+      if (DEVELOPMENT || this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading image texture '${decodeURI (this .URL .href)}'`);
@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    },
    setImage ()
    {
-      if (DEVELOPMENT)
+      if (DEVELOPMENT || this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading image texture '${decodeURI (this .URL .href)}'`);

@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
       if (texture .target !== this .getTarget ())
          throw new Error ("Invalid KTX texture target, must be 'TEXTURE_3D'.");
 
-      if (DEVELOPMENT)
+      if (DEVELOPMENT || this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (URL .protocol !== "data:")
             console .info (`Done loading image texture 3D '${decodeURI (URL .href)}'`);

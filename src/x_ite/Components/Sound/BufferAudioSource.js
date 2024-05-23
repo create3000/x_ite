@@ -183,7 +183,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
 
             this .setLoadState (X3DConstants .COMPLETE_STATE);
 
-            if (DEVELOPMENT)
+            if (DEVELOPMENT || this .getBrowser () .getBrowserOption ("Debug"))
             {
                if (URL .protocol !== "data:")
                   console .info (`Done loading audio '${decodeURI (URL .href)}'`);

@@ -99,7 +99,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
 
             this .setLoadState (X3DConstants .COMPLETE_STATE);
 
-            if (DEVELOPMENT)
+            if (DEVELOPMENT || this .getBrowser () .getBrowserOption ("Debug"))
             {
                if (URL .protocol !== "data:")
                   console .info (`Done loading audio '${decodeURI (URL .href)}'`);
