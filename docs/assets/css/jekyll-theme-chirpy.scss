@@ -10,10 +10,30 @@
 /* append your custom style below */
 
 @mixin x_ite-dark-scheme {
-  --system-red: rgb(255, 69, 58);
+  /* Colors */
+
+  --system-red: rgb(255, 59, 48);
+  --system-orange: rgb(255, 149, 0);
   --system-yellow: rgb(255, 214, 10);
-  --system-blue: rgb(10, 132, 255);
-  --system-green: rgb(48, 209, 88);
+  --system-green: rgb(52, 199, 89);
+  --system-mint: rgb(0, 199, 190);
+  --system-teal: rgb(48, 176, 199);
+  --system-cyan: rgb(50, 173, 230);
+  --system-blue: rgb(0, 122, 255);
+  --system-indigo: rgb(88, 86, 214);
+  --system-purple: rgb(175, 82, 222);
+  --system-pink: rgb(255, 45, 85);
+  --system-brown: rgb(162, 132, 94);
+
+  --system-gray0: rgb(72, 72, 77);
+  --system-gray1: rgb(122, 122, 127);
+  --system-gray2: rgb(174, 174, 178);
+  --system-gray3: rgb(199, 199, 204);
+  --system-gray4: rgb(209, 209, 214);
+  --system-gray5: rgb(229, 229, 234);
+  --system-gray6: rgb(242, 242, 247);
+  --system-gray7: rgb(249, 249, 255);
+  --system-gray8: rgb(255, 255, 255);
 
   --nav-border-color: rgba(158, 158, 158, 0.17);
   --nav-active-page: rgb(168, 182, 206);
@@ -32,10 +52,30 @@
 }
 
 @mixin x_ite-light-scheme {
-  --system-red: rgb(255, 59, 48);
-  --system-yellow: rgb(255, 204, 0);
-  --system-blue: rgb(0, 122, 255);
-  --system-green: rgb(52, 199, 89);
+  /* Colors */
+
+  --system-red: rgb(255, 69, 58);
+  --system-orange: rgb(255, 159, 10);
+  --system-yellow: rgb(255, 214, 10);
+  --system-green: rgb(48, 209, 88);
+  --system-mint: rgb(102, 212, 207);
+  --system-teal: rgb(64, 200, 224);
+  --system-cyan: rgb(100, 210, 255);
+  --system-blue: rgb(10, 132, 255);
+  --system-indigo: rgb(94, 92, 230);
+  --system-purple: rgb(191, 90, 242);
+  --system-pink: rgb(255, 55, 95);
+  --system-brown: rgb(172, 142, 104);
+
+  --system-gray0: rgb(204, 204, 209);
+  --system-gray1: rgb(142, 142, 147);
+  --system-gray2: rgb(99, 99, 102);
+  --system-gray3: rgb(72, 72, 74);
+  --system-gray4: rgb(58, 58, 60);
+  --system-gray5: rgb(44, 44, 46);
+  --system-gray6: rgb(28, 28, 30);
+  --system-gray7: rgb(21, 21, 23);
+  --system-gray8: rgb(0, 0, 0);
 
   --h2-color: rgb(189, 0, 106);
   --h3-color: rgb(159, 103, 34);;
