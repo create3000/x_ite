@@ -30,14 +30,11 @@ const box = `<?xml version="1.0" encoding="UTF-8"?>
 require .config ({ paths: { "vs": "https://cdn.jsdelivr.net/npm/monaco-editor@0.48.0/min/vs" }});
 require (["vs/editor/editor.main"], async () =>
 {
-   const darkMode = (window .matchMedia ?.("(prefers-color-scheme: dark)") .matches || $("html") .attr ("data-mode") === "dark") && ($("html") .attr ("data-mode") !== "light");
-
    addVRMLEncoding (monaco);
 
    const editor = monaco .editor .create (document .getElementById ("editor"),
    {
       language: "xml",
-      theme: darkMode ? "vs-dark" : "vs-light",
       contextmenu: true,
       automaticLayout: true,
       tabSize: 2,
@@ -45,6 +42,23 @@ require (["vs/editor/editor.main"], async () =>
       wrappingIndent: "indent",
       minimap: { enabled: false },
    });
+
+   // Handle color scheme changes.
+
+   const colorScheme = window .matchMedia ("(prefers-color-scheme: dark)")
+
+   colorScheme .addEventListener ("change", event => changeColorScheme (event));
+
+   changeColorScheme ()
+
+   function changeColorScheme ()
+   {
+      const darkMode = (window .matchMedia ?.("(prefers-color-scheme: dark)") .matches || $("html") .attr ("data-mode") === "dark") && ($("html") .attr ("data-mode") !== "light");
+
+      monaco .editor .setTheme (darkMode ? "vs-dark" : "vs-light");
+   }
+
+   // Handle url parameter.
 
    const url = new URL (document .location .href) .searchParams .get ("url");
 
