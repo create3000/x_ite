@@ -429,7 +429,7 @@ Object .assign (X3DBrowserContext,
          }
       }
 
-      if (external && (debug))
+      if (external && debug)
          console .info (`Done loading external component '${name}'.`);
    },
 });
