@@ -63,8 +63,8 @@ function commit (version)
 
 function tags (version)
 {
-	systemSync (`git tag --delete ${version}`);
-	systemSync (`git push --delete origin ${version}`);
+	// systemSync (`git tag --delete ${version}`);
+	// systemSync (`git push --delete origin ${version}`);
 
 	systemSync (`git tag ${version}`);
 	systemSync (`git push origin --tags`);
