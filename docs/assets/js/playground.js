@@ -132,7 +132,7 @@ function updateToolbar (toolbar, canvas, monaco, editor)
 
    $("<span></span>")
       .attr ("title", "View all objects in scene.")
-      .addClass (["fa-solid", "fa-arrows-to-eye"])
+      .addClass (["fa-solid", "fa-arrows-to-dot"])
       .on ("click", () =>
       {
          browser .viewAll ();
