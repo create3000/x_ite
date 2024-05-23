@@ -5,7 +5,7 @@ nav: main
 categories: []
 tags: [Releases]
 ---
-## Latest Version
+## Latest Stable Version
 
 When deploying X_ITE in a production environment, it's crucial to select and use a fixed, stable version to ensure reliability and avoid potential issues arising from updates or changes. Using a fixed version minimizes the risk of unexpected behavior or compatibility problems that could disrupt your application.
 
