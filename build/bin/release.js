@@ -169,13 +169,9 @@ function release ()
 	// tags
 
 	commit (version);
-	tags ("alpha");
 
 	if (!version .endsWith ("a"))
-	{
 		tags (version);
-		tags ("latest");
-	}
 
 	// code
 
