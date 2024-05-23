@@ -45,11 +45,10 @@
  *
  ******************************************************************************/
 
-import X3DObject   from "../Base/X3DObject.js";
-import Fields      from "../Fields.js";
-import GoldenGate  from "../Parser/GoldenGate.js";
-import X3DWorld    from "../Execution/X3DWorld.js";
-import DEVELOPMENT from "../DEVELOPMENT.js";
+import X3DObject  from "../Base/X3DObject.js";
+import Fields     from "../Fields.js";
+import GoldenGate from "../Parser/GoldenGate.js";
+import X3DWorld   from "../Execution/X3DWorld.js";
 
 const foreignMimeType = new Set ([
    "text/html",
@@ -161,7 +160,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          }
       });
 
-      if (DEVELOPMENT || this .browser .getBrowserOption ("Debug"))
+      if (this .browser .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading scene '${decodeURI (this .URL .href)}'`);

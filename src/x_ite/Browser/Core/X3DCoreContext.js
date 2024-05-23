@@ -58,6 +58,7 @@ import URLs                from "../Networking/URLs.js";
 import X3DScene            from "../../Execution/X3DScene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
+import DEVELOPMENT         from "../../DEVELOPMENT.js";
 import _                   from "../../../locale/gettext.js";
 
 const WEBGL_VERSION = 2;
@@ -318,7 +319,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "debug":
          {
-            this .setBrowserOption ("Debug", this .parseBooleanAttribute (newValue, false));
+            this .setBrowserOption ("Debug", this .parseBooleanAttribute (newValue, false) || DEVELOPMENT);
             break;
          }
          case "multisampling":
