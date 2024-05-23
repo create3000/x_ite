@@ -101,7 +101,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
             if (this .getBrowser () .getBrowserOption ("Debug"))
             {
                if (URL .protocol !== "data:")
-                  console .info (`Done loading audio '${decodeURI (URL .href)}'`);
+                  console .info (`Done loading audio '${decodeURI (URL .href)}'.`);
             }
          }
       });

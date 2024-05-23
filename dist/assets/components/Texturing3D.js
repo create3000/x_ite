@@ -1,7 +1,7 @@
 /* X_ITE v9.6.2 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 583:
+/***/ 903:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 401:
+/***/ 673:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 333:
+/***/ 653:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 937:
+/***/ 233:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -7341,10 +7341,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(333);
-/* provided dependency */ var JpegImage = __webpack_require__(937);
-/* provided dependency */ var CharLS = __webpack_require__(583);
-/* provided dependency */ var OpenJPEG = __webpack_require__(401);
+/* provided dependency */ var dicomParser = __webpack_require__(653);
+/* provided dependency */ var JpegImage = __webpack_require__(233);
+/* provided dependency */ var CharLS = __webpack_require__(903);
+/* provided dependency */ var OpenJPEG = __webpack_require__(673);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8450,9 +8450,6 @@ Namespace_default().add ("DICOMParser", "x_ite/Browser/Texturing3D/DICOMParser",
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/InputOutput/FileLoader\")"
 const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.6.2")] .require ("x_ite/InputOutput/FileLoader");
 var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/DEVELOPMENT\")"
-const DEVELOPMENT_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.6.2")] .require ("x_ite/DEVELOPMENT");
-var DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(DEVELOPMENT_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ImageTexture3D.js
 /*******************************************************************************
  *
@@ -8500,7 +8497,6 @@ var DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(DEVELOPMENT_namespa
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -8608,10 +8604,10 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
       if (texture .target !== this .getTarget ())
          throw new Error ("Invalid KTX texture target, must be 'TEXTURE_3D'.");
 
-      if ((DEVELOPMENT_default()) || this .getBrowser () .getBrowserOption ("Debug"))
+      if (this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (URL .protocol !== "data:")
-            console .info (`Done loading image texture 3D '${decodeURI (URL .href)}'`);
+            console .info (`Done loading image texture 3D '${decodeURI (URL .href)}'.`);
       }
 
       this .setTexture (texture);
@@ -8731,7 +8727,6 @@ Namespace_default().add ("ImageTexture3D", "x_ite/Components/Texturing3D/ImageTe
 
 
 
-
 function ImageTextureAtlas (executionContext)
 {
    Texturing3D_X3DTexture3DNode .call (this, executionContext);
@@ -8796,10 +8791,10 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
    },
    setImage ()
    {
-      if ((DEVELOPMENT_default()) || this .getBrowser () .getBrowserOption ("Debug"))
+      if (this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image '${decodeURI (this .URL .href)}'`);
+            console .info (`Done loading image '${decodeURI (this .URL .href)}'.`);
       }
 
       try
@@ -8872,7 +8867,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
       }
       catch (error)
       {
-         if ((DEVELOPMENT_default()) || this .getBrowser () .getBrowserOption ("Debug"))
+         if (this .getBrowser () .getBrowserOption ("Debug"))
             console .log (error)
 
          // Catch security error from cross origin requests.

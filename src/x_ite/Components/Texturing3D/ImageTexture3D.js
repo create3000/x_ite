@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
       if (this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (URL .protocol !== "data:")
-            console .info (`Done loading image texture 3D '${decodeURI (URL .href)}'`);
+            console .info (`Done loading image texture 3D '${decodeURI (URL .href)}'.`);
       }
 
       this .setTexture (texture);

@@ -1084,9 +1084,6 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector2\")"
 const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.6.2")] .require ("standard/Math/Numbers/Vector2");
 var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/DEVELOPMENT\")"
-const DEVELOPMENT_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.6.2")] .require ("x_ite/DEVELOPMENT");
-var DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(DEVELOPMENT_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js
 /* provided dependency */ var $ = __webpack_require__(823);
 /*******************************************************************************
@@ -1135,7 +1132,6 @@ var DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(DEVELOPMENT_namespa
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -1239,10 +1235,10 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       if (texture .target !== this .getTarget ())
          return this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_CUBE_MAP'." });
 
-      if ((DEVELOPMENT_default()) || this .getBrowser () .getBrowserOption ("Debug"))
+      if (this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'`);
+            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'.`);
       }
 
       try
@@ -1262,10 +1258,10 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
    },
    setImage ()
    {
-      if ((DEVELOPMENT_default()) || this .getBrowser () .getBrowserOption ("Debug"))
+      if (this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'`);
+            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'.`);
       }
 
       try

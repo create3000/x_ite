@@ -152,7 +152,7 @@ Object .assign (X3DShadersContext .prototype,
    createShader (name, vs, fs = vs, options = [ ], uniformNames = [ ], transformFeedbackVaryings = [ ])
    {
       if (this .getBrowserOption ("Debug"))
-         console .info (`Initializing ${name}Shader`);
+         console .info (`Initializing ${name}Shader.`);
 
       const
          gl      = this .getContext (),

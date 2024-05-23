@@ -176,7 +176,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          if (this .getBrowser () .getBrowserOption ("Debug"))
          {
             if (this .URL .protocol !== "data:")
-               console .info (`Done loading movie '${decodeURI (this .URL .href)}'`);
+               console .info (`Done loading movie '${decodeURI (this .URL .href)}'.`);
          }
 
          this .video .off ("loadeddata");

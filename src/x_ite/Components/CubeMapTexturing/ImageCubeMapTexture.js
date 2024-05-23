@@ -150,7 +150,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       if (this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'`);
+            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'.`);
       }
 
       try
@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       if (this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'`);
+            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'.`);
       }
 
       try

@@ -163,7 +163,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       if (this .browser .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading scene '${decodeURI (this .URL .href)}'`);
+            console .info (`Done loading scene '${decodeURI (this .URL .href)}'.`);
       }
    },
    createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)

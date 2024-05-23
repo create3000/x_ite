@@ -145,7 +145,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .URL .href)}'`);
+            console .info (`Done loading image texture '${decodeURI (this .URL .href)}'.`);
       }
 
       try
@@ -169,7 +169,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .URL .href)}'`);
+            console .info (`Done loading image texture '${decodeURI (this .URL .href)}'.`);
       }
 
       try
