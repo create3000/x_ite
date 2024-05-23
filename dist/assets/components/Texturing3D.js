@@ -1,7 +1,7 @@
 /* X_ITE v9.6.2 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 640:
+/***/ 583:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 626:
+/***/ 401:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 362:
+/***/ 333:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 730:
+/***/ 937:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -7341,10 +7341,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(362);
-/* provided dependency */ var JpegImage = __webpack_require__(730);
-/* provided dependency */ var CharLS = __webpack_require__(640);
-/* provided dependency */ var OpenJPEG = __webpack_require__(626);
+/* provided dependency */ var dicomParser = __webpack_require__(333);
+/* provided dependency */ var JpegImage = __webpack_require__(937);
+/* provided dependency */ var CharLS = __webpack_require__(583);
+/* provided dependency */ var OpenJPEG = __webpack_require__(401);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8608,7 +8608,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
       if (texture .target !== this .getTarget ())
          throw new Error ("Invalid KTX texture target, must be 'TEXTURE_3D'.");
 
-      if ((DEVELOPMENT_default()))
+      if ((DEVELOPMENT_default()) || this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (URL .protocol !== "data:")
             console .info (`Done loading image texture 3D '${decodeURI (URL .href)}'`);
@@ -8796,7 +8796,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
    },
    setImage ()
    {
-      if ((DEVELOPMENT_default()))
+      if ((DEVELOPMENT_default()) || this .getBrowser () .getBrowserOption ("Debug"))
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading image '${decodeURI (this .URL .href)}'`);
@@ -8872,7 +8872,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
       }
       catch (error)
       {
-         if ((DEVELOPMENT_default()))
+         if ((DEVELOPMENT_default()) || this .getBrowser () .getBrowserOption ("Debug"))
             console .log (error)
 
          // Catch security error from cross origin requests.
