@@ -71,6 +71,7 @@ import ConcreteNodes                  from "../Configuration/ConcreteNodes.js"
 import X3DWorld                       from "../Execution/X3DWorld.js";
 import TraverseType                   from "../Rendering/TraverseType.js";
 import StopWatch                      from "../../standard/Time/StopWatch.js";
+import DEVELOPMENT                    from "../DEVELOPMENT.js";
 
 const
    _world           = Symbol (),
@@ -400,12 +401,8 @@ Object .assign (X3DBrowserContext,
          }
       }
 
-      let debug = false;
-
       for (const browser of browsers)
       {
-         debug = debug || browser .getBrowserOption ("Debug");
-
          if (concreteNodes)
          {
             for (const ConcreteNode of concreteNodes)
@@ -429,7 +426,7 @@ Object .assign (X3DBrowserContext,
          }
       }
 
-      if (external && debug)
+      if (external && DEVELOPMENT)
          console .info (`Done loading external component '${name}'.`);
    },
 });
