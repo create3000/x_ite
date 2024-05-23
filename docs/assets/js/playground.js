@@ -105,8 +105,6 @@ async function applyChanges (monaco, editor)
    monaco .editor .setModelLanguage (editor .getModel (), Browser .currentScene .encoding .toLowerCase ());
 }
 
-let shading = "PHONG";
-
 function updateToolbar (toolbar, canvas, monaco, editor)
 {
    const browser = canvas .prop ("browser");
@@ -202,52 +200,6 @@ function updateToolbar (toolbar, canvas, monaco, editor)
          oit .toggleClass ("selected");
       })
       .appendTo (toolbar);
-
-   $("<span></span>") .addClass ("separator") .appendTo (toolbar);
-
-   $("<span></span>")
-      .text ("point")
-      .attr ("title", "Set shading to POINT.")
-      .on ("click", () =>
-      {
-         browser .setBrowserOption ("Shading", shading = "POINT");
-      })
-      .appendTo (toolbar);
-
-   $("<span></span>") .addClass ("dot") .appendTo (toolbar);
-
-   $("<span></span>")
-      .text ("wireframe")
-      .attr ("title", "Set shading to WIREFRAME.")
-      .on ("click", () =>
-      {
-         browser .setBrowserOption ("Shading", shading = "WIREFRAME");
-      })
-      .appendTo (toolbar);
-
-   $("<span></span>") .addClass ("dot") .appendTo (toolbar);
-
-   $("<span></span>")
-      .text ("flat")
-      .attr ("title", "Set shading to FLAT.")
-      .on ("click", () =>
-      {
-         browser .setBrowserOption ("Shading", shading = "FLAT");
-      })
-      .appendTo (toolbar);
-
-   $("<span></span>") .addClass ("dot") .appendTo (toolbar);
-
-   $("<span></span>")
-      .text ("phong")
-      .attr ("title", "Set shading to PHONG.")
-      .on ("click", () =>
-      {
-         browser .setBrowserOption ("Shading", shading = "PHONG");
-      })
-      .appendTo (toolbar);
-
-   browser .setBrowserOption ("Shading", shading);
 
    // Right side
 
