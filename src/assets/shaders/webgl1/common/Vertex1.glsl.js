@@ -83,12 +83,10 @@ vertex_main ()
 
    vertex = position .xyz;
 
-   #if defined (X3D_GEOMETRY_0D)
-      #if defined (X3D_STYLE_PROPERTIES)
-         gl_PointSize = pointSize = getPointSize (vertex);
-      #else
-         gl_PointSize = 1.0;
-      #endif
+   #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
+      gl_PointSize = pointSize = getPointSize (vertex);
+   #else
+      gl_PointSize = 1.0;
    #endif
 
    #if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
