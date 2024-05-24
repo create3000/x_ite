@@ -58,6 +58,7 @@ import URLs                from "../Networking/URLs.js";
 import X3DScene            from "../../Execution/X3DScene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
+import Features            from "../../Features.js";
 import _                   from "../../../locale/gettext.js";
 
 const WEBGL_VERSION = 2;
@@ -693,14 +694,16 @@ Object .assign (X3DCoreContext .prototype,
                   }
                }
 
+               const options = Features .ENVIRONMENT === "NODE" ? { } : { scene: this .getExecutionContext () };
+
                let text;
 
                switch (this .getExecutionContext () .getEncoding ())
                {
                   case "ASCII":
-                  case "VRML": text = vp .toVRMLString (); break;
-                  case "JSON": text = vp .toJSONString (); break;
-                  default:     text = vp .toXMLString  (); break;
+                  case "VRML": text = vp .toVRMLString (options); break;
+                  case "JSON": text = vp .toJSONString (options); break;
+                  default:     text = vp .toXMLString  (options); break;
                }
 
                text += "\n";
