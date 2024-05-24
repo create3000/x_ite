@@ -282,7 +282,8 @@ small, .small {
   color: var(--text-color);
 }
 
-.example .header a:hover {
+.example .header a:hover,
+.example a:hover {
   color: #d2603a;
 }
 
