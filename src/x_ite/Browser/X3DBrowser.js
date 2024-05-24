@@ -454,7 +454,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          return;
 
       loadCount .removeInterest ("checkLoadCount", this);
-      this .touch (0, 0);
       this .setBrowserLoading (false);
       this .initialized () .set (this .getCurrentTime ());
       this .initialized () .processInterests ();
