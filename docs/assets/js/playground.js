@@ -285,8 +285,7 @@ function addVRMLEncoding (monaco, browser)
             [/TRUE|FALSE|NULL/, "constant"],
             [/PROTO|EXTERNPROTO/, "regexp", "@typeName"],
             [/DEF/, "regexp", "@name"],
-            [/IMPORT/, "regexp", "@import"],
-            [/ROUTE|TO|EXPORT|AS/, "regexp", "@name"],
+            [/IMPORT|ROUTE|TO|EXPORT|AS/, "regexp", "@name"],
             [/@id(?=\s*\{)/, "keyword"], // type names
             [/@id/, {
                cases: {
@@ -310,9 +309,6 @@ function addVRMLEncoding (monaco, browser)
             [/@id/, "keyword", "@pop"],
          ],
          name: [
-            [/@id/, "type.identifier", "@pop"],
-         ],
-         import: [
             [/@id/, "type.identifier", "@pop"],
          ],
          string: [
