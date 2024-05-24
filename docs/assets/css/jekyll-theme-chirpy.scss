@@ -305,22 +305,27 @@ small, .small {
    padding: 0 3px;
 }
 
-.example .toolbar > .selected {
+.example .toolbar span:hover {
+  color: var(--system-gray8);
+}
+
+.example .toolbar > span.selected {
    color: var(--h2-color);
 }
 
-.example .toolbar > .separator {
+.example .toolbar > span.dot::before {
+   content: "·";
+   margin: 0 3px 0 4px;
+   color: var(--text-color);
+}
+
+.example .toolbar > span.separator {
    border-left: 1px solid var(--text-color);
    margin: 0 0 0 5px;
 }
 
-.example .toolbar > .separator + .separator {
+.example .toolbar > span.separator + span.separator {
   display: none;
-}
-
-.example .toolbar > .dot::before {
-   content: "·";
-   margin: 0 3px 0 4px;
 }
 
 .example .footer > * {
@@ -366,6 +371,10 @@ small, .small {
   left: -20px;
   top: -18px;
   cursor: pointer;
+}
+
+.example .fa-circle-xmark:hover {
+  color: var(--system-gray7);
 }
 
 .example .fa-circle-xmark::after {

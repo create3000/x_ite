@@ -43,17 +43,18 @@ order: 4
    color: var(--h2-color);
 }
 
+.toolbar span.dot::before {
+   content: "·";
+   margin: 0 3px 0 4px;
+   color: var(--text-color);
+}
+
 .toolbar span.separator {
    border-left: 1px solid var(--text-color);
    margin: 0 5px 0 10px;
 }
 
-.toolbar span.dot::before {
-   content: "·";
-   margin: 0 3px 0 4px;
-}
-
-.toolbar span.separator + .separator {
+.toolbar span.separator + span.separator {
    display: none;
 }
 
