@@ -285,7 +285,8 @@ function addVRMLEncoding (monaco, browser)
             [/TRUE|FALSE|NULL/, "constant"],
             [/PROTO|EXTERNPROTO/, "regexp", "@typeName"],
             [/DEF/, "regexp", "@name"],
-            [/ROUTE|TO/, "regexp", "@name"],
+            [/IMPORT/, "regexp", "@import"],
+            [/ROUTE|TO|EXPORT|AS/, "regexp", "@name"],
             [/@id(?=\s*\{)/, "keyword"], // type names
             [/@id/, {
                cases: {
@@ -303,7 +304,7 @@ function addVRMLEncoding (monaco, browser)
             [/[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/, "number.float"],
             [/0[xX][\da-fA-F]+/, "number.hex"],
             [/[+-]?\d+/, "number"],
-            [/"/, "string.quote",  "@string" ],
+            [/"/,  { token: "string.quote", bracket: "@open", next: "@string" } ],
          ],
          typeName: [
             [/@id/, "keyword", "@pop"],
@@ -311,11 +312,14 @@ function addVRMLEncoding (monaco, browser)
          name: [
             [/@id/, "type.identifier", "@pop"],
          ],
+         import: [
+            [/@id/, "type.identifier", "@pop"],
+         ],
          string: [
-            [/[^\\"]+/, "string"],
+            [/[^\\"]+/,  "string"],
             [/@escapes/, "string.escape"],
-            [/\\./, "string.escape.invalid"],
-            [/"/, "string.quote", "@pop"],
+            [/\\./,      "string.escape.invalid"],
+            [/"/,        { token: "string.quote", bracket: "@close", next: "@pop" } ]
          ],
       },
    });
