@@ -318,10 +318,13 @@ function addVRMLEncoding (monaco, browser)
 
    monaco .languages .setLanguageConfiguration ("vrml",
    {
+      brackets: [["{", "}"], ["[", "]"], ["(", ")"]],
       autoClosingPairs: [
         { open: "{", close: "}" },
         { open: "[", close: "]" },
+        { open: "(", close: ")" },
         { open: "\"", close: "\"" },
+        { open: "'", close: "'" },
       ],
    });
 }
