@@ -30,7 +30,11 @@ const box = `<?xml version="1.0" encoding="UTF-8"?>
 require .config ({ paths: { "vs": "https://cdn.jsdelivr.net/npm/monaco-editor@0.48.0/min/vs" }});
 require (["vs/editor/editor.main"], async () =>
 {
-   addVRMLEncoding (monaco);
+   const browser = X3D .getBrowser ();
+
+   await browser .loadComponents (browser .getProfile ("Full"), browser .getComponent ("X_ITE"));
+
+   addVRMLEncoding (monaco, browser);
 
    const editor = monaco .editor .create (document .getElementById ("editor"),
    {
@@ -64,21 +68,19 @@ require (["vs/editor/editor.main"], async () =>
 
    if (url)
    {
-      const Browser = X3D .getBrowser ();
+      browser .endUpdate ();
 
-      Browser .endUpdate ();
+      browser .baseURL = url;
 
-      Browser .baseURL = url;
+      await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
-      await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
-
-      const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [Browser .currentScene .encoding] ?? "XML";
+      const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
 
       monaco .editor .setModelLanguage (editor .getModel (), encoding .toLowerCase ());
 
-      editor .setValue (Browser .currentScene [`to${encoding}String`] ());
+      editor .setValue (browser .currentScene [`to${encoding}String`] ());
 
-      Browser .beginUpdate ();
+      browser .beginUpdate ();
    }
 
    let timeoutId;
@@ -99,8 +101,8 @@ require (["vs/editor/editor.main"], async () =>
 async function applyChanges (monaco, editor)
 {
    const
-      Browser         = X3D .getBrowser (),
-      activeViewpoint = Browser .getActiveViewpoint (),
+      browser         = X3D .getBrowser (),
+      activeViewpoint = browser .getActiveViewpoint (),
       text            = editor .getValue (),
       url             = encodeURI (`data:,${text}`);
 
@@ -111,15 +113,15 @@ async function applyChanges (monaco, editor)
          orientationOffset = activeViewpoint ._orientationOffset .copy ();
    }
 
-   await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+   await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
-   if (activeViewpoint && Browser .getActiveViewpoint ())
+   if (activeViewpoint && browser .getActiveViewpoint ())
    {
-      Browser .getActiveViewpoint () ._positionOffset    = positionOffset;
-      Browser .getActiveViewpoint () ._orientationOffset = orientationOffset;
+      browser .getActiveViewpoint () ._positionOffset    = positionOffset;
+      browser .getActiveViewpoint () ._orientationOffset = orientationOffset;
    }
 
-   monaco .editor .setModelLanguage (editor .getModel (), Browser .currentScene .encoding .toLowerCase ());
+   monaco .editor .setModelLanguage (editor .getModel (), browser .currentScene .encoding .toLowerCase ());
 }
 
 function updateToolbar (toolbar, canvas, monaco, editor)
@@ -258,7 +260,7 @@ function updateToolbar (toolbar, canvas, monaco, editor)
       .appendTo (toolbar);
 }
 
-function addVRMLEncoding (monaco)
+function addVRMLEncoding (monaco, browser)
 {
    monaco .languages .setMonarchTokensProvider ("vrml",
    {
@@ -271,6 +273,7 @@ function addVRMLEncoding (monaco)
       fieldTypes: [
          "SFBool", "SFColor", "SFColorRGBA", "SFDouble", "SFFloat", "SFImage", "SFInt32", "SFMatrix3d", "SFMatrix3f", "SFMatrix4d", "SFMatrix4f", "SFNode", "SFRotation", "SFString", "SFTime", "SFVec2d", "SFVec2f", "SFVec3d", "SFVec3f", "SFVec4d", "SFVec4f", "MFBool", "MFColor", "MFColorRGBA", "MFDouble", "MFFloat", "MFImage", "MFInt32", "MFMatrix3d", "MFMatrix3f", "MFMatrix4d", "MFMatrix4f", "MFNode", "MFRotation", "MFString", "MFVec2d", "MFVec2f", "MFVec3d", "MFVec3f", "MFVec4d", "MFVec4f",
       ],
+      nodes: Array .from (browser .concreteNodes, concreteNode => concreteNode .typeName),
       brackets: [
          { open: "{", close: "}", token: "delimiter.curly" },
          { open: "[", close: "]", token: "delimiter.bracket" },
@@ -279,12 +282,13 @@ function addVRMLEncoding (monaco)
       tokenizer: {
          root: [
             [/[,:.]/, "delimiter"],
-            [/TRUE|FALSE/, "constant"],
+            [/TRUE|FALSE|NULL/, "constant"],
             [/[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/, {
                cases: {
                   "@keywords": "keyword",
                   "@accessTypes": "keyword",
                   "@fieldTypes": "keyword",
+                  "@nodes": "attribute.name",
                   "@default": "type.identifier",
                },
             }],
