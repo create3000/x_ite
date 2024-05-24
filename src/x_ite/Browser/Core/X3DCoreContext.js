@@ -693,25 +693,25 @@ Object .assign (X3DCoreContext .prototype,
                   }
                }
 
-               const options = { scene: this .getExecutionContext () };
-
                let text;
 
                switch (this .getExecutionContext () .getEncoding ())
                {
                   case "ASCII":
-                  case "VRML": text = vp .toVRMLString (options); break;
-                  case "JSON": text = vp .toJSONString (options); break;
-                  default:     text = vp .toXMLString  (options); break;
+                  case "VRML": text = vp .toVRMLString (); break;
+                  case "JSON": text = vp .toJSONString (); break;
+                  default:     text = vp .toXMLString  (); break;
                }
 
                text += "\n";
 
-               this .copyToClipboard (text);
-               this .getNotification () ._string = _ ("Viewpoint copied to clipboard.");
+               this .copyToClipboard (text) .then (() =>
+               {
+                  this .getNotification () ._string = _ ("Viewpoint copied to clipboard.");
 
-               console .log ("Viewpoint copied to clipboard.");
-               console .debug (text);
+                  console .log ("Viewpoint copied to clipboard.");
+                  console .debug (text);
+               });
             }
 
             break;
@@ -751,14 +751,21 @@ Object .assign (X3DCoreContext .prototype,
          }
       }
    },
-   copyToClipboard (text)
+   async copyToClipboard (text)
    {
-      // The textarea must be visible to make copy work.
-      const tmp = $("<textarea></textarea>");
-      this .getShadow () .find (".x_ite-private-browser") .prepend (tmp);
-      tmp .text (text) .trigger ("select");
-      document .execCommand ("copy");
-      tmp .remove ();
+      try
+      {
+         await navigator .clipboard .writeText (text);
+      }
+      catch
+      {
+         // The textarea must be visible to make copy work.
+         const tmp = $("<textarea></textarea>");
+         this .getShadow () .find (".x_ite-private-browser") .prepend (tmp);
+         tmp .text (text) .trigger ("select");
+         document .execCommand ("copy");
+         tmp .remove ();
+      }
    },
    dispose ()
    {
