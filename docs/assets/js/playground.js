@@ -267,13 +267,15 @@ function addVRMLEncoding (monaco, browser)
       keywords: [
          "PROFILE", "COMPONENT", "UNIT", "META", "DEF", "USE", "EXTERNPROTO", "PROTO", "IS", "ROUTE", "TO", "IMPORT", "EXPORT", "AS"
       ],
+      profiles: Array .from (browser .supportedProfiles, profile => profile .name),
+      components: Array .from (browser .supportedComponents, components => components .name),
+      nodes: Array .from (browser .concreteNodes, concreteNode => concreteNode .typeName),
       accessTypes: [
          "initializeOnly", "inputOnly", "outputOnly", "inputOutput",
       ],
       fieldTypes: [
          "SFBool", "SFColor", "SFColorRGBA", "SFDouble", "SFFloat", "SFImage", "SFInt32", "SFMatrix3d", "SFMatrix3f", "SFMatrix4d", "SFMatrix4f", "SFNode", "SFRotation", "SFString", "SFTime", "SFVec2d", "SFVec2f", "SFVec3d", "SFVec3f", "SFVec4d", "SFVec4f", "MFBool", "MFColor", "MFColorRGBA", "MFDouble", "MFFloat", "MFImage", "MFInt32", "MFMatrix3d", "MFMatrix3f", "MFMatrix4d", "MFMatrix4f", "MFNode", "MFRotation", "MFString", "MFVec2d", "MFVec2f", "MFVec3d", "MFVec3f", "MFVec4d", "MFVec4f",
       ],
-      nodes: Array .from (browser .concreteNodes, concreteNode => concreteNode .typeName),
       brackets: [
          { open: "{", close: "}", token: "delimiter.curly" },
          { open: "[", close: "]", token: "delimiter.bracket" },
@@ -286,10 +288,12 @@ function addVRMLEncoding (monaco, browser)
             [/[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/, {
                cases: {
                   "@keywords": "keyword",
+                  "@profiles": "type.identifier",
+                  "@components": "type.identifier",
+                  "@nodes": "attribute.name",
                   "@accessTypes": "keyword",
                   "@fieldTypes": "keyword",
-                  "@nodes": "attribute.name",
-                  "@default": "type.identifier",
+                  "@default": "type.identifier", // field names
                },
             }],
             [/#.*/, "comment"],
