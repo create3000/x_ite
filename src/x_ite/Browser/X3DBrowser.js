@@ -56,8 +56,9 @@ import ComponentInfo       from "../Configuration/ComponentInfo.js";
 import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
 import SupportedProfiles   from "../Configuration/SupportedProfiles.js";
 import SupportedComponents from "../Configuration/SupportedComponents.js";
-import AbstractNodes       from "../Configuration/AbstractNodes.js"
-import ConcreteNodes       from "../Configuration/ConcreteNodes.js"
+import AbstractNodes       from "../Configuration/AbstractNodes.js";
+import ConcreteNodes       from "../Configuration/ConcreteNodes.js";
+import FieldTypes          from "../Configuration/FieldTypes.js";
 import X3DScene            from "../Execution/X3DScene.js";
 import FileLoader          from "../InputOutput/FileLoader.js";
 import XMLParser           from "../Parser/XMLParser.js";
@@ -75,6 +76,7 @@ const
    _supportedComponents = Symbol (),
    _concreteNodes       = Symbol (),
    _abstractNodes       = Symbol (),
+   _fieldTypes          = Symbol (),
    _reject              = Symbol (),
    _fileLoader          = Symbol (),
    _browserCallbacks    = Symbol (),
@@ -96,6 +98,7 @@ function X3DBrowser (element)
    this [_supportedComponents] = SupportedComponents .copy ();
    this [_concreteNodes]       = ConcreteNodes .copy ();
    this [_abstractNodes]       = AbstractNodes .copy ();
+   this [_fieldTypes]          = FieldTypes .copy ();
    this [_console]             = document .getElementsByClassName ("x_ite-console");
 
    this [_browserCallbacks] = new Map ([
@@ -366,6 +369,19 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    getAbstractNodes ()
    {
       return this [_abstractNodes];
+   },
+   getFieldType (typeName)
+   {
+      const fieldType = this [_fieldTypes] .get (String (typeName));
+
+      if (fieldType)
+         return fieldType;
+
+      throw new Error (`Field type '${typeName}' does not exists.`);
+   },
+   getFieldTypes ()
+   {
+      return this [_fieldTypes];
    },
    createScene (profile, ... components)
    {
@@ -1033,34 +1049,27 @@ Object .defineProperties (X3DBrowser .prototype,
    },
    supportedProfiles:
    {
-      get ()
-      {
-         return this [_supportedProfiles];
-      },
+      get: X3DBrowser .prototype .getSupportedProfiles,
       enumerable: true,
    },
    supportedComponents:
    {
-      get ()
-      {
-         return this [_supportedComponents];
-      },
+      get: X3DBrowser .prototype .getSupportedComponents,
       enumerable: true,
    },
    concreteNodes:
    {
-      get ()
-      {
-         return this [_concreteNodes];
-      },
+      get: X3DBrowser .prototype .getConcreteNodes,
       enumerable: true,
    },
    abstractNodes:
    {
-      get ()
-      {
-         return this [_abstractNodes];
-      },
+      get: X3DBrowser .prototype .getAbstractNodes,
+      enumerable: true,
+   },
+   fieldTypes:
+   {
+      get: X3DBrowser .prototype .getFieldTypes,
       enumerable: true,
    },
    element:
