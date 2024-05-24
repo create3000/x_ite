@@ -644,6 +644,8 @@ Object .assign (X3DCoreContext .prototype,
             {
                event .preventDefault ();
 
+               // Create viewpoint node.
+
                const viewpoint = this .getActiveViewpoint ();
 
                if (!viewpoint)
@@ -696,6 +698,8 @@ Object .assign (X3DCoreContext .prototype,
                   }
                }
 
+               // Create text.
+
                const options = Features .ENVIRONMENT === "NODE" ? { } : { scene: executionContext };
 
                let text;
@@ -709,6 +713,8 @@ Object .assign (X3DCoreContext .prototype,
                }
 
                text += "\n";
+
+               // Copy to clipboard.
 
                this .copyToClipboard (text) .then (() =>
                {
