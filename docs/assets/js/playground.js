@@ -290,10 +290,10 @@ function addVRMLEncoding (monaco, browser)
                   "@keywords": "keyword",
                   "@profiles": "type.identifier",
                   "@components": "type.identifier",
-                  "@nodes": "attribute.name",
+                  "@nodes": "type.identifier",
                   "@accessTypes": "keyword",
                   "@fieldTypes": "keyword",
-                  "@default": "type.identifier", // field names
+                  "@default": "attribute.name", // field names
                },
             }],
             [/#.*/, "comment"],
