@@ -24,12 +24,10 @@ varying vec3 normal;
 void
 main ()
 {
-   #if defined (X3D_GEOMETRY_0D)
-      #if defined (X3D_STYLE_PROPERTIES)
-         gl_PointSize = max (pointSize = getPointSize (vertex), 2.0);
-      #else
-         gl_PointSize = 2.0;
-      #endif
+   #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
+      gl_PointSize = pointSize = max (getPointSize (vertex), 2.0);
+   #else
+      gl_PointSize = 2.0;
    #endif
 
    vec4 position = x3d_ModelViewMatrix * x3d_Vertex;

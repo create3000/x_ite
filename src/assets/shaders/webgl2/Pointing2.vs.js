@@ -56,12 +56,10 @@ main ()
    vertex = position .xyz;
    normal = getInstanceNormal (getSkinNormal (x3d_Normal));
 
-   #if defined (X3D_GEOMETRY_0D)
-      #if defined (X3D_STYLE_PROPERTIES)
-         gl_PointSize = max (pointSize = getPointSize (vertex), 2.0);
-      #else
-         gl_PointSize = 2.0;
-      #endif
+   #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
+      gl_PointSize = pointSize = max (getPointSize (vertex), 2.0);
+   #else
+      gl_PointSize = 2.0;
    #endif
 
    #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
