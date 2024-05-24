@@ -428,7 +428,7 @@ Object .assign (X3DCoreContext .prototype,
       {
          const url = new Fields .MFString ();
 
-         url .fromString ("[" + urlCharacters + "]", this .getExecutionContext ());
+         url .fromString (`[${urlCharacters}]`, this .getExecutionContext ());
 
          return url;
       }
@@ -649,7 +649,9 @@ Object .assign (X3DCoreContext .prototype,
                if (!viewpoint)
                   break;
 
-               const vp = this .getExecutionContext () .createNode (viewpoint .getTypeName ());
+               const
+                  executionContext = this .getExecutionContext (),
+                  vp               = executionContext .createNode (viewpoint .getTypeName ());
 
                switch (viewpoint .getTypeName ())
                {
@@ -677,7 +679,7 @@ Object .assign (X3DCoreContext .prototype,
 
                      if (geoOrigin .getValue () && geoOrigin .getNodeTypeName () === "GeoOrigin")
                      {
-                        const go = this .getPrivateScene () .createNode ("GeoOrigin");
+                        const go = executionContext .createNode ("GeoOrigin");
 
                         vp .geoOrigin = go;
                         go .geoSystem = geoOrigin .geoSystem;
@@ -694,11 +696,11 @@ Object .assign (X3DCoreContext .prototype,
                   }
                }
 
-               const options = Features .ENVIRONMENT === "NODE" ? { } : { scene: this .getExecutionContext () };
+               const options = Features .ENVIRONMENT === "NODE" ? { } : { scene: executionContext };
 
                let text;
 
-               switch (this .getExecutionContext () .getEncoding ())
+               switch (executionContext .getEncoding ())
                {
                   case "ASCII":
                   case "VRML": text = vp .toVRMLString (options); break;
