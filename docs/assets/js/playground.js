@@ -383,7 +383,7 @@ function addVRMLEncoding (monaco, browser)
       defaultToken: "invalid",
       tokenPostfix: ".vrml",
       keywords: [
-         "PROFILE", "COMPONENT", "UNIT", "META", "DEF", "USE", "EXTERNPROTO", "PROTO", "IS", "ROUTE", "TO", "IMPORT", "EXPORT", "AS"
+         "PROFILE", "COMPONENT", "UNIT", "META", "DEF", "USE", "EXTERNPROTO", "PROTO", "IS", "ROUTE", "TO", "IMPORT", "EXPORT", "AS",
       ],
       profiles: Array .from (browser .supportedProfiles, ({name}) => name),
       components: Array .from (browser .supportedComponents, ({name}) => name),
