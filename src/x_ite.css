@@ -446,6 +446,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-menu .context-menu-icon {
   background-repeat: no-repeat;
   background-position: 2px 3px;
+  image-rendering: pixelated;
 }
 
 .x_ite-private-icon-viewpoint {
