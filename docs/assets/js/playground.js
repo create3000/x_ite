@@ -133,6 +133,8 @@ async function applyChanges (monaco, editor)
       text            = editor .getValue (),
       url             = encodeURI (`data:,${text}`);
 
+   $("#refresh-button") .addClass ("selected");
+
    if (activeViewpoint)
    {
       var
