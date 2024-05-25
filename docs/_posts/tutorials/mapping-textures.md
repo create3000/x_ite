@@ -70,7 +70,7 @@ An [Appearance](/x_ite/components/shape/appearance/) node describes overall shap
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material Material { ... }
@@ -101,7 +101,7 @@ An [ImageTexture](/x_ite/components/texturing/imagetexture/) node selects a text
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material Material { }
@@ -136,7 +136,7 @@ A [PixelTexture](/x_ite/components/texturing/pixeltexture/) node specifies textu
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material Material { }
@@ -175,7 +175,7 @@ A [MovieTexture](/x_ite/components/texturing/movietexture/) node selects a textu
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material Material { }

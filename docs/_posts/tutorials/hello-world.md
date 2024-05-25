@@ -46,7 +46,7 @@ As first a very easy example, we will create a sphere with a texture and a text 
 
 ### Classic Encoding
 
-```js
+```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
 
 Transform {
@@ -81,7 +81,7 @@ Now we have a sphere, but we don't see if it is rotating, let's assign a texture
 
 ### Classic Encoding
 
-```js
+```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
 
 Transform {
@@ -106,7 +106,7 @@ url='"earth.png", "https://example.com/earth.png"'
 
 ### Classic Encoding
 
-```js
+```vrml
 url [
   "earth.png",
   "https://example.com/earth.png"
@@ -156,7 +156,7 @@ Now the sphere looks like an earth and you are very curious how the text will be
 
 ### Classic Encoding
 
-```js
+```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
 
 META "title" "about:hello_world"

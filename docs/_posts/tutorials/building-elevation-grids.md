@@ -36,7 +36,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry ElevationGrid {
@@ -67,7 +67,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry ElevationGrid {
@@ -99,7 +99,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry ElevationGrid {
@@ -137,7 +137,7 @@ Shape {
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry ElevationGrid {

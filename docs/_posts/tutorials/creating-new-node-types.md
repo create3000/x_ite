@@ -42,7 +42,7 @@ A PROTO statement declares a new node type (a prototype):
 
 ### Classic Encoding
 
-```js
+```vrml
 PROTO BouncingBall [
   inputOutput SFTime  cycleInterval 1.0
   inputOutput SFFloat bounceHeight  1.0
@@ -75,7 +75,7 @@ PROTO BouncingBall [
 
 ### Classic Encoding
 
-```js
+```vrml
 PROTO BouncingBall [
   ...
 ]
@@ -120,7 +120,7 @@ Interface items connected by IS need not have the same name as an item in the bo
 
 ### Classic Encoding
 
-```js
+```vrml
 PROTO BouncingBall [
   inputOutput SFTime  cycleInterval 1.0
   inputOutput SFFloat bounceHeight  1.0
@@ -166,7 +166,7 @@ The new node type can be used like any other type.
 
 ### Classic Encoding
 
-```js
+```vrml
 BouncingBall {
   cycleInterval 2.0
   bounceHeight  3.0
@@ -238,7 +238,7 @@ Fields needed:
 
 ### Classic Encoding
 
-```js
+```vrml
 PROTO BouncingBall [
   inputOutput SFTime  cycleInterval 1.0
   inputOutput SFFloat bounceHeight 1.0
@@ -279,7 +279,7 @@ Body needed:
 
 ### Classic Encoding
 
-```js
+```vrml
 PROTO BouncingBall [
   ...
 ]
@@ -323,7 +323,7 @@ Prototypes are typically in a separate external file, referenced by an **EXTERNP
 
 ### Classic Encoding
 
-```js
+```vrml
 EXTERNPROTO BouncingBall [
   inputOutput SFTime  cycleInterval
   inputOutput SFFloat bounceHeight

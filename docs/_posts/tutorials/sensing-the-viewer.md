@@ -56,7 +56,7 @@ A [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) no
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Sensor VisibilitySensor {
   center 0.0 0.0 0.0
   size   14.0 14.0 14.0
@@ -85,7 +85,7 @@ A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Sensor ProximitySensor {
   center 0.0 0.0 0.0
   size   14.0 14.0 14.0
@@ -108,7 +108,7 @@ A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Sensor ProximitySensor { ... }
 
 ROUTE Sensor.position_changed TO PetRobotFollower.set_translation
@@ -162,7 +162,7 @@ A [Collision](/x_ite/components/navigation/collision/) grouping node senses if t
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Collide Collision {
   enabled TRUE
   proxy Shape {

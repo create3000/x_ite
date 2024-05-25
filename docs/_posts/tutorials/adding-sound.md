@@ -45,7 +45,7 @@ An [AudioClip](/x_ite/components/sound/audioclip/) node creates a digital sound 
 
 ### Classic Encoding
 
-```js
+```vrml
 Sound {
   source AudioClip {
     url "myfile.mp3"
@@ -80,7 +80,7 @@ A [MovieTexture](/x_ite/components/texturing/movietexture/) node creates a movie
 
 ### Classic Encoding
 
-```js
+```vrml
 Sound {
   source MovieTexture {
     url "movie.mp4"
@@ -123,7 +123,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 ### Classic Encoding
 
-```js
+```vrml
 Sound {
   source AudioClip { ... }
   location  0.0 0.0 0.0
@@ -150,7 +150,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 ### Classic Encoding
 
-```js
+```vrml
 Sound {
   ...
   intensity 1.0
@@ -212,7 +212,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 ### Classic Encoding
 
-```js
+```vrml
 Group {
   children [
     Shape {
@@ -285,7 +285,7 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 
 ### Classic Encoding
 
-```js
+```vrml
 Sound {
   minFront 5.0
   minBack  5.0

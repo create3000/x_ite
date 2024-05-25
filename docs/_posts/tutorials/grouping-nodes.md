@@ -25,7 +25,7 @@ X3D has several grouping nodes, including:
 
 ### Classic Encoding
 
-```js
+```vrml
 Group       { ... }
 Switch      { ... }
 Transform   { ... }
@@ -51,7 +51,7 @@ The [Group](/x_ite/components/grouping/group/) node creates a basic grouping.
 
 ### Classic Encoding
 
-```js
+```vrml
 Group {
   children [ ... ]
 }
@@ -77,7 +77,7 @@ The [Switch](/x_ite/components/grouping/switch/) group node creates a switched g
 
 ### Classic Encoding
 
-```js
+```vrml
 Switch {
   whichChoice 0
   children [ ... ]
@@ -103,7 +103,7 @@ The [Transform](/x_ite/components/grouping/transform/) group node creates a grou
 
 ### Classic Encoding
 
-```js
+```vrml
 Transform {
   translation 0.0 0.0 0.0
   rotation 0.0 1.0 0.0 0.0
@@ -130,7 +130,7 @@ The [Billboard](/x_ite/components/navigation/billboard/) group node creates a gr
 
 ### Classic Encoding
 
-```js
+```vrml
 Billboard {
   axisOfRotation 0.0 1.0 0.0
   children [ ... ]
@@ -168,7 +168,7 @@ Billboard {
 
 ### Classic Encoding
 
-```js
+```vrml
 Billboard {
   # Y-axis
   axisOfRotation 0.0 1.0 0.0
@@ -201,7 +201,7 @@ An [Anchor](/x_ite/components/networking/anchor/) node creates a group that acts
 
 ### Classic Encoding
 
-```js
+```vrml
 Anchor {
   url "stairwy.wrl"
   description "Twisty Stairs"
@@ -225,7 +225,7 @@ An [Inline](/x_ite/components/networking/inline/) node creates a special group f
 
 ### Classic Encoding
 
-```js
+```vrml
 Inline {
   url "table.wrl"
 }

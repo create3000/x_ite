@@ -711,7 +711,7 @@ Some built-in variables are enumerated and have special values and meanings. The
 
 I assume pretty much every 3D programmer runs into Z-buffer issues sooner or later. Especially when doing planetary rendering; the distant stuff can be a thousand kilometers away but you still would like to see fine details right in front of the camera. First enable the logarithmic depth buffer:
 
-```js
+```vrml
 Script {
   url "ecmascript:
 

@@ -53,7 +53,7 @@ A [Fog](/x_ite/components/environmentaleffects/fog/) node creates colored fog
 
 ### Classic Encoding
 
-```js
+```vrml
 Fog {
   color 1.0 1.0 1.0
   fogType "LINEAR"

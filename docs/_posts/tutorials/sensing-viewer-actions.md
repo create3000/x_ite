@@ -54,7 +54,7 @@ A [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) node senses
 
 ### Classic Encoding
 
-```js
+```vrml
 Transform {
   children [
     DEF Touched TouchSensor { }
@@ -86,7 +86,7 @@ Transform {
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Touch TouchSensor { }
 
 DEF Timer1 TimeSensor { ... }
@@ -123,7 +123,7 @@ A [SphereSensor](/x_ite/components/pointingdevicesensor/spheresensor/) node sens
 
 ### Classic Encoding
 
-```js
+```vrml
 Transform {
   children [
     DEF Rotator  SphereSensor { }
@@ -152,7 +152,7 @@ A [CylinderSensor](/x_ite/components/pointingdevicesensor/cylindersensor/) node 
 
 ### Classic Encoding
 
-```js
+```vrml
 Transform {
   children [
     DEF Rotator  CylinderSensor { }
@@ -181,7 +181,7 @@ A [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) node senses
 
 ### Classic Encoding
 
-```js
+```vrml
 Transform {
   children [
     DEF Mover  PlaneSensor { }

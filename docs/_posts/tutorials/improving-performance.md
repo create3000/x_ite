@@ -54,7 +54,7 @@ If the same object is used more than once in the scene, it's most efficient to g
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Tree1 Transform {
   children DEF Tree Inline {
     url "tree.x3d"
@@ -140,7 +140,7 @@ function set_whichChoice (value)
 
 ### Classic Encoding
 
-```js
+```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
 
 PROTO BooleanSwitch [

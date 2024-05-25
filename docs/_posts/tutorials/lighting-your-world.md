@@ -56,7 +56,7 @@ A [PointLight](/x_ite/components/lighting/pointlight/) node illuminates radially
 
 ### Classic Encoding
 
-```js
+```vrml
 PointLight {
   location  0.0 0.0 0.0
   intensity 1.0
@@ -79,7 +79,7 @@ A [DirectionalLight](/x_ite/components/lighting/directionallight/) node illumina
 
 ### Classic Encoding
 
-```js
+```vrml
 DirectionalLight {
   direction 1.0 0.0 0.0
   intensity 1.0
@@ -104,7 +104,7 @@ A [SpotLight](/x_ite/components/lighting/spotlight/) node illuminates from a poi
 
 ### Classic Encoding
 
-```js
+```vrml
 SpotLight {
   location    0.0 0.0 0.0
   direction   1.0 0.0 0.0
@@ -128,7 +128,7 @@ SpotLight {
 
 ### Classic Encoding
 
-```js
+```vrml
 SpotLight {
   ...
   cutOffAngle 0.785

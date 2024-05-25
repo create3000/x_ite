@@ -48,7 +48,7 @@ Numeric, boolean, and string literals are allowed. Numeric literals can be integ
 
 Here are some examples:
 
-```js
+```vrml
 Script {
   inputOnly       SFBool  anInputField
   outputOnly      SFInt32 anOutputField
@@ -209,13 +209,13 @@ Dereferencing an MF object creates a new object of the corresponding SF object t
 
 The *url* field of the Script node may contain a URL that references ECMAScript code:
 
-```js
+```vrml
 Script { url "https://example.com/myScript.js" }
 ```
 
 The *ecmascript:* protocol allows the script to be placed inline as follows:
 
-```js
+```vrml
 Script {
   url "ecmascript:
 
@@ -228,7 +228,7 @@ function foo () {
 
 The *url* field may contain multiple URL's and thus reference a remote file or in-line code:
 
-```js
+```vrml
 Script {
   url [
     "https://example.com/myScript.js",
@@ -256,7 +256,7 @@ Events sent to the Script node are passed to the corresponding ECMAScript functi
 For example, the following Script node has one inputOnly field whose name is
 *start*:
 
-```js
+```vrml
 Script {
   inputOnly SFBool start
   url "ecmascript:
@@ -306,7 +306,7 @@ The *shutdown* function takes no parameters. Events generated from it are given 
 
 Sometimes it is necessary to get access to the corresponding Script node. For this case, there is a special variable *this* in each callback function that holds a SFNode reference to the Script node.
 
-```js
+```vrml
 DEF Touch TouchSensor { }
 
 Script {
@@ -346,7 +346,7 @@ Fields defined in the Script node are available to the script by using its name.
 
 The script can access any inputOutput, inputOnly or outputOnly fields of any node to which it has a pointer:
 
-```js
+```vrml
 DEF SomeNode Transform { }
 
 Script {

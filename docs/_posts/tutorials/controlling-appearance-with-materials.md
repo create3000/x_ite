@@ -35,7 +35,7 @@ Recall that [Shape](/x_ite/components/shape/shape/) nodes describe:
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance ...
   geometry ...
@@ -61,7 +61,7 @@ An [Appearance](/x_ite/components/shape/appearance/) node describes overall shap
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material ...
@@ -94,7 +94,7 @@ A [Material](/x_ite/components/shape/material/) node controls shape material att
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material Material {
@@ -156,7 +156,7 @@ A [Material](/x_ite/components/shape/material/) node also controls shape shinine
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material Material {

@@ -29,7 +29,7 @@ The **DEF** syntax gives a name to a node.
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material DEF RedColor Material {
@@ -64,7 +64,7 @@ The **USE** syntax uses a previously named node
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material USE RedColor
@@ -123,7 +123,7 @@ Names are also necessary for animation ...
 
 ### Classic Encoding
 
-```js
+```vrml
 Inline {
   url "table.x3dv"
 }

@@ -85,7 +85,7 @@ A [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) node conta
 
 ### Classic Encoding
 
-```js
+```vrml
 TextureCoordinate {
   point [ 0.2 0.2, 0.8 0.2, ... ]
 }
@@ -115,7 +115,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry IndexedFaceSet {
@@ -148,7 +148,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry ElevationGrid {
@@ -179,7 +179,7 @@ An [Appearance](/x_ite/components/shape/appearance/) node describes overall shap
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material Material { ... }
@@ -216,7 +216,7 @@ A [TextureTransform](/x_ite/components/texturing/texturetransform/) node transfo
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material Material { ... }
@@ -253,7 +253,7 @@ Scale, Rotate, and Translate a texture cookie cutter one after the other:
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material Material { ... }

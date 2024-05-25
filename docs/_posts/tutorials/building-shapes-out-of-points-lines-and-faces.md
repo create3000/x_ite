@@ -40,7 +40,7 @@ A [Coordinate](/x_ite/components/rendering/coordinate/) node contains a list of 
 
 ### Classic Encoding
 
-```js
+```vrml
 Coordinate {
   point [
    #X   Y   Z
@@ -81,7 +81,7 @@ A [PointSet](/x_ite/components/rendering/pointset/) geometry node creates geomet
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry PointSet {
@@ -113,7 +113,7 @@ An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node c
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry  IndexedLineSet {
@@ -170,7 +170,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry IndexedFaceSet {
@@ -227,7 +227,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry IndexedFaceSet {
@@ -272,7 +272,7 @@ A [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolato
 
 ### Classic Encoding
 
-```js
+```vrml
 CoordinateInterpolator {
   key [ 0.0, ... ]
   keyValue [ 0.0 1.0 0.0, ... ]

@@ -33,7 +33,7 @@ Shapes are the building blocks of an X3D world. Primitive Shapes are standard bu
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance ...
   geometry ...
@@ -58,7 +58,7 @@ Shape {
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material Material { }
@@ -83,7 +83,7 @@ Shape {
 
 ### Classic Encoding
 
-```js
+```vrml
 Box { ... }
 Cone { ... }
 Cylinder { ... }
@@ -115,7 +115,7 @@ Text { ... }
 
 ### Classic Encoding
 
-```js
+```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
 # A cylinder
 Shape {
@@ -174,7 +174,7 @@ Shape {
 
 ### Classic Encoding
 
-```js
+```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
 
 Shape {

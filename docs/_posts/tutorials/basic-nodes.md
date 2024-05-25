@@ -45,7 +45,7 @@ Here is a typical X3D Classic Encoded file with a single node:
 
 ### Classic Encoding
 
-```js
+```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
 
 # A sample file with a simple scene
@@ -84,7 +84,7 @@ Now we can start to add information to the file. The first node to deal with is 
 
 ### Classic Encoding
 
-```js
+```vrml
 WorldInfo {
  title "Tutorial"
  info [
@@ -113,7 +113,7 @@ A [Shape](/x_ite/components/shape/shape/) node is the node to specify material a
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material Material { }
@@ -154,7 +154,7 @@ In order to make our world any use at all, we need to be able to transform objec
 
 ### Classic Encoding
 
-```js
+```vrml
 Transform {
   translation 1 1 1
   rotation 0 1 0 0.78
@@ -183,7 +183,7 @@ In X3D, you navigate between pages the same way as in HTML. You have an object t
 
 ### Classic Encoding
 
-```js
+```vrml
 Anchor {
   url "next-page.html"
   description "Look forward"
@@ -205,7 +205,7 @@ parameter='"target=_blank"'
 
 ### Classic Encoding
 
-```js
+```vrml
 parameter [ "target=_blank" ]
 ```
 
@@ -222,7 +222,7 @@ There are two ways we can change the background of our scene. One is to specify 
 
 ### Classic Encoding
 
-```js
+```vrml
 Background {
   skyColor [0.5 0.5 0.5]
 }
@@ -244,7 +244,7 @@ To give the world camera another position or orientation there is a [Viewpoint](
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF LookAtHouse Viewpoint {
   position 0 2 10
   orientation 0 1 0 3.14
@@ -264,7 +264,7 @@ If you define more than once viewpoint in an X3D file, the first viewpoint defin
 
 ### Classic Encoding
 
-```js
+```vrml
 Anchor {
   url "#LookAtHouse"
 }
@@ -285,7 +285,7 @@ When using Gouraud shading browsers calculate lighting by working it out for eac
 
 ### Classic Encoding
 
-```js
+```vrml
 NavigationInfo {
   headlight FALSE
 }

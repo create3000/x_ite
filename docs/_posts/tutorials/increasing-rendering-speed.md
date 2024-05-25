@@ -81,7 +81,7 @@ Note that an object can be composed of multiple shapes, and you don't need to pu
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF House Group {
   children [
     DEF InsideHouse Transform {

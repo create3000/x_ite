@@ -970,7 +970,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 DirectionalLight, SpotLight, and PointLight are now able to cast shadows. Let’s details them. A directional light is when light rays are parallel. A bit like when you look at the sun rays on the left. It mostly behaves like a light source very far from us. A spot light is when light rays seems to originate from a single point, and spreads outward in a coned direction, like in a dance club. To enable the shadow casting on a light, just adjust *shadowIntensity* of the light.
 
-```js
+```vrml
 X3DLightNode {
   ...
   shadowIntensity 0

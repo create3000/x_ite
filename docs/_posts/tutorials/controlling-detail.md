@@ -54,7 +54,7 @@ An [LOD](/x_ite/components/navigation/lod/) grouping node creates a group of sha
 
 ### Classic Encoding
 
-```js
+```vrml
 LOD {
   center 0.0 0.0 0.0
   range [ ... ]
@@ -104,7 +104,7 @@ Lower detail levels should use simpler geometry, fewer textures, and no text.
 
 ### Classic Encoding
 
-```js
+```vrml
 LOD {
   center 0.0 0.0 0.0
   range [ 7.0, 10.0 ]

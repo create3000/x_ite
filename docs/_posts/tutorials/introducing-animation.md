@@ -97,7 +97,7 @@ A **ROUTE** statement connects two nodes together using
 
 ### Classic Encoding
 
-```js
+```vrml
 ROUTE MySender.rotation_changed TO MyReceiver.set_rotation
 ```
 
@@ -179,7 +179,7 @@ The [Transform](/x_ite/components/grouping/transform/) node has:
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Touch TouchSensor { }
 
 DEF Timer1 TimeSensor { ... }

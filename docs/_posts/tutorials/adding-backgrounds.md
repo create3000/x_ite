@@ -53,7 +53,7 @@ A [Background](/x_ite/components/environmentaleffects/background/) node describe
 
 ### Classic Encoding
 
-```js
+```vrml
 Background {
   skyColor    [ 0.1 0.1 0.0, ... ]
   skyAngle    [ 1.309, 1.571, ... ]
@@ -104,7 +104,7 @@ Background {
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Summer Background {
   skyAngle [
     0.8,
@@ -166,7 +166,7 @@ A [Background](/x_ite/components/environmentaleffects/background/) node describe
 
 ### Classic Encoding
 
-```js
+```vrml
 Background {
   ...
   frontUrl  "cloud1s.png"
@@ -221,7 +221,7 @@ Background {
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Summer Background {
   frontUrl "clouds1.png"
   backUrl "clouds2.png"

@@ -40,7 +40,7 @@ X3D files contain:
 
 ### Classic Encoding
 
-```js
+```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
 # A Cylinder
 Shape {
@@ -82,7 +82,7 @@ Shape {
 
 ## Using comments
 
-```js
+```vrml
 # A Cylinder
 ```
 
@@ -98,7 +98,7 @@ Shape {
 
 ### Classic Encoding
 
-```js
+```vrml
 Cylinder {
 }
 ```
@@ -132,7 +132,7 @@ Some examples:
 
 ### Classic Encoding
 
-```js
+```vrml
 Cylinder {
   height 2.0
   radius 1.5

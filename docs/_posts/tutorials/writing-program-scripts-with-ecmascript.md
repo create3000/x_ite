@@ -36,7 +36,7 @@ For a JavaScript program script, typically give the script in the Script node's 
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Bouncer Script {
   initializeOnly  SFFloat bounceHeight 3.0
   inputOnly       SFFloat set_fraction
@@ -153,7 +153,7 @@ Nodes needed:
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Ball Transform {
   children [ ... ]
 }
@@ -182,7 +182,7 @@ Script fields needed:
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Bouncer Script {
   initializeOnly SFFloat bounceHeight 3.0
   ...
@@ -209,7 +209,7 @@ Inputs and outputs needed:
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Bouncer Script {
   ...
   inputOnly   SFFloat set_fraction
@@ -244,7 +244,7 @@ function set_fraction (fraction, time)
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Bouncer Script {
   ...
   url "ecmascript:
@@ -291,7 +291,7 @@ function set_fraction (fraction, time)
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Bouncer Script {
   initializeOnly SFFloat bounceHeight 3
   inputOnly      SFFloat set_fraction
@@ -328,7 +328,7 @@ Routes needed:
 
 ### Classic Encoding
 
-```js
+```vrml
 ROUTE Clock.fraction_changed TO Bouncer.set_fraction
 ROUTE Bouncer.value_changed  TO Ball.set_translation
 ```
@@ -389,7 +389,7 @@ function set_fraction (fraction, time)
 
 ### Classic Encoding
 
-```js
+```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
 
 DEF Ball Transform {
@@ -499,7 +499,7 @@ function set_active (value, time)
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Toggle Script {
   inputOutput  SFBool on TRUE
   inputOnly    SFBool set_active
@@ -540,7 +540,7 @@ Use the toggle switch to make a lamp turn on and off
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF LightSwitch TouchSensor { }
 DEF LampLight SpotLight { ... }
 
@@ -576,7 +576,7 @@ function set_selection (value, time)
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF ColorSelector Script {
   initializeOnly  SFColor onColor  1.0 1.0 1.0
   initializeOnly  SFColor offColor 0.0 0.0 0.0
@@ -615,7 +615,7 @@ function set_selection (value, time)
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF LightSwitch TouchSensor { }
 DEF LampLight SpotLight { ... }
 

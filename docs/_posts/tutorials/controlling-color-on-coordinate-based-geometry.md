@@ -23,7 +23,7 @@ A [Color](/x_ite/components/rendering/color/) node contains a list of RGB values
 
 ### Classic Encoding
 
-```js
+```vrml
 Color {
   color [ 1.0 0.0 0.0, ... ]
 }
@@ -59,7 +59,7 @@ A [PointSet](/x_ite/components/rendering/pointset/) geometry node creates geomet
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry PointSet {
@@ -94,7 +94,7 @@ An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node c
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry IndexedLineSet {
@@ -139,7 +139,7 @@ An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node 
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry IndexedFaceSet {
@@ -183,7 +183,7 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance { ... }
   geometry ElevationGrid {

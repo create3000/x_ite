@@ -41,7 +41,7 @@ A [Script](/x_ite/components/scripting/script/) node selects a program script to
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Bouncer Script {
   url "ecmascript: ..."
   #or...
@@ -70,7 +70,7 @@ A Script node also declares the program script interface:
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Bouncer Script {
   initializeOnly  SFFloat bounceHeight 3.0
   inputOnly       SFFloat set_fraction
@@ -104,7 +104,7 @@ DEF Bouncer Script {
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Clock TimeSensor { ... }
 
 DEF Ball Transform { ... }

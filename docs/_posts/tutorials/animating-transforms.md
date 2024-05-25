@@ -59,7 +59,7 @@ Animation requires control over time:
 
 ### Classic Encoding
 
-```js
+```vrml
 TimeSensor {
   cycleInterval 1.0
   loop FALSE
@@ -135,7 +135,7 @@ The fraction\_changed output event:
 
 ### Classic Encoding
 
-```js
+```vrml
 Shape {
   appearance Appearance {
     material DEF Monolith1Facade Material {
@@ -201,7 +201,7 @@ A [PositionInterpolator](/x_ite/components/interpolation/positioninterpolator/) 
 
 ### Classic Encoding
 
-```js
+```vrml
 PositionInterpolator {
   key [ 0.0, ... ]
   keyValue [ 0.0 0.0 0.0, ... ]
@@ -245,7 +245,7 @@ The *value\_changed* output:
 
 ### Classic Encoding
 
-```js
+```vrml
 DEF Particle1 Transform {
   children [
     Shape { ... }
@@ -300,7 +300,7 @@ A [OrientationInterpolator](/x_ite/components/interpolation/orientationinterpola
 
 ### Classic Encoding
 
-```js
+```vrml
 OrientationInterpolator {
   key [ 0.0, ... ]
   keyValue [ 0.0 1.0 0.0 0.0, ... ]
@@ -326,7 +326,7 @@ Typically route into a [Transform](/x_ite/components/grouping/transform/) node's
 
 ### Classic Encoding
 
-```js
+```vrml
 ColorInterpolator {
   key [ 0.0, ... ]
   keyValue [ 1.0 1.0 0.0, ... ]
@@ -352,7 +352,7 @@ Typically route into a [Material](/x_ite/components/shape/material/) node's *set
 
 ### Classic Encoding
 
-```js
+```vrml
 ScalarInterpolator {
   key [ 0.0, ... ]
   keyValue [ 4.5, ... ]

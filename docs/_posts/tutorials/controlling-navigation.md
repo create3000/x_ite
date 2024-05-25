@@ -57,7 +57,7 @@ A [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node selects th
 
 ### Classic Encoding
 
-```js
+```vrml
 NavigationInfo {
   type       [ "WALK", "ANY" ]
   avatarSize [ 0.25, 1.6, 0.75 ]
