@@ -110,6 +110,19 @@ require (["vs/editor/editor.main"], async () =>
       editor .setValue (box);
 
    updateToolbar ($(".playground .toolbar"), $("x3d-canvas"), monaco, editor);
+
+   // Keyboard shortcuts.
+
+   $("#editor") .on ("keydown", event =>
+   {
+      // Apply changes when CommandOrCtrl-s is pressed.
+
+      if (!(event .key === "s" && (event .ctrlKey || event .metaKey)))
+         return;
+
+      event .preventDefault ();
+      applyChanges (monaco, editor);
+   });
 });
 
 async function applyChanges (monaco, editor)
