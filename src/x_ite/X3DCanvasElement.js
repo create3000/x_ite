@@ -84,6 +84,8 @@ class X3DCanvasElement extends HTMLElement
          "contextMenu",
          "contextmenu",
          "debug",
+         "logarithmicDepthBuffer",
+         "logarithmicdepthbuffer",
          "multisampling",
          "notifications",
          "oninitialized",

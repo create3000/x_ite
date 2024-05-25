@@ -114,6 +114,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          "ContentScale",
          "ContextMenu",
          "Debug",
+         "LogarithmicDepthBuffer",
          "Multisampling",
          "Notifications",
          "OrderIndependentTransparency",

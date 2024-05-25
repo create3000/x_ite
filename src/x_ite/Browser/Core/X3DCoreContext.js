@@ -322,6 +322,12 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("Debug", this .parseBooleanAttribute (newValue, false));
             break;
          }
+         case "logarithmicDepthBuffer":
+         case "logarithmicdepthbuffer":
+         {
+            this .setBrowserOption ("LogarithmicDepthBuffer", this .parseBooleanAttribute (newValue, false));
+            break;
+         }
          case "multisampling":
          {
             const samples = parseInt (newValue);

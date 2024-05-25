@@ -324,6 +324,11 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                },
             },
             "separator2": "--------",
+
+            // Insert custom user menu items.
+            ... this .createUserMenu (),
+
+            "separator3": "--------",
             "browser-timings": {
                name: _("Browser Timings"),
                type: "checkbox",
@@ -346,53 +351,47 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   browser .getElement () .toggleFullScreen ();
                },
             },
-            "separator3": "--------",
+            "separator4": "--------",
+            "world-info": {
+               name: _("Show World Info"),
+               className: "context-menu-icon x_ite-private-icon-world-info",
+               callback ()
+               {
+                  browser .getShadow () .find (".x_ite-private-world-info") .remove ();
+
+                  const
+                     priv      = browser .getShadow () .find (".x_ite-private-browser"),
+                     overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
+                     div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
+                     worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
+                     title     = worldInfo .title,
+                     info      = worldInfo .info;
+
+                  $("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
+
+                  if (title .length)
+                  {
+                     $("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
+                  }
+
+                  for (const line of info)
+                  {
+                     $("<div></div>") .addClass ("x_ite-private-world-info-info") .text (line) .appendTo (div);
+                  }
+
+                  overlay .on ("click", function () { overlay .remove (); });
+               },
+            },
+            "about": {
+               name: _("About X_ITE"),
+               className: "context-menu-icon x_ite-private-icon-help-about",
+               callback ()
+               {
+                  window .open (browser .getProviderURL ());
+               },
+            },
          },
       };
-
-      Object .assign (menu .items, this .createUserMenu ());
-
-      Object .assign (menu .items, {
-         "separator4": "--------",
-         "world-info": {
-            name: _("Show World Info"),
-            className: "context-menu-icon x_ite-private-icon-world-info",
-            callback ()
-            {
-               browser .getShadow () .find (".x_ite-private-world-info") .remove ();
-
-               const
-                  priv      = browser .getShadow () .find (".x_ite-private-browser"),
-                  overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
-                  div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
-                  worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
-                  title     = worldInfo .title,
-                  info      = worldInfo .info;
-
-               $("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
-
-               if (title .length)
-               {
-                  $("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
-               }
-
-               for (const line of info)
-               {
-                  $("<div></div>") .addClass ("x_ite-private-world-info-info") .text (line) .appendTo (div);
-               }
-
-               overlay .on ("click", function () { overlay .remove (); });
-            },
-         },
-         "about": {
-            name: _("About X_ITE"),
-            className: "context-menu-icon x_ite-private-icon-help-about",
-            callback ()
-            {
-               window .open (browser .getProviderURL ());
-            },
-         },
-      });
 
       if ($.isEmptyObject (menu .items .viewpoints .items))
          delete menu .items ["viewpoints"];

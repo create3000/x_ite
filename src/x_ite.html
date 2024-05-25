@@ -39,7 +39,6 @@ X3D (() =>
    Browser .getContextMenu () .setUserMenu (() =>
    {
       return {
-         ... (typeof createTestMenu !== "undefined" ? createTestMenu () : { }),
          "transforms": {
             "name": "CSS Transforms",
             "items": {
@@ -57,6 +56,7 @@ X3D (() =>
                },
             },
          },
+         ... (typeof createTestMenu !== "undefined" ? createTestMenu () : { }),
       };
    });
 
