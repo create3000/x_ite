@@ -300,8 +300,6 @@ function updateToolbar (toolbar, canvas, monaco, editor)
             browser .endUpdate ();
          else
             browser .beginUpdate ();
-
-         playButton .toggleClass ("selected");
       })
       .appendTo (toolbar);
 
