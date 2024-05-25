@@ -86,9 +86,9 @@ function updateToolbar (toolbar, canvas)
    $("<span></span>") .addClass ("dot") .appendTo (toolbar);
 
    const contentScale = $("<span></span>")
-      .text ("contentScale 1.0")
+      .text ("content scale 1.0")
       .attr ("index", { "0.1": 0, "1": 1, "2": 2, "-1": 3 } [browser .getBrowserOption ("ContentScale")])
-      .attr ("title", "Toggle contentScale between 0.1, 1.0, 2.0, auto.")
+      .attr ("title", "Toggle content scale between 0.1, 1.0, 2.0, auto.")
       .on ("click", () =>
       {
          const
@@ -99,7 +99,7 @@ function updateToolbar (toolbar, canvas)
 
          contentScale
             .attr ("index", index)
-            .text ("contentScale " + (value === -1 ? "auto" : value .toFixed (1)))
+            .text (`content scale ${value === -1 ? "auto" : value .toFixed (1)}`)
       })
       .appendTo (toolbar);
 

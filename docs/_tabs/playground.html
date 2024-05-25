@@ -30,40 +30,40 @@ order: 4
    overflow: hidden;
 }
 
-.toolbar span {
+.toolbar > span {
    cursor: pointer;
    padding: 0 3px;
 }
 
-.toolbar span:hover {
+.toolbar > span:hover {
    color: var(--system-gray8);
 }
 
-.toolbar span.selected {
+.toolbar > span.selected {
    color: var(--system-green);
 }
 
-.toolbar span.dot::before {
+.toolbar > span.dot::before {
    content: "·";
    margin: 0 3px 0 4px;
    color: var(--text-color);
 }
 
-.toolbar span.separator {
+.toolbar > span.separator {
    border-left: 1px solid var(--text-color);
    margin: 0 5px 0 10px;
 }
 
-.toolbar span.separator + span.separator {
+.toolbar > span.separator + span.separator {
    display: none;
 }
 
-.toolbar span input {
+.toolbar > span input {
    position: relative;
    top: -1px;;
 }
 
-.toolbar span label {
+.toolbar > span label {
    padding-left: 0.5rem;
    padding-right: 0.5rem;
 }

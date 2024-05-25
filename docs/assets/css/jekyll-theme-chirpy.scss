@@ -306,12 +306,12 @@ small, .small {
    padding: 0 3px;
 }
 
-.example .toolbar span:hover {
+.example .toolbar > span:hover {
   color: var(--system-gray8);
 }
 
 .example .toolbar > span.selected {
-   color: var(--h2-color);
+   color: var(--system-green);
 }
 
 .example .toolbar > span.dot::before {
