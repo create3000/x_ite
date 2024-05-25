@@ -24,6 +24,8 @@ Jekyll::Hooks.register :site, :pre_render do |site|
     state :root do
       rule %r/[,:.]/, Punctuation
       rule %r/[{}\[\]]/, Punctuation
+      rule %r/PROTO|EXTERNPROTO/, Keyword, :typeName
+      rule %r/DEF|ROUTE|TO|IMPORT|EXPORT|AS/, Keyword, :name
 
       mixin :comments_and_whitespace
       mixin :keywords
@@ -50,6 +52,16 @@ Jekyll::Hooks.register :site, :pre_render do |site|
 
     state :accessTypes do
       rule %r/initializeOnly|inputOnly|outputOnly|inputOutput|field|eventIn|eventOut|exposedField/, Keyword
+    end
+
+    state :typeName do
+      mixin :comments_and_whitespace
+      rule %r/[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/, Name::Class, :pop!
+    end
+
+    state :name do
+      mixin :comments_and_whitespace
+      rule %r/[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/, Str::Regex, :pop!
     end
 
     state :dq do
