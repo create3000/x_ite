@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*- #
+# frozen_string_literal: true
+
 # This "hook" is executed right before the site"s pages are rendered
 Jekyll::Hooks.register :site, :pre_render do |site|
   puts "Adding VRML Markdown Lexer ..."
