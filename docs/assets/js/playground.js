@@ -389,7 +389,9 @@ function addVRMLEncoding (monaco, browser)
       components: Array .from (browser .supportedComponents, ({name}) => name),
       nodes: Array .from (browser .concreteNodes, ({typeName}) => typeName),
       accessTypes: [
+         // X3D
          "initializeOnly", "inputOnly", "outputOnly", "inputOutput",
+         // VRML
          "field", "eventIn", "eventOut", "exposedField",
       ],
       // fieldTypes: Array .from (browser .fieldTypes, ({typeName}) => typeName),
