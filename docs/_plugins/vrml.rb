@@ -12,9 +12,13 @@ Jekyll::Hooks.register :site, :pre_render do |site|
     aliases "vrml", "x3dv", "wrl"
     filenames "*.x3dv", "*.wrl", "*.vrml"
 
-    mimetypes "model/x3d+vrml", "apmodel/vrml"
+    mimetypes "model/x3d+vrml", "model/vrml", "x-world/x-vrml"
 
     # Pseudo-documentation: https://stackoverflow.com/questions/1661197/what-characters-are-valid-for-javascript-variable-names
+
+    def self.detect?(text)
+      return true if text =~ /\A#(?:X3D|VRML)\b/
+    end
 
     state :comments_and_whitespace do
       rule %r/[\x20\n,\t\r]+/, Text
