@@ -216,7 +216,7 @@ function updateUserMenu (canvas)
                },
             },
             radio4: {
-               name: "auto",
+               name: "Auto",
                type: "radio",
                radio: "content-scale",
                selected: browser .getBrowserOption ("ContentScale") === -1,
@@ -290,7 +290,7 @@ function updateToolbar (toolbar, canvas, monaco, editor)
 
    $("<span></span>") .addClass ("dot") .appendTo (toolbar);
 
-   const play = $("<span></span>")
+   const playButton = $("<span></span>")
       .attr ("title", "Toggle browser update on/off.")
       .addClass (["fa-solid", "fa-play"])
       .addClass (browser .isLive () ? "selected" : "")
@@ -301,9 +301,16 @@ function updateToolbar (toolbar, canvas, monaco, editor)
          else
             browser .beginUpdate ();
 
-         play .toggleClass ("selected");
+         playButton .toggleClass ("selected");
       })
       .appendTo (toolbar);
+
+   browser .getLive () .addFieldCallback ("playground", () =>
+   {
+      playButton
+         .removeClass ("selected")
+         .addClass (browser .isLive () ? "selected" : "");
+   });
 
    $("<span></span>") .addClass ("dot") .appendTo (toolbar);
 
