@@ -45,10 +45,8 @@
   --h4-color-strong: rgb(175, 206, 255);
 
   --example-background-color: rgba(0, 0, 0, 0.471);
+  --playground-console-background: rgba(0, 0, 0, 0.2);
   --button-background-color: black;
-
-  --playground-toolbar-color: rgba(38, 38, 38, 0.7);
-  --playground-editor-background: rgba(0, 0, 0, 0.2);
 }
 
 @mixin x_ite-light-scheme {
@@ -84,10 +82,8 @@
   --h4-color-strong: rgb(10, 80, 144);
 
   --example-background-color: rgba(235, 235, 255, 0.644);
+  --playground-console-background: rgb(0, 0, 0, 0.02);
   --button-background-color: white;
-
-  --playground-toolbar-color: rgba(237, 239, 240, 0.7);
-  --playground-editor-background: rgba(227, 229, 230, 0.7);
 }
 
 @media (prefers-color-scheme: dark) {

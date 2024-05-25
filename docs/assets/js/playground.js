@@ -140,6 +140,7 @@ async function applyChanges (monaco, editor)
    changed = false;
 
    $("#refresh-button") .removeClass ("selected");
+   updateLanguage (browser .currentScene .encoding);
 }
 
 function updateUserMenu (canvas)
@@ -239,21 +240,29 @@ function updateToolbar (toolbar, canvas, monaco, editor)
 
    toolbar .empty ();
 
-   $("<span></span>")
-      .append ($("<input></input>")
-         .attr ("type", "checkbox")
-         .attr ("id", "auto-update")
-         .prop ("checked", autoUpdate)
-         .on ("change", function ()
-         {
-            autoUpdate = this .checked;
-
-            if (autoUpdate && changed)
-               applyChanges (monaco, editor);
-         }))
-      .append ($("<label></label>")
-         .attr ("for", "auto-update")
+   const autoUpdateButton = $("<span></span>")
+      .addClass (autoUpdate ? "selected" : "")
+      .append ($("<span></span>")
+         .addClass (["icon", "fa-solid"])
+         .addClass (autoUpdate ? "fa-check" : "fa-xmark"))
+      .append ($("<span></span>")
+         .addClass ("label")
          .text ("Auto Update"))
+      .on ("click", () =>
+      {
+         autoUpdate = !autoUpdate;
+
+         if (autoUpdate && changed)
+            applyChanges (monaco, editor);
+
+         autoUpdateButton
+            .removeClass ("selected")
+            .addClass (autoUpdate ? "selected" : "");
+
+         autoUpdateButton .find (".icon")
+            .removeClass (["fa-check", "fa-xmark"])
+            .addClass (autoUpdate ? "fa-check" : "fa-xmark");
+      })
       .appendTo (toolbar);
 
    $("<span></span>")
@@ -297,41 +306,56 @@ function updateToolbar (toolbar, canvas, monaco, editor)
    // Right side
 
    $("<span></span>")
-      .text ("JSON")
+      .addClass (["language", "JSON"])
+      .addClass (browser .currentScene .encoding === "JSON" ? "selected" : "")
       .css ("float", "right")
       .attr ("title", "Convert to X3D JSON Encoding.")
+      .text ("JSON")
       .on ("click", () =>
       {
          editor .setValue (browser .currentScene .toJSONString ());
          monaco .editor .setModelLanguage (editor .getModel (), "json");
+         updateLanguage ("JSON");
       })
       .appendTo (toolbar);
 
    $("<span></span>") .css ("float", "right") .addClass ("dot") .appendTo (toolbar);
 
    $("<span></span>")
-      .text ("VRML")
+      .addClass (["language", "VRML"])
+      .addClass (browser .currentScene .encoding === "VRML" ? "selected" : "")
       .css ("float", "right")
       .attr ("title", "Convert to X3D VRML Encoding.")
+      .text ("VRML")
       .on ("click", () =>
       {
          editor .setValue (browser .currentScene .toVRMLString ());
          monaco .editor .setModelLanguage (editor .getModel (), "vrml");
+         updateLanguage ("VRML");
       })
       .appendTo (toolbar);
 
    $("<span></span>") .css ("float", "right") .addClass ("dot") .appendTo (toolbar);
 
    $("<span></span>")
-      .text ("XML")
+      .addClass (["language", "XML"])
+      .addClass (browser .currentScene .encoding === "XML" ? "selected" : "")
       .css ("float", "right")
       .attr ("title", "Convert to X3D XML Encoding.")
+      .text ("XML")
       .on ("click", () =>
       {
          editor .setValue (browser .currentScene .toXMLString ());
          monaco .editor .setModelLanguage (editor .getModel (), "xml");
+         updateLanguage ("XML");
       })
       .appendTo (toolbar);
+}
+
+function updateLanguage (encoding)
+{
+   $(".language") .removeClass ("selected");
+   $(`.language.${encoding}`) .addClass ("selected");
 }
 
 function addVRMLEncoding (monaco, browser)

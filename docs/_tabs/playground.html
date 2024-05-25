@@ -14,20 +14,20 @@ order: 4
 .playground {
    box-sizing: border-box;
    height: 100%;
-   border-bottom: 5px solid var(--playground-toolbar-color);
+   border-top: 1px solid var(--search-border-color);
+   border-bottom: 1px solid var(--search-border-color);
    height: calc(100vh - 128px);
 }
 
 .toolbar {
+   overflow: hidden;
+   padding: 0 2rem;
+   height: 30px;
+   width: 100%;
    user-select: none;
    -moz-user-select: none;
    -webkit-user-select: none;
    -ms-user-select: none;
-   padding: 0 2rem;
-   height: 30px;
-   width: 100%;
-   background-color: var(--playground-toolbar-color);
-   overflow: hidden;
 }
 
 .toolbar > span {
@@ -58,24 +58,20 @@ order: 4
    display: none;
 }
 
-.toolbar > span input {
-   position: relative;
-   top: -1px;;
-}
-
-.toolbar > span label {
+.toolbar > span .label {
    padding-left: 0.5rem;
    padding-right: 0.5rem;
 }
 
 .toolbar .fa-solid {
    position: relative;
-   top: 1px;;
+   top: 1px;
 }
 
 .viewer-row {
    display: flex;
    height: calc(100% - 30px);
+   border-top: 1px solid var(--search-border-color);
 }
 
 .viewer-column {
@@ -87,8 +83,6 @@ order: 4
 /* Editor */
 
 #editor, .console {
-   outline: none;
-   background: var(--playground-editor-background);
    border: none;
    width: 100%;
    height: 100%;
@@ -104,10 +98,11 @@ order: 4
 .monaco-editor-background,
 canvas.minimap-decorations-layer {
    outline: none;
-   background-color: var(--playground-editor-background);
+   background-color: inherit;
 }
 
 .console {
+   background: var(--playground-console-background);
    padding: 0.5rem;
    height: 50%;
 }
