@@ -276,7 +276,10 @@ class Playground
             type: "checkbox",
             selected: this .browser .getBrowserOption ("Antialiased"),
             events: {
-               click: () => { this .canvas .attr ("antialiased", !this .browser .getBrowserOption ("Antialiased")); },
+               click: () =>
+               {
+                  this .canvas .attr ("antialiased", !this .browser .getBrowserOption ("Antialiased"));
+               },
             },
          },
          "pixelated": {
@@ -343,7 +346,10 @@ class Playground
             type: "checkbox",
             selected: this .browser .getBrowserOption ("OrderIndependentTransparency"),
             events: {
-               click: () => { this .canvas .attr ("orderIndependentTransparency", !this .browser .getBrowserOption ("OrderIndependentTransparency")); },
+               click: () =>
+               {
+                  this .canvas .attr ("orderIndependentTransparency", !this .browser .getBrowserOption ("OrderIndependentTransparency"));
+               },
             },
          },
          "log": {
@@ -351,7 +357,10 @@ class Playground
             type: "checkbox",
             selected: this .browser .getBrowserOption ("LogarithmicDepthBuffer"),
             events: {
-               click: () => { this .canvas .attr ("logarithmicDepthBuffer", !this .browser .getBrowserOption ("LogarithmicDepthBuffer")); },
+               click: () =>
+               {
+                  this .canvas .attr ("logarithmicDepthBuffer", !this .browser .getBrowserOption ("LogarithmicDepthBuffer"));
+               },
             },
          },
       };
