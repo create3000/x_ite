@@ -256,7 +256,7 @@ class Playground
          {
             editor .setValue (browser .currentScene .toJSONString ());
             monaco .editor .setModelLanguage (editor .getModel (), "json");
-            updateLanguage ("JSON");
+            this .updateLanguage ("JSON");
          })
          .appendTo (toolbar);
 
@@ -272,7 +272,7 @@ class Playground
          {
             editor .setValue (browser .currentScene .toVRMLString ());
             monaco .editor .setModelLanguage (editor .getModel (), "vrml");
-            updateLanguage ("VRML");
+            this .updateLanguage ("VRML");
          })
          .appendTo (toolbar);
 
@@ -288,7 +288,7 @@ class Playground
          {
             editor .setValue (browser .currentScene .toXMLString ());
             monaco .editor .setModelLanguage (editor .getModel (), "xml");
-            updateLanguage ("XML");
+            this .updateLanguage ("XML");
          })
          .appendTo (toolbar);
    }
