@@ -88,12 +88,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       if (typeof this [_userMenu] === "function")
       {
-         const menu = this [_userMenu] ();
+         const menu = this [_userMenu] (this .getBrowser ());
 
          if ($.isPlainObject (menu))
          {
             for (const key in menu)
-               userMenu ["user-" + key] = menu [key];
+               userMenu [`user-${key}`] = menu [key];
          }
       }
 
