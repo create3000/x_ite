@@ -87,7 +87,7 @@ require (["vs/editor/editor.main"], async () =>
 
       editor .setValue (browser .currentScene [`to${encoding}String`] ());
 
-      updateLanguage (encoding);
+      $(() => updateLanguage (encoding));
 
       browser .beginUpdate ();
    }
