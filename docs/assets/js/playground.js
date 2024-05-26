@@ -286,7 +286,7 @@ class Playground
             type: "checkbox",
             selected: browser .getBrowserOption ("Antialiased"),
             events: {
-               click: () =>
+               click ()
                {
                   canvas .attr ("antialiased", !browser .getBrowserOption ("Antialiased"));
                },
@@ -315,7 +315,7 @@ class Playground
                   selected: browser .getBrowserOption ("ContentScale") === 0.1,
                   value: "0.1",
                   events: {
-                     click: () => { canvas .attr ("contentScale", "0.1"); },
+                     click () { canvas .attr ("contentScale", "0.1"); },
                   },
                },
                radio2: {
@@ -325,7 +325,7 @@ class Playground
                   selected: browser .getBrowserOption ("ContentScale") === 1,
                   value: "1",
                   events: {
-                     click: () => { canvas .attr ("contentScale", "1"); },
+                     click () { canvas .attr ("contentScale", "1"); },
                   },
                },
                radio3: {
@@ -335,7 +335,7 @@ class Playground
                   selected: browser .getBrowserOption ("ContentScale") === 2,
                   value: "2",
                   events: {
-                     click: () => { canvas .attr ("contentScale", "2"); },
+                     click () { canvas .attr ("contentScale", "2"); },
                   },
                },
                radio4: {
@@ -345,7 +345,7 @@ class Playground
                   selected: browser .getBrowserOption ("ContentScale") === -1,
                   value: "auto",
                   events: {
-                     click: () => { canvas .attr ("contentScale", "auto"); },
+                     click () { canvas .attr ("contentScale", "auto"); },
                   },
                },
             },
@@ -356,7 +356,7 @@ class Playground
             type: "checkbox",
             selected: browser .getBrowserOption ("OrderIndependentTransparency"),
             events: {
-               click: () =>
+               click ()
                {
                   canvas .attr ("orderIndependentTransparency", !browser .getBrowserOption ("OrderIndependentTransparency"));
                },
@@ -367,7 +367,7 @@ class Playground
             type: "checkbox",
             selected: browser .getBrowserOption ("LogarithmicDepthBuffer"),
             events: {
-               click: () =>
+               click ()
                {
                   canvas .attr ("logarithmicDepthBuffer", !browser .getBrowserOption ("LogarithmicDepthBuffer"));
                },
