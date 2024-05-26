@@ -95,6 +95,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-notification span {
   padding: 0 24px 0 20px;
   background: url("assets/images/icon.bw.png") no-repeat 0 2px;
+  image-rendering: pixelated;
 }
 
 .x_ite-private-browser-timings {
@@ -146,6 +147,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-browser-timings table {
   overflow: hidden;
   background: url("assets/images/Time.png") no-repeat;
+  image-rendering: pixelated;
   width: 100%;
   max-width: 100%;
   border-collapse: separate;
