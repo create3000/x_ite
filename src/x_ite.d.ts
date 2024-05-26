@@ -429,13 +429,13 @@ type ContextMenuOptions = {
    callback?: MenuCallback,
    build?: ($triggerElement: unknown, e: Event) => ContextMenuOptions,
    itemClickEvent?: string,
-}
+};
 
-type UserMenuCallback = () => UserMenuItems
-type UserMenuItems = Record <string, UserMenuItem>
-type MenuCallback = (itemKey: string, options: ContextMenuOptions, event: Event) => (boolean | void)
-type MenuIconCallback = (options: ContextMenuOptions, $itemElement: HTMLElement, itemKey: string, item: unknown) => string
-type MenuBoolCallback = (itemKey: string, options: ContextMenuOptions) => boolean
+type UserMenuCallback = (browser: X3DBrowser) => UserMenuItems;
+type UserMenuItems = Record <string, UserMenuItem>;
+type MenuCallback = (itemKey: string, options: ContextMenuOptions, event: Event) => (boolean | void);
+type MenuIconCallback = (options: ContextMenuOptions, $itemElement: HTMLElement, itemKey: string, item: unknown) => string;
+type MenuBoolCallback = (itemKey: string, options: ContextMenuOptions) => boolean;
 type UserMenuItem = {
    name: string,
    isHtmlName?: boolean,
@@ -454,7 +454,7 @@ type UserMenuItem = {
    items?: UserMenuItems,
    accesskey?: string,
    dataAttr?: Record <string, string>,
-}
+};
 
 /**
  * A scene is an extension of the execution context services with additional services provided.
