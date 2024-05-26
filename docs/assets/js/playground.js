@@ -65,10 +65,9 @@ class Playground
       this .updateLanguage (encoding);
 
       editor .setValue (browser .currentScene [`to${encoding}String`] ());
+      editor .getModel () .onDidChangeContent (() => this .onDidChangeContent ());
 
       browser .beginUpdate ();
-
-      editor .getModel () .onDidChangeContent (() => this .onDidChangeContent ());
 
       // Keyboard shortcuts.
 
