@@ -421,6 +421,7 @@ const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/NormalTangentMirrorTest/glTF-Binary/NormalTangentMirrorTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/NormalTangentTest/glTF-Binary/NormalTangentTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/OrientationTest/glTF-Binary/OrientationTest.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/PlaysetLightTest/glTF-Binary/PlaysetLightTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/PotOfCoals/glTF-Binary/PotOfCoals.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RecursiveSkeletons/glTF-Binary/RecursiveSkeletons.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedFigure/glTF-Binary/RiggedFigure.glb",
