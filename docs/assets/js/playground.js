@@ -54,6 +54,8 @@ require (["vs/editor/editor.main"], async () =>
       bracketPairColorization: { enabled: true },
    });
 
+   updateToolbar ($(".playground .toolbar"), $("x3d-canvas"), monaco, editor);
+
    // Handle color scheme changes.
 
    const colorScheme = window .matchMedia ("(prefers-color-scheme: dark)")
@@ -87,7 +89,7 @@ require (["vs/editor/editor.main"], async () =>
 
       editor .setValue (browser .currentScene [`to${encoding}String`] ());
 
-      $(() => updateLanguage (encoding));
+      updateLanguage (encoding);
 
       browser .beginUpdate ();
    }
@@ -110,8 +112,6 @@ require (["vs/editor/editor.main"], async () =>
 
    if (!url)
       editor .setValue (box);
-
-   updateToolbar ($(".playground .toolbar"), $("x3d-canvas"), monaco, editor);
 
    // Keyboard shortcuts.
 
