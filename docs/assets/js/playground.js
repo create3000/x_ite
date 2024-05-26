@@ -1,31 +1,3 @@
-const box = `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
-  <head>
-    <component name='ParticleSystems' level='3'/>
-  </head>
-  <Scene>
-    <Viewpoint
-        description='Initial View'
-        position='4.737889 4.718629 7.435519'
-        orientation='-0.640652763184828 0.744770464531058 0.186764536745701 0.746185800293648'/>
-    <ParticleSystem
-        geometryType='GEOMETRY'
-        maxParticles='10'
-        bboxSize='10 10 10'>
-      <PointEmitter
-          direction='0 0 0'
-          speed='1'/>
-      <Appearance>
-        <Material
-            diffuseColor='0 0.5 1'/>
-      </Appearance>
-      <Box/>
-    </ParticleSystem>
-  </Scene>
-</X3D>
-`;
-
 class Playground
 {
    autoUpdate = true;
@@ -72,31 +44,26 @@ class Playground
 
       // Handle url parameter.
 
-      const url = new URL (document .location .href) .searchParams .get ("url");
+      const url = new URL (document .location .href) .searchParams .get ("url")
+         ?? "/x_ite/assets/X3D/playground.x3d";
 
-      if (url)
-      {
-         browser .endUpdate ();
+      browser .endUpdate ();
 
-         browser .baseURL = url;
+      browser .baseURL = url;
 
-         await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+      await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
-         const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
+      const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
 
-         monaco .editor .setModelLanguage (editor .getModel (), encoding .toLowerCase ());
+      monaco .editor .setModelLanguage (editor .getModel (), encoding .toLowerCase ());
 
-         editor .setValue (browser .currentScene [`to${encoding}String`] ());
+      editor .setValue (browser .currentScene [`to${encoding}String`] ());
 
-         this .updateLanguage (encoding);
+      this .updateLanguage (encoding);
 
-         browser .beginUpdate ();
-      }
+      browser .beginUpdate ();
 
       editor .getModel () .onDidChangeContent (() => this .onDidChangeContent (editor));
-
-      if (!url)
-         editor .setValue (box);
 
       // Keyboard shortcuts.
 
