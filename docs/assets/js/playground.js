@@ -39,9 +39,8 @@ class Playground
 
       // Handle color scheme changes.
 
-      const colorScheme = window .matchMedia ("(prefers-color-scheme: dark)");
-
-      colorScheme .addEventListener ("change", () => this .changeColorScheme ());
+      window .matchMedia ("(prefers-color-scheme: dark)")
+         .addEventListener ("change", () => this .changeColorScheme ());
 
       this .changeColorScheme ();
 
