@@ -12,15 +12,16 @@ class Playground
 
    async setup ()
    {
-      const browser = X3D .getBrowser ();
+      this .browser = X3D .getBrowser ();
+      this .canvas  = $(this .browser .element);
 
-      browser .getContextMenu () .setUserMenu (() => this .updateUserMenu ($("x3d-canvas")));
+      this .browser .getContextMenu () .setUserMenu (() => this .updateUserMenu ());
 
-      await browser .loadComponents (browser .getProfile ("Full"), browser .getComponent ("X_ITE"));
+      await this .browser .loadComponents (this .browser .getProfile ("Full"), this .browser .getComponent ("X_ITE"));
 
-      this .addVRMLEncoding (browser);
+      this .addVRMLEncoding ();
 
-      const editor = monaco .editor .create (document .getElementById ("editor"),
+      this .editor = monaco .editor .create (document .getElementById ("editor"),
       {
          language: "xml",
          contextmenu: true,
@@ -32,7 +33,7 @@ class Playground
          bracketPairColorization: { enabled: true },
       });
 
-      this .updateToolbar ($(".playground .toolbar"), $("x3d-canvas"), editor);
+      this .updateToolbar ();
 
       // Handle color scheme changes.
 
@@ -47,23 +48,23 @@ class Playground
       const url = new URL (document .location .href) .searchParams .get ("url")
          ?? "/x_ite/assets/X3D/playground.x3d";
 
-      browser .endUpdate ();
+      this .browser .endUpdate ();
 
-      browser .baseURL = url;
+      this .browser .baseURL = url;
 
-      await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+      await this .browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
-      const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
+      const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [this .browser .currentScene .encoding] ?? "XML";
 
-      monaco .editor .setModelLanguage (editor .getModel (), encoding .toLowerCase ());
+      monaco .editor .setModelLanguage (this .editor .getModel (), encoding .toLowerCase ());
 
-      editor .setValue (browser .currentScene [`to${encoding}String`] ());
+      this .editor .setValue (this .browser .currentScene [`to${encoding}String`] ());
 
       this .updateLanguage (encoding);
 
-      browser .beginUpdate ();
+      this .browser .beginUpdate ();
 
-      editor .getModel () .onDidChangeContent (() => this .onDidChangeContent (editor));
+      this .editor .getModel () .onDidChangeContent (() => this .onDidChangeContent ());
 
       // Keyboard shortcuts.
 
@@ -79,7 +80,7 @@ class Playground
 
    timeoutId;
 
-   onDidChangeContent (editor)
+   onDidChangeContent ()
    {
       this .changed = true;
 
@@ -90,7 +91,7 @@ class Playground
 
       clearTimeout (this .timeoutId);
 
-      this .timeoutId = setTimeout (() => this .applyChanges (editor), 1000);
+      this .timeoutId = setTimeout (() => this .applyChanges (), 1000);
    }
 
    onKeyDown (event)
@@ -101,15 +102,14 @@ class Playground
          return;
 
       event .preventDefault ();
-      this .applyChanges (editor);
+      this .applyChanges ();
    }
 
-   async applyChanges (editor)
+   async applyChanges ()
    {
       const
-         browser         = X3D .getBrowser (),
-         activeViewpoint = browser .getActiveViewpoint (),
-         text            = editor .getValue (),
+         activeViewpoint = this .browser .getActiveViewpoint (),
+         text            = this .editor .getValue (),
          url             = encodeURI (`data:,${text}`);
 
       $("#refresh-button") .addClass ("selected");
@@ -121,25 +121,25 @@ class Playground
             orientationOffset = activeViewpoint ._orientationOffset .copy ();
       }
 
-      await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+      await this .browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
-      if (activeViewpoint && browser .getActiveViewpoint ())
+      if (activeViewpoint && this .browser .getActiveViewpoint ())
       {
-         browser .getActiveViewpoint () ._positionOffset    = positionOffset;
-         browser .getActiveViewpoint () ._orientationOffset = orientationOffset;
+         this .browser .getActiveViewpoint () ._positionOffset    = positionOffset;
+         this .browser .getActiveViewpoint () ._orientationOffset = orientationOffset;
       }
 
-      monaco .editor .setModelLanguage (editor .getModel (), browser .currentScene .encoding .toLowerCase ());
+      monaco .editor .setModelLanguage (this .editor .getModel (), this .browser .currentScene .encoding .toLowerCase ());
 
       this .changed = false;
 
       $("#refresh-button") .removeClass ("selected");
-      this .updateLanguage (browser .currentScene .encoding);
+      this .updateLanguage (this .browser .currentScene .encoding);
    }
 
-   updateToolbar (toolbar, canvas, editor)
+   updateToolbar ()
    {
-      const browser = canvas .prop ("browser");
+      const toolbar = $(".playground .toolbar");
 
       toolbar .empty ();
 
@@ -156,7 +156,7 @@ class Playground
             this .autoUpdate = !this .autoUpdate;
 
             if (this .autoUpdate && this .changed)
-               this .applyChanges (editor);
+               this .applyChanges (this .editor);
 
             autoUpdateButton
                .removeClass ("selected")
@@ -174,7 +174,7 @@ class Playground
          .addClass (["fa-solid", "fa-arrows-rotate"])
          .on ("click", () =>
          {
-            this .applyChanges (editor);
+            this .applyChanges (this .editor);
          })
          .appendTo (toolbar);
 
@@ -183,21 +183,21 @@ class Playground
       const playButton = $("<span></span>")
          .attr ("title", "Toggle browser update on/off.")
          .addClass (["fa-solid", "fa-play"])
-         .addClass (browser .isLive () ? "selected" : "")
+         .addClass (this .browser .isLive () ? "selected" : "")
          .on ("click", () =>
          {
-            if (browser .isLive ())
-               browser .endUpdate ();
+            if (this .browser .isLive ())
+               this .browser .endUpdate ();
             else
-               browser .beginUpdate ();
+               this .browser .beginUpdate ();
          })
          .appendTo (toolbar);
 
-      browser .getLive () .addFieldCallback ("playground", () =>
+      this .browser .getLive () .addFieldCallback ("playground", () =>
       {
          playButton
             .removeClass ("selected")
-            .addClass (browser .isLive () ? "selected" : "");
+            .addClass (this .browser .isLive () ? "selected" : "");
       });
 
       $("<span></span>") .addClass ("dot") .appendTo (toolbar);
@@ -207,7 +207,7 @@ class Playground
          .addClass (["fa-solid", "fa-arrows-to-dot"])
          .on ("click", () =>
          {
-            browser .viewAll ();
+            this .browser .viewAll ();
          })
          .appendTo (toolbar);
 
@@ -215,14 +215,14 @@ class Playground
 
       $("<span></span>")
          .addClass (["language", "JSON"])
-         .addClass (browser .currentScene .encoding === "JSON" ? "selected" : "")
+         .addClass (this .browser .currentScene .encoding === "JSON" ? "selected" : "")
          .css ("float", "right")
          .attr ("title", "Convert to X3D JSON Encoding.")
          .text ("JSON")
          .on ("click", () =>
          {
-            editor .setValue (browser .currentScene .toJSONString ());
-            monaco .editor .setModelLanguage (editor .getModel (), "json");
+            this .editor .setValue (this .browser .currentScene .toJSONString ());
+            monaco .editor .setModelLanguage (this .editor .getModel (), "json");
             this .updateLanguage ("JSON");
          })
          .appendTo (toolbar);
@@ -231,14 +231,14 @@ class Playground
 
       $("<span></span>")
          .addClass (["language", "VRML"])
-         .addClass (browser .currentScene .encoding === "VRML" ? "selected" : "")
+         .addClass (this .browser .currentScene .encoding === "VRML" ? "selected" : "")
          .css ("float", "right")
          .attr ("title", "Convert to X3D VRML Encoding.")
          .text ("VRML")
          .on ("click", () =>
          {
-            editor .setValue (browser .currentScene .toVRMLString ());
-            monaco .editor .setModelLanguage (editor .getModel (), "vrml");
+            this .editor .setValue (this .browser .currentScene .toVRMLString ());
+            monaco .editor .setModelLanguage (this .editor .getModel (), "vrml");
             this .updateLanguage ("VRML");
          })
          .appendTo (toolbar);
@@ -247,14 +247,14 @@ class Playground
 
       $("<span></span>")
          .addClass (["language", "XML"])
-         .addClass (browser .currentScene .encoding === "XML" ? "selected" : "")
+         .addClass (this .browser .currentScene .encoding === "XML" ? "selected" : "")
          .css ("float", "right")
          .attr ("title", "Convert to X3D XML Encoding.")
          .text ("XML")
          .on ("click", () =>
          {
-            editor .setValue (browser .currentScene .toXMLString ());
-            monaco .editor .setModelLanguage (editor .getModel (), "xml");
+            this .editor .setValue (this .browser .currentScene .toXMLString ());
+            monaco .editor .setModelLanguage (this .editor .getModel (), "xml");
             this .updateLanguage ("XML");
          })
          .appendTo (toolbar);
@@ -268,17 +268,15 @@ class Playground
 
    pixelated = false;
 
-   updateUserMenu (canvas)
+   updateUserMenu ()
    {
-      const browser = canvas .prop ("browser");
-
       return {
          "antialiased": {
             name: "Antialiased",
             type: "checkbox",
-            selected: browser .getBrowserOption ("Antialiased"),
+            selected: this .browser .getBrowserOption ("Antialiased"),
             events: {
-               click () { canvas .attr ("antialiased", !browser .getBrowserOption ("Antialiased")); },
+               click: () => { this .canvas .attr ("antialiased", !this .browser .getBrowserOption ("Antialiased")); },
             },
          },
          "pixelated": {
@@ -286,11 +284,11 @@ class Playground
             type: "checkbox",
             selected: this .pixelated,
             events: {
-               click ()
+               click: () =>
                {
                   this .pixelated = !this .pixelated;
 
-                  canvas .css ("image-rendering", this .pixelated ? "pixelated" : "unset");
+                  this .canvas .css ("image-rendering", this .pixelated ? "pixelated" : "unset");
                },
             },
          },
@@ -301,40 +299,40 @@ class Playground
                   name: "0.1",
                   type: "radio",
                   radio: "content-scale",
-                  selected: browser .getBrowserOption ("ContentScale") === 0.1,
+                  selected: this .browser .getBrowserOption ("ContentScale") === 0.1,
                   value: "0.1",
                   events: {
-                     click () { canvas .attr ("contentScale", "0.1"); },
+                     click: () => { this .canvas .attr ("contentScale", "0.1"); },
                   },
                },
                radio2: {
                   name: "1",
                   type: "radio",
                   radio: "content-scale",
-                  selected: browser .getBrowserOption ("ContentScale") === 1,
+                  selected: this .browser .getBrowserOption ("ContentScale") === 1,
                   value: "1",
                   events: {
-                     click () { canvas .attr ("contentScale", "1"); },
+                     click: () => { this .canvas .attr ("contentScale", "1"); },
                   },
                },
                radio3: {
                   name: "2",
                   type: "radio",
                   radio: "content-scale",
-                  selected: browser .getBrowserOption ("ContentScale") === 2,
+                  selected: this .browser .getBrowserOption ("ContentScale") === 2,
                   value: "2",
                   events: {
-                     click () { canvas .attr ("contentScale", "2"); },
+                     click: () => { this .canvas .attr ("contentScale", "2"); },
                   },
                },
                radio4: {
                   name: "Auto",
                   type: "radio",
                   radio: "content-scale",
-                  selected: browser .getBrowserOption ("ContentScale") === -1,
+                  selected: this .browser .getBrowserOption ("ContentScale") === -1,
                   value: "auto",
                   events: {
-                     click () { canvas .attr ("contentScale", "auto"); },
+                     click: () => { this .canvas .attr ("contentScale", "auto"); },
                   },
                },
             },
@@ -343,23 +341,23 @@ class Playground
          "oit": {
             name: "Order Independent Transparency",
             type: "checkbox",
-            selected: browser .getBrowserOption ("OrderIndependentTransparency"),
+            selected: this .browser .getBrowserOption ("OrderIndependentTransparency"),
             events: {
-               click () { canvas .attr ("orderIndependentTransparency", !browser .getBrowserOption ("OrderIndependentTransparency")); },
+               click: () => { this .canvas .attr ("orderIndependentTransparency", !this .browser .getBrowserOption ("OrderIndependentTransparency")); },
             },
          },
          "log": {
             name: "Logarithmic Depth Buffer",
             type: "checkbox",
-            selected: browser .getBrowserOption ("LogarithmicDepthBuffer"),
+            selected: this .browser .getBrowserOption ("LogarithmicDepthBuffer"),
             events: {
-               click () { canvas .attr ("logarithmicDepthBuffer", !browser .getBrowserOption ("LogarithmicDepthBuffer")); },
+               click: () => { this .canvas .attr ("logarithmicDepthBuffer", !this .browser .getBrowserOption ("LogarithmicDepthBuffer")); },
             },
          },
       };
    }
 
-   addVRMLEncoding (browser)
+   addVRMLEncoding ()
    {
       monaco .languages .setMonarchTokensProvider ("vrml",
       {
@@ -368,16 +366,16 @@ class Playground
          keywords: [
             "PROFILE", "COMPONENT", "UNIT", "META", "DEF", "USE", "EXTERNPROTO", "PROTO", "IS", "ROUTE", "TO", "IMPORT", "EXPORT", "AS",
          ],
-         profiles: Array .from (browser .supportedProfiles, ({name}) => name),
-         components: Array .from (browser .supportedComponents, ({name}) => name),
-         nodes: Array .from (browser .concreteNodes, ({typeName}) => typeName),
+         profiles: Array .from (this .browser .supportedProfiles, ({name}) => name),
+         components: Array .from (this .browser .supportedComponents, ({name}) => name),
+         nodes: Array .from (this .browser .concreteNodes, ({typeName}) => typeName),
          accessTypes: [
             // X3D
             "initializeOnly", "inputOnly", "outputOnly", "inputOutput",
             // VRML
             "field", "eventIn", "eventOut", "exposedField",
          ],
-         // fieldTypes: Array .from (browser .fieldTypes, ({typeName}) => typeName),
+         // fieldTypes: Array .from (this .browser .fieldTypes, ({typeName}) => typeName),
          fieldTypes: [
             "SFBool", "SFColor", "SFColorRGBA", "SFDouble", "SFFloat", "SFImage", "SFInt32", "SFMatrix3d", "SFMatrix3f", "SFMatrix4d", "SFMatrix4f", "SFNode", "SFRotation", "SFString", "SFTime", "SFVec2d", "SFVec2f", "SFVec3d", "SFVec3f", "SFVec4d", "SFVec4f", "MFBool", "MFColor", "MFColorRGBA", "MFDouble", "MFFloat", "MFImage", "MFInt32", "MFMatrix3d", "MFMatrix3f", "MFMatrix4d", "MFMatrix4f", "MFNode", "MFRotation", "MFString", "MFVec2d", "MFVec2f", "MFVec3d", "MFVec3f", "MFVec4d", "MFVec4f",
          ],
