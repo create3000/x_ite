@@ -12,6 +12,16 @@ class Playground
 
    async setup ()
    {
+      // Handle color scheme changes.
+      // Must be done at first.
+
+      window .matchMedia ("(prefers-color-scheme: dark)")
+         .addEventListener ("change", () => this .changeColorScheme ());
+
+      this .changeColorScheme ();
+
+      // Create editor.
+
       const
          browser = X3D .getBrowser (),
          editor  = monaco .editor .create (document .getElementById ("editor"),
@@ -37,13 +47,6 @@ class Playground
       this .addVRMLEncoding ();
       this .updateToolbar ();
 
-      // Handle color scheme changes.
-
-      window .matchMedia ("(prefers-color-scheme: dark)")
-         .addEventListener ("change", () => this .changeColorScheme ());
-
-      this .changeColorScheme ();
-
       // Handle url parameter.
 
       const url = new URL (document .location .href) .searchParams .get ("url")
@@ -59,9 +62,9 @@ class Playground
 
       monaco .editor .setModelLanguage (editor .getModel (), encoding .toLowerCase ());
 
-      editor .setValue (browser .currentScene [`to${encoding}String`] ());
-
       this .updateLanguage (encoding);
+
+      editor .setValue (browser .currentScene [`to${encoding}String`] ());
 
       browser .beginUpdate ();
 
