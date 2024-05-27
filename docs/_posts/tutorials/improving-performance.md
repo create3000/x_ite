@@ -209,7 +209,7 @@ Be sure to use the [Text](/x_ite/components/text/text/) node for text. Some tran
 
 Nodes such as [Box](/x_ite/components/geometry3d/box/), [Cone](/x_ite/components/geometry3d/cone/), [Cylinder](/x_ite/components/geometry3d/cylinder/), [Sphere](/x_ite/components/geometry3d/sphere/), [Extrusion](/x_ite/components/geometry3d/extrusion/), and [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) provide a compact way of describing objects with many polygons. Using these nodes saves transmission time. X\_ITE provides optimizations for these shapes.
 
-If your geometry consists only of triangles or quads, you should choose an [IndexedTriangleSet](/x_ite/components/rendering/indexedtriangleset/), [TriangleSet](/x_ite/components/rendering/triangleset/), [IndexedQuadSet](/x_ite/components/cadgeometry/indexedquadset/), or [QuadSet](/x_ite/components/cadgeometry/quadset/) node. These nodes are much more optimal than an [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) node.
+If your geometry consists only of triangles or quads, you should choose an [IndexedTriangleSet](/x_ite/components/rendering/indexedtriangleset/), [TriangleSet](/x_ite/components/rendering/triangleset/), [IndexedQuadSet](/x_ite/components/cadgeometry/indexedquadset/), or [QuadSet](/x_ite/components/cadgeometry/quadset/) node. These nodes are much more optimal than an [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) node can be.
 
 ## Use Automatic Normals
 
