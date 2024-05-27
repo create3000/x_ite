@@ -203,11 +203,13 @@ ROUTE Touch.isOver TO Button.set_whichChoice
 
 ## Use the Text node
 
-Be sure to use the Text node for text. Some translators convert text to polygons, resulting in very large numbers of polygons for a simple string of text. Using the Text node reduces polygon count and allows the browser to optimize for rendering performance, using cached versions of glyphs.
+Be sure to use the [Text](/x_ite/components/text/text/) node for text. Some translators convert text to polygons, resulting in very large numbers of polygons for a simple string of text. Using the Text node reduces polygon count and allows the browser to optimize for rendering performance, using cached versions of glyphs.
 
 ## Use Space-Efficient Geometry Nodes
 
-Nodes such as Box, Cone, Cylinder, Sphere, Extrusion, and ElevationGrid provide a compact way of describing objects with many polygons. Using these nodes saves transmission time. X\_ITE provides optimizations for these shapes.
+Nodes such as [Box](/x_ite/components/geometry3d/box/), [Cone](/x_ite/components/geometry3d/cone/), [Cylinder](/x_ite/components/geometry3d/cylinder/), [Sphere](/x_ite/components/geometry3d/sphere/), [Extrusion](/x_ite/components/geometry3d/extrusion/), and [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) provide a compact way of describing objects with many polygons. Using these nodes saves transmission time. X\_ITE provides optimizations for these shapes.
+
+If your geometry consists only of triangles or quads, you should choose an [IndexedTriangleSet](/x_ite/components/rendering/indexedtriangleset/), TriangleSet](/x_ite/components/rendering/triangleset/), [IndexedQuadSet](/x_ite/components/cadgeometry/indexedquadset/), or [QuadSet](/x_ite/components/cadgeometry/quadset/) node. These nodes are much more optimal than an [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) node.
 
 ## Use Automatic Normals
 
