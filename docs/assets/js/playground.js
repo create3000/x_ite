@@ -54,8 +54,6 @@ class Playground
 
       browser .endUpdate ();
 
-      browser .baseURL = url;
-
       await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
       const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
