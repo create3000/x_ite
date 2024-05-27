@@ -32,7 +32,7 @@ Jekyll::Hooks.register :site, :pre_render do |site|
       rule %r/[,:.]/, Punctuation
       rule %r/[{}\[\]]/, Punctuation
       rule %r/PROTO|EXTERNPROTO/, Keyword, :typeName
-      rule %r/DEF|ROUTE|TO|EXPORT|AS/, Keyword, :name
+      rule %r/DEF|USE|ROUTE|TO|EXPORT|AS/, Keyword, :name
 
       rule %r/(IMPORT)(\s*)(#{id})(\s*)(.)(\s*)(#{id})/ do
         groups Keyword, Text, Str::Regex, Text, Punctuation, Text, Str::Regex
