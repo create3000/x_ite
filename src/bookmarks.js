@@ -335,9 +335,9 @@ const Bookmarks = (() =>
          textureProperties .minificationFilter  = "NICEST";
          textureProperties .magnificationFilter = "NICEST";
 
-         diffuseTexture  .url               = new X3D .MFString ("https://rawgit.com/create3000/Library/main/Tests/Components/images/helipad-diffuse.jpg");
+         diffuseTexture  .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-diffuse.jpg");
          diffuseTexture  .textureProperties = textureProperties;
-         specularTexture .url               = new X3D .MFString ("https://rawgit.com/create3000/Library/main/Tests/Components/images/helipad-specular.jpg");
+         specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg");
          specularTexture .textureProperties = textureProperties;
 
          environmentLight .color           = new X3D .SFColor (0.9764706, 0.7960784, 0.6117647);
