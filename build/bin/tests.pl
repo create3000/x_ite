@@ -67,7 +67,7 @@ sub tests
 
    say FILE  <<EOT;
 ];
-X_ITE_TESTS .server = "https://rawgit.com/create3000/Library/main/Tests/Components";
+X_ITE_TESTS .server = "http://create3000.github.io/Library/Tests/Components";
 EOT
 
    close FILE

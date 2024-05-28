@@ -432,5 +432,5 @@ const X_ITE_TESTS = [
    { path: "VolumeRendering/SilhouetteSkull.x3d" },
    { path: "VolumeRendering/VolumeData.x3d" },
 ];
-X_ITE_TESTS .server = "https://rawgit.com/create3000/Library/main/Tests/Components";
+X_ITE_TESTS .server = "http://create3000.github.io/Library/Tests/Components";
 
