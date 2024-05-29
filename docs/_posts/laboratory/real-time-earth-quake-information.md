@@ -68,6 +68,7 @@ p {
 .link-list {
    overflow: scroll;
    height: 100%;
+   user-select: none;
 }
 
 x3d-canvas {
