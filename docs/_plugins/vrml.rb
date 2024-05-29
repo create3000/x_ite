@@ -7,7 +7,7 @@ Jekyll::Hooks.register :site, :pre_render do |site|
   require "rouge"
 
   # This class defines the VRML lexer which is used to highlight "vrml" code snippets during render-time
-  class VRMLLexer < Rouge::RegexLexer
+  class VRML < Rouge::RegexLexer
     title "VRML"
     desc "Classic VRML Encoding"
 
