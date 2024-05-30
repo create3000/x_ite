@@ -11,13 +11,6 @@ tags: [3D, L-System, Generator, Laboratory]
    padding: 1rem 2rem;
 }
 
-@media all and (max-width: 849px)
-{
-   .viewer {
-      border-bottom: 1px solid var(--main-border-color);
-   }
-}
-
 /* Table */
 table {
   width: 100%;

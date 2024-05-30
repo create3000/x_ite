@@ -23,13 +23,6 @@ p {
    height: calc(100vh - 128px - 3.7rem);
 }
 
-@media all and (max-width: 849px)
-{
-   .viewer {
-      border-bottom: 1px solid var(--main-border-color);
-   }
-}
-
 .viewer-row {
    display: flex;
    height: calc(100% - 4rem);

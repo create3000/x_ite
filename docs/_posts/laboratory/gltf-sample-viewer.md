@@ -28,13 +28,6 @@ tags: [glTF, Sample, Viewer, Laboratory]
    }
 }
 
-@media all and (max-width: 849px)
-{
-   .viewer {
-      border-bottom: 1px solid var(--main-border-color);
-   }
-}
-
 .viewer-row {
    display: flex;
    height: calc(100vh - 128px);

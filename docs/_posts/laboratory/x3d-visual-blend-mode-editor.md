@@ -10,13 +10,6 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
 .viewer {
    padding: 1rem 2rem;
 }
-
-@media all and (max-width: 849px)
-{
-   .viewer {
-      border-bottom: 1px solid var(--main-border-color);
-   }
-}
 </style>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/cferdinandi/tabby@12.0.0/dist/css/tabby-ui.min.css">
