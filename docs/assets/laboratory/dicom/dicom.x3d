@@ -22,7 +22,7 @@
       <Shape>
         <Appearance>
           <ImageTexture3D DEF='Texture'
-              url='"https://create3000.github.io/media/laboratory/dicom/datasets/CT1_J2KR.dcm"'
+              url='"datasets/CT1_J2KR.dcm"'
               repeatS='true'
               repeatT='true'
               repeatR='true'/>
