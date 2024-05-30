@@ -6,6 +6,10 @@ categories: [Laboratory]
 tags: [glTF, Sample, Viewer, Laboratory]
 ---
 <style>
+#topbar-wrapper {
+   border-bottom: 1px solid var(--main-border-color);
+}
+
 .row {
    margin: 0 !important;
 }
@@ -29,6 +33,13 @@ tags: [glTF, Sample, Viewer, Laboratory]
 
    html:not([data-mode]), html[data-mode=light] {
       --list-color: rgba(0, 0, 0, 0.03);
+   }
+}
+
+@media all and (max-width: 849px)
+{
+   .viewer {
+      border-bottom: 1px solid var(--main-border-color);
    }
 }
 
@@ -82,7 +93,7 @@ x3d-canvas {
 
 <script defer src="/x_ite/assets/js/gltf-sample-viewer.js"></script>
 
-<div class="viewer-row">
+<div class="viewer viewer-row">
    <div class="viewer-column1">
       <x3d-canvas>
          <X3D profile='Interchange' version='4.0'>
