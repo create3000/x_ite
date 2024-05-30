@@ -107,14 +107,14 @@ function parseEntry (xml)
 
 function generatePoints (earthquakes)
 {
-	var
+	const
 		Browser = X3D .getBrowser (),
 		coord   = Browser .currentScene .getNamedNode ("EarthQuakesCoord"),
 		color   = Browser .currentScene .getNamedNode ("EarthQuakesColor"),
 		red     = new X3D .SFColor (1, 0, 0),
 		yellow  = new X3D .SFColor (1, 1, 0);
 
-	earthquakes .sort (function (lhs, rhs)
+	earthquakes .sort ((lhs, rhs) =>
 	{
 		if (lhs .magnitude < rhs .magnitude)
 			return 1;
@@ -128,27 +128,27 @@ function generatePoints (earthquakes)
 	coord .point .length = 0;
 	color .color .length = 0;
 
-	earthquakes .forEach (function (earthquake)
+	earthquakes .forEach (earthquake =>
 	{
-		var m = earthquake .magnitude / 10;
+		const m = earthquake .magnitude / 10;
 
 		coord .point .push (new X3D .SFVec3d (earthquake .point [0], earthquake .point [1], 100000 + 1000000 * m));
 		color .color .push (yellow .lerp (red, m));
 	});
 
-	var locations = $(".locations") .empty ();
+	const locations = $(".locations") .empty ();
 
-	var list = $("<ul></ul>")
+	const list = $("<ul></ul>")
 		.addClass ("link-list")
 		.appendTo (locations);
 
-	earthquakes .forEach (function (earthquake)
+	earthquakes .forEach (earthquake =>
 	{
 		list .append ($("<li></li>")
 			.append ($("<a></a>")
-				.css ({ "cursor": "pointer" })
+				.attr ("href", "#")
 				.text (earthquake .magnitude .toFixed (1) + " - " + earthquake .location)
-				.click (selectEarthQuake .bind (null, earthquake))));
+				.on ("click", () => selectEarthQuake (earthquake))));
 	});
 
 	selectEarthQuake (earthquakes [0])
