@@ -1,0 +1,114 @@
+/* CSS StyleSheet */
+@charset "utf-8";
+
+table.blend-mode {
+   width: 100%;
+   height: 100%;
+}
+
+table.blend-mode td {
+	vertical-align: top;
+}
+
+table.blend-mode td + td {
+	padding-left: 10px;
+}
+
+.type-icon {
+	padding-right: 5px;
+	vertical-align: middle;
+}
+
+#foreground-images img,
+#background-images img {
+	cursor: pointer;
+	width: 69px;
+}
+
+input.url {
+	box-sizing: border-box;
+	width: 100%;
+}
+
+div.color {
+	cursor: pointer;
+	display: inline-block;
+	width: 69px;
+	height: 69px;
+}
+
+.checkerboard {
+	background: url("assets/checkerboard.png") center center;
+}
+
+.red {
+	color: red;
+}
+
+.green {
+	color: green;
+}
+
+.blue {
+	color: blue;
+}
+
+#XML,
+#VRML {
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+
+/* Tabby */
+
+@media (prefers-color-scheme: dark) {
+	html:not([data-mode]), html[data-mode=dark] {
+	 	--tab-panel-color: rgba(0,0,0,0.5);
+		--tab-hover: rgba(255,255,255,0.05);
+	}
+
+	html[data-mode=light] {
+		--tab-panel-color: rgba(0,0,0,0.05);
+	  	--tab-hover: rgba(0,0,0,0.05);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+	html[data-mode=dark] {
+		--tab-panel-color: rgba(0,0,0,0.5);
+	 	--tab-hover: rgba(255,255,255,0.05);
+  }
+
+  html:not([data-mode]), html[data-mode=light] {
+	 	--tab-panel-color: rgba(0,0,0,0.05);
+		--tab-hover: rgba(0,0,0,0.05);
+	}
+}
+
+[role=tablist],
+[role=tablist] [role=presentation] {
+	margin: 0 !important;
+	padding: 0 !important;
+	border: none;
+}
+
+[role=tab] {
+	margin: 0;
+	padding: 0 15px;
+	border: none !important;
+	border-radius: 0;
+	background-color: none;
+}
+
+[role=tab]:hover:not([aria-selected=true]) {
+	background-color: var(--tab-hover);
+}
+
+[role=tab][aria-selected=true] {
+	background-color: var(--tab-panel-color);
+}
+
+[role=tabpanel] {
+	padding: 10px;
+	background-color: var(--tab-panel-color);
+}

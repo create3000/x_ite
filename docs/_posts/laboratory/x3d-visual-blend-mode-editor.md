@@ -5,22 +5,37 @@ layout: wide
 categories: [Laboratory]
 tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
 ---
+<style>
+/* Viewer */
+.viewer {
+   padding: 1rem 2rem;
+}
+
+@media all and (max-width: 849px)
+{
+   .viewer {
+      border-bottom: 1px solid var(--main-border-color);
+   }
+}
+</style>
+
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/cferdinandi/tabby@12.0.0/dist/css/tabby-ui.min.css">
 <script defer src="https://cdn.jsdelivr.net/gh/cferdinandi/tabby@12.0.0/dist/js/tabby.polyfills.min.js"></script>
 
-<link rel="stylesheet" href="https://create3000.github.io/media/laboratory/blend-mode/style.css">
-<script type="module" src="https://create3000.github.io/media/laboratory/blend-mode/blend-mode.mjs"></script>
+<link rel="stylesheet" href="/x_ite/assets/laboratory/blend-mode/style.css">
+<script type="module" src="/x_ite/assets/laboratory/blend-mode/blend-mode.mjs"></script>
 
+<div class="viewer">
 <table class="blend-mode">
    <tbody>
       <tr>
          <td>
-            <x3d-canvas class="blend-mode checkerboard" src="https://create3000.github.io/media/laboratory/blend-mode/blend-mode.x3d" splashScreen="false"></x3d-canvas>
+            <x3d-canvas class="blend-mode checkerboard" src="/x_ite/assets/laboratory/blend-mode/blend-mode.x3d" splashScreen="false"></x3d-canvas>
          </td>
          <td style="width: 30%; padding-left: 1.5rem;">
             <small class="small">Source (foreground):</small>
             <br>
-            <img alt="color wheel" src="https://create3000.github.io/media/laboratory/blend-mode/assets/color-wheel.png">
+            <img alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
             <select id="source-color">
                <option>ZERO</option>
                <option>ONE</option>
@@ -39,7 +54,7 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
                <option>ONE_MINUS_CONSTANT_ALPHA</option>
             </select>
             <br>
-            <img alt="contrast" src="https://create3000.github.io/media/laboratory/blend-mode/assets/contrast.png">
+            <img alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
             <select id="source-alpha">
                <option>ZERO</option>
                <option selected="selected">ONE</option>
@@ -60,7 +75,7 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
             <br>
             <small class="small">Destination (background):</small>
             <br>
-            <img alt="color wheel" src="https://create3000.github.io/media/laboratory/blend-mode/assets/color-wheel.png">
+            <img alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
             <select id="destination-color">
                <option>ZERO</option><option>ONE</option>
                <option>SRC_COLOR</option>
@@ -78,7 +93,7 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
                <option>ONE_MINUS_CONSTANT_ALPHA</option>
             </select>
             <br>
-            <img alt="contrast" src="https://create3000.github.io/media/laboratory/blend-mode/assets/contrast.png">
+            <img alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
             <select id="destination-alpha">
                <option>ZERO</option>
                <option>ONE</option>
@@ -99,7 +114,7 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
             <br>
             <small class="small">Blend equation:</small>
             <br>
-            <img alt="color wheel" src="https://create3000.github.io/media/laboratory/blend-mode/assets/color-wheel.png">
+            <img alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
             <select id="equation-color">
                <option selected="selected">FUNC_ADD</option>
                <option>FUNC_SUBTRACT</option>
@@ -107,7 +122,7 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
                <option>MIN</option><option>MAX</option>
             </select>
             <br>
-            <img alt="contrast" src="https://create3000.github.io/media/laboratory/blend-mode/assets/contrast.png">
+            <img alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
             <select id="equation-alpha">
                <option selected="selected">FUNC_ADD</option>
                <option>FUNC_SUBTRACT</option>
@@ -150,35 +165,35 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
 <div id="preset-images">
    <small class="small">Foreground:</small>
    <div id="foreground-images">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/lena.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/earth.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/panther.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/flower.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/cloud.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/forest.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/city.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/death-star.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/colors.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/golden-gate-bridge.jpeg">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/water.jpeg">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/sunset.jpeg">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/night-sky.jpeg">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/lena.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/earth.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/panther.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/flower.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/cloud.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/forest.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/city.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/death-star.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/colors.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/golden-gate-bridge.jpeg">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/water.jpeg">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/sunset.jpeg">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/night-sky.jpeg">
    </div>
    <small class="small">Background:</small>
    <div id="background-images">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/lena.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/earth.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/panther.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/flower.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/cloud.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/forest.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/city.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/death-star.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/colors.png">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/lake.jpeg">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/desktop.jpeg">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/city-night.jpeg">
-      <img alt="example image" src="https://create3000.github.io/media/laboratory/blend-mode/assets/images/castle.jpeg">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/lena.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/earth.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/panther.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/flower.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/cloud.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/forest.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/city.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/death-star.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/colors.png">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/lake.jpeg">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/desktop.jpeg">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/city-night.jpeg">
+      <img alt="example image" src="/x_ite/assets/laboratory/blend-mode/assets/images/castle.jpeg">
    </div>
 </div>
 <div id="image-urls">
@@ -227,3 +242,4 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
 new Tabby ("[data-image-presets-tabs]");
 new Tabby ("[data-encoding-tabs]");
 </script>
+</div>

@@ -6,14 +6,6 @@ categories: [Laboratory]
 tags: [Online, DICOM, NRRD, File, Viewer, Laboratory]
 ---
 <style>
-#topbar-wrapper {
-   border-bottom: 1px solid var(--main-border-color);
-}
-
-.row {
-   margin: 0 !important;
-}
-
 /* Paragraph */
 article > p {
    padding: 0 2rem;

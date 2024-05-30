@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Geometry2D' level='2'/>
+    <component name='Layering' level='1'/>
+    <component name='Layout' level='2'/>
+    <component name='X_ITE' level='1'/>
+    <meta name='comment' content='Rise and Shine'/>
+    <meta name='created' content='Sat, 09 Mar 2019 10:28:15 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.0.36, https://create3000.github.io/sunrize/'/>
+    <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/media/docs/laboratory/blend-mode/blend-mode.x3d'/>
+    <meta name='modified' content='Mon, 29 May 2023 11:15:39 GMT'/>
+  </head>
+  <Scene>
+    <WorldInfo/>
+    <LayerSet
+        order='1'>
+      <LayoutLayer DEF='Images'>
+        <MetadataSet DEF='Titania_1'
+            name='Titania'
+            reference='http://titania.create3000.de'>
+          <MetadataSet DEF='BrowserPanel_1' containerField='value'
+              name='BrowserPanel'
+              reference='http://titania.create3000.de'>
+            <MetadataSet DEF='viewpoints_1' containerField='value'
+                name='viewpoints'
+                reference='http://titania.create3000.de'>
+              <MetadataSet DEF='PerspectiveViewpoint_1' containerField='value'
+                  name='PerspectiveViewpoint'
+                  reference='http://titania.create3000.de'>
+                <MetadataDouble DEF='position' containerField='value'
+                    name='position'
+                    reference='http://titania.create3000.de'
+                    value='2.4723266713855, 3.5007762973429, 2.4723270951904'/>
+                <MetadataDouble DEF='orientation' containerField='value'
+                    name='orientation'
+                    reference='http://titania.create3000.de'
+                    value='0.67859815625003, -0.67859855666104, -0.28108458020961, 5.1871287220859'/>
+                <MetadataDouble DEF='centerOfRotation' containerField='value'
+                    name='centerOfRotation'
+                    reference='http://titania.create3000.de'
+                    value='0, 0, 0'/>
+                <MetadataDouble DEF='fieldOfViewScale_1' containerField='value'
+                    name='fieldOfViewScale'
+                    reference='http://titania.create3000.de'
+                    value='1'/>
+              </MetadataSet>
+            </MetadataSet>
+          </MetadataSet>
+        </MetadataSet>
+        <Transform DEF='BackgroundImageRectangle'
+            translation='0 0 -1'>
+          <Shape>
+            <Appearance>
+              <ImageTexture DEF='BackgroundImage'
+                  url='"assets/images/lake.jpeg"'
+                  repeatS='false'
+                  repeatT='false'/>
+            </Appearance>
+            <Rectangle2D/>
+          </Shape>
+        </Transform>
+        <Transform DEF='ForegroundImageRectangle'>
+          <Shape>
+            <Appearance>
+              <ImageTexture DEF='ForegroundImage'
+                  url='"assets/images/flower.png"'
+                  repeatS='false'
+                  repeatT='false'/>
+              <BlendMode DEF='BlendMode'/>
+            </Appearance>
+            <Rectangle2D/>
+          </Shape>
+        </Transform>
+      </LayoutLayer>
+    </LayerSet>
+  </Scene>
+</X3D>

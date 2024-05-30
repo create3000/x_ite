@@ -6,14 +6,6 @@ categories: [Laboratory]
 tags: [3D, L-System, Generator, Laboratory]
 ---
 <style>
-#topbar-wrapper {
-   border-bottom: 1px solid var(--main-border-color);
-}
-
-.row {
-   margin: 0 !important;
-}
-
 /* Viewer */
 .viewer {
    padding: 1rem 2rem;

@@ -6,14 +6,6 @@ categories: [Laboratory]
 tags: [glTF, Sample, Viewer, Laboratory]
 ---
 <style>
-#topbar-wrapper {
-   border-bottom: 1px solid var(--main-border-color);
-}
-
-.row {
-   margin: 0 !important;
-}
-
 /* Viewer */
 
 @media (prefers-color-scheme: dark) {
