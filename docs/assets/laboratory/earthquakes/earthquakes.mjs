@@ -66,28 +66,31 @@ function parseEntry (xml)
 	if (xml .nodeName !== "entry")
 		return;
 
-	var earthquake = { }
+	const earthquake = { }
 
-	for (var i = 0, length = xml .childNodes .length; i < length; ++ i)
+	for (const childNode of xml .childNodes)
 	{
-		var childNode = xml .childNodes [i];
-
 		switch (childNode .nodeName)
 		{
 			case "title":
 			{
-				var match = childNode .innerHTML .match (/^M\s+([\d\.]+)\s+-\s+(.*?)$/);
+				const match = childNode .innerHTML .match (/^M\s+([\d\.]+)\s+-\s+(.*?)$/);
 
-				if (! match)
+				if (!match)
 					break;
 
 				earthquake .magnitude = parseFloat (match [1]);
 				earthquake .location  = match [2];
 				break;
 			}
+			case "link":
+			{
+				earthquake .link = childNode .getAttribute ("href");
+				break;
+			}
 			case "georss:point":
 			{
-				var point = childNode .innerHTML .split (" ");
+				const point = childNode .innerHTML .split (" ");
 
 				earthquake .point = [
 					parseFloat (point [0]),
@@ -146,12 +149,16 @@ function generatePoints (earthquakes)
 	{
 		list .append ($("<li></li>")
 			.append ($("<a></a>")
-				.attr ("href", "#")
+				.attr ("href", earthquake .link)
 				.text (earthquake .magnitude .toFixed (1) + " - " + earthquake .location)
-				.on ("click", () => selectEarthQuake (earthquake))));
+				.on ("click", () =>
+				{
+					selectEarthQuake (earthquake);
+					return false;
+				})));
 	});
 
-	selectEarthQuake (earthquakes [0])
+	selectEarthQuake (earthquakes [0]);
 }
 
 function selectEarthQuake (earthquake)

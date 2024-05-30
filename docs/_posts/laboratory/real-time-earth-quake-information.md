@@ -20,7 +20,7 @@ p {
    box-sizing: border-box;
    height: 100%;
    border-top: 1px solid var(--main-border-color);
-   height: calc(100vh - 128px - 3.7rem);
+   height: calc(100vh - 128px - 3.8rem);
 }
 
 .viewer-row {
