@@ -1,0 +1,141 @@
+/* CSS StyleSheet */
+@charset "utf-8";
+@import url(https://fonts.googleapis.com/css?family=Material+Icons);
+
+table.l-system,
+table.l-system-options,
+table.l-system-rules {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+table.l-system td {
+	vertical-align: top;
+}
+
+table.l-system > tbody > tr > td:first-child {
+	width: 562px;
+}
+
+table.l-system td + td {
+	padding-left: 10px;
+}
+
+table.l-system-options {
+	width: 100%;
+}
+
+table.l-system-options > tbody > tr > td:first-child {
+	width: 150px;
+}
+
+table.l-system-options > tbody > tr > td {
+	padding: 5px 0px 5px 0px;
+	vertical-align: middle;
+}
+
+table.l-system-options input {
+	box-sizing: border-box;
+	width: 100%;
+}
+
+ul.l-system-links {
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none;
+}
+
+ul.l-system-links li {
+	display: inline-block;
+	margin: 0px;
+	padding: 0px;
+}
+
+ul.l-system-links li + li {
+	padding-left: 20px;
+}
+
+ul.l-system-links li:last-child {
+	float: right;
+}
+
+#colors {
+}
+
+#colors .color,
+#colors .add-color,
+#colors .remove-color {
+	cursor: pointer;
+	display: inline-block;
+	margin-bottom: 5px;
+	width: 50px;
+	height: 50px;
+	font-size: 0px;
+	vertical-align: bottom;
+}
+
+#colors .color {
+	margin-right: 5px;
+}
+
+#colors .add-color,
+#colors .remove-color {
+	position: relative;
+	top: -1px;
+	font-size: 52px;
+	text-align: center;
+}
+
+img.predefined {
+	cursor: pointer;
+}
+
+main section X3DCanvas.l-system {
+	width: 562px;
+}
+
+@media only screen and (max-width: 1635px) {
+
+	table.l-system > tbody > tr > td:first-child {
+		width: 394px;
+	}
+
+	main section X3DCanvas.l-system {
+		width: 394px;
+		height: 520px;
+	}
+
+	table.l-system-options > tbody > tr > td:first-child {
+		width: 120px;
+	}
+}
+
+.material-icons {
+	margin-top: -1px;
+	margin-right: 2px;
+	border: none;
+	width: auto;
+	height: auto;
+
+	font-family: Material Icons;
+	font-weight: normal;
+	font-style: normal;
+	display: inline-block;
+	text-transform: none;
+	letter-spacing: normal;
+	word-wrap: normal;
+	white-space: nowrap;
+	direction: ltr;
+	vertical-align: middle;
+
+	/* Support for all WebKit browsers. */
+	-webkit-font-smoothing: antialiased;
+	/* Support for Safari and Chrome. */
+	text-rendering: optimizeLegibility;
+
+	/* Support for Firefox. */
+	-moz-osx-font-smoothing: grayscale;
+
+	/* Support for IE. */
+	font-feature-settings: 'liga';
+}

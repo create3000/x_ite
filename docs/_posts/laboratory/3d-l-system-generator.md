@@ -6,15 +6,33 @@ categories: [Laboratory]
 tags: [3D, L-System, Generator, Laboratory]
 ---
 <style>
-/* table */
+#topbar-wrapper {
+   border-bottom: 1px solid var(--main-border-color);
+}
 
+.row {
+   margin: 0 !important;
+}
+
+/* Viewer */
+.viewer {
+   padding: 1rem 2rem;
+}
+
+@media all and (max-width: 849px)
+{
+   .viewer {
+      border-bottom: 1px solid var(--main-border-color);
+   }
+}
+
+/* Table */
 table {
   width: 100%;
   height: 100%;
 }
 
 /* Canvas */
-
 x3d-canvas {
    height: 60vh;
    width: 100%;
@@ -22,19 +40,20 @@ x3d-canvas {
 }
 </style>
 
-<script defer src="https://create3000.github.io/media/laboratory/l-system/FileSaver.js-2.0.0/dist/FileSaver.min.js"></script>
+<script defer src="/x_ite/assets/laboratory/l-system/FileSaver.js-2.0.0/dist/FileSaver.min.js"></script>
 
-<link rel="stylesheet" href="https://create3000.github.io/media/laboratory/l-system/Huebee/huebee.css">
-<script defer src="https://create3000.github.io/media/laboratory/l-system/Huebee/huebee.pkgd.min.js"></script>
+<link rel="stylesheet" href="/x_ite/assets/laboratory/l-system/Huebee/huebee.css">
+<script defer src="/x_ite/assets/laboratory/l-system/Huebee/huebee.pkgd.min.js"></script>
 
-<link rel="stylesheet" href="https://create3000.github.io/media/laboratory/l-system/style.css">
-<script type="module" src="https://create3000.github.io/media/laboratory/l-system/l-system.mjs"></script>
+<link rel="stylesheet" href="/x_ite/assets/laboratory/l-system/style.css">
+<script type="module" src="/x_ite/assets/laboratory/l-system/l-system.mjs"></script>
 
+<div class="viewer">
 <table class="l-system">
    <tbody>
       <tr>
          <td style="width: 50%;">
-            <x3d-canvas class="l-system" splashScreen="false" src="https://create3000.github.io/media/laboratory/l-system/l-system.x3d"></x3d-canvas>
+            <x3d-canvas class="l-system" splashScreen="false" src="/x_ite/assets/laboratory/l-system/l-system.x3d"></x3d-canvas>
             <p>
                <a class="download l-system" href="#">Download X3D File</a>
                |
@@ -149,17 +168,18 @@ x3d-canvas {
 
 <h3>Predefined L-Systems</h3>
 
-<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image1.png">
-<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image2.png">
-<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image3.png">
-<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image4.png">
-<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image5.png">
-<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image6.png">
-<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image7.png">
-<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image8.png">
-<img alt="Example Image" class="predefined" src="https://create3000.github.io/media/laboratory//l-system/images/image9.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image1.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image2.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image3.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image4.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image5.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image6.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image7.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image8.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image9.png">
 
 <h2>See Also</h2>
 <ul>
    <li><a href="https://en.wikipedia.org/wiki/L-system" target="_blank">https://en.wikipedia.org/wiki/L-system</a></li>
 </ul>
+</div>
