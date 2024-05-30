@@ -57,14 +57,6 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
 </script>
 ```
 
-```html
-<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.min.js"></script>
-<!-- or as ES module for use in scripts -->
-<script type="module">
-import X3D from "https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.min.mjs";
-</script>
-```
-
 ### UNPKG CDN
 
 ```html
