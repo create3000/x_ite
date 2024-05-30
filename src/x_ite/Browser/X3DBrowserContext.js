@@ -361,6 +361,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       X3DScriptingContext            .prototype .dispose ?.call (this);
       X3DRoutingContext              .prototype .dispose ?.call (this);
       X3DBaseNode                    .prototype .dispose ?.call (this);
+
+      this .getContext () .getExtension ("WEBGL_lose_context") ?.loseContext ();
    },
 });
 
