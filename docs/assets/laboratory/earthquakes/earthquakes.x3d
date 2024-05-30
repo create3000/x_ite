@@ -7,11 +7,9 @@
     <component name='Geospatial' level='2'/>
     <component name='Layering' level='1'/>
     <component name='Layout' level='2'/>
-    <meta name='comment' content='Rise and Shine'/>
     <meta name='created' content='Tue, 09 Jul 2019 09:37:20 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.15, https://create3000.github.io/sunrize/'/>
-    <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/media/docs/laboratory/earthquakes/earthquakes.x3d'/>
     <meta name='modified' content='Wed, 29 May 2024 17:41:23 GMT'/>
   </head>
   <Scene>
