@@ -10,7 +10,7 @@
     <meta name='created' content='Tue, 09 Jul 2019 09:37:20 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.6.15, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Wed, 29 May 2024 17:41:23 GMT'/>
+    <meta name='modified' content='Fri, 31 May 2024 04:50:31 GMT'/>
   </head>
   <Scene>
     <WorldInfo/>
@@ -27,8 +27,8 @@
               <ImageTexture
                   url='"assets/17345.jpg"'/>
             </Appearance>
-            <Rectangle2D DEF='_2'
-                size='1 1'/>
+            <Rectangle2D
+                size='2 1'/>
           </Shape>
         </Transform>
       </LayoutLayer>
@@ -157,7 +157,8 @@
                       diffuseColor='0 0 0'
                       transparency='0.3'/>
                 </Appearance>
-                <Rectangle2D USE='_2'/>
+                <Rectangle2D DEF='_2'
+                    size='1 1'/>
               </Shape>
             </Transform>
             <Transform DEF='LoadingArrow'
