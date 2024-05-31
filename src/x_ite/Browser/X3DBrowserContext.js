@@ -79,6 +79,7 @@ const
    _limitFrameRate  = Symbol (),
    _traverse        = Symbol (),
    _renderCallback  = Symbol (),
+   _animFrame       = Symbol (),
    _previousTime    = Symbol (),
    _systemTime      = Symbol (),
    _browserTime     = Symbol (),
@@ -231,9 +232,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       if (this [_tainted])
          return;
 
-      this [_tainted] = true;
-
-      requestAnimationFrame (this [_renderCallback]);
+      this [_tainted]   = true;
+      this [_animFrame] = requestAnimationFrame (this [_renderCallback]);
    },
    [_limitFrameRate] (now)
    {
@@ -361,6 +361,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       X3DScriptingContext            .prototype .dispose ?.call (this);
       X3DRoutingContext              .prototype .dispose ?.call (this);
       X3DBaseNode                    .prototype .dispose ?.call (this);
+
+      this [_tainted] = true;
+
+      cancelAnimationFrame (this [_animFrame]);
 
       this .getContext () .getExtension ("WEBGL_lose_context") ?.loseContext ();
    },
