@@ -186,10 +186,16 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          target = this [_target],
          value  = target .getValue ();
 
-      if (value)
-         return new SFNode (instance ? value .copy (instance) : value);
+      if (value && instance)
+      {
+         const copy = value .copy (instance);
 
-      return new SFNode ();
+         copy .setup ();
+
+         return new SFNode (copy);
+      }
+
+      return new SFNode (value);
    },
    equals (node)
    {
