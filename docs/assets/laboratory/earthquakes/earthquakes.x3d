@@ -10,7 +10,7 @@
     <meta name='created' content='Tue, 09 Jul 2019 09:37:20 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 02 Jun 2024 16:35:48 GMT'/>
+    <meta name='modified' content='Sun, 02 Jun 2024 16:57:53 GMT'/>
   </head>
   <Scene>
     <WorldInfo/>
@@ -23,7 +23,8 @@
         <Transform DEF='Rectangle2D'>
           <Shape>
             <Appearance>
-              <Material/>
+              <UnlitMaterial
+                  emissiveColor='0.7372549 0.7372549 0.7372549'/>
               <ImageTexture
                   url='"assets/17345.jpg"'/>
             </Appearance>
