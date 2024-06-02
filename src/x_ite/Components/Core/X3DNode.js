@@ -92,6 +92,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                copy .addUserDefinedField (field .getAccessType (), field .getName (), field .copy ());
          }
 
+         copy .setup ();
+
          return copy;
       }
       else
