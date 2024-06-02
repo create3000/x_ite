@@ -286,6 +286,26 @@ declare class X3DBrowser
     * Prints *args* to the browser’s console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object’s `toString ()` function.
     */
    printLn (... args: any []): void;
+   /**
+    * Returns the X3D VRML-encoded string of current scene that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+    */
+   toVRMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D XML-encoded string of current scene that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+    *
+    * For *options* see `X3DScene.toVRMLString`.
+    */
+   toXMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D JSON-encoded string of current scene that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+    *
+    * For *options* see `X3DScene.toVRMLString`.
+    */
+   toJSONString (options?: ToStringOptions): string;
+   /**
+    * Disposes this object.
+    */
+   dispose (): void;
 
    // VRML methods
 
