@@ -9,8 +9,8 @@
     <component name='Layout' level='2'/>
     <meta name='created' content='Tue, 09 Jul 2019 09:37:20 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.6.15, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 31 May 2024 04:50:31 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.0, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sun, 02 Jun 2024 16:35:48 GMT'/>
   </head>
   <Scene>
     <WorldInfo/>
@@ -47,10 +47,12 @@
         <Transform DEF='Earth'>
           <Shape>
             <Appearance>
-              <Material
-                  diffuseColor='1 1 1'/>
-              <ImageTexture
-                  url='"assets/world.topo.bathy.jpg"'/>
+              <PhysicalMaterial
+                  metallic='0'
+                  roughness='0.2990869'>
+                <ImageTexture containerField='baseTexture'
+                    url='"assets/world.topo.bathy.jpg"'/>
+              </PhysicalMaterial>
             </Appearance>
             <GeoElevationGrid
                 geoGridOrigin='-90 180 0'
