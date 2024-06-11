@@ -49,6 +49,7 @@ import Components               from "../../x_ite/Components.js";
 import BlendMode                from "../../x_ite/Components/X_ITE/BlendMode.js";
 import DepthMode                from "../../x_ite/Components/X_ITE/DepthMode.js";
 import InstancedShape           from "../../x_ite/Components/X_ITE/InstancedShape.js";
+import SpecularExtension        from "../../x_ite/Components/X_ITE/SpecularExtension.js";
 import X3DMaterialExtensionNode from "../../x_ite/Components/X_ITE/X3DMaterialExtensionNode.js";
 
 Components .add ({
@@ -58,6 +59,7 @@ Components .add ({
       BlendMode,
       DepthMode,
       InstancedShape,
+      SpecularExtension,
    ],
    abstractNodes:
    [

@@ -45,23 +45,32 @@
  *
  ******************************************************************************/
 
-import X3DAppearanceChildNode from "../Shape/X3DAppearanceChildNode.js";
-import X3DConstants           from "../../Base/X3DConstants.js";
+import Fields                   from "../../Fields.js";
+import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
+import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
+import X3DConstants             from "../../Base/X3DConstants.js";
 
-function X3DMaterialExtensionNode (executionContext)
+function SpecularExtension (executionContext)
 {
-   X3DAppearanceChildNode .call (this, executionContext);
+   X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType (X3DConstants .X3DMaterialExtensionNode);
+   this .addType (X3DConstants .SpecularExtension);
 }
 
-Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, X3DAppearanceChildNode .prototype);
+Object .assign (Object .setPrototypeOf (SpecularExtension .prototype, X3DMaterialExtensionNode .prototype),
+{
+   initialize ()
+   {
+      X3DMaterialExtensionNode .prototype .initialize .call (this);
+   },
+});
 
-Object .defineProperties (X3DMaterialExtensionNode,
+Object .defineProperties (SpecularExtension,
 {
    typeName:
    {
-      value: "X3DMaterialExtensionNode",
+      value: "SpecularExtension",
       enumerable: true,
    },
    componentInfo:
@@ -69,6 +78,23 @@ Object .defineProperties (X3DMaterialExtensionNode,
       value: Object .freeze ({ name: "X_ITE", level: 1 }),
       enumerable: true,
    },
+   containerField:
+   {
+      value: "extensions",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
 });
 
-export default X3DMaterialExtensionNode;
+export default SpecularExtension;
