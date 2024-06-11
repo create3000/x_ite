@@ -1196,9 +1196,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
 
-      materialNode ._emissiveColor .r *= emissiveStrength;
-      materialNode ._emissiveColor .g *= emissiveStrength;
-      materialNode ._emissiveColor .b *= emissiveStrength;
+      materialNode ._emissiveStrength = emissiveStrength;
    },
    textureTransformObject (KHR_texture_transform, texCoord)
    {
