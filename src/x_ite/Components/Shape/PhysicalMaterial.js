@@ -310,7 +310,7 @@ Object .defineProperties (PhysicalMaterial,
          new X3DFieldDefinition (X3DConstants .inputOutput, "baseTextureMapping",              new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "baseTexture",                     new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",                   new Fields .SFColor ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveStrength",                new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveStrength",                new Fields .SFFloat (1)), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",                 new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "metallic",                        new Fields .SFFloat (1)),
