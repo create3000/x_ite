@@ -51,14 +51,14 @@ import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 
-function SpecularExtension (executionContext)
+function SpecularMaterialExtension (executionContext)
 {
    X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType (X3DConstants .SpecularExtension);
+   this .addType (X3DConstants .SpecularMaterialExtension);
 }
 
-Object .assign (Object .setPrototypeOf (SpecularExtension .prototype, X3DMaterialExtensionNode .prototype),
+Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
 {
    initialize ()
    {
@@ -66,11 +66,11 @@ Object .assign (Object .setPrototypeOf (SpecularExtension .prototype, X3DMateria
    },
 });
 
-Object .defineProperties (SpecularExtension,
+Object .defineProperties (SpecularMaterialExtension,
 {
    typeName:
    {
-      value: "SpecularExtension",
+      value: "SpecularMaterialExtension",
       enumerable: true,
    },
    componentInfo:
@@ -91,10 +91,16 @@ Object .defineProperties (SpecularExtension,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specularStrength",            new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specularTextureMapping",      new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specularTexture",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specularColor",               new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specularColorTextureMapping", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specularColorTexture",        new Fields .SFNode ()),
       ]),
       enumerable: true,
    },
 });
 
-export default SpecularExtension;
+export default SpecularMaterialExtension;

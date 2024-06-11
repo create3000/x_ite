@@ -188,8 +188,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          if (extensionNode)
             extensionNodes .push (extensionNode);
       }
-
-      console .log (extensionNodes .length)
    },
    createShader (key, geometryContext, renderContext)
    {
