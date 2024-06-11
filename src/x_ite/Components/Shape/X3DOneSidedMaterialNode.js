@@ -86,7 +86,7 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
       const
          emissiveColor     = this .emissiveColor,
          emissiveColor_    = this ._emissiveColor .getValue (),
-         emissiveStrength_ = this ._emissiveColor .getValue ();
+         emissiveStrength_ = this ._emissiveStrength .getValue ();
 
       emissiveColor [0] = emissiveColor_ .r * emissiveStrength_;
       emissiveColor [1] = emissiveColor_ .g * emissiveStrength_;
