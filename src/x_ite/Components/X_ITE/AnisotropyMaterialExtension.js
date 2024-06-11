@@ -45,40 +45,60 @@
  *
  ******************************************************************************/
 
-import Components                    from "../../x_ite/Components.js";
-import BlendMode                     from "../../x_ite/Components/X_ITE/BlendMode.js";
-import DepthMode                     from "../../x_ite/Components/X_ITE/DepthMode.js";
-import InstancedShape                from "../../x_ite/Components/X_ITE/InstancedShape.js";
-import AnisotropyMaterialExtension   from "../../x_ite/Components/X_ITE/AnisotropyMaterialExtension.js";
-import ClearcoatMaterialExtension    from "../../x_ite/Components/X_ITE/ClearcoatMaterialExtension.js";
-import IORMaterialExtension          from "../../x_ite/Components/X_ITE/IORMaterialExtension.js";
-import IridescenceMaterialExtension  from "../../x_ite/Components/X_ITE/IridescenceMaterialExtension.js";
-import SheenMaterialExtension        from "../../x_ite/Components/X_ITE/SheenMaterialExtension.js";
-import SpecularMaterialExtension     from "../../x_ite/Components/X_ITE/SpecularMaterialExtension.js";
-import TransmissionMaterialExtension from "../../x_ite/Components/X_ITE/TransmissionMaterialExtension.js";
-import VolumeMaterialExtension       from "../../x_ite/Components/X_ITE/VolumeMaterialExtension.js";
-import X3DMaterialExtensionNode      from "../../x_ite/Components/X_ITE/X3DMaterialExtensionNode.js";
+import Fields                   from "../../Fields.js";
+import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
+import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
+import X3DConstants             from "../../Base/X3DConstants.js";
 
-Components .add ({
-   name: "X_ITE",
-   concreteNodes:
-   [
-      BlendMode,
-      DepthMode,
-      InstancedShape,
-      AnisotropyMaterialExtension,
-      ClearcoatMaterialExtension,
-      IORMaterialExtension,
-      IridescenceMaterialExtension,
-      SheenMaterialExtension,
-      SpecularMaterialExtension,
-      TransmissionMaterialExtension,
-      VolumeMaterialExtension,
-   ],
-   abstractNodes:
-   [
-      X3DMaterialExtensionNode,
-   ],
+function AnisotropyMaterialExtension (executionContext)
+{
+   X3DMaterialExtensionNode .call (this, executionContext);
+
+   this .addType (X3DConstants .AnisotropyMaterialExtension);
+}
+
+Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
+{
+   initialize ()
+   {
+      X3DMaterialExtensionNode .prototype .initialize .call (this);
+   },
 });
 
-export default undefined;
+Object .defineProperties (AnisotropyMaterialExtension,
+{
+   typeName:
+   {
+      value: "AnisotropyMaterialExtension",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "extensions",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "anisotropyStrength",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "anisotropyRotation",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "anisotropyTextureMapping", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "anisotropyTexture",        new Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+export default AnisotropyMaterialExtension;

@@ -51,14 +51,14 @@ import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 
-function TransmissionMaterialExtension (executionContext)
+function IridescenceMaterialExtension (executionContext)
 {
    X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType (X3DConstants .TransmissionMaterialExtension);
+   this .addType (X3DConstants .IridescenceMaterialExtension);
 }
 
-Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
+Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
 {
    initialize ()
    {
@@ -66,11 +66,11 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    },
 });
 
-Object .defineProperties (TransmissionMaterialExtension,
+Object .defineProperties (IridescenceMaterialExtension,
 {
    typeName:
    {
-      value: "TransmissionMaterialExtension",
+      value: "IridescenceMaterialExtension",
       enumerable: true,
    },
    componentInfo:
@@ -91,14 +91,18 @@ Object .defineProperties (TransmissionMaterialExtension,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "transmission",               new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "transmissionTextureMapping", new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "transmissionTexture",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "dispersion",                 new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescence",                        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceTextureMapping",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceTexture",                 new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceIndexOfRefraction",       new Fields .SFFloat (1.3)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceThicknessMinimum",        new Fields .SFFloat (100)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceThicknessMaximum",        new Fields .SFFloat (400)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceThicknessTextureMapping", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceThicknessTexture",        new Fields .SFNode ()),
       ]),
       enumerable: true,
    },
 });
 
-export default TransmissionMaterialExtension;
+export default IridescenceMaterialExtension;
