@@ -192,7 +192,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       const extensionsKey = extensionNodes .map (extensionNode => extensionNode .getExtensionKey ()) .sort () .join ("")
 
-      this .materialKey = `3/${extensionsKey}`;
+      this .materialKey = `.3/${extensionsKey}.`;
    },
    createShader (key, geometryContext, renderContext)
    {
