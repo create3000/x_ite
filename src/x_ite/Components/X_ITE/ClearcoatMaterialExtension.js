@@ -51,14 +51,14 @@ import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 
-function SpecularMaterialExtension (executionContext)
+function ClearcoatMaterialExtension (executionContext)
 {
    X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType (X3DConstants .SpecularMaterialExtension);
+   this .addType (X3DConstants .ClearcoatMaterialExtension);
 }
 
-Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
+Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
 {
    initialize ()
    {
@@ -66,11 +66,11 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    },
 });
 
-Object .defineProperties (SpecularMaterialExtension,
+Object .defineProperties (ClearcoatMaterialExtension,
 {
    typeName:
    {
-      value: "SpecularMaterialExtension",
+      value: "ClearcoatMaterialExtension",
       enumerable: true,
    },
    componentInfo:
@@ -91,16 +91,18 @@ Object .defineProperties (SpecularMaterialExtension,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specular",                    new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specularTextureMapping",      new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specularTexture",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specularColor",               new Fields .SFColor (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specularColorTextureMapping", new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specularColorTexture",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "clearcoat",                        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "clearcoatTextureMapping",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "clearcoatTexture",                 new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "clearcoatRoughness",               new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "clearcoatRoughnessTextureMapping", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "clearcoatRoughnessTexture",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "clearcoatNormalTextureMapping",    new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "clearcoatNormalTexture",           new Fields .SFNode ()),
       ]),
       enumerable: true,
    },
 });
 
-export default SpecularMaterialExtension;
+export default ClearcoatMaterialExtension;

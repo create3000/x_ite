@@ -51,14 +51,14 @@ import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 
-function SpecularMaterialExtension (executionContext)
+function TransmissionMaterialExtension (executionContext)
 {
    X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType (X3DConstants .SpecularMaterialExtension);
+   this .addType (X3DConstants .TransmissionMaterialExtension);
 }
 
-Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
+Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
 {
    initialize ()
    {
@@ -66,11 +66,11 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    },
 });
 
-Object .defineProperties (SpecularMaterialExtension,
+Object .defineProperties (TransmissionMaterialExtension,
 {
    typeName:
    {
-      value: "SpecularMaterialExtension",
+      value: "TransmissionMaterialExtension",
       enumerable: true,
    },
    componentInfo:
@@ -91,16 +91,13 @@ Object .defineProperties (SpecularMaterialExtension,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specular",                    new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specularTextureMapping",      new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specularTexture",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specularColor",               new Fields .SFColor (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specularColorTextureMapping", new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specularColorTexture",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transmission",               new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transmissionTextureMapping", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transmissionTexture",        new Fields .SFNode ()),
       ]),
       enumerable: true,
    },
 });
 
-export default SpecularMaterialExtension;
+export default TransmissionMaterialExtension;
