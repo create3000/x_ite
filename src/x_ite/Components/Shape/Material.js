@@ -67,8 +67,8 @@ function Material (executionContext)
 
    // Private properties
 
-   this .diffuseColor  = new Float32Array (3);
-   this .specularColor = new Float32Array (3);
+   this .diffuseColorArray  = new Float32Array (3);
+   this .specularColorArray = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterialNode .prototype),
@@ -147,15 +147,15 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    set_diffuseColor__ ()
    {
       //We cannot use this in Windows Edge:
-      //this .diffuseColor .set (this ._diffuseColor .getValue ());
+      //this .diffuseColorArray .set (this ._diffuseColor .getValue ());
 
       const
-         diffuseColor  = this .diffuseColor,
-         diffuseColor_ = this ._diffuseColor .getValue ();
+         diffuseColorArray = this .diffuseColorArray,
+         diffuseColor      = this ._diffuseColor .getValue ();
 
-      diffuseColor [0] = diffuseColor_ .r;
-      diffuseColor [1] = diffuseColor_ .g;
-      diffuseColor [2] = diffuseColor_ .b;
+      diffuseColorArray [0] = diffuseColor .r;
+      diffuseColorArray [1] = diffuseColor .g;
+      diffuseColorArray [2] = diffuseColor .b;
    },
    set_diffuseTexture__ ()
    {
@@ -180,15 +180,15 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    set_specularColor__ ()
    {
       //We cannot use this in Windows Edge:
-      //this .specularColor .set (this ._specularColor .getValue ());
+      //this .specularColorArray .set (this ._specularColor .getValue ());
 
       const
-         specularColor  = this .specularColor,
-         specularColor_ = this ._specularColor .getValue ();
+         specularColorArray = this .specularColorArray,
+         specularColor      = this ._specularColor .getValue ();
 
-      specularColor [0] = specularColor_ .r;
-      specularColor [1] = specularColor_ .g;
-      specularColor [2] = specularColor_ .b;
+      specularColorArray [0] = specularColor .r;
+      specularColorArray [1] = specularColor .g;
+      specularColorArray [2] = specularColor .b;
    },
    set_specularTexture__ ()
    {
@@ -315,8 +315,8 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
       X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
       gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
-      gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);
-      gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
+      gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColorArray);
+      gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColorArray);
       gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
 
       if (+this .getTextureBits ())

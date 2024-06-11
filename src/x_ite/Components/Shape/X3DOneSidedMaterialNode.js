@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import Fields          from "../../Fields.js";
 import X3DMaterialNode from "./X3DMaterialNode.js";
 import X3DCast         from "../../Base/X3DCast.js";
 import X3DConstants    from "../../Base/X3DConstants.js";
@@ -57,7 +56,7 @@ function X3DOneSidedMaterialNode (executionContext)
 
    this .addType (X3DConstants .X3DOneSidedMaterialNode);
 
-   this .emissiveColor = new Float32Array (3);
+   this .emissiveColorArray = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DMaterialNode .prototype),
@@ -81,16 +80,16 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    set_emissiveColor__ ()
    {
       //We cannot use this in Windows Edge:
-      //this .emissiveColor .set (this ._emissiveColor .getValue ());
+      //this .emissiveColorArray .set (this ._emissiveColor .getValue ());
 
       const
-         emissiveColor     = this .emissiveColor,
-         emissiveColor_    = this ._emissiveColor .getValue (),
-         emissiveStrength_ = this ._emissiveStrength .getValue ();
+         emissiveColorArray = this .emissiveColorArray,
+         emissiveColor      = this ._emissiveColor .getValue (),
+         emissiveStrength   = this ._emissiveStrength .getValue ();
 
-      emissiveColor [0] = emissiveColor_ .r * emissiveStrength_;
-      emissiveColor [1] = emissiveColor_ .g * emissiveStrength_;
-      emissiveColor [2] = emissiveColor_ .b * emissiveStrength_;
+      emissiveColorArray [0] = emissiveColor .r * emissiveStrength;
+      emissiveColorArray [1] = emissiveColor .g * emissiveStrength;
+      emissiveColorArray [2] = emissiveColor .b * emissiveStrength;
    },
    set_emissiveTexture__ ()
    {
@@ -160,7 +159,7 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
+      gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColorArray);
       gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
 
       if (+this .getTextureBits ())

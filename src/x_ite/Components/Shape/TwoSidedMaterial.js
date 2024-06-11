@@ -61,13 +61,13 @@ function TwoSidedMaterial (executionContext)
 
    this .addType (X3DConstants .TwoSidedMaterial);
 
-   this .diffuseColor  = new Float32Array (3);
-   this .specularColor = new Float32Array (3);
-   this .emissiveColor = new Float32Array (3);
+   this .diffuseColorArray  = new Float32Array (3);
+   this .specularColorArray = new Float32Array (3);
+   this .emissiveColorArray = new Float32Array (3);
 
-   this .backDiffuseColor  = new Float32Array (3);
-   this .backSpecularColor = new Float32Array (3);
-   this .backEmissiveColor = new Float32Array (3);
+   this .backDiffuseColorArray  = new Float32Array (3);
+   this .backSpecularColorArray = new Float32Array (3);
+   this .backEmissiveColorArray = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterialNode .prototype),
@@ -117,41 +117,41 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterial
    set_diffuseColor__ ()
    {
       //We cannot use this in Windows Edge:
-      //this .diffuseColor .set (this ._diffuseColor .getValue ());
+      //this .diffuseColorArray .set (this ._diffuseColor .getValue ());
 
       const
-         diffuseColor  = this .diffuseColor,
-         diffuseColor_ = this ._diffuseColor .getValue ();
+         diffuseColorArray = this .diffuseColorArray,
+         diffuseColor      = this ._diffuseColor .getValue ();
 
-      diffuseColor [0] = diffuseColor_ .r;
-      diffuseColor [1] = diffuseColor_ .g;
-      diffuseColor [2] = diffuseColor_ .b;
+      diffuseColorArray [0] = diffuseColor .r;
+      diffuseColorArray [1] = diffuseColor .g;
+      diffuseColorArray [2] = diffuseColor .b;
    },
    set_specularColor__ ()
    {
       //We cannot use this in Windows Edge:
-      //this .specularColor .set (this ._specularColor .getValue ());
+      //this .specularColorArray .set (this ._specularColor .getValue ());
 
       const
-         specularColor  = this .specularColor,
-         specularColor_ = this ._specularColor .getValue ();
+         specularColorArray = this .specularColorArray,
+         specularColor      = this ._specularColor .getValue ();
 
-      specularColor [0] = specularColor_ .r;
-      specularColor [1] = specularColor_ .g;
-      specularColor [2] = specularColor_ .b;
+      specularColorArray [0] = specularColor .r;
+      specularColorArray [1] = specularColor .g;
+      specularColorArray [2] = specularColor .b;
    },
    set_emissiveColor__ ()
    {
       //We cannot use this in Windows Edge:
-      //this .emissiveColor .set (this ._emissiveColor .getValue ());
+      //this .emissiveColorArray .set (this ._emissiveColor .getValue ());
 
       const
-         emissiveColor  = this .emissiveColor,
-         emissiveColor_ = this ._emissiveColor .getValue ();
+         emissiveColorArray = this .emissiveColorArray,
+         emissiveColor      = this ._emissiveColor .getValue ();
 
-      emissiveColor [0] = emissiveColor_ .r;
-      emissiveColor [1] = emissiveColor_ .g;
-      emissiveColor [2] = emissiveColor_ .b;
+      emissiveColorArray [0] = emissiveColor .r;
+      emissiveColorArray [1] = emissiveColor .g;
+      emissiveColorArray [2] = emissiveColor .b;
    },
    set_shininess__ ()
    {
@@ -171,41 +171,41 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterial
    set_backDiffuseColor__ ()
    {
       //We cannot use this in Windows Edge:
-      //this .backDiffuseColor .set (this ._backDiffuseColor .getValue ());
+      //this .backDiffuseColorArray .set (this ._backDiffuseColor .getValue ());
 
       const
-         backDiffuseColor  = this .backDiffuseColor,
-         backDiffuseColor_ = this ._backDiffuseColor .getValue ();
+         backDiffuseColorArray = this .backDiffuseColorArray,
+         backDiffuseColor      = this ._backDiffuseColor .getValue ();
 
-      backDiffuseColor [0] = backDiffuseColor_ .r;
-      backDiffuseColor [1] = backDiffuseColor_ .g;
-      backDiffuseColor [2] = backDiffuseColor_ .b;
+      backDiffuseColorArray [0] = backDiffuseColor .r;
+      backDiffuseColorArray [1] = backDiffuseColor .g;
+      backDiffuseColorArray [2] = backDiffuseColor .b;
    },
    set_backSpecularColor__ ()
    {
       //We cannot use this in Windows Edge:
-      //this .backSpecularColor .set (this ._backSpecularColor .getValue ());
+      //this .backSpecularColorArray .set (this ._backSpecularColor .getValue ());
 
       const
-         backSpecularColor  = this .backSpecularColor,
-         backSpecularColor_ = this ._backSpecularColor .getValue ();
+         backSpecularColorArray = this .backSpecularColorArray,
+         backSpecularColor      = this ._backSpecularColor .getValue ();
 
-      backSpecularColor [0] = backSpecularColor_ .r;
-      backSpecularColor [1] = backSpecularColor_ .g;
-      backSpecularColor [2] = backSpecularColor_ .b;
+      backSpecularColorArray [0] = backSpecularColor .r;
+      backSpecularColorArray [1] = backSpecularColor .g;
+      backSpecularColorArray [2] = backSpecularColor .b;
    },
    set_backEmissiveColor__ ()
    {
       //We cannot use this in Windows Edge:
-      //this .backEmissiveColor .set (this ._backEmissiveColor .getValue ());
+      //this .backEmissiveColorArray .set (this ._backEmissiveColor .getValue ());
 
       const
-         backEmissiveColor  = this .backEmissiveColor,
-         backEmissiveColor_ = this ._backEmissiveColor .getValue ();
+         backEmissiveColorArray = this .backEmissiveColorArray,
+         backEmissiveColor      = this ._backEmissiveColor .getValue ();
 
-      backEmissiveColor [0] = backEmissiveColor_ .r;
-      backEmissiveColor [1] = backEmissiveColor_ .g;
-      backEmissiveColor [2] = backEmissiveColor_ .b;
+      backEmissiveColorArray [0] = backEmissiveColor .r;
+      backEmissiveColorArray [1] = backEmissiveColor .g;
+      backEmissiveColorArray [2] = backEmissiveColor .b;
    },
    set_backShininess__ ()
    {
@@ -224,21 +224,21 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterial
    createShader: Material .prototype .createShader,
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, front)
    {
-      if (! front && this ._separateBackColor .getValue ())
+      if (!front && this ._separateBackColor .getValue ())
       {
          gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .backAmbientIntensity);
-         gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .backDiffuseColor);
-         gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .backSpecularColor);
-         gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .backEmissiveColor);
+         gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .backDiffuseColorArray);
+         gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .backSpecularColorArray);
+         gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .backEmissiveColorArray);
          gl .uniform1f  (shaderObject .x3d_Shininess,        this .backShininess);
          gl .uniform1f  (shaderObject .x3d_Transparency,     this .backTransparency);
       }
       else
       {
          gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
-         gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);
-         gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
-         gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .emissiveColor);
+         gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColorArray);
+         gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColorArray);
+         gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .emissiveColorArray);
          gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
          gl .uniform1f  (shaderObject .x3d_Transparency,     this .transparency);
       }

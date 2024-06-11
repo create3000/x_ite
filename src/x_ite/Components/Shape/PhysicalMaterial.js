@@ -59,7 +59,7 @@ function PhysicalMaterial (executionContext)
 
    this .addType (X3DConstants .PhysicalMaterial);
 
-   this .baseColor = new Float32Array (3);
+   this .baseColorArray = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSidedMaterialNode .prototype),
@@ -114,15 +114,15 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    set_baseColor__ ()
    {
       //We cannot use this in Windows Edge:
-      //this .baseColor .set (this ._baseColor .getValue ());
+      //this .baseColorArray .set (this ._baseColor .getValue ());
 
       const
-         baseColor  = this .baseColor,
-         baseColor_ = this ._baseColor .getValue ();
+         baseColorArray = this .baseColorArray,
+         baseColor      = this ._baseColor .getValue ();
 
-      baseColor [0] = baseColor_ .r;
-      baseColor [1] = baseColor_ .g;
-      baseColor [2] = baseColor_ .b;
+      baseColorArray [0] = baseColor .r;
+      baseColorArray [1] = baseColor .g;
+      baseColorArray [2] = baseColor .b;
    },
    set_baseTexture__ ()
    {
@@ -227,7 +227,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    {
       X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
-      gl .uniform3fv (shaderObject .x3d_BaseColor, this .baseColor);
+      gl .uniform3fv (shaderObject .x3d_BaseColor, this .baseColorArray);
       gl .uniform1f  (shaderObject .x3d_Metallic,  this .metallic);
       gl .uniform1f  (shaderObject .x3d_Roughness, this .roughness);
 
