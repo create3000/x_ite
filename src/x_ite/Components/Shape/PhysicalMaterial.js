@@ -60,6 +60,7 @@ function PhysicalMaterial (executionContext)
    this .addType (X3DConstants .PhysicalMaterial);
 
    this .baseColorArray = new Float32Array (3);
+   this .extensionNodes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSidedMaterialNode .prototype),
@@ -76,6 +77,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       this ._metallicRoughnessTexture .addInterest ("set_metallicRoughnessTexture__", this);
       this ._occlusionStrength        .addInterest ("set_occlusionStrength__",        this);
       this ._occlusionTexture         .addInterest ("set_occlusionTexture__",         this);
+      this ._extensions               .addInterest ("set_extensions__",               this);
 
       this .set_baseColor__ ();
       this .set_baseTexture__ ();
@@ -85,6 +87,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       this .set_occlusionStrength__ ();
       this .set_occlusionTexture__ ();
       this .set_transparent__ ();
+      this .set_extensions__ ();
    },
    getMaterialKey ()
    {
@@ -171,6 +174,22 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    set_transparent__ ()
    {
       this .setTransparent (this .getTransparency () || this .baseTextureNode ?.isTransparent ());
+   },
+   set_extensions__ ()
+   {
+      const extensionNodes = this .extensionNodes;
+
+      extensionNodes .length = 0;
+
+      for (const node of this ._extensions)
+      {
+         const extensionNode = X3DCast (X3DConstants .X3DMaterialExtensionNode, node);
+
+         if (extensionNode)
+            extensionNodes .push (extensionNode);
+      }
+
+
    },
    createShader (key, geometryContext, renderContext)
    {
@@ -324,6 +343,7 @@ Object .defineProperties (PhysicalMaterial,
          new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",            new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",                   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",                    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "extensions",                      new Fields .MFNode ()),
       ]),
       enumerable: true,
    },
