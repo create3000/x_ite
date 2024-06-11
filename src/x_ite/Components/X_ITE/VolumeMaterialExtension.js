@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
    },
    getExtensionKey ()
    {
-      return 7;
+      return 8;
    },
 });
 

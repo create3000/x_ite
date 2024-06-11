@@ -190,7 +190,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
             extensionNodes .push (extensionNode);
       }
 
-      const extensionsKey = extensionNodes .map (extensionNode => extensionNode .getExtensionKey ()) .sort () .join ("")
+      const extensionsKey = extensionNodes .map (extensionNode => extensionNode .getExtensionKey ()) .sort () .join ("");
 
       this .materialKey = `.3/${extensionsKey}.`;
    },

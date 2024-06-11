@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    },
    getExtensionKey ()
    {
-      return 6;
+      return 7;
    },
 });
 

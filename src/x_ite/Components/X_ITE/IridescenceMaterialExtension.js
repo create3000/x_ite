@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    },
    getExtensionKey ()
    {
-      return 3;
+      return 4;
    },
 });
 

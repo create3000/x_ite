@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    },
    getExtensionKey ()
    {
-      return 5;
+      return 6;
    },
 });
 
