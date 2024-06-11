@@ -64,6 +64,10 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X3DMate
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
    },
+   getExtensionKey ()
+   {
+      return 2;
+   },
 });
 
 Object .defineProperties (IORMaterialExtension,

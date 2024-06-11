@@ -64,6 +64,10 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
    },
+   getExtensionKey ()
+   {
+      return 0;
+   },
 });
 
 Object .defineProperties (AnisotropyMaterialExtension,

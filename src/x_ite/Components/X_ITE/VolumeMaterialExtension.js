@@ -64,6 +64,10 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
    },
+   getExtensionKey ()
+   {
+      return 7;
+   },
 });
 
 Object .defineProperties (VolumeMaterialExtension,

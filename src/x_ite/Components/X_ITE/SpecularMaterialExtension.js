@@ -64,6 +64,10 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
    },
+   getExtensionKey ()
+   {
+      return 5;
+   },
 });
 
 Object .defineProperties (SpecularMaterialExtension,

@@ -64,6 +64,10 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
    },
+   getExtensionKey ()
+   {
+      return 6;
+   },
 });
 
 Object .defineProperties (TransmissionMaterialExtension,

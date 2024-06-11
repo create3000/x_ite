@@ -64,6 +64,10 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
    },
+   getExtensionKey ()
+   {
+      return 1;
+   },
 });
 
 Object .defineProperties (ClearcoatMaterialExtension,

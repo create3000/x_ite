@@ -64,6 +64,10 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
    },
+   getExtensionKey ()
+   {
+      return 3;
+   },
 });
 
 Object .defineProperties (IridescenceMaterialExtension,

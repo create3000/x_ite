@@ -64,6 +64,10 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
    },
+   getExtensionKey ()
+   {
+      return 4;
+   },
 });
 
 Object .defineProperties (SheenMaterialExtension,
