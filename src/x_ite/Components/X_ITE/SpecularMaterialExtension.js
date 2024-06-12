@@ -50,6 +50,7 @@ import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
+import X3DCast                  from "../../Base/X3DCast.js";
 
 function SpecularMaterialExtension (executionContext)
 {
@@ -70,6 +71,11 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
       this ._specularTexture      .addInterest ("set_specularTexture__",      this);
       this ._specularColor        .addInterest ("set_specularColor__",        this);
       this ._specularColorTexture .addInterest ("set_specularColorTexture__", this);
+
+      this .set_specular__ ();
+      this .set_specularTexture__ ();
+      this .set_specularColor__ ();
+      this .set_specularColorTexture__ ();
    },
    getExtensionKey ()
    {
@@ -117,7 +123,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f  (shaderObject .x3d_SpecularEXT,      this .specular);
-      gl .uniform3fv (shaderObject .x3d_SpecularColorEXT, this .specularColor);
+      gl .uniform3fv (shaderObject .x3d_SpecularColorEXT, this .specularColorArray);
 
       if (+this .getTextureBits ())
       {
@@ -127,7 +133,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
          {
             const
                specularTextureMapping = this ._specularTextureMapping .getValue (),
-               specularTexture        = shaderObject .x3d_SpecularTexture;
+               specularTexture        = shaderObject .x3d_SpecularTextureEXT;
 
             this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularTexture);
 
@@ -141,7 +147,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
          {
             const
                specularColorTextureMapping = this ._specularColorTextureMapping .getValue (),
-               specularColorTexture        = shaderObject .x3d_SpecularColorTexture;
+               specularColorTexture        = shaderObject .x3d_SpecularColorTextureEXT;
 
             this .specularColorTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularColorTexture);
 

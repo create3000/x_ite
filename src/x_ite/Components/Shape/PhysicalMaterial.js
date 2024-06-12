@@ -266,6 +266,9 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    {
       X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
+      for (const extensionNode of this .extensionNodes)
+         extensionNode .setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+
       gl .uniform3fv (shaderObject .x3d_BaseColor, this .baseColorArray);
       gl .uniform1f  (shaderObject .x3d_Metallic,  this .metallic);
       gl .uniform1f  (shaderObject .x3d_Roughness, this .roughness);

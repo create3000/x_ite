@@ -219,15 +219,16 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       const materialTextures = [
          "x3d_AmbientTexture",
-         "x3d_BaseTexture",
          "x3d_DiffuseTexture",
-         "x3d_EmissiveTexture",
-         "x3d_MetallicRoughnessTexture",
-         "x3d_NormalTexture",
-         "x3d_OcclusionTexture",
-         "x3d_ShininessTexture",
-         "x3d_SpecularColorTexture",
          "x3d_SpecularTexture",
+         "x3d_EmissiveTexture",
+         "x3d_ShininessTexture",
+         "x3d_BaseTexture",
+         "x3d_MetallicRoughnessTexture",
+         "x3d_OcclusionTexture",
+         "x3d_NormalTexture",
+         "x3d_SpecularTextureEXT",
+         "x3d_SpecularColorTextureEXT",
       ];
 
       for (const materialTexture of materialTextures)
