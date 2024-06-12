@@ -72,7 +72,7 @@ How much glowing light is emitted from this object.
 
 - Bright *emissiveColor* values can wash out other colors and some textures.
 
-### SFFloat [in, out] **emissiveStrength** 1 <small>[0,∞)</small>
+### SFFloat [in, out] **emissiveStrength** 1 <small>[0,∞)</small> <small class="yellow">non standard</small>
 
 A scalar factor, that governs the upper limit of emissive strength per material.
 
