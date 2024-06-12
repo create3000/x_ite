@@ -340,6 +340,7 @@ const Bookmarks = (() =>
          specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/symmetrical_garden_1k-specular.png");
          specularTexture .textureProperties = textureProperties;
 
+         environmentLight .intensity       = 1;
          environmentLight .color           = new X3D .SFColor (0.9764706, 0.7960784, 0.6117647);
          environmentLight .rotation        = new X3D .SFRotation (0, 1, 0, Math .PI / 2);
          environmentLight .diffuseTexture  = diffuseTexture;
