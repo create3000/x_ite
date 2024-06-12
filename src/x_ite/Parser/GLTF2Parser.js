@@ -2209,7 +2209,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    createMultiTextureTransform (materialNode)
    {
-      if (!+materialNode .getTextureBits ())
+      if (!(+materialNode .getTextureBits () ||
+             materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ())))
          return null;
 
       const textureTransformNodes = this .textureTransformNodes
