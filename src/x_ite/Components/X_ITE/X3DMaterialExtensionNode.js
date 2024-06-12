@@ -45,20 +45,20 @@
  *
  ******************************************************************************/
 
-import X3DAppearanceChildNode from "../Shape/X3DAppearanceChildNode.js";
-import X3DConstants           from "../../Base/X3DConstants.js";
-import BitSet                 from "../../../standard/Utility/BitSet.js";
+import X3DNode      from "../Core/X3DNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import BitSet       from "../../../standard/Utility/BitSet.js";
 
 function X3DMaterialExtensionNode (executionContext)
 {
-   X3DAppearanceChildNode .call (this, executionContext);
+   X3DNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DMaterialExtensionNode);
 
    this .textureBits = new BitSet ();
 }
 
-Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, X3DNode .prototype),
 {
    setTexture (index, textureNode)
    {
