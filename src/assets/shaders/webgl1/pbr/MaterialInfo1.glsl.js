@@ -226,4 +226,75 @@ getOcclusionFactor ()
       return 1.0;
    #endif
 }
+
+#if defined (X3D_SPECULAR_MATERIAL_EXT)
+#if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE)
+uniform x3d_SpecularTextureParametersEXT x3d_SpecularTextureEXT;
+
+float
+getSpecularEXT ()
+{
+   // Get texture color.
+
+   vec3 texCoord = getTexCoord (x3d_SpecularTextureEXT .textureTransformMapping, x3d_SpecularTextureEXT .textureCoordinateMapping);
+
+   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_FLIP_Y)
+      texCoord .t = 1.0 - texCoord .t;
+   #endif
+
+   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_2D)
+      return texture2D (x3d_SpecularTextureEXT .texture2D, texCoord .st) .a;
+   #elif defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_CUBE)
+      return textureCube (x3d_SpecularTextureEXT .textureCube, texCoord) .a;
+   #endif
+}
+#endif
+
+#if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE)
+uniform x3d_SpecularColorTextureParametersEXT x3d_SpecularColorTextureEXT;
+
+vec3
+getSpecularColorEXT ()
+{
+   // Get texture color.
+
+   vec3 texCoord = getTexCoord (x3d_SpecularColorTextureEXT .textureTransformMapping, x3d_SpecularColorTextureEXT .textureCoordinateMapping);
+
+   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_FLIP_Y)
+      texCoord .t = 1.0 - texCoord .t;
+   #endif
+
+   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_2D)
+      return texture2D (x3d_SpecularColorTextureEXT .texture2D, texCoord .st) .rgb;
+   #elif defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_CUBE)
+      return textureCube (x3d_SpecularColorTextureEXT .textureCube, texCoord) .rgb;
+   #endif
+}
+#endif
+
+uniform float x3d_SpecularEXT;
+uniform vec3  x3d_SpecularColorEXT;
+
+MaterialInfo
+getSpecularInfo (in MaterialInfo info)
+{
+   vec4 specularTexture = vec4 (1.0);
+
+   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE)
+      specularTexture .a = getSpecularEXT ();
+   #endif
+
+   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE)
+      specularTexture .rgb = getSpecularColorEXT ();
+   #endif
+
+   vec3 dielectricSpecularF0 = min (info .f0 * x3d_SpecularColorEXT * specularTexture .rgb, vec3 (1.0));
+
+   info .f0             = mix (dielectricSpecularF0, info .baseColor .rgb, info .metallic);
+   info .specularWeight = x3d_SpecularEXT * specularTexture .a;
+   info .c_diff         = mix (info .baseColor .rgb, vec3 (0.0), info .metallic);
+
+   return info;
+}
+#endif
 `;

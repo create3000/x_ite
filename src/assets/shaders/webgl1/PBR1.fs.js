@@ -53,6 +53,10 @@ getMaterialColor ()
       materialInfo = getMetallicRoughnessInfo (materialInfo);
    #endif
 
+   #if defined (X3D_SPECULAR_MATERIAL_EXT)
+      materialInfo = getSpecularInfo (materialInfo);
+   #endif
+
    materialInfo .perceptualRoughness = clamp (materialInfo .perceptualRoughness, 0.0, 1.0);
    materialInfo .metallic            = clamp (materialInfo .metallic, 0.0, 1.0);
 
