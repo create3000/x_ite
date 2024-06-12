@@ -2595,9 +2595,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    })(),
    createMultiTextureCoordinate (texCoords, material)
    {
-      const appearanceNode = this .materialObject ({ material });
+      const
+         appearanceNode = this .materialObject ({ material }),
+         materialNode   = appearanceNode ._material .getValue ();
 
-      if (!+appearanceNode ._material .getValue () .getTextureBits ())
+      if (!(+materialNode .getTextureBits () ||
+             materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ())))
          return null;
 
       if (texCoords .textureCoordinateNode)
