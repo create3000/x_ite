@@ -45,10 +45,7 @@
  *
  ******************************************************************************/
 
-import Color3    from "./Color3.js";
-import Algorithm from "../Algorithm.js";
-
-const { clamp } = Algorithm;
+import Color3 from "./Color3.js";
 
 const
    _r = Symbol .for ("X_ITE.Color3.r"),
@@ -58,10 +55,10 @@ const
 
 function Color4 (r = 0, g = 0, b = 0, a = 0)
 {
-   this [_r] = clamp (r, 0, 1);
-   this [_g] = clamp (g, 0, 1);
-   this [_b] = clamp (b, 0, 1);
-   this [_a] = clamp (a, 0, 1);
+   this [_r] = Math .max (r, 0);
+   this [_g] = Math .max (g, 0);
+   this [_b] = Math .max (b, 0);
+   this [_a] = Math .max (a, 0);
 }
 
 Object .assign (Color4 .prototype,
@@ -92,10 +89,10 @@ Object .assign (Color4 .prototype,
    },
    set (r, g, b, a)
    {
-      this [_r] = clamp (r, 0, 1);
-      this [_g] = clamp (g, 0, 1);
-      this [_b] = clamp (b, 0, 1);
-      this [_a] = clamp (a, 0, 1);
+      this [_r] = Math .max (r, 0);
+      this [_g] = Math .max (g, 0);
+      this [_b] = Math .max (b, 0);
+      this [_a] = Math .max (a, 0);
       return this;
    },
    equals (color)
@@ -117,7 +114,7 @@ Object .assign (Color4 .prototype,
    {
       Color3 .prototype .setHSV .call (this, h, s, v);
 
-      this [_a] = clamp (a, 0, 1);
+      this [_a] = Math .max (a, 0);
 
       return this;
    },
@@ -135,22 +132,22 @@ for (const key of Object .keys (Color4 .prototype))
 
 const r = {
    get () { return this [_r]; },
-   set (value) { this [_r] = clamp (value, 0, 1); },
+   set (value) { this [_r] = Math .max (value, 0); },
 };
 
 const g = {
    get () { return this [_g]; },
-   set (value) { this [_g] = clamp (value, 0, 1); },
+   set (value) { this [_g] = Math .max (value, 0); },
 };
 
 const b = {
    get () { return this [_b]; },
-   set (value) { this [_b] = clamp (value, 0, 1); },
+   set (value) { this [_b] = Math .max (value, 0); },
 };
 
 const a = {
    get () { return this [_a]; },
-   set (value) { this [_a] = clamp (value, 0, 1); },
+   set (value) { this [_a] = Math .max (value, 0); },
 };
 
 Object .defineProperties (Color4 .prototype,
