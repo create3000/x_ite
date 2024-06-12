@@ -89,9 +89,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       let key = "";
 
-      key += this .getMaterialKey ();
       key += this .textureBits .toString (16);
       key += ".";
+      key += this .getMaterialKey ();
       key += geometryContext .geometryKey;
 
       if (renderContext)

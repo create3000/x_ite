@@ -215,7 +215,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          options = this .getShaderOptions (geometryContext, renderContext);
 
       for (const extensionNode of this .extensionNodes)
-         extensionNode .getShaderOptions (options, geometryContext, renderContext);
+         extensionNode .getShaderOptions (options);
 
       if (geometryContext .hasNormals)
       {
