@@ -55,6 +55,7 @@ import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack          from "../../../standard/Math/Utility/MatrixStack.js";
 import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
+import Matrix3 from "../../../standard/Math/Numbers/Matrix3.js";
 
 const EnvironmentLights = ObjectCache (EnvironmentLightContainer);
 
@@ -77,12 +78,19 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    renderShadowMap (renderObject)
    { },
-   setGlobalVariables (renderObject)
+   setGlobalVariables: (function ()
    {
-      this .modelViewMatrix .get () .get (null, this .rotation);
+      const negateX = new Matrix3 (-1, 0, 0, 0, 1, 0, 0, 0, 1);
 
-      this .rotation .multLeft (this .lightNode ._rotation .getValue ()) .getMatrix (this .rotationMatrix);
-   },
+      return function (renderObject)
+      {
+         this .modelViewMatrix .get () .get (null, this .rotation);
+
+         this .rotation .multLeft (this .lightNode ._rotation .getValue ()) .getMatrix (this .rotationMatrix);
+
+         Matrix3 .prototype .multLeft .call (this .rotationMatrix, negateX);
+      };
+   })(),
    setShaderUniforms (gl, shaderObject)
    {
       const
