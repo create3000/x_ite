@@ -248,9 +248,9 @@ getSpecularEXT ()
 
    vec3 texCoord = getTexCoord (x3d_SpecularTextureEXT .textureTransformMapping, x3d_SpecularTextureEXT .textureCoordinateMapping);
 
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_FLIP_Y)
-      texCoord .t = 1.0 - texCoord .t;
-   #endif
+   // #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_FLIP_Y)
+   //    texCoord .t = 1.0 - texCoord .t;
+   // #endif
 
    #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_2D)
       return texture (x3d_SpecularTextureEXT .texture2D, texCoord .st) .a;
@@ -272,9 +272,9 @@ getSpecularColorEXT ()
 
    vec3 texCoord = getTexCoord (x3d_SpecularColorTextureEXT .textureTransformMapping, x3d_SpecularColorTextureEXT .textureCoordinateMapping);
 
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_FLIP_Y)
-      texCoord .t = 1.0 - texCoord .t;
-   #endif
+   // #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_FLIP_Y)
+   //    texCoord .t = 1.0 - texCoord .t;
+   // #endif
 
    #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_2D)
       return texture (x3d_SpecularColorTextureEXT .texture2D, texCoord .st) .rgb;
