@@ -40,14 +40,26 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFColor [in, out] **sheenColor**
 
+Input/Output field *sheenColor*.
+
 ### SFString [in, out] **sheenColorTextureMapping**
+
+Input/Output field *sheenColorTextureMapping*.
 
 ### SFNode [in, out] **sheenColorTexture**
 
+Input/Output field *sheenColorTexture*.
+
 ### SFFloat [in, out] **sheenRoughness**
+
+Input/Output field *sheenRoughness*.
 
 ### SFString [in, out] **sheenRoughnessTextureMapping**
 
+Input/Output field *sheenRoughnessTextureMapping*.
+
 ### SFNode [in, out] **sheenRoughnessTexture**
+
+Input/Output field *sheenRoughnessTexture*.
 
 ## See Also

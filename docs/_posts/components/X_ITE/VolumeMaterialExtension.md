@@ -40,12 +40,22 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **thickness**
 
+Input/Output field *thickness*.
+
 ### SFString [in, out] **thicknessTextureMapping**
+
+Input/Output field *thicknessTextureMapping*.
 
 ### SFNode [in, out] **thicknessTexture**
 
+Input/Output field *thicknessTexture*.
+
 ### SFFloat [in, out] **attenuationDistance**
 
+Input/Output field *attenuationDistance*.
+
 ### SFColor [in, out] **attenuationColor**
+
+Input/Output field *attenuationColor*.
 
 ## See Also

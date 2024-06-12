@@ -41,27 +41,15 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### MFVec3f [in, out] **translations** [ ] <small>(-∞,∞)</small>
 
-List of translations, one for each instance.
-
-#### Hint
-
-- If only one value is provided, it is provided to each instance equivalently.
+Input/Output field *translations*.
 
 ### MFRotation [in, out] **rotations** [ ] <small>(-∞,∞) or [-1,1]</small>
 
-List of rotations, one for each instance.
-
-#### Hint
-
-- If only one value is provided, it is provided to each instance equivalently.
+Input/Output field *rotations*.
 
 ### MFVec3f [in, out] **scales** [ ] <small>(-∞,∞)</small>
 
-List of scales, one for each instance.
-
-#### Hint
-
-- If only one value is provided, it is provided to each instance equivalently.
+Input/Output field *scales*.
 
 ### SFBool [in, out] **pointerEvents** TRUE <small class="yellow">non standard</small>
 
@@ -69,12 +57,7 @@ List of scales, one for each instance.
 
 ### SFBool [in, out] **castShadow** TRUE
 
-*castShadow* defines whether this Shape casts shadows as produced by lighting nodes.
-
-#### Hints
-
-- If the visible field is FALSE, then the Shape does not cast any shadows.
-- If prior X3D3 content is loaded into an X3D4 model, then legacy Shape nodes have shadows set to true.
+Input/Output field *castShadow*.
 
 ### SFBool [in, out] **visible** TRUE
 
@@ -116,11 +99,11 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ### SFNode [in, out] **appearance** NULL <small>[X3DAppearanceNode]</small>
 
-Single contained [Appearance](/x_ite/components/shape/appearance/) node that can specify visual attributes (such as material, texture, fillProperties and lineProperties) applied to corresponding geometry.
+Input/Output field *appearance*.
 
 ### SFNode [in, out] **geometry** NULL <small>[X3DGeometryNode]</small>
 
-Single contained *geometry* node that is rendered according to corresponding appearance.
+Input/Output field *geometry*.
 
 ## Advice
 

@@ -40,18 +40,34 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **clearcoat**
 
+Input/Output field *clearcoat*.
+
 ### SFString [in, out] **clearcoatTextureMapping**
+
+Input/Output field *clearcoatTextureMapping*.
 
 ### SFNode [in, out] **clearcoatTexture**
 
+Input/Output field *clearcoatTexture*.
+
 ### SFFloat [in, out] **clearcoatRoughness**
+
+Input/Output field *clearcoatRoughness*.
 
 ### SFString [in, out] **clearcoatRoughnessTextureMapping**
 
+Input/Output field *clearcoatRoughnessTextureMapping*.
+
 ### SFNode [in, out] **clearcoatRoughnessTexture**
+
+Input/Output field *clearcoatRoughnessTexture*.
 
 ### SFString [in, out] **clearcoatNormalTextureMapping**
 
+Input/Output field *clearcoatNormalTextureMapping*.
+
 ### SFNode [in, out] **clearcoatNormalTexture**
+
+Input/Output field *clearcoatNormalTexture*.
 
 ## See Also

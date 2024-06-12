@@ -37,11 +37,11 @@ The ImageTextureAtlas node belongs to the **Texturing3D** component and its defa
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../../core/metadataboolean), [MetadataDouble](../../core/metadatadouble), [MetadataFloat](../../core/metadatafloat), [MetadataInteger](../../core/metadatainteger), [MetadataString](../../core/metadatastring) or [MetadataSet](../../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **description** ""
 
@@ -57,8 +57,8 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hints
 
-- Allows author to design when [Inline](../../networking/inline) loading occurs via user interaction, event chains or scripting.
-- Use a separate [LoadSensor](../../networking/loadsensor) node to detect when loading is complete.
+- Allows author to design when [Inline](/x_ite/components/networking/inline/) loading occurs via user interaction, event chains or scripting.
+- Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
@@ -126,7 +126,7 @@ Whether to repeat texture along R axis from front to back.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 
-Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 
 ## Supported File Formats
 

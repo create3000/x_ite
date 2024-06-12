@@ -40,18 +40,34 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **iridescence**
 
+Input/Output field *iridescence*.
+
 ### SFString [in, out] **iridescenceTextureMapping**
+
+Input/Output field *iridescenceTextureMapping*.
 
 ### SFNode [in, out] **iridescenceTexture**
 
+Input/Output field *iridescenceTexture*.
+
 ### SFFloat [in, out] **iridescenceIndexOfRefraction**
+
+Input/Output field *iridescenceIndexOfRefraction*.
 
 ### SFFloat [in, out] **iridescenceThicknessMinimum**
 
+Input/Output field *iridescenceThicknessMinimum*.
+
 ### SFFloat [in, out] **iridescenceThicknessMaximum**
+
+Input/Output field *iridescenceThicknessMaximum*.
 
 ### SFString [in, out] **iridescenceThicknessTextureMapping**
 
+Input/Output field *iridescenceThicknessTextureMapping*.
+
 ### SFNode [in, out] **iridescenceThicknessTexture**
+
+Input/Output field *iridescenceThicknessTexture*.
 
 ## See Also

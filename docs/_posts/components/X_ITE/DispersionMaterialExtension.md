@@ -40,4 +40,6 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **dispersion**
 
+Input/Output field *dispersion*.
+
 ## See Also

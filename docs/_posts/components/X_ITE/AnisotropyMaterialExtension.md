@@ -40,10 +40,18 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **anisotropyStrength**
 
+Input/Output field *anisotropyStrength*.
+
 ### SFFloat [in, out] **anisotropyRotation**
+
+Input/Output field *anisotropyRotation*.
 
 ### SFString [in, out] **anisotropyTextureMapping**
 
+Input/Output field *anisotropyTextureMapping*.
+
 ### SFNode [in, out] **anisotropyTexture**
+
+Input/Output field *anisotropyTexture*.
 
 ## See Also

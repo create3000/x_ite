@@ -33,52 +33,31 @@ The DepthMode node belongs to the **X_ITE** component and its default container 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../../core/metadataboolean), [MetadataDouble](../../core/metadatadouble), [MetadataFloat](../../core/metadatafloat), [MetadataInteger](../../core/metadatainteger), [MetadataString](../../core/metadatastring) or [MetadataSet](../../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFVec2f [in, out] **polygonOffset** 0 0 <small>(-∞,∞)</small>
 
-Specifies the scale factors and units to calculate depth values.
-
-The offset is added before the depth test is performed and before the value is written into the depth buffer.
-
-The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0.
-
-The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0.
+Input/Output field *polygonOffset*.
 
 ### SFVec2f [in, out] **depthRange** 0 1 <small>[0,1]</small>
 
-Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.
-
-The first value is *zNear*, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0.
-
-The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1.
+Input/Output field *depthRange*.
 
 ### SFBool [in, out] **depthTest** TRUE
 
-Activates depth comparisons and updates to the depth buffer.
+Input/Output field *depthTest*.
 
 ### SFString [in, out] **depthFunction** "LESS_EQUAL" <small>["NEVER", "LESS", "EQUAL", "LESS_EQUAL", "GREATER", "NOT_EQUAL", "GREATER_EQUAL", "ALWAYS"]</small>
 
-Specifies a function that compares incoming pixel depth to the current depth buffer value.
-
-Must be one of the following symbolic constants:
-
-* NEVER
-* LESS
-* EQUAL
-* LESS_EQUAL
-* GREATER
-* NOT_EQUAL
-* GREATER_EQUAL
-* ALWAYS
+Input/Output field *depthFunction*.
 
 ### SFBool [in, out] **depthMask** TRUE
 
-Sets whether writing into the depth buffer is enabled or disabled.
+Input/Output field *depthMask*.
 
 ## Example
 

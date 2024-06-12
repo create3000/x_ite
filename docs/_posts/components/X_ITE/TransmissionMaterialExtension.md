@@ -40,10 +40,18 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **transmission**
 
+Input/Output field *transmission*.
+
 ### SFString [in, out] **transmissionTextureMapping**
+
+Input/Output field *transmissionTextureMapping*.
 
 ### SFNode [in, out] **transmissionTexture**
 
+Input/Output field *transmissionTexture*.
+
 ### SFFloat [in, out] **dispersion**
+
+Input/Output field *dispersion*.
 
 ## See Also

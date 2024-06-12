@@ -40,4 +40,6 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **indexOfRefraction**
 
+Input/Output field *indexOfRefraction*.
+
 ## See Also

@@ -71,9 +71,9 @@ sub node {
       @node = @node [0 .. (first_index { /^$/ } @node)];
 
       $file = update_node ($typeName, $componentName, \@node, $file, $source);
-      $file = update_field ($typeName, $_, \@node, $file, $source) foreach @fields;
    }
 
+   $file = update_field ($typeName, $_, \@node, $file, $source) foreach @fields;
    $file = reorder_sections ($file);
 
    open FILE, ">", $md;
@@ -465,6 +465,8 @@ sub update_field {
    }
    else
    {
+      say $name;
+
       $string .= "\n";
       $string .= ucfirst ($fieldDescription -> {$accessType} . "field *$name*.");
       $string .= "\n";

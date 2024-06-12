@@ -33,11 +33,11 @@ The EnvironmentLight node belongs to the **Lighting** component and its default 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a [MetadataBoolean](../../core/metadataboolean), [MetadataDouble](../../core/metadatadouble), [MetadataFloat](../../core/metadatafloat), [MetadataInteger](../../core/metadatainteger), [MetadataString](../../core/metadatastring) or [MetadataSet](../../core/metadataset) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **global** FALSE
 
@@ -45,7 +45,7 @@ Global lights illuminate all objects within their volume of lighting influence. 
 
 #### Warning
 
-- [DirectionalLight](../../lighting/directionallight) default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. [PointLight](../../lighting/pointlight) and [SpotLight](../../lighting/spotlight) default *global*=true since their effects are each limited by maximum radius value.
+- [DirectionalLight](/x_ite/components/lighting/directionallight/) default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. [PointLight](/x_ite/components/lighting/pointlight/) and [SpotLight](/x_ite/components/lighting/spotlight/) default *global*=true since their effects are each limited by maximum radius value.
 
 ### SFBool [in, out] **on** TRUE
 
@@ -65,15 +65,27 @@ Brightness of direct emission from the light.
 
 ### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
 
-Brightness of ambient (nondirectional background) emission from the light. Interchange profile hint: this field may be ignored, applying the default value regardless.
+Brightness of ambient (nondirectional background) emission from the light. Interchange profile
+
+#### Hint
+
+- This field may be ignored, applying the default value regardless.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
+Input/Output field *rotation*.
+
 ### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
+
+Input/Output field *diffuseTexture*.
 
 ### MFFloat [in, out] **diffuseCoefficients** [ ]
 
+Input/Output field *diffuseCoefficients*.
+
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
+
+Input/Output field *specularTexture*.
 
 ### SFBool [in, out] **shadows** FALSE
 

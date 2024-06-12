@@ -40,14 +40,26 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **specular**
 
+Input/Output field *specular*.
+
 ### SFString [in, out] **specularTextureMapping**
+
+Input/Output field *specularTextureMapping*.
 
 ### SFNode [in, out] **specularTexture**
 
+Input/Output field *specularTexture*.
+
 ### SFColor [in, out] **specularColor**
+
+Input/Output field *specularColor*.
 
 ### SFString [in, out] **specularColorTextureMapping**
 
+Input/Output field *specularColorTextureMapping*.
+
 ### SFNode [in, out] **specularColorTexture**
+
+Input/Output field *specularColorTexture*.
 
 ## See Also
