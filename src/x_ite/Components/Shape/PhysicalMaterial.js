@@ -366,7 +366,7 @@ Object .defineProperties (PhysicalMaterial,
          new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",            new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",                   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",                    new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "extensions",                      new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "extensions",                      new Fields .MFNode ()), // experimental
       ]),
       enumerable: true,
    },
