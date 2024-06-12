@@ -68,6 +68,13 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
    {
       return 5;
    },
+   getShaderOptions (options)
+   {
+
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+   },
 });
 
 Object .defineProperties (SheenMaterialExtension,

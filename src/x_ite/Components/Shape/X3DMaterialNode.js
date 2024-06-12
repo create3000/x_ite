@@ -89,6 +89,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       let key = "";
 
+      key += this .getMaterialKey ();
       key += this .textureBits .toString (16);
       key += ".";
       key += geometryContext .geometryKey;
@@ -98,7 +99,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, humanoidNode, objectsKeys } = renderContext;
 
          key += shapeNode .getAlphaMode ();
-         key += this .getMaterialKey ();
          key += renderObject .getRenderBits () .toString (32); // 5 Bits
          key += shadows ? 1 : 0;
          key += fogNode ?.getFogType () ?? 0;
@@ -120,7 +120,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          const { alphaMode, textureNode, objectsKeys } = geometryContext;
 
          key += alphaMode;
-         key += this .getMaterialKey ();
          key += "0000011.0.";
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";

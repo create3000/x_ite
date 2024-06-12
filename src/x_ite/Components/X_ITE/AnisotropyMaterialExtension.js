@@ -68,6 +68,13 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    {
       return 0;
    },
+   getShaderOptions (options)
+   {
+
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+   },
 });
 
 Object .defineProperties (AnisotropyMaterialExtension,

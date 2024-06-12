@@ -56,6 +56,8 @@ function SpecularMaterialExtension (executionContext)
    X3DMaterialExtensionNode .call (this, executionContext);
 
    this .addType (X3DConstants .SpecularMaterialExtension);
+
+   this .specularColorArray = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
@@ -63,10 +65,90 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    initialize ()
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._specular             .addInterest ("set_specular__",             this);
+      this ._specularTexture      .addInterest ("set_specularTexture__",      this);
+      this ._specularColor        .addInterest ("set_specularColor__",        this);
+      this ._specularColorTexture .addInterest ("set_specularColorTexture__", this);
    },
    getExtensionKey ()
    {
       return 6;
+   },
+   set_specular__ ()
+   {
+      this .specular = Math .max (this ._specular .getValue (), 0);
+   },
+   set_specularTexture__ ()
+   {
+      this .specularTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularTexture);
+
+      this .setTexture (0, this .specularTextureNode);
+   },
+   set_specularColor__ ()
+   {
+      //We cannot use this in Windows Edge:
+      //this .specularColorArray .set (this ._specularColor .getValue ());
+
+      const
+         specularColorArray = this .specularColorArray,
+         specularColor      = this ._specularColor .getValue ();
+
+      specularColorArray [0] = specularColor .r;
+      specularColorArray [1] = specularColor .g;
+      specularColorArray [2] = specularColor .b;
+   },
+   set_specularColorTexture__ ()
+   {
+      this .specularColorTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularColorTexture);
+
+      this .setTexture (1, this .specularColorTextureNode);
+   },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_SPECULAR_MATERIAL_EXT");
+
+      if (this .specularTextureNode)
+         options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE", `X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_${this .specularTextureNode .getTextureTypeString ()}`);
+
+      if (this .specularColorTextureNode)
+         options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE", `X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_${this .specularTextureNode .getTextureTypeString ()}`);
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+      gl .uniform1f  (shaderObject .x3d_SpecularEXT,      this .specular);
+      gl .uniform3fv (shaderObject .x3d_SpecularColorEXT, this .specularColor);
+
+      if (+this .getTextureBits ())
+      {
+         // Specular parameters
+
+         if (this .specularTextureNode)
+         {
+            const
+               specularTextureMapping = this ._specularTextureMapping .getValue (),
+               specularTexture        = shaderObject .x3d_SpecularTexture;
+
+            this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularTexture);
+
+            gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (specularTextureMapping) ?? 0);
+            gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularTextureMapping) ?? 0);
+         }
+
+         // Specular color parameters
+
+         if (this .specularColorTextureNode)
+         {
+            const
+               specularColorTextureMapping = this ._specularColorTextureMapping .getValue (),
+               specularColorTexture        = shaderObject .x3d_SpecularColorTexture;
+
+            this .specularColorTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularColorTexture);
+
+            gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (specularColorTextureMapping) ?? 0);
+            gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularColorTextureMapping) ?? 0);
+         }
+      }
    },
 });
 

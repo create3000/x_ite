@@ -68,6 +68,13 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    {
       return 4;
    },
+   getShaderOptions (options)
+   {
+
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+   },
 });
 
 Object .defineProperties (IridescenceMaterialExtension,

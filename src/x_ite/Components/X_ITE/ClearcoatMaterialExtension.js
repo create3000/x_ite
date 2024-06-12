@@ -68,6 +68,13 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    {
       return 1;
    },
+   getShaderOptions (options)
+   {
+
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+   },
 });
 
 Object .defineProperties (ClearcoatMaterialExtension,

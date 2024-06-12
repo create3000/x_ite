@@ -68,6 +68,13 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X3DMate
    {
       return 3;
    },
+   getShaderOptions (options)
+   {
+
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+   },
 });
 
 Object .defineProperties (IORMaterialExtension,

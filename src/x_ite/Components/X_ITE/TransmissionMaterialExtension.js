@@ -68,6 +68,13 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    {
       return 7;
    },
+   getShaderOptions (options)
+   {
+
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+   },
 });
 
 Object .defineProperties (TransmissionMaterialExtension,

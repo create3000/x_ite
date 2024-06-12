@@ -180,6 +180,9 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    {
       const extensionNodes = this .extensionNodes;
 
+      for (const extensionNode of extensionNodes)
+         extensionNode .removeInterest ("set_extensionsKey__", this);
+
       extensionNodes .length = 0;
 
       for (const node of this ._extensions)
@@ -190,15 +193,29 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
             extensionNodes .push (extensionNode);
       }
 
-      const extensionsKey = extensionNodes .map (extensionNode => extensionNode .getExtensionKey ()) .sort () .join ("");
+      extensionNodes .sort ((a, b) => a .getExtensionKey () - b .getExtensionKey ());
 
-      this .materialKey = `.3/${extensionsKey}.`;
+      for (const extensionNode of extensionNodes)
+         extensionNode .addInterest ("set_extensionsKey__", this);
+
+      this .set_extensionsKey__ ();
+   },
+   set_extensionsKey__ ()
+   {
+      const extensionsKey = this .extensionNodes
+         .map (extensionNode => `${extensionNode .getExtensionKey ()}${extensionNode .getTextureBits () .toString (16)}`)
+         .join ("");
+
+      this .materialKey = `[3.${extensionsKey}]`;
    },
    createShader (key, geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),
          options = this .getShaderOptions (geometryContext, renderContext);
+
+      for (const extensionNode of this .extensionNodes)
+         extensionNode .getShaderOptions (options, geometryContext, renderContext);
 
       if (geometryContext .hasNormals)
       {
