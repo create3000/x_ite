@@ -214,8 +214,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_NormalScale       = gl .getUniformLocation (program, "x3d_Material.normalScale");
       this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
 
-      this .x3d_SpecularFactorEXT      = gl .getUniformLocation (program, "x3d_SpecularFactorEXT");
-      this .x3d_SpecularColorFactorEXT = gl .getUniformLocation (program, "x3d_SpecularColorFactorEXT");
+      this .x3d_SpecularEXT      = gl .getUniformLocation (program, "x3d_SpecularEXT");
+      this .x3d_SpecularColorEXT = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
 
       const materialTextures = [
          "x3d_AmbientTexture",

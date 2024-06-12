@@ -1183,15 +1183,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const specularMaterialExtension = this .getScene () .createNode ("SpecularMaterialExtension", false);
 
-      specularMaterialExtension ._specularFactor = this .numberValue (KHR_materials_specular .specularFactor, 1);
-
+      specularMaterialExtension ._specular               = this .numberValue (KHR_materials_specular .specularFactor, 1);
       specularMaterialExtension ._specularTexture        = this .textureInfo (KHR_materials_specular .specularTexture);
       specularMaterialExtension ._specularTextureMapping = this .textureMapping (KHR_materials_specular .specularTexture);
 
-      const specularColorFactor = new Vector3 ();
+      const specularColorFactor = new Color3 ();
 
       if (this .vectorValue (KHR_materials_specular .specularColorFactor, specularColorFactor))
-         specularMaterialExtension ._specularColorFactor = specularColorFactor;
+         specularMaterialExtension ._specularColor = specularColorFactor;
 
       specularMaterialExtension ._specularColorTexture        = this .textureInfo (KHR_materials_specular .specularColorTexture);
       specularMaterialExtension ._specularColorTextureMapping = this .textureMapping (KHR_materials_specular .specularColorTexture);

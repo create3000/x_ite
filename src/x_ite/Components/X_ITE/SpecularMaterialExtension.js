@@ -58,7 +58,7 @@ function SpecularMaterialExtension (executionContext)
 
    this .addType (X3DConstants .SpecularMaterialExtension);
 
-   this .specularColorFactorArray = new Float32Array (3);
+   this .specularColorArray = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
@@ -67,23 +67,23 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
 
-      this ._specularFactor       .addInterest ("set_specularFactor__",             this);
+      this ._specular             .addInterest ("set_specular__",             this);
       this ._specularTexture      .addInterest ("set_specularTexture__",      this);
-      this ._specularColorFactor  .addInterest ("set_specularColorFactor__",        this);
+      this ._specularColor        .addInterest ("set_specularColor__",        this);
       this ._specularColorTexture .addInterest ("set_specularColorTexture__", this);
 
-      this .set_specularFactor__ ();
+      this .set_specular__ ();
       this .set_specularTexture__ ();
-      this .set_specularColorFactor__ ();
+      this .set_specularColor__ ();
       this .set_specularColorTexture__ ();
    },
    getExtensionKey ()
    {
       return 6;
    },
-   set_specularFactor__ ()
+   set_specular__ ()
    {
-      this .specularFactor = Math .max (this ._specularFactor .getValue (), 0);
+      this .specular = Math .max (this ._specular .getValue (), 0);
    },
    set_specularTexture__ ()
    {
@@ -91,18 +91,18 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
 
       this .setTexture (0, this .specularTextureNode);
    },
-   set_specularColorFactor__ ()
+   set_specularColor__ ()
    {
       //We cannot use this in Windows Edge:
-      //this .specularColorFactorArray .set (this ._specularColorFactor .getValue ());
+      //this .specularColorArray .set (this ._specularColor .getValue ());
 
       const
-         specularColorFactorArray = this .specularColorFactorArray,
-         specularColorFactor      = this ._specularColorFactor .getValue ();
+         specularColorArray = this .specularColorArray,
+         specularColor      = this ._specularColor .getValue ();
 
-      specularColorFactorArray [0] = Math .max (specularColorFactor .x, 0);
-      specularColorFactorArray [1] = Math .max (specularColorFactor .y, 0);
-      specularColorFactorArray [2] = Math .max (specularColorFactor .z, 0);
+      specularColorArray [0] = specularColor .r;
+      specularColorArray [1] = specularColor .g;
+      specularColorArray [2] = specularColor .b;
    },
    set_specularColorTexture__ ()
    {
@@ -133,8 +133,8 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      gl .uniform1f  (shaderObject .x3d_SpecularFactorEXT,      this .specularFactor);
-      gl .uniform3fv (shaderObject .x3d_SpecularColorFactorEXT, this .specularColorFactorArray);
+      gl .uniform1f  (shaderObject .x3d_SpecularEXT,      this .specular);
+      gl .uniform3fv (shaderObject .x3d_SpecularColorEXT, this .specularColorArray);
 
       if (+this .getTextureBits ())
       {
@@ -195,10 +195,10 @@ Object .defineProperties (SpecularMaterialExtension,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specularFactor",              new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specular",                    new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularTextureMapping",      new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularTexture",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specularColorFactor",         new Fields .SFVec3f (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specularColor",               new Fields .SFColor (1, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularColorTextureMapping", new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularColorTexture",        new Fields .SFNode ()),
       ]),

@@ -56,9 +56,9 @@ const
 
 function Color3 (r = 0, g = 0, b = 0)
 {
-   this [_r] = clamp (r, 0, 1);
-   this [_g] = clamp (g, 0, 1);
-   this [_b] = clamp (b, 0, 1);
+   this [_r] = Math .max (r, 0);
+   this [_g] = Math .max (g, 0);
+   this [_b] = Math .max (b, 0);
 }
 
 Object .assign (Color3 .prototype,
@@ -86,9 +86,9 @@ Object .assign (Color3 .prototype,
    },
    set (r, g, b)
    {
-      this [_r] = clamp (r, 0, 1);
-      this [_g] = clamp (g, 0, 1);
-      this [_b] = clamp (b, 0, 1);
+      this [_r] = Math .max (r, 0);
+      this [_g] = Math .max (g, 0);
+      this [_b] = Math .max (b, 0);
       return this;
    },
    equals (color)
@@ -101,8 +101,14 @@ Object .assign (Color3 .prototype,
    {
       let h, s, v;
 
-      const min = Math .min (this [_r], this [_g], this [_b]);
-      const max = Math .max (this [_r], this [_g], this [_b]);
+      const
+         r = clamp (this [_r], 0, 1),
+         g = clamp (this [_g], 0, 1),
+         b = clamp (this [_b], 0, 1);
+
+      const min = Math .min (r, g, b);
+      const max = Math .max (r, g, b);
+
       v = max; // value
 
       const delta = max - min;
@@ -111,12 +117,12 @@ Object .assign (Color3 .prototype,
       {
          s = delta / max; // s
 
-         if (this [_r] === max)
-            h =     (this [_g] - this [_b]) / delta;  // between yellow & magenta
-         else if (this [_g] === max)
-            h = 2 + (this [_b] - this [_r]) / delta;  // between cyan & yellow
+         if (r === max)
+            h =     (g - b) / delta;  // between yellow & magenta
+         else if (g === max)
+            h = 2 + (b - r) / delta;  // between cyan & yellow
          else
-            h = 4 + (this [_r] - this [_g]) / delta;  // between magenta & cyan
+            h = 4 + (r - g) / delta;  // between magenta & cyan
 
          h *= Math .PI / 3;  // radiants
          if (h < 0)
@@ -180,17 +186,17 @@ for (const key of Object .keys (Color3 .prototype))
 
 const r = {
    get () { return this [_r]; },
-   set (value) { this [_r] = clamp (value, 0, 1); },
+   set (value) { this [_r] = Math .max (value, 0); },
 };
 
 const g = {
    get () { return this [_g]; },
-   set (value) { this [_g] = clamp (value, 0, 1); },
+   set (value) { this [_g] = Math .max (value, 0); },
 };
 
 const b = {
    get () { return this [_b]; },
-   set (value) { this [_b] = clamp (value, 0, 1); },
+   set (value) { this [_b] = Math .max (value, 0); },
 };
 
 Object .defineProperties (Color3 .prototype,
