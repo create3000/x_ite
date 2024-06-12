@@ -51,6 +51,7 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DLightNode         from "./X3DLightNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
+import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack          from "../../../standard/Math/Utility/MatrixStack.js";
 import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
@@ -60,6 +61,8 @@ const EnvironmentLights = ObjectCache (EnvironmentLightContainer);
 function EnvironmentLightContainer ()
 {
    this .modelViewMatrix = new MatrixStack (Matrix4);
+   this .rotation        = new Rotation4 ();
+   this .rotationMatrix  = new Float32Array (9);
 }
 
 Object .assign (EnvironmentLightContainer .prototype,
@@ -69,11 +72,17 @@ Object .assign (EnvironmentLightContainer .prototype,
       this .browser   = lightNode .getBrowser ();
       this .lightNode = lightNode;
       this .global    = lightNode .getGlobal ();
+
+      this .modelViewMatrix .pushMatrix (modelViewMatrix);
    },
    renderShadowMap (renderObject)
    { },
    setGlobalVariables (renderObject)
-   { },
+   {
+      this .modelViewMatrix .get () .get (null, this .rotation);
+
+      this .rotation .multLeft (this .lightNode ._rotation .getValue ()) .getMatrix (this .rotationMatrix);
+   },
    setShaderUniforms (gl, shaderObject)
    {
       const
@@ -102,7 +111,7 @@ Object .assign (EnvironmentLightContainer .prototype,
 
       gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 color .r, color .g, color .b);
       gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,             lightNode .getIntensity ());
-      gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,       lightNode .getRotation ());
+      gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,       this .rotationMatrix);
       gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLinear,  diffuseTexture ?.isLinear ());
       gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLinear, specularTexture ?.isLinear ());
       gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLevels, specularTextureLevels);
@@ -144,8 +153,6 @@ function EnvironmentLight (executionContext)
    X3DLightNode .call (this, executionContext);
 
    this .addType (X3DConstants .EnvironmentLight);
-
-   this .rotationMatrix = new Float32Array (9);
 }
 
 Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNode .prototype),
@@ -154,21 +161,15 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    {
       X3DLightNode .prototype .initialize .call (this);
 
-      this ._rotation        .addInterest ("set_rotation__",        this);
       this ._diffuseTexture  .addInterest ("set_diffuseTexture__",  this);
       this ._specularTexture .addInterest ("set_specularTexture__", this);
 
-      this .set_rotation__ ();
       this .set_diffuseTexture__ ();
       this .set_specularTexture__ ();
    },
    getLightKey ()
    {
       return 2;
-   },
-   getRotation ()
-   {
-      return this .rotationMatrix;
    },
    getDiffuseTexture ()
    {
@@ -181,10 +182,6 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    getLights ()
    {
       return EnvironmentLights;
-   },
-   set_rotation__ ()
-   {
-      this ._rotation .getValue () .getMatrix (this .rotationMatrix);
    },
    set_diffuseTexture__ ()
    {
