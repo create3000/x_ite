@@ -38,35 +38,35 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
-### SFFloat [in, out] **iridescence**
+### SFFloat [in, out] **iridescence** 0 <small>[0,∞)</small>
 
 Input/Output field *iridescence*.
 
-### SFString [in, out] **iridescenceTextureMapping**
+### SFString [in, out] **iridescenceTextureMapping** ""
 
 Input/Output field *iridescenceTextureMapping*.
 
-### SFNode [in, out] **iridescenceTexture**
+### SFNode [in, out] **iridescenceTexture** NULL <small>[X3DSingleTextureNode]</small>
 
 Input/Output field *iridescenceTexture*.
 
-### SFFloat [in, out] **iridescenceIndexOfRefraction**
+### SFFloat [in, out] **iridescenceIndexOfRefraction** 1.3 <small>[0,∞)</small>
 
 Input/Output field *iridescenceIndexOfRefraction*.
 
-### SFFloat [in, out] **iridescenceThicknessMinimum**
+### SFFloat [in, out] **iridescenceThicknessMinimum** 100 <small>[0,∞)</small>
 
 Input/Output field *iridescenceThicknessMinimum*.
 
-### SFFloat [in, out] **iridescenceThicknessMaximum**
+### SFFloat [in, out] **iridescenceThicknessMaximum** 400 <small>[0,∞)</small>
 
 Input/Output field *iridescenceThicknessMaximum*.
 
-### SFString [in, out] **iridescenceThicknessTextureMapping**
+### SFString [in, out] **iridescenceThicknessTextureMapping** ""
 
 Input/Output field *iridescenceThicknessTextureMapping*.
 
-### SFNode [in, out] **iridescenceThicknessTexture**
+### SFNode [in, out] **iridescenceThicknessTexture** NULL <small>[X3DSingleTextureNode]</small>
 
 Input/Output field *iridescenceThicknessTexture*.
 

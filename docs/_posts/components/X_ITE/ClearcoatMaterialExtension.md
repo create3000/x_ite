@@ -38,35 +38,35 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
-### SFFloat [in, out] **clearcoat**
+### SFFloat [in, out] **clearcoat** 0 <small>[0,∞)</small>
 
 Input/Output field *clearcoat*.
 
-### SFString [in, out] **clearcoatTextureMapping**
+### SFString [in, out] **clearcoatTextureMapping** ""
 
 Input/Output field *clearcoatTextureMapping*.
 
-### SFNode [in, out] **clearcoatTexture**
+### SFNode [in, out] **clearcoatTexture** NULL <small>[X3DSingleTextureNode]</small>
 
 Input/Output field *clearcoatTexture*.
 
-### SFFloat [in, out] **clearcoatRoughness**
+### SFFloat [in, out] **clearcoatRoughness** 0 <small>[0,∞)</small>
 
 Input/Output field *clearcoatRoughness*.
 
-### SFString [in, out] **clearcoatRoughnessTextureMapping**
+### SFString [in, out] **clearcoatRoughnessTextureMapping** ""
 
 Input/Output field *clearcoatRoughnessTextureMapping*.
 
-### SFNode [in, out] **clearcoatRoughnessTexture**
+### SFNode [in, out] **clearcoatRoughnessTexture** NULL <small>[X3DSingleTextureNode]</small>
 
 Input/Output field *clearcoatRoughnessTexture*.
 
-### SFString [in, out] **clearcoatNormalTextureMapping**
+### SFString [in, out] **clearcoatNormalTextureMapping** ""
 
 Input/Output field *clearcoatNormalTextureMapping*.
 
-### SFNode [in, out] **clearcoatNormalTexture**
+### SFNode [in, out] **clearcoatNormalTexture** NULL <small>[X3DSingleTextureNode]</small>
 
 Input/Output field *clearcoatNormalTexture*.
 
