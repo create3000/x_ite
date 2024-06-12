@@ -294,6 +294,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             //    break;
             // },
             case "EXT_mesh_gpu_instancing":
+            case "KHR_materials_specular":
             {
                const component = browser .getComponent ("X_ITE", 1);
 
@@ -1154,14 +1155,50 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          switch (key)
          {
-            case "KHR_materials_unlit":
-               this .khrMaterialsUnlitObject (materialNode);
-               break;
             case "KHR_materials_emissive_strength":
                this .khrMaterialsEmissiveStrengthObject (value, materialNode);
                break;
+            case "KHR_materials_specular":
+               this .khrMaterialsSpecularObject (value, materialNode);
+               break;
+            case "KHR_materials_unlit":
+               this .khrMaterialsUnlitObject (materialNode);
+               break;
          }
       }
+   },
+   khrMaterialsEmissiveStrengthObject (KHR_materials_emissive_strength, materialNode)
+   {
+      if (!(KHR_materials_emissive_strength instanceof Object))
+         return;
+
+      const emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
+
+      materialNode ._emissiveStrength = emissiveStrength;
+   },
+   khrMaterialsSpecularObject (KHR_materials_specular, materialNode)
+   {
+      if (!(KHR_materials_specular instanceof Object))
+         return;
+
+      const specularMaterialExtension = this .getScene () .createNode ("SpecularMaterialExtension", false);
+
+      specularMaterialExtension ._specular = this .numberValue (KHR_materials_specular .specularFactor, 1);
+
+      specularMaterialExtension ._specularTexture        = this .textureInfo (KHR_materials_specular .specularTexture);
+      specularMaterialExtension ._specularTextureMapping = this .textureMapping (KHR_materials_specular .specularTexture);
+
+      const specularColor = new Color3 ();
+
+      if (this .vectorValue (KHR_materials_specular .specularColorFactor, specularColor))
+         specularMaterialExtension ._specularColor = specularColor;
+
+      specularMaterialExtension ._specularColorTexture        = this .textureInfo (KHR_materials_specular .specularColorTexture);
+      specularMaterialExtension ._specularColorTextureMapping = this .textureMapping (KHR_materials_specular .specularColorTexture);
+
+      specularMaterialExtension .setup ();
+
+      materialNode ._extensions .push (specularMaterialExtension);
    },
    khrMaterialsUnlitObject (materialNode)
    {
@@ -1188,15 +1225,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             break;
          }
       }
-   },
-   khrMaterialsEmissiveStrengthObject (KHR_materials_emissive_strength, materialNode)
-   {
-      if (!(KHR_materials_emissive_strength instanceof Object))
-         return;
-
-      const emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
-
-      materialNode ._emissiveStrength = emissiveStrength;
    },
    textureTransformObject (KHR_texture_transform, texCoord)
    {

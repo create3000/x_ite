@@ -117,6 +117,8 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
       if (!+this .getTextureBits ())
          return;
 
+      options .push ("X3D_MATERIAL_TEXTURES");
+
       if (this .specularTextureNode)
          options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE", `X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_${this .specularTextureNode .getTextureTypeString ()}`);
 
@@ -124,7 +126,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
          options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_FLIP_Y");
 
       if (this .specularColorTextureNode)
-         options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE", `X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_${this .specularTextureNode .getTextureTypeString ()}`);
+         options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE", `X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_${this .specularColorTextureNode .getTextureTypeString ()}`);
 
       if (this .specularColorTextureNode ?.getTextureType () === 1)
          options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_COLOR_FLIP_Y");
@@ -146,8 +148,8 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
 
             this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularTexture);
 
-            gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (specularTextureMapping) ?? 0);
-            gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularTextureMapping) ?? 0);
+            gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (specularTextureMapping) ?? 0);
+            gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularTextureMapping) ?? 0);
          }
 
          // Specular color parameters
@@ -160,8 +162,8 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
 
             this .specularColorTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularColorTexture);
 
-            gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (specularColorTextureMapping) ?? 0);
-            gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularColorTextureMapping) ?? 0);
+            gl .uniform1i (specularColorTexture .textureTransformMapping,  textureTransformMapping  .get (specularColorTextureMapping) ?? 0);
+            gl .uniform1i (specularColorTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularColorTextureMapping) ?? 0);
          }
       }
    },

@@ -329,13 +329,13 @@ struct x3d_SpecularColorTextureParametersEXT
 {
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_2D)
+   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_2D)
    mediump sampler2D   texture2D;
    #endif
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_3D) && __VERSION__ != 100
+   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_CUBE)
+   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_CUBE)
    mediump samplerCube textureCube;
    #endif
 };

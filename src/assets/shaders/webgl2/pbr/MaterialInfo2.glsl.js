@@ -270,7 +270,7 @@ getSpecularColorEXT ()
 {
    // Get texture color.
 
-   vec3 texCoord = getTexCoord (x3d_SpecularColorTextureEXT .textureTransformMapping, x3d_SpecularTextureEXT .textureCoordinateMapping);
+   vec3 texCoord = getTexCoord (x3d_SpecularColorTextureEXT .textureTransformMapping, x3d_SpecularColorTextureEXT .textureCoordinateMapping);
 
    #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_FLIP_Y)
       texCoord .t = 1.0 - texCoord .t;
