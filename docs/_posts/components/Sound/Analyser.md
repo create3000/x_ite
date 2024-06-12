@@ -73,6 +73,22 @@ Enables/disables node operation.
 
 *frequencyBinCount* is half of fftSize and generally equates to number of data values available for the visualization.
 
+### MFInt32 [out] **byteFrequencyData**
+
+Output field *byteFrequencyData*.
+
+### MFInt32 [out] **byteTimeDomainData**
+
+Output field *byteTimeDomainData*.
+
+### MFFloat [out] **floatFrequencyData**
+
+Output field *floatFrequencyData*.
+
+### MFFloat [out] **floatTimeDomainData**
+
+Output field *floatTimeDomainData*.
+
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
 The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.

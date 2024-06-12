@@ -38,4 +38,20 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
+### SFFloat [in, out] **clearcoat**
+
+### SFString [in, out] **clearcoatTextureMapping**
+
+### SFNode [in, out] **clearcoatTexture**
+
+### SFFloat [in, out] **clearcoatRoughness**
+
+### SFString [in, out] **clearcoatRoughnessTextureMapping**
+
+### SFNode [in, out] **clearcoatRoughnessTexture**
+
+### SFString [in, out] **clearcoatNormalTextureMapping**
+
+### SFNode [in, out] **clearcoatNormalTexture**
+
 ## See Also

@@ -179,6 +179,10 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 - *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
+### MFNode [in, out] **extensions**
+
+Input/Output field *extensions*.
+
 ## Advice
 
 ### Hints

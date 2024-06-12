@@ -38,4 +38,14 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
+### SFFloat [in, out] **thickness**
+
+### SFString [in, out] **thicknessTextureMapping**
+
+### SFNode [in, out] **thicknessTexture**
+
+### SFFloat [in, out] **attenuationDistance**
+
+### SFColor [in, out] **attenuationColor**
+
 ## See Also

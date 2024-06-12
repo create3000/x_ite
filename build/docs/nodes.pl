@@ -305,18 +305,26 @@ sub reorder_fields {
 
    $source       = `cat $cwd/src/x_ite/Components/$componentName/$typeName.js`;
    @sourceFields = $source =~ /\bX3DFieldDefinition\s*\(.*/go;
-   @sourceFields = map { /"(.*?)"/o; $_ = $1 } @sourceFields;
+   @sourceFields = map { /X3DConstants\s*\.(\w+),\s*"(.*?)",.*?([SM]F\w+)/o; $_ = [$1, $2, $3] } @sourceFields;
 
    $fields = { };
 
-   foreach $name (@sourceFields)
+   foreach $field (@sourceFields)
    {
-      $file =~ s/(###.*?\*\*$name\*\*.*?\n[\s\S\n]*?\n)(?=(?:###|##)\s+)//;
-      $fields -> {$name} = $1;
+      if ($file =~ s/(###.*?\*\*$field->[1]\*\*.*?\n[\s\S\n]*?\n)(?=(?:###|##)\s+)//)
+      {
+         $fields -> {$field -> [1]} = $1;
+      }
+      else
+      {
+         $accesType = $inOut -> {$field -> [0]};
+
+         $fields -> {$field -> [1]} = "### $field->[2] [$accessType] **$field->[1]**\n\n";
+      }
    }
 
    $string = "";
-   $string .= $fields -> {$_} foreach @sourceFields;
+   $string .= $fields -> {$_ -> [1]} foreach @sourceFields;
 
    $file =~ s/(## Fields\n+)/$1$string/so;
 

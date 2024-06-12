@@ -38,4 +38,16 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
+### SFFloat [in, out] **specular**
+
+### SFString [in, out] **specularTextureMapping**
+
+### SFNode [in, out] **specularTexture**
+
+### SFColor [in, out] **specularColor**
+
+### SFString [in, out] **specularColorTextureMapping**
+
+### SFNode [in, out] **specularColorTexture**
+
 ## See Also

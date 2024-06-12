@@ -97,6 +97,10 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
+### SFBool [ ] **colorSpaceConversion**
+
+Field *colorSpaceConversion*.
+
 ### SFBool [ ] **repeatS** TRUE
 
 Whether to repeat texture along S axis horizontally from left to right.
