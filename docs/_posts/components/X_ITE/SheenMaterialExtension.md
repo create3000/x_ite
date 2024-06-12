@@ -38,27 +38,27 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
-### SFColor [in, out] **sheenColor**
+### SFColor [in, out] **sheenColor** 0 0 0 <small>[0,1]</small>
 
 Input/Output field *sheenColor*.
 
-### SFString [in, out] **sheenColorTextureMapping**
+### SFString [in, out] **sheenColorTextureMapping** ""
 
 Input/Output field *sheenColorTextureMapping*.
 
-### SFNode [in, out] **sheenColorTexture**
+### SFNode [in, out] **sheenColorTexture** NULL <small>[X3DSingleTextureNode]</small>
 
 Input/Output field *sheenColorTexture*.
 
-### SFFloat [in, out] **sheenRoughness**
+### SFFloat [in, out] **sheenRoughness** 0 <small>[0,∞)</small>
 
 Input/Output field *sheenRoughness*.
 
-### SFString [in, out] **sheenRoughnessTextureMapping**
+### SFString [in, out] **sheenRoughnessTextureMapping** ""
 
 Input/Output field *sheenRoughnessTextureMapping*.
 
-### SFNode [in, out] **sheenRoughnessTexture**
+### SFNode [in, out] **sheenRoughnessTexture** NULL <small>[X3DSingleTextureNode]</small>
 
 Input/Output field *sheenRoughnessTexture*.
 
