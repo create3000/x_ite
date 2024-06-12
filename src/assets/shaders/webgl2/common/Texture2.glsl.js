@@ -141,7 +141,7 @@ getTexture (const in int i, in vec3 texCoord)
       #if X3D_NUM_TEXTURES > ${i}
       case ${i}:
       {
-         #if defined (X3D_TEXTURE${i}_FLIP_Y)
+         #if !defined (X3D_PHYSICAL_MATERIAL) && defined (X3D_TEXTURE${i}_FLIP_Y)
             texCoord .t = 1.0 - texCoord .t;
          #endif
 
