@@ -1,8 +1,26 @@
 - title: "X_ITE"
   children:
+    - title: "AnisotropyMaterialExtension"
+      url: /components/x-ite/anisotropymaterialextension/
     - title: "BlendMode"
       url: /components/x-ite/blendmode/
+    - title: "ClearcoatMaterialExtension"
+      url: /components/x-ite/clearcoatmaterialextension/
     - title: "DepthMode"
       url: /components/x-ite/depthmode/
+    - title: "DispersionMaterialExtension"
+      url: /components/x-ite/dispersionmaterialextension/
+    - title: "IORMaterialExtension"
+      url: /components/x-ite/iormaterialextension/
     - title: "InstancedShape"
       url: /components/x-ite/instancedshape/
+    - title: "IridescenceMaterialExtension"
+      url: /components/x-ite/iridescencematerialextension/
+    - title: "SheenMaterialExtension"
+      url: /components/x-ite/sheenmaterialextension/
+    - title: "SpecularMaterialExtension"
+      url: /components/x-ite/specularmaterialextension/
+    - title: "TransmissionMaterialExtension"
+      url: /components/x-ite/transmissionmaterialextension/
+    - title: "VolumeMaterialExtension"
+      url: /components/x-ite/volumematerialextension/

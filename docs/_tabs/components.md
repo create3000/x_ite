@@ -382,8 +382,17 @@ X3D groups nodes into components and components into profiles. This index lists 
 
 ## X_ITE
 
+- [AnisotropyMaterialExtension](/x_ite/components/x-ite/anisotropymaterialextension/)
 - [BlendMode](/x_ite/components/x-ite/blendmode/)
+- [ClearcoatMaterialExtension](/x_ite/components/x-ite/clearcoatmaterialextension/)
 - [DepthMode](/x_ite/components/x-ite/depthmode/)
+- [DispersionMaterialExtension](/x_ite/components/x-ite/dispersionmaterialextension/)
+- [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/)
 - [InstancedShape](/x_ite/components/x-ite/instancedshape/)
+- [IridescenceMaterialExtension](/x_ite/components/x-ite/iridescencematerialextension/)
+- [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/)
+- [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/)
+- [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/)
+- [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/)
 
 <!-- COMPONENTS END -->
