@@ -106,8 +106,9 @@ Object .assign (Color3 .prototype,
          g = clamp (this [_g], 0, 1),
          b = clamp (this [_b], 0, 1);
 
-      const min = Math .min (r, g, b);
-      const max = Math .max (r, g, b);
+      const
+         min = Math .min (r, g, b),
+         max = Math .max (r, g, b);
 
       v = max; // value
 
@@ -129,7 +130,9 @@ Object .assign (Color3 .prototype,
             h += Math .PI * 2;
       }
       else
-         s = h = 0;         // s = 0, h is undefined
+      {
+         s = h = 0; // s = 0, h is undefined
+      }
 
       result [0] = h;
       result [1] = s;
