@@ -2206,10 +2206,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return this .defaultAppearance [mode] = appearanceNode;
    },
+   hasTextures (materialNode)
+   {
+      if (+materialNode .getTextureBits ())
+         return true;
+
+      if (materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ()))
+         return true;
+
+      return false;
+   },
    createMultiTextureTransform (materialNode)
    {
-      if (!(+materialNode .getTextureBits () ||
-             materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ())))
+      if (!this .hasTextures (materialNode))
          return null;
 
       const textureTransformNodes = this .textureTransformNodes
@@ -2599,8 +2608,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          appearanceNode = this .materialObject ({ material }),
          materialNode   = appearanceNode ._material .getValue ();
 
-      if (!(+materialNode .getTextureBits () ||
-             materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ())))
+      if (!this .hasTextures (materialNode))
          return null;
 
       if (texCoords .textureCoordinateNode)
