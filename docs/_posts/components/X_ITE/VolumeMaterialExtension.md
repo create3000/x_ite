@@ -38,23 +38,23 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
-### SFFloat [in, out] **thickness**
+### SFFloat [in, out] **thickness** 0 <small>[0,∞)</small>
 
 Input/Output field *thickness*.
 
-### SFString [in, out] **thicknessTextureMapping**
+### SFString [in, out] **thicknessTextureMapping** ""
 
 Input/Output field *thicknessTextureMapping*.
 
-### SFNode [in, out] **thicknessTexture**
+### SFNode [in, out] **thicknessTexture** NULL <small>[X3DSingleTextureNode]</small>
 
 Input/Output field *thicknessTexture*.
 
-### SFFloat [in, out] **attenuationDistance**
+### SFFloat [in, out] **attenuationDistance** 1000000 <small>[0,∞)</small>
 
 Input/Output field *attenuationDistance*.
 
-### SFColor [in, out] **attenuationColor**
+### SFColor [in, out] **attenuationColor** 1 1 1 <small>[0,1]</small>
 
 Input/Output field *attenuationColor*.
 
