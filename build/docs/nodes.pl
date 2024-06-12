@@ -465,12 +465,17 @@ sub update_field {
    }
    else
    {
-      say $name;
-
-      $string .= "\n";
-      $string .= ucfirst ($fieldDescription -> {$accessType} . "field *$name*.");
-      $string .= "\n";
-      $string .= "\n";
+      if ($file =~ /(?:###.*?\*\*$name\*\*.*?\n)(.*?\n)(?:(?:###|##)\s+)/s)
+      {
+         $string .= $1;
+      }
+      else
+      {
+         $string .= "\n";
+         $string .= ucfirst ($fieldDescription -> {$accessType} . "field *$name*.");
+         $string .= "\n";
+         $string .= "\n";
+      }
    }
 
    if (@hints)
