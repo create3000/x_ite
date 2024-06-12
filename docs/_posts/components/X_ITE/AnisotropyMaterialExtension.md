@@ -38,19 +38,19 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
-### SFFloat [in, out] **anisotropyStrength**
+### SFFloat [in, out] **anisotropyStrength** 0 <small>[0,∞)</small>
 
 Input/Output field *anisotropyStrength*.
 
-### SFFloat [in, out] **anisotropyRotation**
+### SFFloat [in, out] **anisotropyRotation** 0 <small>(-∞,∞)</small>
 
 Input/Output field *anisotropyRotation*.
 
-### SFString [in, out] **anisotropyTextureMapping**
+### SFString [in, out] **anisotropyTextureMapping** ""
 
 Input/Output field *anisotropyTextureMapping*.
 
-### SFNode [in, out] **anisotropyTexture**
+### SFNode [in, out] **anisotropyTexture** NULL <small>[X3DSingleTextureNode]</small>
 
 Input/Output field *anisotropyTexture*.
 
