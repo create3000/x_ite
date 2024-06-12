@@ -179,7 +179,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 - *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
-### MFNode [in, out] **extensions**
+### MFNode [in, out] **extensions** [ ] <small>[X3DMaterialExtensionNode]</small> <small class="yellow">non standard</small>
 
 Input/Output field *extensions*.
 
