@@ -286,8 +286,8 @@ getSpecularColorEXT ()
 }
 #endif
 
-uniform float x3d_SpecularEXT;
-uniform vec3  x3d_SpecularColorEXT;
+uniform float x3d_SpecularFactorEXT;
+uniform vec3  x3d_SpecularColorFactorEXT;
 
 MaterialInfo
 getSpecularInfo (in MaterialInfo info)
@@ -302,10 +302,10 @@ getSpecularInfo (in MaterialInfo info)
       specularTexture .rgb = getSpecularColorEXT ();
    #endif
 
-   vec3 dielectricSpecularF0 = min (info .f0 * x3d_SpecularColorEXT * specularTexture .rgb, vec3 (1.0));
+   vec3 dielectricSpecularF0 = min (info .f0 * x3d_SpecularColorFactorEXT * specularTexture .rgb, vec3 (1.0));
 
    info .f0             = mix (dielectricSpecularF0, info .baseColor .rgb, info .metallic);
-   info .specularWeight = x3d_SpecularEXT * specularTexture .a;
+   info .specularWeight = x3d_SpecularFactorEXT * specularTexture .a;
    info .c_diff         = mix (info .baseColor .rgb, vec3 (0.0), info .metallic);
 
    return info;
