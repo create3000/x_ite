@@ -150,4 +150,4 @@ Time event generated when touched.
 
 ## See Also
 
-- [X3D Specification of GeoTouchSensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoTouchSensor){:target="_blank"}
+- [X3D Specification of GeoTouchSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoTouchSensor){:target="_blank"}

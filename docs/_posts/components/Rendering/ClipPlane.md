@@ -73,4 +73,4 @@ If (a,b,c,d) is the *plane*, with the first three components being a normalized 
 
 ## See Also
 
-- [X3D Specification of ClipPlane node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#ClipPlane){:target="_blank"}
+- [X3D Specification of ClipPlane Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#ClipPlane){:target="_blank"}

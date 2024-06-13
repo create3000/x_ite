@@ -150,4 +150,4 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 
 ## See Also
 
-- [X3D Specification of OscillatorSource node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#OscillatorSource){:target="_blank"}
+- [X3D Specification of OscillatorSource Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#OscillatorSource){:target="_blank"}

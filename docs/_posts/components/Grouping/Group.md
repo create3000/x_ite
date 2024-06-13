@@ -109,4 +109,4 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## See Also
 
-- [X3D Specification of Group node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Group){:target="_blank"}
+- [X3D Specification of Group Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Group){:target="_blank"}

@@ -105,4 +105,4 @@ Defines index values into the parent [HAnimSegment](/x_ite/components/hanim/hani
 
 ## See Also
 
-- [X3D Specification of HAnimDisplacer node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimDisplacer){:target="_blank"}
+- [X3D Specification of HAnimDisplacer Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimDisplacer){:target="_blank"}

@@ -59,4 +59,4 @@ Pairs of 2D (s,t) texture coordinates, either in range [0,1] or higher if repeat
 
 ## See Also
 
-- [X3D Specification of TextureCoordinate node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureCoordinate){:target="_blank"}
+- [X3D Specification of TextureCoordinate Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureCoordinate){:target="_blank"}

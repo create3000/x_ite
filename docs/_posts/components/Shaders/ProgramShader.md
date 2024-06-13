@@ -88,4 +88,4 @@ ProgramShader contains zero or more [ShaderProgram](/x_ite/components/shaders/sh
 
 ## See Also
 
-- [X3D Specification of ProgramShader node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ProgramShader){:target="_blank"}
+- [X3D Specification of ProgramShader Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ProgramShader){:target="_blank"}

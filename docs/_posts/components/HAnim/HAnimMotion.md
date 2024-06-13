@@ -187,4 +187,4 @@ Send *previous* output value in values array, using/updating various frame value
 
 ## See Also
 
-- [X3D Specification of HAnimMotion node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimMotion){:target="_blank"}
+- [X3D Specification of HAnimMotion Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimMotion){:target="_blank"}

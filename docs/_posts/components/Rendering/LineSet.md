@@ -98,4 +98,4 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## See Also
 
-- [X3D Specification of LineSet node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#LineSet){:target="_blank"}
+- [X3D Specification of LineSet Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#LineSet){:target="_blank"}

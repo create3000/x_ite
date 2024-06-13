@@ -215,4 +215,4 @@ The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/component
 
 ## See Also
 
-- [X3D Specification of Viewpoint node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#Viewpoint){:target="_blank"}
+- [X3D Specification of Viewpoint Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#Viewpoint){:target="_blank"}

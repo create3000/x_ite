@@ -67,4 +67,4 @@ Vector assigning relative *weight* value to each control point.
 
 ## See Also
 
-- [X3D Specification of NurbsCurve2D node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsCurve2D){:target="_blank"}
+- [X3D Specification of NurbsCurve2D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsCurve2D){:target="_blank"}

@@ -110,4 +110,4 @@ Coordinates for the geometry used as the emitting volume.
 
 ## See Also
 
-- [X3D Specification of VolumeEmitter node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#VolumeEmitter){:target="_blank"}
+- [X3D Specification of VolumeEmitter Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#VolumeEmitter){:target="_blank"}

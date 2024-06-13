@@ -114,4 +114,4 @@ Size of the shadow map in pixels, must be power of two.
 
 ## See Also
 
-- [X3D Specification of DirectionalLight node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#DirectionalLight){:target="_blank"}
+- [X3D Specification of DirectionalLight Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#DirectionalLight){:target="_blank"}

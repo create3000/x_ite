@@ -70,4 +70,4 @@ Coordinates of vertices connected into contiguous Polyline2D.
 
 ## See Also
 
-- [X3D Specification of Polyline2D node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Polyline2D){:target="_blank"}
+- [X3D Specification of Polyline2D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Polyline2D){:target="_blank"}

@@ -124,4 +124,4 @@ Sends rotation event relative to center whenever the target object is contained 
 
 ## See Also
 
-- [X3D Specification of TransformSensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalSensor.html#TransformSensor){:target="_blank"}
+- [X3D Specification of TransformSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalSensor.html#TransformSensor){:target="_blank"}

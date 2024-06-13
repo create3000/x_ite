@@ -242,4 +242,4 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 
 ## See Also
 
-- [X3D Specification of GeoElevationGrid node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoElevationGrid){:target="_blank"}
+- [X3D Specification of GeoElevationGrid Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoElevationGrid){:target="_blank"}

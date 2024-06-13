@@ -150,4 +150,4 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 ## See Also
 
-- [X3D Specification of ImageTexture3D node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#ImageTexture3D){:target="_blank"}
+- [X3D Specification of ImageTexture3D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#ImageTexture3D){:target="_blank"}

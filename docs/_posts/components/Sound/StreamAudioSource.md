@@ -142,4 +142,4 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 
 ## See Also
 
-- [X3D Specification of StreamAudioSource node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#StreamAudioSource){:target="_blank"}
+- [X3D Specification of StreamAudioSource Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#StreamAudioSource){:target="_blank"}

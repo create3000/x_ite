@@ -126,4 +126,4 @@ Input/Output field *geometry*.
 
 ## See Also
 
-- [X3D Specification of Shape node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"}
+- [X3D Specification of Shape Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"}

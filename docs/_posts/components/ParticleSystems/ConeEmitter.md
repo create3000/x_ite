@@ -96,4 +96,4 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 ## See Also
 
-- [X3D Specification of ConeEmitter node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ConeEmitter){:target="_blank"}
+- [X3D Specification of ConeEmitter Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ConeEmitter){:target="_blank"}

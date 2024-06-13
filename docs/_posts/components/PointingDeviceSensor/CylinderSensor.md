@@ -148,4 +148,4 @@ Select geometry by activating the pointing device (for example, clicking the mou
 
 ## See Also
 
-- [X3D Specification of CylinderSensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#CylinderSensor){:target="_blank"}
+- [X3D Specification of CylinderSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#CylinderSensor){:target="_blank"}

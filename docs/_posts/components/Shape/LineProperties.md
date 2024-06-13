@@ -72,4 +72,4 @@ Whether or not LineProperties are *applied* to associated geometry.
 
 ## See Also
 
-- [X3D Specification of LineProperties node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#LineProperties){:target="_blank"}
+- [X3D Specification of LineProperties Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#LineProperties){:target="_blank"}

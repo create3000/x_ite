@@ -170,4 +170,4 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## See Also
 
-- [X3D Specification of HAnimSegment node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimSegment){:target="_blank"}
+- [X3D Specification of HAnimSegment Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimSegment){:target="_blank"}

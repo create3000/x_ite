@@ -129,4 +129,4 @@ Contained *texture* nodes ([ImageTexture](/x_ite/components/texturing/imagetextu
 
 ## See Also
 
-- [X3D Specification of MultiTexture node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MultiTexture){:target="_blank"}
+- [X3D Specification of MultiTexture Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MultiTexture){:target="_blank"}

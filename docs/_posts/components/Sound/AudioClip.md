@@ -234,4 +234,4 @@ Any audio file format supported by the web browser, but at least:
 
 ## See Also
 
-- [X3D Specification of AudioClip node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#AudioClip){:target="_blank"}
+- [X3D Specification of AudioClip Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#AudioClip){:target="_blank"}

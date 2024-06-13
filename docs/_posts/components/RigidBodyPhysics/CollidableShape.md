@@ -119,4 +119,4 @@ The *shape* field provides a geometry proxy for specifying which geometry best r
 
 ## See Also
 
-- [X3D Specification of CollidableShape node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollidableShape){:target="_blank"}
+- [X3D Specification of CollidableShape Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollidableShape){:target="_blank"}

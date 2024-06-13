@@ -120,4 +120,4 @@ Single intermittent output value determined by current key time and correspondin
 
 ## See Also
 
-- [X3D Specification of IntegerSequencer node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#IntegerSequencer){:target="_blank"}
+- [X3D Specification of IntegerSequencer Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#IntegerSequencer){:target="_blank"}

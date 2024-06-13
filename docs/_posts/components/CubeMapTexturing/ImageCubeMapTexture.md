@@ -124,4 +124,4 @@ PNG, JPEG and GIF can be in panorama (Spherical or Equirectangular projection, [
 
 ## See Also
 
-- [X3D Specification of ImageCubeMapTexture node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalTexturing.html#ImageCubeMapTexture){:target="_blank"}
+- [X3D Specification of ImageCubeMapTexture Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalTexturing.html#ImageCubeMapTexture){:target="_blank"}

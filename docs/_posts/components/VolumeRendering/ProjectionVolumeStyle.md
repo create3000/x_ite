@@ -67,4 +67,4 @@ Threshold value used when type=MIN (LMIP) or type=MAX (MIP).
 
 ## See Also
 
-- [X3D Specification of ProjectionVolumeStyle node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#ProjectionVolumeStyle){:target="_blank"}
+- [X3D Specification of ProjectionVolumeStyle Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#ProjectionVolumeStyle){:target="_blank"}

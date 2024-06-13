@@ -136,4 +136,4 @@ Input/Output field *children*.
 
 ## See Also
 
-- [X3D Specification of Sound node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Sound){:target="_blank"}
+- [X3D Specification of Sound Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Sound){:target="_blank"}

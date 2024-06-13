@@ -77,4 +77,4 @@ Specifies the sound *absorption* coefficient of a surface, meaning the ratio of 
 
 ## See Also
 
-- [X3D Specification of AcousticProperties node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#AcousticProperties){:target="_blank"}
+- [X3D Specification of AcousticProperties Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#AcousticProperties){:target="_blank"}

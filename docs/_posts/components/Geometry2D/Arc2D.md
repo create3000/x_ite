@@ -97,4 +97,4 @@ Circle *radius*, of which the arc is a portion.
 
 ## See Also
 
-- [X3D Specification of Arc2D node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Arc2D){:target="_blank"}
+- [X3D Specification of Arc2D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Arc2D){:target="_blank"}

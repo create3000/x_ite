@@ -122,4 +122,4 @@ Time event generated when sensor is touched by pointing device, and then deselec
 
 ## See Also
 
-- [X3D Specification of TouchSensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#TouchSensor){:target="_blank"}
+- [X3D Specification of TouchSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#TouchSensor){:target="_blank"}

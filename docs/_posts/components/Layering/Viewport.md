@@ -114,4 +114,4 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## See Also
 
-- [X3D Specification of Viewport node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#Viewport){:target="_blank"}
+- [X3D Specification of Viewport Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#Viewport){:target="_blank"}

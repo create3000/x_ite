@@ -95,4 +95,4 @@ Linearly interpolated output value determined by current key time and correspond
 
 ## See Also
 
-- [X3D Specification of NormalInterpolator node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#NormalInterpolator){:target="_blank"}
+- [X3D Specification of NormalInterpolator Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#NormalInterpolator){:target="_blank"}

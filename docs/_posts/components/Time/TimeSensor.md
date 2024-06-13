@@ -190,4 +190,4 @@ Time continuously sends the absolute *time* (value 0.0 matches 1 January 1970) i
 
 ## See Also
 
-- [X3D Specification of TimeSensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/time.html#TimeSensor){:target="_blank"}
+- [X3D Specification of TimeSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/time.html#TimeSensor){:target="_blank"}

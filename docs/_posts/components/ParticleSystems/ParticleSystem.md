@@ -254,4 +254,4 @@ Single contained *geometry* node provides *geometry* used for each particle when
 
 ## See Also
 
-- [X3D Specification of ParticleSystem node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ParticleSystem){:target="_blank"}
+- [X3D Specification of ParticleSystem Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ParticleSystem){:target="_blank"}

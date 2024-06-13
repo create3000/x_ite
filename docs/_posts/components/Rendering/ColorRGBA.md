@@ -66,4 +66,4 @@ The *color* field defines an array of 4-tuple RGBA colors.
 
 ## See Also
 
-- [X3D Specification of ColorRGBA node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#ColorRGBA){:target="_blank"}
+- [X3D Specification of ColorRGBA Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#ColorRGBA){:target="_blank"}

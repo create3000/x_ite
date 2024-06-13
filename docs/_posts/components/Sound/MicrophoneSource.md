@@ -150,4 +150,4 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 
 ## See Also
 
-- [X3D Specification of MicrophoneSource node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#MicrophoneSource){:target="_blank"}
+- [X3D Specification of MicrophoneSource Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#MicrophoneSource){:target="_blank"}

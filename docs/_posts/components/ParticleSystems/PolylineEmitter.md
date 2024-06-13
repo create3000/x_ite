@@ -111,4 +111,4 @@ Coordinates for the line along which particles are randomly generated.
 
 ## See Also
 
-- [X3D Specification of PolylineEmitter node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#PolylineEmitter){:target="_blank"}
+- [X3D Specification of PolylineEmitter Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#PolylineEmitter){:target="_blank"}

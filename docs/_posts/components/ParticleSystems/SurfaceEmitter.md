@@ -102,4 +102,4 @@ The geometry node provides geometry used as the emitting *surface*.
 
 ## See Also
 
-- [X3D Specification of SurfaceEmitter node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#SurfaceEmitter){:target="_blank"}
+- [X3D Specification of SurfaceEmitter Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#SurfaceEmitter){:target="_blank"}

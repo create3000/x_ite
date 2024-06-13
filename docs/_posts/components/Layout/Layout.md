@@ -115,4 +115,4 @@ The *scaleMode* field specifies how the scale of the parent is modified. Two quo
 
 ## See Also
 
-- [X3D Specification of Layout node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#Layout){:target="_blank"}
+- [X3D Specification of Layout Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#Layout){:target="_blank"}

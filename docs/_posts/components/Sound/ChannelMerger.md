@@ -105,4 +105,4 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ## See Also
 
-- [X3D Specification of ChannelMerger node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#ChannelMerger){:target="_blank"}
+- [X3D Specification of ChannelMerger Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#ChannelMerger){:target="_blank"}

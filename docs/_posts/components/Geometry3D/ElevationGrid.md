@@ -209,4 +209,4 @@ Grid array of *height* vertices with upward direction along +Y axis, with xDimen
 
 ## See Also
 
-- [X3D Specification of ElevationGrid node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"}
+- [X3D Specification of ElevationGrid Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid){:target="_blank"}

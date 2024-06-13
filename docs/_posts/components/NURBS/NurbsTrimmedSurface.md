@@ -121,4 +121,4 @@ A set of [Contour2D](/x_ite/components/nurbs/contour2d/) nodes are used as trimm
 
 ## See Also
 
-- [X3D Specification of NurbsTrimmedSurface node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsTrimmedSurface){:target="_blank"}
+- [X3D Specification of NurbsTrimmedSurface Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsTrimmedSurface){:target="_blank"}

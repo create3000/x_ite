@@ -160,4 +160,4 @@ Size of the shadow map in pixels, must be power of two.
 
 ## See Also
 
-- [X3D Specification of TextureProjectorParallel node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/textureprojector.html#TextureProjectorParallel){:target="_blank"}
+- [X3D Specification of TextureProjectorParallel Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/textureprojector.html#TextureProjectorParallel){:target="_blank"}

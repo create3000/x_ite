@@ -135,4 +135,4 @@ Output event containing the node or nodes that have been found to intersect with
 
 ## See Also
 
-- [X3D Specification of PrimitivePickSensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/picking.html#PrimitivePickSensor){:target="_blank"}
+- [X3D Specification of PrimitivePickSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/picking.html#PrimitivePickSensor){:target="_blank"}

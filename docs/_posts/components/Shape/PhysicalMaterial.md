@@ -194,4 +194,4 @@ Input/Output field *extensions*.
 
 ## See Also
 
-- [X3D Specification of PhysicalMaterial node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#PhysicalMaterial){:target="_blank"}
+- [X3D Specification of PhysicalMaterial Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#PhysicalMaterial){:target="_blank"}

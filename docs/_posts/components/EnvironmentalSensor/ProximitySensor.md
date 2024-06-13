@@ -127,4 +127,4 @@ Sends changed centerOfRotation values, likely caused by user interaction.
 
 ## See Also
 
-- [X3D Specification of ProximitySensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalSensor.html#ProximitySensor){:target="_blank"}
+- [X3D Specification of ProximitySensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalSensor.html#ProximitySensor){:target="_blank"}

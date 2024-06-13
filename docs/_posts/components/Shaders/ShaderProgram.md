@@ -118,4 +118,4 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 
 ## See Also
 
-- [X3D Specification of ShaderProgram node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ShaderProgram){:target="_blank"}
+- [X3D Specification of ShaderProgram Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ShaderProgram){:target="_blank"}

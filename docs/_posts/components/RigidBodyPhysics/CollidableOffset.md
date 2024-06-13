@@ -112,4 +112,4 @@ The *collidable* field holds a reference to a single nested item of a *collidabl
 
 ## See Also
 
-- [X3D Specification of CollidableOffset node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollidableOffset){:target="_blank"}
+- [X3D Specification of CollidableOffset Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollidableOffset){:target="_blank"}

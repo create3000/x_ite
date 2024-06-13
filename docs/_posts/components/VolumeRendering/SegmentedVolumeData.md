@@ -131,4 +131,4 @@ Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturi
 
 ## See Also
 
-- [X3D Specification of SegmentedVolumeData node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#SegmentedVolumeData){:target="_blank"}
+- [X3D Specification of SegmentedVolumeData Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#SegmentedVolumeData){:target="_blank"}

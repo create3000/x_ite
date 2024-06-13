@@ -79,4 +79,4 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ## See Also
 
-- [X3D Specification of Sphere node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Sphere){:target="_blank"}
+- [X3D Specification of Sphere Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Sphere){:target="_blank"}

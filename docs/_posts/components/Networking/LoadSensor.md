@@ -132,4 +132,4 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 
 ## See Also
 
-- [X3D Specification of LoadSensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#LoadSensor){:target="_blank"}
+- [X3D Specification of LoadSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#LoadSensor){:target="_blank"}

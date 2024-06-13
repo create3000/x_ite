@@ -156,4 +156,4 @@ Any image file format supported by the web browser, but at least:
 
 ## See Also
 
-- [X3D Specification of ImageTexture node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#ImageTexture){:target="_blank"}
+- [X3D Specification of ImageTexture Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#ImageTexture){:target="_blank"}

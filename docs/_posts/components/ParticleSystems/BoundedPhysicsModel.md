@@ -71,4 +71,4 @@ Single contained *geometry* node provides the *geometry* used for each particle 
 
 ## See Also
 
-- [X3D Specification of BoundedPhysicsModel node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#BoundedPhysicsModel){:target="_blank"}
+- [X3D Specification of BoundedPhysicsModel Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#BoundedPhysicsModel){:target="_blank"}

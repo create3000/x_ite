@@ -63,4 +63,4 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ## See Also
 
-- [X3D Specification of Polypoint2D node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Polypoint2D){:target="_blank"}
+- [X3D Specification of Polypoint2D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Polypoint2D){:target="_blank"}

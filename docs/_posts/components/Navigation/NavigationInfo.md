@@ -183,4 +183,4 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ## See Also
 
-- [X3D Specification of NavigationInfo node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo){:target="_blank"}
+- [X3D Specification of NavigationInfo Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo){:target="_blank"}

@@ -92,4 +92,4 @@ Distance in meters where objects are totally obscured by the fog, using local co
 
 ## See Also
 
-- [X3D Specification of LocalFog node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#LocalFog){:target="_blank"}
+- [X3D Specification of LocalFog Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#LocalFog){:target="_blank"}

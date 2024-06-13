@@ -113,4 +113,4 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## See Also
 
-- [X3D Specification of NurbsPatchSurface node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsPatchSurface){:target="_blank"}
+- [X3D Specification of NurbsPatchSurface Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsPatchSurface){:target="_blank"}

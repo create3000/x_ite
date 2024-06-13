@@ -126,4 +126,4 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## See Also
 
-- [X3D Specification of Switch node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Switch){:target="_blank"}
+- [X3D Specification of Switch Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Switch){:target="_blank"}

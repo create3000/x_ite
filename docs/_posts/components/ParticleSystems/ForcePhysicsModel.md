@@ -66,4 +66,4 @@ Enables/disables node operation.
 
 ## See Also
 
-- [X3D Specification of ForcePhysicsModel node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ForcePhysicsModel){:target="_blank"}
+- [X3D Specification of ForcePhysicsModel Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ForcePhysicsModel){:target="_blank"}

@@ -73,4 +73,4 @@ Initial linear *speed* (default is m/s) imparted to all particles along their di
 
 ## See Also
 
-- [X3D Specification of WindPhysicsModel node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#WindPhysicsModel){:target="_blank"}
+- [X3D Specification of WindPhysicsModel Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#WindPhysicsModel){:target="_blank"}

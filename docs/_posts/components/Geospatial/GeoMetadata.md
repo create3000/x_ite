@@ -122,4 +122,4 @@ The *summary* string array contains a set of keyword/value pairs, with each keyw
 
 ## See Also
 
-- [X3D Specification of GeoMetadata node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoMetadata){:target="_blank"}
+- [X3D Specification of GeoMetadata Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoMetadata){:target="_blank"}

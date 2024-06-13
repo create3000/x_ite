@@ -119,4 +119,4 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ## See Also
 
-- [X3D Specification of Fog node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Fog){:target="_blank"}
+- [X3D Specification of Fog Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Fog){:target="_blank"}

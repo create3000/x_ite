@@ -76,4 +76,4 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ## See Also
 
-- [X3D Specification of EdgeEnhancementVolumeStyle node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#EdgeEnhancementVolumeStyle){:target="_blank"}
+- [X3D Specification of EdgeEnhancementVolumeStyle Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#EdgeEnhancementVolumeStyle){:target="_blank"}

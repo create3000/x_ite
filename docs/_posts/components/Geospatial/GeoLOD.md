@@ -185,4 +185,4 @@ The outputOnly *children* field exposes a portion of the scene graph for the cur
 
 ## See Also
 
-- [X3D Specification of GeoLOD node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoLOD){:target="_blank"}
+- [X3D Specification of GeoLOD Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoLOD){:target="_blank"}

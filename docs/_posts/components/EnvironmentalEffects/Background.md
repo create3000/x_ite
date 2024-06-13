@@ -245,4 +245,4 @@ Event sent when node becomes active/inactive.
 
 ## See Also
 
-- [X3D Specification of Background node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Background){:target="_blank"}
+- [X3D Specification of Background Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Background){:target="_blank"}

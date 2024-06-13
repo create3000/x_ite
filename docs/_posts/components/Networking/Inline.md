@@ -180,4 +180,4 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ## See Also
 
-- [X3D Specification of Inline node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Inline){:target="_blank"}
+- [X3D Specification of Inline Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Inline){:target="_blank"}

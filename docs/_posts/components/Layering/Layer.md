@@ -89,4 +89,4 @@ Nodes making up this layer.
 
 ## See Also
 
-- [X3D Specification of Layer node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#Layer){:target="_blank"}
+- [X3D Specification of Layer Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#Layer){:target="_blank"}

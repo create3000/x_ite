@@ -78,4 +78,4 @@ Output values for linear interpolation, each corresponding to knots.
 
 ## See Also
 
-- [X3D Specification of NurbsTextureCoordinate node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsTextureCoordinate){:target="_blank"}
+- [X3D Specification of NurbsTextureCoordinate Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsTextureCoordinate){:target="_blank"}

@@ -83,4 +83,4 @@ Computationaly interpolated output value determined by current key time and corr
 
 ## See Also
 
-- [X3D Specification of NurbsOrientationInterpolator node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsOrientationInterpolator){:target="_blank"}
+- [X3D Specification of NurbsOrientationInterpolator Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsOrientationInterpolator){:target="_blank"}

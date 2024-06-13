@@ -199,4 +199,4 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 
 ## See Also
 
-- [X3D Specification of TextureBackground node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#TextureBackground){:target="_blank"}
+- [X3D Specification of TextureBackground Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#TextureBackground){:target="_blank"}

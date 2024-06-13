@@ -62,4 +62,4 @@ Triplets of 3D (s,t,r) texture coordinates, either in range [0,1] or higher if r
 
 ## See Also
 
-- [X3D Specification of TextureCoordinate3D node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureCoordinate3D){:target="_blank"}
+- [X3D Specification of TextureCoordinate3D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureCoordinate3D){:target="_blank"}

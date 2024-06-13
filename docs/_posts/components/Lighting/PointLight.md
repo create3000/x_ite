@@ -116,4 +116,4 @@ Size of the shadow map in pixels, must be power of two.
 
 ## See Also
 
-- [X3D Specification of PointLight node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#PointLight){:target="_blank"}
+- [X3D Specification of PointLight Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#PointLight){:target="_blank"}

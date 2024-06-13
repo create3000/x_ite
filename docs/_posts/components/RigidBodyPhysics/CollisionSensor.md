@@ -79,4 +79,4 @@ The *collider* field specifies a [CollisionCollection](/x_ite/components/rigidbo
 
 ## See Also
 
-- [X3D Specification of CollisionSensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollisionSensor){:target="_blank"}
+- [X3D Specification of CollisionSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollisionSensor){:target="_blank"}

@@ -136,4 +136,4 @@ Integer enumerations value for particular *subcategory* to which an entity belon
 
 ## See Also
 
-- [X3D Specification of DISEntityTypeMapping node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#DISEntityTypeMapping){:target="_blank"}
+- [X3D Specification of DISEntityTypeMapping Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#DISEntityTypeMapping){:target="_blank"}

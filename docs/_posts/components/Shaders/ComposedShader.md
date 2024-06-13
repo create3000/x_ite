@@ -95,4 +95,4 @@ ComposedShader can contain multiple [ShaderPart](/x_ite/components/shaders/shade
 
 ## See Also
 
-- [X3D Specification of ComposedShader node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ComposedShader){:target="_blank"}
+- [X3D Specification of ComposedShader Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ComposedShader){:target="_blank"}

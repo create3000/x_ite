@@ -376,4 +376,4 @@ List of one or more indexed mesh definitions (such as [IndexedFaceSet](/x_ite/co
 
 ## See Also
 
-- [X3D Specification of HAnimHumanoid node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimHumanoid){:target="_blank"}
+- [X3D Specification of HAnimHumanoid Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimHumanoid){:target="_blank"}

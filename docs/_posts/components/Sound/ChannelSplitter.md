@@ -113,4 +113,4 @@ The *outputs* field is a set of output nodes receiving the split channels, and m
 
 ## See Also
 
-- [X3D Specification of ChannelSplitter node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#ChannelSplitter){:target="_blank"}
+- [X3D Specification of ChannelSplitter Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#ChannelSplitter){:target="_blank"}

@@ -81,4 +81,4 @@ Whether to rotate coordinates of nodes using this GeoOrigin so that local-up dir
 
 ## See Also
 
-- [X3D Specification of GeoOrigin node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoOrigin){:target="_blank"}
+- [X3D Specification of GeoOrigin Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoOrigin){:target="_blank"}
