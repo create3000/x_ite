@@ -880,6 +880,9 @@ const X3DMaterialExtensionNode_default_ = X3DMaterialExtensionNode;
 
 Namespace_default().add ("X3DMaterialExtensionNode", "x_ite/Components/X_ITE/X3DMaterialExtensionNode", X3DMaterialExtensionNode_default_);
 /* harmony default export */ const X_ITE_X3DMaterialExtensionNode = (X3DMaterialExtensionNode_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.7.0")] .require ("x_ite/Base/X3DCast");
+var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X_ITE/ExtensionKeys.js
 /*******************************************************************************
  *
@@ -1004,11 +1007,14 @@ Namespace_default().add ("ExtensionKeys", "x_ite/Browser/X_ITE/ExtensionKeys", E
 
 
 
+
 function AnisotropyMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).AnisotropyMaterialExtension);
+
+   this .anisotropyArray = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
@@ -1016,17 +1022,67 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    initialize ()
    {
       X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._anisotropyStrength .addInterest ("set_anisotropy__",        this);
+      this ._anisotropyRotation .addInterest ("set_anisotropy__",        this);
+      this ._anisotropyTexture  .addInterest ("set_anisotropyTexture__", this);
+
+      this .set_anisotropy__ ();
+      this .set_anisotropyTexture__ ();
    },
    getExtensionKey ()
    {
       return X_ITE_ExtensionKeys .ANISOTROPY_MATERIAL_EXTENSION;
    },
+   set_anisotropy__ ()
+   {
+      const anisotropyRotation = this ._anisotropyRotation .getValue ();
+
+      this .anisotropyArray [0] = Math .cos (anisotropyRotation);
+      this .anisotropyArray [1] = Math .sin (anisotropyRotation);
+      this .anisotropyArray [2] = Math .max (this ._anisotropyStrength .getValue (), 0);
+   },
+   set_anisotropyTexture__ ()
+   {
+      this .anisotropyTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._anisotropyTexture);
+
+      this .setTexture (0, this .anisotropyTextureNode);
+   },
    getShaderOptions (options)
    {
+      options .push ("X3D_ANISOTROPY_MATERIAL_EXT");
 
+      if (!+this .getTextureBits ())
+         return;
+
+      options .push ("X3D_MATERIAL_TEXTURES");
+
+      if (this .anisotropyTextureNode)
+         options .push ("X3D_ANISOTROPY_TEXTURE_EXT", `X3D_ANISOTROPY_TEXTURE_EXT_${this .anisotropyTextureNode .getTextureTypeString ()}`);
+
+      if (this .anisotropyTextureNode ?.getTextureType () === 1)
+         options .push ("X3D_ANISOTROPY_TEXTURE_EXT_FLIP_Y");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      gl .uniform3fv (shaderObject .x3d_AnisotropyEXT, this .anisotropyArray);
+
+      if (+this .getTextureBits ())
+      {
+         // Anisotropy parameters
+
+         if (this .anisotropyTextureNode)
+         {
+            const
+               anisotropyTextureMapping = this ._anisotropyTextureMapping .getValue (),
+               anisotropyTexture        = shaderObject .x3d_AnisotropyTextureEXT;
+
+            this .anisotropyTextureNode .setShaderUniforms (gl, shaderObject, renderObject, anisotropyTexture);
+
+            gl .uniform1i (anisotropyTexture .textureTransformMapping,  textureTransformMapping  .get (anisotropyTextureMapping) ?? 0);
+            gl .uniform1i (anisotropyTexture .textureCoordinateMapping, textureCoordinateMapping .get (anisotropyTextureMapping) ?? 0);
+         }
+      }
    },
 });
 
@@ -1806,9 +1862,6 @@ const SheenMaterialExtension_default_ = SheenMaterialExtension;
 
 Namespace_default().add ("SheenMaterialExtension", "x_ite/Components/X_ITE/SheenMaterialExtension", SheenMaterialExtension_default_);
 /* harmony default export */ const X_ITE_SheenMaterialExtension = (SheenMaterialExtension_default_);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.7.0")] .require ("x_ite/Base/X3DCast");
-var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/SpecularMaterialExtension.js
 /*******************************************************************************
  *
