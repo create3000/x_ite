@@ -171,7 +171,6 @@ struct ${name .replace (/(EXT)?$/, "Parameters$1")}
 
 `) .join ("\n")}
 
-
 //uniform x3d_SpecularColorTextureParametersEXT x3d_SpecularColorTextureEXT;
 
 #if defined (X3D_MULTI_TEXTURING)
