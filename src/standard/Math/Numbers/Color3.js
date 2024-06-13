@@ -47,7 +47,7 @@
 
 import Algorithm from "../Algorithm.js";
 
-const { clamp, interval, degrees } = Algorithm;
+const { interval, degrees } = Algorithm;
 
 const
    _r = Symbol .for ("X_ITE.Color3.r"),
@@ -102,9 +102,9 @@ Object .assign (Color3 .prototype,
       let h, s, v;
 
       const
-         r = clamp (this [_r], 0, 1),
-         g = clamp (this [_g], 0, 1),
-         b = clamp (this [_b], 0, 1);
+         r = this [_r],
+         g = this [_g],
+         b = this [_b];
 
       const
          min = Math .min (r, g, b),
@@ -126,6 +126,7 @@ Object .assign (Color3 .prototype,
             h = 4 + (r - g) / delta;  // between magenta & cyan
 
          h *= Math .PI / 3;  // radiants
+
          if (h < 0)
             h += Math .PI * 2;
       }
@@ -142,8 +143,8 @@ Object .assign (Color3 .prototype,
    },
    setHSV (h, s, v)
    {
-      s = clamp (s, 0, 1),
-      v = clamp (v, 0, 1);
+      s = Math .max (s, 0),
+      v = Math .max (v, 0);
 
       // H is given on [0, 2 * Pi]. S and V are given on [0, 1].
       // RGB are each returned on [0, 1].
