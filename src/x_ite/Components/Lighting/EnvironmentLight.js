@@ -78,19 +78,15 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    renderShadowMap (renderObject)
    { },
-   setGlobalVariables: (function ()
+   setGlobalVariables (renderObject)
    {
-      const negateX = new Matrix3 (-1, 0, 0, 0, 1, 0, 0, 0, 1);
+      this .modelViewMatrix .get () .get (null, this .rotation);
 
-      return function (renderObject)
-      {
-         this .modelViewMatrix .get () .get (null, this .rotation);
-
-         this .rotation .multLeft (this .lightNode ._rotation .getValue ()) .getMatrix (this .rotationMatrix);
-
-         Matrix3 .prototype .multLeft .call (this .rotationMatrix, negateX);
-      };
-   })(),
+      this .rotation
+         .multLeft (this .lightNode ._rotation .getValue ())
+         .inverse ()
+         .getMatrix (this .rotationMatrix);
+   },
    setShaderUniforms (gl, shaderObject)
    {
       const
