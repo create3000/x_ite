@@ -51,6 +51,7 @@ import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
+import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
 function SpecularMaterialExtension (executionContext)
 {
@@ -79,7 +80,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    },
    getExtensionKey ()
    {
-      return 7;
+      return ExtensionKeys .SPECULAR_MATERIAL_EXTENSION;
    },
    set_specular__ ()
    {

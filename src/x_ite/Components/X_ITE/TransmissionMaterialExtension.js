@@ -50,6 +50,7 @@ import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
+import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
 function TransmissionMaterialExtension (executionContext)
 {
@@ -66,7 +67,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    },
    getExtensionKey ()
    {
-      return 8;
+      return ExtensionKeys .TRANSMISSION_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {

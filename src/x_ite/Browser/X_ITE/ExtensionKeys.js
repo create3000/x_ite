@@ -45,69 +45,20 @@
  *
  ******************************************************************************/
 
-import Fields                   from "../../Fields.js";
-import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
-import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
-import X3DConstants             from "../../Base/X3DConstants.js";
-import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
+let i = 0;
 
-function DispersionMaterialExtension (executionContext)
+const ExtensionKeys =
 {
-   X3DMaterialExtensionNode .call (this, executionContext);
+   ANISOTROPY_MATERIAL_EXTENSION:        i ++,
+   CLEARCOAT_MATERIAL_EXTENSION:         i ++,
+   DISPERSION_MATERIAL_EXTENSION:        i ++,
+   EMISSIVE_STRENGTH_MATERIAL_EXTENSION: i ++,
+   IOR_MATERIAL_EXTENSION:               i ++,
+   IRIDESCENCE_MATERIAL_EXTENSION:       i ++,
+   SHEEN_MATERIAL_EXTENSION:             i ++,
+   SPECULAR_MATERIAL_EXTENSION:          i ++,
+   TRANSMISSION_MATERIAL_EXTENSION:      i ++,
+   VOLUME_MATERIAL_EXTENSION:            i ++,
+};
 
-   this .addType (X3DConstants .DispersionMaterialExtension);
-}
-
-Object .assign (Object .setPrototypeOf (DispersionMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
-{
-   initialize ()
-   {
-      X3DMaterialExtensionNode .prototype .initialize .call (this);
-   },
-   getExtensionKey ()
-   {
-      return ExtensionKeys .DISPERSION_MATERIAL_EXTENSION;
-   },
-   getShaderOptions (options)
-   {
-
-   },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
-   {
-   },
-});
-
-Object .defineProperties (DispersionMaterialExtension,
-{
-   typeName:
-   {
-      value: "DispersionMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "dispersion", new Fields .SFFloat ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-export default DispersionMaterialExtension;
+export default ExtensionKeys;
