@@ -21,6 +21,10 @@ getNormalInfo (const in float normalScale)
       vec3 UV = vec3 (0.0);
    #endif
 
+   #if defined (X3D_NORMAL_TEXTURE_FLIP_Y)
+      UV .t = 1.0 - UV .t;
+   #endif
+
    vec3 n, t, b, ng;
 
    // Compute geometrical TBN:
