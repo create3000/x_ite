@@ -174,6 +174,8 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 
 ### SFNode [in, out] **tangent**
 
+Input/Output field *tangent*.
+
 ### MFFloat [ ] **height** [ ] <small>(-∞,∞)</small>
 
 Grid array of *height* vertices with upward direction along +Y axis, with xDimension rows and zDimension columns.

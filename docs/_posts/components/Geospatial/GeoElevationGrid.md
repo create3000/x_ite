@@ -203,6 +203,8 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 
 ### SFNode [in, out] **tangent**
 
+Input/Output field *tangent*.
+
 ### MFDouble [ ] **height** [ 0, 0 ] <small>(-∞,∞)</small>
 
 Contains xDimension rows * zDimension columns floating-point values for elevation above ellipsoid.

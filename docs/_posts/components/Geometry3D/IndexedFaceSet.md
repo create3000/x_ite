@@ -247,6 +247,8 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 
 ### SFNode [in, out] **tangent**
 
+Input/Output field *tangent*.
+
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 
 Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
