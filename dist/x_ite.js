@@ -11,10 +11,10 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 875:
+/***/ 227:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(127);
+/* provided dependency */ var jQuery = __webpack_require__(247);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -210,7 +210,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 815:
+/***/ 695:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -224,7 +224,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(127)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(247)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -435,7 +435,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 127:
+/***/ 247:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11159,7 +11159,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 940:
+/***/ 948:
 /***/ ((module) => {
 
 /**
@@ -15938,7 +15938,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 871:
+/***/ 103:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19183,7 +19183,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 896:
+/***/ 752:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -23465,7 +23465,7 @@ x_ite_Namespace .add ("SFBool", "x_ite/Fields/SFBool", SFBool_default_);
 
 
 
-const { clamp, interval, degrees } = Math_Algorithm;
+const { interval, degrees } = Math_Algorithm;
 
 const
    _r = Symbol .for ("X_ITE.Color3.r"),
@@ -23520,9 +23520,9 @@ Object .assign (Color3 .prototype,
       let h, s, v;
 
       const
-         r = clamp (this [_r], 0, 1),
-         g = clamp (this [_g], 0, 1),
-         b = clamp (this [_b], 0, 1);
+         r = this [_r],
+         g = this [_g],
+         b = this [_b];
 
       const
          min = Math .min (r, g, b),
@@ -23544,6 +23544,7 @@ Object .assign (Color3 .prototype,
             h = 4 + (r - g) / delta;  // between magenta & cyan
 
          h *= Math .PI / 3;  // radiants
+
          if (h < 0)
             h += Math .PI * 2;
       }
@@ -23560,8 +23561,8 @@ Object .assign (Color3 .prototype,
    },
    setHSV (h, s, v)
    {
-      s = clamp (s, 0, 1),
-      v = clamp (v, 0, 1);
+      s = Math .max (s, 0),
+      v = Math .max (v, 0);
 
       // H is given on [0, 2 * Pi]. S and V are given on [0, 1].
       // RGB are each returned on [0, 1].
@@ -34242,7 +34243,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 x_ite_Namespace .add ("X3DBaseNode", "x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
 /* harmony default export */ const Base_X3DBaseNode = (X3DBaseNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(127);
+/* provided dependency */ var $ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39021,7 +39022,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .add ("X3DProtoDeclaration", "x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(127);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39279,7 +39280,7 @@ const Expressions_default_ = Expressions;
 x_ite_Namespace .add ("Expressions", "x_ite/Parser/Expressions", Expressions_default_);
 /* harmony default export */ const Parser_Expressions = (Expressions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(127);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41979,7 +41980,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .add ("VRMLParser", "x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(127);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44023,7 +44024,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(127);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44320,6 +44321,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             //    break;
             // },
             case "EXT_mesh_gpu_instancing":
+            case "KHR_materials_emissive_strength":
             case "KHR_materials_specular":
             {
                const component = browser .getComponent ("X_ITE", 1);
@@ -45198,9 +45200,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       if (!(KHR_materials_emissive_strength instanceof Object))
          return;
 
-      const emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
+      const emissiveStrengthMaterialExtension = this .getScene () .createNode ("EmissiveStrengthMaterialExtension", false);
 
-      materialNode ._emissiveStrength = emissiveStrength;
+      emissiveStrengthMaterialExtension ._emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
+
+      emissiveStrengthMaterialExtension .setup ();
+
+      materialNode ._extensions .push (emissiveStrengthMaterialExtension);
    },
    khrMaterialsSpecularObject (KHR_materials_specular, materialNode)
    {
@@ -46232,10 +46238,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       return this .defaultAppearance [mode] = appearanceNode;
    },
+   hasTextures (materialNode)
+   {
+      if (+materialNode .getTextureBits ())
+         return true;
+
+      if (materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ()))
+         return true;
+
+      return false;
+   },
    createMultiTextureTransform (materialNode)
    {
-      if (!(+materialNode .getTextureBits () ||
-             materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ())))
+      if (!this .hasTextures (materialNode))
          return null;
 
       const textureTransformNodes = this .textureTransformNodes
@@ -46625,8 +46640,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          appearanceNode = this .materialObject ({ material }),
          materialNode   = appearanceNode ._material .getValue ();
 
-      if (!(+materialNode .getTextureBits () ||
-             materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ())))
+      if (!this .hasTextures (materialNode))
          return null;
 
       if (texCoords .textureCoordinateNode)
@@ -47354,7 +47368,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .add ("GLTF2Parser", "x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(127);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47506,7 +47520,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .add ("GLB2Parser", "x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(127);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50865,8 +50879,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .add ("MatrixStack", "standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(127);
-/* provided dependency */ var libtess = __webpack_require__(940);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(247);
+/* provided dependency */ var libtess = __webpack_require__(948);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53634,7 +53648,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .add ("SVGParser", "x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(127);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54001,7 +54015,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .add ("Plane3", "standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(940);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(948);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -62530,7 +62544,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .add ("X3DTexture2DNode", "x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(127);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66112,7 +66126,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .add ("X3DWorld", "x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(127);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67046,7 +67060,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 x_ite_Namespace .add ("ProtoDeclarationArray", "x_ite/Prototype/ProtoDeclarationArray", ProtoDeclarationArray_default_);
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (ProtoDeclarationArray_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(127);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90204,7 +90218,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .add ("X3DShaderNode", "x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(127);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90421,8 +90435,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_NormalScale       = gl .getUniformLocation (program, "x3d_Material.normalScale");
       this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
 
-      this .x3d_SpecularEXT      = gl .getUniformLocation (program, "x3d_SpecularEXT");
-      this .x3d_SpecularColorEXT = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
+      this .x3d_EmissiveStrengthEXT = gl .getUniformLocation (program, "x3d_EmissiveStrengthEXT");
+      this .x3d_SpecularEXT         = gl .getUniformLocation (program, "x3d_SpecularEXT");
+      this .x3d_SpecularColorEXT    = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
 
       const materialTextures = [
          "x3d_AmbientTexture",
@@ -92641,6 +92656,20 @@ const ProgramShader_default_ = ProgramShader;
 x_ite_Namespace .add ("ProgramShader", "x_ite/Components/Shaders/ProgramShader", ProgramShader_default_);
 /* harmony default export */ const Shaders_ProgramShader = (ProgramShader_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/Types.glsl.js
+const materialTextures = [
+   "x3d_AmbientTexture",
+   "x3d_DiffuseTexture",
+   "x3d_SpecularTexture",
+   "x3d_EmissiveTexture",
+   "x3d_ShininessTexture",
+   "x3d_BaseTexture",
+   "x3d_MetallicRoughnessTexture",
+   "x3d_OcclusionTexture",
+   "x3d_NormalTexture",
+   "x3d_SpecularTextureEXT",
+   "x3d_SpecularColorTextureEXT",
+];
+
 const Types_glsl_default_ = /* glsl */ `#if defined(X3D_FOG)
 struct x3d_FogParameters{mediump int type;mediump vec3 color;mediump float visibilityRange;mediump mat3 matrix;};
 #endif
@@ -92680,149 +92709,27 @@ struct x3d_MaterialParameters{mediump float ambientIntensity;mediump vec3 diffus
 #if defined(X3D_PHYSICAL_MATERIAL)
 struct x3d_PhysicalMaterialParameters{mediump vec3 baseColor;mediump vec3 emissiveColor;mediump float metallic;mediump float roughness;mediump float occlusionStrength;mediump float normalScale;mediump float transparency;};
 #endif
-#if defined(X3D_AMBIENT_TEXTURE)
-struct x3d_AmbientTextureParameters{mediump int textureTransformMapping;mediump int textureCoordinateMapping;
-#if defined(X3D_AMBIENT_TEXTURE_2D)
-mediump sampler2D texture2D;
+
+${materialTextures .map (name => /* glsl */ `
+#if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()})
+struct ${name .replace (/(EXT)?$/, "Parameters$1")}
+{
+mediump int         textureTransformMapping;
+mediump int         textureCoordinateMapping;
+#if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()}_2D)
+mediump sampler2D   texture2D;
 #endif
-#if defined(X3D_AMBIENT_TEXTURE_3D)&&__VERSION__!=100
-mediump sampler3D texture3D;
+#if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()}_3D) && __VERSION__ != 100
+mediump sampler3D   texture3D;
 #endif
-#if defined(X3D_AMBIENT_TEXTURE_CUBE)
+#if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()}_CUBE)
 mediump samplerCube textureCube;
 #endif
 };
 #endif
-#if defined(X3D_DIFFUSE_TEXTURE)
-struct x3d_DiffuseTextureParameters{mediump int textureTransformMapping;mediump int textureCoordinateMapping;
-#if defined(X3D_DIFFUSE_TEXTURE_2D)
-mediump sampler2D texture2D;
-#endif
-#if defined(X3D_DIFFUSE_TEXTURE_3D)&&__VERSION__!=100
-mediump sampler3D texture3D;
-#endif
-#if defined(X3D_DIFFUSE_TEXTURE_CUBE)
-mediump samplerCube textureCube;
-#endif
-};
-#endif
-#if defined(X3D_SPECULAR_TEXTURE)
-struct x3d_SpecularTextureParameters{mediump int textureTransformMapping;mediump int textureCoordinateMapping;
-#if defined(X3D_SPECULAR_TEXTURE_2D)
-mediump sampler2D texture2D;
-#endif
-#if defined(X3D_SPECULAR_TEXTURE_3D)&&__VERSION__!=100
-mediump sampler3D texture3D;
-#endif
-#if defined(X3D_SPECULAR_TEXTURE_CUBE)
-mediump samplerCube textureCube;
-#endif
-};
-#endif
-#if defined(X3D_EMISSIVE_TEXTURE)
-struct x3d_EmissiveTextureParameters{mediump int textureTransformMapping;mediump int textureCoordinateMapping;
-#if defined(X3D_EMISSIVE_TEXTURE_2D)
-mediump sampler2D texture2D;
-#endif
-#if defined(X3D_EMISSIVE_TEXTURE_3D)&&__VERSION__!=100
-mediump sampler3D texture3D;
-#endif
-#if defined(X3D_EMISSIVE_TEXTURE_CUBE)
-mediump samplerCube textureCube;
-#endif
-};
-#endif
-#if defined(X3D_SHININESS_TEXTURE)
-struct x3d_ShininessTextureParameters{mediump int textureTransformMapping;mediump int textureCoordinateMapping;
-#if defined(X3D_SHININESS_TEXTURE_2D)
-mediump sampler2D texture2D;
-#endif
-#if defined(X3D_SHININESS_TEXTURE_3D)&&__VERSION__!=100
-mediump sampler3D texture3D;
-#endif
-#if defined(X3D_SHININESS_TEXTURE_CUBE)
-mediump samplerCube textureCube;
-#endif
-};
-#endif
-#if defined(X3D_BASE_TEXTURE)
-struct x3d_BaseTextureParameters{mediump int textureTransformMapping;mediump int textureCoordinateMapping;
-#if defined(X3D_BASE_TEXTURE_2D)
-mediump sampler2D texture2D;
-#endif
-#if defined(X3D_BASE_TEXTURE_3D)&&__VERSION__!=100
-mediump sampler3D texture3D;
-#endif
-#if defined(X3D_BASE_TEXTURE_CUBE)
-mediump samplerCube textureCube;
-#endif
-};
-#endif
-#if defined(X3D_METALLIC_ROUGHNESS_TEXTURE)
-struct x3d_MetallicRoughnessTextureParameters{mediump int textureTransformMapping;mediump int textureCoordinateMapping;
-#if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
-mediump sampler2D texture2D;
-#endif
-#if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_3D)&&__VERSION__!=100
-mediump sampler3D texture3D;
-#endif
-#if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
-mediump samplerCube textureCube;
-#endif
-};
-#endif
-#if defined(X3D_OCCLUSION_TEXTURE)
-struct x3d_OcclusionTextureParameters{mediump int textureTransformMapping;mediump int textureCoordinateMapping;
-#if defined(X3D_OCCLUSION_TEXTURE_2D)
-mediump sampler2D texture2D;
-#endif
-#if defined(X3D_OCCLUSION_TEXTURE_3D)&&__VERSION__!=100
-mediump sampler3D texture3D;
-#endif
-#if defined(X3D_OCCLUSION_TEXTURE_CUBE)
-mediump samplerCube textureCube;
-#endif
-};
-#endif
-#if defined(X3D_NORMAL_TEXTURE)
-struct x3d_NormalTextureParameters{mediump int textureTransformMapping;mediump int textureCoordinateMapping;
-#if defined(X3D_NORMAL_TEXTURE_2D)
-mediump sampler2D texture2D;
-#endif
-#if defined(X3D_NORMAL_TEXTURE_3D)&&__VERSION__!=100
-mediump sampler3D texture3D;
-#endif
-#if defined(X3D_NORMAL_TEXTURE_CUBE)
-mediump samplerCube textureCube;
-#endif
-};
-#endif
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE)
-struct x3d_SpecularTextureParametersEXT{mediump int textureTransformMapping;mediump int textureCoordinateMapping;
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_2D)
-mediump sampler2D texture2D;
-#endif
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_3D)&&__VERSION__!=100
-mediump sampler3D texture3D;
-#endif
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_CUBE)
-mediump samplerCube textureCube;
-#endif
-};
-#endif
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE)
-struct x3d_SpecularColorTextureParametersEXT{mediump int textureTransformMapping;mediump int textureCoordinateMapping;
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_2D)
-mediump sampler2D texture2D;
-#endif
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_3D)&&__VERSION__!=100
-mediump sampler3D texture3D;
-#endif
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_CUBE)
-mediump samplerCube textureCube;
-#endif
-};
-#endif
+//uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
+`) .join ("\n")}
+ 
 #if defined(X3D_MULTI_TEXTURING)
 struct x3d_MultiTextureParameters{mediump int mode;mediump int alphaMode;mediump int source;mediump int function;};
 #endif
@@ -94506,6 +94413,9 @@ vec3 v=normalize(-vertex);MaterialInfo materialInfo;materialInfo.baseColor=baseC
 #if defined(X3D_MATERIAL_METALLIC_ROUGHNESS)
 materialInfo=getMetallicRoughnessInfo(materialInfo);
 #endif
+#if defined(X3D_SPECULAR_MATERIAL_EXT)
+materialInfo=getSpecularInfo(materialInfo);
+#endif
 materialInfo.perceptualRoughness=clamp(materialInfo.perceptualRoughness,0.0,1.0);materialInfo.metallic=clamp(materialInfo.metallic,0.0,1.0);materialInfo.alphaRoughness=materialInfo.perceptualRoughness*materialInfo.perceptualRoughness;float reflectance=max(max(materialInfo.f0.r,materialInfo.f0.g),materialInfo.f0.b);materialInfo.f90=vec3(1.0);vec3 f_specular=vec3(0.0);vec3 f_diffuse=vec3(0.0);vec3 f_emissive=vec3(0.0);vec3 f_clearcoat=vec3(0.0);vec3 f_sheen=vec3(0.0);vec3 f_transmission=vec3(0.0);float albedoSheenScaling=1.0;
 #if defined(X3D_USE_IBL)
 f_specular+=getIBLRadianceGGX(n,v,materialInfo.perceptualRoughness,materialInfo.f0,materialInfo.specularWeight);f_diffuse+=getIBLRadianceLambertian(n,v,materialInfo.perceptualRoughness,materialInfo.c_diff,materialInfo.f0,materialInfo.specularWeight);
@@ -95365,7 +95275,13 @@ info.c_diff=mix(info.baseColor.rgb,vec3(0.0),info.metallic);info.f0=mix(info.f0,
 #if defined(X3D_EMISSIVE_TEXTURE)
 uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
 #endif
+#if defined(X3D_EMISSIVE_STRENGTH_MATERIAL_EXT)
+uniform float x3d_EmissiveStrengthEXT;
+#endif
 vec3 getEmissiveColor(){vec3 emissiveColor=x3d_Material.emissiveColor;
+#if defined(X3D_EMISSIVE_STRENGTH_MATERIAL_EXT)
+emissiveColor*=x3d_EmissiveStrengthEXT;
+#endif
 #if defined(X3D_EMISSIVE_TEXTURE)
 vec3 texCoord=getTexCoord(x3d_EmissiveTexture.textureTransformMapping,x3d_EmissiveTexture.textureCoordinateMapping);
 #if defined(X3D_EMISSIVE_TEXTURE_FLIP_Y)
@@ -95400,7 +95316,42 @@ return textureCube(x3d_OcclusionTexture.textureCube,texCoord).r;
 #else
 return 1.0;
 #endif
-}`
+}
+#if defined(X3D_SPECULAR_MATERIAL_EXT)
+#if defined(X3D_SPECULAR_TEXTURE_EXT)
+uniform x3d_SpecularTextureParametersEXT x3d_SpecularTextureEXT;float getSpecularEXT(){vec3 texCoord=getTexCoord(x3d_SpecularTextureEXT.textureTransformMapping,x3d_SpecularTextureEXT.textureCoordinateMapping);
+#if defined(X3D_SPECULAR_TEXTURE_EXT_FLIP_Y)
+texCoord.t=1.0-texCoord.t;
+#endif
+#if defined(X3D_SPECULAR_TEXTURE_EXT_2D)
+return texture2D(x3d_SpecularTextureEXT.texture2D,texCoord.st).a;
+#elif defined(X3D_SPECULAR_TEXTURE_EXT_CUBE)
+return textureCube(x3d_SpecularTextureEXT.textureCube,texCoord).a;
+#endif
+}
+#endif
+#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT)
+uniform x3d_SpecularColorTextureParametersEXT x3d_SpecularColorTextureEXT;vec3 getSpecularColorEXT(){vec3 texCoord=getTexCoord(x3d_SpecularColorTextureEXT.textureTransformMapping,x3d_SpecularColorTextureEXT.textureCoordinateMapping);
+#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_FLIP_Y)
+texCoord.t=1.0-texCoord.t;
+#endif
+#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_2D)
+return texture2D(x3d_SpecularColorTextureEXT.texture2D,texCoord.st).rgb;
+#elif defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_CUBE)
+return textureCube(x3d_SpecularColorTextureEXT.textureCube,texCoord).rgb;
+#endif
+}
+#endif
+uniform float x3d_SpecularEXT;uniform vec3 x3d_SpecularColorEXT;MaterialInfo getSpecularInfo(in MaterialInfo info){vec4 specularTexture=vec4(1.0);
+#if defined(X3D_SPECULAR_TEXTURE_EXT)
+specularTexture.a=getSpecularEXT();
+#endif
+#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT)
+specularTexture.rgb=getSpecularColorEXT();
+#endif
+vec3 dielectricSpecularF0=min(info.f0*x3d_SpecularColorEXT*specularTexture.rgb,vec3(1.0));info.f0=mix(dielectricSpecularF0,info.baseColor.rgb,info.metallic);info.specularWeight=x3d_SpecularEXT*specularTexture.a;info.c_diff=mix(info.baseColor.rgb,vec3(0.0),info.metallic);return info;}
+#endif
+`
 ;
 
 x_ite_Namespace .add ("MaterialInfo1.glsl", "assets/shaders/webgl1/pbr/MaterialInfo1.glsl", MaterialInfo1_glsl_default_);
@@ -95544,7 +95495,13 @@ info.c_diff=mix(info.baseColor.rgb,vec3(0.0),info.metallic);info.f0=mix(info.f0,
 #if defined(X3D_EMISSIVE_TEXTURE)
 uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
 #endif
+#if defined(X3D_EMISSIVE_STRENGTH_MATERIAL_EXT)
+uniform float x3d_EmissiveStrengthEXT;
+#endif
 vec3 getEmissiveColor(){vec3 emissiveColor=x3d_Material.emissiveColor;
+#if defined(X3D_EMISSIVE_STRENGTH_MATERIAL_EXT)
+emissiveColor*=x3d_EmissiveStrengthEXT;
+#endif
 #if defined(X3D_EMISSIVE_TEXTURE)
 vec3 texCoord=getTexCoord(x3d_EmissiveTexture.textureTransformMapping,x3d_EmissiveTexture.textureCoordinateMapping);
 #if defined(X3D_EMISSIVE_TEXTURE_FLIP_Y)
@@ -95585,39 +95542,39 @@ return 1.0;
 #endif
 }
 #if defined(X3D_SPECULAR_MATERIAL_EXT)
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE)
+#if defined(X3D_SPECULAR_TEXTURE_EXT)
 uniform x3d_SpecularTextureParametersEXT x3d_SpecularTextureEXT;float getSpecularEXT(){vec3 texCoord=getTexCoord(x3d_SpecularTextureEXT.textureTransformMapping,x3d_SpecularTextureEXT.textureCoordinateMapping);
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_FLIP_Y)
+#if defined(X3D_SPECULAR_TEXTURE_EXT_FLIP_Y)
 texCoord.t=1.0-texCoord.t;
 #endif
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_2D)
+#if defined(X3D_SPECULAR_TEXTURE_EXT_2D)
 return texture(x3d_SpecularTextureEXT.texture2D,texCoord.st).a;
-#elif defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_3D)
+#elif defined(X3D_SPECULAR_TEXTURE_EXT_3D)
 return texture(x3d_SpecularTextureEXT.texture3D,texCoord).a;
-#elif defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_CUBE)
+#elif defined(X3D_SPECULAR_TEXTURE_EXT_CUBE)
 return texture(x3d_SpecularTextureEXT.textureCube,texCoord).a;
 #endif
 }
 #endif
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE)
+#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT)
 uniform x3d_SpecularColorTextureParametersEXT x3d_SpecularColorTextureEXT;vec3 getSpecularColorEXT(){vec3 texCoord=getTexCoord(x3d_SpecularColorTextureEXT.textureTransformMapping,x3d_SpecularColorTextureEXT.textureCoordinateMapping);
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_FLIP_Y)
+#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_FLIP_Y)
 texCoord.t=1.0-texCoord.t;
 #endif
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_2D)
+#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_2D)
 return texture(x3d_SpecularColorTextureEXT.texture2D,texCoord.st).rgb;
-#elif defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_3D)
+#elif defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_3D)
 return texture(x3d_SpecularColorTextureEXT.texture3D,texCoord).rgb;
-#elif defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_CUBE)
+#elif defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_CUBE)
 return texture(x3d_SpecularColorTextureEXT.textureCube,texCoord).rgb;
 #endif
 }
 #endif
 uniform float x3d_SpecularEXT;uniform vec3 x3d_SpecularColorEXT;MaterialInfo getSpecularInfo(in MaterialInfo info){vec4 specularTexture=vec4(1.0);
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE)
+#if defined(X3D_SPECULAR_TEXTURE_EXT)
 specularTexture.a=getSpecularEXT();
 #endif
-#if defined(X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE)
+#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT)
 specularTexture.rgb=getSpecularColorEXT();
 #endif
 vec3 dielectricSpecularF0=min(info.f0*x3d_SpecularColorEXT*specularTexture.rgb,vec3(1.0));info.f0=mix(dielectricSpecularF0,info.baseColor.rgb,info.metallic);info.specularWeight=x3d_SpecularEXT*specularTexture.a;info.c_diff=mix(info.baseColor.rgb,vec3(0.0),info.metallic);return info;}
@@ -95973,7 +95930,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .add ("ShaderCompiler", "x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(127);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96630,7 +96587,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .add ("X3DAppearanceNode", "x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(127);
+/* provided dependency */ var Appearance_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97905,12 +97862,11 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, Shap
    {
       Shape_X3DMaterialNode .prototype .initialize .call (this);
 
-      this ._emissiveColor    .addInterest ("set_emissiveColor__",   this);
-      this ._emissiveStrength .addInterest ("set_emissiveColor__",   this);
-      this ._emissiveTexture  .addInterest ("set_emissiveTexture__", this);
-      this ._normalTexture    .addInterest ("set_normalTexture__",   this);
-      this ._transparency     .addInterest ("set_transparency__",    this);
-      this ._transparency     .addInterest ("set_transparent__",     this);
+      this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
+      this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
+      this ._normalTexture   .addInterest ("set_normalTexture__",   this);
+      this ._transparency    .addInterest ("set_transparency__",    this);
+      this ._transparency    .addInterest ("set_transparent__",     this);
 
       this .set_emissiveColor__ ();
       this .set_emissiveTexture__ ();
@@ -97924,12 +97880,11 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, Shap
 
       const
          emissiveColorArray = this .emissiveColorArray,
-         emissiveColor      = this ._emissiveColor .getValue (),
-         emissiveStrength   = this ._emissiveStrength .getValue ();
+         emissiveColor      = this ._emissiveColor .getValue ();
 
-      emissiveColorArray [0] = emissiveColor .r * emissiveStrength;
-      emissiveColorArray [1] = emissiveColor .g * emissiveStrength;
-      emissiveColorArray [2] = emissiveColor .b * emissiveStrength;
+      emissiveColorArray [0] = emissiveColor .r;
+      emissiveColorArray [1] = emissiveColor .g;
+      emissiveColorArray [2] = emissiveColor .b;
    },
    set_emissiveTexture__ ()
    {
@@ -98502,7 +98457,6 @@ Object .defineProperties (Material,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "specularTextureMapping",   new x_ite_Fields .SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "specularTexture",          new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "emissiveColor",            new x_ite_Fields .SFColor ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "emissiveStrength",         new x_ite_Fields .SFFloat (1)), // skip test
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "emissiveTextureMapping",   new x_ite_Fields .SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "emissiveTexture",          new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "shininess",                new x_ite_Fields .SFFloat (0.2)),
@@ -98888,7 +98842,6 @@ Object .defineProperties (PhysicalMaterial,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "baseTextureMapping",              new x_ite_Fields .SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "baseTexture",                     new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "emissiveColor",                   new x_ite_Fields .SFColor ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "emissiveStrength",                new x_ite_Fields .SFFloat (1)), // skip test
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "emissiveTextureMapping",          new x_ite_Fields .SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "emissiveTexture",                 new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metallic",                        new x_ite_Fields .SFFloat (1)),
@@ -98902,7 +98855,7 @@ Object .defineProperties (PhysicalMaterial,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "normalTextureMapping",            new x_ite_Fields .SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "normalTexture",                   new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "transparency",                    new x_ite_Fields .SFFloat ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "extensions",                      new x_ite_Fields .MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "extensions",                      new x_ite_Fields .MFNode ()), // experimental
       ]),
       enumerable: true,
    },
@@ -99996,7 +99949,6 @@ Object .defineProperties (UnlitMaterial,
       value: new Base_FieldDefinitionArray ([
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",               new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "emissiveColor",          new x_ite_Fields .SFColor (1, 1, 1)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "emissiveStrength",       new x_ite_Fields .SFFloat (1)), // skip test
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "emissiveTextureMapping", new x_ite_Fields .SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "emissiveTexture",        new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "normalScale",            new x_ite_Fields .SFFloat (1)),
@@ -105628,8 +105580,8 @@ const GifMedia_default_ = GifMedia;
 x_ite_Namespace .add ("GifMedia", "x_ite/Browser/Texturing/GifMedia", GifMedia_default_);
 /* harmony default export */ const Texturing_GifMedia = (GifMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(127);
-/* provided dependency */ var SuperGif = __webpack_require__(896);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(247);
+/* provided dependency */ var SuperGif = __webpack_require__(752);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108290,10 +108242,17 @@ const Context =
             {
                const ext = gl .getExtension ("OES_vertex_array_object");
 
-               gl .bindVertexArray   =  ext .bindVertexArrayOES   .bind (ext);
-               gl .createVertexArray =  ext .createVertexArrayOES .bind (ext);
-               gl .deleteVertexArray =  ext .deleteVertexArrayOES .bind (ext);
-               gl .isVertexArray     =  ext .isVertexArrayOES     .bind (ext);
+               gl .bindVertexArray   = ext .bindVertexArrayOES   .bind (ext);
+               gl .createVertexArray = ext .createVertexArrayOES .bind (ext);
+               gl .deleteVertexArray = ext .deleteVertexArrayOES .bind (ext);
+               gl .isVertexArray     = ext .isVertexArrayOES     .bind (ext);
+            }
+
+            {
+               const ext = gl .getExtension ("ANGLE_instanced_arrays");
+
+               gl .drawArraysInstanced = ext .drawArraysInstancedANGLE .bind (ext);
+               gl .vertexAttribDivisor = ext .vertexAttribDivisorANGLE .bind (ext);
             }
          }
       }
@@ -109037,7 +108996,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 x_ite_Namespace .add ("gettext", "locale/gettext", gettext_default_);
 /* harmony default export */ const gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(127);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109610,7 +109569,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .add ("TextureQuality", "x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(127);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110205,7 +110164,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .add ("RenderingProperties", "x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(127);
+/* provided dependency */ var Notification_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110328,8 +110287,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .add ("Notification", "x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(875);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(127);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(227);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113082,7 +113041,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .add ("DataStorage", "standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(127);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115629,8 +115588,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .add ("X3DViewer", "x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(815);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(127);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(695);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116502,8 +116461,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .add ("ExamineViewer", "x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(815);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(127);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(695);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117512,8 +117471,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .add ("FlyViewer", "x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(815);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(127);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(695);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117844,8 +117803,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .add ("NoneViewer", "x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(815);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(127);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(695);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118983,8 +118942,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .add ("X3DPickingContext", "x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(815);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(127);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(695);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120288,7 +120247,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .add ("MultiSampleFrameBuffer", "x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(127);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121237,7 +121196,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 x_ite_Namespace .add ("X3DSoundContext", "x_ite/Browser/Sound/X3DSoundContext", X3DSoundContext_default_);
 /* harmony default export */ const Sound_X3DSoundContext = (X3DSoundContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(127);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(247);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -122797,7 +122756,7 @@ const Components_default_ = Components;
 x_ite_Namespace .add ("Components", "x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(127);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(247);
 /*******************************************************************************
  * MIT License
  *
@@ -124065,7 +124024,7 @@ const FieldTypes_default_ = new Configuration_FieldTypesArray (Object .values (x
 x_ite_Namespace .add ("FieldTypes", "x_ite/Configuration/FieldTypes", FieldTypes_default_);
 /* harmony default export */ const FieldTypes = (FieldTypes_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(127);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -125167,7 +125126,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace .add ("X3DBrowser", "x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(127);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -125306,8 +125265,8 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 x_ite_Namespace .add ("X3DCanvasElement", "x_ite/X3DCanvasElement", X3DCanvasElement_default_);
 /* harmony default export */ const x_ite_X3DCanvasElement = (X3DCanvasElement_default_);
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(127);
-/* provided dependency */ var pako = __webpack_require__(871);
+/* provided dependency */ var jquery_$ = __webpack_require__(247);
+/* provided dependency */ var pako = __webpack_require__(103);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -125384,14 +125343,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .add ("jquery", "lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(940);
+/* provided dependency */ var libtess_libtess = __webpack_require__(948);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .add ("libtess", "lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(127);
+/* provided dependency */ var X3D_$ = __webpack_require__(247);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

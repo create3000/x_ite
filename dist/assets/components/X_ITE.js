@@ -779,6 +779,9 @@ const InstancedShape_default_ = InstancedShape;
 
 Namespace_default().add ("InstancedShape", "x_ite/Components/X_ITE/InstancedShape", InstancedShape_default_);
 /* harmony default export */ const X_ITE_InstancedShape = (InstancedShape_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DNode\")"
+const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.7.0")] .require ("x_ite/Components/Core/X3DNode");
+var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Utility/BitSet\")"
 const BitSet_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.7.0")] .require ("standard/Utility/BitSet");
 var BitSet_default = /*#__PURE__*/__webpack_require__.n(BitSet_namespaceObject);
@@ -836,14 +839,14 @@ var BitSet_default = /*#__PURE__*/__webpack_require__.n(BitSet_namespaceObject);
 
 function X3DMaterialExtensionNode (executionContext)
 {
-   X3DAppearanceChildNode_default().call (this, executionContext);
+   X3DNode_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).X3DMaterialExtensionNode);
 
    this .textureBits = new (BitSet_default()) ();
 }
 
-Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, (X3DAppearanceChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, (X3DNode_default()).prototype),
 {
    setTexture (index, textureNode)
    {
@@ -877,6 +880,75 @@ const X3DMaterialExtensionNode_default_ = X3DMaterialExtensionNode;
 
 Namespace_default().add ("X3DMaterialExtensionNode", "x_ite/Components/X_ITE/X3DMaterialExtensionNode", X3DMaterialExtensionNode_default_);
 /* harmony default export */ const X_ITE_X3DMaterialExtensionNode = (X3DMaterialExtensionNode_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Browser/X_ITE/ExtensionKeys.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+let i = 0;
+
+const ExtensionKeys =
+{
+   ANISOTROPY_MATERIAL_EXTENSION:        i ++,
+   CLEARCOAT_MATERIAL_EXTENSION:         i ++,
+   DISPERSION_MATERIAL_EXTENSION:        i ++,
+   EMISSIVE_STRENGTH_MATERIAL_EXTENSION: i ++,
+   IOR_MATERIAL_EXTENSION:               i ++,
+   IRIDESCENCE_MATERIAL_EXTENSION:       i ++,
+   SHEEN_MATERIAL_EXTENSION:             i ++,
+   SPECULAR_MATERIAL_EXTENSION:          i ++,
+   TRANSMISSION_MATERIAL_EXTENSION:      i ++,
+   VOLUME_MATERIAL_EXTENSION:            i ++,
+};
+
+const ExtensionKeys_default_ = ExtensionKeys;
+;
+
+Namespace_default().add ("ExtensionKeys", "x_ite/Browser/X_ITE/ExtensionKeys", ExtensionKeys_default_);
+/* harmony default export */ const X_ITE_ExtensionKeys = (ExtensionKeys_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/AnisotropyMaterialExtension.js
 /*******************************************************************************
  *
@@ -931,6 +1003,7 @@ Namespace_default().add ("X3DMaterialExtensionNode", "x_ite/Components/X_ITE/X3D
 
 
 
+
 function AnisotropyMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -946,7 +1019,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    },
    getExtensionKey ()
    {
-      return 0;
+      return X_ITE_ExtensionKeys .ANISOTROPY_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -1051,6 +1124,7 @@ Namespace_default().add ("AnisotropyMaterialExtension", "x_ite/Components/X_ITE/
 
 
 
+
 function ClearcoatMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -1066,7 +1140,7 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    },
    getExtensionKey ()
    {
-      return 1;
+      return X_ITE_ExtensionKeys .CLEARCOAT_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -1175,6 +1249,7 @@ Namespace_default().add ("ClearcoatMaterialExtension", "x_ite/Components/X_ITE/C
 
 
 
+
 function DispersionMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -1190,7 +1265,7 @@ Object .assign (Object .setPrototypeOf (DispersionMaterialExtension .prototype, 
    },
    getExtensionKey ()
    {
-      return 2;
+      return X_ITE_ExtensionKeys .DISPERSION_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -1238,6 +1313,133 @@ const DispersionMaterialExtension_default_ = DispersionMaterialExtension;
 
 Namespace_default().add ("DispersionMaterialExtension", "x_ite/Components/X_ITE/DispersionMaterialExtension", DispersionMaterialExtension_default_);
 /* harmony default export */ const X_ITE_DispersionMaterialExtension = (DispersionMaterialExtension_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/EmissiveStrengthMaterialExtension.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+function EmissiveStrengthMaterialExtension (executionContext)
+{
+   X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).EmissiveStrengthMaterialExtension);
+}
+
+Object .assign (Object .setPrototypeOf (EmissiveStrengthMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
+{
+   initialize ()
+   {
+      X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._emissiveStrength .addInterest ("set_emissiveStrength__", this);
+
+      this .set_emissiveStrength__ ();
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .EMISSIVE_STRENGTH_MATERIAL_EXTENSION;
+   },
+   set_emissiveStrength__ ()
+   {
+      this .emissiveStrength = Math .max (this ._emissiveStrength .getValue (), 0);
+   },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_EMISSIVE_STRENGTH_MATERIAL_EXT");
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+      gl .uniform1f (shaderObject .x3d_EmissiveStrengthEXT, this .emissiveStrength);
+   },
+});
+
+Object .defineProperties (EmissiveStrengthMaterialExtension,
+{
+   typeName:
+   {
+      value: "EmissiveStrengthMaterialExtension",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "extensions",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "emissiveStrength", new (Fields_default()).SFFloat (1)),
+      ]),
+      enumerable: true,
+   },
+});
+
+const EmissiveStrengthMaterialExtension_default_ = EmissiveStrengthMaterialExtension;
+;
+
+Namespace_default().add ("EmissiveStrengthMaterialExtension", "x_ite/Components/X_ITE/EmissiveStrengthMaterialExtension", EmissiveStrengthMaterialExtension_default_);
+/* harmony default export */ const X_ITE_EmissiveStrengthMaterialExtension = (EmissiveStrengthMaterialExtension_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/IORMaterialExtension.js
 /*******************************************************************************
  *
@@ -1292,6 +1494,7 @@ Namespace_default().add ("DispersionMaterialExtension", "x_ite/Components/X_ITE/
 
 
 
+
 function IORMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -1307,7 +1510,7 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X_ITE_X
    },
    getExtensionKey ()
    {
-      return 3;
+      return X_ITE_ExtensionKeys .IOR_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -1409,6 +1612,7 @@ Namespace_default().add ("IORMaterialExtension", "x_ite/Components/X_ITE/IORMate
 
 
 
+
 function IridescenceMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -1424,7 +1628,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    },
    getExtensionKey ()
    {
-      return 4;
+      return X_ITE_ExtensionKeys .IRIDESCENCE_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -1533,6 +1737,7 @@ Namespace_default().add ("IridescenceMaterialExtension", "x_ite/Components/X_ITE
 
 
 
+
 function SheenMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -1548,7 +1753,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
    },
    getExtensionKey ()
    {
-      return 5;
+      return X_ITE_ExtensionKeys .SHEEN_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -1659,6 +1864,7 @@ var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject
 
 
 
+
 function SpecularMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -1686,7 +1892,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
    },
    getExtensionKey ()
    {
-      return 6;
+      return X_ITE_ExtensionKeys .SPECULAR_MATERIAL_EXTENSION;
    },
    set_specular__ ()
    {
@@ -1727,16 +1933,16 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
       options .push ("X3D_MATERIAL_TEXTURES");
 
       if (this .specularTextureNode)
-         options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE", `X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_${this .specularTextureNode .getTextureTypeString ()}`);
+         options .push ("X3D_SPECULAR_TEXTURE_EXT", `X3D_SPECULAR_TEXTURE_EXT_${this .specularTextureNode .getTextureTypeString ()}`);
 
       if (this .specularTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_FLIP_Y");
+         options .push ("X3D_SPECULAR_TEXTURE_EXT_FLIP_Y");
 
       if (this .specularColorTextureNode)
-         options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE", `X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_${this .specularColorTextureNode .getTextureTypeString ()}`);
+         options .push ("X3D_SPECULAR_COLOR_TEXTURE_EXT", `X3D_SPECULAR_COLOR_TEXTURE_EXT_${this .specularColorTextureNode .getTextureTypeString ()}`);
 
       if (this .specularColorTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_FLIP_Y");
+         options .push ("X3D_SPECULAR_COLOR_TEXTURE_EXT_FLIP_Y");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
@@ -1872,6 +2078,7 @@ Namespace_default().add ("SpecularMaterialExtension", "x_ite/Components/X_ITE/Sp
 
 
 
+
 function TransmissionMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -1887,7 +2094,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    },
    getExtensionKey ()
    {
-      return 7;
+      return X_ITE_ExtensionKeys .TRANSMISSION_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -1927,7 +2134,6 @@ Object .defineProperties (TransmissionMaterialExtension,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "transmission",               new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "transmissionTextureMapping", new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "transmissionTexture",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "dispersion",                 new (Fields_default()).SFFloat ()),
       ]),
       enumerable: true,
    },
@@ -1992,6 +2198,7 @@ Namespace_default().add ("TransmissionMaterialExtension", "x_ite/Components/X_IT
 
 
 
+
 function VolumeMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -2007,7 +2214,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X_IT
    },
    getExtensionKey ()
    {
-      return 8;
+      return X_ITE_ExtensionKeys .VOLUME_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -2122,6 +2329,7 @@ Namespace_default().add ("VolumeMaterialExtension", "x_ite/Components/X_ITE/Volu
 
 
 
+
 Components_default().add ({
    name: "X_ITE",
    concreteNodes:
@@ -2132,6 +2340,7 @@ Components_default().add ({
       X_ITE_AnisotropyMaterialExtension,
       X_ITE_ClearcoatMaterialExtension,
       X_ITE_DispersionMaterialExtension,
+      X_ITE_EmissiveStrengthMaterialExtension,
       X_ITE_IORMaterialExtension,
       X_ITE_IridescenceMaterialExtension,
       X_ITE_SheenMaterialExtension,
