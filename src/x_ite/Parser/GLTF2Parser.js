@@ -2231,27 +2231,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return this .defaultAppearance [mode] = appearanceNode;
    },
-   hasTextures: (function ()
+   hasTextures (materialNode)
    {
-      // Extensions which need texture coords.
-      const extensions = new Set ([
-         "AnisotropyMaterialExtension",
-      ]);
+      if (+materialNode .getTextureBits ())
+         return true;
 
-      return function (materialNode)
-      {
-         if (+materialNode .getTextureBits ())
-            return true;
+      if (materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ()))
+         return true;
 
-         if (materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ()))
-            return true;
-
-         if (materialNode ._extensions .some (extension => extensions .has (extension .getNodeTypeName ())))
-            return true;
-
-         return false;
-      };
-   })(),
+      return false;
+   },
    createMultiTextureTransform (materialNode)
    {
       if (!this .hasTextures (materialNode))

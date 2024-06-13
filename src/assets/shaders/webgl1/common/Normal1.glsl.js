@@ -37,7 +37,7 @@ getNormalInfo (const in float normalScale)
    #if defined (X3D_NORMAL_TEXTURE)
       vec3 UV = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
    #else
-      vec3 UV = texCoord0 .stp / texCoord0 .q;
+      vec3 UV = vec3 (0.0);
    #endif
 
    vec2 uv_dx = dFdx (UV .st);
