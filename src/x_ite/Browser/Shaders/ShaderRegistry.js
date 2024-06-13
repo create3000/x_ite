@@ -110,14 +110,14 @@ import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing2.vs.
 import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js";
 
 /* PBR 1 */
-import BDRF1                  from "../../../assets/shaders/webgl1/pbr/BDRF1.glsl.js";
+import BRDF1                  from "../../../assets/shaders/webgl1/pbr/BRDF1.glsl.js";
 import IBL1                   from "../../../assets/shaders/webgl1/pbr/IBL1.glsl.js";
 import Punctual1              from "../../../assets/shaders/webgl1/pbr/Punctual1.glsl.js";
 import MaterialInfo1          from "../../../assets/shaders/webgl1/pbr/MaterialInfo1.glsl.js";
 import ToneMapping1           from "../../../assets/shaders/webgl1/pbr/ToneMapping1.glsl.js";
 
 /* PBR 2 */
-import BDRF2                  from "../../../assets/shaders/webgl2/pbr/BDRF2.glsl.js";
+import BRDF2                  from "../../../assets/shaders/webgl2/pbr/BRDF2.glsl.js";
 import IBL2                   from "../../../assets/shaders/webgl2/pbr/IBL2.glsl.js";
 import Punctual2              from "../../../assets/shaders/webgl2/pbr/Punctual2.glsl.js";
 import MaterialInfo2          from "../../../assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js";
@@ -140,7 +140,7 @@ const ShaderRegistry = {
          Texture: Texture1,
          Vertex: Vertex1,
          // PBR
-         BDRF: BDRF1,
+         BRDF: BRDF1,
          IBL: IBL1,
          MaterialInfo: MaterialInfo1,
          Punctual: Punctual1,
@@ -166,7 +166,7 @@ const ShaderRegistry = {
          Utils: Utils2,
          Vertex: Vertex2,
          // PBR
-         BDRF: BDRF2,
+         BRDF: BRDF2,
          IBL: IBL2,
          MaterialInfo: MaterialInfo2,
          Punctual: Punctual2,

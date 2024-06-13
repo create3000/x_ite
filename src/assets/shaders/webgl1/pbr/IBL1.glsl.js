@@ -97,7 +97,7 @@ getIBLRadianceAnisotropy (const in vec3 n, const in vec3 v, const in float rough
    vec3  reflection = normalize (reflect (-v, bentNormal));
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
-   vec2 f_ab            = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint).rg;
+   vec2 f_ab            = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
    vec3 specularLight   = getSpecularLight (reflection, lod);
 
    // see https://bruop.github.io/ibl/#single_scattering_results at Single Scattering Results

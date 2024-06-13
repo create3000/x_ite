@@ -18,7 +18,7 @@ precision highp samplerCube;
 
 uniform x3d_PhysicalMaterialParameters x3d_Material;
 
-#pragma X3D include "pbr/BDRF.glsl"
+#pragma X3D include "pbr/BRDF.glsl"
 #pragma X3D include "pbr/MaterialInfo.glsl"
 #pragma X3D include "pbr/Punctual.glsl"
 #pragma X3D include "pbr/IBL.glsl"
@@ -166,7 +166,7 @@ getMaterialColor ()
                l_specular += intensity * NdotL * BRDF_specularGGXIridescence (materialInfo .f0, materialInfo .f90, iridescenceFresnel, materialInfo .alphaRoughness, materialInfo .iridescenceFactor, materialInfo .specularWeight, VdotH, NdotL, NdotV, NdotH);
             #elif defined (X3D_ANISOTROPY_MATERIAL_EXT)
                l_diffuse  += intensity * NdotL * BRDF_lambertian (materialInfo .f0, materialInfo .f90, materialInfo .c_diff, materialInfo .specularWeight, VdotH);
-               l_specular += intensity * NdotL * BRDF_specularGGXAnisotropy(materialInfo .f0, materialInfo .f90, materialInfo .alphaRoughness, materialInfo .anisotropyStrength, n, v, l, h, materialInfo .anisotropicT, materialInfo .anisotropicB);
+               l_specular += intensity * NdotL * BRDF_specularGGXAnisotropy (materialInfo .f0, materialInfo .f90, materialInfo .alphaRoughness, materialInfo .anisotropyStrength, n, v, l, h, materialInfo .anisotropicT, materialInfo .anisotropicB);
             #else
                l_diffuse  += intensity * NdotL * BRDF_lambertian (materialInfo .f0, materialInfo .f90, materialInfo .c_diff, materialInfo .specularWeight, VdotH);
                l_specular += intensity * NdotL * BRDF_specularGGX (materialInfo .f0, materialInfo .f90, materialInfo .alphaRoughness, materialInfo .specularWeight, VdotH, NdotL, NdotV, NdotH);
