@@ -88,8 +88,11 @@ const Context =
             {
                const ext = gl .getExtension ("ANGLE_instanced_arrays");
 
-               gl .drawArraysInstanced = ext .drawArraysInstancedANGLE .bind (ext);
-               gl .vertexAttribDivisor = ext .vertexAttribDivisorANGLE .bind (ext);
+               gl .VERTEX_ATTRIB_ARRAY_DIVISOR = ext .VERTEX_ATTRIB_ARRAY_DIVISOR_ANGLE;
+
+               gl .vertexAttribDivisor   = ext .vertexAttribDivisorANGLE   .bind (ext);
+               gl .drawArraysInstanced   = ext .drawArraysInstancedANGLE   .bind (ext);
+               gl .drawElementsInstanced = ext .drawElementsInstancedANGLE .bind (ext);
             }
          }
       }
