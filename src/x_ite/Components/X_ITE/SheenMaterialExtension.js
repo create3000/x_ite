@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
    },
    getExtensionKey ()
    {
-      return 5;
+      return 6;
    },
    getShaderOptions (options)
    {

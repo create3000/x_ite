@@ -79,7 +79,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    },
    getExtensionKey ()
    {
-      return 6;
+      return 7;
    },
    set_specular__ ()
    {

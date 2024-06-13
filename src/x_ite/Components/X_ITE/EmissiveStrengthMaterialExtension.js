@@ -51,22 +51,30 @@ import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 
-function IridescenceMaterialExtension (executionContext)
+function EmissiveStrengthMaterialExtension (executionContext)
 {
    X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType (X3DConstants .IridescenceMaterialExtension);
+   this .addType (X3DConstants .EmissiveStrengthMaterialExtension);
 }
 
-Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
+Object .assign (Object .setPrototypeOf (EmissiveStrengthMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
 {
    initialize ()
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._emissiveStrength .addInterest ("set_emissiveStrength__", this);
+
+      this .set_emissiveStrength__ ();
    },
    getExtensionKey ()
    {
-      return 5;
+      return 3;
+   },
+   set_emissiveStrength__ ()
+   {
+      this .emissiveStrength = Math .max (this ._emissiveStrength .getValue (), 0);
    },
    getShaderOptions (options)
    {
@@ -77,11 +85,11 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    },
 });
 
-Object .defineProperties (IridescenceMaterialExtension,
+Object .defineProperties (EmissiveStrengthMaterialExtension,
 {
    typeName:
    {
-      value: "IridescenceMaterialExtension",
+      value: "EmissiveStrengthMaterialExtension",
       enumerable: true,
    },
    componentInfo:
@@ -102,18 +110,11 @@ Object .defineProperties (IridescenceMaterialExtension,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescence",                        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceTextureMapping",          new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceTexture",                 new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceIndexOfRefraction",       new Fields .SFFloat (1.3)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceThicknessMinimum",        new Fields .SFFloat (100)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceThicknessMaximum",        new Fields .SFFloat (400)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceThicknessTextureMapping", new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "iridescenceThicknessTexture",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveStrength",new Fields .SFFloat (1)),
       ]),
       enumerable: true,
    },
 });
 
-export default IridescenceMaterialExtension;
+export default EmissiveStrengthMaterialExtension;

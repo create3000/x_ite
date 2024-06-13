@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X3DMate
    },
    getExtensionKey ()
    {
-      return 3;
+      return 4;
    },
    getShaderOptions (options)
    {

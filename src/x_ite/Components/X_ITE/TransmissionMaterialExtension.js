@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    },
    getExtensionKey ()
    {
-      return 7;
+      return 8;
    },
    getShaderOptions (options)
    {
