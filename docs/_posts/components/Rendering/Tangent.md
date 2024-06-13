@@ -38,3 +38,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### MFVec3f [in, out] **vector** [ ] <small>[-1,1]</small>
 
 Set of unit-length normal vectors, corresponding to indexed polygons or vertices.
+
+## See Also
+
+- [X3D Specification of Tangent Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Tangent){:target="_blank"}
