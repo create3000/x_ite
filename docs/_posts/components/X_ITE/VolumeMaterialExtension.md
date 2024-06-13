@@ -60,4 +60,4 @@ Input/Output field *attenuationColor*.
 
 ## See Also
 
-- [KHR_materials_volume](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_volume){:target="_blank"}
+- [Khronos Specification of KHR_materials_volume Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_volume){:target="_blank"}

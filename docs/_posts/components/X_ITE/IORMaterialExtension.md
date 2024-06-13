@@ -44,4 +44,4 @@ Input/Output field *indexOfRefraction*.
 
 ## See Also
 
-- [KHR_materials_ior](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_ior){:target="_blank"}
+- [Khronos Specification of KHR_materials_ior Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_ior){:target="_blank"}

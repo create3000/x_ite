@@ -52,4 +52,4 @@ Input/Output field *transmissionTexture*.
 
 ## See Also
 
-- [KHR_materials_transmission](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_transmission){:target="_blank"}
+- [Khronos Specification of KHR_materials_transmission Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_transmission){:target="_blank"}

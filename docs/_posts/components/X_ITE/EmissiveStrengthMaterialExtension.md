@@ -44,4 +44,4 @@ A scalar factor, that governs the upper limit of emissive strength per material.
 
 ## See Also
 
-- [KHR_materials_emissive_strength](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_emissive_strength){:target="_blank"}
+- [Khronos Specification of KHR_materials_emissive_strength Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_emissive_strength){:target="_blank"}

@@ -64,4 +64,4 @@ Input/Output field *sheenRoughnessTexture*.
 
 ## See Also
 
-- [KHR_materials_sheen](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_sheen){:target="_blank"}
+- [Khronos Specification of KHR_materials_sheen Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_sheen){:target="_blank"}

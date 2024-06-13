@@ -44,4 +44,4 @@ Input/Output field *dispersion*.
 
 ## See Also
 
-- [KHR_materials_dispersion](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_dispersion){:target="_blank"}
+- [Khronos Specification of KHR_materials_dispersion Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_dispersion){:target="_blank"}

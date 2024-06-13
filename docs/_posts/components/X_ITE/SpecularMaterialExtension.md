@@ -64,4 +64,4 @@ Input/Output field *specularColorTexture*.
 
 ## See Also
 
-- [KHR_materials_specular](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_specular){:target="_blank"}
+- [Khronos Specification of KHR_materials_specular Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_specular){:target="_blank"}
