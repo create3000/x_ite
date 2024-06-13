@@ -50,10 +50,6 @@ Input/Output field *transmissionTextureMapping*.
 
 Input/Output field *transmissionTexture*.
 
-### SFFloat [in, out] **dispersion** 0 <small>[0,∞)</small>
-
-Input/Output field *dispersion*.
-
 ## See Also
 
 - [KHR_materials_transmission](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_transmission){:target="_blank"}
