@@ -24,6 +24,8 @@
       url: /components/rendering/normal/
     - title: "PointSet"
       url: /components/rendering/pointset/
+    - title: "Tangent"
+      url: /components/rendering/tangent/
     - title: "TriangleFanSet"
       url: /components/rendering/trianglefanset/
     - title: "TriangleSet"

@@ -1,6 +1,6 @@
 ---
 title: Tangent
-date: 2023-01-07
+date: 2024-06-13
 nav: components-Rendering
 categories: [components, Rendering]
 tags: [Tangent, Rendering]

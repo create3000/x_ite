@@ -253,6 +253,7 @@ X3D groups nodes into components and components into profiles. This index lists 
 - [LineSet](/x_ite/components/rendering/lineset/)
 - [Normal](/x_ite/components/rendering/normal/)
 - [PointSet](/x_ite/components/rendering/pointset/)
+- [Tangent](/x_ite/components/rendering/tangent/)
 - [TriangleFanSet](/x_ite/components/rendering/trianglefanset/)
 - [TriangleSet](/x_ite/components/rendering/triangleset/)
 - [TriangleStripSet](/x_ite/components/rendering/trianglestripset/)
