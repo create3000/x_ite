@@ -175,12 +175,20 @@ getMetallicRoughnessInfo (in MaterialInfo info)
    uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
 #endif
 
+#if defined (X3D_EMISSIVE_STRENGTH_MATERIAL_EXT)
+   uniform float x3d_EmissiveStrengthEXT;
+#endif
+
 vec3
 getEmissiveColor ()
 {
    // Get emissive parameter.
 
    vec3 emissiveColor = x3d_Material .emissiveColor;
+
+   #if defined (X3D_EMISSIVE_STRENGTH_MATERIAL_EXT)
+      emissiveColor *= x3d_EmissiveStrengthEXT;
+   #endif
 
    // Get texture color.
 

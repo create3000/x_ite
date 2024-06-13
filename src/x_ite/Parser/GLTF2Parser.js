@@ -294,6 +294,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             //    break;
             // },
             case "EXT_mesh_gpu_instancing":
+            case "KHR_materials_emissive_strength":
             case "KHR_materials_specular":
             {
                const component = browser .getComponent ("X_ITE", 1);
@@ -1172,9 +1173,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(KHR_materials_emissive_strength instanceof Object))
          return;
 
-      const emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
+      const emissiveStrengthMaterialExtension = this .getScene () .createNode ("EmissiveStrengthMaterialExtension", false);
 
-      materialNode ._emissiveStrength = emissiveStrength;
+      emissiveStrengthMaterialExtension ._emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
+
+      emissiveStrengthMaterialExtension .setup ();
+
+      materialNode ._extensions .push (emissiveStrengthMaterialExtension);
    },
    khrMaterialsSpecularObject (KHR_materials_specular, materialNode)
    {
