@@ -60,6 +60,7 @@ function X3DComposedGeometryNode (executionContext)
    this .colorNode    = null;
    this .texCoordNode = null;
    this .normalNode   = null;
+   this .tangentNode  = null;
    this .coordNode    = null;
 }
 
@@ -74,6 +75,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
       this ._color    .addInterest ("set_color__",    this);
       this ._texCoord .addInterest ("set_texCoord__", this);
       this ._normal   .addInterest ("set_normal__",   this);
+      this ._tangent  .addInterest ("set_tangent__",  this);
       this ._coord    .addInterest ("set_coord__",    this);
 
       this .set_attrib__ ();
@@ -81,6 +83,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
       this .set_color__ ();
       this .set_texCoord__ ();
       this .set_normal__ ();
+      this .set_tangent__ ();
       this .set_coord__ ();
    },
    getFogCoord ()
@@ -98,6 +101,10 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
    getNormal ()
    {
       return this .normalNode;
+   },
+   getTangent ()
+   {
+      return this .tangentNode;
    },
    getCoord ()
    {
@@ -167,6 +174,14 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
+   set_tangent__ ()
+   {
+      this .tangentNode ?.removeInterest ("requestRebuild", this);
+
+      this .tangentNode = X3DCast (X3DConstants .Tangent, this ._tangent);
+
+      this .tangentNode ?.addInterest ("requestRebuild", this);
+   },
    set_coord__ ()
    {
       this .coordNode ?.removeInterest ("requestRebuild", this);
@@ -204,11 +219,13 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
          normalNode         = this .getNormal (),
+         tangentNode        = this .getTangent (),
          coordNode          = this .getCoord (),
          fogDepthArray      = this .getFogDepths (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
          normalArray        = this .getNormals (),
+         tangentArray       = this .getTangents (),
          vertexArray        = this .getVertices ();
 
       texCoordNode ?.init (multiTexCoordArray);
@@ -232,7 +249,8 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
          texCoordNode ?.addPoint (index, multiTexCoordArray);
 
-         normalNode ?.addVector (normalPerVertex ? index : face, normalArray);
+         normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
+         tangentNode ?.addVector (normalPerVertex ? index : face, tangentArray);
 
          coordNode .addPoint (index, vertexArray);
       }

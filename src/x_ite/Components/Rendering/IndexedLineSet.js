@@ -72,16 +72,19 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
 
       this ._set_colorIndex .addFieldInterest (this ._colorIndex);
       this ._set_coordIndex .addFieldInterest (this ._coordIndex);
-      this ._attrib         .addInterest ("set_attrib__",   this);
-      this ._fogCoord       .addInterest ("set_fogCoord__", this);
-      this ._color          .addInterest ("set_color__",    this);
-      this ._normal         .addInterest ("set_normal__",   this);
-      this ._coord          .addInterest ("set_coord__",    this);
+
+      this ._attrib   .addInterest ("set_attrib__",   this);
+      this ._fogCoord .addInterest ("set_fogCoord__", this);
+      this ._color    .addInterest ("set_color__",    this);
+      this ._normal   .addInterest ("set_normal__",   this);
+      this ._tangent  .addInterest ("set_tangent__",  this);
+      this ._coord    .addInterest ("set_coord__",    this);
 
       this .set_attrib__ ();
       this .set_fogCoord__ ();
       this .set_color__ ();
       this .set_normal__ ();
+      this .set_tangent__ ();
       this .set_coord__ ();
    },
    set_attrib__ ()
@@ -137,6 +140,14 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
       this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
 
       this .normalNode ?.addInterest ("requestRebuild", this);
+   },
+   set_tangent__ ()
+   {
+      this .tangentNode ?.removeInterest ("requestRebuild", this);
+
+      this .tangentNode = X3DCast (X3DConstants .Tangent, this ._tangent);
+
+      this .tangentNode ?.addInterest ("requestRebuild", this);
    },
    set_coord__ ()
    {
@@ -213,9 +224,11 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
          colorNode         = this .colorNode,
          coordNode         = this .coordNode,
          normalNode        = this .normalNode,
+         tangentNode       = this .tangentNode,
          fogDepthArray     = this .getFogDepths (),
          colorArray        = this .getColors (),
          normalArray       = this .getNormals (),
+         tangentArray      = this .getTangents (),
          vertexArray       = this .getVertices ();
 
       // Fill GeometryNode
@@ -245,7 +258,8 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
 
                   colorNode ?.addColor (colorPerVertex ? this .getColorPerVertexIndex (i) : this .getColorIndex (face), colorArray);
 
-                  normalNode ?.addVector (index, normalArray);
+                  normalNode  ?.addVector (index, normalArray);
+                  tangentNode ?.addVector (index, tangentArray);
 
                   coordNode .addPoint (index, vertexArray);
                }
@@ -292,6 +306,7 @@ Object .defineProperties (IndexedLineSet,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "color",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tangent",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",          new Fields .SFNode ()),
       ]),
       enumerable: true,

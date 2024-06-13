@@ -74,12 +74,14 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
       this ._fogCoord .addInterest ("set_fogCoord__", this);
       this ._color    .addInterest ("set_color__",    this);
       this ._normal   .addInterest ("set_normal__",   this);
+      this ._tangent  .addInterest ("set_tangent__",  this);
       this ._coord    .addInterest ("set_coord__",    this);
 
       this .set_attrib__ ();
       this .set_fogCoord__ ();
       this .set_color__ ();
       this .set_normal__ ();
+      this .set_tangent__ ();
       this .set_coord__ ();
    },
    getCoord ()
@@ -138,6 +140,14 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
+   set_tangent__ ()
+   {
+      this .tangentNode ?.removeInterest ("requestRebuild", this);
+
+      this .tangentNode = X3DCast (X3DConstants .Tangent, this ._tangent);
+
+      this .tangentNode ?.addInterest ("requestRebuild", this);
+   },
    set_coord__ ()
    {
       this .coordNode ?.removeInterest ("requestRebuild", this);
@@ -163,6 +173,8 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
          coordNode         = this .coordNode,
          normalArray       = this .getNormals (),
          normalNode        = this .normalNode,
+         tangentArray      = this .getTangents (),
+         tangentNode       = this .tangentNode,
          vertexArray       = this .getVertices (),
          numPoints         = coordNode ._point .length;
 
@@ -177,7 +189,8 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
 
       fogCoordNode ?.addDepths  (fogDepthArray, numPoints);
       colorNode    ?.addColors  (colorArray,    numPoints);
-      normalNode   ?.addNormals (normalArray,   numPoints);
+      normalNode   ?.addVectors (normalArray,   numPoints);
+      tangentNode  ?.addVectors (tangentArray,  numPoints);
 
       coordNode .addPoints (vertexArray);
    },
@@ -213,6 +226,7 @@ Object .defineProperties (PointSet,
          new X3DFieldDefinition (X3DConstants .inputOutput, "fogCoord", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "normal",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "tangent",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "coord",    new Fields .SFNode ()),
       ]),
       enumerable: true,

@@ -310,6 +310,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "FogDepth",
          "Color",
          "Normal",
+         "Tangent",
          "Vertex",
          "Particle",
          "ParticleVelocity",
@@ -1255,6 +1256,18 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    normalAttributeDivisor (gl, divisor)
    {
       gl .vertexAttribDivisor (this .x3d_Normal, divisor);
+   },
+   enableTangentAttribute (gl, buffer, stride, offset)
+   {
+      const location = this .x3d_Tangent;
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+      gl .enableVertexAttribArray (location);
+      gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset);
+   },
+   tangentAttributeDivisor (gl, divisor)
+   {
+      gl .vertexAttribDivisor (this .x3d_Tangent, divisor);
    },
    enableVertexAttribute (gl, buffer, stride, offset)
    {

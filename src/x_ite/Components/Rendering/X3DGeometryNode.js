@@ -100,6 +100,7 @@ function X3DGeometryNode (executionContext)
    this .colors                   = X3DGeometryNode .createArray ();
    this .normals                  = X3DGeometryNode .createArray ();
    this .flatNormals              = X3DGeometryNode .createArray ();
+   this .tangents                 = X3DGeometryNode .createArray ();
    this .vertices                 = X3DGeometryNode .createArray ();
    this .hasFogCoords             = false;
    this .hasNormals               = false;
@@ -180,6 +181,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .fogDepthBuffer        = gl .createBuffer ();
       this .colorBuffer           = gl .createBuffer ();
       this .normalBuffer          = gl .createBuffer ();
+      this .tangentBuffer         = gl .createBuffer ();
       this .vertexBuffer          = gl .createBuffer ();
       this .vertexArrayObject     = new VertexArray (gl);
 
@@ -335,6 +337,14 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    getNormals ()
    {
       return this .normals;
+   },
+   setTangents (value)
+   {
+      this .tangents .assign (value);
+   },
+   getTangents ()
+   {
+      return this .tangents;
    },
    setVertices (value)
    {
@@ -788,6 +798,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .fogDepths    .shrinkToFit ();
          this .colors       .shrinkToFit ();
          this .normals      .shrinkToFit ();
+         this .tangents     .shrinkToFit ();
          this .vertices     .shrinkToFit ();
 
          // Determine bbox.
@@ -866,6 +877,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .multiTexCoords .length = 0;
       this .texCoords      .length = 0;
       this .normals        .length = 0;
+      this .tangents       .length = 0;
       this .flatNormals    .length = 0;
       this .vertices       .length = 0;
    },
@@ -932,6 +944,18 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       if (this .hasNormals !== lastHasNormals)
          this .updateVertexArrays ();
 
+      // Transfer tangents.
+
+      const lastHasTangents = this .hasTangents;
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .tangentBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, this .tangents .getValue (), gl .DYNAMIC_DRAW);
+
+      this .hasTangents = !! this .tangents .length;
+
+      if (this .hasTangents !== lastHasTangents)
+         this .updateVertexArrays ();
+
       // Transfer vertices.
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
@@ -946,6 +970,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .geometryKey += this .hasFogCoords  ? "1" : "0";
       this .geometryKey += this .colorMaterial ? "1" : "0";
       this .geometryKey += this .hasNormals    ? "1" : "0";
+      this .geometryKey += this .hasTangents   ? "1" : "0";
    },
    updateRenderFunctions ()
    {
@@ -1038,6 +1063,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          if (this .colorMaterial)
             shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
+         if (this .hasTangents)
+            shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
+
          shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
          shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
          shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
@@ -1112,6 +1140,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          if (this .coordIndices .length)
             shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
+         if (this .hasTangents)
+            shaderNode .enableTangentAttribute  (gl, this .tangentBuffer, 0, 0);
 
          shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
          shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
@@ -1188,6 +1219,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          if (this .colorMaterial)
             shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+         if (this .hasTangents)
+            shaderNode .enableTangentAttribute  (gl, this .tangentBuffer, 0, 0);
 
          shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
          shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);

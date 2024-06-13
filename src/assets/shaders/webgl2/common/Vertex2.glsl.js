@@ -58,11 +58,17 @@ in vec4 x3d_Vertex;
 
 #if defined (X3D_NORMALS)
    uniform mat3 x3d_NormalMatrix;
+
    in  vec3 x3d_Normal;
    out vec3 normal;
 
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
       out vec3 localNormal;
+   #endif
+
+   #if defined (X3D_TANGENTS)
+      in vec3 x3d_Tangent;
+      out mat3 TBN;
    #endif
 #endif
 
@@ -140,6 +146,13 @@ vertex_main ()
 
       #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
          localNormal = x3d_TransformedNormal;
+      #endif
+
+      #if defined (X3D_TANGENTS)
+         vec3 tangent   = normalize (x3d_NormalMatrix * x3d_Tangent);
+         vec3 bitangent = cross (normal, tangent);
+
+         TBN = mat3 (tangent, bitangent, normal);
       #endif
    #endif
 

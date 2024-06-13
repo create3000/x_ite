@@ -2349,9 +2349,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("PointSet", false);
 
-      geometryNode ._color  = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._coord  = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -2366,9 +2367,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("IndexedLineSet", false);
 
-      geometryNode ._color  = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._coord  = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       switch (mode)
       {
@@ -2453,9 +2455,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("LineSet", false);
 
-      geometryNode ._color  = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._coord  = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -2475,6 +2478,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2495,6 +2499,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2516,6 +2521,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2536,6 +2542,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2565,6 +2572,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2585,6 +2593,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -2733,6 +2742,39 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       normalNode .setup ();
 
       return normal .normalNode = normalNode;
+   },
+   createTangent (tangent)
+   {
+      if (tangent ?.type !== "VEC4")
+         return null;
+
+      if (tangent .tangentNode)
+         return tangent .tangentNode;
+
+      const
+         scene      = this .getExecutionContext (),
+         tangentNode = scene .createNode ("Tangent", false);
+
+      const
+         array  = tangent .array,
+         length = array .length,
+         vector = new Float32Array (length / 4 * 3);
+
+      for (let a = 0, v = 0; a < length; a += 4, v += 3)
+      {
+         const w = array [a + 3];
+
+         for (let i = 0; i < 3; ++ i)
+            vector [v + i] = array [a + i] * w;
+      }
+
+      tangentNode ._vector = vector;
+
+      tangent .field = tangentNode ._vector;
+
+      tangentNode .setup ();
+
+      return tangent .tangentNode = tangentNode;
    },
    createCoordinate (position, targets, weights)
    {

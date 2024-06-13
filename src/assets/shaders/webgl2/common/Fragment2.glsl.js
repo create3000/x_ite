@@ -41,6 +41,10 @@ export default /* glsl */ `
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
       in vec3 localNormal;
    #endif
+
+   #if defined (X3D_TANGENTS)
+      in mat3 TBN;
+   #endif
 #else
    const vec3 normal = vec3 (0.0, 0.0, 1.0);
 

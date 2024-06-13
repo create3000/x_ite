@@ -302,11 +302,13 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
          normalNode         = this .getNormal (),
+         tangentNode        = this .getTangent (),
          points             = this .createPoints (),
          fogDepthArray      = this .getFogDepths (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
          normalArray        = this .getNormals (),
+         tangentArray       = this .getTangent (),
          vertexArray        = this .getVertices ();
 
       let face = 0;
@@ -354,7 +356,8 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
                texCoordArray .push (x, y, 0, 1);
             }
 
-            normalNode ?.addVector (normalPerVertex ? index : face, normalArray);
+            normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
+            tangentNode ?.addVector (normalPerVertex ? index : face, tangentArray);
 
             vertexArray .push (x, y, z, 1);
          }
@@ -416,6 +419,7 @@ Object .defineProperties (ElevationGrid,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tangent",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "height",          new Fields .MFFloat ()),
       ]),
       enumerable: true,

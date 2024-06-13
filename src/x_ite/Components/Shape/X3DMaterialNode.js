@@ -146,6 +146,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       if (geometryContext .hasNormals)
          options .push ("X3D_NORMALS");
 
+      if (geometryContext .hasTangents)
+         options .push ("X3D_TANGENTS");
+
       if (renderContext)
       {
          const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsKeys, textureNode } = renderContext;

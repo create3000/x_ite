@@ -133,11 +133,13 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
          normalNode         = this .getNormal (),
+         tangentNode        = this .getTangent (),
          coordNode          = this .getCoord (),
          fogDepthArray      = this .getFogDepths (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
          normalArray        = this .getNormals (),
+         tangentArray       = this .getTangent (),
          vertexArray        = this .getVertices ();
 
       texCoordNode ?.init (multiTexCoordArray);
@@ -159,7 +161,8 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
             texCoordNode ?.addPoint (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
 
-            normalNode ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalIndex (face), normalArray);
+            normalNode  ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalIndex (face), normalArray);
+            tangentNode ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalIndex (face), tangentArray);
 
             coordNode .addPoint (index, vertexArray);
          }
@@ -442,6 +445,7 @@ Object .defineProperties (IndexedFaceSet,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "color",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tangent",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",             new Fields .SFNode ()),
       ]),
       enumerable: true,

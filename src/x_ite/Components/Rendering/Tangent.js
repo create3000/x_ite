@@ -45,24 +45,24 @@
  *
  ******************************************************************************/
 
-import Fields               from "../../Fields.js";
-import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DNormalNode        from "./X3DNormalNode.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
+import Fields                   from "../../Fields.js";
+import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
+import X3DGeometricPropertyNode from "./X3DGeometricPropertyNode.js";
+import X3DConstants             from "../../Base/X3DConstants.js";
 
-function Normal (executionContext)
+function Tangent (executionContext)
 {
-   X3DNormalNode .call (this, executionContext);
+   X3DGeometricPropertyNode .call (this, executionContext);
 
-   this .addType (X3DConstants .Normal);
+   this .addType (X3DConstants .Tangent);
 }
 
-Object .assign (Object .setPrototypeOf (Normal .prototype, X3DNormalNode .prototype),
+Object .assign (Object .setPrototypeOf (Tangent .prototype, X3DGeometricPropertyNode .prototype),
 {
    initialize ()
    {
-      X3DNormalNode .prototype .initialize .call (this);
+      X3DGeometricPropertyNode .prototype .initialize .call (this);
 
       this ._vector .addInterest ("set_vector__", this);
 
@@ -113,26 +113,26 @@ Object .assign (Object .setPrototypeOf (Normal .prototype, X3DNormalNode .protot
    },
 });
 
-Object .defineProperties (Normal,
+Object .defineProperties (Tangent,
 {
    typeName:
    {
-      value: "Normal",
+      value: "Tangent",
       enumerable: true,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Rendering", level: 2 }),
+      value: Object .freeze ({ name: "Rendering", level: 5 }),
       enumerable: true,
    },
    containerField:
    {
-      value: "normal",
+      value: "tangent",
       enumerable: true,
    },
    specificationRange:
    {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -145,4 +145,4 @@ Object .defineProperties (Normal,
    },
 });
 
-export default Normal;
+export default Tangent;

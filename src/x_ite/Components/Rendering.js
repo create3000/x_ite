@@ -57,6 +57,7 @@ import IndexedTriangleStripSet  from "./Rendering/IndexedTriangleStripSet.js";
 import LineSet                  from "./Rendering/LineSet.js";
 import Normal                   from "./Rendering/Normal.js";
 import PointSet                 from "./Rendering/PointSet.js";
+import Tangent                  from "./Rendering/Tangent.js";
 import TriangleFanSet           from "./Rendering/TriangleFanSet.js";
 import TriangleSet              from "./Rendering/TriangleSet.js";
 import TriangleStripSet         from "./Rendering/TriangleStripSet.js";
@@ -83,6 +84,7 @@ export default {
       LineSet,
       Normal,
       PointSet,
+      Tangent,
       TriangleFanSet,
       TriangleSet,
       TriangleStripSet,

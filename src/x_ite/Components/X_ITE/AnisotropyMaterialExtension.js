@@ -104,6 +104,8 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
       if (!+this .getTextureBits ())
          return;
 
+      options .push ("X3D_MATERIAL_TEXTURES");
+
       if (this .anisotropyTextureNode)
          options .push ("X3D_ANISOTROPY_TEXTURE_EXT", `X3D_ANISOTROPY_TEXTURE_EXT_${this .anisotropyTextureNode .getTextureTypeString ()}`);
 
