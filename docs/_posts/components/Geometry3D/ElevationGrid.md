@@ -172,6 +172,8 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 
 - *normal* vectors increase file size, typically doubling geometry definitions.
 
+### SFNode [in, out] **tangent**
+
 ### MFFloat [ ] **height** [ ] <small>(-∞,∞)</small>
 
 Grid array of *height* vertices with upward direction along +Y axis, with xDimension rows and zDimension columns.

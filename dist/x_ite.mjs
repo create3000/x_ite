@@ -1,9 +1,9 @@
 /* X_ITE v9.7.0 */var __webpack_modules__ = ({
 
-/***/ 107:
+/***/ 605:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(463);
+/* provided dependency */ var jQuery = __webpack_require__(989);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -199,7 +199,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 79:
+/***/ 477:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -213,7 +213,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(463)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(989)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -424,7 +424,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 463:
+/***/ 989:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11148,7 +11148,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 460:
+/***/ 902:
 /***/ ((module) => {
 
 /**
@@ -15927,7 +15927,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 55:
+/***/ 969:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19172,7 +19172,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 664:
+/***/ 70:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -34231,7 +34231,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 x_ite_Namespace .add ("X3DBaseNode", "x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
 /* harmony default export */ const Base_X3DBaseNode = (X3DBaseNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(463);
+/* provided dependency */ var $ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39010,7 +39010,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .add ("X3DProtoDeclaration", "x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(463);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39268,7 +39268,7 @@ const Expressions_default_ = Expressions;
 x_ite_Namespace .add ("Expressions", "x_ite/Parser/Expressions", Expressions_default_);
 /* harmony default export */ const Parser_Expressions = (Expressions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(463);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41968,7 +41968,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .add ("VRMLParser", "x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(463);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44012,7 +44012,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(463);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46364,9 +46364,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("PointSet", false);
 
-      geometryNode ._color  = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._coord  = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -46381,9 +46382,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("IndexedLineSet", false);
 
-      geometryNode ._color  = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._coord  = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       switch (mode)
       {
@@ -46468,9 +46470,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("LineSet", false);
 
-      geometryNode ._color  = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal = this .createNormal (attributes .NORMAL, targets, weights);
-      geometryNode ._coord  = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent = this .createTangent (attributes .TANGENT);
+      geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -46490,6 +46493,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -46510,6 +46514,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -46531,6 +46536,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -46551,6 +46557,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -46580,6 +46587,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -46600,6 +46608,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
@@ -46748,6 +46757,39 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       normalNode .setup ();
 
       return normal .normalNode = normalNode;
+   },
+   createTangent (tangent)
+   {
+      if (tangent ?.type !== "VEC4")
+         return null;
+
+      if (tangent .tangentNode)
+         return tangent .tangentNode;
+
+      const
+         scene      = this .getExecutionContext (),
+         tangentNode = scene .createNode ("Tangent", false);
+
+      const
+         array  = tangent .array,
+         length = array .length,
+         vector = new Float32Array (length / 4 * 3);
+
+      for (let a = 0, v = 0; a < length; a += 4, v += 3)
+      {
+         const w = array [a + 3];
+
+         for (let i = 0; i < 3; ++ i)
+            vector [v + i] = array [a + i] * w;
+      }
+
+      tangentNode ._vector = vector;
+
+      tangent .field = tangentNode ._vector;
+
+      tangentNode .setup ();
+
+      return tangent .tangentNode = tangentNode;
    },
    createCoordinate (position, targets, weights)
    {
@@ -47387,7 +47429,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .add ("GLTF2Parser", "x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(463);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47539,7 +47581,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .add ("GLB2Parser", "x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(463);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50898,8 +50940,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .add ("MatrixStack", "standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(463);
-/* provided dependency */ var libtess = __webpack_require__(460);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(989);
+/* provided dependency */ var libtess = __webpack_require__(902);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53667,7 +53709,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .add ("SVGParser", "x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(463);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54034,7 +54076,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .add ("Plane3", "standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(460);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(902);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59994,6 +60036,7 @@ function X3DGeometryNode (executionContext)
    this .colors                   = X3DGeometryNode .createArray ();
    this .normals                  = X3DGeometryNode .createArray ();
    this .flatNormals              = X3DGeometryNode .createArray ();
+   this .tangents                 = X3DGeometryNode .createArray ();
    this .vertices                 = X3DGeometryNode .createArray ();
    this .hasFogCoords             = false;
    this .hasNormals               = false;
@@ -60074,6 +60117,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
       this .fogDepthBuffer        = gl .createBuffer ();
       this .colorBuffer           = gl .createBuffer ();
       this .normalBuffer          = gl .createBuffer ();
+      this .tangentBuffer         = gl .createBuffer ();
       this .vertexBuffer          = gl .createBuffer ();
       this .vertexArrayObject     = new Rendering_VertexArray (gl);
 
@@ -60229,6 +60273,14 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    getNormals ()
    {
       return this .normals;
+   },
+   setTangents (value)
+   {
+      this .tangents .assign (value);
+   },
+   getTangents ()
+   {
+      return this .tangents;
    },
    setVertices (value)
    {
@@ -60682,6 +60734,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
          this .fogDepths    .shrinkToFit ();
          this .colors       .shrinkToFit ();
          this .normals      .shrinkToFit ();
+         this .tangents     .shrinkToFit ();
          this .vertices     .shrinkToFit ();
 
          // Determine bbox.
@@ -60760,6 +60813,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
       this .multiTexCoords .length = 0;
       this .texCoords      .length = 0;
       this .normals        .length = 0;
+      this .tangents       .length = 0;
       this .flatNormals    .length = 0;
       this .vertices       .length = 0;
    },
@@ -60826,6 +60880,18 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
       if (this .hasNormals !== lastHasNormals)
          this .updateVertexArrays ();
 
+      // Transfer tangents.
+
+      const lastHasTangents = this .hasTangents;
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .tangentBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, this .tangents .getValue (), gl .DYNAMIC_DRAW);
+
+      this .hasTangents = !! this .tangents .length;
+
+      if (this .hasTangents !== lastHasTangents)
+         this .updateVertexArrays ();
+
       // Transfer vertices.
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
@@ -60840,6 +60906,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
       this .geometryKey += this .hasFogCoords  ? "1" : "0";
       this .geometryKey += this .colorMaterial ? "1" : "0";
       this .geometryKey += this .hasNormals    ? "1" : "0";
+      this .geometryKey += this .hasTangents   ? "1" : "0";
    },
    updateRenderFunctions ()
    {
@@ -60932,6 +60999,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
          if (this .colorMaterial)
             shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
+         if (this .hasTangents)
+            shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
+
          shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
          shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
          shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
@@ -61006,6 +61076,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
 
          if (this .coordIndices .length)
             shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
+         if (this .hasTangents)
+            shaderNode .enableTangentAttribute  (gl, this .tangentBuffer, 0, 0);
 
          shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
          shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
@@ -61082,6 +61155,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
 
          if (this .colorMaterial)
             shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+         if (this .hasTangents)
+            shaderNode .enableTangentAttribute  (gl, this .tangentBuffer, 0, 0);
 
          shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
          shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
@@ -61273,6 +61349,7 @@ function GeometryContext (options = { })
       hasFogCoords: false,
       colorMaterial: false,
       hasNormals: false,
+      hasTangents: false,
       textureNode: null,
       objectsKeys: [ ],
       textureCoordinateMapping: new Map (),
@@ -62563,7 +62640,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .add ("X3DTexture2DNode", "x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(463);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66145,7 +66222,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .add ("X3DWorld", "x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(463);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67079,7 +67156,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 x_ite_Namespace .add ("ProtoDeclarationArray", "x_ite/Prototype/ProtoDeclarationArray", ProtoDeclarationArray_default_);
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (ProtoDeclarationArray_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(463);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -75000,11 +75077,13 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, Rendering_X3DG
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
          normalNode         = this .getNormal (),
+         tangentNode        = this .getTangent (),
          points             = this .createPoints (),
          fogDepthArray      = this .getFogDepths (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
          normalArray        = this .getNormals (),
+         tangentArray       = this .getTangent (),
          vertexArray        = this .getVertices ();
 
       let face = 0;
@@ -75052,7 +75131,8 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, Rendering_X3DG
                texCoordArray .push (x, y, 0, 1);
             }
 
-            normalNode ?.addVector (normalPerVertex ? index : face, normalArray);
+            normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
+            tangentNode ?.addVector (normalPerVertex ? index : face, tangentArray);
 
             vertexArray .push (x, y, z, 1);
          }
@@ -75114,6 +75194,7 @@ Object .defineProperties (ElevationGrid,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "color",           new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "texCoord",        new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "height",          new x_ite_Fields .MFFloat ()),
       ]),
       enumerable: true,
@@ -75922,6 +76003,7 @@ function X3DComposedGeometryNode (executionContext)
    this .colorNode    = null;
    this .texCoordNode = null;
    this .normalNode   = null;
+   this .tangentNode  = null;
    this .coordNode    = null;
 }
 
@@ -75936,6 +76018,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, Rend
       this ._color    .addInterest ("set_color__",    this);
       this ._texCoord .addInterest ("set_texCoord__", this);
       this ._normal   .addInterest ("set_normal__",   this);
+      this ._tangent  .addInterest ("set_tangent__",  this);
       this ._coord    .addInterest ("set_coord__",    this);
 
       this .set_attrib__ ();
@@ -75943,6 +76026,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, Rend
       this .set_color__ ();
       this .set_texCoord__ ();
       this .set_normal__ ();
+      this .set_tangent__ ();
       this .set_coord__ ();
    },
    getFogCoord ()
@@ -75960,6 +76044,10 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, Rend
    getNormal ()
    {
       return this .normalNode;
+   },
+   getTangent ()
+   {
+      return this .tangentNode;
    },
    getCoord ()
    {
@@ -76029,6 +76117,14 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, Rend
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
+   set_tangent__ ()
+   {
+      this .tangentNode ?.removeInterest ("requestRebuild", this);
+
+      this .tangentNode = Base_X3DCast (Base_X3DConstants .Tangent, this ._tangent);
+
+      this .tangentNode ?.addInterest ("requestRebuild", this);
+   },
    set_coord__ ()
    {
       this .coordNode ?.removeInterest ("requestRebuild", this);
@@ -76066,11 +76162,13 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, Rend
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
          normalNode         = this .getNormal (),
+         tangentNode        = this .getTangent (),
          coordNode          = this .getCoord (),
          fogDepthArray      = this .getFogDepths (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
          normalArray        = this .getNormals (),
+         tangentArray       = this .getTangents (),
          vertexArray        = this .getVertices ();
 
       texCoordNode ?.init (multiTexCoordArray);
@@ -76094,7 +76192,8 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, Rend
 
          texCoordNode ?.addPoint (index, multiTexCoordArray);
 
-         normalNode ?.addVector (normalPerVertex ? index : face, normalArray);
+         normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
+         tangentNode ?.addVector (normalPerVertex ? index : face, tangentArray);
 
          coordNode .addPoint (index, vertexArray);
       }
@@ -76351,11 +76450,13 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, Rendering_X3D
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
          normalNode         = this .getNormal (),
+         tangentNode        = this .getTangent (),
          coordNode          = this .getCoord (),
          fogDepthArray      = this .getFogDepths (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
          normalArray        = this .getNormals (),
+         tangentArray       = this .getTangent (),
          vertexArray        = this .getVertices ();
 
       texCoordNode ?.init (multiTexCoordArray);
@@ -76377,7 +76478,8 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, Rendering_X3D
 
             texCoordNode ?.addPoint (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
 
-            normalNode ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalIndex (face), normalArray);
+            normalNode  ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalIndex (face), normalArray);
+            tangentNode ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalIndex (face), tangentArray);
 
             coordNode .addPoint (index, vertexArray);
          }
@@ -76660,6 +76762,7 @@ Object .defineProperties (IndexedFaceSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "color",             new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "texCoord",          new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",            new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",           new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",             new x_ite_Fields .SFNode ()),
       ]),
       enumerable: true,
@@ -80815,19 +80918,15 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    renderShadowMap (renderObject)
    { },
-   setGlobalVariables: (function ()
+   setGlobalVariables (renderObject)
    {
-      const negateX = new Numbers_Matrix3 (-1, 0, 0, 0, 1, 0, 0, 0, 1);
+      this .modelViewMatrix .get () .get (null, this .rotation);
 
-      return function (renderObject)
-      {
-         this .modelViewMatrix .get () .get (null, this .rotation);
-
-         this .rotation .multLeft (this .lightNode ._rotation .getValue ()) .getMatrix (this .rotationMatrix);
-
-         Numbers_Matrix3 .prototype .multLeft .call (this .rotationMatrix, negateX);
-      };
-   })(),
+      this .rotation
+         .multLeft (this .lightNode ._rotation .getValue ())
+         .inverse ()
+         .getMatrix (this .rotationMatrix);
+   },
    setShaderUniforms (gl, shaderObject)
    {
       const
@@ -87347,6 +87446,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
          if (this .hasNormals)
             shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
+         if (this .hasTangents)
+            shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
+
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
       }
 
@@ -87555,6 +87657,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
 
             if (this .hasNormals)
                shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+            if (this .hasTangents)
+               shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
 
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
          }
@@ -87933,16 +88038,19 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, Rendering_X3D
 
       this ._set_colorIndex .addFieldInterest (this ._colorIndex);
       this ._set_coordIndex .addFieldInterest (this ._coordIndex);
-      this ._attrib         .addInterest ("set_attrib__",   this);
-      this ._fogCoord       .addInterest ("set_fogCoord__", this);
-      this ._color          .addInterest ("set_color__",    this);
-      this ._normal         .addInterest ("set_normal__",   this);
-      this ._coord          .addInterest ("set_coord__",    this);
+
+      this ._attrib   .addInterest ("set_attrib__",   this);
+      this ._fogCoord .addInterest ("set_fogCoord__", this);
+      this ._color    .addInterest ("set_color__",    this);
+      this ._normal   .addInterest ("set_normal__",   this);
+      this ._tangent  .addInterest ("set_tangent__",  this);
+      this ._coord    .addInterest ("set_coord__",    this);
 
       this .set_attrib__ ();
       this .set_fogCoord__ ();
       this .set_color__ ();
       this .set_normal__ ();
+      this .set_tangent__ ();
       this .set_coord__ ();
    },
    set_attrib__ ()
@@ -87998,6 +88106,14 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, Rendering_X3D
       this .normalNode = Base_X3DCast (Base_X3DConstants .X3DNormalNode, this ._normal);
 
       this .normalNode ?.addInterest ("requestRebuild", this);
+   },
+   set_tangent__ ()
+   {
+      this .tangentNode ?.removeInterest ("requestRebuild", this);
+
+      this .tangentNode = Base_X3DCast (Base_X3DConstants .Tangent, this ._tangent);
+
+      this .tangentNode ?.addInterest ("requestRebuild", this);
    },
    set_coord__ ()
    {
@@ -88074,9 +88190,11 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, Rendering_X3D
          colorNode         = this .colorNode,
          coordNode         = this .coordNode,
          normalNode        = this .normalNode,
+         tangentNode       = this .tangentNode,
          fogDepthArray     = this .getFogDepths (),
          colorArray        = this .getColors (),
          normalArray       = this .getNormals (),
+         tangentArray      = this .getTangents (),
          vertexArray       = this .getVertices ();
 
       // Fill GeometryNode
@@ -88106,7 +88224,8 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, Rendering_X3D
 
                   colorNode ?.addColor (colorPerVertex ? this .getColorPerVertexIndex (i) : this .getColorIndex (face), colorArray);
 
-                  normalNode ?.addVector (index, normalArray);
+                  normalNode  ?.addVector (index, normalArray);
+                  tangentNode ?.addVector (index, tangentArray);
 
                   coordNode .addPoint (index, vertexArray);
                }
@@ -88153,6 +88272,7 @@ Object .defineProperties (IndexedLineSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "fogCoord",       new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "color",          new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",         new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",        new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",          new x_ite_Fields .SFNode ()),
       ]),
       enumerable: true,
@@ -88331,6 +88451,7 @@ Object .defineProperties (IndexedTriangleFanSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "color",           new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "texCoord",        new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
       ]),
       enumerable: true,
@@ -88466,6 +88587,7 @@ Object .defineProperties (IndexedTriangleSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "color",           new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "texCoord",        new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
       ]),
       enumerable: true,
@@ -88652,6 +88774,7 @@ Object .defineProperties (IndexedTriangleStripSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "color",           new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "texCoord",        new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
       ]),
       enumerable: true,
@@ -88740,12 +88863,14 @@ Object .assign (Object .setPrototypeOf (LineSet .prototype, Rendering_X3DLineGeo
       this ._fogCoord .addInterest ("set_fogCoord__", this);
       this ._color    .addInterest ("set_color__",    this);
       this ._normal   .addInterest ("set_normal__",   this);
+      this ._tangent  .addInterest ("set_tangent__",  this);
       this ._coord    .addInterest ("set_coord__",    this);
 
       this .set_attrib__ ();
       this .set_fogCoord__ ();
       this .set_color__ ();
       this .set_normal__ ();
+      this .set_tangent__ ();
       this .set_coord__ ();
    },
    set_attrib__ ()
@@ -88802,6 +88927,14 @@ Object .assign (Object .setPrototypeOf (LineSet .prototype, Rendering_X3DLineGeo
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
+   set_tangent__ ()
+   {
+      this .tangentNode ?.removeInterest ("requestRebuild", this);
+
+      this .tangentNode = Base_X3DCast (Base_X3DConstants .Tangent, this ._tangent);
+
+      this .tangentNode ?.addInterest ("requestRebuild", this);
+   },
    set_coord__ ()
    {
       this .coordNode ?.removeInterest ("requestRebuild", this);
@@ -88826,10 +88959,12 @@ Object .assign (Object .setPrototypeOf (LineSet .prototype, Rendering_X3DLineGeo
          fogCoordNode      = this .fogCoordNode,
          colorNode         = this .colorNode,
          normalNode        = this .normalNode,
+         tangentNode       = this .tangentNode,
          coordNode         = this .coordNode,
          fogDepthArray     = this .getFogDepths (),
          colorArray        = this .getColors (),
          normalArray       = this .getNormals (),
+         tangentArray      = this .getTangents (),
          vertexArray       = this .getVertices (),
          size              = coordNode .getSize ();
 
@@ -88854,6 +88989,7 @@ Object .assign (Object .setPrototypeOf (LineSet .prototype, Rendering_X3DLineGeo
                fogCoordNode ?.addDepth  (index, fogDepthArray);
                colorNode    ?.addColor  (index, colorArray);
                normalNode   ?.addVector (index, normalArray);
+               tangentNode  ?.addVector (index, tangentArray);
 
                coordNode .addPoint (index, vertexArray);
             }
@@ -88897,6 +89033,7 @@ Object .defineProperties (LineSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "fogCoord",    new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "color",       new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "normal",      new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "tangent",     new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "coord",       new x_ite_Fields .SFNode ()),
       ]),
       enumerable: true,
@@ -89078,7 +89215,7 @@ Object .assign (Object .setPrototypeOf (Normal .prototype, Rendering_X3DNormalNo
          return array .push (0, 0, 0);
       }
    },
-   addNormals (array, min = this .length)
+   addVectors (array, min = this .length)
    {
       const length = this .length;
 
@@ -89250,6 +89387,9 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, Renderi
          if (this .hasNormals)
             shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
+         if (this .hasTangents)
+            shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
+
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
       }
 
@@ -89308,6 +89448,9 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, Renderi
 
          if (this .hasNormals)
             shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+         if (this .hasTangents)
+            shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
@@ -89419,12 +89562,14 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, Rendering_X3DPointG
       this ._fogCoord .addInterest ("set_fogCoord__", this);
       this ._color    .addInterest ("set_color__",    this);
       this ._normal   .addInterest ("set_normal__",   this);
+      this ._tangent  .addInterest ("set_tangent__",  this);
       this ._coord    .addInterest ("set_coord__",    this);
 
       this .set_attrib__ ();
       this .set_fogCoord__ ();
       this .set_color__ ();
       this .set_normal__ ();
+      this .set_tangent__ ();
       this .set_coord__ ();
    },
    getCoord ()
@@ -89483,6 +89628,14 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, Rendering_X3DPointG
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
+   set_tangent__ ()
+   {
+      this .tangentNode ?.removeInterest ("requestRebuild", this);
+
+      this .tangentNode = Base_X3DCast (Base_X3DConstants .Tangent, this ._tangent);
+
+      this .tangentNode ?.addInterest ("requestRebuild", this);
+   },
    set_coord__ ()
    {
       this .coordNode ?.removeInterest ("requestRebuild", this);
@@ -89508,6 +89661,8 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, Rendering_X3DPointG
          coordNode         = this .coordNode,
          normalArray       = this .getNormals (),
          normalNode        = this .normalNode,
+         tangentArray      = this .getTangents (),
+         tangentNode       = this .tangentNode,
          vertexArray       = this .getVertices (),
          numPoints         = coordNode ._point .length;
 
@@ -89522,7 +89677,8 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, Rendering_X3DPointG
 
       fogCoordNode ?.addDepths  (fogDepthArray, numPoints);
       colorNode    ?.addColors  (colorArray,    numPoints);
-      normalNode   ?.addNormals (normalArray,   numPoints);
+      normalNode   ?.addVectors (normalArray,   numPoints);
+      tangentNode  ?.addVectors (tangentArray,  numPoints);
 
       coordNode .addPoints (vertexArray);
    },
@@ -89558,6 +89714,7 @@ Object .defineProperties (PointSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "fogCoord", new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "color",    new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "normal",   new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "tangent",  new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "coord",    new x_ite_Fields .SFNode ()),
       ]),
       enumerable: true,
@@ -89569,6 +89726,159 @@ const PointSet_default_ = PointSet;
 
 x_ite_Namespace .add ("PointSet", "x_ite/Components/Rendering/PointSet", PointSet_default_);
 /* harmony default export */ const Rendering_PointSet = (PointSet_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Tangent.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function Tangent (executionContext)
+{
+   Rendering_X3DGeometricPropertyNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .Tangent);
+}
+
+Object .assign (Object .setPrototypeOf (Tangent .prototype, Rendering_X3DGeometricPropertyNode .prototype),
+{
+   initialize ()
+   {
+      Rendering_X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+      this ._vector .addInterest ("set_vector__", this);
+
+      this .set_vector__ ();
+   },
+   set_vector__ ()
+   {
+      this .vector = this ._vector .getValue ();
+      this .length = this ._vector .length;
+   },
+   addVector (index, array)
+   {
+      if (index >= 0 && this .length)
+      {
+         const
+            vector = this .vector,
+            i      = (index % this .length) * 3;
+
+         array .push (vector [i], vector [i + 1], vector [i + 2]);
+      }
+      else
+      {
+         return array .push (0, 0, 0);
+      }
+   },
+   addVectors (array, min = this .length)
+   {
+      const length = this .length;
+
+      if (length)
+      {
+         const vector = this .vector;
+
+         for (let index = 0; index < min; ++ index)
+         {
+            const i = (index % length) * 3;
+
+            array .push (vector [i], vector [i + 1], vector [i + 2]);
+         }
+      }
+      else
+      {
+         for (let index = 0; index < min; ++ index)
+            array .push (0, 0, 0);
+      }
+
+      return array;
+   },
+});
+
+Object .defineProperties (Tangent,
+{
+   typeName:
+   {
+      value: "Tangent",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "Rendering", level: 5 }),
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "tangent",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "vector",   new x_ite_Fields .MFVec3f ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const Tangent_default_ = Tangent;
+;
+
+x_ite_Namespace .add ("Tangent", "x_ite/Components/Rendering/Tangent", Tangent_default_);
+/* harmony default export */ const Rendering_Tangent = (Tangent_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/TriangleFanSet.js
 /*******************************************************************************
  *
@@ -89718,6 +90028,7 @@ Object .defineProperties (TriangleFanSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "color",           new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "texCoord",        new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
       ]),
       enumerable: true,
@@ -89848,6 +90159,7 @@ Object .defineProperties (TriangleSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "color",           new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "texCoord",        new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
       ]),
       enumerable: true,
@@ -90012,6 +90324,7 @@ Object .defineProperties (TriangleStripSet,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "color",           new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "texCoord",        new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
       ]),
       enumerable: true,
@@ -90093,6 +90406,7 @@ x_ite_Namespace .add ("TriangleStripSet", "x_ite/Components/Rendering/TriangleSt
 
 
 
+
 const Rendering_default_ = {
    name: "Rendering",
    concreteNodes:
@@ -90109,6 +90423,7 @@ const Rendering_default_ = {
       Rendering_LineSet,
       Rendering_Normal,
       Rendering_PointSet,
+      Rendering_Tangent,
       Rendering_TriangleFanSet,
       Rendering_TriangleSet,
       Rendering_TriangleStripSet,
@@ -90237,7 +90552,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .add ("X3DShaderNode", "x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(463);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90550,6 +90865,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "FogDepth",
          "Color",
          "Normal",
+         "Tangent",
          "Vertex",
          "Particle",
          "ParticleVelocity",
@@ -91495,6 +91811,18 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    normalAttributeDivisor (gl, divisor)
    {
       gl .vertexAttribDivisor (this .x3d_Normal, divisor);
+   },
+   enableTangentAttribute (gl, buffer, stride, offset)
+   {
+      const location = this .x3d_Tangent;
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+      gl .enableVertexAttribArray (location);
+      gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset);
+   },
+   tangentAttributeDivisor (gl, divisor)
+   {
+      gl .vertexAttribDivisor (this .x3d_Tangent, divisor);
    },
    enableVertexAttribute (gl, buffer, stride, offset)
    {
@@ -93310,8 +93638,6 @@ varying vec4 texCoord${i};
 #endif
 `) .join ("\n")}
  
-#else
-varying vec4 texCoord0;
 #endif
 #else
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
@@ -93322,14 +93648,15 @@ vec4 texCoord${i} = vec4 (0.0, 0.0, 0.0, 1.0);
 #endif
 `) .join ("\n")}
  
-#else
-vec4 texCoord0=vec4(0.0,0.0,0.0,1.0);
 #endif
 #endif
 #if defined(X3D_NORMALS)
 varying vec3 normal;
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
 varying vec3 localNormal;
+#endif
+#if defined(X3D_TANGENTS)
+varying mat3 TBN;
 #endif
 #else
 const vec3 normal=vec3(0.0,0.0,1.0);
@@ -93431,9 +93758,15 @@ struct NormalInfo{vec3 ng;vec3 ntex;vec3 n;vec3 t;vec3 b;};NormalInfo getNormalI
 #if defined(X3D_NORMAL_TEXTURE)
 vec3 UV=getTexCoord(x3d_NormalTexture.textureTransformMapping,x3d_NormalTexture.textureCoordinateMapping);
 #else
-vec3 UV=texCoord0.stp/texCoord0.q;
+vec3 UV=vec3(0.0);
 #endif
-vec2 uv_dx=dFdx(UV.st);vec2 uv_dy=dFdy(UV.st);if(length(uv_dx)<=1e-2)uv_dx=vec2(1.0,0.0);if(length(uv_dy)<=1e-2)uv_dy=vec2(0.0,1.0);vec3 t_=(uv_dy.t*dFdx(vertex)-uv_dx.t*dFdy(vertex))/(uv_dx.s*uv_dy.t-uv_dy.s*uv_dx.t);vec3 n,t,b,ng;ng=normalize(normal);t=normalize(t_-ng*dot(ng,t_));b=cross(ng,t);if(gl_FrontFacing==false){t*=-1.0;b*=-1.0;ng*=-1.0;}NormalInfo info;info.ng=ng;
+vec3 n,t,b,ng;
+#if defined(X3D_TANGENTS)
+t=normalize(TBN[0]);b=normalize(TBN[1]);ng=normalize(TBN[2]);
+#else
+vec2 uv_dx=dFdx(UV.st);vec2 uv_dy=dFdy(UV.st);if(length(uv_dx)<=1e-2)uv_dx=vec2(1.0,0.0);if(length(uv_dy)<=1e-2)uv_dy=vec2(0.0,1.0);vec3 t_=(uv_dy.t*dFdx(vertex)-uv_dx.t*dFdy(vertex))/(uv_dx.s*uv_dy.t-uv_dy.s*uv_dx.t);ng=normalize(normal);t=normalize(t_-ng*dot(ng,t_));b=cross(ng,t);
+#endif
+if(gl_FrontFacing==false){t*=-1.0;b*=-1.0;ng*=-1.0;}NormalInfo info;info.ng=ng;
 #if defined(X3D_NORMAL_TEXTURE)
 #if defined(X3D_NORMAL_TEXTURE_2D)
 info.ntex=texture2D(x3d_NormalTexture.texture2D,UV.st).rgb;
@@ -93661,8 +93994,6 @@ attribute vec4 x3d_TexCoord${i};
 #endif
 `) .join ("\n")}
  
-#else
-attribute vec4 x3d_TexCoord0;
 #endif
 #endif
 attribute vec4 x3d_Vertex;
@@ -93681,14 +94012,15 @@ varying vec4 texCoord${i};
 #endif
 `) .join ("\n")}
  
-#else
-varying vec4 texCoord0;
 #endif
 #endif
 #if defined(X3D_NORMALS)
 uniform mat3 x3d_NormalMatrix;attribute vec3 x3d_Normal;varying vec3 normal;
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
 varying vec3 localNormal;
+#endif
+#if defined(X3D_TANGENTS)
+attribute vec3 x3d_Tangent;varying mat3 TBN;
 #endif
 #endif
 varying vec3 vertex;
@@ -93720,14 +94052,15 @@ texCoord${i} = x3d_TexCoord${i};
 #endif
 `) .join ("\n")}
  
-#else
-texCoord0=x3d_TexCoord0;
 #endif
 #endif
 #if defined(X3D_NORMALS)
 normal=x3d_NormalMatrix*x3d_Normal;
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
 localNormal=x3d_Normal;
+#endif
+#if defined(X3D_TANGENTS)
+vec3 tangent=x3d_NormalMatrix*x3d_Tangent;vec3 bitangent=cross(normal,tangent);TBN=mat3(tangent,bitangent,normal);
 #endif
 #endif
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
@@ -93792,8 +94125,6 @@ in vec4 texCoord${i};
 #endif
 `) .join ("\n")}
  
-#else
-in vec4 texCoord0;
 #endif
 #else
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
@@ -93804,14 +94135,15 @@ vec4 texCoord${i} = vec4 (0.0, 0.0, 0.0, 1.0);
 #endif
 `) .join ("\n")}
  
-#else
-vec4 texCoord0=vec4(0.0,0.0,0.0,1.0);
 #endif
 #endif
 #if defined(X3D_NORMALS)
 in vec3 normal;
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
 in vec3 localNormal;
+#endif
+#if defined(X3D_TANGENTS)
+in mat3 TBN;
 #endif
 #else
 const vec3 normal=vec3(0.0,0.0,1.0);
@@ -93929,18 +94261,21 @@ x_ite_Namespace .add ("Material2.glsl", "assets/shaders/webgl2/common/Material2.
 /* harmony default export */ const Material2_glsl = (Material2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Normal2.glsl.js
 const Normal2_glsl_default_ = /* glsl */ `#if defined(X3D_NORMAL_TEXTURE)
-mat3 getTBNMatrix(const in vec2 texCoord,const in vec3 ng){vec3 pos_dx=dFdx(vertex);vec3 pos_dy=dFdy(vertex);vec2 tex_dx=dFdx(texCoord);vec2 tex_dy=dFdy(texCoord);vec3 t=(tex_dy.t*pos_dx-tex_dx.t*pos_dy)/(tex_dx.s*tex_dy.t-tex_dy.s*tex_dx.t);vec3 N=ng;vec3 T=normalize(t-N*dot(N,t));vec3 B=normalize(cross(N,T));mat3 tbn=mat3(T,B,N);return tbn;}
-#endif
-#if defined(X3D_NORMAL_TEXTURE)
 uniform x3d_NormalTextureParameters x3d_NormalTexture;
 #endif
 struct NormalInfo{vec3 ng;vec3 ntex;vec3 n;vec3 t;vec3 b;};NormalInfo getNormalInfo(const in float normalScale){
 #if defined(X3D_NORMAL_TEXTURE)
 vec3 UV=getTexCoord(x3d_NormalTexture.textureTransformMapping,x3d_NormalTexture.textureCoordinateMapping);
 #else
-vec3 UV=texCoord0.stp/texCoord0.q;
+vec3 UV=vec3(0.0);
 #endif
-vec2 uv_dx=dFdx(UV.st);vec2 uv_dy=dFdy(UV.st);if(length(uv_dx)<=1e-2)uv_dx=vec2(1.0,0.0);if(length(uv_dy)<=1e-2)uv_dy=vec2(0.0,1.0);vec3 t_=(uv_dy.t*dFdx(vertex)-uv_dx.t*dFdy(vertex))/(uv_dx.s*uv_dy.t-uv_dy.s*uv_dx.t);vec3 n,t,b,ng;ng=normalize(normal);t=normalize(t_-ng*dot(ng,t_));b=cross(ng,t);if(gl_FrontFacing==false){t*=-1.0;b*=-1.0;ng*=-1.0;}NormalInfo info;info.ng=ng;
+vec3 n,t,b,ng;
+#if defined(X3D_TANGENTS)
+t=normalize(TBN[0]);b=normalize(TBN[1]);ng=normalize(TBN[2]);
+#else
+vec2 uv_dx=dFdx(UV.st);vec2 uv_dy=dFdy(UV.st);if(length(uv_dx)<=1e-2)uv_dx=vec2(1.0,0.0);if(length(uv_dy)<=1e-2)uv_dy=vec2(0.0,1.0);vec3 t_=(uv_dy.t*dFdx(vertex)-uv_dx.t*dFdy(vertex))/(uv_dx.s*uv_dy.t-uv_dy.s*uv_dx.t);ng=normalize(normal);t=normalize(t_-ng*dot(ng,t_));b=cross(ng,t);
+#endif
+if(gl_FrontFacing==false){t*=-1.0;b*=-1.0;ng*=-1.0;}NormalInfo info;info.ng=ng;
 #if defined(X3D_NORMAL_TEXTURE)
 #if defined(X3D_NORMAL_TEXTURE_2D)
 info.ntex=texture(x3d_NormalTexture.texture2D,UV.st).rgb;
@@ -94232,8 +94567,6 @@ in vec4 x3d_TexCoord${i};
 #endif
 `) .join ("\n")}
  
-#else
-in vec4 x3d_TexCoord0;
 #endif
 #endif
 in vec4 x3d_Vertex;
@@ -94252,14 +94585,15 @@ out vec4 texCoord${i};
 #endif
 `) .join ("\n")}
  
-#else
-out vec4 texCoord0;
 #endif
 #endif
 #if defined(X3D_NORMALS)
 uniform mat3 x3d_NormalMatrix;in vec3 x3d_Normal;out vec3 normal;
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
 out vec3 localNormal;
+#endif
+#if defined(X3D_TANGENTS)
+in vec3 x3d_Tangent;out mat3 TBN;
 #endif
 #endif
 #if defined(X3D_GEOMETRY_1D)&&defined(X3D_STYLE_PROPERTIES)
@@ -94306,14 +94640,15 @@ texCoord${i} = getInstanceTexCoord (x3d_TexCoord${i});
 #endif
 `) .join ("\n")}
  
-#else
-texCoord0=getInstanceTexCoord(x3d_TexCoord0);
 #endif
 #endif
 #if defined(X3D_NORMALS)
 normal=x3d_NormalMatrix*x3d_TransformedNormal;
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
 localNormal=x3d_TransformedNormal;
+#endif
+#if defined(X3D_TANGENTS)
+vec3 tangent=x3d_NormalMatrix*x3d_Tangent;vec3 bitangent=cross(normal,tangent);TBN=mat3(tangent,bitangent,normal);
 #endif
 #endif
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
@@ -94442,7 +94777,7 @@ precision highp float;precision highp int;precision highp sampler2D;precision hi
 uniform x3d_LightSourceParameters x3d_LightSource[X3D_NUM_LIGHTS];
 #endif
 uniform x3d_PhysicalMaterialParameters x3d_Material;
-#pragma X3D include "pbr/BDRF.glsl"
+#pragma X3D include "pbr/BRDF.glsl"
 #pragma X3D include "pbr/MaterialInfo.glsl"
 #pragma X3D include "pbr/Punctual.glsl"
 #pragma X3D include "pbr/IBL.glsl"
@@ -94450,10 +94785,11 @@ vec4 getMaterialColor(){vec4 baseColor=getBaseColor();
 #if defined(X3D_TEXTURE_PROJECTION)
 baseColor.rgb*=getTextureProjectorColor();
 #endif
+vec3 v=normalize(-vertex);
 #if defined(X3D_LIGHTING)||defined(X3D_USE_IBL)||defined(X3D_ANISOTROPY_MATERIAL_EXT)
 NormalInfo normalInfo=getNormalInfo(x3d_Material.normalScale);vec3 n=normalInfo.n;
 #endif
-vec3 v=normalize(-vertex);MaterialInfo materialInfo;materialInfo.baseColor=baseColor.rgb;materialInfo.ior=1.5;materialInfo.f0=vec3(0.04);materialInfo.specularWeight=1.0;
+MaterialInfo materialInfo;materialInfo.baseColor=baseColor.rgb;materialInfo.ior=1.5;materialInfo.f0=vec3(0.04);materialInfo.specularWeight=1.0;
 #if defined(X3D_MATERIAL_METALLIC_ROUGHNESS)
 materialInfo=getMetallicRoughnessInfo(materialInfo);
 #endif
@@ -94915,7 +95251,7 @@ precision highp float;precision highp int;precision highp sampler2D;precision hi
 uniform x3d_LightSourceParameters x3d_LightSource[X3D_NUM_LIGHTS];
 #endif
 uniform x3d_PhysicalMaterialParameters x3d_Material;
-#pragma X3D include "pbr/BDRF.glsl"
+#pragma X3D include "pbr/BRDF.glsl"
 #pragma X3D include "pbr/MaterialInfo.glsl"
 #pragma X3D include "pbr/Punctual.glsl"
 #pragma X3D include "pbr/IBL.glsl"
@@ -94923,10 +95259,11 @@ vec4 getMaterialColor(){vec4 baseColor=getBaseColor();
 #if defined(X3D_TEXTURE_PROJECTION)
 baseColor.rgb*=getTextureProjectorColor();
 #endif
+vec3 v=normalize(-vertex);
 #if defined(X3D_LIGHTING)||defined(X3D_USE_IBL)||defined(X3D_ANISOTROPY_MATERIAL_EXT)
 NormalInfo normalInfo=getNormalInfo(x3d_Material.normalScale);vec3 n=normalInfo.n;
 #endif
-vec3 v=normalize(-vertex);MaterialInfo materialInfo;materialInfo.baseColor=baseColor.rgb;materialInfo.ior=1.5;materialInfo.f0=vec3(0.04);materialInfo.specularWeight=1.0;
+MaterialInfo materialInfo;materialInfo.baseColor=baseColor.rgb;materialInfo.ior=1.5;materialInfo.f0=vec3(0.04);materialInfo.specularWeight=1.0;
 #if defined(X3D_MATERIAL_METALLIC_ROUGHNESS)
 materialInfo=getMetallicRoughnessInfo(materialInfo);
 #endif
@@ -95269,8 +95606,8 @@ return finalColor;}void main(){fragment_main();}`
 
 x_ite_Namespace .add ("Unlit2.fs", "assets/shaders/webgl2/Unlit2.fs", Unlit2_fs_default_);
 /* harmony default export */ const Unlit2_fs = (Unlit2_fs_default_);
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/pbr/BDRF1.glsl.js
-const BDRF1_glsl_default_ = /* glsl */ `#if defined(X3D_LIGHTING)
+;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/pbr/BRDF1.glsl.js
+const BRDF1_glsl_default_ = /* glsl */ `#if defined(X3D_LIGHTING)
 const float M_PI=3.14159265359;vec3 F_Schlick(vec3 f0,vec3 f90,float VdotH){return f0+(f90-f0)*pow(clamp(1.0-VdotH,0.0,1.0),5.0);}float V_GGX(float NdotL,float NdotV,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float GGXV=NdotL*sqrt(NdotV*NdotV*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGXL=NdotV*sqrt(NdotL*NdotL*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGX=GGXV+GGXL;if(GGX>0.0){return 0.5/GGX;}return 0.0;}float D_GGX(float NdotH,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float f=(NdotH*NdotH)*(alphaRoughnessSq-1.0)+1.0;return alphaRoughnessSq/(M_PI*f*f);}vec3 BRDF_lambertian(vec3 f0,vec3 f90,vec3 diffuseColor,float specularWeight,float VdotH){return(1.0-specularWeight*F_Schlick(f0,f90,VdotH))*(diffuseColor/M_PI);}vec3 BRDF_specularGGX(vec3 f0,vec3 f90,float alphaRoughness,float specularWeight,float VdotH,float NdotL,float NdotV,float NdotH){vec3 F=F_Schlick(f0,f90,VdotH);float Vis=V_GGX(NdotL,NdotV,alphaRoughness);float D=D_GGX(NdotH,alphaRoughness);return specularWeight*F*Vis*D;}
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
 float D_GGX_anisotropic(float NdotH,float TdotH,float BdotH,float anisotropy,float at,float ab){float a2=at*ab;vec3 f=vec3(ab*TdotH,at*BdotH,a2*NdotH);float w2=a2/dot(f,f);return a2*w2*w2/M_PI;}float V_GGX_anisotropic(float NdotL,float NdotV,float BdotV,float TdotV,float TdotL,float BdotL,float at,float ab){float GGXV=NdotL*length(vec3(at*TdotV,ab*BdotV,NdotV));float GGXL=NdotV*length(vec3(at*TdotL,ab*BdotL,NdotL));float v=0.5/(GGXV+GGXL);return clamp(v,0.0,1.0);}vec3 BRDF_specularGGXAnisotropy(vec3 f0,vec3 f90,float alphaRoughness,float anisotropy,vec3 n,vec3 v,vec3 l,vec3 h,vec3 t,vec3 b){float at=mix(alphaRoughness,1.0,anisotropy*anisotropy);float ab=clamp(alphaRoughness,0.001,1.0);float NdotL=clamp(dot(n,l),0.0,1.0);float NdotH=clamp(dot(n,h),0.001,1.0);float NdotV=dot(n,v);float VdotH=clamp(dot(v,h),0.0,1.0);float V=V_GGX_anisotropic(NdotL,NdotV,dot(b,v),dot(t,v),dot(t,l),dot(b,l),at,ab);float D=D_GGX_anisotropic(NdotH,dot(t,h),dot(b,h),anisotropy,at,ab);vec3 F=F_Schlick(f0,f90,VdotH);return F*V*D;}
@@ -95279,8 +95616,8 @@ float D_GGX_anisotropic(float NdotH,float TdotH,float BdotH,float anisotropy,flo
 `
 ;
 
-x_ite_Namespace .add ("BDRF1.glsl", "assets/shaders/webgl1/pbr/BDRF1.glsl", BDRF1_glsl_default_);
-/* harmony default export */ const BDRF1_glsl = (BDRF1_glsl_default_);
+x_ite_Namespace .add ("BRDF1.glsl", "assets/shaders/webgl1/pbr/BRDF1.glsl", BRDF1_glsl_default_);
+/* harmony default export */ const BRDF1_glsl = (BRDF1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/pbr/IBL1.glsl.js
 const IBL1_glsl_default_ = /* glsl */ `#if defined(X3D_USE_IBL)
 uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;vec3 getDiffuseLight(const in vec3 n){vec3 textureColor=textureCube(x3d_EnvironmentLightSource.diffuseTexture,x3d_EnvironmentLightSource.rotation*n).rgb;if(!x3d_EnvironmentLightSource.diffuseTextureLinear)textureColor=sRGBToLinear(textureColor);return textureColor*x3d_EnvironmentLightSource.color*x3d_EnvironmentLightSource.intensity;}vec3 getSpecularLight(const in vec3 reflection,const in float lod){vec3 textureColor=textureCubeLodEXT(x3d_EnvironmentLightSource.specularTexture,x3d_EnvironmentLightSource.rotation*reflection,lod).rgb;if(!x3d_EnvironmentLightSource.specularTextureLinear)textureColor=sRGBToLinear(textureColor);return textureColor*x3d_EnvironmentLightSource.color*x3d_EnvironmentLightSource.intensity;}vec3 getIBLRadianceGGX(const in vec3 n,const in vec3 v,const in float roughness,const in vec3 F0,const in float specularWeight){float NdotV=clamp(dot(n,v),0.0,1.0);float lod=roughness*float(x3d_EnvironmentLightSource.specularTextureLevels-1);vec3 reflection=normalize(reflect(-v,n));vec2 brdfSamplePoint=clamp(vec2(NdotV,roughness),vec2(0.0),vec2(1.0));vec2 f_ab=texture2D(x3d_EnvironmentLightSource.GGXLUTTexture,brdfSamplePoint).rg;vec3 specularLight=getSpecularLight(reflection,lod);vec3 Fr=max(vec3(1.0-roughness),F0)-F0;vec3 k_S=F0+Fr*pow(1.0-NdotV,5.0);vec3 FssEss=k_S*f_ab.x+f_ab.y;return specularWeight*specularLight*FssEss;}vec3 getIBLRadianceLambertian(const in vec3 n,const in vec3 v,const in float roughness,const in vec3 diffuseColor,const in vec3 F0,const in float specularWeight){float NdotV=clamp(dot(n,v),0.0,1.0);vec2 brdfSamplePoint=clamp(vec2(NdotV,roughness),vec2(0.0),vec2(1.0));vec2 f_ab=texture2D(x3d_EnvironmentLightSource.GGXLUTTexture,brdfSamplePoint).rg;vec3 irradiance=getDiffuseLight(n);vec3 Fr=max(vec3(1.0-roughness),F0)-F0;vec3 k_S=F0+Fr*pow(1.0-NdotV,5.0);vec3 FssEss=specularWeight*k_S*f_ab.x+f_ab.y;float Ems=(1.0-(f_ab.x+f_ab.y));vec3 F_avg=specularWeight*(F0+(1.0-F0)/21.0);vec3 FmsEms=Ems*FssEss*F_avg/(1.0-F_avg*Ems);vec3 k_D=diffuseColor*(1.0-FssEss+FmsEms);return(FmsEms+k_D)*irradiance;}
@@ -95478,7 +95815,7 @@ uniform vec3 x3d_AnisotropyEXT;MaterialInfo getAnisotropyInfo(in MaterialInfo in
 #if defined(X3D_ANISOTROPY_TEXTURE_EXT)
 vec3 anisotropySample=getAnisotropyEXT();direction=anisotropySample.xy*2.0-vec2(1.0);strengthFactor=anisotropySample.z;
 #endif
-vec2 directionRotation=x3d_AnisotropyEXT.xy;mat2 rotationMatrix=mat2(directionRotation.x,directionRotation.y,-directionRotation.y,directionRotation.x);direction=rotationMatrix*direction.xy;info.anisotropicT=mat3(normalInfo.t,normalInfo.b,normalInfo.n)*normalize(vec3(direction,0.0));info.anisotropicB=cross(normalInfo.ng,info.anisotropicT);info.anisotropyStrength=clamp(x3d_AnisotropyEXT.z*strengthFactor,0.0,1.0);return info;}
+vec2 directionRotation=x3d_AnisotropyEXT.xy;mat2 rotationMatrix=mat2(directionRotation.x,directionRotation.y,-directionRotation.y,directionRotation.x);direction=rotationMatrix*direction;info.anisotropicT=mat3(normalInfo.t,normalInfo.b,normalInfo.n)*normalize(vec3(direction,0.0));info.anisotropicB=cross(normalInfo.ng,info.anisotropicT);info.anisotropyStrength=clamp(x3d_AnisotropyEXT.z*strengthFactor,0.0,1.0);return info;}
 #endif
 `
 ;
@@ -95508,8 +95845,8 @@ return linearTosRGB(color);}`
 
 x_ite_Namespace .add ("ToneMapping1.glsl", "assets/shaders/webgl1/pbr/ToneMapping1.glsl", ToneMapping1_glsl_default_);
 /* harmony default export */ const ToneMapping1_glsl = (ToneMapping1_glsl_default_);
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/BDRF2.glsl.js
-const BDRF2_glsl_default_ = /* glsl */ `#if defined(X3D_LIGHTING)
+;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/BRDF2.glsl.js
+const BRDF2_glsl_default_ = /* glsl */ `#if defined(X3D_LIGHTING)
 const float M_PI=3.1415926535897932384626433832795;vec3 F_Schlick(vec3 f0,vec3 f90,float VdotH){return f0+(f90-f0)*pow(clamp(1.0-VdotH,0.0,1.0),5.0);}float V_GGX(float NdotL,float NdotV,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float GGXV=NdotL*sqrt(NdotV*NdotV*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGXL=NdotV*sqrt(NdotL*NdotL*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGX=GGXV+GGXL;if(GGX>0.0){return 0.5/GGX;}return 0.0;}float D_GGX(float NdotH,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float f=(NdotH*NdotH)*(alphaRoughnessSq-1.0)+1.0;return alphaRoughnessSq/(M_PI*f*f);}vec3 BRDF_lambertian(vec3 f0,vec3 f90,vec3 diffuseColor,float specularWeight,float VdotH){return(1.0-specularWeight*F_Schlick(f0,f90,VdotH))*(diffuseColor/M_PI);}vec3 BRDF_specularGGX(vec3 f0,vec3 f90,float alphaRoughness,float specularWeight,float VdotH,float NdotL,float NdotV,float NdotH){vec3 F=F_Schlick(f0,f90,VdotH);float Vis=V_GGX(NdotL,NdotV,alphaRoughness);float D=D_GGX(NdotH,alphaRoughness);return specularWeight*F*Vis*D;}
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
 float D_GGX_anisotropic(float NdotH,float TdotH,float BdotH,float anisotropy,float at,float ab){float a2=at*ab;vec3 f=vec3(ab*TdotH,at*BdotH,a2*NdotH);float w2=a2/dot(f,f);return a2*w2*w2/M_PI;}float V_GGX_anisotropic(float NdotL,float NdotV,float BdotV,float TdotV,float TdotL,float BdotL,float at,float ab){float GGXV=NdotL*length(vec3(at*TdotV,ab*BdotV,NdotV));float GGXL=NdotV*length(vec3(at*TdotL,ab*BdotL,NdotL));float v=0.5/(GGXV+GGXL);return clamp(v,0.0,1.0);}vec3 BRDF_specularGGXAnisotropy(vec3 f0,vec3 f90,float alphaRoughness,float anisotropy,vec3 n,vec3 v,vec3 l,vec3 h,vec3 t,vec3 b){float at=mix(alphaRoughness,1.0,anisotropy*anisotropy);float ab=clamp(alphaRoughness,0.001,1.0);float NdotL=clamp(dot(n,l),0.0,1.0);float NdotH=clamp(dot(n,h),0.001,1.0);float NdotV=dot(n,v);float VdotH=clamp(dot(v,h),0.0,1.0);float V=V_GGX_anisotropic(NdotL,NdotV,dot(b,v),dot(t,v),dot(t,l),dot(b,l),at,ab);float D=D_GGX_anisotropic(NdotH,dot(t,h),dot(b,h),anisotropy,at,ab);vec3 F=F_Schlick(f0,f90,VdotH);return F*V*D;}
@@ -95518,8 +95855,8 @@ float D_GGX_anisotropic(float NdotH,float TdotH,float BdotH,float anisotropy,flo
 `
 ;
 
-x_ite_Namespace .add ("BDRF2.glsl", "assets/shaders/webgl2/pbr/BDRF2.glsl", BDRF2_glsl_default_);
-/* harmony default export */ const BDRF2_glsl = (BDRF2_glsl_default_);
+x_ite_Namespace .add ("BRDF2.glsl", "assets/shaders/webgl2/pbr/BRDF2.glsl", BRDF2_glsl_default_);
+/* harmony default export */ const BRDF2_glsl = (BRDF2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/IBL2.glsl.js
 const IBL2_glsl_default_ = /* glsl */ `#if defined(X3D_USE_IBL)
 uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;vec3 getDiffuseLight(const in vec3 n){vec3 textureColor=texture(x3d_EnvironmentLightSource.diffuseTexture,x3d_EnvironmentLightSource.rotation*n).rgb;if(!x3d_EnvironmentLightSource.diffuseTextureLinear)textureColor=sRGBToLinear(textureColor);return textureColor*x3d_EnvironmentLightSource.color*x3d_EnvironmentLightSource.intensity;}vec3 getSpecularLight(const in vec3 reflection,const in float lod){vec3 textureColor=textureLod(x3d_EnvironmentLightSource.specularTexture,x3d_EnvironmentLightSource.rotation*reflection,lod).rgb;if(!x3d_EnvironmentLightSource.specularTextureLinear)textureColor=sRGBToLinear(textureColor);return textureColor*x3d_EnvironmentLightSource.color*x3d_EnvironmentLightSource.intensity;}vec3 getIBLRadianceGGX(const in vec3 n,const in vec3 v,const in float roughness,const in vec3 F0,const in float specularWeight){float NdotV=clamp(dot(n,v),0.0,1.0);float lod=roughness*float(x3d_EnvironmentLightSource.specularTextureLevels-1);vec3 reflection=normalize(reflect(-v,n));vec2 brdfSamplePoint=clamp(vec2(NdotV,roughness),vec2(0.0),vec2(1.0));vec2 f_ab=texture(x3d_EnvironmentLightSource.GGXLUTTexture,brdfSamplePoint).rg;vec3 specularLight=getSpecularLight(reflection,lod);vec3 Fr=max(vec3(1.0-roughness),F0)-F0;vec3 k_S=F0+Fr*pow(1.0-NdotV,5.0);vec3 FssEss=k_S*f_ab.x+f_ab.y;return specularWeight*specularLight*FssEss;}vec3 getIBLRadianceLambertian(const in vec3 n,const in vec3 v,const in float roughness,const in vec3 diffuseColor,const in vec3 F0,const in float specularWeight){float NdotV=clamp(dot(n,v),0.0,1.0);vec2 brdfSamplePoint=clamp(vec2(NdotV,roughness),vec2(0.0),vec2(1.0));vec2 f_ab=texture(x3d_EnvironmentLightSource.GGXLUTTexture,brdfSamplePoint).rg;vec3 irradiance=getDiffuseLight(n);vec3 Fr=max(vec3(1.0-roughness),F0)-F0;vec3 k_S=F0+Fr*pow(1.0-NdotV,5.0);vec3 FssEss=specularWeight*k_S*f_ab.x+f_ab.y;float Ems=(1.0-(f_ab.x+f_ab.y));vec3 F_avg=specularWeight*(F0+(1.0-F0)/21.0);vec3 FmsEms=Ems*FssEss*F_avg/(1.0-F_avg*Ems);vec3 k_D=diffuseColor*(1.0-FssEss+FmsEms);return(FmsEms+k_D)*irradiance;}
@@ -95733,7 +96070,7 @@ uniform vec3 x3d_AnisotropyEXT;MaterialInfo getAnisotropyInfo(in MaterialInfo in
 #if defined(X3D_ANISOTROPY_TEXTURE_EXT)
 vec3 anisotropySample=getAnisotropyEXT();direction=anisotropySample.xy*2.0-vec2(1.0);strengthFactor=anisotropySample.z;
 #endif
-vec2 directionRotation=x3d_AnisotropyEXT.xy;mat2 rotationMatrix=mat2(directionRotation.x,directionRotation.y,-directionRotation.y,directionRotation.x);direction=rotationMatrix*direction.xy;info.anisotropicT=mat3(normalInfo.t,normalInfo.b,normalInfo.n)*normalize(vec3(direction,0.0));info.anisotropicB=cross(normalInfo.ng,info.anisotropicT);info.anisotropyStrength=clamp(x3d_AnisotropyEXT.z*strengthFactor,0.0,1.0);return info;}
+vec2 directionRotation=x3d_AnisotropyEXT.xy;mat2 rotationMatrix=mat2(directionRotation.x,directionRotation.y,-directionRotation.y,directionRotation.x);direction=rotationMatrix*direction;info.anisotropicT=mat3(normalInfo.t,normalInfo.b,normalInfo.n)*normalize(vec3(direction,0.0));info.anisotropicB=cross(normalInfo.ng,info.anisotropicT);info.anisotropyStrength=clamp(x3d_AnisotropyEXT.z*strengthFactor,0.0,1.0);return info;}
 #endif
 `
 ;
@@ -95906,7 +96243,7 @@ const ShaderRegistry = {
          Texture: Texture1_glsl,
          Vertex: Vertex1_glsl,
          // PBR
-         BDRF: BDRF1_glsl,
+         BRDF: BRDF1_glsl,
          IBL: IBL1_glsl,
          MaterialInfo: MaterialInfo1_glsl,
          Punctual: Punctual1_glsl,
@@ -95932,7 +96269,7 @@ const ShaderRegistry = {
          Utils: Utils2_glsl,
          Vertex: Vertex2_glsl,
          // PBR
-         BDRF: BDRF2_glsl,
+         BRDF: BRDF2_glsl,
          IBL: IBL2_glsl,
          MaterialInfo: MaterialInfo2_glsl,
          Punctual: Punctual2_glsl,
@@ -96086,7 +96423,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .add ("ShaderCompiler", "x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(463);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96743,7 +97080,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .add ("X3DAppearanceNode", "x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(463);
+/* provided dependency */ var Appearance_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97722,6 +98059,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DApp
 
       if (geometryContext .hasNormals)
          options .push ("X3D_NORMALS");
+
+      if (geometryContext .hasTangents)
+         options .push ("X3D_TANGENTS");
 
       if (renderContext)
       {
@@ -105736,8 +106076,8 @@ const GifMedia_default_ = GifMedia;
 x_ite_Namespace .add ("GifMedia", "x_ite/Browser/Texturing/GifMedia", GifMedia_default_);
 /* harmony default export */ const Texturing_GifMedia = (GifMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(463);
-/* provided dependency */ var SuperGif = __webpack_require__(664);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(989);
+/* provided dependency */ var SuperGif = __webpack_require__(70);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109155,7 +109495,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 x_ite_Namespace .add ("gettext", "locale/gettext", gettext_default_);
 /* harmony default export */ const gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(463);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109728,7 +110068,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .add ("TextureQuality", "x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(463);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110323,7 +110663,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .add ("RenderingProperties", "x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(463);
+/* provided dependency */ var Notification_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110446,8 +110786,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .add ("Notification", "x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(107);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(463);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(605);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113200,7 +113540,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .add ("DataStorage", "standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(463);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115747,8 +116087,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .add ("X3DViewer", "x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(79);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(463);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(477);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116620,8 +116960,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .add ("ExamineViewer", "x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(79);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(463);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(477);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117630,8 +117970,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .add ("FlyViewer", "x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(79);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(463);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(477);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117962,8 +118302,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .add ("NoneViewer", "x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(79);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(463);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(477);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119101,8 +119441,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .add ("X3DPickingContext", "x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(79);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(463);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(477);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120406,7 +120746,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .add ("MultiSampleFrameBuffer", "x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(463);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121355,7 +121695,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 x_ite_Namespace .add ("X3DSoundContext", "x_ite/Browser/Sound/X3DSoundContext", X3DSoundContext_default_);
 /* harmony default export */ const Sound_X3DSoundContext = (X3DSoundContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(463);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(989);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -122915,7 +123255,7 @@ const Components_default_ = Components;
 x_ite_Namespace .add ("Components", "x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(463);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(989);
 /*******************************************************************************
  * MIT License
  *
@@ -124183,7 +124523,7 @@ const FieldTypes_default_ = new Configuration_FieldTypesArray (Object .values (x
 x_ite_Namespace .add ("FieldTypes", "x_ite/Configuration/FieldTypes", FieldTypes_default_);
 /* harmony default export */ const FieldTypes = (FieldTypes_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(463);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -125285,7 +125625,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace .add ("X3DBrowser", "x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(463);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -125424,8 +125764,8 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 x_ite_Namespace .add ("X3DCanvasElement", "x_ite/X3DCanvasElement", X3DCanvasElement_default_);
 /* harmony default export */ const x_ite_X3DCanvasElement = (X3DCanvasElement_default_);
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(463);
-/* provided dependency */ var pako = __webpack_require__(55);
+/* provided dependency */ var jquery_$ = __webpack_require__(989);
+/* provided dependency */ var pako = __webpack_require__(969);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -125502,14 +125842,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .add ("jquery", "lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(460);
+/* provided dependency */ var libtess_libtess = __webpack_require__(902);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .add ("libtess", "lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(463);
+/* provided dependency */ var X3D_$ = __webpack_require__(989);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

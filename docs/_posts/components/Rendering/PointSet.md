@@ -63,6 +63,8 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 
 - *normal* vectors increase file size, typically doubling geometry definitions.
 
+### SFNode [in, out] **tangent**
+
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 
 Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.

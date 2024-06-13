@@ -201,6 +201,8 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 
 - *normal* vectors increase file size, typically doubling geometry definitions.
 
+### SFNode [in, out] **tangent**
+
 ### MFDouble [ ] **height** [ 0, 0 ] <small>(-∞,∞)</small>
 
 Contains xDimension rows * zDimension columns floating-point values for elevation above ellipsoid.

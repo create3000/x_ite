@@ -1023,24 +1023,28 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    {
       X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
 
-      this ._anisotropyStrength .addInterest ("set_anisotropy__",        this);
-      this ._anisotropyRotation .addInterest ("set_anisotropy__",        this);
-      this ._anisotropyTexture  .addInterest ("set_anisotropyTexture__", this);
+      this ._anisotropyStrength .addInterest ("set_anisotropyStrength__", this);
+      this ._anisotropyRotation .addInterest ("set_anisotropyRotation__", this);
+      this ._anisotropyTexture  .addInterest ("set_anisotropyTexture__",  this);
 
-      this .set_anisotropy__ ();
+      this .set_anisotropyStrength__ ();
+      this .set_anisotropyRotation__ ();
       this .set_anisotropyTexture__ ();
    },
    getExtensionKey ()
    {
       return X_ITE_ExtensionKeys .ANISOTROPY_MATERIAL_EXTENSION;
    },
-   set_anisotropy__ ()
+   set_anisotropyStrength__ ()
+   {
+      this .anisotropyArray [2] = Math .max (this ._anisotropyStrength .getValue (), 0);
+   },
+   set_anisotropyRotation__ ()
    {
       const anisotropyRotation = this ._anisotropyRotation .getValue ();
 
       this .anisotropyArray [0] = Math .cos (anisotropyRotation);
       this .anisotropyArray [1] = Math .sin (anisotropyRotation);
-      this .anisotropyArray [2] = Math .max (this ._anisotropyStrength .getValue (), 0);
    },
    set_anisotropyTexture__ ()
    {
