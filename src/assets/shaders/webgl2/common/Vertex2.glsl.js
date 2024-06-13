@@ -149,7 +149,7 @@ vertex_main ()
       #endif
 
       #if defined (X3D_TANGENTS)
-         vec3 tangent   = normalize (x3d_NormalMatrix * x3d_Tangent);
+         vec3 tangent   = x3d_NormalMatrix * x3d_Tangent;
          vec3 bitangent = cross (normal, tangent);
 
          TBN = mat3 (tangent, bitangent, normal);
