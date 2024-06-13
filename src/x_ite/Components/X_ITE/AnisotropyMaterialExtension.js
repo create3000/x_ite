@@ -99,7 +99,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    },
    getShaderOptions (options)
    {
-      options .push ("X3D_ANISOTROPY_MATERIAL_EXT", "X3D_MATERIAL_TEXTURES");
+      options .push ("X3D_ANISOTROPY_MATERIAL_EXT");
 
       if (!+this .getTextureBits ())
          return;

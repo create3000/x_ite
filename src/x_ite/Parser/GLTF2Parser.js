@@ -935,12 +935,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       materialNode .setup ();
 
-      if (!texCoordIndices .size)
-      {
-         if (this .hasTextures (materialNode))
-            texCoordIndices .add (0);
-      }
-
       for (const i of texCoordIndices)
       {
          const mapping = `TEXCOORD_${i}`;

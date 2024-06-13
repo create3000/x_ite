@@ -25,8 +25,6 @@ uniform mat4 x3d_ModelViewMatrix;
       #endif
 
       `) .join ("\n")}
-   #else
-      attribute vec4 x3d_TexCoord0;
    #endif
 #endif
 
@@ -51,8 +49,6 @@ attribute vec4 x3d_Vertex;
       #endif
 
       `) .join ("\n")}
-   #else
-      varying vec4 texCoord0;
    #endif
 #endif
 
@@ -110,8 +106,6 @@ vertex_main ()
          #endif
 
          `) .join ("\n")}
-      #else
-         texCoord0 = x3d_TexCoord0;
       #endif
    #endif
 
