@@ -419,7 +419,7 @@ Object .defineProperties (ElevationGrid,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "tangent",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tangent",         new Fields .SFNode ()), // experimental
          new X3DFieldDefinition (X3DConstants .initializeOnly, "height",          new Fields .MFFloat ()),
       ]),
       enumerable: true,
