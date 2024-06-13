@@ -15,6 +15,12 @@ struct NormalInfo
 NormalInfo
 getNormalInfo (const in float normalScale)
 {
+   #if defined (X3D_NORMAL_TEXTURE)
+      vec3 UV = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
+   #else
+      vec3 UV = vec3 (0.0);
+   #endif
+
    vec3 n, t, b, ng;
 
    // Compute geometrical TBN:
@@ -25,12 +31,6 @@ getNormalInfo (const in float normalScale)
       b  = normalize (TBN [1]);
       ng = normalize (TBN [2]);
    #else
-      #if defined (X3D_NORMAL_TEXTURE)
-         vec3 UV = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
-      #else
-         vec3 UV = vec3 (0.0);
-      #endif
-
       vec2 uv_dx = dFdx (UV .st);
       vec2 uv_dy = dFdy (UV .st);
 
