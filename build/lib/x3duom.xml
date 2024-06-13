@@ -241,5 +241,18 @@
                   description=""/>
          </InterfaceDefinition>
       </ConcreteNode>
+      <ConcreteNode name="Tangent">
+         <InterfaceDefinition>
+            <componentInfo name="Rendering" level="5"/>
+            <containerField default="tangent" type="xs:NMTOKEN"/>
+            <Inheritance baseType="X3DGeometricPropertyNode"/>
+            <field name="vector"
+                  type="MFVec3f"
+                  accessType="inputOutput"
+                  minInclusive="-1"
+                  maxInclusive="1"
+                  description="A unit XYZ vector defining a tangential direction on the surface."/>
+         </InterfaceDefinition>
+      </ConcreteNode>
    </ConcreteNodes>
 </X3dUnifiedObjectModel>

@@ -323,6 +323,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - StringSensor
 - SurfaceEmitter
 - Switch
+- Tangent
 - TexCoordChaser2D
 - TexCoordDamper2D
 - Text
