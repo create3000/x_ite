@@ -10,6 +10,8 @@
       url: /components/x-ite/depthmode/
     - title: "DispersionMaterialExtension"
       url: /components/x-ite/dispersionmaterialextension/
+    - title: "EmissiveStrengthMaterialExtension"
+      url: /components/x-ite/emissivestrengthmaterialextension/
     - title: "IORMaterialExtension"
       url: /components/x-ite/iormaterialextension/
     - title: "InstancedShape"

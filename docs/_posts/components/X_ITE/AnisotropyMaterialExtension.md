@@ -55,3 +55,5 @@ Input/Output field *anisotropyTextureMapping*.
 Input/Output field *anisotropyTexture*.
 
 ## See Also
+
+- [KHR_materials_anisotropy](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_anisotropy){:target="_blank"}

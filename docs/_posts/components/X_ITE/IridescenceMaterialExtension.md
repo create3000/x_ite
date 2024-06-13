@@ -71,3 +71,5 @@ Input/Output field *iridescenceThicknessTextureMapping*.
 Input/Output field *iridescenceThicknessTexture*.
 
 ## See Also
+
+- [KHR_materials_iridescence](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_iridescence){:target="_blank"}

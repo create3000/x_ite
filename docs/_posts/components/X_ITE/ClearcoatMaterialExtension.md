@@ -71,3 +71,5 @@ Input/Output field *clearcoatNormalTextureMapping*.
 Input/Output field *clearcoatNormalTexture*.
 
 ## See Also
+
+- [KHR_materials_clearcoat](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_clearcoat){:target="_blank"}

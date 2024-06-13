@@ -43,3 +43,5 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 Input/Output field *indexOfRefraction*.
 
 ## See Also
+
+- [KHR_materials_ior](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_ior){:target="_blank"}

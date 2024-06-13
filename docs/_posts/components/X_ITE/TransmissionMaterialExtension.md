@@ -55,3 +55,5 @@ Input/Output field *transmissionTexture*.
 Input/Output field *dispersion*.
 
 ## See Also
+
+- [KHR_materials_transmission](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_transmission){:target="_blank"}

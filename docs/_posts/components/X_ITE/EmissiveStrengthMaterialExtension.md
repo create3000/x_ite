@@ -43,3 +43,5 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 A scalar factor, that governs the upper limit of emissive strength per material.
 
 ## See Also
+
+- [KHR_materials_emissive_strength](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_emissive_strength){:target="_blank"}

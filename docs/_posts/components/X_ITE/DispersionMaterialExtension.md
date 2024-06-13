@@ -43,3 +43,5 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 Input/Output field *dispersion*.
 
 ## See Also
+
+- [KHR_materials_dispersion](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_dispersion){:target="_blank"}
