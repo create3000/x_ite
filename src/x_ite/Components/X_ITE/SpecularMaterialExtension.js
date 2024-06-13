@@ -121,16 +121,16 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
       options .push ("X3D_MATERIAL_TEXTURES");
 
       if (this .specularTextureNode)
-         options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE", `X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_${this .specularTextureNode .getTextureTypeString ()}`);
+         options .push ("X3D_SPECULAR_TEXTURE_EXT", `X3D_SPECULAR_TEXTURE_EXT_${this .specularTextureNode .getTextureTypeString ()}`);
 
       if (this .specularTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_FLIP_Y");
+         options .push ("X3D_SPECULAR_TEXTURE_EXT_FLIP_Y");
 
       if (this .specularColorTextureNode)
-         options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE", `X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_${this .specularColorTextureNode .getTextureTypeString ()}`);
+         options .push ("X3D_SPECULAR_COLOR_TEXTURE_EXT", `X3D_SPECULAR_COLOR_TEXTURE_EXT_${this .specularColorTextureNode .getTextureTypeString ()}`);
 
       if (this .specularColorTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_FLIP_Y");
+         options .push ("X3D_SPECULAR_COLOR_TEXTURE_EXT_FLIP_Y");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {

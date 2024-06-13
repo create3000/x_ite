@@ -1,3 +1,18 @@
+
+const materialTextures = [
+   "x3d_AmbientTexture",
+   "x3d_DiffuseTexture",
+   "x3d_SpecularTexture",
+   "x3d_EmissiveTexture",
+   "x3d_ShininessTexture",
+   "x3d_BaseTexture",
+   "x3d_MetallicRoughnessTexture",
+   "x3d_OcclusionTexture",
+   "x3d_NormalTexture",
+   "x3d_SpecularTextureEXT",
+   "x3d_SpecularColorTextureEXT",
+];
+
 export default /* glsl */ `
 #if defined (X3D_FOG)
 struct x3d_FogParameters {
@@ -134,18 +149,20 @@ struct x3d_PhysicalMaterialParameters
 
 //uniform x3d_PhysicalMaterialParameters x3d_Material;
 
-#if defined (X3D_AMBIENT_TEXTURE)
-struct x3d_AmbientTextureParameters
+${materialTextures .map (name => /* glsl */ `
+
+#if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()})
+struct ${name .replace (/(EXT)?$/, "Parameters$1")}
 {
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
-   #if defined (X3D_AMBIENT_TEXTURE_2D)
+   #if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()}_2D)
    mediump sampler2D   texture2D;
    #endif
-   #if defined (X3D_AMBIENT_TEXTURE_3D) && __VERSION__ != 100
+   #if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()}_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
-   #if defined (X3D_AMBIENT_TEXTURE_CUBE)
+   #if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()}_CUBE)
    mediump samplerCube textureCube;
    #endif
 };
@@ -153,193 +170,8 @@ struct x3d_AmbientTextureParameters
 
 //uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
 
-#if defined (X3D_DIFFUSE_TEXTURE)
-struct x3d_DiffuseTextureParameters
-{
-   mediump int         textureTransformMapping;
-   mediump int         textureCoordinateMapping;
-   #if defined (X3D_DIFFUSE_TEXTURE_2D)
-   mediump sampler2D   texture2D;
-   #endif
-   #if defined (X3D_DIFFUSE_TEXTURE_3D) && __VERSION__ != 100
-   mediump sampler3D   texture3D;
-   #endif
-   #if defined (X3D_DIFFUSE_TEXTURE_CUBE)
-   mediump samplerCube textureCube;
-   #endif
-};
-#endif
+`) .join ("\n")}
 
-//uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
-
-#if defined (X3D_SPECULAR_TEXTURE)
-struct x3d_SpecularTextureParameters
-{
-   mediump int         textureTransformMapping;
-   mediump int         textureCoordinateMapping;
-   #if defined (X3D_SPECULAR_TEXTURE_2D)
-   mediump sampler2D   texture2D;
-   #endif
-   #if defined (X3D_SPECULAR_TEXTURE_3D) && __VERSION__ != 100
-   mediump sampler3D   texture3D;
-   #endif
-   #if defined (X3D_SPECULAR_TEXTURE_CUBE)
-   mediump samplerCube textureCube;
-   #endif
-};
-#endif
-
-//uniform x3d_SpecularTextureParameters x3d_SpecularTexture;
-
-#if defined (X3D_EMISSIVE_TEXTURE)
-struct x3d_EmissiveTextureParameters
-{
-   mediump int         textureTransformMapping;
-   mediump int         textureCoordinateMapping;
-   #if defined (X3D_EMISSIVE_TEXTURE_2D)
-   mediump sampler2D   texture2D;
-   #endif
-   #if defined (X3D_EMISSIVE_TEXTURE_3D) && __VERSION__ != 100
-   mediump sampler3D   texture3D;
-   #endif
-   #if defined (X3D_EMISSIVE_TEXTURE_CUBE)
-   mediump samplerCube textureCube;
-   #endif
-};
-#endif
-
-//uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
-
-#if defined (X3D_SHININESS_TEXTURE)
-struct x3d_ShininessTextureParameters
-{
-   mediump int         textureTransformMapping;
-   mediump int         textureCoordinateMapping;
-   #if defined (X3D_SHININESS_TEXTURE_2D)
-   mediump sampler2D   texture2D;
-   #endif
-   #if defined (X3D_SHININESS_TEXTURE_3D) && __VERSION__ != 100
-   mediump sampler3D   texture3D;
-   #endif
-   #if defined (X3D_SHININESS_TEXTURE_CUBE)
-   mediump samplerCube textureCube;
-   #endif
-};
-#endif
-
-//uniform x3d_ShininessTextureParameters x3d_ShininessTexture;
-
-#if defined (X3D_BASE_TEXTURE)
-struct x3d_BaseTextureParameters
-{
-   mediump int         textureTransformMapping;
-   mediump int         textureCoordinateMapping;
-   #if defined (X3D_BASE_TEXTURE_2D)
-   mediump sampler2D   texture2D;
-   #endif
-   #if defined (X3D_BASE_TEXTURE_3D) && __VERSION__ != 100
-   mediump sampler3D   texture3D;
-   #endif
-   #if defined (X3D_BASE_TEXTURE_CUBE)
-   mediump samplerCube textureCube;
-   #endif
-};
-#endif
-
-//uniform x3d_BaseTextureParameters x3d_BaseTexture;
-
-#if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
-struct x3d_MetallicRoughnessTextureParameters
-{
-   mediump int         textureTransformMapping;
-   mediump int         textureCoordinateMapping;
-   #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
-   mediump sampler2D   texture2D;
-   #endif
-   #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_3D) && __VERSION__ != 100
-   mediump sampler3D   texture3D;
-   #endif
-   #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
-   mediump samplerCube textureCube;
-   #endif
-};
-#endif
-
-//uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
-
-#if defined (X3D_OCCLUSION_TEXTURE)
-struct x3d_OcclusionTextureParameters
-{
-   mediump int         textureTransformMapping;
-   mediump int         textureCoordinateMapping;
-   #if defined (X3D_OCCLUSION_TEXTURE_2D)
-   mediump sampler2D   texture2D;
-   #endif
-   #if defined (X3D_OCCLUSION_TEXTURE_3D) && __VERSION__ != 100
-   mediump sampler3D   texture3D;
-   #endif
-   #if defined (X3D_OCCLUSION_TEXTURE_CUBE)
-   mediump samplerCube textureCube;
-   #endif
-};
-#endif
-
-//uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
-
-#if defined (X3D_NORMAL_TEXTURE)
-struct x3d_NormalTextureParameters
-{
-   mediump int         textureTransformMapping;
-   mediump int         textureCoordinateMapping;
-   #if defined (X3D_NORMAL_TEXTURE_2D)
-   mediump sampler2D   texture2D;
-   #endif
-   #if defined (X3D_NORMAL_TEXTURE_3D) && __VERSION__ != 100
-   mediump sampler3D   texture3D;
-   #endif
-   #if defined (X3D_NORMAL_TEXTURE_CUBE)
-   mediump samplerCube textureCube;
-   #endif
-};
-#endif
-
-//uniform x3d_NormalTextureParameters x3d_NormalTexture;
-
-#if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE)
-struct x3d_SpecularTextureParametersEXT
-{
-   mediump int         textureTransformMapping;
-   mediump int         textureCoordinateMapping;
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_2D)
-   mediump sampler2D   texture2D;
-   #endif
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_3D) && __VERSION__ != 100
-   mediump sampler3D   texture3D;
-   #endif
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_CUBE)
-   mediump samplerCube textureCube;
-   #endif
-};
-#endif
-
-//uniform x3d_SpecularTextureParametersEXT x3d_SpecularTextureEXT;
-
-#if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE)
-struct x3d_SpecularColorTextureParametersEXT
-{
-   mediump int         textureTransformMapping;
-   mediump int         textureCoordinateMapping;
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_2D)
-   mediump sampler2D   texture2D;
-   #endif
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_3D) && __VERSION__ != 100
-   mediump sampler3D   texture3D;
-   #endif
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_CUBE)
-   mediump samplerCube textureCube;
-   #endif
-};
-#endif
 
 //uniform x3d_SpecularColorTextureParametersEXT x3d_SpecularColorTextureEXT;
 

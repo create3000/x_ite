@@ -246,7 +246,7 @@ getOcclusionFactor ()
 }
 
 #if defined (X3D_SPECULAR_MATERIAL_EXT)
-#if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE)
+#if defined (X3D_SPECULAR_TEXTURE_EXT)
 uniform x3d_SpecularTextureParametersEXT x3d_SpecularTextureEXT;
 
 float
@@ -256,21 +256,21 @@ getSpecularEXT ()
 
    vec3 texCoord = getTexCoord (x3d_SpecularTextureEXT .textureTransformMapping, x3d_SpecularTextureEXT .textureCoordinateMapping);
 
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_FLIP_Y)
+   #if defined (X3D_SPECULAR_TEXTURE_EXT_FLIP_Y)
       texCoord .t = 1.0 - texCoord .t;
    #endif
 
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_2D)
+   #if defined (X3D_SPECULAR_TEXTURE_EXT_2D)
       return texture (x3d_SpecularTextureEXT .texture2D, texCoord .st) .a;
-   #elif defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_3D)
+   #elif defined (X3D_SPECULAR_TEXTURE_EXT_3D)
       return texture (x3d_SpecularTextureEXT .texture3D, texCoord) .a;
-   #elif defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE_CUBE)
+   #elif defined (X3D_SPECULAR_TEXTURE_EXT_CUBE)
       return texture (x3d_SpecularTextureEXT .textureCube, texCoord) .a;
    #endif
 }
 #endif
 
-#if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE)
+#if defined (X3D_SPECULAR_COLOR_TEXTURE_EXT)
 uniform x3d_SpecularColorTextureParametersEXT x3d_SpecularColorTextureEXT;
 
 vec3
@@ -280,15 +280,15 @@ getSpecularColorEXT ()
 
    vec3 texCoord = getTexCoord (x3d_SpecularColorTextureEXT .textureTransformMapping, x3d_SpecularColorTextureEXT .textureCoordinateMapping);
 
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_FLIP_Y)
+   #if defined (X3D_SPECULAR_COLOR_TEXTURE_EXT_FLIP_Y)
       texCoord .t = 1.0 - texCoord .t;
    #endif
 
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_2D)
+   #if defined (X3D_SPECULAR_COLOR_TEXTURE_EXT_2D)
       return texture (x3d_SpecularColorTextureEXT .texture2D, texCoord .st) .rgb;
-   #elif defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_3D)
+   #elif defined (X3D_SPECULAR_COLOR_TEXTURE_EXT_3D)
       return texture (x3d_SpecularColorTextureEXT .texture3D, texCoord) .rgb;
-   #elif defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE_CUBE)
+   #elif defined (X3D_SPECULAR_COLOR_TEXTURE_EXT_CUBE)
       return texture (x3d_SpecularColorTextureEXT .textureCube, texCoord) .rgb;
    #endif
 }
@@ -302,11 +302,11 @@ getSpecularInfo (in MaterialInfo info)
 {
    vec4 specularTexture = vec4 (1.0);
 
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_TEXTURE)
+   #if defined (X3D_SPECULAR_TEXTURE_EXT)
       specularTexture .a = getSpecularEXT ();
    #endif
 
-   #if defined (X3D_SPECULAR_MATERIAL_EXT_SPECULAR_COLOR_TEXTURE)
+   #if defined (X3D_SPECULAR_COLOR_TEXTURE_EXT)
       specularTexture .rgb = getSpecularColorEXT ();
    #endif
 
