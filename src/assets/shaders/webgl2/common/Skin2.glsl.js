@@ -29,6 +29,10 @@ getDisplacementJointMatrix (const in int joint)
 #if defined (X3D_NORMALS)
 vec3 skinNormal = vec3 (0.0);
 
+#if defined (X3D_TANGENTS)
+   vec3 skinTangent = vec3 (0.0);
+#endif
+
 mat3
 getJointNormalMatrix (const in int joint)
 {
@@ -40,18 +44,28 @@ getJointNormalMatrix (const in int joint)
 }
 
 #define getSkinNormal(normal) (skinNormal)
+
+#if defined (X3D_TANGENTS)
+#define getSkinTangent(tangent) (skinTangent)
+#endif
+
 #else
    #define getSkinNormal(normal) (normal)
+   #define getSkinTangent(tangent) (tangent)
 #endif
 
 vec4
-getSkinVertex (const in vec4 vertex, const in vec3 normal)
+getSkinVertex (const in vec4 vertex, const in vec3 normal, const in vec3 tangent)
 {
    int  coordIndex = int (x3d_CoordIndex);
    vec4 skin       = vertex;
 
    #if defined (X3D_NORMALS)
       skinNormal = normal;
+
+      #if defined (X3D_TANGENTS)
+         skinTangent = tangent;
+      #endif
    #endif
 
    #if X3D_NUM_DISPLACEMENTS > 0
@@ -87,7 +101,13 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal)
          skin += (getJointMatrix (joint) * vertex - vertex) * weight;
 
          #if defined (X3D_NORMALS)
-            skinNormal += (getJointNormalMatrix (joint) * normal - normal) * weight;
+            mat3 jointNormalMatrix = getJointNormalMatrix (joint);
+
+            skinNormal += (jointNormalMatrix * normal - normal) * weight;
+
+            #if defined (X3D_TANGENTS)
+               skinTangent += (jointNormalMatrix * tangent - tangent) * weight;
+            #endif
          #endif
       }
    }
@@ -95,7 +115,8 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal)
    return skin;
 }
 #else
-   #define getSkinVertex(vertex,normal) (vertex)
+   #define getSkinVertex(vertex,normal,tangent) (vertex)
    #define getSkinNormal(normal) (normal)
+   #define getSkinTangent(tangent) (tangent)
 #endif
 `;

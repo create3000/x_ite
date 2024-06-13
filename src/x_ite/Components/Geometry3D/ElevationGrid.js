@@ -169,6 +169,10 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
    {
       return this .normalNode;
    },
+   getTangent ()
+   {
+      return this .tangentNode;
+   },
    getHeight (index)
    {
       if (index < this ._height .length)
