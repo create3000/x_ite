@@ -13,9 +13,12 @@ tags: [Tangent, Rendering]
 
 ## Overview
 
-Tangent defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate or CoordinateDouble node, or else to a parent ElevationGrid node. Tangent values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading.
+Tangent.
 
-The Tangent node belongs to the **Rendering** component and requires at least level **2,** its default container field is *tangent.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Tangent node belongs to the **Rendering** component and requires at least level **5,** its default container field is *tangent.* It is available from X3D version 4.0 or higher.
+
+>**Info:** Please note that the functionality of this node is still experimental.
+{: .prompt-info }
 
 ## Hierarchy
 
@@ -37,7 +40,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### MFVec3f [in, out] **vector** [ ] <small>[-1,1]</small>
 
-Set of unit-length normal vectors, corresponding to indexed polygons or vertices.
+A unit XYZ vector defining a tangential direction on the surface.
 
 ## See Also
 

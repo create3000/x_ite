@@ -67,7 +67,7 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 
 - *normal* vectors increase file size, typically doubling geometry definitions.
 
-### SFNode [in, out] **tangent** NULL <small>[Tangent]</small>
+### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="yellow">non standard</small>
 
 Input/Output field *tangent*.
 
