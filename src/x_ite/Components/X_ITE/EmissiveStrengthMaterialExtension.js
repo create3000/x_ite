@@ -111,8 +111,8 @@ Object .defineProperties (EmissiveStrengthMaterialExtension,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveStrength",new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveStrength", new Fields .SFFloat (1)),
       ]),
       enumerable: true,
    },
