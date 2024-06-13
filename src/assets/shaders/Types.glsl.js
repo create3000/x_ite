@@ -1,4 +1,3 @@
-
 const materialTextures = [
    "x3d_AmbientTexture",
    "x3d_DiffuseTexture",
