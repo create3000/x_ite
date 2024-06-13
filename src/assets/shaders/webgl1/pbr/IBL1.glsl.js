@@ -80,5 +80,35 @@ getIBLRadianceLambertian (const in vec3 n, const in vec3 v, const in float rough
    return (FmsEms + k_D) * irradiance;
 }
 
+#if defined (X3D_ANISOTROPY_MATERIAL_EXT)
+vec3
+getIBLRadianceAnisotropy (const in vec3 n, const in vec3 v, const in float roughness, const in float anisotropy, const in vec3 anisotropyDirection, const in vec3 F0, const in float specularWeight)
+{
+   float NdotV = clamp (dot (n, v), 0.0, 1.0);
+
+   float tangentRoughness   = mix (roughness, 1.0, anisotropy * anisotropy);
+   vec3  anisotropicTangent = cross (anisotropyDirection, v);
+   vec3  anisotropicNormal  = cross (anisotropicTangent, anisotropyDirection);
+   float bendFactor         = 1.0 - anisotropy * (1.0 - roughness);
+   float bendFactorPow4     = bendFactor * bendFactor * bendFactor * bendFactor;
+   vec3  bentNormal         = normalize (mix (anisotropicNormal, n, bendFactorPow4));
+
+   float lod        = roughness * float (x3d_EnvironmentLightSource .specularTextureLevels - 1);
+   vec3  reflection = normalize (reflect (-v, bentNormal));
+
+   vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
+   vec2 f_ab            = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint).rg;
+   vec3 specularLight   = getSpecularLight (reflection, lod);
+
+   // see https://bruop.github.io/ibl/#single_scattering_results at Single Scattering Results
+   // Roughness dependent fresnel, from Fdez-Aguera
+   vec3 Fr     = max (vec3 (1.0 - roughness), F0) - F0;
+   vec3 k_S    = F0 + Fr * pow (1.0 - NdotV, 5.0);
+   vec3 FssEss = k_S * f_ab.x + f_ab.y;
+
+   return specularWeight * specularLight * FssEss;
+}
+#endif
+
 #endif
 `;

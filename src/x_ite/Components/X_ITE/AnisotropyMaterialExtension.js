@@ -50,6 +50,7 @@ import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
+import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
 function AnisotropyMaterialExtension (executionContext)
@@ -57,6 +58,8 @@ function AnisotropyMaterialExtension (executionContext)
    X3DMaterialExtensionNode .call (this, executionContext);
 
    this .addType (X3DConstants .AnisotropyMaterialExtension);
+
+   this .anisotropyArray = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
@@ -64,17 +67,67 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    initialize ()
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._anisotropyStrength .addInterest ("set_anisotropy__",        this);
+      this ._anisotropyRotation .addInterest ("set_anisotropy__",        this);
+      this ._anisotropyTexture  .addInterest ("set_anisotropyTexture__", this);
+
+      this .set_anisotropy__ ();
+      this .set_anisotropyTexture__ ();
    },
    getExtensionKey ()
    {
       return ExtensionKeys .ANISOTROPY_MATERIAL_EXTENSION;
    },
+   set_anisotropy__ ()
+   {
+      const anisotropyRotation = this ._anisotropyRotation .getValue ();
+
+      this .anisotropyArray [0] = Math .cos (anisotropyRotation);
+      this .anisotropyArray [1] = Math .sin (anisotropyRotation);
+      this .anisotropyArray [2] = Math .max (this ._anisotropyStrength .getValue (), 0);
+   },
+   set_anisotropyTexture__ ()
+   {
+      this .anisotropyTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._anisotropyTexture);
+
+      this .setTexture (0, this .anisotropyTextureNode);
+   },
    getShaderOptions (options)
    {
+      options .push ("X3D_ANISOTROPY_MATERIAL_EXT");
 
+      if (!+this .getTextureBits ())
+         return;
+
+      options .push ("X3D_MATERIAL_TEXTURES");
+
+      if (this .anisotropyTextureNode)
+         options .push ("X3D_ANISOTROPY_TEXTURE_EXT", `X3D_ANISOTROPY_TEXTURE_EXT_${this .anisotropyTextureNode .getTextureTypeString ()}`);
+
+      if (this .anisotropyTextureNode ?.getTextureType () === 1)
+         options .push ("X3D_ANISOTROPY_TEXTURE_EXT_FLIP_Y");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      gl .uniform3fv (shaderObject .x3d_AnisotropyEXT, this .anisotropyArray);
+
+      if (+this .getTextureBits ())
+      {
+         // Anisotropy parameters
+
+         if (this .anisotropyTextureNode)
+         {
+            const
+               anisotropyTextureMapping = this ._anisotropyTextureMapping .getValue (),
+               anisotropyTexture        = shaderObject .x3d_AnisotropyTextureEXT;
+
+            this .anisotropyTextureNode .setShaderUniforms (gl, shaderObject, renderObject, anisotropyTexture);
+
+            gl .uniform1i (anisotropyTexture .textureTransformMapping,  textureTransformMapping  .get (anisotropyTextureMapping) ?? 0);
+            gl .uniform1i (anisotropyTexture .textureCoordinateMapping, textureCoordinateMapping .get (anisotropyTextureMapping) ?? 0);
+         }
+      }
    },
 });
 

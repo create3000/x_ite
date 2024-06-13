@@ -294,6 +294,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             //    break;
             // },
             case "EXT_mesh_gpu_instancing":
+            case "KHR_materials_anisotropy":
             case "KHR_materials_emissive_strength":
             case "KHR_materials_specular":
             {
@@ -1156,6 +1157,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          switch (key)
          {
+            case "KHR_materials_anisotropy":
+               this .khrMaterialsAnisotropyObject (value, materialNode);
+               break;
             case "KHR_materials_emissive_strength":
                this .khrMaterialsEmissiveStrengthObject (value, materialNode);
                break;
@@ -1168,41 +1172,57 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
+   khrMaterialsAnisotropyObject (KHR_materials_anisotropy, materialNode)
+   {
+      if (!(KHR_materials_anisotropy instanceof Object))
+         return;
+
+      const extension = this .getScene () .createNode ("AnisotropyMaterialExtension", false);
+
+      extension ._anisotropyStrength       = this .numberValue (KHR_materials_anisotropy .anisotropyStrength, 0);
+      extension ._anisotropyRotation       = this .numberValue (KHR_materials_anisotropy .anisotropyRotation, 0);
+      extension ._anisotropyTexture        = this .textureInfo (KHR_materials_anisotropy .anisotropyTexture);
+      extension ._anisotropyTextureMapping = this .textureMapping (KHR_materials_anisotropy .anisotropyTexture);
+
+      extension .setup ();
+
+      materialNode ._extensions .push (extension);
+   },
    khrMaterialsEmissiveStrengthObject (KHR_materials_emissive_strength, materialNode)
    {
       if (!(KHR_materials_emissive_strength instanceof Object))
          return;
 
-      const emissiveStrengthMaterialExtension = this .getScene () .createNode ("EmissiveStrengthMaterialExtension", false);
+      const extension = this .getScene () .createNode ("EmissiveStrengthMaterialExtension", false);
 
-      emissiveStrengthMaterialExtension ._emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
+      extension ._emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
 
-      emissiveStrengthMaterialExtension .setup ();
+      extension .setup ();
 
-      materialNode ._extensions .push (emissiveStrengthMaterialExtension);
+      materialNode ._extensions .push (extension);
    },
    khrMaterialsSpecularObject (KHR_materials_specular, materialNode)
    {
       if (!(KHR_materials_specular instanceof Object))
          return;
 
-      const specularMaterialExtension = this .getScene () .createNode ("SpecularMaterialExtension", false);
+      const extension = this .getScene () .createNode ("SpecularMaterialExtension", false);
 
-      specularMaterialExtension ._specular               = this .numberValue (KHR_materials_specular .specularFactor, 1);
-      specularMaterialExtension ._specularTexture        = this .textureInfo (KHR_materials_specular .specularTexture);
-      specularMaterialExtension ._specularTextureMapping = this .textureMapping (KHR_materials_specular .specularTexture);
+      extension ._specular               = this .numberValue (KHR_materials_specular .specularFactor, 1);
+      extension ._specularTexture        = this .textureInfo (KHR_materials_specular .specularTexture);
+      extension ._specularTextureMapping = this .textureMapping (KHR_materials_specular .specularTexture);
 
       const specularColorFactor = new Color3 ();
 
       if (this .vectorValue (KHR_materials_specular .specularColorFactor, specularColorFactor))
-         specularMaterialExtension ._specularColor = specularColorFactor;
+         extension ._specularColor = specularColorFactor;
 
-      specularMaterialExtension ._specularColorTexture        = this .textureInfo (KHR_materials_specular .specularColorTexture);
-      specularMaterialExtension ._specularColorTextureMapping = this .textureMapping (KHR_materials_specular .specularColorTexture);
+      extension ._specularColorTexture        = this .textureInfo (KHR_materials_specular .specularColorTexture);
+      extension ._specularColorTextureMapping = this .textureMapping (KHR_materials_specular .specularColorTexture);
 
-      specularMaterialExtension .setup ();
+      extension .setup ();
 
-      materialNode ._extensions .push (specularMaterialExtension);
+      materialNode ._extensions .push (extension);
    },
    khrMaterialsUnlitObject (materialNode)
    {
@@ -2211,16 +2231,27 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return this .defaultAppearance [mode] = appearanceNode;
    },
-   hasTextures (materialNode)
+   hasTextures: (function ()
    {
-      if (+materialNode .getTextureBits ())
-         return true;
+      // Extensions which need texture coords.
+      const extensions = new Set ([
+         "AnisotropyMaterialExtension",
+      ]);
 
-      if (materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ()))
-         return true;
+      return function (materialNode)
+      {
+         if (+materialNode .getTextureBits ())
+            return true;
 
-      return false;
-   },
+         if (materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ()))
+            return true;
+
+         if (materialNode ._extensions .some (extension => extensions .has (extension .getNodeTypeName ())))
+            return true;
+
+         return false;
+      };
+   })(),
    createMultiTextureTransform (materialNode)
    {
       if (!this .hasTextures (materialNode))

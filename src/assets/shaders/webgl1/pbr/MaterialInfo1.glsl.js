@@ -41,6 +41,9 @@ struct MaterialInfo
    vec3 anisotropicT;
    vec3 anisotropicB;
    float anisotropyStrength;
+
+   // KHR_materials_dispersion
+   float dispersion;
 };
 
 #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
@@ -301,6 +304,57 @@ getSpecularInfo (in MaterialInfo info)
    info .f0             = mix (dielectricSpecularF0, info .baseColor .rgb, info .metallic);
    info .specularWeight = x3d_SpecularEXT * specularTexture .a;
    info .c_diff         = mix (info .baseColor .rgb, vec3 (0.0), info .metallic);
+
+   return info;
+}
+#endif
+
+#if defined (X3D_ANISOTROPY_MATERIAL_EXT)
+#if defined (X3D_ANISOTROPY_TEXTURE_EXT)
+uniform x3d_AnisotropyTextureParametersEXT x3d_AnisotropyTextureEXT;
+
+vec3
+getAnisotropyEXT ()
+{
+   // Get texture color.
+
+   vec3 texCoord = getTexCoord (x3d_AnisotropyTextureEXT .textureTransformMapping, x3d_AnisotropyTextureEXT .textureCoordinateMapping);
+
+   #if defined (X3D_ANISOTROPY_TEXTURE_EXT_FLIP_Y)
+      texCoord .t = 1.0 - texCoord .t;
+   #endif
+
+   #if defined (X3D_ANISOTROPY_TEXTURE_EXT_2D)
+      return texture2D (x3d_AnisotropyTextureEXT .texture2D, texCoord .st) .rgb;
+   #elif defined (X3D_ANISOTROPY_TEXTURE_EXT_CUBE)
+      return textureCube (x3d_AnisotropyTextureEXT .textureCube, texCoord) .rgb;
+   #endif
+}
+#endif
+
+uniform vec3 x3d_AnisotropyEXT;
+
+MaterialInfo
+getAnisotropyInfo (in MaterialInfo info, const in NormalInfo normalInfo)
+{
+   vec2  direction      = vec2 (1.0, 0.0);
+   float strengthFactor = 1.0;
+
+   #if defined (X3D_ANISOTROPY_TEXTURE_EXT)
+      vec3 anisotropySample = getAnisotropyEXT ();
+
+      direction      = anisotropySample .xy * 2.0 - vec2 (1.0);
+      strengthFactor = anisotropySample .z;
+   #endif
+
+   vec2 directionRotation = x3d_AnisotropyEXT .xy; // cos(theta), sin(theta)
+   mat2 rotationMatrix    = mat2 (directionRotation .x, directionRotation .y, -directionRotation .y, directionRotation .x);
+
+   direction = rotationMatrix * direction .xy;
+
+   info .anisotropicT       = mat3 (normalInfo .t, normalInfo .b, normalInfo .n) * normalize (vec3 (direction, 0.0));
+   info .anisotropicB       = cross (normalInfo .ng, info .anisotropicT);
+   info .anisotropyStrength = clamp (x3d_AnisotropyEXT .z * strengthFactor, 0.0, 1.0);
 
    return info;
 }

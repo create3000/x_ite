@@ -214,9 +214,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_NormalScale       = gl .getUniformLocation (program, "x3d_Material.normalScale");
       this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
 
-      this .x3d_EmissiveStrengthEXT = gl .getUniformLocation (program, "x3d_EmissiveStrengthEXT");
-      this .x3d_SpecularEXT         = gl .getUniformLocation (program, "x3d_SpecularEXT");
-      this .x3d_SpecularColorEXT    = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
+      this .x3d_AnisotropyEXT         = gl .getUniformLocation (program, "x3d_AnisotropyEXT");
+      this .x3d_EmissiveStrengthEXT   = gl .getUniformLocation (program, "x3d_EmissiveStrengthEXT");
+      this .x3d_SpecularEXT           = gl .getUniformLocation (program, "x3d_SpecularEXT");
+      this .x3d_SpecularColorEXT      = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
 
       const materialTextures = [
          "x3d_AmbientTexture",
@@ -228,6 +229,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_MetallicRoughnessTexture",
          "x3d_OcclusionTexture",
          "x3d_NormalTexture",
+         "x3d_AnisotropyTextureEXT",
          "x3d_SpecularTextureEXT",
          "x3d_SpecularColorTextureEXT",
       ];

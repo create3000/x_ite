@@ -32,8 +32,10 @@ getMaterialColor ()
       baseColor .rgb *= getTextureProjectorColor ();
    #endif
 
-   #if defined (X3D_LIGHTING) || defined (X3D_USE_IBL)
-      vec3 n = getNormalVector (x3d_Material .normalScale);
+   #if defined (X3D_LIGHTING) || defined (X3D_USE_IBL) || defined (X3D_ANISOTROPY_MATERIAL_EXT)
+      NormalInfo normalInfo = getNormalInfo (x3d_Material .normalScale);
+
+      vec3 n = normalInfo .n;
    #endif
 
    vec3 v = normalize (-vertex);
@@ -52,6 +54,10 @@ getMaterialColor ()
 
    #if defined (X3D_SPECULAR_MATERIAL_EXT)
       materialInfo = getSpecularInfo (materialInfo);
+   #endif
+
+   #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
+      materialInfo = getAnisotropyInfo (materialInfo, normalInfo);
    #endif
 
    materialInfo .perceptualRoughness = clamp (materialInfo .perceptualRoughness, 0.0, 1.0);
@@ -77,9 +83,27 @@ getMaterialColor ()
 
    float albedoSheenScaling = 1.0;
 
+   // Calculate lighting contribution from image based lighting source (IBL)
    #if defined (X3D_USE_IBL)
-      f_specular += getIBLRadianceGGX (n, v, materialInfo .perceptualRoughness, materialInfo .f0, materialInfo .specularWeight);
-      f_diffuse  += getIBLRadianceLambertian (n, v, materialInfo .perceptualRoughness, materialInfo .c_diff, materialInfo .f0, materialInfo .specularWeight);
+      #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
+         f_specular += getIBLRadianceGGXIridescence (n, v, materialInfo .perceptualRoughness, materialInfo .f0, iridescenceFresnel, materialInfo .iridescenceFactor, materialInfo .specularWeight);
+         f_diffuse  += getIBLRadianceLambertianIridescence (n, v, materialInfo .perceptualRoughness, materialInfo .c_diff, materialInfo .f0, iridescenceF0, materialInfo .iridescenceFactor, materialInfo .specularWeight);
+      #elif defined (X3D_ANISOTROPY_MATERIAL_EXT)
+         f_specular += getIBLRadianceAnisotropy (n, v, materialInfo .perceptualRoughness, materialInfo .anisotropyStrength, materialInfo .anisotropicB, materialInfo .f0, materialInfo .specularWeight);
+         f_diffuse  += getIBLRadianceLambertian (n, v, materialInfo .perceptualRoughness, materialInfo .c_diff, materialInfo .f0, materialInfo .specularWeight);
+      #else
+         f_specular += getIBLRadianceGGX (n, v, materialInfo .perceptualRoughness, materialInfo .f0, materialInfo .specularWeight);
+         f_diffuse  += getIBLRadianceLambertian (n, v, materialInfo .perceptualRoughness, materialInfo .c_diff, materialInfo .f0, materialInfo .specularWeight);
+      #endif
+
+      #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
+         f_clearcoat += getIBLRadianceGGX (materialInfo .clearcoatNormal, v, materialInfo .clearcoatRoughness, materialInfo .clearcoatF0, 1.0);
+      #endif
+
+      #if defined (X3D_SHEEN_MATERIAL_EXT)
+         f_sheen += getIBLRadianceCharlie (n, v, materialInfo .sheenRoughnessFactor, materialInfo .sheenColorFactor);
+         albedoSheenScaling = 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor);
+      #endif
    #endif
 
    vec3 f_diffuse_ibl   = f_diffuse;
@@ -134,8 +158,35 @@ getMaterialColor ()
                   intensity = mix (intensity, light .shadowColor, getShadowIntensity (i, light));
             #endif
 
-            f_diffuse  += intensity * NdotL * BRDF_lambertian (materialInfo .f0, materialInfo .f90, materialInfo .c_diff, materialInfo .specularWeight, VdotH);
-            f_specular += intensity * NdotL * BRDF_specularGGX (materialInfo .f0, materialInfo .f90, materialInfo .alphaRoughness, materialInfo .specularWeight, VdotH, NdotL, NdotV, NdotH);
+            vec3 l_diffuse  = vec3 (0.0);
+            vec3 l_specular = vec3 (0.0);
+
+            #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
+               l_diffuse  += intensity * NdotL * BRDF_lambertianIridescence (materialInfo .f0, materialInfo .f90, iridescenceFresnel, materialInfo .iridescenceFactor, materialInfo .c_diff, materialInfo .specularWeight, VdotH);
+               l_specular += intensity * NdotL * BRDF_specularGGXIridescence (materialInfo .f0, materialInfo .f90, iridescenceFresnel, materialInfo .alphaRoughness, materialInfo .iridescenceFactor, materialInfo .specularWeight, VdotH, NdotL, NdotV, NdotH);
+            #elif defined (X3D_ANISOTROPY_MATERIAL_EXT)
+               l_diffuse  += intensity * NdotL * BRDF_lambertian (materialInfo .f0, materialInfo .f90, materialInfo .c_diff, materialInfo .specularWeight, VdotH);
+               l_specular += intensity * NdotL * BRDF_specularGGXAnisotropy(materialInfo .f0, materialInfo .f90, materialInfo .alphaRoughness, materialInfo .anisotropyStrength, n, v, l, h, materialInfo .anisotropicT, materialInfo .anisotropicB);
+            #else
+               l_diffuse  += intensity * NdotL * BRDF_lambertian (materialInfo .f0, materialInfo .f90, materialInfo .c_diff, materialInfo .specularWeight, VdotH);
+               l_specular += intensity * NdotL * BRDF_specularGGX (materialInfo .f0, materialInfo .f90, materialInfo .alphaRoughness, materialInfo .specularWeight, VdotH, NdotL, NdotV, NdotH);
+            #endif
+
+            #if defined (X3D_SHEEN_MATERIAL_EXT)
+               f_sheen += intensity * getPunctualRadianceSheen (materialInfo .sheenColorFactor, materialInfo .sheenRoughnessFactor, NdotL, NdotV, NdotH);
+
+               float l_albedoSheenScaling = min (1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor), 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotL, materialInfo .sheenRoughnessFactor));
+
+               l_diffuse  *= l_albedoSheenScaling;
+               l_specular *= l_albedoSheenScaling;
+            #endif
+
+            f_diffuse  += l_diffuse;
+            f_specular += l_specular;
+
+            #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
+               f_clearcoat += intensity * getPunctualRadianceClearCoat (materialInfo .clearcoatNormal, v, l, h, VdotH, materialInfo .clearcoatF0, materialInfo .clearcoatF90, materialInfo .clearcoatRoughness);
+            #endif
          }
       }
    }

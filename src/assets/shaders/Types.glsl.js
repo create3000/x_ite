@@ -8,6 +8,7 @@ const materialTextures = [
    "x3d_MetallicRoughnessTexture",
    "x3d_OcclusionTexture",
    "x3d_NormalTexture",
+   "x3d_AnisotropyTextureEXT",
    "x3d_SpecularTextureEXT",
    "x3d_SpecularColorTextureEXT",
 ];
