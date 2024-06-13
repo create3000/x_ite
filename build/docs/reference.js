@@ -7,7 +7,26 @@ const
 
 const { concreteNodes, abstractNodes } = require ("../lib/x3duom");
 
+const experimentalNodes = sh ("ls", "-C1", "src/x_ite/Components/X_ITE")
+   .trim ()
+   .split ("\n")
+   .map (typeName => typeName .replace (/\.js$/, ""));
+
+const
+   experimentalConcreteNodes = experimentalNodes .filter (typeName => !typeName .match (/^X3D/)),
+   experimentalAbstractNodes = experimentalNodes .filter (typeName => typeName .match (/^X3D/));
+
 let constants = sh ("cat", "docs/_posts/reference/constants-services.md");
+
+Array .prototype .unique ??= function ()
+{
+   return Array .from (new Set (this));
+};
+
+function cmpi (a, b)
+{
+   return a .toLowerCase () .localeCompare (b .toLowerCase ());
+}
 
 function main ()
 {
@@ -24,7 +43,7 @@ function ConcreteNodesConstants ()
    const string = `<!-- CONCRETE NODE TYPES START -->
 <!-- DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED. -->
 
-${[... concreteNodes .keys ()] .map (typeName => `- ${typeName}`) .join ("\n")}
+${Array .from (concreteNodes .keys ()) .concat (experimentalConcreteNodes) .unique () .sort (cmpi) .map (typeName => `- ${typeName}`) .join ("\n")}
 
 <!-- CONCRETE NODE TYPES END -->`;
 
@@ -36,7 +55,7 @@ function AbstractNodesConstants ()
    const string = `<!-- ABSTRACT NODE TYPES START -->
 <!-- DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED. -->
 
-${[... abstractNodes .keys ()] .map (typeName => `- ${typeName}`) .join ("\n")}
+${Array .from (abstractNodes .keys ()) .concat (experimentalAbstractNodes) .unique () .sort (cmpi) .map (typeName => `- ${typeName}`) .join ("\n")}
 
 <!-- ABSTRACT NODE TYPES END -->`;
 

@@ -92,6 +92,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - AcousticProperties
 - Analyser
 - Anchor
+- AnisotropyMaterialExtension
 - Appearance
 - Arc2D
 - ArcClose2D
@@ -120,6 +121,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - ChannelSelector
 - ChannelSplitter
 - Circle2D
+- ClearcoatMaterialExtension
 - ClipPlane
 - CollidableOffset
 - CollidableShape
@@ -156,11 +158,13 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - DISEntityManager
 - DISEntityTypeMapping
 - Disk2D
+- DispersionMaterialExtension
 - DoubleAxisHingeJoint
 - DynamicsCompressor
 - EaseInEaseOut
 - EdgeEnhancementVolumeStyle
 - ElevationGrid
+- EmissiveStrengthMaterialExtension
 - EnvironmentLight
 - EspduTransform
 - ExplosionEmitter
@@ -202,8 +206,11 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - IndexedTriangleSet
 - IndexedTriangleStripSet
 - Inline
+- InstancedShape
 - IntegerSequencer
 - IntegerTrigger
+- IORMaterialExtension
+- IridescenceMaterialExtension
 - IsoSurfaceVolumeData
 - KeySensor
 - Layer
@@ -295,12 +302,14 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - ShaderPart
 - ShaderProgram
 - Shape
+- SheenMaterialExtension
 - SignalPdu
 - SilhouetteEnhancementVolumeStyle
 - SingleAxisHingeJoint
 - SliderJoint
 - Sound
 - SpatialSound
+- SpecularMaterialExtension
 - Sphere
 - SphereSensor
 - SplinePositionInterpolator
@@ -334,6 +343,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - TouchSensor
 - Transform
 - TransformSensor
+- TransmissionMaterialExtension
 - TransmitterPdu
 - TriangleFanSet
 - TriangleSet
@@ -348,6 +358,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - VisibilitySensor
 - VolumeData
 - VolumeEmitter
+- VolumeMaterialExtension
 - VolumePickSensor
 - WaveShaper
 - WindPhysicsModel
@@ -389,6 +400,7 @@ All abstract node types from *X3DAppearanceChildNode, X3DAppearanceNode,* … to
 - X3DLayerNode
 - X3DLayoutNode
 - X3DLightNode
+- X3DMaterialExtensionNode
 - X3DMaterialNode
 - X3DMetadataObject
 - X3DNBodyCollidableNode
