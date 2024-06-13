@@ -1,24 +1,5 @@
 export default /* glsl */ `
 #if defined (X3D_NORMAL_TEXTURE)
-// Tangent-Bitangent-Normal-Matrix
-mat3
-getTBNMatrix (const in vec2 texCoord, const in vec3 ng)
-{
-   vec3 pos_dx = dFdx (vertex);
-   vec3 pos_dy = dFdy (vertex);
-   vec2 tex_dx = dFdx (texCoord);
-   vec2 tex_dy = dFdy (texCoord);
-   vec3 t      = (tex_dy .t * pos_dx - tex_dx .t * pos_dy) / (tex_dx .s * tex_dy.t - tex_dy .s * tex_dx .t);
-   vec3 N      = ng;
-   vec3 T      = normalize (t - N * dot (N, t));
-   vec3 B      = normalize (cross (N, T));
-   mat3 tbn    = mat3 (T, B, N);
-
-   return tbn;
-}
-#endif
-
-#if defined (X3D_NORMAL_TEXTURE)
 uniform x3d_NormalTextureParameters x3d_NormalTexture;
 #endif
 
@@ -51,6 +32,8 @@ getNormalInfo (const in float normalScale)
    if (length (uv_dy) <= 1e-2)
       uv_dy = vec2 (0.0, 1.0);
 
+   // TODO: Unfortunately, if we use vertex in dFdx/dFdy, we can see the hard faces in the TBN.
+   // This can only be solved with precomputed tangents.
    vec3 t_ = (uv_dy .t * dFdx (vertex) - uv_dx .t * dFdy (vertex)) / (uv_dx .s * uv_dy .t - uv_dy .s * uv_dx .t);
 
    vec3 n, t, b, ng;
