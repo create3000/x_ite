@@ -29,6 +29,8 @@ uniform mat4 x3d_ModelViewMatrix;
       #endif
 
       `) .join ("\n")}
+   #else
+      in vec4 x3d_TexCoord0;
    #endif
 #endif
 
@@ -53,6 +55,8 @@ in vec4 x3d_Vertex;
       #endif
 
       `) .join ("\n")}
+   #else
+      out vec4 texCoord0;
    #endif
 #endif
 
@@ -132,6 +136,8 @@ vertex_main ()
          #endif
 
          `) .join ("\n")}
+      #else
+         texCoord0 = getInstanceTexCoord (x3d_TexCoord0);
       #endif
    #endif
 

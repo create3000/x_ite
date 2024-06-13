@@ -37,7 +37,7 @@ getNormalInfo (const in float normalScale)
    #if defined (X3D_NORMAL_TEXTURE)
       vec3 UV = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
    #else
-      vec3 UV = vec3 (0.0);
+      vec3 UV = getTexCoord (0, 0);
    #endif
 
    vec2 uv_dx = dFdx (UV .st);
@@ -53,7 +53,7 @@ getNormalInfo (const in float normalScale)
 
    vec3 n, t, b, ng;
 
-    // Compute geometrical TBN:
+   // Compute geometrical TBN:
    // Normals are either present as vertex attributes or approximated.
    ng = normalize (normal);
    t  = normalize (t_ - ng * dot (ng, t_));

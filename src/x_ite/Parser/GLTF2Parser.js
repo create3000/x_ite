@@ -935,6 +935,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       materialNode .setup ();
 
+      if (!texCoordIndices .size)
+      {
+         if (this .hasTextures (materialNode))
+            texCoordIndices .add (0);
+      }
+
       for (const i of texCoordIndices)
       {
          const mapping = `TEXCOORD_${i}`;
@@ -2231,16 +2237,27 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return this .defaultAppearance [mode] = appearanceNode;
    },
-   hasTextures (materialNode)
+   hasTextures: (function ()
    {
-      if (+materialNode .getTextureBits ())
-         return true;
+      // Extensions which need texture coords.
+      const extensions = new Set ([
+         "AnisotropyMaterialExtension",
+      ]);
 
-      if (materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ()))
-         return true;
+      return function (materialNode)
+      {
+         if (+materialNode .getTextureBits ())
+            return true;
 
-      return false;
-   },
+         if (materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ()))
+            return true;
+
+         if (materialNode ._extensions .some (extension => extensions .has (extension .getNodeTypeName ())))
+            return true;
+
+         return false;
+      };
+   })(),
    createMultiTextureTransform (materialNode)
    {
       if (!this .hasTextures (materialNode))

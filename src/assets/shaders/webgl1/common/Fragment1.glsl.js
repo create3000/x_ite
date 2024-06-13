@@ -30,6 +30,8 @@ export default /* glsl */ `
       #endif
 
       `) .join ("\n")}
+   #else
+      varying vec4 texCoord0;
    #endif
 #else
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
@@ -40,6 +42,8 @@ export default /* glsl */ `
       #endif
 
       `) .join ("\n")}
+   #else
+      vec4 texCoord0 = vec4 (0.0, 0.0, 0.0, 1.0);
    #endif
 #endif
 
