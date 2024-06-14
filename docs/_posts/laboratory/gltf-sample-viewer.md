@@ -62,12 +62,13 @@ x3d-canvas {
 
 #options {
    position: absolute;
-   right: 0;
+   right: 5px;
    bottom: 5px;
    min-width: 200px;
    padding: 10px 20px;
    background-color: var(--main-bg);
-   border-bottom: 5px solid var(--text-color);
+   border: 1px solid var(--nav-border-color);
+   border-radius: 0.8rem;
 }
 
 #options label {
