@@ -588,7 +588,7 @@ function createList (description, filenames)
    {
       const
          match = filename .match (/([^\/]+)\.\w+$/),
-         name  = match [1] .replace (/([A-Z]+)/g, " $1") .replace (/\s+/g, " ") .trim ();
+         name  = match [1] .replace (/([A-Z]+)/g, " $1") .replace (/([A-Z]+)([A-Z])/g, "$1 $2") .replace (/\s+/g, " ") .trim ();
 
       if (map .has (name))
          continue;
