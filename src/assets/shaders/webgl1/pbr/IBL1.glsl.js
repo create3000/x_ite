@@ -34,6 +34,16 @@ getSpecularLight (const in vec3 reflection, const in float lod)
    return textureColor * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
 }
 
+#if defined (X3D_SHEEN_MATERIAL_EXT)
+vec3
+getSheenLight (const in vec3 reflection, const in float lod)
+{
+   // return textureLod (u_CharlieEnvSampler, u_EnvRotation * reflection, lod) * u_EnvIntensity;
+
+   return getSpecularLight (reflection, lod);
+}
+#endif
+
 vec3
 getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness, const in vec3 F0, const in float specularWeight)
 {
@@ -107,6 +117,22 @@ getIBLRadianceAnisotropy (const in vec3 n, const in vec3 v, const in float rough
    vec3 FssEss = k_S * f_ab.x + f_ab.y;
 
    return specularWeight * specularLight * FssEss;
+}
+#endif
+
+#if defined (X3D_SHEEN_MATERIAL_EXT)
+vec3
+getIBLRadianceCharlie (const in vec3 n, const in vec3 v, const in float sheenRoughness, const in vec3 sheenColor)
+{
+   float NdotV      = clamp (dot (n, v), 0.0, 1.0);
+   float lod        = sheenRoughness * float (x3d_EnvironmentLightSource .specularTextureLevels - 1);
+   vec3  reflection = normalize (reflect (-v, n));
+
+   vec2  brdfSamplePoint = clamp (vec2 (NdotV, sheenRoughness), vec2 (0.0), vec2 (1.0));
+   float brdf            = texture2D (x3d_EnvironmentLightSource .CharlieLUTTexture, brdfSamplePoint) .b;
+   vec3  sheenLight      = getSheenLight (reflection, lod);
+
+   return sheenLight * sheenColor * brdf;
 }
 #endif
 
