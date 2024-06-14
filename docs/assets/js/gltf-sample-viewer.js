@@ -617,7 +617,17 @@ async function loadURL (filename, event)
    await Browser .loadURL (new X3D .MFString (filename));
 
    if (ibl_files .some (name => filename .includes (name)))
-      Browser .currentScene .rootNodes .push (await getEnvironmentLight (Browser, Browser .currentScene));
+   {
+      setEnvironmentLight (Browser, Browser .currentScene, true);
+      $("#ibl") .prop ("checked", true);
+   }
+   else
+   {
+      $("#ibl") .prop ("checked", false);
+   }
+
+   setHeadlight (Browser, Browser .currentScene, true);
+   $("#headlight") .prop ("checked", true);
 
    if (!Browser .getActiveViewpoint () ._description .getValue ())
       Browser .viewAll (0);
@@ -672,6 +682,16 @@ async function loadURL (filename, event)
    { }
 }
 
+async function setEnvironmentLight (Browser, scene, on)
+{
+   const environmentLight = await getEnvironmentLight (Browser, scene);
+
+   environmentLight .on = on;
+
+   if (!scene .rootNodes .includes (environmentLight))
+      scene .rootNodes .push (environmentLight);
+}
+
 async function getEnvironmentLight (Browser, scene)
 {
    if (getEnvironmentLight .environmentLight)
@@ -680,6 +700,7 @@ async function getEnvironmentLight (Browser, scene)
    const cubeMapTexturing = Browser .getComponent ("CubeMapTexturing");
 
    await Browser .loadComponents (cubeMapTexturing);
+
    scene .addComponent (cubeMapTexturing);
 
    const
@@ -705,6 +726,27 @@ async function getEnvironmentLight (Browser, scene)
    return getEnvironmentLight .environmentLight = environmentLight;
 }
 
+async function setHeadlight (Browser, scene, on)
+{
+   const navigationInfo = await getNavigationInfo (Browser, scene);
+
+   navigationInfo .set_bind  = true;
+   navigationInfo .headlight = on;
+
+   if (!scene .rootNodes .includes (navigationInfo))
+      scene .rootNodes .push (navigationInfo);
+}
+
+async function getNavigationInfo (Browser, scene)
+{
+   if (getNavigationInfo .navigationInfo)
+      return getNavigationInfo .navigationInfo;
+
+   const navigationInfo = scene .createNode ("NavigationInfo");
+
+   return getNavigationInfo .navigationInfo = navigationInfo;
+}
+
 createList ("glTF Random Models",          models);
 createList ("glTF Sample Models",          glTF);
 createList ("glb Sample Models",           glb);
@@ -712,3 +754,13 @@ createList ("glTF Draco Sample Models",    draco);
 createList ("glTF Embedded Sample Models", embedded);
 createList ("glTF IBL Sample Models",      ibl);
 createList ("glTF KTX Sample Models",      ktx);
+
+$("#ibl") .on ("change", () =>
+{
+   setEnvironmentLight (X3D .getBrowser (), X3D .getBrowser () .currentScene, $("#ibl") .prop ("checked"));
+});
+
+$("#headlight") .on ("change", () =>
+{
+   setHeadlight (X3D .getBrowser (), X3D .getBrowser () .currentScene, $("#headlight") .prop ("checked"));
+});

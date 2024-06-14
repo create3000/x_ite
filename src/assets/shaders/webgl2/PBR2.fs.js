@@ -42,10 +42,9 @@ getMaterialColor ()
    #if defined (X3D_LIGHTING) || defined (X3D_USE_IBL) || defined (X3D_ANISOTROPY_MATERIAL_EXT)
       NormalInfo normalInfo = getNormalInfo (x3d_Material .normalScale);
 
-      vec3 n = normalInfo .n;
+      vec3  n     = normalInfo .n;
+      float NdotV = clamp (dot (n, v), 0.0, 1.0);
    #endif
-
-   float NdotV = clamp (dot (n, v), 0.0, 1.0);
 
    MaterialInfo materialInfo;
 

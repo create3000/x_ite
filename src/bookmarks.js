@@ -174,8 +174,9 @@ const Bookmarks = (() =>
             {
                if (environmentLight)
                {
-                  environmentLight .on       = !environmentLight .on;
-                  navigationInfo   .set_bind = environmentLight .on;
+                  environmentLight .on      = !environmentLight .on;
+                  // navigationInfo .headlight = environmentLight .on;
+                  // navigationInfo .set_bind  = true;
 
                   console .info ("EnvironmentLight.on", environmentLight .on);
                }
@@ -188,6 +189,15 @@ const Bookmarks = (() =>
                   this .browser .currentScene .rootNodes .push (environmentLight);
 
                   console .info ("Added EnvironmentLight.");
+
+                  // navigationInfo = this .browser .currentScene .createNode ("NavigationInfo");
+
+                  // navigationInfo .headlight = false;
+                  // navigationInfo .set_bind  = true;
+
+                  // this .browser .currentScene .rootNodes .push (navigationInfo);
+
+                  // console .info ("Added NavigationInfo.");
                }
             })
             .appendTo ($("#toolbar"));

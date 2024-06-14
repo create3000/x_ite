@@ -60,8 +60,7 @@ x3d-canvas {
    aspect-ratio: unset;
 }
 
-#animations {
-   display: none;
+#options {
    position: absolute;
    right: 0;
    bottom: 5px;
@@ -71,8 +70,13 @@ x3d-canvas {
    border-bottom: 5px solid var(--text-color);
 }
 
-#animations label {
+#options label {
    margin: 0;
+   padding-left: 0.5rem;
+}
+
+#animations {
+   display: none;
 }
 </style>
 
@@ -94,7 +98,16 @@ x3d-canvas {
             </Scene>
          </X3D>
       </x3d-canvas>
-      <div id="animations"></div>
+      <div id="options">
+         <div id="lighting">
+            <b>Lighting</b>
+            <br>
+            <input id="ibl" type="checkbox"><label for="ibl">Image Based Lighting</label>
+            <br>
+            <input id="headlight" type="checkbox"><label for="headlight">Headlight</label>
+         </div>
+         <div id="animations"></div>
+      </div>
    </div>
    <div class="viewer-column2"></div>
 </div>
