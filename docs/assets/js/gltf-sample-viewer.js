@@ -643,7 +643,7 @@ async function loadURL (filename, event)
                group .children [0] .stopTime = Date .now () / 1000;
 
             if (!$(`#animation${i}`) .hasClass ( "fa-circle-dot"))
-               return;
+               return false;
 
             $("#animations i") .each ((_, element) =>
             {
@@ -656,6 +656,8 @@ async function loadURL (filename, event)
 
             timeSensor .loop      = true;
             timeSensor .startTime = Date .now () / 1000;
+
+            return false;
          };
 
          const label = $("<label></label>")
@@ -699,8 +701,7 @@ async function setEnvironmentLight (Browser, scene, on)
 
    environmentLight .on = on;
 
-   if (!scene .rootNodes .includes (environmentLight))
-      scene .rootNodes .push (environmentLight);
+   scene .addRootNode (environmentLight);
 }
 
 async function getEnvironmentLight (Browser, scene)
@@ -755,8 +756,7 @@ async function setHeadlight (Browser, scene, on)
    navigationInfo .set_bind  = true;
    navigationInfo .headlight = on;
 
-   if (!scene .rootNodes .includes (navigationInfo))
-      scene .rootNodes .push (navigationInfo);
+   scene .addRootNode (navigationInfo);
 }
 
 async function getNavigationInfo (Browser, scene)
@@ -780,9 +780,13 @@ createList ("glTF KTX Sample Models",      ktx);
 $("[for=ibl]") .on ("click", () =>
 {
    setEnvironmentLight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#ibl") .hasClass ("green"));
+
+   return false;
 });
 
 $("[for=headlight]") .on ("click", () =>
 {
    setHeadlight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#headlight") .hasClass ("green"));
+
+   return false;
 });
