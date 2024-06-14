@@ -1609,6 +1609,10 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometr
    {
       return this .normalNode;
    },
+   getTangent ()
+   {
+      return this .tangentNode;
+   },
    getHeight (index)
    {
       if (index < this ._height .length)
@@ -1893,7 +1897,7 @@ Object .defineProperties (GeoElevationGrid,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "color",           new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",        new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "normal",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tangent",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tangent",         new (Fields_default()).SFNode ()), // experimental
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "height",          new (Fields_default()).MFDouble (0, 0)),
       ]),
       enumerable: true,

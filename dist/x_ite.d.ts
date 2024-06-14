@@ -1313,6 +1313,7 @@ interface X3DConstants
    readonly StringSensor: number;
    readonly SurfaceEmitter: number;
    readonly Switch: number;
+   readonly Tangent: number;
    readonly TexCoordChaser2D: number;
    readonly TexCoordDamper2D: number;
    readonly Text: number;
@@ -17153,6 +17154,17 @@ interface SwitchProxy extends X3DGroupingNodeProxy
    whichChoice: number;
 }
 
+/** undefined */
+interface TangentProxy extends X3DGeometricPropertyNodeProxy
+{
+   /**
+   * A unit XYZ vector defining a tangential direction on the surface.
+   *
+   * This field is of access type 'inputOutput' and type MFVec3f.
+   */
+   vector: MFVec3f;
+}
+
 /** TexCoordChaser2D generates a series of single floating-point values that progressively change from initial value to destination value. */
 interface TexCoordChaser2DProxy extends X3DChaserNodeProxy
 {
@@ -21613,6 +21625,7 @@ type ConcreteNodeTypes = {
    StringSensor: StringSensorProxy,
    SurfaceEmitter: SurfaceEmitterProxy,
    Switch: SwitchProxy,
+   Tangent: TangentProxy,
    TexCoordChaser2D: TexCoordChaser2DProxy,
    TexCoordDamper2D: TexCoordDamper2DProxy,
    Text: TextProxy,

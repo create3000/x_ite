@@ -252,7 +252,7 @@ getOcclusionFactor ()
 #if defined (X3D_SHEEN_COLOR_TEXTURE_EXT)
 uniform x3d_SheenColorTextureParametersEXT x3d_SheenColorTextureEXT;
 
-float
+vec3
 getSheenColorEXT ()
 {
    // Get texture color.
