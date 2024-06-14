@@ -17158,11 +17158,11 @@ interface SwitchProxy extends X3DGroupingNodeProxy
 interface TangentProxy extends X3DGeometricPropertyNodeProxy
 {
    /**
-   * A unit XYZ vector defining a tangential direction on the surface.
+   * A unit XYZ vector defining a tangent direction on the surface, and a W component whose sign value (-1 or +1) indicates the handedness of the tangent base.
    *
-   * This field is of access type 'inputOutput' and type MFVec3f.
+   * This field is of access type 'inputOutput' and type MFVec4f.
    */
-   vector: MFVec3f;
+   vector: MFVec4f;
 }
 
 /** TexCoordChaser2D generates a series of single floating-point values that progressively change from initial value to destination value. */
