@@ -215,13 +215,14 @@ getMaterialColor ()
 
     // Apply optional PBR terms for additional (optional) shading
    #if defined (X3D_OCCLUSION_TEXTURE)
-      float ao = getOcclusionFactor ();
+      float ao                = getOcclusionFactor ();
+      float occlusionStrength = x3d_Material .occlusionStrength;
 
-      diffuse   = f_diffuse   + mix (f_diffuse_ibl, f_diffuse_ibl * ao, x3d_Material .occlusionStrength);
+      diffuse   = f_diffuse   + mix (f_diffuse_ibl,   f_diffuse_ibl   * ao, occlusionStrength);
       // apply ambient occlusion to all lighting that is not punctual
-      specular  = f_specular  + mix (f_specular_ibl, f_specular_ibl * ao, x3d_Material .occlusionStrength);
-      sheen     = f_sheen     + mix (f_sheen_ibl, f_sheen_ibl * ao, x3d_Material .occlusionStrength);
-      clearcoat = f_clearcoat + mix (f_clearcoat_ibl, f_clearcoat_ibl * ao, x3d_Material .occlusionStrength);
+      specular  = f_specular  + mix (f_specular_ibl,  f_specular_ibl  * ao, occlusionStrength);
+      sheen     = f_sheen     + mix (f_sheen_ibl,     f_sheen_ibl     * ao, occlusionStrength);
+      clearcoat = f_clearcoat + mix (f_clearcoat_ibl, f_clearcoat_ibl * ao, occlusionStrength);
    #else
       diffuse   = f_diffuse_ibl   + f_diffuse;
       specular  = f_specular_ibl  + f_specular;
