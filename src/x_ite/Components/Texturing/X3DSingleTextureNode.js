@@ -50,6 +50,7 @@ import X3DTextureNode from "./X3DTextureNode.js";
 import X3DConstants   from "../../Base/X3DConstants.js";
 import X3DCast        from "../../Base/X3DCast.js";
 import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
+import Algorithm      from "../../../standard/Math/Algorithm.js";
 
 function X3DSingleTextureNode (executionContext)
 {
@@ -210,7 +211,9 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
 
             if (ext)
             {
-               gl .texParameterf (target, ext .TEXTURE_MAX_ANISOTROPY_EXT, textureProperties ._anisotropicDegree .getValue ());
+               const max = gl .getParameter (ext .MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+
+               gl .texParameterf (target, ext .TEXTURE_MAX_ANISOTROPY_EXT, Algorithm .clamp (textureProperties ._anisotropicDegree .getValue (), 0, max));
                break;
             }
          }
