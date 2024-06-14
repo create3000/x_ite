@@ -758,7 +758,8 @@ class SampleViewer
       specularTexture .url               = new X3D .MFString (new URL ("/x_ite/assets/img/glTF/helipad-specular.jpg", location));
       specularTexture .textureProperties = textureProperties;
 
-      environmentLight .color           = new X3D .SFColor (0.9764706, 0.7960784, 0.6117647);
+      environmentLight .intensity       = 1;
+      environmentLight .color           = new X3D .SFColor (1, 1, 1);
       environmentLight .diffuseTexture  = diffuseTexture;
       environmentLight .specularTexture = specularTexture;
 

@@ -367,7 +367,7 @@ const Bookmarks = (() =>
          specularTexture .textureProperties = textureProperties;
 
          environmentLight .intensity       = 1;
-         environmentLight .color           = new X3D .SFColor (0.9764706, 0.7960784, 0.6117647);
+         environmentLight .color           = new X3D .SFColor (1,1,1);
          environmentLight .diffuseTexture  = diffuseTexture;
          environmentLight .specularTexture = specularTexture;
 
