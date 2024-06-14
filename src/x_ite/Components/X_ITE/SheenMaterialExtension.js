@@ -52,6 +52,7 @@ import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
+import Algorithm                from "../../../standard/Math/Algorithm.js";
 
 function SheenMaterialExtension (executionContext)
 {
@@ -103,7 +104,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
    },
    set_sheenRoughness__ ()
    {
-      this .sheenRoughness = Math .max (this ._sheenRoughness .getValue (), 0);
+      this .sheenRoughness = Algorithm .clamp (this ._sheenRoughness .getValue (), 0, 1);
    },
    set_sheenRoughnessTexture__ ()
    {
