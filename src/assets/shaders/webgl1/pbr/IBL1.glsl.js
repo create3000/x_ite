@@ -15,7 +15,8 @@ uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;
 vec3
 getDiffuseLight (const in vec3 n)
 {
-   vec3 textureColor = textureCube (x3d_EnvironmentLightSource .diffuseTexture, x3d_EnvironmentLightSource .rotation * n) .rgb;
+   vec3 texCoord     = x3d_EnvironmentLightSource .rotation * n;
+   vec3 textureColor = textureCube (x3d_EnvironmentLightSource .diffuseTexture, texCoord) .rgb;
 
    if (!x3d_EnvironmentLightSource .diffuseTextureLinear)
       textureColor = sRGBToLinear (textureColor);
@@ -26,7 +27,8 @@ getDiffuseLight (const in vec3 n)
 vec3
 getSpecularLight (const in vec3 reflection, const in float lod)
 {
-   vec3 textureColor = textureCubeLodEXT (x3d_EnvironmentLightSource .specularTexture, x3d_EnvironmentLightSource .rotation * reflection, lod) .rgb;
+   vec3 texCoord     = x3d_EnvironmentLightSource .rotation * reflection;
+   vec3 textureColor = textureCubeLodEXT (x3d_EnvironmentLightSource .specularTexture, texCoord, lod) .rgb;
 
    if (!x3d_EnvironmentLightSource .specularTextureLinear)
       textureColor = sRGBToLinear (textureColor);
@@ -40,7 +42,7 @@ getSheenLight (const in vec3 reflection, const in float lod)
 {
    // return textureLod (u_CharlieEnvSampler, u_EnvRotation * reflection, lod) * u_EnvIntensity;
 
-   return getSpecularLight (reflection, lod);
+   return vec3 (0.5) * (lod / float (x3d_EnvironmentLightSource .specularTextureLevels - 1)) * x3d_EnvironmentLightSource .intensity;
 }
 #endif
 

@@ -1743,6 +1743,9 @@ const IridescenceMaterialExtension_default_ = IridescenceMaterialExtension;
 
 Namespace_default().add ("IridescenceMaterialExtension", "x_ite/Components/X_ITE/IridescenceMaterialExtension", IridescenceMaterialExtension_default_);
 /* harmony default export */ const X_ITE_IridescenceMaterialExtension = (IridescenceMaterialExtension_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
+const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.7.0")] .require ("standard/Math/Algorithm");
+var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/SheenMaterialExtension.js
 /*******************************************************************************
  *
@@ -1790,6 +1793,7 @@ Namespace_default().add ("IridescenceMaterialExtension", "x_ite/Components/X_ITE
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1849,7 +1853,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
    },
    set_sheenRoughness__ ()
    {
-      this .sheenRoughness = Math .max (this ._sheenRoughness .getValue (), 0);
+      this .sheenRoughness = Algorithm_default().clamp (this ._sheenRoughness .getValue (), 0, 1);
    },
    set_sheenRoughnessTexture__ ()
    {

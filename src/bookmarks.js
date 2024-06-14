@@ -163,7 +163,9 @@ const Bookmarks = (() =>
             .on ("click", () => this .browser .viewAll (0))
             .appendTo ($("#toolbar"));
 
-         let environmentLight = null;
+         let
+            environmentLight = null,
+            navigationInfo   = null;
 
          $("<span></span>")
             .text ("💡")
@@ -172,7 +174,8 @@ const Bookmarks = (() =>
             {
                if (environmentLight)
                {
-                  environmentLight .on = !environmentLight .on;
+                  environmentLight .on       = !environmentLight .on;
+                  navigationInfo   .set_bind = environmentLight .on;
 
                   console .info ("EnvironmentLight.on", environmentLight .on);
                }
