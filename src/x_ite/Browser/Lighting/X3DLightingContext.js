@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
-import TextureBuffer from "../../Rendering/TextureBuffer.js";
-import ImageTexture  from "../../Components/Texturing/ImageTexture.js";
-import URLs          from "../Networking/URLs.js";
+import TextureBuffer     from "../../Rendering/TextureBuffer.js";
+import ImageTexture      from "../../Components/Texturing/ImageTexture.js";
+import TextureProperties from "../../Components/Texturing/TextureProperties.js";
+import URLs              from "../Networking/URLs.js";
 
 const
    _maxLights     = Symbol (),
@@ -81,11 +82,21 @@ Object .assign (X3DLightingContext .prototype,
    },
    createLibraryTexture (name)
    {
-      const texture = new ImageTexture (this .getPrivateScene ());
+      const
+         texture           = new ImageTexture (this .getPrivateScene ()),
+         textureProperties = new TextureProperties (this .getPrivateScene ());
 
-      texture ._url     = [URLs .getLibraryURL (name)];
-      texture ._repeatS = false;
-      texture ._repeatT = false;
+      textureProperties ._generateMipMaps     = false;
+      textureProperties ._minificationFilter  = "AVG_PIXEL";
+      textureProperties ._magnificationFilter = "AVG_PIXEL";
+      textureProperties ._boundaryModeS       = "CLAMP_TO_BOUNDARY";
+      textureProperties ._boundaryModeT       = "CLAMP_TO_BOUNDARY";
+      textureProperties ._boundaryModeR       = "CLAMP_TO_BOUNDARY";
+
+      textureProperties .setup ();
+
+      texture ._url               = [URLs .getLibraryURL (name)];
+      texture ._textureProperties = textureProperties;
 
       texture .setup ();
 
