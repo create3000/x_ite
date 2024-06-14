@@ -11,6 +11,11 @@ precision highp int;
 precision highp sampler2D;
 precision highp samplerCube;
 
+float max3 (const in vec3 value)
+{
+   return max (max (value .x, value .y), value .z);
+}
+
 #pragma X3D include "common/Fragment.glsl"
 #pragma X3D include "common/Normal.glsl"
 #pragma X3D include "common/Shadow.glsl"
@@ -20,11 +25,6 @@ precision highp samplerCube;
 #endif
 
 uniform x3d_PhysicalMaterialParameters x3d_Material;
-
-float max3 (const in vec3 value)
-{
-   return max (max (value .x, value .y), value .z);
-}
 
 #pragma X3D include "pbr/BRDF.glsl"
 #pragma X3D include "pbr/MaterialInfo.glsl"
@@ -82,7 +82,7 @@ getMaterialColor ()
    materialInfo .alphaRoughness = materialInfo .perceptualRoughness * materialInfo .perceptualRoughness;
 
    // Compute reflectance.
-   float reflectance = max (max (materialInfo .f0 .r, materialInfo .f0 .g), materialInfo .f0 .b);
+   float reflectance = max3 (materialInfo .f0);
 
    // Anything less than 2% is physically impossible and is instead considered to be shadowing. Compare to "Real-Time-Rendering" 4th edition on page 325.
    materialInfo .f90 = vec3 (1.0);
@@ -216,21 +216,21 @@ getMaterialColor ()
    vec3  sheen;
    vec3  clearcoat;
 
-    // Apply optional PBR terms for additional (optional) shading
+   // Apply optional PBR terms for additional (optional) shading
    #if defined (X3D_OCCLUSION_TEXTURE)
       float ao                = getOcclusionFactor ();
       float occlusionStrength = x3d_Material .occlusionStrength;
 
-      diffuse   = f_diffuse   + mix (f_diffuse_ibl,   f_diffuse_ibl   * ao, occlusionStrength);
+      diffuse   = f_diffuse   + mix (f_diffuse_ibl,   f_diffuse_ibl   * ao, occlusionStrength) * albedoSheenScaling;
       // apply ambient occlusion to all lighting that is not punctual
-      specular  = f_specular  + mix (f_specular_ibl,  f_specular_ibl  * ao, occlusionStrength);
+      specular  = f_specular  + mix (f_specular_ibl,  f_specular_ibl  * ao, occlusionStrength) * albedoSheenScaling;
       sheen     = f_sheen     + mix (f_sheen_ibl,     f_sheen_ibl     * ao, occlusionStrength);
       clearcoat = f_clearcoat + mix (f_clearcoat_ibl, f_clearcoat_ibl * ao, occlusionStrength);
    #else
-      diffuse   = f_diffuse_ibl   + f_diffuse;
-      specular  = f_specular_ibl  + f_specular;
-      sheen     = f_sheen_ibl     + f_sheen;
-      clearcoat = f_clearcoat_ibl + f_clearcoat;
+      diffuse   = f_diffuse_ibl  * albedoSheenScaling + f_diffuse;
+      specular  = f_specular_ibl * albedoSheenScaling + f_specular;
+      sheen     = f_sheen_ibl                         + f_sheen;
+      clearcoat = f_clearcoat_ibl                     + f_clearcoat;
    #endif
 
    vec3 color = vec3 (0.0);
