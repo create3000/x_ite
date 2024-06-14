@@ -668,13 +668,12 @@ async function loadURL (filename, event)
          $("<i></i>")
             .addClass (["fa-regular", "fa-circle"])
             .attr ("id", `animation${i}`)
-            .on ("click", onclick)
             .prependTo (label);
 
          $("<br>") .appendTo ($("#animations"));
       }
 
-      $("#animations") .show () .find ("i") .first () .trigger ("click");
+      $("#animations") .show () .find ("label") .first () .trigger ("click");
    }
    catch
    { }
@@ -778,12 +777,12 @@ createList ("glTF Embedded Sample Models", embedded);
 createList ("glTF IBL Sample Models",      ibl);
 createList ("glTF KTX Sample Models",      ktx);
 
-$("#ibl, [for=ibl]") .on ("click", () =>
+$("[for=ibl]") .on ("click", () =>
 {
    setEnvironmentLight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#ibl") .hasClass ("green"));
 });
 
-$("#headlight, [for=headlight]") .on ("click", () =>
+$("[for=headlight]") .on ("click", () =>
 {
    setHeadlight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#headlight") .hasClass ("green"));
 });

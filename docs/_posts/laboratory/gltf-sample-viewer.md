@@ -116,9 +116,9 @@ x3d-canvas {
          <div id="lighting">
             <b>Lighting</b>
             <br>
-            <label for="ibl"><i id="ibl" class="fa-regular fa-xmark"></i>Image Based Lighting</label>
+            <label for="ibl"><i id="ibl" class="fa-solid fa-xmark"></i>Image Based Lighting</label>
             <br>
-            <label for="headlight"><i id="headlight" class="fa-regular fa-xmark"></i>Headlight</label>
+            <label for="headlight"><i id="headlight" class="fa-solid fa-xmark"></i>Headlight</label>
          </div>
          <div id="animations"></div>
       </div>
