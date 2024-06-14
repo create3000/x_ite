@@ -62,8 +62,6 @@ import Color4       from "../../standard/Math/Numbers/Color4.js";
 
 const SAMPLES_PER_SECOND = 30; // in 1/s
 
-const _texCoord = Symbol ();
-
 function GLTF2Parser (scene)
 {
    X3DParser    .call (this, scene);
@@ -920,6 +918,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .texCoordIndex         = Array .from (texCoordIndices) .reduce (Math .max, -1);
       this .textureTransformNodes = [ ];
       this .texCoordMappings      = new Map ();
+      this .texCoordOfNode             = new Map ();
       material .texCoordMappings  = this .texCoordMappings;
 
       const
@@ -1313,7 +1312,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Check for existing node.
 
-      const existing = this .textureTransformNodes .find (node => node [_texCoord] === texCoord && node ._matrix .getValue () .equals (matrix));
+      const existing = this .textureTransformNodes .find (node => this .texCoordOfNode .get (node) === texCoord && node ._matrix .getValue () .equals (matrix));
 
       if (existing)
          return existing ._mapping .getValue ();
@@ -1325,14 +1324,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          textureTransformNode = scene .createNode ("TextureTransformMatrix3D", false),
          mapping              = `TEXCOORD_${this .texCoordIndex + this .textureTransformNodes .length + 1}`;
 
-      textureTransformNode [_texCoord] = texCoord;
       textureTransformNode ._mapping   = mapping;
       textureTransformNode ._matrix    = matrix;
 
       textureTransformNode .setup ();
 
       this .textureTransformNodes .push (textureTransformNode);
-      this .texCoordMappings .set (mapping, KHR_texture_transform .texCoord ?? texCoord);
+      this .texCoordMappings .set (mapping, texCoord);
+      this .texCoordOfNode .set (textureTransformNode, texCoord);
 
       return mapping;
    },
