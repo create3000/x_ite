@@ -49,10 +49,6 @@ tags: [glTF, Sample, Viewer, Laboratory]
    padding: 1rem;
 }
 
-.viewer-column2 div {
-   color: var(--h2-color);
-}
-
 x3d-canvas {
    display: block;
    width: 100%;

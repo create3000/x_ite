@@ -70,7 +70,7 @@ chdir "$samples/glTF-Sample-Assets";
 system "git pull origin";
 
 $string = "";
-$string .= "// TESTS_BEGIN\n\n";
+$string .= "// SAMPLES_BEGIN\n\n";
 $string .= media;
 $string .= "\n";
 $string .= glTF ("glTF", ".gltf", "glTF");
@@ -84,9 +84,9 @@ $string .= "\n";
 $string .= glTF ("glTF-IBL", ".gltf", "ibl");
 $string .= "\n";
 $string .= glTF ("glTF-KTX-BasisU", ".gltf", "ktx");
-$string .= "\n// TESTS_END";
+$string .= "\n// SAMPLES_END";
 
-$viewer =~ s|// TESTS_BEGIN.*?// TESTS_END|$string|s;
+$viewer =~ s|// SAMPLES_BEGIN.*?// SAMPLES_END|$string|s;
 
 open SCRIPT, ">", $script;
 print SCRIPT $viewer;

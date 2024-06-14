@@ -54,7 +54,7 @@ const ibl_files = [
    "YetiWarrior",
 ];
 
-// TESTS_BEGIN
+// SAMPLES_BEGIN
 
 const models = [
    "https://create3000.github.io/media/glTF/Animated Bee/Animated Bee.glb",
@@ -572,215 +572,230 @@ const ktx = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/StainedGlassLamp/glTF-KTX-BasisU/StainedGlassLamp.gltf",
 ];
 
-// TESTS_END
+// SAMPLES_END
 
-function createList (description, filenames)
+class SampleViewer
 {
-   const column = $(".viewer-column2");
-
-   $("<div></div>") .append ($("<strong></strong>") .text (description)) .appendTo (column);
-
-   const
-      list = $("<ul></ul>") .appendTo (column),
-      map  = new Map ();
-
-   for (const filename of filenames)
+   constructor (browser)
    {
-      const
-         match = filename .match (/([^\/]+)\.\w+$/),
-         name  = match [1] .replace (/([A-Z]+)/g, " $1") .replace (/([A-Z]+)([A-Z])/g, "$1 $2") .replace (/\s+/g, " ") .trim ();
+      this .browser = browser;
 
-      if (map .has (name))
-         continue;
+      this .createList ("glTF Random Models",          models);
+      this .createList ("glTF Sample Models",          glTF);
+      this .createList ("glb Sample Models",           glb);
+      this .createList ("glTF Draco Sample Models",    draco);
+      this .createList ("glTF Embedded Sample Models", embedded);
+      this .createList ("glTF IBL Sample Models",      ibl);
+      this .createList ("glTF KTX Sample Models",      ktx);
 
-      map .set (name, filename);
-   }
-
-   for (const [name, filename] of [... map] .sort ((a, b) => a [0] .localeCompare (b [0])))
-   {
-      $("<a></a>")
-         .text (name)
-         .attr ("href", filename)
-         .appendTo ($("<li></li>") .appendTo (list))
-         .on ("click", loadURL .bind (null, filename));
-   }
-}
-
-async function loadURL (filename, event)
-{
-   event .preventDefault ();
-
-   $("#animations") .hide ();
-
-   const Browser = X3D .getBrowser ();
-
-   await Browser .loadURL (new X3D .MFString (filename));
-
-   setEnvironmentLight (Browser, Browser .currentScene, ibl_files .some (name => filename .includes (name)));
-   setHeadlight (Browser, Browser .currentScene, true);
-
-   if (!Browser .getActiveViewpoint () ._description .getValue ())
-      Browser .viewAll (0);
-
-   try
-   {
-      const animations = Browser .currentScene .getExportedNode ("Animations");
-
-      $("#animations") .empty ();
-      $("<b></b>") .text ("Animations") .appendTo ($("#animations"));
-      $("<br>") .appendTo ($("#animations"));
-
-      for (const [i, group] of animations .children .entries ())
+      $("[for=ibl]") .on ("click", () =>
       {
-         const timeSensor = group .children [0];
+         this .setEnvironmentLight (!$("#ibl") .hasClass ("green"));
+      });
 
-         const onclick = () =>
-         {
-            $(`#animation${i}`) .toggleClass (["fa-circle", "fa-circle-dot", "green"]);
-            $(`[for=animation${i}]`) .toggleClass ("green");
+      $("[for=headlight]") .on ("click", () =>
+      {
+         this .setHeadlight (!$("#headlight") .hasClass ("green"));
+      });
+   }
 
-            for (const group of animations .children)
-               group .children [0] .stopTime = Date .now () / 1000;
+   get scene ()
+   {
+      return this .browser .currentScene;
+   }
 
-            if (!$(`#animation${i}`) .hasClass ( "fa-circle-dot"))
-               return;
+   createList (description, filenames)
+   {
+      const column = $(".viewer-column2");
 
-            $("#animations i") .each ((_, element) =>
-            {
-               if (element === $(`#animation${i}`) .get (0))
-                  return;
+      $("<div></div>") .append ($("<strong></strong>") .text (description)) .appendTo (column);
 
-               $(element) .removeClass (["fa-circle-dot", "green"]) .addClass ("fa-circle");
-               $(`[for=${$(element) .attr ("id")}]`) .removeClass ("green");
-            });
+      const
+         list = $("<ul></ul>") .appendTo (column),
+         map  = new Map ();
 
-            timeSensor .loop      = true;
-            timeSensor .startTime = Date .now () / 1000;
-         };
+      for (const filename of filenames)
+      {
+         const
+            match = filename .match (/([^\/]+)\.\w+$/),
+            name  = match [1] .replace (/([A-Z]+)/g, " $1") .replace (/([A-Z]+)([A-Z])/g, "$1 $2") .replace (/\s+/g, " ") .trim ();
 
-         const label = $("<label></label>")
-            .append ()
-            .attr ("for", `animation${i}`)
-            .text (group .children [0] .description)
-            .on ("click", onclick)
-            .appendTo ($("#animations"));
+         if (map .has (name))
+            continue;
 
-         $("<i></i>")
-            .addClass (["fa-regular", "fa-circle"])
-            .attr ("id", `animation${i}`)
-            .prependTo (label);
-
-         $("<br>") .appendTo ($("#animations"));
+         map .set (name, filename);
       }
 
-      $("#animations") .show () .find ("label") .first () .trigger ("click");
+      for (const [name, filename] of [... map] .sort ((a, b) => a [0] .localeCompare (b [0])))
+      {
+         $("<a></a>")
+            .text (name)
+            .attr ("href", filename)
+            .appendTo ($("<li></li>") .appendTo (list))
+            .on ("click", () =>
+            {
+               this .loadURL (filename);
+               return false;
+            });
+      }
    }
-   catch
-   { }
-}
 
-async function setEnvironmentLight (Browser, scene, on)
-{
-   if (on)
+   async loadURL (filename, event)
    {
-      $("#ibl") .removeClass ("fa-xmark") .addClass ("fa-check");
-      $("#ibl, [for=ibl]") .addClass ("green");
+      $("#animations") .hide ();
+
+      await this .browser .loadURL (new X3D .MFString (filename));
+
+      this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
+      this .setHeadlight (true);
+
+      if (!this .browser .getActiveViewpoint () ._description .getValue ())
+         this .browser .viewAll (0);
+
+      try
+      {
+         const animations = this .scene .getExportedNode ("Animations");
+
+         $("#animations") .empty ();
+         $("<b></b>") .text ("Animations") .appendTo ($("#animations"));
+         $("<br>") .appendTo ($("#animations"));
+
+         for (const [i, group] of animations .children .entries ())
+         {
+            const timeSensor = group .children [0];
+
+            const onclick = () =>
+            {
+               $(`#animation${i}`) .toggleClass (["fa-circle", "fa-circle-dot", "green"]);
+               $(`[for=animation${i}]`) .toggleClass ("green");
+
+               for (const group of animations .children)
+                  group .children [0] .stopTime = Date .now () / 1000;
+
+               if (!$(`#animation${i}`) .hasClass ( "fa-circle-dot"))
+                  return;
+
+               $("#animations i") .each ((_, element) =>
+               {
+                  if (element === $(`#animation${i}`) .get (0))
+                     return;
+
+                  $(element) .removeClass (["fa-circle-dot", "green"]) .addClass ("fa-circle");
+                  $(`[for=${$(element) .attr ("id")}]`) .removeClass ("green");
+               });
+
+               timeSensor .loop      = true;
+               timeSensor .startTime = Date .now () / 1000;
+            };
+
+            const label = $("<label></label>")
+               .append ()
+               .attr ("for", `animation${i}`)
+               .text (group .children [0] .description)
+               .on ("click", onclick)
+               .appendTo ($("#animations"));
+
+            $("<i></i>")
+               .addClass (["fa-regular", "fa-circle"])
+               .attr ("id", `animation${i}`)
+               .prependTo (label);
+
+            $("<br>") .appendTo ($("#animations"));
+         }
+
+         $("#animations") .show () .find ("label") .first () .trigger ("click");
+      }
+      catch
+      { }
    }
-   else
+
+   async setEnvironmentLight (on)
    {
-      $("#ibl") .removeClass ("fa-check") .addClass ("fa-xmark");
-      $("#ibl, [for=ibl]") .removeClass ("green");
+      if (on)
+      {
+         $("#ibl") .removeClass ("fa-xmark") .addClass ("fa-check");
+         $("#ibl, [for=ibl]") .addClass ("green");
+      }
+      else
+      {
+         $("#ibl") .removeClass ("fa-check") .addClass ("fa-xmark");
+         $("#ibl, [for=ibl]") .removeClass ("green");
 
-      if (!getEnvironmentLight .environmentLight)
-         return;
+         if (!this .environmentLight)
+            return;
+      }
+
+      const environmentLight = await this .getEnvironmentLight ();
+
+      environmentLight .on = on;
+
+      this .scene .addRootNode (environmentLight);
    }
 
-   const environmentLight = await getEnvironmentLight (Browser, scene);
-
-   environmentLight .on = on;
-
-   scene .addRootNode (environmentLight);
-}
-
-async function getEnvironmentLight (Browser, scene)
-{
-   if (getEnvironmentLight .environmentLight)
-      return getEnvironmentLight .environmentLight;
-
-   const cubeMapTexturing = Browser .getComponent ("CubeMapTexturing");
-
-   await Browser .loadComponents (cubeMapTexturing);
-
-   scene .addComponent (cubeMapTexturing);
-
-   const
-      environmentLight  = scene .createNode ("EnvironmentLight"),
-      diffuseTexture    = scene .createNode ("ImageCubeMapTexture"),
-      specularTexture   = scene .createNode ("ImageCubeMapTexture"),
-      textureProperties = scene .createNode ("TextureProperties");
-
-   textureProperties .generateMipMaps     = true;
-   textureProperties .minificationFilter  = "NICEST";
-   textureProperties .magnificationFilter = "NICEST";
-
-   diffuseTexture  .url               = new X3D .MFString (new URL ("/x_ite/assets/img/glTF/helipad-diffuse.jpg",  location));
-   diffuseTexture  .textureProperties = textureProperties;
-   specularTexture .url               = new X3D .MFString (new URL ("/x_ite/assets/img/glTF/helipad-specular.jpg", location));
-   specularTexture .textureProperties = textureProperties;
-
-   environmentLight .color           = new X3D .SFColor (0.9764706, 0.7960784, 0.6117647);
-   environmentLight .rotation        = new X3D .SFRotation (0, 1, 0, Math .PI / 2);
-   environmentLight .diffuseTexture  = diffuseTexture;
-   environmentLight .specularTexture = specularTexture;
-
-   return getEnvironmentLight .environmentLight = environmentLight;
-}
-
-async function setHeadlight (Browser, scene, on)
-{
-   if (on)
+   async getEnvironmentLight ()
    {
-      $("#headlight") .removeClass ("fa-xmark") .addClass ("fa-check");
-      $("#headlight, [for=headlight]") .addClass ("green");
+      if (this .environmentLight)
+         return this .environmentLight;
+
+      const cubeMapTexturing = this .browser .getComponent ("CubeMapTexturing");
+
+      await this .browser .loadComponents (cubeMapTexturing);
+
+      this .scene .addComponent (cubeMapTexturing);
+
+      const
+         environmentLight  = this .scene .createNode ("EnvironmentLight"),
+         diffuseTexture    = this .scene .createNode ("ImageCubeMapTexture"),
+         specularTexture   = this .scene .createNode ("ImageCubeMapTexture"),
+         textureProperties = this .scene .createNode ("TextureProperties");
+
+      textureProperties .generateMipMaps     = true;
+      textureProperties .minificationFilter  = "NICEST";
+      textureProperties .magnificationFilter = "NICEST";
+
+      diffuseTexture  .url               = new X3D .MFString (new URL ("/x_ite/assets/img/glTF/helipad-diffuse.jpg",  location));
+      diffuseTexture  .textureProperties = textureProperties;
+      specularTexture .url               = new X3D .MFString (new URL ("/x_ite/assets/img/glTF/helipad-specular.jpg", location));
+      specularTexture .textureProperties = textureProperties;
+
+      environmentLight .color           = new X3D .SFColor (0.9764706, 0.7960784, 0.6117647);
+      environmentLight .rotation        = new X3D .SFRotation (0, 1, 0, Math .PI / 2);
+      environmentLight .diffuseTexture  = diffuseTexture;
+      environmentLight .specularTexture = specularTexture;
+
+      return this .environmentLight = environmentLight;
    }
-   else
+
+   async setHeadlight (on)
    {
-      $("#headlight") .removeClass ("fa-check") .addClass ("fa-xmark");
-      $("#headlight, [for=headlight]") .removeClass ("green");
+      if (on)
+      {
+         $("#headlight") .removeClass ("fa-xmark") .addClass ("fa-check");
+         $("#headlight, [for=headlight]") .addClass ("green");
+      }
+      else
+      {
+         $("#headlight") .removeClass ("fa-check") .addClass ("fa-xmark");
+         $("#headlight, [for=headlight]") .removeClass ("green");
+      }
+
+      const navigationInfo = await this .getNavigationInfo ();
+
+      navigationInfo .set_bind  = true;
+      navigationInfo .headlight = on;
+
+      this .scene .addRootNode (navigationInfo);
    }
 
-   const navigationInfo = await getNavigationInfo (Browser, scene);
+   async getNavigationInfo ()
+   {
+      if (this .navigationInfo)
+         return this .navigationInfo;
 
-   navigationInfo .set_bind  = true;
-   navigationInfo .headlight = on;
+      const navigationInfo = this .scene .createNode ("NavigationInfo");
 
-   scene .addRootNode (navigationInfo);
+      return this .navigationInfo = navigationInfo;
+   }
 }
 
-async function getNavigationInfo (Browser, scene)
-{
-   if (getNavigationInfo .navigationInfo)
-      return getNavigationInfo .navigationInfo;
-
-   const navigationInfo = scene .createNode ("NavigationInfo");
-
-   return getNavigationInfo .navigationInfo = navigationInfo;
-}
-
-createList ("glTF Random Models",          models);
-createList ("glTF Sample Models",          glTF);
-createList ("glb Sample Models",           glb);
-createList ("glTF Draco Sample Models",    draco);
-createList ("glTF Embedded Sample Models", embedded);
-createList ("glTF IBL Sample Models",      ibl);
-createList ("glTF KTX Sample Models",      ktx);
-
-$("[for=ibl]") .on ("click", () =>
-{
-   setEnvironmentLight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#ibl") .hasClass ("green"));
-});
-
-$("[for=headlight]") .on ("click", () =>
-{
-   setHeadlight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#headlight") .hasClass ("green"));
-});
+const viewer = new SampleViewer (X3D .getBrowser ());
