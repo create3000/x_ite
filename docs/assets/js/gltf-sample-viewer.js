@@ -22,6 +22,7 @@ const ibl_files = [
    "DragonAttenuation",
    "EmissiveStrengthTest",
    "EnvironmentTest",
+   "Glam",
    "GlassBrokenWindow",
    "GlassHurricaneCandleHolder",
    "GlassVaseFlowers",
