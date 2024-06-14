@@ -2279,10 +2279,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    hasTextures (materialNode)
    {
+      // Test UnlitMaterial, PhysicalMaterial, ...
+
       if (+materialNode .getTextureBits ())
          return true;
 
-      if (materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ()))
+      if (materialNode ._extensions ?.some (extension => +extension .getValue () .getTextureBits ()))
          return true;
 
       return false;
