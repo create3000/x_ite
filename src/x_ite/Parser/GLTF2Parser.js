@@ -2787,12 +2787,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return tangent .tangentNode;
 
       const
-         scene      = this .getExecutionContext (),
+         scene       = this .getExecutionContext (),
          tangentNode = scene .createNode ("Tangent", false);
 
       tangentNode ._vector = tangent .array;
-
-      tangent .field = tangentNode ._vector;
 
       tangentNode .setup ();
 

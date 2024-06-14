@@ -336,6 +336,7 @@ const Bookmarks = (() =>
          const cubeMapTexturing = Browser .getComponent ("CubeMapTexturing");
 
          await Browser .loadComponents (cubeMapTexturing);
+
          scene .addComponent (cubeMapTexturing);
 
          const
@@ -348,9 +349,14 @@ const Bookmarks = (() =>
          textureProperties .minificationFilter  = "NICEST";
          textureProperties .magnificationFilter = "NICEST";
 
-         diffuseTexture  .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/symmetrical_garden_1k-diffuse.png");
+         // diffuseTexture  .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/symmetrical_garden_1k-diffuse.png");
+         // diffuseTexture  .textureProperties = textureProperties;
+         // specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/symmetrical_garden_1k-specular.png");
+         // specularTexture .textureProperties = textureProperties;
+
+         diffuseTexture  .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-diffuse.jpg");
          diffuseTexture  .textureProperties = textureProperties;
-         specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/symmetrical_garden_1k-specular.png");
+         specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg");
          specularTexture .textureProperties = textureProperties;
 
          environmentLight .intensity       = 1;
