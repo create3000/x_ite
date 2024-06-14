@@ -167,7 +167,7 @@ const Bookmarks = (() =>
             environmentLight = null,
             navigationInfo   = null;
 
-         $("<span></span>")
+         const environmentLightButton = $("<span></span>")
             .text ("💡")
             .attr ("title", "Add EnvironmentLight")
             .on ("click", async () =>
@@ -199,8 +199,13 @@ const Bookmarks = (() =>
 
                   // console .info ("Added NavigationInfo.");
                }
+
+               this .browser .getLocalStorage () ["Bookmarks.environmentLight"] = environmentLight .on;
             })
             .appendTo ($("#toolbar"));
+
+         if (this .browser .getLocalStorage () ["Bookmarks.environmentLight"])
+            environmentLightButton .trigger ("click");
 
          $("<span></span>") .addClass ("separator") .appendTo ($("#toolbar"));
 
