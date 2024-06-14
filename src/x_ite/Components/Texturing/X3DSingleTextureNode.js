@@ -144,81 +144,68 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
       if (update)
          this .updateTextureParameters ();
    },
-   updateTextureParameters: (() =>
+   updateTextureParameters (target, haveTextureProperties, textureProperties, width, height, repeatS, repeatT, repeatR)
    {
-      // Anisotropic Filtering in WebGL is handled by an extension, use one of getExtension depending on browser:
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
 
-      const ANISOTROPIC_EXT = [
-         "EXT_texture_filter_anisotropic",
-         "MOZ_EXT_texture_filter_anisotropic",
-         "WEBKIT_EXT_texture_filter_anisotropic",
-      ];
+      gl .bindTexture (target, this .getTexture ());
 
-      return function (target, haveTextureProperties, textureProperties, width, height, repeatS, repeatT, repeatR)
+      if (!haveTextureProperties && Math .max (width, height) < browser .getMinTextureSize ())
       {
-         const gl = this .getBrowser () .getContext ();
+         // Don't generate MipMaps.
+         gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+         gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+      }
+      else if (!this .isLinear () || haveTextureProperties)
+      {
+         // All linear textures (KTX2, HDR) do NOT support mip-maps.
 
-         gl .bindTexture (target, this .getTexture ());
-
-         if (!haveTextureProperties && Math .max (width, height) < this .getBrowser () .getMinTextureSize ())
+         if (!this .isLinear ())
          {
-            // Don't generate MipMaps.
-            gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
-            gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-         }
-         else if (!this .isLinear () || haveTextureProperties)
-         {
-            // All linear textures (KTX2, HDR) do NOT support mip-maps.
-
-            if (!this .isLinear ())
-            {
-               if (textureProperties ._generateMipMaps .getValue ())
-                  gl .generateMipmap (target);
-            }
-
-            gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
-            gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl [textureProperties .getMagnificationFilter ()]);
-         }
-         else
-         {
-            gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-            gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+            if (textureProperties ._generateMipMaps .getValue ())
+               gl .generateMipmap (target);
          }
 
-         if (haveTextureProperties)
-         {
-            gl .texParameteri (target, gl .TEXTURE_WRAP_S, gl [textureProperties .getBoundaryModeS ()]);
-            gl .texParameteri (target, gl .TEXTURE_WRAP_T, gl [textureProperties .getBoundaryModeT ()]);
+         gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
+         gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl [textureProperties .getMagnificationFilter ()]);
+      }
+      else
+      {
+         gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+         gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+      }
 
-            if (gl .getVersion () >= 2)
-               gl .texParameteri (target, gl .TEXTURE_WRAP_R, gl [textureProperties .getBoundaryModeR ()]);
-         }
-         else
-         {
-            gl .texParameteri (target, gl .TEXTURE_WRAP_S, repeatS ? gl .REPEAT : gl .CLAMP_TO_EDGE);
-            gl .texParameteri (target, gl .TEXTURE_WRAP_T, repeatT ? gl .REPEAT : gl .CLAMP_TO_EDGE);
+      if (haveTextureProperties)
+      {
+         gl .texParameteri (target, gl .TEXTURE_WRAP_S, gl [textureProperties .getBoundaryModeS ()]);
+         gl .texParameteri (target, gl .TEXTURE_WRAP_T, gl [textureProperties .getBoundaryModeT ()]);
 
-            if (gl .getVersion () >= 2)
-               gl .texParameteri (target, gl .TEXTURE_WRAP_R, repeatR ? gl .REPEAT : gl .CLAMP_TO_EDGE);
-         }
+         if (gl .getVersion () >= 2)
+            gl .texParameteri (target, gl .TEXTURE_WRAP_R, gl [textureProperties .getBoundaryModeR ()]);
+      }
+      else
+      {
+         gl .texParameteri (target, gl .TEXTURE_WRAP_S, repeatS ? gl .REPEAT : gl .CLAMP_TO_EDGE);
+         gl .texParameteri (target, gl .TEXTURE_WRAP_T, repeatT ? gl .REPEAT : gl .CLAMP_TO_EDGE);
 
-         //gl .texParameterfv (target, gl .TEXTURE_BORDER_COLOR, textureProperties ._borderColor .getValue ());
-         //gl .texParameterf  (target, gl .TEXTURE_PRIORITY,     textureProperties ._texturePriority .getValue ());
+         if (gl .getVersion () >= 2)
+            gl .texParameteri (target, gl .TEXTURE_WRAP_R, repeatR ? gl .REPEAT : gl .CLAMP_TO_EDGE);
+      }
 
-         for (const extension of ANISOTROPIC_EXT)
-         {
-            const ext = gl .getExtension (extension);
+      //gl .texParameterfv (target, gl .TEXTURE_BORDER_COLOR, textureProperties ._borderColor .getValue ());
+      //gl .texParameterf  (target, gl .TEXTURE_PRIORITY,     textureProperties ._texturePriority .getValue ());
 
-            if (ext)
-            {
-               const max = gl .getParameter (ext .MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+      const ext = browser .getAnisotropicExtension ();
 
-               gl .texParameterf (target, ext .TEXTURE_MAX_ANISOTROPY_EXT, Algorithm .clamp (textureProperties ._anisotropicDegree .getValue (), 0, max));
-               break;
-            }
-         }
-      };
-   })(),
+      if (ext)
+      {
+         const max = gl .getParameter (ext .MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+
+         gl .texParameterf (target, ext .TEXTURE_MAX_ANISOTROPY_EXT, Algorithm .clamp (textureProperties ._anisotropicDegree .getValue (), 0, max));
+      }
+   },
    getTextureBits ()
    {
       return (this .isLinear () << 3) | this .getTextureType ();

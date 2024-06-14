@@ -66,12 +66,13 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
 
       const browser = this .getBrowser ();
 
-      this ._MaxTextureSize = browser .getMaxTextureSize ();
-      this ._TextureUnits   = browser .getMaxCombinedTextureUnits ();
-      this ._MaxLights      = browser .getMaxLights ();
-      this ._ColorDepth     = browser .getColorDepth ();
-      this ._TextureMemory  = browser .getTextureMemory ();
-      this ._MaxSamples     = browser .getMaxSamples ();
+      this ._MaxTextureSize       = browser .getMaxTextureSize ();
+      this ._TextureUnits         = browser .getMaxCombinedTextureUnits ();
+      this ._MaxLights            = browser .getMaxLights ();
+      this ._ColorDepth           = browser .getColorDepth ();
+      this ._TextureMemory        = browser .getTextureMemory ();
+      this ._MaxAnisotropicDegree = browser .getMaxAnisotropicDegree ();
+      this ._MaxSamples           = browser .getMaxSamples ();
    },
 });
 
@@ -94,7 +95,8 @@ Object .defineProperties (RenderingProperties,
          new X3DFieldDefinition (X3DConstants .outputOnly, "TextureMemory",          new Fields .SFDouble ()),
          new X3DFieldDefinition (X3DConstants .outputOnly, "ContentScale",           new Fields .SFDouble (1)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "LogarithmicDepthBuffer", new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxSamples",             new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxAnisotropicDegree",   new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxSamples",             new Fields .SFInt32 (0)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "Multisampling",          new Fields .SFInt32 (4)),
       ]),
       enumerable: true,

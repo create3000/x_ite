@@ -774,7 +774,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                // minFilter
 
-               const minificationFilter = MinificationFilters .get (sampler .minFilter) ?? ["AVG_PIXEL", false];
+               const minificationFilter = MinificationFilters .get (sampler .minFilter) ?? ["AVG_PIXEL_AVG_MIPMAP", true];
 
                texturePropertiesNode ._minificationFilter = minificationFilter [0];
                texturePropertiesNode ._generateMipMaps    = minificationFilter [1];
@@ -787,6 +787,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                texturePropertiesNode ._boundaryModeS = BoundaryModes .get (sampler .wrapS) ?? "REPEAT";
                texturePropertiesNode ._boundaryModeT = BoundaryModes .get (sampler .wrapT) ?? "REPEAT";
+
+               // anisotropicDegree
+
+               texturePropertiesNode ._anisotropicDegree = this .getBrowser () .getRenderingProperty ("MaxAnisotropicDegree");
 
                // setup
 

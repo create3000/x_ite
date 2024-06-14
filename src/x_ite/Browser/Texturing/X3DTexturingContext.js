@@ -164,6 +164,37 @@ Object .assign (X3DTexturingContext .prototype,
 
       return gl .getParameter (gl .MAX_TEXTURE_SIZE);
    },
+   getAnisotropicExtension: (() =>
+   {
+      // Anisotropic Filtering in WebGL is handled by an extension, use one of getExtension depending on browser:
+
+      const ANISOTROPIC_EXT = [
+         "EXT_texture_filter_anisotropic",
+         "MOZ_EXT_texture_filter_anisotropic",
+         "WEBKIT_EXT_texture_filter_anisotropic",
+      ];
+
+      return function ()
+      {
+         const gl = this .getContext ();
+
+         for (const extension of ANISOTROPIC_EXT)
+         {
+            const ext = gl .getExtension (extension);
+
+            if (ext)
+               return ext;
+         }
+      };
+   })(),
+   getMaxAnisotropicDegree ()
+   {
+      const
+         gl  = this .getContext (),
+         ext = this .getAnisotropicExtension ();
+
+      return ext ? gl .getParameter (ext .MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 1;
+   },
    getMaxCombinedTextureUnits ()
    {
       const gl = this .getContext ();

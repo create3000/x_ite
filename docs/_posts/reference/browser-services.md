@@ -366,6 +366,11 @@ Returns a rendering property with the corresponding *name*.
          <td>Currently used factor to scale content. <small class="blue">non standard</small></td>
       </tr>
       <tr>
+         <td>MaxAnisotropicDegree</td>
+         <td>Float</td>
+         <td>The maximum number of available anisotropy. <small class="blue">non standard</small></td>
+      </tr>
+      <tr>
          <td>MaxSamples</td>
          <td>Integer</td>
          <td>The maximum number of samples supported for doing multisampling. <small class="blue">non standard</small></td>
