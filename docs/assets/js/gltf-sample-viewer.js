@@ -643,7 +643,7 @@ async function loadURL (filename, event)
                group .children [0] .stopTime = Date .now () / 1000;
 
             if (!$(`#animation${i}`) .hasClass ( "fa-circle-dot"))
-               return false;
+               return;
 
             $("#animations i") .each ((_, element) =>
             {
@@ -656,8 +656,6 @@ async function loadURL (filename, event)
 
             timeSensor .loop      = true;
             timeSensor .startTime = Date .now () / 1000;
-
-            return false;
          };
 
          const label = $("<label></label>")
@@ -780,13 +778,9 @@ createList ("glTF KTX Sample Models",      ktx);
 $("[for=ibl]") .on ("click", () =>
 {
    setEnvironmentLight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#ibl") .hasClass ("green"));
-
-   return false;
 });
 
 $("[for=headlight]") .on ("click", () =>
 {
    setHeadlight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#headlight") .hasClass ("green"));
-
-   return false;
 });

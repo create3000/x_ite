@@ -166,11 +166,16 @@ Object .assign (X3DNavigationContext .prototype,
    },
    set_activeNavigationInfo__ ()
    {
-      this ._activeNavigationInfo .getValue () ?._viewer .removeFieldInterest (this ._viewer);
+      const activeNavigationInfo = this ._activeNavigationInfo .getValue ();
+
+      activeNavigationInfo ?._viewer .removeFieldInterest (this ._viewer);
 
       if (this ._activeLayer .getValue ())
       {
          this ._activeNavigationInfo = this ._activeLayer .getValue () .getNavigationInfo ();
+
+         if (this ._activeNavigationInfo .getValue () === activeNavigationInfo)
+            return;
 
          this ._activeNavigationInfo .getValue () ._viewer .addFieldInterest (this ._viewer);
 
@@ -184,10 +189,7 @@ Object .assign (X3DNavigationContext .prototype,
    },
    set_activeViewpoint__ ()
    {
-      if (this ._activeLayer .getValue ())
-         this ._activeViewpoint = this ._activeLayer .getValue () .getViewpoint ();
-      else
-         this ._activeViewpoint = null;
+      this ._activeViewpoint = this ._activeLayer .getValue () ?.getViewpoint () ?? null;
    },
    set_viewer__ (viewer)
    {
