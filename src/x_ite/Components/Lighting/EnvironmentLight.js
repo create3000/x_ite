@@ -91,10 +91,11 @@ Object .assign (EnvironmentLightContainer .prototype,
    {
       const
          { browser, lightNode, global } = this,
-         color           = lightNode .getColor (),
-         diffuseTexture  = lightNode .getDiffuseTexture (),
-         specularTexture = lightNode .getSpecularTexture (),
-         GGXLUTTexture   = browser .getGGXLUTTexture ();
+         color             = lightNode .getColor (),
+         diffuseTexture    = lightNode .getDiffuseTexture (),
+         specularTexture   = lightNode .getSpecularTexture (),
+         GGXLUTTexture     = browser .getLibraryTexture ("lut_ggx.png"),
+         CharlieLUTTexture = browser .getLibraryTexture ("lut_charlie.png");
 
       const diffuseTextureUnit = global
          ? this .diffuseTextureUnit = this .diffuseTextureUnit ?? browser .popTextureCubeUnit ()
@@ -106,6 +107,10 @@ Object .assign (EnvironmentLightContainer .prototype,
 
       const GGXLUTTextureUnit = global
          ? this .GGXLUTTextureUnit = this .GGXLUTTextureUnit ?? browser .popTexture2DUnit ()
+         : browser .getTexture2DUnit ();
+
+      const CharlieLUTTextureUnit = global
+         ? this .CharlieLUTTextureUnit = this .CharlieLUTTextureUnit ?? browser .popTexture2DUnit ()
          : browser .getTexture2DUnit ();
 
       // https://stackoverflow.com/a/25640078/1818915
@@ -131,6 +136,10 @@ Object .assign (EnvironmentLightContainer .prototype,
       gl .activeTexture (gl .TEXTURE0 + GGXLUTTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, GGXLUTTexture .getTexture ());
       gl .uniform1i (shaderObject .x3d_EnvironmentLightGGXLUTTexture, GGXLUTTextureUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + CharlieLUTTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, CharlieLUTTexture .getTexture ());
+      gl .uniform1i (shaderObject .x3d_EnvironmentLightCharlieLUTTexture, CharlieLUTTextureUnit);
    },
    dispose ()
    {
@@ -139,12 +148,14 @@ Object .assign (EnvironmentLightContainer .prototype,
       browser .pushTextureCubeUnit (this .diffuseTextureUnit);
       browser .pushTextureCubeUnit (this .specularTextureUnit);
       browser .pushTexture2DUnit   (this .GGXLUTTextureUnit);
+      browser .pushTexture2DUnit   (this .CharlieLUTTextureUnit);
 
       this .modelViewMatrix .clear ();
 
-      this .diffuseTextureUnit  = undefined;
-      this .specularTextureUnit = undefined;
-      this .GGXLUTTextureUnit   = undefined;
+      this .diffuseTextureUnit    = undefined;
+      this .specularTextureUnit   = undefined;
+      this .GGXLUTTextureUnit     = undefined;
+      this .CharlieLUTTextureUnit = undefined;
 
       // Return container
 

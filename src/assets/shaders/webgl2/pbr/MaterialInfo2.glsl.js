@@ -248,6 +248,84 @@ getOcclusionFactor ()
    #endif
 }
 
+#if defined (X3D_SHEEN_MATERIAL_EXT)
+#if defined (X3D_SHEEN_COLOR_TEXTURE_EXT)
+uniform x3d_SheenColorTextureParametersEXT x3d_SheenColorTextureEXT;
+
+float
+getSheenColorEXT ()
+{
+   // Get texture color.
+
+   vec3 texCoord = getTexCoord (x3d_SheenColorTextureEXT .textureTransformMapping, x3d_SheenColorTextureEXT .textureCoordinateMapping);
+
+   #if defined (X3D_SHEEN_COLOR_TEXTURE_EXT_FLIP_Y)
+      texCoord .t = 1.0 - texCoord .t;
+   #endif
+
+   #if defined (X3D_SHEEN_COLOR_TEXTURE_EXT_2D)
+      return texture (x3d_SheenColorTextureEXT .texture2D, texCoord .st) .rgb;
+   #elif defined (X3D_SHEEN_COLOR_TEXTURE_EXT_3D)
+      return texture (x3d_SheenColorTextureEXT .texture3D, texCoord) .rgb;
+   #elif defined (X3D_SHEEN_COLOR_TEXTURE_EXT_CUBE)
+      return texture (x3d_SheenColorTextureEXT .textureCube, texCoord) .rgb;
+   #endif
+}
+#endif
+
+#if defined (X3D_SHEEN_ROUGHNESS_TEXTURE_EXT)
+uniform x3d_SheenRoughnessTextureParametersEXT x3d_SheenRoughnessTextureEXT;
+
+float
+getSheenRoughnessEXT ()
+{
+   // Get texture color.
+
+   vec3 texCoord = getTexCoord (x3d_SheenRoughnessTextureEXT .textureTransformMapping, x3d_SheenRoughnessTextureEXT .textureCoordinateMapping);
+
+   #if defined (X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_FLIP_Y)
+      texCoord .t = 1.0 - texCoord .t;
+   #endif
+
+   #if defined (X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_2D)
+      return texture (x3d_SheenRoughnessTextureEXT .texture2D, texCoord .st) .a;
+   #elif defined (X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_3D)
+      return texture (x3d_SheenRoughnessTextureEXT .texture3D, texCoord) .a;
+   #elif defined (X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_CUBE)
+      return texture (x3d_SheenRoughnessTextureEXT .textureCube, texCoord) .a;
+   #endif
+}
+#endif
+
+uniform vec3  x3d_SheenColorEXT;
+uniform float x3d_SheenRoughnessEXT;
+
+MaterialInfo
+getSheenInfo (in MaterialInfo info)
+{
+   info .sheenColorFactor     = x3d_SheenColorEXT;
+   info .sheenRoughnessFactor = x3d_SheenRoughnessEXT;
+
+   #if defined (X3D_SHEEN_COLOR_TEXTURE_EXT)
+      info .sheenColorFactor *= getSheenColorEXT ();
+   #endif
+
+   #if defined (X3D_SHEEN_ROUGHNESS_TEXTURE_EXT)
+      info .sheenRoughnessFactor *= getSheenRoughnessEXT ();
+   #endif
+
+   return info;
+}
+
+uniform sampler2D x3d_SheenELUTTextureEXT;
+
+float
+albedoSheenScalingLUT (const in float NdotV, const in float sheenRoughnessFactor)
+{
+   return texture (x3d_SheenELUTTextureEXT, vec2 (NdotV, sheenRoughnessFactor)) .r;
+}
+#endif
+
 #if defined (X3D_SPECULAR_MATERIAL_EXT)
 #if defined (X3D_SPECULAR_TEXTURE_EXT)
 uniform x3d_SpecularTextureParametersEXT x3d_SpecularTextureEXT;

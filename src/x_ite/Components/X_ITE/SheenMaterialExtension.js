@@ -50,6 +50,7 @@ import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
+import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
 function SheenMaterialExtension (executionContext)
@@ -57,6 +58,8 @@ function SheenMaterialExtension (executionContext)
    X3DMaterialExtensionNode .call (this, executionContext);
 
    this .addType (X3DConstants .SheenMaterialExtension);
+
+   this .sheenColorArray = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
@@ -64,17 +67,114 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
    initialize ()
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._sheenColor            .addInterest ("set_sheenColor__",            this);
+      this ._sheenColorTexture     .addInterest ("set_sheenColorTexture__",     this);
+      this ._sheenRoughness        .addInterest ("set_sheenRoughness__",        this);
+      this ._sheenRoughnessTexture .addInterest ("set_sheenRoughnessTexture__", this);
+
+      this .set_sheenColor__ ();
+      this .set_sheenColorTexture__ ();
+      this .set_sheenRoughness__ ();
+      this .set_sheenRoughnessTexture__ ();
    },
    getExtensionKey ()
    {
       return ExtensionKeys .SHEEN_MATERIAL_EXTENSION;
    },
+   set_sheenColor__ ()
+   {
+      //We cannot use this in Windows Edge:
+      //this .sheenColorArray .set (this ._sheenColor .getValue ());
+
+      const
+         sheenColorArray = this .sheenColorArray,
+         sheenColor      = this ._sheenColor .getValue ();
+
+      sheenColorArray [0] = sheenColor .r;
+      sheenColorArray [1] = sheenColor .g;
+      sheenColorArray [2] = sheenColor .b;
+   },
+   set_sheenColorTexture__ ()
+   {
+      this .sheenColorTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._sheenColorTexture);
+
+      this .setTexture (0, this .sheenColorTextureNode);
+   },
+   set_sheenRoughness__ ()
+   {
+      this .sheenRoughness = Math .max (this ._sheenRoughness .getValue (), 0);
+   },
+   set_sheenRoughnessTexture__ ()
+   {
+      this .sheenRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._sheenRoughnessTexture);
+
+      this .setTexture (1, this .sheenRoughnessTextureNode);
+   },
    getShaderOptions (options)
    {
+      options .push ("X3D_SHEEN_MATERIAL_EXT");
 
+      if (!+this .getTextureBits ())
+         return;
+
+      options .push ("X3D_MATERIAL_TEXTURES");
+
+      if (this .sheenColorTextureNode)
+         options .push ("X3D_SHEEN_COLOR_TEXTURE_EXT", `X3D_SHEEN_COLOR_TEXTURE_EXT_${this .sheenColorTextureNode .getTextureTypeString ()}`);
+
+      if (this .sheenColorTextureNode ?.getTextureType () === 1)
+         options .push ("X3D_SHEEN_COLOR_TEXTURE_EXT_FLIP_Y");
+
+      if (this .sheenRoughnessTextureNode)
+         options .push ("X3D_SHEEN_ROUGHNESS_TEXTURE_EXT", `X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_${this .sheenRoughnessTextureNode .getTextureTypeString ()}`);
+
+      if (this .sheenRoughnessTextureNode ?.getTextureType () === 1)
+         options .push ("X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_FLIP_Y");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      gl .uniform3fv (shaderObject .x3d_SheenColorEXT,     this .sheenColorArray);
+      gl .uniform1f  (shaderObject .x3d_SheenRoughnessEXT, this .sheenRoughness);
+
+      const
+         browser              = this .getBrowser (),
+         SheenELUTTexture     = browser .getLibraryTexture ("lut_sheen_E.png"),
+         SheenELUTTextureUnit = browser .getTexture2DUnit ();
+
+      gl .activeTexture (gl .TEXTURE0 + SheenELUTTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, SheenELUTTexture .getTexture ());
+      gl .uniform1i (shaderObject .x3d_SheenELUTTextureEXT, SheenELUTTextureUnit);
+
+      if (+this .getTextureBits ())
+      {
+         // Sheen color parameters
+
+         if (this .sheenColorTextureNode)
+         {
+            const
+               sheenColorTextureMapping = this ._sheenColorTextureMapping .getValue (),
+               sheenColorTexture        = shaderObject .x3d_SheenColorTextureEXT;
+
+            this .sheenColorTextureNode .setShaderUniforms (gl, shaderObject, renderObject, sheenColorTexture);
+
+            gl .uniform1i (sheenColorTexture .textureTransformMapping,  textureTransformMapping  .get (sheenColorTextureMapping) ?? 0);
+            gl .uniform1i (sheenColorTexture .textureCoordinateMapping, textureCoordinateMapping .get (sheenColorTextureMapping) ?? 0);
+         }
+         // Sheen color parameters
+
+         if (this .sheenRoughnessTextureNode)
+         {
+            const
+               sheenRoughnessTextureMapping = this ._sheenRoughnessTextureMapping .getValue (),
+               sheenRoughnessTexture        = shaderObject .x3d_SheenRoughnessTextureEXT;
+
+            this .sheenRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, sheenRoughnessTexture);
+
+            gl .uniform1i (sheenRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (sheenRoughnessTextureMapping) ?? 0);
+            gl .uniform1i (sheenRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (sheenRoughnessTextureMapping) ?? 0);
+         }
+      }
    },
 });
 

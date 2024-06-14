@@ -51,7 +51,7 @@ import URLs          from "../Networking/URLs.js";
 
 const
    _maxLights     = Symbol (),
-   _GGXLUTTexture = Symbol (),
+   _textures      = Symbol (),
    _shadowBuffers = Symbol ();
 
 function X3DLightingContext ()
@@ -65,6 +65,7 @@ function X3DLightingContext ()
    else
       this [_maxLights] = 2;
 
+   this [_textures]      = new Map ();
    this [_shadowBuffers] = [ ]; // Shadow buffer cache
 }
 
@@ -74,19 +75,23 @@ Object .assign (X3DLightingContext .prototype,
    {
       return this [_maxLights];
    },
-   getGGXLUTTexture ()
+   getLibraryTexture (name)
    {
-      this [_GGXLUTTexture] = new ImageTexture (this .getPrivateScene ());
-      this [_GGXLUTTexture] ._url     = [URLs .getLibraryURL ("lut_ggx.png")];
-      this [_GGXLUTTexture] ._repeatS = false;
-      this [_GGXLUTTexture] ._repeatT = false;
-      this [_GGXLUTTexture] .setup ();
+      return this [_textures] .get (name) ?? this .createLibraryTexture (name);
+   },
+   createLibraryTexture (name)
+   {
+      const texture = new ImageTexture (this .getPrivateScene ());
 
-      this .getGGXLUTTexture = function () { return this [_GGXLUTTexture]; };
+      texture ._url     = [URLs .getLibraryURL (name)];
+      texture ._repeatS = false;
+      texture ._repeatT = false;
 
-      Object .defineProperty (this, "getGGXLUTTexture", { enumerable: false });
+      texture .setup ();
 
-      return this [_GGXLUTTexture];
+      this [_textures] .set (name, texture)
+
+      return texture;
    },
    popShadowBuffer (shadowMapSize)
    {

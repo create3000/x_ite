@@ -9,6 +9,8 @@ const materialTextures = [
    "x3d_OcclusionTexture",
    "x3d_NormalTexture",
    "x3d_AnisotropyTextureEXT",
+   "x3d_SheenColorTextureEXT",
+   "x3d_SheenRoughnessTextureEXT",
    "x3d_SpecularTextureEXT",
    "x3d_SpecularColorTextureEXT",
 ];
@@ -62,6 +64,10 @@ struct x3d_EnvironmentLightSourceParameters {
    bool                specularTextureLinear;
    mediump int         specularTextureLevels;
    mediump sampler2D   GGXLUTTexture;
+
+   #if defined (X3D_SHEEN_MATERIAL_EXT)
+      mediump sampler2D CharlieLUTTexture;
+   #endif
 };
 #endif
 

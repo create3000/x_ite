@@ -201,6 +201,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_EnvironmentLightSpecularTextureLinear = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLinear");
       this .x3d_EnvironmentLightSpecularTextureLevels = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLevels");
       this .x3d_EnvironmentLightGGXLUTTexture         = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.GGXLUTTexture");
+      this .x3d_EnvironmentLightCharlieLUTTexture     = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.CharlieLUTTexture");
 
       this .x3d_AmbientIntensity  = this .getUniformLocation (gl, program, "x3d_Material.ambientIntensity", "x3d_FrontMaterial.ambientIntensity");
       this .x3d_DiffuseColor      = this .getUniformLocation (gl, program, "x3d_Material.diffuseColor",     "x3d_FrontMaterial.diffuseColor");
@@ -216,6 +217,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       this .x3d_AnisotropyEXT       = gl .getUniformLocation (program, "x3d_AnisotropyEXT");
       this .x3d_EmissiveStrengthEXT = gl .getUniformLocation (program, "x3d_EmissiveStrengthEXT");
+      this .x3d_SheenColorEXT       = gl .getUniformLocation (program, "x3d_SheenColorEXT");
+      this .x3d_SheenRoughnessEXT   = gl .getUniformLocation (program, "x3d_SheenRoughnessEXT");
+      this .x3d_SheenELUTTextureEXT = gl .getUniformLocation (program, "x3d_SheenELUTTextureEXT");
       this .x3d_SpecularEXT         = gl .getUniformLocation (program, "x3d_SpecularEXT");
       this .x3d_SpecularColorEXT    = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
 
@@ -230,6 +234,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_OcclusionTexture",
          "x3d_NormalTexture",
          "x3d_AnisotropyTextureEXT",
+         "x3d_SheenColorTextureEXT",
+         "x3d_SheenRoughnessTextureEXT",
          "x3d_SpecularTextureEXT",
          "x3d_SpecularColorTextureEXT",
       ];
@@ -391,9 +397,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (const uniform of this .x3d_ShadowMap)
          gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
 
-      gl .uniform1i (this .x3d_EnvironmentLightDiffuseTexture,  browser .getDefaultTextureCubeUnit ());
-      gl .uniform1i (this .x3d_EnvironmentLightSpecularTexture, browser .getDefaultTextureCubeUnit ());
-      gl .uniform1i (this .x3d_EnvironmentLightGGXLUTTexture,   browser .getDefaultTexture2DUnit ());
+      gl .uniform1i (this .x3d_EnvironmentLightDiffuseTexture,    browser .getDefaultTextureCubeUnit ());
+      gl .uniform1i (this .x3d_EnvironmentLightSpecularTexture,   browser .getDefaultTextureCubeUnit ());
+      gl .uniform1i (this .x3d_EnvironmentLightGGXLUTTexture,     browser .getDefaultTexture2DUnit ());
+      gl .uniform1i (this .x3d_EnvironmentLightCharlieLUTTexture, browser .getDefaultTexture2DUnit ());
 
       for (const uniform of this .x3d_TextureProjectorTexture)
          gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());

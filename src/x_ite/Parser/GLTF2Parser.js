@@ -296,6 +296,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "EXT_mesh_gpu_instancing":
             case "KHR_materials_anisotropy":
             case "KHR_materials_emissive_strength":
+            case "KHR_materials_sheen":
             case "KHR_materials_specular":
             {
                const component = browser .getComponent ("X_ITE", 1);
@@ -1163,6 +1164,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_emissive_strength":
                this .khrMaterialsEmissiveStrengthObject (value, materialNode);
                break;
+            case "KHR_materials_sheen":
+               this .khrMaterialsSheenObject (value, materialNode);
+               break;
             case "KHR_materials_specular":
                this .khrMaterialsSpecularObject (value, materialNode);
                break;
@@ -1196,6 +1200,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const extension = this .getScene () .createNode ("EmissiveStrengthMaterialExtension", false);
 
       extension ._emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
+
+      extension .setup ();
+
+      materialNode ._extensions .push (extension);
+   },
+   khrMaterialsSheenObject (KHR_materials_sheen, materialNode)
+   {
+      if (!(KHR_materials_sheen instanceof Object))
+         return;
+
+      const extension = this .getScene () .createNode ("SheenMaterialExtension", false);
+
+      const sheenColorFactor = new Color3 ();
+
+      if (this .vectorValue (KHR_materials_sheen .sheenColorFactor, sheenColorFactor))
+         extension ._sheenColor = sheenColorFactor;
+
+      extension ._sheenColorTexture        = this .textureInfo (KHR_materials_sheen .sheenColorTexture);
+      extension ._sheenColorTextureMapping = this .textureMapping (KHR_materials_sheen .sheenColorTexture);
+
+      extension ._sheenRoughness               = this .numberValue (KHR_materials_sheen .sheenRoughnessFactor, 0);
+      extension ._sheenRoughnessTexture        = this .textureInfo (KHR_materials_sheen .sheenRoughnessTexture);
+      extension ._sheenRoughnessTextureMapping = this .textureMapping (KHR_materials_sheen .sheenRoughnessTexture);
 
       extension .setup ();
 

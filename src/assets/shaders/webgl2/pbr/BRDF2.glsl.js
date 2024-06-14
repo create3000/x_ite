@@ -111,5 +111,66 @@ BRDF_specularGGXAnisotropy (vec3 f0, vec3 f90, float alphaRoughness, float aniso
 }
 #endif
 
+#if defined (X3D_SHEEN_MATERIAL_EXT)
+float
+lambdaSheenNumericHelper (const in float x, const in float alphaG)
+{
+   float oneMinusAlphaSq = (1.0 - alphaG) * (1.0 - alphaG);
+
+   float a = mix ( 21.5473,  25.3245, oneMinusAlphaSq);
+   float b = mix ( 3.82987,  3.32435, oneMinusAlphaSq);
+   float c = mix ( 0.19823,  0.16801, oneMinusAlphaSq);
+   float d = mix (-1.97760, -1.27393, oneMinusAlphaSq);
+   float e = mix (-4.32054, -4.85967, oneMinusAlphaSq);
+
+   return a / (1.0 + b * pow (x, c)) + d * x + e;
+}
+
+float
+lambdaSheen (const in float cosTheta, const in float alphaG)
+{
+   if (abs (cosTheta) < 0.5)
+      return exp (lambdaSheenNumericHelper (cosTheta, alphaG));
+   else
+      return exp (2.0 * lambdaSheenNumericHelper (0.5, alphaG) - lambdaSheenNumericHelper (1.0 - cosTheta, alphaG));
+}
+
+float
+V_Sheen (const in float NdotL, const in float NdotV, in float sheenRoughness)
+{
+   sheenRoughness = max (sheenRoughness, 0.000001); //clamp (0,1]
+
+   float alphaG = sheenRoughness * sheenRoughness;
+
+   return clamp (1.0 / ((1.0 + lambdaSheen (NdotV, alphaG) + lambdaSheen (NdotL, alphaG)) * (4.0 * NdotV * NdotL)), 0.0, 1.0);
+}
+
+//Sheen implementation-------------------------------------------------------------------------------------
+// See  https://github.com/sebavan/glTF/tree/KHR_materials_sheen/extensions/2.0/Khronos/KHR_materials_sheen
+
+// Estevez and Kulla http://www.aconty.com/pdf/s2017_pbs_imageworks_sheen.pdf
+float
+D_Charlie (in float sheenRoughness, const in float NdotH)
+{
+    sheenRoughness = max (sheenRoughness, 0.000001); //clamp (0,1]
+
+    float alphaG = sheenRoughness * sheenRoughness;
+    float invR   = 1.0 / alphaG;
+    float cos2h  = NdotH * NdotH;
+    float sin2h  = 1.0 - cos2h;
+
+    return (2.0 + invR) * pow (sin2h, invR * 0.5) / (2.0 * M_PI);
+}
+
+vec3
+BRDF_specularSheen (const in vec3 sheenColor, const in float sheenRoughness, const in float NdotL, const in float NdotV, const in float NdotH)
+{
+   float sheenDistribution = D_Charlie (sheenRoughness, NdotH);
+   float sheenVisibility   = V_Sheen (NdotL, NdotV, sheenRoughness);
+
+   return sheenColor * sheenDistribution * sheenVisibility;
+}
+#endif
+
 #endif
 `;

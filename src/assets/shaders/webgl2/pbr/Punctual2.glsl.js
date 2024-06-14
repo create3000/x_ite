@@ -22,5 +22,13 @@ getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 point
    return attenuationFactor * spotFactor * light .intensity * light .color;
 }
 
+#if defined (X3D_SHEEN_MATERIAL_EXT)
+vec3
+getPunctualRadianceSheen (const in vec3 sheenColor, const in float sheenRoughness, const in float NdotL, const in float NdotV, const in float NdotH)
+{
+    return NdotL * BRDF_specularSheen (sheenColor, sheenRoughness, NdotL, NdotV, NdotH);
+}
+#endif
+
 #endif
 `;

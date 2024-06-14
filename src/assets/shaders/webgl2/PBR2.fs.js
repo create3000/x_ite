@@ -18,6 +18,11 @@ precision highp samplerCube;
 
 uniform x3d_PhysicalMaterialParameters x3d_Material;
 
+float max3 (const in vec3 value)
+{
+   return max (max (value .x, value .y), value .z);
+}
+
 #pragma X3D include "pbr/BRDF.glsl"
 #pragma X3D include "pbr/MaterialInfo.glsl"
 #pragma X3D include "pbr/Punctual.glsl"
@@ -40,6 +45,8 @@ getMaterialColor ()
       vec3 n = normalInfo .n;
    #endif
 
+   float NdotV = clamp (dot (n, v), 0.0, 1.0);
+
    MaterialInfo materialInfo;
 
    // The default index of refraction of 1.5 yields a dielectric normal incidence reflectance of 0.04.
@@ -50,6 +57,10 @@ getMaterialColor ()
 
    #if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
       materialInfo = getMetallicRoughnessInfo (materialInfo);
+   #endif
+
+   #if defined (X3D_SHEEN_MATERIAL_EXT)
+      materialInfo = getSheenInfo (materialInfo);
    #endif
 
    #if defined (X3D_SPECULAR_MATERIAL_EXT)
@@ -142,7 +153,6 @@ getMaterialColor ()
          vec3 h = normalize (l + v);          // Direction of the vector between l and v, called halfway vector
 
          float NdotL = clamp (dot (n, l), 0.0, 1.0);
-         float NdotV = clamp (dot (n, v), 0.0, 1.0);
          float NdotH = clamp (dot (n, h), 0.0, 1.0);
          // float LdotH = clamp (dot (l, h), 0.0, 1.0);
          float VdotH = clamp (dot (v, h), 0.0, 1.0);
