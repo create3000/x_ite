@@ -94,8 +94,7 @@ Object .assign (EnvironmentLightContainer .prototype,
          color             = lightNode .getColor (),
          diffuseTexture    = lightNode .getDiffuseTexture (),
          specularTexture   = lightNode .getSpecularTexture (),
-         GGXLUTTexture     = browser .getLibraryTexture ("lut_ggx.png"),
-         CharlieLUTTexture = browser .getLibraryTexture ("lut_charlie.png");
+         GGXLUTTexture     = browser .getLibraryTexture ("lut_ggx.png");
 
       const diffuseTextureUnit = global
          ? this .diffuseTextureUnit = this .diffuseTextureUnit ?? browser .popTextureCubeUnit ()
@@ -107,10 +106,6 @@ Object .assign (EnvironmentLightContainer .prototype,
 
       const GGXLUTTextureUnit = global
          ? this .GGXLUTTextureUnit = this .GGXLUTTextureUnit ?? browser .popTexture2DUnit ()
-         : browser .getTexture2DUnit ();
-
-      const CharlieLUTTextureUnit = global
-         ? this .CharlieLUTTextureUnit = this .CharlieLUTTextureUnit ?? browser .popTexture2DUnit ()
          : browser .getTexture2DUnit ();
 
       // https://stackoverflow.com/a/25640078/1818915
@@ -137,9 +132,18 @@ Object .assign (EnvironmentLightContainer .prototype,
       gl .bindTexture (gl .TEXTURE_2D, GGXLUTTexture .getTexture ());
       gl .uniform1i (shaderObject .x3d_EnvironmentLightGGXLUTTexture, GGXLUTTextureUnit);
 
-      gl .activeTexture (gl .TEXTURE0 + CharlieLUTTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, CharlieLUTTexture .getTexture ());
-      gl .uniform1i (shaderObject .x3d_EnvironmentLightCharlieLUTTexture, CharlieLUTTextureUnit);
+      if (shaderObject .x3d_EnvironmentLightCharlieLUTTexture)
+      {
+         const CharlieLUTTexture = browser .getLibraryTexture ("lut_charlie.png");
+
+         const CharlieLUTTextureUnit = global
+            ? this .CharlieLUTTextureUnit = this .CharlieLUTTextureUnit ?? browser .popTexture2DUnit ()
+            : browser .getTexture2DUnit ();
+
+         gl .activeTexture (gl .TEXTURE0 + CharlieLUTTextureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, CharlieLUTTexture .getTexture ());
+         gl .uniform1i (shaderObject .x3d_EnvironmentLightCharlieLUTTexture, CharlieLUTTextureUnit);
+      }
    },
    dispose ()
    {
