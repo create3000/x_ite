@@ -63,7 +63,7 @@ attribute vec4 x3d_Vertex;
    #endif
 
    #if defined (X3D_TANGENTS)
-      attribute vec3 x3d_Tangent;
+      attribute vec4 x3d_Tangent;
       varying mat3 TBN;
    #endif
 #endif
@@ -123,8 +123,8 @@ vertex_main ()
       #endif
 
       #if defined (X3D_TANGENTS)
-         vec3 tangent   = x3d_NormalMatrix * x3d_Tangent;
-         vec3 bitangent = cross (normal, tangent);
+         vec3 tangent   = x3d_NormalMatrix * x3d_Tangent .xyz;
+         vec3 bitangent = cross (normal, tangent) * x3d_Tangent .w;
 
          TBN = mat3 (tangent, bitangent, normal);
       #endif

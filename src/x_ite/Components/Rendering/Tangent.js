@@ -79,13 +79,13 @@ Object .assign (Object .setPrototypeOf (Tangent .prototype, X3DGeometricProperty
       {
          const
             vector = this .vector,
-            i      = (index % this .length) * 3;
+            i      = (index % this .length) * 4;
 
-         array .push (vector [i], vector [i + 1], vector [i + 2]);
+         array .push (vector [i], vector [i + 1], vector [i + 2], vector [i + 3]);
       }
       else
       {
-         return array .push (0, 0, 0);
+         return array .push (1, 0, 0, 1);
       }
    },
    addVectors (array, min = this .length)
@@ -98,15 +98,15 @@ Object .assign (Object .setPrototypeOf (Tangent .prototype, X3DGeometricProperty
 
          for (let index = 0; index < min; ++ index)
          {
-            const i = (index % length) * 3;
+            const i = (index % length) * 4;
 
-            array .push (vector [i], vector [i + 1], vector [i + 2]);
+            array .push (vector [i], vector [i + 1], vector [i + 2], vector [i + 3]);
          }
       }
       else
       {
          for (let index = 0; index < min; ++ index)
-            array .push (0, 0, 0);
+            array .push (1, 0, 0, 1);
       }
 
       return array;
@@ -139,7 +139,7 @@ Object .defineProperties (Tangent,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "vector",   new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "vector",   new Fields .MFVec4f ()),
       ]),
       enumerable: true,
    },

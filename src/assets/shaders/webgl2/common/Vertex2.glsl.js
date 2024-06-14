@@ -67,10 +67,10 @@ in vec4 x3d_Vertex;
    #endif
 
    #if defined (X3D_TANGENTS)
-      in vec3 x3d_Tangent;
+      in vec4 x3d_Tangent;
       out mat3 TBN;
    #else
-      vec3 x3d_Tangent;
+      vec4 x3d_Tangent;
    #endif
 #endif
 
@@ -101,11 +101,11 @@ void
 vertex_main ()
 {
    #if defined (X3D_NORMALS)
-      vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, x3d_Normal, x3d_Tangent));
+      vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, x3d_Normal, x3d_Tangent .xyz));
       vec3 x3d_TransformedNormal = getInstanceNormal (getSkinNormal (x3d_Normal));
 
       #if defined (X3D_TANGENTS)
-         vec3 x3d_TransformedTangent = getInstanceNormal (getSkinTangent (x3d_Tangent));
+         vec3 x3d_TransformedTangent = getInstanceNormal (getSkinTangent (x3d_Tangent .xyz));
       #endif
    #else
       vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, vec3 (0.0), vec3 (0.0)));
@@ -156,7 +156,7 @@ vertex_main ()
 
       #if defined (X3D_TANGENTS)
          vec3 tangent   = x3d_NormalMatrix * x3d_TransformedTangent;
-         vec3 bitangent = cross (normal, tangent);
+         vec3 bitangent = cross (normal, tangent) * x3d_Tangent .w;
 
          TBN = mat3 (tangent, bitangent, normal);
       #endif

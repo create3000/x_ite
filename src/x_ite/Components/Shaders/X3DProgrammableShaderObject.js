@@ -1270,7 +1270,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
-      gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset);
+      gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
    },
    tangentAttributeDivisor (gl, divisor)
    {
