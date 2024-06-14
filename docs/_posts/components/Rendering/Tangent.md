@@ -40,7 +40,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### MFVec3f [in, out] **vector** [ ] <small>[-1,1]</small>
 
-A unit XYZ vector defining a tangential direction on the surface.
+A unit XYZ vector defining a tangent direction on the surface, and a W component whose sign value (-1 or +1) indicates the handedness of the tangent base.
 
 ## See Also
 
