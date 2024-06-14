@@ -658,17 +658,18 @@ async function loadURL (filename, event)
             timeSensor .startTime = Date .now () / 1000;
          };
 
-         $("<i></i>")
-            .addClass (["fa-regular", "fa-circle"])
-            .attr ("id", `animation${i}`)
-            .on ("click", onclick)
-            .appendTo ($("#animations"));
-
-         $("<label></label>")
+         const label = $("<label></label>")
+            .append ()
             .attr ("for", `animation${i}`)
             .text (group .children [0] .description)
             .on ("click", onclick)
             .appendTo ($("#animations"));
+
+         $("<i></i>")
+            .addClass (["fa-regular", "fa-circle"])
+            .attr ("id", `animation${i}`)
+            .on ("click", onclick)
+            .prependTo (label);
 
          $("<br>") .appendTo ($("#animations"));
       }
@@ -683,13 +684,16 @@ async function setEnvironmentLight (Browser, scene, on)
 {
    if (on)
    {
-      $("#ibl") .removeClass ("fa-circle") .addClass (["fa-circle-dot", "green"]);
-      $("[for=ibl]") .addClass ("green");
+      $("#ibl") .removeClass ("fa-xmark") .addClass ("fa-check");
+      $("#ibl, [for=ibl]") .addClass ("green");
    }
    else
    {
-      $("#ibl") .removeClass (["fa-circle-dot", "green"]) .addClass ("fa-circle");
-      $("[for=ibl]") .removeClass ("green");
+      $("#ibl") .removeClass ("fa-check") .addClass ("fa-xmark");
+      $("#ibl, [for=ibl]") .removeClass ("green");
+
+      if (!getEnvironmentLight .environmentLight)
+         return;
    }
 
    const environmentLight = await getEnvironmentLight (Browser, scene);
@@ -738,13 +742,13 @@ async function setHeadlight (Browser, scene, on)
 {
    if (on)
    {
-      $("#headlight") .removeClass ("fa-circle") .addClass (["fa-circle-dot", "green"]);
-      $("[for=headlight]") .addClass ("green");
+      $("#headlight") .removeClass ("fa-xmark") .addClass ("fa-check");
+      $("#headlight, [for=headlight]") .addClass ("green");
    }
    else
    {
-      $("#headlight") .removeClass (["fa-circle-dot", "green"]) .addClass ("fa-circle");
-      $("[for=headlight]") .removeClass ("green");
+      $("#headlight") .removeClass ("fa-check") .addClass ("fa-xmark");
+      $("#headlight, [for=headlight]") .removeClass ("green");
    }
 
    const navigationInfo = await getNavigationInfo (Browser, scene);
@@ -776,10 +780,10 @@ createList ("glTF KTX Sample Models",      ktx);
 
 $("#ibl, [for=ibl]") .on ("click", () =>
 {
-   setEnvironmentLight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#ibl") .hasClass ("fa-circle-dot"));
+   setEnvironmentLight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#ibl") .hasClass ("green"));
 });
 
 $("#headlight, [for=headlight]") .on ("click", () =>
 {
-   setHeadlight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#headlight") .hasClass ("fa-circle-dot"));
+   setHeadlight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#headlight") .hasClass ("green"));
 });

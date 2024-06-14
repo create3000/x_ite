@@ -76,12 +76,17 @@ x3d-canvas {
 
 #options i {
    cursor: pointer;
+   padding-right: 0.5rem;
 }
 
 #options label {
    cursor: pointer;
    margin: 0;
-   padding-left: 0.5rem;
+}
+
+#options i:hover,
+#options label:hover {
+   color: var(--system-gray8);
 }
 
 #animations {
@@ -111,9 +116,9 @@ x3d-canvas {
          <div id="lighting">
             <b>Lighting</b>
             <br>
-            <i id="ibl" class="fa-regular fa-circle"></i><label for="ibl">Image Based Lighting</label>
+            <label for="ibl"><i id="ibl" class="fa-regular fa-xmark"></i>Image Based Lighting</label>
             <br>
-            <i id="headlight" class="fa-regular fa-circle"></i><label for="headlight">Headlight</label>
+            <label for="headlight"><i id="headlight" class="fa-regular fa-xmark"></i>Headlight</label>
          </div>
          <div id="animations"></div>
       </div>
