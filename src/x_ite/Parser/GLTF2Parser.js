@@ -2695,7 +2695,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (texCoords .textureCoordinateNode)
          return texCoords .textureCoordinateNode;
 
-      switch (material .texCoordMappings .size)
+      switch (texCoords .length === 1 ? 1 : material .texCoordMappings .size)
       {
          case 0:
          {
