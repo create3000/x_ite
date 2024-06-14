@@ -61,6 +61,9 @@ x3d-canvas {
 }
 
 #options {
+   -webkit-user-select: none; /* Safari */
+   -ms-user-select: none; /* IE 10 and IE 11 */
+   user-select: none;
    position: absolute;
    right: 5px;
    bottom: 5px;
@@ -71,7 +74,12 @@ x3d-canvas {
    border-radius: 0.8rem;
 }
 
+#options i {
+   cursor: pointer;
+}
+
 #options label {
+   cursor: pointer;
    margin: 0;
    padding-left: 0.5rem;
 }
@@ -103,9 +111,9 @@ x3d-canvas {
          <div id="lighting">
             <b>Lighting</b>
             <br>
-            <input id="ibl" type="checkbox"><label for="ibl">Image Based Lighting</label>
+            <i id="ibl" class="fa-regular fa-circle"></i><label for="ibl">Image Based Lighting</label>
             <br>
-            <input id="headlight" type="checkbox"><label for="headlight">Headlight</label>
+            <i id="headlight" class="fa-regular fa-circle"></i><label for="headlight">Headlight</label>
          </div>
          <div id="animations"></div>
       </div>

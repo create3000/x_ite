@@ -616,18 +616,8 @@ async function loadURL (filename, event)
 
    await Browser .loadURL (new X3D .MFString (filename));
 
-   if (ibl_files .some (name => filename .includes (name)))
-   {
-      setEnvironmentLight (Browser, Browser .currentScene, true);
-      $("#ibl") .prop ("checked", true);
-   }
-   else
-   {
-      $("#ibl") .prop ("checked", false);
-   }
-
+   setEnvironmentLight (Browser, Browser .currentScene, ibl_files .some (name => filename .includes (name)));
    setHeadlight (Browser, Browser .currentScene, true);
-   $("#headlight") .prop ("checked", true);
 
    if (!Browser .getActiveViewpoint () ._description .getValue ())
       Browser .viewAll (0);
@@ -644,39 +634,46 @@ async function loadURL (filename, event)
       {
          const timeSensor = group .children [0];
 
-         $("<input></input>")
-            .attr ("id", "animation" + i)
-            .attr ("type", "checkbox")
-            .on ("change", event =>
-            {
-               for (const group of animations .children)
-                  group .children [0] .stopTime = Date .now () / 1000;
+         const onclick = () =>
+         {
+            $(`#animation${i}`) .toggleClass (["fa-circle", "fa-circle-dot", "green"]);
+            $(`[for=animation${i}]`) .toggleClass ("green");
 
-               if (!event .target .checked)
+            for (const group of animations .children)
+               group .children [0] .stopTime = Date .now () / 1000;
+
+            if (!$(`#animation${i}`) .hasClass ( "fa-circle-dot"))
+               return;
+
+            $("#animations i") .each ((_, element) =>
+            {
+               if (element === $(`#animation${i}`) .get (0))
                   return;
 
-               $("#animations") .children () .each ((i, element) =>
-               {
-                  if (element !== event .target)
-                     element .checked = false;
-               });
+               $(element) .removeClass (["fa-circle-dot", "green"]) .addClass ("fa-circle");
+               $(`[for=${$(element) .attr ("id")}]`) .removeClass ("green");
+            });
 
-               timeSensor .loop      = true;
-               timeSensor .startTime = Date .now () / 1000;
-            })
+            timeSensor .loop      = true;
+            timeSensor .startTime = Date .now () / 1000;
+         };
+
+         $("<i></i>")
+            .addClass (["fa-regular", "fa-circle"])
+            .attr ("id", `animation${i}`)
+            .on ("click", onclick)
             .appendTo ($("#animations"));
 
-         $(document .createTextNode (" ")) .appendTo ($("#animations"));
-
          $("<label></label>")
-            .attr ("for", "animation" + i)
+            .attr ("for", `animation${i}`)
             .text (group .children [0] .description)
+            .on ("click", onclick)
             .appendTo ($("#animations"));
 
          $("<br>") .appendTo ($("#animations"));
       }
 
-      $("#animations") .show () .find ("input") .first () .trigger ("click");
+      $("#animations") .show () .find ("i") .first () .trigger ("click");
    }
    catch
    { }
@@ -684,6 +681,17 @@ async function loadURL (filename, event)
 
 async function setEnvironmentLight (Browser, scene, on)
 {
+   if (on)
+   {
+      $("#ibl") .removeClass ("fa-circle") .addClass (["fa-circle-dot", "green"]);
+      $("[for=ibl]") .addClass ("green");
+   }
+   else
+   {
+      $("#ibl") .removeClass (["fa-circle-dot", "green"]) .addClass ("fa-circle");
+      $("[for=ibl]") .removeClass ("green");
+   }
+
    const environmentLight = await getEnvironmentLight (Browser, scene);
 
    environmentLight .on = on;
@@ -728,6 +736,17 @@ async function getEnvironmentLight (Browser, scene)
 
 async function setHeadlight (Browser, scene, on)
 {
+   if (on)
+   {
+      $("#headlight") .removeClass ("fa-circle") .addClass (["fa-circle-dot", "green"]);
+      $("[for=headlight]") .addClass ("green");
+   }
+   else
+   {
+      $("#headlight") .removeClass (["fa-circle-dot", "green"]) .addClass ("fa-circle");
+      $("[for=headlight]") .removeClass ("green");
+   }
+
    const navigationInfo = await getNavigationInfo (Browser, scene);
 
    navigationInfo .set_bind  = true;
@@ -755,12 +774,12 @@ createList ("glTF Embedded Sample Models", embedded);
 createList ("glTF IBL Sample Models",      ibl);
 createList ("glTF KTX Sample Models",      ktx);
 
-$("#ibl") .on ("change", () =>
+$("#ibl, [for=ibl]") .on ("click", () =>
 {
-   setEnvironmentLight (X3D .getBrowser (), X3D .getBrowser () .currentScene, $("#ibl") .prop ("checked"));
+   setEnvironmentLight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#ibl") .hasClass ("fa-circle-dot"));
 });
 
-$("#headlight") .on ("change", () =>
+$("#headlight, [for=headlight]") .on ("click", () =>
 {
-   setHeadlight (X3D .getBrowser (), X3D .getBrowser () .currentScene, $("#headlight") .prop ("checked"));
+   setHeadlight (X3D .getBrowser (), X3D .getBrowser () .currentScene, !$("#headlight") .hasClass ("fa-circle-dot"));
 });
