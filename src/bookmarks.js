@@ -174,7 +174,8 @@ const Bookmarks = (() =>
             {
                if (environmentLight)
                {
-                  environmentLight .on      = !environmentLight .on;
+                  environmentLight .on = !environmentLight .on;
+
                   // navigationInfo .headlight = environmentLight .on;
                   // navigationInfo .set_bind  = true;
 
@@ -342,7 +343,8 @@ const Bookmarks = (() =>
 
          await Browser .loadComponents (cubeMapTexturing);
 
-         scene .addComponent (cubeMapTexturing);
+         if (!scene .hasComponent (cubeMapTexturing))
+            scene .addComponent (cubeMapTexturing);
 
          const
             environmentLight  = scene .createNode ("EnvironmentLight"),
