@@ -85,7 +85,6 @@ function GLTF2Parser (scene)
    this .accessors             = [ ];
    this .samplers              = [ ];
    this .materials             = [ ];
-   this .defaultAppearance     = [ ];
    this .textureTransformNodes = [ ];
    this .meshes                = [ ];
    this .cameras               = [ ];
@@ -905,10 +904,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .materials = materials;
    },
-   materialObject ({ material, mode = 4 })
+   materialObject ({ material })
    {
       if (!(material instanceof Object))
-         return this .getDefaultAppearance (mode);
+         return this .getDefaultAppearance ();
 
       if (material .appearanceNode)
          return material .appearanceNode;
@@ -918,13 +917,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .texCoordIndex         = Array .from (texCoordIndices) .reduce (Math .max, -1);
       this .textureTransformNodes = [ ];
       this .texCoordMappings      = new Map ();
-      this .texCoordOfNode             = new Map ();
+      this .texCoordOfNode        = new Map ();
       material .texCoordMappings  = this .texCoordMappings;
 
       const
          scene          = this .getExecutionContext (),
          appearanceNode = scene .createNode ("Appearance", false),
-         materialNode   = this .refineMaterial (mode, this .createMaterial (material, mode)),
+         materialNode   = this .createMaterial (material),
          name           = this .sanitizeName (material .name);
 
       const emissiveFactor = new Color3 ();
@@ -978,47 +977,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return material .appearanceNode = appearanceNode;
    },
-   refineMaterial (mode, materialNode)
-   {
-      if (mode > 3)
-         return materialNode
-
-      switch (materialNode .getTypeName ())
-      {
-         default:
-         {
-            return materialNode;
-         }
-         case "Material":
-         {
-            const
-               scene             = this .getExecutionContext (),
-               unlitMaterialNode = scene .createNode ("UnlitMaterial", false);
-
-            unlitMaterialNode ._emissiveColor          = materialNode ._diffuseColor;
-            unlitMaterialNode ._emissiveTextureMapping = materialNode ._diffuseTextureMapping;
-            unlitMaterialNode ._emissiveTexture        = materialNode ._diffuseTexture;
-
-            materialNode .dispose ();
-
-            return unlitMaterialNode;
-         }
-         case "PhysicalMaterial":
-         {
-            const
-               scene             = this .getExecutionContext (),
-               unlitMaterialNode = scene .createNode ("UnlitMaterial", false);
-
-            unlitMaterialNode ._emissiveColor          = materialNode ._baseColor;
-            unlitMaterialNode ._emissiveTextureMapping = materialNode ._baseTextureMapping;
-            unlitMaterialNode ._emissiveTexture        = materialNode ._baseTexture;
-
-            materialNode .dispose ();
-
-            return unlitMaterialNode;
-         }
-      }
-   },
    texCoordIndices (key, object, indices = new Set ())
    {
       if (!(object instanceof Object))
@@ -1032,7 +990,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return indices;
    },
-   createMaterial (material, mode)
+   createMaterial (material)
    {
       const materials = [
          this .pbrMetallicRoughnessObject  .bind (this, material .pbrMetallicRoughness),
@@ -1042,13 +1000,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       for (const material of materials)
       {
-         const materialNode = material (mode);
+         const materialNode = material ();
 
          if (materialNode)
             return materialNode;
       }
    },
-   pbrMetallicRoughnessObject (pbrMetallicRoughness, mode)
+   pbrMetallicRoughnessObject (pbrMetallicRoughness)
    {
       if (!(pbrMetallicRoughness instanceof Object))
          return null;
@@ -2254,37 +2212,33 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return instancedShapeNode;
    },
-   getDefaultAppearance (mode)
+   getDefaultAppearance ()
    {
-      mode = mode > 3;
-
-      if (this .defaultAppearance [mode])
-         return this .defaultAppearance [mode];
+      if (this .defaultAppearance)
+         return this .defaultAppearance;
 
       const
          scene          = this .getExecutionContext (),
          appearanceNode = scene .createNode ("Appearance", false),
-         materialNode   = scene .createNode (mode ? "PhysicalMaterial" : "UnlitMaterial", false);
+         materialNode   = scene .createNode ("PhysicalMaterial", false);
 
       appearanceNode ._alphaMode = "OPAQUE";
       appearanceNode ._material  = materialNode;
-
-      if (mode)
-         materialNode ._metallic = 0;
+      materialNode   ._metallic  = 0;
 
       materialNode   .setup ();
       appearanceNode .setup ();
 
-      return this .defaultAppearance [mode] = appearanceNode;
+      return this .defaultAppearance = appearanceNode;
    },
    hasTextures (materialNode)
    {
-      // Test UnlitMaterial, PhysicalMaterial, ...
+      // Test PhysicalMaterial, ...
 
       if (+materialNode .getTextureBits ())
          return true;
 
-      if (materialNode ._extensions ?.some (extension => +extension .getValue () .getTextureBits ()))
+      if (materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ()))
          return true;
 
       return false;

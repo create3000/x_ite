@@ -217,46 +217,33 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       for (const extensionNode of this .extensionNodes)
          extensionNode .getShaderOptions (options);
 
-      if (geometryContext .hasNormals)
+      options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_METALLIC_ROUGHNESS");
+
+      if (+this .getTextureBits ())
       {
-         options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_METALLIC_ROUGHNESS");
+         if (this .baseTextureNode)
+            options .push ("X3D_BASE_TEXTURE", `X3D_BASE_TEXTURE_${this .baseTextureNode .getTextureTypeString ()}`);
 
-         if (+this .getTextureBits ())
-         {
-            if (this .baseTextureNode)
-               options .push ("X3D_BASE_TEXTURE", `X3D_BASE_TEXTURE_${this .baseTextureNode .getTextureTypeString ()}`);
+         if (this .baseTextureNode ?.getTextureType () === 1)
+            options .push ("X3D_BASE_TEXTURE_FLIP_Y");
 
-            if (this .baseTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_BASE_TEXTURE_FLIP_Y");
+         if (this .baseTextureNode ?.isLinear ())
+            options .push ("X3D_BASE_TEXTURE_LINEAR");
 
-            if (this .baseTextureNode ?.isLinear ())
-               options .push ("X3D_BASE_TEXTURE_LINEAR");
+         if (this .metallicRoughnessTextureNode)
+            options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", `X3D_METALLIC_ROUGHNESS_TEXTURE_${this .metallicRoughnessTextureNode .getTextureTypeString ()}`);
 
-            if (this .metallicRoughnessTextureNode)
-               options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", `X3D_METALLIC_ROUGHNESS_TEXTURE_${this .metallicRoughnessTextureNode .getTextureTypeString ()}`);
+         if (this .metallicRoughnessTextureNode ?.getTextureType () === 1)
+            options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE_FLIP_Y");
 
-            if (this .metallicRoughnessTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE_FLIP_Y");
+         if (this .occlusionTextureNode)
+            options .push ("X3D_OCCLUSION_TEXTURE", `X3D_OCCLUSION_TEXTURE_${this .occlusionTextureNode .getTextureTypeString ()}`);
 
-            if (this .occlusionTextureNode)
-               options .push ("X3D_OCCLUSION_TEXTURE", `X3D_OCCLUSION_TEXTURE_${this .occlusionTextureNode .getTextureTypeString ()}`);
-
-            if (this .occlusionTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_OCCLUSION_TEXTURE_FLIP_Y");
-         }
-
-         var shaderNode = browser .createShader ("PBR", "Default", "PBR", options);
+         if (this .occlusionTextureNode ?.getTextureType () === 1)
+            options .push ("X3D_OCCLUSION_TEXTURE_FLIP_Y");
       }
-      else
-      {
-         // If the Material node is used together with unlit points and lines, geometry shall be rendered as unlit and only the emissiveColor is used.
 
-         options .push ("X3D_UNLIT_MATERIAL");
-
-         var shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
-
-         browser .getShaders () .set (key, shaderNode);
-      }
+      const shaderNode = browser .createShader ("PBR", "Default", "PBR", options);
 
       browser .getShaders () .set (key, shaderNode);
 

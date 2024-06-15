@@ -217,7 +217,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
          }
 
-         if (numEnvironmentLights && geometryContext .hasNormals)
+         if (numEnvironmentLights)
          {
             options .push ("X3D_USE_IBL")
             options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxLights ())}`);
