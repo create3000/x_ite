@@ -653,7 +653,7 @@ class SampleViewer
 
    async loadURL (filename, event)
    {
-      $("#scenes, #viewpoints, #variants, #animations") .hide ();
+      $("#scenes, #viewpoints, #material-variants, #animations") .hide ();
 
       await this .browser .loadURL (new X3D .MFString (filename));
 
@@ -839,9 +839,9 @@ class SampleViewer
       if (!variants)
          return;
 
-      $("#variants") .empty ();
-      $("<b></b>") .text ("Material Variants") .appendTo ($("#variants"));
-      $("<br>") .appendTo ($("#variants"));
+      $("#material-variants") .empty ();
+      $("<b></b>") .text ("Material Variants") .appendTo ($("#material-variants"));
+      $("<br>") .appendTo ($("#material-variants"));
 
       for (const switchNode of variants .children)
       {
@@ -850,7 +850,7 @@ class SampleViewer
             {
                switchNode .whichChoice = +select .val ();
             })
-            .appendTo ($("#variants"));
+            .appendTo ($("#material-variants"));
 
          for (const i of switchNode .children .keys ())
          {
@@ -862,7 +862,7 @@ class SampleViewer
          }
       }
 
-      $("#variants") .show ();
+      $("#material-variants") .show ();
    }
 
    addAnimations ()
