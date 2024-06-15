@@ -827,6 +827,8 @@ class SampleViewer
 
          viewpoint .getField ("isBound") .addFieldCallback ("bind", () => select .val (i));
       }
+
+      $("#viewpoints") .show ();
    }
 
    addAnimations ()
