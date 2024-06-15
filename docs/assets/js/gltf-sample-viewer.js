@@ -652,7 +652,7 @@ class SampleViewer
       }
    }
 
-   async loadURL (filename, event)
+   async loadURL (filename)
    {
       $("#scenes, #viewpoints, #material-variants, #animations") .hide ();
 
