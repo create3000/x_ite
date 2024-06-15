@@ -134,6 +134,7 @@ x3d-canvas {
          </div>
          <div id="scenes"></div>
          <div id="viewpoints"></div>
+         <div id="variants"></div>
          <div id="animations"></div>
       </div>
    </div>

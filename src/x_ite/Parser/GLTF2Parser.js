@@ -1601,7 +1601,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!variantsNode ._children .length)
          return;
 
-      variantsNode .setMetaData ("Variants/names", new Fields .MFString (... names));
+      variantsNode .setMetaData ("MaterialVariants/names", new Fields .MFString (... names));
 
       this .materialVariantNodes .push (variantsNode);
 

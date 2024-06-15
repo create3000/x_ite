@@ -653,7 +653,7 @@ class SampleViewer
 
    async loadURL (filename, event)
    {
-      $("#scenes, #viewpoints, #animations") .hide ();
+      $("#scenes, #viewpoints, #variants, #animations") .hide ();
 
       await this .browser .loadURL (new X3D .MFString (filename));
 
@@ -664,6 +664,7 @@ class SampleViewer
       this .setHeadlight (true);
       this .addScenes ();
       this .addViewpoints ();
+      this .addVariants ();
       this .addAnimations ();
    }
 
@@ -829,6 +830,39 @@ class SampleViewer
       }
 
       $("#viewpoints") .show ();
+   }
+
+   addVariants ()
+   {
+      const variants = $.try (() => this .scene .getExportedNode ("MaterialVariants"));
+
+      if (!variants)
+         return;
+
+      $("#variants") .empty ();
+      $("<b></b>") .text ("Material Variants") .appendTo ($("#variants"));
+      $("<br>") .appendTo ($("#variants"));
+
+      for (const switchNode of variants .children)
+      {
+         const select = $("<select></select>")
+            .on ("change", () =>
+            {
+               switchNode .whichChoice = +select .val ();
+            })
+            .appendTo ($("#variants"));
+
+         for (const i of switchNode .children .keys ())
+         {
+            $("<option></option>")
+               .prop ("selected", i === 0)
+               .text (switchNode .getValue () .getMetaData ("MaterialVariants/names") [i])
+               .val (i)
+               .appendTo (select);
+         }
+      }
+
+      $("#variants") .show ();
    }
 
    addAnimations ()
