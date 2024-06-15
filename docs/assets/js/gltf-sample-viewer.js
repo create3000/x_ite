@@ -574,6 +574,11 @@ const ktx = [
 
 // SAMPLES_END
 
+$.try = function (callback)
+{
+   try { return callback (); } catch { }
+};
+
 class SampleViewer
 {
    constructor (browser)
@@ -642,71 +647,17 @@ class SampleViewer
 
    async loadURL (filename, event)
    {
-      $("#animations") .hide ();
+      $("#scenes, #animations") .hide ();
 
       await this .browser .loadURL (new X3D .MFString (filename));
-
-      this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
-      this .setHeadlight (true);
 
       if (!this .browser .getActiveViewpoint () ._description .getValue ())
          this .browser .viewAll (0);
 
-      try
-      {
-         const animations = this .scene .getExportedNode ("Animations");
-
-         $("#animations") .empty ();
-         $("<b></b>") .text ("Animations") .appendTo ($("#animations"));
-         $("<br>") .appendTo ($("#animations"));
-
-         for (const [i, group] of animations .children .entries ())
-         {
-            const timeSensor = group .children [0];
-
-            const onclick = () =>
-            {
-               $(`#animation${i}`) .toggleClass (["fa-circle", "fa-circle-dot", "green"]);
-               $(`[for=animation${i}]`) .toggleClass ("green");
-
-               for (const group of animations .children)
-                  group .children [0] .stopTime = Date .now () / 1000;
-
-               if (!$(`#animation${i}`) .hasClass ( "fa-circle-dot"))
-                  return;
-
-               $("#animations i") .each ((_, element) =>
-               {
-                  if (element === $(`#animation${i}`) .get (0))
-                     return;
-
-                  $(element) .removeClass (["fa-circle-dot", "green"]) .addClass ("fa-circle");
-                  $(`[for=${$(element) .attr ("id")}]`) .removeClass ("green");
-               });
-
-               timeSensor .loop      = true;
-               timeSensor .startTime = Date .now () / 1000;
-            };
-
-            const label = $("<label></label>")
-               .append ()
-               .attr ("for", `animation${i}`)
-               .text (group .children [0] .description)
-               .on ("click", onclick)
-               .appendTo ($("#animations"));
-
-            $("<i></i>")
-               .addClass (["fa-regular", "fa-circle"])
-               .attr ("id", `animation${i}`)
-               .prependTo (label);
-
-            $("<br>") .appendTo ($("#animations"));
-         }
-
-         $("#animations") .show () .find ("label") .first () .trigger ("click");
-      }
-      catch
-      { }
+      this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
+      this .setHeadlight (true);
+      this .addScenes ();
+      this .addAnimations ();
    }
 
    async setEnvironmentLight (on)
@@ -795,6 +746,108 @@ class SampleViewer
       const navigationInfo = this .scene .createNode ("NavigationInfo");
 
       return this .navigationInfo = navigationInfo;
+   }
+
+   addScenes ()
+   {
+      const scenes = $.try (() => this .scene .getExportedNode ("Scenes"));
+
+      if (!scenes)
+         return;
+
+      $("#scenes") .empty ();
+      $("<b></b>") .text ("Scenes") .appendTo ($("#scenes"));
+      $("<br>") .appendTo ($("#scenes"));
+
+      for (let i = 0; i < scenes .children .length; ++ i)
+      {
+         const onclick = () =>
+         {
+            $("#scenes i") .each ((_, element) =>
+            {
+               $(element) .removeClass (["fa-circle-dot", "green"]) .addClass ("fa-circle");
+               $(`[for=${$(element) .attr ("id")}]`) .removeClass ("green");
+            });
+
+            $(`#scene${i}`) .toggleClass (["fa-circle", "fa-circle-dot", "green"]);
+            $(`[for=scene${i}]`) .toggleClass ("green");
+
+            scenes .whichChoice = i;
+         };
+
+         const label = $("<label></label>")
+            .append ()
+            .attr ("for", `scene${i}`)
+            .text (`Scene ${i}`)
+            .on ("click", onclick)
+            .appendTo ($("#scenes"));
+
+         $("<i></i>")
+            .addClass (["fa-regular", "fa-circle"])
+            .attr ("id", `scene${i}`)
+            .prependTo (label);
+
+         $("<br>") .appendTo ($("#scenes"));
+      }
+
+      $("#scenes") .show () .find ("label") .first () .trigger ("click");
+   }
+
+   addAnimations ()
+   {
+      const animations = $.try (() => this .scene .getExportedNode ("Animations"));
+
+      if (!animations)
+         return;
+
+      $("#animations") .empty ();
+      $("<b></b>") .text ("Animations") .appendTo ($("#animations"));
+      $("<br>") .appendTo ($("#animations"));
+
+      for (const [i, group] of animations .children .entries ())
+      {
+         const timeSensor = group .children [0];
+
+         const onclick = () =>
+         {
+            $(`#animation${i}`) .toggleClass (["fa-circle", "fa-circle-dot", "green"]);
+            $(`[for=animation${i}]`) .toggleClass ("green");
+
+            for (const group of animations .children)
+               group .children [0] .stopTime = Date .now () / 1000;
+
+            if (!$(`#animation${i}`) .hasClass ( "fa-circle-dot"))
+               return;
+
+            $("#animations i") .each ((_, element) =>
+            {
+               if (element === $(`#animation${i}`) .get (0))
+                  return;
+
+               $(element) .removeClass (["fa-circle-dot", "green"]) .addClass ("fa-circle");
+               $(`[for=${$(element) .attr ("id")}]`) .removeClass ("green");
+            });
+
+            timeSensor .loop      = true;
+            timeSensor .startTime = Date .now () / 1000;
+         };
+
+         const label = $("<label></label>")
+            .append ()
+            .attr ("for", `animation${i}`)
+            .text (group .children [0] .description)
+            .on ("click", onclick)
+            .appendTo ($("#animations"));
+
+         $("<i></i>")
+            .addClass (["fa-regular", "fa-circle"])
+            .attr ("id", `animation${i}`)
+            .prependTo (label);
+
+         $("<br>") .appendTo ($("#animations"));
+      }
+
+      $("#animations") .show () .find ("label") .first () .trigger ("click");
    }
 }
 

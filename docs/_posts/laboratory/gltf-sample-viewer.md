@@ -85,6 +85,7 @@ x3d-canvas {
    color: var(--system-gray8);
 }
 
+#scenes,
 #animations {
    display: none;
 }
@@ -116,6 +117,7 @@ x3d-canvas {
             <br>
             <label for="headlight"><i id="headlight" class="fa-solid fa-xmark"></i>Headlight</label>
          </div>
+         <div id="scenes"></div>
          <div id="animations"></div>
       </div>
    </div>
