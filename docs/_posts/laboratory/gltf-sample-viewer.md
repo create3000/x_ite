@@ -85,6 +85,18 @@ x3d-canvas {
    color: var(--system-gray8);
 }
 
+#options select {
+   outline: none;
+   background: none;
+   border: 1px solid var(--text-color);
+   color: var(--text-color);
+}
+
+#options select:focus {
+   border: 1px solid var(--system-green);
+   color: var(--system-green);
+}
+
 #scenes,
 #animations {
    display: none;
@@ -118,6 +130,7 @@ x3d-canvas {
             <label for="headlight"><i id="headlight" class="fa-solid fa-xmark"></i>Headlight</label>
          </div>
          <div id="scenes"></div>
+         <div id="viewpoints"></div>
          <div id="animations"></div>
       </div>
    </div>

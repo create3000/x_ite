@@ -593,6 +593,12 @@ class SampleViewer
       this .createList ("glTF IBL Sample Models",      ibl);
       this .createList ("glTF KTX Sample Models",      ktx);
 
+      $(".viewer-column2") .on ("scroll", () =>
+      {
+         this .browser .getLocalStorage () ["SampleViewer.scrollTop"] = $(".viewer-column2") .scrollTop ();
+      })
+      .scrollTop (this .browser .getLocalStorage () ["SampleViewer.scrollTop"] ?? 0);
+
       $("[for=ibl]") .on ("click", () =>
       {
          this .setEnvironmentLight (!$("#ibl") .hasClass ("green"));
@@ -647,7 +653,7 @@ class SampleViewer
 
    async loadURL (filename, event)
    {
-      $("#scenes, #animations") .hide ();
+      $("#scenes, #viewpoints, #animations") .hide ();
 
       await this .browser .loadURL (new X3D .MFString (filename));
 
@@ -657,6 +663,7 @@ class SampleViewer
       this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
       this .setHeadlight (true);
       this .addScenes ();
+      this .addViewpoints ();
       this .addAnimations ();
    }
 
@@ -776,7 +783,6 @@ class SampleViewer
          };
 
          const label = $("<label></label>")
-            .append ()
             .attr ("for", `scene${i}`)
             .text (`Scene ${i}`)
             .on ("click", onclick)
@@ -791,6 +797,36 @@ class SampleViewer
       }
 
       $("#scenes") .show () .find ("label") .first () .trigger ("click");
+   }
+
+   addViewpoints ()
+   {
+      const viewpoints = $.try (() => this .scene .getExportedNode ("Viewpoints"));
+
+      if (!viewpoints)
+         return;
+
+      $("#viewpoints") .empty ();
+      $("<b></b>") .text ("Viewpoints") .appendTo ($("#viewpoints"));
+      $("<br>") .appendTo ($("#viewpoints"));
+
+      const select = $("<select></select>")
+         .on ("change", () =>
+         {
+            viewpoints .children [+select .val ()] .set_bind = true;
+         })
+         .appendTo ($("#viewpoints"));
+
+      for (const [i, viewpoint] of viewpoints .children .entries ())
+      {
+         $("<option></option>")
+            .val (i)
+            .prop ("selected", viewpoint .isBound)
+            .text (viewpoint .description)
+            .appendTo (select);
+
+         viewpoint .getField ("isBound") .addFieldCallback ("bind", () => select .val (i));
+      }
    }
 
    addAnimations ()
@@ -833,7 +869,6 @@ class SampleViewer
          };
 
          const label = $("<label></label>")
-            .append ()
             .attr ("for", `animation${i}`)
             .text (group .children [0] .description)
             .on ("click", onclick)
