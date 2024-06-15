@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import Fields       from "../Fields.js";
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import URLs         from "../Browser/Networking/URLs.js";
@@ -77,9 +78,11 @@ function GLTF2Parser (scene)
    // Globals
 
    this .extensions            = new Set ();
-   this .lights                = [ ];
    this .envLights             = [ ];
+   this .lights                = [ ];
    this .usedLights            = 0;
+   this .materialVariants      = [ ];
+   this .materialVariantNodes  = [ ];
    this .buffers               = [ ];
    this .bufferViews           = [ ];
    this .accessors             = [ ];
@@ -186,8 +189,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       // Parse root objects.
 
       this .assetObject      (glTF .asset);
-      this .extensionsArray  (glTF .extensionsUsed, this .extensions);
       this .extensionsArray  (glTF .extensionsRequired, this .extensions);
+      this .extensionsArray  (glTF .extensionsUsed, this .extensions);
       this .extensionsObject (glTF .extensions);
 
       await browser .loadComponents (scene);
@@ -209,7 +212,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .skinsArray      (glTF .skins);
       this .nodesArray      (glTF .nodes);
       this .scenesArray     (glTF .scenes, glTF .scene);
+
       this .viewpointsGroup ();
+      this .materialVariantsGroup ();
+
       this .animationsArray (glTF .animations);
 
       try
@@ -327,15 +333,105 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          switch (key)
          {
-            case "KHR_lights_punctual":
-               return this .khrLightsPunctualObject (value);
             case "EXT_lights_image_based":
-               return this .extLightsImageBasedObject (value);
+               this .extLightsImageBasedObject (value);
+               break;
             // https://github.com/KhronosGroup/glTF/pull/1956
             // case "KHR_lights_environment": // in development
-            //    return this .khrLightsEnvironment (value);
+            //    this .khrLightsEnvironment (value);
+            //    break;
+            case "KHR_lights_punctual":
+               this .khrLightsPunctualObject (value);
+               break;
+            case "KHR_materials_variants":
+               this .khrMaterialsVariantsObjectVariants (value);
+               break;
          }
       }
+   },
+   extLightsImageBasedObject (EXT_lights_image_based)
+   {
+      if (!(EXT_lights_image_based instanceof Object))
+         return;
+
+      this .envLightsArray (EXT_lights_image_based .lights);
+   },
+   envLightsArray (lights)
+   {
+      if (!(lights instanceof Array))
+         return;
+
+      this .envLights = lights;
+   },
+   envLightObject (id, light = this .envLights [id])
+   {
+      if (!(light instanceof Object))
+         return null;
+
+      if (light .node)
+         return light .node;
+
+      const
+         scene      = this .getScene (),
+         lightNode  = scene .createNode ("EnvironmentLight", false),
+         name       = `EnvironmentLight${id}`,
+         quaternion = new Quaternion ();
+
+      scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
+      scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
+
+      lightNode ._global    = false;
+      lightNode ._intensity = this .numberValue (light .intensity, 1);
+
+      if (this .vectorValue (lightNode .rotation, quaternion))
+         lightNode ._rotation = new Rotation4 (quaternion);
+
+      if (light .irradianceCoefficients instanceof Array)
+      {
+         for (const irradianceCoefficient of light .irradianceCoefficients)
+         {
+            if (!(irradianceCoefficient instanceof Array))
+               continue;
+
+            lightNode ._diffuseCoefficients .push (... irradianceCoefficient);
+         }
+      }
+
+      if (light .specularImages instanceof Array)
+      {
+         const
+            specularTextureNode = scene .createNode ("ComposedCubeMapTexture", false),
+            baseImages          = light .specularImages [0];
+
+         if (baseImages instanceof Array)
+         {
+            const faces = ["right", "left", "top", "bottom", "front", "back"];
+
+            for (const [i, image] of baseImages .map (image => this .images [image]) .entries ())
+            {
+               const
+                  textureNode = scene .createNode ("ImageTexture", false),
+                  name        = this .sanitizeName (image ?.name);
+
+               if (name)
+                  scene .addNamedNode (scene .getUniqueName (name), textureNode);
+
+               textureNode ._description = image ?.name ?? "";
+               textureNode ._url         = image ? [image .uri] : [ ];
+               textureNode .setup ();
+
+               specularTextureNode [`_${faces [i]}Texture`] = textureNode;
+            }
+
+            specularTextureNode .setup ();
+
+            lightNode ._specularTexture = specularTextureNode;
+         }
+      }
+
+      lightNode .setup ();
+
+      return light .node = lightNode;
    },
    khrLightsPunctualObject (KHR_lights_punctual)
    {
@@ -427,89 +523,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return lightNode;
    },
-   extLightsImageBasedObject (EXT_lights_image_based)
+   khrMaterialsVariantsObjectVariants (KHR_materials_variants)
    {
-      if (!(EXT_lights_image_based instanceof Object))
+      if (!(KHR_materials_variants instanceof Object))
          return;
 
-      this .envLightsArray (EXT_lights_image_based .lights);
-   },
-   envLightsArray (lights)
-   {
-      if (!(lights instanceof Array))
+      const variants = KHR_materials_variants .variants;
+
+      if (!(variants instanceof Array))
          return;
 
-      this .envLights = lights;
-   },
-   envLightObject (id, light = this .envLights [id])
-   {
-      if (!(light instanceof Object))
-         return null;
-
-      if (light .node)
-         return light .node;
-
-      const
-         scene      = this .getScene (),
-         lightNode  = scene .createNode ("EnvironmentLight", false),
-         name       = `EnvironmentLight${id}`,
-         quaternion = new Quaternion ();
-
-      scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
-      scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
-
-      lightNode ._global    = false;
-      lightNode ._intensity = this .numberValue (light .intensity, 1);
-
-      if (this .vectorValue (lightNode .rotation, quaternion))
-         lightNode ._rotation = new Rotation4 (quaternion);
-
-      if (light .irradianceCoefficients instanceof Array)
-      {
-         for (const irradianceCoefficient of light .irradianceCoefficients)
-         {
-            if (!(irradianceCoefficient instanceof Array))
-               continue;
-
-            lightNode ._diffuseCoefficients .push (... irradianceCoefficient);
-         }
-      }
-
-      if (light .specularImages instanceof Array)
-      {
-         const
-            specularTextureNode = scene .createNode ("ComposedCubeMapTexture", false),
-            baseImages          = light .specularImages [0];
-
-         if (baseImages instanceof Array)
-         {
-            const faces = ["right", "left", "top", "bottom", "front", "back"];
-
-            for (const [i, image] of baseImages .map (image => this .images [image]) .entries ())
-            {
-               const
-                  textureNode = scene .createNode ("ImageTexture", false),
-                  name        = this .sanitizeName (image ?.name);
-
-               if (name)
-                  scene .addNamedNode (scene .getUniqueName (name), textureNode);
-
-               textureNode ._description = image ?.name ?? "";
-               textureNode ._url         = image ? [image .uri] : [ ];
-               textureNode .setup ();
-
-               specularTextureNode [`_${faces [i]}Texture`] = textureNode;
-            }
-
-            specularTextureNode .setup ();
-
-            lightNode ._specularTexture = specularTextureNode;
-         }
-      }
-
-      lightNode .setup ();
-
-      return light .node = lightNode;
+      this .materialVariants = variants;
    },
    async buffersArray (buffers)
    {
@@ -1358,9 +1382,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       primitive .indices  = this .accessors [primitive .indices];
       primitive .material = this .materials [primitive .material];
 
-      this .primitiveExtensionsObject (primitive .extensions, primitive)
+      this .primitiveExtensionsObject (primitive .extensions, primitive);
 
-      shapeNodes .push (primitive .shapeNode = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing));
+      const
+         shapeNode    = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing),
+         variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions, shapeNode);
+
+      shapeNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
    },
    attributesObject (attributes)
    {
@@ -1402,7 +1430,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          switch (key)
          {
             case "KHR_draco_mesh_compression":
-               return this .khrDracoMeshCompressionObject (value, primitive);
+               this .khrDracoMeshCompressionObject (value, primitive);
+               break;
          }
       }
    },
@@ -1536,6 +1565,74 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          return this .constructor .draco = draco;
       }
+   },
+   khrMaterialsVariantsExtension (extensions, shapeNode)
+   {
+      if (!(extensions instanceof Object))
+         return;
+
+      return this .khrMaterialsVariantsObjectMappings (extensions .KHR_materials_variants, shapeNode);
+   },
+   khrMaterialsVariantsObjectMappings (KHR_materials_variants, shapeNode)
+   {
+      if (!(KHR_materials_variants instanceof Object))
+         return;
+
+      const mappings = KHR_materials_variants .mappings;
+
+      if (!(mappings instanceof Array))
+         return;
+
+      if (!mappings .length)
+         return;
+
+      const
+         scene        = this .getScene (),
+         variantsNode = scene .createNode ("Switch", false),
+         names        = [ ];
+
+      variantsNode ._whichChoice = 0;
+
+      for (const mapping of mappings)
+         this .khrMaterialsVariantsObjectMapping (mapping, shapeNode, variantsNode, names);
+
+      variantsNode .setup ();
+
+      if (!variantsNode ._children .length)
+         return;
+
+      variantsNode .setMetaData ("Variants/names", new Fields .MFString (... names));
+
+      this .materialVariantNodes .push (variantsNode);
+
+      return variantsNode;
+   },
+   khrMaterialsVariantsObjectMapping (mapping, shapeNode, variantsNode, names)
+   {
+      if (!(mapping instanceof Object))
+         return;
+
+      mapping .material = this .materials [mapping .material];
+
+      if (!mapping .material)
+         return;
+
+      const
+         scene          = this .getScene (),
+         variantNode    = this .getScene () .createNode ("Shape", false),
+         appearanceNode = this .materialObject (mapping),
+         name           = this .sanitizeName (this .materialVariants [mapping .variants ?.[0]] ?.name ?? "");
+
+      if (name)
+         scene .addNamedNode (scene .getUniqueName (name), variantNode);
+
+      variantNode ._appearance = appearanceNode;
+      variantNode ._geometry   = shapeNode ._geometry;
+
+      variantNode .setup ();
+
+      variantsNode ._children .push (variantNode);
+      names .push (this .materialVariants [mapping .variants ?.[0]] ?.name ?? "");
    },
    camerasArray (cameras)
    {
@@ -2033,6 +2130,25 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       groupNode ._visible  = false;
       groupNode ._children = this .viewpointNodes;
+
+      groupNode .setup ();
+
+      scene .getRootNodes () .push (groupNode);
+   },
+   materialVariantsGroup ()
+   {
+      if (!this .materialVariantNodes .length)
+         return;
+
+      const
+         scene     = this .getScene (),
+         groupNode = scene .createNode ("Group", false);
+
+      scene .addNamedNode    (scene .getUniqueName       ("MaterialVariants"), groupNode);
+      scene .addExportedNode (scene .getUniqueExportName ("MaterialVariants"), groupNode);
+
+      groupNode ._visible  = false;
+      groupNode ._children = this .materialVariantNodes;
 
       groupNode .setup ();
 
