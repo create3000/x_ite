@@ -1696,14 +1696,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (typeof camera .xmag === "number")
       {
-         viewpointNode ._fieldOfView [0] = -camera .xmag / 2;
-         viewpointNode ._fieldOfView [2] = +camera .xmag / 2;
+         viewpointNode ._fieldOfView [0] = -camera .xmag;
+         viewpointNode ._fieldOfView [2] = +camera .xmag;
       }
 
       if (typeof camera .ymag === "number")
       {
-         viewpointNode ._fieldOfView [1] = -camera .ymag / 2;
-         viewpointNode ._fieldOfView [3] = +camera .ymag / 2;
+         viewpointNode ._fieldOfView [1] = -camera .ymag;
+         viewpointNode ._fieldOfView [3] = +camera .ymag;
       }
 
       if (typeof camera .znear === "number")
