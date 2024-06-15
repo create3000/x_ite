@@ -91,11 +91,12 @@ x3d-canvas {
    outline: none;
    background: none;
    border: 1px solid var(--text-color);
-   border-radius: 5px;
-   padding: 0px 0.7em;
-   height: 2em;
+   border-radius: 1rem;
+   padding: 0 0.7rem;
    width: 100%;
+   height: 2rem;
    color: var(--text-color);
+   align-items: baseline;
 }
 
 #options select:focus {
