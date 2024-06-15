@@ -820,9 +820,9 @@ class SampleViewer
       for (const [i, viewpoint] of viewpoints .children .entries ())
       {
          $("<option></option>")
-            .val (i)
             .prop ("selected", viewpoint .isBound)
             .text (viewpoint .description)
+            .val (i)
             .appendTo (select);
 
          viewpoint .getField ("isBound") .addFieldCallback ("bind", () => select .val (i));
