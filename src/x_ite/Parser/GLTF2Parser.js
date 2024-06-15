@@ -88,7 +88,7 @@ function GLTF2Parser (scene)
    this .textureTransformNodes = [ ];
    this .meshes                = [ ];
    this .cameras               = [ ];
-   this .viewpoints            = [ ];
+   this .viewpointNodes        = [ ];
    this .nodes                 = [ ];
    this .skins                 = [ ];
    this .joints                = new Set ();
@@ -1569,9 +1569,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene .addExportedNode (scene .getUniqueExportName (name), viewpointNode);
       }
 
-      this .viewpoints .push (viewpointNode);
+      this .viewpointNodes .push (viewpointNode);
 
-      viewpointNode ._description      = this .description (camera .name || `Viewpoint ${this .viewpoints .length}`);
+      viewpointNode ._description      = this .description (camera .name || `Viewpoint ${this .viewpointNodes .length}`);
       viewpointNode ._position         = Vector3 .Zero;
       viewpointNode ._centerOfRotation = new Vector3 (0, 0, -10);
 
@@ -2021,7 +2021,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    viewpointsGroup ()
    {
-      if (!this .viewpoints .length)
+      if (!this .viewpointNodes .length)
          return;
 
       const
@@ -2032,7 +2032,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       scene .addExportedNode (scene .getUniqueExportName ("Viewpoints"), groupNode);
 
       groupNode ._visible  = false;
-      groupNode ._children = this .viewpoints;
+      groupNode ._children = this .viewpointNodes;
 
       groupNode .setup ();
 
