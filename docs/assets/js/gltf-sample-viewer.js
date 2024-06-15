@@ -815,7 +815,7 @@ class SampleViewer
       const select = $("<select></select>")
          .on ("change", () =>
          {
-            viewpoints .children [+select .val ()] .set_bind = true;
+            viewpoints .children [select .val ()] .set_bind = true;
          })
          .appendTo ($("#viewpoints"));
 
@@ -849,7 +849,7 @@ class SampleViewer
          const select = $("<select></select>")
             .on ("change", () =>
             {
-               switchNode .whichChoice = +select .val ();
+               switchNode .whichChoice = select .val ();
             })
             .appendTo ($("#material-variants"));
 
