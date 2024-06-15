@@ -205,13 +205,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       await this .imagesArray (glTF .images);
 
-      this .texturesArray   (glTF .textures);
-      this .materialsArray  (glTF .materials);
-      this .meshesArray     (glTF .meshes);
-      this .camerasArray    (glTF .cameras);
-      this .skinsArray      (glTF .skins);
-      this .nodesArray      (glTF .nodes);
-      this .scenesArray     (glTF .scenes, glTF .scene);
+      this .texturesArray  (glTF .textures);
+      this .materialsArray (glTF .materials);
+      this .meshesArray    (glTF .meshes);
+      this .camerasArray   (glTF .cameras);
+      this .skinsArray     (glTF .skins);
+      this .nodesArray     (glTF .nodes);
+      this .scenesArray    (glTF .scenes, glTF .scene);
 
       this .viewpointsGroup ();
       this .materialVariantsGroup ();
