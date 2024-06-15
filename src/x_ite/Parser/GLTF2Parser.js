@@ -1605,6 +1605,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .materialVariantNodes .push (variantsNode);
 
+      scene .addExportedNode (scene .getUniqueExportName (`MaterialVariants${this .materialVariantNodes .length}`), variantsNode);
+
       return variantsNode;
    },
    khrMaterialsVariantsObjectMapping (mapping, shapeNode, variantsNode, names)
