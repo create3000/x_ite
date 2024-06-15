@@ -34,6 +34,7 @@ const ibl_files = [
    "MandarinOrange",
    "MaterialsVariantsShoe",
    "MetalRoughSpheres",
+   "Morph",
    "MosquitoInAmber",
    "NegativeScaleTest",
    "NeilArmstrong",
