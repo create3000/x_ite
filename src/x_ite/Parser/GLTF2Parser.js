@@ -217,15 +217,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .materialVariantsGroup ();
 
       this .animationsArray (glTF .animations);
-
-      try
-      {
-         this .optimizeSceneGraph (this .getScene () .getRootNodes ());
-      }
-      catch (error)
-      {
-         console .error (error)
-      }
+      
+      this .optimizeSceneGraph (this .getScene () .getRootNodes ());
 
       return this .getScene ();
    },
