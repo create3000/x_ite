@@ -86,10 +86,12 @@ x3d-canvas {
 }
 
 #options select {
-   height: 2em;
    outline: none;
    background: none;
    border: 1px solid var(--text-color);
+   border-radius: 5px;
+   padding: 0px 0.5em;
+   height: 2em;
    color: var(--text-color);
 }
 
