@@ -312,6 +312,110 @@ albedoSheenScalingLUT (const in float NdotV, const in float sheenRoughnessFactor
 }
 #endif
 
+#if defined (X3D_CLEARCOAT_MATERIAL_EXT)
+#if defined (X3D_CLEARCOAT_TEXTURE_EXT)
+uniform x3d_ClearcoatTextureParametersEXT x3d_ClearcoatTextureEXT;
+
+float
+getClearcoatEXT ()
+{
+   // Get texture color.
+
+   vec3 texCoord = getTexCoord (x3d_ClearcoatTextureEXT .textureTransformMapping, x3d_ClearcoatTextureEXT .textureCoordinateMapping);
+
+   #if defined (X3D_CLEARCOAT_TEXTURE_EXT_FLIP_Y)
+      texCoord .t = 1.0 - texCoord .t;
+   #endif
+
+   #if defined (X3D_CLEARCOAT_TEXTURE_EXT_2D)
+      return texture2D (x3d_ClearcoatTextureEXT .texture2D, texCoord .st) .r;
+   #elif defined (X3D_CLEARCOAT_TEXTURE_EXT_CUBE)
+      return textureCube (x3d_ClearcoatTextureEXT .textureCube, texCoord) .r;
+   #endif
+}
+#endif
+
+#if defined (X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT)
+uniform x3d_ClearcoatRoughnessTextureParametersEXT x3d_ClearcoatRoughnessTextureEXT;
+
+float
+getClearcoatRoughnessEXT ()
+{
+   // Get texture color.
+
+   vec3 texCoord = getTexCoord (x3d_ClearcoatRoughnessTextureEXT .textureTransformMapping, x3d_ClearcoatRoughnessTextureEXT .textureCoordinateMapping);
+
+   #if defined (X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_FLIP_Y)
+      texCoord .t = 1.0 - texCoord .t;
+   #endif
+
+   #if defined (X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_2D)
+      return texture2D (x3d_ClearcoatRoughnessTextureEXT .texture2D, texCoord .st) .g;
+   #elif defined (X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_CUBE)
+      return textureCube (x3d_ClearcoatRoughnessTextureEXT .textureCube, texCoord) .g;
+   #endif
+}
+#endif
+
+#if defined (X3D_CLEARCOAT_NORMAL_TEXTURE_EXT)
+const float x3d_ClearcoatNormalScaleEXT = 1.0;
+uniform x3d_ClearcoatNormalTextureParametersEXT x3d_ClearcoatNormalTextureEXT;
+#endif
+
+vec3
+getClearcoatNormalEXT (const in NormalInfo normalInfo)
+{
+   #if defined (X3D_CLEARCOAT_NORMAL_TEXTURE_EXT)
+      // Get texture color.
+
+      vec3 texCoord = getTexCoord (x3d_ClearcoatNormalTextureEXT .textureTransformMapping, x3d_ClearcoatNormalTextureEXT .textureCoordinateMapping);
+
+      #if defined (X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_FLIP_Y)
+         texCoord .t = 1.0 - texCoord .t;
+      #endif
+
+      #if defined (X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_2D)
+         vec3 sample = texture2D (x3d_ClearcoatNormalTextureEXT .texture2D, texCoord .st) .rgb;
+      #elif defined (X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_CUBE)
+         vec3 sample = textureCube (x3d_ClearcoatNormalTextureEXT .textureCube, texCoord) .rgb;
+      #endif
+
+      vec3 n = sample * 2.0 - vec3 (1.0);
+
+      n *= vec3 (vec2 (x3d_ClearcoatNormalScaleEXT), 1.0);
+      n  = mat3 (normalInfo .t, normalInfo .b, normalInfo .ng) * normalize (n);
+
+      return n;
+   #else
+      return normalInfo .ng;
+   #endif
+}
+
+uniform float x3d_ClearcoatEXT;
+uniform float x3d_ClearcoatRoughnessEXT;
+
+MaterialInfo
+getClearCoatInfo (in MaterialInfo info, const in NormalInfo normalInfo)
+{
+   info .clearcoatFactor    = x3d_ClearcoatEXT;
+   info .clearcoatRoughness = x3d_ClearcoatRoughnessEXT;
+   info .clearcoatF0        = vec3 (pow ((info .ior - 1.0) / (info .ior + 1.0), 2.0));
+   info .clearcoatF90       = vec3 (1.0);
+
+   #if defined (X3D_CLEARCOAT_TEXTURE_EXT)
+      info .clearcoatFactor *= getClearcoatEXT ();
+   #endif
+
+   #if defined (X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT)
+      info .clearcoatRoughness *= getClearcoatRoughnessEXT ();
+   #endif
+
+   info .clearcoatNormal    = getClearcoatNormalEXT (normalInfo);
+   info .clearcoatRoughness = clamp (info .clearcoatRoughness, 0.0, 1.0);
+   return info;
+}
+#endif
+
 #if defined (X3D_SPECULAR_MATERIAL_EXT)
 #if defined (X3D_SPECULAR_TEXTURE_EXT)
 uniform x3d_SpecularTextureParametersEXT x3d_SpecularTextureEXT;

@@ -121,17 +121,8 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
-      if (this .sheenColorTextureNode)
-         options .push ("X3D_SHEEN_COLOR_TEXTURE_EXT", `X3D_SHEEN_COLOR_TEXTURE_EXT_${this .sheenColorTextureNode .getTextureTypeString ()}`);
-
-      if (this .sheenColorTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_SHEEN_COLOR_TEXTURE_EXT_FLIP_Y");
-
-      if (this .sheenRoughnessTextureNode)
-         options .push ("X3D_SHEEN_ROUGHNESS_TEXTURE_EXT", `X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_${this .sheenRoughnessTextureNode .getTextureTypeString ()}`);
-
-      if (this .sheenRoughnessTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_FLIP_Y");
+      this .sheenColorTextureNode     ?.getNamedShaderOptions (options, "SHEEN_COLOR",     true);
+      this .sheenRoughnessTextureNode ?.getNamedShaderOptions (options, "SHEEN_ROUGHNESS", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
@@ -162,6 +153,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
             gl .uniform1i (sheenColorTexture .textureTransformMapping,  textureTransformMapping  .get (sheenColorTextureMapping) ?? 0);
             gl .uniform1i (sheenColorTexture .textureCoordinateMapping, textureCoordinateMapping .get (sheenColorTextureMapping) ?? 0);
          }
+
          // Sheen color parameters
 
          if (this .sheenRoughnessTextureNode)

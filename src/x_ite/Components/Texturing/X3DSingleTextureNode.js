@@ -214,6 +214,18 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    {
       textureBits .add (channel * 4, this .getTextureBits ());
    },
+   getNamedShaderOptions (options, name, ext)
+   {
+      ext = ext ? "_EXT" : "";
+
+      options .push (`X3D_${name}_TEXTURE${ext}`, `X3D_${name}_TEXTURE${ext}_${this .getTextureTypeString ()}`);
+
+      if (this .getTextureType () === 1)
+         options .push (`X3D_${name}_TEXTURE${ext}_FLIP_Y`);
+
+      if (this .isLinear ())
+         options .push (`X3D_${name}_TEXTURE${ext}_LINEAR`);
+   },
    getShaderOptions (options, channel = 0)
    {
       options .push (`X3D_TEXTURE${channel}_${this .getTextureTypeString ()}`);

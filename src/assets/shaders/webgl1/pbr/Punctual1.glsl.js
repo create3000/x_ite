@@ -30,5 +30,17 @@ getPunctualRadianceSheen (const in vec3 sheenColor, const in float sheenRoughnes
 }
 #endif
 
+#if defined (X3D_CLEARCOAT_MATERIAL_EXT)
+vec3
+getPunctualRadianceClearCoat (const in vec3 clearcoatNormal, const in vec3 v, const in vec3 l, const in vec3 h, const in float VdotH, const in vec3 f0, const in vec3 f90, const in float clearcoatRoughness)
+{
+    float NdotL = clamp (dot (clearcoatNormal, l), 0.0, 1.0);
+    float NdotV = clamp (dot (clearcoatNormal, v), 0.0, 1.0);
+    float NdotH = clamp (dot (clearcoatNormal, h), 0.0, 1.0);
+
+    return NdotL * BRDF_specularGGX (f0, f90, clearcoatRoughness * clearcoatRoughness, 1.0, VdotH, NdotL, NdotV, NdotH);
+}
+#endif
+
 #endif
 `;

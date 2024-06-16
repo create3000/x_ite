@@ -215,13 +215,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_NormalScale       = gl .getUniformLocation (program, "x3d_Material.normalScale");
       this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
 
-      this .x3d_AnisotropyEXT       = gl .getUniformLocation (program, "x3d_AnisotropyEXT");
-      this .x3d_EmissiveStrengthEXT = gl .getUniformLocation (program, "x3d_EmissiveStrengthEXT");
-      this .x3d_SheenColorEXT       = gl .getUniformLocation (program, "x3d_SheenColorEXT");
-      this .x3d_SheenRoughnessEXT   = gl .getUniformLocation (program, "x3d_SheenRoughnessEXT");
-      this .x3d_SheenELUTTextureEXT = gl .getUniformLocation (program, "x3d_SheenELUTTextureEXT");
-      this .x3d_SpecularEXT         = gl .getUniformLocation (program, "x3d_SpecularEXT");
-      this .x3d_SpecularColorEXT    = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
+      this .x3d_AnisotropyEXT         = gl .getUniformLocation (program, "x3d_AnisotropyEXT");
+      this .x3d_ClearcoatEXT          = gl .getUniformLocation (program, "x3d_ClearcoatEXT");
+      this .x3d_ClearcoatRoughnessEXT = gl .getUniformLocation (program, "x3d_ClearcoatRoughnessEXT");
+      this .x3d_EmissiveStrengthEXT   = gl .getUniformLocation (program, "x3d_EmissiveStrengthEXT");
+      this .x3d_SheenColorEXT         = gl .getUniformLocation (program, "x3d_SheenColorEXT");
+      this .x3d_SheenRoughnessEXT     = gl .getUniformLocation (program, "x3d_SheenRoughnessEXT");
+      this .x3d_SheenELUTTextureEXT   = gl .getUniformLocation (program, "x3d_SheenELUTTextureEXT");
+      this .x3d_SpecularEXT           = gl .getUniformLocation (program, "x3d_SpecularEXT");
+      this .x3d_SpecularColorEXT      = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
 
       const materialTextures = [
          "x3d_AmbientTexture",
@@ -234,6 +236,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_OcclusionTexture",
          "x3d_NormalTexture",
          "x3d_AnisotropyTextureEXT",
+         "x3d_ClearcoatTextureEXT",
+         "x3d_ClearcoatRoughnessTextureEXT",
+         "x3d_ClearcoatNormalTextureEXT",
          "x3d_SheenColorTextureEXT",
          "x3d_SheenRoughnessTextureEXT",
          "x3d_SpecularTextureEXT",

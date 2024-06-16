@@ -120,17 +120,8 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
-      if (this .specularTextureNode)
-         options .push ("X3D_SPECULAR_TEXTURE_EXT", `X3D_SPECULAR_TEXTURE_EXT_${this .specularTextureNode .getTextureTypeString ()}`);
-
-      if (this .specularTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_SPECULAR_TEXTURE_EXT_FLIP_Y");
-
-      if (this .specularColorTextureNode)
-         options .push ("X3D_SPECULAR_COLOR_TEXTURE_EXT", `X3D_SPECULAR_COLOR_TEXTURE_EXT_${this .specularColorTextureNode .getTextureTypeString ()}`);
-
-      if (this .specularColorTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_SPECULAR_COLOR_TEXTURE_EXT_FLIP_Y");
+      this .specularTextureNode      ?.getNamedShaderOptions (options, "SPECULAR",       true);
+      this .specularColorTextureNode ?.getNamedShaderOptions (options, "SPECULAR_COLOR", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
@@ -144,13 +135,13 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
          if (this .specularTextureNode)
          {
             const
-               specularTextureMapping = this ._specularTextureMapping .getValue (),
-               specularTexture        = shaderObject .x3d_SpecularTextureEXT;
+               mapping      = this ._specularTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_SpecularTextureEXT;
 
-            this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularTexture);
+            this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (specularTextureMapping) ?? 0);
-            gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Specular color parameters
@@ -158,13 +149,13 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
          if (this .specularColorTextureNode)
          {
             const
-               specularColorTextureMapping = this ._specularColorTextureMapping .getValue (),
-               specularColorTexture        = shaderObject .x3d_SpecularColorTextureEXT;
+               mapping       = this ._specularColorTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_SpecularColorTextureEXT;
 
-            this .specularColorTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularColorTexture);
+            this .specularColorTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (specularColorTexture .textureTransformMapping,  textureTransformMapping  .get (specularColorTextureMapping) ?? 0);
-            gl .uniform1i (specularColorTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularColorTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
       }
    },

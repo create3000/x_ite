@@ -62,6 +62,10 @@ getMaterialColor ()
       materialInfo = getSheenInfo (materialInfo);
    #endif
 
+   #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
+      materialInfo = getClearCoatInfo (materialInfo, normalInfo);
+   #endif
+
    #if defined (X3D_SPECULAR_MATERIAL_EXT)
       materialInfo = getSpecularInfo (materialInfo);
    #endif
@@ -227,6 +231,12 @@ getMaterialColor ()
       specular  = f_specular_ibl * albedoSheenScaling + f_specular;
       sheen     = f_sheen_ibl                         + f_sheen;
       clearcoat = f_clearcoat_ibl                     + f_clearcoat;
+   #endif
+
+   #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
+      clearcoatFactor  = materialInfo .clearcoatFactor;
+      clearcoatFresnel = F_Schlick (materialInfo .clearcoatF0, materialInfo .clearcoatF90, clamp (dot (materialInfo .clearcoatNormal, v), 0.0, 1.0));
+      clearcoat       *= clearcoatFactor;
    #endif
 
    vec3 color = vec3 (0.0);

@@ -137,20 +137,8 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
 
       if (+this .getTextureBits ())
       {
-         if (this .getEmissiveTexture ())
-            options .push ("X3D_EMISSIVE_TEXTURE", `X3D_EMISSIVE_TEXTURE_${this .getEmissiveTexture () .getTextureTypeString ()}`);
-
-         if (this .getEmissiveTexture () ?.getTextureType () === 1)
-            options .push ("X3D_EMISSIVE_TEXTURE_FLIP_Y");
-
-         if (this .getEmissiveTexture () ?.isLinear ())
-            options .push ("X3D_EMISSIVE_TEXTURE_LINEAR");
-
-         if (this .getNormalTexture ())
-            options .push ("X3D_NORMAL_TEXTURE", `X3D_NORMAL_TEXTURE_${this .getNormalTexture () .getTextureTypeString ()}`);
-
-         if (this .getNormalTexture () ?.getTextureType () === 1)
-            options .push ("X3D_NORMAL_TEXTURE_FLIP_Y");
+         this .getEmissiveTexture () ?.getNamedShaderOptions (options, "EMISSIVE");
+         this .getNormalTexture ()   ?.getNamedShaderOptions (options, "NORMAL");
       }
 
       return options;
@@ -167,13 +155,13 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
          if (this .emissiveTextureNode)
          {
             const
-               emissiveTextureMapping = this ._emissiveTextureMapping .getValue (),
-               emissiveTexture        = shaderObject .x3d_EmissiveTexture;
+               mapping       = this ._emissiveTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_EmissiveTexture;
 
-            this .emissiveTextureNode .setShaderUniforms (gl, shaderObject, renderObject, emissiveTexture);
+            this .emissiveTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (emissiveTextureMapping) ?? 0);
-            gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (emissiveTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Normal parameters
@@ -181,15 +169,15 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
          if (this .normalTextureNode)
          {
             const
-               normalTextureMapping = this ._normalTextureMapping .getValue (),
-               normalTexture        = shaderObject .x3d_NormalTexture;
+               mapping       = this ._normalTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_NormalTexture;
 
             gl .uniform1f (shaderObject .x3d_NormalScale, Math .max (this ._normalScale .getValue (), 0));
 
-            this .normalTextureNode .setShaderUniforms (gl, shaderObject, renderObject, normalTexture);
+            this .normalTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (normalTextureMapping) ?? 0);
-            gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (normalTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
       }
    },

@@ -238,44 +238,11 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
          if (+this .getTextureBits ())
          {
-            if (this .ambientTextureNode)
-               options .push ("X3D_AMBIENT_TEXTURE", `X3D_AMBIENT_TEXTURE_${this .ambientTextureNode .getTextureTypeString ()}`);
-
-            if (this .ambientTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_AMBIENT_TEXTURE_FLIP_Y");
-
-            if (this .ambientTextureNode ?.isLinear ())
-               options .push ("X3D_AMBIENT_TEXTURE_LINEAR");
-
-            if (this .diffuseTextureNode)
-               options .push ("X3D_DIFFUSE_TEXTURE", `X3D_DIFFUSE_TEXTURE_${this .diffuseTextureNode .getTextureTypeString ()}`);
-
-            if (this .diffuseTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_DIFFUSE_TEXTURE_FLIP_Y");
-
-            if (this .diffuseTextureNode ?.isLinear ())
-               options .push ("X3D_DIFFUSE_TEXTURE_LINEAR");
-
-            if (this .specularTextureNode)
-               options .push ("X3D_SPECULAR_TEXTURE", `X3D_SPECULAR_TEXTURE_${this .specularTextureNode .getTextureTypeString ()}`);
-
-            if (this .specularTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_SPECULAR_TEXTURE_FLIP_Y");
-
-            if (this .specularTextureNode ?.isLinear ())
-               options .push ("X3D_SPECULAR_TEXTURE_LINEAR");
-
-            if (this .shininessTextureNode)
-               options .push ("X3D_SHININESS_TEXTURE", `X3D_SHININESS_TEXTURE_${this .shininessTextureNode .getTextureTypeString ()}`);
-
-            if (this .shininessTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_SHININESS_TEXTURE_FLIP_Y");
-
-            if (this .occlusionTextureNode)
-               options .push ("X3D_OCCLUSION_TEXTURE", `X3D_OCCLUSION_TEXTURE_${this .occlusionTextureNode .getTextureTypeString ()}`);
-
-            if (this .occlusionTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_OCCLUSION_TEXTURE_FLIP_Y");
+            this .ambientTextureNode   ?.getNamedShaderOptions (options, "AMBIENT");
+            this .diffuseTextureNode   ?.getNamedShaderOptions (options, "DIFFUSE");
+            this .specularTextureNode  ?.getNamedShaderOptions (options, "SPECULAR");
+            this .shininessTextureNode ?.getNamedShaderOptions (options, "SHININESS");
+            this .occlusionTextureNode ?.getNamedShaderOptions (options, "OCCLUSION");
          }
 
          switch (this .getMaterialKey ())
@@ -326,13 +293,13 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          if (this .ambientTextureNode)
          {
             const
-               ambientTextureMapping = this ._ambientTextureMapping .getValue (),
-               ambientTexture        = shaderObject .x3d_AmbientTexture;
+               mapping       = this ._ambientTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_AmbientTexture;
 
-            this .ambientTextureNode .setShaderUniforms (gl, shaderObject, renderObject, ambientTexture);
+            this .ambientTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (ambientTexture .textureTransformMapping,  textureTransformMapping  .get (ambientTextureMapping) ?? 0);
-            gl .uniform1i (ambientTexture .textureCoordinateMapping, textureCoordinateMapping .get (ambientTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Diffuse parameters
@@ -340,13 +307,13 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          if (this .diffuseTextureNode)
          {
             const
-               diffuseTextureMapping = this ._diffuseTextureMapping .getValue (),
-               diffuseTexture        = shaderObject .x3d_DiffuseTexture;
+               mapping       = this ._diffuseTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_DiffuseTexture;
 
-            this .diffuseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, diffuseTexture);
+            this .diffuseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (diffuseTexture .textureTransformMapping,  textureTransformMapping  .get (diffuseTextureMapping) ?? 0);
-            gl .uniform1i (diffuseTexture .textureCoordinateMapping, textureCoordinateMapping .get (diffuseTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Specular parameters
@@ -354,13 +321,13 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          if (this .specularTextureNode)
          {
             const
-               specularTextureMapping = this ._specularTextureMapping .getValue (),
-               specularTexture        = shaderObject .x3d_SpecularTexture;
+               mapping       = this ._specularTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_SpecularTexture;
 
-            this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularTexture);
+            this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (specularTextureMapping) ?? 0);
-            gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Shininess parameters
@@ -368,13 +335,13 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          if (this .shininessTextureNode)
          {
             const
-               shininessTextureMapping = this ._shininessTextureMapping .getValue (),
-               shininessTexture        = shaderObject .x3d_ShininessTexture;
+               mapping       = this ._shininessTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_ShininessTexture;
 
-            this .shininessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, shininessTexture);
+            this .shininessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (shininessTexture .textureTransformMapping,  textureTransformMapping  .get (shininessTextureMapping) ?? 0);
-            gl .uniform1i (shininessTexture .textureCoordinateMapping, textureCoordinateMapping .get (shininessTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Occlusion parameters
@@ -382,15 +349,15 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          if (this .occlusionTextureNode)
          {
             const
-               occlusionTextureMapping = this ._occlusionTextureMapping .getValue (),
-               occlusionTexture        = shaderObject .x3d_OcclusionTexture;
+               mapping       = this ._occlusionTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_OcclusionTexture;
 
             gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
-            this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, occlusionTexture);
+            this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (occlusionTextureMapping) ?? 0);
-            gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (occlusionTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
       }
    },

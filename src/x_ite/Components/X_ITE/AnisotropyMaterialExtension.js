@@ -106,11 +106,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
-      if (this .anisotropyTextureNode)
-         options .push ("X3D_ANISOTROPY_TEXTURE_EXT", `X3D_ANISOTROPY_TEXTURE_EXT_${this .anisotropyTextureNode .getTextureTypeString ()}`);
-
-      if (this .anisotropyTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_ANISOTROPY_TEXTURE_EXT_FLIP_Y");
+      this .anisotropyTextureNode ?.getNamedShaderOptions (options, "ANISOTROPY", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
@@ -123,13 +119,13 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
          if (this .anisotropyTextureNode)
          {
             const
-               anisotropyTextureMapping = this ._anisotropyTextureMapping .getValue (),
-               anisotropyTexture        = shaderObject .x3d_AnisotropyTextureEXT;
+               mapping       = this ._anisotropyTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_AnisotropyTextureEXT;
 
-            this .anisotropyTextureNode .setShaderUniforms (gl, shaderObject, renderObject, anisotropyTexture);
+            this .anisotropyTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (anisotropyTexture .textureTransformMapping,  textureTransformMapping  .get (anisotropyTextureMapping) ?? 0);
-            gl .uniform1i (anisotropyTexture .textureCoordinateMapping, textureCoordinateMapping .get (anisotropyTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
       }
    },
