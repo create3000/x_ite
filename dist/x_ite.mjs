@@ -1,9 +1,9 @@
 /* X_ITE v9.7.0 */var __webpack_modules__ = ({
 
-/***/ 863:
+/***/ 751:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(555);
+/* provided dependency */ var jQuery = __webpack_require__(851);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -199,7 +199,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 251:
+/***/ 571:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -213,7 +213,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(555)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(851)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -424,7 +424,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 555:
+/***/ 851:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11148,7 +11148,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 456:
+/***/ 528:
 /***/ ((module) => {
 
 /**
@@ -15927,7 +15927,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 171:
+/***/ 731:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19172,7 +19172,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 844:
+/***/ 84:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -34231,7 +34231,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 x_ite_Namespace .add ("X3DBaseNode", "x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
 /* harmony default export */ const Base_X3DBaseNode = (X3DBaseNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(555);
+/* provided dependency */ var $ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39010,7 +39010,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .add ("X3DProtoDeclaration", "x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(555);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39268,7 +39268,7 @@ const Expressions_default_ = Expressions;
 x_ite_Namespace .add ("Expressions", "x_ite/Parser/Expressions", Expressions_default_);
 /* harmony default export */ const Parser_Expressions = (Expressions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(555);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41968,7 +41968,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .add ("VRMLParser", "x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(555);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44012,7 +44012,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(555);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44220,27 +44220,20 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       await this .imagesArray (glTF .images);
 
-      this .texturesArray   (glTF .textures);
-      this .materialsArray  (glTF .materials);
-      this .meshesArray     (glTF .meshes);
-      this .camerasArray    (glTF .cameras);
-      this .skinsArray      (glTF .skins);
-      this .nodesArray      (glTF .nodes);
-      this .scenesArray     (glTF .scenes, glTF .scene);
+      this .texturesArray  (glTF .textures);
+      this .materialsArray (glTF .materials);
+      this .meshesArray    (glTF .meshes);
+      this .camerasArray   (glTF .cameras);
+      this .skinsArray     (glTF .skins);
+      this .nodesArray     (glTF .nodes);
+      this .scenesArray    (glTF .scenes, glTF .scene);
 
       this .viewpointsGroup ();
       this .materialVariantsGroup ();
 
       this .animationsArray (glTF .animations);
 
-      try
-      {
-         this .optimizeSceneGraph (this .getScene () .getRootNodes ());
-      }
-      catch (error)
-      {
-         console .error (error)
-      }
+      this .optimizeSceneGraph (this .getScene () .getRootNodes ());
 
       return this .getScene ();
    },
@@ -44316,6 +44309,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             // },
             case "EXT_mesh_gpu_instancing":
             case "KHR_materials_anisotropy":
+            case "KHR_materials_clearcoat":
             case "KHR_materials_emissive_strength":
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
@@ -45164,6 +45158,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             case "KHR_materials_anisotropy":
                this .khrMaterialsAnisotropyObject (value, materialNode);
                break;
+            case "KHR_materials_clearcoat":
+               this .khrMaterialsClearcoatObject (value, materialNode);
+               break;
             case "KHR_materials_emissive_strength":
                this .khrMaterialsEmissiveStrengthObject (value, materialNode);
                break;
@@ -45190,6 +45187,28 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       extension ._anisotropyRotation       = this .numberValue (KHR_materials_anisotropy .anisotropyRotation, 0);
       extension ._anisotropyTexture        = this .textureInfo (KHR_materials_anisotropy .anisotropyTexture);
       extension ._anisotropyTextureMapping = this .textureMapping (KHR_materials_anisotropy .anisotropyTexture);
+
+      extension .setup ();
+
+      materialNode ._extensions .push (extension);
+   },
+   khrMaterialsClearcoatObject (KHR_materials_clearcoat, materialNode)
+   {
+      if (!(KHR_materials_clearcoat instanceof Object))
+         return;
+
+      const extension = this .getScene () .createNode ("ClearcoatMaterialExtension", false);
+
+      extension ._clearcoat               = this .numberValue (KHR_materials_clearcoat .clearcoatFactor, 0);
+      extension ._clearcoatTexture        = this .textureInfo (KHR_materials_clearcoat .clearcoatTexture);
+      extension ._clearcoatTextureMapping = this .textureMapping (KHR_materials_clearcoat .clearcoatTexture);
+
+      extension ._clearcoatRoughness               = this .numberValue (KHR_materials_clearcoat .clearcoatRoughnessFactor, 0);
+      extension ._clearcoatRoughnessTexture        = this .textureInfo (KHR_materials_clearcoat .clearcoatRoughnessTexture);
+      extension ._clearcoatRoughnessTextureMapping = this .textureMapping (KHR_materials_clearcoat .clearcoatRoughnessTexture);
+
+      extension ._clearcoatNormalTexture        = this .textureInfo (KHR_materials_clearcoat .clearcoatNormalTexture);
+      extension ._clearcoatNormalTextureMapping = this .textureMapping (KHR_materials_clearcoat .clearcoatNormalTexture);
 
       extension .setup ();
 
@@ -45703,48 +45722,54 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             return null;
       }
    },
-   orthographicCamera ({ xmag, ymag, znear, zfar })
+   orthographicCamera (camera)
    {
+      if (!(camera instanceof Object))
+         return null;
+
       const
          scene         = this .getScene (),
          viewpointNode = scene .createNode ("OrthoViewpoint", false);
 
-      if (typeof xmag === "number")
+      if (typeof camera .xmag === "number")
       {
-         viewpointNode ._fieldOfView [0] = -xmag;
-         viewpointNode ._fieldOfView [2] = +xmag;
+         viewpointNode ._fieldOfView [0] = -camera .xmag;
+         viewpointNode ._fieldOfView [2] = +camera .xmag;
       }
 
-      if (typeof ymag === "number")
+      if (typeof camera .ymag === "number")
       {
-         viewpointNode ._fieldOfView [1] = -ymag;
-         viewpointNode ._fieldOfView [3] = +ymag;
+         viewpointNode ._fieldOfView [1] = -camera .ymag;
+         viewpointNode ._fieldOfView [3] = +camera .ymag;
       }
 
-      if (typeof znear === "number")
-         viewpointNode ._nearDistance = znear;
+      if (typeof camera .znear === "number")
+         viewpointNode ._nearDistance = camera .znear;
 
-      if (typeof zfar === "number")
-         viewpointNode ._farDistance = zfar;
+      if (typeof camera .zfar === "number")
+         viewpointNode ._farDistance = camera .zfar;
 
       viewpointNode .setup ();
 
       return viewpointNode;
    },
-   perspectiveCamera ({ yfov, znear, zfar })
+   perspectiveCamera (camera)
    {
+      if (!(camera instanceof Object))
+         return null;
+
       const
          scene         = this .getScene (),
          viewpointNode = scene .createNode ("Viewpoint", false);
 
-      if (typeof yfov === "number")
-         viewpointNode ._fieldOfView = yfov
+      if (typeof camera .yfov === "number")
+         viewpointNode ._fieldOfView = camera .yfov
 
-      if (typeof znear === "number")
-         viewpointNode ._nearDistance = znear;
+      if (typeof camera .znear === "number")
+         viewpointNode ._nearDistance = camera .znear;
 
-      if (typeof zfar === "number")
-         viewpointNode ._farDistance = zfar;
+      if (typeof camera .zfar === "number")
+         viewpointNode ._farDistance = camera .zfar;
 
       viewpointNode .setup ();
 
@@ -47545,7 +47570,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .add ("GLTF2Parser", "x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(555);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47697,7 +47722,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .add ("GLB2Parser", "x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(555);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51056,8 +51081,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .add ("MatrixStack", "standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(555);
-/* provided dependency */ var libtess = __webpack_require__(456);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(851);
+/* provided dependency */ var libtess = __webpack_require__(528);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53825,7 +53850,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .add ("SVGParser", "x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(555);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54192,7 +54217,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .add ("Plane3", "standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(456);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(528);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -62522,6 +62547,18 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, Texturi
    {
       textureBits .add (channel * 4, this .getTextureBits ());
    },
+   getNamedShaderOptions (options, name, ext)
+   {
+      ext = ext ? "_EXT" : "";
+
+      options .push (`X3D_${name}_TEXTURE${ext}`, `X3D_${name}_TEXTURE${ext}_${this .getTextureTypeString ()}`);
+
+      if (this .getTextureType () === 1)
+         options .push (`X3D_${name}_TEXTURE${ext}_FLIP_Y`);
+
+      if (this .isLinear ())
+         options .push (`X3D_${name}_TEXTURE${ext}_LINEAR`);
+   },
    getShaderOptions (options, channel = 0)
    {
       options .push (`X3D_TEXTURE${channel}_${this .getTextureTypeString ()}`);
@@ -62746,7 +62783,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .add ("X3DTexture2DNode", "x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(555);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66328,7 +66365,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .add ("X3DWorld", "x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(555);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67262,7 +67299,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 x_ite_Namespace .add ("ProtoDeclarationArray", "x_ite/Prototype/ProtoDeclarationArray", ProtoDeclarationArray_default_);
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (ProtoDeclarationArray_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(555);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90677,7 +90714,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .add ("X3DShaderNode", "x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(555);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90895,13 +90932,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_NormalScale       = gl .getUniformLocation (program, "x3d_Material.normalScale");
       this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
 
-      this .x3d_AnisotropyEXT       = gl .getUniformLocation (program, "x3d_AnisotropyEXT");
-      this .x3d_EmissiveStrengthEXT = gl .getUniformLocation (program, "x3d_EmissiveStrengthEXT");
-      this .x3d_SheenColorEXT       = gl .getUniformLocation (program, "x3d_SheenColorEXT");
-      this .x3d_SheenRoughnessEXT   = gl .getUniformLocation (program, "x3d_SheenRoughnessEXT");
-      this .x3d_SheenELUTTextureEXT = gl .getUniformLocation (program, "x3d_SheenELUTTextureEXT");
-      this .x3d_SpecularEXT         = gl .getUniformLocation (program, "x3d_SpecularEXT");
-      this .x3d_SpecularColorEXT    = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
+      this .x3d_AnisotropyEXT         = gl .getUniformLocation (program, "x3d_AnisotropyEXT");
+      this .x3d_ClearcoatEXT          = gl .getUniformLocation (program, "x3d_ClearcoatEXT");
+      this .x3d_ClearcoatRoughnessEXT = gl .getUniformLocation (program, "x3d_ClearcoatRoughnessEXT");
+      this .x3d_EmissiveStrengthEXT   = gl .getUniformLocation (program, "x3d_EmissiveStrengthEXT");
+      this .x3d_SheenColorEXT         = gl .getUniformLocation (program, "x3d_SheenColorEXT");
+      this .x3d_SheenRoughnessEXT     = gl .getUniformLocation (program, "x3d_SheenRoughnessEXT");
+      this .x3d_SheenELUTTextureEXT   = gl .getUniformLocation (program, "x3d_SheenELUTTextureEXT");
+      this .x3d_SpecularEXT           = gl .getUniformLocation (program, "x3d_SpecularEXT");
+      this .x3d_SpecularColorEXT      = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
 
       const materialTextures = [
          "x3d_AmbientTexture",
@@ -90914,6 +90953,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_OcclusionTexture",
          "x3d_NormalTexture",
          "x3d_AnisotropyTextureEXT",
+         "x3d_ClearcoatTextureEXT",
+         "x3d_ClearcoatRoughnessTextureEXT",
+         "x3d_ClearcoatNormalTextureEXT",
          "x3d_SheenColorTextureEXT",
          "x3d_SheenRoughnessTextureEXT",
          "x3d_SpecularTextureEXT",
@@ -93148,7 +93190,10 @@ const materialTextures = [
    "x3d_OcclusionTexture",
    "x3d_NormalTexture",
    "x3d_AnisotropyTextureEXT",
-   "x3d_SheenColorTextureEXT",
+   "x3d_ClearcoatTextureEXT",
+   "x3d_ClearcoatRoughnessTextureEXT",
+   "x3d_ClearcoatNormalTextureEXT",
+"x3d_SheenColorTextureEXT",
    "x3d_SheenRoughnessTextureEXT",
    "x3d_SpecularTextureEXT",
    "x3d_SpecularColorTextureEXT",
@@ -94950,7 +94995,7 @@ vec4 getMaterialColor(){vec4 baseColor=getBaseColor();
 baseColor.rgb*=getTextureProjectorColor();
 #endif
 vec3 v=normalize(-vertex);
-#if defined(X3D_LIGHTING)||defined(X3D_USE_IBL)||defined(X3D_ANISOTROPY_MATERIAL_EXT)
+#if defined(X3D_LIGHTING)||defined(X3D_USE_IBL)||defined(X3D_ANISOTROPY_MATERIAL_EXT)||defined(X3D_CLEARCOAT_MATERIAL_EXT)
 NormalInfo normalInfo=getNormalInfo(x3d_Material.normalScale);vec3 n=normalInfo.n;float NdotV=clamp(dot(n,v),0.0,1.0);
 #endif
 MaterialInfo materialInfo;materialInfo.baseColor=baseColor.rgb;materialInfo.ior=1.5;materialInfo.f0=vec3(0.04);materialInfo.specularWeight=1.0;
@@ -94959,6 +95004,9 @@ materialInfo=getMetallicRoughnessInfo(materialInfo);
 #endif
 #if defined(X3D_SHEEN_MATERIAL_EXT)
 materialInfo=getSheenInfo(materialInfo);
+#endif
+#if defined(X3D_CLEARCOAT_MATERIAL_EXT)
+materialInfo=getClearCoatInfo(materialInfo,normalInfo);
 #endif
 #if defined(X3D_SPECULAR_MATERIAL_EXT)
 materialInfo=getSpecularInfo(materialInfo);
@@ -95010,6 +95058,9 @@ f_emissive=getEmissiveColor();float clearcoatFactor=0.0;vec3 clearcoatFresnel=ve
 float ao=getOcclusionFactor();float occlusionStrength=x3d_Material.occlusionStrength;diffuse=f_diffuse+mix(f_diffuse_ibl,f_diffuse_ibl*ao,occlusionStrength)*albedoSheenScaling;specular=f_specular+mix(f_specular_ibl,f_specular_ibl*ao,occlusionStrength)*albedoSheenScaling;sheen=f_sheen+mix(f_sheen_ibl,f_sheen_ibl*ao,occlusionStrength);clearcoat=f_clearcoat+mix(f_clearcoat_ibl,f_clearcoat_ibl*ao,occlusionStrength);
 #else
 diffuse=f_diffuse_ibl*albedoSheenScaling+f_diffuse;specular=f_specular_ibl*albedoSheenScaling+f_specular;sheen=f_sheen_ibl+f_sheen;clearcoat=f_clearcoat_ibl+f_clearcoat;
+#endif
+#if defined(X3D_CLEARCOAT_MATERIAL_EXT)
+clearcoatFactor=materialInfo.clearcoatFactor;clearcoatFresnel=F_Schlick(materialInfo.clearcoatF0,materialInfo.clearcoatF90,clamp(dot(materialInfo.clearcoatNormal,v),0.0,1.0));clearcoat*=clearcoatFactor;
 #endif
 vec3 color=vec3(0.0);
 #if defined(X3D_MATERIAL_UNLIT)
@@ -95427,7 +95478,7 @@ vec4 getMaterialColor(){vec4 baseColor=getBaseColor();
 baseColor.rgb*=getTextureProjectorColor();
 #endif
 vec3 v=normalize(-vertex);
-#if defined(X3D_LIGHTING)||defined(X3D_USE_IBL)||defined(X3D_ANISOTROPY_MATERIAL_EXT)
+#if defined(X3D_LIGHTING)||defined(X3D_USE_IBL)||defined(X3D_ANISOTROPY_MATERIAL_EXT)||defined(X3D_CLEARCOAT_MATERIAL_EXT)
 NormalInfo normalInfo=getNormalInfo(x3d_Material.normalScale);vec3 n=normalInfo.n;float NdotV=clamp(dot(n,v),0.0,1.0);
 #endif
 MaterialInfo materialInfo;materialInfo.baseColor=baseColor.rgb;materialInfo.ior=1.5;materialInfo.f0=vec3(0.04);materialInfo.specularWeight=1.0;
@@ -95436,6 +95487,9 @@ materialInfo=getMetallicRoughnessInfo(materialInfo);
 #endif
 #if defined(X3D_SHEEN_MATERIAL_EXT)
 materialInfo=getSheenInfo(materialInfo);
+#endif
+#if defined(X3D_CLEARCOAT_MATERIAL_EXT)
+materialInfo=getClearCoatInfo(materialInfo,normalInfo);
 #endif
 #if defined(X3D_SPECULAR_MATERIAL_EXT)
 materialInfo=getSpecularInfo(materialInfo);
@@ -95487,6 +95541,9 @@ f_emissive=getEmissiveColor();float clearcoatFactor=0.0;vec3 clearcoatFresnel=ve
 float ao=getOcclusionFactor();float occlusionStrength=x3d_Material.occlusionStrength;diffuse=f_diffuse+mix(f_diffuse_ibl,f_diffuse_ibl*ao,occlusionStrength)*albedoSheenScaling;specular=f_specular+mix(f_specular_ibl,f_specular_ibl*ao,occlusionStrength)*albedoSheenScaling;sheen=f_sheen+mix(f_sheen_ibl,f_sheen_ibl*ao,occlusionStrength);clearcoat=f_clearcoat+mix(f_clearcoat_ibl,f_clearcoat_ibl*ao,occlusionStrength);
 #else
 diffuse=f_diffuse_ibl*albedoSheenScaling+f_diffuse;specular=f_specular_ibl*albedoSheenScaling+f_specular;sheen=f_sheen_ibl+f_sheen;clearcoat=f_clearcoat_ibl+f_clearcoat;
+#endif
+#if defined(X3D_CLEARCOAT_MATERIAL_EXT)
+clearcoatFactor=materialInfo.clearcoatFactor;clearcoatFresnel=F_Schlick(materialInfo.clearcoatF0,materialInfo.clearcoatF90,clamp(dot(materialInfo.clearcoatNormal,v),0.0,1.0));clearcoat*=clearcoatFactor;
 #endif
 vec3 color=vec3(0.0);
 #if defined(X3D_MATERIAL_UNLIT)
@@ -95777,8 +95834,9 @@ return finalColor;}void main(){fragment_main();}`
 x_ite_Namespace .add ("Unlit2.fs", "assets/shaders/webgl2/Unlit2.fs", Unlit2_fs_default_);
 /* harmony default export */ const Unlit2_fs = (Unlit2_fs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/pbr/BRDF1.glsl.js
-const BRDF1_glsl_default_ = /* glsl */ `#if defined(X3D_LIGHTING)
-const float M_PI=3.14159265359;vec3 F_Schlick(vec3 f0,vec3 f90,float VdotH){return f0+(f90-f0)*pow(clamp(1.0-VdotH,0.0,1.0),5.0);}float V_GGX(float NdotL,float NdotV,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float GGXV=NdotL*sqrt(NdotV*NdotV*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGXL=NdotV*sqrt(NdotL*NdotL*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGX=GGXV+GGXL;if(GGX>0.0){return 0.5/GGX;}return 0.0;}float D_GGX(float NdotH,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float f=(NdotH*NdotH)*(alphaRoughnessSq-1.0)+1.0;return alphaRoughnessSq/(M_PI*f*f);}vec3 BRDF_lambertian(vec3 f0,vec3 f90,vec3 diffuseColor,float specularWeight,float VdotH){return(1.0-specularWeight*F_Schlick(f0,f90,VdotH))*(diffuseColor/M_PI);}vec3 BRDF_specularGGX(vec3 f0,vec3 f90,float alphaRoughness,float specularWeight,float VdotH,float NdotL,float NdotV,float NdotH){vec3 F=F_Schlick(f0,f90,VdotH);float Vis=V_GGX(NdotL,NdotV,alphaRoughness);float D=D_GGX(NdotH,alphaRoughness);return specularWeight*F*Vis*D;}
+const BRDF1_glsl_default_ = /* glsl */ `vec3 F_Schlick(vec3 f0,vec3 f90,float VdotH){return f0+(f90-f0)*pow(clamp(1.0-VdotH,0.0,1.0),5.0);}
+#if defined(X3D_LIGHTING)
+const float M_PI=3.14159265359;float V_GGX(float NdotL,float NdotV,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float GGXV=NdotL*sqrt(NdotV*NdotV*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGXL=NdotV*sqrt(NdotL*NdotL*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGX=GGXV+GGXL;if(GGX>0.0){return 0.5/GGX;}return 0.0;}float D_GGX(float NdotH,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float f=(NdotH*NdotH)*(alphaRoughnessSq-1.0)+1.0;return alphaRoughnessSq/(M_PI*f*f);}vec3 BRDF_lambertian(vec3 f0,vec3 f90,vec3 diffuseColor,float specularWeight,float VdotH){return(1.0-specularWeight*F_Schlick(f0,f90,VdotH))*(diffuseColor/M_PI);}vec3 BRDF_specularGGX(vec3 f0,vec3 f90,float alphaRoughness,float specularWeight,float VdotH,float NdotL,float NdotV,float NdotH){vec3 F=F_Schlick(f0,f90,VdotH);float Vis=V_GGX(NdotL,NdotV,alphaRoughness);float D=D_GGX(NdotH,alphaRoughness);return specularWeight*F*Vis*D;}
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
 float D_GGX_anisotropic(float NdotH,float TdotH,float BdotH,float anisotropy,float at,float ab){float a2=at*ab;vec3 f=vec3(ab*TdotH,at*BdotH,a2*NdotH);float w2=a2/dot(f,f);return a2*w2*w2/M_PI;}float V_GGX_anisotropic(float NdotL,float NdotV,float BdotV,float TdotV,float TdotL,float BdotL,float at,float ab){float GGXV=NdotL*length(vec3(at*TdotV,ab*BdotV,NdotV));float GGXL=NdotV*length(vec3(at*TdotL,ab*BdotL,NdotL));float v=0.5/(GGXV+GGXL);return clamp(v,0.0,1.0);}vec3 BRDF_specularGGXAnisotropy(vec3 f0,vec3 f90,float alphaRoughness,float anisotropy,vec3 n,vec3 v,vec3 l,vec3 h,vec3 t,vec3 b){float at=mix(alphaRoughness,1.0,anisotropy*anisotropy);float ab=clamp(alphaRoughness,0.001,1.0);float NdotL=clamp(dot(n,l),0.0,1.0);float NdotH=clamp(dot(n,h),0.001,1.0);float NdotV=dot(n,v);float VdotH=clamp(dot(v,h),0.0,1.0);float V=V_GGX_anisotropic(NdotL,NdotV,dot(b,v),dot(t,v),dot(t,l),dot(b,l),at,ab);float D=D_GGX_anisotropic(NdotH,dot(t,h),dot(b,h),anisotropy,at,ab);vec3 F=F_Schlick(f0,f90,VdotH);return F*V*D;}
 #endif
@@ -95816,6 +95874,9 @@ const Punctual1_glsl_default_ = /* glsl */ `#if defined(X3D_LIGHTING)
 vec3 getLightIntensity(const in x3d_LightSourceParameters light,const in vec3 pointToLight,const in float distanceToLight){float attenuationFactor=1.0;float spotFactor=1.0;if(light.type!=x3d_DirectionalLight){attenuationFactor=getAttenuation(light.attenuation,distanceToLight);}if(light.type==x3d_SpotLight){spotFactor=getSpotFactor(pointToLight,light.direction,light.cutOffAngle,light.beamWidth);}return attenuationFactor*spotFactor*light.intensity*light.color;}
 #if defined(X3D_SHEEN_MATERIAL_EXT)
 vec3 getPunctualRadianceSheen(const in vec3 sheenColor,const in float sheenRoughness,const in float NdotL,const in float NdotV,const in float NdotH){return NdotL*BRDF_specularSheen(sheenColor,sheenRoughness,NdotL,NdotV,NdotH);}
+#endif
+#if defined(X3D_CLEARCOAT_MATERIAL_EXT)
+vec3 getPunctualRadianceClearCoat(const in vec3 clearcoatNormal,const in vec3 v,const in vec3 l,const in vec3 h,const in float VdotH,const in vec3 f0,const in vec3 f90,const in float clearcoatRoughness){float NdotL=clamp(dot(clearcoatNormal,l),0.0,1.0);float NdotV=clamp(dot(clearcoatNormal,v),0.0,1.0);float NdotH=clamp(dot(clearcoatNormal,h),0.0,1.0);return NdotL*BRDF_specularGGX(f0,f90,clearcoatRoughness*clearcoatRoughness,1.0,VdotH,NdotL,NdotV,NdotH);}
 #endif
 #endif
 `
@@ -95981,6 +96042,58 @@ info.sheenRoughnessFactor*=getSheenRoughnessEXT();
 #endif
 return info;}uniform sampler2D x3d_SheenELUTTextureEXT;float albedoSheenScalingLUT(const in float NdotV,const in float sheenRoughnessFactor){return texture2D(x3d_SheenELUTTextureEXT,vec2(NdotV,sheenRoughnessFactor)).r;}
 #endif
+#if defined(X3D_CLEARCOAT_MATERIAL_EXT)
+#if defined(X3D_CLEARCOAT_TEXTURE_EXT)
+uniform x3d_ClearcoatTextureParametersEXT x3d_ClearcoatTextureEXT;float getClearcoatEXT(){vec3 texCoord=getTexCoord(x3d_ClearcoatTextureEXT.textureTransformMapping,x3d_ClearcoatTextureEXT.textureCoordinateMapping);
+#if defined(X3D_CLEARCOAT_TEXTURE_EXT_FLIP_Y)
+texCoord.t=1.0-texCoord.t;
+#endif
+#if defined(X3D_CLEARCOAT_TEXTURE_EXT_2D)
+return texture2D(x3d_ClearcoatTextureEXT.texture2D,texCoord.st).r;
+#elif defined(X3D_CLEARCOAT_TEXTURE_EXT_CUBE)
+return textureCube(x3d_ClearcoatTextureEXT.textureCube,texCoord).r;
+#endif
+}
+#endif
+#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT)
+uniform x3d_ClearcoatRoughnessTextureParametersEXT x3d_ClearcoatRoughnessTextureEXT;float getClearcoatRoughnessEXT(){vec3 texCoord=getTexCoord(x3d_ClearcoatRoughnessTextureEXT.textureTransformMapping,x3d_ClearcoatRoughnessTextureEXT.textureCoordinateMapping);
+#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_FLIP_Y)
+texCoord.t=1.0-texCoord.t;
+#endif
+#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_2D)
+return texture2D(x3d_ClearcoatRoughnessTextureEXT.texture2D,texCoord.st).g;
+#elif defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_CUBE)
+return textureCube(x3d_ClearcoatRoughnessTextureEXT.textureCube,texCoord).g;
+#endif
+}
+#endif
+#if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT)
+const float x3d_ClearcoatNormalScaleEXT=1.0;uniform x3d_ClearcoatNormalTextureParametersEXT x3d_ClearcoatNormalTextureEXT;
+#endif
+vec3 getClearcoatNormalEXT(const in NormalInfo normalInfo){
+#if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT)
+vec3 texCoord=getTexCoord(x3d_ClearcoatNormalTextureEXT.textureTransformMapping,x3d_ClearcoatNormalTextureEXT.textureCoordinateMapping);
+#if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_FLIP_Y)
+texCoord.t=1.0-texCoord.t;
+#endif
+#if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_2D)
+vec3 color=texture2D(x3d_ClearcoatNormalTextureEXT.texture2D,texCoord.st).rgb;
+#elif defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_CUBE)
+vec3 color=textureCube(x3d_ClearcoatNormalTextureEXT.textureCube,texCoord).rgb;
+#endif
+vec3 n=color*2.0-vec3(1.0);n*=vec3(vec2(x3d_ClearcoatNormalScaleEXT),1.0);n=mat3(normalInfo.t,normalInfo.b,normalInfo.ng)*normalize(n);return n;
+#else
+return normalInfo.ng;
+#endif
+}uniform float x3d_ClearcoatEXT;uniform float x3d_ClearcoatRoughnessEXT;MaterialInfo getClearCoatInfo(in MaterialInfo info,const in NormalInfo normalInfo){info.clearcoatFactor=x3d_ClearcoatEXT;info.clearcoatRoughness=x3d_ClearcoatRoughnessEXT;info.clearcoatF0=vec3(pow((info.ior-1.0)/(info.ior+1.0),2.0));info.clearcoatF90=vec3(1.0);
+#if defined(X3D_CLEARCOAT_TEXTURE_EXT)
+info.clearcoatFactor*=getClearcoatEXT();
+#endif
+#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT)
+info.clearcoatRoughness*=getClearcoatRoughnessEXT();
+#endif
+info.clearcoatNormal=getClearcoatNormalEXT(normalInfo);info.clearcoatRoughness=clamp(info.clearcoatRoughness,0.0,1.0);return info;}
+#endif
 #if defined(X3D_SPECULAR_MATERIAL_EXT)
 #if defined(X3D_SPECULAR_TEXTURE_EXT)
 uniform x3d_SpecularTextureParametersEXT x3d_SpecularTextureEXT;float getSpecularEXT(){vec3 texCoord=getTexCoord(x3d_SpecularTextureEXT.textureTransformMapping,x3d_SpecularTextureEXT.textureCoordinateMapping);
@@ -96063,8 +96176,9 @@ return linearTosRGB(color);}`
 x_ite_Namespace .add ("ToneMapping1.glsl", "assets/shaders/webgl1/pbr/ToneMapping1.glsl", ToneMapping1_glsl_default_);
 /* harmony default export */ const ToneMapping1_glsl = (ToneMapping1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/BRDF2.glsl.js
-const BRDF2_glsl_default_ = /* glsl */ `#if defined(X3D_LIGHTING)
-const float M_PI=3.1415926535897932384626433832795;vec3 F_Schlick(vec3 f0,vec3 f90,float VdotH){return f0+(f90-f0)*pow(clamp(1.0-VdotH,0.0,1.0),5.0);}float V_GGX(float NdotL,float NdotV,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float GGXV=NdotL*sqrt(NdotV*NdotV*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGXL=NdotV*sqrt(NdotL*NdotL*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGX=GGXV+GGXL;if(GGX>0.0){return 0.5/GGX;}return 0.0;}float D_GGX(float NdotH,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float f=(NdotH*NdotH)*(alphaRoughnessSq-1.0)+1.0;return alphaRoughnessSq/(M_PI*f*f);}vec3 BRDF_lambertian(vec3 f0,vec3 f90,vec3 diffuseColor,float specularWeight,float VdotH){return(1.0-specularWeight*F_Schlick(f0,f90,VdotH))*(diffuseColor/M_PI);}vec3 BRDF_specularGGX(vec3 f0,vec3 f90,float alphaRoughness,float specularWeight,float VdotH,float NdotL,float NdotV,float NdotH){vec3 F=F_Schlick(f0,f90,VdotH);float Vis=V_GGX(NdotL,NdotV,alphaRoughness);float D=D_GGX(NdotH,alphaRoughness);return specularWeight*F*Vis*D;}
+const BRDF2_glsl_default_ = /* glsl */ `vec3 F_Schlick(vec3 f0,vec3 f90,float VdotH){return f0+(f90-f0)*pow(clamp(1.0-VdotH,0.0,1.0),5.0);}
+#if defined(X3D_LIGHTING)
+const float M_PI=3.1415926535897932384626433832795;float V_GGX(float NdotL,float NdotV,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float GGXV=NdotL*sqrt(NdotV*NdotV*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGXL=NdotV*sqrt(NdotL*NdotL*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGX=GGXV+GGXL;if(GGX>0.0){return 0.5/GGX;}return 0.0;}float D_GGX(float NdotH,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float f=(NdotH*NdotH)*(alphaRoughnessSq-1.0)+1.0;return alphaRoughnessSq/(M_PI*f*f);}vec3 BRDF_lambertian(vec3 f0,vec3 f90,vec3 diffuseColor,float specularWeight,float VdotH){return(1.0-specularWeight*F_Schlick(f0,f90,VdotH))*(diffuseColor/M_PI);}vec3 BRDF_specularGGX(vec3 f0,vec3 f90,float alphaRoughness,float specularWeight,float VdotH,float NdotL,float NdotV,float NdotH){vec3 F=F_Schlick(f0,f90,VdotH);float Vis=V_GGX(NdotL,NdotV,alphaRoughness);float D=D_GGX(NdotH,alphaRoughness);return specularWeight*F*Vis*D;}
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
 float D_GGX_anisotropic(float NdotH,float TdotH,float BdotH,float anisotropy,float at,float ab){float a2=at*ab;vec3 f=vec3(ab*TdotH,at*BdotH,a2*NdotH);float w2=a2/dot(f,f);return a2*w2*w2/M_PI;}float V_GGX_anisotropic(float NdotL,float NdotV,float BdotV,float TdotV,float TdotL,float BdotL,float at,float ab){float GGXV=NdotL*length(vec3(at*TdotV,ab*BdotV,NdotV));float GGXL=NdotV*length(vec3(at*TdotL,ab*BdotL,NdotL));float v=0.5/(GGXV+GGXL);return clamp(v,0.0,1.0);}vec3 BRDF_specularGGXAnisotropy(vec3 f0,vec3 f90,float alphaRoughness,float anisotropy,vec3 n,vec3 v,vec3 l,vec3 h,vec3 t,vec3 b){float at=mix(alphaRoughness,1.0,anisotropy*anisotropy);float ab=clamp(alphaRoughness,0.001,1.0);float NdotL=clamp(dot(n,l),0.0,1.0);float NdotH=clamp(dot(n,h),0.001,1.0);float NdotV=dot(n,v);float VdotH=clamp(dot(v,h),0.0,1.0);float V=V_GGX_anisotropic(NdotL,NdotV,dot(b,v),dot(t,v),dot(t,l),dot(b,l),at,ab);float D=D_GGX_anisotropic(NdotH,dot(t,h),dot(b,h),anisotropy,at,ab);vec3 F=F_Schlick(f0,f90,VdotH);return F*V*D;}
 #endif
@@ -96102,6 +96216,9 @@ const Punctual2_glsl_default_ = /* glsl */ `#if defined(X3D_LIGHTING)
 vec3 getLightIntensity(const in x3d_LightSourceParameters light,const in vec3 pointToLight,const in float distanceToLight){float attenuationFactor=1.0;float spotFactor=1.0;if(light.type!=x3d_DirectionalLight){attenuationFactor=getAttenuation(light.attenuation,distanceToLight);}if(light.type==x3d_SpotLight){spotFactor=getSpotFactor(pointToLight,light.direction,light.cutOffAngle,light.beamWidth);}return attenuationFactor*spotFactor*light.intensity*light.color;}
 #if defined(X3D_SHEEN_MATERIAL_EXT)
 vec3 getPunctualRadianceSheen(const in vec3 sheenColor,const in float sheenRoughness,const in float NdotL,const in float NdotV,const in float NdotH){return NdotL*BRDF_specularSheen(sheenColor,sheenRoughness,NdotL,NdotV,NdotH);}
+#endif
+#if defined(X3D_CLEARCOAT_MATERIAL_EXT)
+vec3 getPunctualRadianceClearCoat(const in vec3 clearcoatNormal,const in vec3 v,const in vec3 l,const in vec3 h,const in float VdotH,const in vec3 f0,const in vec3 f90,const in float clearcoatRoughness){float NdotL=clamp(dot(clearcoatNormal,l),0.0,1.0);float NdotV=clamp(dot(clearcoatNormal,v),0.0,1.0);float NdotH=clamp(dot(clearcoatNormal,h),0.0,1.0);return NdotL*BRDF_specularGGX(f0,f90,clearcoatRoughness*clearcoatRoughness,1.0,VdotH,NdotL,NdotV,NdotH);}
 #endif
 #endif
 `
@@ -96280,6 +96397,64 @@ info.sheenColorFactor*=getSheenColorEXT();
 info.sheenRoughnessFactor*=getSheenRoughnessEXT();
 #endif
 return info;}uniform sampler2D x3d_SheenELUTTextureEXT;float albedoSheenScalingLUT(const in float NdotV,const in float sheenRoughnessFactor){return texture(x3d_SheenELUTTextureEXT,vec2(NdotV,sheenRoughnessFactor)).r;}
+#endif
+#if defined(X3D_CLEARCOAT_MATERIAL_EXT)
+#if defined(X3D_CLEARCOAT_TEXTURE_EXT)
+uniform x3d_ClearcoatTextureParametersEXT x3d_ClearcoatTextureEXT;float getClearcoatEXT(){vec3 texCoord=getTexCoord(x3d_ClearcoatTextureEXT.textureTransformMapping,x3d_ClearcoatTextureEXT.textureCoordinateMapping);
+#if defined(X3D_CLEARCOAT_TEXTURE_EXT_FLIP_Y)
+texCoord.t=1.0-texCoord.t;
+#endif
+#if defined(X3D_CLEARCOAT_TEXTURE_EXT_2D)
+return texture(x3d_ClearcoatTextureEXT.texture2D,texCoord.st).r;
+#elif defined(X3D_CLEARCOAT_TEXTURE_EXT_3D)
+return texture(x3d_ClearcoatTextureEXT.texture3D,texCoord).r;
+#elif defined(X3D_CLEARCOAT_TEXTURE_EXT_CUBE)
+return texture(x3d_ClearcoatTextureEXT.textureCube,texCoord).r;
+#endif
+}
+#endif
+#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT)
+uniform x3d_ClearcoatRoughnessTextureParametersEXT x3d_ClearcoatRoughnessTextureEXT;float getClearcoatRoughnessEXT(){vec3 texCoord=getTexCoord(x3d_ClearcoatRoughnessTextureEXT.textureTransformMapping,x3d_ClearcoatRoughnessTextureEXT.textureCoordinateMapping);
+#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_FLIP_Y)
+texCoord.t=1.0-texCoord.t;
+#endif
+#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_2D)
+return texture(x3d_ClearcoatRoughnessTextureEXT.texture2D,texCoord.st).g;
+#elif defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_3D)
+return texture(x3d_ClearcoatRoughnessTextureEXT.texture3D,texCoord).g;
+#elif defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_CUBE)
+return texture(x3d_ClearcoatRoughnessTextureEXT.textureCube,texCoord).g;
+#endif
+}
+#endif
+#if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT)
+const float x3d_ClearcoatNormalScaleEXT=1.0;uniform x3d_ClearcoatNormalTextureParametersEXT x3d_ClearcoatNormalTextureEXT;
+#endif
+vec3 getClearcoatNormalEXT(const in NormalInfo normalInfo){
+#if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT)
+vec3 texCoord=getTexCoord(x3d_ClearcoatNormalTextureEXT.textureTransformMapping,x3d_ClearcoatNormalTextureEXT.textureCoordinateMapping);
+#if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_FLIP_Y)
+texCoord.t=1.0-texCoord.t;
+#endif
+#if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_2D)
+vec3 color=texture(x3d_ClearcoatNormalTextureEXT.texture2D,texCoord.st).rgb;
+#elif defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_3D)
+vec3 color=texture(x3d_ClearcoatNormalTextureEXT.texture3D,texCoord).rgb;
+#elif defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_CUBE)
+vec3 color=texture(x3d_ClearcoatNormalTextureEXT.textureCube,texCoord).rgb;
+#endif
+vec3 n=color*2.0-vec3(1.0);n*=vec3(vec2(x3d_ClearcoatNormalScaleEXT),1.0);n=mat3(normalInfo.t,normalInfo.b,normalInfo.ng)*normalize(n);return n;
+#else
+return normalInfo.ng;
+#endif
+}uniform float x3d_ClearcoatEXT;uniform float x3d_ClearcoatRoughnessEXT;MaterialInfo getClearCoatInfo(in MaterialInfo info,const in NormalInfo normalInfo){info.clearcoatFactor=x3d_ClearcoatEXT;info.clearcoatRoughness=x3d_ClearcoatRoughnessEXT;info.clearcoatF0=vec3(pow((info.ior-1.0)/(info.ior+1.0),2.0));info.clearcoatF90=vec3(1.0);
+#if defined(X3D_CLEARCOAT_TEXTURE_EXT)
+info.clearcoatFactor*=getClearcoatEXT();
+#endif
+#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT)
+info.clearcoatRoughness*=getClearcoatRoughnessEXT();
+#endif
+info.clearcoatNormal=getClearcoatNormalEXT(normalInfo);info.clearcoatRoughness=clamp(info.clearcoatRoughness,0.0,1.0);return info;}
 #endif
 #if defined(X3D_SPECULAR_MATERIAL_EXT)
 #if defined(X3D_SPECULAR_TEXTURE_EXT)
@@ -96691,7 +96866,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .add ("ShaderCompiler", "x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(555);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97348,7 +97523,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .add ("X3DAppearanceNode", "x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(555);
+/* provided dependency */ var Appearance_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -98698,20 +98873,8 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, Shap
 
       if (+this .getTextureBits ())
       {
-         if (this .getEmissiveTexture ())
-            options .push ("X3D_EMISSIVE_TEXTURE", `X3D_EMISSIVE_TEXTURE_${this .getEmissiveTexture () .getTextureTypeString ()}`);
-
-         if (this .getEmissiveTexture () ?.getTextureType () === 1)
-            options .push ("X3D_EMISSIVE_TEXTURE_FLIP_Y");
-
-         if (this .getEmissiveTexture () ?.isLinear ())
-            options .push ("X3D_EMISSIVE_TEXTURE_LINEAR");
-
-         if (this .getNormalTexture ())
-            options .push ("X3D_NORMAL_TEXTURE", `X3D_NORMAL_TEXTURE_${this .getNormalTexture () .getTextureTypeString ()}`);
-
-         if (this .getNormalTexture () ?.getTextureType () === 1)
-            options .push ("X3D_NORMAL_TEXTURE_FLIP_Y");
+         this .getEmissiveTexture () ?.getNamedShaderOptions (options, "EMISSIVE");
+         this .getNormalTexture ()   ?.getNamedShaderOptions (options, "NORMAL");
       }
 
       return options;
@@ -98728,13 +98891,13 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, Shap
          if (this .emissiveTextureNode)
          {
             const
-               emissiveTextureMapping = this ._emissiveTextureMapping .getValue (),
-               emissiveTexture        = shaderObject .x3d_EmissiveTexture;
+               mapping       = this ._emissiveTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_EmissiveTexture;
 
-            this .emissiveTextureNode .setShaderUniforms (gl, shaderObject, renderObject, emissiveTexture);
+            this .emissiveTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (emissiveTextureMapping) ?? 0);
-            gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (emissiveTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Normal parameters
@@ -98742,15 +98905,18 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, Shap
          if (this .normalTextureNode)
          {
             const
-               normalTextureMapping = this ._normalTextureMapping .getValue (),
-               normalTexture        = shaderObject .x3d_NormalTexture;
+               mapping       = this ._normalTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_NormalTexture;
 
-            gl .uniform1f (shaderObject .x3d_NormalScale, Math .max (this ._normalScale .getValue (), 0));
+            if (uniformStruct)
+            {
+               gl .uniform1f (shaderObject .x3d_NormalScale, Math .max (this ._normalScale .getValue (), 0));
 
-            this .normalTextureNode .setShaderUniforms (gl, shaderObject, renderObject, normalTexture);
+               this .normalTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (normalTextureMapping) ?? 0);
-            gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (normalTextureMapping) ?? 0);
+               gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+               gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
+            }
          }
       }
    },
@@ -99016,44 +99182,11 @@ Object .assign (Object .setPrototypeOf (Material .prototype, Shape_X3DOneSidedMa
 
          if (+this .getTextureBits ())
          {
-            if (this .ambientTextureNode)
-               options .push ("X3D_AMBIENT_TEXTURE", `X3D_AMBIENT_TEXTURE_${this .ambientTextureNode .getTextureTypeString ()}`);
-
-            if (this .ambientTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_AMBIENT_TEXTURE_FLIP_Y");
-
-            if (this .ambientTextureNode ?.isLinear ())
-               options .push ("X3D_AMBIENT_TEXTURE_LINEAR");
-
-            if (this .diffuseTextureNode)
-               options .push ("X3D_DIFFUSE_TEXTURE", `X3D_DIFFUSE_TEXTURE_${this .diffuseTextureNode .getTextureTypeString ()}`);
-
-            if (this .diffuseTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_DIFFUSE_TEXTURE_FLIP_Y");
-
-            if (this .diffuseTextureNode ?.isLinear ())
-               options .push ("X3D_DIFFUSE_TEXTURE_LINEAR");
-
-            if (this .specularTextureNode)
-               options .push ("X3D_SPECULAR_TEXTURE", `X3D_SPECULAR_TEXTURE_${this .specularTextureNode .getTextureTypeString ()}`);
-
-            if (this .specularTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_SPECULAR_TEXTURE_FLIP_Y");
-
-            if (this .specularTextureNode ?.isLinear ())
-               options .push ("X3D_SPECULAR_TEXTURE_LINEAR");
-
-            if (this .shininessTextureNode)
-               options .push ("X3D_SHININESS_TEXTURE", `X3D_SHININESS_TEXTURE_${this .shininessTextureNode .getTextureTypeString ()}`);
-
-            if (this .shininessTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_SHININESS_TEXTURE_FLIP_Y");
-
-            if (this .occlusionTextureNode)
-               options .push ("X3D_OCCLUSION_TEXTURE", `X3D_OCCLUSION_TEXTURE_${this .occlusionTextureNode .getTextureTypeString ()}`);
-
-            if (this .occlusionTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_OCCLUSION_TEXTURE_FLIP_Y");
+            this .ambientTextureNode   ?.getNamedShaderOptions (options, "AMBIENT");
+            this .diffuseTextureNode   ?.getNamedShaderOptions (options, "DIFFUSE");
+            this .specularTextureNode  ?.getNamedShaderOptions (options, "SPECULAR");
+            this .shininessTextureNode ?.getNamedShaderOptions (options, "SHININESS");
+            this .occlusionTextureNode ?.getNamedShaderOptions (options, "OCCLUSION");
          }
 
          switch (this .getMaterialKey ())
@@ -99104,13 +99237,13 @@ Object .assign (Object .setPrototypeOf (Material .prototype, Shape_X3DOneSidedMa
          if (this .ambientTextureNode)
          {
             const
-               ambientTextureMapping = this ._ambientTextureMapping .getValue (),
-               ambientTexture        = shaderObject .x3d_AmbientTexture;
+               mapping       = this ._ambientTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_AmbientTexture;
 
-            this .ambientTextureNode .setShaderUniforms (gl, shaderObject, renderObject, ambientTexture);
+            this .ambientTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (ambientTexture .textureTransformMapping,  textureTransformMapping  .get (ambientTextureMapping) ?? 0);
-            gl .uniform1i (ambientTexture .textureCoordinateMapping, textureCoordinateMapping .get (ambientTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Diffuse parameters
@@ -99118,13 +99251,13 @@ Object .assign (Object .setPrototypeOf (Material .prototype, Shape_X3DOneSidedMa
          if (this .diffuseTextureNode)
          {
             const
-               diffuseTextureMapping = this ._diffuseTextureMapping .getValue (),
-               diffuseTexture        = shaderObject .x3d_DiffuseTexture;
+               mapping       = this ._diffuseTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_DiffuseTexture;
 
-            this .diffuseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, diffuseTexture);
+            this .diffuseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (diffuseTexture .textureTransformMapping,  textureTransformMapping  .get (diffuseTextureMapping) ?? 0);
-            gl .uniform1i (diffuseTexture .textureCoordinateMapping, textureCoordinateMapping .get (diffuseTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Specular parameters
@@ -99132,13 +99265,13 @@ Object .assign (Object .setPrototypeOf (Material .prototype, Shape_X3DOneSidedMa
          if (this .specularTextureNode)
          {
             const
-               specularTextureMapping = this ._specularTextureMapping .getValue (),
-               specularTexture        = shaderObject .x3d_SpecularTexture;
+               mapping       = this ._specularTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_SpecularTexture;
 
-            this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularTexture);
+            this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (specularTextureMapping) ?? 0);
-            gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Shininess parameters
@@ -99146,13 +99279,13 @@ Object .assign (Object .setPrototypeOf (Material .prototype, Shape_X3DOneSidedMa
          if (this .shininessTextureNode)
          {
             const
-               shininessTextureMapping = this ._shininessTextureMapping .getValue (),
-               shininessTexture        = shaderObject .x3d_ShininessTexture;
+               mapping       = this ._shininessTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_ShininessTexture;
 
-            this .shininessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, shininessTexture);
+            this .shininessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (shininessTexture .textureTransformMapping,  textureTransformMapping  .get (shininessTextureMapping) ?? 0);
-            gl .uniform1i (shininessTexture .textureCoordinateMapping, textureCoordinateMapping .get (shininessTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Occlusion parameters
@@ -99160,15 +99293,15 @@ Object .assign (Object .setPrototypeOf (Material .prototype, Shape_X3DOneSidedMa
          if (this .occlusionTextureNode)
          {
             const
-               occlusionTextureMapping = this ._occlusionTextureMapping .getValue (),
-               occlusionTexture        = shaderObject .x3d_OcclusionTexture;
+               mapping       = this ._occlusionTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_OcclusionTexture;
 
             gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
-            this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, occlusionTexture);
+            this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (occlusionTextureMapping) ?? 0);
-            gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (occlusionTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
       }
    },
@@ -99475,26 +99608,9 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, Shape_X3DOn
 
       if (+this .getTextureBits ())
       {
-         if (this .baseTextureNode)
-            options .push ("X3D_BASE_TEXTURE", `X3D_BASE_TEXTURE_${this .baseTextureNode .getTextureTypeString ()}`);
-
-         if (this .baseTextureNode ?.getTextureType () === 1)
-            options .push ("X3D_BASE_TEXTURE_FLIP_Y");
-
-         if (this .baseTextureNode ?.isLinear ())
-            options .push ("X3D_BASE_TEXTURE_LINEAR");
-
-         if (this .metallicRoughnessTextureNode)
-            options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", `X3D_METALLIC_ROUGHNESS_TEXTURE_${this .metallicRoughnessTextureNode .getTextureTypeString ()}`);
-
-         if (this .metallicRoughnessTextureNode ?.getTextureType () === 1)
-            options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE_FLIP_Y");
-
-         if (this .occlusionTextureNode)
-            options .push ("X3D_OCCLUSION_TEXTURE", `X3D_OCCLUSION_TEXTURE_${this .occlusionTextureNode .getTextureTypeString ()}`);
-
-         if (this .occlusionTextureNode ?.getTextureType () === 1)
-            options .push ("X3D_OCCLUSION_TEXTURE_FLIP_Y");
+         this .baseTextureNode              ?.getNamedShaderOptions (options, "BASE");
+         this .metallicRoughnessTextureNode ?.getNamedShaderOptions (options, "METALLIC_ROUGHNESS");
+         this .occlusionTextureNode         ?.getNamedShaderOptions (options, "OCCLUSION");
       }
 
       const shaderNode = browser .createShader ("PBR", "Default", "PBR", options);
@@ -99521,13 +99637,13 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, Shape_X3DOn
          if (this .baseTextureNode)
          {
             const
-               baseTextureMapping = this ._baseTextureMapping .getValue (),
-               baseTexture        = shaderObject .x3d_BaseTexture;
+               mapping       = this ._baseTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_BaseTexture;
 
-            this .baseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, baseTexture);
+            this .baseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (baseTextureMapping) ?? 0);
-            gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (baseTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Metallic roughness parameters
@@ -99535,13 +99651,13 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, Shape_X3DOn
          if (this .metallicRoughnessTextureNode)
          {
             const
-               metallicRoughnessTextureMapping = this ._metallicRoughnessTextureMapping .getValue (),
-               metallicRoughnessTexture        = shaderObject .x3d_MetallicRoughnessTexture;
+               mapping       = this ._metallicRoughnessTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_MetallicRoughnessTexture;
 
-            this .metallicRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, metallicRoughnessTexture);
+            this .metallicRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (metallicRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (metallicRoughnessTextureMapping) ?? 0);
-            gl .uniform1i (metallicRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (metallicRoughnessTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Occlusion parameters
@@ -99549,15 +99665,15 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, Shape_X3DOn
          if (this .occlusionTextureNode)
          {
             const
-               occlusionTextureMapping = this ._occlusionTextureMapping .getValue (),
-               occlusionTexture        = shaderObject .x3d_OcclusionTexture;
+               mapping       = this ._occlusionTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_OcclusionTexture;
 
             gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
-            this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, occlusionTexture);
+            this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (occlusionTextureMapping) ?? 0);
-            gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (occlusionTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
       }
    },
@@ -106331,8 +106447,8 @@ const GifMedia_default_ = GifMedia;
 x_ite_Namespace .add ("GifMedia", "x_ite/Browser/Texturing/GifMedia", GifMedia_default_);
 /* harmony default export */ const Texturing_GifMedia = (GifMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(555);
-/* provided dependency */ var SuperGif = __webpack_require__(844);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(851);
+/* provided dependency */ var SuperGif = __webpack_require__(84);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109750,7 +109866,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 x_ite_Namespace .add ("gettext", "locale/gettext", gettext_default_);
 /* harmony default export */ const gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(555);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110323,7 +110439,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .add ("TextureQuality", "x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(555);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110920,7 +111036,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .add ("RenderingProperties", "x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(555);
+/* provided dependency */ var Notification_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111043,8 +111159,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .add ("Notification", "x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(863);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(555);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(751);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113797,7 +113913,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .add ("DataStorage", "standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(555);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116360,8 +116476,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .add ("X3DViewer", "x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(251);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(555);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(571);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117233,8 +117349,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .add ("ExamineViewer", "x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(251);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(555);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(571);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118243,8 +118359,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .add ("FlyViewer", "x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(251);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(555);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(571);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118575,8 +118691,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .add ("NoneViewer", "x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(251);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(555);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(571);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119716,8 +119832,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .add ("X3DPickingContext", "x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(251);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(555);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(571);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121021,7 +121137,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .add ("MultiSampleFrameBuffer", "x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(555);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121970,7 +122086,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 x_ite_Namespace .add ("X3DSoundContext", "x_ite/Browser/Sound/X3DSoundContext", X3DSoundContext_default_);
 /* harmony default export */ const Sound_X3DSoundContext = (X3DSoundContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(555);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(851);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -123561,7 +123677,7 @@ const Components_default_ = Components;
 x_ite_Namespace .add ("Components", "x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(555);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(851);
 /*******************************************************************************
  * MIT License
  *
@@ -124829,7 +124945,7 @@ const FieldTypes_default_ = new Configuration_FieldTypesArray (Object .values (x
 x_ite_Namespace .add ("FieldTypes", "x_ite/Configuration/FieldTypes", FieldTypes_default_);
 /* harmony default export */ const FieldTypes = (FieldTypes_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(555);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -125931,7 +126047,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace .add ("X3DBrowser", "x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(555);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -126070,8 +126186,8 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 x_ite_Namespace .add ("X3DCanvasElement", "x_ite/X3DCanvasElement", X3DCanvasElement_default_);
 /* harmony default export */ const x_ite_X3DCanvasElement = (X3DCanvasElement_default_);
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(555);
-/* provided dependency */ var pako = __webpack_require__(171);
+/* provided dependency */ var jquery_$ = __webpack_require__(851);
+/* provided dependency */ var pako = __webpack_require__(731);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -126148,14 +126264,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .add ("jquery", "lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(456);
+/* provided dependency */ var libtess_libtess = __webpack_require__(528);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .add ("libtess", "lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(555);
+/* provided dependency */ var X3D_$ = __webpack_require__(851);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

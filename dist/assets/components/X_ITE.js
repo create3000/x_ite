@@ -1061,11 +1061,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
-      if (this .anisotropyTextureNode)
-         options .push ("X3D_ANISOTROPY_TEXTURE_EXT", `X3D_ANISOTROPY_TEXTURE_EXT_${this .anisotropyTextureNode .getTextureTypeString ()}`);
-
-      if (this .anisotropyTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_ANISOTROPY_TEXTURE_EXT_FLIP_Y");
+      this .anisotropyTextureNode ?.getNamedShaderOptions (options, "ANISOTROPY", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
@@ -1078,13 +1074,13 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
          if (this .anisotropyTextureNode)
          {
             const
-               anisotropyTextureMapping = this ._anisotropyTextureMapping .getValue (),
-               anisotropyTexture        = shaderObject .x3d_AnisotropyTextureEXT;
+               mapping       = this ._anisotropyTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_AnisotropyTextureEXT;
 
-            this .anisotropyTextureNode .setShaderUniforms (gl, shaderObject, renderObject, anisotropyTexture);
+            this .anisotropyTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (anisotropyTexture .textureTransformMapping,  textureTransformMapping  .get (anisotropyTextureMapping) ?? 0);
-            gl .uniform1i (anisotropyTexture .textureCoordinateMapping, textureCoordinateMapping .get (anisotropyTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
       }
    },
@@ -1130,6 +1126,9 @@ const AnisotropyMaterialExtension_default_ = AnisotropyMaterialExtension;
 
 Namespace_default().add ("AnisotropyMaterialExtension", "x_ite/Components/X_ITE/AnisotropyMaterialExtension", AnisotropyMaterialExtension_default_);
 /* harmony default export */ const X_ITE_AnisotropyMaterialExtension = (AnisotropyMaterialExtension_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
+const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.7.0")] .require ("standard/Math/Algorithm");
+var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/ClearcoatMaterialExtension.js
 /*******************************************************************************
  *
@@ -1185,6 +1184,8 @@ Namespace_default().add ("AnisotropyMaterialExtension", "x_ite/Components/X_ITE/
 
 
 
+
+
 function ClearcoatMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -1197,17 +1198,111 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    initialize ()
    {
       X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._clearcoat                 .addInterest ("set_clearcoat__",                 this);
+      this ._clearcoatTexture          .addInterest ("set_clearcoatTexture__",          this);
+      this ._clearcoatRoughness        .addInterest ("set_clearcoatRoughness__",        this);
+      this ._clearcoatRoughnessTexture .addInterest ("set_clearcoatRoughnessTexture__", this);
+      this ._clearcoatNormalTexture    .addInterest ("set_clearcoatNormalTexture__",    this);
+
+      this .set_clearcoat__ ();
+      this .set_clearcoatTexture__ ();
+      this .set_clearcoatRoughness__ ();
+      this .set_clearcoatRoughnessTexture__ ();
+      this .set_clearcoatNormalTexture__ ();
    },
    getExtensionKey ()
    {
       return X_ITE_ExtensionKeys .CLEARCOAT_MATERIAL_EXTENSION;
    },
+   set_clearcoat__ ()
+   {
+      this .clearcoat = Math .max (this ._clearcoat .getValue (), 0);
+   },
+   set_clearcoatTexture__ ()
+   {
+      this .clearcoatTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatTexture);
+
+      this .setTexture (0, this .clearcoatTextureNode);
+   },
+   set_clearcoatRoughness__ ()
+   {
+      this .clearcoatRoughness = Algorithm_default().clamp (this ._clearcoatRoughness .getValue (), 0, 1);
+   },
+   set_clearcoatRoughnessTexture__ ()
+   {
+      this .clearcoatRoughnessTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatRoughnessTexture);
+
+      this .setTexture (1, this .clearcoatRoughnessTextureNode);
+   },
+   set_clearcoatNormalTexture__ ()
+   {
+      this .clearcoatNormalTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatNormalTexture);
+
+      this .setTexture (2, this .clearcoatNormalTextureNode);
+   },
    getShaderOptions (options)
    {
+      options .push ("X3D_CLEARCOAT_MATERIAL_EXT");
 
+      if (!+this .getTextureBits ())
+         return;
+
+      options .push ("X3D_MATERIAL_TEXTURES");
+
+      this .clearcoatTextureNode          ?.getNamedShaderOptions (options, "CLEARCOAT",           true);
+      this .clearcoatRoughnessTextureNode ?.getNamedShaderOptions (options, "CLEARCOAT_ROUGHNESS", true);
+      this .clearcoatNormalTextureNode    ?.getNamedShaderOptions (options, "CLEARCOAT_NORMAL",    true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      gl .uniform1f (shaderObject .x3d_ClearcoatEXT,          this .clearcoat);
+      gl .uniform1f (shaderObject .x3d_ClearcoatRoughnessEXT, this .clearcoatRoughness);
+
+      if (+this .getTextureBits ())
+      {
+         // Clearcoat parameters
+
+         if (this .clearcoatTextureNode)
+         {
+            const
+               mapping       = this ._clearcoatTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_ClearcoatTextureEXT;
+
+            this .clearcoatTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
+
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
+         }
+
+         // Clearcoat roughness parameters
+
+         if (this .clearcoatRoughnessTextureNode)
+         {
+            const
+               mapping       = this ._clearcoatRoughnessTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_ClearcoatRoughnessTextureEXT;
+
+            this .clearcoatRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
+
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
+         }
+
+         // Clearcoat normal parameters
+
+         if (this .clearcoatNormalTextureNode)
+         {
+            const
+               mapping       = this ._clearcoatNormalTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_ClearcoatNormalTextureEXT;
+
+            this .clearcoatNormalTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
+
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
+         }
+      }
    },
 });
 
@@ -1743,9 +1838,6 @@ const IridescenceMaterialExtension_default_ = IridescenceMaterialExtension;
 
 Namespace_default().add ("IridescenceMaterialExtension", "x_ite/Components/X_ITE/IridescenceMaterialExtension", IridescenceMaterialExtension_default_);
 /* harmony default export */ const X_ITE_IridescenceMaterialExtension = (IridescenceMaterialExtension_default_);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.7.0")] .require ("standard/Math/Algorithm");
-var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/SheenMaterialExtension.js
 /*******************************************************************************
  *
@@ -1870,17 +1962,8 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
-      if (this .sheenColorTextureNode)
-         options .push ("X3D_SHEEN_COLOR_TEXTURE_EXT", `X3D_SHEEN_COLOR_TEXTURE_EXT_${this .sheenColorTextureNode .getTextureTypeString ()}`);
-
-      if (this .sheenColorTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_SHEEN_COLOR_TEXTURE_EXT_FLIP_Y");
-
-      if (this .sheenRoughnessTextureNode)
-         options .push ("X3D_SHEEN_ROUGHNESS_TEXTURE_EXT", `X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_${this .sheenRoughnessTextureNode .getTextureTypeString ()}`);
-
-      if (this .sheenRoughnessTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_FLIP_Y");
+      this .sheenColorTextureNode     ?.getNamedShaderOptions (options, "SHEEN_COLOR",     true);
+      this .sheenRoughnessTextureNode ?.getNamedShaderOptions (options, "SHEEN_ROUGHNESS", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
@@ -1911,6 +1994,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
             gl .uniform1i (sheenColorTexture .textureTransformMapping,  textureTransformMapping  .get (sheenColorTextureMapping) ?? 0);
             gl .uniform1i (sheenColorTexture .textureCoordinateMapping, textureCoordinateMapping .get (sheenColorTextureMapping) ?? 0);
          }
+
          // Sheen color parameters
 
          if (this .sheenRoughnessTextureNode)
@@ -2093,17 +2177,8 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
-      if (this .specularTextureNode)
-         options .push ("X3D_SPECULAR_TEXTURE_EXT", `X3D_SPECULAR_TEXTURE_EXT_${this .specularTextureNode .getTextureTypeString ()}`);
-
-      if (this .specularTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_SPECULAR_TEXTURE_EXT_FLIP_Y");
-
-      if (this .specularColorTextureNode)
-         options .push ("X3D_SPECULAR_COLOR_TEXTURE_EXT", `X3D_SPECULAR_COLOR_TEXTURE_EXT_${this .specularColorTextureNode .getTextureTypeString ()}`);
-
-      if (this .specularColorTextureNode ?.getTextureType () === 1)
-         options .push ("X3D_SPECULAR_COLOR_TEXTURE_EXT_FLIP_Y");
+      this .specularTextureNode      ?.getNamedShaderOptions (options, "SPECULAR",       true);
+      this .specularColorTextureNode ?.getNamedShaderOptions (options, "SPECULAR_COLOR", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
@@ -2117,13 +2192,13 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
          if (this .specularTextureNode)
          {
             const
-               specularTextureMapping = this ._specularTextureMapping .getValue (),
-               specularTexture        = shaderObject .x3d_SpecularTextureEXT;
+               mapping      = this ._specularTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_SpecularTextureEXT;
 
-            this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularTexture);
+            this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (specularTextureMapping) ?? 0);
-            gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
 
          // Specular color parameters
@@ -2131,13 +2206,13 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
          if (this .specularColorTextureNode)
          {
             const
-               specularColorTextureMapping = this ._specularColorTextureMapping .getValue (),
-               specularColorTexture        = shaderObject .x3d_SpecularColorTextureEXT;
+               mapping       = this ._specularColorTextureMapping .getValue (),
+               uniformStruct = shaderObject .x3d_SpecularColorTextureEXT;
 
-            this .specularColorTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularColorTexture);
+            this .specularColorTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
-            gl .uniform1i (specularColorTexture .textureTransformMapping,  textureTransformMapping  .get (specularColorTextureMapping) ?? 0);
-            gl .uniform1i (specularColorTexture .textureCoordinateMapping, textureCoordinateMapping .get (specularColorTextureMapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
          }
       }
    },
