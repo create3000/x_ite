@@ -1061,7 +1061,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
-      this .anisotropyTextureNode ?.getNamedShaderOptions (options, "ANISOTROPY", true);
+      this .anisotropyTextureNode ?.getShaderOptions (options, "ANISOTROPY", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
@@ -1250,9 +1250,9 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
-      this .clearcoatTextureNode          ?.getNamedShaderOptions (options, "CLEARCOAT",           true);
-      this .clearcoatRoughnessTextureNode ?.getNamedShaderOptions (options, "CLEARCOAT_ROUGHNESS", true);
-      this .clearcoatNormalTextureNode    ?.getNamedShaderOptions (options, "CLEARCOAT_NORMAL",    true);
+      this .clearcoatTextureNode          ?.getShaderOptions (options, "CLEARCOAT",           true);
+      this .clearcoatRoughnessTextureNode ?.getShaderOptions (options, "CLEARCOAT_ROUGHNESS", true);
+      this .clearcoatNormalTextureNode    ?.getShaderOptions (options, "CLEARCOAT_NORMAL",    true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
@@ -1962,8 +1962,8 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
-      this .sheenColorTextureNode     ?.getNamedShaderOptions (options, "SHEEN_COLOR",     true);
-      this .sheenRoughnessTextureNode ?.getNamedShaderOptions (options, "SHEEN_ROUGHNESS", true);
+      this .sheenColorTextureNode     ?.getShaderOptions (options, "SHEEN_COLOR",     true);
+      this .sheenRoughnessTextureNode ?.getShaderOptions (options, "SHEEN_ROUGHNESS", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
@@ -2177,8 +2177,8 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
-      this .specularTextureNode      ?.getNamedShaderOptions (options, "SPECULAR",       true);
-      this .specularColorTextureNode ?.getNamedShaderOptions (options, "SPECULAR_COLOR", true);
+      this .specularTextureNode      ?.getShaderOptions (options, "SPECULAR",       true);
+      this .specularColorTextureNode ?.getShaderOptions (options, "SPECULAR_COLOR", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {

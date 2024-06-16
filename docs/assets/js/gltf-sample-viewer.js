@@ -831,31 +831,28 @@ class SampleViewer
 
    addVariants ()
    {
-      const variants = $.try (() => this .scene .getExportedNode ("MaterialVariants"));
+      const switchNode = $.try (() => this .scene .getExportedNode ("MaterialVariants"));
 
-      if (!variants)
+      if (!switchNode)
          return;
 
       $("#material-variants") .empty ();
       $("<b></b>") .text ("Material Variants") .appendTo ($("#material-variants"));
 
-      for (const switchNode of variants .children)
-      {
-         const select = $("<select></select>")
-            .on ("change", () =>
-            {
-               switchNode .whichChoice = select .val ();
-            })
-            .appendTo ($("#material-variants"));
-
-         for (const i of switchNode .children .keys ())
+      const select = $("<select></select>")
+         .on ("change", () =>
          {
-            $("<option></option>")
-               .prop ("selected", i === 0)
-               .text (switchNode .getValue () .getMetaData ("MaterialVariants/names") [i])
-               .val (i)
-               .appendTo (select);
-         }
+            switchNode .whichChoice = select .val ();
+         })
+         .appendTo ($("#material-variants"));
+
+      for (const [i, name] of switchNode .getValue () .getMetaData ("MaterialVariants/names") .entries ())
+      {
+         $("<option></option>")
+            .prop ("selected", i === 0)
+            .val (i)
+            .text (name)
+            .appendTo (select);
       }
 
       $("#material-variants") .show ();
