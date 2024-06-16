@@ -1,9 +1,9 @@
 /* X_ITE v9.7.0 */var __webpack_modules__ = ({
 
-/***/ 888:
+/***/ 772:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(356);
+/* provided dependency */ var jQuery = __webpack_require__(904);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -199,7 +199,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 218:
+/***/ 742:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -213,7 +213,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(356)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(904)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -424,7 +424,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 356:
+/***/ 904:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11148,7 +11148,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 793:
+/***/ 533:
 /***/ ((module) => {
 
 /**
@@ -15927,7 +15927,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 176:
+/***/ 228:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19172,7 +19172,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 255:
+/***/ 635:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -34231,7 +34231,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 x_ite_Namespace .add ("X3DBaseNode", "x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
 /* harmony default export */ const Base_X3DBaseNode = (X3DBaseNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(356);
+/* provided dependency */ var $ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39010,7 +39010,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .add ("X3DProtoDeclaration", "x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(356);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39268,7 +39268,7 @@ const Expressions_default_ = Expressions;
 x_ite_Namespace .add ("Expressions", "x_ite/Parser/Expressions", Expressions_default_);
 /* harmony default export */ const Parser_Expressions = (Expressions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(356);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41968,7 +41968,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .add ("VRMLParser", "x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(356);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44012,7 +44012,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(356);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47574,7 +47574,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .add ("GLTF2Parser", "x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(356);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47726,7 +47726,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .add ("GLB2Parser", "x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(356);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51085,8 +51085,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .add ("MatrixStack", "standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(356);
-/* provided dependency */ var libtess = __webpack_require__(793);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(904);
+/* provided dependency */ var libtess = __webpack_require__(533);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53854,7 +53854,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .add ("SVGParser", "x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(356);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54221,7 +54221,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .add ("Plane3", "standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(793);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(533);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -62576,6 +62576,13 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, Texturi
             options .push (`X3D_${name}_TEXTURE${ext}_LINEAR`);
       }
    },
+   setNamedShaderUniforms (gl, shaderObject, renderObject, uniformStruct, mapping, textureTransformMapping, textureCoordinateMapping)
+   {
+      this .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
+
+      gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
+      gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
+   },
 });
 
 Object .defineProperties (X3DSingleTextureNode,
@@ -62790,7 +62797,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .add ("X3DTexture2DNode", "x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(356);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66372,7 +66379,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .add ("X3DWorld", "x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(356);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67306,7 +67313,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 x_ite_Namespace .add ("ProtoDeclarationArray", "x_ite/Prototype/ProtoDeclarationArray", ProtoDeclarationArray_default_);
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (ProtoDeclarationArray_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(356);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90720,8 +90727,105 @@ const X3DShaderNode_default_ = X3DShaderNode;
 
 x_ite_Namespace .add ("X3DShaderNode", "x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
+;// CONCATENATED MODULE: ./src/assets/shaders/MaterialTextures.js
+const MaterialTextures_default_ = {
+   names: [
+      "x3d_AmbientTexture",
+      "x3d_DiffuseTexture",
+      "x3d_SpecularTexture",
+      "x3d_EmissiveTexture",
+      "x3d_ShininessTexture",
+      "x3d_BaseTexture",
+      "x3d_MetallicRoughnessTexture",
+      "x3d_OcclusionTexture",
+      "x3d_NormalTexture",
+      "x3d_AnisotropyTextureEXT",
+      "x3d_ClearcoatTextureEXT",
+      "x3d_ClearcoatRoughnessTextureEXT",
+      "x3d_ClearcoatNormalTextureEXT",
+      "x3d_SheenColorTextureEXT",
+      "x3d_SheenRoughnessTextureEXT",
+      "x3d_SpecularTextureEXT",
+      "x3d_SpecularColorTextureEXT",
+   ],
+   texture (name, sizzle = "rgba", colorspace = "")
+   {
+      const ext = !!name .match (/EXT$/);
+
+      name = name .replace (/EXT$/, "")
+
+      const define = name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ();
+
+      const
+          EXT = ext ?  "EXT" : "",
+         _EXT = ext ? "_EXT" : "";
+
+      const string = /* glsl */ `
+      #if defined(${define}${_EXT})
+uniform ${name}Parameters${EXT} ${name}${EXT};${["", "float", "vec2", "vec3", "vec4"] [sizzle .length]} get${name .replace (/^x3d_/g, "")}${EXT}(){vec3 texCoord=getTexCoord(${name}${EXT}.textureTransformMapping,${name}${EXT}.textureCoordinateMapping);
+#if defined(${define}${_EXT}_FLIP_Y)
+texCoord.t=1.0-texCoord.t;
+#endif
+#if __VERSION__==100
+#if defined(${define}${_EXT}_2D)
+vec4 textureColor=texture2D(${name}${EXT}.texture2D,texCoord.st);
+#elif defined(${define}${_EXT}_CUBE)
+vec4 textureColor=textureCube(${name}${EXT}.textureCube,texCoord);
+#endif
+#else
+#if defined(${define}${_EXT}_2D)
+vec4 textureColor=texture(${name}${EXT}.texture2D,texCoord.st);
+#elif defined(${define}${_EXT}_3D)
+vec4 textureColor=texture(${name}${EXT}.texture3D,texCoord);
+#elif defined(${define}${_EXT}_CUBE)
+vec4 textureColor=texture(${name}${EXT}.textureCube,texCoord);
+#endif
+#endif
+#if defined(${define}${_EXT}_LINEAR)
+#if ${colorspace === "sRGB" ? 1 : 0}
+textureColor=linearTosRGB(textureColor);
+#endif
+#else
+#if ${colorspace === "linear" ? 1 : 0}
+textureColor*=sRGBToLinear(textureColor);
+#endif
+#endif
+return textureColor.${sizzle};}
+#endif
+`
+
+      return string;
+   },
+   structs ()
+   {
+      return this .names .map (name =>
+      {
+         const define = name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ();
+
+         return /* glsl */ `
+         #if defined(${define})
+struct ${name .replace (/(EXT)?$/, "Parameters$1")}{mediump int textureTransformMapping;mediump int textureCoordinateMapping;
+#if defined(${define}_2D)
+mediump sampler2D texture2D;
+#endif
+#if defined(${define}_3D)&&__VERSION__!=100
+mediump sampler3D texture3D;
+#endif
+#if defined(${define}_CUBE)
+mediump samplerCube textureCube;
+#endif
+};
+#endif
+`
+      }) .join ("\n");
+   }
+};
+;
+
+x_ite_Namespace .add ("MaterialTextures", "assets/shaders/MaterialTextures", MaterialTextures_default_);
+/* harmony default export */ const MaterialTextures = (MaterialTextures_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(356);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90768,6 +90872,7 @@ x_ite_Namespace .add ("X3DShaderNode", "x_ite/Components/Shaders/X3DShaderNode",
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -90949,27 +91054,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_SpecularEXT           = gl .getUniformLocation (program, "x3d_SpecularEXT");
       this .x3d_SpecularColorEXT      = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
 
-      const materialTextures = [
-         "x3d_AmbientTexture",
-         "x3d_DiffuseTexture",
-         "x3d_SpecularTexture",
-         "x3d_EmissiveTexture",
-         "x3d_ShininessTexture",
-         "x3d_BaseTexture",
-         "x3d_MetallicRoughnessTexture",
-         "x3d_OcclusionTexture",
-         "x3d_NormalTexture",
-         "x3d_AnisotropyTextureEXT",
-         "x3d_ClearcoatTextureEXT",
-         "x3d_ClearcoatRoughnessTextureEXT",
-         "x3d_ClearcoatNormalTextureEXT",
-         "x3d_SheenColorTextureEXT",
-         "x3d_SheenRoughnessTextureEXT",
-         "x3d_SpecularTextureEXT",
-         "x3d_SpecularColorTextureEXT",
-      ];
-
-      for (const materialTexture of materialTextures)
+      for (const materialTexture of MaterialTextures .names)
       {
          this [materialTexture] = {
             textureTransformMapping:  gl .getUniformLocation (program, materialTexture + ".textureTransformMapping"),
@@ -91106,7 +91191,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .uniform1i  (this .x3d_LinePropertiesTexture, browser .getDefaultTexture2DUnit ());
       gl .uniform1i  (this .x3d_FillPropertiesTexture, browser .getDefaultTexture2DUnit ());
 
-      for (const materialTexture of materialTextures)
+      for (const materialTexture of MaterialTextures .names)
       {
          gl .uniform1i (this [materialTexture] .texture2D,   browser .getDefaultTexture2DUnit ());
          gl .uniform1i (this [materialTexture] .texture3D,   browser .getDefaultTexture3DUnit ());
@@ -93186,27 +93271,10 @@ const ProgramShader_default_ = ProgramShader;
 x_ite_Namespace .add ("ProgramShader", "x_ite/Components/Shaders/ProgramShader", ProgramShader_default_);
 /* harmony default export */ const Shaders_ProgramShader = (ProgramShader_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/Types.glsl.js
-const materialTextures = [
-   "x3d_AmbientTexture",
-   "x3d_DiffuseTexture",
-   "x3d_SpecularTexture",
-   "x3d_EmissiveTexture",
-   "x3d_ShininessTexture",
-   "x3d_BaseTexture",
-   "x3d_MetallicRoughnessTexture",
-   "x3d_OcclusionTexture",
-   "x3d_NormalTexture",
-   "x3d_AnisotropyTextureEXT",
-   "x3d_ClearcoatTextureEXT",
-   "x3d_ClearcoatRoughnessTextureEXT",
-   "x3d_ClearcoatNormalTextureEXT",
-"x3d_SheenColorTextureEXT",
-   "x3d_SheenRoughnessTextureEXT",
-   "x3d_SpecularTextureEXT",
-   "x3d_SpecularColorTextureEXT",
-];
 
-const Types_glsl_default_ = /* glsl */ `#if defined(X3D_FOG)
+
+const Types_glsl_default_ = /* glsl */ `
+#if defined(X3D_FOG)
 struct x3d_FogParameters{mediump int type;mediump vec3 color;mediump float visibilityRange;mediump mat3 matrix;};
 #endif
 #if defined(X3D_LIGHTING)
@@ -93249,27 +93317,7 @@ struct x3d_MaterialParameters{mediump float ambientIntensity;mediump vec3 diffus
 #if defined(X3D_PHYSICAL_MATERIAL)
 struct x3d_PhysicalMaterialParameters{mediump vec3 baseColor;mediump vec3 emissiveColor;mediump float metallic;mediump float roughness;mediump float occlusionStrength;mediump float normalScale;mediump float transparency;};
 #endif
-
-${materialTextures .map (name => /* glsl */ `
-#if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()})
-struct ${name .replace (/(EXT)?$/, "Parameters$1")}
-{
-mediump int         textureTransformMapping;
-mediump int         textureCoordinateMapping;
-#if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()}_2D)
-mediump sampler2D   texture2D;
-#endif
-#if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()}_3D) && __VERSION__ != 100
-mediump sampler3D   texture3D;
-#endif
-#if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()}_CUBE)
-mediump samplerCube textureCube;
-#endif
-};
-#endif
-//uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
-`) .join ("\n")}
- 
+${MaterialTextures .structs ()} 
 #if defined(X3D_MULTI_TEXTURING)
 struct x3d_MultiTextureParameters{mediump int mode;mediump int alphaMode;mediump int source;mediump int function;};
 #endif
@@ -93765,7 +93813,8 @@ const ShaderSource_default_ = ShaderSource;
 x_ite_Namespace .add ("ShaderSource", "x_ite/Browser/Shaders/ShaderSource", ShaderSource_default_);
 /* harmony default export */ const Shaders_ShaderSource = (ShaderSource_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/ClipPlanes1.glsl.js
-const ClipPlanes1_glsl_default_ = /* glsl */ `#if defined(X3D_CLIP_PLANES)
+const ClipPlanes1_glsl_default_ = /* glsl */ `
+#if defined(X3D_CLIP_PLANES)
 uniform vec4 x3d_ClipPlane[X3D_NUM_CLIP_PLANES];void clip(){for(int i=0;i<X3D_NUM_CLIP_PLANES;++i){if(dot(vertex,x3d_ClipPlane[i].xyz)-x3d_ClipPlane[i].w<0.0)discard;}}
 #endif
 `
@@ -93774,7 +93823,8 @@ uniform vec4 x3d_ClipPlane[X3D_NUM_CLIP_PLANES];void clip(){for(int i=0;i<X3D_NU
 x_ite_Namespace .add ("ClipPlanes1.glsl", "assets/shaders/webgl1/common/ClipPlanes1.glsl", ClipPlanes1_glsl_default_);
 /* harmony default export */ const ClipPlanes1_glsl = (ClipPlanes1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Fog1.glsl.js
-const Fog1_glsl_default_ = /* glsl */ `#if defined(X3D_FOG)
+const Fog1_glsl_default_ = /* glsl */ `
+#if defined(X3D_FOG)
 uniform x3d_FogParameters x3d_Fog;float getFogInterpolant(){
 #if defined(X3D_FOG_COORDS)
 return clamp(1.0-fogDepth,0.0,1.0);
@@ -93804,7 +93854,8 @@ const maxTextures          = 4;
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Fragment1.glsl.js
 
 
-const Fragment1_glsl_default_ = /* glsl */ `#if defined(X3D_NORMAL_TEXTURE)
+const Fragment1_glsl_default_ = /* glsl */ `
+#if defined(X3D_NORMAL_TEXTURE)
 #extension GL_OES_standard_derivatives:enable
 #endif
 #if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
@@ -93821,23 +93872,19 @@ varying vec4 color;
 #endif
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
-
 ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 varying vec4 texCoord${i};
 #endif
-`) .join ("\n")}
- 
+`) .join ("\n")} 
 #endif
 #else
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
-
 ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 vec4 texCoord${i} = vec4 (0.0, 0.0, 0.0, 1.0);
 #endif
-`) .join ("\n")}
- 
+`) .join ("\n")} 
 #endif
 #endif
 #if defined(X3D_NORMALS)
@@ -93900,7 +93947,8 @@ gl_FragDepthEXT=log2(depth)*x3d_LogarithmicFarFactor1_2;
 x_ite_Namespace .add ("Fragment1.glsl", "assets/shaders/webgl1/common/Fragment1.glsl", Fragment1_glsl_default_);
 /* harmony default export */ const Fragment1_glsl = (Fragment1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Hatch1.glsl.js
-const Hatch1_glsl_default_ = /* glsl */ `#if(defined(X3D_GEOMETRY_2D)||defined(X3D_GEOMETRY_3D))&&defined(X3D_STYLE_PROPERTIES)
+const Hatch1_glsl_default_ = /* glsl */ `
+#if(defined(X3D_GEOMETRY_2D)||defined(X3D_GEOMETRY_3D))&&defined(X3D_STYLE_PROPERTIES)
 uniform x3d_FillPropertiesParameters x3d_FillProperties;vec4 getHatchColor(vec4 color){vec4 finalColor=x3d_FillProperties.filled?color:vec4(0.0);
 #if defined(X3D_STYLE_PROPERTIES_TEXTURE)
 vec2 t=gl_FragCoord.xy/(32.0*x3d_FillProperties.scale);vec4 hatch=texture2D(x3d_FillProperties.texture,vec2(t.x,1.0-t.y));hatch.rgb*=x3d_FillProperties.hatchColor;finalColor=mix(finalColor,hatch,hatch.a);
@@ -93913,7 +93961,8 @@ return finalColor;}
 x_ite_Namespace .add ("Hatch1.glsl", "assets/shaders/webgl1/common/Hatch1.glsl", Hatch1_glsl_default_);
 /* harmony default export */ const Hatch1_glsl = (Hatch1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Lighting1.glsl.js
-const Lighting1_glsl_default_ = /* glsl */ `#if defined(X3D_LIGHTING)
+const Lighting1_glsl_default_ = /* glsl */ `
+#if defined(X3D_LIGHTING)
 float getAttenuation(const in vec3 attenuation,const in float distanceToLight){return 1.0/max(dot(attenuation,vec3(1.0,distanceToLight,distanceToLight*distanceToLight)),1.0);}float getSpotFactor(const in vec3 pointToLight,const in vec3 direction,const in float cutOffAngle,const in float beamWidth){float spotAngle=acos(clamp(dot(-pointToLight,direction),-1.0,1.0));if(spotAngle>=cutOffAngle)return 0.0;else if(spotAngle<=beamWidth)return 1.0;return(spotAngle-cutOffAngle)/(beamWidth-cutOffAngle);}
 #endif
 `
@@ -93922,7 +93971,8 @@ float getAttenuation(const in vec3 attenuation,const in float distanceToLight){r
 x_ite_Namespace .add ("Lighting1.glsl", "assets/shaders/webgl1/common/Lighting1.glsl", Lighting1_glsl_default_);
 /* harmony default export */ const Lighting1_glsl = (Lighting1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Material1.glsl.js
-const Material1_glsl_default_ = /* glsl */ `uniform x3d_MaterialParameters x3d_Material;
+const Material1_glsl_default_ = /* glsl */ `
+uniform x3d_MaterialParameters x3d_Material;
 #if defined(X3D_LIGHTING)
 #pragma X3D include "Lighting.glsl"
 #pragma X3D include "Shadow.glsl"
@@ -93938,7 +93988,8 @@ finalColor+=attenuationSpotFactor*light.color*(ambientTerm+diffuseSpecularTerm);
 x_ite_Namespace .add ("Material1.glsl", "assets/shaders/webgl1/common/Material1.glsl", Material1_glsl_default_);
 /* harmony default export */ const Material1_glsl = (Material1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Normal1.glsl.js
-const Normal1_glsl_default_ = /* glsl */ `#if defined(X3D_NORMAL_TEXTURE)
+const Normal1_glsl_default_ = /* glsl */ `
+#if defined(X3D_NORMAL_TEXTURE)
 mat3 getTBNMatrix(const in vec2 texCoord,const in vec3 ng){vec3 pos_dx=dFdx(vertex);vec3 pos_dy=dFdy(vertex);vec2 tex_dx=dFdx(texCoord);vec2 tex_dy=dFdy(texCoord);vec3 t=(tex_dy.t*pos_dx-tex_dx.t*pos_dy)/(tex_dx.s*tex_dy.t-tex_dy.s*tex_dx.t);vec3 N=ng;vec3 T=normalize(t-N*dot(N,t));vec3 B=normalize(cross(N,T));mat3 tbn=mat3(T,B,N);return tbn;}
 #endif
 #if defined(X3D_NORMAL_TEXTURE)
@@ -93976,7 +94027,8 @@ info.t=t;info.b=b;return info;}vec3 getNormalVector(const in float normalScale){
 x_ite_Namespace .add ("Normal1.glsl", "assets/shaders/webgl1/common/Normal1.glsl", Normal1_glsl_default_);
 /* harmony default export */ const Normal1_glsl = (Normal1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Perlin1.glsl.js
-const Perlin1_glsl_default_ = /* glsl */ `float rand(const in vec2 co){return fract(sin(dot(co.xy,vec2(12.9898,78.233)))*43758.5453);}float rand(const in vec2 co,const in float l){return rand(vec2(rand(co),l));}float rand(const in vec2 co,const in float l,const in float t){return rand(vec2(rand(co,l),t));}float perlin(const in vec2 p,const in float dim,const in float time){const float M_PI=3.14159265358979323846;vec2 pos=floor(p*dim);vec2 posx=pos+vec2(1.0,0.0);vec2 posy=pos+vec2(0.0,1.0);vec2 posxy=pos+vec2(1.0);float c=rand(pos,dim,time);float cx=rand(posx,dim,time);float cy=rand(posy,dim,time);float cxy=rand(posxy,dim,time);vec2 d=fract(p*dim);d=-0.5*cos(d*M_PI)+0.5;float ccx=mix(c,cx,d.x);float cycxy=mix(cy,cxy,d.x);float center=mix(ccx,cycxy,d.y);return center*2.0-1.0;}vec3 perlin(const in vec3 p){return vec3(perlin(p.xy,1.0,0.0),perlin(p.yz,1.0,0.0),perlin(p.zx,1.0,0.0));}`
+const Perlin1_glsl_default_ = /* glsl */ `
+float rand(const in vec2 co){return fract(sin(dot(co.xy,vec2(12.9898,78.233)))*43758.5453);}float rand(const in vec2 co,const in float l){return rand(vec2(rand(co),l));}float rand(const in vec2 co,const in float l,const in float t){return rand(vec2(rand(co,l),t));}float perlin(const in vec2 p,const in float dim,const in float time){const float M_PI=3.14159265358979323846;vec2 pos=floor(p*dim);vec2 posx=pos+vec2(1.0,0.0);vec2 posy=pos+vec2(0.0,1.0);vec2 posxy=pos+vec2(1.0);float c=rand(pos,dim,time);float cx=rand(posx,dim,time);float cy=rand(posy,dim,time);float cxy=rand(posxy,dim,time);vec2 d=fract(p*dim);d=-0.5*cos(d*M_PI)+0.5;float ccx=mix(c,cx,d.x);float cycxy=mix(cy,cxy,d.x);float center=mix(ccx,cycxy,d.y);return center*2.0-1.0;}vec3 perlin(const in vec3 p){return vec3(perlin(p.xy,1.0,0.0),perlin(p.yz,1.0,0.0),perlin(p.zx,1.0,0.0));}`
 ;
 
 x_ite_Namespace .add ("Perlin1.glsl", "assets/shaders/webgl1/common/Perlin1.glsl", Perlin1_glsl_default_);
@@ -93984,15 +94036,14 @@ x_ite_Namespace .add ("Perlin1.glsl", "assets/shaders/webgl1/common/Perlin1.glsl
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Point1.glsl.js
 
 
-const Point1_glsl_default_ = /* glsl */ `#if defined(X3D_GEOMETRY_0D)&&defined(X3D_STYLE_PROPERTIES)
+const Point1_glsl_default_ = /* glsl */ `
+#if defined(X3D_GEOMETRY_0D)&&defined(X3D_STYLE_PROPERTIES)
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
-void setPointTexCoords(){vec4 texCoord=vec4(gl_PointCoord.x,1.0-gl_PointCoord.y,0.0,1.0);
-${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
+void setPointTexCoords(){vec4 texCoord=vec4(gl_PointCoord.x,1.0-gl_PointCoord.y,0.0,1.0);${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 texCoord${i} = texCoord;
 #endif
-`) .join ("\n")}
-}
+`) .join ("\n")}}
 #define getPointColor(color)(color)
 #else
 #define setPointTexCoords()
@@ -94005,7 +94056,8 @@ varying float pointSize;vec4 getPointColor(in vec4 color){if(pointSize>1.0)color
 x_ite_Namespace .add ("Point1.glsl", "assets/shaders/webgl1/common/Point1.glsl", Point1_glsl_default_);
 /* harmony default export */ const Point1_glsl = (Point1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/PointSize1.glsl.js
-const PointSize1_glsl_default_ = /* glsl */ `#if defined(X3D_GEOMETRY_0D)&&defined(X3D_STYLE_PROPERTIES)
+const PointSize1_glsl_default_ = /* glsl */ `
+#if defined(X3D_GEOMETRY_0D)&&defined(X3D_STYLE_PROPERTIES)
 uniform x3d_PointPropertiesParameters x3d_PointProperties;varying float pointSize;float getPointSize(const in vec3 vertex){float pointSizeMinValue=x3d_PointProperties.pointSizeMinValue;float pointSizeMaxValue=x3d_PointProperties.pointSizeMaxValue;vec3 attenuation=x3d_PointProperties.attenuation;float dL=length(vertex);float pointSize=0.0;pointSize=x3d_PointProperties.pointSizeScaleFactor;pointSize/=dot(attenuation,vec3(1.0,dL,dL*dL));pointSize=clamp(pointSize,pointSizeMinValue,pointSizeMaxValue);
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURE)
 return pointSize;
@@ -94020,7 +94072,8 @@ return pointSize+1.0-step(pointSize,1.0);
 x_ite_Namespace .add ("PointSize1.glsl", "assets/shaders/webgl1/common/PointSize1.glsl", PointSize1_glsl_default_);
 /* harmony default export */ const PointSize1_glsl = (PointSize1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Shadow1.glsl.js
-const Shadow1_glsl_default_ = /* glsl */ `#if defined(X3D_FRAGMENT_SHADER)&&defined(X3D_SHADOWS)
+const Shadow1_glsl_default_ = /* glsl */ `
+#if defined(X3D_FRAGMENT_SHADER)&&defined(X3D_SHADOWS)
 uniform sampler2D x3d_ShadowMap[X3D_NUM_LIGHTS];float getShadowDepth(const in int index,const in vec2 shadowCoord){
 #if X3D_NUM_LIGHTS>0
 if(index==0)return texture2D(x3d_ShadowMap[0],shadowCoord).r;
@@ -94070,50 +94123,44 @@ x_ite_Namespace .add ("Shadow1.glsl", "assets/shaders/webgl1/common/Shadow1.glsl
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Texture1.glsl.js
 
 
-const Texture1_glsl_default_ = /* glsl */ `#if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
+const Texture1_glsl_default_ = /* glsl */ `
+#if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
 #pragma X3D include "Perlin.glsl"
 uniform mat4 x3d_TextureMatrix[X3D_NUM_TEXTURE_TRANSFORMS];mat4 getTextureMatrix(const in int i){
 #if X3D_NUM_TEXTURE_TRANSFORMS>1
-mat4 textureTransformMatrix=mat4(0.0);
-${Array .from ({ length: maxTextureTransforms }, (_, i) => /* glsl */ `
+mat4 textureTransformMatrix=mat4(0.0);${Array .from ({ length: maxTextureTransforms }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_TRANSFORMS > ${i}
 ${i === 0 ? "" : "else"} if (i == ${i})
 textureTransformMatrix = x3d_TextureMatrix [${i}];
 #endif
-`) .join ("\n")}
- return textureTransformMatrix;
+`) .join ("\n")} return textureTransformMatrix;
 #else
 return x3d_TextureMatrix[0];
 #endif
 }vec4 getTexCoord(const in int i){
 #if X3D_NUM_TEXTURE_COORDINATES>1
-vec4 texCoord=vec4(0.0);
-${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
+vec4 texCoord=vec4(0.0);${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 ${i === 0 ? "" : "else"} if (i == ${i})
 texCoord = texCoord${i};
 #endif
-`) .join ("\n")}
- return texCoord;
+`) .join ("\n")} return texCoord;
 #else
 return texCoord0;
 #endif
-}vec4 getTexCoord(const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator,const in int textureTransformMapping,const in int textureCoordinateMapping){int mode=textureCoordinateGenerator.mode;if(mode==x3d_None){return getTextureMatrix(textureTransformMapping)*getTexCoord(textureCoordinateMapping);}else if(mode==x3d_Sphere){vec2 N=normalize(gl_FrontFacing?normal:-normal).xy;return vec4(N*0.5+0.5,0.0,1.0);}else if(mode==x3d_CameraSpaceNormal){vec3 N=normalize(gl_FrontFacing?normal:-normal);return vec4(N,1.0);}else if(mode==x3d_CameraSpacePosition){return vec4(vertex,1.0);}else if(mode==x3d_CameraSpaceReflectionVector){vec3 N=normalize(gl_FrontFacing?normal:-normal);return vec4(reflect(normalize(vertex),-N),1.0);}else if(mode==x3d_SphereLocal){vec2 N=normalize(gl_FrontFacing?localNormal:-localNormal).xy;return vec4(N*0.5+0.5,0.0,1.0);}else if(mode==x3d_Coord){return vec4(localVertex,1.0);}else if(mode==x3d_CoordEye){return vec4(vertex,1.0);}else if(mode==x3d_Noise){vec3 scale=vec3(textureCoordinateGenerator.parameter[0],textureCoordinateGenerator.parameter[1],textureCoordinateGenerator.parameter[2]);vec3 translation=vec3(textureCoordinateGenerator.parameter[3],textureCoordinateGenerator.parameter[4],textureCoordinateGenerator.parameter[5]);return vec4(perlin(localVertex*scale+translation),1.0);}else if(mode==x3d_NoiseEye){vec3 scale=vec3(textureCoordinateGenerator.parameter[0],textureCoordinateGenerator.parameter[1],textureCoordinateGenerator.parameter[2]);vec3 translation=vec3(textureCoordinateGenerator.parameter[3],textureCoordinateGenerator.parameter[4],textureCoordinateGenerator.parameter[5]);return vec4(perlin(vertex*scale+translation),1.0);}else if(mode==x3d_SphereReflect){vec3 N=normalize(gl_FrontFacing?normal:-normal);float eta=textureCoordinateGenerator.parameter[0];return vec4(refract(normalize(vertex),-N,eta),1.0);}else if(mode==x3d_SphereReflectLocal){vec3 N=normalize(gl_FrontFacing?localNormal:-localNormal);float eta=textureCoordinateGenerator.parameter[0];vec3 eye=vec3(textureCoordinateGenerator.parameter[1],textureCoordinateGenerator.parameter[2],textureCoordinateGenerator.parameter[3]);return vec4(refract(normalize(localVertex-eye),-N,eta),1.0);}return getTextureMatrix(textureTransformMapping)*getTexCoord(textureCoordinateMapping);}uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator[X3D_NUM_TEXTURE_COORDINATES];vec3 getTexCoord(const in int textureTransformMapping,const in int textureCoordinateMapping){vec4 texCoord;
-${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
+}vec4 getTexCoord(const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator,const in int textureTransformMapping,const in int textureCoordinateMapping){int mode=textureCoordinateGenerator.mode;if(mode==x3d_None){return getTextureMatrix(textureTransformMapping)*getTexCoord(textureCoordinateMapping);}else if(mode==x3d_Sphere){vec2 N=normalize(gl_FrontFacing?normal:-normal).xy;return vec4(N*0.5+0.5,0.0,1.0);}else if(mode==x3d_CameraSpaceNormal){vec3 N=normalize(gl_FrontFacing?normal:-normal);return vec4(N,1.0);}else if(mode==x3d_CameraSpacePosition){return vec4(vertex,1.0);}else if(mode==x3d_CameraSpaceReflectionVector){vec3 N=normalize(gl_FrontFacing?normal:-normal);return vec4(reflect(normalize(vertex),-N),1.0);}else if(mode==x3d_SphereLocal){vec2 N=normalize(gl_FrontFacing?localNormal:-localNormal).xy;return vec4(N*0.5+0.5,0.0,1.0);}else if(mode==x3d_Coord){return vec4(localVertex,1.0);}else if(mode==x3d_CoordEye){return vec4(vertex,1.0);}else if(mode==x3d_Noise){vec3 scale=vec3(textureCoordinateGenerator.parameter[0],textureCoordinateGenerator.parameter[1],textureCoordinateGenerator.parameter[2]);vec3 translation=vec3(textureCoordinateGenerator.parameter[3],textureCoordinateGenerator.parameter[4],textureCoordinateGenerator.parameter[5]);return vec4(perlin(localVertex*scale+translation),1.0);}else if(mode==x3d_NoiseEye){vec3 scale=vec3(textureCoordinateGenerator.parameter[0],textureCoordinateGenerator.parameter[1],textureCoordinateGenerator.parameter[2]);vec3 translation=vec3(textureCoordinateGenerator.parameter[3],textureCoordinateGenerator.parameter[4],textureCoordinateGenerator.parameter[5]);return vec4(perlin(vertex*scale+translation),1.0);}else if(mode==x3d_SphereReflect){vec3 N=normalize(gl_FrontFacing?normal:-normal);float eta=textureCoordinateGenerator.parameter[0];return vec4(refract(normalize(vertex),-N,eta),1.0);}else if(mode==x3d_SphereReflectLocal){vec3 N=normalize(gl_FrontFacing?localNormal:-localNormal);float eta=textureCoordinateGenerator.parameter[0];vec3 eye=vec3(textureCoordinateGenerator.parameter[1],textureCoordinateGenerator.parameter[2],textureCoordinateGenerator.parameter[3]);return vec4(refract(normalize(localVertex-eye),-N,eta),1.0);}return getTextureMatrix(textureTransformMapping)*getTexCoord(textureCoordinateMapping);}uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator[X3D_NUM_TEXTURE_COORDINATES];vec3 getTexCoord(const in int textureTransformMapping,const in int textureCoordinateMapping){vec4 texCoord;${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 ${i === 0 ? "" : "else"} if (textureCoordinateMapping == ${i})
 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [${i}], textureTransformMapping, textureCoordinateMapping);
 #endif
-`) .join ("\n")}
- 
+`) .join ("\n")} 
 #if defined(X3D_GEOMETRY_2D)
 if(gl_FrontFacing==false)texCoord.s=1.0-texCoord.s;
 #endif
 return texCoord.stp;}
 #endif 
 #if defined(X3D_TEXTURE)
-uniform sampler2D x3d_Texture2D[X3D_NUM_TEXTURES];uniform samplerCube x3d_TextureCube[X3D_NUM_TEXTURES];vec4 getTexture(const in int i,in vec3 texCoord){vec4 textureColor=vec4(1.0);
-${Array .from ({ length: maxTextures }, (_, i) => /* glsl */ `
+uniform sampler2D x3d_Texture2D[X3D_NUM_TEXTURES];uniform samplerCube x3d_TextureCube[X3D_NUM_TEXTURES];vec4 getTexture(const in int i,in vec3 texCoord){vec4 textureColor=vec4(1.0);${Array .from ({ length: maxTextures }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURES > ${i}
 ${i === 0 ? "" : "else"} if (i == ${i})
 {
@@ -94132,8 +94179,7 @@ textureColor = linearTosRGB (textureColor);
 #endif
 }
 #endif
-`) .join ("\n")}
- return textureColor;}
+`) .join ("\n")} return textureColor;}
 #if defined(X3D_MULTI_TEXTURING)
 uniform vec4 x3d_MultiTextureColor;uniform x3d_MultiTextureParameters x3d_MultiTexture[X3D_NUM_TEXTURES];
 #endif
@@ -94146,16 +94192,14 @@ vec3 texCoord=getTexCoord(0,0);vec4 textureColor=getTexture(0,texCoord);return d
 }
 #endif
 #if defined(X3D_TEXTURE_PROJECTION)
-uniform vec3 x3d_TextureProjectorColor[X3D_NUM_TEXTURE_PROJECTORS];uniform float x3d_TextureProjectorIntensity[X3D_NUM_TEXTURE_PROJECTORS];uniform vec3 x3d_TextureProjectorLocation[X3D_NUM_TEXTURE_PROJECTORS];uniform vec3 x3d_TextureProjectorParams[X3D_NUM_TEXTURE_PROJECTORS];uniform mat4 x3d_TextureProjectorMatrix[X3D_NUM_TEXTURE_PROJECTORS];uniform sampler2D x3d_TextureProjectorTexture[X3D_NUM_TEXTURE_PROJECTORS];vec4 getTextureProjectorTexture(const in int i,const in vec2 texCoord){vec4 textureColor=vec4(1.0);
-${Array .from ({ length: maxTextures }, (_, i) => /* glsl */ `
+uniform vec3 x3d_TextureProjectorColor[X3D_NUM_TEXTURE_PROJECTORS];uniform float x3d_TextureProjectorIntensity[X3D_NUM_TEXTURE_PROJECTORS];uniform vec3 x3d_TextureProjectorLocation[X3D_NUM_TEXTURE_PROJECTORS];uniform vec3 x3d_TextureProjectorParams[X3D_NUM_TEXTURE_PROJECTORS];uniform mat4 x3d_TextureProjectorMatrix[X3D_NUM_TEXTURE_PROJECTORS];uniform sampler2D x3d_TextureProjectorTexture[X3D_NUM_TEXTURE_PROJECTORS];vec4 getTextureProjectorTexture(const in int i,const in vec2 texCoord){vec4 textureColor=vec4(1.0);${Array .from ({ length: maxTextures }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_PROJECTORS > ${i}
 ${i === 0 ? "" : "else"} if (i == ${i})
 {
 textureColor = texture2D (x3d_TextureProjectorTexture [${i}], texCoord);
 }
 #endif
-`) .join ("\n")}
- return textureColor;}vec3 getTextureProjectorColor(){vec3 currentColor=vec3(1.0);vec3 N=gl_FrontFacing?normal:-normal;for(int i=0;i<X3D_NUM_TEXTURE_PROJECTORS;++i){vec4 texCoord=x3d_TextureProjectorMatrix[i]*vec4(vertex,1.0);texCoord.stp/=texCoord.q;texCoord.p=clamp(texCoord.p,x3d_TextureProjectorParams[i].x,x3d_TextureProjectorParams[i].y);if(any(greaterThan(abs(texCoord.stp-0.5),vec3(0.5))))continue;vec3 p=x3d_TextureProjectorLocation[i]-vertex;if(dot(N,p)<0.0)continue;vec4 T=getTextureProjectorTexture(i,texCoord.st);
+`) .join ("\n")} return textureColor;}vec3 getTextureProjectorColor(){vec3 currentColor=vec3(1.0);vec3 N=gl_FrontFacing?normal:-normal;for(int i=0;i<X3D_NUM_TEXTURE_PROJECTORS;++i){vec4 texCoord=x3d_TextureProjectorMatrix[i]*vec4(vertex,1.0);texCoord.stp/=texCoord.q;texCoord.p=clamp(texCoord.p,x3d_TextureProjectorParams[i].x,x3d_TextureProjectorParams[i].y);if(any(greaterThan(abs(texCoord.stp-0.5),vec3(0.5))))continue;vec3 p=x3d_TextureProjectorLocation[i]-vertex;if(dot(N,p)<0.0)continue;vec4 T=getTextureProjectorTexture(i,texCoord.st);
 #if defined(X3D_PHYSICAL_MATERIAL)
 if(!bool(x3d_TextureProjectorParams[i].z))T=sRGBToLinear(T);
 #else
@@ -94171,7 +94215,8 @@ x_ite_Namespace .add ("Texture1.glsl", "assets/shaders/webgl1/common/Texture1.gl
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/common/Vertex1.glsl.js
 
 
-const Vertex1_glsl_default_ = /* glsl */ `uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;
+const Vertex1_glsl_default_ = /* glsl */ `
+uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;
 #if defined(X3D_FOG)&&defined(X3D_FOG_COORDS)
 attribute float x3d_FogDepth;
 #endif
@@ -94180,13 +94225,11 @@ attribute vec4 x3d_Color;
 #endif
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
-
 ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 attribute vec4 x3d_TexCoord${i};
 #endif
-`) .join ("\n")}
- 
+`) .join ("\n")} 
 #endif
 #endif
 attribute vec4 x3d_Vertex;
@@ -94198,13 +94241,11 @@ varying vec4 color;
 #endif
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
-
 ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 varying vec4 texCoord${i};
 #endif
-`) .join ("\n")}
- 
+`) .join ("\n")} 
 #endif
 #endif
 #if defined(X3D_NORMALS)
@@ -94238,13 +94279,11 @@ color=x3d_Color;
 #endif
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
-
 ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 texCoord${i} = x3d_TexCoord${i};
 #endif
-`) .join ("\n")}
- 
+`) .join ("\n")} 
 #endif
 #endif
 #if defined(X3D_NORMALS)
@@ -94269,7 +94308,8 @@ depth=1.0+gl_Position.w;
 x_ite_Namespace .add ("Vertex1.glsl", "assets/shaders/webgl1/common/Vertex1.glsl", Vertex1_glsl_default_);
 /* harmony default export */ const Vertex1_glsl = (Vertex1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/ClipPlanes2.glsl.js
-const ClipPlanes2_glsl_default_ = /* glsl */ `#if defined(X3D_CLIP_PLANES)
+const ClipPlanes2_glsl_default_ = /* glsl */ `
+#if defined(X3D_CLIP_PLANES)
 uniform vec4 x3d_ClipPlane[X3D_NUM_CLIP_PLANES];void clip(){for(int i=0;i<X3D_NUM_CLIP_PLANES;++i){if(dot(vertex,x3d_ClipPlane[i].xyz)-x3d_ClipPlane[i].w<0.0)discard;}}
 #endif
 `
@@ -94278,7 +94318,8 @@ uniform vec4 x3d_ClipPlane[X3D_NUM_CLIP_PLANES];void clip(){for(int i=0;i<X3D_NU
 x_ite_Namespace .add ("ClipPlanes2.glsl", "assets/shaders/webgl2/common/ClipPlanes2.glsl", ClipPlanes2_glsl_default_);
 /* harmony default export */ const ClipPlanes2_glsl = (ClipPlanes2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Fog2.glsl.js
-const Fog2_glsl_default_ = /* glsl */ `#if defined(X3D_FOG)
+const Fog2_glsl_default_ = /* glsl */ `
+#if defined(X3D_FOG)
 uniform x3d_FogParameters x3d_Fog;float getFogInterpolant(){
 #if defined(X3D_FOG_COORDS)
 return clamp(1.0-fogDepth,0.0,1.0);
@@ -94300,7 +94341,8 @@ x_ite_Namespace .add ("Fog2.glsl", "assets/shaders/webgl2/common/Fog2.glsl", Fog
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Fragment2.glsl.js
 
 
-const Fragment2_glsl_default_ = /* glsl */ `#if defined(X3D_ALPHA_MODE_MASK)
+const Fragment2_glsl_default_ = /* glsl */ `
+#if defined(X3D_ALPHA_MODE_MASK)
 uniform float x3d_AlphaCutoff;
 #endif
 #if defined(X3D_FOG)&&defined(X3D_FOG_COORDS)
@@ -94311,23 +94353,19 @@ in vec4 color;
 #endif
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
-
 ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 in vec4 texCoord${i};
 #endif
-`) .join ("\n")}
- 
+`) .join ("\n")} 
 #endif
 #else
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
-
 ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 vec4 texCoord${i} = vec4 (0.0, 0.0, 0.0, 1.0);
 #endif
-`) .join ("\n")}
- 
+`) .join ("\n")} 
 #endif
 #endif
 #if defined(X3D_NORMALS)
@@ -94409,7 +94447,8 @@ gl_FragDepth=log2(depth)*x3d_LogarithmicFarFactor1_2;
 x_ite_Namespace .add ("Fragment2.glsl", "assets/shaders/webgl2/common/Fragment2.glsl", Fragment2_glsl_default_);
 /* harmony default export */ const Fragment2_glsl = (Fragment2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Hatch2.glsl.js
-const Hatch2_glsl_default_ = /* glsl */ `#if(defined(X3D_GEOMETRY_2D)||defined(X3D_GEOMETRY_3D))&&defined(X3D_STYLE_PROPERTIES)
+const Hatch2_glsl_default_ = /* glsl */ `
+#if(defined(X3D_GEOMETRY_2D)||defined(X3D_GEOMETRY_3D))&&defined(X3D_STYLE_PROPERTIES)
 uniform x3d_FillPropertiesParameters x3d_FillProperties;vec4 getHatchColor(vec4 color){vec4 finalColor=x3d_FillProperties.filled?color:vec4(0.0);
 #if defined(X3D_STYLE_PROPERTIES_TEXTURE)
 vec2 t=gl_FragCoord.xy/(32.0*x3d_FillProperties.scale);vec4 hatch=texture(x3d_FillProperties.texture,vec2(t.x,1.0-t.y));hatch.rgb*=x3d_FillProperties.hatchColor;finalColor=mix(finalColor,hatch,hatch.a);
@@ -94422,7 +94461,8 @@ return finalColor;}
 x_ite_Namespace .add ("Hatch2.glsl", "assets/shaders/webgl2/common/Hatch2.glsl", Hatch2_glsl_default_);
 /* harmony default export */ const Hatch2_glsl = (Hatch2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Lighting2.glsl.js
-const Lighting2_glsl_default_ = /* glsl */ `#if defined(X3D_LIGHTING)
+const Lighting2_glsl_default_ = /* glsl */ `
+#if defined(X3D_LIGHTING)
 float getAttenuation(const in vec3 attenuation,const in float distanceToLight){return 1.0/max(dot(attenuation,vec3(1.0,distanceToLight,distanceToLight*distanceToLight)),1.0);}float getSpotFactor(const in vec3 pointToLight,const in vec3 direction,const in float cutOffAngle,const in float beamWidth){float spotAngle=acos(clamp(dot(-pointToLight,direction),-1.0,1.0));if(spotAngle>=cutOffAngle)return 0.0;else if(spotAngle<=beamWidth)return 1.0;return(spotAngle-cutOffAngle)/(beamWidth-cutOffAngle);}
 #endif
 `
@@ -94431,13 +94471,15 @@ float getAttenuation(const in vec3 attenuation,const in float distanceToLight){r
 x_ite_Namespace .add ("Lighting2.glsl", "assets/shaders/webgl2/common/Lighting2.glsl", Lighting2_glsl_default_);
 /* harmony default export */ const Lighting2_glsl = (Lighting2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Line22.glsl.js
-const Line22_glsl_default_ = /* glsl */ `struct Line2{vec2 point;vec2 direction;};Line2 line2(const in vec2 point1,const in vec2 point2){return Line2(point1,normalize(point2-point1));}vec2 closest_point(const in Line2 line,const in vec2 point){vec2 r=point-line.point;float d=dot(r,line.direction);return line.direction*d+line.point;}`
+const Line22_glsl_default_ = /* glsl */ `
+struct Line2{vec2 point;vec2 direction;};Line2 line2(const in vec2 point1,const in vec2 point2){return Line2(point1,normalize(point2-point1));}vec2 closest_point(const in Line2 line,const in vec2 point){vec2 r=point-line.point;float d=dot(r,line.direction);return line.direction*d+line.point;}`
 ;
 
 x_ite_Namespace .add ("Line22.glsl", "assets/shaders/webgl2/common/Line22.glsl", Line22_glsl_default_);
 /* harmony default export */ const Line22_glsl = (Line22_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Material2.glsl.js
-const Material2_glsl_default_ = /* glsl */ `uniform x3d_MaterialParameters x3d_Material;
+const Material2_glsl_default_ = /* glsl */ `
+uniform x3d_MaterialParameters x3d_Material;
 #if defined(X3D_LIGHTING)
 #pragma X3D include "Lighting.glsl"
 #pragma X3D include "Shadow.glsl"
@@ -94453,7 +94495,8 @@ finalColor+=attenuationSpotFactor*light.color*(ambientTerm+diffuseSpecularTerm);
 x_ite_Namespace .add ("Material2.glsl", "assets/shaders/webgl2/common/Material2.glsl", Material2_glsl_default_);
 /* harmony default export */ const Material2_glsl = (Material2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Normal2.glsl.js
-const Normal2_glsl_default_ = /* glsl */ `#if defined(X3D_NORMAL_TEXTURE)
+const Normal2_glsl_default_ = /* glsl */ `
+#if defined(X3D_NORMAL_TEXTURE)
 uniform x3d_NormalTextureParameters x3d_NormalTexture;
 #endif
 struct NormalInfo{vec3 ng;vec3 ntex;vec3 n;vec3 t;vec3 b;};NormalInfo getNormalInfo(const in float normalScale){
@@ -94490,7 +94533,8 @@ info.t=t;info.b=b;return info;}vec3 getNormalVector(const in float normalScale){
 x_ite_Namespace .add ("Normal2.glsl", "assets/shaders/webgl2/common/Normal2.glsl", Normal2_glsl_default_);
 /* harmony default export */ const Normal2_glsl = (Normal2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Instancing2.glsl.js
-const Instancing2_glsl_default_ = /* glsl */ `#if defined(X3D_INSTANCING)
+const Instancing2_glsl_default_ = /* glsl */ `
+#if defined(X3D_INSTANCING)
 #if defined(X3D_TEX_COORD_RAMP)
 uniform sampler2D x3d_TexCoordRamp;in vec4 x3d_Particle;vec4 getInstanceTexCoord(const in vec4 texCoord){const int map[6]=int[6](0,1,2,0,2,3);int index0=int(x3d_Particle[3]);return texelFetch(x3d_TexCoordRamp,index0+map[gl_VertexID % 6],0);}
 #else
@@ -94513,7 +94557,8 @@ in mat4 x3d_InstanceMatrix;vec4 getInstanceVertex(const in vec4 vertex){return x
 x_ite_Namespace .add ("Instancing2.glsl", "assets/shaders/webgl2/common/Instancing2.glsl", Instancing2_glsl_default_);
 /* harmony default export */ const Instancing2_glsl = (Instancing2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Perlin2.glsl.js
-const Perlin2_glsl_default_ = /* glsl */ `float rand(const in vec2 co){return fract(sin(dot(co.xy,vec2(12.9898,78.233)))*43758.5453);}float rand(const in vec2 co,const in float l){return rand(vec2(rand(co),l));}float rand(const in vec2 co,const in float l,const in float t){return rand(vec2(rand(co,l),t));}float perlin(const in vec2 p,const in float dim,const in float time){const float M_PI=3.14159265358979323846;vec2 pos=floor(p*dim);vec2 posx=pos+vec2(1.0,0.0);vec2 posy=pos+vec2(0.0,1.0);vec2 posxy=pos+vec2(1.0);float c=rand(pos,dim,time);float cx=rand(posx,dim,time);float cy=rand(posy,dim,time);float cxy=rand(posxy,dim,time);vec2 d=fract(p*dim);d=-0.5*cos(d*M_PI)+0.5;float ccx=mix(c,cx,d.x);float cycxy=mix(cy,cxy,d.x);float center=mix(ccx,cycxy,d.y);return center*2.0-1.0;}vec3 perlin(const in vec3 p){return vec3(perlin(p.xy,1.0,0.0),perlin(p.yz,1.0,0.0),perlin(p.zx,1.0,0.0));}`
+const Perlin2_glsl_default_ = /* glsl */ `
+float rand(const in vec2 co){return fract(sin(dot(co.xy,vec2(12.9898,78.233)))*43758.5453);}float rand(const in vec2 co,const in float l){return rand(vec2(rand(co),l));}float rand(const in vec2 co,const in float l,const in float t){return rand(vec2(rand(co,l),t));}float perlin(const in vec2 p,const in float dim,const in float time){const float M_PI=3.14159265358979323846;vec2 pos=floor(p*dim);vec2 posx=pos+vec2(1.0,0.0);vec2 posy=pos+vec2(0.0,1.0);vec2 posxy=pos+vec2(1.0);float c=rand(pos,dim,time);float cx=rand(posx,dim,time);float cy=rand(posy,dim,time);float cxy=rand(posxy,dim,time);vec2 d=fract(p*dim);d=-0.5*cos(d*M_PI)+0.5;float ccx=mix(c,cx,d.x);float cycxy=mix(cy,cxy,d.x);float center=mix(ccx,cycxy,d.y);return center*2.0-1.0;}vec3 perlin(const in vec3 p){return vec3(perlin(p.xy,1.0,0.0),perlin(p.yz,1.0,0.0),perlin(p.zx,1.0,0.0));}`
 ;
 
 x_ite_Namespace .add ("Perlin2.glsl", "assets/shaders/webgl2/common/Perlin2.glsl", Perlin2_glsl_default_);
@@ -94521,15 +94566,14 @@ x_ite_Namespace .add ("Perlin2.glsl", "assets/shaders/webgl2/common/Perlin2.glsl
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Point2.glsl.js
 
 
-const Point2_glsl_default_ = /* glsl */ `#if defined(X3D_GEOMETRY_0D)&&defined(X3D_STYLE_PROPERTIES)
+const Point2_glsl_default_ = /* glsl */ `
+#if defined(X3D_GEOMETRY_0D)&&defined(X3D_STYLE_PROPERTIES)
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
-void setPointTexCoords(){vec4 texCoord=vec4(gl_PointCoord.x,1.0-gl_PointCoord.y,0.0,1.0);
-${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
+void setPointTexCoords(){vec4 texCoord=vec4(gl_PointCoord.x,1.0-gl_PointCoord.y,0.0,1.0);${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 texCoords [${i}] = texCoord;
 #endif
-`) .join ("\n")}
-}
+`) .join ("\n")}}
 #define getPointColor(color)(color)
 #else
 #define setPointTexCoords()
@@ -94542,7 +94586,8 @@ in float pointSize;vec4 getPointColor(in vec4 color){if(pointSize>1.0)color.a*=c
 x_ite_Namespace .add ("Point2.glsl", "assets/shaders/webgl2/common/Point2.glsl", Point2_glsl_default_);
 /* harmony default export */ const Point2_glsl = (Point2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/PointSize2.glsl.js
-const PointSize2_glsl_default_ = /* glsl */ `#if defined(X3D_GEOMETRY_0D)&&defined(X3D_STYLE_PROPERTIES)
+const PointSize2_glsl_default_ = /* glsl */ `
+#if defined(X3D_GEOMETRY_0D)&&defined(X3D_STYLE_PROPERTIES)
 uniform x3d_PointPropertiesParameters x3d_PointProperties;out float pointSize;float getPointSize(const in vec3 vertex){float pointSizeMinValue=x3d_PointProperties.pointSizeMinValue;float pointSizeMaxValue=x3d_PointProperties.pointSizeMaxValue;vec3 attenuation=x3d_PointProperties.attenuation;float dL=length(vertex);float pointSize=0.0;pointSize=x3d_PointProperties.pointSizeScaleFactor;pointSize/=dot(attenuation,vec3(1.0,dL,dL*dL));pointSize=clamp(pointSize,pointSizeMinValue,pointSizeMaxValue);
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURE)
 return pointSize;
@@ -94557,7 +94602,8 @@ return pointSize+1.0-step(pointSize,1.0);
 x_ite_Namespace .add ("PointSize2.glsl", "assets/shaders/webgl2/common/PointSize2.glsl", PointSize2_glsl_default_);
 /* harmony default export */ const PointSize2_glsl = (PointSize2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Shadow2.glsl.js
-const Shadow2_glsl_default_ = /* glsl */ `#if defined(X3D_FRAGMENT_SHADER)&&defined(X3D_SHADOWS)
+const Shadow2_glsl_default_ = /* glsl */ `
+#if defined(X3D_FRAGMENT_SHADER)&&defined(X3D_SHADOWS)
 uniform sampler2D x3d_ShadowMap[X3D_NUM_LIGHTS];float getShadowDepth(const in int index,const in vec2 shadowCoord){switch(index){
 #if X3D_NUM_LIGHTS>0
 case 0:{return texture(x3d_ShadowMap[0],shadowCoord).r;}
@@ -94605,7 +94651,8 @@ vec4 shadowCoord=light.shadowMatrix*vec4(vertex,1.0);shadowCoord.z-=light.shadow
 x_ite_Namespace .add ("Shadow2.glsl", "assets/shaders/webgl2/common/Shadow2.glsl", Shadow2_glsl_default_);
 /* harmony default export */ const Shadow2_glsl = (Shadow2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Skin2.glsl.js
-const Skin2_glsl_default_ = /* glsl */ `#if defined(X3D_SKINNING)
+const Skin2_glsl_default_ = /* glsl */ `
+#if defined(X3D_SKINNING)
 in float x3d_CoordIndex;uniform sampler2D x3d_JointsTexture;uniform sampler2D x3d_DisplacementsTexture;uniform sampler2D x3d_JointMatricesTexture;mat4 getJointMatrix(const in int joint){vec4 a=texelFetch(x3d_JointMatricesTexture,joint*8,0);vec4 b=texelFetch(x3d_JointMatricesTexture,joint*8+1,0);vec4 c=texelFetch(x3d_JointMatricesTexture,joint*8+2,0);vec4 d=texelFetch(x3d_JointMatricesTexture,joint*8+3,0);return mat4(a,b,c,d);}mat3 getDisplacementJointMatrix(const in int joint){mat4 m=getJointMatrix(joint);return mat3(m[0].xyz,m[1].xyz,m[2].xyz);}
 #if defined(X3D_NORMALS)
 vec3 skinNormal=vec3(0.0);
@@ -94650,7 +94697,8 @@ skinTangent+=(jointNormalMatrix*tangent-tangent)*weight;
 x_ite_Namespace .add ("Skin2.glsl", "assets/shaders/webgl2/common/Skin2.glsl", Skin2_glsl_default_);
 /* harmony default export */ const Skin2_glsl = (Skin2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Stipple2.glsl.js
-const Stipple2_glsl_default_ = /* glsl */ `#if defined(X3D_GEOMETRY_1D)&&defined(X3D_STYLE_PROPERTIES)
+const Stipple2_glsl_default_ = /* glsl */ `
+#if defined(X3D_GEOMETRY_1D)&&defined(X3D_STYLE_PROPERTIES)
 #pragma X3D include "Line2.glsl"
 uniform x3d_LinePropertiesParameters x3d_LineProperties;flat in float lengthSoFar;flat in vec2 startPoint;in vec2 midPoint;void stipple(){vec2 point=closest_point(line2(startPoint,midPoint),gl_FragCoord.xy);float s=(lengthSoFar+length(point-startPoint))*x3d_LineProperties.lineStippleScale;
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
@@ -94674,23 +94722,21 @@ x_ite_Namespace .add ("Stipple2.glsl", "assets/shaders/webgl2/common/Stipple2.gl
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Texture2.glsl.js
 
 
-const Texture2_glsl_default_ = /* glsl */ `#if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
+const Texture2_glsl_default_ = /* glsl */ `
+#if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
 #pragma X3D include "Perlin.glsl"
-vec4 texCoords[X3D_NUM_TEXTURE_COORDINATES];void setTexCoords(){
-${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
+vec4 texCoords[X3D_NUM_TEXTURE_COORDINATES];void setTexCoords(){${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 texCoords [${i}] = texCoord${i};
 #endif
-`) .join ("\n")}
-}uniform mat4 x3d_TextureMatrix[X3D_NUM_TEXTURE_TRANSFORMS];vec4 getTexCoord(const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator,const in int textureTransformMapping,const in int textureCoordinateMapping){int mode=textureCoordinateGenerator.mode;switch(mode){case x3d_None:{return x3d_TextureMatrix[textureTransformMapping]*texCoords[textureCoordinateMapping];}case x3d_Sphere:{vec2 N=normalize(gl_FrontFacing?normal:-normal).xy;return vec4(N*0.5+0.5,0.0,1.0);}case x3d_CameraSpaceNormal:{vec3 N=normalize(gl_FrontFacing?normal:-normal);return vec4(N,1.0);}case x3d_CameraSpacePosition:{return vec4(vertex,1.0);}case x3d_CameraSpaceReflectionVector:{vec3 N=normalize(gl_FrontFacing?normal:-normal);return vec4(reflect(normalize(vertex),-N),1.0);}case x3d_SphereLocal:{vec2 N=normalize(gl_FrontFacing?localNormal:-localNormal).xy;return vec4(N*0.5+0.5,0.0,1.0);}case x3d_Coord:{return vec4(localVertex,1.0);}case x3d_CoordEye:{return vec4(vertex,1.0);}case x3d_Noise:{vec3 scale=vec3(textureCoordinateGenerator.parameter[0],textureCoordinateGenerator.parameter[1],textureCoordinateGenerator.parameter[2]);vec3 translation=vec3(textureCoordinateGenerator.parameter[3],textureCoordinateGenerator.parameter[4],textureCoordinateGenerator.parameter[5]);return vec4(perlin(localVertex*scale+translation),1.0);}case x3d_NoiseEye:{vec3 scale=vec3(textureCoordinateGenerator.parameter[0],textureCoordinateGenerator.parameter[1],textureCoordinateGenerator.parameter[2]);vec3 translation=vec3(textureCoordinateGenerator.parameter[3],textureCoordinateGenerator.parameter[4],textureCoordinateGenerator.parameter[5]);return vec4(perlin(vertex*scale+translation),1.0);}case x3d_SphereReflect:{vec3 N=normalize(gl_FrontFacing?normal:-normal);float eta=textureCoordinateGenerator.parameter[0];return vec4(refract(normalize(vertex),-N,eta),1.0);}case x3d_SphereReflectLocal:{vec3 N=normalize(gl_FrontFacing?localNormal:-localNormal);float eta=textureCoordinateGenerator.parameter[0];vec3 eye=vec3(textureCoordinateGenerator.parameter[1],textureCoordinateGenerator.parameter[2],textureCoordinateGenerator.parameter[3]);return vec4(refract(normalize(localVertex-eye),-N,eta),1.0);}default:{return x3d_TextureMatrix[textureTransformMapping]*texCoords[textureCoordinateMapping];}}}uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator[X3D_NUM_TEXTURE_COORDINATES];vec3 getTexCoord(const in int textureTransformMapping,const in int textureCoordinateMapping){vec4 texCoord=getTexCoord(x3d_TextureCoordinateGenerator[textureCoordinateMapping],textureTransformMapping,textureCoordinateMapping);texCoord.stp/=texCoord.q;
+`) .join ("\n")}}uniform mat4 x3d_TextureMatrix[X3D_NUM_TEXTURE_TRANSFORMS];vec4 getTexCoord(const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator,const in int textureTransformMapping,const in int textureCoordinateMapping){int mode=textureCoordinateGenerator.mode;switch(mode){case x3d_None:{return x3d_TextureMatrix[textureTransformMapping]*texCoords[textureCoordinateMapping];}case x3d_Sphere:{vec2 N=normalize(gl_FrontFacing?normal:-normal).xy;return vec4(N*0.5+0.5,0.0,1.0);}case x3d_CameraSpaceNormal:{vec3 N=normalize(gl_FrontFacing?normal:-normal);return vec4(N,1.0);}case x3d_CameraSpacePosition:{return vec4(vertex,1.0);}case x3d_CameraSpaceReflectionVector:{vec3 N=normalize(gl_FrontFacing?normal:-normal);return vec4(reflect(normalize(vertex),-N),1.0);}case x3d_SphereLocal:{vec2 N=normalize(gl_FrontFacing?localNormal:-localNormal).xy;return vec4(N*0.5+0.5,0.0,1.0);}case x3d_Coord:{return vec4(localVertex,1.0);}case x3d_CoordEye:{return vec4(vertex,1.0);}case x3d_Noise:{vec3 scale=vec3(textureCoordinateGenerator.parameter[0],textureCoordinateGenerator.parameter[1],textureCoordinateGenerator.parameter[2]);vec3 translation=vec3(textureCoordinateGenerator.parameter[3],textureCoordinateGenerator.parameter[4],textureCoordinateGenerator.parameter[5]);return vec4(perlin(localVertex*scale+translation),1.0);}case x3d_NoiseEye:{vec3 scale=vec3(textureCoordinateGenerator.parameter[0],textureCoordinateGenerator.parameter[1],textureCoordinateGenerator.parameter[2]);vec3 translation=vec3(textureCoordinateGenerator.parameter[3],textureCoordinateGenerator.parameter[4],textureCoordinateGenerator.parameter[5]);return vec4(perlin(vertex*scale+translation),1.0);}case x3d_SphereReflect:{vec3 N=normalize(gl_FrontFacing?normal:-normal);float eta=textureCoordinateGenerator.parameter[0];return vec4(refract(normalize(vertex),-N,eta),1.0);}case x3d_SphereReflectLocal:{vec3 N=normalize(gl_FrontFacing?localNormal:-localNormal);float eta=textureCoordinateGenerator.parameter[0];vec3 eye=vec3(textureCoordinateGenerator.parameter[1],textureCoordinateGenerator.parameter[2],textureCoordinateGenerator.parameter[3]);return vec4(refract(normalize(localVertex-eye),-N,eta),1.0);}default:{return x3d_TextureMatrix[textureTransformMapping]*texCoords[textureCoordinateMapping];}}}uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator[X3D_NUM_TEXTURE_COORDINATES];vec3 getTexCoord(const in int textureTransformMapping,const in int textureCoordinateMapping){vec4 texCoord=getTexCoord(x3d_TextureCoordinateGenerator[textureCoordinateMapping],textureTransformMapping,textureCoordinateMapping);texCoord.stp/=texCoord.q;
 #if defined(X3D_GEOMETRY_2D)
 if(gl_FrontFacing==false)texCoord.s=1.0-texCoord.s;
 #endif
 return texCoord.stp;}
 #endif 
 #if defined(X3D_TEXTURE)
-uniform sampler2D x3d_Texture2D[X3D_NUM_TEXTURES];uniform sampler3D x3d_Texture3D[X3D_NUM_TEXTURES];uniform samplerCube x3d_TextureCube[X3D_NUM_TEXTURES];vec4 getTexture(const in int i,in vec3 texCoord){vec4 textureColor=vec4(1.0);switch(i){
-${Array .from ({ length: maxTextures }, (_, i) => /* glsl */ `
+uniform sampler2D x3d_Texture2D[X3D_NUM_TEXTURES];uniform sampler3D x3d_Texture3D[X3D_NUM_TEXTURES];uniform samplerCube x3d_TextureCube[X3D_NUM_TEXTURES];vec4 getTexture(const in int i,in vec3 texCoord){vec4 textureColor=vec4(1.0);switch(i){${Array .from ({ length: maxTextures }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURES > ${i}
 case ${i}:
 {
@@ -94712,8 +94758,7 @@ textureColor = linearTosRGB (textureColor);
 break;
 }
 #endif
-`) .join ("\n")}
-}return textureColor;}
+`) .join ("\n")}}return textureColor;}
 #if defined(X3D_MULTI_TEXTURING)
 uniform vec4 x3d_MultiTextureColor;uniform x3d_MultiTextureParameters x3d_MultiTexture[X3D_NUM_TEXTURES];
 #endif
@@ -94726,15 +94771,13 @@ vec3 texCoord=getTexCoord(0,0);vec4 textureColor=getTexture(0,texCoord);return d
 }
 #endif 
 #if defined(X3D_TEXTURE_PROJECTION)
-uniform vec3 x3d_TextureProjectorColor[X3D_NUM_TEXTURE_PROJECTORS];uniform float x3d_TextureProjectorIntensity[X3D_NUM_TEXTURE_PROJECTORS];uniform vec3 x3d_TextureProjectorLocation[X3D_NUM_TEXTURE_PROJECTORS];uniform vec3 x3d_TextureProjectorParams[X3D_NUM_TEXTURE_PROJECTORS];uniform mat4 x3d_TextureProjectorMatrix[X3D_NUM_TEXTURE_PROJECTORS];uniform sampler2D x3d_TextureProjectorTexture[X3D_NUM_TEXTURE_PROJECTORS];vec4 getTextureProjectorTexture(const in int i,const in vec2 texCoord){vec4 textureColor=vec4(1.0);switch(i){
-${Array .from ({ length: maxTextures }, (_, i) => /* glsl */ `
+uniform vec3 x3d_TextureProjectorColor[X3D_NUM_TEXTURE_PROJECTORS];uniform float x3d_TextureProjectorIntensity[X3D_NUM_TEXTURE_PROJECTORS];uniform vec3 x3d_TextureProjectorLocation[X3D_NUM_TEXTURE_PROJECTORS];uniform vec3 x3d_TextureProjectorParams[X3D_NUM_TEXTURE_PROJECTORS];uniform mat4 x3d_TextureProjectorMatrix[X3D_NUM_TEXTURE_PROJECTORS];uniform sampler2D x3d_TextureProjectorTexture[X3D_NUM_TEXTURE_PROJECTORS];vec4 getTextureProjectorTexture(const in int i,const in vec2 texCoord){vec4 textureColor=vec4(1.0);switch(i){${Array .from ({ length: maxTextures }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_PROJECTORS > ${i}
 case ${i}:
 textureColor = texture (x3d_TextureProjectorTexture [${i}], texCoord);
 break;
 #endif
-`) .join ("\n")}
-}return textureColor;}vec3 getTextureProjectorColor(){vec3 currentColor=vec3(1.0);vec3 N=gl_FrontFacing?normal:-normal;for(int i=0;i<X3D_NUM_TEXTURE_PROJECTORS;++i){vec4 texCoord=x3d_TextureProjectorMatrix[i]*vec4(vertex,1.0);texCoord.stp/=texCoord.q;texCoord.p=clamp(texCoord.p,x3d_TextureProjectorParams[i].x,x3d_TextureProjectorParams[i].y);if(any(greaterThan(abs(texCoord.stp-0.5),vec3(0.5))))continue;vec3 p=x3d_TextureProjectorLocation[i]-vertex;if(dot(N,p)<0.0)continue;vec4 T=getTextureProjectorTexture(i,texCoord.st);
+`) .join ("\n")}}return textureColor;}vec3 getTextureProjectorColor(){vec3 currentColor=vec3(1.0);vec3 N=gl_FrontFacing?normal:-normal;for(int i=0;i<X3D_NUM_TEXTURE_PROJECTORS;++i){vec4 texCoord=x3d_TextureProjectorMatrix[i]*vec4(vertex,1.0);texCoord.stp/=texCoord.q;texCoord.p=clamp(texCoord.p,x3d_TextureProjectorParams[i].x,x3d_TextureProjectorParams[i].y);if(any(greaterThan(abs(texCoord.stp-0.5),vec3(0.5))))continue;vec3 p=x3d_TextureProjectorLocation[i]-vertex;if(dot(N,p)<0.0)continue;vec4 T=getTextureProjectorTexture(i,texCoord.st);
 #if defined(X3D_PHYSICAL_MATERIAL)
 if(!bool(x3d_TextureProjectorParams[i].z))T=sRGBToLinear(T);
 #else
@@ -94748,7 +94791,8 @@ currentColor*=mix(vec3(1.0),T.rgb*x3d_TextureProjectorColor[i],T.a*x3d_TexturePr
 x_ite_Namespace .add ("Texture2.glsl", "assets/shaders/webgl2/common/Texture2.glsl", Texture2_glsl_default_);
 /* harmony default export */ const Texture2_glsl = (Texture2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Utils2.glsl.js
-const Utils2_glsl_default_ = /* glsl */ `#if defined(X3D_SKINNING)||defined(X3D_INSTANCING)
+const Utils2_glsl_default_ = /* glsl */ `
+#if defined(X3D_SKINNING)||defined(X3D_INSTANCING)
 vec4 texelFetch(const in sampler2D _sampler,const in int index,const in int lod){int x=textureSize(_sampler,lod).x;ivec2 p=ivec2(index % x,index/x);vec4 t=texelFetch(_sampler,p,lod);return t;}
 #endif
 `
@@ -94759,7 +94803,8 @@ x_ite_Namespace .add ("Utils2.glsl", "assets/shaders/webgl2/common/Utils2.glsl",
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Vertex2.glsl.js
 
 
-const Vertex2_glsl_default_ = /* glsl */ `uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;
+const Vertex2_glsl_default_ = /* glsl */ `
+uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;
 #if defined(X3D_GEOMETRY_1D)&&defined(X3D_STYLE_PROPERTIES)
 in vec3 x3d_LineStipple;
 #endif
@@ -94771,13 +94816,11 @@ in vec4 x3d_Color;
 #endif
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
-
 ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 in vec4 x3d_TexCoord${i};
 #endif
-`) .join ("\n")}
- 
+`) .join ("\n")} 
 #endif
 #endif
 in vec4 x3d_Vertex;
@@ -94789,13 +94832,11 @@ out vec4 color;
 #endif
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
-
 ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 out vec4 texCoord${i};
 #endif
-`) .join ("\n")}
- 
+`) .join ("\n")} 
 #endif
 #endif
 #if defined(X3D_NORMALS)
@@ -94849,13 +94890,11 @@ color=x3d_Color;
 #endif
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
-
 ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
 texCoord${i} = getInstanceTexCoord (x3d_TexCoord${i});
 #endif
-`) .join ("\n")}
- 
+`) .join ("\n")} 
 #endif
 #endif
 #if defined(X3D_NORMALS)
@@ -94880,13 +94919,15 @@ depth=1.0+gl_Position.w;
 x_ite_Namespace .add ("Vertex2.glsl", "assets/shaders/webgl2/common/Vertex2.glsl", Vertex2_glsl_default_);
 /* harmony default export */ const Vertex2_glsl = (Vertex2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/FullScreen1.vs.js
-const FullScreen1_vs_default_ = /* glsl */ `precision highp float;precision highp int;precision highp sampler2D;attribute vec2 x3d_Vertex;varying vec2 texCoord;void main(){texCoord=x3d_Vertex;gl_Position=vec4(x3d_Vertex,0.0,1.0);}`
+const FullScreen1_vs_default_ = /* glsl */ `
+precision highp float;precision highp int;precision highp sampler2D;attribute vec2 x3d_Vertex;varying vec2 texCoord;void main(){texCoord=x3d_Vertex;gl_Position=vec4(x3d_Vertex,0.0,1.0);}`
 ;
 
 x_ite_Namespace .add ("FullScreen1.vs", "assets/shaders/webgl1/FullScreen1.vs", FullScreen1_vs_default_);
 /* harmony default export */ const FullScreen1_vs = (FullScreen1_vs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Default1.vs.js
-const Default1_vs_default_ = /* glsl */ `precision highp float;precision highp int;precision highp sampler2D;precision highp samplerCube;
+const Default1_vs_default_ = /* glsl */ `
+precision highp float;precision highp int;precision highp sampler2D;precision highp samplerCube;
 #pragma X3D include "common/Vertex.glsl"
 void main(){vertex_main();}`
 ;
@@ -94894,7 +94935,8 @@ void main(){vertex_main();}`
 x_ite_Namespace .add ("Default1.vs", "assets/shaders/webgl1/Default1.vs", Default1_vs_default_);
 /* harmony default export */ const Default1_vs = (Default1_vs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Depth1.fs.js
-const Depth1_fs_default_ = /* glsl */ `precision highp float;precision highp int;precision highp sampler2D;varying vec3 vertex;
+const Depth1_fs_default_ = /* glsl */ `
+precision highp float;precision highp int;precision highp sampler2D;varying vec3 vertex;
 #pragma X3D include "common/ClipPlanes.glsl"
 #pragma X3D include "common/Point.glsl"
 void main(){
@@ -94910,7 +94952,8 @@ gl_FragColor=vec4(gl_FragCoord.z);}`
 x_ite_Namespace .add ("Depth1.fs", "assets/shaders/webgl1/Depth1.fs", Depth1_fs_default_);
 /* harmony default export */ const Depth1_fs = (Depth1_fs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Depth1.vs.js
-const Depth1_vs_default_ = /* glsl */ `precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;attribute vec4 x3d_Vertex;varying vec3 vertex;
+const Depth1_vs_default_ = /* glsl */ `
+precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;attribute vec4 x3d_Vertex;varying vec3 vertex;
 #pragma X3D include "common/PointSize.glsl"
 void main(){vec4 position=x3d_ModelViewMatrix*x3d_Vertex;vertex=position.xyz;
 #if defined(X3D_GEOMETRY_0D)&&defined(X3D_STYLE_PROPERTIES)
@@ -94924,7 +94967,8 @@ gl_Position=x3d_ProjectionMatrix*position;}`
 x_ite_Namespace .add ("Depth1.vs", "assets/shaders/webgl1/Depth1.vs", Depth1_vs_default_);
 /* harmony default export */ const Depth1_vs = (Depth1_vs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Gouraud1.fs.js
-const Gouraud1_fs_default_ = /* glsl */ `precision highp float;precision highp int;precision highp sampler2D;precision highp samplerCube;
+const Gouraud1_fs_default_ = /* glsl */ `
+precision highp float;precision highp int;precision highp sampler2D;precision highp samplerCube;
 #pragma X3D include "common/Fragment.glsl"
 varying vec4 frontColor;
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
@@ -94948,7 +94992,8 @@ return finalColor;}void main(){fragment_main();}`
 x_ite_Namespace .add ("Gouraud1.fs", "assets/shaders/webgl1/Gouraud1.fs", Gouraud1_fs_default_);
 /* harmony default export */ const Gouraud1_fs = (Gouraud1_fs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Gouraud1.vs.js
-const Gouraud1_vs_default_ = /* glsl */ `precision highp float;precision highp int;precision highp sampler2D;precision highp samplerCube;
+const Gouraud1_vs_default_ = /* glsl */ `
+precision highp float;precision highp int;precision highp sampler2D;precision highp samplerCube;
 #pragma X3D include "common/Vertex.glsl"
 #pragma X3D include "common/Material.glsl"
 varying vec4 frontColor;
@@ -94982,7 +95027,8 @@ backColor=getMaterialColor(-normal,vertex,x3d_Material);
 x_ite_Namespace .add ("Gouraud1.vs", "assets/shaders/webgl1/Gouraud1.vs", Gouraud1_vs_default_);
 /* harmony default export */ const Gouraud1_vs = (Gouraud1_vs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/PBR1.fs.js
-const PBR1_fs_default_ = /* glsl */ `#extension GL_OES_standard_derivatives:enable
+const PBR1_fs_default_ = /* glsl */ `
+#extension GL_OES_standard_derivatives:enable
 #extension GL_EXT_frag_depth:enable
 #extension GL_EXT_shader_texture_lod:enable
 precision highp float;precision highp int;precision highp sampler2D;precision highp samplerCube;float max3(const in vec3 value){return max(max(value.x,value.y),value.z);}
@@ -95086,135 +95132,47 @@ return vec4(toneMap(color),baseColor.a);
 x_ite_Namespace .add ("PBR1.fs", "assets/shaders/webgl1/PBR1.fs", PBR1_fs_default_);
 /* harmony default export */ const PBR1_fs = (PBR1_fs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Phong1.fs.js
-const Phong1_fs_default_ = /* glsl */ `#extension GL_OES_standard_derivatives:enable
+
+
+const Phong1_fs_default_ = /* glsl */ `
+#extension GL_OES_standard_derivatives:enable
 #extension GL_EXT_frag_depth:enable
 precision highp float;precision highp int;precision highp sampler2D;precision highp samplerCube;
 #pragma X3D include "common/Fragment.glsl"
 #pragma X3D include "common/Material.glsl"
 #pragma X3D include "common/Normal.glsl"
+${MaterialTextures .texture ("x3d_AmbientTexture", "rgb", "sRGB")} vec3 getAmbientColor(const in vec3 diffuseColor){vec3 ambientColor=x3d_Material.ambientIntensity*diffuseColor;
 #if defined(X3D_AMBIENT_TEXTURE)
-uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
-#endif
-vec3 getAmbientColor(const in vec3 diffuseColor){vec3 ambientColor=x3d_Material.ambientIntensity*diffuseColor;
-#if defined(X3D_AMBIENT_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_AmbientTexture.textureTransformMapping,x3d_AmbientTexture.textureCoordinateMapping);
-#if defined(X3D_AMBIENT_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_AMBIENT_TEXTURE_2D)
-vec3 textureColor=texture2D(x3d_AmbientTexture.texture2D,texCoord.st).rgb;
-#elif defined(X3D_AMBIENT_TEXTURE_CUBE)
-vec3 textureColor=textureCube(x3d_AmbientTexture.textureCube,texCoord).rgb;
-#endif
-#if defined(X3D_AMBIENT_TEXTURE_LINEAR)
-ambientColor*=linearTosRGB(textureColor);
-#else
-ambientColor*=textureColor;
-#endif
+ambientColor*=getAmbientTexture();
 #else
 return ambientColor;
 #endif
-}
-#if defined(X3D_DIFFUSE_TEXTURE)
-uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
-#endif
-vec4 getDiffuseColor(){float alpha=1.0-x3d_Material.transparency;
+}${MaterialTextures .texture ("x3d_DiffuseTexture", "rgba", "sRGB")} vec4 getDiffuseColor(){float alpha=1.0-x3d_Material.transparency;
 #if defined(X3D_COLOR_MATERIAL)
 vec4 diffuseColor=vec4(color.rgb,color.a*alpha);
 #else
 vec4 diffuseColor=vec4(x3d_Material.diffuseColor,alpha);
 #endif
 #if defined(X3D_DIFFUSE_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_DiffuseTexture.textureTransformMapping,x3d_DiffuseTexture.textureCoordinateMapping);
-#if defined(X3D_DIFFUSE_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_DIFFUSE_TEXTURE_2D)
-vec4 textureColor=texture2D(x3d_DiffuseTexture.texture2D,texCoord.st);
-#elif defined(X3D_DIFFUSE_TEXTURE_CUBE)
-vec4 textureColor=textureCube(x3d_DiffuseTexture.textureCube,texCoord);
-#endif
-#if defined(X3D_DIFFUSE_TEXTURE_LINEAR)
-diffuseColor*=linearTosRGB(textureColor);
-#else
-diffuseColor*=textureColor;
-#endif
+diffuseColor*=getDiffuseTexture();
 #elif defined(X3D_TEXTURE)
 diffuseColor=getTextureColor(diffuseColor,vec4(x3d_Material.specularColor,alpha));
 #endif
-return diffuseColor;}
+return diffuseColor;}${MaterialTextures .texture ("x3d_SpecularTexture", "rgb", "sRGB")} vec3 getSpecularColor(){vec3 specularColor=x3d_Material.specularColor;
 #if defined(X3D_SPECULAR_TEXTURE)
-uniform x3d_SpecularTextureParameters x3d_SpecularTexture;
+specularColor*=getSpecularTexture();
 #endif
-vec3 getSpecularColor(){vec3 specularColor=x3d_Material.specularColor;
-#if defined(X3D_SPECULAR_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_SpecularTexture.textureTransformMapping,x3d_SpecularTexture.textureCoordinateMapping);
-#if defined(X3D_SPECULAR_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_SPECULAR_TEXTURE_2D)
-vec3 textureColor=texture2D(x3d_SpecularTexture.texture2D,texCoord.st).rgb;
-#elif defined(X3D_SPECULAR_TEXTURE_CUBE)
-vec3 textureColor=textureCube(x3d_SpecularTexture.textureCube,texCoord).rgb;
-#endif
-#if defined(X3D_SPECULAR_TEXTURE_LINEAR)
-specularColor*=linearTosRGB(textureColor);
-#else
-specularColor*=textureColor;
-#endif
-#endif
-return specularColor;}
+return specularColor;}${MaterialTextures .texture ("x3d_EmissiveTexture", "rgb", "sRGB")} vec3 getEmissiveColor(){vec3 emissiveColor=x3d_Material.emissiveColor;
 #if defined(X3D_EMISSIVE_TEXTURE)
-uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
+emissiveColor*=getEmissiveTexture();
 #endif
-vec3 getEmissiveColor(){vec3 emissiveColor=x3d_Material.emissiveColor;
-#if defined(X3D_EMISSIVE_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_EmissiveTexture.textureTransformMapping,x3d_EmissiveTexture.textureCoordinateMapping);
-#if defined(X3D_EMISSIVE_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_EMISSIVE_TEXTURE_2D)
-vec3 textureColor=texture2D(x3d_EmissiveTexture.texture2D,texCoord.st).rgb;
-#elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
-vec3 textureColor=textureCube(x3d_EmissiveTexture.textureCube,texCoord).rgb;
-#endif
-#if defined(X3D_EMISSIVE_TEXTURE_LINEAR)
-emissiveColor*=linearTosRGB(textureColor);
-#else
-emissiveColor*=textureColor;
-#endif
-#endif
-return emissiveColor;}
+return emissiveColor;}${MaterialTextures .texture ("x3d_ShininessTexture", "a")} float getShininessFactor(){float shininess=x3d_Material.shininess;
 #if defined(X3D_SHININESS_TEXTURE)
-uniform x3d_ShininessTextureParameters x3d_ShininessTexture;
+shininess*=getShininessTexture();
 #endif
-float getShininessFactor(){float shininess=x3d_Material.shininess;
-#if defined(X3D_SHININESS_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_ShininessTexture.textureTransformMapping,x3d_ShininessTexture.textureCoordinateMapping);
-#if defined(X3D_SHININESS_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_SHININESS_TEXTURE_2D)
-shininess*=texture2D(x3d_ShininessTexture.texture2D,texCoord.st).a;
-#elif defined(X3D_SHININESS_TEXTURE_CUBE)
-shininess*=textureCube(x3d_ShininessTexture.textureCube,texCoord).a;
-#endif
-#endif
-return shininess;}
+return shininess;}${MaterialTextures .texture ("x3d_OcclusionTexture", "r")} float getOcclusionFactor(){
 #if defined(X3D_OCCLUSION_TEXTURE)
-uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
-#endif
-float getOcclusionFactor(){
-#if defined(X3D_OCCLUSION_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_OcclusionTexture.textureTransformMapping,x3d_OcclusionTexture.textureCoordinateMapping);
-#if defined(X3D_OCCLUSION_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_OCCLUSION_TEXTURE_2D)
-return texture2D(x3d_OcclusionTexture.texture2D,texCoord.st).r;
-#elif defined(X3D_OCCLUSION_TEXTURE_CUBE)
-return textureCube(x3d_OcclusionTexture.textureCube,texCoord).r;
-#endif
+return getOcclusionTexture();
 #else
 return 1.0;
 #endif
@@ -95236,7 +95194,8 @@ finalColor+=getEmissiveColor();return vec4(finalColor,alpha);}void main(){fragme
 x_ite_Namespace .add ("Phong1.fs", "assets/shaders/webgl1/Phong1.fs", Phong1_fs_default_);
 /* harmony default export */ const Phong1_fs = (Phong1_fs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Pointing1.fs.js
-const Pointing1_fs_default_ = /* glsl */ `#extension GL_EXT_draw_buffers:enable
+const Pointing1_fs_default_ = /* glsl */ `
+#extension GL_EXT_draw_buffers:enable
 precision highp float;precision highp int;precision highp sampler2D;varying vec3 vertex;varying vec3 normal;
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
 varying vec4 texCoord0;
@@ -95258,7 +95217,8 @@ gl_FragData[0]=vec4(vertex,x3d_Id);gl_FragData[1]=vec4(normal,0.0);gl_FragData[2
 x_ite_Namespace .add ("Pointing1.fs", "assets/shaders/webgl1/Pointing1.fs", Pointing1_fs_default_);
 /* harmony default export */ const Pointing1_fs = (Pointing1_fs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Pointing1.vs.js
-const Pointing1_vs_default_ = /* glsl */ `precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;attribute vec4 x3d_Vertex;attribute vec3 x3d_Normal;
+const Pointing1_vs_default_ = /* glsl */ `
+precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;attribute vec4 x3d_Vertex;attribute vec3 x3d_Normal;
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
 attribute vec4 x3d_TexCoord0;
 #endif
@@ -95283,35 +95243,21 @@ gl_Position=x3d_ProjectionMatrix*position;}`
 x_ite_Namespace .add ("Pointing1.vs", "assets/shaders/webgl1/Pointing1.vs", Pointing1_vs_default_);
 /* harmony default export */ const Pointing1_vs = (Pointing1_vs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/Unlit1.fs.js
-const Unlit1_fs_default_ = /* glsl */ `#extension GL_OES_standard_derivatives:enable
+
+
+const Unlit1_fs_default_ = /* glsl */ `
+#extension GL_OES_standard_derivatives:enable
 #extension GL_EXT_frag_depth:enable
 precision highp float;precision highp int;precision highp sampler2D;precision highp samplerCube;
 #pragma X3D include "common/Fragment.glsl"
-uniform x3d_UnlitMaterialParameters x3d_Material;
-#if defined(X3D_EMISSIVE_TEXTURE)
-uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
-#endif
-vec4 getEmissiveColor(){float alpha=1.0-x3d_Material.transparency;
+uniform x3d_UnlitMaterialParameters x3d_Material;${MaterialTextures .texture ("x3d_EmissiveTexture", "rgba", "sRGB")} vec4 getEmissiveColor(){float alpha=1.0-x3d_Material.transparency;
 #if defined(X3D_COLOR_MATERIAL)
 vec4 emissiveColor=vec4(color.rgb,color.a*alpha);
 #else
 vec4 emissiveColor=vec4(x3d_Material.emissiveColor,alpha);
 #endif
 #if defined(X3D_EMISSIVE_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_EmissiveTexture.textureTransformMapping,x3d_EmissiveTexture.textureCoordinateMapping);
-#if defined(X3D_EMISSIVE_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_EMISSIVE_TEXTURE_2D)
-vec4 textureColor=texture2D(x3d_EmissiveTexture.texture2D,texCoord.st);
-#elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
-vec4 textureColor=textureCube(x3d_EmissiveTexture.textureCube,texCoord);
-#endif
-#if defined(X3D_EMISSIVE_TEXTURE_LINEAR)
-emissiveColor*=linearTosRGB(textureColor);
-#else
-emissiveColor*=textureColor;
-#endif
+emissiveColor*=getEmissiveTexture();
 #elif defined(X3D_TEXTURE)
 emissiveColor=getTextureColor(emissiveColor,vec4(vec3(1.0),alpha));
 #endif
@@ -95569,144 +95515,47 @@ return vec4(toneMap(color),baseColor.a);
 x_ite_Namespace .add ("PBR2.fs", "assets/shaders/webgl2/PBR2.fs", PBR2_fs_default_);
 /* harmony default export */ const PBR2_fs = (PBR2_fs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/Phong2.fs.js
+
+
 const Phong2_fs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #pragma X3D include "common/Fragment.glsl"
 #pragma X3D include "common/Material.glsl"
 #pragma X3D include "common/Normal.glsl"
+${MaterialTextures .texture ("x3d_AmbientTexture", "rgb", "sRGB")} vec3 getAmbientColor(const in vec3 diffuseColor){vec3 ambientColor=x3d_Material.ambientIntensity*diffuseColor;
 #if defined(X3D_AMBIENT_TEXTURE)
-uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
+ambientColor*=getAmbientTexture();
 #endif
-vec3 getAmbientColor(const in vec3 diffuseColor){vec3 ambientColor=x3d_Material.ambientIntensity*diffuseColor;
-#if defined(X3D_AMBIENT_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_AmbientTexture.textureTransformMapping,x3d_AmbientTexture.textureCoordinateMapping);
-#if defined(X3D_AMBIENT_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_AMBIENT_TEXTURE_2D)
-vec3 textureColor=texture(x3d_AmbientTexture.texture2D,texCoord.st).rgb;
-#elif defined(X3D_AMBIENT_TEXTURE_3D)
-vec3 textureColor=texture(x3d_AmbientTexture.texture3D,texCoord).rgb;
-#elif defined(X3D_AMBIENT_TEXTURE_CUBE)
-vec3 textureColor=texture(x3d_AmbientTexture.textureCube,texCoord).rgb;
-#endif
-#if defined(X3D_AMBIENT_TEXTURE_LINEAR)
-ambientColor*=linearTosRGB(textureColor);
-#else
-ambientColor*=textureColor;
-#endif
-#endif
-return ambientColor;}
-#if defined(X3D_DIFFUSE_TEXTURE)
-uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
-#endif
-vec4 getDiffuseColor(){float alpha=1.0-x3d_Material.transparency;
+return ambientColor;}${MaterialTextures .texture ("x3d_DiffuseTexture", "rgba", "sRGB")} vec4 getDiffuseColor(){float alpha=1.0-x3d_Material.transparency;
 #if defined(X3D_COLOR_MATERIAL)
 vec4 diffuseColor=vec4(color.rgb,color.a*alpha);
 #else
 vec4 diffuseColor=vec4(x3d_Material.diffuseColor,alpha);
 #endif
 #if defined(X3D_DIFFUSE_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_DiffuseTexture.textureTransformMapping,x3d_DiffuseTexture.textureCoordinateMapping);
-#if defined(X3D_DIFFUSE_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_DIFFUSE_TEXTURE_2D)
-vec4 textureColor=texture(x3d_DiffuseTexture.texture2D,texCoord.st);
-#elif defined(X3D_DIFFUSE_TEXTURE_3D)
-vec4 textureColor=texture(x3d_DiffuseTexture.texture3D,texCoord);
-#elif defined(X3D_DIFFUSE_TEXTURE_CUBE)
-vec4 textureColor=texture(x3d_DiffuseTexture.textureCube,texCoord);
-#endif
-#if defined(X3D_DIFFUSE_TEXTURE_LINEAR)
-diffuseColor*=linearTosRGB(textureColor);
-#else
-diffuseColor*=textureColor;
-#endif
+diffuseColor*=getDiffuseTexture();
 #elif defined(X3D_TEXTURE)
 diffuseColor=getTextureColor(diffuseColor,vec4(x3d_Material.specularColor,alpha));
 #endif
-return diffuseColor;}
+return diffuseColor;}${MaterialTextures .texture ("x3d_SpecularTexture", "rgb", "sRGB")} vec3 getSpecularColor(){vec3 specularColor=x3d_Material.specularColor;
 #if defined(X3D_SPECULAR_TEXTURE)
-uniform x3d_SpecularTextureParameters x3d_SpecularTexture;
+specularColor*=getSpecularTexture();
 #endif
-vec3 getSpecularColor(){vec3 specularColor=x3d_Material.specularColor;
-#if defined(X3D_SPECULAR_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_SpecularTexture.textureTransformMapping,x3d_SpecularTexture.textureCoordinateMapping);
-#if defined(X3D_SPECULAR_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_SPECULAR_TEXTURE_2D)
-vec3 textureColor=texture(x3d_SpecularTexture.texture2D,texCoord.st).rgb;
-#elif defined(X3D_SPECULAR_TEXTURE_3D)
-vec3 textureColor=texture(x3d_SpecularTexture.texture3D,texCoord).rgb;
-#elif defined(X3D_SPECULAR_TEXTURE_CUBE)
-vec3 textureColor=texture(x3d_SpecularTexture.textureCube,texCoord).rgb;
-#endif
-#if defined(X3D_SPECULAR_TEXTURE_LINEAR)
-specularColor*=linearTosRGB(textureColor);
-#else
-specularColor*=textureColor;
-#endif
-#endif
-return specularColor;}
+return specularColor;}${MaterialTextures .texture ("x3d_EmissiveTexture", "rgb", "sRGB")} vec3 getEmissiveColor(){vec3 emissiveColor=x3d_Material.emissiveColor;
 #if defined(X3D_EMISSIVE_TEXTURE)
-uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
-#endif
-vec3 getEmissiveColor(){vec3 emissiveColor=x3d_Material.emissiveColor;
-#if defined(X3D_EMISSIVE_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_EmissiveTexture.textureTransformMapping,x3d_EmissiveTexture.textureCoordinateMapping);
-#if defined(X3D_EMISSIVE_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_EMISSIVE_TEXTURE_2D)
-vec3 textureColor=texture(x3d_EmissiveTexture.texture2D,texCoord.st).rgb;
-#elif defined(X3D_EMISSIVE_TEXTURE_3D)
-vec3 textureColor=texture(x3d_EmissiveTexture.texture3D,texCoord).rgb;
-#elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
-vec3 textureColor=texture(x3d_EmissiveTexture.textureCube,texCoord).rgb;
-#endif
-#if defined(X3D_EMISSIVE_TEXTURE_LINEAR)
-emissiveColor*=linearTosRGB(textureColor);
-#else
-emissiveColor*=textureColor;
-#endif
+emissiveColor*=getEmissiveTexture();
 #endif
 return emissiveColor;}
 #if defined(X3D_SHININESS_TEXTURE)
 uniform x3d_ShininessTextureParameters x3d_ShininessTexture;
 #endif
-float getShininessFactor(){float shininess=x3d_Material.shininess;
+${MaterialTextures .texture ("x3d_ShininessTexture", "a")} float getShininessFactor(){float shininess=x3d_Material.shininess;
 #if defined(X3D_SHININESS_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_ShininessTexture.textureTransformMapping,x3d_ShininessTexture.textureCoordinateMapping);
-#if defined(X3D_SHININESS_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
+shininess*=getShininessTexture();
 #endif
-#if defined(X3D_SHININESS_TEXTURE_2D)
-shininess*=texture(x3d_ShininessTexture.texture2D,texCoord.st).a;
-#elif defined(X3D_SHININESS_TEXTURE_3D)
-shininess*=texture(x3d_ShininessTexture.texture3D,texCoord).a;
-#elif defined(X3D_SHININESS_TEXTURE_CUBE)
-shininess*=texture(x3d_ShininessTexture.textureCube,texCoord).a;
-#endif
-#endif
-return shininess;}
+return shininess;}${MaterialTextures .texture ("x3d_OcclusionTexture", "r")} float getOcclusionFactor(){
 #if defined(X3D_OCCLUSION_TEXTURE)
-uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
-#endif
-float getOcclusionFactor(){
-#if defined(X3D_OCCLUSION_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_OcclusionTexture.textureTransformMapping,x3d_OcclusionTexture.textureCoordinateMapping);
-#if defined(X3D_OCCLUSION_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_OCCLUSION_TEXTURE_2D)
-return texture(x3d_OcclusionTexture.texture2D,texCoord.st).r;
-#elif defined(X3D_OCCLUSION_TEXTURE_3D)
-return texture(x3d_OcclusionTexture.texture3D,texCoord).r;
-#elif defined(X3D_OCCLUSION_TEXTURE_CUBE)
-return texture(x3d_OcclusionTexture.textureCube,texCoord).r;
-#endif
+return getOcclusionTexture();
 #else
 return 1.0;
 #endif
@@ -95798,36 +95647,19 @@ gl_Position=x3d_ProjectionMatrix*position;}`
 x_ite_Namespace .add ("Pointing2.vs", "assets/shaders/webgl2/Pointing2.vs", Pointing2_vs_default_);
 /* harmony default export */ const Pointing2_vs = (Pointing2_vs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/Unlit2.fs.js
+
+
 const Unlit2_fs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #pragma X3D include "common/Fragment.glsl"
-uniform x3d_UnlitMaterialParameters x3d_Material;
-#if defined(X3D_EMISSIVE_TEXTURE)
-uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
-#endif
-vec4 getEmissiveColor(){float alpha=1.0-x3d_Material.transparency;
+uniform x3d_UnlitMaterialParameters x3d_Material;${MaterialTextures .texture ("x3d_EmissiveTexture", "rgba", "sRGB")} vec4 getEmissiveColor(){float alpha=1.0-x3d_Material.transparency;
 #if defined(X3D_COLOR_MATERIAL)
 vec4 emissiveColor=vec4(color.rgb,color.a*alpha);
 #else
 vec4 emissiveColor=vec4(x3d_Material.emissiveColor,alpha);
 #endif
 #if defined(X3D_EMISSIVE_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_EmissiveTexture.textureTransformMapping,x3d_EmissiveTexture.textureCoordinateMapping);
-#if defined(X3D_EMISSIVE_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_EMISSIVE_TEXTURE_2D)
-vec4 textureColor=texture(x3d_EmissiveTexture.texture2D,texCoord.st);
-#elif defined(X3D_EMISSIVE_TEXTURE_3D)
-vec4 textureColor=texture(x3d_EmissiveTexture.texture3D,texCoord);
-#elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
-vec4 textureColor=texture(x3d_EmissiveTexture.textureCube,texCoord);
-#endif
-#if defined(X3D_EMISSIVE_TEXTURE_LINEAR)
-emissiveColor*=linearTosRGB(textureColor);
-#else
-emissiveColor*=textureColor;
-#endif
+emissiveColor*=getEmissiveTexture();
 #elif defined(X3D_TEXTURE)
 emissiveColor=getTextureColor(emissiveColor,vec4(vec3(1.0),alpha));
 #endif
@@ -95841,7 +95673,8 @@ return finalColor;}void main(){fragment_main();}`
 x_ite_Namespace .add ("Unlit2.fs", "assets/shaders/webgl2/Unlit2.fs", Unlit2_fs_default_);
 /* harmony default export */ const Unlit2_fs = (Unlit2_fs_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/pbr/BRDF1.glsl.js
-const BRDF1_glsl_default_ = /* glsl */ `vec3 F_Schlick(vec3 f0,vec3 f90,float VdotH){return f0+(f90-f0)*pow(clamp(1.0-VdotH,0.0,1.0),5.0);}
+const BRDF1_glsl_default_ = /* glsl */ `
+vec3 F_Schlick(vec3 f0,vec3 f90,float VdotH){return f0+(f90-f0)*pow(clamp(1.0-VdotH,0.0,1.0),5.0);}
 #if defined(X3D_LIGHTING)
 const float M_PI=3.14159265359;float V_GGX(float NdotL,float NdotV,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float GGXV=NdotL*sqrt(NdotV*NdotV*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGXL=NdotV*sqrt(NdotL*NdotL*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGX=GGXV+GGXL;if(GGX>0.0){return 0.5/GGX;}return 0.0;}float D_GGX(float NdotH,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float f=(NdotH*NdotH)*(alphaRoughnessSq-1.0)+1.0;return alphaRoughnessSq/(M_PI*f*f);}vec3 BRDF_lambertian(vec3 f0,vec3 f90,vec3 diffuseColor,float specularWeight,float VdotH){return(1.0-specularWeight*F_Schlick(f0,f90,VdotH))*(diffuseColor/M_PI);}vec3 BRDF_specularGGX(vec3 f0,vec3 f90,float alphaRoughness,float specularWeight,float VdotH,float NdotL,float NdotV,float NdotH){vec3 F=F_Schlick(f0,f90,VdotH);float Vis=V_GGX(NdotL,NdotV,alphaRoughness);float D=D_GGX(NdotH,alphaRoughness);return specularWeight*F*Vis*D;}
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
@@ -95857,7 +95690,8 @@ float lambdaSheenNumericHelper(const in float x,const in float alphaG){float one
 x_ite_Namespace .add ("BRDF1.glsl", "assets/shaders/webgl1/pbr/BRDF1.glsl", BRDF1_glsl_default_);
 /* harmony default export */ const BRDF1_glsl = (BRDF1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/pbr/IBL1.glsl.js
-const IBL1_glsl_default_ = /* glsl */ `#if defined(X3D_USE_IBL)
+const IBL1_glsl_default_ = /* glsl */ `
+#if defined(X3D_USE_IBL)
 uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;vec3 getDiffuseLight(const in vec3 n){vec3 texCoord=x3d_EnvironmentLightSource.rotation*n;vec3 textureColor=textureCube(x3d_EnvironmentLightSource.diffuseTexture,texCoord).rgb;if(!x3d_EnvironmentLightSource.diffuseTextureLinear)textureColor=sRGBToLinear(textureColor);return textureColor*x3d_EnvironmentLightSource.color*x3d_EnvironmentLightSource.intensity;}vec3 getSpecularLight(const in vec3 reflection,const in float lod){vec3 texCoord=x3d_EnvironmentLightSource.rotation*reflection;vec3 textureColor=textureCubeLodEXT(x3d_EnvironmentLightSource.specularTexture,texCoord,lod).rgb;if(!x3d_EnvironmentLightSource.specularTextureLinear)textureColor=sRGBToLinear(textureColor);return textureColor*x3d_EnvironmentLightSource.color*x3d_EnvironmentLightSource.intensity;}
 #if defined(X3D_SHEEN_MATERIAL_EXT)
 vec3 getSheenLight(const in vec3 reflection,const in float lod){return vec3(0.5)*(lod/float(x3d_EnvironmentLightSource.specularTextureLevels-1))*x3d_EnvironmentLightSource.intensity;}
@@ -95876,7 +95710,8 @@ vec3 getIBLRadianceCharlie(const in vec3 n,const in vec3 v,const in float sheenR
 x_ite_Namespace .add ("IBL1.glsl", "assets/shaders/webgl1/pbr/IBL1.glsl", IBL1_glsl_default_);
 /* harmony default export */ const IBL1_glsl = (IBL1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/pbr/Punctual1.glsl.js
-const Punctual1_glsl_default_ = /* glsl */ `#if defined(X3D_LIGHTING)
+const Punctual1_glsl_default_ = /* glsl */ `
+#if defined(X3D_LIGHTING)
 #pragma X3D include "../common/Lighting.glsl"
 vec3 getLightIntensity(const in x3d_LightSourceParameters light,const in vec3 pointToLight,const in float distanceToLight){float attenuationFactor=1.0;float spotFactor=1.0;if(light.type!=x3d_DirectionalLight){attenuationFactor=getAttenuation(light.attenuation,distanceToLight);}if(light.type==x3d_SpotLight){spotFactor=getSpotFactor(pointToLight,light.direction,light.cutOffAngle,light.beamWidth);}return attenuationFactor*spotFactor*light.intensity*light.color;}
 #if defined(X3D_SHEEN_MATERIAL_EXT)
@@ -95892,14 +95727,17 @@ vec3 getPunctualRadianceClearCoat(const in vec3 clearcoatNormal,const in vec3 v,
 x_ite_Namespace .add ("Punctual1.glsl", "assets/shaders/webgl1/pbr/Punctual1.glsl", Punctual1_glsl_default_);
 /* harmony default export */ const Punctual1_glsl = (Punctual1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/pbr/MaterialInfo1.glsl.js
-const MaterialInfo1_glsl_default_ = /* glsl */ `struct MaterialInfo{float ior;float perceptualRoughness;vec3 f0;float alphaRoughness;vec3 c_diff;vec3 f90;float metallic;vec3 baseColor;float sheenRoughnessFactor;vec3 sheenColorFactor;vec3 clearcoatF0;vec3 clearcoatF90;float clearcoatFactor;vec3 clearcoatNormal;float clearcoatRoughness;float specularWeight;float transmissionFactor;float thickness;vec3 attenuationColor;float attenuationDistance;float iridescenceFactor;float iridescenceIor;float iridescenceThickness;vec3 anisotropicT;vec3 anisotropicB;float anisotropyStrength;float dispersion;};
+
+
+const MaterialInfo1_glsl_default_ = /* glsl */ `
+struct MaterialInfo{float ior;float perceptualRoughness;vec3 f0;float alphaRoughness;vec3 c_diff;vec3 f90;float metallic;vec3 baseColor;float sheenRoughnessFactor;vec3 sheenColorFactor;vec3 clearcoatF0;vec3 clearcoatF90;float clearcoatFactor;vec3 clearcoatNormal;float clearcoatRoughness;float specularWeight;float transmissionFactor;float thickness;vec3 attenuationColor;float attenuationDistance;float iridescenceFactor;float iridescenceIor;float iridescenceThickness;vec3 anisotropicT;vec3 anisotropicB;float anisotropyStrength;float dispersion;};
 #if defined(X3D_MATERIAL_SPECULAR_GLOSSINESS)
 #if defined(X3D_DIFFUSE_TEXTURE)
-uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
+${MaterialTextures .texture ("x3d_DiffuseTexture", "rgba", "linear")} 
 #endif
 #elif defined(X3D_MATERIAL_METALLIC_ROUGHNESS)
 #if defined(X3D_BASE_TEXTURE)
-uniform x3d_BaseTextureParameters x3d_BaseTexture;
+${MaterialTextures .texture ("x3d_BaseTexture", "rgba", "linear")} 
 #endif
 #endif
 vec4 getBaseColor(){float alpha=1.0-x3d_Material.transparency;
@@ -95913,66 +95751,26 @@ baseColor*=color;
 #endif
 #if defined(X3D_MATERIAL_SPECULAR_GLOSSINESS)
 #if defined(X3D_DIFFUSE_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_DiffuseTexture.textureTransformMapping,x3d_DiffuseTexture.textureCoordinateMapping);
-#if defined(X3D_DIFFUSE_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_DIFFUSE_TEXTURE_2D)
-vec4 textureColor=texture2D(x3d_DiffuseTexture.texture2D,texCoord.st);
-#elif defined(X3D_DIFFUSE_TEXTURE_CUBE)
-vec4 textureColor=textureCube(x3d_DiffuseTexture.textureCube,texCoord);
-#endif
-#if defined(X3D_BASE_TEXTURE_LINEAR)
-baseColor*=textureColor;
-#else
-baseColor*=sRGBToLinear(textureColor);
-#endif
+baseColor*=getDiffuseTexture();
 #elif defined(X3D_TEXTURE)
 baseColor=getTextureColor(baseColor,vec4(vec3(1.0),alpha));
 #endif
 #elif defined(X3D_MATERIAL_METALLIC_ROUGHNESS)
 #if defined(X3D_BASE_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_BaseTexture.textureTransformMapping,x3d_BaseTexture.textureCoordinateMapping);
-#if defined(X3D_BASE_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_BASE_TEXTURE_2D)
-vec4 textureColor=texture2D(x3d_BaseTexture.texture2D,texCoord.st);
-#elif defined(X3D_BASE_TEXTURE_CUBE)
-vec4 textureColor=textureCube(x3d_BaseTexture.textureCube,texCoord);
-#endif
-#if defined(X3D_BASE_TEXTURE_LINEAR)
-baseColor*=textureColor;
-#else
-baseColor*=sRGBToLinear(textureColor);
-#endif
+baseColor*=getBaseTexture();
 #elif defined(X3D_TEXTURE)
 baseColor=getTextureColor(baseColor,vec4(vec3(1.0),alpha));
 #endif
 #endif
 return baseColor;}
 #if defined(X3D_MATERIAL_METALLIC_ROUGHNESS)
+${MaterialTextures .texture ("x3d_MetallicRoughnessTexture")} MaterialInfo getMetallicRoughnessInfo(in MaterialInfo info){info.metallic=x3d_Material.metallic;info.perceptualRoughness=x3d_Material.roughness;
 #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE)
-uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
-#endif
-MaterialInfo getMetallicRoughnessInfo(in MaterialInfo info){info.metallic=x3d_Material.metallic;info.perceptualRoughness=x3d_Material.roughness;
-#if defined(X3D_METALLIC_ROUGHNESS_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_MetallicRoughnessTexture.textureTransformMapping,x3d_MetallicRoughnessTexture.textureCoordinateMapping);
-#if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
-vec4 mrSample=texture2D(x3d_MetallicRoughnessTexture.texture2D,texCoord.st);
-#elif defined(X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
-vec4 mrSample=textureCube(x3d_MetallicRoughnessTexture.textureCube,texCoord);
-#endif
-info.metallic*=mrSample.b;info.perceptualRoughness*=mrSample.g;
+vec4 mrSample=getMetallicRoughnessTexture();info.metallic*=mrSample.b;info.perceptualRoughness*=mrSample.g;
 #endif
 info.c_diff=mix(info.baseColor.rgb,vec3(0.0),info.metallic);info.f0=mix(info.f0,info.baseColor.rgb,info.metallic);return info;}
 #endif
-#if defined(X3D_EMISSIVE_TEXTURE)
-uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
-#endif
+${MaterialTextures .texture ("x3d_EmissiveTexture", "rgb", "linear")} 
 #if defined(X3D_EMISSIVE_STRENGTH_MATERIAL_EXT)
 uniform float x3d_EmissiveStrengthEXT;
 #endif
@@ -95981,176 +95779,59 @@ vec3 getEmissiveColor(){vec3 emissiveColor=x3d_Material.emissiveColor;
 emissiveColor*=x3d_EmissiveStrengthEXT;
 #endif
 #if defined(X3D_EMISSIVE_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_EmissiveTexture.textureTransformMapping,x3d_EmissiveTexture.textureCoordinateMapping);
-#if defined(X3D_EMISSIVE_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
+emissiveColor*=getEmissiveTexture();
 #endif
-#if defined(X3D_EMISSIVE_TEXTURE_2D)
-vec3 textureColor=texture2D(x3d_EmissiveTexture.texture2D,texCoord.st).rgb;
-#elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
-vec3 textureColor=textureCube(x3d_EmissiveTexture.textureCube,texCoord).rgb;
-#endif
-#if defined(X3D_EMISSIVE_TEXTURE_LINEAR)
-emissiveColor*=textureColor;
-#else
-emissiveColor*=sRGBToLinear(textureColor);
-#endif
-#endif
-return emissiveColor;}
+return emissiveColor;}${MaterialTextures .texture ("x3d_OcclusionTexture", "r")} float getOcclusionFactor(){
 #if defined(X3D_OCCLUSION_TEXTURE)
-uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
-#endif
-float getOcclusionFactor(){
-#if defined(X3D_OCCLUSION_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_OcclusionTexture.textureTransformMapping,x3d_OcclusionTexture.textureCoordinateMapping);
-#if defined(X3D_OCCLUSION_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_OCCLUSION_TEXTURE_2D)
-return texture2D(x3d_OcclusionTexture.texture2D,texCoord.st).r;
-#elif defined(X3D_OCCLUSION_TEXTURE_CUBE)
-return textureCube(x3d_OcclusionTexture.textureCube,texCoord).r;
-#endif
+return getOcclusionTexture();
 #else
 return 1.0;
 #endif
 }
 #if defined(X3D_SHEEN_MATERIAL_EXT)
+${MaterialTextures .texture ("x3d_SheenColorTextureEXT",     "rgb")} ${MaterialTextures .texture ("x3d_SheenRoughnessTextureEXT", "a")} uniform vec3 x3d_SheenColorEXT;uniform float x3d_SheenRoughnessEXT;MaterialInfo getSheenInfo(in MaterialInfo info){info.sheenColorFactor=x3d_SheenColorEXT;info.sheenRoughnessFactor=x3d_SheenRoughnessEXT;
 #if defined(X3D_SHEEN_COLOR_TEXTURE_EXT)
-uniform x3d_SheenColorTextureParametersEXT x3d_SheenColorTextureEXT;vec3 getSheenColorEXT(){vec3 texCoord=getTexCoord(x3d_SheenColorTextureEXT.textureTransformMapping,x3d_SheenColorTextureEXT.textureCoordinateMapping);
-#if defined(X3D_SHEEN_COLOR_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_SHEEN_COLOR_TEXTURE_EXT_2D)
-return texture2D(x3d_SheenColorTextureEXT.texture2D,texCoord.st).rgb;
-#elif defined(X3D_SHEEN_COLOR_TEXTURE_EXT_CUBE)
-return textureCube(x3d_SheenColorTextureEXT.textureCube,texCoord).rgb;
-#endif
-}
+info.sheenColorFactor*=getSheenColorTextureEXT();
 #endif
 #if defined(X3D_SHEEN_ROUGHNESS_TEXTURE_EXT)
-uniform x3d_SheenRoughnessTextureParametersEXT x3d_SheenRoughnessTextureEXT;float getSheenRoughnessEXT(){vec3 texCoord=getTexCoord(x3d_SheenRoughnessTextureEXT.textureTransformMapping,x3d_SheenRoughnessTextureEXT.textureCoordinateMapping);
-#if defined(X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_2D)
-return texture2D(x3d_SheenRoughnessTextureEXT.texture2D,texCoord.st).a;
-#elif defined(X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_CUBE)
-return textureCube(x3d_SheenRoughnessTextureEXT.textureCube,texCoord).a;
-#endif
-}
-#endif
-uniform vec3 x3d_SheenColorEXT;uniform float x3d_SheenRoughnessEXT;MaterialInfo getSheenInfo(in MaterialInfo info){info.sheenColorFactor=x3d_SheenColorEXT;info.sheenRoughnessFactor=x3d_SheenRoughnessEXT;
-#if defined(X3D_SHEEN_COLOR_TEXTURE_EXT)
-info.sheenColorFactor*=getSheenColorEXT();
-#endif
-#if defined(X3D_SHEEN_ROUGHNESS_TEXTURE_EXT)
-info.sheenRoughnessFactor*=getSheenRoughnessEXT();
+info.sheenRoughnessFactor*=getSheenRoughnessTextureEXT();
 #endif
 return info;}uniform sampler2D x3d_SheenELUTTextureEXT;float albedoSheenScalingLUT(const in float NdotV,const in float sheenRoughnessFactor){return texture2D(x3d_SheenELUTTextureEXT,vec2(NdotV,sheenRoughnessFactor)).r;}
 #endif
 #if defined(X3D_CLEARCOAT_MATERIAL_EXT)
-#if defined(X3D_CLEARCOAT_TEXTURE_EXT)
-uniform x3d_ClearcoatTextureParametersEXT x3d_ClearcoatTextureEXT;float getClearcoatEXT(){vec3 texCoord=getTexCoord(x3d_ClearcoatTextureEXT.textureTransformMapping,x3d_ClearcoatTextureEXT.textureCoordinateMapping);
-#if defined(X3D_CLEARCOAT_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_CLEARCOAT_TEXTURE_EXT_2D)
-return texture2D(x3d_ClearcoatTextureEXT.texture2D,texCoord.st).r;
-#elif defined(X3D_CLEARCOAT_TEXTURE_EXT_CUBE)
-return textureCube(x3d_ClearcoatTextureEXT.textureCube,texCoord).r;
-#endif
-}
-#endif
-#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT)
-uniform x3d_ClearcoatRoughnessTextureParametersEXT x3d_ClearcoatRoughnessTextureEXT;float getClearcoatRoughnessEXT(){vec3 texCoord=getTexCoord(x3d_ClearcoatRoughnessTextureEXT.textureTransformMapping,x3d_ClearcoatRoughnessTextureEXT.textureCoordinateMapping);
-#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_2D)
-return texture2D(x3d_ClearcoatRoughnessTextureEXT.texture2D,texCoord.st).g;
-#elif defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_CUBE)
-return textureCube(x3d_ClearcoatRoughnessTextureEXT.textureCube,texCoord).g;
-#endif
-}
-#endif
+${MaterialTextures .texture ("x3d_ClearcoatTextureEXT",          "r")} ${MaterialTextures .texture ("x3d_ClearcoatRoughnessTextureEXT", "g")} ${MaterialTextures .texture ("x3d_ClearcoatNormalTextureEXT",    "rgb")} 
 #if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT)
-const float x3d_ClearcoatNormalScaleEXT=1.0;uniform x3d_ClearcoatNormalTextureParametersEXT x3d_ClearcoatNormalTextureEXT;
+const float x3d_ClearcoatNormalScaleEXT=1.0;
 #endif
 vec3 getClearcoatNormalEXT(const in NormalInfo normalInfo){
 #if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT)
-vec3 texCoord=getTexCoord(x3d_ClearcoatNormalTextureEXT.textureTransformMapping,x3d_ClearcoatNormalTextureEXT.textureCoordinateMapping);
-#if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_2D)
-vec3 color=texture2D(x3d_ClearcoatNormalTextureEXT.texture2D,texCoord.st).rgb;
-#elif defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_CUBE)
-vec3 color=textureCube(x3d_ClearcoatNormalTextureEXT.textureCube,texCoord).rgb;
-#endif
-vec3 n=color*2.0-vec3(1.0);n*=vec3(vec2(x3d_ClearcoatNormalScaleEXT),1.0);n=mat3(normalInfo.t,normalInfo.b,normalInfo.ng)*normalize(n);return n;
+vec3 color=getClearcoatNormalTextureEXT();vec3 n=color*2.0-vec3(1.0);n*=vec3(vec2(x3d_ClearcoatNormalScaleEXT),1.0);n=mat3(normalInfo.t,normalInfo.b,normalInfo.ng)*normalize(n);return n;
 #else
 return normalInfo.ng;
 #endif
 }uniform float x3d_ClearcoatEXT;uniform float x3d_ClearcoatRoughnessEXT;MaterialInfo getClearCoatInfo(in MaterialInfo info,const in NormalInfo normalInfo){info.clearcoatFactor=x3d_ClearcoatEXT;info.clearcoatRoughness=x3d_ClearcoatRoughnessEXT;info.clearcoatF0=vec3(pow((info.ior-1.0)/(info.ior+1.0),2.0));info.clearcoatF90=vec3(1.0);
 #if defined(X3D_CLEARCOAT_TEXTURE_EXT)
-info.clearcoatFactor*=getClearcoatEXT();
+info.clearcoatFactor*=getClearcoatTextureEXT();
 #endif
 #if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT)
-info.clearcoatRoughness*=getClearcoatRoughnessEXT();
+info.clearcoatRoughness*=getClearcoatRoughnessTextureEXT();
 #endif
 info.clearcoatNormal=getClearcoatNormalEXT(normalInfo);info.clearcoatRoughness=clamp(info.clearcoatRoughness,0.0,1.0);return info;}
 #endif
 #if defined(X3D_SPECULAR_MATERIAL_EXT)
+${MaterialTextures .texture ("x3d_SpecularTextureEXT",      "a")} ${MaterialTextures .texture ("x3d_SpecularColorTextureEXT", "rgb")} uniform float x3d_SpecularEXT;uniform vec3 x3d_SpecularColorEXT;MaterialInfo getSpecularInfo(in MaterialInfo info){vec4 specularTexture=vec4(1.0);
 #if defined(X3D_SPECULAR_TEXTURE_EXT)
-uniform x3d_SpecularTextureParametersEXT x3d_SpecularTextureEXT;float getSpecularEXT(){vec3 texCoord=getTexCoord(x3d_SpecularTextureEXT.textureTransformMapping,x3d_SpecularTextureEXT.textureCoordinateMapping);
-#if defined(X3D_SPECULAR_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_SPECULAR_TEXTURE_EXT_2D)
-return texture2D(x3d_SpecularTextureEXT.texture2D,texCoord.st).a;
-#elif defined(X3D_SPECULAR_TEXTURE_EXT_CUBE)
-return textureCube(x3d_SpecularTextureEXT.textureCube,texCoord).a;
-#endif
-}
+specularTexture.a=getSpecularTextureEXT();
 #endif
 #if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT)
-uniform x3d_SpecularColorTextureParametersEXT x3d_SpecularColorTextureEXT;vec3 getSpecularColorEXT(){vec3 texCoord=getTexCoord(x3d_SpecularColorTextureEXT.textureTransformMapping,x3d_SpecularColorTextureEXT.textureCoordinateMapping);
-#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_2D)
-return texture2D(x3d_SpecularColorTextureEXT.texture2D,texCoord.st).rgb;
-#elif defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_CUBE)
-return textureCube(x3d_SpecularColorTextureEXT.textureCube,texCoord).rgb;
-#endif
-}
-#endif
-uniform float x3d_SpecularEXT;uniform vec3 x3d_SpecularColorEXT;MaterialInfo getSpecularInfo(in MaterialInfo info){vec4 specularTexture=vec4(1.0);
-#if defined(X3D_SPECULAR_TEXTURE_EXT)
-specularTexture.a=getSpecularEXT();
-#endif
-#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT)
-specularTexture.rgb=getSpecularColorEXT();
+specularTexture.rgb=getSpecularColorTextureEXT();
 #endif
 vec3 dielectricSpecularF0=min(info.f0*x3d_SpecularColorEXT*specularTexture.rgb,vec3(1.0));info.f0=mix(dielectricSpecularF0,info.baseColor.rgb,info.metallic);info.specularWeight=x3d_SpecularEXT*specularTexture.a;info.c_diff=mix(info.baseColor.rgb,vec3(0.0),info.metallic);return info;}
 #endif
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
+${MaterialTextures .texture ("x3d_AnisotropyTextureEXT", "rgb")} uniform vec3 x3d_AnisotropyEXT;MaterialInfo getAnisotropyInfo(in MaterialInfo info,const in NormalInfo normalInfo){vec2 direction=vec2(1.0,0.0);float strengthFactor=1.0;
 #if defined(X3D_ANISOTROPY_TEXTURE_EXT)
-uniform x3d_AnisotropyTextureParametersEXT x3d_AnisotropyTextureEXT;vec3 getAnisotropyEXT(){vec3 texCoord=getTexCoord(x3d_AnisotropyTextureEXT.textureTransformMapping,x3d_AnisotropyTextureEXT.textureCoordinateMapping);
-#if defined(X3D_ANISOTROPY_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_ANISOTROPY_TEXTURE_EXT_2D)
-return texture2D(x3d_AnisotropyTextureEXT.texture2D,texCoord.st).rgb;
-#elif defined(X3D_ANISOTROPY_TEXTURE_EXT_CUBE)
-return textureCube(x3d_AnisotropyTextureEXT.textureCube,texCoord).rgb;
-#endif
-}
-#endif
-uniform vec3 x3d_AnisotropyEXT;MaterialInfo getAnisotropyInfo(in MaterialInfo info,const in NormalInfo normalInfo){vec2 direction=vec2(1.0,0.0);float strengthFactor=1.0;
-#if defined(X3D_ANISOTROPY_TEXTURE_EXT)
-vec3 anisotropySample=getAnisotropyEXT();direction=anisotropySample.xy*2.0-vec2(1.0);strengthFactor=anisotropySample.z;
+vec3 anisotropySample=getAnisotropyTextureEXT();direction=anisotropySample.xy*2.0-vec2(1.0);strengthFactor=anisotropySample.z;
 #endif
 vec2 directionRotation=x3d_AnisotropyEXT.xy;mat2 rotationMatrix=mat2(directionRotation.x,directionRotation.y,-directionRotation.y,directionRotation.x);direction=rotationMatrix*direction;info.anisotropicT=mat3(normalInfo.t,normalInfo.b,normalInfo.n)*normalize(vec3(direction,0.0));info.anisotropicB=cross(normalInfo.ng,info.anisotropicT);info.anisotropyStrength=clamp(x3d_AnisotropyEXT.z*strengthFactor,0.0,1.0);return info;}
 #endif
@@ -96160,7 +95841,8 @@ vec2 directionRotation=x3d_AnisotropyEXT.xy;mat2 rotationMatrix=mat2(directionRo
 x_ite_Namespace .add ("MaterialInfo1.glsl", "assets/shaders/webgl1/pbr/MaterialInfo1.glsl", MaterialInfo1_glsl_default_);
 /* harmony default export */ const MaterialInfo1_glsl = (MaterialInfo1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl1/pbr/ToneMapping1.glsl.js
-const ToneMapping1_glsl_default_ = /* glsl */ `const float exposure=1.0;const float GAMMA=2.2;const float INV_GAMMA=1.0/GAMMA;vec3 linearTosRGB(const in vec3 color){return pow(color,vec3(INV_GAMMA));}vec4 linearTosRGB(const in vec4 color){return vec4(linearTosRGB(color.rgb),color.a);}vec3 sRGBToLinear(const in vec3 color){return pow(color,vec3(GAMMA));}vec4 sRGBToLinear(const in vec4 color){return vec4(sRGBToLinear(color.rgb),color.a);}
+const ToneMapping1_glsl_default_ = /* glsl */ `
+const float exposure=1.0;const float GAMMA=2.2;const float INV_GAMMA=1.0/GAMMA;vec3 linearTosRGB(const in vec3 color){return pow(color,vec3(INV_GAMMA));}vec4 linearTosRGB(const in vec4 color){return vec4(linearTosRGB(color.rgb),color.a);}vec3 sRGBToLinear(const in vec3 color){return pow(color,vec3(GAMMA));}vec4 sRGBToLinear(const in vec4 color){return vec4(sRGBToLinear(color.rgb),color.a);}
 #if defined(X3D_TONEMAP_ACES_NARKOWICZ)
 vec3 toneMapACES_Narkowicz(const in vec3 color){const float A=2.51;const float B=0.03;const float C=2.43;const float D=0.59;const float E=0.14;return clamp((color*(A*color+B))/(color*(C*color+D)+E),0.0,1.0);}
 #endif
@@ -96183,7 +95865,8 @@ return linearTosRGB(color);}`
 x_ite_Namespace .add ("ToneMapping1.glsl", "assets/shaders/webgl1/pbr/ToneMapping1.glsl", ToneMapping1_glsl_default_);
 /* harmony default export */ const ToneMapping1_glsl = (ToneMapping1_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/BRDF2.glsl.js
-const BRDF2_glsl_default_ = /* glsl */ `vec3 F_Schlick(vec3 f0,vec3 f90,float VdotH){return f0+(f90-f0)*pow(clamp(1.0-VdotH,0.0,1.0),5.0);}
+const BRDF2_glsl_default_ = /* glsl */ `
+vec3 F_Schlick(vec3 f0,vec3 f90,float VdotH){return f0+(f90-f0)*pow(clamp(1.0-VdotH,0.0,1.0),5.0);}
 #if defined(X3D_LIGHTING)
 const float M_PI=3.1415926535897932384626433832795;float V_GGX(float NdotL,float NdotV,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float GGXV=NdotL*sqrt(NdotV*NdotV*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGXL=NdotV*sqrt(NdotL*NdotL*(1.0-alphaRoughnessSq)+alphaRoughnessSq);float GGX=GGXV+GGXL;if(GGX>0.0){return 0.5/GGX;}return 0.0;}float D_GGX(float NdotH,float alphaRoughness){float alphaRoughnessSq=alphaRoughness*alphaRoughness;float f=(NdotH*NdotH)*(alphaRoughnessSq-1.0)+1.0;return alphaRoughnessSq/(M_PI*f*f);}vec3 BRDF_lambertian(vec3 f0,vec3 f90,vec3 diffuseColor,float specularWeight,float VdotH){return(1.0-specularWeight*F_Schlick(f0,f90,VdotH))*(diffuseColor/M_PI);}vec3 BRDF_specularGGX(vec3 f0,vec3 f90,float alphaRoughness,float specularWeight,float VdotH,float NdotL,float NdotV,float NdotH){vec3 F=F_Schlick(f0,f90,VdotH);float Vis=V_GGX(NdotL,NdotV,alphaRoughness);float D=D_GGX(NdotH,alphaRoughness);return specularWeight*F*Vis*D;}
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
@@ -96199,7 +95882,8 @@ float lambdaSheenNumericHelper(const in float x,const in float alphaG){float one
 x_ite_Namespace .add ("BRDF2.glsl", "assets/shaders/webgl2/pbr/BRDF2.glsl", BRDF2_glsl_default_);
 /* harmony default export */ const BRDF2_glsl = (BRDF2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/IBL2.glsl.js
-const IBL2_glsl_default_ = /* glsl */ `#if defined(X3D_USE_IBL)
+const IBL2_glsl_default_ = /* glsl */ `
+#if defined(X3D_USE_IBL)
 uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;vec3 getDiffuseLight(const in vec3 n){vec3 texCoord=x3d_EnvironmentLightSource.rotation*n*vec3(-1.0,1.0,1.0);vec3 textureColor=texture(x3d_EnvironmentLightSource.diffuseTexture,texCoord).rgb;if(!x3d_EnvironmentLightSource.diffuseTextureLinear)textureColor=sRGBToLinear(textureColor);return textureColor*x3d_EnvironmentLightSource.color*x3d_EnvironmentLightSource.intensity;}vec3 getSpecularLight(const in vec3 reflection,const in float lod){vec3 texCoord=x3d_EnvironmentLightSource.rotation*reflection*vec3(-1.0,1.0,1.0);vec3 textureColor=textureLod(x3d_EnvironmentLightSource.specularTexture,texCoord,lod).rgb;if(!x3d_EnvironmentLightSource.specularTextureLinear)textureColor=sRGBToLinear(textureColor);return textureColor*x3d_EnvironmentLightSource.color*x3d_EnvironmentLightSource.intensity;}
 #if defined(X3D_SHEEN_MATERIAL_EXT)
 vec3 getSheenLight(const in vec3 reflection,const in float lod){return vec3(0.5)*(lod/float(x3d_EnvironmentLightSource.specularTextureLevels-1))*x3d_EnvironmentLightSource.intensity;}
@@ -96218,7 +95902,8 @@ vec3 getIBLRadianceCharlie(const in vec3 n,const in vec3 v,const in float sheenR
 x_ite_Namespace .add ("IBL2.glsl", "assets/shaders/webgl2/pbr/IBL2.glsl", IBL2_glsl_default_);
 /* harmony default export */ const IBL2_glsl = (IBL2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/Punctual2.glsl.js
-const Punctual2_glsl_default_ = /* glsl */ `#if defined(X3D_LIGHTING)
+const Punctual2_glsl_default_ = /* glsl */ `
+#if defined(X3D_LIGHTING)
 #pragma X3D include "../common/Lighting.glsl"
 vec3 getLightIntensity(const in x3d_LightSourceParameters light,const in vec3 pointToLight,const in float distanceToLight){float attenuationFactor=1.0;float spotFactor=1.0;if(light.type!=x3d_DirectionalLight){attenuationFactor=getAttenuation(light.attenuation,distanceToLight);}if(light.type==x3d_SpotLight){spotFactor=getSpotFactor(pointToLight,light.direction,light.cutOffAngle,light.beamWidth);}return attenuationFactor*spotFactor*light.intensity*light.color;}
 #if defined(X3D_SHEEN_MATERIAL_EXT)
@@ -96234,15 +95919,14 @@ vec3 getPunctualRadianceClearCoat(const in vec3 clearcoatNormal,const in vec3 v,
 x_ite_Namespace .add ("Punctual2.glsl", "assets/shaders/webgl2/pbr/Punctual2.glsl", Punctual2_glsl_default_);
 /* harmony default export */ const Punctual2_glsl = (Punctual2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js
-const MaterialInfo2_glsl_default_ = /* glsl */ `struct MaterialInfo{float ior;float perceptualRoughness;vec3 f0;float alphaRoughness;vec3 c_diff;vec3 f90;float metallic;vec3 baseColor;float sheenRoughnessFactor;vec3 sheenColorFactor;vec3 clearcoatF0;vec3 clearcoatF90;float clearcoatFactor;vec3 clearcoatNormal;float clearcoatRoughness;float specularWeight;float transmissionFactor;float thickness;vec3 attenuationColor;float attenuationDistance;float iridescenceFactor;float iridescenceIor;float iridescenceThickness;vec3 anisotropicT;vec3 anisotropicB;float anisotropyStrength;float dispersion;};
+
+
+const MaterialInfo2_glsl_default_ = /* glsl */ `
+struct MaterialInfo{float ior;float perceptualRoughness;vec3 f0;float alphaRoughness;vec3 c_diff;vec3 f90;float metallic;vec3 baseColor;float sheenRoughnessFactor;vec3 sheenColorFactor;vec3 clearcoatF0;vec3 clearcoatF90;float clearcoatFactor;vec3 clearcoatNormal;float clearcoatRoughness;float specularWeight;float transmissionFactor;float thickness;vec3 attenuationColor;float attenuationDistance;float iridescenceFactor;float iridescenceIor;float iridescenceThickness;vec3 anisotropicT;vec3 anisotropicB;float anisotropyStrength;float dispersion;};
 #if defined(X3D_MATERIAL_SPECULAR_GLOSSINESS)
-#if defined(X3D_DIFFUSE_TEXTURE)
-uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
-#endif
+${MaterialTextures .texture ("x3d_DiffuseTexture", "rgba", "linear")} 
 #elif defined(X3D_MATERIAL_METALLIC_ROUGHNESS)
-#if defined(X3D_BASE_TEXTURE)
-uniform x3d_BaseTextureParameters x3d_BaseTexture;
-#endif
+${MaterialTextures .texture ("x3d_BaseTexture", "rgba", "linear")} 
 #endif
 vec4 getBaseColor(){float alpha=1.0-x3d_Material.transparency;
 #if defined(X3D_MATERIAL_SPECULAR_GLOSSINESS)
@@ -96255,72 +95939,26 @@ baseColor*=color;
 #endif
 #if defined(X3D_MATERIAL_SPECULAR_GLOSSINESS)
 #if defined(X3D_DIFFUSE_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_DiffuseTexture.textureTransformMapping,x3d_DiffuseTexture.textureCoordinateMapping);
-#if defined(X3D_DIFFUSE_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_DIFFUSE_TEXTURE_2D)
-vec4 textureColor=texture(x3d_DiffuseTexture.texture2D,texCoord.st);
-#elif defined(X3D_DIFFUSE_TEXTURE_3D)
-vec4 textureColor=texture(x3d_DiffuseTexture.texture3D,texCoord);
-#elif defined(X3D_DIFFUSE_TEXTURE_CUBE)
-vec4 textureColor=texture(x3d_DiffuseTexture.textureCube,texCoord);
-#endif
-#if defined(X3D_BASE_TEXTURE_LINEAR)
-baseColor*=textureColor;
-#else
-baseColor*=sRGBToLinear(textureColor);
-#endif
+baseColor*=getDiffuseTexture();
 #elif defined(X3D_TEXTURE)
 baseColor=getTextureColor(baseColor,vec4(vec3(1.0),alpha));
 #endif
 #elif defined(X3D_MATERIAL_METALLIC_ROUGHNESS)
 #if defined(X3D_BASE_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_BaseTexture.textureTransformMapping,x3d_BaseTexture.textureCoordinateMapping);
-#if defined(X3D_BASE_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_BASE_TEXTURE_2D)
-vec4 textureColor=texture(x3d_BaseTexture.texture2D,texCoord.st);
-#elif defined(X3D_BASE_TEXTURE_3D)
-vec4 textureColor=texture(x3d_BaseTexture.texture3D,texCoord);
-#elif defined(X3D_BASE_TEXTURE_CUBE)
-vec4 textureColor=texture(x3d_BaseTexture.textureCube,texCoord);
-#endif
-#if defined(X3D_BASE_TEXTURE_LINEAR)
-baseColor*=textureColor;
-#else
-baseColor*=sRGBToLinear(textureColor);
-#endif
+baseColor*=getBaseTexture();
 #elif defined(X3D_TEXTURE)
 baseColor=getTextureColor(baseColor,vec4(vec3(1.0),alpha));
 #endif
 #endif
 return baseColor;}
 #if defined(X3D_MATERIAL_METALLIC_ROUGHNESS)
+${MaterialTextures .texture ("x3d_MetallicRoughnessTexture")} MaterialInfo getMetallicRoughnessInfo(in MaterialInfo info){info.metallic=x3d_Material.metallic;info.perceptualRoughness=x3d_Material.roughness;
 #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE)
-uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
-#endif
-MaterialInfo getMetallicRoughnessInfo(in MaterialInfo info){info.metallic=x3d_Material.metallic;info.perceptualRoughness=x3d_Material.roughness;
-#if defined(X3D_METALLIC_ROUGHNESS_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_MetallicRoughnessTexture.textureTransformMapping,x3d_MetallicRoughnessTexture.textureCoordinateMapping);
-#if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
-vec4 mrSample=texture(x3d_MetallicRoughnessTexture.texture2D,texCoord.st);
-#elif defined(X3D_METALLIC_ROUGHNESS_TEXTURE_3D)
-vec4 mrSample=texture(x3d_MetallicRoughnessTexture.texture3D,texCoord);
-#elif defined(X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
-vec4 mrSample=texture(x3d_MetallicRoughnessTexture.textureCube,texCoord);
-#endif
-info.metallic*=mrSample.b;info.perceptualRoughness*=mrSample.g;
+vec4 mrSample=getMetallicRoughnessTexture();info.metallic*=mrSample.b;info.perceptualRoughness*=mrSample.g;
 #endif
 info.c_diff=mix(info.baseColor.rgb,vec3(0.0),info.metallic);info.f0=mix(info.f0,info.baseColor.rgb,info.metallic);return info;}
 #endif
-#if defined(X3D_EMISSIVE_TEXTURE)
-uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
-#endif
+${MaterialTextures .texture ("x3d_EmissiveTexture", "rgb", "linear")} 
 #if defined(X3D_EMISSIVE_STRENGTH_MATERIAL_EXT)
 uniform float x3d_EmissiveStrengthEXT;
 #endif
@@ -96329,196 +95967,59 @@ vec3 getEmissiveColor(){vec3 emissiveColor=x3d_Material.emissiveColor;
 emissiveColor*=x3d_EmissiveStrengthEXT;
 #endif
 #if defined(X3D_EMISSIVE_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_EmissiveTexture.textureTransformMapping,x3d_EmissiveTexture.textureCoordinateMapping);
-#if defined(X3D_EMISSIVE_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
+emissiveColor*=getEmissiveTexture();
 #endif
-#if defined(X3D_EMISSIVE_TEXTURE_2D)
-vec3 textureColor=texture(x3d_EmissiveTexture.texture2D,texCoord.st).rgb;
-#elif defined(X3D_EMISSIVE_TEXTURE_3D)
-vec3 textureColor=texture(x3d_EmissiveTexture.texture3D,texCoord).rgb;
-#elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
-vec3 textureColor=texture(x3d_EmissiveTexture.textureCube,texCoord).rgb;
-#endif
-#if defined(X3D_EMISSIVE_TEXTURE_LINEAR)
-emissiveColor*=textureColor;
-#else
-emissiveColor*=sRGBToLinear(textureColor);
-#endif
-#endif
-return emissiveColor;}
+return emissiveColor;}${MaterialTextures .texture ("x3d_OcclusionTexture", "r")} float getOcclusionFactor(){
 #if defined(X3D_OCCLUSION_TEXTURE)
-uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
-#endif
-float getOcclusionFactor(){
-#if defined(X3D_OCCLUSION_TEXTURE)
-vec3 texCoord=getTexCoord(x3d_OcclusionTexture.textureTransformMapping,x3d_OcclusionTexture.textureCoordinateMapping);
-#if defined(X3D_OCCLUSION_TEXTURE_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_OCCLUSION_TEXTURE_2D)
-return texture(x3d_OcclusionTexture.texture2D,texCoord.st).r;
-#elif defined(X3D_OCCLUSION_TEXTURE_3D)
-return texture(x3d_OcclusionTexture.texture3D,texCoord).r;
-#elif defined(X3D_OCCLUSION_TEXTURE_CUBE)
-return texture(x3d_OcclusionTexture.textureCube,texCoord).r;
-#endif
+return getOcclusionTexture();
 #else
 return 1.0;
 #endif
 }
 #if defined(X3D_SHEEN_MATERIAL_EXT)
+${MaterialTextures .texture ("x3d_SheenColorTextureEXT",     "rgb")} ${MaterialTextures .texture ("x3d_SheenRoughnessTextureEXT", "a")} uniform vec3 x3d_SheenColorEXT;uniform float x3d_SheenRoughnessEXT;MaterialInfo getSheenInfo(in MaterialInfo info){info.sheenColorFactor=x3d_SheenColorEXT;info.sheenRoughnessFactor=x3d_SheenRoughnessEXT;
 #if defined(X3D_SHEEN_COLOR_TEXTURE_EXT)
-uniform x3d_SheenColorTextureParametersEXT x3d_SheenColorTextureEXT;vec3 getSheenColorEXT(){vec3 texCoord=getTexCoord(x3d_SheenColorTextureEXT.textureTransformMapping,x3d_SheenColorTextureEXT.textureCoordinateMapping);
-#if defined(X3D_SHEEN_COLOR_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_SHEEN_COLOR_TEXTURE_EXT_2D)
-return texture(x3d_SheenColorTextureEXT.texture2D,texCoord.st).rgb;
-#elif defined(X3D_SHEEN_COLOR_TEXTURE_EXT_3D)
-return texture(x3d_SheenColorTextureEXT.texture3D,texCoord).rgb;
-#elif defined(X3D_SHEEN_COLOR_TEXTURE_EXT_CUBE)
-return texture(x3d_SheenColorTextureEXT.textureCube,texCoord).rgb;
-#endif
-}
+info.sheenColorFactor*=getSheenColorTextureEXT();
 #endif
 #if defined(X3D_SHEEN_ROUGHNESS_TEXTURE_EXT)
-uniform x3d_SheenRoughnessTextureParametersEXT x3d_SheenRoughnessTextureEXT;float getSheenRoughnessEXT(){vec3 texCoord=getTexCoord(x3d_SheenRoughnessTextureEXT.textureTransformMapping,x3d_SheenRoughnessTextureEXT.textureCoordinateMapping);
-#if defined(X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_2D)
-return texture(x3d_SheenRoughnessTextureEXT.texture2D,texCoord.st).a;
-#elif defined(X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_3D)
-return texture(x3d_SheenRoughnessTextureEXT.texture3D,texCoord).a;
-#elif defined(X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_CUBE)
-return texture(x3d_SheenRoughnessTextureEXT.textureCube,texCoord).a;
-#endif
-}
-#endif
-uniform vec3 x3d_SheenColorEXT;uniform float x3d_SheenRoughnessEXT;MaterialInfo getSheenInfo(in MaterialInfo info){info.sheenColorFactor=x3d_SheenColorEXT;info.sheenRoughnessFactor=x3d_SheenRoughnessEXT;
-#if defined(X3D_SHEEN_COLOR_TEXTURE_EXT)
-info.sheenColorFactor*=getSheenColorEXT();
-#endif
-#if defined(X3D_SHEEN_ROUGHNESS_TEXTURE_EXT)
-info.sheenRoughnessFactor*=getSheenRoughnessEXT();
+info.sheenRoughnessFactor*=getSheenRoughnessTextureEXT();
 #endif
 return info;}uniform sampler2D x3d_SheenELUTTextureEXT;float albedoSheenScalingLUT(const in float NdotV,const in float sheenRoughnessFactor){return texture(x3d_SheenELUTTextureEXT,vec2(NdotV,sheenRoughnessFactor)).r;}
 #endif
 #if defined(X3D_CLEARCOAT_MATERIAL_EXT)
-#if defined(X3D_CLEARCOAT_TEXTURE_EXT)
-uniform x3d_ClearcoatTextureParametersEXT x3d_ClearcoatTextureEXT;float getClearcoatEXT(){vec3 texCoord=getTexCoord(x3d_ClearcoatTextureEXT.textureTransformMapping,x3d_ClearcoatTextureEXT.textureCoordinateMapping);
-#if defined(X3D_CLEARCOAT_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_CLEARCOAT_TEXTURE_EXT_2D)
-return texture(x3d_ClearcoatTextureEXT.texture2D,texCoord.st).r;
-#elif defined(X3D_CLEARCOAT_TEXTURE_EXT_3D)
-return texture(x3d_ClearcoatTextureEXT.texture3D,texCoord).r;
-#elif defined(X3D_CLEARCOAT_TEXTURE_EXT_CUBE)
-return texture(x3d_ClearcoatTextureEXT.textureCube,texCoord).r;
-#endif
-}
-#endif
-#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT)
-uniform x3d_ClearcoatRoughnessTextureParametersEXT x3d_ClearcoatRoughnessTextureEXT;float getClearcoatRoughnessEXT(){vec3 texCoord=getTexCoord(x3d_ClearcoatRoughnessTextureEXT.textureTransformMapping,x3d_ClearcoatRoughnessTextureEXT.textureCoordinateMapping);
-#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_2D)
-return texture(x3d_ClearcoatRoughnessTextureEXT.texture2D,texCoord.st).g;
-#elif defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_3D)
-return texture(x3d_ClearcoatRoughnessTextureEXT.texture3D,texCoord).g;
-#elif defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_CUBE)
-return texture(x3d_ClearcoatRoughnessTextureEXT.textureCube,texCoord).g;
-#endif
-}
-#endif
+${MaterialTextures .texture ("x3d_ClearcoatTextureEXT",          "r")} ${MaterialTextures .texture ("x3d_ClearcoatRoughnessTextureEXT", "g")} ${MaterialTextures .texture ("x3d_ClearcoatNormalTextureEXT",    "rgb")} 
 #if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT)
-const float x3d_ClearcoatNormalScaleEXT=1.0;uniform x3d_ClearcoatNormalTextureParametersEXT x3d_ClearcoatNormalTextureEXT;
+const float x3d_ClearcoatNormalScaleEXT=1.0;
 #endif
 vec3 getClearcoatNormalEXT(const in NormalInfo normalInfo){
 #if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT)
-vec3 texCoord=getTexCoord(x3d_ClearcoatNormalTextureEXT.textureTransformMapping,x3d_ClearcoatNormalTextureEXT.textureCoordinateMapping);
-#if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_2D)
-vec3 color=texture(x3d_ClearcoatNormalTextureEXT.texture2D,texCoord.st).rgb;
-#elif defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_3D)
-vec3 color=texture(x3d_ClearcoatNormalTextureEXT.texture3D,texCoord).rgb;
-#elif defined(X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_CUBE)
-vec3 color=texture(x3d_ClearcoatNormalTextureEXT.textureCube,texCoord).rgb;
-#endif
-vec3 n=color*2.0-vec3(1.0);n*=vec3(vec2(x3d_ClearcoatNormalScaleEXT),1.0);n=mat3(normalInfo.t,normalInfo.b,normalInfo.ng)*normalize(n);return n;
+vec3 color=getClearcoatNormalTextureEXT();vec3 n=color*2.0-vec3(1.0);n*=vec3(vec2(x3d_ClearcoatNormalScaleEXT),1.0);n=mat3(normalInfo.t,normalInfo.b,normalInfo.ng)*normalize(n);return n;
 #else
 return normalInfo.ng;
 #endif
 }uniform float x3d_ClearcoatEXT;uniform float x3d_ClearcoatRoughnessEXT;MaterialInfo getClearCoatInfo(in MaterialInfo info,const in NormalInfo normalInfo){info.clearcoatFactor=x3d_ClearcoatEXT;info.clearcoatRoughness=x3d_ClearcoatRoughnessEXT;info.clearcoatF0=vec3(pow((info.ior-1.0)/(info.ior+1.0),2.0));info.clearcoatF90=vec3(1.0);
 #if defined(X3D_CLEARCOAT_TEXTURE_EXT)
-info.clearcoatFactor*=getClearcoatEXT();
+info.clearcoatFactor*=getClearcoatTextureEXT();
 #endif
 #if defined(X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT)
-info.clearcoatRoughness*=getClearcoatRoughnessEXT();
+info.clearcoatRoughness*=getClearcoatRoughnessTextureEXT();
 #endif
 info.clearcoatNormal=getClearcoatNormalEXT(normalInfo);info.clearcoatRoughness=clamp(info.clearcoatRoughness,0.0,1.0);return info;}
 #endif
 #if defined(X3D_SPECULAR_MATERIAL_EXT)
+${MaterialTextures .texture ("x3d_SpecularTextureEXT",      "a")} ${MaterialTextures .texture ("x3d_SpecularColorTextureEXT", "rgb")} uniform float x3d_SpecularEXT;uniform vec3 x3d_SpecularColorEXT;MaterialInfo getSpecularInfo(in MaterialInfo info){vec4 specularTexture=vec4(1.0);
 #if defined(X3D_SPECULAR_TEXTURE_EXT)
-uniform x3d_SpecularTextureParametersEXT x3d_SpecularTextureEXT;float getSpecularEXT(){vec3 texCoord=getTexCoord(x3d_SpecularTextureEXT.textureTransformMapping,x3d_SpecularTextureEXT.textureCoordinateMapping);
-#if defined(X3D_SPECULAR_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_SPECULAR_TEXTURE_EXT_2D)
-return texture(x3d_SpecularTextureEXT.texture2D,texCoord.st).a;
-#elif defined(X3D_SPECULAR_TEXTURE_EXT_3D)
-return texture(x3d_SpecularTextureEXT.texture3D,texCoord).a;
-#elif defined(X3D_SPECULAR_TEXTURE_EXT_CUBE)
-return texture(x3d_SpecularTextureEXT.textureCube,texCoord).a;
-#endif
-}
+specularTexture.a=getSpecularTextureEXT();
 #endif
 #if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT)
-uniform x3d_SpecularColorTextureParametersEXT x3d_SpecularColorTextureEXT;vec3 getSpecularColorEXT(){vec3 texCoord=getTexCoord(x3d_SpecularColorTextureEXT.textureTransformMapping,x3d_SpecularColorTextureEXT.textureCoordinateMapping);
-#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_2D)
-return texture(x3d_SpecularColorTextureEXT.texture2D,texCoord.st).rgb;
-#elif defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_3D)
-return texture(x3d_SpecularColorTextureEXT.texture3D,texCoord).rgb;
-#elif defined(X3D_SPECULAR_COLOR_TEXTURE_EXT_CUBE)
-return texture(x3d_SpecularColorTextureEXT.textureCube,texCoord).rgb;
-#endif
-}
-#endif
-uniform float x3d_SpecularEXT;uniform vec3 x3d_SpecularColorEXT;MaterialInfo getSpecularInfo(in MaterialInfo info){vec4 specularTexture=vec4(1.0);
-#if defined(X3D_SPECULAR_TEXTURE_EXT)
-specularTexture.a=getSpecularEXT();
-#endif
-#if defined(X3D_SPECULAR_COLOR_TEXTURE_EXT)
-specularTexture.rgb=getSpecularColorEXT();
+specularTexture.rgb=getSpecularColorTextureEXT();
 #endif
 vec3 dielectricSpecularF0=min(info.f0*x3d_SpecularColorEXT*specularTexture.rgb,vec3(1.0));info.f0=mix(dielectricSpecularF0,info.baseColor.rgb,info.metallic);info.specularWeight=x3d_SpecularEXT*specularTexture.a;info.c_diff=mix(info.baseColor.rgb,vec3(0.0),info.metallic);return info;}
 #endif
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
+${MaterialTextures .texture ("x3d_AnisotropyTextureEXT", "rgb")} uniform vec3 x3d_AnisotropyEXT;MaterialInfo getAnisotropyInfo(in MaterialInfo info,const in NormalInfo normalInfo){vec2 direction=vec2(1.0,0.0);float strengthFactor=1.0;
 #if defined(X3D_ANISOTROPY_TEXTURE_EXT)
-uniform x3d_AnisotropyTextureParametersEXT x3d_AnisotropyTextureEXT;vec3 getAnisotropyEXT(){vec3 texCoord=getTexCoord(x3d_AnisotropyTextureEXT.textureTransformMapping,x3d_AnisotropyTextureEXT.textureCoordinateMapping);
-#if defined(X3D_ANISOTROPY_TEXTURE_EXT_FLIP_Y)
-texCoord.t=1.0-texCoord.t;
-#endif
-#if defined(X3D_ANISOTROPY_TEXTURE_EXT_2D)
-return texture(x3d_AnisotropyTextureEXT.texture2D,texCoord.st).rgb;
-#elif defined(X3D_ANISOTROPY_TEXTURE_EXT_3D)
-return texture(x3d_AnisotropyTextureEXT.texture3D,texCoord).rgb;
-#elif defined(X3D_ANISOTROPY_TEXTURE_EXT_CUBE)
-return texture(x3d_AnisotropyTextureEXT.textureCube,texCoord).rgb;
-#endif
-}
-#endif
-uniform vec3 x3d_AnisotropyEXT;MaterialInfo getAnisotropyInfo(in MaterialInfo info,const in NormalInfo normalInfo){vec2 direction=vec2(1.0,0.0);float strengthFactor=1.0;
-#if defined(X3D_ANISOTROPY_TEXTURE_EXT)
-vec3 anisotropySample=getAnisotropyEXT();direction=anisotropySample.xy*2.0-vec2(1.0);strengthFactor=anisotropySample.z;
+vec3 anisotropySample=getAnisotropyTextureEXT();direction=anisotropySample.xy*2.0-vec2(1.0);strengthFactor=anisotropySample.z;
 #endif
 vec2 directionRotation=x3d_AnisotropyEXT.xy;mat2 rotationMatrix=mat2(directionRotation.x,directionRotation.y,-directionRotation.y,directionRotation.x);direction=rotationMatrix*direction;info.anisotropicT=mat3(normalInfo.t,normalInfo.b,normalInfo.n)*normalize(vec3(direction,0.0));info.anisotropicB=cross(normalInfo.ng,info.anisotropicT);info.anisotropyStrength=clamp(x3d_AnisotropyEXT.z*strengthFactor,0.0,1.0);return info;}
 #endif
@@ -96528,7 +96029,8 @@ vec2 directionRotation=x3d_AnisotropyEXT.xy;mat2 rotationMatrix=mat2(directionRo
 x_ite_Namespace .add ("MaterialInfo2.glsl", "assets/shaders/webgl2/pbr/MaterialInfo2.glsl", MaterialInfo2_glsl_default_);
 /* harmony default export */ const MaterialInfo2_glsl = (MaterialInfo2_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/pbr/ToneMapping2.glsl.js
-const ToneMapping2_glsl_default_ = /* glsl */ `const float exposure=1.0;const float GAMMA=2.2;const float INV_GAMMA=1.0/GAMMA;vec3 linearTosRGB(const in vec3 color){return pow(color,vec3(INV_GAMMA));}vec4 linearTosRGB(const in vec4 color){return vec4(linearTosRGB(color.rgb),color.a);}vec3 sRGBToLinear(const in vec3 color){return pow(color,vec3(GAMMA));}vec4 sRGBToLinear(const in vec4 color){return vec4(sRGBToLinear(color.rgb),color.a);}
+const ToneMapping2_glsl_default_ = /* glsl */ `
+const float exposure=1.0;const float GAMMA=2.2;const float INV_GAMMA=1.0/GAMMA;vec3 linearTosRGB(const in vec3 color){return pow(color,vec3(INV_GAMMA));}vec4 linearTosRGB(const in vec4 color){return vec4(linearTosRGB(color.rgb),color.a);}vec3 sRGBToLinear(const in vec3 color){return pow(color,vec3(GAMMA));}vec4 sRGBToLinear(const in vec4 color){return vec4(sRGBToLinear(color.rgb),color.a);}
 #if defined(X3D_TONEMAP_ACES_NARKOWICZ)
 vec3 toneMapACES_Narkowicz(const in vec3 color){const float A=2.51;const float B=0.03;const float C=2.43;const float D=0.59;const float E=0.14;return clamp((color*(A*color+B))/(color*(C*color+D)+E),0.0,1.0);}
 #endif
@@ -96873,7 +96375,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .add ("ShaderCompiler", "x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(356);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97530,7 +97032,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .add ("X3DAppearanceNode", "x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(356);
+/* provided dependency */ var Appearance_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -98891,40 +98393,29 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, Shap
       gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColorArray);
       gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
 
-      if (+this .getTextureBits ())
+      if (!+this .getTextureBits ())
+         return;
+
+      this .emissiveTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_EmissiveTexture,
+         this ._emissiveTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+
+      if (shaderObject .x3d_NormalTexture)
       {
-         // Emissive parameters
-
-         if (this .emissiveTextureNode)
-         {
-            const
-               mapping       = this ._emissiveTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_EmissiveTexture;
-
-            this .emissiveTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-
-         // Normal parameters
-
          if (this .normalTextureNode)
-         {
-            const
-               mapping       = this ._normalTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_NormalTexture;
+            gl .uniform1f (shaderObject .x3d_NormalScale, Math .max (this ._normalScale .getValue (), 0));
 
-            if (uniformStruct)
-            {
-               gl .uniform1f (shaderObject .x3d_NormalScale, Math .max (this ._normalScale .getValue (), 0));
-
-               this .normalTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-               gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-               gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-            }
-         }
+         this .normalTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_NormalTexture,
+            this ._normalTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
       }
    },
 });
@@ -99237,80 +98728,51 @@ Object .assign (Object .setPrototypeOf (Material .prototype, Shape_X3DOneSidedMa
       gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColorArray);
       gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
 
-      if (+this .getTextureBits ())
-      {
-         // Ambient parameters
+      if (!+this .getTextureBits ())
+         return;
 
-         if (this .ambientTextureNode)
-         {
-            const
-               mapping       = this ._ambientTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_AmbientTexture;
+      this .ambientTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_AmbientTexture,
+         this ._ambientTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
 
-            this .ambientTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
+      this .diffuseTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_DiffuseTexture,
+         this ._diffuseTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
 
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
+      this .specularTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_SpecularTexture,
+         this ._specularTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
 
-         // Diffuse parameters
+      this .shininessTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_ShininessTexture,
+         this ._shininessTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
 
-         if (this .diffuseTextureNode)
-         {
-            const
-               mapping       = this ._diffuseTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_DiffuseTexture;
+      if (this .occlusionTextureNode)
+         gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
-            this .diffuseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-
-         // Specular parameters
-
-         if (this .specularTextureNode)
-         {
-            const
-               mapping       = this ._specularTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_SpecularTexture;
-
-            this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-
-         // Shininess parameters
-
-         if (this .shininessTextureNode)
-         {
-            const
-               mapping       = this ._shininessTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_ShininessTexture;
-
-            this .shininessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-
-         // Occlusion parameters
-
-         if (this .occlusionTextureNode)
-         {
-            const
-               mapping       = this ._occlusionTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_OcclusionTexture;
-
-            gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
-
-            this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-      }
+      this .occlusionTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_OcclusionTexture,
+         this ._occlusionTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
    },
 });
 
@@ -99637,52 +99099,35 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, Shape_X3DOn
       gl .uniform1f  (shaderObject .x3d_Metallic,  this .metallic);
       gl .uniform1f  (shaderObject .x3d_Roughness, this .roughness);
 
-      if (+this .getTextureBits ())
-      {
-         // Base parameters
+      if (!+this .getTextureBits ())
+         return;
 
-         if (this .baseTextureNode)
-         {
-            const
-               mapping       = this ._baseTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_BaseTexture;
+      this .baseTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_BaseTexture,
+         this ._baseTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
 
-            this .baseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
+      this .metallicRoughnessTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_MetallicRoughnessTexture,
+         this ._metallicRoughnessTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
 
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
+      if (this .occlusionTextureNode)
+         gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
-         // Metallic roughness parameters
-
-         if (this .metallicRoughnessTextureNode)
-         {
-            const
-               mapping       = this ._metallicRoughnessTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_MetallicRoughnessTexture;
-
-            this .metallicRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-
-         // Occlusion parameters
-
-         if (this .occlusionTextureNode)
-         {
-            const
-               mapping       = this ._occlusionTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_OcclusionTexture;
-
-            gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
-
-            this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-      }
+      this .occlusionTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_OcclusionTexture,
+         this ._occlusionTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
    },
 });
 
@@ -106454,8 +105899,8 @@ const GifMedia_default_ = GifMedia;
 x_ite_Namespace .add ("GifMedia", "x_ite/Browser/Texturing/GifMedia", GifMedia_default_);
 /* harmony default export */ const Texturing_GifMedia = (GifMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(356);
-/* provided dependency */ var SuperGif = __webpack_require__(255);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(904);
+/* provided dependency */ var SuperGif = __webpack_require__(635);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109873,7 +109318,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 x_ite_Namespace .add ("gettext", "locale/gettext", gettext_default_);
 /* harmony default export */ const gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(356);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110446,7 +109891,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .add ("TextureQuality", "x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(356);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111043,7 +110488,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .add ("RenderingProperties", "x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(356);
+/* provided dependency */ var Notification_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111166,8 +110611,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .add ("Notification", "x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(888);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(356);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(772);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113920,7 +113365,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .add ("DataStorage", "standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(356);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116483,8 +115928,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .add ("X3DViewer", "x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(218);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(356);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(742);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117356,8 +116801,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .add ("ExamineViewer", "x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(218);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(356);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(742);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118366,8 +117811,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .add ("FlyViewer", "x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(218);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(356);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(742);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118698,8 +118143,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .add ("NoneViewer", "x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(218);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(356);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(742);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119839,8 +119284,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .add ("X3DPickingContext", "x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(218);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(356);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(742);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121144,7 +120589,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .add ("MultiSampleFrameBuffer", "x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(356);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122093,7 +121538,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 x_ite_Namespace .add ("X3DSoundContext", "x_ite/Browser/Sound/X3DSoundContext", X3DSoundContext_default_);
 /* harmony default export */ const Sound_X3DSoundContext = (X3DSoundContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(356);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(904);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -123684,7 +123129,7 @@ const Components_default_ = Components;
 x_ite_Namespace .add ("Components", "x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(356);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(904);
 /*******************************************************************************
  * MIT License
  *
@@ -124952,7 +124397,7 @@ const FieldTypes_default_ = new Configuration_FieldTypesArray (Object .values (x
 x_ite_Namespace .add ("FieldTypes", "x_ite/Configuration/FieldTypes", FieldTypes_default_);
 /* harmony default export */ const FieldTypes = (FieldTypes_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(356);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -126054,7 +125499,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace .add ("X3DBrowser", "x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(356);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -126193,8 +125638,8 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 x_ite_Namespace .add ("X3DCanvasElement", "x_ite/X3DCanvasElement", X3DCanvasElement_default_);
 /* harmony default export */ const x_ite_X3DCanvasElement = (X3DCanvasElement_default_);
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(356);
-/* provided dependency */ var pako = __webpack_require__(176);
+/* provided dependency */ var jquery_$ = __webpack_require__(904);
+/* provided dependency */ var pako = __webpack_require__(228);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -126271,14 +125716,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .add ("jquery", "lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(793);
+/* provided dependency */ var libtess_libtess = __webpack_require__(533);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .add ("libtess", "lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(356);
+/* provided dependency */ var X3D_$ = __webpack_require__(904);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
