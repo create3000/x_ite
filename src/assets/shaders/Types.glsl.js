@@ -1,22 +1,4 @@
-const materialTextures = [
-   "x3d_AmbientTexture",
-   "x3d_DiffuseTexture",
-   "x3d_SpecularTexture",
-   "x3d_EmissiveTexture",
-   "x3d_ShininessTexture",
-   "x3d_BaseTexture",
-   "x3d_MetallicRoughnessTexture",
-   "x3d_OcclusionTexture",
-   "x3d_NormalTexture",
-   "x3d_AnisotropyTextureEXT",
-   "x3d_ClearcoatTextureEXT",
-   "x3d_ClearcoatRoughnessTextureEXT",
-   "x3d_ClearcoatNormalTextureEXT",
-"x3d_SheenColorTextureEXT",
-   "x3d_SheenRoughnessTextureEXT",
-   "x3d_SpecularTextureEXT",
-   "x3d_SpecularColorTextureEXT",
-];
+import MaterialTextures from "./MaterialTextures.js";
 
 export default /* glsl */ `
 #if defined (X3D_FOG)
@@ -158,7 +140,7 @@ struct x3d_PhysicalMaterialParameters
 
 //uniform x3d_PhysicalMaterialParameters x3d_Material;
 
-${materialTextures .map (name => /* glsl */ `
+${MaterialTextures .map (name => /* glsl */ `
 
 #if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()})
 struct ${name .replace (/(EXT)?$/, "Parameters$1")}

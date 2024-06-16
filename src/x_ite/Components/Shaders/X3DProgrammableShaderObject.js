@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
-import X3DCast      from "../../Base/X3DCast.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Matrix3      from "../../../standard/Math/Numbers/Matrix3.js";
+import X3DCast          from "../../Base/X3DCast.js";
+import X3DConstants     from "../../Base/X3DConstants.js";
+import Matrix3          from "../../../standard/Math/Numbers/Matrix3.js";
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
 
 const _uniformLocation = Symbol .for ("X_ITE.X3DField.uniformLocation");
 
@@ -225,27 +226,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_SpecularEXT           = gl .getUniformLocation (program, "x3d_SpecularEXT");
       this .x3d_SpecularColorEXT      = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
 
-      const materialTextures = [
-         "x3d_AmbientTexture",
-         "x3d_DiffuseTexture",
-         "x3d_SpecularTexture",
-         "x3d_EmissiveTexture",
-         "x3d_ShininessTexture",
-         "x3d_BaseTexture",
-         "x3d_MetallicRoughnessTexture",
-         "x3d_OcclusionTexture",
-         "x3d_NormalTexture",
-         "x3d_AnisotropyTextureEXT",
-         "x3d_ClearcoatTextureEXT",
-         "x3d_ClearcoatRoughnessTextureEXT",
-         "x3d_ClearcoatNormalTextureEXT",
-         "x3d_SheenColorTextureEXT",
-         "x3d_SheenRoughnessTextureEXT",
-         "x3d_SpecularTextureEXT",
-         "x3d_SpecularColorTextureEXT",
-      ];
-
-      for (const materialTexture of materialTextures)
+      for (const materialTexture of MaterialTextures)
       {
          this [materialTexture] = {
             textureTransformMapping:  gl .getUniformLocation (program, materialTexture + ".textureTransformMapping"),
@@ -382,7 +363,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .uniform1i  (this .x3d_LinePropertiesTexture, browser .getDefaultTexture2DUnit ());
       gl .uniform1i  (this .x3d_FillPropertiesTexture, browser .getDefaultTexture2DUnit ());
 
-      for (const materialTexture of materialTextures)
+      for (const materialTexture of MaterialTextures)
       {
          gl .uniform1i (this [materialTexture] .texture2D,   browser .getDefaultTexture2DUnit ());
          gl .uniform1i (this [materialTexture] .texture3D,   browser .getDefaultTexture3DUnit ());
