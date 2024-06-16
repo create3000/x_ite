@@ -127,32 +127,32 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
       gl .uniform1f (shaderObject .x3d_ClearcoatEXT,          this .clearcoat);
       gl .uniform1f (shaderObject .x3d_ClearcoatRoughnessEXT, this .clearcoatRoughness);
 
-      if (+this .getTextureBits ())
-      {
-         this .clearcoatTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
-            shaderObject .x3d_ClearcoatTextureEXT,
-            this ._clearcoatTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
+      if (!+this .getTextureBits ())
+         return;
 
-         this .clearcoatRoughnessTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
-            shaderObject .x3d_ClearcoatRoughnessTextureEXT,
-            this ._clearcoatRoughnessTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
+      this .clearcoatTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_ClearcoatTextureEXT,
+         this ._clearcoatTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
 
-         this .clearcoatNormalTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
-            shaderObject .x3d_ClearcoatNormalTextureEXT,
-            this ._clearcoatNormalTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
-      }
+      this .clearcoatRoughnessTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_ClearcoatRoughnessTextureEXT,
+         this ._clearcoatRoughnessTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+
+      this .clearcoatNormalTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_ClearcoatNormalTextureEXT,
+         this ._clearcoatNormalTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
    },
 });
 

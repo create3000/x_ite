@@ -148,29 +148,29 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
       gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColorArray);
       gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
 
-      if (+this .getTextureBits ())
+      if (!+this .getTextureBits ())
+         return;
+
+      this .emissiveTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_EmissiveTexture,
+         this ._emissiveTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+
+      if (shaderObject .x3d_NormalTexture)
       {
-         this .emissiveTextureNode ?.setNamedShaderUniforms (gl,
+         if (this .normalTextureNode)
+            gl .uniform1f (shaderObject .x3d_NormalScale, Math .max (this ._normalScale .getValue (), 0));
+
+         this .normalTextureNode ?.setNamedShaderUniforms (gl,
             shaderObject,
             renderObject,
-            shaderObject .x3d_EmissiveTexture,
-            this ._emissiveTextureMapping .getValue (),
+            shaderObject .x3d_NormalTexture,
+            this ._normalTextureMapping .getValue (),
             textureTransformMapping,
             textureCoordinateMapping);
-
-         if (shaderObject .x3d_NormalTexture)
-         {
-            if (this .normalTextureNode)
-               gl .uniform1f (shaderObject .x3d_NormalScale, Math .max (this ._normalScale .getValue (), 0));
-
-            this .normalTextureNode ?.setNamedShaderUniforms (gl,
-               shaderObject,
-               renderObject,
-               shaderObject .x3d_NormalTexture,
-               this ._normalTextureMapping .getValue (),
-               textureTransformMapping,
-               textureCoordinateMapping);
-         }
       }
    },
 });

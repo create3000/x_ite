@@ -138,24 +138,24 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
       gl .bindTexture (gl .TEXTURE_2D, SheenELUTTexture .getTexture ());
       gl .uniform1i (shaderObject .x3d_SheenELUTTextureEXT, SheenELUTTextureUnit);
 
-      if (+this .getTextureBits ())
-      {
-         this .sheenColorTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
-            shaderObject .x3d_SheenColorTextureEXT,
-            this ._sheenColorTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
+      if (!+this .getTextureBits ())
+         return;
 
-         this .sheenRoughnessTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
-            shaderObject .x3d_SheenRoughnessTextureEXT,
-            this ._sheenRoughnessTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
-      }
+      this .sheenColorTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_SheenColorTextureEXT,
+         this ._sheenColorTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+
+      this .sheenRoughnessTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_SheenRoughnessTextureEXT,
+         this ._sheenRoughnessTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
    },
 });
 

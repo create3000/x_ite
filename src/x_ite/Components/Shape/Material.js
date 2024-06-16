@@ -286,51 +286,51 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
       gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColorArray);
       gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
 
-      if (+this .getTextureBits ())
-      {
-         this .ambientTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
-            shaderObject .x3d_AmbientTexture,
-            this ._ambientTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
+      if (!+this .getTextureBits ())
+         return;
 
-         this .diffuseTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
-            shaderObject .x3d_DiffuseTexture,
-            this ._diffuseTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
+      this .ambientTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_AmbientTexture,
+         this ._ambientTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
 
-         this .specularTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
-            shaderObject .x3d_SpecularTexture,
-            this ._specularTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
+      this .diffuseTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_DiffuseTexture,
+         this ._diffuseTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
 
-         this .shininessTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
-            shaderObject .x3d_ShininessTexture,
-            this ._shininessTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
+      this .specularTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_SpecularTexture,
+         this ._specularTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
 
-         if (this .occlusionTextureNode)
-            gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+      this .shininessTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_ShininessTexture,
+         this ._shininessTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
 
-         this .occlusionTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
-            shaderObject .x3d_OcclusionTexture,
-            this ._occlusionTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
-      }
+      if (this .occlusionTextureNode)
+         gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+
+      this .occlusionTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_OcclusionTexture,
+         this ._occlusionTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
    },
 });
 
