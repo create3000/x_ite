@@ -31,13 +31,15 @@ export default
           EXT = ext ?  "EXT" : "",
          _EXT = ext ? "_EXT" : "";
 
+      const type = ["", "float", "vec2", "vec3", "vec4"] [sizzle .length];
+
       const string = /* glsl */ `
 
       #if defined (${define}${_EXT})
 
       uniform ${name}Parameters${EXT} ${name}${EXT};
 
-      ${["", "float", "vec2", "vec3", "vec4"] [sizzle .length]}
+      ${type}
       get${name .replace (/^x3d_/g, "")}${EXT} ()
       {
          // Get texture color.
@@ -64,17 +66,19 @@ export default
             #endif
          #endif
 
+         ${type} textureColorParts = textureColor .${sizzle};
+
          #if defined (${define}${_EXT}_LINEAR)
             #if ${colorspace === "sRGB" ? 1 : 0}
-               textureColor = linearTosRGB (textureColor);
+               textureColorParts = linearTosRGB (textureColorParts);
             #endif
          #else
             #if ${colorspace === "linear" ? 1 : 0}
-               textureColor *= sRGBToLinear (textureColor);
+               textureColorParts = sRGBToLinear (textureColorParts);
             #endif
          #endif
 
-         return textureColor .${sizzle};
+         return textureColorParts;
       }
       #endif
       `;
