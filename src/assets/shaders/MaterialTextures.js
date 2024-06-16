@@ -19,7 +19,7 @@ export default
       "x3d_SpecularTextureEXT",
       "x3d_SpecularColorTextureEXT",
    ],
-   texture (name, sizzle = "rgba", colorspace = "")
+   texture (name, components = "rgba", colorspace = "")
    {
       const ext = !!name .match (/EXT$/);
 
@@ -31,7 +31,7 @@ export default
           EXT = ext ?  "EXT" : "",
          _EXT = ext ? "_EXT" : "";
 
-      const type = ["", "float", "vec2", "vec3", "vec4"] [sizzle .length];
+      const type = ["", "float", "vec2", "vec3", "vec4"] [components .length];
 
       const string = /* glsl */ `
 
@@ -66,19 +66,19 @@ export default
             #endif
          #endif
 
-         ${type} textureColorParts = textureColor .${sizzle};
+         ${type} textureColorComponents = textureColor .${components};
 
          #if defined (${define}${_EXT}_LINEAR)
             #if ${colorspace === "sRGB" ? 1 : 0}
-               textureColorParts = linearTosRGB (textureColorParts);
+               textureColorComponents = linearTosRGB (textureColorComponents);
             #endif
          #else
             #if ${colorspace === "linear" ? 1 : 0}
-               textureColorParts = sRGBToLinear (textureColorParts);
+               textureColorComponents = sRGBToLinear (textureColorComponents);
             #endif
          #endif
 
-         return textureColorParts;
+         return textureColorComponents;
       }
       #endif
       `;
