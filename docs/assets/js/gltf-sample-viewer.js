@@ -16,6 +16,7 @@ const ibl_files = [
    "ChairDamaskPurplegold",
    "Clearcoat",
    "ClearCoat",
+   "Corset",
    "Cube",
    "Dispersion",
    "DragonAttenuation",
