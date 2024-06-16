@@ -214,7 +214,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .scenesArray    (glTF .scenes, glTF .scene);
 
       this .viewpointsGroup ();
-      this .materialVariantsGroup ();
+      this .materialVariantsSwitch ();
 
       this .animationsArray (glTF .animations);
 
@@ -1607,28 +1607,23 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          scene        = this .getScene (),
-         variantsNode = scene .createNode ("Switch", false),
-         names        = [ ];
+         variantsNode = scene .createNode ("Switch", false);
 
       variantsNode ._whichChoice = 0;
 
       for (const mapping of mappings)
-         this .khrMaterialsVariantsObjectMapping (mapping, shapeNode, variantsNode, names);
+         this .khrMaterialsVariantsObjectMapping (mapping, shapeNode, variantsNode);
 
       variantsNode .setup ();
 
       if (!variantsNode ._children .length)
          return;
 
-      variantsNode .setMetaData ("MaterialVariants/names", new Fields .MFString (... names));
-
       this .materialVariantNodes .push (variantsNode);
-
-      scene .addExportedNode (scene .getUniqueExportName (`MaterialVariants${this .materialVariantNodes .length}`), variantsNode);
 
       return variantsNode;
    },
-   khrMaterialsVariantsObjectMapping (mapping, shapeNode, variantsNode, names)
+   khrMaterialsVariantsObjectMapping (mapping, shapeNode, variantsNode)
    {
       if (!(mapping instanceof Object))
          return;
@@ -1642,7 +1637,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene          = this .getScene (),
          variantNode    = this .getScene () .createNode ("Shape", false),
          appearanceNode = this .materialObject (mapping),
-         name           = this .sanitizeName (this .materialVariants [mapping .variants ?.[0]] ?.name ?? "");
+         variant        = mapping .variants ?.[0] ?? 0,
+         name           = this .sanitizeName (this .materialVariants [variant] ?.name ?? "");
 
       if (name)
          scene .addNamedNode (scene .getUniqueName (name), variantNode);
@@ -1652,8 +1648,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       variantNode .setup ();
 
-      variantsNode ._children .push (variantNode);
-      names .push (this .materialVariants [mapping .variants ?.[0]] ?.name ?? "");
+      variantsNode ._children [variant] = variantNode;
    },
    camerasArray (cameras)
    {
@@ -2162,24 +2157,30 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       scene .getRootNodes () .push (groupNode);
    },
-   materialVariantsGroup ()
+   materialVariantsSwitch ()
    {
       if (!this .materialVariantNodes .length)
          return;
 
       const
-         scene     = this .getScene (),
-         groupNode = scene .createNode ("Group", false);
+         scene      = this .getScene (),
+         switchNode = scene .createNode ("Switch", false),
+         names      = this .materialVariants .map (object => object .name);
 
-      scene .addNamedNode    (scene .getUniqueName       ("MaterialVariants"), groupNode);
-      scene .addExportedNode (scene .getUniqueExportName ("MaterialVariants"), groupNode);
+      scene .addNamedNode    (scene .getUniqueName       ("MaterialVariants"), switchNode);
+      scene .addExportedNode (scene .getUniqueExportName ("MaterialVariants"), switchNode);
 
-      groupNode ._visible  = false;
-      groupNode ._children = this .materialVariantNodes;
+      switchNode ._whichChoice = 0;
+      switchNode ._visible     = false;
 
-      groupNode .setup ();
+      switchNode .setup ();
 
-      scene .getRootNodes () .push (groupNode);
+      switchNode .setMetaData ("MaterialVariants/names", new Fields .MFString (... names));
+
+      for (const variantNode of this .materialVariantNodes)
+         scene .addRoute (switchNode, "whichChoice", variantNode, "whichChoice");
+
+      scene .getRootNodes () .push (switchNode);
    },
    animationsArray (animations)
    {
