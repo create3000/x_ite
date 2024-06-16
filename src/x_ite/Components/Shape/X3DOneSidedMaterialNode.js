@@ -150,37 +150,26 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
 
       if (+this .getTextureBits ())
       {
-         // Emissive parameters
+         this .emissiveTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_EmissiveTexture,
+            this ._emissiveTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
 
-         if (this .emissiveTextureNode)
+         if (shaderObject .x3d_NormalTexture)
          {
-            const
-               mapping       = this ._emissiveTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_EmissiveTexture;
-
-            this .emissiveTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-
-         // Normal parameters
-
-         if (this .normalTextureNode)
-         {
-            const
-               mapping       = this ._normalTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_NormalTexture;
-
-            if (uniformStruct)
-            {
+            if (this .normalTextureNode)
                gl .uniform1f (shaderObject .x3d_NormalScale, Math .max (this ._normalScale .getValue (), 0));
 
-               this .normalTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-               gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-               gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-            }
+            this .normalTextureNode ?.setNamedShaderUniforms (gl,
+               shaderObject,
+               renderObject,
+               shaderObject .x3d_NormalTexture,
+               this ._normalTextureMapping .getValue (),
+               textureTransformMapping,
+               textureCoordinateMapping);
          }
       }
    },

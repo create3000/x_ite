@@ -112,22 +112,13 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    {
       gl .uniform3fv (shaderObject .x3d_AnisotropyEXT, this .anisotropyArray);
 
-      if (+this .getTextureBits ())
-      {
-         // Anisotropy parameters
-
-         if (this .anisotropyTextureNode)
-         {
-            const
-               mapping       = this ._anisotropyTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_AnisotropyTextureEXT;
-
-            this .anisotropyTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-      }
+      this .anisotropyTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_AnisotropyTextureEXT,
+         this ._anisotropyTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
    },
 });
 

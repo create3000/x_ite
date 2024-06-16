@@ -245,49 +245,32 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       if (+this .getTextureBits ())
       {
-         // Base parameters
+         this .baseTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_BaseTexture,
+            this ._baseTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
 
-         if (this .baseTextureNode)
-         {
-            const
-               mapping       = this ._baseTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_BaseTexture;
-
-            this .baseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-
-         // Metallic roughness parameters
-
-         if (this .metallicRoughnessTextureNode)
-         {
-            const
-               mapping       = this ._metallicRoughnessTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_MetallicRoughnessTexture;
-
-            this .metallicRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-
-         // Occlusion parameters
+         this .metallicRoughnessTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_MetallicRoughnessTexture,
+            this ._metallicRoughnessTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
 
          if (this .occlusionTextureNode)
-         {
-            const
-               mapping       = this ._occlusionTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_OcclusionTexture;
-
             gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
-            this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
+         this .occlusionTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_OcclusionTexture,
+            this ._occlusionTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
       }
    },
 });

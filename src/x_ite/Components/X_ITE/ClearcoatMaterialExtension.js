@@ -129,47 +129,29 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
 
       if (+this .getTextureBits ())
       {
-         // Clearcoat parameters
+         this .clearcoatTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_ClearcoatTextureEXT,
+            this ._clearcoatTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
 
-         if (this .clearcoatTextureNode)
-         {
-            const
-               mapping       = this ._clearcoatTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_ClearcoatTextureEXT;
+         this .clearcoatRoughnessTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_ClearcoatRoughnessTextureEXT,
+            this ._clearcoatRoughnessTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
 
-            this .clearcoatTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-
-         // Clearcoat roughness parameters
-
-         if (this .clearcoatRoughnessTextureNode)
-         {
-            const
-               mapping       = this ._clearcoatRoughnessTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_ClearcoatRoughnessTextureEXT;
-
-            this .clearcoatRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-
-         // Clearcoat normal parameters
-
-         if (this .clearcoatNormalTextureNode)
-         {
-            const
-               mapping       = this ._clearcoatNormalTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_ClearcoatNormalTextureEXT;
-
-            this .clearcoatNormalTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
+         this .clearcoatNormalTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_ClearcoatNormalTextureEXT,
+            this ._clearcoatNormalTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
       }
    },
 });

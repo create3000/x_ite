@@ -140,33 +140,21 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
 
       if (+this .getTextureBits ())
       {
-         // Sheen color parameters
+         this .sheenColorTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_SheenColorTextureEXT,
+            this ._sheenColorTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
 
-         if (this .sheenColorTextureNode)
-         {
-            const
-               sheenColorTextureMapping = this ._sheenColorTextureMapping .getValue (),
-               sheenColorTexture        = shaderObject .x3d_SheenColorTextureEXT;
-
-            this .sheenColorTextureNode .setShaderUniforms (gl, shaderObject, renderObject, sheenColorTexture);
-
-            gl .uniform1i (sheenColorTexture .textureTransformMapping,  textureTransformMapping  .get (sheenColorTextureMapping) ?? 0);
-            gl .uniform1i (sheenColorTexture .textureCoordinateMapping, textureCoordinateMapping .get (sheenColorTextureMapping) ?? 0);
-         }
-
-         // Sheen color parameters
-
-         if (this .sheenRoughnessTextureNode)
-         {
-            const
-               sheenRoughnessTextureMapping = this ._sheenRoughnessTextureMapping .getValue (),
-               sheenRoughnessTexture        = shaderObject .x3d_SheenRoughnessTextureEXT;
-
-            this .sheenRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, sheenRoughnessTexture);
-
-            gl .uniform1i (sheenRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (sheenRoughnessTextureMapping) ?? 0);
-            gl .uniform1i (sheenRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (sheenRoughnessTextureMapping) ?? 0);
-         }
+         this .sheenRoughnessTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_SheenRoughnessTextureEXT,
+            this ._sheenRoughnessTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
       }
    },
 });

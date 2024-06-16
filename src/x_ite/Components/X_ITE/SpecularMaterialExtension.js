@@ -130,33 +130,21 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
 
       if (+this .getTextureBits ())
       {
-         // Specular parameters
+         this .specularTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_SpecularTextureEXT,
+            this ._specularTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
 
-         if (this .specularTextureNode)
-         {
-            const
-               mapping      = this ._specularTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_SpecularTextureEXT;
-
-            this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
-
-         // Specular color parameters
-
-         if (this .specularColorTextureNode)
-         {
-            const
-               mapping       = this ._specularColorTextureMapping .getValue (),
-               uniformStruct = shaderObject .x3d_SpecularColorTextureEXT;
-
-            this .specularColorTextureNode .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
-
-            gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
-            gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);
-         }
+         this .specularColorTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_SpecularColorTextureEXT,
+            this ._specularColorTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
       }
    },
 });
