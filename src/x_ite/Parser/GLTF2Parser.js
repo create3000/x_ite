@@ -217,7 +217,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .materialVariantsGroup ();
 
       this .animationsArray (glTF .animations);
-      
+
       this .optimizeSceneGraph (this .getScene () .getRootNodes ());
 
       return this .getScene ();
@@ -1681,48 +1681,54 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             return null;
       }
    },
-   orthographicCamera ({ xmag, ymag, znear, zfar })
+   orthographicCamera (camera)
    {
+      if (!(camera instanceof Object))
+         return null;
+
       const
          scene         = this .getScene (),
          viewpointNode = scene .createNode ("OrthoViewpoint", false);
 
-      if (typeof xmag === "number")
+      if (typeof camera .xmag === "number")
       {
-         viewpointNode ._fieldOfView [0] = -xmag;
-         viewpointNode ._fieldOfView [2] = +xmag;
+         viewpointNode ._fieldOfView [0] = -camera .xmag;
+         viewpointNode ._fieldOfView [2] = +camera .xmag;
       }
 
-      if (typeof ymag === "number")
+      if (typeof camera .ymag === "number")
       {
-         viewpointNode ._fieldOfView [1] = -ymag;
-         viewpointNode ._fieldOfView [3] = +ymag;
+         viewpointNode ._fieldOfView [1] = -camera .ymag;
+         viewpointNode ._fieldOfView [3] = +camera .ymag;
       }
 
-      if (typeof znear === "number")
-         viewpointNode ._nearDistance = znear;
+      if (typeof camera .znear === "number")
+         viewpointNode ._nearDistance = camera .znear;
 
-      if (typeof zfar === "number")
-         viewpointNode ._farDistance = zfar;
+      if (typeof camera .zfar === "number")
+         viewpointNode ._farDistance = camera .zfar;
 
       viewpointNode .setup ();
 
       return viewpointNode;
    },
-   perspectiveCamera ({ yfov, znear, zfar })
+   perspectiveCamera (camera)
    {
+      if (!(camera instanceof Object))
+         return null;
+
       const
          scene         = this .getScene (),
          viewpointNode = scene .createNode ("Viewpoint", false);
 
-      if (typeof yfov === "number")
-         viewpointNode ._fieldOfView = yfov
+      if (typeof camera .yfov === "number")
+         viewpointNode ._fieldOfView = camera .yfov
 
-      if (typeof znear === "number")
-         viewpointNode ._nearDistance = znear;
+      if (typeof camera .znear === "number")
+         viewpointNode ._nearDistance = camera .znear;
 
-      if (typeof zfar === "number")
-         viewpointNode ._farDistance = zfar;
+      if (typeof camera .zfar === "number")
+         viewpointNode ._farDistance = camera .zfar;
 
       viewpointNode .setup ();
 
