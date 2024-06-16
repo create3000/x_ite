@@ -163,7 +163,7 @@ getOcclusionFactor ()
 
 #if defined (X3D_SHEEN_MATERIAL_EXT)
 
-${MaterialTextures .texture ("x3d_SheenColorTextureEXT",     "rgb")}
+${MaterialTextures .texture ("x3d_SheenColorTextureEXT",     "rgb", "linear")}
 ${MaterialTextures .texture ("x3d_SheenRoughnessTextureEXT", "a")}
 
 uniform vec3  x3d_SheenColorEXT;
@@ -249,7 +249,7 @@ getClearCoatInfo (in MaterialInfo info, const in NormalInfo normalInfo)
 #if defined (X3D_SPECULAR_MATERIAL_EXT)
 
 ${MaterialTextures .texture ("x3d_SpecularTextureEXT",      "a")}
-${MaterialTextures .texture ("x3d_SpecularColorTextureEXT", "rgb")}
+${MaterialTextures .texture ("x3d_SpecularColorTextureEXT", "rgb", "linear")}
 
 uniform float x3d_SpecularEXT;
 uniform vec3  x3d_SpecularColorEXT;
