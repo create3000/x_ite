@@ -238,11 +238,11 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
          if (+this .getTextureBits ())
          {
-            this .ambientTextureNode   ?.getNamedShaderOptions (options, "AMBIENT");
-            this .diffuseTextureNode   ?.getNamedShaderOptions (options, "DIFFUSE");
-            this .specularTextureNode  ?.getNamedShaderOptions (options, "SPECULAR");
-            this .shininessTextureNode ?.getNamedShaderOptions (options, "SHININESS");
-            this .occlusionTextureNode ?.getNamedShaderOptions (options, "OCCLUSION");
+            this .ambientTextureNode   ?.getShaderOptions (options, "AMBIENT");
+            this .diffuseTextureNode   ?.getShaderOptions (options, "DIFFUSE");
+            this .specularTextureNode  ?.getShaderOptions (options, "SPECULAR");
+            this .shininessTextureNode ?.getShaderOptions (options, "SHININESS");
+            this .occlusionTextureNode ?.getShaderOptions (options, "OCCLUSION");
          }
 
          switch (this .getMaterialKey ())

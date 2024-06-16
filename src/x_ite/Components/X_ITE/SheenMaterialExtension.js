@@ -121,8 +121,8 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
-      this .sheenColorTextureNode     ?.getNamedShaderOptions (options, "SHEEN_COLOR",     true);
-      this .sheenRoughnessTextureNode ?.getNamedShaderOptions (options, "SHEEN_ROUGHNESS", true);
+      this .sheenColorTextureNode     ?.getShaderOptions (options, "SHEEN_COLOR",     true);
+      this .sheenRoughnessTextureNode ?.getShaderOptions (options, "SHEEN_ROUGHNESS", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {

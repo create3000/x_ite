@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
-      this .anisotropyTextureNode ?.getNamedShaderOptions (options, "ANISOTROPY", true);
+      this .anisotropyTextureNode ?.getShaderOptions (options, "ANISOTROPY", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {

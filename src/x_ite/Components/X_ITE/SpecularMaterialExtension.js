@@ -120,8 +120,8 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
 
       options .push ("X3D_MATERIAL_TEXTURES");
 
-      this .specularTextureNode      ?.getNamedShaderOptions (options, "SPECULAR",       true);
-      this .specularColorTextureNode ?.getNamedShaderOptions (options, "SPECULAR_COLOR", true);
+      this .specularTextureNode      ?.getShaderOptions (options, "SPECULAR",       true);
+      this .specularColorTextureNode ?.getShaderOptions (options, "SPECULAR_COLOR", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {

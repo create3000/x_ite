@@ -221,9 +221,9 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       if (+this .getTextureBits ())
       {
-         this .baseTextureNode              ?.getNamedShaderOptions (options, "BASE");
-         this .metallicRoughnessTextureNode ?.getNamedShaderOptions (options, "METALLIC_ROUGHNESS");
-         this .occlusionTextureNode         ?.getNamedShaderOptions (options, "OCCLUSION");
+         this .baseTextureNode              ?.getShaderOptions (options, "BASE");
+         this .metallicRoughnessTextureNode ?.getShaderOptions (options, "METALLIC_ROUGHNESS");
+         this .occlusionTextureNode         ?.getShaderOptions (options, "OCCLUSION");
       }
 
       const shaderNode = browser .createShader ("PBR", "Default", "PBR", options);

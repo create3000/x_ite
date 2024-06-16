@@ -137,8 +137,8 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
 
       if (+this .getTextureBits ())
       {
-         this .getEmissiveTexture () ?.getNamedShaderOptions (options, "EMISSIVE");
-         this .getNormalTexture ()   ?.getNamedShaderOptions (options, "NORMAL");
+         this .getEmissiveTexture () ?.getShaderOptions (options, "EMISSIVE");
+         this .getNormalTexture ()   ?.getShaderOptions (options, "NORMAL");
       }
 
       return options;
