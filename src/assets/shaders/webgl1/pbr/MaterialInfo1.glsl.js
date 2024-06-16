@@ -1,3 +1,5 @@
+import MaterialTextures from "../../MaterialTextures.js";
+
 export default /* glsl */ `
 
 struct MaterialInfo
@@ -48,11 +50,11 @@ struct MaterialInfo
 
 #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
    #if defined (X3D_DIFFUSE_TEXTURE)
-      uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
+      ${MaterialTextures .texture ("x3d_DiffuseTexture", "rgba", "linear")}
    #endif
 #elif defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
    #if defined (X3D_BASE_TEXTURE)
-      uniform x3d_BaseTextureParameters x3d_BaseTexture;
+      ${MaterialTextures .texture ("x3d_BaseTexture", "rgba", "linear")}
    #endif
 #endif
 
@@ -78,45 +80,13 @@ getBaseColor ()
 
    #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
       #if defined (X3D_DIFFUSE_TEXTURE)
-         vec3 texCoord = getTexCoord (x3d_DiffuseTexture .textureTransformMapping, x3d_DiffuseTexture .textureCoordinateMapping);
-
-         #if defined (X3D_DIFFUSE_TEXTURE_FLIP_Y)
-            texCoord .t = 1.0 - texCoord .t;
-         #endif
-
-         #if defined (X3D_DIFFUSE_TEXTURE_2D)
-            vec4 textureColor = texture2D (x3d_DiffuseTexture .texture2D, texCoord .st);
-         #elif defined (X3D_DIFFUSE_TEXTURE_CUBE)
-            vec4 textureColor = textureCube (x3d_DiffuseTexture .textureCube, texCoord);
-         #endif
-
-         #if defined (X3D_BASE_TEXTURE_LINEAR)
-            baseColor *= textureColor;
-         #else
-            baseColor *= sRGBToLinear (textureColor);
-         #endif
+         baseColor *= getDiffuseTexture ();
       #elif defined (X3D_TEXTURE)
          baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
       #endif
    #elif defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
       #if defined (X3D_BASE_TEXTURE)
-         vec3 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
-
-         #if defined (X3D_BASE_TEXTURE_FLIP_Y)
-            texCoord .t = 1.0 - texCoord .t;
-         #endif
-
-         #if defined (X3D_BASE_TEXTURE_2D)
-            vec4 textureColor = texture2D (x3d_BaseTexture .texture2D, texCoord .st);
-         #elif defined (X3D_BASE_TEXTURE_CUBE)
-            vec4 textureColor = textureCube (x3d_BaseTexture .textureCube, texCoord);
-         #endif
-
-         #if defined (X3D_BASE_TEXTURE_LINEAR)
-            baseColor *= textureColor;
-         #else
-            baseColor *= sRGBToLinear (textureColor);
-         #endif
+         baseColor *= getBaseTexture ();
       #elif defined (X3D_TEXTURE)
          baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
       #endif
@@ -126,9 +96,8 @@ getBaseColor ()
 }
 
 #if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
-#if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
-   uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
-#endif
+
+${MaterialTextures .texture ("x3d_MetallicRoughnessTexture")}
 
 MaterialInfo
 getMetallicRoughnessInfo (in MaterialInfo info)
@@ -142,19 +111,9 @@ getMetallicRoughnessInfo (in MaterialInfo info)
    // Get texture color.
 
    #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
-      vec3 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
-
-      #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_FLIP_Y)
-         texCoord .t = 1.0 - texCoord .t;
-      #endif
-
       // Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
       // This layout intentionally reserves the 'r' channel for (optional) occlusion map data
-      #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
-         vec4 mrSample = texture2D (x3d_MetallicRoughnessTexture .texture2D, texCoord .st);
-      #elif defined (X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
-         vec4 mrSample = textureCube (x3d_MetallicRoughnessTexture .textureCube, texCoord);
-      #endif
+      vec4 mrSample = getMetallicRoughnessTexture ();
 
       info .metallic            *= mrSample .b;
       info .perceptualRoughness *= mrSample .g;
@@ -168,9 +127,7 @@ getMetallicRoughnessInfo (in MaterialInfo info)
 }
 #endif
 
-#if defined (X3D_EMISSIVE_TEXTURE)
-   uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
-#endif
+${MaterialTextures .texture ("x3d_EmissiveTexture", "rgb", "linear")}
 
 #if defined (X3D_EMISSIVE_STRENGTH_MATERIAL_EXT)
    uniform float x3d_EmissiveStrengthEXT;
@@ -190,31 +147,13 @@ getEmissiveColor ()
    // Get texture color.
 
    #if defined (X3D_EMISSIVE_TEXTURE)
-      vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
-
-      #if defined (X3D_EMISSIVE_TEXTURE_FLIP_Y)
-         texCoord .t = 1.0 - texCoord .t;
-      #endif
-
-      #if defined (X3D_EMISSIVE_TEXTURE_2D)
-         vec3 textureColor = texture2D (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
-      #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
-         vec3 textureColor = textureCube (x3d_EmissiveTexture .textureCube, texCoord) .rgb;
-      #endif
-
-      #if defined (X3D_EMISSIVE_TEXTURE_LINEAR)
-         emissiveColor *= textureColor;
-      #else
-         emissiveColor *= sRGBToLinear (textureColor);
-      #endif
+      emissiveColor *= getEmissiveTexture ();
    #endif
 
    return emissiveColor;
 }
 
-#if defined (X3D_OCCLUSION_TEXTURE)
-   uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
-#endif
+${MaterialTextures .texture ("x3d_OcclusionTexture", "r")}
 
 float
 getOcclusionFactor ()
@@ -222,66 +161,16 @@ getOcclusionFactor ()
    // Get texture color.
 
    #if defined (X3D_OCCLUSION_TEXTURE)
-      vec3 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
-
-      #if defined (X3D_OCCLUSION_TEXTURE_FLIP_Y)
-         texCoord .t = 1.0 - texCoord .t;
-      #endif
-
-      #if defined (X3D_OCCLUSION_TEXTURE_2D)
-         return texture2D (x3d_OcclusionTexture .texture2D, texCoord .st) .r;
-      #elif defined (X3D_OCCLUSION_TEXTURE_CUBE)
-         return textureCube (x3d_OcclusionTexture .textureCube, texCoord) .r;
-      #endif
+      return getOcclusionTexture ();
    #else
       return 1.0;
    #endif
 }
 
 #if defined (X3D_SHEEN_MATERIAL_EXT)
-#if defined (X3D_SHEEN_COLOR_TEXTURE_EXT)
-uniform x3d_SheenColorTextureParametersEXT x3d_SheenColorTextureEXT;
 
-vec3
-getSheenColorEXT ()
-{
-   // Get texture color.
-
-   vec3 texCoord = getTexCoord (x3d_SheenColorTextureEXT .textureTransformMapping, x3d_SheenColorTextureEXT .textureCoordinateMapping);
-
-   #if defined (X3D_SHEEN_COLOR_TEXTURE_EXT_FLIP_Y)
-      texCoord .t = 1.0 - texCoord .t;
-   #endif
-
-   #if defined (X3D_SHEEN_COLOR_TEXTURE_EXT_2D)
-      return texture2D (x3d_SheenColorTextureEXT .texture2D, texCoord .st) .rgb;
-   #elif defined (X3D_SHEEN_COLOR_TEXTURE_EXT_CUBE)
-      return textureCube (x3d_SheenColorTextureEXT .textureCube, texCoord) .rgb;
-   #endif
-}
-#endif
-
-#if defined (X3D_SHEEN_ROUGHNESS_TEXTURE_EXT)
-uniform x3d_SheenRoughnessTextureParametersEXT x3d_SheenRoughnessTextureEXT;
-
-float
-getSheenRoughnessEXT ()
-{
-   // Get texture color.
-
-   vec3 texCoord = getTexCoord (x3d_SheenRoughnessTextureEXT .textureTransformMapping, x3d_SheenRoughnessTextureEXT .textureCoordinateMapping);
-
-   #if defined (X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_FLIP_Y)
-      texCoord .t = 1.0 - texCoord .t;
-   #endif
-
-   #if defined (X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_2D)
-      return texture2D (x3d_SheenRoughnessTextureEXT .texture2D, texCoord .st) .a;
-   #elif defined (X3D_SHEEN_ROUGHNESS_TEXTURE_EXT_CUBE)
-      return textureCube (x3d_SheenRoughnessTextureEXT .textureCube, texCoord) .a;
-   #endif
-}
-#endif
+${MaterialTextures .texture ("x3d_SheenColorTextureEXT",     "rgb")}
+${MaterialTextures .texture ("x3d_SheenRoughnessTextureEXT", "a")}
 
 uniform vec3  x3d_SheenColorEXT;
 uniform float x3d_SheenRoughnessEXT;
@@ -293,11 +182,11 @@ getSheenInfo (in MaterialInfo info)
    info .sheenRoughnessFactor = x3d_SheenRoughnessEXT;
 
    #if defined (X3D_SHEEN_COLOR_TEXTURE_EXT)
-      info .sheenColorFactor *= getSheenColorEXT ();
+      info .sheenColorFactor *= getSheenColorTextureEXT ();
    #endif
 
    #if defined (X3D_SHEEN_ROUGHNESS_TEXTURE_EXT)
-      info .sheenRoughnessFactor *= getSheenRoughnessEXT ();
+      info .sheenRoughnessFactor *= getSheenRoughnessTextureEXT ();
    #endif
 
    return info;
@@ -313,74 +202,21 @@ albedoSheenScalingLUT (const in float NdotV, const in float sheenRoughnessFactor
 #endif
 
 #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
-#if defined (X3D_CLEARCOAT_TEXTURE_EXT)
-uniform x3d_ClearcoatTextureParametersEXT x3d_ClearcoatTextureEXT;
 
-float
-getClearcoatEXT ()
-{
-   // Get texture color.
-
-   vec3 texCoord = getTexCoord (x3d_ClearcoatTextureEXT .textureTransformMapping, x3d_ClearcoatTextureEXT .textureCoordinateMapping);
-
-   #if defined (X3D_CLEARCOAT_TEXTURE_EXT_FLIP_Y)
-      texCoord .t = 1.0 - texCoord .t;
-   #endif
-
-   #if defined (X3D_CLEARCOAT_TEXTURE_EXT_2D)
-      return texture2D (x3d_ClearcoatTextureEXT .texture2D, texCoord .st) .r;
-   #elif defined (X3D_CLEARCOAT_TEXTURE_EXT_CUBE)
-      return textureCube (x3d_ClearcoatTextureEXT .textureCube, texCoord) .r;
-   #endif
-}
-#endif
-
-#if defined (X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT)
-uniform x3d_ClearcoatRoughnessTextureParametersEXT x3d_ClearcoatRoughnessTextureEXT;
-
-float
-getClearcoatRoughnessEXT ()
-{
-   // Get texture color.
-
-   vec3 texCoord = getTexCoord (x3d_ClearcoatRoughnessTextureEXT .textureTransformMapping, x3d_ClearcoatRoughnessTextureEXT .textureCoordinateMapping);
-
-   #if defined (X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_FLIP_Y)
-      texCoord .t = 1.0 - texCoord .t;
-   #endif
-
-   #if defined (X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_2D)
-      return texture2D (x3d_ClearcoatRoughnessTextureEXT .texture2D, texCoord .st) .g;
-   #elif defined (X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT_CUBE)
-      return textureCube (x3d_ClearcoatRoughnessTextureEXT .textureCube, texCoord) .g;
-   #endif
-}
-#endif
+${MaterialTextures .texture ("x3d_ClearcoatTextureEXT",          "r")}
+${MaterialTextures .texture ("x3d_ClearcoatRoughnessTextureEXT", "g")}
+${MaterialTextures .texture ("x3d_ClearcoatNormalTextureEXT",    "rgb")}
 
 #if defined (X3D_CLEARCOAT_NORMAL_TEXTURE_EXT)
 const float x3d_ClearcoatNormalScaleEXT = 1.0;
-uniform x3d_ClearcoatNormalTextureParametersEXT x3d_ClearcoatNormalTextureEXT;
 #endif
 
 vec3
 getClearcoatNormalEXT (const in NormalInfo normalInfo)
 {
    #if defined (X3D_CLEARCOAT_NORMAL_TEXTURE_EXT)
-      // Get texture color.
-
-      vec3 texCoord = getTexCoord (x3d_ClearcoatNormalTextureEXT .textureTransformMapping, x3d_ClearcoatNormalTextureEXT .textureCoordinateMapping);
-
-      #if defined (X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_FLIP_Y)
-         texCoord .t = 1.0 - texCoord .t;
-      #endif
-
-      #if defined (X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_2D)
-         vec3 color = texture2D (x3d_ClearcoatNormalTextureEXT .texture2D, texCoord .st) .rgb;
-      #elif defined (X3D_CLEARCOAT_NORMAL_TEXTURE_EXT_CUBE)
-         vec3 color = textureCube (x3d_ClearcoatNormalTextureEXT .textureCube, texCoord) .rgb;
-      #endif
-
-      vec3 n = color * 2.0 - vec3 (1.0);
+      vec3 color = getClearcoatNormalTextureEXT ();
+      vec3 n     = color * 2.0 - vec3 (1.0);
 
       n *= vec3 (vec2 (x3d_ClearcoatNormalScaleEXT), 1.0);
       n  = mat3 (normalInfo .t, normalInfo .b, normalInfo .ng) * normalize (n);
@@ -403,11 +239,11 @@ getClearCoatInfo (in MaterialInfo info, const in NormalInfo normalInfo)
    info .clearcoatF90       = vec3 (1.0);
 
    #if defined (X3D_CLEARCOAT_TEXTURE_EXT)
-      info .clearcoatFactor *= getClearcoatEXT ();
+      info .clearcoatFactor *= getClearcoatTextureEXT ();
    #endif
 
    #if defined (X3D_CLEARCOAT_ROUGHNESS_TEXTURE_EXT)
-      info .clearcoatRoughness *= getClearcoatRoughnessEXT ();
+      info .clearcoatRoughness *= getClearcoatRoughnessTextureEXT ();
    #endif
 
    info .clearcoatNormal    = getClearcoatNormalEXT (normalInfo);
@@ -417,49 +253,9 @@ getClearCoatInfo (in MaterialInfo info, const in NormalInfo normalInfo)
 #endif
 
 #if defined (X3D_SPECULAR_MATERIAL_EXT)
-#if defined (X3D_SPECULAR_TEXTURE_EXT)
-uniform x3d_SpecularTextureParametersEXT x3d_SpecularTextureEXT;
 
-float
-getSpecularEXT ()
-{
-   // Get texture color.
-
-   vec3 texCoord = getTexCoord (x3d_SpecularTextureEXT .textureTransformMapping, x3d_SpecularTextureEXT .textureCoordinateMapping);
-
-   #if defined (X3D_SPECULAR_TEXTURE_EXT_FLIP_Y)
-      texCoord .t = 1.0 - texCoord .t;
-   #endif
-
-   #if defined (X3D_SPECULAR_TEXTURE_EXT_2D)
-      return texture2D (x3d_SpecularTextureEXT .texture2D, texCoord .st) .a;
-   #elif defined (X3D_SPECULAR_TEXTURE_EXT_CUBE)
-      return textureCube (x3d_SpecularTextureEXT .textureCube, texCoord) .a;
-   #endif
-}
-#endif
-
-#if defined (X3D_SPECULAR_COLOR_TEXTURE_EXT)
-uniform x3d_SpecularColorTextureParametersEXT x3d_SpecularColorTextureEXT;
-
-vec3
-getSpecularColorEXT ()
-{
-   // Get texture color.
-
-   vec3 texCoord = getTexCoord (x3d_SpecularColorTextureEXT .textureTransformMapping, x3d_SpecularColorTextureEXT .textureCoordinateMapping);
-
-   #if defined (X3D_SPECULAR_COLOR_TEXTURE_EXT_FLIP_Y)
-      texCoord .t = 1.0 - texCoord .t;
-   #endif
-
-   #if defined (X3D_SPECULAR_COLOR_TEXTURE_EXT_2D)
-      return texture2D (x3d_SpecularColorTextureEXT .texture2D, texCoord .st) .rgb;
-   #elif defined (X3D_SPECULAR_COLOR_TEXTURE_EXT_CUBE)
-      return textureCube (x3d_SpecularColorTextureEXT .textureCube, texCoord) .rgb;
-   #endif
-}
-#endif
+${MaterialTextures .texture ("x3d_SpecularTextureEXT",      "a")}
+${MaterialTextures .texture ("x3d_SpecularColorTextureEXT", "rgb")}
 
 uniform float x3d_SpecularEXT;
 uniform vec3  x3d_SpecularColorEXT;
@@ -470,11 +266,11 @@ getSpecularInfo (in MaterialInfo info)
    vec4 specularTexture = vec4 (1.0);
 
    #if defined (X3D_SPECULAR_TEXTURE_EXT)
-      specularTexture .a = getSpecularEXT ();
+      specularTexture .a = getSpecularTextureEXT ();
    #endif
 
    #if defined (X3D_SPECULAR_COLOR_TEXTURE_EXT)
-      specularTexture .rgb = getSpecularColorEXT ();
+      specularTexture .rgb = getSpecularColorTextureEXT ();
    #endif
 
    vec3 dielectricSpecularF0 = min (info .f0 * x3d_SpecularColorEXT * specularTexture .rgb, vec3 (1.0));
@@ -488,27 +284,8 @@ getSpecularInfo (in MaterialInfo info)
 #endif
 
 #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
-#if defined (X3D_ANISOTROPY_TEXTURE_EXT)
-uniform x3d_AnisotropyTextureParametersEXT x3d_AnisotropyTextureEXT;
 
-vec3
-getAnisotropyEXT ()
-{
-   // Get texture color.
-
-   vec3 texCoord = getTexCoord (x3d_AnisotropyTextureEXT .textureTransformMapping, x3d_AnisotropyTextureEXT .textureCoordinateMapping);
-
-   #if defined (X3D_ANISOTROPY_TEXTURE_EXT_FLIP_Y)
-      texCoord .t = 1.0 - texCoord .t;
-   #endif
-
-   #if defined (X3D_ANISOTROPY_TEXTURE_EXT_2D)
-      return texture2D (x3d_AnisotropyTextureEXT .texture2D, texCoord .st) .rgb;
-   #elif defined (X3D_ANISOTROPY_TEXTURE_EXT_CUBE)
-      return textureCube (x3d_AnisotropyTextureEXT .textureCube, texCoord) .rgb;
-   #endif
-}
-#endif
+${MaterialTextures .texture ("x3d_AnisotropyTextureEXT", "rgb")}
 
 uniform vec3 x3d_AnisotropyEXT;
 
@@ -519,7 +296,7 @@ getAnisotropyInfo (in MaterialInfo info, const in NormalInfo normalInfo)
    float strengthFactor = 1.0;
 
    #if defined (X3D_ANISOTROPY_TEXTURE_EXT)
-      vec3 anisotropySample = getAnisotropyEXT ();
+      vec3 anisotropySample = getAnisotropyTextureEXT ();
 
       direction      = anisotropySample .xy * 2.0 - vec2 (1.0);
       strengthFactor = anisotropySample .z;

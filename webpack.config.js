@@ -83,10 +83,14 @@ export default __default__;`;
                      {
                         const e = [ ];
 
-                        return "/* glsl */ `" + m
+                        const a = m .match (/^\s*/) [0]
+                           .replace (/\n+/sg, "\n")
+                           .replace (/s+/, "");
+
+                        return "/* glsl */ `" + a + m
                            .replace (/\$\{(?:[^}{]|\{(?:[^}{]|\{(?:[^}{]|\{[^}{]*\})*\})*\})*\}/sg, s =>
                            {
-                              return `__EXPRESSION${e .push (s) - 1}__`
+                              return `__EXPRESSION_${e .push (s) - 1}__`;
                            })
                            .replace (/\/\*.*?\*\//sg, "")
                            .replace (/\/\/.*?\n/sg, "\n")
@@ -99,11 +103,11 @@ export default __default__;`;
                            .replace (/$/, "\n")
                            .replace (/(\})\s+$/s, "$1")
                            .replace (/\n+/sg, "\n")
-                           .replace (/__EXPRESSION(\d+)__/sg, (_, i) =>
+                           .replace (/__EXPRESSION_(\d+)__/sg, (_, i) =>
                            {
-                              return `\n${e [i]
+                              return `${e [i]
                                  .replace (/^\s+/mg, "")
-                                 .replace (/\n+/sg, "\n")}\n`
+                                 .replace (/\n+/sg, "\n")}`
                            }) + "`"
                      },
                   },

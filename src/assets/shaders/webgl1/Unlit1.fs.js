@@ -1,3 +1,5 @@
+import MaterialTextures from "../MaterialTextures.js";
+
 export default /* glsl */ `
 
 #extension GL_OES_standard_derivatives : enable
@@ -11,9 +13,7 @@ precision highp samplerCube;
 #pragma X3D include "common/Fragment.glsl"
 uniform x3d_UnlitMaterialParameters x3d_Material;
 
-#if defined (X3D_EMISSIVE_TEXTURE)
-   uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
-#endif
+${MaterialTextures .texture ("x3d_EmissiveTexture", "rgba", "sRGB")}
 
 vec4
 getEmissiveColor ()
@@ -31,23 +31,7 @@ getEmissiveColor ()
    // Get texture color.
 
    #if defined (X3D_EMISSIVE_TEXTURE)
-      vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
-
-      #if defined (X3D_EMISSIVE_TEXTURE_FLIP_Y)
-         texCoord .t = 1.0 - texCoord .t;
-      #endif
-
-      #if defined (X3D_EMISSIVE_TEXTURE_2D)
-         vec4 textureColor = texture2D (x3d_EmissiveTexture .texture2D, texCoord .st);
-      #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
-         vec4 textureColor = textureCube (x3d_EmissiveTexture .textureCube, texCoord);
-      #endif
-
-      #if defined (X3D_EMISSIVE_TEXTURE_LINEAR)
-         emissiveColor *= linearTosRGB (textureColor);
-      #else
-         emissiveColor *= textureColor;
-      #endif
+      emissiveColor *= getEmissiveTexture ();
    #elif defined (X3D_TEXTURE)
       emissiveColor = getTextureColor (emissiveColor, vec4 (vec3 (1.0), alpha));
    #endif

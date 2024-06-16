@@ -140,28 +140,7 @@ struct x3d_PhysicalMaterialParameters
 
 //uniform x3d_PhysicalMaterialParameters x3d_Material;
 
-${MaterialTextures .map (name => /* glsl */ `
-
-#if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()})
-struct ${name .replace (/(EXT)?$/, "Parameters$1")}
-{
-   mediump int         textureTransformMapping;
-   mediump int         textureCoordinateMapping;
-   #if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()}_2D)
-   mediump sampler2D   texture2D;
-   #endif
-   #if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()}_3D) && __VERSION__ != 100
-   mediump sampler3D   texture3D;
-   #endif
-   #if defined (${name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ()}_CUBE)
-   mediump samplerCube textureCube;
-   #endif
-};
-#endif
-
-//uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
-
-`) .join ("\n")}
+${MaterialTextures .structs ()}
 
 //uniform x3d_SpecularColorTextureParametersEXT x3d_SpecularColorTextureEXT;
 

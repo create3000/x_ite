@@ -226,7 +226,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_SpecularEXT           = gl .getUniformLocation (program, "x3d_SpecularEXT");
       this .x3d_SpecularColorEXT      = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
 
-      for (const materialTexture of MaterialTextures)
+      for (const materialTexture of MaterialTextures .names)
       {
          this [materialTexture] = {
             textureTransformMapping:  gl .getUniformLocation (program, materialTexture + ".textureTransformMapping"),
@@ -363,7 +363,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .uniform1i  (this .x3d_LinePropertiesTexture, browser .getDefaultTexture2DUnit ());
       gl .uniform1i  (this .x3d_FillPropertiesTexture, browser .getDefaultTexture2DUnit ());
 
-      for (const materialTexture of MaterialTextures)
+      for (const materialTexture of MaterialTextures .names)
       {
          gl .uniform1i (this [materialTexture] .texture2D,   browser .getDefaultTexture2DUnit ());
          gl .uniform1i (this [materialTexture] .texture3D,   browser .getDefaultTexture3DUnit ());
