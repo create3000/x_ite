@@ -294,6 +294,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             // },
             case "EXT_mesh_gpu_instancing":
             case "KHR_materials_anisotropy":
+            case "KHR_materials_clearcoat":
             case "KHR_materials_emissive_strength":
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
@@ -1142,6 +1143,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_anisotropy":
                this .khrMaterialsAnisotropyObject (value, materialNode);
                break;
+            case "KHR_materials_clearcoat":
+               this .khrMaterialsClearcoatObject (value, materialNode);
+               break;
             case "KHR_materials_emissive_strength":
                this .khrMaterialsEmissiveStrengthObject (value, materialNode);
                break;
@@ -1168,6 +1172,28 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._anisotropyRotation       = this .numberValue (KHR_materials_anisotropy .anisotropyRotation, 0);
       extension ._anisotropyTexture        = this .textureInfo (KHR_materials_anisotropy .anisotropyTexture);
       extension ._anisotropyTextureMapping = this .textureMapping (KHR_materials_anisotropy .anisotropyTexture);
+
+      extension .setup ();
+
+      materialNode ._extensions .push (extension);
+   },
+   khrMaterialsClearcoatObject (KHR_materials_clearcoat, materialNode)
+   {
+      if (!(KHR_materials_clearcoat instanceof Object))
+         return;
+
+      const extension = this .getScene () .createNode ("ClearcoatMaterialExtension", false);
+
+      extension ._clearcoat               = this .numberValue (KHR_materials_clearcoat .clearcoatFactor, 0);
+      extension ._clearcoatTexture        = this .textureInfo (KHR_materials_clearcoat .clearcoatTexture);
+      extension ._clearcoatTextureMapping = this .textureMapping (KHR_materials_clearcoat .clearcoatTexture);
+
+      extension ._clearcoatRoughness               = this .numberValue (KHR_materials_clearcoat .clearcoatRoughnessFactor, 0);
+      extension ._clearcoatRoughnessTexture        = this .textureInfo (KHR_materials_clearcoat .clearcoatRoughnessTexture);
+      extension ._clearcoatRoughnessTextureMapping = this .textureMapping (KHR_materials_clearcoat .clearcoatRoughnessTexture);
+
+      extension ._clearcoatNormalTexture        = this .textureInfo (KHR_materials_clearcoat .clearcoatNormalTexture);
+      extension ._clearcoatNormalTextureMapping = this .textureMapping (KHR_materials_clearcoat .clearcoatNormalTexture);
 
       extension .setup ();
 
