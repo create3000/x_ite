@@ -1407,6 +1407,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          shapeNode    = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing),
          variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions, shapeNode);
 
+      if (variantsNode)
+         variantsNode ._children [this .materialVariants .length] = shapeNode;
+
       shapeNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
    },
    attributesObject (attributes)
