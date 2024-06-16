@@ -23,17 +23,15 @@ export default
    {
       const ext = !!name .match (/EXT$/);
 
-      name = name .replace (/EXT$/, "")
-
-      const define = name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase ();
+      name = name .replace (/EXT$/, "");
 
       const
-          EXT = ext ?  "EXT" : "",
-         _EXT = ext ? "_EXT" : "";
+         type   = ["", "float", "vec2", "vec3", "vec4"] [components .length],
+         define = name .replace (/([a-z])([A-Z])/g, "$1_$2") .toUpperCase (),
+          EXT   = ext ?  "EXT" : "",
+         _EXT   = ext ? "_EXT" : "";
 
-      const type = ["", "float", "vec2", "vec3", "vec4"] [components .length];
-
-      const string = /* glsl */ `
+      return /* glsl */ `
 
       #if defined (${define}${_EXT})
 
@@ -82,8 +80,6 @@ export default
       }
       #endif
       `;
-
-      return string;
    },
    structs ()
    {
