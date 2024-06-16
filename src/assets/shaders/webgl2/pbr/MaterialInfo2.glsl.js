@@ -297,7 +297,7 @@ getAnisotropyInfo (in MaterialInfo info, const in NormalInfo normalInfo)
    #endif
 
    vec2 directionRotation = x3d_AnisotropyEXT .xy; // cos(theta), sin(theta)
-   mat2 rotationMatrix    = mat2 (directionRotation .x, directionRotation .y, -directionRotation .y, directionRotation .x);
+   mat2 rotationMatrix    = mat2 (directionRotation .xy, -directionRotation .y, directionRotation .x);
 
    direction = rotationMatrix * direction;
 
