@@ -766,7 +766,6 @@ class SampleViewer
 
       $("#scenes") .empty ();
       $("<b></b>") .text ("Scenes") .appendTo ($("#scenes"));
-      $("<br>") .appendTo ($("#scenes"));
 
       for (let i = 0; i < scenes .children .length; ++ i)
       {
@@ -794,8 +793,6 @@ class SampleViewer
             .addClass (["fa-regular", "fa-circle"])
             .attr ("id", `scene${i}`)
             .prependTo (label);
-
-         $("<br>") .appendTo ($("#scenes"));
       }
 
       $("#scenes") .show () .find ("label") .first () .trigger ("click");
@@ -810,7 +807,6 @@ class SampleViewer
 
       $("#viewpoints") .empty ();
       $("<b></b>") .text ("Viewpoints") .appendTo ($("#viewpoints"));
-      $("<br>") .appendTo ($("#viewpoints"));
 
       const select = $("<select></select>")
          .on ("change", () =>
@@ -842,7 +838,6 @@ class SampleViewer
 
       $("#material-variants") .empty ();
       $("<b></b>") .text ("Material Variants") .appendTo ($("#material-variants"));
-      $("<br>") .appendTo ($("#material-variants"));
 
       for (const switchNode of variants .children)
       {
@@ -875,7 +870,6 @@ class SampleViewer
 
       $("#animations") .empty ();
       $("<b></b>") .text ("Animations") .appendTo ($("#animations"));
-      $("<br>") .appendTo ($("#animations"));
 
       for (const [i, group] of animations .children .entries ())
       {
@@ -915,8 +909,6 @@ class SampleViewer
             .addClass (["fa-regular", "fa-circle"])
             .attr ("id", `animation${i}`)
             .prependTo (label);
-
-         $("<br>") .appendTo ($("#animations"));
       }
 
       $("#animations") .show () .find ("label") .first () .trigger ("click");

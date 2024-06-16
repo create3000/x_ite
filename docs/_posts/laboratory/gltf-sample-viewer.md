@@ -70,14 +70,18 @@ x3d-canvas {
    border-radius: 0.8rem;
 }
 
-#options i {
-   cursor: pointer;
-   padding-right: 0.5rem;
+#options b {
+   display: block;
 }
 
 #options label {
    cursor: pointer;
-   margin: 0;
+   display: block;
+}
+
+#options i {
+   cursor: pointer;
+   padding-right: 0.5rem;
 }
 
 #options i:hover,
@@ -88,10 +92,12 @@ x3d-canvas {
 #options select {
    -moz-appearance: none;
    -webkit-appearance: none;
+   display: block;
    outline: none;
    background: none;
    border: 1px solid var(--text-color);
    border-radius: 1rem;
+   margin: 0.3rem 0;
    padding: 0 0.7rem;
    width: 100%;
    height: 2rem;
@@ -131,9 +137,7 @@ x3d-canvas {
       <div id="options">
          <div id="lighting">
             <b>Lighting</b>
-            <br>
             <label for="ibl"><i id="ibl" class="fa-solid fa-xmark"></i>Image Based Lighting</label>
-            <br>
             <label for="headlight"><i id="headlight" class="fa-solid fa-xmark"></i>Headlight</label>
          </div>
          <div id="scenes"></div>
