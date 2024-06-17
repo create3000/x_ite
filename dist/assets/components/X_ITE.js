@@ -2264,6 +2264,7 @@ Namespace_default().add ("SpecularMaterialExtension", "x_ite/Components/X_ITE/Sp
 
 
 
+
 function TransmissionMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -2276,17 +2277,62 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    initialize ()
    {
       X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._transmission        .addInterest ("set_transmission__",        this);
+      this ._transmissionTexture .addInterest ("set_transmissionTexture__", this);
+
+      this .set_transmission__ ();
+      this .set_transmissionTexture__ ();
    },
    getExtensionKey ()
    {
       return X_ITE_ExtensionKeys .TRANSMISSION_MATERIAL_EXTENSION;
    },
+   set_transmission__ ()
+   {
+      this .transmission = Math .max (this ._transmission .getValue (), 0);
+   },
+   set_transmissionTexture__ ()
+   {
+      this .transmissionTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._transmissionTexture);
+
+      this .setTexture (0, this .transmissionTextureNode);
+   },
    getShaderOptions (options)
    {
+      options .push ("X3D_TRANSMISSION_MATERIAL_EXT");
 
+      if (!+this .getTextureBits ())
+         return;
+
+      options .push ("X3D_MATERIAL_TEXTURES");
+
+      this .transmissionTextureNode ?.getShaderOptions (options, "TRANSMISSION", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      const
+         browser            = this .getBrowser (),
+         transmissionBuffer = browser .getTransmissionBuffer (),
+         transmissionUnit   = browser .getTexture2DUnit ();
+
+      gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
+
+      gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
+      gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
+      gl .uniform1i (shaderObject .x3d_TransmissionFramebufferSamplerEXT, transmissionUnit);
+      gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, transmissionBuffer .getWidth (), transmissionBuffer .getHeight ());
+
+      if (!+this .getTextureBits ())
+         return;
+
+      this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_TransmissionTextureEXT,
+         this ._transmissionTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
    },
 });
 
