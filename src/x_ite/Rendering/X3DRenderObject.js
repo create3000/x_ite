@@ -89,7 +89,7 @@ function X3DRenderObject (executionContext)
    this .localShadows             = [ false ];
    this .localFogs                = [ null ];
    this .layouts                  = [ ];
-   this .humanoids                = [ ];
+   this .humanoids                = [ null ];
    this .generatedCubeMapTextures = [ ];
    this .collisions               = [ ];
    this .collisionTime            = new StopWatch ();

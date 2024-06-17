@@ -1050,7 +1050,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             for (const globalLights of renderObject .getGlobalLights ())
                globalLights .setShaderUniforms (gl, this, renderObject);
 
-            this .numGlobalLights             = this .numLights;
+            this .numGlobalLights            = this .numLights;
             this .numGlobalTextureProjectors = this .numTextureProjectors;
 
             // Logarithmic depth buffer support
