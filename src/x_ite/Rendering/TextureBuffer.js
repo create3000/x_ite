@@ -49,7 +49,7 @@ import ViewVolume from "../../standard/Math/Geometry/ViewVolume.js";
 import Vector3    from "../../standard/Math/Numbers/Vector3.js";
 import Matrix4    from "../../standard/Math/Numbers/Matrix4.js";
 
-function TextureBuffer (browser, width, height, float = false)
+function TextureBuffer (browser, width, height, float = false, mipMaps = false)
 {
    const gl = browser .getContext ();
 
@@ -83,8 +83,17 @@ function TextureBuffer (browser, width, height, float = false)
    gl .bindTexture (gl .TEXTURE_2D, this .colorTexture);
    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+
+   if (mipMaps)
+   {
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR_MIPMAP_LINEAR);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+   }
+   else
+   {
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+   }
 
    if (float)
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, width, height, 0, gl .RGBA, gl .FLOAT, null);
@@ -199,7 +208,7 @@ Object .assign (TextureBuffer .prototype,
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
    },
-   delete ()
+   dispose ()
    {
       const gl = this .context;
 

@@ -93,15 +93,18 @@ getIBLRadianceLambertian (const in vec3 n, const in vec3 v, const in float rough
 }
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+
+uniform sampler2D x3d_TransmissionFramebufferSamplerEXT;
+uniform ivec2     x3d_TransmissionFramebufferSizeEXT;
+
 vec3
 getTransmissionSample (const in vec2 fragCoord, const in float roughness, const in float ior)
 {
-   // float framebufferLod   = log2 (float (u_TransmissionFramebufferSize .x)) * applyIorToRoughness (roughness, ior);
-   // vec3  transmittedLight = textureLod (u_TransmissionFramebufferSampler, fragCoord .xy, framebufferLod) .rgb;
+   float framebufferSize  = max (float (x3d_TransmissionFramebufferSizeEXT .x), float (x3d_TransmissionFramebufferSizeEXT .y));
+   float framebufferLod   = log2 (framebufferSize) * applyIorToRoughness (roughness, ior);
+   vec3  transmittedLight = texture2DLodEXT (x3d_TransmissionFramebufferSamplerEXT, fragCoord, framebufferLod) .rgb;
 
-   // return transmittedLight;
-
-   return vec3 (0.5, 0.5, 0.5);
+   return transmittedLight;
 }
 
 vec3
@@ -138,7 +141,7 @@ getIBLVolumeRefraction (const in vec3 n, const in vec3 v, const in float percept
       vec3  refractedRayExit      = position + transmissionRay;
 
       // Project refracted vector on the framebuffer, while mapping to normalized device coordinates.
-      vec4 ndcPos           = projMatrix * viewMatrix * vec4 (refractedRayExit, 1.0);
+      vec4 ndcPos           = projMatrix * vec4 (refractedRayExit, 1.0); // removed viewMatrix
       vec2 refractionCoords = ndcPos.xy / ndcPos.w;
 
       refractionCoords += 1.0;

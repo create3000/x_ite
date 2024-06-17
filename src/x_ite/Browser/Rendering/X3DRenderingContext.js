@@ -46,17 +46,19 @@
  ******************************************************************************/
 
 import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
+import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import Vector4                from "../../../standard/Math/Numbers/Vector4.js";
 
 const
-   _viewport         = Symbol (),
-   _frameBuffer      = Symbol (),
-   _resizer          = Symbol (),
-   _localObjects     = Symbol (),
-   _fullscreenArray  = Symbol (),
-   _fullscreenBuffer = Symbol (),
-   _composeShader    = Symbol (),
-   _depthShaders     = Symbol ();
+   _viewport           = Symbol (),
+   _frameBuffer        = Symbol (),
+   _transmissionBuffer = Symbol (),
+   _resizer            = Symbol (),
+   _localObjects       = Symbol (),
+   _fullscreenArray    = Symbol (),
+   _fullscreenBuffer   = Symbol (),
+   _composeShader      = Symbol (),
+   _depthShaders       = Symbol ();
 
 function X3DRenderingContext ()
 {
@@ -162,6 +164,19 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return this [_frameBuffer];
    },
+   getTransmissionBuffer ()
+   {
+      if (this [_transmissionBuffer])
+         return this [_transmissionBuffer];
+
+      this [_transmissionBuffer] = new TextureBuffer (this,
+         this [_frameBuffer] .getWidth (),
+         this [_frameBuffer] .getHeight (),
+         false,
+         true);
+
+      return this [_transmissionBuffer];
+   },
    getFullscreenVertexArrayObject ()
    {
       // Quad for fullscreen rendering.
@@ -263,8 +278,8 @@ Object .assign (X3DRenderingContext .prototype,
          contentScale = this .getRenderingProperty ("ContentScale"),
          samples      = this .getRenderingProperty ("Multisampling"),
          oit          = this .getBrowserOption ("OrderIndependentTransparency"),
-         width        = canvas .width () * contentScale,
-         height       = canvas .height () * contentScale;
+         width        = Math .max (canvas .width () * contentScale, 1),
+         height       = Math .max (canvas .height () * contentScale, 1);
 
       canvas .prop ("width",  width);
       canvas .prop ("height", height);
@@ -279,6 +294,12 @@ Object .assign (X3DRenderingContext .prototype,
       {
          this [_frameBuffer] .dispose ();
          this [_frameBuffer] = new MultiSampleFrameBuffer (this, width, height, samples, oit);
+
+         if (this [_transmissionBuffer])
+         {
+            this [_transmissionBuffer] .dispose ();
+            this [_transmissionBuffer] = new TextureBuffer (this, width, height, false, true);
+         }
       }
 
       this .addBrowserEvent ();

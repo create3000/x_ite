@@ -87,8 +87,8 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       this .set_metallicRoughnessTexture__ ();
       this .set_occlusionStrength__ ();
       this .set_occlusionTexture__ ();
-      this .set_transparent__ ();
       this .set_extensions__ ();
+      this .set_transparent__ ();
    },
    getMaterialKey ()
    {
@@ -174,7 +174,9 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
    set_transparent__ ()
    {
-      this .setTransparent (this .getTransparency () || this .baseTextureNode ?.isTransparent ());
+      this .setTransparent (this .getTransparency () ||
+                            this .baseTextureNode ?.isTransparent () ||
+                            this .isTransmission ());
    },
    set_extensions__ ()
    {
@@ -198,6 +200,9 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       for (const extensionNode of extensionNodes)
          extensionNode .addInterest ("set_extensionsKey__", this);
 
+      this .setTransmission (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .TransmissionMaterialExtension)));
+
+      this .set_transparent__ ();
       this .set_extensionsKey__ ();
    },
    set_extensionsKey__ ()

@@ -118,6 +118,14 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       this .transparent = !!value;
    },
+   isTransmission ()
+   {
+      return this .transmission;
+   },
+   setTransmission (value)
+   {
+      this .transmission = !!value;
+   },
    getAlphaMode ()
    {
       return this .alphaMode;
@@ -142,16 +150,18 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       if (this .appearanceNode)
       {
-         this .appearanceNode ._alphaMode   .removeInterest ("set_transparent__", this);
-         this .appearanceNode ._transparent .removeInterest ("set_transparent__", this);
+         this .appearanceNode ._alphaMode    .removeInterest ("set_transparent__",  this);
+         this .appearanceNode ._transparent  .removeInterest ("set_transparent__",  this);
+         this .appearanceNode ._transmission .removeInterest ("set_transmission__", this);
       }
 
       this .appearanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this ._appearance);
 
       if (this .appearanceNode)
       {
-         this .appearanceNode ._alphaMode   .addInterest ("set_transparent__", this);
-         this .appearanceNode ._transparent .addInterest ("set_transparent__", this);
+         this .appearanceNode ._alphaMode    .addInterest ("set_transparent__", this);
+         this .appearanceNode ._transparent  .addInterest ("set_transparent__",  this);
+         this .appearanceNode ._transmission .addInterest ("set_transmission__", this);
       }
       else
       {
@@ -159,6 +169,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       }
 
       this .set_transparent__ ();
+      this .set_transmission__ ();
    },
    set_geometry__ ()
    {
@@ -195,6 +206,10 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          this .transparent = alphaMode === AlphaMode .BLEND;
          this .alphaMode   = alphaMode;
       }
+   },
+   set_transmission__ ()
+   {
+      this .transmission = this .appearanceNode .isTransmission ();
    },
    set_bbox__ ()
    {

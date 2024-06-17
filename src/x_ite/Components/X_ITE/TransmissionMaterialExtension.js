@@ -99,7 +99,17 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      const
+         browser            = this .getBrowser (),
+         transmissionBuffer = browser .getTransmissionBuffer (),
+         transmissionUnit   = browser .getTexture2DUnit ();
+
       gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
+
+      gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
+      gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
+      gl .uniform1i (shaderObject .x3d_TransmissionFramebufferSamplerEXT, transmissionUnit);
+      gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, transmissionBuffer .getWidth (), transmissionBuffer .getHeight ());
 
       if (!+this .getTextureBits ())
          return;

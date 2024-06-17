@@ -1017,6 +1017,7 @@ Object .assign (X3DRenderObject .prototype,
          browser                  = this .getBrowser (),
          gl                       = browser .getContext (),
          frameBuffer              = browser .getFrameBuffer (),
+         independent              = this .isIndependent (),
          viewport                 = this .getViewVolume () .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
@@ -1034,7 +1035,7 @@ Object .assign (X3DRenderObject .prototype,
 
       // PREPARATIONS
 
-      if (this .isIndependent ())
+      if (independent)
       {
          // Render shadow maps.
 
@@ -1045,8 +1046,6 @@ Object .assign (X3DRenderObject .prototype,
 
          for (const generatedCubeMapTexture of generatedCubeMapTextures)
             generatedCubeMapTexture .renderTexture (this);
-
-         frameBuffer .bind ();
       }
 
       // Set up shadow matrix for all lights, and matrix for all projective textures.
@@ -1067,23 +1066,7 @@ Object .assign (X3DRenderObject .prototype,
       this .viewMatrixArray        .set (this .getViewMatrix () .get ());
       this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 
-      // DRAW
-
-      // Configure viewport and background
-
-      gl .viewport (... viewport);
-      gl .scissor (... viewport);
-
-      // Draw background.
-
-      gl .clear (gl .DEPTH_BUFFER_BIT);
-      gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
-
-      this .getBackground () .display (gl, this, viewport);
-
-      // Sorted blend or order independent transparency
-
-      // Render opaque objects first
+      // Prepare opaque objects first.
 
       const opaqueShapes = this .opaqueShapes;
 
@@ -1091,49 +1074,45 @@ Object .assign (X3DRenderObject .prototype,
       {
          const renderContext = opaqueShapes [i];
 
-         gl .scissor (... renderContext .scissor);
-
          renderContext .shadows = renderContext .shadows || shadows;
          renderContext .objectsKeys .push (... globalLightsKeys);
-
-         renderContext .shapeNode .display (gl, renderContext);
-         browser .resetTextureUnits ();
       }
 
-      // Render transparent objects
+      // Prepare transparent objects.
 
       const transparentShapes = this .transparentShapes;
-
-      if (oit)
-         frameBuffer .bindTransparency ();
-      else
-         this .transparencySorter .sort (0, this .numTransparentShapes);
-
-      gl .depthMask (false);
-      gl .enable (gl .BLEND);
 
       for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
       {
          const renderContext = transparentShapes [i];
 
-         gl .scissor (... renderContext .scissor);
-
          renderContext .shadows = renderContext .shadows || shadows;
          renderContext .objectsKeys .push (... globalLightsKeys);
-
-         renderContext .shapeNode .display (gl, renderContext);
-         browser .resetTextureUnits ();
       }
 
-      gl .depthMask (true);
-      gl .disable (gl .BLEND);
+      if (independent && true)
+      {
+         // Transmission
 
-      if (oit)
-         frameBuffer .compose ();
+         const transmissionBuffer = browser .getTransmissionBuffer ();
+
+         this .drawShapes (gl, browser, true, transmissionBuffer, false, true, viewport);
+
+         gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
+         gl .generateMipmap (gl .TEXTURE_2D);
+
+         this .drawShapes (gl, browser, true, frameBuffer, oit, false, viewport);
+      }
+      else
+      {
+         // DRAW
+
+         this .drawShapes (gl, browser, independent, frameBuffer, oit, false, viewport);
+      }
 
       // POST DRAW
 
-      if (this .isIndependent ())
+      if (independent)
       {
          // Recycle clip planes, local fogs, local lights, and local projective textures.
 
@@ -1157,6 +1136,73 @@ Object .assign (X3DRenderObject .prototype,
       lights                   .length = 0;
       globalShadows            .length = 1;
       generatedCubeMapTextures .length = 0;
+   },
+   drawShapes (gl, browser, independent, frameBuffer, oit, transmission, viewport)
+   {
+      if (independent)
+         frameBuffer .bind ();
+
+      // Configure viewport and background
+
+      gl .viewport (... viewport);
+      gl .scissor (... viewport);
+
+      // Draw background.
+
+      gl .clear (gl .DEPTH_BUFFER_BIT);
+      gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+
+      this .getBackground () .display (gl, this, viewport);
+
+      // Sorted blend or order independent transparency
+
+      // Render opaque objects first
+
+      const opaqueShapes = this .opaqueShapes;
+
+      for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
+      {
+         const renderContext = opaqueShapes [i];
+
+         if (transmission && renderContext .shapeNode .isTransmission ())
+            continue;
+
+         gl .scissor (... renderContext .scissor);
+
+         renderContext .shapeNode .display (gl, renderContext);
+         browser .resetTextureUnits ();
+      }
+
+      // Render transparent objects
+
+      const transparentShapes = this .transparentShapes;
+
+      if (oit)
+         frameBuffer .bindTransparency ();
+      else
+         this .transparencySorter .sort (0, this .numTransparentShapes);
+
+      gl .depthMask (false);
+      gl .enable (gl .BLEND);
+
+      for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
+      {
+         const renderContext = transparentShapes [i];
+
+         if (transmission && renderContext .shapeNode .isTransmission ())
+            continue;
+
+         gl .scissor (... renderContext .scissor);
+
+         renderContext .shapeNode .display (gl, renderContext);
+         browser .resetTextureUnits ();
+      }
+
+      gl .depthMask (true);
+      gl .disable (gl .BLEND);
+
+      if (oit)
+         frameBuffer .compose ();
    },
 });
 

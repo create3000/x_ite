@@ -56,7 +56,7 @@ Object .assign (VertexArray .prototype,
    update (value = true)
    {
       if (value)
-         this .delete ();
+         this .dispose ();
 
       return this;
    },
@@ -74,7 +74,7 @@ Object .assign (VertexArray .prototype,
       {
          // Memory leak prevention when shaders are reloaded. There should normally be no more than maybe 10 VAOs, except when shaders are often reloaded.
          if (this .vertexArrays .size > 100)
-            this .delete ();
+            this .dispose ();
 
          const vertexArray = this .gl .createVertexArray ();
 
@@ -87,7 +87,7 @@ Object .assign (VertexArray .prototype,
          return true; // Rebuild
       }
    },
-   delete ()
+   dispose ()
    {
       for (const vertexArray of this .vertexArrays .values ())
          this .gl .deleteVertexArray (vertexArray);

@@ -247,7 +247,10 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    set_material__ ()
    {
       if (this .materialNode)
-         this .materialNode ._transparent .removeInterest ("set_transparent__", this);
+      {
+         this .materialNode ._transparent  .removeInterest ("set_transparent__",  this);
+         this .materialNode ._transmission .removeInterest ("set_transmission__", this);
+      }
 
       this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this ._material);
 
@@ -255,7 +258,10 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
          this .materialNode = this .getBrowser () .getDefaultMaterial ();
 
       if (this .materialNode)
-         this .materialNode ._transparent .addInterest ("set_transparent__", this);
+      {
+         this .materialNode ._transparent  .addInterest ("set_transparent__",  this);
+         this .materialNode ._transmission .addInterest ("set_transmission__", this);
+      }
 
       // Depreciated TwoSidedMaterial handling.
 
@@ -397,6 +403,12 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
                             this .backMaterialNode ?.isTransparent () ||
                             this .textureNode ?.isTransparent () ||
                             this .blendModeNode);
+   },
+   set_transmission__ ()
+   {
+      this .setTransmission (this .materialNode ?.isTransmission () ||
+                             this .backMaterialNode ?.isTransmission ());
+
    },
    traverse (type, renderObject)
    {

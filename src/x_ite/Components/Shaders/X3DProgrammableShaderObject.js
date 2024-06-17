@@ -216,16 +216,18 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_NormalScale       = gl .getUniformLocation (program, "x3d_Material.normalScale");
       this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
 
-      this .x3d_AnisotropyEXT         = gl .getUniformLocation (program, "x3d_AnisotropyEXT");
-      this .x3d_ClearcoatEXT          = gl .getUniformLocation (program, "x3d_ClearcoatEXT");
-      this .x3d_ClearcoatRoughnessEXT = gl .getUniformLocation (program, "x3d_ClearcoatRoughnessEXT");
-      this .x3d_EmissiveStrengthEXT   = gl .getUniformLocation (program, "x3d_EmissiveStrengthEXT");
-      this .x3d_SheenColorEXT         = gl .getUniformLocation (program, "x3d_SheenColorEXT");
-      this .x3d_SheenRoughnessEXT     = gl .getUniformLocation (program, "x3d_SheenRoughnessEXT");
-      this .x3d_SheenELUTTextureEXT   = gl .getUniformLocation (program, "x3d_SheenELUTTextureEXT");
-      this .x3d_SpecularEXT           = gl .getUniformLocation (program, "x3d_SpecularEXT");
-      this .x3d_SpecularColorEXT      = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
-      this .x3d_TransmissionEXT       = gl .getUniformLocation (program, "x3d_TransmissionEXT");
+      this .x3d_AnisotropyEXT                     = gl .getUniformLocation (program, "x3d_AnisotropyEXT");
+      this .x3d_ClearcoatEXT                      = gl .getUniformLocation (program, "x3d_ClearcoatEXT");
+      this .x3d_ClearcoatRoughnessEXT             = gl .getUniformLocation (program, "x3d_ClearcoatRoughnessEXT");
+      this .x3d_EmissiveStrengthEXT               = gl .getUniformLocation (program, "x3d_EmissiveStrengthEXT");
+      this .x3d_SheenColorEXT                     = gl .getUniformLocation (program, "x3d_SheenColorEXT");
+      this .x3d_SheenRoughnessEXT                 = gl .getUniformLocation (program, "x3d_SheenRoughnessEXT");
+      this .x3d_SheenELUTTextureEXT               = gl .getUniformLocation (program, "x3d_SheenELUTTextureEXT");
+      this .x3d_SpecularEXT                       = gl .getUniformLocation (program, "x3d_SpecularEXT");
+      this .x3d_SpecularColorEXT                  = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
+      this .x3d_TransmissionEXT                   = gl .getUniformLocation (program, "x3d_TransmissionEXT");
+      this .x3d_TransmissionFramebufferSamplerEXT = gl .getUniformLocation (program, "x3d_TransmissionFramebufferSamplerEXT");
+      this .x3d_TransmissionFramebufferSizeEXT    = gl .getUniformLocation (program, "x3d_TransmissionFramebufferSizeEXT");
 
       for (const materialTexture of MaterialTextures .names)
       {

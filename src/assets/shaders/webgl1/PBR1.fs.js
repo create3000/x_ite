@@ -143,7 +143,7 @@ getMaterialColor ()
             materialInfo .f0,
             materialInfo .f90,
             vertex,
-            x3d_ModelViewMatrix, // ??? x3d_ModelMatrix
+            x3d_ModelViewMatrix, // x3d_ModelMatrix
             x3d_ViewMatrix,
             x3d_ProjectionMatrix,
             materialInfo .ior,
