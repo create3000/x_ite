@@ -241,6 +241,9 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    },
    setNamedShaderUniforms (gl, shaderObject, renderObject, uniformStruct, mapping, textureTransformMapping, textureCoordinateMapping)
    {
+      if (!uniformStruct)
+         return;
+      
       this .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
 
       gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);

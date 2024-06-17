@@ -1,4 +1,7 @@
 export default /* glsl */ `
+
+const float M_PI = 3.1415926535897932384626433832795;
+
 // The following equation models the Fresnel reflectance term of the spec equation (aka F())
 // Implementation of fresnel from [4], Equation 15
 vec3
@@ -6,10 +9,6 @@ F_Schlick (const in vec3 f0, const in vec3 f90, const in float VdotH)
 {
    return f0 + (f90 - f0) * pow (clamp (1.0 - VdotH, 0.0, 1.0), 5.0);
 }
-
-#if defined (X3D_LIGHTING)
-
-const float M_PI = 3.1415926535897932384626433832795;
 
 // Smith Joint GGX
 // Note: Vis = G / (4 * NdotL * NdotV)
@@ -45,6 +44,8 @@ D_GGX (const in float NdotH, const in float alphaRoughness)
 
    return alphaRoughnessSq / (M_PI * f * f);
 }
+
+#if defined (X3D_LIGHTING)
 
 //https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
 vec3
