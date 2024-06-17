@@ -563,68 +563,63 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       viewpoint ._orientationOffset = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset, false);
       viewpoint ._positionOffset    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint ._orientationOffset .getValue ());
    },
-   addRotate: (() =>
+   addRotate (rotationChange)
    {
-      const destination = new Rotation4 ();
+      const viewpoint = this .getActiveViewpoint ();
 
-      return function (rotationChange)
+      if (this .rotationChaser ._value_changed .hasInterest ("set_rotation__", this))
       {
-         const viewpoint = this .getActiveViewpoint ();
-
-         if (this .rotationChaser ._value_changed .hasInterest ("set_rotation__", this))
+         try
          {
-            try
-            {
-               // console .warn ("active")
+            // console .warn ("active")
 
-               // Check for critical angle.
-               this .getOrientationOffset (rotationChange, this .initialOrientationOffset, true);
+            // Check for critical angle.
+            this .getOrientationOffset (rotationChange, this .initialOrientationOffset, true);
 
-               this .rotationChaser ._set_destination = rotationChange;
-            }
-            catch
-            {
-               // console .warn ("critical")
-
-               rotationChange = this .getHorizonRotation (rotationChange);
-
-               this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
-               this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
-
-               this .fromVector .assign (this .toVector);
-
-               this .rotationChaser ._set_value       = Rotation4 .Identity;
-               this .rotationChaser ._set_destination = this .getHorizonRotation (rotationChange);
-            }
+            this .rotationChaser ._set_destination = rotationChange;
          }
-         else
+         catch
          {
-            try
-            {
-               // console .warn ("start")
+            // console .warn ("critical")
 
-               this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
-               this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
+            rotationChange = this .getHorizonRotation (rotationChange);
 
-               // Check for critical angle.
-               this .getOrientationOffset (rotationChange, this .initialOrientationOffset, true);
+            this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
+            this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
 
-               this .rotationChaser ._set_value       = Rotation4 .Identity;
-               this .rotationChaser ._set_destination = rotationChange;
-            }
-            catch
-            {
-               // Slide along critical angle.
+            this .fromVector .assign (this .toVector);
 
-               this .rotationChaser ._set_value       = Rotation4 .Identity;
-               this .rotationChaser ._set_destination = this .getHorizonRotation (rotationChange);
-            }
+            this .rotationChaser ._set_value       = Rotation4 .Identity;
+            this .rotationChaser ._set_destination = this .getHorizonRotation (rotationChange);
          }
+      }
+      else
+      {
+         try
+         {
+            // console .warn ("start")
 
-         this .disconnect ();
-         this .rotationChaser ._value_changed .addInterest ("set_rotation__", this);
-      };
-   })(),
+            this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
+            this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
+
+            // Check for critical angle.
+            this .getOrientationOffset (rotationChange, this .initialOrientationOffset, true);
+
+            this .rotationChaser ._set_value       = Rotation4 .Identity;
+            this .rotationChaser ._set_destination = rotationChange;
+         }
+         catch
+         {
+            // Slide along critical angle.
+
+            this .rotationChaser ._set_value       = Rotation4 .Identity;
+            this .rotationChaser ._set_destination = this .getHorizonRotation (rotationChange);
+         }
+      }
+
+      this .disconnect ();
+      this .rotationChaser ._value_changed .addInterest ("set_rotation__", this);
+   },
    addSpinning (rotationChange)
    {
       this .disconnect ();
