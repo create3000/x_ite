@@ -69,7 +69,7 @@ const
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
    MOVE_TIME         = 0.2,
    ROTATE_TIME       = 0.1,
-   CRITICAL_ANGLE    = 0.97;
+   CRITICAL_ANGLE    = 0.99;
 
 function ExamineViewer (executionContext, navigationInfo)
 {
@@ -582,15 +582,14 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          {
             // console .warn ("critical")
 
-            rotationChange = this .getHorizonRotation (rotationChange);
+            const destination = this .getHorizonRotation (this .deltaRotation);
 
+            this .fromVector               .assign (this .toVector);
             this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
             this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
 
-            this .fromVector .assign (this .toVector);
-
             this .rotationChaser ._set_value       = Rotation4 .Identity;
-            this .rotationChaser ._set_destination = this .getHorizonRotation (rotationChange);
+            this .rotationChaser ._set_destination = destination;
          }
       }
       else
@@ -636,7 +635,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
          this .axis .assign (axis);
 
-         if (rotation .getAxis (new Vector3 ()) .dot (Vector3 .yAxis) < 0 !== rotation .angle < 0)
+         if (Math .sign (rotation .getAxis () .dot (Vector3 .yAxis)) !== Math .sign (rotation .angle))
             this .axis .negate ();
 
          this .timeSensor ._cycleInterval = Math .PI / (rotationChange .angle * SPIN_FACTOR * 30);
@@ -810,15 +809,18 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    })(),
    getHorizonRotation: (() =>
    {
-      const zAxis = new Vector3 ();
+      const
+         V = new Vector3 (),
+         N = new Vector3 (),
+         H = new Vector3 (),
+         r = new Rotation4 ();
 
       return function (rotation)
       {
-         const
-            V = rotation .multVecRot (zAxis .assign (Vector3 .zAxis)),
-            N = Vector3 .yAxis .copy () .cross (V),
-            H = N .copy () .cross (Vector3 .yAxis),
-            r = new Rotation4 (Vector3 .zAxis, H);
+         rotation .multVecRot (V .assign (Vector3 .zAxis));
+         N .assign (Vector3 .yAxis) .cross (V);
+         H .assign (N) .cross (Vector3 .yAxis);
+         r .setFromToVec (Vector3 .zAxis, H);
 
          return r;
       };
