@@ -277,6 +277,31 @@ getSpecularInfo (in MaterialInfo info)
 }
 #endif
 
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+
+${MaterialTextures .texture ("x3d_TransmissionTextureEXT", "r")}
+
+uniform float x3d_TransmissionEXT;
+
+MaterialInfo
+getTransmissionInfo (in MaterialInfo info)
+{
+   info .transmissionFactor = x3d_TransmissionEXT;
+
+   #if defined (X3D_TRANSMISSION_TEXTURE_EXT)
+      info .transmissionFactor *= getTransmissionTextureEXT ();
+   #endif
+
+   #if defined (X3D_DISPERSION_MATERIAL_EXT)
+      info .dispersion = x3d_DispersionEXT;
+   #else
+      info .dispersion = 0.0;
+   #endif
+
+   return info;
+}
+#endif
+
 #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
 
 ${MaterialTextures .texture ("x3d_AnisotropyTextureEXT", "rgb")}

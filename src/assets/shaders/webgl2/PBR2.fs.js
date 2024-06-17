@@ -17,6 +17,13 @@ float max3 (const in vec3 value)
 #pragma X3D include "common/Normal.glsl"
 #pragma X3D include "common/Shadow.glsl"
 
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+   uniform mat4 x3d_ProjectionMatrix;
+   uniform mat4 x3d_ModelViewMatrix;
+   uniform mat4 x3d_ViewMatrix;
+   uniform mat4 x3d_CameraSpaceMatrix;
+#endif
+
 #if defined (X3D_LIGHTING)
    uniform x3d_LightSourceParameters x3d_LightSource [X3D_NUM_LIGHTS];
 #endif
@@ -70,6 +77,10 @@ getMaterialColor ()
       materialInfo = getSpecularInfo (materialInfo);
    #endif
 
+   #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+      materialInfo = getTransmissionInfo (materialInfo);
+   #endif
+
    #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
       materialInfo = getAnisotropyInfo (materialInfo, normalInfo);
    #endif
@@ -117,6 +128,25 @@ getMaterialColor ()
       #if defined (X3D_SHEEN_MATERIAL_EXT)
          f_sheen += getIBLRadianceCharlie (n, v, materialInfo .sheenRoughnessFactor, materialInfo .sheenColorFactor);
          albedoSheenScaling = 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor);
+      #endif
+
+      #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+         f_transmission += getIBLVolumeRefraction (
+            n,
+            v,
+            materialInfo .perceptualRoughness,
+            materialInfo .c_diff,
+            materialInfo .f0,
+            materialInfo .f90,
+            vertex,
+            x3d_ModelViewMatrix, // ??? x3d_ModelMatrix
+            x3d_ViewMatrix,
+            x3d_ProjectionMatrix,
+            materialInfo .ior,
+            materialInfo .thickness,
+            materialInfo .attenuationColor,
+            materialInfo .attenuationDistance,
+            materialInfo .dispersion);
       #endif
    #endif
 
@@ -201,6 +231,25 @@ getMaterialColor ()
                f_clearcoat += intensity * getPunctualRadianceClearCoat (materialInfo .clearcoatNormal, v, l, h, VdotH, materialInfo .clearcoatF0, materialInfo .clearcoatF90, materialInfo .clearcoatRoughness);
             #endif
          }
+
+         // BTDF (Bidirectional Transmittance Distribution Function)
+         #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+            // If the light ray travels through the geometry, use the point it exits the geometry again.
+            // That will change the angle to the light source, if the material refracts the light ray.
+            vec3 transmissionRay = getVolumeTransmissionRay (n, v, materialInfo .thickness, materialInfo .ior, x3d_ModelViewMatrix); // x3d_ModelMatrix
+
+            pointToLight -= transmissionRay;
+            l             = normalize (pointToLight);
+
+            vec3 intensity        = getLightIntensity (light, pointToLight, distanceToLight);
+            vec3 transmittedLight = intensity * getPunctualRadianceTransmission (n, v, l, materialInfo .alphaRoughness, materialInfo .f0, materialInfo .f90, materialInfo .c_diff, materialInfo .ior);
+
+            #if defined (X3D_VOLUME_MATERIAL_EXT)
+               transmittedLight = applyVolumeAttenuation (transmittedLight, length (transmissionRay), materialInfo .attenuationColor, materialInfo .attenuationDistance);
+            #endif
+
+            f_transmission += transmittedLight;
+         #endif
       }
    }
    #endif
@@ -237,6 +286,10 @@ getMaterialColor ()
       clearcoatFactor  = materialInfo .clearcoatFactor;
       clearcoatFresnel = F_Schlick (materialInfo .clearcoatF0, materialInfo .clearcoatF90, clamp (dot (materialInfo .clearcoatNormal, v), 0.0, 1.0));
       clearcoat       *= clearcoatFactor;
+   #endif
+
+   #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+      diffuse = mix (diffuse, f_transmission, materialInfo .transmissionFactor);
    #endif
 
    vec3 color = vec3 (0.0);

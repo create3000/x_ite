@@ -50,6 +50,7 @@ import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
+import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
 function TransmissionMaterialExtension (executionContext)
@@ -64,17 +65,52 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    initialize ()
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._transmission        .addInterest ("set_transmission__",        this);
+      this ._transmissionTexture .addInterest ("set_transmissionTexture__", this);
+
+      this .set_transmission__ ();
+      this .set_transmissionTexture__ ();
    },
    getExtensionKey ()
    {
       return ExtensionKeys .TRANSMISSION_MATERIAL_EXTENSION;
    },
+   set_transmission__ ()
+   {
+      this .transmission = Math .max (this ._transmission .getValue (), 0);
+   },
+   set_transmissionTexture__ ()
+   {
+      this .transmissionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._transmissionTexture);
+
+      this .setTexture (0, this .transmissionTextureNode);
+   },
    getShaderOptions (options)
    {
+      options .push ("X3D_TRANSMISSION_MATERIAL_EXT");
 
+      if (!+this .getTextureBits ())
+         return;
+
+      options .push ("X3D_MATERIAL_TEXTURES");
+
+      this .transmissionTextureNode ?.getShaderOptions (options, "TRANSMISSION", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
+
+      if (!+this .getTextureBits ())
+         return;
+
+      this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_TransmissionTextureEXT,
+         this ._transmissionTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
    },
 });
 

@@ -225,6 +225,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_SheenELUTTextureEXT   = gl .getUniformLocation (program, "x3d_SheenELUTTextureEXT");
       this .x3d_SpecularEXT           = gl .getUniformLocation (program, "x3d_SpecularEXT");
       this .x3d_SpecularColorEXT      = gl .getUniformLocation (program, "x3d_SpecularColorEXT");
+      this .x3d_TransmissionEXT       = gl .getUniformLocation (program, "x3d_TransmissionEXT");
 
       for (const materialTexture of MaterialTextures .names)
       {
@@ -290,6 +291,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_ProjectionMatrix  = gl .getUniformLocation (program, "x3d_ProjectionMatrix");
       this .x3d_ModelViewMatrix   = gl .getUniformLocation (program, "x3d_ModelViewMatrix");
       this .x3d_NormalMatrix      = gl .getUniformLocation (program, "x3d_NormalMatrix");
+      this .x3d_ViewMatrix        = gl .getUniformLocation (program, "x3d_ViewMatrix");
       this .x3d_CameraSpaceMatrix = gl .getUniformLocation (program, "x3d_CameraSpaceMatrix");
 
       /*
@@ -1029,6 +1031,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             // Set projection matrix.
 
             gl .uniformMatrix4fv (this .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
+            gl .uniformMatrix4fv (this .x3d_ViewMatrix,        false, renderObject .getViewMatrixArray ());
             gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, renderObject .getCameraSpaceMatrixArray ());
 
             // Fog

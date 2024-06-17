@@ -18,6 +18,7 @@ export default
       "x3d_SheenRoughnessTextureEXT",
       "x3d_SpecularTextureEXT",
       "x3d_SpecularColorTextureEXT",
+      "x3d_TransmissionTextureEXT",
    ],
    texture (name, components = "rgba", colorspace = "")
    {

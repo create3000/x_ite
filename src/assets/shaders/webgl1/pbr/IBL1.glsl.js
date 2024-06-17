@@ -92,6 +92,74 @@ getIBLRadianceLambertian (const in vec3 n, const in vec3 v, const in float rough
    return (FmsEms + k_D) * irradiance;
 }
 
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+vec3
+getTransmissionSample (const in vec2 fragCoord, const in float roughness, const in float ior)
+{
+   // float framebufferLod   = log2 (float (u_TransmissionFramebufferSize .x)) * applyIorToRoughness (roughness, ior);
+   // vec3  transmittedLight = textureLod (u_TransmissionFramebufferSampler, fragCoord .xy, framebufferLod) .rgb;
+
+   // return transmittedLight;
+
+   return vec3 (0.5, 0.5, 0.5);
+}
+
+vec3
+getIBLVolumeRefraction (const in vec3 n, const in vec3 v, const in float perceptualRoughness, const in vec3 baseColor, const in vec3 f0, const in vec3 f90, const in vec3 position, const in mat4 modelMatrix, const in mat4 viewMatrix, const in mat4 projMatrix, const in float ior, const in float thickness, const in vec3 attenuationColor, const in float attenuationDistance, const in float dispersion)
+{
+   #if defined (X3D_DISPERSION_MATERIAL_EXT)
+      // Dispersion will spread out the ior values for each r,g,b channel
+      float halfSpread = (ior - 1.0) * 0.025 * dispersion;
+      vec3  iors       = vec3 (ior - halfSpread, ior, ior + halfSpread);
+
+      vec3  transmittedLight;
+      float transmissionRayLength;
+
+      for (int i = 0; i < 3; i++)
+      {
+         vec3 transmissionRay = getVolumeTransmissionRay (n, v, thickness, iors [i], modelMatrix);
+         // TODO: taking length of blue ray, ideally we would take the length of the green ray. For now overwriting seems ok
+         transmissionRayLength = length (transmissionRay);
+         vec3 refractedRayExit = position + transmissionRay;
+
+         // Project refracted vector on the framebuffer, while mapping to normalized device coordinates.
+         vec4 ndcPos           = projMatrix * viewMatrix * vec4 (refractedRayExit, 1.0);
+         vec2 refractionCoords = ndcPos.xy / ndcPos.w;
+
+         refractionCoords += 1.0;
+         refractionCoords /= 2.0;
+
+         // Sample framebuffer to get pixel the refracted ray hits for this color channel.
+         transmittedLight [i] = getTransmissionSample (refractionCoords, perceptualRoughness, iors [i]) [i];
+      }
+   #else
+      vec3  transmissionRay       = getVolumeTransmissionRay (n, v, thickness, ior, modelMatrix);
+      float transmissionRayLength = length (transmissionRay);
+      vec3  refractedRayExit      = position + transmissionRay;
+
+      // Project refracted vector on the framebuffer, while mapping to normalized device coordinates.
+      vec4 ndcPos           = projMatrix * viewMatrix * vec4 (refractedRayExit, 1.0);
+      vec2 refractionCoords = ndcPos.xy / ndcPos.w;
+
+      refractionCoords += 1.0;
+      refractionCoords /= 2.0;
+
+      // Sample framebuffer to get pixel the refracted ray hits.
+      vec3 transmittedLight = getTransmissionSample (refractionCoords, perceptualRoughness, ior);
+   #endif // MATERIAL_DISPERSION
+
+   vec3 attenuatedColor = applyVolumeAttenuation (transmittedLight, transmissionRayLength, attenuationColor, attenuationDistance);
+
+   // Sample GGX LUT to get the specular component.
+   float NdotV           = clamp (dot(n, v), 0.0, 1.0);
+   vec2  brdfSamplePoint = clamp (vec2 (NdotV, perceptualRoughness), vec2 (0.0), vec2 (1.0));
+   vec2  brdf            = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   vec3  specularColor   = f0 * brdf .x + f90 * brdf .y;
+
+   return (1.0 - specularColor) * attenuatedColor * baseColor;
+}
+#endif
+
 #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
 vec3
 getIBLRadianceAnisotropy (const in vec3 n, const in vec3 v, const in float roughness, const in float anisotropy, const in vec3 anisotropyDirection, const in vec3 F0, const in float specularWeight)

@@ -298,6 +298,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_emissive_strength":
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
+            case "KHR_materials_transmission":
             {
                const component = browser .getComponent ("X_ITE", 1);
 
@@ -1155,6 +1156,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_specular":
                this .khrMaterialsSpecularObject (value, materialNode);
                break;
+            case "KHR_materials_transmission":
+               this .khrMaterialsTransmission (value, materialNode);
+               break;
             case "KHR_materials_unlit":
                this .khrMaterialsUnlitObject (materialNode);
                break;
@@ -1253,6 +1257,21 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension ._specularColorTexture        = this .textureInfo (KHR_materials_specular .specularColorTexture);
       extension ._specularColorTextureMapping = this .textureMapping (KHR_materials_specular .specularColorTexture);
+
+      extension .setup ();
+
+      materialNode ._extensions .push (extension);
+   },
+   khrMaterialsTransmission (KHR_materials_transmission, materialNode)
+   {
+      if (!(KHR_materials_transmission instanceof Object))
+         return;
+
+      const extension = this .getScene () .createNode ("TransmissionMaterialExtension", false);
+
+      extension ._transmission               = this .numberValue (KHR_materials_transmission .transmissionFactor, 0);
+      extension ._transmissionTexture        = this .textureInfo (KHR_materials_transmission .transmissionTexture);
+      extension ._transmissionTextureMapping = this .textureMapping (KHR_materials_transmission .transmissionTexture);
 
       extension .setup ();
 

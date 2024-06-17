@@ -69,12 +69,13 @@ function X3DRenderObject (executionContext)
    this .renderBits               = new BitSet ();
    this .renderCount              = 0;
    this .viewVolumes              = [ ];
-   this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
-   this .viewMatrix               = new MatrixStack (Matrix4);
    this .projectionMatrix         = new MatrixStack (Matrix4);
    this .modelViewMatrix          = new MatrixStack (Matrix4);
+   this .viewMatrix               = new MatrixStack (Matrix4);
+   this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
    this .viewportArray            = new Int32Array (4);
    this .projectionMatrixArray    = new Float32Array (16);
+   this .viewMatrixArray          = new Float32Array (16);
    this .cameraSpaceMatrixArray   = new Float32Array (16);
    this .hitRay                   = new Line3 (Vector3 .Zero, Vector3 .Zero);
    this .sensors                  = [[ ]];
@@ -142,14 +143,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .viewVolumes .at (-1);
    },
-   getCameraSpaceMatrix ()
-   {
-      return this .cameraSpaceMatrix;
-   },
-   getViewMatrix ()
-   {
-      return this .viewMatrix;
-   },
    getProjectionMatrix ()
    {
       return this .projectionMatrix;
@@ -158,6 +151,14 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .modelViewMatrix;
    },
+   getViewMatrix ()
+   {
+      return this .viewMatrix;
+   },
+   getCameraSpaceMatrix ()
+   {
+      return this .cameraSpaceMatrix;
+   },
    getViewportArray ()
    {
       return this .viewportArray;
@@ -165,6 +166,10 @@ Object .assign (X3DRenderObject .prototype,
    getProjectionMatrixArray ()
    {
       return this .projectionMatrixArray;
+   },
+   getViewMatrixArray ()
+   {
+      return this .viewMatrixArray;
    },
    getCameraSpaceMatrixArray ()
    {
@@ -1058,8 +1063,9 @@ Object .assign (X3DRenderObject .prototype,
       // Set global uniforms.
 
       this .viewportArray          .set (viewport);
-      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
       this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
+      this .viewMatrixArray        .set (this .getViewMatrix () .get ());
+      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 
       // DRAW
 
