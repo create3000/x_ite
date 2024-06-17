@@ -1201,7 +1201,7 @@ Object .assign (X3DRenderObject .prototype,
       gl .depthMask (false);
       gl .enable (gl .BLEND);
 
-      for (let i = 0, length = numTransparentShapes; i < length; ++ i)
+      for (let i = 0; i < numTransparentShapes; ++ i)
       {
          const renderContext = transparentShapes [i];
 
