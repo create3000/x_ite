@@ -1079,7 +1079,7 @@ Object .assign (X3DRenderObject .prototype,
       this .viewMatrixArray        .set (this .getViewMatrix () .get ());
       this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 
-      // Prepare opaque objects first.
+      // Prepare opaque objects.
 
       const
          opaqueShapes    = this .opaqueShapes,
@@ -1107,6 +1107,8 @@ Object .assign (X3DRenderObject .prototype,
          renderContext .objectsKeys .push (... globalLightsKeys);
       }
 
+      // DRAW
+
       const
          transmissionOpaqueShapes         = this .transmissionOpaqueShapes,
          transmissionTransparentShapes    = this .transmissionTransparentShapes,
@@ -1128,7 +1130,7 @@ Object .assign (X3DRenderObject .prototype,
       }
       else
       {
-         // DRAW
+         // Draw with sorted blend or OIT.
 
          this .drawShapes (gl, browser, independent, frameBuffer, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, this .transparencySorter);
       }
