@@ -66,50 +66,51 @@ function X3DRenderObject (executionContext)
 {
    const browser = executionContext .getBrowser ();
 
-   this .renderBits                    = new BitSet ();
-   this .renderCount                   = 0;
-   this .viewVolumes                   = [ ];
-   this .projectionMatrix              = new MatrixStack (Matrix4);
-   this .modelViewMatrix               = new MatrixStack (Matrix4);
-   this .viewMatrix                    = new MatrixStack (Matrix4);
-   this .cameraSpaceMatrix             = new MatrixStack (Matrix4);
-   this .viewportArray                 = new Int32Array (4);
-   this .projectionMatrixArray         = new Float32Array (16);
-   this .viewMatrixArray               = new Float32Array (16);
-   this .cameraSpaceMatrixArray        = new Float32Array (16);
-   this .hitRay                        = new Line3 (Vector3 .Zero, Vector3 .Zero);
-   this .sensors                       = [[ ]];
-   this .viewpointGroups               = [ ];
-   this .localObjectsKeys              = [ ];
-   this .globalLightsKeys              = [ ];
-   this .globalLights                  = [ ];
-   this .localObjects                  = [ ];
-   this .lights                        = [ ];
-   this .globalShadows                 = [ false ];
-   this .localShadows                  = [ false ];
-   this .localFogs                     = [ null ];
-   this .layouts                       = [ ];
-   this .humanoids                     = [ null ];
-   this .generatedCubeMapTextures      = [ ];
-   this .collisions                    = [ ];
-   this .collisionTime                 = new StopWatch ();
-   this .numPointingShapes             = 0;
-   this .numCollisionShapes            = 0;
-   this .numShadowShapes               = 0;
-   this .numOpaqueShapes               = 0;
-   this .numTransparentShapes          = 0;
-   this .pointingShapes                = [ ];
-   this .collisionShapes               = [ ];
-   this .activeCollisions              = [ ];
-   this .shadowShapes                  = [ ];
-   this .opaqueShapes                  = [ ];
-   this .transparentShapes             = [ ];
-   this .transmissionShapes            = [ ];
-   this .transmissionOpaqueShapes      = [ ];
-   this .transmissionTransparentShapes = [ ];
-   this .transparencySorter            = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
-   this .speed                         = 0;
-   this .depthBuffer                   = new TextureBuffer (browser, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE, true);
+   this .renderBits                     = new BitSet ();
+   this .renderCount                    = 0;
+   this .viewVolumes                    = [ ];
+   this .projectionMatrix               = new MatrixStack (Matrix4);
+   this .modelViewMatrix                = new MatrixStack (Matrix4);
+   this .viewMatrix                     = new MatrixStack (Matrix4);
+   this .cameraSpaceMatrix              = new MatrixStack (Matrix4);
+   this .viewportArray                  = new Int32Array (4);
+   this .projectionMatrixArray          = new Float32Array (16);
+   this .viewMatrixArray                = new Float32Array (16);
+   this .cameraSpaceMatrixArray         = new Float32Array (16);
+   this .hitRay                         = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   this .sensors                        = [[ ]];
+   this .viewpointGroups                = [ ];
+   this .localObjectsKeys               = [ ];
+   this .globalLightsKeys               = [ ];
+   this .globalLights                   = [ ];
+   this .localObjects                   = [ ];
+   this .lights                         = [ ];
+   this .globalShadows                  = [ false ];
+   this .localShadows                   = [ false ];
+   this .localFogs                      = [ null ];
+   this .layouts                        = [ ];
+   this .humanoids                      = [ null ];
+   this .generatedCubeMapTextures       = [ ];
+   this .collisions                     = [ ];
+   this .collisionTime                  = new StopWatch ();
+   this .numPointingShapes              = 0;
+   this .numCollisionShapes             = 0;
+   this .numShadowShapes                = 0;
+   this .numOpaqueShapes                = 0;
+   this .numTransparentShapes           = 0;
+   this .pointingShapes                 = [ ];
+   this .collisionShapes                = [ ];
+   this .activeCollisions               = [ ];
+   this .shadowShapes                   = [ ];
+   this .opaqueShapes                   = [ ];
+   this .transparentShapes              = [ ];
+   this .transmissionShapes             = [ ];
+   this .transmissionOpaqueShapes       = [ ];
+   this .transmissionTransparentShapes  = [ ];
+   this .transparencySorter             = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
+   this .transmissionTransparencySorter = new MergeSort (this .transmissionTransparentShapes, (a, b) => a .distance < b .distance);
+   this .speed                          = 0;
+   this .depthBuffer                    = new TextureBuffer (browser, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE, true);
 }
 
 Object .assign (X3DRenderObject .prototype,
@@ -1038,7 +1039,7 @@ Object .assign (X3DRenderObject .prototype,
          globalShadows            = this .globalShadows,
          shadows                  = globalShadows .at (-1),
          headlight                = this .getNavigationInfo () ._headlight .getValue (),
-         oit                      = frameBuffer .getOIT ();
+         oit                      = frameBuffer .getOIT () && independent;
 
       this .renderCount = this .getNextRenderCount ();
 
@@ -1118,18 +1119,18 @@ Object .assign (X3DRenderObject .prototype,
 
          const transmissionBuffer = browser .getTransmissionBuffer ();
 
-         this .drawShapes (gl, browser, true, transmissionBuffer, false, true, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes);
+         this .drawShapes (gl, browser, true, transmissionBuffer, false, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes, this .transmissionTransparencySorter);
 
          gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
          gl .generateMipmap (gl .TEXTURE_2D);
 
-         this .drawShapes (gl, browser, true, frameBuffer, oit, false, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes);
+         this .drawShapes (gl, browser, true, frameBuffer, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, this .transparencySorter);
       }
       else
       {
          // DRAW
 
-         this .drawShapes (gl, browser, independent, frameBuffer, oit, false, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes);
+         this .drawShapes (gl, browser, independent, frameBuffer, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, this .transparencySorter);
       }
 
       // POST DRAW
@@ -1159,7 +1160,7 @@ Object .assign (X3DRenderObject .prototype,
       globalShadows            .length = 1;
       generatedCubeMapTextures .length = 0;
    },
-   drawShapes (gl, browser, independent, frameBuffer, oit, transmission, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes)
+   drawShapes (gl, browser, independent, frameBuffer, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
    {
       if (independent)
          frameBuffer .bind ();
@@ -1195,7 +1196,7 @@ Object .assign (X3DRenderObject .prototype,
       if (oit)
          frameBuffer .bindTransparency ();
       else
-         this .transparencySorter .sort (0, numTransparentShapes);
+         transparencySorter .sort (0, numTransparentShapes);
 
       gl .depthMask (false);
       gl .enable (gl .BLEND);
