@@ -2,7 +2,7 @@ export default /* glsl */ `
 // The following equation models the Fresnel reflectance term of the spec equation (aka F())
 // Implementation of fresnel from [4], Equation 15
 vec3
-F_Schlick (vec3 f0, vec3 f90, float VdotH)
+F_Schlick (const in vec3 f0, const in vec3 f90, const in float VdotH)
 {
    return f0 + (f90 - f0) * pow (clamp (1.0 - VdotH, 0.0, 1.0), 5.0);
 }
@@ -17,7 +17,7 @@ const float M_PI = 3.14159265359;
 // see Real-Time Rendering. Page 331 to 336.
 // see https://google.github.io/filament/Filament.md.html#materialsystem/specularbrdf/geometricshadowing (specularg)
 float
-V_GGX (float NdotL, float NdotV, float alphaRoughness)
+V_GGX (const in float NdotL, const in float NdotV, const in float alphaRoughness)
 {
    float alphaRoughnessSq = alphaRoughness * alphaRoughness;
 
@@ -38,7 +38,7 @@ V_GGX (float NdotL, float NdotV, float alphaRoughness)
 // Implementation from "Average Irregularity Representation of a Roughened Surface for Ray Reflection" by T. S. Trowbridge, and K. P. Reitz
 // Follows the distribution function recommended in the SIGGRAPH 2013 course notes from EPIC Games [1], Equation 3.
 float
-D_GGX (float NdotH, float alphaRoughness)
+D_GGX (const in float NdotH, const in float alphaRoughness)
 {
    float alphaRoughnessSq = alphaRoughness * alphaRoughness;
    float f                = (NdotH * NdotH) * (alphaRoughnessSq - 1.0) + 1.0;
@@ -48,7 +48,7 @@ D_GGX (float NdotH, float alphaRoughness)
 
 //https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
 vec3
-BRDF_lambertian (vec3 f0, vec3 f90, vec3 diffuseColor, float specularWeight, float VdotH)
+BRDF_lambertian (const in vec3 f0, const in vec3 f90, const in vec3 diffuseColor, const in float specularWeight, const in float VdotH)
 {
    // see https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/
    return (1.0 - specularWeight * F_Schlick (f0, f90, VdotH)) * (diffuseColor / M_PI);
@@ -56,7 +56,7 @@ BRDF_lambertian (vec3 f0, vec3 f90, vec3 diffuseColor, float specularWeight, flo
 
 //  https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
 vec3
-BRDF_specularGGX (vec3 f0, vec3 f90, float alphaRoughness, float specularWeight, float VdotH, float NdotL, float NdotV, float NdotH)
+BRDF_specularGGX (const in vec3 f0, const in vec3 f90, const in float alphaRoughness, const in float specularWeight, const in float VdotH, const in float NdotL, const in float NdotV, const in float NdotH)
 {
    vec3  F   = F_Schlick (f0, f90, VdotH);
    float Vis = V_GGX (NdotL, NdotV, alphaRoughness);
@@ -69,7 +69,7 @@ BRDF_specularGGX (vec3 f0, vec3 f90, float alphaRoughness, float specularWeight,
 // GGX Distribution Anisotropic (Same as Babylon.js)
 // https://blog.selfshadow.com/publications/s2012-shading-course/burley/s2012_pbs_disney_brdf_notes_v3.pdf Addenda
 float
-D_GGX_anisotropic (float NdotH, float TdotH, float BdotH, float anisotropy, float at, float ab)
+D_GGX_anisotropic (const in float NdotH, const in float TdotH, const in float BdotH, const in float anisotropy, const in float at, const in float ab)
 {
    float a2 = at * ab;
    vec3  f  = vec3 (ab * TdotH, at * BdotH, a2 * NdotH);
@@ -81,7 +81,7 @@ D_GGX_anisotropic (float NdotH, float TdotH, float BdotH, float anisotropy, floa
 // GGX Mask/Shadowing Anisotropic (Same as Babylon.js - smithVisibility_GGXCorrelated_Anisotropic)
 // Heitz http://jcgt.org/published/0003/02/03/paper.pdf
 float
-V_GGX_anisotropic (float NdotL, float NdotV, float BdotV, float TdotV, float TdotL, float BdotL, float at, float ab)
+V_GGX_anisotropic (const in float NdotL, const in float NdotV, const in float BdotV, const in float TdotV, const in float TdotL, const in float BdotL, const in float at, const in float ab)
 {
    float GGXV = NdotL * length (vec3 (at * TdotV, ab * BdotV, NdotV));
    float GGXL = NdotV * length (vec3 (at * TdotL, ab * BdotL, NdotL));
@@ -91,7 +91,7 @@ V_GGX_anisotropic (float NdotL, float NdotV, float BdotV, float TdotV, float Tdo
 }
 
 vec3
-BRDF_specularGGXAnisotropy (vec3 f0, vec3 f90, float alphaRoughness, float anisotropy, vec3 n, vec3 v, vec3 l, vec3 h, vec3 t, vec3 b)
+BRDF_specularGGXAnisotropy (const in vec3 f0, const in vec3 f90, const in float alphaRoughness, const in float anisotropy, const in vec3 n, const in vec3 v, const in vec3 l, const in vec3 h, const in vec3 t, const in vec3 b)
 {
    // Roughness along the anisotropy bitangent is the material roughness, while the tangent roughness increases with anisotropy.
    float at = mix (alphaRoughness, 1.0, anisotropy * anisotropy);

@@ -40,9 +40,23 @@ getPunctualRadianceSheen (const in vec3 sheenColor, const in float sheenRoughnes
 }
 #endif
 
+#if defined (X3D_CLEARCOAT_MATERIAL_EXT)
+vec3
+getPunctualRadianceClearCoat (const in vec3 clearcoatNormal, const in vec3 v, const in vec3 l, const in vec3 h, const in float VdotH, const in vec3 f0, const in vec3 f90, const in float clearcoatRoughness)
+{
+    float NdotL = clamp (dot (clearcoatNormal, l), 0.0, 1.0);
+    float NdotV = clamp (dot (clearcoatNormal, v), 0.0, 1.0);
+    float NdotH = clamp (dot (clearcoatNormal, h), 0.0, 1.0);
+
+    return NdotL * BRDF_specularGGX (f0, f90, clearcoatRoughness * clearcoatRoughness, 1.0, VdotH, NdotL, NdotV, NdotH);
+}
+#endif
+
+#endif
+
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
 vec3
-getPunctualRadianceTransmission (vec3 normal, vec3 view, vec3 pointToLight, float alphaRoughness, vec3 f0, vec3 f90, vec3 baseColor, float ior)
+getPunctualRadianceTransmission (const in vec3 normal, const in vec3 view, const in vec3 pointToLight, const in float alphaRoughness, const in vec3 f0, const in vec3 f90, const in vec3 baseColor, const in float ior)
 {
    float transmissionRoughness = applyIorToRoughness (alphaRoughness, ior);
 
@@ -59,23 +73,7 @@ getPunctualRadianceTransmission (vec3 normal, vec3 view, vec3 pointToLight, floa
    // Transmission BTDF
    return (1.0 - F) * baseColor * D * Vis;
 }
-#endif
 
-#if defined (X3D_CLEARCOAT_MATERIAL_EXT)
-vec3
-getPunctualRadianceClearCoat (const in vec3 clearcoatNormal, const in vec3 v, const in vec3 l, const in vec3 h, const in float VdotH, const in vec3 f0, const in vec3 f90, const in float clearcoatRoughness)
-{
-    float NdotL = clamp (dot (clearcoatNormal, l), 0.0, 1.0);
-    float NdotV = clamp (dot (clearcoatNormal, v), 0.0, 1.0);
-    float NdotH = clamp (dot (clearcoatNormal, h), 0.0, 1.0);
-
-    return NdotL * BRDF_specularGGX (f0, f90, clearcoatRoughness * clearcoatRoughness, 1.0, VdotH, NdotL, NdotV, NdotH);
-}
-#endif
-
-#endif
-
-#if defined (X3D_TRANSMISSION_MATERIAL_EXT)
 // Compute attenuated light as it travels through a volume.
 vec3
 applyVolumeAttenuation (const in vec3 radiance, const in float transmissionDistance, const in vec3 attenuationColor, const in float attenuationDistance)

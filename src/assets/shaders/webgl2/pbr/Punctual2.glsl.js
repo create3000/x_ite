@@ -40,27 +40,6 @@ getPunctualRadianceSheen (const in vec3 sheenColor, const in float sheenRoughnes
 }
 #endif
 
-#if defined (X3D_TRANSMISSION_MATERIAL_EXT)
-vec3
-getPunctualRadianceTransmission (vec3 normal, vec3 view, vec3 pointToLight, float alphaRoughness, vec3 f0, vec3 f90, vec3 baseColor, float ior)
-{
-   float transmissionRoughness = applyIorToRoughness (alphaRoughness, ior);
-
-   vec3 n        = normalize (normal);           // Outward direction of surface point
-   vec3 v        = normalize (view);             // Direction from surface point to view
-   vec3 l        = normalize (pointToLight);
-   vec3 l_mirror = normalize (l + 2.0 * n * dot (-l, n));     // Mirror light reflection vector on surface
-   vec3 h        = normalize (l_mirror + v);            // Halfway vector between transmission light vector and v
-
-   float D   = D_GGX (clamp (dot (n, h), 0.0, 1.0), transmissionRoughness);
-   vec3  F   = F_Schlick (f0, f90, clamp (dot (v, h), 0.0, 1.0));
-   float Vis = V_GGX (clamp (dot (n, l_mirror), 0.0, 1.0), clamp (dot (n, v), 0.0, 1.0), transmissionRoughness);
-
-   // Transmission BTDF
-   return (1.0 - F) * baseColor * D * Vis;
-}
-#endif
-
 #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
 vec3
 getPunctualRadianceClearCoat (const in vec3 clearcoatNormal, const in vec3 v, const in vec3 l, const in vec3 h, const in float VdotH, const in vec3 f0, const in vec3 f90, const in float clearcoatRoughness)
@@ -76,6 +55,22 @@ getPunctualRadianceClearCoat (const in vec3 clearcoatNormal, const in vec3 v, co
 #endif
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+vec3
+getPunctualRadianceTransmission (const in vec3 n, const in vec3 v, const in vec3 l, const in float alphaRoughness, const in vec3 f0, const in vec3 f90, const in vec3 baseColor, const in float ior)
+{
+   float transmissionRoughness = applyIorToRoughness (alphaRoughness, ior);
+
+   vec3 l_mirror = normalize (l + 2.0 * n * dot (-l, n)); // Mirror light reflection vector on surface
+   vec3 h        = normalize (l_mirror + v);              // Halfway vector between transmission light vector and v
+
+   float D   = D_GGX (clamp (dot (n, h), 0.0, 1.0), transmissionRoughness);
+   vec3  F   = F_Schlick (f0, f90, clamp (dot (v, h), 0.0, 1.0));
+   float Vis = V_GGX (clamp (dot (n, l_mirror), 0.0, 1.0), clamp (dot (n, v), 0.0, 1.0), transmissionRoughness);
+
+   // Transmission BTDF
+   return (1.0 - F) * baseColor * D * Vis;
+}
+
 // Compute attenuated light as it travels through a volume.
 vec3
 applyVolumeAttenuation (const in vec3 radiance, const in float transmissionDistance, const in vec3 attenuationColor, const in float attenuationDistance)
