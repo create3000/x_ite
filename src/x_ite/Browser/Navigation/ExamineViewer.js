@@ -308,7 +308,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
                if (Math .abs (this .deltaRotation .angle) < SPIN_ANGLE && Date .now () - this .pressTime < MOTION_TIME)
                   return;
 
-               this .addRotate (this .rotation);
+               this .addRotate (this .rotation, this .deltaRotation);
 
                this .motionTime = Date .now ();
                break;
@@ -563,7 +563,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       viewpoint ._orientationOffset = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset, false);
       viewpoint ._positionOffset    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint ._orientationOffset .getValue ());
    },
-   addRotate (rotationChange)
+   addRotate (rotation, deltaRotation)
    {
       const viewpoint = this .getActiveViewpoint ();
 
@@ -574,15 +574,15 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             // console .warn ("active")
 
             // Check for critical angle.
-            this .getOrientationOffset (rotationChange, this .initialOrientationOffset, true);
+            this .getOrientationOffset (rotation, this .initialOrientationOffset, true);
 
-            this .rotationChaser ._set_destination = rotationChange;
+            this .rotationChaser ._set_destination = rotation;
          }
          catch
          {
             // console .warn ("critical")
 
-            const destination = this .getHorizonRotation (this .deltaRotation);
+            const destination = this .getHorizonRotation (deltaRotation);
 
             this .fromVector               .assign (this .toVector);
             this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
@@ -602,24 +602,24 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
 
             // Check for critical angle.
-            this .getOrientationOffset (rotationChange, this .initialOrientationOffset, true);
+            this .getOrientationOffset (rotation, this .initialOrientationOffset, true);
 
             this .rotationChaser ._set_value       = Rotation4 .Identity;
-            this .rotationChaser ._set_destination = rotationChange;
+            this .rotationChaser ._set_destination = rotation;
          }
          catch
          {
             // Slide along critical angle.
 
             this .rotationChaser ._set_value       = Rotation4 .Identity;
-            this .rotationChaser ._set_destination = this .getHorizonRotation (rotationChange);
+            this .rotationChaser ._set_destination = this .getHorizonRotation (rotation);
          }
       }
 
       this .disconnect ();
       this .rotationChaser ._value_changed .addInterest ("set_rotation__", this);
    },
-   addSpinning (rotationChange)
+   addSpinning (deltaRotation)
    {
       this .disconnect ();
 
@@ -630,7 +630,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             userPosition         = viewpoint .getUserPosition (),
             userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
             direction            = userPosition .copy () .subtract (userCenterOfRotation),
-            rotation             = this .getHorizonRotation (rotationChange),
+            rotation             = this .getHorizonRotation (deltaRotation),
             axis                 = viewpoint .getUpVector (true);
 
          this .axis .assign (axis);
@@ -638,7 +638,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          if (Math .sign (rotation .getAxis () .dot (Vector3 .yAxis)) !== Math .sign (rotation .angle))
             this .axis .negate ();
 
-         this .timeSensor ._cycleInterval = Math .PI / (rotationChange .angle * SPIN_FACTOR * 30);
+         this .timeSensor ._cycleInterval = Math .PI / (deltaRotation .angle * SPIN_FACTOR * 30);
          this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
          const lookAtRotation = viewpoint .getLookAtRotation (userPosition, userCenterOfRotation);
@@ -649,7 +649,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       else
       {
          this .getBrowser () .prepareEvents () .addInterest ("spin", this);
-         this .rotation .assign (rotationChange);
+         this .rotation .assign (deltaRotation);
       }
    },
    spin: (() =>
