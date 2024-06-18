@@ -313,6 +313,10 @@ Object .assign (X3DRenderingContext .prototype,
       else
          element .removeClass ("x_ite-fullscreen");
    },
+   dispose ()
+   {
+      this [_resizer] .disconnect ();
+   },
 });
 
 export default X3DRenderingContext;
