@@ -614,6 +614,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          {
             // Slide along critical angle.
 
+            this .fromVector .assign (this .toVector);
+
             this .rotationChaser ._set_value       = Rotation4 .Identity;
             this .rotationChaser ._set_destination = this .getHorizonRotation (rotation);
          }
