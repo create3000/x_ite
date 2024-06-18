@@ -53,6 +53,7 @@ import X3DViewer            from "./X3DViewer.js";
 import PositionChaser       from "../../Components/Followers/PositionChaser.js";
 import OrientationChaser    from "../../Components/Followers/OrientationChaser.js";
 import TimeSensor           from "../../Components/Time/TimeSensor.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
@@ -69,7 +70,7 @@ const
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
    MOVE_TIME         = 0.2,
    ROTATE_TIME       = 0.1,
-   CRITICAL_ANGLE    = 0.99;
+   CRITICAL_ANGLE    = Math .cos (Algorithm .radians (0.1));
 
 function ExamineViewer (executionContext, navigationInfo)
 {
