@@ -274,6 +274,7 @@ Object .assign (X3DRenderingContext .prototype,
    reshape ()
    {
       const
+         gl           = this .getContext (),
          canvas       = this .getCanvas (),
          contentScale = this .getRenderingProperty ("ContentScale"),
          samples      = this .getRenderingProperty ("Multisampling"),
