@@ -70,7 +70,7 @@ const
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
    MOVE_TIME         = 0.2,
    ROTATE_TIME       = 0.1,
-   CRITICAL_ANGLE    = Math .cos (Algorithm .radians (0.1));
+   CRITICAL_ANGLE    = Math .cos (Algorithm .radians (0.15));
 
 function ExamineViewer (executionContext, navigationInfo)
 {
