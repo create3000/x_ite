@@ -303,6 +303,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
             case "KHR_materials_unlit":
+            case "KHR_materials_volume":
             {
                const component = browser .getComponent ("X_ITE", 1);
 
@@ -1169,6 +1170,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_unlit":
                this .khrMaterialsUnlitObject (value, materialNode);
                break;
+            case "KHR_materials_volume":
+               this .khrMaterialsVolumeObject (value, materialNode);
+               break;
          }
       }
    },
@@ -1297,6 +1301,24 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    khrMaterialsUnlitObject (KHR_materials_unlit, materialNode)
    {
       const extension = this .getScene () .createNode ("UnlitMaterialExtension", false);
+
+      extension .setup ();
+
+      materialNode ._extensions .push (extension);
+   },
+   khrMaterialsVolumeObject (KHR_materials_volume, materialNode)
+   {
+      const extension = this .getScene () .createNode ("VolumeMaterialExtension", false);
+
+      extension ._thickness               = this .numberValue (KHR_materials_volume .thicknessFactor, 0);
+      extension ._thicknessTexture        = this .textureInfo (KHR_materials_volume .thicknessTexture);
+      extension ._thicknessTextureMapping = this .textureMapping (KHR_materials_volume .thicknessTexture);
+      extension ._attenuationDistance     = this .numberValue (KHR_materials_volume .attenuationDistance, 1_000_000);
+
+      const attenuationColor = new Color3 ();
+
+      if (this .vectorValue (KHR_materials_volume .attenuationColor, attenuationColor))
+         extension ._attenuationColor = attenuationColor;
 
       extension .setup ();
 
