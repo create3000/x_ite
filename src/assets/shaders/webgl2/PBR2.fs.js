@@ -20,8 +20,6 @@ float max3 (const in vec3 value)
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
    uniform mat4 x3d_ProjectionMatrix;
    uniform mat4 x3d_ModelViewMatrix;
-   uniform mat4 x3d_ViewMatrix;
-   uniform mat4 x3d_CameraSpaceMatrix;
 #endif
 
 #if defined (X3D_LIGHTING)
@@ -148,7 +146,6 @@ getMaterialColor ()
             materialInfo .f90,
             vertex,
             x3d_ModelViewMatrix, // x3d_ModelMatrix
-            x3d_ViewMatrix,
             x3d_ProjectionMatrix,
             materialInfo .ior,
             materialInfo .thickness,

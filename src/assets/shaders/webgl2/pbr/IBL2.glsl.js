@@ -108,7 +108,7 @@ getTransmissionSample (const in vec2 fragCoord, const in float roughness, const 
 }
 
 vec3
-getIBLVolumeRefraction (const in vec3 n, const in vec3 v, const in float perceptualRoughness, const in vec3 baseColor, const in vec3 f0, const in vec3 f90, const in vec3 position, const in mat4 modelMatrix, const in mat4 viewMatrix, const in mat4 projMatrix, const in float ior, const in float thickness, const in vec3 attenuationColor, const in float attenuationDistance, const in float dispersion)
+getIBLVolumeRefraction (const in vec3 n, const in vec3 v, const in float perceptualRoughness, const in vec3 baseColor, const in vec3 f0, const in vec3 f90, const in vec3 position, const in mat4 modelMatrix, const in mat4 projMatrix, const in float ior, const in float thickness, const in vec3 attenuationColor, const in float attenuationDistance, const in float dispersion)
 {
    #if defined (X3D_DISPERSION_MATERIAL_EXT)
       // Dispersion will spread out the ior values for each r,g,b channel
