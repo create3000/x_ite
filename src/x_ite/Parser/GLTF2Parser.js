@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
-import Fields       from "../Fields.js";
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
+import Fields       from "../Fields.js";
+import X3DConstants from "../Base/X3DConstants.js";
 import URLs         from "../Browser/Networking/URLs.js";
 import Algorithm    from "../../standard/Math/Algorithm.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
@@ -218,6 +219,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .animationsArray (glTF .animations);
 
+      this .viewpointsCenterOfRotation (this .getScene ());
       this .optimizeSceneGraph (this .getScene () .getRootNodes ());
 
       return this .getScene ();
@@ -1703,9 +1705,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .viewpointNodes .push (viewpointNode);
 
-      viewpointNode ._description      = this .description (camera .name || `Viewpoint ${this .viewpointNodes .length}`);
-      viewpointNode ._position         = Vector3 .Zero;
-      viewpointNode ._centerOfRotation = new Vector3 (0, 0, -10);
+      viewpointNode ._description = this .description (camera .name || `Viewpoint ${this .viewpointNodes .length}`);
+      viewpointNode ._position    = Vector3 .Zero;
 
       return camera .viewpointNode = viewpointNode;
    },

@@ -48,6 +48,7 @@
 import Vector3      from "../../standard/Math/Numbers/Vector3.js";
 import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
+import Box3         from "../../standard/Math/Geometry/Box3.js";
 import X3DConstants from "../Base/X3DConstants.js";
 
 function X3DOptimizer () { }
@@ -280,6 +281,56 @@ Object .assign (X3DOptimizer .prototype,
       removedNodes .push (node);
 
       return child;
+   },
+   viewpointsCenterOfRotation (scene)
+   {
+      const
+         bbox        = scene .getBBox (new Box3 ()),
+         modelMatrix = new Matrix4 (),
+         seen        = new Set ();
+
+      this .viewpointsCenterOfRotationNodes (this .getScene () .rootNodes, bbox, modelMatrix, seen);
+   },
+   viewpointsCenterOfRotationNodes (nodes, bbox, modelMatrix, seen)
+   {
+      for (const node of nodes)
+         this .viewpointsCenterOfRotationNode (node ?.getValue (), bbox, modelMatrix, seen);
+   },
+   viewpointsCenterOfRotationNode (node, bbox, modelMatrix, seen)
+   {
+      if (!node)
+         return;
+
+      if (seen .has (node))
+         return;
+
+      seen .add (node);
+
+      if (node .getMatrix)
+         modelMatrix = modelMatrix .copy () .multLeft (node .getMatrix ());
+
+      switch (node .getType () .at (-1))
+      {
+         case X3DConstants .Viewpoint:
+         case X3DConstants .OrthoViewpoint:
+         {
+            node ._centerOfRotation = modelMatrix .copy () .inverse () .multVecMatrix (bbox .center);
+            break;
+         }
+      }
+
+      for (const field of node .getFields ())
+      {
+         switch (field .getType ())
+         {
+            case X3DConstants .SFNode:
+               this .viewpointsCenterOfRotationNode (field .getValue (), bbox, modelMatrix, seen);
+               break;
+            case X3DConstants .MFNode:
+               this .viewpointsCenterOfRotationNodes (field, bbox, modelMatrix, seen);
+               break;
+         }
+      }
    },
 });
 

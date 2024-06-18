@@ -47,6 +47,7 @@
 
 import Fields                      from "../Fields.js";
 import X3DBaseNode                 from "../Base/X3DBaseNode.js";
+import X3DBoundedObject            from "../Components/Grouping/X3DBoundedObject.js";
 import { getUniqueName }           from "./NamedNodesHandling.js";
 import NamedNodesArray             from "./NamedNodesArray.js";
 import X3DImportedNode             from "./X3DImportedNode.js";
@@ -137,6 +138,13 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    setCountPrimitives (value)
    {
       this ._countPrimitives = (this .getExecutionContext () ?.getCountPrimitives () ?? true) && value;
+   },
+   getBBox (bbox, shadows)
+   {
+      const nodes = Array .from (this .getRootNodes (), node => X3DCast (X3DConstants .X3DBoundedObject, node))
+         .filter (node => node);
+
+      return X3DBoundedObject .prototype .getBBox (nodes, bbox, shadows);
    },
    getSpecificationVersion ()
    {
