@@ -46,12 +46,8 @@
  ******************************************************************************/
 
 /* WebGL 1 */
-import ClipPlanes1            from "../../../assets/shaders/webgl1/common/ClipPlanes1.glsl.js";
-import Fog1                   from "../../../assets/shaders/webgl1/common/Fog1.glsl.js";
 import Fragment1              from "../../../assets/shaders/webgl1/common/Fragment1.glsl.js";
 import Hatch1                 from "../../../assets/shaders/webgl1/common/Hatch1.glsl.js";
-import Lighting1              from "../../../assets/shaders/webgl1/common/Lighting1.glsl.js";
-import Material1              from "../../../assets/shaders/webgl1/common/Material1.glsl.js";
 import Normal1                from "../../../assets/shaders/webgl1/common/Normal1.glsl.js";
 import Perlin1                from "../../../assets/shaders/webgl1/common/Perlin1.glsl.js";
 import Point1                 from "../../../assets/shaders/webgl1/common/Point1.glsl.js";
@@ -110,11 +106,7 @@ import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing2.vs.
 import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js";
 
 /* PBR 1 */
-import BRDF1                  from "../../../assets/shaders/webgl1/pbr/BRDF1.glsl.js";
 import IBL1                   from "../../../assets/shaders/webgl1/pbr/IBL1.glsl.js";
-import Punctual1              from "../../../assets/shaders/webgl1/pbr/Punctual1.glsl.js";
-import MaterialInfo1          from "../../../assets/shaders/webgl1/pbr/MaterialInfo1.glsl.js";
-import ToneMapping1           from "../../../assets/shaders/webgl1/pbr/ToneMapping1.glsl.js";
 
 /* PBR 2 */
 import BRDF2                  from "../../../assets/shaders/webgl2/pbr/BRDF2.glsl.js";
@@ -126,12 +118,12 @@ import ToneMapping2           from "../../../assets/shaders/webgl2/pbr/ToneMappi
 const ShaderRegistry = {
    includes: {
       1: {
-         ClipPlanes: ClipPlanes1,
-         Fog: Fog1,
+         ClipPlanes: ClipPlanes2,
+         Fog: Fog2,
          Fragment: Fragment1,
          Hatch: Hatch1,
-         Lighting: Lighting1,
-         Material: Material1,
+         Lighting: Lighting2,
+         Material: Material2,
          Normal: Normal1,
          Perlin: Perlin1,
          Point: Point1,
@@ -140,11 +132,11 @@ const ShaderRegistry = {
          Texture: Texture1,
          Vertex: Vertex1,
          // PBR
-         BRDF: BRDF1,
+         BRDF: BRDF2,
          IBL: IBL1,
-         MaterialInfo: MaterialInfo1,
-         Punctual: Punctual1,
-         ToneMapping: ToneMapping1,
+         MaterialInfo: MaterialInfo2,
+         Punctual: Punctual2,
+         ToneMapping: ToneMapping2,
       },
       2: {
          ClipPlanes: ClipPlanes2,

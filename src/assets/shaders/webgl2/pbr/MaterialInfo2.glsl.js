@@ -107,6 +107,8 @@ getMetallicRoughnessInfo (in MaterialInfo info)
    // Get texture color.
 
    #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
+      // Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
+      // This layout intentionally reserves the 'r' channel for (optional) occlusion map data
       vec4 mrSample = getMetallicRoughnessTexture ();
 
       info .metallic            *= mrSample .b;
@@ -201,11 +203,20 @@ getSheenInfo (in MaterialInfo info)
 
 uniform sampler2D x3d_SheenELUTTextureEXT;
 
+#if __VERSION__ == 100
+float
+albedoSheenScalingLUT (const in float NdotV, const in float sheenRoughnessFactor)
+{
+   return texture2D (x3d_SheenELUTTextureEXT, vec2 (NdotV, sheenRoughnessFactor)) .r;
+}
+#else
 float
 albedoSheenScalingLUT (const in float NdotV, const in float sheenRoughnessFactor)
 {
    return texture (x3d_SheenELUTTextureEXT, vec2 (NdotV, sheenRoughnessFactor)) .r;
 }
+#endif
+
 #endif
 
 #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
