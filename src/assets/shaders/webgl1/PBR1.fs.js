@@ -85,6 +85,10 @@ getMaterialColor ()
       materialInfo = getTransmissionInfo (materialInfo);
    #endif
 
+   #if defined (X3D_VOLUME_MATERIAL_EXT)
+      materialInfo = getVolumeInfo (materialInfo);
+   #endif
+
    #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
       materialInfo = getAnisotropyInfo (materialInfo, normalInfo);
    #endif

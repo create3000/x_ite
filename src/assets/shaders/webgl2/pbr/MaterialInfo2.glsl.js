@@ -290,6 +290,29 @@ getSpecularInfo (in MaterialInfo info)
 }
 #endif
 
+#if defined (X3D_VOLUME_MATERIAL_EXT)
+
+${MaterialTextures .texture ("x3d_ThicknessTextureEXT", "g")}
+
+uniform float x3d_ThicknessEXT;
+uniform float x3d_AttenuationDistanceEXT;
+uniform vec3  x3d_AttenuationColoEXT;
+
+MaterialInfo
+getVolumeInfo (in MaterialInfo info)
+{
+   info .thickness           = x3d_ThicknessEXT;
+   info .attenuationDistance = x3d_AttenuationDistanceEXT;
+   info .attenuationColor    = x3d_AttenuationColoEXT;
+
+   #ifdef HAS_THICKNESS_MAP
+      info .thickness *= getThicknessTextureEXT ();
+   #endif
+
+   return info;
+}
+#endif
+
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
 
 ${MaterialTextures .texture ("x3d_TransmissionTextureEXT", "r")}
