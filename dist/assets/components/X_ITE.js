@@ -1032,10 +1032,6 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
       this .set_anisotropyRotation__ ();
       this .set_anisotropyTexture__ ();
    },
-   getExtensionKey ()
-   {
-      return X_ITE_ExtensionKeys .ANISOTROPY_MATERIAL_EXTENSION;
-   },
    set_anisotropyStrength__ ()
    {
       this .anisotropyArray [2] = Math .max (this ._anisotropyStrength .getValue (), 0);
@@ -1052,6 +1048,10 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
       this .anisotropyTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._anisotropyTexture);
 
       this .setTexture (0, this .anisotropyTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .ANISOTROPY_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -1203,10 +1203,6 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
       this .set_clearcoatRoughnessTexture__ ();
       this .set_clearcoatNormalTexture__ ();
    },
-   getExtensionKey ()
-   {
-      return X_ITE_ExtensionKeys .CLEARCOAT_MATERIAL_EXTENSION;
-   },
    set_clearcoat__ ()
    {
       this .clearcoat = Math .max (this ._clearcoat .getValue (), 0);
@@ -1232,6 +1228,10 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
       this .clearcoatNormalTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatNormalTexture);
 
       this .setTexture (2, this .clearcoatNormalTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .CLEARCOAT_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -1514,13 +1514,13 @@ Object .assign (Object .setPrototypeOf (EmissiveStrengthMaterialExtension .proto
 
       this .set_emissiveStrength__ ();
    },
-   getExtensionKey ()
-   {
-      return X_ITE_ExtensionKeys .EMISSIVE_STRENGTH_MATERIAL_EXTENSION;
-   },
    set_emissiveStrength__ ()
    {
       this .emissiveStrength = Math .max (this ._emissiveStrength .getValue (), 0);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .EMISSIVE_STRENGTH_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -1641,13 +1641,13 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X_ITE_X
 
       this .set_indexOfRefraction__ ();
    },
-   getExtensionKey ()
-   {
-      return X_ITE_ExtensionKeys .IOR_MATERIAL_EXTENSION;
-   },
    set_indexOfRefraction__ ()
    {
       this .indexOfRefraction = Math .max (this ._indexOfRefraction .getValue (), 0);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .IOR_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -1903,10 +1903,6 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
       this .set_sheenRoughness__ ();
       this .set_sheenRoughnessTexture__ ();
    },
-   getExtensionKey ()
-   {
-      return X_ITE_ExtensionKeys .SHEEN_MATERIAL_EXTENSION;
-   },
    set_sheenColor__ ()
    {
       //We cannot use this in Windows Edge:
@@ -1935,6 +1931,10 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
       this .sheenRoughnessTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._sheenRoughnessTexture);
 
       this .setTexture (1, this .sheenRoughnessTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .SHEEN_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -2106,10 +2106,6 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
       this .set_specularColor__ ();
       this .set_specularColorTexture__ ();
    },
-   getExtensionKey ()
-   {
-      return X_ITE_ExtensionKeys .SPECULAR_MATERIAL_EXTENSION;
-   },
    set_specular__ ()
    {
       this .specular = Math .max (this ._specular .getValue (), 0);
@@ -2138,6 +2134,10 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
       this .specularColorTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._specularColorTexture);
 
       this .setTexture (1, this .specularColorTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .SPECULAR_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -2294,10 +2294,6 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       this .set_transmission__ ();
       this .set_transmissionTexture__ ();
    },
-   getExtensionKey ()
-   {
-      return X_ITE_ExtensionKeys .TRANSMISSION_MATERIAL_EXTENSION;
-   },
    set_transmission__ ()
    {
       this .transmission = Math .max (this ._transmission .getValue (), 0);
@@ -2307,6 +2303,10 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       this .transmissionTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._transmissionTexture);
 
       this .setTexture (0, this .transmissionTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .TRANSMISSION_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
@@ -2552,11 +2552,14 @@ Namespace_default().add ("UnlitMaterialExtension", "x_ite/Components/X_ITE/Unlit
 
 
 
+
 function VolumeMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).VolumeMaterialExtension);
+
+   this .attenuationColorArray = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
@@ -2564,6 +2567,43 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X_IT
    initialize ()
    {
       X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._thickness            .addInterest ("set_thickness__",          this);
+      this ._thicknessTexture    .addInterest ("set_thicknessTexture__",    this);
+      this ._attenuationDistance .addInterest ("set_attenuationDistance__", this);
+      this ._attenuationColor    .addInterest ("set_attenuationColor__",    this);
+
+      this .set_thickness__ ();
+      this .set_thicknessTexture__ ();
+      this .set_attenuationDistance__ ();
+      this .set_attenuationColor__ ();
+   },
+   set_thickness__ ()
+   {
+      this .thickness = Math .max (this ._thickness .getValue (), 0);
+   },
+   set_thicknessTexture__ ()
+   {
+      this .thicknessTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._thicknessTexture);
+
+      this .setTexture (0, this .thicknessTextureNode);
+   },
+   set_attenuationDistance__ ()
+   {
+      this .attenuationDistance = Math .max (this ._attenuationDistance .getValue (), 0);
+   },
+   set_attenuationColor__ ()
+   {
+      //We cannot use this in Windows Edge:
+      //this .attenuationColorArray .set (this ._attenuationColor .getValue ());
+
+      const
+         attenuationColorArray = this .attenuationColorArray,
+         attenuationColor      = this ._attenuationColor .getValue ();
+
+      attenuationColorArray [0] = attenuationColor .r;
+      attenuationColorArray [1] = attenuationColor .g;
+      attenuationColorArray [2] = attenuationColor .b;
    },
    getExtensionKey ()
    {
@@ -2582,6 +2622,10 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X_IT
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      gl .uniform1f  (shaderObject .x3d_ThicknessEXT,           this .thickness);
+      gl .uniform1f  (shaderObject .x3d_AttenuationDistanceEXT, this .attenuationDistance);
+      gl .uniform3fv (shaderObject .x3d_AttenuationColoEXT,     this .attenuationColorArray);
+
       if (!+this .getTextureBits ())
          return;
 
