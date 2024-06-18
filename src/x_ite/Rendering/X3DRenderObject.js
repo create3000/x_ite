@@ -488,6 +488,7 @@ Object .assign (X3DRenderObject .prototype,
             this .numOpaqueShapes      = 0;
             this .numTransparentShapes = 0;
 
+            this .transmission                          = false;
             this .transmissionOpaqueShapes      .length = 0;
             this .transmissionTransparentShapes .length = 0;
 
@@ -680,7 +681,9 @@ Object .assign (X3DRenderObject .prototype,
 
                renderContext .distance = bboxCenter .z;
 
-               if (!shapeNode .isTransmission ())
+               if (shapeNode .isTransmission ())
+                  this .transmission = true;
+               else
                   this .transmissionTransparentShapes .push (renderContext);
             }
             else
@@ -692,7 +695,9 @@ Object .assign (X3DRenderObject .prototype,
 
                var renderContext = this .opaqueShapes [num];
 
-               if (!shapeNode .isTransmission ())
+               if (shapeNode .isTransmission ())
+                  this .transmission = true;
+               else
                   this .transmissionOpaqueShapes .push (renderContext);
             }
 
@@ -1109,30 +1114,29 @@ Object .assign (X3DRenderObject .prototype,
 
       // DRAW
 
-      const
-         transmissionOpaqueShapes         = this .transmissionOpaqueShapes,
-         transmissionTransparentShapes    = this .transmissionTransparentShapes,
-         numTransmissionOpaqueShapes      = transmissionOpaqueShapes .length,
-         numTransmissionTransparentShapes = transmissionTransparentShapes .length;
-
-      if (independent && (numTransmissionOpaqueShapes || numTransmissionTransparentShapes))
+      if (independent && this .transmission)
       {
          // Transmission
 
-         const transmissionBuffer = browser .getTransmissionBuffer ();
+         const
+            transmissionBuffer               = browser .getTransmissionBuffer (),
+            transmissionOpaqueShapes         = this .transmissionOpaqueShapes,
+            transmissionTransparentShapes    = this .transmissionTransparentShapes,
+            numTransmissionOpaqueShapes      = transmissionOpaqueShapes .length,
+            numTransmissionTransparentShapes = transmissionTransparentShapes .length;
 
-         this .drawShapes (gl, browser, true, transmissionBuffer, false, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes, this .transmissionTransparencySorter);
+         this .drawShapes (gl, browser, true, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes, this .transmissionTransparencySorter);
 
          gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
          gl .generateMipmap (gl .TEXTURE_2D);
 
-         this .drawShapes (gl, browser, true, frameBuffer, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, this .transparencySorter);
+         this .drawShapes (gl, browser, true, frameBuffer, 0, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, this .transparencySorter);
       }
       else
       {
          // Draw with sorted blend or OIT.
 
-         this .drawShapes (gl, browser, independent, frameBuffer, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, this .transparencySorter);
+         this .drawShapes (gl, browser, independent, frameBuffer, 0, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, this .transparencySorter);
       }
 
       // POST DRAW
@@ -1162,7 +1166,7 @@ Object .assign (X3DRenderObject .prototype,
       globalShadows            .length = 1;
       generatedCubeMapTextures .length = 0;
    },
-   drawShapes (gl, browser, independent, frameBuffer, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
+   drawShapes (gl, browser, independent, frameBuffer, clear, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
    {
       if (independent)
          frameBuffer .bind ();
@@ -1174,7 +1178,8 @@ Object .assign (X3DRenderObject .prototype,
 
       // Draw background.
 
-      gl .clear (gl .DEPTH_BUFFER_BIT);
+      gl .clearColor (0, 0, 0, 0);
+      gl .clear (gl .DEPTH_BUFFER_BIT | clear);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
       this .getBackground () .display (gl, this, viewport);
