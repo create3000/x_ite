@@ -585,14 +585,12 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             // console .warn ("critical")
 
-            const destination = this .getHorizonRotation (deltaRotation);
-
             this .fromVector               .assign (this .toVector);
             this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
             this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
 
             this .rotationChaser ._set_value       = Rotation4 .Identity;
-            this .rotationChaser ._set_destination = destination;
+            this .rotationChaser ._set_destination = this .getHorizonRotation (deltaRotation);
          }
       }
       else
