@@ -46,6 +46,7 @@ const ibl_files = [
    "SimpleInstancing",
    "SpecGlossVsMetalRough",
    "Specular",
+   "StainedGlassLamp",
    "Suzanne",
    "TextureEncodingTest",
    "TextureTransformMultiTest",
