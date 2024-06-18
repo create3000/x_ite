@@ -647,12 +647,15 @@ class SampleViewer
 
       for (const [name, filename] of [... map] .sort ((a, b) => a [0] .localeCompare (b [0])))
       {
-         $("<a></a>")
+         const link = $("<a></a>")
             .text (name)
             .attr ("href", filename)
             .appendTo ($("<li></li>") .appendTo (list))
             .on ("click", () =>
             {
+               column .find ("a") .removeClass ("bold");
+               link .addClass ("bold");
+
                this .loadURL (filename);
                return false;
             });
