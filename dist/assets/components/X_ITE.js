@@ -944,6 +944,7 @@ const ExtensionKeys =
    SHEEN_MATERIAL_EXTENSION:             i ++,
    SPECULAR_MATERIAL_EXTENSION:          i ++,
    TRANSMISSION_MATERIAL_EXTENSION:      i ++,
+   UNLIT_MATERIAL_EXTENSION:             i ++,
    VOLUME_MATERIAL_EXTENSION:            i ++,
 };
 
@@ -1635,17 +1636,26 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X_ITE_X
    initialize ()
    {
       X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._indexOfRefraction .addInterest ("set_indexOfRefraction__", this);
+
+      this .set_indexOfRefraction__ ();
    },
    getExtensionKey ()
    {
       return X_ITE_ExtensionKeys .IOR_MATERIAL_EXTENSION;
    },
+   set_indexOfRefraction__ ()
+   {
+      this .indexOfRefraction = Math .max (this ._indexOfRefraction .getValue (), 0);
+   },
    getShaderOptions (options)
    {
-
+      options .push ("X3D_IOR_MATERIAL_EXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      gl .uniform1f (shaderObject .x3d_IorEXT, this .indexOfRefraction);
    },
 });
 
@@ -2375,6 +2385,118 @@ const TransmissionMaterialExtension_default_ = TransmissionMaterialExtension;
 
 Namespace_default().add ("TransmissionMaterialExtension", "x_ite/Components/X_ITE/TransmissionMaterialExtension", TransmissionMaterialExtension_default_);
 /* harmony default export */ const X_ITE_TransmissionMaterialExtension = (TransmissionMaterialExtension_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/UnlitMaterialExtension.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+function UnlitMaterialExtension (executionContext)
+{
+   X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).UnlitMaterialExtension);
+}
+
+Object .assign (Object .setPrototypeOf (UnlitMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
+{
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .UNLIT_MATERIAL_EXTENSION;
+   },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_UNLIT_MATERIAL_EXT");
+   },
+   setShaderUniforms ()
+   { },
+});
+
+Object .defineProperties (UnlitMaterialExtension,
+{
+   typeName:
+   {
+      value: "UnlitMaterialExtension",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "extensions",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const UnlitMaterialExtension_default_ = UnlitMaterialExtension;
+;
+
+Namespace_default().add ("UnlitMaterialExtension", "x_ite/Components/X_ITE/UnlitMaterialExtension", UnlitMaterialExtension_default_);
+/* harmony default export */ const X_ITE_UnlitMaterialExtension = (UnlitMaterialExtension_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/VolumeMaterialExtension.js
 /*******************************************************************************
  *
@@ -2561,6 +2683,7 @@ Namespace_default().add ("VolumeMaterialExtension", "x_ite/Components/X_ITE/Volu
 
 
 
+
 Components_default().add ({
    name: "X_ITE",
    concreteNodes:
@@ -2577,6 +2700,7 @@ Components_default().add ({
       X_ITE_SheenMaterialExtension,
       X_ITE_SpecularMaterialExtension,
       X_ITE_TransmissionMaterialExtension,
+      X_ITE_UnlitMaterialExtension,
       X_ITE_VolumeMaterialExtension,
    ],
    abstractNodes:
