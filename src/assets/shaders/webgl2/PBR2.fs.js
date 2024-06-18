@@ -61,6 +61,10 @@ getMaterialColor ()
    materialInfo .f0             = vec3 (0.04);
    materialInfo .specularWeight = 1.0;
 
+   #if defined (X3D_IOR_MATERIAL_EXT)
+      materialInfo = getIorInfo (materialInfo);
+   #endif
+
    #if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
       materialInfo = getMetallicRoughnessInfo (materialInfo);
    #endif

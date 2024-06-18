@@ -296,6 +296,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_anisotropy":
             case "KHR_materials_clearcoat":
             case "KHR_materials_emissive_strength":
+            case "KHR_materials_ior":
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
@@ -1151,6 +1152,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_emissive_strength":
                this .khrMaterialsEmissiveStrengthObject (value, materialNode);
                break;
+            case "KHR_materials_ior":
+               this .khrMaterialsIorStrengthObject (value, materialNode);
+               break;
             case "KHR_materials_sheen":
                this .khrMaterialsSheenObject (value, materialNode);
                break;
@@ -1212,6 +1216,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const extension = this .getScene () .createNode ("EmissiveStrengthMaterialExtension", false);
 
       extension ._emissiveStrength = this .numberValue (KHR_materials_emissive_strength .emissiveStrength, 1);
+
+      extension .setup ();
+
+      materialNode ._extensions .push (extension);
+   },
+   khrMaterialsIorStrengthObject (KHR_materials_ior, materialNode)
+   {
+      const extension = this .getScene () .createNode ("IORMaterialExtension", false);
+
+      extension ._indexOfRefraction = this .numberValue (KHR_materials_ior .ior, 1.5);
 
       extension .setup ();
 

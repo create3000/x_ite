@@ -64,17 +64,26 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X3DMate
    initialize ()
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._indexOfRefraction .addInterest ("set_indexOfRefraction__", this);
+
+      this .set_indexOfRefraction__ ();
    },
    getExtensionKey ()
    {
       return ExtensionKeys .IOR_MATERIAL_EXTENSION;
    },
+   set_indexOfRefraction__ ()
+   {
+      this .indexOfRefraction = Math .max (this ._indexOfRefraction .getValue (), 0);
+   },
    getShaderOptions (options)
    {
-
+      options .push ("X3D_IOR_MATERIAL_EXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      gl .uniform1f (shaderObject .x3d_IorEXT, this .indexOfRefraction);
    },
 });
 

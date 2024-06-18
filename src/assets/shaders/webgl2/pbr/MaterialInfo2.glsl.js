@@ -161,6 +161,19 @@ getOcclusionFactor ()
    #endif
 }
 
+#if defined (X3D_IOR_MATERIAL_EXT)
+uniform float x3d_IorEXT;
+
+MaterialInfo
+getIorInfo (in MaterialInfo info)
+{
+    info .f0   = vec3 (pow ((x3d_IorEXT - 1.0) / (x3d_IorEXT + 1.0), 2.0));
+    info .ior = x3d_IorEXT;
+
+    return info;
+}
+#endif
+
 #if defined (X3D_SHEEN_MATERIAL_EXT)
 
 ${MaterialTextures .texture ("x3d_SheenColorTextureEXT",     "rgb", "linear")}
