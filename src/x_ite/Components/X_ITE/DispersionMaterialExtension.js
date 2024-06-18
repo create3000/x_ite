@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (DispersionMaterialExtension .prototype, 
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      gl .uniform1f  (shaderObject .x3d_DispersionEXT, this .dispersion);
+      gl .uniform1f (shaderObject .x3d_DispersionEXT, this .dispersion);
    },
 });
 
