@@ -1,9 +1,9 @@
 /* X_ITE v9.7.0 */var __webpack_modules__ = ({
 
-/***/ 109:
+/***/ 651:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(773);
+/* provided dependency */ var jQuery = __webpack_require__(623);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -199,7 +199,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 861:
+/***/ 559:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -213,7 +213,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(773)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(623)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -424,7 +424,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 773:
+/***/ 623:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11148,7 +11148,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 382:
+/***/ 716:
 /***/ ((module) => {
 
 /**
@@ -15927,7 +15927,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 865:
+/***/ 959:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19172,7 +19172,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 878:
+/***/ 512:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -34231,7 +34231,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 x_ite_Namespace .add ("X3DBaseNode", "x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
 /* harmony default export */ const Base_X3DBaseNode = (X3DBaseNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(773);
+/* provided dependency */ var $ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -37553,6 +37553,1120 @@ const X3DBindableNode_default_ = X3DBindableNode;
 
 x_ite_Namespace .add ("X3DBindableNode", "x_ite/Components/Core/X3DBindableNode", X3DBindableNode_default_);
 /* harmony default export */ const Core_X3DBindableNode = (X3DBindableNode_default_);
+;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
+/* provided dependency */ var libtess = __webpack_require__(716);
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+const Triangle3 =
+{
+   area: (() =>
+   {
+      const
+         B = new Numbers_Vector3 (),
+         C = new Numbers_Vector3 ();
+
+      return function (a, b, c)
+      {
+         return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .magnitude () / 2;
+      };
+   })(),
+   normal (v1, v2, v3, normal)
+   {
+      const
+         x1 = v3 .x - v2 .x,
+         y1 = v3 .y - v2 .y,
+         z1 = v3 .z - v2 .z,
+         x2 = v1 .x - v2 .x,
+         y2 = v1 .y - v2 .y,
+         z2 = v1 .z - v2 .z;
+
+      normal .set (y1 * z2 - z1 * y2,
+                   z1 * x2 - x1 * z2,
+                   x1 * y2 - y1 * x2);
+
+      return normal .normalize ();
+   },
+   quadNormal (v1, v2, v3, v4, normal)
+   {
+      const
+         x1 = v3 .x - v1 .x,
+         y1 = v3 .y - v1 .y,
+         z1 = v3 .z - v1 .z,
+         x2 = v4 .x - v2 .x,
+         y2 = v4 .y - v2 .y,
+         z2 = v4 .z - v2 .z;
+
+      normal .set (y1 * z2 - z1 * y2,
+                   z1 * x2 - x1 * z2,
+                   x1 * y2 - y1 * x2);
+
+      return normal .normalize ();
+   },
+   triangulatePolygon: (() =>
+   {
+      // Function called for each vertex of tesselator output.
+
+      function vertexCallback (index, triangles)
+      {
+         triangles .push (index);
+      }
+
+      // Required in case of a combine, otherwise an empty array is returned.
+
+      function combineCallback (coords, data, weight)
+      {
+         return data [0];
+      }
+
+      const tessy = new libtess .GluTesselator ();
+
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
+      tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
+
+      return function (polygon, triangles)
+      {
+         tessy .gluTessBeginPolygon (triangles);
+         tessy .gluTessBeginContour ();
+
+         for (const point of polygon)
+            tessy .gluTessVertex (point, point .index);
+
+         tessy .gluTessEndContour ();
+         tessy .gluTessEndPolygon ();
+
+         // Return array of indices.
+         return triangles;
+      };
+   })(),
+   triangulateConvexPolygon (vertices, triangles)
+   {
+      // Fallback: Very simple triangulation for convex polygons.
+      for (let i = 1, length = vertices .length - 1; i < length; ++ i)
+         triangles .push (vertices [0], vertices [i], vertices [i + 1]);
+   },
+};
+
+const Triangle3_default_ = Triangle3;
+;
+
+x_ite_Namespace .add ("Triangle3", "standard/Math/Geometry/Triangle3", Triangle3_default_);
+/* harmony default export */ const Geometry_Triangle3 = (Triangle3_default_);
+;// CONCATENATED MODULE: ./src/standard/Math/Algorithms/SAT.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+const
+   extents1 = { min: 0, max: 0 },
+   extents2 = { min: 0, max: 0 };
+
+/**
+ *  Class to represent the Separating Axis Theorem.
+ */
+function SAT () { }
+
+SAT .isSeparated = function (axes, points1, points2)
+{
+   // https://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
+
+   for (const axis of axes)
+   {
+      project (points1, axis, extents1);
+      project (points2, axis, extents2);
+
+      if (overlaps (extents1 .min, extents1 .max, extents2 .min, extents2 .max))
+         continue;
+
+      return true;
+   }
+
+   return false;
+};
+
+///  Projects @a points to @a axis and returns the minimum and maximum bounds.
+function project (points, axis, extents)
+{
+   extents .min = Number .POSITIVE_INFINITY;
+   extents .max = Number .NEGATIVE_INFINITY;
+
+   for (const point of points)
+   {
+      // Just dot it to get the min and max along this axis.
+      // NOTE: the axis must be normalized to get accurate projections to calculate the MTV, but if it is only needed to
+      // know whether it overlaps, every axis can be used.
+
+      const dotVal = point .dot (axis);
+
+      if (dotVal < extents .min)
+         extents .min = dotVal;
+
+      if (dotVal > extents .max)
+         extents .max = dotVal;
+   }
+}
+
+///  Returns true if both ranges overlap, otherwise false.
+function overlaps (min1, max1, min2, max2)
+{
+   return is_between (min2, min1, max1) || is_between (min1, min2, max2);
+}
+
+///  Returns true if @a value is between @a lowerBound and @a upperBound, otherwise false.
+function is_between (value, lowerBound, upperBound)
+{
+   return lowerBound <= value && value <= upperBound;
+}
+
+const SAT_default_ = SAT;
+;
+
+x_ite_Namespace .add ("SAT", "standard/Math/Algorithms/SAT", SAT_default_);
+/* harmony default export */ const Algorithms_SAT = (SAT_default_);
+;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Box3.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+function Box3 (/* size, center */)
+{
+   this .matrix = new Numbers_Matrix4 ();
+
+   this .set (... arguments);
+}
+
+Object .assign (Box3 .prototype,
+{
+   copy ()
+   {
+      const copy = Object .create (Box3 .prototype);
+      copy .matrix = this .matrix .copy ();
+      return copy;
+   },
+   assign (box)
+   {
+      this .matrix .assign (box .matrix);
+      return this;
+   },
+   equals (box)
+   {
+      return this .matrix .equals (box .matrix);
+   },
+   getMatrix ()
+   {
+      return this .matrix;
+   },
+   set (size, center)
+   {
+      switch (arguments .length)
+      {
+         case 0:
+         {
+            this .matrix .set (0, 0, 0, 0,
+                               0, 0, 0, 0,
+                               0, 0, 0, 0,
+                               0, 0, 0, 0);
+
+            return this;
+         }
+         case 2:
+         {
+            this .matrix .set (size .x / 2, 0, 0, 0,
+                               0, size .y / 2, 0, 0,
+                               0, 0, size .z / 2, 0,
+                               center .x, center .y, center .z, 1);
+
+            return this;
+         }
+         // case 3:
+         // {
+         //    console .trace ()
+         //    return this .setExtents (arguments [0], arguments [1]);
+         // }
+      }
+   },
+   setExtents (min, max)
+   {
+      const
+         sx = (max .x - min .x) / 2,
+         sy = (max .y - min .y) / 2,
+         sz = (max .z - min .z) / 2,
+         cx = (max .x + min .x) / 2,
+         cy = (max .y + min .y) / 2,
+         cz = (max .z + min .z) / 2;
+
+      this .matrix .set (sx, 0,  0,  0,
+                         0,  sy, 0,  0,
+                         0,  0,  sz, 0,
+                         cx, cy, cz, 1);
+
+      return this;
+   },
+   getExtents (min, max)
+   {
+      this .getAbsoluteExtents (min, max);
+
+      min .add (this .center);
+      max .add (this .center);
+   },
+   getAbsoluteExtents: (() =>
+   {
+      const
+         r1 = new Numbers_Vector3 (),
+         p1 = new Numbers_Vector3 (),
+         p4 = new Numbers_Vector3 ();
+
+      return function (min, max)
+      {
+         const
+            m = this .matrix,
+            x = m .xAxis,
+            y = m .yAxis,
+            z = m .zAxis;
+
+         r1 .assign (y) .add (z);
+
+         const r2 = z .subtract (y);
+
+         p1 .assign (x) .add (r1),
+         p4 .assign (x) .add (r2);
+
+         const
+            p2 = r1 .subtract (x),
+            p3 = r2 .subtract (x);
+
+         min .assign (p1) .min (p2, p3, p4);
+         max .assign (p1) .max (p2, p3, p4);
+
+         p1 .negate ();
+         p2 .negate ();
+         p3 .negate ();
+         p4 .negate ();
+
+         min .min (p1, p2, p3, p4);
+         max .max (p1, p2, p3, p4);
+      };
+   })(),
+   getPoints: (() =>
+   {
+      const
+         x  = new Numbers_Vector3 (),
+         y  = new Numbers_Vector3 (),
+         z  = new Numbers_Vector3 (),
+         r1 = new Numbers_Vector3 ();
+
+      return function (points)
+      {
+         /*
+          * p6 ---------- p5
+          * | \           | \
+          * | p2------------ p1
+          * |  |          |  |
+          * |  |          |  |
+          * p7 |_________ p8 |
+          *  \ |           \ |
+          *   \|            \|
+          *    p3 ---------- p4
+          */
+
+         const m = this .matrix;
+
+         x .assign (m .xAxis);
+         y .assign (m .yAxis);
+         z .assign (m .zAxis);
+
+         r1 .assign (y) .add (z);
+
+         const r2 = z .subtract (y);
+
+         points [0] .assign (x)  .add (r1);
+         points [1] .assign (r1) .subtract (x);
+         points [2] .assign (r2) .subtract (x);
+         points [3] .assign (x)  .add (r2);
+
+         points [4] .assign (points [2]) .negate ();
+         points [5] .assign (points [3]) .negate ();
+         points [6] .assign (points [0]) .negate ();
+         points [7] .assign (points [1]) .negate ();
+
+         const center = this .center;
+
+         points [0] .add (center);
+         points [1] .add (center);
+         points [2] .add (center);
+         points [3] .add (center);
+
+         points [4] .add (center);
+         points [5] .add (center);
+         points [6] .add (center);
+         points [7] .add (center);
+
+         return points;
+      };
+   })(),
+   getAxes (axes)
+   {
+      const m = this .matrix;
+
+      axes [0] .assign (m .xAxis);
+      axes [1] .assign (m .yAxis);
+      axes [2] .assign (m .zAxis);
+
+      return axes;
+   },
+   getNormals: (() =>
+   {
+      const
+         x = new Numbers_Vector3 (),
+         y = new Numbers_Vector3 (),
+         z = new Numbers_Vector3 ();
+
+      const axes = [ Numbers_Vector3 .xAxis, Numbers_Vector3 .yAxis, Numbers_Vector3 .zAxis ];
+
+      return function (normals)
+      {
+         const m = this .matrix;
+
+         x .assign (m .xAxis);
+         y .assign (m .yAxis);
+         z .assign (m .zAxis);
+
+         if (x .norm () === 0)
+         {
+            x .assign (y) .cross (z);
+
+            if (x .norm () === 0)
+            {
+               for (const axis of axes)
+               {
+                  x .assign (axis) .cross (y);
+
+                  if (x .norm () !== 0)
+                     break;
+               }
+
+               if (x .norm () === 0)
+               {
+                  for (const axis of axes)
+                  {
+                     x .assign (axis) .cross (z);
+
+                     if (x .norm () !== 0)
+                        break;
+                  }
+
+                  if (x .norm () === 0)
+                     x .assign (Numbers_Vector3 .xAxis);
+               }
+            }
+         }
+
+         if (y .norm () === 0)
+         {
+            y .assign (z) .cross (x);
+
+            if (y .norm () === 0)
+            {
+               for (const axis of axes)
+               {
+                  y .assign (axis) .cross (z);
+
+                  if (y .norm () !== 0)
+                     break;
+               }
+
+               if (y .norm () === 0)
+               {
+                  for (const axis of axes)
+                  {
+                     y .assign (axis) .cross (x);
+
+                     if (y .norm () !== 0)
+                        break;
+                  }
+
+                  if (y .norm () === 0)
+                     y .assign (Numbers_Vector3 .yAxis);
+               }
+            }
+         }
+
+         if (z .norm () === 0)
+         {
+            z .assign (x) .cross (y);
+
+            if (z .norm () === 0)
+            {
+               for (const axis of axes)
+               {
+                  z .assign (axis) .cross (x);
+
+                  if (z .norm () !== 0)
+                     break;
+               }
+
+               if (z .norm () === 0)
+               {
+                  for (const axis of axes)
+                  {
+                     z .assign (axis) .cross (y);
+
+                     if (z .norm () !== 0)
+                        break;
+                  }
+
+                  if (z .norm () === 0)
+                     z .assign (Numbers_Vector3 .zAxis);
+               }
+            }
+         }
+
+         normals [0] .assign (y) .cross (z) .normalize ();
+         normals [1] .assign (z) .cross (x) .normalize ();
+         normals [2] .assign (x) .cross (y) .normalize ();
+
+         return normals;
+      };
+   })(),
+   isEmpty ()
+   {
+      return this .matrix [15] === 0;
+   },
+   add: (() =>
+   {
+      const
+         lhs_min = new Numbers_Vector3 (),
+         lhs_max = new Numbers_Vector3 (),
+         rhs_min = new Numbers_Vector3 (),
+         rhs_max = new Numbers_Vector3 ();
+
+      return function (box)
+      {
+         if (this .isEmpty ())
+            return this .assign (box);
+
+         if (box .isEmpty ())
+            return this;
+
+         this .getExtents (lhs_min, lhs_max);
+         box  .getExtents (rhs_min, rhs_max);
+
+         return this .setExtents (lhs_min .min (rhs_min), lhs_max .max (rhs_max));
+      };
+   })(),
+   multLeft (matrix)
+   {
+      this .matrix .multLeft (matrix);
+      return this;
+   },
+   multRight (matrix)
+   {
+      this .matrix .multRight (matrix);
+      return this;
+   },
+   containsPoint: (() =>
+   {
+      const
+         min = new Numbers_Vector3 (),
+         max = new Numbers_Vector3 ();
+
+      return function (point)
+      {
+         this .getExtents (min, max);
+
+         return min .x <= point .x &&
+                max .x >= point .x &&
+                min .y <= point .y &&
+                max .y >= point .y &&
+                min .z <= point .z &&
+                max .z >= point .z;
+      };
+   })(),
+   intersectsBox: (() =>
+   {
+      const points1 = [
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+      ];
+
+      const points2 = [
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+      ];
+
+      const axes1 = [
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+      ];
+
+      const axes2 = [
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+      ];
+
+      const axes9 = [
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+      ];
+
+      const normals = [
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+      ];
+
+      return function (other)
+      {
+         // Test special cases.
+
+         if (this .isEmpty ())
+            return false;
+
+         if (other .isEmpty ())
+            return false;
+
+         // Get points.
+
+         this  .getPoints (points1);
+         other .getPoints (points2);
+
+         // Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
+
+         if (Algorithms_SAT .isSeparated (this .getNormals (normals), points1, points2))
+            return false;
+
+         // Test the three planes spanned by the normal vectors of the faces of the second parallelepiped.
+
+         if (Algorithms_SAT .isSeparated (other .getNormals (normals), points1, points2))
+            return false;
+
+         // Test the nine other planes spanned by the edges of each parallelepiped.
+
+         this  .getAxes (axes1);
+         other .getAxes (axes2);
+
+         for (let i1 = 0; i1 < 3; ++ i1)
+         {
+            for (let i2 = 0; i2 < 3; ++ i2)
+               axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (axes2 [i2]);
+         }
+
+         if (Algorithms_SAT .isSeparated (axes9, points1, points2))
+            return false;
+
+         // Both boxes intersect.
+
+         return true;
+      };
+   })(),
+   intersectsTriangle: (() =>
+   {
+      const points1 = [
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+      ];
+
+      const axes1 = [
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+      ];
+
+      const axes9 = [
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+      ];
+
+      const normals = [
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+      ];
+
+      const triangle = [ ];
+
+      const triangleNormal = [ new Numbers_Vector3 () ];
+
+      const triangleEdges = [
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 (),
+         new Numbers_Vector3 ()
+      ];
+
+      return function (a, b, c)
+      {
+         // Test special cases.
+
+         if (this .isEmpty ())
+            return false;
+
+         // Get points.
+
+         this .getPoints (points1);
+
+         triangle [0] = a;
+         triangle [1] = b;
+         triangle [2] = c;
+
+         // Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
+
+         if (Algorithms_SAT .isSeparated (this .getNormals (normals), points1, triangle))
+            return false;
+
+         // Test the normal of the triangle.
+
+         Geometry_Triangle3 .normal (a, b, c, triangleNormal [0]);
+
+         if (Algorithms_SAT .isSeparated (triangleNormal, points1, triangle))
+            return false;
+
+         // Test the nine other planes spanned by the edges of each parallelepiped.
+
+         this .getAxes (axes1);
+
+         triangleEdges [0] .assign (a) .subtract (b);
+         triangleEdges [1] .assign (b) .subtract (c);
+         triangleEdges [2] .assign (c) .subtract (a);
+
+         for (let i1 = 0; i1 < 3; ++ i1)
+         {
+            for (let i2 = 0; i2 < 3; ++ i2)
+               axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (triangleEdges [i2]);
+         }
+
+         if (Algorithms_SAT .isSeparated (axes9, points1, triangle))
+            return false;
+
+         // Box and triangle intersect.
+
+         return true;
+      };
+   })(),
+   toString ()
+   {
+      return `${this .size}, ${this .center}`;
+   },
+});
+
+Object .assign (Box3,
+{
+   Extents (min, max)
+   {
+      return new Box3 () .setExtents (min, max);
+   },
+   Points (points)
+   {
+      const
+         min = new Numbers_Vector3 (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
+         max = new Numbers_Vector3 (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+
+      for (const point of points)
+      {
+         min .min (point);
+         max .max (point);
+      }
+
+      return new Box3 () .setExtents (min, max);
+   },
+});
+
+Object .defineProperties (Box3 .prototype,
+{
+   size:
+   {
+      get: (() =>
+      {
+         const
+            min = new Numbers_Vector3 (),
+            max = new Numbers_Vector3 ();
+
+         return function ()
+         {
+            this .getAbsoluteExtents (min, max);
+
+            return max .subtract (min);
+         };
+      })(),
+      enumerable: true,
+   },
+   center:
+   {
+      get ()
+      {
+         return this .matrix .origin;
+      },
+      enumerable: true,
+   },
+});
+
+const Box3_default_ = Box3;
+;
+
+x_ite_Namespace .add ("Box3", "standard/Math/Geometry/Box3", Box3_default_);
+/* harmony default export */ const Geometry_Box3 = (Box3_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/X3DBoundedObject.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function X3DBoundedObject (executionContext)
+{
+   this .addType (Base_X3DConstants .X3DBoundedObject);
+
+   this .addChildObjects (Base_X3DConstants .inputOutput, "hidden",                   new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .outputOnly,  "display",                  new x_ite_Fields .SFBool (true),
+                          Base_X3DConstants .outputOnly,  "transformSensors_changed", new x_ite_Fields .SFTime ());
+
+   this ._bboxSize   .setUnit ("length");
+   this ._bboxCenter .setUnit ("length");
+
+   this .childBBox            = new Geometry_Box3 (); // Must be unique for each X3DBoundedObject.
+   this .transformSensorNodes = new Set ();
+}
+
+Object .assign (X3DBoundedObject .prototype,
+{
+   childBBox: new Geometry_Box3 (),
+   initialize ()
+   {
+      this ._hidden  .addInterest ("set_visible_and_hidden__", this);
+      this ._visible .addInterest ("set_visible_and_hidden__", this);
+
+      this .set_visible_and_hidden__ ();
+   },
+   isHidden ()
+   {
+      return this ._hidden .getValue ();
+   },
+   setHidden (value)
+   {
+      if (value === this ._hidden .getValue ())
+         return;
+
+      this ._hidden = value;
+   },
+   getDefaultBBoxSize: (() =>
+   {
+      const defaultBBoxSize = new Numbers_Vector3 (-1, -1, -1);
+
+      return function ()
+      {
+         return defaultBBoxSize;
+      };
+   })(),
+   getBBox (nodes, bbox, shadows)
+   {
+      // Must be unique for each X3DBoundedObject.
+      const childBBox = this .childBBox;
+
+      // Add bounding boxes.
+
+      bbox .set ();
+
+      for (const node of nodes)
+      {
+         if (node .getBBox)
+            bbox .add (node .getBBox (childBBox, shadows));
+      }
+
+      return bbox;
+   },
+   displayBBox: (() =>
+   {
+      const
+         bbox   = new Geometry_Box3 (),
+         matrix = new Numbers_Matrix4 ();
+
+      return function (type, renderObject)
+      {
+         const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+         this .getBBox (bbox);
+         matrix .set (bbox .center, null, bbox .size);
+
+         modelViewMatrix .push ();
+         modelViewMatrix .multLeft (matrix);
+
+         this .getBrowser () .getBBoxNode () .traverse (type, renderObject);
+
+         modelViewMatrix .pop ();
+      };
+   })(),
+   addTransformSensor (transformSensorNode)
+   {
+      this .transformSensorNodes .add (transformSensorNode);
+
+      this ._transformSensors_changed = this .getBrowser () .getCurrentTime ();
+   },
+   removeTransformSensor (transformSensorNode)
+   {
+      this .transformSensorNodes .delete (transformSensorNode);
+
+      this ._transformSensors_changed = this .getBrowser () .getCurrentTime ();
+   },
+   getTransformSensors ()
+   {
+      return this .transformSensorNodes;
+   },
+   set_visible_and_hidden__ ()
+   {
+      const value = this ._visible .getValue () && !this ._hidden .getValue ();
+
+      if (value === this ._display .getValue ())
+         return;
+
+      this ._display = value;
+   },
+   dispose () { },
+});
+
+Object .defineProperties (X3DBoundedObject,
+{
+   typeName:
+   {
+      value: "X3DBoundedObject",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "Grouping", level: 1 }),
+      enumerable: true,
+   },
+});
+
+const X3DBoundedObject_default_ = X3DBoundedObject;
+;
+
+x_ite_Namespace .add ("X3DBoundedObject", "x_ite/Components/Grouping/X3DBoundedObject", X3DBoundedObject_default_);
+/* harmony default export */ const Grouping_X3DBoundedObject = (X3DBoundedObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Execution/NamedNodesArray.js
 /*******************************************************************************
  *
@@ -39010,7 +40124,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .add ("X3DProtoDeclaration", "x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(773);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39268,7 +40382,7 @@ const Expressions_default_ = Expressions;
 x_ite_Namespace .add ("Expressions", "x_ite/Parser/Expressions", Expressions_default_);
 /* harmony default export */ const Parser_Expressions = (Expressions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(773);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41968,7 +43082,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .add ("VRMLParser", "x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(773);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43660,6 +44774,7 @@ x_ite_Namespace .add ("JSONParser", "x_ite/Parser/JSONParser", JSONParser_defaul
 
 
 
+
 function X3DOptimizer () { }
 
 Object .assign (X3DOptimizer .prototype,
@@ -43891,6 +45006,56 @@ Object .assign (X3DOptimizer .prototype,
 
       return child;
    },
+   viewpointsCenterOfRotation (scene)
+   {
+      const
+         bbox        = scene .getBBox (new Geometry_Box3 ()),
+         modelMatrix = new Numbers_Matrix4 (),
+         seen        = new Set ();
+
+      this .viewpointsCenterOfRotationNodes (this .getScene () .rootNodes, bbox, modelMatrix, seen);
+   },
+   viewpointsCenterOfRotationNodes (nodes, bbox, modelMatrix, seen)
+   {
+      for (const node of nodes)
+         this .viewpointsCenterOfRotationNode (node ?.getValue (), bbox, modelMatrix, seen);
+   },
+   viewpointsCenterOfRotationNode (node, bbox, modelMatrix, seen)
+   {
+      if (!node)
+         return;
+
+      if (seen .has (node))
+         return;
+
+      seen .add (node);
+
+      if (node .getMatrix)
+         modelMatrix = modelMatrix .copy () .multLeft (node .getMatrix ());
+
+      switch (node .getType () .at (-1))
+      {
+         case Base_X3DConstants .Viewpoint:
+         case Base_X3DConstants .OrthoViewpoint:
+         {
+            node ._centerOfRotation = modelMatrix .copy () .inverse () .multVecMatrix (bbox .center);
+            break;
+         }
+      }
+
+      for (const field of node .getFields ())
+      {
+         switch (field .getType ())
+         {
+            case Base_X3DConstants .SFNode:
+               this .viewpointsCenterOfRotationNode (field .getValue (), bbox, modelMatrix, seen);
+               break;
+            case Base_X3DConstants .MFNode:
+               this .viewpointsCenterOfRotationNodes (field, bbox, modelMatrix, seen);
+               break;
+         }
+      }
+   },
 });
 
 const X3DOptimizer_default_ = X3DOptimizer;
@@ -44012,7 +45177,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(773);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44059,6 +45224,7 @@ x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -44233,6 +45399,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       this .animationsArray (glTF .animations);
 
+      this .viewpointsCenterOfRotation (this .getScene ());
       this .optimizeSceneGraph (this .getScene () .getRootNodes ());
 
       return this .getScene ();
@@ -45718,9 +46885,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       this .viewpointNodes .push (viewpointNode);
 
-      viewpointNode ._description      = this .description (camera .name || `Viewpoint ${this .viewpointNodes .length}`);
-      viewpointNode ._position         = Numbers_Vector3 .Zero;
-      viewpointNode ._centerOfRotation = new Numbers_Vector3 (0, 0, -10);
+      viewpointNode ._description = this .description (camera .name || `Viewpoint ${this .viewpointNodes .length}`);
+      viewpointNode ._position    = Numbers_Vector3 .Zero;
 
       return camera .viewpointNode = viewpointNode;
    },
@@ -47590,7 +48756,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .add ("GLTF2Parser", "x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(773);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47742,7 +48908,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .add ("GLB2Parser", "x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(773);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51101,8 +52267,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .add ("MatrixStack", "standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(773);
-/* provided dependency */ var libtess = __webpack_require__(382);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(623);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(716);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53810,9 +54976,9 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
          triangles .push (index);
       }
 
-      const tessy = new libtess .GluTesselator ();
+      const tessy = new SVGParser_libtess .GluTesselator ();
 
-      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA, vertexCallback);
+      tessy .gluTessCallback (SVGParser_libtess .gluEnum .GLU_TESS_VERTEX_DATA, vertexCallback);
       tessy .gluTessNormal (0, 0, 1);
 
       return tessy;
@@ -53835,8 +55001,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
          winding   = this .style .fillRule === "evenodd" ? "GLU_TESS_WINDING_ODD" : "GLU_TESS_WINDING_NONZERO",
          triangles = [ ];
 
-      tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule [winding]);
-      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
+      tessy .gluTessProperty (SVGParser_libtess .gluEnum .GLU_TESS_WINDING_RULE, SVGParser_libtess .windingRule [winding]);
+      tessy .gluTessCallback (SVGParser_libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
       tessy .gluTessBeginPolygon (triangles);
 
       for (const points of contours)
@@ -53870,7 +55036,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .add ("SVGParser", "x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(773);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54236,266 +55402,6 @@ const Plane3_default_ = Plane3;
 
 x_ite_Namespace .add ("Plane3", "standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(382);
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-const Triangle3 =
-{
-   area: (() =>
-   {
-      const
-         B = new Numbers_Vector3 (),
-         C = new Numbers_Vector3 ();
-
-      return function (a, b, c)
-      {
-         return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .magnitude () / 2;
-      };
-   })(),
-   normal (v1, v2, v3, normal)
-   {
-      const
-         x1 = v3 .x - v2 .x,
-         y1 = v3 .y - v2 .y,
-         z1 = v3 .z - v2 .z,
-         x2 = v1 .x - v2 .x,
-         y2 = v1 .y - v2 .y,
-         z2 = v1 .z - v2 .z;
-
-      normal .set (y1 * z2 - z1 * y2,
-                   z1 * x2 - x1 * z2,
-                   x1 * y2 - y1 * x2);
-
-      return normal .normalize ();
-   },
-   quadNormal (v1, v2, v3, v4, normal)
-   {
-      const
-         x1 = v3 .x - v1 .x,
-         y1 = v3 .y - v1 .y,
-         z1 = v3 .z - v1 .z,
-         x2 = v4 .x - v2 .x,
-         y2 = v4 .y - v2 .y,
-         z2 = v4 .z - v2 .z;
-
-      normal .set (y1 * z2 - z1 * y2,
-                   z1 * x2 - x1 * z2,
-                   x1 * y2 - y1 * x2);
-
-      return normal .normalize ();
-   },
-   triangulatePolygon: (() =>
-   {
-      // Function called for each vertex of tesselator output.
-
-      function vertexCallback (index, triangles)
-      {
-         triangles .push (index);
-      }
-
-      // Required in case of a combine, otherwise an empty array is returned.
-
-      function combineCallback (coords, data, weight)
-      {
-         return data [0];
-      }
-
-      const tessy = new Triangle3_libtess .GluTesselator ();
-
-      tessy .gluTessCallback (Triangle3_libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
-      tessy .gluTessCallback (Triangle3_libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
-      tessy .gluTessProperty (Triangle3_libtess .gluEnum .GLU_TESS_WINDING_RULE, Triangle3_libtess .windingRule .GLU_TESS_WINDING_ODD);
-
-      return function (polygon, triangles)
-      {
-         tessy .gluTessBeginPolygon (triangles);
-         tessy .gluTessBeginContour ();
-
-         for (const point of polygon)
-            tessy .gluTessVertex (point, point .index);
-
-         tessy .gluTessEndContour ();
-         tessy .gluTessEndPolygon ();
-
-         // Return array of indices.
-         return triangles;
-      };
-   })(),
-   triangulateConvexPolygon (vertices, triangles)
-   {
-      // Fallback: Very simple triangulation for convex polygons.
-      for (let i = 1, length = vertices .length - 1; i < length; ++ i)
-         triangles .push (vertices [0], vertices [i], vertices [i + 1]);
-   },
-};
-
-const Triangle3_default_ = Triangle3;
-;
-
-x_ite_Namespace .add ("Triangle3", "standard/Math/Geometry/Triangle3", Triangle3_default_);
-/* harmony default export */ const Geometry_Triangle3 = (Triangle3_default_);
-;// CONCATENATED MODULE: ./src/standard/Math/Algorithms/SAT.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-const
-   extents1 = { min: 0, max: 0 },
-   extents2 = { min: 0, max: 0 };
-
-/**
- *  Class to represent the Separating Axis Theorem.
- */
-function SAT () { }
-
-SAT .isSeparated = function (axes, points1, points2)
-{
-   // https://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
-
-   for (const axis of axes)
-   {
-      project (points1, axis, extents1);
-      project (points2, axis, extents2);
-
-      if (overlaps (extents1 .min, extents1 .max, extents2 .min, extents2 .max))
-         continue;
-
-      return true;
-   }
-
-   return false;
-};
-
-///  Projects @a points to @a axis and returns the minimum and maximum bounds.
-function project (points, axis, extents)
-{
-   extents .min = Number .POSITIVE_INFINITY;
-   extents .max = Number .NEGATIVE_INFINITY;
-
-   for (const point of points)
-   {
-      // Just dot it to get the min and max along this axis.
-      // NOTE: the axis must be normalized to get accurate projections to calculate the MTV, but if it is only needed to
-      // know whether it overlaps, every axis can be used.
-
-      const dotVal = point .dot (axis);
-
-      if (dotVal < extents .min)
-         extents .min = dotVal;
-
-      if (dotVal > extents .max)
-         extents .max = dotVal;
-   }
-}
-
-///  Returns true if both ranges overlap, otherwise false.
-function overlaps (min1, max1, min2, max2)
-{
-   return is_between (min2, min1, max1) || is_between (min1, min2, max2);
-}
-
-///  Returns true if @a value is between @a lowerBound and @a upperBound, otherwise false.
-function is_between (value, lowerBound, upperBound)
-{
-   return lowerBound <= value && value <= upperBound;
-}
-
-const SAT_default_ = SAT;
-;
-
-x_ite_Namespace .add ("SAT", "standard/Math/Algorithms/SAT", SAT_default_);
-/* harmony default export */ const Algorithms_SAT = (SAT_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/ViewVolume.js
 /*******************************************************************************
  *
@@ -55461,676 +56367,6 @@ const Camera_default_ = Camera;
 
 x_ite_Namespace .add ("Camera", "standard/Math/Geometry/Camera", Camera_default_);
 /* harmony default export */ const Geometry_Camera = (Camera_default_);
-;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Box3.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-function Box3 (/* size, center */)
-{
-   this .matrix = new Numbers_Matrix4 ();
-
-   this .set (... arguments);
-}
-
-Object .assign (Box3 .prototype,
-{
-   copy ()
-   {
-      const copy = Object .create (Box3 .prototype);
-      copy .matrix = this .matrix .copy ();
-      return copy;
-   },
-   assign (box)
-   {
-      this .matrix .assign (box .matrix);
-      return this;
-   },
-   equals (box)
-   {
-      return this .matrix .equals (box .matrix);
-   },
-   getMatrix ()
-   {
-      return this .matrix;
-   },
-   set (size, center)
-   {
-      switch (arguments .length)
-      {
-         case 0:
-         {
-            this .matrix .set (0, 0, 0, 0,
-                               0, 0, 0, 0,
-                               0, 0, 0, 0,
-                               0, 0, 0, 0);
-
-            return this;
-         }
-         case 2:
-         {
-            this .matrix .set (size .x / 2, 0, 0, 0,
-                               0, size .y / 2, 0, 0,
-                               0, 0, size .z / 2, 0,
-                               center .x, center .y, center .z, 1);
-
-            return this;
-         }
-         // case 3:
-         // {
-         //    console .trace ()
-         //    return this .setExtents (arguments [0], arguments [1]);
-         // }
-      }
-   },
-   setExtents (min, max)
-   {
-      const
-         sx = (max .x - min .x) / 2,
-         sy = (max .y - min .y) / 2,
-         sz = (max .z - min .z) / 2,
-         cx = (max .x + min .x) / 2,
-         cy = (max .y + min .y) / 2,
-         cz = (max .z + min .z) / 2;
-
-      this .matrix .set (sx, 0,  0,  0,
-                         0,  sy, 0,  0,
-                         0,  0,  sz, 0,
-                         cx, cy, cz, 1);
-
-      return this;
-   },
-   getExtents (min, max)
-   {
-      this .getAbsoluteExtents (min, max);
-
-      min .add (this .center);
-      max .add (this .center);
-   },
-   getAbsoluteExtents: (() =>
-   {
-      const
-         r1 = new Numbers_Vector3 (),
-         p1 = new Numbers_Vector3 (),
-         p4 = new Numbers_Vector3 ();
-
-      return function (min, max)
-      {
-         const
-            m = this .matrix,
-            x = m .xAxis,
-            y = m .yAxis,
-            z = m .zAxis;
-
-         r1 .assign (y) .add (z);
-
-         const r2 = z .subtract (y);
-
-         p1 .assign (x) .add (r1),
-         p4 .assign (x) .add (r2);
-
-         const
-            p2 = r1 .subtract (x),
-            p3 = r2 .subtract (x);
-
-         min .assign (p1) .min (p2, p3, p4);
-         max .assign (p1) .max (p2, p3, p4);
-
-         p1 .negate ();
-         p2 .negate ();
-         p3 .negate ();
-         p4 .negate ();
-
-         min .min (p1, p2, p3, p4);
-         max .max (p1, p2, p3, p4);
-      };
-   })(),
-   getPoints: (() =>
-   {
-      const
-         x  = new Numbers_Vector3 (),
-         y  = new Numbers_Vector3 (),
-         z  = new Numbers_Vector3 (),
-         r1 = new Numbers_Vector3 ();
-
-      return function (points)
-      {
-         /*
-          * p6 ---------- p5
-          * | \           | \
-          * | p2------------ p1
-          * |  |          |  |
-          * |  |          |  |
-          * p7 |_________ p8 |
-          *  \ |           \ |
-          *   \|            \|
-          *    p3 ---------- p4
-          */
-
-         const m = this .matrix;
-
-         x .assign (m .xAxis);
-         y .assign (m .yAxis);
-         z .assign (m .zAxis);
-
-         r1 .assign (y) .add (z);
-
-         const r2 = z .subtract (y);
-
-         points [0] .assign (x)  .add (r1);
-         points [1] .assign (r1) .subtract (x);
-         points [2] .assign (r2) .subtract (x);
-         points [3] .assign (x)  .add (r2);
-
-         points [4] .assign (points [2]) .negate ();
-         points [5] .assign (points [3]) .negate ();
-         points [6] .assign (points [0]) .negate ();
-         points [7] .assign (points [1]) .negate ();
-
-         const center = this .center;
-
-         points [0] .add (center);
-         points [1] .add (center);
-         points [2] .add (center);
-         points [3] .add (center);
-
-         points [4] .add (center);
-         points [5] .add (center);
-         points [6] .add (center);
-         points [7] .add (center);
-
-         return points;
-      };
-   })(),
-   getAxes (axes)
-   {
-      const m = this .matrix;
-
-      axes [0] .assign (m .xAxis);
-      axes [1] .assign (m .yAxis);
-      axes [2] .assign (m .zAxis);
-
-      return axes;
-   },
-   getNormals: (() =>
-   {
-      const
-         x = new Numbers_Vector3 (),
-         y = new Numbers_Vector3 (),
-         z = new Numbers_Vector3 ();
-
-      const axes = [ Numbers_Vector3 .xAxis, Numbers_Vector3 .yAxis, Numbers_Vector3 .zAxis ];
-
-      return function (normals)
-      {
-         const m = this .matrix;
-
-         x .assign (m .xAxis);
-         y .assign (m .yAxis);
-         z .assign (m .zAxis);
-
-         if (x .norm () === 0)
-         {
-            x .assign (y) .cross (z);
-
-            if (x .norm () === 0)
-            {
-               for (const axis of axes)
-               {
-                  x .assign (axis) .cross (y);
-
-                  if (x .norm () !== 0)
-                     break;
-               }
-
-               if (x .norm () === 0)
-               {
-                  for (const axis of axes)
-                  {
-                     x .assign (axis) .cross (z);
-
-                     if (x .norm () !== 0)
-                        break;
-                  }
-
-                  if (x .norm () === 0)
-                     x .assign (Numbers_Vector3 .xAxis);
-               }
-            }
-         }
-
-         if (y .norm () === 0)
-         {
-            y .assign (z) .cross (x);
-
-            if (y .norm () === 0)
-            {
-               for (const axis of axes)
-               {
-                  y .assign (axis) .cross (z);
-
-                  if (y .norm () !== 0)
-                     break;
-               }
-
-               if (y .norm () === 0)
-               {
-                  for (const axis of axes)
-                  {
-                     y .assign (axis) .cross (x);
-
-                     if (y .norm () !== 0)
-                        break;
-                  }
-
-                  if (y .norm () === 0)
-                     y .assign (Numbers_Vector3 .yAxis);
-               }
-            }
-         }
-
-         if (z .norm () === 0)
-         {
-            z .assign (x) .cross (y);
-
-            if (z .norm () === 0)
-            {
-               for (const axis of axes)
-               {
-                  z .assign (axis) .cross (x);
-
-                  if (z .norm () !== 0)
-                     break;
-               }
-
-               if (z .norm () === 0)
-               {
-                  for (const axis of axes)
-                  {
-                     z .assign (axis) .cross (y);
-
-                     if (z .norm () !== 0)
-                        break;
-                  }
-
-                  if (z .norm () === 0)
-                     z .assign (Numbers_Vector3 .zAxis);
-               }
-            }
-         }
-
-         normals [0] .assign (y) .cross (z) .normalize ();
-         normals [1] .assign (z) .cross (x) .normalize ();
-         normals [2] .assign (x) .cross (y) .normalize ();
-
-         return normals;
-      };
-   })(),
-   isEmpty ()
-   {
-      return this .matrix [15] === 0;
-   },
-   add: (() =>
-   {
-      const
-         lhs_min = new Numbers_Vector3 (),
-         lhs_max = new Numbers_Vector3 (),
-         rhs_min = new Numbers_Vector3 (),
-         rhs_max = new Numbers_Vector3 ();
-
-      return function (box)
-      {
-         if (this .isEmpty ())
-            return this .assign (box);
-
-         if (box .isEmpty ())
-            return this;
-
-         this .getExtents (lhs_min, lhs_max);
-         box  .getExtents (rhs_min, rhs_max);
-
-         return this .setExtents (lhs_min .min (rhs_min), lhs_max .max (rhs_max));
-      };
-   })(),
-   multLeft (matrix)
-   {
-      this .matrix .multLeft (matrix);
-      return this;
-   },
-   multRight (matrix)
-   {
-      this .matrix .multRight (matrix);
-      return this;
-   },
-   containsPoint: (() =>
-   {
-      const
-         min = new Numbers_Vector3 (),
-         max = new Numbers_Vector3 ();
-
-      return function (point)
-      {
-         this .getExtents (min, max);
-
-         return min .x <= point .x &&
-                max .x >= point .x &&
-                min .y <= point .y &&
-                max .y >= point .y &&
-                min .z <= point .z &&
-                max .z >= point .z;
-      };
-   })(),
-   intersectsBox: (() =>
-   {
-      const points1 = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-      ];
-
-      const points2 = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-      ];
-
-      const axes1 = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-      ];
-
-      const axes2 = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-      ];
-
-      const axes9 = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-      ];
-
-      const normals = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-      ];
-
-      return function (other)
-      {
-         // Test special cases.
-
-         if (this .isEmpty ())
-            return false;
-
-         if (other .isEmpty ())
-            return false;
-
-         // Get points.
-
-         this  .getPoints (points1);
-         other .getPoints (points2);
-
-         // Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
-
-         if (Algorithms_SAT .isSeparated (this .getNormals (normals), points1, points2))
-            return false;
-
-         // Test the three planes spanned by the normal vectors of the faces of the second parallelepiped.
-
-         if (Algorithms_SAT .isSeparated (other .getNormals (normals), points1, points2))
-            return false;
-
-         // Test the nine other planes spanned by the edges of each parallelepiped.
-
-         this  .getAxes (axes1);
-         other .getAxes (axes2);
-
-         for (let i1 = 0; i1 < 3; ++ i1)
-         {
-            for (let i2 = 0; i2 < 3; ++ i2)
-               axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (axes2 [i2]);
-         }
-
-         if (Algorithms_SAT .isSeparated (axes9, points1, points2))
-            return false;
-
-         // Both boxes intersect.
-
-         return true;
-      };
-   })(),
-   intersectsTriangle: (() =>
-   {
-      const points1 = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-      ];
-
-      const axes1 = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-      ];
-
-      const axes9 = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-      ];
-
-      const normals = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-      ];
-
-      const triangle = [ ];
-
-      const triangleNormal = [ new Numbers_Vector3 () ];
-
-      const triangleEdges = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 ()
-      ];
-
-      return function (a, b, c)
-      {
-         // Test special cases.
-
-         if (this .isEmpty ())
-            return false;
-
-         // Get points.
-
-         this .getPoints (points1);
-
-         triangle [0] = a;
-         triangle [1] = b;
-         triangle [2] = c;
-
-         // Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
-
-         if (Algorithms_SAT .isSeparated (this .getNormals (normals), points1, triangle))
-            return false;
-
-         // Test the normal of the triangle.
-
-         Geometry_Triangle3 .normal (a, b, c, triangleNormal [0]);
-
-         if (Algorithms_SAT .isSeparated (triangleNormal, points1, triangle))
-            return false;
-
-         // Test the nine other planes spanned by the edges of each parallelepiped.
-
-         this .getAxes (axes1);
-
-         triangleEdges [0] .assign (a) .subtract (b);
-         triangleEdges [1] .assign (b) .subtract (c);
-         triangleEdges [2] .assign (c) .subtract (a);
-
-         for (let i1 = 0; i1 < 3; ++ i1)
-         {
-            for (let i2 = 0; i2 < 3; ++ i2)
-               axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (triangleEdges [i2]);
-         }
-
-         if (Algorithms_SAT .isSeparated (axes9, points1, triangle))
-            return false;
-
-         // Box and triangle intersect.
-
-         return true;
-      };
-   })(),
-   toString ()
-   {
-      return `${this .size}, ${this .center}`;
-   },
-});
-
-Object .assign (Box3,
-{
-   Extents (min, max)
-   {
-      return new Box3 () .setExtents (min, max);
-   },
-   Points (points)
-   {
-      const
-         min = new Numbers_Vector3 (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
-         max = new Numbers_Vector3 (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
-
-      for (const point of points)
-      {
-         min .min (point);
-         max .max (point);
-      }
-
-      return new Box3 () .setExtents (min, max);
-   },
-});
-
-Object .defineProperties (Box3 .prototype,
-{
-   size:
-   {
-      get: (() =>
-      {
-         const
-            min = new Numbers_Vector3 (),
-            max = new Numbers_Vector3 ();
-
-         return function ()
-         {
-            this .getAbsoluteExtents (min, max);
-
-            return max .subtract (min);
-         };
-      })(),
-      enumerable: true,
-   },
-   center:
-   {
-      get ()
-      {
-         return this .matrix .origin;
-      },
-      enumerable: true,
-   },
-});
-
-const Box3_default_ = Box3;
-;
-
-x_ite_Namespace .add ("Box3", "standard/Math/Geometry/Box3", Box3_default_);
-/* harmony default export */ const Geometry_Box3 = (Box3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Line3.js
 /*******************************************************************************
  *
@@ -58205,189 +58441,6 @@ const BindableList_default_ = BindableList;
 
 x_ite_Namespace .add ("BindableList", "x_ite/Execution/BindableList", BindableList_default_);
 /* harmony default export */ const Execution_BindableList = (BindableList_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/X3DBoundedObject.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-function X3DBoundedObject (executionContext)
-{
-   this .addType (Base_X3DConstants .X3DBoundedObject);
-
-   this .addChildObjects (Base_X3DConstants .inputOutput, "hidden",                   new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly,  "display",                  new x_ite_Fields .SFBool (true),
-                          Base_X3DConstants .outputOnly,  "transformSensors_changed", new x_ite_Fields .SFTime ());
-
-   this ._bboxSize   .setUnit ("length");
-   this ._bboxCenter .setUnit ("length");
-
-   this .childBBox            = new Geometry_Box3 (); // Must be unique for each X3DBoundedObject.
-   this .transformSensorNodes = new Set ();
-}
-
-Object .assign (X3DBoundedObject .prototype,
-{
-   initialize ()
-   {
-      this ._hidden  .addInterest ("set_visible_and_hidden__", this);
-      this ._visible .addInterest ("set_visible_and_hidden__", this);
-
-      this .set_visible_and_hidden__ ();
-   },
-   isHidden ()
-   {
-      return this ._hidden .getValue ();
-   },
-   setHidden (value)
-   {
-      if (value === this ._hidden .getValue ())
-         return;
-
-      this ._hidden = value;
-   },
-   getDefaultBBoxSize: (() =>
-   {
-      const defaultBBoxSize = new Numbers_Vector3 (-1, -1, -1);
-
-      return function ()
-      {
-         return defaultBBoxSize;
-      };
-   })(),
-   getBBox (nodes, bbox, shadows)
-   {
-      // Must be unique for each X3DBoundedObject.
-      const childBBox = this .childBBox;
-
-      // Add bounding boxes.
-
-      bbox .set ();
-
-      for (const node of nodes)
-      {
-         if (node .getBBox)
-            bbox .add (node .getBBox (childBBox, shadows));
-      }
-
-      return bbox;
-   },
-   displayBBox: (() =>
-   {
-      const
-         bbox   = new Geometry_Box3 (),
-         matrix = new Numbers_Matrix4 ();
-
-      return function (type, renderObject)
-      {
-         const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-         this .getBBox (bbox);
-         matrix .set (bbox .center, null, bbox .size);
-
-         modelViewMatrix .push ();
-         modelViewMatrix .multLeft (matrix);
-
-         this .getBrowser () .getBBoxNode () .traverse (type, renderObject);
-
-         modelViewMatrix .pop ();
-      };
-   })(),
-   addTransformSensor (transformSensorNode)
-   {
-      this .transformSensorNodes .add (transformSensorNode);
-
-      this ._transformSensors_changed = this .getBrowser () .getCurrentTime ();
-   },
-   removeTransformSensor (transformSensorNode)
-   {
-      this .transformSensorNodes .delete (transformSensorNode);
-
-      this ._transformSensors_changed = this .getBrowser () .getCurrentTime ();
-   },
-   getTransformSensors ()
-   {
-      return this .transformSensorNodes;
-   },
-   set_visible_and_hidden__ ()
-   {
-      const value = this ._visible .getValue () && !this ._hidden .getValue ();
-
-      if (value === this ._display .getValue ())
-         return;
-
-      this ._display = value;
-   },
-   dispose () { },
-});
-
-Object .defineProperties (X3DBoundedObject,
-{
-   typeName:
-   {
-      value: "X3DBoundedObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 1 }),
-      enumerable: true,
-   },
-});
-
-const X3DBoundedObject_default_ = X3DBoundedObject;
-;
-
-x_ite_Namespace .add ("X3DBoundedObject", "x_ite/Components/Grouping/X3DBoundedObject", X3DBoundedObject_default_);
-/* harmony default export */ const Grouping_X3DBoundedObject = (X3DBoundedObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Base/X3DCast.js
 /*******************************************************************************
  *
@@ -62889,7 +62942,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .add ("X3DTexture2DNode", "x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(773);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66471,7 +66524,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .add ("X3DWorld", "x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(773);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67405,7 +67458,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 x_ite_Namespace .add ("ProtoDeclarationArray", "x_ite/Prototype/ProtoDeclarationArray", ProtoDeclarationArray_default_);
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (ProtoDeclarationArray_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(773);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -68007,6 +68060,7 @@ x_ite_Namespace .add ("RouteArray", "x_ite/Routing/RouteArray", RouteArray_defau
 
 
 
+
 const
    _outerNode     = Symbol (),
    _namedNodes    = Symbol (),
@@ -68083,6 +68137,13 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
    setCountPrimitives (value)
    {
       this ._countPrimitives = (this .getExecutionContext () ?.getCountPrimitives () ?? true) && value;
+   },
+   getBBox (bbox, shadows)
+   {
+      const nodes = Array .from (this .getRootNodes (), node => Base_X3DCast (Base_X3DConstants .X3DBoundedObject, node))
+         .filter (node => node);
+
+      return Grouping_X3DBoundedObject .prototype .getBBox (nodes, bbox, shadows);
    },
    getSpecificationVersion ()
    {
@@ -90917,7 +90978,7 @@ mediump samplerCube textureCube;
 x_ite_Namespace .add ("MaterialTextures", "assets/shaders/MaterialTextures", MaterialTextures_default_);
 /* harmony default export */ const MaterialTextures = (MaterialTextures_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(773);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96578,7 +96639,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .add ("ShaderCompiler", "x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(773);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97245,7 +97306,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .add ("X3DAppearanceNode", "x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(773);
+/* provided dependency */ var Appearance_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106151,8 +106212,8 @@ const GifMedia_default_ = GifMedia;
 x_ite_Namespace .add ("GifMedia", "x_ite/Browser/Texturing/GifMedia", GifMedia_default_);
 /* harmony default export */ const Texturing_GifMedia = (GifMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(773);
-/* provided dependency */ var SuperGif = __webpack_require__(878);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(623);
+/* provided dependency */ var SuperGif = __webpack_require__(512);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109570,7 +109631,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 x_ite_Namespace .add ("gettext", "locale/gettext", gettext_default_);
 /* harmony default export */ const gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(773);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110143,7 +110204,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .add ("TextureQuality", "x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(773);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110740,7 +110801,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .add ("RenderingProperties", "x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(773);
+/* provided dependency */ var Notification_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110863,8 +110924,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .add ("Notification", "x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(109);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(773);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(651);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113617,7 +113678,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .add ("DataStorage", "standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(773);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116180,8 +116241,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .add ("X3DViewer", "x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(861);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(773);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(559);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117057,8 +117118,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .add ("ExamineViewer", "x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(861);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(773);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(559);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118067,8 +118128,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .add ("FlyViewer", "x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(861);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(773);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(559);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118399,8 +118460,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .add ("NoneViewer", "x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(861);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(773);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(559);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119540,8 +119601,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .add ("X3DPickingContext", "x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(861);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(773);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(559);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120845,7 +120906,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .add ("MultiSampleFrameBuffer", "x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(773);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121815,7 +121876,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 x_ite_Namespace .add ("X3DSoundContext", "x_ite/Browser/Sound/X3DSoundContext", X3DSoundContext_default_);
 /* harmony default export */ const Sound_X3DSoundContext = (X3DSoundContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(773);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(623);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -123406,7 +123467,7 @@ const Components_default_ = Components;
 x_ite_Namespace .add ("Components", "x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(773);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(623);
 /*******************************************************************************
  * MIT License
  *
@@ -124674,7 +124735,7 @@ const FieldTypes_default_ = new Configuration_FieldTypesArray (Object .values (x
 x_ite_Namespace .add ("FieldTypes", "x_ite/Configuration/FieldTypes", FieldTypes_default_);
 /* harmony default export */ const FieldTypes = (FieldTypes_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(773);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -125776,7 +125837,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace .add ("X3DBrowser", "x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(773);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -125915,8 +125976,8 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 x_ite_Namespace .add ("X3DCanvasElement", "x_ite/X3DCanvasElement", X3DCanvasElement_default_);
 /* harmony default export */ const x_ite_X3DCanvasElement = (X3DCanvasElement_default_);
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(773);
-/* provided dependency */ var pako = __webpack_require__(865);
+/* provided dependency */ var jquery_$ = __webpack_require__(623);
+/* provided dependency */ var pako = __webpack_require__(959);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -125993,14 +126054,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .add ("jquery", "lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(382);
+/* provided dependency */ var libtess_libtess = __webpack_require__(716);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .add ("libtess", "lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(773);
+/* provided dependency */ var X3D_$ = __webpack_require__(623);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
