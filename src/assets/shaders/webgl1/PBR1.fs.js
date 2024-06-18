@@ -303,7 +303,7 @@ getMaterialColor ()
       color = baseColor .rgb;
    #else
       color = f_emissive + diffuse + specular;
-      color = sheen + color * albedoSheenScaling;
+      color = sheen + color;
       color = color * (1.0 - clearcoatFactor * clearcoatFresnel) + clearcoat;
    #endif
 
