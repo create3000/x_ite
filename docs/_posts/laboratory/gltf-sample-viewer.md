@@ -140,6 +140,10 @@ x3d-canvas {
             <label for="ibl"><i id="ibl" class="fa-solid fa-xmark"></i>Image Based Lighting</label>
             <label for="headlight"><i id="headlight" class="fa-solid fa-xmark"></i>Headlight</label>
          </div>
+         <div id="background">
+            <b>Background</b>
+            <label for="summer"><i id="summer" class="fa-solid fa-xmark"></i>Show Background</label>
+         </div>
          <div id="scenes"></div>
          <div id="viewpoints"></div>
          <div id="material-variants"></div>

@@ -611,6 +611,11 @@ class SampleViewer
       {
          this .setHeadlight (!$("#headlight") .hasClass ("green"));
       });
+
+      $("[for=summer]") .on ("click", () =>
+      {
+         this .setBackground (!$("#summer") .hasClass ("green"));
+      });
    }
 
    get scene ()
@@ -665,6 +670,7 @@ class SampleViewer
 
       this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
       this .setHeadlight (true);
+      this .setBackground ($("#summer") .hasClass ("green"));
       this .addScenes ();
       this .addViewpoints ();
       this .addVariants ();
@@ -757,6 +763,41 @@ class SampleViewer
       const navigationInfo = this .scene .createNode ("NavigationInfo");
 
       return this .navigationInfo = navigationInfo;
+   }
+
+   async setBackground (on)
+   {
+      if (on)
+      {
+         $("#summer") .removeClass ("fa-xmark") .addClass ("fa-check");
+         $("#summer, [for=summer]") .addClass ("green");
+      }
+      else
+      {
+         $("#summer") .removeClass ("fa-check") .addClass ("fa-xmark");
+         $("#summer, [for=summer]") .removeClass ("green");
+      }
+
+      const background = await this .getBackground ();
+
+      background .set_bind = on;
+
+      this .scene .addRootNode (background);
+   }
+
+   async getBackground ()
+   {
+      if (this .background)
+         return this .background;
+
+      const background = this .scene .createNode ("Background");
+
+      background .skyAngle    = [0.8, 1.3, 1.4, 1.5708];
+      background .skyColor    = [0.21, 0.31, 0.59, 0.33, 0.45, 0.7, 0.57, 0.66, 0.85, 0.6, 0.73, 0.89, 0.7, 0.83, 0.98];
+      background .groundAngle = [0.659972, 1.2, 1.39912, 1.5708];
+      background .groundColor = [0.105712, 0.156051, 0.297, 0.187629, 0.255857, 0.398, 0.33604, 0.405546, 0.542, 0.3612, 0.469145, 0.602, 0.39471, 0.522059, 0.669];
+
+      return this .background = background;
    }
 
    addScenes ()
