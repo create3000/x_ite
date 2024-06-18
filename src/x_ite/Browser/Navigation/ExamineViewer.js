@@ -585,9 +585,9 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             // console .warn ("critical")
 
-            this .fromVector               .assign (this .toVector);
             this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
             this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
+            this .fromVector               .assign (this .toVector);
 
             this .rotationChaser ._set_value       = Rotation4 .Identity;
             this .rotationChaser ._set_destination = this .getHorizonRotation (deltaRotation);
