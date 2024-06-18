@@ -78,10 +78,6 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
       this .set_specularColor__ ();
       this .set_specularColorTexture__ ();
    },
-   getExtensionKey ()
-   {
-      return ExtensionKeys .SPECULAR_MATERIAL_EXTENSION;
-   },
    set_specular__ ()
    {
       this .specular = Math .max (this ._specular .getValue (), 0);
@@ -110,6 +106,10 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
       this .specularColorTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularColorTexture);
 
       this .setTexture (1, this .specularColorTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return ExtensionKeys .SPECULAR_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {

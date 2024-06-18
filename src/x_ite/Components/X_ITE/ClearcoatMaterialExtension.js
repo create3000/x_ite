@@ -79,10 +79,6 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
       this .set_clearcoatRoughnessTexture__ ();
       this .set_clearcoatNormalTexture__ ();
    },
-   getExtensionKey ()
-   {
-      return ExtensionKeys .CLEARCOAT_MATERIAL_EXTENSION;
-   },
    set_clearcoat__ ()
    {
       this .clearcoat = Math .max (this ._clearcoat .getValue (), 0);
@@ -108,6 +104,10 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
       this .clearcoatNormalTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._clearcoatNormalTexture);
 
       this .setTexture (2, this .clearcoatNormalTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return ExtensionKeys .CLEARCOAT_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {

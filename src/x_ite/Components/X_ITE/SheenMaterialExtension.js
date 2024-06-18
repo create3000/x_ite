@@ -79,10 +79,6 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
       this .set_sheenRoughness__ ();
       this .set_sheenRoughnessTexture__ ();
    },
-   getExtensionKey ()
-   {
-      return ExtensionKeys .SHEEN_MATERIAL_EXTENSION;
-   },
    set_sheenColor__ ()
    {
       //We cannot use this in Windows Edge:
@@ -111,6 +107,10 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
       this .sheenRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._sheenRoughnessTexture);
 
       this .setTexture (1, this .sheenRoughnessTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return ExtensionKeys .SHEEN_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {

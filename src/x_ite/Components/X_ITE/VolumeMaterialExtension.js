@@ -50,6 +50,7 @@ import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
+import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
 function VolumeMaterialExtension (executionContext)
@@ -57,6 +58,8 @@ function VolumeMaterialExtension (executionContext)
    X3DMaterialExtensionNode .call (this, executionContext);
 
    this .addType (X3DConstants .VolumeMaterialExtension);
+
+   this .attenuationColorArray = new Float32Array (3);
 }
 
 Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
@@ -64,6 +67,43 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
    initialize ()
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._thickness            .addInterest ("set_thickness__",          this);
+      this ._thicknessTexture    .addInterest ("set_thicknessTexture__",    this);
+      this ._attenuationDistance .addInterest ("set_attenuationDistance__", this);
+      this ._attenuationColor    .addInterest ("set_attenuationColor__",    this);
+
+      this .set_thickness__ ();
+      this .set_thicknessTexture__ ();
+      this .set_attenuationDistance__ ();
+      this .set_attenuationColor__ ();
+   },
+   set_thickness__ ()
+   {
+      this .thickness = Math .max (this ._thickness .getValue (), 0);
+   },
+   set_thicknessTexture__ ()
+   {
+      this .thicknessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._thicknessTexture);
+
+      this .setTexture (0, this .thicknessTextureNode);
+   },
+   set_attenuationDistance__ ()
+   {
+      this .attenuationDistance = Math .max (this ._attenuationDistance .getValue (), 0);
+   },
+   set_attenuationColor__ ()
+   {
+      //We cannot use this in Windows Edge:
+      //this .attenuationColorArray .set (this ._attenuationColor .getValue ());
+
+      const
+         attenuationColorArray = this .attenuationColorArray,
+         attenuationColor      = this ._attenuationColor .getValue ();
+
+      attenuationColorArray [0] = attenuationColor .r;
+      attenuationColorArray [1] = attenuationColor .g;
+      attenuationColorArray [2] = attenuationColor .b;
    },
    getExtensionKey ()
    {
@@ -82,6 +122,10 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      gl .uniform1f  (shaderObject .x3d_ThicknessEXT,           this .thickness);
+      gl .uniform1f  (shaderObject .x3d_AttenuationDistanceEXT, this .attenuationDistance);
+      gl .uniform3fv (shaderObject .x3d_AttenuationColoEXT,     this .attenuationColorArray);
+
       if (!+this .getTextureBits ())
          return;
 

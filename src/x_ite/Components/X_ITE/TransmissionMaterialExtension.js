@@ -72,10 +72,6 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       this .set_transmission__ ();
       this .set_transmissionTexture__ ();
    },
-   getExtensionKey ()
-   {
-      return ExtensionKeys .TRANSMISSION_MATERIAL_EXTENSION;
-   },
    set_transmission__ ()
    {
       this .transmission = Math .max (this ._transmission .getValue (), 0);
@@ -85,6 +81,10 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       this .transmissionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._transmissionTexture);
 
       this .setTexture (0, this .transmissionTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return ExtensionKeys .TRANSMISSION_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {

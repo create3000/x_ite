@@ -69,13 +69,13 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X3DMate
 
       this .set_indexOfRefraction__ ();
    },
-   getExtensionKey ()
-   {
-      return ExtensionKeys .IOR_MATERIAL_EXTENSION;
-   },
    set_indexOfRefraction__ ()
    {
       this .indexOfRefraction = Math .max (this ._indexOfRefraction .getValue (), 0);
+   },
+   getExtensionKey ()
+   {
+      return ExtensionKeys .IOR_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {

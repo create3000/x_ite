@@ -69,13 +69,13 @@ Object .assign (Object .setPrototypeOf (EmissiveStrengthMaterialExtension .proto
 
       this .set_emissiveStrength__ ();
    },
-   getExtensionKey ()
-   {
-      return ExtensionKeys .EMISSIVE_STRENGTH_MATERIAL_EXTENSION;
-   },
    set_emissiveStrength__ ()
    {
       this .emissiveStrength = Math .max (this ._emissiveStrength .getValue (), 0);
+   },
+   getExtensionKey ()
+   {
+      return ExtensionKeys .EMISSIVE_STRENGTH_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {

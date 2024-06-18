@@ -76,10 +76,6 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
       this .set_anisotropyRotation__ ();
       this .set_anisotropyTexture__ ();
    },
-   getExtensionKey ()
-   {
-      return ExtensionKeys .ANISOTROPY_MATERIAL_EXTENSION;
-   },
    set_anisotropyStrength__ ()
    {
       this .anisotropyArray [2] = Math .max (this ._anisotropyStrength .getValue (), 0);
@@ -96,6 +92,10 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
       this .anisotropyTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._anisotropyTexture);
 
       this .setTexture (0, this .anisotropyTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return ExtensionKeys .ANISOTROPY_MATERIAL_EXTENSION;
    },
    getShaderOptions (options)
    {
