@@ -2571,10 +2571,27 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X_IT
    },
    getShaderOptions (options)
    {
+      options .push ("X3D_VOLUME_MATERIAL_EXT");
 
+      if (!+this .getTextureBits ())
+         return;
+
+      options .push ("X3D_MATERIAL_TEXTURES");
+
+      this .thicknessTextureNode ?.getShaderOptions (options, "THICKNESS", true);
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      if (!+this .getTextureBits ())
+         return;
+
+      this .thicknessTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_ThicknessTextureEXT,
+         this ._thicknessTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
    },
 });
 
