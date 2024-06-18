@@ -48,10 +48,6 @@
 /* WebGL 1 */
 import Fragment1              from "../../../assets/shaders/webgl1/common/Fragment1.glsl.js";
 import Hatch1                 from "../../../assets/shaders/webgl1/common/Hatch1.glsl.js";
-import Normal1                from "../../../assets/shaders/webgl1/common/Normal1.glsl.js";
-import Perlin1                from "../../../assets/shaders/webgl1/common/Perlin1.glsl.js";
-import Point1                 from "../../../assets/shaders/webgl1/common/Point1.glsl.js";
-import PointSize1             from "../../../assets/shaders/webgl1/common/PointSize1.glsl.js";
 import Shadow1                from "../../../assets/shaders/webgl1/common/Shadow1.glsl.js";
 import Texture1               from "../../../assets/shaders/webgl1/common/Texture1.glsl.js";
 import Vertex1                from "../../../assets/shaders/webgl1/common/Vertex1.glsl.js";
@@ -124,10 +120,10 @@ const ShaderRegistry = {
          Hatch: Hatch1,
          Lighting: Lighting2,
          Material: Material2,
-         Normal: Normal1,
-         Perlin: Perlin1,
-         Point: Point1,
-         PointSize: PointSize1,
+         Normal: Normal2,
+         Perlin: Perlin2,
+         Point: Point2,
+         PointSize: PointSize2,
          Shadow: Shadow1,
          Texture: Texture1,
          Vertex: Vertex1,

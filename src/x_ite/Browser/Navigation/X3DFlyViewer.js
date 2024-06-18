@@ -752,7 +752,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       const gl = this .getBrowser () .getContext ();
 
       gl .deleteBuffer (this .lineVertexBuffer);
-      this .lineVertexArrayObject .delete (gl);
+      this .lineVertexArrayObject .dispose (gl);
 
       this .disconnect ();
       this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);

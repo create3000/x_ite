@@ -1,8 +1,4 @@
 export default /* glsl */ `
-#if defined (X3D_NORMAL_TEXTURE)
-uniform x3d_NormalTextureParameters x3d_NormalTexture;
-#endif
-
 struct NormalInfo
 {
    vec3 ng;
@@ -11,6 +7,10 @@ struct NormalInfo
    vec3 t;
    vec3 b;
 };
+
+#if defined (X3D_NORMAL_TEXTURE)
+uniform x3d_NormalTextureParameters x3d_NormalTexture;
+#endif
 
 NormalInfo
 getNormalInfo (const in float normalScale)
@@ -68,12 +68,20 @@ getNormalInfo (const in float normalScale)
    info .ng = ng;
 
    #if defined (X3D_NORMAL_TEXTURE)
-      #if defined (X3D_NORMAL_TEXTURE_2D)
-         info .ntex = texture (x3d_NormalTexture .texture2D, UV .st) .rgb;
-      #elif defined (X3D_NORMAL_TEXTURE_3D)
-         info .ntex = texture (x3d_NormalTexture .texture3D, UV) .rgb;
-      #elif defined (X3D_NORMAL_TEXTURE_CUBE)
-         info .ntex = texture (x3d_NormalTexture .textureCube, UV) .rgb;
+      #if __VERSION__ == 100
+         #if defined (X3D_NORMAL_TEXTURE_2D)
+            info .ntex = texture2D (x3d_NormalTexture .texture2D, UV .st) .rgb;
+         #elif defined (X3D_NORMAL_TEXTURE_CUBE)
+            info .ntex = textureCube (x3d_NormalTexture .textureCube, UV) .rgb;
+         #endif
+      #else
+         #if defined (X3D_NORMAL_TEXTURE_2D)
+            info .ntex = texture (x3d_NormalTexture .texture2D, UV .st) .rgb;
+         #elif defined (X3D_NORMAL_TEXTURE_3D)
+            info .ntex = texture (x3d_NormalTexture .texture3D, UV) .rgb;
+         #elif defined (X3D_NORMAL_TEXTURE_CUBE)
+            info .ntex = texture (x3d_NormalTexture .textureCube, UV) .rgb;
+         #endif
       #endif
 
       info .ntex  = info .ntex * 2.0 - vec3 (1.0);

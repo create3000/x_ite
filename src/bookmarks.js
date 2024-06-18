@@ -193,7 +193,7 @@ const Bookmarks = (() =>
 
                   navigationInfo = this .browser .currentScene .createNode ("NavigationInfo");
 
-                  navigationInfo .headlight = false;
+                  navigationInfo .headlight = true;
                   navigationInfo .set_bind  = true;
 
                   this .browser .currentScene .rootNodes .push (navigationInfo);
