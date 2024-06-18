@@ -64,6 +64,14 @@ Object .assign (Object .setPrototypeOf (DispersionMaterialExtension .prototype, 
    initialize ()
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._dispersion .addInterest ("set_dispersion__", this);
+
+      this .set_dispersion__ ();
+   },
+   set_dispersion__ ()
+   {
+      this .dispersion = Math .max (this ._dispersion .getValue (), 0);
    },
    getExtensionKey ()
    {
@@ -71,10 +79,11 @@ Object .assign (Object .setPrototypeOf (DispersionMaterialExtension .prototype, 
    },
    getShaderOptions (options)
    {
-
+      options .push ("X3D_DISPERSION_MATERIAL_EXT");
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
+      gl .uniform1f  (shaderObject .x3d_DispersionEXT, this .dispersion);
    },
 });
 

@@ -312,6 +312,10 @@ ${MaterialTextures .texture ("x3d_TransmissionTextureEXT", "r")}
 
 uniform float x3d_TransmissionEXT;
 
+#if defined (X3D_DISPERSION_MATERIAL_EXT)
+   uniform float x3d_DispersionEXT;
+#endif
+
 MaterialInfo
 getTransmissionInfo (in MaterialInfo info)
 {

@@ -297,6 +297,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "EXT_mesh_gpu_instancing":
             case "KHR_materials_anisotropy":
             case "KHR_materials_clearcoat":
+            case "KHR_materials_dispersion":
             case "KHR_materials_emissive_strength":
             case "KHR_materials_ior":
             case "KHR_materials_sheen":
@@ -1152,6 +1153,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_clearcoat":
                this .khrMaterialsClearcoatObject (value, materialNode);
                break;
+            case "KHR_materials_dispersion":
+               this .khrMaterialsDispersionObject (value, materialNode);
+               break;
             case "KHR_materials_emissive_strength":
                this .khrMaterialsEmissiveStrengthObject (value, materialNode);
                break;
@@ -1209,6 +1213,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension ._clearcoatNormalTexture        = this .textureInfo (KHR_materials_clearcoat .clearcoatNormalTexture);
       extension ._clearcoatNormalTextureMapping = this .textureMapping (KHR_materials_clearcoat .clearcoatNormalTexture);
+
+      extension .setup ();
+
+      materialNode ._extensions .push (extension);
+   },
+   khrMaterialsDispersionObject (KHR_materials_dispersion, materialNode)
+   {
+      if (!(KHR_materials_dispersion instanceof Object))
+         return;
+
+      const extension = this .getScene () .createNode ("DispersionMaterialExtension", false);
+
+      extension ._dispersion = this .numberValue (KHR_materials_dispersion .dispersion, 0);
 
       extension .setup ();
 

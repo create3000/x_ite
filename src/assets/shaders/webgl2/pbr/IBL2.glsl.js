@@ -126,7 +126,7 @@ getIBLVolumeRefraction (const in vec3 n, const in vec3 v, const in float percept
          vec3 refractedRayExit = position + transmissionRay;
 
          // Project refracted vector on the framebuffer, while mapping to normalized device coordinates.
-         vec4 ndcPos           = projMatrix * viewMatrix * vec4 (refractedRayExit, 1.0);
+         vec4 ndcPos           = projMatrix * vec4 (refractedRayExit, 1.0); // removed viewMatrix
          vec2 refractionCoords = ndcPos.xy / ndcPos.w;
 
          refractionCoords += 1.0;
