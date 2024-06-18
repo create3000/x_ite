@@ -45,21 +45,63 @@
  *
  ******************************************************************************/
 
-let i = 0;
+import Fields                   from "../../Fields.js";
+import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
+import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
+import X3DConstants             from "../../Base/X3DConstants.js";
+import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
-const ExtensionKeys =
+function UnlitMaterialExtension (executionContext)
 {
-   ANISOTROPY_MATERIAL_EXTENSION:        i ++,
-   CLEARCOAT_MATERIAL_EXTENSION:         i ++,
-   DISPERSION_MATERIAL_EXTENSION:        i ++,
-   EMISSIVE_STRENGTH_MATERIAL_EXTENSION: i ++,
-   IOR_MATERIAL_EXTENSION:               i ++,
-   IRIDESCENCE_MATERIAL_EXTENSION:       i ++,
-   SHEEN_MATERIAL_EXTENSION:             i ++,
-   SPECULAR_MATERIAL_EXTENSION:          i ++,
-   TRANSMISSION_MATERIAL_EXTENSION:      i ++,
-   UNLIT_MATERIAL_EXTENSION:             i ++,
-   VOLUME_MATERIAL_EXTENSION:            i ++,
-};
+   X3DMaterialExtensionNode .call (this, executionContext);
 
-export default ExtensionKeys;
+   this .addType (X3DConstants .UnlitMaterialExtension);
+}
+
+Object .assign (Object .setPrototypeOf (UnlitMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
+{
+   getExtensionKey ()
+   {
+      return ExtensionKeys .UNLIT_MATERIAL_EXTENSION;
+   },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_UNLIT_MATERIAL_EXT");
+   },
+   setShaderUniforms ()
+   { },
+});
+
+Object .defineProperties (UnlitMaterialExtension,
+{
+   typeName:
+   {
+      value: "UnlitMaterialExtension",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "extensions",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+export default UnlitMaterialExtension;

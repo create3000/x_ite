@@ -208,7 +208,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    set_extensionsKey__ ()
    {
       const extensionsKey = this .extensionNodes
-         .map (extensionNode => `${extensionNode .getExtensionKey ()}${extensionNode .getTextureBits () .toString (16)}`)
+         .map (extensionNode => `${extensionNode .getExtensionKey () .toString (16)}${extensionNode .getTextureBits () .toString (16)}`)
          .join ("");
 
       this .materialKey = `[3.${extensionsKey}]`;

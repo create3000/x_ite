@@ -294,7 +294,7 @@ getMaterialColor ()
 
    vec3 color = vec3 (0.0);
 
-   #if defined (X3D_MATERIAL_UNLIT)
+   #if defined (X3D_UNLIT_MATERIAL_EXT)
       color = baseColor .rgb;
    #else
       color = f_emissive + diffuse + specular;

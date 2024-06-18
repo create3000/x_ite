@@ -299,6 +299,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
+            case "KHR_materials_unlit":
             {
                const component = browser .getComponent ("X_ITE", 1);
 
@@ -1160,7 +1161,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                this .khrMaterialsTransmission (value, materialNode);
                break;
             case "KHR_materials_unlit":
-               this .khrMaterialsUnlitObject (materialNode);
+               this .khrMaterialsUnlitObject (value, materialNode);
                break;
          }
       }
@@ -1277,31 +1278,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       materialNode ._extensions .push (extension);
    },
-   khrMaterialsUnlitObject (materialNode)
+   khrMaterialsUnlitObject (KHR_materials_unlit, materialNode)
    {
-      switch (materialNode .getTypeName ())
-      {
-         case "PhysicalMaterial":
-         {
-            materialNode ._emissiveColor          = materialNode ._baseColor;
-            materialNode ._emissiveTextureMapping = materialNode ._baseTextureMapping;
-            materialNode ._emissiveTexture        = materialNode ._baseTexture;
-            materialNode ._baseColor              = Color3 .Black;
-            materialNode ._baseTextureMapping     = "";
-            materialNode ._baseTexture            = null;
-            break;
-         }
-         case "Material":
-         {
-            materialNode ._emissiveColor          = materialNode ._diffuseColor;
-            materialNode ._emissiveTextureMapping = materialNode ._diffuseTextureMapping;
-            materialNode ._emissiveTexture        = materialNode ._diffuseTexture;
-            materialNode ._diffuseColor           = Color3 .Black;
-            materialNode ._diffuseTextureMapping  = "";
-            materialNode ._diffuseTexture         = null;
-            break;
-         }
-      }
+      const extension = this .getScene () .createNode ("UnlitMaterialExtension", false);
+
+      extension .setup ();
+
+      materialNode ._extensions .push (extension);
    },
    textureTransformObject (KHR_texture_transform, texCoord)
    {
