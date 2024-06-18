@@ -70,7 +70,7 @@ const
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
    MOVE_TIME         = 0.2,
    ROTATE_TIME       = 0.1,
-   CRITICAL_ANGLE    = Math .cos (Algorithm .radians (0.15));
+   CRITICAL_ANGLE    = Math .cos (Algorithm .radians (1));
 
 function ExamineViewer (executionContext, navigationInfo)
 {
@@ -581,6 +581,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          catch
          {
+            // Slide along critical angle.
+
             // console .warn ("critical")
 
             const destination = this .getHorizonRotation (deltaRotation);
@@ -639,7 +641,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          if (Math .sign (rotation .getAxis () .dot (Vector3 .yAxis)) !== Math .sign (rotation .angle))
             this .axis .negate ();
 
-         this .timeSensor ._cycleInterval = Math .PI / (deltaRotation .angle * SPIN_FACTOR * 30);
+         this .timeSensor ._cycleInterval = Math .PI / (Math .abs (deltaRotation .angle) * SPIN_FACTOR * 30);
          this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
          const lookAtRotation = viewpoint .getLookAtRotation (userPosition, userCenterOfRotation);
