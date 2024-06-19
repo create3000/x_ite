@@ -33,7 +33,7 @@ All glTF extensions implemented with this version are listed below.
 * KHR_materials_unlit implemented as [UnlitMaterialExtension](/x_ite/components/x-ite/unlitmaterialextension/) node.
 * KHR_materials_volume implemented as [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) node.
 
-### Converted to Switch
+### Switch
 
 * KHR_materials_variants implemented as [Switch](/x_ite/components/grouping/switch/) node.
 
