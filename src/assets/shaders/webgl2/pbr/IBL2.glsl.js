@@ -248,7 +248,7 @@ getIBLRadianceCharlie (const in vec3 n, const in vec3 v, const in float sheenRou
       float brdf = texture (x3d_EnvironmentLightSource .CharlieLUTTexture, brdfSamplePoint) .b;
    #endif
 
-   vec3  sheenLight = getSheenLight (reflection, lod);
+   vec3 sheenLight = getSheenLight (reflection, lod);
 
    return sheenLight * sheenColor * brdf;
 }
