@@ -215,8 +215,7 @@ getMaterialColor ()
             vec3 intensity = getLightIntensity (light, l, distanceToLight);
 
             #if defined (X3D_SHADOWS)
-               if (light .shadowIntensity > 0.0)
-                  intensity = mix (intensity, light .shadowColor, getShadowIntensity (i, light));
+               intensity = mix (intensity, light .shadowColor, getShadowIntensity (i, light));
             #endif
 
             vec3 l_diffuse  = vec3 (0.0);
