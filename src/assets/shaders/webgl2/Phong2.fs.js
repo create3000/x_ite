@@ -92,10 +92,6 @@ getEmissiveColor ()
    return emissiveColor;
 }
 
-#if defined (X3D_SHININESS_TEXTURE)
-   uniform x3d_ShininessTextureParameters x3d_ShininessTexture;
-#endif
-
 ${MaterialTextures .texture ("x3d_ShininessTexture", "a")}
 
 float
