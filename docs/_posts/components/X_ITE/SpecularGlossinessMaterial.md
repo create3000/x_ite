@@ -40,31 +40,31 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
-### SFColor [in, out] **diffuseColor**
+### SFColor [in, out] **diffuseColor** 1 1 1 <small>[0,1]</small>
 
 Input/Output field *diffuseColor*.
 
-### SFString [in, out] **diffuseTextureMapping**
+### SFString [in, out] **diffuseTextureMapping** ""
 
 Input/Output field *diffuseTextureMapping*.
 
-### SFNode [in, out] **diffuseTexture**
+### SFNode [in, out] **diffuseTexture** NULL <small>[X3DSingleTextureNode]</small>
 
 Input/Output field *diffuseTexture*.
 
-### SFColor [in, out] **specularColor**
+### SFColor [in, out] **specularColor** 1 1 1 <small>[0,1]</small>
 
 Input/Output field *specularColor*.
 
-### SFFloat [in, out] **glossiness**
+### SFFloat [in, out] **glossiness** 1 <small>[0,1]</small>
 
 Input/Output field *glossiness*.
 
-### SFString [in, out] **specularGlossinessTextureMapping**
+### SFString [in, out] **specularGlossinessTextureMapping** "
 
 Input/Output field *specularGlossinessTextureMapping*.
 
-### SFNode [in, out] **specularGlossinessTexture**
+### SFNode [in, out] **specularGlossinessTexture** NULL <small>[X3DSingleTextureNode]</small>
 
 Input/Output field *specularGlossinessTexture*.
 
