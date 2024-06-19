@@ -15,7 +15,7 @@ tags: [AnisotropyMaterialExtension, X_ITE]
 
 AnisotropyMaterialExtension.
 
-The AnisotropyMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *material.* It is available from X3D version 4.0 or higher.
+The AnisotropyMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
 
 >**Info:** Please note that the functionality of this node is still experimental.
 {: .prompt-info }
