@@ -289,7 +289,11 @@ Object .assign (X3DOptimizer .prototype,
    {
       // Combine single viewpoint nodes.
 
-      const nodeMatrix = new Matrix4 ();
+      const
+         nodeMatrix      = new Matrix4 (),
+         viewpointMatrix = new Matrix4 (),
+         translation     = new Vector3 (),
+         rotation        = new Rotation4 ();
 
       nodeMatrix .set (node .translation .getValue (),
                        node .rotation .getValue (),
@@ -297,18 +301,12 @@ Object .assign (X3DOptimizer .prototype,
                        node .scaleOrientation .getValue (),
                        node .center .getValue ());
 
-      const viewpointMatrix = new Matrix4 ();
-
       viewpointMatrix .set (child .position .getValue (),
                             child .orientation .getValue ());
 
-      viewpointMatrix .multRight (nodeMatrix);
-
-      const
-         translation = new Vector3 (),
-         rotation    = new Rotation4 ();
-
-      viewpointMatrix .get (translation, rotation);
+      viewpointMatrix
+         .multRight (nodeMatrix)
+         .get (translation, rotation);
 
       child .position         = translation;
       child .orientation      = rotation;
