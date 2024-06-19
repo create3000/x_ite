@@ -166,14 +166,15 @@ Object .assign (X3DRenderingContext .prototype,
    },
    getTransmissionBuffer ()
    {
-      if (this [_transmissionBuffer])
-         return this [_transmissionBuffer];
-
       this [_transmissionBuffer] = new TextureBuffer (this,
          this [_frameBuffer] .getWidth (),
          this [_frameBuffer] .getHeight (),
          false,
          true);
+
+      this .getTransmissionBuffer = function () { return this [_transmissionBuffer]; };
+
+      Object .defineProperty (this, "getTransmissionBuffer", { enumerable: false });
 
       return this [_transmissionBuffer];
    },
