@@ -57,6 +57,7 @@ const ibl_files = [
    "Transmission",
    "Walking Alien",
    "WaterBottle",
+   "WebP",
    "YetiWarrior",
 ];
 
