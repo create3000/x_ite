@@ -309,6 +309,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - SliderJoint
 - Sound
 - SpatialSound
+- SpecularGlossinessMaterial
 - SpecularMaterialExtension
 - Sphere
 - SphereSensor

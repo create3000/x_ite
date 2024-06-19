@@ -20,6 +20,8 @@
       url: /components/x-ite/iridescencematerialextension/
     - title: "SheenMaterialExtension"
       url: /components/x-ite/sheenmaterialextension/
+    - title: "SpecularGlossinessMaterial"
+      url: /components/x-ite/specularglossinessmaterial/
     - title: "SpecularMaterialExtension"
       url: /components/x-ite/specularmaterialextension/
     - title: "TransmissionMaterialExtension"

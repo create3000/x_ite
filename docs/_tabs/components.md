@@ -393,6 +393,7 @@ X3D groups nodes into components and components into profiles. This index lists 
 - [InstancedShape](/x_ite/components/x-ite/instancedshape/)
 - [IridescenceMaterialExtension](/x_ite/components/x-ite/iridescencematerialextension/)
 - [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/)
+- [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/)
 - [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/)
 - [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/)
 - [UnlitMaterialExtension](/x_ite/components/x-ite/unlitmaterialextension/)
