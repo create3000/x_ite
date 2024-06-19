@@ -205,7 +205,6 @@ getMaterialColor ()
 
          float NdotL = clamp (dot (n, l), 0.0, 1.0);
          float NdotH = clamp (dot (n, h), 0.0, 1.0);
-         // float LdotH = clamp (dot (l, h), 0.0, 1.0);
          float VdotH = clamp (dot (v, h), 0.0, 1.0);
 
          if (NdotL > 0.0 || NdotV > 0.0)
