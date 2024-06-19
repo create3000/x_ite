@@ -395,6 +395,7 @@ X3D groups nodes into components and components into profiles. This index lists 
 - [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/)
 - [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/)
 - [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/)
+- [UnlitMaterialExtension](/x_ite/components/x-ite/unlitmaterialextension/)
 - [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/)
 
 <!-- COMPONENTS END -->

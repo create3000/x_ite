@@ -24,5 +24,7 @@
       url: /components/x-ite/specularmaterialextension/
     - title: "TransmissionMaterialExtension"
       url: /components/x-ite/transmissionmaterialextension/
+    - title: "UnlitMaterialExtension"
+      url: /components/x-ite/unlitmaterialextension/
     - title: "VolumeMaterialExtension"
       url: /components/x-ite/volumematerialextension/
