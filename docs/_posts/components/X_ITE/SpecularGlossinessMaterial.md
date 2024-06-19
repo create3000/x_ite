@@ -60,7 +60,7 @@ Input/Output field *specularColor*.
 
 Input/Output field *glossiness*.
 
-### SFString [in, out] **specularGlossinessTextureMapping** "
+### SFString [in, out] **specularGlossinessTextureMapping** ""
 
 Input/Output field *specularGlossinessTextureMapping*.
 
