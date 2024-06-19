@@ -123,7 +123,7 @@ getMetallicRoughnessInfo (in MaterialInfo info)
 }
 #endif
 
-${MaterialTextures .texture ("x3d_EmissiveTexture", "rgb", "linear")}
+${MaterialTextures .texture ("x3d_EmissiveTexture", "rgb")}
 
 #if defined (X3D_EMISSIVE_STRENGTH_MATERIAL_EXT)
    uniform float x3d_EmissiveStrengthEXT;
