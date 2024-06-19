@@ -47,7 +47,6 @@
 
 /* WebGL 1 */
 import Fragment1              from "../../../assets/shaders/webgl1/common/Fragment1.glsl.js";
-import Hatch1                 from "../../../assets/shaders/webgl1/common/Hatch1.glsl.js";
 import Shadow1                from "../../../assets/shaders/webgl1/common/Shadow1.glsl.js";
 import Texture1               from "../../../assets/shaders/webgl1/common/Texture1.glsl.js";
 import Vertex1                from "../../../assets/shaders/webgl1/common/Vertex1.glsl.js";
@@ -114,7 +113,7 @@ const ShaderRegistry = {
          ClipPlanes: ClipPlanes2,
          Fog: Fog2,
          Fragment: Fragment1,
-         Hatch: Hatch1,
+         Hatch: Hatch2,
          Lighting: Lighting2,
          Material: Material2,
          Normal: Normal2,
