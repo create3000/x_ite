@@ -44,8 +44,6 @@ getNormalInfo (const in float normalScale)
       if (length (uv_dy) <= 1e-2)
          uv_dy = vec2 (0.0, 1.0);
 
-      // TODO: Unfortunately, if we use vertex in dFdx/dFdy, we can see the hard faces in the TBN.
-      // This can only be solved with precomputed tangents.
       vec3 t_ = (uv_dy .t * dFdx (vertex) - uv_dx .t * dFdy (vertex)) / (uv_dx .s * uv_dy .t - uv_dy .s * uv_dx .t);
 
       // Normals are either present as vertex attributes or approximated.
