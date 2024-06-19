@@ -12,6 +12,7 @@ const ibl_files = [
    "Bonsai",
    "BoomBox",
    "Box With Spaces",
+   "BrainStem",
    "CarbonFibre",
    "ChairDamaskPurplegold",
    "Clearcoat",
