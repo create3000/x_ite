@@ -2,8 +2,8 @@
 title: SpecularGlossinessMaterial
 date: 2023-01-31
 nav: components-Shape
-categories: [components, Shape]
-tags: [SpecularGlossinessMaterial, Shape]
+categories: [components, X_ITE]
+tags: [SpecularGlossinessMaterial, X_ITE]
 ---
 <style>
 .post h3 {
@@ -39,6 +39,34 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 #### Hint
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFColor [in, out] **diffuseColor**
+
+Input/Output field *diffuseColor*.
+
+### SFString [in, out] **diffuseTextureMapping**
+
+Input/Output field *diffuseTextureMapping*.
+
+### SFNode [in, out] **diffuseTexture**
+
+Input/Output field *diffuseTexture*.
+
+### SFColor [in, out] **specularColor**
+
+Input/Output field *specularColor*.
+
+### SFFloat [in, out] **glossiness**
+
+Input/Output field *glossiness*.
+
+### SFString [in, out] **specularGlossinessTextureMapping**
+
+Input/Output field *specularGlossinessTextureMapping*.
+
+### SFNode [in, out] **specularGlossinessTexture**
+
+Input/Output field *specularGlossinessTexture*.
 
 ### SFColor [in, out] **emissiveColor** 0 0 0 <small>[0,1]</small>
 
@@ -151,4 +179,4 @@ Input/Output field *extensions*.
 
 ## See Also
 
-- [X3D Specification of SpecularGlossinessMaterial Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#SpecularGlossinessMaterial){:target="_blank"}
+- [Khronos Specification of KHR_materials_pbrSpecularGlossiness Material](https://kcoley.github.io/glTF/extensions/2.0/Khronos/KHR_materials_pbrSpecularGlossiness/#:~:text=The%20PBR%20specular%2Dglossiness%20extension,materials%20compared%20to%20metallic%2Droughness.){:target="_blank"}
