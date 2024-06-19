@@ -324,6 +324,38 @@ getVolumeInfo (in MaterialInfo info)
 }
 #endif
 
+#if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
+
+${MaterialTextures .texture ("x3d_IridescenceTextureEXT",          "r")}
+${MaterialTextures .texture ("x3d_IridescenceThicknessTextureEXT", "g")}
+
+uniform float x3d_IridescenceEXT;
+uniform float x3d_IridescenceIndexOfRefractionEXT;
+uniform float x3d_IridescenceThicknessMinimumEXT;
+uniform float x3d_IridescenceThicknessMaximumEXT;
+
+MaterialInfo
+getIridescenceInfo (in MaterialInfo info)
+{
+    info .iridescenceFactor    = x3d_IridescenceEXT;
+    info .iridescenceIor       = x3d_IridescenceIndexOfRefractionEXT;
+    info .iridescenceThickness = x3d_IridescenceThicknessMaximumEXT;
+
+    #if defined (X3D_IRIDESCENCE_TEXTURE_EXT)
+        info .iridescenceFactor *= getIridescenceTextureEXT ();
+    #endif
+
+    #if defined (X3D_IRIDESCENCE_THICKNESS_TEXTURE_EXT)
+        float thicknessSampled = getIridescenceThicknessTextureEXT ();
+        float thickness        = mix (x3d_IridescenceThicknessMinimumEXT, x3d_IridescenceThicknessMaximumEXT, thicknessSampled);
+
+        info .iridescenceThickness = thickness;
+    #endif
+
+    return info;
+}
+#endif
+
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
 
 ${MaterialTextures .texture ("x3d_TransmissionTextureEXT", "r")}

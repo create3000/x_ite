@@ -300,6 +300,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_dispersion":
             case "KHR_materials_emissive_strength":
             case "KHR_materials_ior":
+            case "KHR_materials_iridescence":
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
@@ -1162,6 +1163,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_ior":
                this .khrMaterialsIorStrengthObject (value, materialNode);
                break;
+            case "KHR_materials_iridescence":
+               this .khrMaterialsIridescenceObject (value, materialNode);
+               break;
             case "KHR_materials_sheen":
                this .khrMaterialsSheenObject (value, materialNode);
                break;
@@ -1249,6 +1253,23 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const extension = this .getScene () .createNode ("IORMaterialExtension", false);
 
       extension ._indexOfRefraction = this .numberValue (KHR_materials_ior .ior, 1.5);
+
+      extension .setup ();
+
+      materialNode ._extensions .push (extension);
+   },
+   khrMaterialsIridescenceObject (KHR_materials_iridescence, materialNode)
+   {
+      const extension = this .getScene () .createNode ("IridescenceMaterialExtension", false);
+
+      extension ._iridescence                        = this .numberValue (KHR_materials_iridescence .iridescenceFactor, 0);
+      extension ._iridescenceTexture                 = this .textureInfo (KHR_materials_iridescence .iridescenceTexture);
+      extension ._iridescenceTextureMapping          = this .textureMapping (KHR_materials_iridescence .iridescenceTexture);
+      extension ._iridescenceIndexOfRefraction       = this .numberValue (KHR_materials_iridescence .iridescenceIor, 1.3);
+      extension ._iridescenceThicknessMinimum        = this .numberValue (KHR_materials_iridescence .iridescenceThicknessMinimum, 100);
+      extension ._iridescenceThicknessMaximum        = this .numberValue (KHR_materials_iridescence .iridescenceThicknessMaximum, 400);
+      extension ._iridescenceThicknessTexture        = this .textureInfo (KHR_materials_iridescence .iridescenceThicknessTexture);
+      extension ._iridescenceThicknessTextureMapping = this .textureMapping (KHR_materials_iridescence .iridescenceThicknessTexture);
 
       extension .setup ();
 

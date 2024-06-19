@@ -10,6 +10,74 @@ F_Schlick (const in vec3 f0, const in vec3 f90, const in float VdotH)
    return f0 + (f90 - f0) * pow (clamp (1.0 - VdotH, 0.0, 1.0), 5.0);
 }
 
+float
+F_Schlick (const in float f0, const in float f90, const in float VdotH)
+{
+    float x  = clamp (1.0 - VdotH, 0.0, 1.0);
+    float x2 = x * x;
+    float x5 = x * x2 * x2;
+
+    return f0 + (f90 - f0) * x5;
+}
+
+float
+F_Schlick (const in float f0, const in float VdotH)
+{
+    float f90 = 1.0; //clamp(50.0 * f0, 0.0, 1.0);
+
+    return F_Schlick (f0, f90, VdotH);
+}
+
+vec3
+F_Schlick (const in vec3 f0, const in float f90, const in float VdotH)
+{
+    float x  = clamp (1.0 - VdotH, 0.0, 1.0);
+    float x2 = x * x;
+    float x5 = x * x2 * x2;
+
+    return f0 + (f90 - f0) * x5;
+}
+
+vec3
+F_Schlick (const in vec3 f0, const in float VdotH)
+{
+    float f90 = 1.0; //clamp(dot(f0, vec3(50.0 * 0.33)), 0.0, 1.0);
+
+    return F_Schlick (f0, f90, VdotH);
+}
+
+vec3
+Schlick_to_F0 (const in vec3 f, const in vec3 f90, const in float VdotH)
+{
+    float x  = clamp (1.0 - VdotH, 0.0, 1.0);
+    float x2 = x * x;
+    float x5 = clamp (x * x2 * x2, 0.0, 0.9999);
+
+    return (f - f90 * x5) / (1.0 - x5);
+}
+
+float
+Schlick_to_F0 (const in float f, const in float f90, const in float VdotH)
+{
+    float x  = clamp (1.0 - VdotH, 0.0, 1.0);
+    float x2 = x * x;
+    float x5 = clamp (x * x2 * x2, 0.0, 0.9999);
+
+    return (f - f90 * x5) / (1.0 - x5);
+}
+
+vec3
+Schlick_to_F0 (const in vec3 f, const in float VdotH)
+{
+    return Schlick_to_F0 (f, vec3 (1.0), VdotH);
+}
+
+float
+Schlick_to_F0 (const in float f, const in float VdotH)
+{
+   return Schlick_to_F0 (f, 1.0, VdotH);
+}
+
 // Smith Joint GGX
 // Note: Vis = G / (4 * NdotL * NdotV)
 // see Eric Heitz. 2014. Understanding the Masking-Shadowing Function in Microfacet-Based BRDFs. Journal of Computer Graphics Techniques, 3
@@ -65,6 +133,35 @@ BRDF_specularGGX (const in vec3 f0, const in vec3 f90, const in float alphaRough
 
    return specularWeight * F * Vis * D;
 }
+
+#if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
+//https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
+vec3
+BRDF_lambertianIridescence (const in vec3 f0, const in vec3 f90, const in vec3 iridescenceFresnel, const in float iridescenceFactor, const in vec3 diffuseColor, const in float specularWeight, const in float VdotH)
+{
+   // Use the maximum component of the iridescence Fresnel color
+   // Maximum is used instead of the RGB value to not get inverse colors for the diffuse BRDF
+   vec3 iridescenceFresnelMax = vec3 (max (max (iridescenceFresnel .r, iridescenceFresnel .g), iridescenceFresnel .b));
+
+   vec3 schlickFresnel = F_Schlick (f0, f90, VdotH);
+
+   // Blend default specular Fresnel with iridescence Fresnel
+   vec3 F = mix (schlickFresnel, iridescenceFresnelMax, iridescenceFactor);
+
+   // see https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/
+   return (1.0 - specularWeight * F) * (diffuseColor / M_PI);
+}
+
+vec3
+BRDF_specularGGXIridescence (const in vec3 f0, const in vec3 f90, const in vec3 iridescenceFresnel, const in float alphaRoughness, const in float iridescenceFactor, const in float specularWeight, const in float VdotH, const in float NdotL, const in float NdotV, const in float NdotH)
+{
+   vec3  F   = mix (F_Schlick (f0, f90, VdotH), iridescenceFresnel, iridescenceFactor);
+   float Vis = V_GGX (NdotL, NdotV, alphaRoughness);
+   float D   = D_GGX (NdotH, alphaRoughness);
+
+   return specularWeight * F * Vis * D;
+}
+#endif
 
 #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
 // GGX Distribution Anisotropic (Same as Babylon.js)

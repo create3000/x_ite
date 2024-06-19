@@ -32,6 +32,7 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 #pragma X3D include "pbr/MaterialInfo.glsl"
 #pragma X3D include "pbr/Punctual.glsl"
 #pragma X3D include "pbr/IBL.glsl"
+#pragma X3D include "pbr/Iridescence.glsl"
 
 vec4
 getMaterialColor ()
@@ -44,7 +45,7 @@ getMaterialColor ()
 
    vec3 v = normalize (-vertex);
 
-   #if defined (X3D_LIGHTING) || defined (X3D_USE_IBL) || defined (X3D_ANISOTROPY_MATERIAL_EXT) || defined (X3D_CLEARCOAT_MATERIAL_EXT)
+   #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING) || defined (X3D_ANISOTROPY_MATERIAL_EXT) || defined (X3D_CLEARCOAT_MATERIAL_EXT)
       NormalInfo normalInfo = getNormalInfo (x3d_Material .normalScale);
 
       vec3  n     = normalInfo .n;
@@ -87,6 +88,10 @@ getMaterialColor ()
       materialInfo = getVolumeInfo (materialInfo);
    #endif
 
+   #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
+      materialInfo = getIridescenceInfo (materialInfo);
+   #endif
+
    #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
       materialInfo = getAnisotropyInfo (materialInfo, normalInfo);
    #endif
@@ -113,6 +118,14 @@ getMaterialColor ()
    vec3 f_transmission = vec3 (0.0);
 
    float albedoSheenScaling = 1.0;
+
+   #if defined (X3D_IRIDESCENCE_MATERIAL_EXT) && (defined (X3D_USE_IBL) || defined (X3D_LIGHTING))
+      vec3 iridescenceFresnel = evalIridescence (1.0, materialInfo .iridescenceIor, NdotV, materialInfo .iridescenceThickness, materialInfo .f0);
+      vec3 iridescenceF0      = Schlick_to_F0 (iridescenceFresnel, NdotV);
+
+      if (materialInfo .iridescenceThickness == 0.0)
+         materialInfo .iridescenceFactor = 0.0;
+   #endif
 
    // Calculate lighting contribution from image based lighting source (IBL)
    #if defined (X3D_USE_IBL)

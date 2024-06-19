@@ -14,6 +14,8 @@ export default
       "x3d_ClearcoatTextureEXT",
       "x3d_ClearcoatRoughnessTextureEXT",
       "x3d_ClearcoatNormalTextureEXT",
+      "x3d_IridescenceTextureEXT",
+      "x3d_IridescenceThicknessTextureEXT",
       "x3d_SheenColorTextureEXT",
       "x3d_SheenRoughnessTextureEXT",
       "x3d_SpecularTextureEXT",

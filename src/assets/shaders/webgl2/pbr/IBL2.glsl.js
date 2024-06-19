@@ -113,6 +113,72 @@ getIBLRadianceLambertian (const in vec3 n, const in vec3 v, const in float rough
    return (FmsEms + k_D) * irradiance;
 }
 
+#if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
+vec3
+getIBLRadianceGGXIridescence (const in vec3 n, const in vec3 v, const in float roughness, const in vec3 F0, const in vec3 iridescenceFresnel, const in float iridescenceFactor, const in float specularWeight)
+{
+   float NdotV      = clamp (dot (n, v), 0.0, 1.0);
+   float lod        = roughness * float (x3d_EnvironmentLightSource .specularTextureLevels - 1);
+   vec3  reflection = normalize (reflect (-v, n));
+
+   vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
+
+   #if __VERSION__ == 100
+      vec2 f_ab = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   #else
+      vec2 f_ab = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   #endif
+
+   vec3 specularLight = getSpecularLight (reflection, lod);
+
+   // see https://bruop.github.io/ibl/#single_scattering_results at Single Scattering Results
+   // Roughness dependent fresnel, from Fdez-Aguera
+   vec3 Fr     = max (vec3 (1.0 - roughness), F0) - F0;
+   vec3 k_S    = mix (F0 + Fr * pow (1.0 - NdotV, 5.0), iridescenceFresnel, iridescenceFactor);
+   vec3 FssEss = k_S * f_ab.x + f_ab.y;
+
+   return specularWeight * specularLight * FssEss;
+}
+
+// specularWeight is introduced with KHR_materials_specular
+vec3
+getIBLRadianceLambertianIridescence (const in vec3 n, const in vec3 v, const in float roughness, const in vec3 diffuseColor, const in vec3 F0, const in vec3 iridescenceF0, const in float iridescenceFactor, const in float specularWeight)
+{
+   float NdotV         = clamp (dot (n, v), 0.0, 1.0);
+   vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2(0.0, 0.0), vec2(1.0, 1.0));
+
+   #if __VERSION__ == 100
+      vec2 f_ab = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   #else
+      vec2 f_ab = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   #endif
+
+   vec3 irradiance = getDiffuseLight (n);
+
+   // Use the maximum component of the iridescence Fresnel color
+   // Maximum is used instead of the RGB value to not get inverse colors for the diffuse BRDF
+   vec3 iridescenceF0Max = vec3 (max (max (iridescenceF0 .r, iridescenceF0 .g), iridescenceF0 .b));
+
+   // Blend between base F0 and iridescence F0
+   vec3 mixedF0 = mix (F0, iridescenceF0Max, iridescenceFactor);
+
+   // see https://bruop.github.io/ibl/#single_scattering_results at Single Scattering Results
+   // Roughness dependent fresnel, from Fdez-Aguera
+
+   vec3 Fr     = max (vec3 (1.0 - roughness), mixedF0) - mixedF0;
+   vec3 k_S    = mixedF0 + Fr * pow (1.0 - NdotV, 5.0);
+   vec3 FssEss = specularWeight * k_S * f_ab.x + f_ab.y; // <--- GGX / specular light contribution (scale it down if the specularWeight is low)
+
+   // Multiple scattering, from Fdez-Aguera
+   float Ems    = (1.0 - (f_ab.x + f_ab.y));
+   vec3  F_avg  = specularWeight * (mixedF0 + (1.0 - mixedF0) / 21.0);
+   vec3  FmsEms = Ems * FssEss * F_avg / (1.0 - F_avg * Ems);
+   vec3  k_D    = diffuseColor * (1.0 - FssEss + FmsEms); // we use +FmsEms as indicated by the formula in the blog post (might be a typo in the implementation)
+
+   return (FmsEms + k_D) * irradiance;
+}
+#endif
+
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
 
 uniform sampler2D x3d_TransmissionFramebufferSamplerEXT;
