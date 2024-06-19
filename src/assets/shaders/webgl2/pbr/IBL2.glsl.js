@@ -52,7 +52,7 @@ getSheenLight (const in vec3 reflection, const in float lod)
 {
    // return textureLod (u_CharlieEnvSampler, u_EnvRotation * reflection, lod) * u_EnvIntensity;
 
-   return vec3 (0.5) * (lod / float (x3d_EnvironmentLightSource .specularTextureLevels - 1)) * x3d_EnvironmentLightSource .intensity;
+   return vec3 (0.5) * (lod / float (x3d_EnvironmentLightSource .specularTextureLevels)) * x3d_EnvironmentLightSource .intensity;
 }
 #endif
 
@@ -60,7 +60,7 @@ vec3
 getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness, const in vec3 F0, const in float specularWeight)
 {
    float NdotV      = clamp (dot (n, v), 0.0, 1.0);
-   float lod        = roughness * float (x3d_EnvironmentLightSource .specularTextureLevels - 1);
+   float lod        = roughness * float (x3d_EnvironmentLightSource .specularTextureLevels);
    vec3  reflection = normalize (reflect (-v, n));
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
@@ -118,7 +118,7 @@ vec3
 getIBLRadianceGGXIridescence (const in vec3 n, const in vec3 v, const in float roughness, const in vec3 F0, const in vec3 iridescenceFresnel, const in float iridescenceFactor, const in float specularWeight)
 {
    float NdotV      = clamp (dot (n, v), 0.0, 1.0);
-   float lod        = roughness * float (x3d_EnvironmentLightSource .specularTextureLevels - 1);
+   float lod        = roughness * float (x3d_EnvironmentLightSource .specularTextureLevels);
    vec3  reflection = normalize (reflect (-v, n));
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
@@ -275,7 +275,7 @@ getIBLRadianceAnisotropy (const in vec3 n, const in vec3 v, const in float rough
    float bendFactorPow4     = bendFactor * bendFactor * bendFactor * bendFactor;
    vec3  bentNormal         = normalize (mix (anisotropicNormal, n, bendFactorPow4));
 
-   float lod        = roughness * float (x3d_EnvironmentLightSource .specularTextureLevels - 1);
+   float lod        = roughness * float (x3d_EnvironmentLightSource .specularTextureLevels);
    vec3  reflection = normalize (reflect (-v, bentNormal));
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
@@ -303,7 +303,7 @@ vec3
 getIBLRadianceCharlie (const in vec3 n, const in vec3 v, const in float sheenRoughness, const in vec3 sheenColor)
 {
    float NdotV      = clamp (dot (n, v), 0.0, 1.0);
-   float lod        = sheenRoughness * float (x3d_EnvironmentLightSource .specularTextureLevels - 1);
+   float lod        = sheenRoughness * float (x3d_EnvironmentLightSource .specularTextureLevels);
    vec3  reflection = normalize (reflect (-v, n));
 
    vec2  brdfSamplePoint = clamp (vec2 (NdotV, sheenRoughness), vec2 (0.0), vec2 (1.0));
