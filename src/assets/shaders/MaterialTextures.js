@@ -8,6 +8,7 @@ export default
       "x3d_ShininessTexture",
       "x3d_BaseTexture",
       "x3d_MetallicRoughnessTexture",
+      "x3d_SpecularGlossinessTexture",
       "x3d_OcclusionTexture",
       "x3d_NormalTexture",
       "x3d_AnisotropyTextureEXT",

@@ -212,6 +212,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_BaseColor         = gl .getUniformLocation (program, "x3d_Material.baseColor");
       this .x3d_Metallic          = gl .getUniformLocation (program, "x3d_Material.metallic");
       this .x3d_Roughness         = gl .getUniformLocation (program, "x3d_Material.roughness");
+      this .x3d_Glossiness        = gl .getUniformLocation (program, "x3d_Material.glossiness");
       this .x3d_OcclusionStrength = gl .getUniformLocation (program, "x3d_Material.occlusionStrength");
       this .x3d_NormalScale       = gl .getUniformLocation (program, "x3d_Material.normalScale");
       this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");

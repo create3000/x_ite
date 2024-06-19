@@ -128,10 +128,16 @@ struct x3d_MaterialParameters
 #if defined (X3D_PHYSICAL_MATERIAL)
 struct x3d_PhysicalMaterialParameters
 {
-   mediump vec3  baseColor;
+   #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
+      mediump vec3 diffuseColor;
+      mediump vec3 specularColor;
+      mediump float glossiness;
+   #elif defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
+      mediump vec3  baseColor;
+      mediump float metallic;
+      mediump float roughness;
+   #endif
    mediump vec3  emissiveColor;
-   mediump float metallic;
-   mediump float roughness;
    mediump float occlusionStrength;
    mediump float normalScale;
    mediump float transparency;

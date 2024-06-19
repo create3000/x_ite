@@ -293,6 +293,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             //    break;
             // },
             case "EXT_mesh_gpu_instancing":
+            case "KHR_materials_pbrSpecularGlossiness":
             case "KHR_materials_anisotropy":
             case "KHR_materials_clearcoat":
             case "KHR_materials_dispersion":
@@ -1053,9 +1054,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       materialNode ._metallic  = this .numberValue (pbrMetallicRoughness .metallicFactor,  1);
       materialNode ._roughness = this .numberValue (pbrMetallicRoughness .roughnessFactor, 1);
 
-      materialNode ._baseTexture                     = this .textureInfo    (pbrMetallicRoughness .baseColorTexture);
+      materialNode ._baseTexture                     = this .textureInfo (pbrMetallicRoughness .baseColorTexture);
       materialNode ._baseTextureMapping              = this .textureMapping (pbrMetallicRoughness .baseColorTexture);
-      materialNode ._metallicRoughnessTexture        = this .textureInfo    (pbrMetallicRoughness .metallicRoughnessTexture);
+      materialNode ._metallicRoughnessTexture        = this .textureInfo (pbrMetallicRoughness .metallicRoughnessTexture);
       materialNode ._metallicRoughnessTextureMapping = this .textureMapping (pbrMetallicRoughness .metallicRoughnessTexture);
 
       return materialNode;
@@ -1067,7 +1068,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          scene        = this .getScene (),
-         materialNode = scene .createNode ("Material", false);
+         materialNode = scene .createNode ("SpecularGlossinessMaterial", false);
 
       const
          diffuseFactor  = new Color4 (),
@@ -1079,24 +1080,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          materialNode ._diffuseColor = diffuseColor .set (... diffuseFactor);
          materialNode ._transparency = 1 - diffuseFactor .a;
       }
-      else
-      {
-         materialNode ._diffuseColor = Color3 .White;
-      }
+
+      materialNode ._diffuseTexture        = this .textureInfo (pbrSpecularGlossiness .diffuseTexture);
+      materialNode ._diffuseTextureMapping = this .textureMapping (pbrSpecularGlossiness .diffuseTexture);
 
       if (this .vectorValue (pbrSpecularGlossiness .specularFactor, specularFactor))
          materialNode ._specularColor = specularFactor;
       else
          materialNode ._specularColor = Color3 .White;
 
-      materialNode ._shininess = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
+      materialNode ._glossiness = this .numberValue (pbrSpecularGlossiness .glossinessFactor, 1);
 
-      materialNode ._diffuseTexture          = this .textureInfo    (pbrSpecularGlossiness .diffuseTexture);
-      materialNode ._diffuseTextureMapping   = this .textureMapping (pbrSpecularGlossiness .diffuseTexture);
-      materialNode ._specularTexture         = this .textureInfo    (pbrSpecularGlossiness .specularGlossinessTexture);
-      materialNode ._specularTextureMapping  = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
-      materialNode ._shininessTexture        = this .textureInfo    (pbrSpecularGlossiness .specularGlossinessTexture);
-      materialNode ._shininessTextureMapping = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
+      materialNode ._specularGlossinessTexture        = this .textureInfo (pbrSpecularGlossiness .specularGlossinessTexture);
+      materialNode ._specularGlossinessTextureMapping = this .textureMapping (pbrSpecularGlossiness .specularGlossinessTexture);
 
       return materialNode;
    },

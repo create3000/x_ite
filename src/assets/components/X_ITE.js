@@ -49,6 +49,7 @@ import Components                        from "../../x_ite/Components.js";
 import BlendMode                         from "../../x_ite/Components/X_ITE/BlendMode.js";
 import DepthMode                         from "../../x_ite/Components/X_ITE/DepthMode.js";
 import InstancedShape                    from "../../x_ite/Components/X_ITE/InstancedShape.js";
+import SpecularGlossinessMaterial        from "../../x_ite/Components/X_ITE/SpecularGlossinessMaterial.js";
 import AnisotropyMaterialExtension       from "../../x_ite/Components/X_ITE/AnisotropyMaterialExtension.js";
 import ClearcoatMaterialExtension        from "../../x_ite/Components/X_ITE/ClearcoatMaterialExtension.js";
 import DispersionMaterialExtension       from "../../x_ite/Components/X_ITE/DispersionMaterialExtension.js";
@@ -69,6 +70,7 @@ Components .add ({
       BlendMode,
       DepthMode,
       InstancedShape,
+      SpecularGlossinessMaterial,
       AnisotropyMaterialExtension,
       ClearcoatMaterialExtension,
       DispersionMaterialExtension,

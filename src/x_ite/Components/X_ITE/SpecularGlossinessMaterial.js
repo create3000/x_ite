@@ -59,9 +59,10 @@ function SpecularGlossinessMaterial (executionContext)
 
    this .addType (X3DConstants .SpecularGlossinessMaterial);
 
-   this .materialKey    = "3/";
-   this .baseColorArray = new Float32Array (3);
-   this .extensionNodes = [ ];
+   this .materialKey        = "4/";
+   this .diffuseColorArray  = new Float32Array (3);
+   this .specularColorArray = new Float32Array (3);
+   this .extensionNodes     = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X3DOneSidedMaterialNode .prototype),
@@ -70,21 +71,21 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    {
       X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-      this ._baseColor                .addInterest ("set_baseColor__",                this);
-      this ._baseTexture              .addInterest ("set_baseTexture__",              this);
-      this ._baseTexture              .addInterest ("set_transparent__",              this);
-      this ._metallic                 .addInterest ("set_metallic__",                 this);
-      this ._roughness                .addInterest ("set_roughness__",                this);
-      this ._metallicRoughnessTexture .addInterest ("set_metallicRoughnessTexture__", this);
-      this ._occlusionStrength        .addInterest ("set_occlusionStrength__",        this);
-      this ._occlusionTexture         .addInterest ("set_occlusionTexture__",         this);
-      this ._extensions               .addInterest ("set_extensions__",               this);
+      this ._diffuseColor              .addInterest ("set_diffuseColor__",              this);
+      this ._diffuseTexture            .addInterest ("set_diffuseTexture__",            this);
+      this ._diffuseTexture            .addInterest ("set_transparent__",               this);
+      this ._specularColor             .addInterest ("set_specularColor__",             this);
+      this ._glossiness                .addInterest ("set_glossiness__",                this);
+      this ._specularGlossinessTexture .addInterest ("set_specularGlossinessTexture__", this);
+      this ._occlusionStrength         .addInterest ("set_occlusionStrength__",         this);
+      this ._occlusionTexture          .addInterest ("set_occlusionTexture__",          this);
+      this ._extensions                .addInterest ("set_extensions__",                this);
 
-      this .set_baseColor__ ();
-      this .set_baseTexture__ ();
-      this .set_metallic__ ();
-      this .set_roughness__ ();
-      this .set_metallicRoughnessTexture__ ();
+      this .set_diffuseColor__ ();
+      this .set_diffuseTexture__ ();
+      this .set_specularColor__ ();
+      this .set_glossiness__ ();
+      this .set_specularGlossinessTexture__ ();
       this .set_occlusionStrength__ ();
       this .set_occlusionTexture__ ();
       this .set_extensions__ ();
@@ -113,54 +114,63 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    })(),
    getBaseTexture ()
    {
-      return this .baseTextureNode;
+      return this .diffuseTextureNode;
    },
-   set_baseColor__ ()
+   set_diffuseColor__ ()
    {
       //We cannot use this in Windows Edge:
-      //this .baseColorArray .set (this ._baseColor .getValue ());
+      //this .diffuseColorArray .set (this ._diffuseColor .getValue ());
 
       const
-         baseColorArray = this .baseColorArray,
-         baseColor      = this ._baseColor .getValue ();
+         diffuseColorArray = this .diffuseColorArray,
+         diffuseColor      = this ._diffuseColor .getValue ();
 
-      baseColorArray [0] = baseColor .r;
-      baseColorArray [1] = baseColor .g;
-      baseColorArray [2] = baseColor .b;
+      diffuseColorArray [0] = diffuseColor .r;
+      diffuseColorArray [1] = diffuseColor .g;
+      diffuseColorArray [2] = diffuseColor .b;
    },
-   set_baseTexture__ ()
+   set_diffuseTexture__ ()
    {
-      const index = this .getTextureIndices () .BASE_TEXTURE;
+      const index = this .getTextureIndices () .DIFFUSE_TEXTURE;
 
-      if (this .baseTextureNode)
+      if (this .diffuseTextureNode)
       {
-         this .baseTextureNode ._transparent .removeInterest ("set_transparent__",  this);
-         this .baseTextureNode ._linear      .removeInterest (`setTexture${index}`, this);
+         this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__",  this);
+         this .diffuseTextureNode ._linear      .removeInterest (`setTexture${index}`, this);
       }
 
-      this .baseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._baseTexture);
+      this .diffuseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._diffuseTexture);
 
-      if (this .baseTextureNode)
+      if (this .diffuseTextureNode)
       {
-         this .baseTextureNode ._transparent .addInterest ("set_transparent__",  this);
-         this .baseTextureNode ._linear      .addInterest (`setTexture${index}`, this, index, this .baseTextureNode);
+         this .diffuseTextureNode ._transparent .addInterest ("set_transparent__",  this);
+         this .diffuseTextureNode ._linear      .addInterest (`setTexture${index}`, this, index, this .diffuseTextureNode);
       }
 
-      this .setTexture (index, this .baseTextureNode);
+      this .setTexture (index, this .diffuseTextureNode);
    },
-   set_metallic__ ()
+   set_specularColor__ ()
    {
-      this .metallic = Algorithm .clamp (this ._metallic .getValue (), 0, 1);
-   },
-   set_roughness__ ()
-   {
-      this .roughness = Algorithm .clamp (this ._roughness .getValue (), 0, 1);
-   },
-   set_metallicRoughnessTexture__ ()
-   {
-      this .metallicRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._metallicRoughnessTexture);
+      //We cannot use this in Windows Edge:
+      //this .specularColorArray .set (this ._specularColor .getValue ());
 
-      this .setTexture (this .getTextureIndices () .METALLIC_ROUGHNESS_TEXTURE, this .metallicRoughnessTextureNode);
+      const
+         specularColorArray = this .specularColorArray,
+         specularColor      = this ._specularColor .getValue ();
+
+      specularColorArray [0] = specularColor .r;
+      specularColorArray [1] = specularColor .g;
+      specularColorArray [2] = specularColor .b;
+   },
+   set_glossiness__ ()
+   {
+      this .glossiness = Algorithm .clamp (this ._glossiness .getValue (), 0, 1);
+   },
+   set_specularGlossinessTexture__ ()
+   {
+      this .specularGlossinessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularGlossinessTexture);
+
+      this .setTexture (this .getTextureIndices () .SPECULAR_GLOSSINESS_TEXTURE, this .specularGlossinessTextureNode);
    },
    set_occlusionStrength__ ()
    {
@@ -175,7 +185,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    set_transparent__ ()
    {
       this .setTransparent (this .getTransparency () ||
-                            this .baseTextureNode ?.isTransparent () ||
+                            this .diffuseTextureNode ?.isTransparent () ||
                             this .isTransmission ());
    },
    set_extensions__ ()
@@ -211,7 +221,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
          .map (extensionNode => `${extensionNode .getExtensionKey () .toString (16)}${extensionNode .getTextureBits () .toString (16)}`)
          .join ("");
 
-      this .materialKey = `[3.${extensionsKey}]`;
+      this .materialKey = `[4.${extensionsKey}]`;
    },
    createShader (key, geometryContext, renderContext)
    {
@@ -222,13 +232,13 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
       for (const extensionNode of this .extensionNodes)
          extensionNode .getShaderOptions (options);
 
-      options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_METALLIC_ROUGHNESS");
+      options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_SPECULAR_GLOSSINESS");
 
       if (+this .getTextureBits ())
       {
-         this .baseTextureNode              ?.getShaderOptions (options, "BASE");
-         this .metallicRoughnessTextureNode ?.getShaderOptions (options, "METALLIC_ROUGHNESS");
-         this .occlusionTextureNode         ?.getShaderOptions (options, "OCCLUSION");
+         this .diffuseTextureNode            ?.getShaderOptions (options, "DIFFUSE");
+         this .specularGlossinessTextureNode ?.getShaderOptions (options, "SPECULAR_GLOSSINESS");
+         this .occlusionTextureNode          ?.getShaderOptions (options, "OCCLUSION");
       }
 
       const shaderNode = browser .createShader ("PBR", "Default", "PBR", options);
@@ -244,26 +254,26 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
       for (const extensionNode of this .extensionNodes)
          extensionNode .setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
-      gl .uniform3fv (shaderObject .x3d_BaseColor, this .baseColorArray);
-      gl .uniform1f  (shaderObject .x3d_Metallic,  this .metallic);
-      gl .uniform1f  (shaderObject .x3d_Roughness, this .roughness);
+      gl .uniform3fv (shaderObject .x3d_DiffuseColor,  this .diffuseColorArray);
+      gl .uniform3fv (shaderObject .x3d_SpecularColor, this .specularColorArray);
+      gl .uniform1f  (shaderObject .x3d_Glossiness,    this .glossiness);
 
       if (!+this .getTextureBits ())
          return;
 
-      this .baseTextureNode ?.setNamedShaderUniforms (gl,
+      this .diffuseTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
          renderObject,
-         shaderObject .x3d_BaseTexture,
-         this ._baseTextureMapping .getValue (),
+         shaderObject .x3d_DiffuseTexture,
+         this ._diffuseTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
-      this .metallicRoughnessTextureNode ?.setNamedShaderUniforms (gl,
+      this .specularGlossinessTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject,
          renderObject,
-         shaderObject .x3d_MetallicRoughnessTexture,
-         this ._metallicRoughnessTextureMapping .getValue (),
+         shaderObject .x3d_SpecularGlossinessTexture,
+         this ._specularGlossinessTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
@@ -289,7 +299,7 @@ Object .defineProperties (SpecularGlossinessMaterial,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Shape", level: 2 }),
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
       enumerable: true,
    },
    containerField:

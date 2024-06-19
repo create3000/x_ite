@@ -64,6 +64,10 @@ getMaterialColor ()
       materialInfo = getIorInfo (materialInfo);
    #endif
 
+   #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
+      materialInfo = getSpecularGlossinessInfo (materialInfo);
+   #endif
+
    #if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
       materialInfo = getMetallicRoughnessInfo (materialInfo);
    #endif
