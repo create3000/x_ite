@@ -215,8 +215,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .scenesArray     (glTF .scenes, glTF .scene);
       this .animationsArray (glTF .animations);
 
-      this .optimizeSceneGraph (this .getScene () .getRootNodes ());
       this .viewpointsCenterOfRotation (this .getScene ());
+      this .optimizeSceneGraph (this .getScene () .getRootNodes ());
       this .viewpointsGroup ();
       this .materialVariantsSwitch ();
 
