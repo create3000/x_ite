@@ -568,7 +568,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
   </tr>
 </table>
 
->**Note:** The VolumeRendering examples are only working if your browser supports WebGL 2, otherwise the examples left black.
+>**Note:** If you still haven't had enough and would like to see even more models, then take a look at the [glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/). There are a lot of models from simple to advanced.
 {: .prompt-info }
 
 ## Download X_ITE v{{ site.x_ite_latest_version }}
