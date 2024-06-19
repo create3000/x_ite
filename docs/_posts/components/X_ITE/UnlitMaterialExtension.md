@@ -1,21 +1,21 @@
 ---
-title: Tangent
-date: 2024-06-13
-nav: components-Rendering
-categories: [components, Rendering]
-tags: [Tangent, Rendering]
+title: UnlitMaterialExtension
+date: 2024-06-19
+nav: components-X_ITE
+categories: [components, X_ITE]
+tags: [UnlitMaterialExtension, X_ITE]
 ---
 <style>
 .post h3 {
-  word-spacing: 0.2em;
+   word-spacing: 0.2em;
 }
 </style>
 
 ## Overview
 
-Tangent.
+UnlitMaterialExtension.
 
-The Tangent node belongs to the **Rendering** component and requires at least level **5,** its default container field is *tangent.* It is available from X3D version 4.0 or higher.
+The UnlitMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *material.* It is available from X3D version 4.0 or higher.
 
 >**Info:** Please note that the functionality of this node is still experimental.
 {: .prompt-info }
@@ -24,8 +24,8 @@ The Tangent node belongs to the **Rendering** component and requires at least le
 
 ```
 + X3DNode
-  + X3DGeometricPropertyNode
-   + Tangent
+  + X3DMaterialExtensionNode
+    + UnlitMaterialExtension
 ```
 
 ## Fields
@@ -38,10 +38,6 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
 
-### MFVec4f [in, out] **vector** [ ] <small>[-1,1]</small>
-
-A unit XYZ vector defining a tangent direction on the surface, and a W component whose sign value (-1 or +1) indicates the handedness of the tangent base.
-
 ## See Also
 
-- [X3D Specification of Tangent Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Tangent){:target="_blank"}
+- [Khronos Specification of KHR_materials_unlit Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_unlit){:target="_blank"}
