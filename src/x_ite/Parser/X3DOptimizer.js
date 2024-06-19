@@ -69,7 +69,7 @@ Object .assign (X3DOptimizer .prototype,
    },
    optimizeNodes (nodes, combine, removedNodes)
    {
-      return [... nodes] .flatMap (node => this .optimizeNode (node, combine, removedNodes));
+      return Array .from (nodes) .flatMap (node => this .optimizeNode (node, combine, removedNodes));
    },
    optimizeNode (node, combine, removedNodes)
    {
@@ -161,7 +161,7 @@ Object .assign (X3DOptimizer .prototype,
       {
          removedNodes .push (node);
 
-         return [... node .children];
+         return Array .from (node .children);
       }
 
       return node;
