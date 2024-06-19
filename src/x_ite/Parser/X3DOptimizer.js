@@ -212,6 +212,9 @@ Object .assign (X3DOptimizer .prototype,
          case "PointLight":
          case "SpotLight":
             return this .combineLight (node, child, removedNodes);
+         case "Viewpoint":
+         case "OrthoViewpoint":
+            return this .combineViewpoint (node, child, removedNodes);
          default:
             return node;
       }
@@ -277,6 +280,39 @@ Object .assign (X3DOptimizer .prototype,
 
       if (child .direction)
          child .direction = nodeMatrix .multDirMatrix (child .direction .getValue ()) .normalize ();
+
+      removedNodes .push (node);
+
+      return child;
+   },
+   combineViewpoint (node, child, removedNodes)
+   {
+      // Combine single viewpoint nodes.
+
+      const nodeMatrix = new Matrix4 ();
+
+      nodeMatrix .set (node .translation .getValue (),
+                       node .rotation .getValue (),
+                       node .scale .getValue (),
+                       node .scaleOrientation .getValue (),
+                       node .center .getValue ());
+
+      const viewpointMatrix = new Matrix4 ();
+
+      viewpointMatrix .set (child .position .getValue (),
+                            child .orientation .getValue ());
+
+      viewpointMatrix .multRight (nodeMatrix);
+
+      const
+         translation = new Vector3 (),
+         rotation    = new Rotation4 ();
+
+      viewpointMatrix .get (translation, rotation);
+
+      child .position         = translation;
+      child .orientation      = rotation;
+      child .centerOfRotation = nodeMatrix .multVecMatrix (child .centerOfRotation .getValue ());
 
       removedNodes .push (node);
 
