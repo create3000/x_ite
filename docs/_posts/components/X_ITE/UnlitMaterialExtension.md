@@ -13,7 +13,7 @@ tags: [UnlitMaterialExtension, X_ITE]
 
 ## Overview
 
-UnlitMaterialExtension.
+UnlitMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.
 
 The UnlitMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
 

@@ -13,7 +13,7 @@ tags: [TransmissionMaterialExtension, X_ITE]
 
 ## Overview
 
-TransmissionMaterialExtension.
+TransmissionMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.
 
 The TransmissionMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
 
