@@ -7,6 +7,36 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning){:target="_blank"}. Keep this in mind when choosing a version number.
 
+## X_ITE v10.0.0 Released
+
+*Leipzig, 23rd June 2024:* With this release, all glTF material extensions are now available, i.e. when a glTF file is parsed, these extensions are automatically converted to X3D. There is now an X3D node for each glTF extension. These nodes can also be referenced directly in X3D files. Extensions for glTF materials are converted to X3DMaterialExtensionNode, which can be used as a child of [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) node and [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) node. These material nodes now have a new field »extensions« for this purpose. The introduction of the »extensions« field has only a minimal impact and leads to the greatest possible compatibility.
+
+To get an idea of what a great difference these new material extensions make, check out our [glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/). Take some time and look through all the examples. I am sure you will be amazed.
+
+All glTF extensions implemented with this version are listed below.
+
+### X3DOneSidedMaterialNode
+
+* KHR_materials_pbrSpecularGlossiness implemented as [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) node.
+
+### X3DMaterialExtensionNode
+
+* KHR_materials_anisotropy implemented as [AnisotropyMaterialExtension](/x_ite/components/x-ite/anisotropymaterialextension/) node.
+* KHR_materials_clearcoat implemented as [ClearcoatMaterialExtension](/x_ite/components/x-ite/clearcoatmaterialextension/) node.
+* KHR_materials_dispersion implemented as [DispersionMaterialExtension](/x_ite/components/x-ite/dispersionmaterialextension/) node.
+* KHR_materials_emissive_strength implemented as [EmissiveStrengthMaterialExtension](/x_ite/components/x-ite/emissivestrengthmaterialextension/) node.
+* KHR_materials_ior implemented as [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/) node.
+* KHR_materials_iridescence implemented as [IridescenceMaterialExtension](/x_ite/components/x-ite/iridescencematerialextension/) node.
+* KHR_materials_sheen implemented as [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/) node.
+* KHR_materials_specular implemented as [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/) node.
+* KHR_materials_transmission implemented as [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) node.
+* KHR_materials_unlit implemented as [UnlitMaterialExtension](/x_ite/components/x-ite/unlitmaterialextension/) node.
+* KHR_materials_volume implemented as [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) node.
+
+### Converted to Switch
+
+* KHR_materials_variants implemented as [Switch](/x_ite/components/grouping/switch/) node.
+
 ## X_ITE v9.5.2 Released
 
 *Leipzig, 28th April 2024:* Progress continues...
