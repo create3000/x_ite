@@ -101,9 +101,6 @@ import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing2.fs.
 import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing2.vs.js";
 import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js";
 
-/* PBR 1 */
-import IBL1                   from "../../../assets/shaders/webgl1/pbr/IBL1.glsl.js";
-
 /* PBR 2 */
 import BRDF2                  from "../../../assets/shaders/webgl2/pbr/BRDF2.glsl.js";
 import IBL2                   from "../../../assets/shaders/webgl2/pbr/IBL2.glsl.js";
@@ -129,7 +126,7 @@ const ShaderRegistry = {
          Vertex: Vertex1,
          // PBR
          BRDF: BRDF2,
-         IBL: IBL1,
+         IBL: IBL2,
          MaterialInfo: MaterialInfo2,
          Punctual: Punctual2,
          ToneMapping: ToneMapping2,

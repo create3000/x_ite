@@ -15,8 +15,13 @@ uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;
 vec3
 getDiffuseLight (const in vec3 n)
 {
-   vec3 texCoord     = x3d_EnvironmentLightSource .rotation * n * vec3 (-1.0, 1.0, 1.0);
-   vec3 textureColor = texture (x3d_EnvironmentLightSource .diffuseTexture, texCoord) .rgb;
+   vec3 texCoord = x3d_EnvironmentLightSource .rotation * n * vec3 (-1.0, 1.0, 1.0);
+
+   #if __VERSION__ == 100
+      vec3 textureColor = textureCube (x3d_EnvironmentLightSource .diffuseTexture, texCoord) .rgb;
+   #else
+      vec3 textureColor = texture (x3d_EnvironmentLightSource .diffuseTexture, texCoord) .rgb;
+   #endif
 
    if (!x3d_EnvironmentLightSource .diffuseTextureLinear)
       textureColor = sRGBToLinear (textureColor);
@@ -27,8 +32,13 @@ getDiffuseLight (const in vec3 n)
 vec3
 getSpecularLight (const in vec3 reflection, const in float lod)
 {
-   vec3 texCoord     = x3d_EnvironmentLightSource .rotation * reflection * vec3 (-1.0, 1.0, 1.0);
-   vec3 textureColor = textureLod (x3d_EnvironmentLightSource .specularTexture, texCoord, lod) .rgb;
+   vec3 texCoord = x3d_EnvironmentLightSource .rotation * reflection * vec3 (-1.0, 1.0, 1.0);
+
+   #if __VERSION__ == 100
+      vec3 textureColor = textureCubeLodEXT (x3d_EnvironmentLightSource .specularTexture, texCoord, lod) .rgb;
+   #else
+      vec3 textureColor = textureLod (x3d_EnvironmentLightSource .specularTexture, texCoord, lod) .rgb;
+   #endif
 
    if (!x3d_EnvironmentLightSource .specularTextureLinear)
       textureColor = sRGBToLinear (textureColor);
@@ -54,8 +64,14 @@ getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness, c
    vec3  reflection = normalize (reflect (-v, n));
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
-   vec2 f_ab            = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
-   vec3 specularLight   = getSpecularLight (reflection, lod);
+
+   #if __VERSION__ == 100
+      vec2 f_ab = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   #else
+      vec2 f_ab = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   #endif
+
+   vec3 specularLight = getSpecularLight (reflection, lod);
 
    // see https://bruop.github.io/ibl/#single_scattering_results at Single Scattering Results
    // Roughness dependent fresnel, from Fdez-Aguera
@@ -72,7 +88,12 @@ getIBLRadianceLambertian (const in vec3 n, const in vec3 v, const in float rough
 {
    float NdotV           = clamp (dot (n, v), 0.0, 1.0);
    vec2  brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
-   vec2  f_ab            = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+
+   #if __VERSION__ == 100
+      vec2 f_ab = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   #else
+      vec2 f_ab = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   #endif
 
    vec3 irradiance = getDiffuseLight (n);
 
@@ -100,9 +121,15 @@ uniform ivec2     x3d_TransmissionFramebufferSizeEXT;
 vec3
 getTransmissionSample (const in vec2 fragCoord, const in float roughness, const in float ior)
 {
-   int   framebufferSize  = max (x3d_TransmissionFramebufferSizeEXT .x, x3d_TransmissionFramebufferSizeEXT .y);
-   float framebufferLod   = log2 (float (framebufferSize)) * applyIorToRoughness (roughness, ior);
-   vec3  transmittedLight = textureLod (x3d_TransmissionFramebufferSamplerEXT, fragCoord, framebufferLod) .rgb;
+   #if __VERSION__ == 100
+      float framebufferSize  = max (float (x3d_TransmissionFramebufferSizeEXT .x), float (x3d_TransmissionFramebufferSizeEXT .y));
+      float framebufferLod   = log2 (framebufferSize) * applyIorToRoughness (roughness, ior);
+      vec3  transmittedLight = texture2DLodEXT (x3d_TransmissionFramebufferSamplerEXT, fragCoord, framebufferLod) .rgb;
+   #else
+      int   framebufferSize  = max (x3d_TransmissionFramebufferSizeEXT .x, x3d_TransmissionFramebufferSizeEXT .y);
+      float framebufferLod   = log2 (float (framebufferSize)) * applyIorToRoughness (roughness, ior);
+      vec3  transmittedLight = textureLod (x3d_TransmissionFramebufferSamplerEXT, fragCoord, framebufferLod) .rgb;
+   #endif
 
    return transmittedLight;
 }
@@ -156,8 +183,14 @@ getIBLVolumeRefraction (const in vec3 n, const in vec3 v, const in float percept
    // Sample GGX LUT to get the specular component.
    float NdotV           = clamp (dot(n, v), 0.0, 1.0);
    vec2  brdfSamplePoint = clamp (vec2 (NdotV, perceptualRoughness), vec2 (0.0), vec2 (1.0));
-   vec2  brdf            = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
-   vec3  specularColor   = f0 * brdf .x + f90 * brdf .y;
+
+   #if __VERSION__ == 100
+      vec2 brdf = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   #else
+      vec2 brdf = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   #endif
+
+   vec3 specularColor = f0 * brdf .x + f90 * brdf .y;
 
    return (1.0 - specularColor) * attenuatedColor * baseColor;
 }
@@ -180,8 +213,14 @@ getIBLRadianceAnisotropy (const in vec3 n, const in vec3 v, const in float rough
    vec3  reflection = normalize (reflect (-v, bentNormal));
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
-   vec2 f_ab            = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
-   vec3 specularLight   = getSpecularLight (reflection, lod);
+
+   #if __VERSION__ == 100
+      vec2 f_ab = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   #else
+      vec2 f_ab = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   #endif
+
+   vec3 specularLight = getSpecularLight (reflection, lod);
 
    // see https://bruop.github.io/ibl/#single_scattering_results at Single Scattering Results
    // Roughness dependent fresnel, from Fdez-Aguera
@@ -202,8 +241,14 @@ getIBLRadianceCharlie (const in vec3 n, const in vec3 v, const in float sheenRou
    vec3  reflection = normalize (reflect (-v, n));
 
    vec2  brdfSamplePoint = clamp (vec2 (NdotV, sheenRoughness), vec2 (0.0), vec2 (1.0));
-   float brdf            = texture (x3d_EnvironmentLightSource .CharlieLUTTexture, brdfSamplePoint) .b;
-   vec3  sheenLight      = getSheenLight (reflection, lod);
+
+   #if __VERSION__ == 100
+      float brdf = texture2D (x3d_EnvironmentLightSource .CharlieLUTTexture, brdfSamplePoint) .b;
+   #else
+      float brdf = texture (x3d_EnvironmentLightSource .CharlieLUTTexture, brdfSamplePoint) .b;
+   #endif
+
+   vec3  sheenLight = getSheenLight (reflection, lod);
 
    return sheenLight * sheenColor * brdf;
 }
