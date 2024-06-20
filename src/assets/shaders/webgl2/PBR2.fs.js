@@ -8,11 +8,6 @@ precision highp sampler2D;
 precision highp sampler3D;
 precision highp samplerCube;
 
-float max3 (const in vec3 value)
-{
-   return max (max (value .x, value .y), value .z);
-}
-
 #pragma X3D include "common/Fragment.glsl"
 #pragma X3D include "common/Normal.glsl"
 #pragma X3D include "common/Shadow.glsl"

@@ -2,6 +2,11 @@ export default /* glsl */ `
 
 const float M_PI = 3.1415926535897932384626433832795;
 
+float max3 (const in vec3 value)
+{
+   return max (max (value .x, value .y), value .z);
+}
+
 // The following equation models the Fresnel reflectance term of the spec equation (aka F())
 // Implementation of fresnel from [4], Equation 15
 vec3
