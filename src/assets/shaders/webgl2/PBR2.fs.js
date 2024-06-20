@@ -149,8 +149,8 @@ getMaterialColor ()
       #endif
 
       #if defined (X3D_SHEEN_MATERIAL_EXT)
-         f_sheen += getIBLRadianceCharlie (n, v, materialInfo .sheenRoughnessFactor, materialInfo .sheenColorFactor);
-         albedoSheenScaling = 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor);
+         f_sheen            += getIBLRadianceCharlie (n, v, materialInfo .sheenRoughnessFactor, materialInfo .sheenColorFactor);
+         albedoSheenScaling  = 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor);
       #endif
 
       #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
