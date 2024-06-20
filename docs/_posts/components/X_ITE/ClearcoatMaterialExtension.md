@@ -40,7 +40,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **clearcoat** 0 <small>[0,∞)</small>
 
-Input/Output field *clearcoat*.
+The clearcoat layer intensity.
 
 ### SFString [in, out] **clearcoatTextureMapping** ""
 
@@ -48,11 +48,11 @@ Input/Output field *clearcoatTextureMapping*.
 
 ### SFNode [in, out] **clearcoatTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *clearcoatTexture*.
+The clearcoat layer intensity texture.
 
 ### SFFloat [in, out] **clearcoatRoughness** 0 <small>[0,∞)</small>
 
-Input/Output field *clearcoatRoughness*.
+The clearcoat layer roughness.
 
 ### SFString [in, out] **clearcoatRoughnessTextureMapping** ""
 
@@ -60,7 +60,7 @@ Input/Output field *clearcoatRoughnessTextureMapping*.
 
 ### SFNode [in, out] **clearcoatRoughnessTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *clearcoatRoughnessTexture*.
+The clearcoat layer roughness texture.
 
 ### SFString [in, out] **clearcoatNormalTextureMapping** ""
 
@@ -68,7 +68,7 @@ Input/Output field *clearcoatNormalTextureMapping*.
 
 ### SFNode [in, out] **clearcoatNormalTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *clearcoatNormalTexture*.
+The clearcoat normal map texture.
 
 ## See Also
 

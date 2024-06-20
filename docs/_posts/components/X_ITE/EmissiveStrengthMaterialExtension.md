@@ -40,7 +40,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **emissiveStrength** 1 <small>[0,∞)</small>
 
-A scalar factor, that governs the upper limit of emissive strength per material.
+The strength adjustment to be multiplied with the material's emissive value.
 
 ## See Also
 

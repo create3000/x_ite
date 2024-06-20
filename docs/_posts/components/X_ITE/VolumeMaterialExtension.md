@@ -40,7 +40,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **thickness** 0 <small>[0,∞)</small>
 
-Input/Output field *thickness*.
+The thickness of the volume beneath the surface. The value is given in the coordinate space of the mesh. If the value is 0 the material is thin-walled. Otherwise the material is a volume boundary. The doubleSided property has no effect on volume boundaries.
 
 ### SFString [in, out] **thicknessTextureMapping** ""
 
@@ -48,15 +48,15 @@ Input/Output field *thicknessTextureMapping*.
 
 ### SFNode [in, out] **thicknessTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *thicknessTexture*.
+A texture that defines the thickness, stored in the G channel. This will be multiplied by thicknessFactor.
 
 ### SFFloat [in, out] **attenuationDistance** 1000000 <small>[0,∞)</small>
 
-Input/Output field *attenuationDistance*.
+Density of the medium given as the average distance that light travels in the medium before interacting with a particle. The value is given in world space.
 
 ### SFColor [in, out] **attenuationColor** 1 1 1 <small>[0,1]</small>
 
-Input/Output field *attenuationColor*.
+The color that white light turns into due to absorption when reaching the attenuation distance.
 
 ## See Also
 

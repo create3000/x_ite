@@ -40,11 +40,11 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **anisotropyStrength** 0 <small>[0,∞)</small>
 
-Input/Output field *anisotropyStrength*.
+The anisotropy strength. When the anisotropy texture is present, this value is multiplied by the texture's blue channel.
 
 ### SFFloat [in, out] **anisotropyRotation** 0 <small>(-∞,∞)</small>
 
-Input/Output field *anisotropyRotation*.
+The rotation of the anisotropy in tangent, bitangent space, measured in radians counter-clockwise from the tangent. When the anisotropy texture is present, this value provides additional rotation to the vectors in the texture.
 
 ### SFString [in, out] **anisotropyTextureMapping** ""
 
@@ -52,7 +52,7 @@ Input/Output field *anisotropyTextureMapping*.
 
 ### SFNode [in, out] **anisotropyTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *anisotropyTexture*.
+he anisotropy texture. Red and green channels represent the anisotropy direction in tangent, bitangent space to be rotated by the anisotropy rotation. The blue channel contains strength as to be multiplied by the anisotropy strength.
 
 ## See Also
 

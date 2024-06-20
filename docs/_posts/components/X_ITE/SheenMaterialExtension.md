@@ -40,7 +40,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFColor [in, out] **sheenColor** 0 0 0 <small>[0,1]</small>
 
-Input/Output field *sheenColor*.
+The sheen color in linear space.
 
 ### SFString [in, out] **sheenColorTextureMapping** ""
 
@@ -48,11 +48,11 @@ Input/Output field *sheenColorTextureMapping*.
 
 ### SFNode [in, out] **sheenColorTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *sheenColorTexture*.
+The sheen color (RGB). The sheen color is in sRGB transfer function.
 
 ### SFFloat [in, out] **sheenRoughness** 0 <small>[0,∞)</small>
 
-Input/Output field *sheenRoughness*.
+The sheen roughness.
 
 ### SFString [in, out] **sheenRoughnessTextureMapping** ""
 
@@ -60,7 +60,7 @@ Input/Output field *sheenRoughnessTextureMapping*.
 
 ### SFNode [in, out] **sheenRoughnessTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *sheenRoughnessTexture*.
+The sheen roughness (Alpha) texture.
 
 ## See Also
 

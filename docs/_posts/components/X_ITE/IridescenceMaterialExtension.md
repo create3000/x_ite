@@ -40,7 +40,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **iridescence** 0 <small>[0,∞)</small>
 
-Input/Output field *iridescence*.
+The iridescence intensity factor.
 
 ### SFString [in, out] **iridescenceTextureMapping** ""
 
@@ -48,19 +48,19 @@ Input/Output field *iridescenceTextureMapping*.
 
 ### SFNode [in, out] **iridescenceTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *iridescenceTexture*.
+The iridescence intensity texture.
 
 ### SFFloat [in, out] **iridescenceIndexOfRefraction** 1.3 <small>[0,∞)</small>
 
-Input/Output field *iridescenceIndexOfRefraction*.
+The index of refraction of the dielectric thin-film layer.
 
 ### SFFloat [in, out] **iridescenceThicknessMinimum** 100 <small>[0,∞)</small>
 
-Input/Output field *iridescenceThicknessMinimum*.
+The minimum thickness of the thin-film layer given in nanometers.
 
 ### SFFloat [in, out] **iridescenceThicknessMaximum** 400 <small>[0,∞)</small>
 
-Input/Output field *iridescenceThicknessMaximum*.
+The maximum thickness of the thin-film layer given in nanometers.
 
 ### SFString [in, out] **iridescenceThicknessTextureMapping** ""
 
@@ -68,7 +68,7 @@ Input/Output field *iridescenceThicknessTextureMapping*.
 
 ### SFNode [in, out] **iridescenceThicknessTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *iridescenceThicknessTexture*.
+The thickness texture of the thin-film layer.
 
 ## See Also
 

@@ -42,7 +42,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFColor [in, out] **diffuseColor** 1 1 1 <small>[0,1]</small>
 
-Input/Output field *diffuseColor*.
+The reflected diffuse factor of the material.
 
 ### SFString [in, out] **diffuseTextureMapping** ""
 
@@ -50,15 +50,15 @@ Input/Output field *diffuseTextureMapping*.
 
 ### SFNode [in, out] **diffuseTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *diffuseTexture*.
+The diffuse texture.
 
 ### SFColor [in, out] **specularColor** 1 1 1 <small>[0,1]</small>
 
-Input/Output field *specularColor*.
+The specular RGB color of the material.
 
 ### SFFloat [in, out] **glossiness** 1 <small>[0,1]</small>
 
-Input/Output field *glossiness*.
+The glossiness or smoothness of the material.
 
 ### SFString [in, out] **specularGlossinessTextureMapping** ""
 
@@ -66,7 +66,7 @@ Input/Output field *specularGlossinessTextureMapping*.
 
 ### SFNode [in, out] **specularGlossinessTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *specularGlossinessTexture*.
+The specular-glossiness texture.
 
 ### SFColor [in, out] **emissiveColor** 0 0 0 <small>[0,1]</small>
 

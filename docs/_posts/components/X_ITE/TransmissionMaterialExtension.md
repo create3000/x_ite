@@ -40,7 +40,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **transmission** 0 <small>[0,∞)</small>
 
-Input/Output field *transmission*.
+The base percentage of light that is transmitted through the surface.
 
 ### SFString [in, out] **transmissionTextureMapping** ""
 
@@ -48,7 +48,7 @@ Input/Output field *transmissionTextureMapping*.
 
 ### SFNode [in, out] **transmissionTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *transmissionTexture*.
+A texture that defines the transmission percentage of the surface, stored in the R channel. This will be multiplied by transmissionFactor.
 
 ## See Also
 

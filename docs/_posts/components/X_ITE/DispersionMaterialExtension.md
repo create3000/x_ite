@@ -40,7 +40,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **dispersion** 0 <small>[0,∞)</small>
 
-Input/Output field *dispersion*.
+The strength of the dispersion effect, specified as 20/Abbe number.
 
 ## See Also
 

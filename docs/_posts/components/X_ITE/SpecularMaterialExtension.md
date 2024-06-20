@@ -40,7 +40,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFFloat [in, out] **specular** 1 <small>[0,∞)</small>
 
-Input/Output field *specular*.
+The strength of the specular reflection.
 
 ### SFString [in, out] **specularTextureMapping** ""
 
@@ -48,11 +48,11 @@ Input/Output field *specularTextureMapping*.
 
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *specularTexture*.
+ texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
 
 ### SFColor [in, out] **specularColor** 1 1 1 <small>[0,1]</small>
 
-Input/Output field *specularColor*.
+The F0 color of the specular reflection (linear RGB).
 
 ### SFString [in, out] **specularColorTextureMapping** ""
 
@@ -60,7 +60,7 @@ Input/Output field *specularColorTextureMapping*.
 
 ### SFNode [in, out] **specularColorTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-Input/Output field *specularColorTexture*.
+A texture that defines the F0 color of the specular reflection, stored in the RGB channels and encoded in sRGB. This texture will be multiplied by specularColorFactor.
 
 ## See Also
 
