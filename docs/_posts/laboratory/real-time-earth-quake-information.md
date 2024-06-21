@@ -51,7 +51,7 @@ p {
 }
 
 .link-list {
-   overflow: scroll;
+   overflow-y: scroll;
    height: 100%;
    user-select: none;
 }

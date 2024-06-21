@@ -44,7 +44,7 @@ tags: [glTF, Sample, Viewer, Laboratory]
    flex: 20%;
    width: 20%;
    height: 100%;
-   overflow: scroll;
+   overflow-y: scroll;
    background-color: var(--list-color);
    padding: 1rem;
 }
