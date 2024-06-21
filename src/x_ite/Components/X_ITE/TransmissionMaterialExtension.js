@@ -102,8 +102,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       const
          browser            = this .getBrowser (),
          transmissionBuffer = browser .getTransmissionBuffer (),
-         transmissionUnit   = browser .getTexture2DUnit (),
-         viewport           = renderObject .getViewVolume () .getViewport ();
+         transmissionUnit   = browser .getTexture2DUnit ();
 
       gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
 
@@ -111,7 +110,6 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
       gl .uniform1i (shaderObject .x3d_TransmissionFramebufferSamplerEXT, transmissionUnit);
       gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, transmissionBuffer .getWidth (), transmissionBuffer .getHeight ());
-      gl .uniform4i (shaderObject .x3d_TransmissionFramebufferViewportEXT, ... viewport);
 
       if (!+this .getTextureBits ())
          return;
