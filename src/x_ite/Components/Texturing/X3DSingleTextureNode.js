@@ -114,6 +114,14 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
       if (value !== this ._linear .getValue ())
          this ._linear = value;
    },
+   getMipMaps ()
+   {
+      return this .mipMaps;
+   },
+   setMipMaps (value)
+   {
+      this .mipMaps = value;
+   },
    getMatrix ()
    {
       // Normally the identity matrix or a flipY matrix.
@@ -158,15 +166,10 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
          gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
          gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
       }
-      else if (!this .isLinear () || haveTextureProperties)
+      else if (this .getMipMaps ())
       {
-         // All linear textures (KTX2, HDR) do NOT support mip-maps.
-
-         if (!this .isLinear ())
-         {
-            if (textureProperties ._generateMipMaps .getValue ())
-               gl .generateMipmap (target);
-         }
+         if (textureProperties ._generateMipMaps .getValue ())
+            gl .generateMipmap (target);
 
          gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
          gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl [textureProperties .getMagnificationFilter ()]);

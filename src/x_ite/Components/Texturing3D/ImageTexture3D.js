@@ -109,6 +109,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
             if (URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || URL .href .match (/^data:image\/ktx2[;,]/))
             {
                this .setLinear (true);
+               this .setMipMaps (false);
 
                return this .getBrowser () .getKTXDecoder ()
                   .then (decoder => decoder .loadKTXFromBuffer (data))
@@ -116,6 +117,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
             }
 
             this .setLinear (false);
+            this .setMipMaps (true);
 
             const nrrd = new NRRDParser () .parse (data);
 

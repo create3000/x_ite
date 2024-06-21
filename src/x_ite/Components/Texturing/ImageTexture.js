@@ -112,6 +112,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
       {
          this .setLinear (true);
+         this .setMipMaps (false);
 
          this .getBrowser () .getKTXDecoder ()
             .then (decoder => decoder .loadKTXFromURL (this .URL, this .getCache ()))
@@ -121,6 +122,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       else
       {
          this .setLinear (false);
+         this .setMipMaps (true);
 
          if (this .URL .protocol !== "data:")
          {

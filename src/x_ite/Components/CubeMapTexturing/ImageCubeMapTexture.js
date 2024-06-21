@@ -117,6 +117,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
       {
          this .setLinear (true);
+         this .setMipMaps (false);
 
          this .getBrowser () .getKTXDecoder ()
             .then (decoder => decoder .loadKTXFromURL (this .URL, this .getCache ()))
@@ -126,6 +127,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       else
       {
          this .setLinear (false);
+         this .setMipMaps (true);
 
          if (this .URL .protocol !== "data:")
          {
