@@ -197,7 +197,7 @@ getTransmissionSample (const in vec2 fragCoord, const in float roughness, const 
       vec3  transmittedLight = textureLod (x3d_TransmissionFramebufferSamplerEXT, fragCoord, framebufferLod) .rgb;
    #endif
 
-   return transmittedLight;
+   return sRGBToLinear (transmittedLight);
 }
 
 vec3
