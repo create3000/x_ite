@@ -679,16 +679,15 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          const
             viewpoint            = this .getActiveViewpoint (),
+            upVector             = viewpoint .getUpVector (true),
             userPosition         = viewpoint .getUserPosition (),
             userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
             direction            = userPosition .copy () .subtract (userCenterOfRotation),
-            rotation             = this .getHorizonRotation (deltaRotation),
-            axis                 = viewpoint .getUpVector (true),
             angle                = Math .min (Math .abs (deltaRotation .angle), Math .PI / 8);
 
-         this .axis .assign (axis);
+         this .axis .assign (upVector);
 
-         if (Math .sign (rotation .getAxis () .dot (Vector3 .yAxis)) !== Math .sign (rotation .angle))
+         if (Math .sign (deltaRotation .getAxis () .dot (upVector)) !== Math .sign (deltaRotation .angle))
             this .axis .negate ();
 
          this .timeSensor ._cycleInterval = Math .PI / (angle * SPIN_FACTOR * 30);
