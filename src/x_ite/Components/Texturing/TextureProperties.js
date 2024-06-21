@@ -87,12 +87,7 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .p
 
       return function (string)
       {
-         const boundaryMode = boundaryModes .get (string);
-
-         if (boundaryMode !== undefined)
-            return boundaryMode;
-
-         return "REPEAT";
+         return boundaryModes .get (string) ?? "REPEAT";
       };
    })(),
    getBoundaryModeS ()
@@ -110,29 +105,22 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .p
    getMinificationFilter: (() =>
    {
       const minificationFilters = new Map ([
-         ["AVG_PIXEL_AVG_MIPMAP",         "LINEAR_MIPMAP_LINEAR"],
-         ["AVG_PIXEL",                    "LINEAR"],
-         ["AVG_PIXEL_NEAREST_MIPMAP",     "LINEAR_MIPMAP_NEAREST"],
-         ["NEAREST_PIXEL_AVG_MIPMAP",     "NEAREST_MIPMAP_LINEAR"],
-         ["NEAREST_PIXEL_NEAREST_MIPMAP", "NEAREST_MIPMAP_NEAREST"],
-         ["NEAREST_PIXEL",                "NEAREST"],
-         ["NICEST",                       "LINEAR_MIPMAP_LINEAR"],
-         ["FASTEST",                      "NEAREST"],
+         ["AVG_PIXEL_AVG_MIPMAP",         ["LINEAR",  "LINEAR_MIPMAP_LINEAR"]],
+         ["AVG_PIXEL",                    ["LINEAR",  "LINEAR"]],
+         ["AVG_PIXEL_NEAREST_MIPMAP",     ["LINEAR",  "LINEAR_MIPMAP_NEAREST"]],
+         ["NEAREST_PIXEL_AVG_MIPMAP",     ["NEAREST", "NEAREST_MIPMAP_LINEAR"]],
+         ["NEAREST_PIXEL_NEAREST_MIPMAP", ["NEAREST", "NEAREST_MIPMAP_NEAREST"]],
+         ["NEAREST_PIXEL",                ["NEAREST", "NEAREST"]],
+         ["NICEST",                       ["LINEAR",  "LINEAR_MIPMAP_LINEAR"]],
+         ["FASTEST",                      ["NEAREST", "NEAREST"]],
       ]);
 
-      return function ()
+      return function (mipMaps = true)
       {
-         if (this ._generateMipMaps .getValue ())
-         {
-            const minificationFilter = minificationFilters .get (this ._minificationFilter .getValue ());
+         const i = mipMaps && this ._generateMipMaps .getValue () ? 1 : 0;
 
-            if (minificationFilter !== undefined)
-               return minificationFilter;
-
-            return this .getBrowser () .getDefaultTextureProperties () .getMinificationFilter ();
-         }
-
-         return "LINEAR";
+         return minificationFilters .get (this ._minificationFilter .getValue ()) ?.[i]
+            ?? this .getBrowser () .getDefaultTextureProperties () .getMinificationFilter (mipMaps);
       };
    })(),
    getMagnificationFilter: (() =>
@@ -146,13 +134,8 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .p
 
       return function ()
       {
-         const magnificationFilter = magnificationFilters .get (this ._magnificationFilter .getValue ());
-
-         if (magnificationFilter !== undefined)
-            return magnificationFilter;
-
-         // DEFAULT
-         return this .getBrowser () .getDefaultTextureProperties () .getMagnificationFilter ();
+         return magnificationFilters .get (this ._magnificationFilter .getValue ())
+            ?? this .getBrowser () .getDefaultTextureProperties () .getMagnificationFilter ();
       };
    })(),
    getTextureCompression: (() =>
@@ -174,11 +157,7 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .p
             compressedTexture  = gl .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
             textureCompression = compressedTexture ? compressedTexture [textureCompressions .get (this ._textureCompression .getValue ())] : undefined;
 
-         if (textureCompression !== undefined)
-            return textureCompression;
-
-         // DEFAULT
-         return gl .RGBA;
+         return textureCompression ?? gl .RGBA;
       };
    })(),
 });
