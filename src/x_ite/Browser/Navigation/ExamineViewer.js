@@ -63,14 +63,15 @@ typeof jquery_mousewheel; // import plugin
 const macOS = /Mac OS X/i .test (navigator .userAgent);
 
 const
-   MOTION_TIME       = 0.05 * 1000,
-   SPIN_RELEASE_TIME = 0.04 * 1000,
-   SPIN_ANGLE        = 0.003,
-   SPIN_FACTOR       = 0.4,
-   SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
-   MOVE_TIME         = 0.2,
-   ROTATE_TIME       = 0.1,
-   CRITICAL_ANGLE    = Math .cos (Algorithm .radians (2));
+   MOTION_TIME          = 0.05 * 1000,
+   SPIN_RELEASE_TIME    = 0.04 * 1000,
+   SPIN_ANGLE           = 0.003,
+   SPIN_FACTOR          = 0.4,
+   SCROLL_FACTOR        = macOS ? 1 / 120 : 1 / 20,
+   MOVE_TIME            = 0.2,
+   ROTATE_TIME          = 0.2,
+   PIXEL_PER_REVOLUTION = 1500,
+   CRITICAL_ANGLE       = Algorithm .radians (0.1);
 
 function ExamineViewer (executionContext, navigationInfo)
 {
@@ -80,8 +81,11 @@ function ExamineViewer (executionContext, navigationInfo)
    this .orientationOffset        = new Rotation4 ();
    this .fromVector               = new Vector3 ();
    this .toVector                 = new Vector3 ();
+   this .fromPointer              = new Vector2 ();
    this .fromPoint                = new Vector3 ();
    this .toPoint                  = new Vector3 ();
+   this .startOrientation         = new Rotation4 ();
+   this .roll                     = new Rotation4 ();
    this .rotation                 = new Rotation4 ();
    this .deltaRotation            = new Rotation4 ();
    this .direction                = new Vector3 ();
@@ -156,7 +160,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          const viewpoint = this .getActiveViewpoint ();
 
          if (viewpoint)
-            viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .Identity, viewpoint ._orientationOffset .getValue (), false);
+         {
+            this .startOrientation .assign (viewpoint .getUserOrientation ());
+
+            viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .Identity, Rotation4 .Identity, viewpoint ._orientationOffset .getValue (), false);
+         }
       }
 
       this .disconnect ();
@@ -194,7 +202,20 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
 
-            this .trackballProjectToSphere (x, y, this .fromVector);
+            if (this .getStraightenHorizon ())
+            {
+               const
+                  viewpoint = this .getActiveViewpoint (),
+                  upVector  = viewpoint .getUpVector (true);
+
+               this .fromPointer .set (x, y);
+               this .startOrientation .assign (viewpoint .getUserOrientation ());
+            }
+            else
+            {
+               this .trackballProjectToSphere (x, y, this .fromVector);
+            }
+
             this .rotation .assign (Rotation4 .Identity);
             this .deltaRotation .assign (Rotation4 .Identity);
 
@@ -284,7 +305,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    },
    mousemove: (() =>
    {
-      const fromPoint = new Vector3 ();
+      const
+         translation = new Vector2 (),
+         axis        = new Vector3 (),
+         fromPoint   = new Vector3 ();
 
       return function (event)
       {
@@ -300,16 +324,40 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
                event .preventDefault ();
                event .stopImmediatePropagation ();
 
-               const toVector = this .trackballProjectToSphere (x, y, this .toVector);
+               if (this .getStraightenHorizon ())
+               {
+                  const
+                     viewpoint = this .getActiveViewpoint (),
+                     upVector  = viewpoint .getUpVector (true);
 
-               this .deltaRotation .assign (this .rotation);
-               this .rotation .setFromToVec (toVector, this .fromVector);
-               this .deltaRotation .inverse () .multRight (this .rotation);
+                  translation .set (x, y) .subtract (this .fromPointer);
+
+                  const
+                     startRoll   = Math .acos (Algorithm .clamp (this .startOrientation .multVecRot (axis .assign (Vector3 .zAxis)) .dot (upVector), -1, 1)),
+                     roll        = Math .PI * 2 * +translation .y / PIXEL_PER_REVOLUTION,
+                     clampedRoll = Algorithm .clamp (startRoll + roll, CRITICAL_ANGLE, Math .PI - CRITICAL_ANGLE) - startRoll;
+
+                  this .deltaRotation .assign (this .rotation);
+
+                  this .roll .set (1, 0, 0, clampedRoll);
+                  this .rotation .setAxisAngle (upVector, Math .PI * 2 * -translation .x / PIXEL_PER_REVOLUTION);
+
+                  this .deltaRotation .inverse () .multRight (this .rotation);
+               }
+               else
+               {
+                  const toVector = this .trackballProjectToSphere (x, y, this .toVector);
+
+                  this .deltaRotation .assign (this .rotation);
+                  this .roll .assign (Rotation4 .Identity);
+                  this .rotation .setFromToVec (toVector, this .fromVector);
+                  this .deltaRotation .inverse () .multRight (this .rotation);
+               }
 
                if (Math .abs (this .deltaRotation .angle) < SPIN_ANGLE && Date .now () - this .pressTime < MOTION_TIME)
                   return;
 
-               this .addRotate (this .rotation, this .deltaRotation);
+               this .addRotate (this .roll, this .rotation, this .deltaRotation);
 
                this .motionTime = Date .now ();
                break;
@@ -561,10 +609,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    {
       const viewpoint = this .getActiveViewpoint ();
 
-      viewpoint ._orientationOffset = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset, false);
+      viewpoint ._orientationOffset = this .getOrientationOffset (this .roll, value .getValue (), this .initialOrientationOffset, false);
       viewpoint ._positionOffset    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint ._orientationOffset .getValue ());
    },
-   addRotate (rotation, deltaRotation)
+   addRotate (roll, rotation, deltaRotation)
    {
       const viewpoint = this .getActiveViewpoint ();
 
@@ -575,7 +623,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             // console .warn ("active")
 
             // Check for critical angle.
-            this .getOrientationOffset (rotation, this .initialOrientationOffset, true);
+            this .getOrientationOffset (roll, rotation, this .initialOrientationOffset, true);
 
             this .rotationChaser ._set_destination = rotation;
          }
@@ -603,7 +651,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
 
             // Check for critical angle.
-            this .getOrientationOffset (rotation, this .initialOrientationOffset, true);
+            this .getOrientationOffset (roll, rotation, this .initialOrientationOffset, true);
 
             this .rotationChaser ._set_value       = Rotation4 .Identity;
             this .rotationChaser ._set_destination = rotation;
@@ -690,7 +738,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             this .orientationOffset .assign (viewpoint ._orientationOffset .getValue ());
 
-            viewpoint ._orientationOffset = this .getOrientationOffset (rotation, this .orientationOffset);
+            viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .Identity, rotation, this .orientationOffset);
             viewpoint ._positionOffset    = this .getPositionOffset (viewpoint ._positionOffset .getValue (), this .orientationOffset, viewpoint ._orientationOffset .getValue ());
          }
       };
@@ -773,41 +821,40 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          orientationOffset = new Rotation4 (),
          zAxis             = new Vector3 ();
 
-      return function (rotation, orientationOffsetBefore, _throw)
+      return function (roll, rotation, orientationOffsetBefore, _throw)
       {
          const
             viewpoint         = this .getActiveViewpoint (),
             straightenHorizon = this .getStraightenHorizon ();
 
-         userOrientation
-            .assign (rotation)
-            .multRight (viewpoint .getOrientation ())
-            .multRight (orientationOffsetBefore);
 
          if (straightenHorizon)
+         {
+            // Determine userOrientation.
+
+            userOrientation
+               .assign (roll)
+               .multRight (this .startOrientation)
+               .multRight (rotation);
+
+            // Straighten horizon of userOrientation.
+
             viewpoint .straightenHorizon (userOrientation);
+         }
+         else
+         {
+            userOrientation
+               .assign (rotation)
+               .multRight (viewpoint .getOrientation ())
+               .multRight (orientationOffsetBefore);
+         }
 
          const orientationOffsetAfter = orientationOffset
             .assign (viewpoint .getOrientation ())
             .inverse ()
             .multRight (userOrientation);
 
-         if (straightenHorizon)
-         {
-            if (!_throw)
-               return orientationOffsetAfter;
-
-            const userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
-
-            if (Math .abs (viewpoint .getUpVector (true) .dot (userVector)) < CRITICAL_ANGLE)
-               return orientationOffsetAfter;
-
-            throw new Error ("Critical angle");
-         }
-         else
-         {
-            return orientationOffsetAfter;
-         }
+         return orientationOffsetAfter;
       };
    })(),
    getHorizonRotation: (() =>
