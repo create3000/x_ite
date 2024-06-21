@@ -51,6 +51,7 @@ import FieldDefinitionArray      from "../../Base/FieldDefinitionArray.js";
 import X3DEnvironmentTextureNode from "./X3DEnvironmentTextureNode.js";
 import X3DUrlObject              from "../Networking/X3DUrlObject.js";
 import X3DConstants              from "../../Base/X3DConstants.js";
+import FileLoader                from "../../InputOutput/FileLoader.js";
 import Vector2                   from "../../../standard/Math/Numbers/Vector2.js";
 import DEVELOPMENT               from "../../DEVELOPMENT.js";
 
@@ -117,15 +118,29 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
       {
          this .setLinear (true);
+         this .setMipMaps (false);
 
          this .getBrowser () .getKTXDecoder ()
             .then (decoder => decoder .loadKTXFromURL (this .URL, this .getCache ()))
             .then (texture => this .setKTXTexture (texture))
             .catch (error => this .setError ({ type: error .message }));
       }
+      else if (this .URL .pathname .match (/\.hdr$/) || this .URL .href .match (/^data:image\/hdr[;,]/))
+      {
+         this .setLinear (true);
+         this .setMipMaps (true);
+
+         new FileLoader (this) .loadDocument (new Fields .MFString (this .URL), (data, URL) =>
+         {
+            this .getBrowser () .loadHDR (new Uint8Array (data))
+               .then (data => this .setHDRTexture (data))
+               .catch (error => this .setError ({ type: error .message }));
+         });
+      }
       else
       {
          this .setLinear (false);
+         this .setMipMaps (true);
 
          if (this .URL .protocol !== "data:")
          {
@@ -169,6 +184,39 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          this .setError ({ type: error .message });
       }
    },
+   setHDRTexture ({ width, height, dataFloat })
+   {
+      if (DEVELOPMENT)
+      {
+         if (this .URL .protocol !== "data:")
+            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'.`);
+      }
+
+      try
+      {
+         // Create texture.
+
+         const
+            gl      = this .getBrowser () .getContext (),
+            texture = gl .createTexture ();
+
+         gl .bindTexture (gl .TEXTURE_2D, texture);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB16F, width, height, 0, gl .RGB, gl .FLOAT, dataFloat);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+
+         this .imageToCubeMap (texture, width, height);
+
+         // Update load state.
+
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+      }
+      catch (error)
+      {
+         // Catch security error from cross origin requests.
+         this .setError ({ type: error .message });
+      }
+   },
    setImage ()
    {
       if (DEVELOPMENT)
@@ -188,7 +236,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          gl .bindTexture (gl .TEXTURE_2D, texture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, this .image [0]);
 
-         this .imageToCubeMap (texture, this .image .prop ("width"), this .image .prop ("height"), false);
+         this .imageToCubeMap (texture, this .image .prop ("width"), this .image .prop ("height"));
 
          // Update load state.
 
@@ -245,7 +293,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          gl .bindTexture (this .getTarget (), this .getTexture ());
 
          for (let i = 0; i < 6; ++ i)
-            gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+            gl .texImage2D (this .getTargets () [i], 0, gl .RGBA16F, width1_4, height1_3, 0, gl .RGBA, gl .FLOAT, null);
 
          // Extract images.
 
