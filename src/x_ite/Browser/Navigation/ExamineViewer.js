@@ -203,12 +203,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             if (this .getStraightenHorizon ())
             {
-               const
-                  viewpoint = this .getActiveViewpoint (),
-                  upVector  = viewpoint .getUpVector (true);
+               const viewpoint = this .getActiveViewpoint ();
 
                this .fromPointer .set (x, y);
                this .startOrientation .assign (viewpoint .getUserOrientation ());
+               this .lastRoll = 0;
             }
             else
             {
@@ -338,16 +337,25 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
                      roll                = Math .PI * 2 * +translation .y / pixelPerRevolutionY,
                      clampedRoll         = Algorithm .clamp (startRoll + roll, CRITICAL_ANGLE, Math .PI - CRITICAL_ANGLE) - startRoll;
 
-                  this .deltaRotation .assign (this .rotation);
+                  // Adjust fromPointer y.
 
+                  if (this .lastRoll - Math .abs (roll) > 0)
+                     this .fromPointer .y += (roll - clampedRoll) / (Math .PI * 2) * pixelPerRevolutionY;
+
+                  this .lastRoll = Math .abs (roll);
+
+                  // Determine roll and rotation.
+
+                  this .deltaRotation .assign (this .rotation);
                   this .roll .set (1, 0, 0, clampedRoll);
                   this .rotation .setAxisAngle (upVector, Math .PI * 2 * -translation .x / pixelPerRevolutionX);
-
                   this .deltaRotation .inverse () .multRight (this .rotation);
                }
                else
                {
                   const toVector = this .trackballProjectToSphere (x, y, this .toVector);
+
+                  // Determine roll and rotation.
 
                   this .deltaRotation .assign (this .rotation);
                   this .roll .assign (Rotation4 .Identity);
