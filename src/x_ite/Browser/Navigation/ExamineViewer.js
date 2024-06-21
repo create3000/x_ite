@@ -68,8 +68,8 @@ const
    SPIN_ANGLE        = 0.003,
    SPIN_FACTOR       = 0.4,
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
-   MOVE_TIME         = 0.2,
-   ROTATE_TIME       = 0.2,
+   MOVE_TIME         = 0.1,
+   ROTATE_TIME       = 0.1,
    CRITICAL_ANGLE    = Algorithm .radians (0.1);
 
 function ExamineViewer (executionContext, navigationInfo)
