@@ -690,7 +690,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          if (Math .sign (deltaRotation .getAxis () .dot (upVector)) !== Math .sign (deltaRotation .angle))
             this .axis .negate ();
 
-         this .timeSensor ._cycleInterval = Math .PI / (angle * SPIN_FACTOR * 30);
+         this .timeSensor ._cycleInterval = Math .PI / (angle * SPIN_FACTOR * 25);
          this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
          const lookAtRotation = viewpoint .getLookAtRotation (userPosition, userCenterOfRotation);
