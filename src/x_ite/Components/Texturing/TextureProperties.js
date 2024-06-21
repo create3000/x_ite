@@ -155,7 +155,7 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .p
             browser            = this .getBrowser (),
             gl                 = browser .getContext (),
             compressedTexture  = gl .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
-            textureCompression = compressedTexture ? compressedTexture [textureCompressions .get (this ._textureCompression .getValue ())] : undefined;
+            textureCompression = compressedTexture ?.[textureCompressions .get (this ._textureCompression .getValue ())];
 
          return textureCompression ?? gl .RGBA;
       };
