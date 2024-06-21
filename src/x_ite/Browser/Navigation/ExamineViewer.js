@@ -63,9 +63,8 @@ typeof jquery_mousewheel; // import plugin
 const macOS = /Mac OS X/i .test (navigator .userAgent);
 
 const
-   MOTION_TIME       = 0.05 * 1000,
-   SPIN_RELEASE_TIME = 0.04 * 1000,
-   SPIN_ANGLE        = 0.003,
+   SPIN_RELEASE_TIME = 20,
+   SPIN_ANGLE        = Algorithm .radians (2),
    SPIN_FACTOR       = 0.4,
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
    MOVE_TIME         = 0.2,
@@ -89,8 +88,6 @@ function ExamineViewer (executionContext, navigationInfo)
    this .deltaRotation            = new Rotation4 ();
    this .direction                = new Vector3 ();
    this .axis                     = new Vector3 ();
-   this .pressTime                = 0;
-   this .motionTime               = 0;
 
    this .touchMode                = 0;
    this .touch1                   = new Vector2 ();
@@ -173,8 +170,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       if (this .button >= 0)
          return;
 
-      this .pressTime = Date .now ();
-
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       if (!this .isPointerInRectangle (x, y))
@@ -217,7 +212,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .rotation .assign (Rotation4 .Identity);
             this .deltaRotation .assign (Rotation4 .Identity);
 
-            this .motionTime = 0;
+            this .motionTime = Date .now ();
 
             this ._isActive = true;
             break;
@@ -362,9 +357,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
                   this .rotation .setFromToVec (toVector, this .fromVector);
                   this .deltaRotation .inverse () .multRight (this .rotation);
                }
-
-               if (Math .abs (this .deltaRotation .angle) < SPIN_ANGLE && Date .now () - this .pressTime < MOTION_TIME)
-                  return;
 
                this .addRotate (this .roll, this .rotation, this .deltaRotation);
 
@@ -691,14 +683,15 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
             direction            = userPosition .copy () .subtract (userCenterOfRotation),
             rotation             = this .getHorizonRotation (deltaRotation),
-            axis                 = viewpoint .getUpVector (true);
+            axis                 = viewpoint .getUpVector (true),
+            angle                = Math .min (Math .abs (deltaRotation .angle), Math .PI / 8);
 
          this .axis .assign (axis);
 
          if (Math .sign (rotation .getAxis () .dot (Vector3 .yAxis)) !== Math .sign (rotation .angle))
             this .axis .negate ();
 
-         this .timeSensor ._cycleInterval = Math .PI / (Math .abs (deltaRotation .angle) * SPIN_FACTOR * 30);
+         this .timeSensor ._cycleInterval = Math .PI / (angle * SPIN_FACTOR * 30);
          this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
          const lookAtRotation = viewpoint .getLookAtRotation (userPosition, userCenterOfRotation);
