@@ -836,7 +836,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             viewpoint         = this .getActiveViewpoint (),
             straightenHorizon = this .getStraightenHorizon ();
 
-
          if (straightenHorizon)
          {
             // Determine userOrientation.
