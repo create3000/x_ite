@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
    },
    lookAtPoint (x, y, straightenHorizon)
    {
-      if (! this .touch (x, y))
+      if (!this .touch (x, y))
          return;
 
       const
@@ -165,7 +165,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
    },
    lookAtBBox (x, y, straightenHorizon)
    {
-      if (! this .touch (x, y))
+      if (!this .touch (x, y))
          return;
 
       const
