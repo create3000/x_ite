@@ -385,7 +385,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       lightNode ._intensity = this .numberValue (light .intensity, 1);
 
       if (this .vectorValue (lightNode .rotation, quaternion))
-         lightNode ._rotation = new Rotation4 (quaternion);
+         lightNode ._rotation = new Rotation4 (0, 0, 1, Math .PI) .multRight (new Rotation4 (quaternion));
+      else
+         lightNode ._rotation = new Rotation4 (0, 0, 1, Math .PI);
 
       if (light .irradianceCoefficients instanceof Array)
       {
@@ -406,7 +408,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          if (baseImages instanceof Array)
          {
-            const faces = ["right", "left", "top", "bottom", "front", "back"];
+            const faces = ["right", "left", "bottom", "top", "front", "back"];
 
             for (const [i, image] of baseImages .map (image => this .images [image]) .entries ())
             {
