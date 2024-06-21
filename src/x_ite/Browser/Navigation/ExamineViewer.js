@@ -69,6 +69,7 @@ const
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
    MOVE_TIME         = 0.2,
    ROTATE_TIME       = 0.1,
+   DISK_ANGLE        = Math .PI / 12,
    CRITICAL_ANGLE    = Algorithm .radians (0.1);
 
 function ExamineViewer (executionContext, navigationInfo)
@@ -203,6 +204,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
                this .fromPointer .set (x, y);
                this .startOrientation .assign (viewpoint .getUserOrientation ());
                this .lastRoll = 0;
+               this .negate   = 0;
             }
             else
             {
@@ -339,11 +341,28 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
                   this .lastRoll = Math .abs (roll);
 
+                  // Check disk angle.
+
+                  if (!this .negate)
+                  {
+                     if (Math .PI / 2 - Math .abs (startRoll - Math .PI / 2) < DISK_ANGLE)
+                     {
+                        if (y - this .getViewport () [1] > this .getViewport () [3] / 2)
+                           this .negate = startRoll < Math .PI / 4 ? -1 : 1;
+                        else
+                           this .negate = startRoll > Math .PI / 4 ? -1 : 1;
+                     }
+                     else
+                     {
+                        this .negate = 1;
+                     }
+                  }
+
                   // Determine roll and rotation.
 
                   this .deltaRotation .assign (this .rotation);
                   this .roll .set (1, 0, 0, clampedRoll);
-                  this .rotation .setAxisAngle (upVector, Math .PI * 2 * -translation .x / pixelPerRevolutionX);
+                  this .rotation .setAxisAngle (upVector, Math .PI * 2 * -translation .x / pixelPerRevolutionX * this .negate);
                   this .deltaRotation .inverse () .multRight (this .rotation);
                }
                else
