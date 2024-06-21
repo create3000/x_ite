@@ -160,7 +160,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          {
             this .startOrientation .assign (viewpoint .getUserOrientation ());
 
-            viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .Identity, Rotation4 .Identity, viewpoint ._orientationOffset .getValue (), false);
+            viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .Identity, Rotation4 .Identity, viewpoint ._orientationOffset .getValue ());
          }
       }
 
@@ -629,7 +629,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    {
       const viewpoint = this .getActiveViewpoint ();
 
-      viewpoint ._orientationOffset = this .getOrientationOffset (this .roll, value .getValue (), this .initialOrientationOffset, false);
+      viewpoint ._orientationOffset = this .getOrientationOffset (this .roll, value .getValue (), this .initialOrientationOffset);
       viewpoint ._positionOffset    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint ._orientationOffset .getValue ());
    },
    addRotate (roll, rotation, deltaRotation)
@@ -638,53 +638,23 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       if (this .rotationChaser ._value_changed .hasInterest ("set_rotation__", this))
       {
-         try
-         {
-            // console .warn ("active")
+         // console .warn ("active")
 
-            // Check for critical angle.
-            this .getOrientationOffset (roll, rotation, this .initialOrientationOffset, true);
+         this .getOrientationOffset (roll, rotation, this .initialOrientationOffset);
 
-            this .rotationChaser ._set_destination = rotation;
-         }
-         catch
-         {
-            // Slide along critical angle.
-
-            // console .warn ("critical")
-
-            this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
-            this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
-            this .fromVector               .assign (this .toVector);
-
-            this .rotationChaser ._set_value       = Rotation4 .Identity;
-            this .rotationChaser ._set_destination = this .getHorizonRotation (deltaRotation);
-         }
+         this .rotationChaser ._set_destination = rotation;
       }
       else
       {
-         try
-         {
-            // console .warn ("start")
+         // console .warn ("start")
 
-            this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
-            this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
+         this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
+         this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
 
-            // Check for critical angle.
-            this .getOrientationOffset (roll, rotation, this .initialOrientationOffset, true);
+         this .getOrientationOffset (roll, rotation, this .initialOrientationOffset);
 
-            this .rotationChaser ._set_value       = Rotation4 .Identity;
-            this .rotationChaser ._set_destination = rotation;
-         }
-         catch
-         {
-            // Slide along critical angle.
-
-            this .fromVector .assign (this .toVector);
-
-            this .rotationChaser ._set_value       = Rotation4 .Identity;
-            this .rotationChaser ._set_destination = this .getHorizonRotation (rotation);
-         }
+         this .rotationChaser ._set_value       = Rotation4 .Identity;
+         this .rotationChaser ._set_destination = rotation;
       }
 
       this .disconnect ();
@@ -838,10 +808,9 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    {
       const
          userOrientation   = new Rotation4 (),
-         orientationOffset = new Rotation4 (),
-         zAxis             = new Vector3 ();
+         orientationOffset = new Rotation4 ();
 
-      return function (roll, rotation, orientationOffsetBefore, _throw)
+      return function (roll, rotation, orientationOffsetBefore)
       {
          const
             viewpoint         = this .getActiveViewpoint (),
