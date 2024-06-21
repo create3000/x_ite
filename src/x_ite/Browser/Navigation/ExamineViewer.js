@@ -332,15 +332,16 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
                   translation .set (x, y) .subtract (this .fromPointer);
 
                   const
-                     pixelPerRevolution = this .getViewport () [2] * 2,
-                     startRoll          = Math .acos (Algorithm .clamp (this .startOrientation .multVecRot (axis .assign (Vector3 .zAxis)) .dot (upVector), -1, 1)),
-                     roll               = Math .PI * 2 * +translation .y / pixelPerRevolution,
-                     clampedRoll        = Algorithm .clamp (startRoll + roll, CRITICAL_ANGLE, Math .PI - CRITICAL_ANGLE) - startRoll;
+                     pixelPerRevolutionX = this .getViewport () [2] * 2,
+                     pixelPerRevolutionY = this .getViewport () [3] * 2,
+                     startRoll           = Math .acos (Algorithm .clamp (this .startOrientation .multVecRot (axis .assign (Vector3 .zAxis)) .dot (upVector), -1, 1)),
+                     roll                = Math .PI * 2 * +translation .y / pixelPerRevolutionY,
+                     clampedRoll         = Algorithm .clamp (startRoll + roll, CRITICAL_ANGLE, Math .PI - CRITICAL_ANGLE) - startRoll;
 
                   this .deltaRotation .assign (this .rotation);
 
                   this .roll .set (1, 0, 0, clampedRoll);
-                  this .rotation .setAxisAngle (upVector, Math .PI * 2 * -translation .x / pixelPerRevolution);
+                  this .rotation .setAxisAngle (upVector, Math .PI * 2 * -translation .x / pixelPerRevolutionX);
 
                   this .deltaRotation .inverse () .multRight (this .rotation);
                }
