@@ -677,7 +677,7 @@ class SampleViewer
 
       this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
       this .setHeadlight (true);
-      this .setBackground ($("#summer") .hasClass ("green"));
+      this .setBackground (this .browser .getLocalStorage () ["glTFSampleViewer.background"]);
       this .addScenes ();
       this .addViewpoints ();
       this .addVariants ();
@@ -774,6 +774,8 @@ class SampleViewer
 
    async setBackground (on)
    {
+      this .browser .getLocalStorage () ["glTFSampleViewer.background"] = on;
+
       if (on)
       {
          $("#summer") .removeClass ("fa-xmark") .addClass ("fa-check");
