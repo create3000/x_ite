@@ -183,10 +183,14 @@ getIBLRadianceLambertianIridescence (const in vec3 n, const in vec3 v, const in 
 
 uniform sampler2D x3d_TransmissionFramebufferSamplerEXT;
 uniform ivec2     x3d_TransmissionFramebufferSizeEXT;
+uniform ivec4     x3d_TransmissionFramebufferViewportEXT;
 
 vec3
-getTransmissionSample (const in vec2 fragCoord, const in float roughness, const in float ior)
+getTransmissionSample (in vec2 fragCoord, const in float roughness, const in float ior)
 {
+   // Move fragCoord into viewport.
+   fragCoord = fragCoord * vec2 (x3d_TransmissionFramebufferViewportEXT .zw) / vec2 (x3d_TransmissionFramebufferSizeEXT) + vec2 (x3d_TransmissionFramebufferViewportEXT .xy) / vec2 (x3d_TransmissionFramebufferViewportEXT .zw);
+
    #if __VERSION__ == 100
       float framebufferSize  = max (float (x3d_TransmissionFramebufferSizeEXT .x), float (x3d_TransmissionFramebufferSizeEXT .y));
       float framebufferLod   = log2 (framebufferSize) * applyIorToRoughness (roughness, ior);
