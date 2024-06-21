@@ -683,7 +683,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             userPosition         = viewpoint .getUserPosition (),
             userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
             direction            = userPosition .copy () .subtract (userCenterOfRotation),
-            angle                = Math .min (Math .abs (deltaRotation .angle), Math .PI / 8);
+            angle                = Math .min (Math .abs (deltaRotation .angle), Math .PI / 4);
 
          this .axis .assign (upVector);
 
