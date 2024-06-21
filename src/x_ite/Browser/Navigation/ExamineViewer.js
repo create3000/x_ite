@@ -63,15 +63,14 @@ typeof jquery_mousewheel; // import plugin
 const macOS = /Mac OS X/i .test (navigator .userAgent);
 
 const
-   MOTION_TIME          = 0.05 * 1000,
-   SPIN_RELEASE_TIME    = 0.04 * 1000,
-   SPIN_ANGLE           = 0.003,
-   SPIN_FACTOR          = 0.4,
-   SCROLL_FACTOR        = macOS ? 1 / 120 : 1 / 20,
-   MOVE_TIME            = 0.2,
-   ROTATE_TIME          = 0.2,
-   PIXEL_PER_REVOLUTION = 1500,
-   CRITICAL_ANGLE       = Algorithm .radians (0.1);
+   MOTION_TIME       = 0.05 * 1000,
+   SPIN_RELEASE_TIME = 0.04 * 1000,
+   SPIN_ANGLE        = 0.003,
+   SPIN_FACTOR       = 0.4,
+   SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
+   MOVE_TIME         = 0.2,
+   ROTATE_TIME       = 0.2,
+   CRITICAL_ANGLE    = Algorithm .radians (0.1);
 
 function ExamineViewer (executionContext, navigationInfo)
 {
@@ -333,14 +332,15 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
                   translation .set (x, y) .subtract (this .fromPointer);
 
                   const
-                     startRoll   = Math .acos (Algorithm .clamp (this .startOrientation .multVecRot (axis .assign (Vector3 .zAxis)) .dot (upVector), -1, 1)),
-                     roll        = Math .PI * 2 * +translation .y / PIXEL_PER_REVOLUTION,
-                     clampedRoll = Algorithm .clamp (startRoll + roll, CRITICAL_ANGLE, Math .PI - CRITICAL_ANGLE) - startRoll;
+                     pixelPerRevolution = this .getViewport () [2] * 2,
+                     startRoll          = Math .acos (Algorithm .clamp (this .startOrientation .multVecRot (axis .assign (Vector3 .zAxis)) .dot (upVector), -1, 1)),
+                     roll               = Math .PI * 2 * +translation .y / pixelPerRevolution,
+                     clampedRoll        = Algorithm .clamp (startRoll + roll, CRITICAL_ANGLE, Math .PI - CRITICAL_ANGLE) - startRoll;
 
                   this .deltaRotation .assign (this .rotation);
 
                   this .roll .set (1, 0, 0, clampedRoll);
-                  this .rotation .setAxisAngle (upVector, Math .PI * 2 * -translation .x / PIXEL_PER_REVOLUTION);
+                  this .rotation .setAxisAngle (upVector, Math .PI * 2 * -translation .x / pixelPerRevolution);
 
                   this .deltaRotation .inverse () .multRight (this .rotation);
                }
