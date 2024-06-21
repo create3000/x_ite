@@ -361,9 +361,9 @@ const Bookmarks = (() =>
          // specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/symmetrical_garden_1k-specular.png");
          // specularTexture .textureProperties = textureProperties;
 
-         diffuseTexture  .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-diffuse.hdr");
+         diffuseTexture  .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-diffuse.jpg");
          diffuseTexture  .textureProperties = textureProperties;
-         specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-specular.hdr");
+         specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg");
          specularTexture .textureProperties = textureProperties;
 
          environmentLight .intensity       = 1;

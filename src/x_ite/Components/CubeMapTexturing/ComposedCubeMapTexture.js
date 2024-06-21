@@ -204,7 +204,6 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
 
          this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
          this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
-         this .setMipMaps (textureNodes .every (textureNode => textureNode .getMipMaps ()));
          this .updateTextureParameters ();
       }
       else
