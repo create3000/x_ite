@@ -52,6 +52,7 @@ import X3DEnvironmentTextureNode from "./X3DEnvironmentTextureNode.js";
 import X3DUrlObject              from "../Networking/X3DUrlObject.js";
 import X3DConstants              from "../../Base/X3DConstants.js";
 import FileLoader                from "../../InputOutput/FileLoader.js";
+import Algorithm                 from "../../../standard/Math/Algorithm.js";
 import Vector2                   from "../../../standard/Math/Numbers/Vector2.js";
 import DEVELOPMENT               from "../../DEVELOPMENT.js";
 
@@ -235,6 +236,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
          gl .bindTexture (gl .TEXTURE_2D, texture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, this .image [0]);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
 
          this .imageToCubeMap (texture, this .image .prop ("width"), this .image .prop ("height"));
 
@@ -284,9 +287,9 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          const
             gl          = this .getBrowser () .getContext (),
             framebuffer = gl .createFramebuffer (),
-            width1_4    = width / 4,
-            height1_3   = height / 3,
-            data        = new Uint8Array (width1_4 * height1_3 * 4);
+            width1_4    = gl .getVersion () === 1 ? Algorithm .nextPowerOfTwo (width / 4) : width / 4,
+            height1_3   = gl .getVersion () === 1 ? Algorithm .nextPowerOfTwo (height / 3) : height / 3,
+            data        = new Float32Array (width1_4 * height1_3 * 4);
 
          // Init cube map texture.
 
@@ -312,7 +315,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
             if (!transparent)
             {
-               gl .readPixels (offsets [i] .x * width1_4, offsets [i] .y * height1_3, width1_4, height1_3, gl .RGBA, gl .UNSIGNED_BYTE, data);
+               gl .readPixels (offsets [i] .x * width1_4, offsets [i] .y * height1_3, width1_4, height1_3, gl .RGBA, gl .FLOAT, data);
 
                transparent = this .isImageTransparent (data);
             }
@@ -337,8 +340,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          shaderNode  = browser .getPanoramaShader (),
          framebuffer = gl .createFramebuffer (),
          textureUnit = browser .getTextureCubeUnit (),
-         size        = height / 2,
-         data        = new Uint8Array (size * size * 4);
+         size        = gl .getVersion () === 1 ? Algorithm .nextPowerOfTwo (height / 2) : height / 2,
+         data        = new Float32Array (size * size * 4);
 
       // Adjust panorama texture.
 
@@ -353,7 +356,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       gl .bindTexture (this .getTarget (), this .getTexture ());
 
       for (let i = 0; i < 6; ++ i)
-         gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+         gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA16F, size, size, 0, gl .RGBA, gl .FLOAT, null);
 
       // Render faces.
 
@@ -382,7 +385,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
          if (!transparent)
          {
-            gl .readPixels (0, 0, size, size, gl .RGBA, gl .UNSIGNED_BYTE, data);
+            gl .readPixels (0, 0, size, size, gl .RGBA, gl .FLOAT, data);
 
             transparent = this .isImageTransparent (data);
          }

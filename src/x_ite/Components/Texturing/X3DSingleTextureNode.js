@@ -132,10 +132,21 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    {
       const length = data .length;
 
-      for (let i = 3; i < length; i += 4)
+      if (data instanceof Float32Array)
       {
-         if (data [i] !== 255)
-            return true;
+         for (let i = 3; i < length; i += 4)
+         {
+            if (data [i] < 1)
+               return true;
+         }
+      }
+      else
+      {
+         for (let i = 3; i < length; i += 4)
+         {
+            if (data [i] !== 255)
+               return true;
+         }
       }
 
       return false;

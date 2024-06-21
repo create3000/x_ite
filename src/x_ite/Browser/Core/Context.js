@@ -134,6 +134,11 @@ const Context =
             color_buffer_float = gl .getExtension ("WEBGL_color_buffer_float"),
             draw_buffers       = gl .getExtension ("WEBGL_draw_buffers");
 
+         gl .getExtension ("OES_texture_float");
+         gl .getExtension ("OES_texture_float_linear");
+
+         gl .RGB16F                = gl .RGB;
+         gl .RGBA16F               = gl .RGBA;
          gl .RGBA32F               = color_buffer_float .RGBA32F_EXT;
          gl .MAX_COLOR_ATTACHMENTS = draw_buffers .MAX_COLOR_ATTACHMENTS_WEBGL;
          gl .drawBuffers           = draw_buffers .drawBuffersWEBGL .bind (draw_buffers);
