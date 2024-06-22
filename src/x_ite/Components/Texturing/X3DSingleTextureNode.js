@@ -166,17 +166,17 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
          gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
          gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
       }
-      else if (this .getMipMaps ())
+      else if (this .getMipMaps () && textureProperties ._generateMipMaps .getValue ())
       {
-         if (textureProperties ._generateMipMaps .getValue ())
-            gl .generateMipmap (target);
+         // Can MipMaps and wants MipMaps.
+         gl .generateMipmap (target);
 
          gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
          gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl [textureProperties .getMagnificationFilter ()]);
       }
       else
       {
-         // No mipMaps.
+         // No MipMaps.
          gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter (false)]);
          gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl [textureProperties .getMagnificationFilter (false)]);
       }
