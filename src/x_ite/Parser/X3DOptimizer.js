@@ -107,6 +107,13 @@ Object .assign (X3DOptimizer .prototype,
          case "Switch":
          {
             this .optimizeNodes (node .children, false, removedNodes);
+
+            if (this .removeEmptyGroups)
+            {
+               if (node .children .length === 0)
+                  return [ ];
+            }
+
             return node;
          }
          case "HAnimJoint":
@@ -114,6 +121,13 @@ Object .assign (X3DOptimizer .prototype,
          case "HAnimSite":
          {
             node .children = this .optimizeNodes (node .children, true, removedNodes);
+
+            if (this .removeEmptyGroups)
+            {
+               if (node .children .length === 0)
+                  return [ ];
+            }
+
             return node;
          }
          case "HAnimHumanoid":
