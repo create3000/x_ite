@@ -179,6 +179,23 @@ Object .assign (X3DOptimizer .prototype,
 
       return children;
    },
+   removeChildren (node)
+   {
+      for (const field of node .getValue () .getFields ())
+      {
+         switch (field .getType ())
+         {
+            case X3DConstants .SFNode:
+               field .setValue (null);
+               break;
+            case X3DConstants .MFNode:
+               field .length = 0;
+               break;
+         }
+      }
+
+      return node;
+   },
    removeIfNoChildren (node)
    {
       if (this .removeEmptyGroups)
@@ -338,23 +355,6 @@ Object .assign (X3DOptimizer .prototype,
       removedNodes .push (this .removeChildren (node));
 
       return child;
-   },
-   removeChildren (node)
-   {
-      for (const field of node .getValue () .getFields ())
-      {
-         switch (field .getType ())
-         {
-            case X3DConstants .SFNode:
-               field .setValue (null);
-               break;
-            case X3DConstants .MFNode:
-               field .length = 0;
-               break;
-         }
-      }
-
-      return node;
    },
    viewpointsCenterOfRotation (scene)
    {
