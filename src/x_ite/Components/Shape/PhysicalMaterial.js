@@ -223,6 +223,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          extensionNode .getShaderOptions (options);
 
       options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_METALLIC_ROUGHNESS");
+      options .push ("X3D_TONEMAP_KHR_PBR_NEUTRAL");
 
       if (+this .getTextureBits ())
       {
