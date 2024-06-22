@@ -87,7 +87,7 @@ export default __default__;`;
                            .replace (/\n+/sg, "\n")
                            .replace (/s+/, "");
 
-                        const s =  "/* glsl */ `" + a + m
+                        const s = "/* glsl */ `" + a + m
                            .replace (/(\s*)(\$\{(?:[^}{]|\{(?:[^}{]|\{(?:[^}{]|\{[^}{]*\})*\})*\})*\})(\s*)/sg, (s, s1, s2, s3) =>
                            {
                               return `${s1}__EXPRESSION_${e .push (s) - 1}__${s3}`;
@@ -110,7 +110,7 @@ export default __default__;`;
                                  .replace (/\n+/sg, "\n")}`
                            }) + "`";
 
-                        return s .replace (/\n+/sg, "\n");
+                        return s .replace (/[\n\s]{2,}/sg, "\n");
                      },
                   },
                ],
