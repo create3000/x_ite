@@ -109,7 +109,8 @@ toneMap_KhronosPbrNeutral (in vec3 color)
 
     float peak = max (color .r, max (color .g, color .b));
 
-    if (peak < startCompression) return color;
+    if (peak < startCompression)
+      return color;
 
     const float d = 1. - startCompression;
 

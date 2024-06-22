@@ -1024,6 +1024,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
          extensionNode .getShaderOptions (options);
 
       options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_SPECULAR_GLOSSINESS");
+      options .push ("X3D_TONEMAP_KHR_PBR_NEUTRAL");
 
       if (+this .getTextureBits ())
       {
