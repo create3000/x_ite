@@ -97,13 +97,7 @@ Object .assign (X3DOptimizer .prototype,
          {
             node .children = this .optimizeNodes (node, node .children, true, removedNodes);
 
-            if (this .removeEmptyGroups)
-            {
-               if (node .children .length === 0)
-                  return [ ];
-            }
-
-            return node;
+            return this .removeIfNoChildren (node);
          }
          case "Collision":
          case "LOD":
@@ -111,13 +105,7 @@ Object .assign (X3DOptimizer .prototype,
          {
             this .optimizeNodes (node, node .children, false, removedNodes);
 
-            if (this .removeEmptyGroups)
-            {
-               if (node .children .length === 0)
-                  return [ ];
-            }
-
-            return node;
+            return this .removeIfNoChildren (node);
          }
          case "HAnimJoint":
          case "HAnimSegment":
@@ -125,26 +113,20 @@ Object .assign (X3DOptimizer .prototype,
          {
             node .children = this .optimizeNodes (node, node .children, true, removedNodes);
 
-            if (this .removeEmptyGroups)
+            switch (parent ?.getNodeTypeName ())
             {
-               switch (parent ?.getNodeTypeName ())
+               case "HAnimHumanoid":
+               case "HAnimJoint":
+               case "HAnimSegment":
+               case "HAnimSite":
                {
-                  case "HAnimHumanoid":
-                  case "HAnimJoint":
-                  case "HAnimSegment":
-                  case "HAnimSite":
-                  {
-                     break;
-                  }
-                  default:
-                  {
-                     if (node .children .length === 0)
-                        return [ ];
-                  }
+                  return node;
+               }
+               default:
+               {
+                  return this .removeIfNoChildren (node);
                }
             }
-
-            return node;
          }
          case "HAnimHumanoid":
          {
@@ -196,6 +178,16 @@ Object .assign (X3DOptimizer .prototype,
       removedNodes .push (this .removeChildren (node));
 
       return children;
+   },
+   removeIfNoChildren (node)
+   {
+      if (this .removeEmptyGroups)
+      {
+         if (node .children .length === 0)
+            return [ ];
+      }
+
+      return node;
    },
    removeInterpolatorsWithOnlyOneValue (node, removedNodes)
    {
