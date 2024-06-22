@@ -190,8 +190,8 @@ Object .assign (X3DRenderingContext .prototype,
       gl .bindVertexArray (this [_fullscreenArray]);
       gl .bindBuffer (gl .ARRAY_BUFFER, this [_fullscreenBuffer]);
       gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([-1, 1, -1, -1, 1, -1, -1, 1, 1, -1, 1, 1]), gl .STATIC_DRAW);
+      gl .enableVertexAttribArray (0);
       gl .vertexAttribPointer (0, 2, gl .FLOAT, false, 0, 0);
-      gl .enableVertexAttribArray (null);
 
       this .getFullscreenVertexArrayObject = function () { return this [_fullscreenArray]; };
 

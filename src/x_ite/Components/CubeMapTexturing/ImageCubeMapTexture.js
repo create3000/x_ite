@@ -189,6 +189,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
          gl .bindTexture (gl .TEXTURE_2D, texture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, this .image [0]);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
 
          this .imageToCubeMap (texture, this .image .prop ("width"), this .image .prop ("height"), false);
 
@@ -238,8 +240,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          const
             gl          = this .getBrowser () .getContext (),
             framebuffer = gl .createFramebuffer (),
-            width1_4    = width / 4,
-            height1_3   = height / 3,
+            width1_4    = Math .floor (width / 4),
+            height1_3   = Math .floor (height / 3),
             data        = new Uint8Array (width1_4 * height1_3 * 4);
 
          // Init cube map texture.
@@ -291,7 +293,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          shaderNode  = browser .getPanoramaShader (),
          framebuffer = gl .createFramebuffer (),
          textureUnit = browser .getTextureCubeUnit (),
-         size        = height / 2,
+         size        = Math .floor (height / 2),
          data        = new Uint8Array (size * size * 4);
 
       // Adjust panorama texture.
@@ -319,6 +321,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .viewport (0, 0, size, size);
+      gl .scissor (0, 0, size, size);
       gl .disable (gl .DEPTH_TEST);
       gl .enable (gl .CULL_FACE);
       gl .frontFace (gl .CCW);
