@@ -97,7 +97,7 @@ Object .assign (X3DOptimizer .prototype,
          {
             node .children = this .optimizeNodes (node, node .children, true, removedNodes);
 
-            return this .removeIfNoChildren (node);
+            return this .removeIfNoChildren (node, removedNodes);
          }
          case "Collision":
          case "LOD":
@@ -105,7 +105,7 @@ Object .assign (X3DOptimizer .prototype,
          {
             this .optimizeNodes (node, node .children, false, removedNodes);
 
-            return this .removeIfNoChildren (node);
+            return this .removeIfNoChildren (node, removedNodes);
          }
          case "HAnimJoint":
          case "HAnimSegment":
@@ -124,7 +124,7 @@ Object .assign (X3DOptimizer .prototype,
                }
                default:
                {
-                  return this .removeIfNoChildren (node);
+                  return this .removeIfNoChildren (node, removedNodes);
                }
             }
          }
@@ -196,12 +196,16 @@ Object .assign (X3DOptimizer .prototype,
 
       return node;
    },
-   removeIfNoChildren (node)
+   removeIfNoChildren (node, removedNodes)
    {
       if (this .removeEmptyGroups)
       {
          if (node .children .length === 0)
+         {
+            removedNodes .push (node);
+
             return [ ];
+         }
       }
 
       return node;
