@@ -546,6 +546,7 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeM
 
          this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
          this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
+         this .setMipMaps (textureNodes .every (textureNode => textureNode .getMipMaps ()));
          this .updateTextureParameters ();
       }
       else
@@ -1209,6 +1210,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
       {
          this .setLinear (true);
+         this .setMipMaps (false);
 
          this .getBrowser () .getKTXDecoder ()
             .then (decoder => decoder .loadKTXFromURL (this .URL, this .getCache ()))
@@ -1218,6 +1220,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       else
       {
          this .setLinear (false);
+         this .setMipMaps (true);
 
          if (this .URL .protocol !== "data:")
          {
@@ -1279,6 +1282,10 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
          gl .bindTexture (gl .TEXTURE_2D, texture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, this .image [0]);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S, gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T, gl .CLAMP_TO_EDGE);
 
          this .imageToCubeMap (texture, this .image .prop ("width"), this .image .prop ("height"), false);
 
@@ -1328,8 +1335,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          const
             gl          = this .getBrowser () .getContext (),
             framebuffer = gl .createFramebuffer (),
-            width1_4    = width / 4,
-            height1_3   = height / 3,
+            width1_4    = Math .floor (width / 4),
+            height1_3   = Math .floor (height / 3),
             data        = new Uint8Array (width1_4 * height1_3 * 4);
 
          // Init cube map texture.
@@ -1381,7 +1388,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          shaderNode  = browser .getPanoramaShader (),
          framebuffer = gl .createFramebuffer (),
          textureUnit = browser .getTextureCubeUnit (),
-         size        = height / 2,
+         size        = Math .floor (height / 2),
          data        = new Uint8Array (size * size * 4);
 
       // Adjust panorama texture.
@@ -1409,6 +1416,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .viewport (0, 0, size, size);
+      gl .scissor (0, 0, size, size);
       gl .disable (gl .DEPTH_TEST);
       gl .enable (gl .CULL_FACE);
       gl .frontFace (gl .CCW);

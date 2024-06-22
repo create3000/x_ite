@@ -1,7 +1,7 @@
 /* X_ITE v10.0.0 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 961:
+/***/ 449:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 875:
+/***/ 795:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 963:
+/***/ 459:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 187:
+/***/ 699:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5665,6 +5665,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3
          this .setDepth (depth);
          this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
          this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
+         this .setMipMaps (textureNodes .every (textureNode => textureNode .getMipMaps ()));
          this .updateTextureParameters ();
       }
    },
@@ -7341,10 +7342,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(963);
-/* provided dependency */ var JpegImage = __webpack_require__(187);
-/* provided dependency */ var CharLS = __webpack_require__(961);
-/* provided dependency */ var OpenJPEG = __webpack_require__(875);
+/* provided dependency */ var dicomParser = __webpack_require__(459);
+/* provided dependency */ var JpegImage = __webpack_require__(699);
+/* provided dependency */ var CharLS = __webpack_require__(449);
+/* provided dependency */ var OpenJPEG = __webpack_require__(795);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8565,6 +8566,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
             if (URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || URL .href .match (/^data:image\/ktx2[;,]/))
             {
                this .setLinear (true);
+               this .setMipMaps (false);
 
                return this .getBrowser () .getKTXDecoder ()
                   .then (decoder => decoder .loadKTXFromBuffer (data))
@@ -8572,6 +8574,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
             }
 
             this .setLinear (false);
+            this .setMipMaps (true);
 
             const nrrd = new Texturing3D_NRRDParser () .parse (data);
 
