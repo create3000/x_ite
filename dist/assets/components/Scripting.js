@@ -67,8 +67,6 @@ module.exports = window [Symbol .for ("X_ITE.X3D-10.0.0")] .require ("lib/jquery
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
 
 // UNUSED EXPORTS: default
 
@@ -926,7 +924,5 @@ const Scripting_default_ = undefined;
 
 Namespace_default().add ("Scripting", "assets/components/Scripting", Scripting_default_);
 /* harmony default export */ const Scripting = ((/* unused pure expression or super */ null && (Scripting_default_)));
-})();
-
 /******/ })()
 ;

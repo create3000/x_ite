@@ -87,10 +87,10 @@ export default __default__;`;
                            .replace (/\n+/sg, "\n")
                            .replace (/s+/, "");
 
-                        return "/* glsl */ `" + a + m
-                           .replace (/\$\{(?:[^}{]|\{(?:[^}{]|\{(?:[^}{]|\{[^}{]*\})*\})*\})*\}/sg, s =>
+                        const s =  "/* glsl */ `" + a + m
+                           .replace (/(\s*)(\$\{(?:[^}{]|\{(?:[^}{]|\{(?:[^}{]|\{[^}{]*\})*\})*\})*\})(\s*)/sg, (s, s1, s2, s3) =>
                            {
-                              return `__EXPRESSION_${e .push (s) - 1}__`;
+                              return `${s1}__EXPRESSION_${e .push (s) - 1}__${s3}`;
                            })
                            .replace (/\/\*.*?\*\//sg, "")
                            .replace (/\/\/.*?\n/sg, "\n")
@@ -106,9 +106,11 @@ export default __default__;`;
                            .replace (/__EXPRESSION_(\d+)__/sg, (_, i) =>
                            {
                               return `${e [i]
-                                 .replace (/^\s+/mg, "")
+                                 .replace (/^[ \t]+/mg, "")
                                  .replace (/\n+/sg, "\n")}`
-                           }) + "`"
+                           }) + "`";
+
+                        return s .replace (/\n+/sg, "\n");
                      },
                   },
                ],
