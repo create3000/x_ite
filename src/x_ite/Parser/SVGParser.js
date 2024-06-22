@@ -119,7 +119,7 @@ function SVGParser (scene)
    // Optimizer
 
    this .removeEmptyGroups    = true;
-   this .combineGroupingNodes = false;
+   this .combineGroupingNodes = true;
 
    // Options
 
