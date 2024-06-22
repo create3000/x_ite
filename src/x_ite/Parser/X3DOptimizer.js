@@ -159,9 +159,11 @@ Object .assign (X3DOptimizer .prototype,
 
       if (node .children)
       {
-         removedNodes .push (node);
+         const children = Array .from (node .children);
 
-         return Array .from (node .children);
+         removedNodes .push (this .removeChildren (node));
+
+         return children;
       }
 
       return node;
@@ -185,7 +187,7 @@ Object .assign (X3DOptimizer .prototype,
 
          node [route .destinationField] = sourceNode .keyValue [0];
 
-         removedNodes .push (sourceNode);
+         removedNodes .push (this .removeChildren (sourceNode));
 
          route .dispose ();
       }
@@ -259,7 +261,7 @@ Object .assign (X3DOptimizer .prototype,
          executionContext .addNamedNode (executionContext .getUniqueName (node .getNodeTypeName ()), child);
       }
 
-      removedNodes .push (node);
+      removedNodes .push (this .removeChildren (node));
 
       return child;
    },
@@ -281,7 +283,7 @@ Object .assign (X3DOptimizer .prototype,
       if (child .direction)
          child .direction = nodeMatrix .multDirMatrix (child .direction .getValue ()) .normalize ();
 
-      removedNodes .push (node);
+      removedNodes .push (this .removeChildren (node));
 
       return child;
    },
@@ -312,9 +314,26 @@ Object .assign (X3DOptimizer .prototype,
       child .orientation      = rotation;
       child .centerOfRotation = nodeMatrix .multVecMatrix (child .centerOfRotation .getValue ());
 
-      removedNodes .push (node);
+      removedNodes .push (this .removeChildren (node));
 
       return child;
+   },
+   removeChildren (node)
+   {
+      for (const field of node .getValue () .getFields ())
+      {
+         switch (field .getType ())
+         {
+            case X3DConstants .SFNode:
+               field .setValue (null);
+               break;
+            case X3DConstants .MFNode:
+               field .length = 0;
+               break;
+         }
+      }
+
+      return node;
    },
    viewpointsCenterOfRotation (scene)
    {
@@ -323,7 +342,7 @@ Object .assign (X3DOptimizer .prototype,
          modelMatrix = new Matrix4 (),
          seen        = new Set ();
 
-      this .viewpointsCenterOfRotationNodes (this .getScene () .rootNodes, bbox, modelMatrix, seen);
+      this .viewpointsCenterOfRotationNodes (scene .rootNodes, bbox, modelMatrix, seen);
    },
    viewpointsCenterOfRotationNodes (nodes, bbox, modelMatrix, seen)
    {

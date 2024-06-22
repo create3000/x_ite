@@ -8,6 +8,7 @@ const ibl_files = [
    "AntiqueCamera",
    "AttenuationTest",
    "BarramundiFish",
+   "Bee",
    "BlackDragon",
    "Bonsai",
    "BoomBox",
