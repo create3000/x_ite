@@ -157,16 +157,14 @@ Object .assign (X3DOptimizer .prototype,
             return node;
       }
 
-      if (node .children)
-      {
-         const children = Array .from (node .children);
+      if (!node .children)
+         return node;
 
-         removedNodes .push (this .removeChildren (node));
+      const children = Array .from (node .children);
 
-         return children;
-      }
+      removedNodes .push (this .removeChildren (node));
 
-      return node;
+      return children;
    },
    removeInterpolatorsWithOnlyOneValue (node, removedNodes)
    {
