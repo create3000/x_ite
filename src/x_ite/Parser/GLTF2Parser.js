@@ -71,7 +71,6 @@ function GLTF2Parser (scene)
 
    // Optimizer
 
-   this .removeGroups          = false;
    this .removeEmptyGroups     = true;
    this .combineGroupingNodes  = true;
    this .optimizeInterpolators = true;

@@ -107,7 +107,6 @@ function OBJParser (scene)
 
    // Optimizer
 
-   this .removeGroups         = true;
    this .removeEmptyGroups    = true;
    this .combineGroupingNodes = false;
 

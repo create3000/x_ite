@@ -55,7 +55,6 @@ function X3DOptimizer () { }
 
 Object .assign (X3DOptimizer .prototype,
 {
-   removeGroups: false,
    removeEmptyGroups: false,
    combineGroupingNodes: false,
    optimizeInterpolators: false,
@@ -63,15 +62,15 @@ Object .assign (X3DOptimizer .prototype,
    {
       const removedNodes = [ ];
 
-      nodes .setValue (this .optimizeNodes (nodes, true, removedNodes));
+      nodes .setValue (this .optimizeNodes (null, nodes, true, removedNodes));
 
       removedNodes .forEach (node => node .dispose ());
    },
-   optimizeNodes (nodes, combine, removedNodes)
+   optimizeNodes (parent, nodes, combine, removedNodes)
    {
-      return Array .from (nodes) .flatMap (node => this .optimizeNode (node, combine, removedNodes));
+      return Array .from (nodes) .flatMap (node => this .optimizeNode (parent, node, combine, removedNodes));
    },
-   optimizeNode (node, combine, removedNodes)
+   optimizeNode (parent, node, combine, removedNodes)
    {
       if (!node)
          return [ ];
@@ -83,13 +82,7 @@ Object .assign (X3DOptimizer .prototype,
       {
          case "Transform":
          {
-            node .children = this .optimizeNodes (node .children, true, removedNodes);
-            break;
-         }
-         case "Anchor":
-         case "Group":
-         {
-            node .children = this .optimizeNodes (node .children, true, removedNodes);
+            node .children = this .optimizeNodes (node, node .children, true, removedNodes);
 
             if (this .removeEmptyGroups)
             {
@@ -97,8 +90,18 @@ Object .assign (X3DOptimizer .prototype,
                   return [ ];
             }
 
-            if (this .removeGroups)
-               break;
+            break;
+         }
+         case "Anchor":
+         case "Group":
+         {
+            node .children = this .optimizeNodes (node, node .children, true, removedNodes);
+
+            if (this .removeEmptyGroups)
+            {
+               if (node .children .length === 0)
+                  return [ ];
+            }
 
             return node;
          }
@@ -106,7 +109,7 @@ Object .assign (X3DOptimizer .prototype,
          case "LOD":
          case "Switch":
          {
-            this .optimizeNodes (node .children, false, removedNodes);
+            this .optimizeNodes (node, node .children, false, removedNodes);
 
             if (this .removeEmptyGroups)
             {
@@ -120,20 +123,40 @@ Object .assign (X3DOptimizer .prototype,
          case "HAnimSegment":
          case "HAnimSite":
          {
-            node .children = this .optimizeNodes (node .children, true, removedNodes);
+            node .children = this .optimizeNodes (node, node .children, true, removedNodes);
 
             if (this .removeEmptyGroups)
             {
-               if (node .children .length === 0)
-                  return [ ];
+               switch (parent ?.getNodeTypeName ())
+               {
+                  case "HAnimHumanoid":
+                  case "HAnimJoint":
+                  case "HAnimSegment":
+                  case "HAnimSite":
+                  {
+                     break;
+                  }
+                  default:
+                  {
+                     if (node .children .length === 0)
+                        return [ ];
+                  }
+               }
             }
 
             return node;
          }
          case "HAnimHumanoid":
          {
-            node .skeleton = this .optimizeNodes (node .skeleton, true, removedNodes);
-            node .skin     = this .optimizeNodes (node .skin,     true, removedNodes);
+            node .skeleton = this .optimizeNodes (node, node .skeleton, true, removedNodes);
+            node .skin     = this .optimizeNodes (node, node .skin,     true, removedNodes);
+
+            if (this .removeEmptyGroups)
+            {
+               if (!node .skeleton .length && !node .skin .length)
+                  return [ ];
+            }
+
             return node;
          }
          default:
@@ -144,12 +167,6 @@ Object .assign (X3DOptimizer .prototype,
 
       if (!combine)
          return node;
-
-      if (this .removeEmptyGroups)
-      {
-         if (node .children .length === 0)
-            return [ ];
-      }
 
       if (!this .combineGroupingNodes)
          return node;
