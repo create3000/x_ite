@@ -37,6 +37,13 @@ All glTF extensions implemented with this version are listed below.
 
 * KHR_materials_variants implemented as [Switch](/x_ite/components/grouping/switch/) node.
 
+### Browser Options
+
+There are also new [Browser Options](/x_ite/reference/browser-services/#browser-options) that are made for PhysicalMaterial and SpecularGlossinessMaterial.
+
+* New browser option Exposure.
+* New browser option ToneMapping.
+
 ## X_ITE v9.5.2 Released
 
 *Leipzig, 28th April 2024:* Progress continues...
