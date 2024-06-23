@@ -143,11 +143,11 @@ x3d-canvas {
          <div>
             <b>Tone Mapping</b>
             <select id="tone-mapping">
-               <option value="NONE">None</option>
+               <option value="NONE" selected>None</option>
                <option value="ACES_NARKOWICZ">ACES Narkowicz</option>
                <option value="ACES_HILL">ACES Hill</option>
                <option value="ACES_HILL_EXPOSURE_BOOST">ACES Hill Exposure Boost</option>
-               <option value="KHR_PBR_NEUTRAL" selected>KHR PBR Neutral</option>
+               <option value="KHR_PBR_NEUTRAL">KHR PBR Neutral</option>
             </select>
          </div>
          <div id="background">
