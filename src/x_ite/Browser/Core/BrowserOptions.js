@@ -322,13 +322,14 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    set_exposure__ (exposure)
    {
       const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
+         browser  = this .getBrowser (),
+         gl       = browser .getContext (),
+         exposure = Math .max (exposure .getValue (), 0);
 
       for (const shaderNode of browser .getShaders () .values ())
       {
          gl .useProgram (shaderNode .getProgram ());
-         gl .uniform1f (shaderNode .x3d_Exposure, Math .max (exposure .getValue (), 0));
+         gl .uniform1f (shaderNode .x3d_Exposure, exposure);
       }
    },
    set_logarithmicDepthBuffer__ (logarithmicDepthBuffer)
