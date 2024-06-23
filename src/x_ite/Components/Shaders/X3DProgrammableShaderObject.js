@@ -1068,6 +1068,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             this .numGlobalLights            = this .numLights;
             this .numGlobalTextureProjectors = this .numTextureProjectors;
 
+            gl .uniform1f (this .x3d_Exposure, renderObject .getBrowser () .getBrowserOption ("Exposure"));
+
             // Logarithmic depth buffer support
 
             if (renderObject .getLogarithmicDepthBuffer ())
