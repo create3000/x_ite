@@ -319,12 +319,12 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       browser .reshape ();
    },
-   set_exposure__ (exposure)
+   set_exposure__ ()
    {
       const
          browser  = this .getBrowser (),
          gl       = browser .getContext (),
-         exposure = Math .max (exposure .getValue (), 0);
+         exposure = Math .max (this ._Exposure .getValue (), 0);
 
       for (const shaderNode of browser .getShaders () .values ())
       {
