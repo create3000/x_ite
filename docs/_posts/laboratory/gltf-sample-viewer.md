@@ -92,6 +92,8 @@ x3d-canvas {
 #options select {
    -moz-appearance: none;
    -webkit-appearance: none;
+   appearance: none;
+   cursor: pointer;
    display: block;
    outline: none;
    background: none;
@@ -108,6 +110,36 @@ x3d-canvas {
 #options select:focus {
    border: 1px solid var(--system-green);
    color: var(--system-green);
+}
+
+#options input[type=range] {
+   -moz-appearance: none;
+   -webkit-appearance: none;
+   appearance: none;
+   cursor: pointer;
+   position: relative;
+   top: -2px;
+   margin-left: 0.3rem;
+   background-color: var(--text-color);
+   height: 4px;
+}
+
+#options input[type=range]::-webkit-slider-runnable-track,
+#options input[type=range]::-moz-range-track {
+   -moz-appearance: none;
+   -webkit-appearance: none;
+   appearance: none;
+}
+
+#options input[type=range]::-webkit-slider-thumb,
+#options input[type=range]::-moz-range-thumb {
+   -moz-appearance: none;
+   -webkit-appearance: none;
+   appearance: none;
+   background: var(--text-color);
+   height: 0.8rem;
+   width: 0.8rem;
+   border-radius: 50%;
 }
 
 #scenes,
@@ -142,6 +174,7 @@ x3d-canvas {
          </div>
          <div>
             <b>Tone Mapping</b>
+            <label for="exposure">Exposure <input id="exposure" type="range" min="0" max="5" step="0.01" value="1"></label>
             <select id="tone-mapping">
                <option value="NONE" selected>None</option>
                <option value="ACES_NARKOWICZ">ACES Narkowicz</option>

@@ -624,6 +624,11 @@ class SampleViewer
          this .setHeadlight (!$("#headlight") .hasClass ("green"));
       });
 
+      $("#exposure") .on ("change input", () =>
+      {
+         this .setExposure ($("#exposure") .val ());
+      });
+
       $("#tone-mapping") .on ("change", () =>
       {
          this .setToneMapping ($("#tone-mapping") .val ());
@@ -784,6 +789,11 @@ class SampleViewer
       const navigationInfo = this .scene .createNode ("NavigationInfo");
 
       return this .navigationInfo = navigationInfo;
+   }
+
+   setExposure (value)
+   {
+      this .browser .setBrowserOption ("Exposure", value);
    }
 
    setToneMapping (value)
