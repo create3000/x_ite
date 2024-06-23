@@ -325,7 +325,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      for (const shaderNode of this .getBrowser () .getShaders () .values ())
+      for (const shaderNode of browser .getShaders () .values ())
       {
          gl .useProgram (shaderNode .getProgram ());
          gl .uniform1f (shaderNode .x3d_Exposure, Math .max (exposure .getValue (), 0));
