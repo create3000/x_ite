@@ -610,9 +610,9 @@ class SampleViewer
 
       $(".viewer-column2") .on ("scroll", () =>
       {
-         this .localStorage ["scrollTop"] = $(".viewer-column2") .scrollTop ();
+         this .localStorage .scrollTop = $(".viewer-column2") .scrollTop ();
       })
-      .scrollTop (this .localStorage ["scrollTop"]);
+      .scrollTop (this .localStorage .scrollTop);
 
       $("[for=ibl]") .on ("click", () =>
       {
@@ -690,8 +690,8 @@ class SampleViewer
 
       this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
       this .setHeadlight (true);
-      this .setToneMapping (this .localStorage ["toneMapping"]);
-      this .setBackground (this .localStorage ["background"]);
+      this .setToneMapping (this .localStorage .toneMapping);
+      this .setBackground (this .localStorage .background);
       this .addScenes ();
       this .addViewpoints ();
       this .addVariants ();
@@ -788,7 +788,7 @@ class SampleViewer
 
    setToneMapping (on)
    {
-      this .localStorage ["toneMapping"] = on;
+      this .localStorage .toneMapping = on;
 
       if (on)
       {
@@ -806,7 +806,7 @@ class SampleViewer
 
    async setBackground (on)
    {
-      this .localStorage ["background"] = on;
+      this .localStorage .background = on;
 
       if (on)
       {
