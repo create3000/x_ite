@@ -263,7 +263,7 @@ Returns a browser option with the corresponding *name*.
       </tr>
       <tr>
          <td>Exposure</td>
-         <td>The exposure of an image describes the amount of light that is captured. This option has only works with PhysicalMaterial and SpecularGlossinessMaterial. <small class="blue">non standard</small></td>
+         <td>The exposure of an image describes the amount of light that is captured. This option only works with PhysicalMaterial and SpecularGlossinessMaterial. <small class="blue">non standard</small></td>
          <td>Float</td>
          <td>1</td>
       </tr>
@@ -311,7 +311,7 @@ Returns a browser option with the corresponding *name*.
       </tr>
       <tr>
          <td>ToneMapping</td>
-         <td>Whether tone mapping should be applied. This option has only works with PhysicalMaterial and SpecularGlossinessMaterial. <small class="blue">non standard</small></td>
+         <td>Whether tone mapping should be applied. This option only works with PhysicalMaterial and SpecularGlossinessMaterial. <small class="blue">non standard</small></td>
          <td>NONE, TONEMAP_ACES_NARKOWICZ, TONEMAP_ACES_HILL, TONEMAP_ACES_HILL_EXPOSURE_BOOST, TONEMAP_KHR_PBR_NEUTRAL</td>
          <td>NONE</td>
       </tr>
