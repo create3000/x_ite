@@ -1070,7 +1070,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
             // Logarithmic depth buffer support
 
-            if (renderObject .getRenderBits () .get (0))
+            if (renderObject .getLogarithmicDepthBuffer ())
             {
                const
                   viewpoint      = renderObject .getViewpoint (),

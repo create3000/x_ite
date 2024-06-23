@@ -66,7 +66,7 @@ function X3DRenderObject (executionContext)
 {
    const browser = executionContext .getBrowser ();
 
-   this .renderBits                     = new BitSet ();
+   this .renderKey                      = "";
    this .renderCount                    = 0;
    this .viewVolumes                    = [ ];
    this .projectionMatrix               = new MatrixStack (Matrix4);
@@ -116,14 +116,45 @@ function X3DRenderObject (executionContext)
 Object .assign (X3DRenderObject .prototype,
 {
    initialize ()
-   { },
+   {
+      const browser = this .getBrowser ();
+
+      browser .getRenderingProperties () ._LogarithmicDepthBuffer  .addInterest ("set_renderKey__", this);
+      browser .getBrowserOptions () ._OrderIndependentTransparency .addInterest ("set_renderKey__", this);
+
+      this .getViewpointStack ()  .addInterest ("set_renderKey__", this);
+
+      this .set_renderKey__ ();
+   },
    isIndependent ()
    {
       return true;
    },
-   getRenderBits ()
+   set_renderKey__ ()
    {
-      return this .renderBits;
+      const browser = this .getBrowser ();
+
+      this .logarithmicDepthBuffer       = browser .getRenderingProperty ("LogarithmicDepthBuffer") || this .getViewpoint () .getLogarithmicDepthBuffer ();
+      this .orderIndependentTransparency = browser .getBrowserOption ("OrderIndependentTransparency");
+
+      let renderKey = "";
+
+      renderKey += this .logarithmicDepthBuffer ? 1 : 0;
+      renderKey += this .orderIndependentTransparency ? 1 : 0;
+
+      this .renderKey = renderKey;
+   },
+   getLogarithmicDepthBuffer ()
+   {
+      return this .logarithmicDepthBuffer ;
+   },
+   getOrderIndependentTransparency ()
+   {
+      return this .orderIndependentTransparency;
+   },
+   getRenderKey ()
+   {
+      return this .renderKey;
    },
    getRenderCount ()
    {
@@ -1047,9 +1078,6 @@ Object .assign (X3DRenderObject .prototype,
          oit                      = frameBuffer .getOIT () && independent;
 
       this .renderCount = this .getNextRenderCount ();
-
-      this .renderBits .set (0, browser .getRenderingProperty ("LogarithmicDepthBuffer") || this .getViewpoint () .getLogarithmicDepthBuffer ());
-      this .renderBits .set (1, browser .getBrowserOption ("OrderIndependentTransparency"));
 
       // PREPARATIONS
 

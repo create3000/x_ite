@@ -109,7 +109,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, humanoidNode, objectsKeys } = renderContext;
 
          key += shapeNode .getAlphaMode ();
-         key += renderObject .getRenderBits () .toString (32); // 5 Bits
+         key += renderObject .getRenderKey ();
          key += shadows ? 1 : 0;
          key += fogNode ?.getFogType () ?? 0;
          key += shapeNode .getShapeKey ();
@@ -163,7 +163,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsKeys, textureNode } = renderContext;
 
-         if (renderObject .getRenderBits () .get (0))
+         if (renderObject .getLogarithmicDepthBuffer ())
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 
          switch (shapeNode .getAlphaMode ())
@@ -182,7 +182,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             {
                options .push ("X3D_ALPHA_MODE_BLEND");
 
-               if (renderObject .getRenderBits () .get (1))
+               if (renderObject .getOrderIndependentTransparency ())
                   options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
 
                break;
