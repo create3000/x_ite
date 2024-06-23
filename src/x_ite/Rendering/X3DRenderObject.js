@@ -146,16 +146,16 @@ Object .assign (X3DRenderObject .prototype,
          default: // NONE
             this .renderKey += 0;
             break;
-         case "TONEMAP_ACES_NARKOWICZ":
+         case "ACES_NARKOWICZ":
             this .renderKey += 1;
             break;
-         case "TONEMAP_ACES_HILL":
+         case "ACES_HILL":
             this .renderKey += 2;
             break;
-         case "TONEMAP_ACES_HILL_EXPOSURE_BOOST":
+         case "ACES_HILL_EXPOSURE_BOOST":
             this .renderKey += 3;
             break;
-         case "TONEMAP_KHR_PBR_NEUTRAL":
+         case "KHR_PBR_NEUTRAL":
             this .renderKey += 4;
             break;
       }

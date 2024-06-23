@@ -596,7 +596,7 @@ class SampleViewer
 
       this .localStorage .setDefaultValues ({
          scrollTop: 0,
-         toneMapping: true,
+         toneMapping: "KHR_PBR_NEUTRAL",
          background: false,
       });
 
@@ -624,9 +624,9 @@ class SampleViewer
          this .setHeadlight (!$("#headlight") .hasClass ("green"));
       });
 
-      $("[for=tone-mapping]") .on ("click", () =>
+      $("#tone-mapping") .on ("change", () =>
       {
-         this .setToneMapping (!$("#tone-mapping") .hasClass ("green"));
+         this .setToneMapping ($("#tone-mapping") .val ());
       });
 
       $("[for=summer]") .on ("click", () =>
@@ -786,22 +786,11 @@ class SampleViewer
       return this .navigationInfo = navigationInfo;
    }
 
-   setToneMapping (on)
+   setToneMapping (value)
    {
-      this .localStorage .toneMapping = on;
+      this .localStorage .toneMapping = value;
 
-      if (on)
-      {
-         $("#tone-mapping") .removeClass ("fa-xmark") .addClass ("fa-check");
-         $("#tone-mapping, [for=tone-mapping]") .addClass ("green");
-      }
-      else
-      {
-         $("#tone-mapping") .removeClass ("fa-check") .addClass ("fa-xmark");
-         $("#tone-mapping, [for=tone-mapping]") .removeClass ("green");
-      }
-
-      this .browser .setBrowserOption ("ToneMapping", on ? "TONEMAP_KHR_PBR_NEUTRAL" : "NONE");
+      this .browser .setBrowserOption ("ToneMapping", value);
    }
 
    async setBackground (on)

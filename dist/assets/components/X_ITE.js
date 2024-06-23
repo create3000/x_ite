@@ -1029,11 +1029,11 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
       {
          default: // NONE
             break;
-         case "TONEMAP_ACES_NARKOWICZ":
-         case "TONEMAP_ACES_HILL":
-         case "TONEMAP_ACES_HILL_EXPOSURE_BOOST":
-         case "TONEMAP_KHR_PBR_NEUTRAL":
-            options .push (`X3D_${browser .getBrowserOption ("ToneMapping")}`);
+         case "ACES_NARKOWICZ":
+         case "ACES_HILL":
+         case "ACES_HILL_EXPOSURE_BOOST":
+         case "KHR_PBR_NEUTRAL":
+            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping")}`);
             break;
       }
 

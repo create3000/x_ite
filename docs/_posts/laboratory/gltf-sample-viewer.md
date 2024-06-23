@@ -139,7 +139,16 @@ x3d-canvas {
             <b>Lighting</b>
             <label for="ibl"><i id="ibl" class="fa-solid fa-xmark"></i>Image Based Lighting</label>
             <label for="headlight"><i id="headlight" class="fa-solid fa-xmark"></i>Headlight</label>
-            <label for="tone-mapping"><i id="tone-mapping" class="fa-solid fa-xmark"></i>Tone Mapping</label>
+         </div>
+         <div>
+            <b>Tone Mapping</b>
+            <select id="tone-mapping">
+               <option value="NONE">None</option>
+               <option value="ACES_NARKOWICZ">ACES Narkowicz</option>
+               <option value="ACES_HILL">ACES Hill</option>
+               <option value="ACES_HILL_EXPOSURE_BOOST">ACES Hill Exposure Boost</option>
+               <option value="KHR_PBR_NEUTRAL" selected>KHR PBR Neutral</option>
+            </select>
          </div>
          <div id="background">
             <b>Background</b>

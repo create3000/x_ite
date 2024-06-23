@@ -312,8 +312,8 @@ Returns a browser option with the corresponding *name*.
       <tr>
          <td>ToneMapping</td>
          <td>Whether tone mapping should be applied. This option only works with PhysicalMaterial and SpecularGlossinessMaterial. <small class="blue">non standard</small></td>
-         <td>NONE, TONEMAP_ACES_NARKOWICZ, TONEMAP_ACES_HILL, TONEMAP_ACES_HILL_EXPOSURE_BOOST, TONEMAP_KHR_PBR_NEUTRAL</td>
-         <td>TONEMAP_KHR_PBR_NEUTRAL</td>
+         <td>NONE, ACES_NARKOWICZ, ACES_HILL, ACES_HILL_EXPOSURE_BOOST, KHR_PBR_NEUTRAL</td>
+         <td>KHR_PBR_NEUTRAL</td>
       </tr>
    </tbody>
 </table>
