@@ -139,6 +139,7 @@ x3d-canvas {
             <b>Lighting</b>
             <label for="ibl"><i id="ibl" class="fa-solid fa-xmark"></i>Image Based Lighting</label>
             <label for="headlight"><i id="headlight" class="fa-solid fa-xmark"></i>Headlight</label>
+            <label for="tone-mapping"><i id="tone-mapping" class="fa-solid fa-xmark"></i>Tone Mapping</label>
          </div>
          <div id="background">
             <b>Background</b>

@@ -591,9 +591,14 @@ class SampleViewer
 {
    constructor (browser)
    {
-      this .browser = browser;
+      this .browser      = browser;
+      this .localStorage = this .browser .getLocalStorage () .addNameSpace ("glTFSampleViewer.");
 
-      browser .setBrowserOption ("ToneMapping", "TONEMAP_KHR_PBR_NEUTRAL");
+      this .localStorage .setDefaultValues ({
+         scrollTop: 0,
+         toneMapping: true,
+         background: false,
+      });
 
       this .createList ("glTF Random Models",          models);
       this .createList ("glTF Sample Models",          glTF);
@@ -605,9 +610,9 @@ class SampleViewer
 
       $(".viewer-column2") .on ("scroll", () =>
       {
-         this .browser .getLocalStorage () ["SampleViewer.scrollTop"] = $(".viewer-column2") .scrollTop ();
+         this .localStorage ["scrollTop"] = $(".viewer-column2") .scrollTop ();
       })
-      .scrollTop (this .browser .getLocalStorage () ["SampleViewer.scrollTop"] ?? 0);
+      .scrollTop (this .localStorage ["scrollTop"]);
 
       $("[for=ibl]") .on ("click", () =>
       {
@@ -617,6 +622,11 @@ class SampleViewer
       $("[for=headlight]") .on ("click", () =>
       {
          this .setHeadlight (!$("#headlight") .hasClass ("green"));
+      });
+
+      $("[for=tone-mapping]") .on ("click", () =>
+      {
+         this .setToneMapping (!$("#tone-mapping") .hasClass ("green"));
       });
 
       $("[for=summer]") .on ("click", () =>
@@ -680,7 +690,8 @@ class SampleViewer
 
       this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
       this .setHeadlight (true);
-      this .setBackground (this .browser .getLocalStorage () ["glTFSampleViewer.background"]);
+      this .setToneMapping (this .localStorage ["toneMapping"]);
+      this .setBackground (this .localStorage ["background"]);
       this .addScenes ();
       this .addViewpoints ();
       this .addVariants ();
@@ -775,9 +786,27 @@ class SampleViewer
       return this .navigationInfo = navigationInfo;
    }
 
+   setToneMapping (on)
+   {
+      this .localStorage ["toneMapping"] = on;
+
+      if (on)
+      {
+         $("#tone-mapping") .removeClass ("fa-xmark") .addClass ("fa-check");
+         $("#tone-mapping, [for=tone-mapping]") .addClass ("green");
+      }
+      else
+      {
+         $("#tone-mapping") .removeClass ("fa-check") .addClass ("fa-xmark");
+         $("#tone-mapping, [for=tone-mapping]") .removeClass ("green");
+      }
+
+      this .browser .setBrowserOption ("ToneMapping", on ? "TONEMAP_KHR_PBR_NEUTRAL" : "NONE");
+   }
+
    async setBackground (on)
    {
-      this .browser .getLocalStorage () ["glTFSampleViewer.background"] = on;
+      this .localStorage ["background"] = on;
 
       if (on)
       {
