@@ -1,6 +1,4 @@
 export default /* glsl */ `
-const float exposure = 1.0;
-
 const float GAMMA     = 2.2;
 const float INV_GAMMA = 1.0 / GAMMA;
 
@@ -124,10 +122,12 @@ toneMap_KhronosPbrNeutral (in vec3 color)
 }
 #endif
 
+uniform float x3d_Exposure;
+
 vec3
 toneMap (in vec3 color)
 {
-   color *= exposure;
+   color *= x3d_Exposure;
 
    #if defined (X3D_TONEMAP_ACES_NARKOWICZ)
       color = toneMapACES_Narkowicz (color);

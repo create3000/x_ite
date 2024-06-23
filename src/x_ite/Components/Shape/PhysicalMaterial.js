@@ -260,6 +260,8 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       gl .uniform1f  (shaderObject .x3d_Metallic,  this .metallic);
       gl .uniform1f  (shaderObject .x3d_Roughness, this .roughness);
 
+      gl .uniform1f (shaderObject .x3d_Exposure, renderObject .getBrowser () .getBrowserOption ("Exposure"));
+
       if (!+this .getTextureBits ())
          return;
 

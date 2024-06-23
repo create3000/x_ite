@@ -39,7 +39,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 Enables/disables node operation.
 
-### SFFloat [in, out] **damping** 1 <small>(-∞,∞)</small> <small class="yellow">non standard</small>
+### SFFloat [in, out] **damping** 1 <small>(-∞,∞)</small> <small class="blue">non standard</small>
 
 Damping of velocity in the event of a collision.
 

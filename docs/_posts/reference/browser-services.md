@@ -262,6 +262,12 @@ Returns a browser option with the corresponding *name*.
          <td>false</td>
       </tr>
       <tr>
+         <td>Exposure</td>
+         <td>The exposure of an image describes the amount of light that is captured. <small class="blue">non standard</small></td>
+         <td>Float</td>
+         <td>1</td>
+      </tr>
+      <tr>
          <td>Gravity</td>
          <td>Default is gravity of Earth. <small class="blue">non standard</small></td>
          <td>Float</td>

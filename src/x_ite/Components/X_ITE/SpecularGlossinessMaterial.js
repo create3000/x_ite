@@ -270,6 +270,8 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
       gl .uniform3fv (shaderObject .x3d_SpecularColor, this .specularColorArray);
       gl .uniform1f  (shaderObject .x3d_Glossiness,    this .glossiness);
 
+      gl .uniform1f (shaderObject .x3d_Exposure, renderObject .getBrowser () .getBrowserOption ("Exposure"));
+
       if (!+this .getTextureBits ())
          return;
 

@@ -51,7 +51,7 @@ Input/Output field *rotations*.
 
 Input/Output field *scales*.
 
-### SFBool [in, out] **pointerEvents** TRUE <small class="yellow">non standard</small>
+### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non standard</small>
 
 *pointerEvents* defines whether this Shape becomes target for pointer events.
 

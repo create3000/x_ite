@@ -107,11 +107,11 @@ Zero or more contained programmable shader nodes ([ComposedShader](/x_ite/compon
 
 - [X3D Architecture 31 Programmable *shaders* component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/*shaders*.html){:target="_blank"}
 
-### SFNode [in, out] **blendMode** NULL <small>[BlendMode]</small> <small class="yellow">non standard</small>
+### SFNode [in, out] **blendMode** NULL <small>[BlendMode]</small> <small class="blue">non standard</small>
 
 Single contained [BlendMode](../../x-ite/blendmode) node that defines blend mode properties.
 
-### SFNode [in, out] **depthMode** NULL <small>[DepthMode]</small> <small class="yellow">non standard</small>
+### SFNode [in, out] **depthMode** NULL <small>[DepthMode]</small> <small class="blue">non standard</small>
 
 Single contained [DepthMode](../../x-ite/depthmode) node that defines depth mode properties.
 

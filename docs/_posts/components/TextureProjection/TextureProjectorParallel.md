@@ -125,7 +125,7 @@ Single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imag
 
 *shadows* field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
 
-### SFColor [in, out] **shadowColor** 0 0 0 <small>[0,1]</small> <small class="yellow">non standard</small>
+### SFColor [in, out] **shadowColor** 0 0 0 <small>[0,1]</small> <small class="blue">non standard</small>
 
 Color of shadow, applied to colors of objects.
 
@@ -133,11 +133,11 @@ Color of shadow, applied to colors of objects.
 
 *shadowIntensity* field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
 
-### SFFloat [in, out] **shadowBias** 0.005 <small>[0,1]</small> <small class="yellow">non standard</small>
+### SFFloat [in, out] **shadowBias** 0.005 <small>[0,1]</small> <small class="blue">non standard</small>
 
 The shadowBias value controls the visibility of *shadow acne*.
 
-### SFInt32 [ ] **shadowMapSize** 1024 <small>[0,∞)</small> <small class="yellow">non standard</small>
+### SFInt32 [ ] **shadowMapSize** 1024 <small>[0,∞)</small> <small class="blue">non standard</small>
 
 Size of the shadow map in pixels, must be power of two.
 

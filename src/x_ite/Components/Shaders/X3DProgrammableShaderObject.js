@@ -143,17 +143,12 @@ Object .assign (X3DProgrammableShaderObject .prototype,
        * Uniforms.
        */
 
-      this .x3d_Id                      = gl .getUniformLocation (program, "x3d_Id");
-      this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
-
       for (let i = 0; i < maxClipPlanes; ++ i)
          this .x3d_ClipPlane [i] = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
 
       this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
       this .x3d_FogVisibilityRange = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange", "x3d_FogVisibilityRange");
       this .x3d_FogMatrix          = this .getUniformLocation (gl, program, "x3d_Fog.matrix",          "x3d_FogMatrix");
-
-      this .x3d_AlphaCutoff = gl .getUniformLocation (program, "x3d_AlphaCutoff");
 
       this .x3d_PointPropertiesPointSizeScaleFactor = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeScaleFactor");
       this .x3d_PointPropertiesPointSizeMinValue    = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeMinValue");
@@ -217,7 +212,26 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_NormalScale       = gl .getUniformLocation (program, "x3d_Material.normalScale");
       this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
 
-      const extensionUniforms = [
+      const commonUniforms = [
+         // Matrices
+         "x3d_Viewport",
+         "x3d_ProjectionMatrix",
+         "x3d_ModelViewMatrix",
+         "x3d_NormalMatrix",
+         "x3d_ViewMatrix",
+         "x3d_CameraSpaceMatrix",
+         // ParticleSystem and Skinning
+         "x3d_TexCoordRamp",
+         "x3d_JointsTexture",
+         "x3d_DisplacementsTexture",
+         "x3d_JointMatricesTexture",
+         // Common
+         "x3d_Id", // Pointing ID
+         "x3d_AlphaCutoff",
+         "x3d_Exposure",
+         "x3d_LogarithmicFarFactor1_2",
+         "x3d_MultiTextureColor",
+         // Extensions
          "x3d_AnisotropyEXT",
          "x3d_ClearcoatEXT",
          "x3d_ClearcoatRoughnessEXT",
@@ -241,7 +255,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_AttenuationColoEXT",
       ];
 
-      for (const name of extensionUniforms)
+      for (const name of commonUniforms)
          this [name] = gl .getUniformLocation (program, name);
 
       for (const materialTexture of MaterialTextures .names)
@@ -254,8 +268,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             textureCube:              gl .getUniformLocation (program, materialTexture + ".textureCube"),
          };
       }
-
-      this .x3d_MultiTextureColor = gl .getUniformLocation (program, "x3d_MultiTextureColor");
 
       this .x3d_TexCoord .length = 0;
 
@@ -298,18 +310,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          if (x3d_TexCoord !== -1)
             this .x3d_TexCoord .push ([i, x3d_TexCoord]);
       }
-
-      this .x3d_TexCoordRamp         = gl .getUniformLocation (program, "x3d_TexCoordRamp");
-      this .x3d_JointsTexture        = gl .getUniformLocation (program, "x3d_JointsTexture");
-      this .x3d_DisplacementsTexture = gl .getUniformLocation (program, "x3d_DisplacementsTexture");
-      this .x3d_JointMatricesTexture = gl .getUniformLocation (program, "x3d_JointMatricesTexture");
-
-      this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
-      this .x3d_ProjectionMatrix  = gl .getUniformLocation (program, "x3d_ProjectionMatrix");
-      this .x3d_ModelViewMatrix   = gl .getUniformLocation (program, "x3d_ModelViewMatrix");
-      this .x3d_NormalMatrix      = gl .getUniformLocation (program, "x3d_NormalMatrix");
-      this .x3d_ViewMatrix        = gl .getUniformLocation (program, "x3d_ViewMatrix");
-      this .x3d_CameraSpaceMatrix = gl .getUniformLocation (program, "x3d_CameraSpaceMatrix");
 
       /*
        * Attributes.
