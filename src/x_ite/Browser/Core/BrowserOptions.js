@@ -91,6 +91,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this ._StraightenHorizon            .addInterest ("set_straightenHorizon__",            this);
       this ._AutoUpdate                   .addInterest ("set_autoUpdate__",                   this);
       this ._ContentScale                 .addInterest ("set_contentScale__",                 this);
+      this ._Exposure                     .addInterest ("set_exposure__",                     this);
       this ._LogarithmicDepthBuffer       .addInterest ("set_logarithmicDepthBuffer__",       this);
       this ._Multisampling                .addInterest ("set_multisampling__",                this);
       this ._OrderIndependentTransparency .addInterest ("set_orderIndependentTransparency__", this);
@@ -99,6 +100,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this .set_antialiased__                  (this ._Antialiased);
       this .set_shading__                      (this ._Shading);
       this .set_contentScale__                 (this ._ContentScale);
+      this .set_exposure__                     (this ._Exposure);
       this .set_logarithmicDepthBuffer__       (this ._LogarithmicDepthBuffer);
       this .set_multisampling__                (this ._Multisampling);
       this .set_orderIndependentTransparency__ (this ._OrderIndependentTransparency);
@@ -316,6 +318,18 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       browser .getRenderingProperties () ._ContentScale = window .devicePixelRatio;
 
       browser .reshape ();
+   },
+   set_exposure__ (exposure)
+   {
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      for (const shaderNode of this .getBrowser () .getShaders () .values ())
+      {
+         gl .useProgram (shaderNode .getProgram ());
+         gl .uniform1f (shaderNode .x3d_Exposure, Math .max (exposure .getValue (), 0));
+      }
    },
    set_logarithmicDepthBuffer__ (logarithmicDepthBuffer)
    {

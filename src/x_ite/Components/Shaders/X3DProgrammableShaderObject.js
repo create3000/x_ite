@@ -377,6 +377,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
        * Fill uniforms with defaults.
        */
 
+      // Fill browser options.
+
+      gl .uniform1f (this .x3d_Exposure, Math .max (browser .getBrowserOption ("Exposure"), 0));
+
       // Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
       gl .uniform1i  (this .x3d_LinePropertiesTexture, browser .getDefaultTexture2DUnit ());
@@ -1067,8 +1071,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
             this .numGlobalLights            = this .numLights;
             this .numGlobalTextureProjectors = this .numTextureProjectors;
-
-            gl .uniform1f (this .x3d_Exposure, renderObject .getBrowser () .getBrowserOption ("Exposure"));
 
             // Logarithmic depth buffer support
 
