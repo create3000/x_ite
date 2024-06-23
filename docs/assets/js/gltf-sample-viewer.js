@@ -596,7 +596,6 @@ class SampleViewer
 
       this .localStorage .setDefaultValues ({
          scrollTop: 0,
-         toneMapping: "KHR_PBR_NEUTRAL",
          background: false,
       });
 
@@ -690,7 +689,6 @@ class SampleViewer
 
       this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
       this .setHeadlight (true);
-      this .setToneMapping (this .localStorage .toneMapping);
       this .setBackground (this .localStorage .background);
       this .addScenes ();
       this .addViewpoints ();
@@ -788,8 +786,6 @@ class SampleViewer
 
    setToneMapping (value)
    {
-      this .localStorage .toneMapping = value;
-
       this .browser .setBrowserOption ("ToneMapping", value);
    }
 
