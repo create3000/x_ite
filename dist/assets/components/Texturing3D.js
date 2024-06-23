@@ -1,7 +1,7 @@
 /* X_ITE v10.0.0 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 887:
+/***/ 918:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 537:
+/***/ 912:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,13 +72,13 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 941:
+/***/ 788:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(940));
+		module.exports = factory(__webpack_require__(559));
 	else {}
 })(this, function(__WEBPACK_EXTERNAL_MODULE_zlib__) {
 return /******/ (function(modules) { // webpackBootstrap
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 417:
+/***/ 992:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5219,7 +5219,7 @@ module.exports = window [Symbol .for ("X_ITE.X3D-10.0.0")] .require ("lib/jquery
 
 /***/ }),
 
-/***/ 940:
+/***/ 559:
 /***/ (() => {
 
 /* (ignored) */
@@ -7342,10 +7342,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(941);
-/* provided dependency */ var JpegImage = __webpack_require__(417);
-/* provided dependency */ var CharLS = __webpack_require__(887);
-/* provided dependency */ var OpenJPEG = __webpack_require__(537);
+/* provided dependency */ var dicomParser = __webpack_require__(788);
+/* provided dependency */ var JpegImage = __webpack_require__(992);
+/* provided dependency */ var CharLS = __webpack_require__(918);
+/* provided dependency */ var OpenJPEG = __webpack_require__(912);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
