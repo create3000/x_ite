@@ -13,13 +13,22 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 To get an idea of what a great difference these new material extensions make, check out our [glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/). Take some time and look through all the examples. I am sure you will be amazed.
 
-All glTF extensions implemented with this version are listed below.
+### Browser Options
 
-### X3DOneSidedMaterialNode
+There are also new [Browser Options](/x_ite/reference/browser-services/#browser-options) that are made for PhysicalMaterial and SpecularGlossinessMaterial.
+
+* New browser option Exposure.
+* New browser option ToneMapping.
+
+### Implemented glTF Extensions
+
+All glTF extensions implemented with this version are listed below:
+
+#### X3DOneSidedMaterialNode
 
 * KHR_materials_pbrSpecularGlossiness implemented as [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) node.
 
-### X3DMaterialExtensionNode
+#### X3DMaterialExtensionNode
 
 * KHR_materials_anisotropy implemented as [AnisotropyMaterialExtension](/x_ite/components/x-ite/anisotropymaterialextension/) node.
 * KHR_materials_clearcoat implemented as [ClearcoatMaterialExtension](/x_ite/components/x-ite/clearcoatmaterialextension/) node.
@@ -33,16 +42,9 @@ All glTF extensions implemented with this version are listed below.
 * KHR_materials_unlit implemented as [UnlitMaterialExtension](/x_ite/components/x-ite/unlitmaterialextension/) node.
 * KHR_materials_volume implemented as [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) node.
 
-### Switch
+#### Switch
 
 * KHR_materials_variants implemented as [Switch](/x_ite/components/grouping/switch/) node.
-
-### Browser Options
-
-There are also new [Browser Options](/x_ite/reference/browser-services/#browser-options) that are made for PhysicalMaterial and SpecularGlossinessMaterial.
-
-* New browser option Exposure.
-* New browser option ToneMapping.
 
 ## X_ITE v9.5.2 Released
 
