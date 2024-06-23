@@ -414,7 +414,7 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 
 Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callback associated whit key are removed.
 
-#### void **viewAll** (*[SFNode layerNode], [Number transitionTime = 1]*) <small><span class="yellow">non standard</span></small>
+#### void **viewAll** (*[SFNode layerNode], [Number transitionTime = 1]*) <small><span class="blue">non standard</span></small>
 
 Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layerNode* is omitted, the active layer is used.
 

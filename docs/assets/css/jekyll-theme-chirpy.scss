@@ -54,8 +54,8 @@
   --system-red: rgb(255, 69, 58);
   --system-orange: rgb(255, 159, 10);
   --system-yellow: rgb(255, 214, 10);
-  --system-green: rgb(48, 209, 88);
-  --system-mint: rgb(102, 212, 207);
+  --system-green: hsl(135, 64%, 45%);
+  --system-mint: rgb(104, 212, 207);
   --system-teal: rgb(64, 200, 224);
   --system-cyan: rgb(100, 210, 255);
   --system-blue: rgb(10, 132, 255);
@@ -274,6 +274,12 @@ input[type=number] {
   height: 2rem;
   padding: 0 1rem;
   background: var(--system-gray0);
+}
+
+input[type=""]:focus,
+input[type=text]:focus,
+input[type=number]:focus {
+  outline: 1px solid var(--system-green);
 }
 
 select.select {

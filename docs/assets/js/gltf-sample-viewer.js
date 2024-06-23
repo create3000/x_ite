@@ -23,6 +23,7 @@ const ibl_files = [
    "Dispersion",
    "DragonAttenuation",
    "EmissiveStrengthTest",
+   "Engine",
    "EnvironmentTest",
    "Glam",
    "GlassBrokenWindow",
