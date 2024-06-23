@@ -135,6 +135,7 @@ function SVGParser (scene)
    this .tessy            = this .createTesselator ();
    this .canvas           = document .createElement ("canvas");
    this .context          = this .canvas .getContext ("2d");
+   this .numSwitchNodes   = 0;
 
    this .styles = [{
       display: "inline",
@@ -458,7 +459,10 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          switchNode    = scene .createNode ("Switch");
 
       transformNode .children .push (switchNode);
+
       switchNode .whichChoice = 0;
+
+      scene .addExportedNode (scene .getUniqueExportName (`Switch${++ this .numSwitchNodes}`), node);
 
       // Get child elements.
 
@@ -1210,11 +1214,11 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          scene = this .getExecutionContext (),
          name  = this .sanitizeName (attribute);
 
-      if (name)
-      {
-         scene .addNamedNode (scene .getUniqueName (name), node);
-         scene .addExportedNode (scene .getUniqueExportName (name), node);
-      }
+      if (!name)
+         return;
+
+      scene .addNamedNode (scene .getUniqueName (name), node);
+      scene .addExportedNode (scene .getUniqueExportName (name), node);
    },
    viewBoxAttribute (attribute, defaultValue)
    {
