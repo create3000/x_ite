@@ -10,7 +10,7 @@
     <meta name='created' content='Tue, 09 Jul 2019 09:37:20 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 23 Jun 2024 22:05:35 GMT'/>
+    <meta name='modified' content='Sun, 23 Jun 2024 22:24:06 GMT'/>
   </head>
   <Scene>
     <WorldInfo/>
@@ -18,7 +18,7 @@
         activeLayer='2'
         order='1, 2, 3'>
       <LayoutLayer DEF='Background'>
-        <Layout DEF='_1'
+        <Layout DEF='_5'
             scaleMode='"STRETCH", "STRETCH"'/>
         <Transform DEF='Rectangle2D'>
           <Shape>
@@ -45,15 +45,35 @@
               key='0, 1'
               keyValue='0 0 11457000, 0 0 11457000'/>
         </Group>
-        <Transform DEF='Earth'>
+        <Transform DEF='Earth_1'>
           <Shape>
             <Appearance>
               <PhysicalMaterial
-                  metallic='0'
-                  roughness='0.2990869'>
+                  baseColor='3 3 3'
+                  baseTextureMapping='TEXCOORD_0'
+                  emissiveTextureMapping='TEXCOORD_0'
+                  metallic='0.3'
+                  roughness='0.5107484'
+                  normalScale='0.7'
+                  normalTextureMapping='TEXCOORD_0'>
                 <ImageTexture containerField='baseTexture'
-                    url='"assets/world.topo.bathy.jpg"'/>
+                    url='"assets/Surface.mat_baseColor.jpeg"'
+                    colorSpaceConversion='false'>
+                  <TextureProperties DEF='_1'
+                      anisotropicDegree='16'
+                      generateMipMaps='true'
+                      minificationFilter='AVG_PIXEL_AVG_MIPMAP'
+                      magnificationFilter='AVG_PIXEL'/>
+                </ImageTexture>
+                <ImageTexture containerField='normalTexture'
+                    url='"assets/Surface.mat_normal.jpeg"'
+                    colorSpaceConversion='false'>
+                  <TextureProperties USE='_1'/>
+                </ImageTexture>
               </PhysicalMaterial>
+              <TextureTransform
+                  translation='0 -1'
+                  scale='1 -1'/>
             </Appearance>
             <GeoElevationGrid
                 geoGridOrigin='-90 180 0'
@@ -147,7 +167,7 @@
         </Transform>
       </Layer>
       <LayoutLayer DEF='Loading'>
-        <Layout USE='_1'/>
+        <Layout USE='_5'/>
         <Switch DEF='LoadingSwitch'>
           <Group/>
           <Group>
