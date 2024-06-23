@@ -13,7 +13,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 To get an idea of what a great difference these new material extensions make, check out our [glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/). Take some time and look through all the examples. I am sure you will be amazed.
 
-### Browser Options
+### New Browser Options
 
 There are also new [Browser Options](/x_ite/reference/browser-services/#browser-options) that are especially made for PhysicalMaterial and SpecularGlossinessMaterial.
 
