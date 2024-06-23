@@ -133,13 +133,7 @@ Object .assign (X3DOptimizer .prototype,
             node .skeleton = this .optimizeNodes (node, node .skeleton, true, removedNodes);
             node .skin     = this .optimizeNodes (node, node .skin,     true, removedNodes);
 
-            if (this .removeEmptyGroups)
-            {
-               if (!node .skeleton .length && !node .skin .length)
-                  return [ ];
-            }
-
-            return node;
+            return this .removeIfNoChildren (node, removedNodes);
          }
          default:
          {
@@ -198,17 +192,26 @@ Object .assign (X3DOptimizer .prototype,
    },
    removeIfNoChildren (node, removedNodes)
    {
-      if (this .removeEmptyGroups)
-      {
-         if (node .children .length === 0)
-         {
-            removedNodes .push (node);
+      if (!this .removeEmptyGroups)
+         return node;
 
-            return [ ];
+      switch (node .getNodeTypeName ())
+      {
+         case "HAnimHumanoid":
+         {
+            if (node .skeleton .length || node .skin .length)
+               return node;
+         }
+         default:
+         {
+            if (node .children .length !== 0)
+               return node;
          }
       }
 
-      return node;
+      removedNodes .push (node);
+
+      return [ ];
    },
    removeInterpolatorsWithOnlyOneValue (node, removedNodes)
    {
