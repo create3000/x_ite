@@ -165,22 +165,22 @@ function selectEarthQuake (earthquake)
 {
 	// Red point
 
-	var
+	const
 		Browser = X3D .getBrowser (),
 		coord   = Browser .currentScene .getNamedNode ("EarthQuakeCoord"),
-		timer   = Browser .currentScene .getNamedNode ("EarthQuakeAnimationTimer"),
+		timer1  = Browser .currentScene .getNamedNode ("EarthQuakeAnimationTimer"),
 		m       = earthquake .magnitude / 10,
 		now     = Date .now () / 1000;
 
 	coord .point [0] = new X3D .SFVec3d (earthquake .point [0], earthquake .point [1], 100000 + 1000000 * m);
 
-	timer .stopTime  = now;
-	timer .startTime = now;
+	timer1 .stopTime  = now;
+	timer1 .startTime = now;
 
 	// Viewpoint
 
-	var
-		timer        = Browser .currentScene .getNamedNode ("ViewpointAnimationTimer"),
+	const
+		timer2       = Browser .currentScene .getNamedNode ("ViewpointAnimationTimer"),
 		interpolator = Browser .currentScene .getNamedNode ("ViewpointPositionInterpolator");
 
 	Browser .changeViewpoint ("Viewpoint");
@@ -189,6 +189,6 @@ function selectEarthQuake (earthquake)
 	interpolator .keyValue [1] .x = earthquake .point [0];
 	interpolator .keyValue [1] .y = earthquake .point [1];
 
-	timer .stopTime  = now;
-	timer .startTime = now;
+	timer2 .stopTime  = now;
+	timer2 .startTime = now;
 }

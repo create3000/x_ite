@@ -10,7 +10,7 @@
     <meta name='created' content='Tue, 09 Jul 2019 09:37:20 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 02 Jun 2024 17:04:23 GMT'/>
+    <meta name='modified' content='Sun, 23 Jun 2024 22:05:35 GMT'/>
   </head>
   <Scene>
     <WorldInfo/>
@@ -37,13 +37,13 @@
         <Group>
           <GeoViewpoint DEF='Viewpoint'
               description='GeoViewpoint'
-              position='0 0 16457000'
+              position='0 0 11457000'
               orientation='-1 0 0 1.5733444502447'
               centerOfRotation='-79.973709236216 -60.066827542369 -6297124.3143008'/>
           <TimeSensor DEF='ViewpointAnimationTimer'/>
           <GeoPositionInterpolator DEF='ViewpointPositionInterpolator'
               key='0, 1'
-              keyValue='0 0 16457000, 0 0 16457000'/>
+              keyValue='0 0 11457000, 0 0 11457000'/>
         </Group>
         <Transform DEF='Earth'>
           <Shape>
