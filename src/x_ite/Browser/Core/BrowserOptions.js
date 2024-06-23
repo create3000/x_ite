@@ -116,11 +116,13 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          "ContentScale",
          "ContextMenu",
          "Debug",
+         "Exposure",
          "LogarithmicDepthBuffer",
          "Multisampling",
          "Notifications",
          "OrderIndependentTransparency",
          "SplashScreen",
+         "ToneMapping",
       ]);
 
       const mappings = new Map ([

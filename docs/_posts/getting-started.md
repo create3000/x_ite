@@ -718,11 +718,14 @@ contextMenu
 debug
 : A Boolean value (`true` or `false`) to indicate whether additional debug message should be printed into the web browsers console and whether additional context menu items should be enabled. The default value for the *debug* attribute is `false`.
 
+exposure
+: A Float value that describes the amount of light that is captured. This option only works with PhysicalMaterial node and SpecularGlossinessMaterial node. The default value for the *exposure* attribute is `1`.
+
 logarithmicDepthBuffer
 : A Boolean value (`true` or `false`) to indicate whether order logarithmic depth buffer rendering technique should be used. The default value for the *logarithmicDepthBuffer* attribute is `false`.
 
 multisampling
-: An Integer value that specifies the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of anti-aliasing. Check the [rendering property](/x_ite/reference/browser-services/#rendering-properties) »MaxSamples«, which is browser dependent.
+: An Integer value that specifies the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of anti-aliasing. Check the [Rendering Property](/x_ite/reference/browser-services/#rendering-properties) »MaxSamples«, which is browser dependent.
 
 notifications
 : A Boolean value (`true` or `false`) to indicate whether the notification bubble should be displayed. The default value for the *notifications* attribute is `true`.
@@ -752,6 +755,9 @@ src
 
 timings
 : A Boolean value (`true` or `false`) to indicate whether the Timings Panel should be displayed. The default value for the *timings* attribute is restored from the previous session, otherwise it is `false`.
+
+toneMapping
+: A String value that indicates whether tone mapping should be applied. This option only works with PhysicalMaterial node and SpecularGlossinessMaterial node. The default value for the *toneMapping* attribute is `"NONE"`. For a list of possible values see [Browser Options](/x_ite/reference/browser-services/#browser-options).
 
 update
 : A Boolean value (`true`, `false` or `auto`) to indicate whether browser events should be processed. The default value for the *update* attribute is `true`. A value of `true` will enable event processing, a value of `false` will stop event processing. If the value is `auto`, the effective value is determined by the visibility of the \<x3d-canvas\> element.

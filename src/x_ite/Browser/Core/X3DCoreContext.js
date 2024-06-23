@@ -322,6 +322,11 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("Debug", this .parseBooleanAttribute (newValue, false));
             break;
          }
+         case "exposure":
+         {
+            this .setBrowserOption ("Exposure", newValue);
+            break;
+         }
          case "logarithmicDepthBuffer":
          case "logarithmicdepthbuffer":
          {
@@ -386,6 +391,12 @@ Object .assign (X3DCoreContext .prototype,
          case "timings":
          {
             this .setBrowserOption ("Timings", this .parseBooleanAttribute (newValue, false));
+            break;
+         }
+         case "toneMapping":
+         case "tonemapping":
+         {
+            this .setBrowserOption ("ToneMapping", newValue);
             break;
          }
          case "update":

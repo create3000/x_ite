@@ -84,6 +84,7 @@ class X3DCanvasElement extends HTMLElement
          "contextMenu",
          "contextmenu",
          "debug",
+         "exposure",
          "logarithmicDepthBuffer",
          "logarithmicdepthbuffer",
          "multisampling",
@@ -96,6 +97,8 @@ class X3DCanvasElement extends HTMLElement
          "splashscreen",
          "src",
          "timings",
+         "toneMapping",
+         "tonemapping",
          "update",
          "url",
       ];
