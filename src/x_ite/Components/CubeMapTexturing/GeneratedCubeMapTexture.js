@@ -67,10 +67,10 @@ function GeneratedCubeMapTexture (executionContext)
 
    this .addType (X3DConstants .GeneratedCubeMapTexture);
 
-   this .dependentRenderer = new DependentRenderer (executionContext);
-   this .projectionMatrix  = new Matrix4 ();
-   this .modelMatrix       = new Matrix4 ();
-   this .viewVolume        = new ViewVolume ();
+   this .dependentRenderers = new WeakMap ();
+   this .projectionMatrix   = new Matrix4 ();
+   this .modelMatrix        = new Matrix4 ();
+   this .viewVolume         = new ViewVolume ();
 }
 
 Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
@@ -80,8 +80,6 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
       X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
       this ._size .addInterest ("set_size__", this);
-
-      this .dependentRenderer .setup ();
 
       this .set_size__ ();
    },
@@ -169,10 +167,17 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
       return function (renderObject)
       {
-         this .dependentRenderer .setRenderer (renderObject);
+         if (!this .dependentRenderers .has (renderObject))
+         {
+            const dependentRenderer = new DependentRenderer (this .getExecutionContext (), renderObject, this);
+
+            dependentRenderer .setup ();
+
+            this .dependentRenderers .set (renderObject, dependentRenderer);
+         }
 
          const
-            dependentRenderer  = this .dependentRenderer,
+            dependentRenderer  = this .dependentRenderers .get (renderObject),
             browser            = this .getBrowser (),
             layer              = renderObject .getLayer (),
             gl                 = browser .getContext (),
@@ -253,7 +258,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
       {
          X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, channel);
 
-         if (renderObject === this .dependentRenderer)
+         if (renderObject .getNode () === this)
             gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
       };
    })(),

@@ -49,12 +49,13 @@ import X3DBaseNode     from "../Base/X3DBaseNode.js";
 import X3DRenderObject from "./X3DRenderObject.js";
 import TraverseType    from "./TraverseType.js";
 
-function DependentRenderer (executionContext)
+function DependentRenderer (executionContext, renderObject, node)
 {
    X3DBaseNode     .call (this, executionContext);
    X3DRenderObject .call (this, executionContext);
 
-   this .renderObject = null;
+   this .node         = node;
+   this .renderObject = renderObject;
 }
 
 Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNode .prototype),
@@ -69,9 +70,9 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    {
       return false;
    },
-   setRenderer (value)
+   getNode ()
    {
-      this .renderObject = value;
+      return this .node;
    },
    getLayer ()
    {
@@ -92,6 +93,10 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    getViewpoint ()
    {
       return this .renderObject .getViewpoint ();
+   },
+   getViewpointStack ()
+   {
+      return this .renderObject .getViewpointStack ();
    },
    getLightContainer ()
    {
