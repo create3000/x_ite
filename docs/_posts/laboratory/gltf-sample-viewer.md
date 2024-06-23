@@ -112,6 +112,11 @@ x3d-canvas {
    color: var(--system-green);
 }
 
+#options select:hover {
+   border: 1px solid var(--system-gray8);
+   color: var(--system-gray8);
+}
+
 #options input[type=range] {
    -moz-appearance: none;
    -webkit-appearance: none;
@@ -120,18 +125,30 @@ x3d-canvas {
    position: relative;
    top: -2px;
    margin-left: 0.3rem;
-   background-color: var(--text-color);
+   background: var(--text-color);
    height: 4px;
 }
 
-#options input[type=range]::-webkit-slider-runnable-track,
-#options input[type=range]::-moz-range-track {
+#options input[type=range]:hover {
+   background: var(--system-gray8);
+}
+
+/* Must have a selector for each browser separately. */
+#options input[type=range]::-webkit-slider-thumb {
    -moz-appearance: none;
    -webkit-appearance: none;
    appearance: none;
+   background: var(--text-color);
+   height: 0.8rem;
+   width: 0.8rem;
+   border-radius: 50%;
 }
 
-#options input[type=range]::-webkit-slider-thumb,
+#options input[type=range]:hover::-webkit-slider-thumb {
+   background: var(--system-gray8);
+}
+
+/* Must have a selector for each browser separately. */
 #options input[type=range]::-moz-range-thumb {
    -moz-appearance: none;
    -webkit-appearance: none;
@@ -140,6 +157,10 @@ x3d-canvas {
    height: 0.8rem;
    width: 0.8rem;
    border-radius: 50%;
+}
+
+#options input[type=range]:hover::-moz-range-thumb {
+   background: var(--system-gray8);
 }
 
 #scenes,
