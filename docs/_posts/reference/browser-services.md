@@ -303,6 +303,12 @@ Returns a browser option with the corresponding *name*.
          <td>Boolean</td>
          <td>false</td>
       </tr>
+      <tr>
+         <td>ToneMapping</td>
+         <td>Whether tone mapping should be applied. <small class="blue">non standard</small></td>
+         <td>NONE, TONEMAP_ACES_NARKOWICZ, TONEMAP_ACES_HILL, TONEMAP_ACES_HILL_EXPOSURE_BOOST, TONEMAP_KHR_PBR_NEUTRAL</td>
+         <td>NONE</td>
+      </tr>
    </tbody>
 </table>
 

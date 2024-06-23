@@ -593,6 +593,8 @@ class SampleViewer
    {
       this .browser = browser;
 
+      browser .setBrowserOption ("ToneMapping", "TONEMAP_KHR_PBR_NEUTRAL");
+
       this .createList ("glTF Random Models",          models);
       this .createList ("glTF Sample Models",          glTF);
       this .createList ("glb Sample Models",           glb);

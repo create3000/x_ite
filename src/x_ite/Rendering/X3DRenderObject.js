@@ -121,6 +121,7 @@ Object .assign (X3DRenderObject .prototype,
 
       browser .getRenderingProperties () ._LogarithmicDepthBuffer  .addInterest ("set_renderKey__", this);
       browser .getBrowserOptions () ._OrderIndependentTransparency .addInterest ("set_renderKey__", this);
+      browser .getBrowserOptions () ._ToneMapping                  .addInterest ("set_renderKey__", this);
 
       this .getViewpointStack ()  .addInterest ("set_renderKey__", this);
 
@@ -137,12 +138,27 @@ Object .assign (X3DRenderObject .prototype,
       this .logarithmicDepthBuffer       = browser .getRenderingProperty ("LogarithmicDepthBuffer") || this .getViewpoint () .getLogarithmicDepthBuffer ();
       this .orderIndependentTransparency = browser .getBrowserOption ("OrderIndependentTransparency");
 
-      let renderKey = "";
+      this .renderKey += this .logarithmicDepthBuffer ? 1 : 0;
+      this .renderKey += this .orderIndependentTransparency ? 1 : 0;
 
-      renderKey += this .logarithmicDepthBuffer ? 1 : 0;
-      renderKey += this .orderIndependentTransparency ? 1 : 0;
-
-      this .renderKey = renderKey;
+      switch (browser .getBrowserOption ("ToneMapping"))
+      {
+         default: // NONE
+            this .renderKey += 0;
+            break;
+         case "TONEMAP_ACES_NARKOWICZ":
+            this .renderKey += 1;
+            break;
+         case "TONEMAP_ACES_HILL":
+            this .renderKey += 2;
+            break;
+         case "TONEMAP_ACES_HILL_EXPOSURE_BOOST":
+            this .renderKey += 3;
+            break;
+         case "TONEMAP_KHR_PBR_NEUTRAL":
+            this .renderKey += 4;
+            break;
+      }
    },
    getLogarithmicDepthBuffer ()
    {

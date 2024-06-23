@@ -233,7 +233,18 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
          extensionNode .getShaderOptions (options);
 
       options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_SPECULAR_GLOSSINESS");
-      options .push ("X3D_TONEMAP_KHR_PBR_NEUTRAL");
+
+      switch (browser .getBrowserOption ("ToneMapping"))
+      {
+         default: // NONE
+            break;
+         case "TONEMAP_ACES_NARKOWICZ":
+         case "TONEMAP_ACES_HILL":
+         case "TONEMAP_ACES_HILL_EXPOSURE_BOOST":
+         case "TONEMAP_KHR_PBR_NEUTRAL":
+            options .push (`X3D_${browser .getBrowserOption ("ToneMapping")}`);
+            break;
+      }
 
       if (+this .getTextureBits ())
       {
