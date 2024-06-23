@@ -15,7 +15,7 @@ To get an idea of what a great difference these new material extensions make, ch
 
 ### Browser Options
 
-There are also new [Browser Options](/x_ite/reference/browser-services/#browser-options) that are made for PhysicalMaterial and SpecularGlossinessMaterial.
+There are also new [Browser Options](/x_ite/reference/browser-services/#browser-options) that are especially made for PhysicalMaterial and SpecularGlossinessMaterial.
 
 * New browser option Exposure.
 * New browser option ToneMapping.
