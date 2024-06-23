@@ -134,7 +134,8 @@ Object .assign (X3DRenderObject .prototype,
    {
       const browser = this .getBrowser ();
 
-      this .logarithmicDepthBuffer       = browser .getRenderingProperty ("LogarithmicDepthBuffer") || this .getViewpoint () .getLogarithmicDepthBuffer ();
+      this .logarithmicDepthBuffer       = browser .getRenderingProperty ("LogarithmicDepthBuffer")
+         || this .getViewpoint () .getLogarithmicDepthBuffer ();
       this .orderIndependentTransparency = browser .getBrowserOption ("OrderIndependentTransparency");
 
       this .renderKey += this .logarithmicDepthBuffer ? 1 : 0;
