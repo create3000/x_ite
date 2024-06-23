@@ -89,84 +89,6 @@ x3d-canvas {
    color: var(--system-gray8);
 }
 
-#options select {
-   -moz-appearance: none;
-   -webkit-appearance: none;
-   appearance: none;
-   cursor: pointer;
-   display: block;
-   outline: none;
-   background: none;
-   border: 1px solid var(--text-color);
-   border-radius: 1rem;
-   margin: 0.3rem 0;
-   padding: 0 0.7rem;
-   width: 100%;
-   height: 2rem;
-   color: var(--text-color);
-   align-items: baseline;
-}
-
-#options select:hover {
-   border: 1px solid var(--system-gray8);
-   color: var(--system-gray8);
-}
-
-#options select:focus {
-   border: 1px solid var(--system-green);
-   color: var(--system-green);
-}
-
-#options input[type=range] {
-   -moz-appearance: none;
-   -webkit-appearance: none;
-   appearance: none;
-   cursor: pointer;
-   position: relative;
-   top: -2px;
-   margin-left: 0.3rem;
-   background: var(--text-color);
-   height: 4px;
-}
-
-#options input[type=range]:hover {
-   background: var(--system-gray8);
-}
-
-#options input[type=range]:focus {
-   background: var(--system-green);
-}
-
-/* Must have a selector for each browser separately. */
-#options input[type=range]::-webkit-slider-thumb {
-   -moz-appearance: none;
-   -webkit-appearance: none;
-   appearance: none;
-   background: var(--text-color);
-   height: 0.8rem;
-   width: 0.8rem;
-   border-radius: 50%;
-}
-
-#options input[type=range]:hover::-webkit-slider-thumb {
-   background: var(--system-gray8);
-}
-
-/* Must have a selector for each browser separately. */
-#options input[type=range]::-moz-range-thumb {
-   -moz-appearance: none;
-   -webkit-appearance: none;
-   appearance: none;
-   background: var(--text-color);
-   height: 0.8rem;
-   width: 0.8rem;
-   border-radius: 50%;
-}
-
-#options input[type=range]:hover::-moz-range-thumb {
-   background: var(--system-gray8);
-}
-
 #scenes,
 #animations {
    display: none;
@@ -199,8 +121,8 @@ x3d-canvas {
          </div>
          <div>
             <b>Tone Mapping</b>
-            <label for="exposure"><span class="reset">Exposure</span> <input id="exposure" type="range" min="0" max="5" step="0.01" value="1"></label>
-            <select id="tone-mapping">
+            <label for="exposure"><span class="reset">Exposure</span> <input id="exposure" class="range" type="range" min="0" max="5" step="0.01" value="1"></label>
+            <select id="tone-mapping" class="select">
                <option value="NONE" selected>None</option>
                <option value="ACES_NARKOWICZ">ACES Narkowicz</option>
                <option value="ACES_HILL">ACES Hill</option>

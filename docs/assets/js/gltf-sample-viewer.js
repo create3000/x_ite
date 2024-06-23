@@ -900,6 +900,7 @@ class SampleViewer
       $("<b></b>") .text ("Viewpoints") .appendTo ($("#viewpoints"));
 
       const select = $("<select></select>")
+         .addClass ("select")
          .on ("change", () =>
          {
             viewpoints .children [select .val ()] .set_bind = true;
@@ -931,6 +932,7 @@ class SampleViewer
       $("<b></b>") .text ("Material Variants") .appendTo ($("#material-variants"));
 
       const select = $("<select></select>")
+         .addClass ("select")
          .on ("change", () =>
          {
             switchNode .whichChoice = select .val ();

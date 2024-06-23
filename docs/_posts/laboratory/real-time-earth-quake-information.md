@@ -46,6 +46,10 @@ p {
    overflow: hidden;
 }
 
+.quakes p {
+   padding-right: 1rem;
+}
+
 .locations {
    height: calc(100% - 4rem);
 }
@@ -74,10 +78,10 @@ x3d-canvas {
       <div class="viewer-column-30">
          <div class="quakes">
             <p>
-               <select id="time">
+               <select id="time" class="select">
                   <option value="3">Past 30 Days</option>
                   <option value="2">Past 7 Days</option>
-                  <option selected="selected" value="1">Past Day</option>
+                  <option value="1" selected>Past Day</option>
                   <option value="0">Past Hour</option>
                </select>
             </p>

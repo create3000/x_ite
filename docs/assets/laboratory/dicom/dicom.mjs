@@ -5,11 +5,13 @@ $("x3d-canvas") .on ("load", init);
 function init ()
 {
 	$("<input/>")
+		.addClass ("button")
 		.attr ("type", "file")
 		.on ("change", onchange)
 		.appendTo ($("#dicom-buttons"));
 
 	slider = $("<input/>")
+		.addClass ("range")
 		.attr ("type", "range")
 		.attr ("min", "0")
 		.attr ("max", "1")
@@ -20,6 +22,7 @@ function init ()
 		.appendTo ($("#dicom-buttons"));
 
 	$("<input/>")
+		.addClass ("button")
 		.attr ("type", "button")
 		.attr ("value", "Reset View")
 		.css ({ "float": "right" })

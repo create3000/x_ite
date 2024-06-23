@@ -10,6 +10,17 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
 .viewer {
    padding: 1rem 2rem;
 }
+
+img.icon {
+   position: relative;
+   top: -2px;
+}
+
+select.select {
+   display: inline-block;
+   margin-left: 0.5rem;
+   width: auto;
+}
 </style>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/cferdinandi/tabby@12.0.0/dist/css/tabby-ui.min.css">
@@ -28,8 +39,8 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
          <td style="width: 30%; padding-left: 1.5rem;">
             <small class="small">Source (foreground):</small>
             <br>
-            <img alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
-            <select id="source-color">
+            <img class="icon" alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
+            <select id="source-color" class="select">
                <option>ZERO</option>
                <option>ONE</option>
                <option>SRC_COLOR</option>
@@ -47,8 +58,8 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
                <option>ONE_MINUS_CONSTANT_ALPHA</option>
             </select>
             <br>
-            <img alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
-            <select id="source-alpha">
+            <img class="icon" alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
+            <select id="source-alpha" class="select">
                <option>ZERO</option>
                <option selected="selected">ONE</option>
                <option>SRC_COLOR</option>
@@ -68,8 +79,8 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
             <br>
             <small class="small">Destination (background):</small>
             <br>
-            <img alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
-            <select id="destination-color">
+            <img class="icon" alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
+            <select id="destination-color" class="select">
                <option>ZERO</option><option>ONE</option>
                <option>SRC_COLOR</option>
                <option>ONE_MINUS_SRC_COLOR</option>
@@ -86,8 +97,8 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
                <option>ONE_MINUS_CONSTANT_ALPHA</option>
             </select>
             <br>
-            <img alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
-            <select id="destination-alpha">
+            <img class="icon" alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
+            <select id="destination-alpha" class="select">
                <option>ZERO</option>
                <option>ONE</option>
                <option>SRC_COLOR</option>
@@ -107,16 +118,16 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
             <br>
             <small class="small">Blend equation:</small>
             <br>
-            <img alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
-            <select id="equation-color">
+            <img class="icon" alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
+            <select id="equation-color" class="select">
                <option selected="selected">FUNC_ADD</option>
                <option>FUNC_SUBTRACT</option>
                <option>FUNC_REVERSE_SUBTRACT</option>
                <option>MIN</option><option>MAX</option>
             </select>
             <br>
-            <img alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
-            <select id="equation-alpha">
+            <img class="icon" alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
+            <select id="equation-alpha" class="select">
                <option selected="selected">FUNC_ADD</option>
                <option>FUNC_SUBTRACT</option>
                <option>FUNC_REVERSE_SUBTRACT</option>

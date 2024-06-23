@@ -667,12 +667,13 @@ var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_names
 
 
 
-function DependentRenderer (executionContext)
+function DependentRenderer (executionContext, renderObject, node)
 {
    X3DBaseNode_default().call (this, executionContext);
    X3DRenderObject_default().call (this, executionContext);
 
-   this .renderObject = null;
+   this .node         = node;
+   this .renderObject = renderObject;
 }
 
 Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (X3DBaseNode_default()).prototype),
@@ -687,9 +688,9 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (X3DBaseNo
    {
       return false;
    },
-   setRenderer (value)
+   getNode ()
    {
-      this .renderObject = value;
+      return this .node;
    },
    getLayer ()
    {
@@ -710,6 +711,10 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (X3DBaseNo
    getViewpoint ()
    {
       return this .renderObject .getViewpoint ();
+   },
+   getViewpointStack ()
+   {
+      return this .renderObject .getViewpointStack ();
    },
    getLightContainer ()
    {
@@ -846,10 +851,10 @@ function GeneratedCubeMapTexture (executionContext)
 
    this .addType ((X3DConstants_default()).GeneratedCubeMapTexture);
 
-   this .dependentRenderer = new Rendering_DependentRenderer (executionContext);
-   this .projectionMatrix  = new (Matrix4_default()) ();
-   this .modelMatrix       = new (Matrix4_default()) ();
-   this .viewVolume        = new (ViewVolume_default()) ();
+   this .dependentRenderers = new WeakMap ();
+   this .projectionMatrix   = new (Matrix4_default()) ();
+   this .modelMatrix        = new (Matrix4_default()) ();
+   this .viewVolume         = new (ViewVolume_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode .prototype),
@@ -859,8 +864,6 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
       CubeMapTexturing_X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
       this ._size .addInterest ("set_size__", this);
-
-      this .dependentRenderer .setup ();
 
       this .set_size__ ();
    },
@@ -948,10 +951,17 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
       return function (renderObject)
       {
-         this .dependentRenderer .setRenderer (renderObject);
+         if (!this .dependentRenderers .has (renderObject))
+         {
+            const dependentRenderer = new Rendering_DependentRenderer (this .getExecutionContext (), renderObject, this);
+
+            dependentRenderer .setup ();
+
+            this .dependentRenderers .set (renderObject, dependentRenderer);
+         }
 
          const
-            dependentRenderer  = this .dependentRenderer,
+            dependentRenderer  = this .dependentRenderers .get (renderObject),
             browser            = this .getBrowser (),
             layer              = renderObject .getLayer (),
             gl                 = browser .getContext (),
@@ -1032,7 +1042,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
       {
          CubeMapTexturing_X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, channel);
 
-         if (renderObject === this .dependentRenderer)
+         if (renderObject .getNode () === this)
             gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
       };
    })(),

@@ -223,6 +223,137 @@ span[data-label-text="VRML" i] {
   white-space: initial;
 }
 
+input[type=button].button,
+input[type=file].button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  background: none;
+  border: 1px solid var(--text-color);
+  border-radius: 1rem;
+  padding: 0 0.7rem 0.5rem;
+  height: 2rem;
+  color: var(--text-color);
+}
+
+input.button::file-selector-button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  background: none;
+  outline: none;
+  border: none;
+  padding-bottom: 0.5rem;
+}
+
+/* Special Safari only Selector */
+_::-webkit-full-page-media, _:future, :root input.button::file-selector-button {
+  top: -2px;
+}
+
+input[type=button].button:hover,
+input[type=file].button:hover {
+  border: 1px solid var(--system-gray8);
+  color: var(--system-gray8);
+}
+
+input[type=button].button:focus,
+input[type=file].button:focus {
+  border: 1px solid var(--system-green);
+  color: var(--system-green);
+}
+
+input[type=""],
+input[type=text],
+input[type=number] {
+  border: none;
+  border-radius: 1rem;
+  height: 2rem;
+  padding: 0 1rem;
+  background: var(--system-gray0);
+}
+
+select.select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  display: block;
+  outline: none;
+  background: none;
+  border: 1px solid var(--text-color);
+  border-radius: 1rem;
+  margin: 0.3rem 0;
+  padding: 0 0.7rem;
+  width: 100%;
+  height: 2rem;
+  color: var(--text-color);
+  align-items: baseline;
+}
+
+select.select:hover {
+  border: 1px solid var(--system-gray8);
+  color: var(--system-gray8);
+}
+
+select.select:focus {
+  border: 1px solid var(--system-green);
+  color: var(--system-green);
+}
+
+input[type=range].range {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  position: relative;
+  top: -2px;
+  margin-left: 0.3rem;
+  background: var(--text-color);
+  height: 4px;
+}
+
+input[type=range].range:hover {
+  background: var(--system-gray8);
+}
+
+input[type=range].range:focus {
+  background: var(--system-green);
+}
+
+/* Must have a selector for each browser separately. */
+input[type=range].range::-webkit-slider-thumb {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--text-color);
+  height: 0.8rem;
+  width: 0.8rem;
+  border-radius: 50%;
+}
+
+input[type=range].range:hover::-webkit-slider-thumb {
+  background: var(--system-gray8);
+}
+
+/* Must have a selector for each browser separately. */
+input[type=range].range::-moz-range-thumb {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--text-color);
+  height: 0.8rem;
+  width: 0.8rem;
+  border-radius: 50%;
+}
+
+input[type=range].range:hover::-moz-range-thumb {
+  background: var(--system-gray8);
+}
+
 /* Patreon link  */
 
 .patreon {

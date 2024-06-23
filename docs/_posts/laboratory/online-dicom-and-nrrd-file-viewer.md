@@ -38,6 +38,7 @@ p {
    flex: 30%;
    width: 30%;
    height: 100%;
+   padding-top: 1rem;
    padding-left: 2rem;
 }
 
@@ -49,9 +50,6 @@ x3d-canvas {
 }
 
 /* Buttons */
-.viewer strong {
-   color: var(--h2-color);
-}
 
 .viewer .toolbar {
    box-sizing: border-box;
@@ -81,7 +79,8 @@ x3d-canvas {
          <x3d-canvas splashScreen="false" src="/x_ite/assets/laboratory/dicom/dicom.x3d"></x3d-canvas>
       </div>
       <div class="viewer-column-30">
-         <p><strong>Sample Images</strong></p>
+         <b>Sample Images</b>
+         <br>
          <ul id="dicom-samples">
             <li><a href="/x_ite/assets/laboratory/dicom/datasets/CT1_J2KR.dcm">CT1_J2KR.dcm</a></li>
             <li><a href="/x_ite/assets/laboratory/dicom/datasets/MR-MONO2-12-shoulder.dcm">MR-MONO2-12-shoulder.dcm</a></li>
