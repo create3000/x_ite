@@ -10,7 +10,7 @@
     <meta name='created' content='Tue, 09 Jul 2019 09:37:20 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sun, 23 Jun 2024 22:24:06 GMT'/>
+    <meta name='modified' content='Sun, 23 Jun 2024 22:36:23 GMT'/>
   </head>
   <Scene>
     <WorldInfo/>
@@ -50,12 +50,10 @@
             <Appearance>
               <PhysicalMaterial
                   baseColor='3 3 3'
-                  baseTextureMapping='TEXCOORD_0'
                   emissiveTextureMapping='TEXCOORD_0'
                   metallic='0.3'
                   roughness='0.5107484'
-                  normalScale='0.7'
-                  normalTextureMapping='TEXCOORD_0'>
+                  normalScale='0.7'>
                 <ImageTexture containerField='baseTexture'
                     url='"assets/Surface.mat_baseColor.jpeg"'
                     colorSpaceConversion='false'>
