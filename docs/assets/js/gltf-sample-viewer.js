@@ -629,6 +629,12 @@ class SampleViewer
          this .setExposure ($("#exposure") .val ());
       });
 
+      $("[for=exposure] .reset") .on ("click", () =>
+      {
+         $("#exposure") .val (1);
+         this .setExposure (1);
+      });
+
       $("#tone-mapping") .on ("change", () =>
       {
          this .setToneMapping ($("#tone-mapping") .val ());

@@ -107,14 +107,14 @@ x3d-canvas {
    align-items: baseline;
 }
 
-#options select:focus {
-   border: 1px solid var(--system-green);
-   color: var(--system-green);
-}
-
 #options select:hover {
    border: 1px solid var(--system-gray8);
    color: var(--system-gray8);
+}
+
+#options select:focus {
+   border: 1px solid var(--system-green);
+   color: var(--system-green);
 }
 
 #options input[type=range] {
@@ -131,6 +131,10 @@ x3d-canvas {
 
 #options input[type=range]:hover {
    background: var(--system-gray8);
+}
+
+#options input[type=range]:focus {
+   background: var(--system-green);
 }
 
 /* Must have a selector for each browser separately. */
@@ -195,7 +199,7 @@ x3d-canvas {
          </div>
          <div>
             <b>Tone Mapping</b>
-            <label for="exposure">Exposure <input id="exposure" type="range" min="0" max="5" step="0.01" value="1"></label>
+            <label for="exposure"><span class="reset">Exposure</span> <input id="exposure" type="range" min="0" max="5" step="0.01" value="1"></label>
             <select id="tone-mapping">
                <option value="NONE" selected>None</option>
                <option value="ACES_NARKOWICZ">ACES Narkowicz</option>
