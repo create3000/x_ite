@@ -788,6 +788,8 @@ class SampleViewer
 
    setToneMapping (value)
    {
+      $("#tone-mapping") .val (value);
+
       this .localStorage .toneMapping = value;
 
       this .browser .setBrowserOption ("ToneMapping", value);
