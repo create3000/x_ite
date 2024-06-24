@@ -74,19 +74,8 @@ x3d-canvas {
    display: block;
 }
 
-#options label {
-   cursor: pointer;
+#options button {
    display: block;
-}
-
-#options i {
-   cursor: pointer;
-   padding-right: 0.5rem;
-}
-
-#options i:hover,
-#options label:hover {
-   color: var(--system-gray8);
 }
 
 #scenes,
@@ -116,12 +105,12 @@ x3d-canvas {
       <div id="options">
          <div id="lighting">
             <b>Lighting</b>
-            <label for="ibl"><i id="ibl" class="fa-solid fa-xmark"></i>Image Based Lighting</label>
-            <label for="headlight"><i id="headlight" class="fa-solid fa-xmark"></i>Headlight</label>
+            <button class="check" for="ibl"><i id="ibl" class="fa-solid fa-xmark"></i>Image Based Lighting</button>
+            <button class="check" for="headlight"><i id="headlight" class="fa-solid fa-xmark"></i>Headlight</button>
          </div>
          <div>
             <b>Tone Mapping</b>
-            <label for="exposure"><span class="reset">Exposure</span> <input id="exposure" class="range" type="range" min="0" max="5" step="0.01" value="1"></label>
+            <button class="check" for="exposure"><span class="reset">Exposure</span> <input id="exposure" class="range" type="range" min="0" max="5" step="0.01" value="1"></button>
             <select id="tone-mapping" class="select">
                <option value="NONE" selected>None</option>
                <option value="ACES_NARKOWICZ">ACES Narkowicz</option>
@@ -132,7 +121,7 @@ x3d-canvas {
          </div>
          <div id="background">
             <b>Background</b>
-            <label for="summer"><i id="summer" class="fa-solid fa-xmark"></i>Show Background</label>
+            <button class="check" for="summer"><i id="summer" class="fa-solid fa-xmark"></i>Show Background</button>
          </div>
          <div id="scenes"></div>
          <div id="viewpoints"></div>

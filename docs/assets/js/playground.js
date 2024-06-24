@@ -149,9 +149,9 @@ class Playground
 
       toolbar .empty ();
 
-      const autoUpdateButton = $("<span></span>")
+      const autoUpdateButton = $("<button></button>")
          .addClass (this .autoUpdate ? "selected" : "")
-         .append ($("<span></span>")
+         .append ($("<i></i>")
             .addClass (["icon", "fa-solid"])
             .addClass (this .autoUpdate ? "fa-check" : "fa-xmark"))
          .append ($("<span></span>")
@@ -174,7 +174,7 @@ class Playground
          })
          .appendTo (toolbar);
 
-      $("<span></span>")
+      $("<button></button>")
          .attr ("title", "Apply changes.")
          .attr ("id", "refresh-button")
          .addClass (["fa-solid", "fa-arrows-rotate"])
@@ -186,7 +186,7 @@ class Playground
 
       $("<span></span>") .addClass ("dot") .appendTo (toolbar);
 
-      const playButton = $("<span></span>")
+      const playButton = $("<button></button>")
          .attr ("title", "Toggle browser update on/off.")
          .addClass (["fa-solid", "fa-play"])
          .addClass (browser .isLive () ? "selected" : "")
@@ -208,7 +208,7 @@ class Playground
 
       $("<span></span>") .addClass ("dot") .appendTo (toolbar);
 
-      $("<span></span>")
+      $("<button></button>")
          .attr ("title", "View all objects in scene.")
          .addClass (["fa-solid", "fa-arrows-to-dot"])
          .on ("click", () =>
@@ -219,42 +219,13 @@ class Playground
 
       // Right side
 
-      $("<span></span>")
-         .addClass (["language", "JSON"])
-         .addClass (browser .currentScene .encoding === "JSON" ? "selected" : "")
+      const right = $("<div></div>")
          .css ("float", "right")
-         .attr ("title", "Convert to X3D JSON Encoding.")
-         .text ("JSON")
-         .on ("click", () =>
-         {
-            editor .setValue (browser .currentScene .toJSONString ());
-            monaco .editor .setModelLanguage (editor .getModel (), "json");
-            this .updateLanguage ("JSON");
-         })
          .appendTo (toolbar);
 
-      $("<span></span>") .css ("float", "right") .addClass ("dot") .appendTo (toolbar);
-
-      $("<span></span>")
-         .addClass (["language", "VRML"])
-         .addClass (browser .currentScene .encoding === "VRML" ? "selected" : "")
-         .css ("float", "right")
-         .attr ("title", "Convert to X3D VRML Encoding.")
-         .text ("VRML")
-         .on ("click", () =>
-         {
-            editor .setValue (browser .currentScene .toVRMLString ());
-            monaco .editor .setModelLanguage (editor .getModel (), "vrml");
-            this .updateLanguage ("VRML");
-         })
-         .appendTo (toolbar);
-
-      $("<span></span>") .css ("float", "right") .addClass ("dot") .appendTo (toolbar);
-
-      $("<span></span>")
+      $("<button></button>")
          .addClass (["language", "XML"])
          .addClass (browser .currentScene .encoding === "XML" ? "selected" : "")
-         .css ("float", "right")
          .attr ("title", "Convert to X3D XML Encoding.")
          .text ("XML")
          .on ("click", () =>
@@ -263,7 +234,37 @@ class Playground
             monaco .editor .setModelLanguage (editor .getModel (), "xml");
             this .updateLanguage ("XML");
          })
-         .appendTo (toolbar);
+         .appendTo (right);
+
+      $("<span></span>") .addClass ("dot") .appendTo (right);
+
+      $("<button></button>")
+         .addClass (["language", "VRML"])
+         .addClass (browser .currentScene .encoding === "VRML" ? "selected" : "")
+         .attr ("title", "Convert to X3D VRML Encoding.")
+         .text ("VRML")
+         .on ("click", () =>
+         {
+            editor .setValue (browser .currentScene .toVRMLString ());
+            monaco .editor .setModelLanguage (editor .getModel (), "vrml");
+            this .updateLanguage ("VRML");
+         })
+         .appendTo (right);
+
+      $("<span></span>") .addClass ("dot") .appendTo (right);
+
+      $("<button></button>")
+         .addClass (["language", "JSON"])
+         .addClass (browser .currentScene .encoding === "JSON" ? "selected" : "")
+         .attr ("title", "Convert to X3D JSON Encoding.")
+         .text ("JSON")
+         .on ("click", () =>
+         {
+            editor .setValue (browser .currentScene .toJSONString ());
+            monaco .editor .setModelLanguage (editor .getModel (), "json");
+            this .updateLanguage ("JSON");
+         })
+         .appendTo (right);
    }
 
    updateLanguage (encoding)

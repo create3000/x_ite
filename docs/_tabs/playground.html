@@ -24,37 +24,28 @@ order: 4
    -ms-user-select: none;
 }
 
-.toolbar > span {
-   cursor: pointer;
-   padding: 0 3px;
+.toolbar button {
+  padding: 0 3px;
 }
 
-.toolbar > span:hover {
-   color: var(--system-gray8);
-}
-
-.toolbar > span.selected {
-   color: var(--system-green);
-}
-
-.toolbar > span.dot::before {
+.toolbar span.dot::before {
    content: "·";
    margin: 0 3px 0 4px;
    color: var(--text-color);
 }
 
-.toolbar > span.separator {
+.toolbar span.separator {
    border-left: 1px solid var(--text-color);
    margin: 0 5px 0 10px;
 }
 
-.toolbar > span.separator + span.separator {
+.toolbar span.separator + span.separator {
    display: none;
 }
 
-.toolbar > span .label {
-   padding-left: 0.5rem;
-   padding-right: 0.3rem;
+.toolbar button:not(:first-child):not(:last-child) {
+   padding-left: 0.4rem;
+   padding-right: 0.4rem;
 }
 
 .toolbar .fa-solid {

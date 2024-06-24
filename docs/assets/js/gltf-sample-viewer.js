@@ -875,7 +875,8 @@ class SampleViewer
             scenes .whichChoice = i;
          };
 
-         const label = $("<label></label>")
+         const button = $("<button></button>")
+            .addClass ("check")
             .attr ("for", `scene${i}`)
             .text (`Scene ${i}`)
             .on ("click", onclick)
@@ -884,10 +885,10 @@ class SampleViewer
          $("<i></i>")
             .addClass (["fa-regular", "fa-circle"])
             .attr ("id", `scene${i}`)
-            .prependTo (label);
+            .prependTo (button);
       }
 
-      $("#scenes") .show () .find ("label") .first () .trigger ("click");
+      $("#scenes") .show () .find ("button") .first () .trigger ("click");
    }
 
    addViewpoints ()
@@ -990,7 +991,8 @@ class SampleViewer
             timeSensor .startTime = Date .now () / 1000;
          };
 
-         const label = $("<label></label>")
+         const button = $("<button></button>")
+            .addClass ("check")
             .attr ("for", `animation${i}`)
             .text (group .children [0] .description)
             .on ("click", onclick)
@@ -999,10 +1001,10 @@ class SampleViewer
          $("<i></i>")
             .addClass (["fa-regular", "fa-circle"])
             .attr ("id", `animation${i}`)
-            .prependTo (label);
+            .prependTo (button);
       }
 
-      $("#animations") .show () .find ("label") .first () .trigger ("click");
+      $("#animations") .show () .find ("button") .first () .trigger ("click");
    }
 }
 
