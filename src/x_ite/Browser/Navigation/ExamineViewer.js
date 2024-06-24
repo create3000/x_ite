@@ -60,10 +60,12 @@ import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 
 typeof jquery_mousewheel; // import plugin
 
-const macOS = /Mac OS X/i .test (navigator .userAgent);
+const
+   macOS  = /Mac OS X/i .test (navigator .userAgent),
+   mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
 const
-   SPIN_RELEASE_TIME = 20,
+   SPIN_RELEASE_TIME = mobile ? 20 : 25,
    SPIN_ANGLE        = Algorithm .radians (2),
    SPIN_FACTOR       = 0.3,
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
