@@ -36,7 +36,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -102,7 +102,7 @@ The *summary* string array contains a set of keyword/value pairs, with each keyw
 #### Hints
 
 - Example `<GeoMetadata summary=' "title" "San Francisco, California USA" '/>`.
-- [Table 25.5, GeoMetadata keywords and values](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/geospatial.html#t-keywordsandvalues){:target="_blank"}
+- [Table 25.5, GeoMetadata keywords and values](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/geospatial.html#t-keywordsandvalues
 - There should always be an even (or zero) number of strings to match key-value paired strings.
 
 ### MFNode [in, out] **data** [ ]

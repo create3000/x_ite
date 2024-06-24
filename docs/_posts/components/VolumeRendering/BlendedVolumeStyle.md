@@ -34,7 +34,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -54,8 +54,8 @@ Specifies 2D textures used to determine weight values when weight function is se
 
 #### Hints
 
-- [X3D Architecture Table 41.3, Weight function types](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/volume.html#t-WeightFunctionTypes){:target="_blank"}
-- [X3D Architecture Table 41.4, Transfer function to weight mapping](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/volume.html#t-transferFunctionToWeightMapping){:target="_blank"}
+- [X3D Architecture Table 41.3, Weight function types](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/volume.html#t-WeightFunctionTypes
+- [X3D Architecture Table 41.4, Transfer function to weight mapping](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/volume.html#t-transferFunctionToWeightMapping
 
 #### Warning
 
@@ -67,8 +67,8 @@ Specifies 2D textures used to determine weight values when weight function is se
 
 #### Hints
 
-- [X3D Architecture Table 41.3, Weight function types](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/volume.html#t-WeightFunctionTypes){:target="_blank"}
-- [X3D Architecture Table 41.4, Transfer function to weight mapping](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/volume.html#t-transferFunctionToWeightMapping){:target="_blank"}
+- [X3D Architecture Table 41.3, Weight function types](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/volume.html#t-WeightFunctionTypes
+- [X3D Architecture Table 41.4, Transfer function to weight mapping](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/volume.html#t-transferFunctionToWeightMapping
 
 #### Warning
 
@@ -80,7 +80,7 @@ The *weightTransferFunction1* and weightTransferFunction2 fields specify two-dim
 
 #### Hint
 
-- Https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/volume.html#t-transferFunctionToWeightMapping
+- Https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS /Part01/components/volume.html#t-transferFunctionToWeightMapping
 
 ### SFNode [in, out] **weightTransferFunction2** NULL <small>[X3DTexture2DNode]</small>
 
@@ -88,7 +88,7 @@ The weightTransferFunction1 and *weightTransferFunction2* fields specify two-dim
 
 #### Hint
 
-- Https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/volume.html#t-transferFunctionToWeightMapping
+- Https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS /Part01/components/volume.html#t-transferFunctionToWeightMapping
 
 ### SFNode [in, out] **renderStyle** NULL <small>[X3DComposableVolumeRenderStyleNode]</small>
 

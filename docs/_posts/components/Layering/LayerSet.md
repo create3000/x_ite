@@ -32,7 +32,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
 
 ### SFInt32 [in, out] **activeLayer** 0 <small>(0,∞)</small>
 
@@ -69,7 +69,7 @@ The *layers* list defines a list of [Layer](/x_ite/components/layering/layer/) n
 ### Hints
 
 - The layer first specified in the order field is the first layer rendered and appears below any other layers. The layer last specified in the order field is the last layer rendered and correspondingly appears on top of all other layers.
-- [X3D Architecture 35.2.1 Overview of layering](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/layering.html#OverviewOfLayering){:target="_blank"}
+- [X3D Architecture 35.2.1 Overview of layering](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/layering.html#OverviewOfLayering
 
 ### Warning
 

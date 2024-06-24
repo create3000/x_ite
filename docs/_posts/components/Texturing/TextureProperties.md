@@ -32,7 +32,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
 
 ### SFColorRGBA [in, out] **borderColor** 0 0 0 0 <small>[0,1]</small>
 
@@ -76,7 +76,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.9 Texture minification modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/texturing.html#t-TextureMinificationModes){:target="_blank"} for details.
+- [X3D Architecture Table 18.9 Texture minification modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-TextureMinificationModes for details.
 
 #### Warning
 
@@ -88,7 +88,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.8 Texture magnification modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/texturing.html#t-TextureMagnificationModes){:target="_blank"} for details.
+- [X3D Architecture Table 18.8 Texture magnification modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-TextureMagnificationModes for details.
 
 #### Warning
 
@@ -100,7 +100,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/texturing.html#t-TextureBoundaryModes){:target="_blank"} for details.
+- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-TextureBoundaryModes for details.
 
 #### Warning
 
@@ -112,7 +112,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/texturing.html#t-TextureBoundaryModes){:target="_blank"} for details.
+- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-TextureBoundaryModes for details.
 
 #### Warning
 
@@ -124,7 +124,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/texturing.html#t-TextureBoundaryModes){:target="_blank"} for details.
+- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-TextureBoundaryModes for details.
 
 #### Warning
 
@@ -136,7 +136,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hints
 
-- [X3D Architecture Table 18.10 Texture compression modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/texturing.html#t-TextureCompressionModes){:target="_blank"} for details.
+- [X3D Architecture Table 18.10 Texture compression modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-TextureCompressionModes for details.
 - [Texture compression](https://en.wikipedia.org/wiki/Texture_compression){:target="_blank"}
 
 #### Warning

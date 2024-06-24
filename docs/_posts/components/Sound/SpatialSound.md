@@ -34,7 +34,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/core.html#Metadata){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -95,7 +95,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hints
 
 - ConeOuterAngle value is greater than or equal to *coneInnerAngle*.
-- [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/sound.html#f-AudioPannerListenerRelationships){:target="_blank"}
+- [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/sound.html#f-AudioPannerListenerRelationships
 
 ### SFFloat [in, out] **coneOuterAngle** 6.2832 <small>[0,2π]</small>
 
@@ -104,7 +104,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hints
 
 - *coneOuterAngle* value is greater than or equal to coneInnerAngle.
-- [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/sound.html#f-AudioPannerListenerRelationships){:target="_blank"}
+- [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/sound.html#f-AudioPannerListenerRelationships
 
 ### SFString [in, out] **distanceModel** "INVERSE" <small>["LINEAR" "INVERSE" "EXPONENTIAL"]</small>
 
@@ -173,7 +173,7 @@ The *children* field specifies audio-graph sound sources providing input signals
 ### Hints
 
 - If the audio source is stereo or multi-channel, channel separation is retained during playback.
-- [X3D Sound component Figure 16.2 Sound Node Geometry](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/sound.html#f-Soundnodegeometry){:target="_blank"}
+- [X3D Sound component Figure 16.2 Sound Node Geometry](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/sound.html#f-Soundnodegeometry
 - [W3C Web Audio API, PannerNode Interface](https://www.w3.org/TR/webaudio/#pannernode){:target="_blank"}
 - [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio){:target="_blank"}
 - [Wikipedia 3D sound localization](https://en.wikipedia.org/wiki/3D_sound_localization){:target="_blank"}
