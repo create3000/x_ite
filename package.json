@@ -1,6 +1,6 @@
 {
   "name": "x_ite",
-  "version": "10.0.0",
+  "version": "10.0.1",
   "description": "X_ITE X3D browser, view and manipulate X3D and VRML scenes in HTML.",
   "main": "dist/x_ite.js",
   "module": "dist/x_ite.mjs",
