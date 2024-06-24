@@ -1,19 +1,6 @@
 /* CSS StyleSheet */
 @charset "utf-8";
 
-table.blend-mode {
-   width: 100%;
-   height: 100%;
-}
-
-table.blend-mode td {
-	vertical-align: top;
-}
-
-table.blend-mode td + td {
-	padding-left: 10px;
-}
-
 .type-icon {
 	padding-right: 5px;
 	vertical-align: middle;
@@ -39,18 +26,6 @@ div.color {
 
 .checkerboard {
 	background: url("assets/checkerboard.png") center center;
-}
-
-.red {
-	color: red;
-}
-
-.green {
-	color: green;
-}
-
-.blue {
-	color: blue;
 }
 
 #XML,

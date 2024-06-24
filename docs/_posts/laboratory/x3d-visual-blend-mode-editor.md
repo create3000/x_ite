@@ -8,7 +8,25 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
 <style>
 /* Viewer */
 .viewer {
-   padding: 1rem 2rem;
+   padding: 0 2rem;
+   width: 100vw;
+}
+
+.viewer-row {
+   display: flex;
+   width: calc(100vw - 6rem);
+}
+
+.viewer-column-70 {
+   flex: 70%;
+   height: 100%;
+}
+
+.viewer-column-30 {
+   flex: 30%;
+   height: 100%;
+   padding-left: 2rem;
+   white-space: nowrap;
 }
 
 img.icon {
@@ -30,133 +48,129 @@ select.select {
 <script type="module" src="/x_ite/assets/laboratory/blend-mode/blend-mode.mjs"></script>
 
 <div class="viewer">
-<table class="blend-mode">
-   <tbody>
-      <tr>
-         <td>
-            <x3d-canvas class="blend-mode checkerboard" src="/x_ite/assets/laboratory/blend-mode/blend-mode.x3d" splashScreen="false"></x3d-canvas>
-         </td>
-         <td style="width: 30%; padding-left: 1.5rem;">
-            <small class="small">Source (foreground):</small>
-            <br>
-            <img class="icon" alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
-            <select id="source-color" class="select">
-               <option>ZERO</option>
-               <option>ONE</option>
-               <option>SRC_COLOR</option>
-               <option>ONE_MINUS_SRC_COLOR</option>
-               <option>DST_COLOR</option>
-               <option>ONE_MINUS_DST_COLOR</option>
-               <option selected="selected">SRC_ALPHA</option>
-               <option>ONE_MINUS_SRC_ALPHA</option>
-               <option>DST_ALPHA</option>
-               <option>ONE_MINUS_DST_ALPHA</option>
-               <option>SRC_ALPHA_SATURATE</option>
-               <option>CONSTANT_COLOR</option>
-               <option>ONE_MINUS_CONSTANT_COLOR</option>
-               <option>CONSTANT_ALPHA</option>
-               <option>ONE_MINUS_CONSTANT_ALPHA</option>
-            </select>
-            <br>
-            <img class="icon" alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
-            <select id="source-alpha" class="select">
-               <option>ZERO</option>
-               <option selected="selected">ONE</option>
-               <option>SRC_COLOR</option>
-               <option>ONE_MINUS_SRC_COLOR</option>
-               <option>DST_COLOR</option>
-               <option>ONE_MINUS_DST_COLOR</option>
-               <option>SRC_ALPHA</option>
-               <option>ONE_MINUS_SRC_ALPHA</option>
-               <option>DST_ALPHA</option>
-               <option>ONE_MINUS_DST_ALPHA</option>
-               <option>SRC_ALPHA_SATURATE</option>
-               <option>CONSTANT_COLOR</option>
-               <option>ONE_MINUS_CONSTANT_COLOR</option>
-               <option>CONSTANT_ALPHA</option>
-               <option>ONE_MINUS_CONSTANT_ALPHA</option>
-            </select>
-            <br>
-            <small class="small">Destination (background):</small>
-            <br>
-            <img class="icon" alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
-            <select id="destination-color" class="select">
-               <option>ZERO</option><option>ONE</option>
-               <option>SRC_COLOR</option>
-               <option>ONE_MINUS_SRC_COLOR</option>
-               <option>DST_COLOR</option>
-               <option>ONE_MINUS_DST_COLOR</option>
-               <option>SRC_ALPHA</option>
-               <option selected="selected">ONE_MINUS_SRC_ALPHA</option>
-               <option>DST_ALPHA</option>
-               <option>ONE_MINUS_DST_ALPHA</option>
-               <option>SRC_ALPHA_SATURATE</option>
-               <option>CONSTANT_COLOR</option>
-               <option>ONE_MINUS_CONSTANT_COLOR</option>
-               <option>CONSTANT_ALPHA</option>
-               <option>ONE_MINUS_CONSTANT_ALPHA</option>
-            </select>
-            <br>
-            <img class="icon" alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
-            <select id="destination-alpha" class="select">
-               <option>ZERO</option>
-               <option>ONE</option>
-               <option>SRC_COLOR</option>
-               <option>ONE_MINUS_SRC_COLOR</option>
-               <option>DST_COLOR</option>
-               <option>ONE_MINUS_DST_COLOR</option>
-               <option>SRC_ALPHA</option>
-               <option selected="selected">ONE_MINUS_SRC_ALPHA</option>
-               <option>DST_ALPHA</option>
-               <option>ONE_MINUS_DST_ALPHA</option>
-               <option>SRC_ALPHA_SATURATE</option>
-               <option>CONSTANT_COLOR</option>
-               <option>ONE_MINUS_CONSTANT_COLOR</option>
-               <option>CONSTANT_ALPHA</option>
-               <option>ONE_MINUS_CONSTANT_ALPHA</option>
-            </select>
-            <br>
-            <small class="small">Blend equation:</small>
-            <br>
-            <img class="icon" alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
-            <select id="equation-color" class="select">
-               <option selected="selected">FUNC_ADD</option>
-               <option>FUNC_SUBTRACT</option>
-               <option>FUNC_REVERSE_SUBTRACT</option>
-               <option>MIN</option><option>MAX</option>
-            </select>
-            <br>
-            <img class="icon" alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
-            <select id="equation-alpha" class="select">
-               <option selected="selected">FUNC_ADD</option>
-               <option>FUNC_SUBTRACT</option>
-               <option>FUNC_REVERSE_SUBTRACT</option>
-               <option>MIN</option>
-               <option>MAX</option>
-            </select>
-            <br>
-            <small class="small">Resulting equations:</small>
-            <table>
-               <tbody>
-                  <tr class="red">
-                     <td>Red:</td>
-                     <td id="red-equation"></td>
-                  </tr>
-                  <tr class="green">
-                     <td>Green:</td>
-                     <td id="green-equation"></td>
-                  </tr><tr class="blue">
-                     <td>Blue:</td><td id="blue-equation"></td>
-                  </tr>
-                  <tr>
-                     <td>Alpha:</td><td id="alpha-equation"></td>
-                  </tr>
-               </tbody>
-            </table>
-         </td>
-      </tr>
-   </tbody>
-</table>
+<div class="viewer-row">
+   <div class="viewer-column-70">
+      <x3d-canvas class="blend-mode checkerboard" src="/x_ite/assets/laboratory/blend-mode/blend-mode.x3d" splashScreen="false"></x3d-canvas>
+   </div>
+   <div class="viewer-column-30">
+      <small class="small">Source (foreground):</small>
+      <br>
+      <img class="icon" alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
+      <select id="source-color" class="select">
+         <option>ZERO</option>
+         <option>ONE</option>
+         <option>SRC_COLOR</option>
+         <option>ONE_MINUS_SRC_COLOR</option>
+         <option>DST_COLOR</option>
+         <option>ONE_MINUS_DST_COLOR</option>
+         <option selected="selected">SRC_ALPHA</option>
+         <option>ONE_MINUS_SRC_ALPHA</option>
+         <option>DST_ALPHA</option>
+         <option>ONE_MINUS_DST_ALPHA</option>
+         <option>SRC_ALPHA_SATURATE</option>
+         <option>CONSTANT_COLOR</option>
+         <option>ONE_MINUS_CONSTANT_COLOR</option>
+         <option>CONSTANT_ALPHA</option>
+         <option>ONE_MINUS_CONSTANT_ALPHA</option>
+      </select>
+      <br>
+      <img class="icon" alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
+      <select id="source-alpha" class="select">
+         <option>ZERO</option>
+         <option selected="selected">ONE</option>
+         <option>SRC_COLOR</option>
+         <option>ONE_MINUS_SRC_COLOR</option>
+         <option>DST_COLOR</option>
+         <option>ONE_MINUS_DST_COLOR</option>
+         <option>SRC_ALPHA</option>
+         <option>ONE_MINUS_SRC_ALPHA</option>
+         <option>DST_ALPHA</option>
+         <option>ONE_MINUS_DST_ALPHA</option>
+         <option>SRC_ALPHA_SATURATE</option>
+         <option>CONSTANT_COLOR</option>
+         <option>ONE_MINUS_CONSTANT_COLOR</option>
+         <option>CONSTANT_ALPHA</option>
+         <option>ONE_MINUS_CONSTANT_ALPHA</option>
+      </select>
+      <br>
+      <small class="small">Destination (background):</small>
+      <br>
+      <img class="icon" alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
+      <select id="destination-color" class="select">
+         <option>ZERO</option><option>ONE</option>
+         <option>SRC_COLOR</option>
+         <option>ONE_MINUS_SRC_COLOR</option>
+         <option>DST_COLOR</option>
+         <option>ONE_MINUS_DST_COLOR</option>
+         <option>SRC_ALPHA</option>
+         <option selected="selected">ONE_MINUS_SRC_ALPHA</option>
+         <option>DST_ALPHA</option>
+         <option>ONE_MINUS_DST_ALPHA</option>
+         <option>SRC_ALPHA_SATURATE</option>
+         <option>CONSTANT_COLOR</option>
+         <option>ONE_MINUS_CONSTANT_COLOR</option>
+         <option>CONSTANT_ALPHA</option>
+         <option>ONE_MINUS_CONSTANT_ALPHA</option>
+      </select>
+      <br>
+      <img class="icon" alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
+      <select id="destination-alpha" class="select">
+         <option>ZERO</option>
+         <option>ONE</option>
+         <option>SRC_COLOR</option>
+         <option>ONE_MINUS_SRC_COLOR</option>
+         <option>DST_COLOR</option>
+         <option>ONE_MINUS_DST_COLOR</option>
+         <option>SRC_ALPHA</option>
+         <option selected="selected">ONE_MINUS_SRC_ALPHA</option>
+         <option>DST_ALPHA</option>
+         <option>ONE_MINUS_DST_ALPHA</option>
+         <option>SRC_ALPHA_SATURATE</option>
+         <option>CONSTANT_COLOR</option>
+         <option>ONE_MINUS_CONSTANT_COLOR</option>
+         <option>CONSTANT_ALPHA</option>
+         <option>ONE_MINUS_CONSTANT_ALPHA</option>
+      </select>
+      <br>
+      <small class="small">Blend equation:</small>
+      <br>
+      <img class="icon" alt="color wheel" src="/x_ite/assets/laboratory/blend-mode/assets/color-wheel.png">
+      <select id="equation-color" class="select">
+         <option selected="selected">FUNC_ADD</option>
+         <option>FUNC_SUBTRACT</option>
+         <option>FUNC_REVERSE_SUBTRACT</option>
+         <option>MIN</option><option>MAX</option>
+      </select>
+      <br>
+      <img class="icon" alt="contrast" src="/x_ite/assets/laboratory/blend-mode/assets/contrast.png">
+      <select id="equation-alpha" class="select">
+         <option selected="selected">FUNC_ADD</option>
+         <option>FUNC_SUBTRACT</option>
+         <option>FUNC_REVERSE_SUBTRACT</option>
+         <option>MIN</option>
+         <option>MAX</option>
+      </select>
+      <br>
+      <small class="small">Resulting equations:</small>
+      <table>
+         <tbody>
+            <tr class="red">
+               <td>Red:</td>
+               <td id="red-equation"></td>
+            </tr>
+            <tr class="green">
+               <td>Green:</td>
+               <td id="green-equation"></td>
+            </tr><tr class="blue">
+               <td>Blue:</td><td id="blue-equation"></td>
+            </tr>
+            <tr>
+               <td>Alpha:</td><td id="alpha-equation"></td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
 
 <br>
 
