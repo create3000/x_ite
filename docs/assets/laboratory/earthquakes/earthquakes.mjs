@@ -181,11 +181,16 @@ function selectEarthQuake (earthquake)
 
 	const
 		timer2       = Browser .currentScene .getNamedNode ("ViewpointAnimationTimer"),
-		interpolator = Browser .currentScene .getNamedNode ("ViewpointPositionInterpolator");
+		interpolator = Browser .currentScene .getNamedNode ("ViewpointPositionInterpolator"),
+		viewpoint    = Browser .currentScene .getNamedNode ("Viewpoint");
 
-	Browser .changeViewpoint ("Viewpoint");
+	viewpoint .getValue () .setPosition (viewpoint .getValue () .getUserPosition ());
+	viewpoint .getValue () .resetUserOffsets ();
 
-	interpolator .keyValue [0]    = interpolator .geovalue_changed;
+	viewpoint .set_bind = true;
+
+	interpolator .keyValue [0] .x = viewpoint .position .x;
+	interpolator .keyValue [0] .y = viewpoint .position .y;
 	interpolator .keyValue [1] .x = earthquake .point [0];
 	interpolator .keyValue [1] .y = earthquake .point [1];
 
