@@ -24,8 +24,17 @@ order: 4
    -ms-user-select: none;
 }
 
-.toolbar button {
-  padding: 0 3px;
+.toolbar button:not(:first-child) {
+   padding-left: 0.4rem;
+}
+
+.toolbar button:not(:last-child) {
+   padding-right: 0.4rem;
+}
+
+.toolbar .fa-solid {
+   position: relative;
+   top: 1px;
 }
 
 .toolbar span.dot::before {
@@ -41,19 +50,6 @@ order: 4
 
 .toolbar span.separator + span.separator {
    display: none;
-}
-
-.toolbar button:not(:first-child) {
-   padding-left: 0.4rem;
-}
-
-.toolbar button:not(:last-child) {
-   padding-right: 0.4rem;
-}
-
-.toolbar .fa-solid {
-   position: relative;
-   top: 1px;
 }
 
 .viewer-row {
