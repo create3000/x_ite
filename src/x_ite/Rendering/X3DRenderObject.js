@@ -142,27 +142,31 @@ Object .assign (X3DRenderObject .prototype,
          || this .getViewpoint () .getLogarithmicDepthBuffer ();
       this .orderIndependentTransparency = browser .getBrowserOption ("OrderIndependentTransparency");
 
-      this .renderKey += this .logarithmicDepthBuffer ? 1 : 0;
-      this .renderKey += this .orderIndependentTransparency ? 1 : 0;
+      let renderKey = "";
+
+      renderKey += this .logarithmicDepthBuffer ? 1 : 0;
+      renderKey += this .orderIndependentTransparency ? 1 : 0;
 
       switch (browser .getBrowserOption ("ToneMapping"))
       {
          default: // NONE
-            this .renderKey += 0;
+            renderKey += 0;
             break;
          case "ACES_NARKOWICZ":
-            this .renderKey += 1;
+            renderKey += 1;
             break;
          case "ACES_HILL":
-            this .renderKey += 2;
+            renderKey += 2;
             break;
          case "ACES_HILL_EXPOSURE_BOOST":
-            this .renderKey += 3;
+            renderKey += 3;
             break;
          case "KHR_PBR_NEUTRAL":
-            this .renderKey += 4;
+            renderKey += 4;
             break;
       }
+
+      this .renderKey = renderKey;
    },
    getLogarithmicDepthBuffer ()
    {
