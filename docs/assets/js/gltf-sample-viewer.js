@@ -617,12 +617,12 @@ class SampleViewer
 
       $("[for=ibl]") .on ("click", () =>
       {
-         this .setEnvironmentLight (!$("#ibl") .hasClass ("green"));
+         this .setEnvironmentLight (!$("#ibl") .hasClass ("selected"));
       });
 
       $("[for=headlight]") .on ("click", () =>
       {
-         this .setHeadlight (!$("#headlight") .hasClass ("green"));
+         this .setHeadlight (!$("#headlight") .hasClass ("selected"));
       });
 
       $("#exposure") .on ("change input", () =>
@@ -643,7 +643,7 @@ class SampleViewer
 
       $("[for=summer]") .on ("click", () =>
       {
-         this .setBackground (!$("#summer") .hasClass ("green"));
+         this .setBackground (!$("#summer") .hasClass ("selected"));
       });
    }
 
@@ -715,12 +715,12 @@ class SampleViewer
       if (on)
       {
          $("#ibl") .removeClass ("fa-xmark") .addClass ("fa-check");
-         $("#ibl, [for=ibl]") .addClass ("green");
+         $("#ibl, [for=ibl]") .addClass ("selected");
       }
       else
       {
          $("#ibl") .removeClass ("fa-check") .addClass ("fa-xmark");
-         $("#ibl, [for=ibl]") .removeClass ("green");
+         $("#ibl, [for=ibl]") .removeClass ("selected");
 
          if (!this .environmentLight)
             return;
@@ -772,12 +772,12 @@ class SampleViewer
       if (on)
       {
          $("#headlight") .removeClass ("fa-xmark") .addClass ("fa-check");
-         $("#headlight, [for=headlight]") .addClass ("green");
+         $("#headlight, [for=headlight]") .addClass ("selected");
       }
       else
       {
          $("#headlight") .removeClass ("fa-check") .addClass ("fa-xmark");
-         $("#headlight, [for=headlight]") .removeClass ("green");
+         $("#headlight, [for=headlight]") .removeClass ("selected");
       }
 
       const navigationInfo = await this .getNavigationInfo ();
@@ -819,12 +819,12 @@ class SampleViewer
       if (on)
       {
          $("#summer") .removeClass ("fa-xmark") .addClass ("fa-check");
-         $("#summer, [for=summer]") .addClass ("green");
+         $("#summer, [for=summer]") .addClass ("selected");
       }
       else
       {
          $("#summer") .removeClass ("fa-check") .addClass ("fa-xmark");
-         $("#summer, [for=summer]") .removeClass ("green");
+         $("#summer, [for=summer]") .removeClass ("selected");
       }
 
       const background = await this .getBackground ();
@@ -865,12 +865,12 @@ class SampleViewer
          {
             $("#scenes i") .each ((_, element) =>
             {
-               $(element) .removeClass (["fa-circle-dot", "green"]) .addClass ("fa-circle");
-               $(`[for=${$(element) .attr ("id")}]`) .removeClass ("green");
+               $(element) .removeClass (["fa-circle-dot", "selected"]) .addClass ("fa-circle");
+               $(`[for=${$(element) .attr ("id")}]`) .removeClass ("selected");
             });
 
-            $(`#scene${i}`) .toggleClass (["fa-circle", "fa-circle-dot", "green"]);
-            $(`[for=scene${i}]`) .toggleClass ("green");
+            $(`#scene${i}`) .toggleClass (["fa-circle", "fa-circle-dot", "selected"]);
+            $(`[for=scene${i}]`) .toggleClass ("selected");
 
             scenes .whichChoice = i;
          };
@@ -969,8 +969,8 @@ class SampleViewer
 
          const onclick = () =>
          {
-            $(`#animation${i}`) .toggleClass (["fa-circle", "fa-circle-dot", "green"]);
-            $(`[for=animation${i}]`) .toggleClass ("green");
+            $(`#animation${i}`) .toggleClass (["fa-circle", "fa-circle-dot", "selected"]);
+            $(`[for=animation${i}]`) .toggleClass ("selected");
 
             for (const group of animations .children)
                group .children [0] .stopTime = Date .now () / 1000;
@@ -983,8 +983,8 @@ class SampleViewer
                if (element === $(`#animation${i}`) .get (0))
                   return;
 
-               $(element) .removeClass (["fa-circle-dot", "green"]) .addClass ("fa-circle");
-               $(`[for=${$(element) .attr ("id")}]`) .removeClass ("green");
+               $(element) .removeClass (["fa-circle-dot", "selected"]) .addClass ("fa-circle");
+               $(`[for=${$(element) .attr ("id")}]`) .removeClass ("selected");
             });
 
             timeSensor .loop      = true;
