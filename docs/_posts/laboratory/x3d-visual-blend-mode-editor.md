@@ -8,7 +8,7 @@ tags: [X3D, Visual, Blend Mode, Editor, Laboratory]
 <style>
 /* Viewer */
 .viewer {
-   padding: 0 2rem;
+   padding: 1rem 2rem;
    width: 100vw;
 }
 
