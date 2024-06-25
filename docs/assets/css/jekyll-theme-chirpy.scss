@@ -391,6 +391,11 @@ select.select:focus {
   color: var(--system-green);
 }
 
+select.select option {
+  color: var(--text-color);
+  background: var(--main-bg);
+}
+
 /* Patreon link  */
 
 .patreon {
