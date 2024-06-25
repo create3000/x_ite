@@ -645,6 +645,26 @@ class SampleViewer
       {
          this .setBackground (!$("#summer") .hasClass ("selected"));
       });
+
+      // Handle url parameter.
+
+      this .browser .addBrowserCallback ("init", X3D .X3DConstants .INITIALIZED_EVENT, () =>
+      {
+         this .browser .removeBrowserCallback ("init", X3D .X3DConstants .INITIALIZED_EVENT);
+
+         const url = new URL (document .location .href) .searchParams .get ("url");
+
+         if (!url)
+            return;
+
+         const a = Array .from ($(".viewer-column2") .find ("a"))
+             .find (a => $(a) .attr ("href") .includes (url));
+
+         if (a)
+            $(a) .trigger ("click");
+         else
+            this .loadURL (url);
+      });
    }
 
    get scene ()
