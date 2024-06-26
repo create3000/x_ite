@@ -52,7 +52,7 @@ Input/Output field *anisotropyTextureMapping*.
 
 ### SFNode [in, out] **anisotropyTexture** NULL <small>[X3DSingleTextureNode]</small>
 
-he anisotropy texture. Red and green channels represent the anisotropy direction in tangent, bitangent space to be rotated by the anisotropy rotation. The blue channel contains strength as to be multiplied by the anisotropy strength.
+The anisotropy texture. Red and green channels represent the anisotropy direction in tangent, bitangent space to be rotated by the anisotropy rotation. The blue channel contains strength as to be multiplied by the anisotropy strength.
 
 ## See Also
 
