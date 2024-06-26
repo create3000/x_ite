@@ -41,6 +41,8 @@ getMaterialColor ()
       baseColor .rgb *= getTextureProjectorColor ();
    #endif
 
+   #if !defined (X3D_UNLIT_MATERIAL_EXT)
+
    vec3 v = normalize (-vertex);
 
    #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING) || defined (X3D_ANISOTROPY_MATERIAL_EXT) || defined (X3D_CLEARCOAT_MATERIAL_EXT)
@@ -302,6 +304,8 @@ getMaterialColor ()
    #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
       diffuse = mix (diffuse, f_transmission, materialInfo .transmissionFactor);
    #endif
+
+   #endif // X3D_UNLIT_MATERIAL_EXT
 
    vec3 color = vec3 (0.0);
 
