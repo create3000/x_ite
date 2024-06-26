@@ -282,28 +282,30 @@ Object .assign (X3DRenderingContext .prototype,
          width        = Math .max (canvas .width () * contentScale, 1),
          height       = Math .max (canvas .height () * contentScale, 1);
 
+      this .addBrowserEvent ();
+
       canvas .prop ("width",  width);
       canvas .prop ("height", height);
 
       this [_viewport] [2] = width;
       this [_viewport] [3] = height;
 
-      if (width   !== this [_frameBuffer] .getWidth ()   ||
-          height  !== this [_frameBuffer] .getHeight ()  ||
-          samples !== this [_frameBuffer] .getSamples () ||
-          oit     !== this [_frameBuffer] .getOIT ())
+      if (width   === this [_frameBuffer] .getWidth ()   &&
+          height  === this [_frameBuffer] .getHeight ()  &&
+          samples === this [_frameBuffer] .getSamples () &&
+          oit     === this [_frameBuffer] .getOIT ())
       {
-         this [_frameBuffer] .dispose ();
-         this [_frameBuffer] = new MultiSampleFrameBuffer (this, width, height, samples, oit);
-
-         if (this [_transmissionBuffer])
-         {
-            this [_transmissionBuffer] .dispose ();
-            this [_transmissionBuffer] = new TextureBuffer (this, width, height, false, true);
-         }
+         return;
       }
 
-      this .addBrowserEvent ();
+      this [_frameBuffer] .dispose ();
+      this [_frameBuffer] = new MultiSampleFrameBuffer (this, width, height, samples, oit);
+
+      if (!this [_transmissionBuffer])
+         return;
+
+      this [_transmissionBuffer] .dispose ();
+      this [_transmissionBuffer] = new TextureBuffer (this, width, height, false, true);
    },
    onfullscreen ()
    {
