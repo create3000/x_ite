@@ -6,11 +6,11 @@ categories: []
 tags: [Getting Started]
 permalink: /
 ---
-[![npm Version](https://badgen.net/npm/v/x_ite)](https://www.npmjs.com/package/x_ite)
-[![Build Size](https://badgen.net/bundlephobia/minzip/x_ite)](https://bundlephobia.com/package/x_ite)
-[![jsDelivr Hits](https://badgen.net/jsdelivr/hits/npm/x_ite)](https://www.jsdelivr.com/package/npm/x_ite)
-[![npm Downloads](https://badgen.net/npm/dm/x_ite)](https://npmtrends.com/x_ite)
-[![DeepScan grade](https://deepscan.io/api/teams/23540/projects/26814/branches/855447/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26814&bid=855447)
+[![npm Version](https://badgen.net/npm/v/x_ite)](https://www.npmjs.com/package/x_ite){: .badge-link }
+[![Build Size](https://badgen.net/bundlephobia/minzip/x_ite)](https://bundlephobia.com/package/x_ite){: .badge-link }
+[![jsDelivr Hits](https://badgen.net/jsdelivr/hits/npm/x_ite)](https://www.jsdelivr.com/package/npm/x_ite){: .badge-link }
+[![npm Downloads](https://badgen.net/npm/dm/x_ite)](https://npmtrends.com/x_ite){: .badge-link }
+[![DeepScan grade](https://deepscan.io/api/teams/23540/projects/26814/branches/855447/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26814&bid=855447){: .badge-link }
 
 <x3d-canvas
   class="teaser"

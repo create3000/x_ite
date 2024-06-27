@@ -223,6 +223,10 @@ span[data-label-text="VRML" i] {
   white-space: initial;
 }
 
+.badge-link img {
+  display: inline;
+}
+
 input[type=button].button,
 input[type=file].button {
   -moz-appearance: none;
