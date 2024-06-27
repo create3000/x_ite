@@ -755,6 +755,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    {
       const gl = this .getBrowser () .getContext ();
 
+      this .geometryContext .renderObject .dispose ();
+
       gl .deleteBuffer (this .lineVertexBuffer);
       this .lineVertexArrayObject .dispose (gl);
 
