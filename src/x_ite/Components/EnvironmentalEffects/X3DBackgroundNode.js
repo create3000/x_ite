@@ -83,7 +83,6 @@ function X3DBackgroundNode (executionContext)
    this .textureNodes          = new Array (6);
    this .textureBits           = new BitSet ();
    this .sphereContext         = new GeometryContext ({ colorMaterial: true });
-   this .sphereAlphaContext    = new GeometryContext ({ colorMaterial: true, alphaMode: AlphaMode .BLEND });
    this .texturesContext       = new GeometryContext ({ });
 }
 
@@ -514,9 +513,14 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          return;
 
       const
-         browser    = this .getBrowser (),
-         gl         = browser .getContext (),
-         shaderNode = browser .getDefaultMaterial () .getShader (transparency ? this .sphereAlphaContext : this .sphereContext);
+         browser       = this .getBrowser (),
+         gl            = browser .getContext (),
+         sphereContext = this .sphereContext;
+
+      sphereContext .alphaMode    = transparency ? AlphaMode .BLEND : AlphaMode .OPAQUE;
+      sphereContext .renderObject = renderObject;
+
+      const shaderNode = browser .getDefaultMaterial () .getShader (sphereContext);
 
       shaderNode .enable (gl);
       shaderNode .setClipPlanes (gl, this .clipPlanes);
@@ -564,8 +568,9 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          {
             const textureNode = this .textureNodes [i];
 
-            texturesContext .alphaMode   = textureNode ._transparent .getValue () ? AlphaMode .BLEND : AlphaMode .OPAQUE;
-            texturesContext .textureNode = textureNode;
+            texturesContext .alphaMode    = textureNode ._transparent .getValue () ? AlphaMode .BLEND : AlphaMode .OPAQUE;
+            texturesContext .textureNode  = textureNode;
+            texturesContext .renderObject = renderObject;
 
             const shaderNode = browser .getDefaultMaterial () .getShader (texturesContext);
 

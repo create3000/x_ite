@@ -48,6 +48,7 @@
 import X3DViewer         from "./X3DViewer.js";
 import OrientationChaser from "../../Components/Followers/OrientationChaser.js";
 import GeometryContext   from "../Rendering/GeometryContext.js";
+import Layer             from "../../Components/Layering/Layer.js";
 import VertexArray       from "../../Rendering/VertexArray.js";
 import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
@@ -94,6 +95,9 @@ function X3DFlyViewer (executionContext, navigationInfo)
    this .lineVertexArrayObject = new VertexArray (gl);
    this .lineVertexArray       = new Float32Array (8 * 4) .fill (1);
    this .geometryContext       = new GeometryContext ({ geometryType: 2, colorMaterial: true });
+
+   this .geometryContext .renderObject = new Layer (executionContext);
+   this .geometryContext .renderObject .setup ();
 
    gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
    gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint8Array ([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]), gl .STATIC_DRAW);
