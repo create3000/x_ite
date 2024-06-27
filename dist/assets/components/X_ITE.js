@@ -990,7 +990,6 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
 
       this .setTransmission (extensionNodes .some (extensionNode => extensionNode .getType () .includes ((X3DConstants_default()).TransmissionMaterialExtension)));
 
-      this .set_transparent__ ();
       this .set_extensionsKey__ ();
    },
    set_extensionsKey__ ()
@@ -1011,18 +1010,6 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
          extensionNode .getShaderOptions (options);
 
       options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_SPECULAR_GLOSSINESS");
-
-      switch (browser .getBrowserOption ("ToneMapping"))
-      {
-         default: // NONE
-            break;
-         case "ACES_NARKOWICZ":
-         case "ACES_HILL":
-         case "ACES_HILL_EXPOSURE_BOOST":
-         case "KHR_PBR_NEUTRAL":
-            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping")}`);
-            break;
-      }
 
       if (+this .getTextureBits ())
       {
@@ -2009,7 +1996,7 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X_ITE_X
    },
    set_indexOfRefraction__ ()
    {
-      this .indexOfRefraction = Math .max (this ._indexOfRefraction .getValue (), 0);
+      this .indexOfRefraction = Math .max (this ._indexOfRefraction .getValue (), 1);
    },
    getExtensionKey ()
    {
@@ -2157,7 +2144,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    },
    set_iridescenceIndexOfRefraction__ ()
    {
-      this .iridescenceIndexOfRefraction = Math .max (this ._iridescenceIndexOfRefraction .getValue (), 0);
+      this .iridescenceIndexOfRefraction = Math .max (this ._iridescenceIndexOfRefraction .getValue (), 1);
    },
    set_iridescenceThicknessMinimum__ ()
    {
