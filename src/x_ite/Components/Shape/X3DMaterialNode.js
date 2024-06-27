@@ -323,6 +323,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          const { renderObject, alphaMode, objectsKeys, textureNode } = geometryContext;
 
+         if (renderObject .getLogarithmicDepthBuffer ())
+            options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
+
          switch (alphaMode)
          {
             case AlphaMode .OPAQUE:
