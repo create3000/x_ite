@@ -55,6 +55,8 @@ import Shading              from "./Shading.js";
 import TextureQuality       from "./TextureQuality.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
+// https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#BrowserProperties
+
 function BrowserOptions (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
