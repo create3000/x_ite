@@ -1,19 +1,10 @@
 export default /* glsl */ `
 
-#extension GL_OES_standard_derivatives : enable
-#extension GL_EXT_frag_depth : enable
-#extension GL_EXT_shader_texture_lod : enable
-
 // https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/source/Renderer/shaders/pbr.frag
 
-precision highp float;
-precision highp int;
-precision highp sampler2D;
-precision highp samplerCube;
-
-#pragma X3D include "common/Fragment.glsl"
-#pragma X3D include "common/Normal.glsl"
-#pragma X3D include "common/Shadow.glsl"
+#pragma X3D include "../common/Fragment.glsl"
+#pragma X3D include "../common/Normal.glsl"
+#pragma X3D include "../common/Shadow.glsl"
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
    uniform mat4 x3d_ProjectionMatrix;
@@ -52,7 +43,6 @@ getMaterialColor ()
       float NdotV = clamp (dot (n, v), 0.0, 1.0);
    #endif
 
-
    MaterialInfo materialInfo;
 
    // The default index of refraction of 1.5 yields a dielectric normal incidence reflectance of 0.04.
@@ -60,6 +50,14 @@ getMaterialColor ()
    materialInfo .ior            = 1.5;
    materialInfo .f0             = vec3 (0.04);
    materialInfo .specularWeight = 1.0;
+
+   #if defined (X3D_IOR_MATERIAL_EXT)
+      materialInfo = getIorInfo (materialInfo);
+   #endif
+
+   #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
+      materialInfo = getSpecularGlossinessInfo (materialInfo);
+   #endif
 
    #if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
       materialInfo = getMetallicRoughnessInfo (materialInfo);

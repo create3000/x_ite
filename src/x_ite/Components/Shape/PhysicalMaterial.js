@@ -243,7 +243,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          this .occlusionTextureNode         ?.getShaderOptions (options, "OCCLUSION");
       }
 
-      const shaderNode = browser .createShader ("PBR", "Default", "PBR", options);
+      const shaderNode = browser .createShader ("Physical", "Default", "Physical", options);
 
       browser .getShaders () .set (key, shaderNode);
 

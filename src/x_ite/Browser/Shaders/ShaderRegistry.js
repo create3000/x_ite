@@ -78,7 +78,7 @@ import DepthFragment1         from "../../../assets/shaders/webgl1/Depth1.fs.js"
 import DepthVertex1           from "../../../assets/shaders/webgl1/Depth1.vs.js";
 import GouraudFragment1       from "../../../assets/shaders/webgl1/Gouraud1.fs.js";
 import GouraudVertex1         from "../../../assets/shaders/webgl1/Gouraud1.vs.js";
-import PBRFragment1           from "../../../assets/shaders/webgl1/PBR1.fs.js";
+import PhysicalFragment1      from "../../../assets/shaders/webgl1/Physical1.fs.js";
 import PhongFragment1         from "../../../assets/shaders/webgl1/Phong1.fs.js";
 import PointingFragment1      from "../../../assets/shaders/webgl1/Pointing1.fs.js";
 import PointingVertex1        from "../../../assets/shaders/webgl1/Pointing1.vs.js";
@@ -94,7 +94,7 @@ import GouraudVertex2         from "../../../assets/shaders/webgl2/Gouraud2.vs.j
 import LineTransformFragment2 from "../../../assets/shaders/webgl2/LineTransform2.fs.js";
 import LineTransformVertex2   from "../../../assets/shaders/webgl2/LineTransform2.vs.js";
 import OITComposeFragment2    from "../../../assets/shaders/webgl2/OITCompose2.fs.js";
-import PBRFragment2           from "../../../assets/shaders/webgl2/PBR2.fs.js";
+import PhysicalFragment2      from "../../../assets/shaders/webgl2/Physical2.js";
 import PhongFragment2         from "../../../assets/shaders/webgl2/Phong2.fs.js";
 import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing2.fs.js";
 import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing2.vs.js";
@@ -104,8 +104,9 @@ import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js"
 import BRDF2                  from "../../../assets/shaders/webgl2/pbr/BRDF2.glsl.js";
 import IBL2                   from "../../../assets/shaders/webgl2/pbr/IBL2.glsl.js";
 import Iridescence2           from "../../../assets/shaders/webgl2/pbr/Iridescence2.glsl.js";
-import Punctual2              from "../../../assets/shaders/webgl2/pbr/Punctual2.glsl.js";
 import MaterialInfo2          from "../../../assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js";
+import PBR2                   from "../../../assets/shaders/webgl2/pbr/PBR2.glsl.js";
+import Punctual2              from "../../../assets/shaders/webgl2/pbr/Punctual2.glsl.js";
 import ToneMapping2           from "../../../assets/shaders/webgl2/pbr/ToneMapping2.glsl.js";
 
 const ShaderRegistry = {
@@ -129,6 +130,7 @@ const ShaderRegistry = {
          IBL: IBL2,
          Iridescence: Iridescence2,
          MaterialInfo: MaterialInfo2,
+         PBR: PBR2,
          Punctual: Punctual2,
          ToneMapping: ToneMapping2,
       },
@@ -156,6 +158,7 @@ const ShaderRegistry = {
          IBL: IBL2,
          Iridescence: Iridescence2,
          MaterialInfo: MaterialInfo2,
+         PBR: PBR2,
          Punctual: Punctual2,
          ToneMapping: ToneMapping2,
       },
@@ -181,9 +184,9 @@ const ShaderRegistry = {
       1: {
          Depth: DepthFragment1,
          Gouraud: GouraudFragment1,
-         PBR: PBRFragment1,
          Phong: PhongFragment1,
          Pointing: PointingFragment1,
+         Physical: PhysicalFragment1,
          Unlit: UnlitFragment1,
       },
       2: {
@@ -191,9 +194,9 @@ const ShaderRegistry = {
          Gouraud: GouraudFragment2,
          LineTransform: LineTransformFragment2,
          OITCompose: OITComposeFragment2,
-         PBR: PBRFragment2,
          Phong: PhongFragment2,
          Pointing: PointingFragment2,
+         Physical: PhysicalFragment2,
          Unlit: UnlitFragment2,
       },
    },
