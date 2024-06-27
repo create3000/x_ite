@@ -41,23 +41,44 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFVec2f [in, out] **polygonOffset** 0 0 <small>(-∞,∞)</small>
 
-Input/Output field *polygonOffset*.
+Specifies the scale factors and units to calculate depth values.
+
+The offset is added before the depth test is performed and before the value is written into the depth buffer.
+
+The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0.
+
+The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0.
 
 ### SFVec2f [in, out] **depthRange** 0 1 <small>[0,1]</small>
 
-Input/Output field *depthRange*.
+Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.
+
+The first value is *zNear*, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0.
+
+The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1.
 
 ### SFBool [in, out] **depthTest** TRUE
 
-Input/Output field *depthTest*.
+Activates depth comparisons and updates to the depth buffer.
 
 ### SFString [in, out] **depthFunction** "LESS_EQUAL" <small>["NEVER", "LESS", "EQUAL", "LESS_EQUAL", "GREATER", "NOT_EQUAL", "GREATER_EQUAL", "ALWAYS"]</small>
 
-Input/Output field *depthFunction*.
+Specifies a function that compares incoming pixel depth to the current depth buffer value.
+
+Must be one of the following symbolic constants:
+
+* NEVER
+* LESS
+* EQUAL
+* LESS_EQUAL
+* GREATER
+* NOT_EQUAL
+* GREATER_EQUAL
+* ALWAYS
 
 ### SFBool [in, out] **depthMask** TRUE
 
-Input/Output field *depthMask*.
+Sets whether writing into the depth buffer is enabled or disabled.
 
 ## Example
 

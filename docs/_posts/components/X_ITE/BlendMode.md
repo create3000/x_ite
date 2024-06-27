@@ -41,31 +41,56 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### SFColorRGBA [in, out] **blendColor** 0 0 0 0 <small>[0,1]</small>
 
-Input/Output field *blendColor*.
+The *blendColor* may be used to calculate the source and destination blending factors.
 
 ### SFString [in, out] **sourceColorFactor** "SRC_ALPHA"
 
-Input/Output field *sourceColorFactor*.
+Specifies how the red, green, and blue source blending factors are computed.
+
+Source and destination parameters must be one of the following symbolic constants:
+
+- ZERO
+- ONE
+- SRC_COLOR
+- ONE_MINUS_SRC_COLOR
+- DST_COLOR
+- ONE_MINUS_DST_COLOR
+- SRC_ALPHA
+- ONE_MINUS_SRC_ALPHA
+- DST_ALPHA
+- ONE_MINUS_DST_ALPHA
+- CONSTANT_COLOR
+- ONE_MINUS_CONSTANT_COLOR
+- CONSTANT_ALPHA
+- ONE_MINUS_CONSTANT_ALPHA
 
 ### SFString [in, out] **sourceAlphaFactor** "ONE"
 
-Input/Output field *sourceAlphaFactor*.
+Specifies how the alpha source blending factors are computed.
 
 ### SFString [in, out] **destinationColorFactor** "ONE_MINUS_SRC_ALPHA"
 
-Input/Output field *destinationColorFactor*.
+Specifies how the red, green, and blue destination blending factors are computed.
 
 ### SFString [in, out] **destinationAlphaFactor** "ONE_MINUS_SRC_ALPHA"
 
-Input/Output field *destinationAlphaFactor*.
+Specifies how the alpha destination blending factors are computed.
 
 ### SFString [in, out] **colorEquation** "FUNC_ADD"
 
-Input/Output field *colorEquation*.
+Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:
+
+- FUNC_ADD
+- FUNC_SUBTRACT
+- FUNC_REVERSE_SUBTRACT
 
 ### SFString [in, out] **alphaEquation** "FUNC_ADD"
 
-Input/Output field *alphaEquation*.
+Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:
+
+- FUNC_ADD
+- FUNC_SUBTRACT
+- FUNC_REVERSE_SUBTRACT
 
 ## Example
 
