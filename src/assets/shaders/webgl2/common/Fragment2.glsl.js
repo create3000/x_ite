@@ -132,6 +132,8 @@ fragment_main ()
       finalColor .a = 1.0;
    #endif
 
+   finalColor .rgb = toneMap (finalColor .rgb);
+
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
       float a = finalColor .a;
       float w = weight (gl_FragCoord .z, a);

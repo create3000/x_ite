@@ -315,11 +315,7 @@ getMaterialColor ()
       color = color * (1.0 - clearcoatFactor * clearcoatFresnel) + clearcoat;
    #endif
 
-   #if defined (X3D_LINEAR_OUTPUT)
-      return vec4 (color, baseColor .a);
-   #else
-      return vec4 (toneMap (color), baseColor .a);
-   #endif
+   return vec4 (color, baseColor .a);
 }
 
 void

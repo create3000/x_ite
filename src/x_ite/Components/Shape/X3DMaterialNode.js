@@ -322,6 +322,8 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          const { alphaMode, objectsKeys, textureNode } = geometryContext;
 
+         options .push ("X3D_COLORSPACE_LINEAR_WHEN_PHYSICAL_MATERIAL");
+
          switch (alphaMode)
          {
             case AlphaMode .OPAQUE:

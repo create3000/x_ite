@@ -24,7 +24,7 @@ export default
       "x3d_TransmissionTextureEXT",
       "x3d_ThicknessTextureEXT",
    ],
-   texture (name, components = "rgba", colorspace = "")
+   texture (name, components = "rgba", colorSpace = "")
    {
       const ext = !!name .match (/EXT$/);
 
@@ -71,13 +71,27 @@ export default
 
          ${type} textureColorComponents = textureColor .${components};
 
-         #if defined (${define}${_EXT}_LINEAR)
-            #if ${colorspace === "sRGB" ? 1 : 0}
-               textureColorComponents = linearTosRGB (textureColorComponents);
+         #if defined (X3D_COLORSPACE_SRGB)
+            #if defined (${define}${_EXT}_LINEAR)
+               #if ${colorSpace === "sRGB" || colorSpace === "linear" ? 1 : 0}
+                  textureColorComponents = linearTosRGB (textureColorComponents);
+               #endif
             #endif
-         #else
-            #if ${colorspace === "linear" ? 1 : 0}
-               textureColorComponents = sRGBToLinear (textureColorComponents);
+         #elif defined (X3D_COLORSPACE_LINEAR_WHEN_PHYSICAL_MATERIAL)
+            #if defined (${define}${_EXT}_LINEAR)
+               #if ${colorSpace === "sRGB" ? 1 : 0}
+                  textureColorComponents = linearTosRGB (textureColorComponents);
+               #endif
+            #else
+               #if ${colorSpace === "linear" ? 1 : 0}
+                  textureColorComponents = sRGBToLinear (textureColorComponents);
+               #endif
+            #endif
+         #elif defined (X3D_COLORSPACE_LINEAR)
+            #if !defined (${define}${_EXT}_LINEAR)
+               #if ${colorSpace === "sRGB" || colorSpace === "linear" ? 1 : 0}
+                  textureColorComponents = sRGBToLinear (textureColorComponents);
+               #endif
             #endif
          #endif
 
