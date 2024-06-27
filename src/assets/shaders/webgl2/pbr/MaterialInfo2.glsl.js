@@ -338,7 +338,7 @@ getVolumeInfo (in MaterialInfo info)
 {
    info .thickness           = x3d_ThicknessEXT;
    info .attenuationDistance = x3d_AttenuationDistanceEXT;
-   info .attenuationColor    = x3d_AttenuationColoEXT;
+   info .attenuationColor    = x3d_AttenuationColorEXT;
 
    #if defined (X3D_THICKNESS_TEXTURE_EXT)
       info .thickness *= getThicknessTextureEXT ();

@@ -124,7 +124,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
    {
       gl .uniform1f  (shaderObject .x3d_ThicknessEXT,           this .thickness);
       gl .uniform1f  (shaderObject .x3d_AttenuationDistanceEXT, this .attenuationDistance);
-      gl .uniform3fv (shaderObject .x3d_AttenuationColoEXT,     this .attenuationColorArray);
+      gl .uniform3fv (shaderObject .x3d_AttenuationColorEXT,    this .attenuationColorArray);
 
       if (!+this .getTextureBits ())
          return;

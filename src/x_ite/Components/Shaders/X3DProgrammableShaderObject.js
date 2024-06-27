@@ -252,7 +252,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_TransmissionFramebufferSizeEXT",
          "x3d_ThicknessEXT",
          "x3d_AttenuationDistanceEXT",
-         "x3d_AttenuationColoEXT",
+         "x3d_AttenuationColorEXT",
       ];
 
       for (const name of commonUniforms)
