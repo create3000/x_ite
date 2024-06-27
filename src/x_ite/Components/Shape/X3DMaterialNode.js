@@ -130,7 +130,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          const { alphaMode, textureNode, objectsKeys } = geometryContext;
 
          key += alphaMode;
-         key += "0000011.0.";
+         key += "0010000011.0.";
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
          key += textureNode ?.getTextureBits () .toString (16) ?? 0;
@@ -187,6 +187,31 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
                break;
             }
+         }
+
+         switch (browser .getBrowserOption ("ColorSpace"))
+         {
+            case "SRGB":
+               options .push ("X3D_COLORSPACE_SRGB");
+               break;
+            default: // LINEAR_WHEN_PHYSICAL_MATERIAL
+               options .push ("X3D_COLORSPACE_LINEAR_WHEN_PHYSICAL_MATERIAL");
+               break;
+            case "LINEAR":
+               options .push ("X3D_COLORSPACE_LINEAR");
+               break;
+         }
+
+         switch (browser .getBrowserOption ("ToneMapping"))
+         {
+            default: // NONE
+               break;
+            case "ACES_NARKOWICZ":
+            case "ACES_HILL":
+            case "ACES_HILL_EXPOSURE_BOOST":
+            case "KHR_PBR_NEUTRAL":
+               options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping")}`);
+               break;
          }
 
          if (renderContext .shadows)

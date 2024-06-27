@@ -222,18 +222,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_METALLIC_ROUGHNESS");
 
-      switch (browser .getBrowserOption ("ToneMapping"))
-      {
-         default: // NONE
-            break;
-         case "ACES_NARKOWICZ":
-         case "ACES_HILL":
-         case "ACES_HILL_EXPOSURE_BOOST":
-         case "KHR_PBR_NEUTRAL":
-            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping")}`);
-            break;
-      }
-
       if (+this .getTextureBits ())
       {
          this .baseTextureNode              ?.getShaderOptions (options, "BASE");

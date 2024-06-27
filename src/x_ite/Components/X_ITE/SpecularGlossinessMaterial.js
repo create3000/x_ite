@@ -232,18 +232,6 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
 
       options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_SPECULAR_GLOSSINESS");
 
-      switch (browser .getBrowserOption ("ToneMapping"))
-      {
-         default: // NONE
-            break;
-         case "ACES_NARKOWICZ":
-         case "ACES_HILL":
-         case "ACES_HILL_EXPOSURE_BOOST":
-         case "KHR_PBR_NEUTRAL":
-            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping")}`);
-            break;
-      }
-
       if (+this .getTextureBits ())
       {
          this .diffuseTextureNode            ?.getShaderOptions (options, "DIFFUSE");
