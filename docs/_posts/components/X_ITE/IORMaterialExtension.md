@@ -38,7 +38,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
 
-### SFFloat [in, out] **indexOfRefraction** 1.5 <small>[0,∞)</small>
+### SFFloat [in, out] **indexOfRefraction** 1.5 <small>[1,∞)</small>
 
 The index of refraction.
 

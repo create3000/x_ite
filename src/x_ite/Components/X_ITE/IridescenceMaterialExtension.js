@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    },
    set_iridescenceIndexOfRefraction__ ()
    {
-      this .iridescenceIndexOfRefraction = Math .max (this ._iridescenceIndexOfRefraction .getValue (), 0);
+      this .iridescenceIndexOfRefraction = Math .max (this ._iridescenceIndexOfRefraction .getValue (), 1);
    },
    set_iridescenceThicknessMinimum__ ()
    {

@@ -50,7 +50,7 @@ Input/Output field *iridescenceTextureMapping*.
 
 The iridescence intensity texture.
 
-### SFFloat [in, out] **iridescenceIndexOfRefraction** 1.3 <small>[0,∞)</small>
+### SFFloat [in, out] **iridescenceIndexOfRefraction** 1.3 <small>[1,∞)</small>
 
 The index of refraction of the dielectric thin-film layer.
 
