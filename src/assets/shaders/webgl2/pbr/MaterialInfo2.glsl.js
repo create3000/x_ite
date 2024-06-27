@@ -331,7 +331,7 @@ ${MaterialTextures .texture ("x3d_ThicknessTextureEXT", "g")}
 
 uniform float x3d_ThicknessEXT;
 uniform float x3d_AttenuationDistanceEXT;
-uniform vec3  x3d_AttenuationColoEXT;
+uniform vec3  x3d_AttenuationColorEXT;
 
 MaterialInfo
 getVolumeInfo (in MaterialInfo info)
