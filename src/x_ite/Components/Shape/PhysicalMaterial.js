@@ -175,8 +175,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    set_transparent__ ()
    {
       this .setTransparent (this .getTransparency () ||
-                            this .baseTextureNode ?.isTransparent () ||
-                            this .isTransmission ());
+                            this .baseTextureNode ?.isTransparent ());
    },
    set_extensions__ ()
    {

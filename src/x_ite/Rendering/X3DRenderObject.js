@@ -1177,6 +1177,8 @@ Object .assign (X3DRenderObject .prototype,
             numTransmissionOpaqueShapes      = transmissionOpaqueShapes .length,
             numTransmissionTransparentShapes = transmissionTransparentShapes .length;
 
+         console .log (numOpaqueShapes, numTransparentShapes)
+
          this .drawShapes (gl, browser, true, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes, this .transmissionTransparencySorter);
 
          gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
