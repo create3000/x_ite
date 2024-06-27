@@ -66,8 +66,8 @@ const
 
 const
    SPIN_RELEASE_TIME = mobile ? 20 : 25,
-   SPIN_ANGLE        = Algorithm .radians (2),
-   SPIN_FACTOR       = 0.3,
+   SPIN_ANGLE        = Algorithm .radians (mobile ? 3 : 2),
+   SPIN_FACTOR       = mobile ? 0.2 : 0.3,
    SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
    MOVE_TIME         = 0.2,
    ROTATE_TIME       = 0.2,
