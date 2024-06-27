@@ -244,6 +244,12 @@ Returns a browser option with the corresponding *name*.
          <td>true</td>
       </tr>
       <tr>
+         <td>ColorSpace</td>
+         <td>The color space in which color calculations take place. <small class="blue">non standard</small></td>
+         <td>SRGB, LINEAR_WHEN_PHYSICAL_MATERIAL, LINEAR</td>
+         <td>LINEAR_WHEN_PHYSICAL_MATERIAL</td>
+      </tr>
+      <tr>
          <td>ContentScale</td>
          <td>Factor with which the internal canvas size should be scaled. If set to -1, window.devicePixelRatio is used. <small class="blue">non standard</small></td>
          <td>Float</td>

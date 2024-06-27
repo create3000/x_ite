@@ -79,6 +79,8 @@ class X3DCanvasElement extends HTMLElement
          "baseURL",
          "baseurl",
          "cache",
+         "colorSpace",
+         "colorspace",
          "contentScale",
          "contentscale",
          "contextMenu",

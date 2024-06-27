@@ -305,6 +305,12 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("Cache", this .parseBooleanAttribute (newValue, true));
             break;
          }
+         case "colorSpace":
+         case "colorspace":
+         {
+            this .setBrowserOption ("ColorSpace", newValue);
+            break;
+         }
          case "contentScale":
          case "contentscale":
          {

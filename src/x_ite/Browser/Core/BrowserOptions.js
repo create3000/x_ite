@@ -115,6 +115,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          "Antialiased",
          "AutoUpdate",
          "Cache",
+         "ColorSpace",
          "ContentScale",
          "ContextMenu",
          "Debug",
