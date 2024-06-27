@@ -201,7 +201,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       this .setTransmission (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .TransmissionMaterialExtension)));
 
-      this .set_transparent__ ();
       this .set_extensionsKey__ ();
    },
    set_extensionsKey__ ()
