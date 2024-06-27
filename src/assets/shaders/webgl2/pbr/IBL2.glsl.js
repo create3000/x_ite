@@ -23,8 +23,13 @@ getDiffuseLight (const in vec3 n)
       vec3 textureColor = texture (x3d_EnvironmentLightSource .diffuseTexture, texCoord) .rgb;
    #endif
 
-   if (!x3d_EnvironmentLightSource .diffuseTextureLinear)
-      textureColor = sRGBToLinear (textureColor);
+   #if defined (X3D_COLORSPACE_SRGB)
+      if (x3d_EnvironmentLightSource .diffuseTextureLinear)
+         textureColor = linearTosRGB (textureColor);
+   #else
+      if (!x3d_EnvironmentLightSource .diffuseTextureLinear)
+         textureColor = sRGBToLinear (textureColor);
+   #endif
 
    return textureColor * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
 }
@@ -40,8 +45,13 @@ getSpecularLight (const in vec3 reflection, const in float lod)
       vec3 textureColor = textureLod (x3d_EnvironmentLightSource .specularTexture, texCoord, lod) .rgb;
    #endif
 
-   if (!x3d_EnvironmentLightSource .specularTextureLinear)
-      textureColor = sRGBToLinear (textureColor);
+   #if defined (X3D_COLORSPACE_SRGB)
+      if (x3d_EnvironmentLightSource .specularTextureLinear)
+         textureColor = linearTosRGB (textureColor);
+   #else
+      if (!x3d_EnvironmentLightSource .specularTextureLinear)
+         textureColor = sRGBToLinear (textureColor);
+   #endif
 
    return textureColor * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
 }
@@ -201,7 +211,11 @@ getTransmissionSample (in vec2 fragCoord, const in float roughness, const in flo
       vec3  transmittedLight = textureLod (x3d_TransmissionFramebufferSamplerEXT, fragCoord, framebufferLod) .rgb;
    #endif
 
-   return sRGBToLinear (transmittedLight);
+   #if defined (X3D_COLORSPACE_SRGB)
+      return transmittedLight;
+   #else
+      return sRGBToLinear (transmittedLight);
+   #endif
 }
 
 vec3
