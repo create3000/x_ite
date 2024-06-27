@@ -13,6 +13,7 @@ my $containerField = "";
 my $first = 1;
 my $description = "";
 my $collectdesc = 0;
+my $enums = "";
 
 sub trail() {
 	print "<containerField default=\"$containerField\" type=\"xs:NMTOKEN\"/>\n";
@@ -22,8 +23,14 @@ sub trail() {
 sub trailfield () {
    return unless $description;
    $description =~ s/{:.*?}//;
+   $description =~ s/[\r\n]+/ /g;
+   $description =~ s/ *$//;
+   $description =~ s/^ *//;
+   $description =~ s/"/'/g;
    print "\tdescription=\"$description\"\n";
-	print "/>\n";
+   print ">";
+   print $enums;
+   print "</field>\n";
    $description = "";
 }
 
@@ -42,6 +49,7 @@ while (<STDIN>) {
 			print "<ConcreteNode name=\"$current\">\n";
          		print "\t<InterfaceDefinition specificationUrl=\"https://create3000.github.io/x_ite/components/x-ite/". lc $current . "\"\n";
 			$appinfo =~ s/{:.*?}//;
+   		$appinfo =~ s/[\r\n]+/ /g;
 			$appinfo =~ s/[<>]/  /g;
 			$appinfo =~ s/^## //;
                         print "\t\tappinfo=\"$appinfo\">\n";
@@ -82,7 +90,7 @@ while (<STDIN>) {
 		trailfield();
 		$description = "";
 		$collectdesc = 1;
-		my $enums = "";
+		$enums = "";
 		my $type = $1;
 		my $accesstype = $2;
 		my $name = $3;
@@ -125,7 +133,7 @@ while (<STDIN>) {
 			$accesstype = "initializeOnly";
 		}
 		if (defined $default) {
-			$default =~ s/ *$//;
+			$default =~ s/[\r\n ]*$//;
 			$default =~ s/^"(.*)"$/$1/;
 			if ($default eq "[ ]") {
 				undef $default;
@@ -155,7 +163,6 @@ while (<STDIN>) {
 		if (defined $maxExclusive) {
 			print "\tmaxExclusive=\"$maxExclusive\"\n";
 		}
-		print $enums;
 		if (defined $inheritance && $inheritance =~ /^X3D/) {
 			print "\tinheritedFrom=\"$inheritance\"\n";
 		}
