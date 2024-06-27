@@ -964,8 +964,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
    set_transparent__ ()
    {
       this .setTransparent (this .getTransparency () ||
-                            this .diffuseTextureNode ?.isTransparent () ||
-                            this .isTransmission ());
+                            this .diffuseTextureNode ?.isTransparent ());
    },
    set_extensions__ ()
    {
