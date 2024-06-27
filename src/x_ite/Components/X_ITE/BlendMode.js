@@ -109,45 +109,33 @@ Object .assign (Object .setPrototypeOf (BlendMode .prototype, X3DAppearanceChild
    },
    set_sourceColorFactor__ ()
    {
-      this .sourceColorFactorType = this .factorTypes .get (this ._sourceColorFactor .getValue ());
-
-      if (this .sourceColorFactorType === undefined)
-         this .sourceColorFactorType = this .factorTypes .get ("SRC_ALPHA");
+      this .sourceColorFactorType = this .factorTypes .get (this ._sourceColorFactor .getValue ())
+         ?? this .factorTypes .get ("SRC_ALPHA");
    },
    set_sourceAlphaFactor__ ()
    {
-      this .sourceAlphaFactorType = this .factorTypes .get (this ._sourceAlphaFactor .getValue ());
-
-      if (this .sourceAlphaFactorType === undefined)
-         this .sourceAlphaFactorType = this .factorTypes .get ("ONE");
+      this .sourceAlphaFactorType = this .factorTypes .get (this ._sourceAlphaFactor .getValue ())
+         ?? this .factorTypes .get ("ONE");
    },
    set_destinationColorFactor__ ()
    {
-      this .destinationColorFactorType = this .factorTypes .get (this ._destinationColorFactor .getValue ());
-
-      if (this .destinationColorFactorType === undefined)
-         this .destinationColorFactorType = this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
+      this .destinationColorFactorType = this .factorTypes .get (this ._destinationColorFactor .getValue ())
+         ?? this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
    },
    set_destinationAlphaFactor__ ()
    {
-      this .destinationAlphaFactorType = this .factorTypes .get (this ._destinationAlphaFactor .getValue ());
-
-      if (this .destinationAlphaFactorType === undefined)
-         this .destinationAlphaFactorType = this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
+      this .destinationAlphaFactorType = this .factorTypes .get (this ._destinationAlphaFactor .getValue ())
+      ??    this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
    },
    set_colorEquation__ ()
    {
-      this .colorEquationType = this .equationTypes .get (this ._colorEquation .getValue ());
-
-      if (this .colorEquationType === undefined)
-         this .colorEquationType = this .equationTypes .get ("FUNC_ADD");
+      this .colorEquationType = this .equationTypes .get (this ._colorEquation .getValue ())
+         ?? this .equationTypes .get ("FUNC_ADD");
    },
    set_alphaEquation__ ()
    {
-      this .alphaEquationType = this .equationTypes .get (this ._alphaEquation .getValue ());
-
-      if (this .alphaEquationType === undefined)
-         this .alphaEquationType = this .equationTypes .get ("FUNC_ADD");
+      this .alphaEquationType = this .equationTypes .get (this ._alphaEquation .getValue ())
+         ?? this .equationTypes .get ("FUNC_ADD");
    },
    enable (gl)
    {
