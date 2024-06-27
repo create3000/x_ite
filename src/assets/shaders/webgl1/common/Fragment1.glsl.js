@@ -118,6 +118,8 @@ fragment_main ()
       finalColor .a = 1.0;
    #endif
 
+   finalColor .rgb = toneMap (finalColor .rgb);
+
    gl_FragColor = finalColor;
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
