@@ -178,10 +178,20 @@ getTexture (const in int i, in vec3 texCoord)
          textureColor = textureCube (x3d_TextureCube [${i}], texCoord .stp);
       #endif
 
-      #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE${i}_LINEAR)
-         textureColor = sRGBToLinear (textureColor);
-      #elif !defined (X3D_PHYSICAL_MATERIAL) && defined (X3D_TEXTURE${i}_LINEAR)
-         textureColor = linearTosRGB (textureColor);
+      #if defined (X3D_COLORSPACE_SRGB)
+         #if defined (X3D_TEXTURE${i}_LINEAR)
+            textureColor = linearTosRGB (textureColor);
+         #endif
+      #elif defined (X3D_COLORSPACE_LINEAR_WHEN_PHYSICAL_MATERIAL)
+         #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE${i}_LINEAR)
+            textureColor = sRGBToLinear (textureColor);
+         #elif !defined (X3D_PHYSICAL_MATERIAL) && defined (X3D_TEXTURE${i}_LINEAR)
+            textureColor = linearTosRGB (textureColor);
+         #endif
+      #elif defined (X3D_COLORSPACE_LINEAR)
+         #if !defined (X3D_TEXTURE${i}_LINEAR)
+            textureColor = sRGBToLinear (textureColor);
+         #endif
       #endif
    }
    #endif
@@ -486,12 +496,20 @@ getTextureProjectorColor ()
 
       vec4 T = getTextureProjectorTexture (i, texCoord .st);
 
-      #if defined (X3D_PHYSICAL_MATERIAL)
-         if (!bool (x3d_TextureProjectorParams [i] .z))
-            T = sRGBToLinear (T);
-      #else
+      #if defined (X3D_COLORSPACE_SRGB)
          if (bool (x3d_TextureProjectorParams [i] .z))
             T = linearTosRGB (T);
+      #elif defined (X3D_COLORSPACE_LINEAR_WHEN_PHYSICAL_MATERIAL)
+         #if defined (X3D_PHYSICAL_MATERIAL)
+            if (!bool (x3d_TextureProjectorParams [i] .z))
+               T = sRGBToLinear (T);
+         #else
+            if (bool (x3d_TextureProjectorParams [i] .z))
+               T = linearTosRGB (T);
+         #endif
+      #elif defined (X3D_COLORSPACE_LINEAR)
+         if (!bool (x3d_TextureProjectorParams [i] .z))
+            T = sRGBToLinear (T);
       #endif
 
       currentColor *= mix (vec3 (1.0), T .rgb * x3d_TextureProjectorColor [i], T .a * x3d_TextureProjectorIntensity [i]);
