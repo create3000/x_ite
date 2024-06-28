@@ -227,20 +227,15 @@ getSheenInfo (in MaterialInfo info)
 
 uniform sampler2D x3d_SheenELUTTextureEXT;
 
-#if __VERSION__ == 100
 float
 albedoSheenScalingLUT (const in float NdotV, const in float sheenRoughnessFactor)
 {
-   return texture2D (x3d_SheenELUTTextureEXT, vec2 (NdotV, sheenRoughnessFactor)) .r;
+   #if __VERSION__ == 100
+      return texture2D (x3d_SheenELUTTextureEXT, vec2 (NdotV, sheenRoughnessFactor)) .r;
+   #else
+      return texture (x3d_SheenELUTTextureEXT, vec2 (NdotV, sheenRoughnessFactor)) .r;
+   #endif
 }
-#else
-float
-albedoSheenScalingLUT (const in float NdotV, const in float sheenRoughnessFactor)
-{
-   return texture (x3d_SheenELUTTextureEXT, vec2 (NdotV, sheenRoughnessFactor)) .r;
-}
-#endif
-
 #endif
 
 #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
