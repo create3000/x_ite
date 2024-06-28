@@ -302,7 +302,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
-            case "KHR_materials_unlit":
             case "KHR_materials_volume":
             {
                const component = browser .getComponent ("X_ITE", 1);
@@ -997,7 +996,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       appearanceNode ._alphaMode        = this .stringValue (material .alphaMode, "OPAQUE");
       appearanceNode ._alphaCutoff      = this .numberValue (material .alphaCutoff, 0.5);
-      appearanceNode ._material         = materialNode;
+      appearanceNode ._material         = this .khrMaterialsUnlitObject (material .extensions ?.KHR_materials_unlit, materialNode);
       appearanceNode ._textureTransform = this .createMultiTextureTransform (materialNode);
 
       appearanceNode .setup ();
@@ -1170,9 +1169,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_transmission":
                this .khrMaterialsTransmission (value, materialNode);
                break;
-            case "KHR_materials_unlit":
-               this .khrMaterialsUnlitObject (value, materialNode);
-               break;
             case "KHR_materials_volume":
                this .khrMaterialsVolumeObject (value, materialNode);
                break;
@@ -1331,14 +1327,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       materialNode ._extensions .push (extension);
    },
-   khrMaterialsUnlitObject (KHR_materials_unlit, materialNode)
-   {
-      const extension = this .getScene () .createNode ("UnlitMaterialExtension", false);
-
-      extension .setup ();
-
-      materialNode ._extensions .push (extension);
-   },
    khrMaterialsVolumeObject (KHR_materials_volume, materialNode)
    {
       const extension = this .getScene () .createNode ("VolumeMaterialExtension", false);
@@ -1356,6 +1344,27 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension .setup ();
 
       materialNode ._extensions .push (extension);
+   },
+   khrMaterialsUnlitObject (KHR_materials_unlit, materialNode)
+   {
+      if (!KHR_materials_unlit)
+         return materialNode;
+
+      const unlitMaterialNode = this .getScene () .createNode ("UnlitMaterial", false);
+
+      unlitMaterialNode ._emissiveColor          = materialNode ._baseColor;
+      unlitMaterialNode ._emissiveTextureMapping = materialNode ._baseTextureMapping;
+      unlitMaterialNode ._emissiveTexture        = materialNode ._baseTexture;
+      unlitMaterialNode ._normalScale            = materialNode ._normalScale;
+      unlitMaterialNode ._normalTextureMapping   = materialNode ._normalTextureMapping;
+      unlitMaterialNode ._normalTexture          = materialNode ._normalTexture;
+      unlitMaterialNode ._transparency           = materialNode ._transparency;
+
+      unlitMaterialNode .setup ();
+
+      materialNode .dispose ();
+
+      return unlitMaterialNode;
    },
    textureTransformObject (KHR_texture_transform, texCoord)
    {
@@ -2474,12 +2483,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    hasTextures (materialNode)
    {
-      // Test PhysicalMaterial, ...
+      // Test PhysicalMaterial, UnlitMaterial ...
 
       if (+materialNode .getTextureBits ())
          return true;
 
-      if (materialNode ._extensions .some (extension => +extension .getValue () .getTextureBits ()))
+      if (materialNode ._extensions ?.some (extension => +extension .getValue () .getTextureBits ()))
          return true;
 
       return false;
