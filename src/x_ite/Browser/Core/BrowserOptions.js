@@ -85,27 +85,27 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          Timings:           this ._Timings           .getValue (),
       });
 
-      this ._Rubberband                   .addInterest ("set_rubberband__",                   this);
-      this ._Antialiased                  .addInterest ("set_antialiased__",                  this);
-      this ._PrimitiveQuality             .addInterest ("set_primitiveQuality__",             this);
-      this ._TextureQuality               .addInterest ("set_textureQuality__",               this);
-      this ._Shading                      .addInterest ("set_shading__",                      this);
-      this ._StraightenHorizon            .addInterest ("set_straightenHorizon__",            this);
-      this ._AutoUpdate                   .addInterest ("set_autoUpdate__",                   this);
-      this ._ContentScale                 .addInterest ("set_contentScale__",                 this);
-      this ._Exposure                     .addInterest ("set_exposure__",                     this);
-      this ._LogarithmicDepthBuffer       .addInterest ("set_logarithmicDepthBuffer__",       this);
-      this ._Multisampling                .addInterest ("set_multisampling__",                this);
-      this ._OrderIndependentTransparency .addInterest ("set_orderIndependentTransparency__", this);
-      this ._Timings                      .addInterest ("set_timings__",                      this);
+      this ._Rubberband                   .addInterest ("set_Rubberband__",                   this);
+      this ._Antialiased                  .addInterest ("set_Antialiased__",                  this);
+      this ._PrimitiveQuality             .addInterest ("set_PrimitiveQuality__",             this);
+      this ._TextureQuality               .addInterest ("set_TextureQuality__",               this);
+      this ._Shading                      .addInterest ("set_Shading__",                      this);
+      this ._StraightenHorizon            .addInterest ("set_StraightenHorizon__",            this);
+      this ._AutoUpdate                   .addInterest ("set_AutoUpdate__",                   this);
+      this ._ContentScale                 .addInterest ("set_ContentScale__",                 this);
+      this ._Exposure                     .addInterest ("set_Exposure__",                     this);
+      this ._LogarithmicDepthBuffer       .addInterest ("set_LogarithmicDepthBuffer__",       this);
+      this ._Multisampling                .addInterest ("set_Multisampling__",                this);
+      this ._OrderIndependentTransparency .addInterest ("set_OrderIndependentTransparency__", this);
+      this ._Timings                      .addInterest ("set_Timings__",                      this);
 
-      this .set_antialiased__                  (this ._Antialiased);
-      this .set_shading__                      (this ._Shading);
-      this .set_contentScale__                 (this ._ContentScale);
-      this .set_exposure__                     (this ._Exposure);
-      this .set_logarithmicDepthBuffer__       (this ._LogarithmicDepthBuffer);
-      this .set_multisampling__                (this ._Multisampling);
-      this .set_orderIndependentTransparency__ (this ._OrderIndependentTransparency);
+      this .set_Antialiased__                  (this ._Antialiased);
+      this .set_Shading__                      (this ._Shading);
+      this .set_ContentScale__                 (this ._ContentScale);
+      this .set_Exposure__                     (this ._Exposure);
+      this .set_LogarithmicDepthBuffer__       (this ._LogarithmicDepthBuffer);
+      this .set_Multisampling__                (this ._Multisampling);
+      this .set_OrderIndependentTransparency__ (this ._OrderIndependentTransparency);
 
       this .reset ();
    },
@@ -194,15 +194,15 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       return this .textureQuality;
    },
-   set_rubberband__ (rubberband)
+   set_Rubberband__ (rubberband)
    {
       this .localStorage .Rubberband = rubberband .getValue ();
    },
-   set_antialiased__ ()
+   set_Antialiased__ ()
    {
-      this .set_multisampling__ (this ._Multisampling);
+      this .set_Multisampling__ (this ._Multisampling);
    },
-   set_primitiveQuality__ (value)
+   set_PrimitiveQuality__ (value)
    {
       const
          browser          = this .getBrowser (),
@@ -217,7 +217,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       if (typeof browser .setPrimitiveQuality3D === "function")
          browser .setPrimitiveQuality3D (this .primitiveQuality);
    },
-   set_textureQuality__ (value)
+   set_TextureQuality__ (value)
    {
       const
          browser        = this .getBrowser (),
@@ -229,7 +229,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       if (typeof browser .setTextureQuality === "function")
          browser .setTextureQuality (this .textureQuality);
    },
-   set_shading__: (() =>
+   set_Shading__: (() =>
    {
       const strings = {
          [Shading .POINT]:     "POINT",
@@ -251,14 +251,14 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          browser .setShading (this .shading);
       };
    })(),
-   set_straightenHorizon__ (straightenHorizon)
+   set_StraightenHorizon__ (straightenHorizon)
    {
       this .localStorage .StraightenHorizon = straightenHorizon .getValue ();
 
       if (straightenHorizon .getValue ())
          this .getBrowser () .getActiveLayer () ?.straightenView ();
    },
-   set_autoUpdate__ (autoUpdate)
+   set_AutoUpdate__ (autoUpdate)
    {
       const events = ["resize", "scroll", "load"]
          .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
@@ -292,7 +292,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          $(window) .off (events);
       }
    },
-   set_contentScale__ (contentScale)
+   set_ContentScale__ (contentScale)
    {
       const browser = this .getBrowser ();
 
@@ -324,7 +324,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       browser .reshape ();
    },
-   set_exposure__ ()
+   set_Exposure__ ()
    {
       const
          browser  = this .getBrowser (),
@@ -337,7 +337,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          gl .uniform1f (shaderNode .x3d_Exposure, exposure);
       }
    },
-   set_logarithmicDepthBuffer__ (logarithmicDepthBuffer)
+   set_LogarithmicDepthBuffer__ (logarithmicDepthBuffer)
    {
       const
          browser = this .getBrowser (),
@@ -345,7 +345,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && gl .HAS_FEATURE_FRAG_DEPTH;
    },
-   set_multisampling__ (multisampling)
+   set_Multisampling__ (multisampling)
    {
       const
          browser = this .getBrowser (),
@@ -356,11 +356,11 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       browser .reshape ();
    },
-   set_orderIndependentTransparency__ ()
+   set_OrderIndependentTransparency__ ()
    {
       this .getBrowser () .reshape ();
    },
-   set_timings__ (timings)
+   set_Timings__ (timings)
    {
       this .localStorage .Timings = timings .getValue ();
    },
