@@ -96,8 +96,7 @@ function X3DFlyViewer (executionContext, navigationInfo)
    this .lineVertexArray       = new Float32Array (8 * 4) .fill (1);
    this .geometryContext       = new GeometryContext ({ geometryType: 2, colorMaterial: true });
 
-   this .geometryContext .renderObject = new Layer (executionContext);
-   this .geometryContext .renderObject .setup ();
+   this .geometryContext .renderObject = this .getActiveLayer ();
 
    gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
    gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint8Array ([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]), gl .STATIC_DRAW);
@@ -754,8 +753,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    dispose ()
    {
       const gl = this .getBrowser () .getContext ();
-
-      this .geometryContext .renderObject .dispose ();
 
       gl .deleteBuffer (this .lineVertexBuffer);
       this .lineVertexArrayObject .dispose (gl);
