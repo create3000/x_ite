@@ -354,7 +354,6 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - TwoSidedMaterial
 - UniversalJoint
 - UnlitMaterial
-- UnlitMaterialExtension
 - Viewpoint
 - ViewpointGroup
 - Viewport

@@ -59,7 +59,6 @@ import IridescenceMaterialExtension      from "../../x_ite/Components/X_ITE/Irid
 import SheenMaterialExtension            from "../../x_ite/Components/X_ITE/SheenMaterialExtension.js";
 import SpecularMaterialExtension         from "../../x_ite/Components/X_ITE/SpecularMaterialExtension.js";
 import TransmissionMaterialExtension     from "../../x_ite/Components/X_ITE/TransmissionMaterialExtension.js";
-import UnlitMaterialExtension            from "../../x_ite/Components/X_ITE/UnlitMaterialExtension.js";
 import VolumeMaterialExtension           from "../../x_ite/Components/X_ITE/VolumeMaterialExtension.js";
 import X3DMaterialExtensionNode          from "../../x_ite/Components/X_ITE/X3DMaterialExtensionNode.js";
 
@@ -80,7 +79,6 @@ Components .add ({
       SheenMaterialExtension,
       SpecularMaterialExtension,
       TransmissionMaterialExtension,
-      UnlitMaterialExtension,
       VolumeMaterialExtension,
    ],
    abstractNodes:
