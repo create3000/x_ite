@@ -1096,6 +1096,7 @@ interface X3DConstants
    readonly AcousticProperties: number;
    readonly Analyser: number;
    readonly Anchor: number;
+   readonly AnisotropyMaterialExtension: number;
    readonly Appearance: number;
    readonly Arc2D: number;
    readonly ArcClose2D: number;
@@ -1124,6 +1125,7 @@ interface X3DConstants
    readonly ChannelSelector: number;
    readonly ChannelSplitter: number;
    readonly Circle2D: number;
+   readonly ClearcoatMaterialExtension: number;
    readonly ClipPlane: number;
    readonly CollidableOffset: number;
    readonly CollidableShape: number;
@@ -1160,12 +1162,13 @@ interface X3DConstants
    readonly DISEntityManager: number;
    readonly DISEntityTypeMapping: number;
    readonly Disk2D: number;
+   readonly DispersionMaterialExtension: number;
    readonly DoubleAxisHingeJoint: number;
    readonly DynamicsCompressor: number;
    readonly EaseInEaseOut: number;
    readonly EdgeEnhancementVolumeStyle: number;
    readonly ElevationGrid: number;
-   readonly EnvironmentLight: number;
+   readonly EmissiveStrengthMaterialExtension: number;
    readonly EspduTransform: number;
    readonly ExplosionEmitter: number;
    readonly Extrusion: number;
@@ -1206,8 +1209,11 @@ interface X3DConstants
    readonly IndexedTriangleSet: number;
    readonly IndexedTriangleStripSet: number;
    readonly Inline: number;
+   readonly InstancedShape: number;
    readonly IntegerSequencer: number;
    readonly IntegerTrigger: number;
+   readonly IORMaterialExtension: number;
+   readonly IridescenceMaterialExtension: number;
    readonly IsoSurfaceVolumeData: number;
    readonly KeySensor: number;
    readonly Layer: number;
@@ -1299,12 +1305,15 @@ interface X3DConstants
    readonly ShaderPart: number;
    readonly ShaderProgram: number;
    readonly Shape: number;
+   readonly SheenMaterialExtension: number;
    readonly SignalPdu: number;
    readonly SilhouetteEnhancementVolumeStyle: number;
    readonly SingleAxisHingeJoint: number;
    readonly SliderJoint: number;
    readonly Sound: number;
    readonly SpatialSound: number;
+   readonly SpecularGlossinessMaterial: number;
+   readonly SpecularMaterialExtension: number;
    readonly Sphere: number;
    readonly SphereSensor: number;
    readonly SplinePositionInterpolator: number;
@@ -1339,6 +1348,7 @@ interface X3DConstants
    readonly TouchSensor: number;
    readonly Transform: number;
    readonly TransformSensor: number;
+   readonly TransmissionMaterialExtension: number;
    readonly TransmitterPdu: number;
    readonly TriangleFanSet: number;
    readonly TriangleSet: number;
@@ -1347,12 +1357,14 @@ interface X3DConstants
    readonly TwoSidedMaterial: number;
    readonly UniversalJoint: number;
    readonly UnlitMaterial: number;
+   readonly UnlitMaterialExtension: number;
    readonly Viewpoint: number;
    readonly ViewpointGroup: number;
    readonly Viewport: number;
    readonly VisibilitySensor: number;
    readonly VolumeData: number;
    readonly VolumeEmitter: number;
+   readonly VolumeMaterialExtension: number;
    readonly VolumePickSensor: number;
    readonly WaveShaper: number;
    readonly WindPhysicsModel: number;
@@ -2895,6 +2907,41 @@ interface AnchorProxy extends X3DGroupingNodeProxy, X3DUrlObjectProxy
    visible: boolean;
 }
 
+/** AnisotropyMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node. */
+interface AnisotropyMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+{
+   /**
+   * The rotation of the anisotropy in tangent, bitangent space, measured in radians counter-clockwise from the tangent. When the anisotropy texture is present, this value provides additional rotation to the vectors in the texture.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   anisotropyRotation: number;
+   /**
+   * The anisotropy strength. When the anisotropy texture is present, this value is multiplied by the texture's blue channel.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   anisotropyStrength: number;
+   /**
+   * The anisotropy texture. Red and green channels represent the anisotropy direction in tangent, bitangent space to be rotated by the anisotropy rotation. The blue channel contains strength as to be multiplied by the anisotropy strength.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   anisotropyTexture: SFNode | null;
+   /**
+   * Input/Output field *anisotropyTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   anisotropyTextureMapping: string;
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
+}
+
 /** Appearance specifies the visual properties of geometry by containing the Material, ImageTexture/MovieTexture/PixelTexture, FillProperties, LineProperties, programmable shader nodes (ComposedShader, PackagedShader, ProgramShader) and TextureTransform nodes. */
 interface AppearanceProxy extends X3DAppearanceNodeProxy
 {
@@ -2920,14 +2967,6 @@ interface AppearanceProxy extends X3DAppearanceNodeProxy
    * This field is of access type 'inputOutput' and type SFNode.
    */
    backMaterial: X3DMaterialNodeProxy | null;
-   /**
-   * This field is of access type 'inputOutput' and type SFNode.
-   */
-   blendMode: BlendModeProxy | null;
-   /**
-   * This field is of access type 'inputOutput' and type SFNode.
-   */
-   depthMode: DepthModeProxy | null;
    /**
    * Single contained FillProperties node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
    *
@@ -3619,37 +3658,77 @@ interface BlendedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProx
    weightTransferFunction2: X3DTexture2DNodeProxy | null;
 }
 
-/** undefined */
+/** BlendMode controls how pixels of an objects are drawn. Pixels can be drawn using a function that blends the incoming (source) RGBA values with the RGBA values that are already in the frame buffer (the destination values). BlendMode is an X3DAppearanceChildNode node that handles blend operations. */
 interface BlendModeProxy extends X3DAppearanceChildNodeProxy
 {
    /**
+   * Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:
+- FUNC_ADD
+- FUNC_SUBTRACT
+- FUNC_REVERSE_SUBTRACT
+   *
    * This field is of access type 'inputOutput' and type SFString.
    */
-   alphaEquation: "FUNC_ADD" | "FUNC_SUBTRACT" | "FUNC_REVERSE_SUBTRACT" | "MIN" | "MAX";
+   alphaEquation: "FUNC_ADD" | "FUNC_SUBTRACT" | "FUNC_REVERSE_SUBTRACT";
    /**
-   * This field is of access type 'inputOutput' and type SFColor.
+   * The *blendColor* may be used to calculate the source and destination blending factors.
+   *
+   * This field is of access type 'inputOutput' and type SFColorRGBA.
    */
-   blendColor: SFColor;
+   blendColor: SFColorRGBA;
    /**
+   * Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:
+- FUNC_ADD
+- FUNC_SUBTRACT
+- FUNC_REVERSE_SUBTRACT
+   *
    * This field is of access type 'inputOutput' and type SFString.
    */
-   colorEquation: "FUNC_ADD" | "FUNC_SUBTRACT" | "FUNC_REVERSE_SUBTRACT" | "MIN" | "MAX";
+   colorEquation: "FUNC_ADD" | "FUNC_SUBTRACT" | "FUNC_REVERSE_SUBTRACT";
    /**
+   * Specifies how the alpha destination blending factors are computed.
+   *
    * This field is of access type 'inputOutput' and type SFString.
    */
-   destinationAlphaFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "SRC_ALPHA_SATURATE" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA";
+   destinationAlphaFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA";
    /**
+   * Specifies how the red, green, and blue destination blending factors are computed.
+   *
    * This field is of access type 'inputOutput' and type SFString.
    */
-   destinationColorFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "SRC_ALPHA_SATURATE" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA";
+   destinationColorFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA";
    /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
+   /**
+   * Specifies how the alpha source blending factors are computed.
+   *
    * This field is of access type 'inputOutput' and type SFString.
    */
-   sourceAlphaFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "SRC_ALPHA_SATURATE" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA";
+   sourceAlphaFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA";
    /**
+   * Specifies how the red, green, and blue source blending factors are computed.Source and destination parameters must be one of the following symbolic constants:
+- ZERO
+- ONE
+- SRC_COLOR
+- ONE_MINUS_SRC_COLOR
+- DST_COLOR
+- ONE_MINUS_DST_COLOR
+- SRC_ALPHA
+- ONE_MINUS_SRC_ALPHA
+- DST_ALPHA
+- ONE_MINUS_DST_ALPHA
+- CONSTANT_COLOR
+- ONE_MINUS_CONSTANT_COLOR
+- CONSTANT_ALPHA
+- ONE_MINUS_CONSTANT_ALPHA
+   *
    * This field is of access type 'inputOutput' and type SFString.
    */
-   sourceColorFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "SRC_ALPHA_SATURATE" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA";
+   sourceColorFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA";
 }
 
 /** BooleanFilter selectively passes true, false or negated events. */
@@ -4505,6 +4584,65 @@ interface Circle2DProxy extends X3DGeometryNodeProxy
    * This field is of access type 'initializeOnly' and type SFFloat.
    */
    radius: number;
+}
+
+/** ClearcoatMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node. */
+interface ClearcoatMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+{
+   /**
+   * The clearcoat layer intensity.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   clearcoat: number;
+   /**
+   * The clearcoat normal map texture.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   clearcoatNormalTexture: SFNode | null;
+   /**
+   * Input/Output field *clearcoatNormalTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   clearcoatNormalTextureMapping: string;
+   /**
+   * The clearcoat layer roughness.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   clearcoatRoughness: number;
+   /**
+   * The clearcoat layer roughness texture.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   clearcoatRoughnessTexture: SFNode | null;
+   /**
+   * Input/Output field *clearcoatRoughnessTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   clearcoatRoughnessTextureMapping: string;
+   /**
+   * The clearcoat layer intensity texture.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   clearcoatTexture: SFNode | null;
+   /**
+   * Input/Output field *clearcoatTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   clearcoatTextureMapping: string;
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
 }
 
 /** ClipPlane specifies a single plane equation used to clip (i. */
@@ -6114,26 +6252,42 @@ interface DelayProxy extends X3DSoundProcessingNodeProxy
    tailTime: number;
 }
 
-/** undefined */
+/** DepthMode contains parameters that are specific for depth control, like the value used for depth buffer comparisons. */
 interface DepthModeProxy extends X3DAppearanceChildNodeProxy
 {
    /**
+   * Specifies a function that compares incoming pixel depth to the current depth buffer value.Must be one of the following symbolic constants:* NEVER* LESS* EQUAL* LESS_EQUAL* GREATER* NOT_EQUAL* GREATER_EQUAL* ALWAYS
+   *
    * This field is of access type 'inputOutput' and type SFString.
    */
-   depthFunc: "NEVER" | "LESS" | "EQUAL" | "LESS_EQUAL" | "GREATER" | "NOT_EQUAL" | "GREATER_EQUAL" | "ALWAYS";
+   depthFunction: "NEVER" | "LESS" | "EQUAL" | "LESS_EQUAL" | "GREATER" | "NOT_EQUAL" | "GREATER_EQUAL" | "ALWAYS";
    /**
+   * Sets whether writing into the depth buffer is enabled or disabled.
+   *
    * This field is of access type 'inputOutput' and type SFBool.
    */
    depthMask: boolean;
    /**
+   * Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.The first value is *zNear*, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0.The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1.
+   *
    * This field is of access type 'inputOutput' and type SFVec2f.
    */
    depthRange: SFVec2f;
    /**
+   * Activates depth comparisons and updates to the depth buffer.
+   *
    * This field is of access type 'inputOutput' and type SFBool.
    */
    depthTest: boolean;
    /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
+   /**
+   * Specifies the scale factors and units to calculate depth values.The offset is added before the depth test is performed and before the value is written into the depth buffer.The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0.The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0.
+   *
    * This field is of access type 'inputOutput' and type SFVec2f.
    */
    polygonOffset: SFVec2f;
@@ -6361,6 +6515,23 @@ interface Disk2DProxy extends X3DGeometryNodeProxy
    * This field is of access type 'initializeOnly' and type SFBool.
    */
    solid: boolean;
+}
+
+/** DispersionMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node. */
+interface DispersionMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+{
+   /**
+   * The strength of the dispersion effect, specified as 20/Abbe number.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   dispersion: number;
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
 }
 
 /** DoubleAxisHingeJoint has two independent axes located around a common anchor point. */
@@ -6830,25 +7001,21 @@ interface ElevationGridProxy extends X3DGeometryNodeProxy
    zSpacing: number;
 }
 
-/** undefined */
-interface EnvironmentLightProxy extends X3DLightNodeProxy
+/** EmissiveStrengthMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node. */
+interface EmissiveStrengthMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
 {
    /**
-   * This field is of access type 'inputOutput' and type MFFloat.
+   * The strength adjustment to be multiplied with the material's emissive value.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
    */
-   diffuseCoefficients: MFFloat;
+   emissiveStrength: number;
    /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
    * This field is of access type 'inputOutput' and type SFNode.
    */
-   diffuseTexture: X3DEnvironmentTextureNodeProxy | null;
-   /**
-   * This field is of access type 'inputOutput' and type SFRotation.
-   */
-   rotation: SFRotation;
-   /**
-   * This field is of access type 'inputOutput' and type SFNode.
-   */
-   specularTexture: X3DEnvironmentTextureNodeProxy | null;
+   metadata: SFNode | null;
 }
 
 /** EspduTransform is a networked Transform node that can contain most nodes. */
@@ -9635,21 +9802,87 @@ interface ImageTexture3DProxy extends X3DTexture3DNodeProxy, X3DUrlObjectProxy
    url: MFString;
 }
 
-/** undefined */
-interface ImageTextureAtlasProxy extends X3DTexture3DNodeProxy, X3DUrlObjectProxy
+/** ImageTextureAtlas defines a 3D image-based texture map by specifying a single image file that contains slices for complete 3D data. */
+interface ImageTextureAtlasProxy extends X3DTexture3DNodeProxy
 {
    /**
+   * *autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
+   *
+   * This field is of access type 'inputOutput' and type SFTime.
+   */
+   autoRefresh: number;
+   /**
+   * *autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
+   *
+   * This field is of access type 'inputOutput' and type SFTime.
+   */
+   autoRefreshTimeLimit: number;
+   /**
+   * Author-provided prose that describes intended purpose of the url asset.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   description: string;
+   /**
+   * *load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
+   *
+   * This field is of access type 'inputOutput' and type SFBool.
+   */
+   load: boolean;
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
+   /**
+   * Total number of images.
+   *
    * This field is of access type 'inputOutput' and type SFInt32.
    */
    numberOfSlices: number;
    /**
+   * Whether to repeat texture along R axis from front to back.
+   *
+   * This field is of access type 'initializeOnly' and type SFBool.
+   */
+   repeatR: boolean;
+   /**
+   * Whether to repeat texture along S axis horizontally from left to right.
+   *
+   * This field is of access type 'initializeOnly' and type SFBool.
+   */
+   repeatS: boolean;
+   /**
+   * Whether to repeat texture along T axis vertically from top to bottom.
+   *
+   * This field is of access type 'initializeOnly' and type SFBool.
+   */
+   repeatT: boolean;
+   /**
+   * Number of images in x direction.
+   *
    * This field is of access type 'inputOutput' and type SFInt32.
    */
    slicesOverX: number;
    /**
+   * Number of images in y direction.
+   *
    * This field is of access type 'inputOutput' and type SFInt32.
    */
    slicesOverY: number;
+   /**
+   * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+   *
+   * This field is of access type 'initializeOnly' and type SFNode.
+   */
+   textureProperties: SFNode | null;
+   /**
+   * Location and filename of image. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
+   *
+   * This field is of access type 'inputOutput' and type MFString.
+   */
+   url: MFString;
 }
 
 /** IndexedFaceSet defines polygons using index lists corresponding to vertex coordinates. */
@@ -10257,6 +10490,83 @@ interface InlineProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy, X3DUrlOb
    visible: boolean;
 }
 
+/** InstancedShape can appear under any grouping node. InstancedShape can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided. */
+interface InstancedShapeProxy extends X3DShapeNodeProxy
+{
+   /**
+   * Input/Output field *appearance*.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   appearance: SFNode | null;
+   /**
+   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
+   *
+   * This field is of access type 'initializeOnly' and type SFVec3f.
+   */
+   bboxCenter: SFVec3f;
+   /**
+   * Whether to display bounding box for associated geometry, aligned with world coordinates.
+   *
+   * This field is of access type 'inputOutput' and type SFBool.
+   */
+   bboxDisplay: boolean;
+   /**
+   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
+   *
+   * This field is of access type 'initializeOnly' and type SFVec3f.
+   */
+   bboxSize: SFVec3f;
+   /**
+   * Input/Output field *castShadow*.
+   *
+   * This field is of access type 'inputOutput' and type SFBool.
+   */
+   castShadow: boolean;
+   /**
+   * Input/Output field *geometry*.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   geometry: SFNode | null;
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
+   /**
+   * *pointerEvents* defines whether this Shape becomes target for pointer events.
+   *
+   * This field is of access type 'inputOutput' and type SFBool.
+   */
+   pointerEvents: boolean;
+   /**
+   * Input/Output field *rotations*.
+   *
+   * This field is of access type 'inputOutput' and type MFRotation.
+   */
+   rotations: MFRotation;
+   /**
+   * Input/Output field *scales*.
+   *
+   * This field is of access type 'inputOutput' and type MFVec3f.
+   */
+   scales: MFVec3f;
+   /**
+   * Input/Output field *translations*.
+   *
+   * This field is of access type 'inputOutput' and type MFVec3f.
+   */
+   translations: MFVec3f;
+   /**
+   * Whether or not renderable content within this node is visually displayed.
+   *
+   * This field is of access type 'inputOutput' and type SFBool.
+   */
+   visible: boolean;
+}
+
 /** IntegerSequencer generates periodic discrete integer values. */
 interface IntegerSequencerProxy extends X3DSequencerNodeProxy
 {
@@ -10331,6 +10641,82 @@ interface IntegerTriggerProxy extends X3DTriggerNodeProxy
    * This field is of access type 'outputOnly' and type SFInt32.
    */
    readonly triggerValue: number;
+}
+
+/** IORMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node. */
+interface IORMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+{
+   /**
+   * The index of refraction.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   indexOfRefraction: number;
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
+}
+
+/** IridescenceMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node. */
+interface IridescenceMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+{
+   /**
+   * The iridescence intensity factor.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   iridescence: number;
+   /**
+   * The index of refraction of the dielectric thin-film layer.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   iridescenceIndexOfRefraction: number;
+   /**
+   * The iridescence intensity texture.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   iridescenceTexture: SFNode | null;
+   /**
+   * Input/Output field *iridescenceTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   iridescenceTextureMapping: string;
+   /**
+   * The maximum thickness of the thin-film layer given in nanometers.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   iridescenceThicknessMaximum: number;
+   /**
+   * The minimum thickness of the thin-film layer given in nanometers.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   iridescenceThicknessMinimum: number;
+   /**
+   * The thickness texture of the thin-film layer.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   iridescenceThicknessTexture: SFNode | null;
+   /**
+   * Input/Output field *iridescenceThicknessTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   iridescenceThicknessTextureMapping: string;
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
 }
 
 /** IsoSurfaceVolumeData displays one or more surfaces extracted from a voxel dataset. */
@@ -12054,7 +12440,7 @@ interface NavigationInfoProxy extends X3DBindableNodeProxy
    *
    * This field is of access type 'inputOutput' and type MFString.
    */
-   type: MFString <"ANY" | "WALK" | "EXAMINE" | "FLY" | "LOOKAT" | "NONE" | "EXPLORE" | "PLANE" | "PLANE_create3000.github.io">;
+   type: MFString <"ANY" | "WALK" | "EXAMINE" | "FLY" | "LOOKAT" | "NONE" | "EXPLORE">;
    /**
    * Geometry beyond the visibilityLimit may not be rendered (far clipping plane of the view frustrum).
    *
@@ -15824,6 +16210,53 @@ interface ShapeProxy extends X3DShapeNodeProxy
    visible: boolean;
 }
 
+/** SheenMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node. */
+interface SheenMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+{
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
+   /**
+   * The sheen color in linear space.
+   *
+   * This field is of access type 'inputOutput' and type SFColor.
+   */
+   sheenColor: SFColor;
+   /**
+   * The sheen color (RGB). The sheen color is in sRGB transfer function.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   sheenColorTexture: SFNode | null;
+   /**
+   * Input/Output field *sheenColorTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   sheenColorTextureMapping: string;
+   /**
+   * The sheen roughness.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   sheenRoughness: number;
+   /**
+   * The sheen roughness (Alpha) texture.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   sheenRoughnessTexture: SFNode | null;
+   /**
+   * Input/Output field *sheenRoughnessTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   sheenRoughnessTextureMapping: string;
+}
+
 /** SignalPdu is a networked Protocol Data Unit (PDU) information node that communicates the transmission of voice, audio or other data modeled in a simulation. */
 interface SignalPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectProxy
 {
@@ -16436,6 +16869,172 @@ interface SpatialSoundProxy extends X3DSoundNodeProxy
    * This field is of access type 'initializeOnly' and type SFBool.
    */
    spatialize: boolean;
+}
+
+/** SpecularGlossinessMaterial specifies surface rendering properties for associated geometry nodes. Material attributes are used by the X3D lighting equations during rendering. */
+interface SpecularGlossinessMaterialProxy extends X3DOneSidedMaterialNodeProxy
+{
+   /**
+   * The reflected diffuse factor of the material.
+   *
+   * This field is of access type 'inputOutput' and type SFColor.
+   */
+   diffuseColor: SFColor;
+   /**
+   * The diffuse texture.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   diffuseTexture: SFNode | null;
+   /**
+   * Input/Output field *diffuseTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   diffuseTextureMapping: string;
+   /**
+   * How much glowing light is emitted from this object.
+   *
+   * This field is of access type 'inputOutput' and type SFColor.
+   */
+   emissiveColor: SFColor;
+   /**
+   * When applying emissiveColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   emissiveTexture: SFNode | null;
+   /**
+   * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   emissiveTextureMapping: string;
+   /**
+   * Input/Output field *extensions*.
+   *
+   * This field is of access type 'inputOutput' and type MFNode.
+   */
+   extensions: MFNode <SFNode>;
+   /**
+   * The glossiness or smoothness of the material.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   glossiness: number;
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
+   /**
+   * *normalScale* controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   normalScale: number;
+   /**
+   * When applying normalScale for this material node, the contained texture modulates the texture across the surface.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   normalTexture: SFNode | null;
+   /**
+   * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   normalTextureMapping: string;
+   /**
+   * *occlusionStrength* indicates areas of indirect lighting, typically called ambient occlusion. Higher values indicate areas that should receive full indirect lighting and lower values indicate no indirect lighting.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   occlusionStrength: number;
+   /**
+   * When applying occlusionStrength for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   occlusionTexture: SFNode | null;
+   /**
+   * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   occlusionTextureMapping: string;
+   /**
+   * The specular RGB color of the material.
+   *
+   * This field is of access type 'inputOutput' and type SFColor.
+   */
+   specularColor: SFColor;
+   /**
+   * The specular-glossiness texture.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   specularGlossinessTexture: SFNode | null;
+   /**
+   * Input/Output field *specularGlossinessTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   specularGlossinessTextureMapping: string;
+   /**
+   * How 'clear' an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   transparency: number;
+}
+
+/** SpecularMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node. */
+interface SpecularMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+{
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
+   /**
+   * The strength of the specular reflection.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   specular: number;
+   /**
+   * The F0 color of the specular reflection (linear RGB).
+   *
+   * This field is of access type 'inputOutput' and type SFColor.
+   */
+   specularColor: SFColor;
+   /**
+   * A texture that defines the F0 color of the specular reflection, stored in the RGB channels and encoded in sRGB. This texture will be multiplied by specularColorFactor.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   specularColorTexture: SFNode | null;
+   /**
+   * Input/Output field *specularColorTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   specularColorTextureMapping: string;
+   /**
+   * texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   specularTexture: SFNode | null;
+   /**
+   * Input/Output field *specularTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   specularTextureMapping: string;
 }
 
 /** Sphere is a geometry node, representing a perfectly round geometrical object that is the surface of a completely round ball. */
@@ -17159,9 +17758,15 @@ interface SwitchProxy extends X3DGroupingNodeProxy
    whichChoice: number;
 }
 
-/** undefined */
+/** Tangent. */
 interface TangentProxy extends X3DGeometricPropertyNodeProxy
 {
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
    /**
    * A unit XYZ vector defining a tangent direction on the surface, and a W component whose sign value (-1 or +1) indicates the handedness of the tangent base.
    *
@@ -18292,6 +18897,35 @@ interface TransformSensorProxy extends X3DEnvironmentalSensorNodeProxy
    targetObject: X3DGroupingNodeProxy | X3DShapeNodeProxy | null;
 }
 
+/** TransmissionMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node. */
+interface TransmissionMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+{
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
+   /**
+   * The base percentage of light that is transmitted through the surface.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   transmission: number;
+   /**
+   * A texture that defines the transmission percentage of the surface, stored in the R channel. This will be multiplied by transmissionFactor.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   transmissionTexture: SFNode | null;
+   /**
+   * Input/Output field *transmissionTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   transmissionTextureMapping: string;
+}
+
 /** TransmitterPdu is a networked Protocol Data Unit (PDU) information node that provides detailed information about a radio transmitter modeled in a simulation. */
 interface TransmitterPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectProxy
 {
@@ -19082,6 +19716,17 @@ interface UnlitMaterialProxy extends X3DOneSidedMaterialNodeProxy
    transparency: number;
 }
 
+/** UnlitMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node. */
+interface UnlitMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+{
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
+}
+
 /** Viewpoint provides a specific location and direction where the user may view the scene. */
 interface ViewpointProxy extends X3DViewpointNodeProxy
 {
@@ -19452,6 +20097,47 @@ interface VolumeEmitterProxy extends X3DParticleEmitterNodeProxy
    * This field is of access type 'inputOutput' and type SFFloat.
    */
    variation: number;
+}
+
+/** VolumeMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node. */
+interface VolumeMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+{
+   /**
+   * The color that white light turns into due to absorption when reaching the attenuation distance.
+   *
+   * This field is of access type 'inputOutput' and type SFColor.
+   */
+   attenuationColor: SFColor;
+   /**
+   * Density of the medium given as the average distance that light travels in the medium before interacting with a particle. The value is given in world space.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   attenuationDistance: number;
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
+   /**
+   * The thickness of the volume beneath the surface. The value is given in the coordinate space of the mesh. If the value is 0 the material is thin-walled. Otherwise the material is a volume boundary. The doubleSided property has no effect on volume boundaries.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   thickness: number;
+   /**
+   * A texture that defines the thickness, stored in the G channel. This will be multiplied by thicknessFactor.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   thicknessTexture: SFNode | null;
+   /**
+   * Input/Output field *thicknessTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   thicknessTextureMapping: string;
 }
 
 /** VolumePickSensor tests picking intersections using the pickingGeometry against the pickTarget geometry volume. */
@@ -21408,6 +22094,7 @@ type ConcreteNodeTypes = {
    AcousticProperties: AcousticPropertiesProxy,
    Analyser: AnalyserProxy,
    Anchor: AnchorProxy,
+   AnisotropyMaterialExtension: AnisotropyMaterialExtensionProxy,
    Appearance: AppearanceProxy,
    Arc2D: Arc2DProxy,
    ArcClose2D: ArcClose2DProxy,
@@ -21436,6 +22123,7 @@ type ConcreteNodeTypes = {
    ChannelSelector: ChannelSelectorProxy,
    ChannelSplitter: ChannelSplitterProxy,
    Circle2D: Circle2DProxy,
+   ClearcoatMaterialExtension: ClearcoatMaterialExtensionProxy,
    ClipPlane: ClipPlaneProxy,
    CollidableOffset: CollidableOffsetProxy,
    CollidableShape: CollidableShapeProxy,
@@ -21472,12 +22160,13 @@ type ConcreteNodeTypes = {
    DISEntityManager: DISEntityManagerProxy,
    DISEntityTypeMapping: DISEntityTypeMappingProxy,
    Disk2D: Disk2DProxy,
+   DispersionMaterialExtension: DispersionMaterialExtensionProxy,
    DoubleAxisHingeJoint: DoubleAxisHingeJointProxy,
    DynamicsCompressor: DynamicsCompressorProxy,
    EaseInEaseOut: EaseInEaseOutProxy,
    EdgeEnhancementVolumeStyle: EdgeEnhancementVolumeStyleProxy,
    ElevationGrid: ElevationGridProxy,
-   EnvironmentLight: EnvironmentLightProxy,
+   EmissiveStrengthMaterialExtension: EmissiveStrengthMaterialExtensionProxy,
    EspduTransform: EspduTransformProxy,
    ExplosionEmitter: ExplosionEmitterProxy,
    Extrusion: ExtrusionProxy,
@@ -21518,8 +22207,11 @@ type ConcreteNodeTypes = {
    IndexedTriangleSet: IndexedTriangleSetProxy,
    IndexedTriangleStripSet: IndexedTriangleStripSetProxy,
    Inline: InlineProxy,
+   InstancedShape: InstancedShapeProxy,
    IntegerSequencer: IntegerSequencerProxy,
    IntegerTrigger: IntegerTriggerProxy,
+   IORMaterialExtension: IORMaterialExtensionProxy,
+   IridescenceMaterialExtension: IridescenceMaterialExtensionProxy,
    IsoSurfaceVolumeData: IsoSurfaceVolumeDataProxy,
    KeySensor: KeySensorProxy,
    Layer: LayerProxy,
@@ -21611,12 +22303,15 @@ type ConcreteNodeTypes = {
    ShaderPart: ShaderPartProxy,
    ShaderProgram: ShaderProgramProxy,
    Shape: ShapeProxy,
+   SheenMaterialExtension: SheenMaterialExtensionProxy,
    SignalPdu: SignalPduProxy,
    SilhouetteEnhancementVolumeStyle: SilhouetteEnhancementVolumeStyleProxy,
    SingleAxisHingeJoint: SingleAxisHingeJointProxy,
    SliderJoint: SliderJointProxy,
    Sound: SoundProxy,
    SpatialSound: SpatialSoundProxy,
+   SpecularGlossinessMaterial: SpecularGlossinessMaterialProxy,
+   SpecularMaterialExtension: SpecularMaterialExtensionProxy,
    Sphere: SphereProxy,
    SphereSensor: SphereSensorProxy,
    SplinePositionInterpolator: SplinePositionInterpolatorProxy,
@@ -21651,6 +22346,7 @@ type ConcreteNodeTypes = {
    TouchSensor: TouchSensorProxy,
    Transform: TransformProxy,
    TransformSensor: TransformSensorProxy,
+   TransmissionMaterialExtension: TransmissionMaterialExtensionProxy,
    TransmitterPdu: TransmitterPduProxy,
    TriangleFanSet: TriangleFanSetProxy,
    TriangleSet: TriangleSetProxy,
@@ -21659,12 +22355,14 @@ type ConcreteNodeTypes = {
    TwoSidedMaterial: TwoSidedMaterialProxy,
    UniversalJoint: UniversalJointProxy,
    UnlitMaterial: UnlitMaterialProxy,
+   UnlitMaterialExtension: UnlitMaterialExtensionProxy,
    Viewpoint: ViewpointProxy,
    ViewpointGroup: ViewpointGroupProxy,
    Viewport: ViewportProxy,
    VisibilitySensor: VisibilitySensorProxy,
    VolumeData: VolumeDataProxy,
    VolumeEmitter: VolumeEmitterProxy,
+   VolumeMaterialExtension: VolumeMaterialExtensionProxy,
    VolumePickSensor: VolumePickSensorProxy,
    WaveShaper: WaveShaperProxy,
    WindPhysicsModel: WindPhysicsModelProxy,

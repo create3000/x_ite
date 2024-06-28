@@ -149,8 +149,8 @@ function FieldType (field)
       case "SFNode":
       {
          const types = field .acceptableNodeTypes
-            .split (/[|,]/)
-            .map (type => `${type .trim ()}Proxy`);
+            ?.split (/[|,]/)
+            .map (type => `${type .trim ()}Proxy`) ?? [ ];
 
          if (!types .length)
             types .push ("SFNode");
@@ -162,8 +162,8 @@ function FieldType (field)
       case "MFNode":
       {
          const types = field .acceptableNodeTypes
-            .split (/[|,]/)
-            .map (type => `${type .trim ()}Proxy`);
+            ?.split (/[|,]/)
+            .map (type => `${type .trim ()}Proxy`) ?? [ ];
 
          if (!types .length)
             types .push ("SFNode");
