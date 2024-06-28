@@ -592,6 +592,8 @@ class SampleViewer
 {
    constructor (browser)
    {
+      browser .setBrowserOption ("ColorSpace", "LINEAR");
+
       this .browser      = browser;
       this .localStorage = this .browser .getLocalStorage () .addNameSpace ("glTFSampleViewer.");
 
