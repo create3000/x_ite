@@ -394,9 +394,11 @@ type BrowserOption = {
    TextureQuality:               QualityLevels,
    AutoUpdate:                   boolean,
    Cache:                        boolean,
+   ColorSpace:                   ColorSpaceTypes,
    ContentScale:                 number,
    ContextMenu:                  boolean,
    Debug:                        boolean,
+   Exposure:                     number,
    Gravity:                      number,
    LogarithmicDepthBuffer:       boolean,
    Multisampling:                number,
@@ -404,10 +406,13 @@ type BrowserOption = {
    OrderIndependentTransparency: boolean,
    StraightenHorizon:            boolean,
    Timings:                      boolean,
+   ToneMapping:                  ToneMappingTypes,
 }
 
+type ColorSpaceTypes = "SRGB" | "LINEAR_WHEN_PHYSICAL_MATERIAL" | "LINEAR";
 type QualityLevels = "LOW" | "MEDIUM" | "HIGH";
 type ShadingTypes = "POINT" | "WIREFRAME" | "FLAT" | "GOURAUD" | "PHONG";
+type ToneMappingTypes = "NONE" | "ACES_NARKOWICZ" | "ACES_HILL" | "ACES_HILL_EXPOSURE_BOOST" | "KHR_PBR_NEUTRAL";
 
 type RenderingProperty = {
    Shading:	               ShadingTypes,
