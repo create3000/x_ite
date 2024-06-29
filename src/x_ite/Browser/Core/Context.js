@@ -154,7 +154,12 @@ const Context =
          {
             const ext = gl .getExtension ("EXT_color_buffer_half_float");
 
-            gl .RGBA32F = gl .getVersion () === 1 ? ext .RGBA16F_EXT : gl .RGBA16F;
+            // Use defineProperty to overwrite property.
+            Object .defineProperty (gl, "RGBA32F",
+            {
+               value: gl .getVersion () === 1 ? ext .RGBA16F_EXT : gl .RGBA16F,
+               enumerable: true,
+            });
          }
       }
 
