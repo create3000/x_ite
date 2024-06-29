@@ -177,7 +177,7 @@ Object .assign (Color3 .prototype,
 
       return this;
    },
-   linearTosRGB (color = new Color3 ())
+   linearToSRGB (color = new Color3 ())
    {
       color [_r] = Math .pow (this [_r], 1 / 2.2);
       color [_g] = Math .pow (this [_g], 1 / 2.2);

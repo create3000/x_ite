@@ -95,9 +95,9 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .protot
       this .getValue () .setHSVA (h, s, v, a);
       this .addEvent ();
    },
-   linearTosRGB ()
+   linearToSRGB ()
    {
-      return new SFColorRGBA (this .getValue () .linearTosRGB ());
+      return new SFColorRGBA (this .getValue () .linearToSRGB ());
    },
    sRGBToLinear ()
    {

@@ -180,13 +180,13 @@ getTexture (const in int i, in vec3 texCoord)
 
       #if defined (X3D_COLORSPACE_SRGB)
          #if defined (X3D_TEXTURE${i}_LINEAR)
-            textureColor = linearTosRGB (textureColor);
+            textureColor = linearToSRGB (textureColor);
          #endif
       #elif defined (X3D_COLORSPACE_LINEAR_WHEN_PHYSICAL_MATERIAL)
          #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE${i}_LINEAR)
             textureColor = sRGBToLinear (textureColor);
          #elif !defined (X3D_PHYSICAL_MATERIAL) && defined (X3D_TEXTURE${i}_LINEAR)
-            textureColor = linearTosRGB (textureColor);
+            textureColor = linearToSRGB (textureColor);
          #endif
       #elif defined (X3D_COLORSPACE_LINEAR)
          #if !defined (X3D_TEXTURE${i}_LINEAR)
@@ -498,14 +498,14 @@ getTextureProjectorColor ()
 
       #if defined (X3D_COLORSPACE_SRGB)
          if (bool (x3d_TextureProjectorParams [i] .z))
-            T = linearTosRGB (T);
+            T = linearToSRGB (T);
       #elif defined (X3D_COLORSPACE_LINEAR_WHEN_PHYSICAL_MATERIAL)
          #if defined (X3D_PHYSICAL_MATERIAL)
             if (!bool (x3d_TextureProjectorParams [i] .z))
                T = sRGBToLinear (T);
          #else
             if (bool (x3d_TextureProjectorParams [i] .z))
-               T = linearTosRGB (T);
+               T = linearToSRGB (T);
          #endif
       #elif defined (X3D_COLORSPACE_LINEAR)
          if (!bool (x3d_TextureProjectorParams [i] .z))

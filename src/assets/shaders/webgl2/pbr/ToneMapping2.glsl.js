@@ -5,15 +5,15 @@ const float INV_GAMMA = 1.0 / GAMMA;
 // linear to sRGB approximation
 // see http://chilliant.blogspot.com/2012/08/srgb-approximations-for-hlsl.html
 vec3
-linearTosRGB (const in vec3 color)
+linearToSRGB (const in vec3 color)
 {
    return pow (color, vec3 (INV_GAMMA));
 }
 
 vec4
-linearTosRGB (const in vec4 color)
+linearToSRGB (const in vec4 color)
 {
-   return vec4 (linearTosRGB (color .rgb), color .a);
+   return vec4 (linearToSRGB (color .rgb), color .a);
 }
 
 // sRGB to linear approximation
@@ -153,12 +153,12 @@ toneMap (in vec3 color)
       return color;
    #elif defined (X3D_COLORSPACE_LINEAR_WHEN_PHYSICAL_MATERIAL)
       #if defined (X3D_PHYSICAL_MATERIAL)
-         return linearTosRGB (color);
+         return linearToSRGB (color);
       #else
          return color;
       #endif
    #elif defined (X3D_COLORSPACE_LINEAR)
-      return linearTosRGB (color);
+      return linearToSRGB (color);
    #endif
 }
 `;

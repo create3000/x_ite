@@ -100,9 +100,9 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
       this .getValue () .setHSV (h, s, v);
       this .addEvent ();
    },
-   linearTosRGB ()
+   linearToSRGB ()
    {
-      return new SFColor (this .getValue () .linearTosRGB ());
+      return new SFColor (this .getValue () .linearToSRGB ());
    },
    sRGBToLinear ()
    {

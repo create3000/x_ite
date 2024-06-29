@@ -25,7 +25,7 @@ getDiffuseLight (const in vec3 n)
 
    #if defined (X3D_COLORSPACE_SRGB)
       if (x3d_EnvironmentLightSource .diffuseTextureLinear)
-         textureColor = linearTosRGB (textureColor);
+         textureColor = linearToSRGB (textureColor);
    #else
       if (!x3d_EnvironmentLightSource .diffuseTextureLinear)
          textureColor = sRGBToLinear (textureColor);
@@ -47,7 +47,7 @@ getSpecularLight (const in vec3 reflection, const in float lod)
 
    #if defined (X3D_COLORSPACE_SRGB)
       if (x3d_EnvironmentLightSource .specularTextureLinear)
-         textureColor = linearTosRGB (textureColor);
+         textureColor = linearToSRGB (textureColor);
    #else
       if (!x3d_EnvironmentLightSource .specularTextureLinear)
          textureColor = sRGBToLinear (textureColor);

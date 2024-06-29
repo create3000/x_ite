@@ -118,9 +118,9 @@ Object .assign (Color4 .prototype,
 
       return this;
    },
-   linearTosRGB (color = new Color4 ())
+   linearToSRGB (color = new Color4 ())
    {
-      Color3 .prototype .linearTosRGB .call (this, color);
+      Color3 .prototype .linearToSRGB .call (this, color);
 
       color [_a] = this [_a];
 
