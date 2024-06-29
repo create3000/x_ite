@@ -654,9 +654,6 @@ class SampleViewer
             description = browser .getActiveViewpoint () ._description .getValue (),
             index       = [... $("#viewpoints option")] .findIndex (o => $(o) .text () === description);
 
-         if (index < 0)
-            return;
-
          $("#viewpoints select") .val (index);
       });
 
