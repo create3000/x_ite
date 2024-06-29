@@ -1592,6 +1592,14 @@ declare class SFColor extends X3DField
     */
    setHSV (h: number, s: number, v: number): void;
    /**
+    * Returns this color converted to sRGB color space.
+    */
+   linearToSRGB (): SFColor;
+   /**
+    * Returns this color converted to linear color space.
+    */
+   sRGBToLinear (): SFColor;
+   /**
     * Linearly interpolates in HSV space between source color and destination color by an amount of t.
     */
    lerp (destination: SFColor, t: number): SFColor;
@@ -1642,7 +1650,15 @@ declare class SFColorRGBA extends X3DField
     *
     * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
     */
-   setHSVA (h: number, s: number, v: number): void;
+   setHSVA (h: number, s: number, v: number, a: number): void;
+   /**
+    * Returns this color converted to sRGB color space.
+    */
+   linearToSRGB (): SFColorRGBA;
+   /**
+    * Returns this color converted to linear color space.
+    */
+   sRGBToLinear (): SFColorRGBA;
    /**
     * Linearly interpolates in HSVA space between source color and destination color by an amount of t.
     */

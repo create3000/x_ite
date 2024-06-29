@@ -180,6 +180,14 @@ Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value 
 
 The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
 
+### SFColor **linearToSRGB** ()
+
+Return this color converted to linear color space.
+
+### SFColor **sRGBToLinear** ()
+
+Returns this color converted to linear color space.
+
 #### SFColor **lerp** (*destination, t*)
 
 Linearly interpolates in HSV space between source color and destination color by an amount of t.
@@ -235,6 +243,14 @@ Return an array with the components of the color's HSVA value.
 Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
 
 The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
+
+### SFColorRGBA **linearToSRGB** ()
+
+Return this color converted to linear color space.
+
+### SFColorRGBA **sRGBToLinear** ()
+
+Returns this color converted to linear color space.
 
 #### SFColorRGBA **lerp** (*destination, t*)
 
