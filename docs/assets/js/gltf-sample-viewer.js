@@ -864,9 +864,9 @@ class SampleViewer
       const background = this .scene .createNode ("Background");
 
       background .skyAngle    = [0.8, 1.3, 1.4, 1.5708];
-      background .skyColor    = [0.21, 0.31, 0.59, 0.33, 0.45, 0.7, 0.57, 0.66, 0.85, 0.6, 0.73, 0.89, 0.7, 0.83, 0.98];
+      background .skyColor    = [0.21, 0.31, 0.59, 0.33, 0.45, 0.7, 0.57, 0.66, 0.85, 0.6, 0.73, 0.89, 0.7, 0.83, 0.98] .map (v => Math .pow (v, 2.2));
       background .groundAngle = [0.659972, 1.2, 1.39912, 1.5708];
-      background .groundColor = [0.105712, 0.156051, 0.297, 0.187629, 0.255857, 0.398, 0.33604, 0.405546, 0.542, 0.3612, 0.469145, 0.602, 0.39471, 0.522059, 0.669];
+      background .groundColor = [0.105712, 0.156051, 0.297, 0.187629, 0.255857, 0.398, 0.33604, 0.405546, 0.542, 0.3612, 0.469145, 0.602, 0.39471, 0.522059, 0.669] .map (v => Math .pow (v, 2.2));
 
       return this .background = background;
    }
