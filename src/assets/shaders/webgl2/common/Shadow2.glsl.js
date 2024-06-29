@@ -3,6 +3,53 @@ export default /* glsl */ `
 
 uniform sampler2D x3d_ShadowMap [X3D_NUM_LIGHTS];
 
+#if __VERSION__ == 100
+float
+getShadowDepth (const in int index, const in vec2 shadowCoord)
+{
+   #if X3D_NUM_LIGHTS > 0
+   if (index == 0)
+      return texture2D (x3d_ShadowMap [0], shadowCoord) .r;
+   #endif
+
+   #if X3D_NUM_LIGHTS > 1
+   if (index == 1)
+      return texture2D (x3d_ShadowMap [1], shadowCoord) .r;
+   #endif
+
+   #if X3D_NUM_LIGHTS > 2
+   if (index == 2)
+      return texture2D (x3d_ShadowMap [2], shadowCoord) .r;
+   #endif
+
+   #if X3D_NUM_LIGHTS > 3
+   if (index == 3)
+      return texture2D (x3d_ShadowMap [3], shadowCoord) .r;
+   #endif
+
+   #if X3D_NUM_LIGHTS > 4
+   if (index == 4)
+      return texture2D (x3d_ShadowMap [4], shadowCoord) .r;
+   #endif
+
+   #if X3D_NUM_LIGHTS > 5
+   if (index == 5)
+      return texture2D (x3d_ShadowMap [5], shadowCoord) .r;
+   #endif
+
+   #if X3D_NUM_LIGHTS > 6
+   if (index == 6)
+      return texture2D (x3d_ShadowMap [6], shadowCoord) .r;
+   #endif
+
+   #if X3D_NUM_LIGHTS > 7
+   if (index == 7)
+      return texture2D (x3d_ShadowMap [7], shadowCoord) .r;
+   #endif
+
+   return 0.0;
+}
+#else
 float
 getShadowDepth (const in int index, const in vec2 shadowCoord)
 {
@@ -62,6 +109,7 @@ getShadowDepth (const in int index, const in vec2 shadowCoord)
       }
    }
 }
+#endif
 
 float
 texture2DCompare (const in int index, const in vec2 texCoord, const in float compare)

@@ -47,7 +47,6 @@
 
 /* WebGL 1 */
 import Fragment1              from "../../../assets/shaders/webgl1/common/Fragment1.glsl.js";
-import Shadow1                from "../../../assets/shaders/webgl1/common/Shadow1.glsl.js";
 import Texture1               from "../../../assets/shaders/webgl1/common/Texture1.glsl.js";
 import Vertex1                from "../../../assets/shaders/webgl1/common/Vertex1.glsl.js";
 
@@ -122,7 +121,7 @@ const ShaderRegistry = {
          Perlin: Perlin2,
          Point: Point2,
          PointSize: PointSize2,
-         Shadow: Shadow1,
+         Shadow: Shadow2,
          Texture: Texture1,
          Vertex: Vertex1,
          // PBR
