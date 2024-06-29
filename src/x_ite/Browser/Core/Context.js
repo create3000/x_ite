@@ -94,6 +94,27 @@ const Context =
                gl .drawArraysInstanced   = ext .drawArraysInstancedANGLE   .bind (ext);
                gl .drawElementsInstanced = ext .drawElementsInstancedANGLE .bind (ext);
             }
+
+            {
+               const ext = gl .getExtension ("WEBGL_color_buffer_float");
+
+               gl .RGBA32F = ext .RGBA32F_EXT;
+            }
+
+            {
+               const ext = gl .getExtension ("WEBGL_draw_buffers");
+
+               gl .MAX_COLOR_ATTACHMENTS = ext .MAX_COLOR_ATTACHMENTS_WEBGL;
+               gl .drawBuffers           = ext .drawBuffersWEBGL .bind (ext);
+
+               for (let i = 0, length = gl .getParameter(gl .MAX_COLOR_ATTACHMENTS); i < length; ++ i)
+               {
+                  const COLOR_ATTACHMENTi = ext .COLOR_ATTACHMENT0_WEBGL + i;
+
+                  if (gl [`COLOR_ATTACHMENT${i}`] === undefined)
+                     gl [`COLOR_ATTACHMENT${i}`] = COLOR_ATTACHMENTi;
+               }
+            }
          }
       }
 
@@ -128,105 +149,14 @@ const Context =
       gl .HAS_FEATURE_DEPTH_TEXTURE = gl .getVersion () >= 2 || !! gl .getExtension ("WEBGL_depth_texture");
       gl .HAS_FEATURE_FRAG_DEPTH    = gl .getVersion () >= 2 || !! gl .getExtension ("EXT_frag_depth");
 
-      if (gl .getVersion () === 1)
-      {
-         const
-            color_buffer_float = gl .getExtension ("WEBGL_color_buffer_float"),
-            draw_buffers       = gl .getExtension ("WEBGL_draw_buffers");
-
-         gl .RGBA32F               = color_buffer_float .RGBA32F_EXT;
-         gl .MAX_COLOR_ATTACHMENTS = draw_buffers .MAX_COLOR_ATTACHMENTS_WEBGL;
-         gl .drawBuffers           = draw_buffers .drawBuffersWEBGL .bind (draw_buffers);
-
-         for (let i = 0, length = gl .getParameter(gl .MAX_COLOR_ATTACHMENTS); i < length; ++ i)
-         {
-            const COLOR_ATTACHMENTi = draw_buffers .COLOR_ATTACHMENT0_WEBGL + i;
-
-            if (gl [`COLOR_ATTACHMENT${i}`] === undefined)
-               gl [`COLOR_ATTACHMENT${i}`] = COLOR_ATTACHMENTi;
-         }
-      }
-
       if (mobile)
       {
-         const color_buffer_half_float = gl .getExtension ("EXT_color_buffer_half_float");
-
-         Object .defineProperty (gl, "RGBA32F",
          {
-            value: gl .getVersion () === 1 ? color_buffer_half_float .RGBA16F_EXT : gl .RGBA16F,
-         });
+            const ext = gl .getExtension ("EXT_color_buffer_half_float");
+
+            gl .RGBA32F = gl .getVersion () === 1 ? ext .RGBA16F_EXT : gl .RGBA16F;
+         }
       }
-
-      // // Async functions, DOES'NT WORK WELL WITH OPERA!!!
-
-      // Object .assign (gl, gl .getVersion () === 1
-      // ?
-      // {
-      //    readPixelsAsync: gl .readPixels,
-      // }
-      // :
-      // {
-      //    clientWaitAsync (sync, flags, timeout)
-      //    {
-      //       return new Promise ((resolve, reject) =>
-      //       {
-      //          const check = () =>
-      //          {
-      //             const result = this .clientWaitSync (sync, flags, 0);
-
-      //             switch (result)
-      //             {
-      //                case this .WAIT_FAILED:
-      //                {
-      //                   reject (new Error ("clientWaitSync: WAIT_FAILED"));
-      //                   return;
-      //                }
-      //                case this .TIMEOUT_EXPIRED:
-      //                {
-      //                   setTimeout (check, timeout);
-      //                   return;
-      //                }
-      //                default:
-      //                {
-      //                   resolve ();
-      //                   return;
-      //                }
-      //             }
-      //          };
-
-      //          setTimeout (check);
-      //       });
-      //    },
-      //    async getBufferSubDataAsync (target, buffer, srcByteOffset, dstBuffer, /* optional */ dstOffset, /* optional */ length)
-      //    {
-      //       const sync = this .fenceSync (this .SYNC_GPU_COMMANDS_COMPLETE, 0);
-
-      //       this .flush ();
-
-      //       await this .clientWaitAsync (sync, 0, 10);
-
-      //       this .deleteSync (sync);
-
-      //       this .bindBuffer (target, buffer);
-      //       this .getBufferSubData (target, srcByteOffset, dstBuffer, dstOffset, length);
-      //       this .bindBuffer (target, null);
-      //    },
-      //    async readPixelsAsync (x, y, w, h, format, type, dest, dstOffset)
-      //    {
-      //       const buffer = this .createBuffer ();
-
-      //       this .bindBuffer (this .PIXEL_PACK_BUFFER, buffer);
-      //       this .bufferData (this .PIXEL_PACK_BUFFER, dest .byteLength, this .STREAM_READ);
-      //       this .readPixels (x, y, w, h, format, type, 0);
-      //       this .bindBuffer (this .PIXEL_PACK_BUFFER, null);
-
-      //       await this .getBufferSubDataAsync (this .PIXEL_PACK_BUFFER, buffer, 0, dest, dstOffset);
-
-      //       this .deleteBuffer (buffer);
-      //    },
-      // });
-
-      // Return context.
 
       return gl;
    },
