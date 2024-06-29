@@ -1592,11 +1592,11 @@ declare class SFColor extends X3DField
     */
    setHSV (h: number, s: number, v: number): void;
    /**
-    * Returns this color converted to sRGB color space.
+    * Returns a SFColor object whose value is converted to sRGB color space.
     */
    linearToSRGB (): SFColor;
    /**
-    * Returns this color converted to linear color space.
+    * Returns a SFColor object whose value is converted to linear color space.
     */
    sRGBToLinear (): SFColor;
    /**
@@ -1652,11 +1652,11 @@ declare class SFColorRGBA extends X3DField
     */
    setHSVA (h: number, s: number, v: number, a: number): void;
    /**
-    * Returns this color converted to sRGB color space.
+    * Returns a SFColorRGBA object whose value is converted to sRGB color space.
     */
    linearToSRGB (): SFColorRGBA;
    /**
-    * Returns this color converted to linear color space.
+    * Returns a SFColorRGBA object whose value is converted to linear color space.
     */
    sRGBToLinear (): SFColorRGBA;
    /**
