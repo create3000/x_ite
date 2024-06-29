@@ -648,6 +648,18 @@ class SampleViewer
          this .setBackground (!$("#summer") .hasClass ("selected"));
       });
 
+      browser ._activeViewpoint .addFieldCallback ("change", () =>
+      {
+         const
+            description = browser .getActiveViewpoint () ._description .getValue (),
+            index       = [... $("#viewpoints option")] .findIndex (o => $(o) .text () === description);
+
+         if (index < 0)
+            return;
+
+         $("#viewpoints select") .val (index);
+      });
+
       // Handle url parameter.
 
       this .browser .addBrowserCallback ("init", X3D .X3DConstants .INITIALIZED_EVENT, () =>
