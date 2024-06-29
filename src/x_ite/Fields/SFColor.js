@@ -100,6 +100,14 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
       this .getValue () .setHSV (h, s, v);
       this .addEvent ();
    },
+   linearTosRGB ()
+   {
+      return new SFColor (this .getValue () .linearTosRGB ());
+   },
+   sRGBToLinear ()
+   {
+      return new SFColor (this .getValue () .sRGBToLinear ());
+   },
    lerp: (() =>
    {
       const

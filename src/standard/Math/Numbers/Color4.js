@@ -118,6 +118,22 @@ Object .assign (Color4 .prototype,
 
       return this;
    },
+   linearTosRGB (color = new Color4 ())
+   {
+      Color3 .prototype .linearTosRGB .call (this, color);
+
+      color [_a] = this [_a];
+
+      return color;
+   },
+   sRGBToLinear (color = new Color4 ())
+   {
+      Color3 .prototype .sRGBToLinear .call (this, color);
+
+      color [_a] = this [_a];
+
+      return color;
+   },
    toString ()
    {
       return this [_r] + " " +

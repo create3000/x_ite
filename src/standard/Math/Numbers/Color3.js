@@ -177,6 +177,22 @@ Object .assign (Color3 .prototype,
 
       return this;
    },
+   linearTosRGB (color = new Color3 ())
+   {
+      color [_r] = Math .pow (this [_r], 1 / 2.2);
+      color [_g] = Math .pow (this [_g], 1 / 2.2);
+      color [_b] = Math .pow (this [_b], 1 / 2.2);
+
+      return color;
+   },
+   sRGBToLinear (color = new Color3 ())
+   {
+      color [_r] = Math .pow (this [_r], 2.2);
+      color [_g] = Math .pow (this [_g], 2.2);
+      color [_b] = Math .pow (this [_b], 2.2);
+
+      return color;
+   },
    toString ()
    {
       return this [_r] + " " +
