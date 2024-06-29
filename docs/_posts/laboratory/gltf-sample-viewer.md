@@ -112,11 +112,11 @@ x3d-canvas {
             <b>Tone Mapping</b>
             <button class="check" for="exposure"><span class="reset">Exposure</span> <input id="exposure" class="range" type="range" min="0" max="5" step="0.01" value="1"></button>
             <select id="tone-mapping" class="select">
-               <option value="NONE" selected>None</option>
-               <option value="ACES_NARKOWICZ">ACES Narkowicz</option>
-               <option value="ACES_HILL">ACES Hill</option>
-               <option value="ACES_HILL_EXPOSURE_BOOST">ACES Hill Exposure Boost</option>
                <option value="KHR_PBR_NEUTRAL">KHR PBR Neutral</option>
+               <option value="ACES_HILL_EXPOSURE_BOOST">ACES Hill Exposure Boost</option>
+               <option value="ACES_HILL">ACES Hill</option>
+               <option value="ACES_NARKOWICZ">ACES Narkowicz</option>
+               <option value="NONE" selected>None</option>
             </select>
          </div>
          <div id="background">
