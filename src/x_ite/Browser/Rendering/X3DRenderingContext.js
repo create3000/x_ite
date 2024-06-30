@@ -213,10 +213,9 @@ Object .assign (X3DRenderingContext .prototype,
       let key = "";
 
       key += numClipPlanes;
-      key += ".";
+      key += humanoidNode ?.getHumanoidKey () ?? "[]";
       key += shapeNode .getShapeKey ();
       key += geometryContext .geometryType;
-      key += humanoidNode ?.getHumanoidKey () ?? "[]";
 
       if (geometryContext .geometryType >= 2)
       {
