@@ -61,20 +61,6 @@ const
    _viewerNode         = Symbol (),
    _headlightContainer = Symbol ();
 
-function getHeadlight (browser)
-{
-   const headlight = new DirectionalLight (browser .getPrivateScene ());
-
-   headlight .setup ();
-
-   const headlightContainer = headlight .getLights () .pop ();
-
-   headlightContainer .set (headlight, null, Matrix4 .Identity);
-   headlightContainer .dispose = Function .prototype;
-
-   return headlightContainer;
-};
-
 function X3DNavigationContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "activeLayer",          new Fields .SFNode (),
@@ -96,8 +82,21 @@ Object .assign (X3DNavigationContext .prototype,
       this .initialized () .addInterest ("set_world__",    this);
       this .shutdown ()    .addInterest ("remove_world__", this);
 
-      this [_headlightContainer] = getHeadlight (this);
+      this [_headlightContainer] = this .createHeadlight ();
       this [_viewerNode] .setup ();
+   },
+   createHeadlight ()
+   {
+      const headlight = new DirectionalLight (this .getPrivateScene ());
+
+      headlight .setup ();
+
+      const headlightContainer = headlight .getLights () .pop ();
+
+      headlightContainer .set (headlight, null, Matrix4 .Identity);
+      headlightContainer .dispose = Function .prototype;
+
+      return headlightContainer;
    },
    getHeadlight ()
    {
