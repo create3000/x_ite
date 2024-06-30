@@ -1357,7 +1357,6 @@ interface X3DConstants
    readonly TwoSidedMaterial: number;
    readonly UniversalJoint: number;
    readonly UnlitMaterial: number;
-   readonly UnlitMaterialExtension: number;
    readonly Viewpoint: number;
    readonly ViewpointGroup: number;
    readonly Viewport: number;
@@ -19732,17 +19731,6 @@ interface UnlitMaterialProxy extends X3DOneSidedMaterialNodeProxy
    transparency: number;
 }
 
-/** UnlitMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node. */
-interface UnlitMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
-{
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type 'inputOutput' and type SFNode.
-   */
-   metadata: SFNode | null;
-}
-
 /** Viewpoint provides a specific location and direction where the user may view the scene. */
 interface ViewpointProxy extends X3DViewpointNodeProxy
 {
@@ -22371,7 +22359,6 @@ type ConcreteNodeTypes = {
    TwoSidedMaterial: TwoSidedMaterialProxy,
    UniversalJoint: UniversalJointProxy,
    UnlitMaterial: UnlitMaterialProxy,
-   UnlitMaterialExtension: UnlitMaterialExtensionProxy,
    Viewpoint: ViewpointProxy,
    ViewpointGroup: ViewpointGroupProxy,
    Viewport: ViewportProxy,
