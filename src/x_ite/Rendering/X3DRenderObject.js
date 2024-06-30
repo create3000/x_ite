@@ -81,6 +81,7 @@ function X3DRenderObject (executionContext)
    this .viewpointGroups                = [ ];
    this .localObjectsKeys               = [ ];
    this .globalLightsKeys               = [ ];
+   this .globalLightsKey                = "";
    this .globalLights                   = [ ];
    this .localObjects                   = [ ];
    this .lights                         = [ ];
@@ -263,6 +264,14 @@ Object .assign (X3DRenderObject .prototype,
    getGlobalLights ()
    {
       return this .globalLights;
+   },
+   getGlobalLightsKeys ()
+   {
+      return this .globalLightsKeys;
+   },
+   getGlobalLightsKey ()
+   {
+      return this .globalLightsKey;
    },
    getLocalObjects ()
    {
@@ -1111,7 +1120,6 @@ Object .assign (X3DRenderObject .prototype,
          globalLights             = this .globalLights,
          generatedCubeMapTextures = this .generatedCubeMapTextures,
          globalShadows            = this .globalShadows,
-         shadows                  = globalShadows .at (-1),
          headlight                = this .getNavigationInfo () ._headlight .getValue (),
          oit                      = frameBuffer .getOIT () && independent;
 
@@ -1143,40 +1151,14 @@ Object .assign (X3DRenderObject .prototype,
       for (const light of globalLights)
          globalLightsKeys .push (light .lightNode .getLightKey ());
 
+      this .globalLightsKey = globalLightsKeys .sort () .join ("");
+
       // Set global uniforms.
 
       this .viewportArray          .set (viewport);
       this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
       this .viewMatrixArray        .set (this .getViewMatrix () .get ());
       this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-
-      // Prepare opaque objects.
-
-      const
-         opaqueShapes    = this .opaqueShapes,
-         numOpaqueShapes = this .numOpaqueShapes;
-
-      for (let i = 0; i < numOpaqueShapes; ++ i)
-      {
-         const renderContext = opaqueShapes [i];
-
-         renderContext .shadows = renderContext .shadows || shadows;
-         renderContext .objectsKeys .push (... globalLightsKeys);
-      }
-
-      // Prepare transparent objects.
-
-      const
-         transparentShapes    = this .transparentShapes,
-         numTransparentShapes = this .numTransparentShapes;
-
-      for (let i = 0; i < numTransparentShapes; ++ i)
-      {
-         const renderContext = transparentShapes [i];
-
-         renderContext .shadows = renderContext .shadows || shadows;
-         renderContext .objectsKeys .push (... globalLightsKeys);
-      }
 
       // DRAW
 
@@ -1196,13 +1178,13 @@ Object .assign (X3DRenderObject .prototype,
          gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
          gl .generateMipmap (gl .TEXTURE_2D);
 
-         this .drawShapes (gl, browser, true, frameBuffer, 0, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, this .transparencySorter);
+         this .drawShapes (gl, browser, true, frameBuffer, 0, oit, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
       }
       else
       {
          // Draw with sorted blend or OIT.
 
-         this .drawShapes (gl, browser, independent, frameBuffer, 0, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, this .transparencySorter);
+         this .drawShapes (gl, browser, independent, frameBuffer, 0, oit, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
       }
 
       // POST DRAW

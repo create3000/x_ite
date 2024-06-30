@@ -110,7 +110,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          key += shapeNode .getAlphaMode ();
          key += renderObject .getRenderKey ();
-         key += shadows ? 1 : 0;
+         key += shadows || renderObject .getGlobalShadows () .at (-1)? 1 : 0;
          key += fogNode ?.getFogType () ?? 0;
          key += shapeNode .getShapeKey ();
          key += appearanceNode .getStyleProperties (geometryContext .geometryType) ?.getStyleKey () ?? 0;
@@ -119,6 +119,8 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += ".";
          key += humanoidNode ?.getHumanoidKey () ?? "";
          key += ".";
+         key += renderObject .getGlobalLightsKey ();
+         key += "."
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
          key += textureNode ? 2 : appearanceNode .getTextureBits () .toString (16);
@@ -132,6 +134,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += alphaMode;
          key += renderObject .getRenderKey ();
          key += "000011.0.";
+         key += "..";
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
          key += textureNode ?.getTextureBits () .toString (16) ?? 0;
@@ -187,7 +190,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       if (renderContext)
       {
-         const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsKeys, textureNode } = renderContext;
+         const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsKeys: localObjectsKeys, textureNode } = renderContext;
+
+         const objectsKeys = localObjectsKeys .slice () .concat (renderObject .getGlobalLightsKeys ());
 
          if (renderObject .getLogarithmicDepthBuffer ())
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
@@ -215,7 +220,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             }
          }
 
-         if (renderContext .shadows)
+         if (renderContext .shadows || renderObject .getGlobalShadows () .at (-1))
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
          switch (fogNode ?.getFogType ())
@@ -349,34 +354,12 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             }
          }
 
-         const
-            numClipPlanes        = objectsKeys .reduce ((a, c) => a + (c === 0), 0),
-            numLights            = objectsKeys .reduce ((a, c) => a + (c === 1), 0),
-            numEnvironmentLights = objectsKeys .reduce ((a, c) => a + (c === 2), 0),
-            numTextureProjectors = objectsKeys .reduce ((a, c) => a + (c === 3), 0);
+         const numClipPlanes = objectsKeys .reduce ((a, c) => a + (c === 0), 0);
 
          if (numClipPlanes)
          {
             options .push ("X3D_CLIP_PLANES")
             options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
-         }
-
-         if (numLights)
-         {
-            options .push ("X3D_LIGHTING")
-            options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
-         }
-
-         if (numEnvironmentLights)
-         {
-            options .push ("X3D_USE_IBL")
-            options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxLights ())}`);
-         }
-
-         if (numTextureProjectors)
-         {
-            options .push ("X3D_TEXTURE_PROJECTION")
-            options .push (`X3D_NUM_TEXTURE_PROJECTORS ${Math .min (numTextureProjectors, browser .getMaxTextures ())}`);
          }
 
          if (textureNode)
