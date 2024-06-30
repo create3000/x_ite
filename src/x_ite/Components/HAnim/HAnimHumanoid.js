@@ -234,6 +234,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       return this .numDisplacements;
    },
+   set_humanoidKey__ ()
+   {
+      this .humanoidKey = `.${this .numJoints}.${this .numDisplacements}.`;
+   },
    set_motions__ ()
    {
       const
@@ -394,7 +398,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       // Trigger update.
 
       this .change .enable ();
-      this .set_humanoidKey ();
+      this .set_humanoidKey__ ();
    },
    set_displacementsTexture__ ()
    {
@@ -449,7 +453,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       // Trigger update.
 
       this .change .enable ();
-      this .set_humanoidKey ();
+      this .set_humanoidKey__ ();
    },
    set_displacementWeightsTexture__ ()
    {
@@ -522,10 +526,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this ._jointTextures              .addEvent ();
       this ._displacementsTexture       .addEvent ();
       this ._displacementWeightsTexture .addEvent ();
-   },
-   set_humanoidKey ()
-   {
-      this .humanoidKey = `.${this .numJoints}.${this .numDisplacements}.`;
    },
    traverse (type, renderObject)
    {
