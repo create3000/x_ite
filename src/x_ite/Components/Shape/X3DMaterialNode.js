@@ -110,7 +110,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          key += shapeNode .getAlphaMode ();
          key += renderObject .getRenderKey ();
-         key += shadows || renderObject .getGlobalShadows () .at (-1)? 1 : 0;
+         key += shadows || renderObject .getGlobalShadow () ? 1 : 0;
          key += fogNode ?.getFogType () ?? 0;
          key += shapeNode .getShapeKey ();
          key += appearanceNode .getStyleProperties (geometryContext .geometryType) ?.getStyleKey () ?? 0;

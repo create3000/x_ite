@@ -79,13 +79,14 @@ function X3DRenderObject (executionContext)
    this .hitRay                         = new Line3 (Vector3 .Zero, Vector3 .Zero);
    this .sensors                        = [[ ]];
    this .viewpointGroups                = [ ];
-   this .localObjectsKeys               = [ ];
+   this .lights                         = [ ];
    this .globalLightsKeys               = [ ];
    this .globalLightsKey                = "";
    this .globalLights                   = [ ];
+   this .localObjectsKeys               = [ ];
    this .localObjects                   = [ ];
-   this .lights                         = [ ];
    this .globalShadows                  = [ false ];
+   this .globalShadow                   = false;
    this .localShadows                   = [ false ];
    this .localFogs                      = [ null ];
    this .layouts                        = [ ];
@@ -261,6 +262,10 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .viewpointGroups;
    },
+   getLights ()
+   {
+      return this .lights;
+   },
    getGlobalLights ()
    {
       return this .globalLights;
@@ -281,10 +286,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .localObjectsKeys;
    },
-   getLights ()
-   {
-      return this .lights;
-   },
    pushGlobalShadows (value)
    {
       this .globalShadows .push (value || this .globalShadows .at (-1));
@@ -292,6 +293,10 @@ Object .assign (X3DRenderObject .prototype,
    getGlobalShadows ()
    {
       return this .globalShadows;
+   },
+   getGlobalShadow ()
+   {
+      return this .globalShadow;
    },
    pushLocalShadows (value)
    {
@@ -1152,6 +1157,7 @@ Object .assign (X3DRenderObject .prototype,
          globalLightsKeys .push (light .lightNode .getLightKey ());
 
       this .globalLightsKey = globalLightsKeys .sort () .join ("");
+      this .globalShadow    = globalShadows .at (-1);
 
       // Set global uniforms.
 
