@@ -236,7 +236,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    set_humanoidKey__ ()
    {
-      this .humanoidKey = `.${this .numJoints}.${this .numDisplacements}.`;
+      this .humanoidKey = `[${this .numJoints}.${this .numDisplacements}]`;
    },
    set_motions__ ()
    {

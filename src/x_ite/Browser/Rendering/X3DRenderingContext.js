@@ -216,9 +216,7 @@ Object .assign (X3DRenderingContext .prototype,
       key += ".";
       key += shapeNode .getShapeKey ();
       key += geometryContext .geometryType;
-      key += ".";
-      key += humanoidNode ?.getHumanoidKey () ?? "";
-      key += ".";
+      key += humanoidNode ?.getHumanoidKey () ?? "[]";
 
       if (geometryContext .geometryType >= 2)
       {

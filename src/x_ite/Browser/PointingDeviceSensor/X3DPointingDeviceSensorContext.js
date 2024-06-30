@@ -368,9 +368,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       key += shapeNode .getShapeKey ();
       key += geometryType;
       key += hasNormals;
-      key += ".";
-      key += humanoidNode ?.getHumanoidKey () ?? "";
-      key += ".";
+      key += humanoidNode ?.getHumanoidKey () ?? "[]";
 
       if (geometryType >= 2)
       {
