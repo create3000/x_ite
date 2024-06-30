@@ -525,7 +525,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    set_humanoidKey ()
    {
-      this .humanoidKey = this .numJoints + "." + this .numDisplacements;
+      this .humanoidKey = `.${this .numJoints}.${this .numDisplacements}.`;
    },
    traverse (type, renderObject)
    {
