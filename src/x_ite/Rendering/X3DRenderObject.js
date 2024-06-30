@@ -66,6 +66,7 @@ function X3DRenderObject (executionContext)
    const browser = executionContext .getBrowser ();
 
    this .renderKey                      = "";
+   this .renderAndGlobalLightsKey       = "";
    this .renderCount                    = 0;
    this .viewVolumes                    = [ ];
    this .projectionMatrix               = new MatrixStack (Matrix4);
@@ -81,7 +82,6 @@ function X3DRenderObject (executionContext)
    this .viewpointGroups                = [ ];
    this .lights                         = [ ];
    this .globalLightsKeys               = [ ];
-   this .globalLightsKey                = "";
    this .globalLights                   = [ ];
    this .localObjectsKeys               = [ ];
    this .localObjects                   = [ ];
@@ -192,9 +192,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .orderIndependentTransparency;
    },
-   getRenderKey ()
+   getRenderAndGlobalLightsKey ()
    {
-      return this .renderKey;
+      return this .renderAndGlobalLightsKey;
    },
    getRenderCount ()
    {
@@ -273,10 +273,6 @@ Object .assign (X3DRenderObject .prototype,
    getGlobalLightsKeys ()
    {
       return this .globalLightsKeys;
-   },
-   getGlobalLightsKey ()
-   {
-      return this .globalLightsKey;
    },
    getLocalObjects ()
    {
@@ -1156,8 +1152,8 @@ Object .assign (X3DRenderObject .prototype,
       for (const light of globalLights)
          globalLightsKeys .push (light .lightNode .getLightKey ());
 
-      this .globalLightsKey = globalLightsKeys .sort () .join ("");
-      this .globalShadow    = globalShadows .at (-1);
+      this .renderAndGlobalLightsKey = `.${this .renderKey}.${globalLightsKeys .sort () .join ("")}.`;
+      this .globalShadow             = globalShadows .at (-1);
 
       // Set global uniforms.
 
