@@ -83,7 +83,7 @@ function X3DBackgroundNode (executionContext)
    this .textureNodes          = new Array (6);
    this .textureBits           = new BitSet ();
    this .sphereContext         = new GeometryContext ({ colorMaterial: true });
-   this .texturesContext       = new GeometryContext ({ });
+   this .texturesContext       = new GeometryContext ({ objectsKeys: this .sphereContext .objectsKeys});
 }
 
 Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindableNode .prototype),
@@ -435,26 +435,20 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          {
             const
                localObjects = renderObject .getLocalObjects (),
-               clipPlanes   = this .clipPlanes;
+               clipPlanes   = this .clipPlanes,
+               objectsKeys  = this .sphereContext .objectsKeys;
 
             let c = 0;
 
-            for (let l = 0, length = localObjects .length; l < length; ++ l)
+            for (const localObject of localObjects)
             {
-               if (localObjects [l] .isClipped)
-                  clipPlanes [c ++] = localObjects [l];
+               if (localObject .isClipped)
+                  clipPlanes [c ++] = localObject;
             }
 
-            clipPlanes .length = c;
-
-            for (let i = 0; i < c; ++ i)
-            {
-               this .sphereContext   .objectsKeys [i] = 0;
-               this .texturesContext .objectsKeys [i] = 0;
-            }
-
-            this .sphereContext   .objectsKeys .length = c;
-            this .texturesContext .objectsKeys .length = c;
+            clipPlanes  .length = c;
+            objectsKeys .length = c;
+            objectsKeys .fill (0);
             return;
          }
       }
