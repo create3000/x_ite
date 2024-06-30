@@ -39,7 +39,6 @@ All glTF extensions implemented with this version are listed below:
 * KHR_materials_sheen implemented as [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/) node.
 * KHR_materials_specular implemented as [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/) node.
 * KHR_materials_transmission implemented as [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) node.
-* KHR_materials_unlit implemented as [UnlitMaterialExtension](/x_ite/components/x-ite/unlitmaterialextension/) node.
 * KHR_materials_volume implemented as [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) node.
 
 #### Switch
