@@ -128,8 +128,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          const { renderObject, alphaMode, textureNode, objectsKeys } = geometryContext;
 
          key += alphaMode;
-         key += renderObject .getRenderAndGlobalLightsKey ();
-         key += "000011...";
+         key += ".";
+         key += renderObject .getRenderKey ();
+         key += "..000011...";
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
          key += textureNode ?.getTextureBits () .toString (16) ?? 0;

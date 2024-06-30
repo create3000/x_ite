@@ -192,6 +192,10 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .orderIndependentTransparency;
    },
+   getRenderKey ()
+   {
+      return this .renderKey;
+   },
    getRenderAndGlobalLightsKey ()
    {
       return this .renderAndGlobalLightsKey;
