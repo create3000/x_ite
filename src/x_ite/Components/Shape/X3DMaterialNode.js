@@ -192,7 +192,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsKeys: localObjectsKeys, textureNode } = renderContext;
 
-         const objectsKeys = localObjectsKeys .slice () .concat (renderObject .getGlobalLightsKeys ());
+         const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
 
          if (renderObject .getLogarithmicDepthBuffer ())
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
