@@ -165,7 +165,6 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - EdgeEnhancementVolumeStyle
 - ElevationGrid
 - EmissiveStrengthMaterialExtension
-- EnvironmentLight
 - EspduTransform
 - ExplosionEmitter
 - Extrusion
@@ -354,6 +353,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - TwoSidedMaterial
 - UniversalJoint
 - UnlitMaterial
+- UnlitMaterialExtension
 - Viewpoint
 - ViewpointGroup
 - Viewport
