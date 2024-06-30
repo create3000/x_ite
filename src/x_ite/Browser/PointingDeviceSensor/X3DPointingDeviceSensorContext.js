@@ -363,7 +363,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       let key = "";
 
-      key += numClipPlanes;
+      key += numClipPlanes; // Could be more than 9.
       key += humanoidNode ?.getHumanoidKey () ?? "[]";
       key += shapeNode .getShapeKey ();
       key += geometryType;
