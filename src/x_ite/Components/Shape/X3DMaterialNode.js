@@ -131,7 +131,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += ".";
          key += renderObject .getRenderKey ();
          key += "..000011...";
-         key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
+         key += objectsKeys .sort () .join (""); // ClipPlane
          key += ".";
          key += textureNode ?.getTextureBits () .toString (16) ?? 0;
       }
