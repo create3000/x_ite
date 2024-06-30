@@ -941,21 +941,6 @@
 <containerField default="extensions" type="xs:NMTOKEN"/>
 </InterfaceDefinition>
 </ConcreteNode>
-<ConcreteNode name="UnlitMaterialExtension">
-	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/unlitmaterialextension"
-		appinfo="UnlitMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
-	<componentInfo name="X_ITE" level="1"/>
-	<Inheritance baseType="X3DMaterialExtensionNode"/>
-<field name="metadata"
-	type="SFNode"
-	accessType="inputOutput"
-	default="NULL"
-	inheritedFrom="X3DMetadataObject"
-	description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-/>
-<containerField default="extensions" type="xs:NMTOKEN"/>
-</InterfaceDefinition>
-</ConcreteNode>
 <ConcreteNode name="VolumeMaterialExtension">
 	<InterfaceDefinition specificationUrl="https://create3000.github.io/x_ite/components/x-ite/volumematerialextension"
 		appinfo="VolumeMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
