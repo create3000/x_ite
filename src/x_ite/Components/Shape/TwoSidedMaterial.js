@@ -55,7 +55,7 @@ import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function TwoSidedMaterial (executionContext)
 {
-   console .warn ("TwoSidedMaterial is depreciated, please use Appearance backMaterial field.");
+   console .warn ("TwoSidedMaterial is depreciated, please use Appearance backMaterial field instead.");
 
    X3DMaterialNode .call (this, executionContext);
 

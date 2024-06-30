@@ -55,6 +55,8 @@ import Algorithm               from "../../../standard/Math/Algorithm.js";
 
 function SpecularGlossinessMaterial (executionContext)
 {
+   console .warn ("SpecularGlossinessMaterial is depreciated, please use PhysicalMaterial instead.");
+
    X3DOneSidedMaterialNode .call (this, executionContext);
 
    this .addType (X3DConstants .SpecularGlossinessMaterial);
