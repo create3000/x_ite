@@ -2959,6 +2959,10 @@ Namespace_default().add ("DoubleAxisHingeJoint", "x_ite/Components/RigidBodyPhys
 
 
 
+/**
+ * THIS NODE IS NOT SUPPORTED.
+ */
+
 function MotorJoint (executionContext)
 {
    RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
@@ -4553,6 +4557,10 @@ Namespace_default().add ("SliderJoint", "x_ite/Components/RigidBodyPhysics/Slide
 
 
 
+
+/**
+ * THIS NODE IS NOT SUPPORTED.
+ */
 
 function UniversalJoint (executionContext)
 {

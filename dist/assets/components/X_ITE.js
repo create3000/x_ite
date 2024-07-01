@@ -113,6 +113,10 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function BlendMode (executionContext)
 {
    X3DAppearanceChildNode_default().call (this, executionContext);
@@ -311,6 +315,10 @@ Namespace_default().add ("BlendMode", "x_ite/Components/X_ITE/BlendMode", __defa
 
 
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function DepthMode (executionContext)
 {
    X3DAppearanceChildNode_default().call (this, executionContext);
@@ -499,6 +507,10 @@ var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
 
 
 
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
 
 function InstancedShape (executionContext)
 {
@@ -831,6 +843,10 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
 
 
 
+
+/**
+ * THIS NODE IS DEPRECIATED.
+ */
 
 function SpecularGlossinessMaterial (executionContext)
 {
@@ -1358,6 +1374,10 @@ Namespace_default().add ("ExtensionKeys", "x_ite/Browser/X_ITE/ExtensionKeys", E
 
 
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function AnisotropyMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -1523,6 +1543,10 @@ Namespace_default().add ("AnisotropyMaterialExtension", "x_ite/Components/X_ITE/
 
 
 
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
 
 function ClearcoatMaterialExtension (executionContext)
 {
@@ -1725,6 +1749,10 @@ Namespace_default().add ("ClearcoatMaterialExtension", "x_ite/Components/X_ITE/C
 
 
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function DispersionMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -1851,6 +1879,10 @@ Namespace_default().add ("DispersionMaterialExtension", "x_ite/Components/X_ITE/
 
 
 
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
 
 function EmissiveStrengthMaterialExtension (executionContext)
 {
@@ -1979,6 +2011,10 @@ Namespace_default().add ("EmissiveStrengthMaterialExtension", "x_ite/Components/
 
 
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function IORMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -2106,6 +2142,10 @@ Namespace_default().add ("IORMaterialExtension", "x_ite/Components/X_ITE/IORMate
 
 
 
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
 
 function IridescenceMaterialExtension (executionContext)
 {
@@ -2306,6 +2346,10 @@ Namespace_default().add ("IridescenceMaterialExtension", "x_ite/Components/X_ITE
 
 
 
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
 
 function SheenMaterialExtension (executionContext)
 {
@@ -2510,6 +2554,10 @@ Namespace_default().add ("SheenMaterialExtension", "x_ite/Components/X_ITE/Sheen
 
 
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function SpecularMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -2704,6 +2752,10 @@ Namespace_default().add ("SpecularMaterialExtension", "x_ite/Components/X_ITE/Sp
 
 
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function TransmissionMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
@@ -2869,6 +2921,10 @@ Namespace_default().add ("TransmissionMaterialExtension", "x_ite/Components/X_IT
 
 
 
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
 
 function VolumeMaterialExtension (executionContext)
 {

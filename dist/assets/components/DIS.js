@@ -113,6 +113,10 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 
 
+/**
+ * THIS NODE IS NOT SUPPORTED.
+ */
+
 function DISEntityManager (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -230,6 +234,10 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
 
 
 
+
+/**
+ * THIS NODE IS NOT SUPPORTED.
+ */
 
 function DISEntityTypeMapping (executionContext)
 {
@@ -362,6 +370,10 @@ var X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DSensorNode_nam
 
 
 
+
+/**
+ * THIS NODE IS NOT SUPPORTED.
+ */
 
 function EspduTransform (executionContext)
 {
@@ -576,6 +588,10 @@ var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObje
 
 
 
+/**
+ * THIS NODE IS NOT SUPPORTED.
+ */
+
 function ReceiverPdu (executionContext)
 {
    X3DSensorNode_default().call (this, executionContext);
@@ -731,6 +747,10 @@ Namespace_default().add ("ReceiverPdu", "x_ite/Components/DIS/ReceiverPdu", Rece
 
 
 
+/**
+ * THIS NODE IS NOT SUPPORTED.
+ */
+
 function SignalPdu (executionContext)
 {
    X3DSensorNode_default().call (this, executionContext);
@@ -884,6 +904,10 @@ Namespace_default().add ("SignalPdu", "x_ite/Components/DIS/SignalPdu", SignalPd
 
 
 
+
+/**
+ * THIS NODE IS NOT SUPPORTED.
+ */
 
 function TransmitterPdu (executionContext)
 {
