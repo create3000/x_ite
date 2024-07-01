@@ -39,7 +39,7 @@ function main ()
    copy_files ();
    systemSync (`npx webpack`);
    html ();
-   systemSync (`gzip -5 dist/x_ite.min.js --stdout | wc -c`);
+   systemSync (`brotli -6 dist/x_ite.min.js --stdout | wc -c`);
    systemSync (`du -h dist/x_ite.min.js`);
 }
 

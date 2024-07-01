@@ -45,7 +45,7 @@ function readme (version)
 
 function docs (version)
 {
-	const contentLength = Math .floor (parseInt (sh (`gzip -5 dist/x_ite.min.js --stdout | wc -c`) .trim ()) / 1000);
+	const contentLength = Math .floor (parseInt (sh (`brotli -6 dist/x_ite.min.js --stdout | wc -c`) .trim ()) / 1000);
 
 	let config = sh (`cat 'docs/_config.yml'`);
 
