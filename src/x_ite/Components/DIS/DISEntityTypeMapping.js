@@ -53,7 +53,7 @@ import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 /**
- * NOT IMPLEMENTED
+ * THIS NODE IS NOT SUPPORTED.
  */
 
 function DISEntityTypeMapping (executionContext)

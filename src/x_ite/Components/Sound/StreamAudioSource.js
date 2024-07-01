@@ -52,7 +52,7 @@ import X3DSoundSourceNode   from "./X3DSoundSourceNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 /**
- * NOT IMPLEMENTED
+ * THIS NODE IS NOT SUPPORTED.
  */
 
 function StreamAudioSource (executionContext)

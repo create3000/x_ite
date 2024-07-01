@@ -52,7 +52,7 @@ import X3DShaderNode        from "./X3DShaderNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 /**
- * NOT IMPLEMENTED
+ * THIS NODE IS NOT SUPPORTED.
  */
 
 function ProgramShader (executionContext)

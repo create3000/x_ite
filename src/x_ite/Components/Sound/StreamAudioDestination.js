@@ -52,7 +52,7 @@ import X3DSoundDestinationNode from "./X3DSoundDestinationNode.js";
 import X3DConstants            from "../../Base/X3DConstants.js";
 
 /**
- * NOT IMPLEMENTED
+ * THIS NODE IS NOT SUPPORTED.
  */
 
 function StreamAudioDestination (executionContext)

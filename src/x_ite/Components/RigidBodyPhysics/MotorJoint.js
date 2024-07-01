@@ -53,7 +53,7 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
 /**
- * NOT IMPLEMENTED
+ * THIS NODE IS NOT SUPPORTED.
  */
 
 function MotorJoint (executionContext)

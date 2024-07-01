@@ -38,12 +38,12 @@ X3D groups nodes into components and components into profiles. This index lists 
 
 ## DIS
 
-- [DISEntityManager](/x_ite/components/dis/disentitymanager/) <small class="red">not implemented</small>
-- [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/) <small class="red">not implemented</small>
-- [EspduTransform](/x_ite/components/dis/espdutransform/) <small class="red">not implemented</small>
-- [ReceiverPdu](/x_ite/components/dis/receiverpdu/) <small class="red">not implemented</small>
-- [SignalPdu](/x_ite/components/dis/signalpdu/) <small class="red">not implemented</small>
-- [TransmitterPdu](/x_ite/components/dis/transmitterpdu/) <small class="red">not implemented</small>
+- [DISEntityManager](/x_ite/components/dis/disentitymanager/) <small class="red">not supported</small>
+- [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/) <small class="red">not supported</small>
+- [EspduTransform](/x_ite/components/dis/espdutransform/) <small class="red">not supported</small>
+- [ReceiverPdu](/x_ite/components/dis/receiverpdu/) <small class="red">not supported</small>
+- [SignalPdu](/x_ite/components/dis/signalpdu/) <small class="red">not supported</small>
+- [TransmitterPdu](/x_ite/components/dis/transmitterpdu/) <small class="red">not supported</small>
 
 ## EnvironmentalEffects
 
@@ -268,12 +268,12 @@ X3D groups nodes into components and components into profiles. This index lists 
 - [CollisionSpace](/x_ite/components/rigidbodyphysics/collisionspace/)
 - [Contact](/x_ite/components/rigidbodyphysics/contact/)
 - [DoubleAxisHingeJoint](/x_ite/components/rigidbodyphysics/doubleaxishingejoint/)
-- [MotorJoint](/x_ite/components/rigidbodyphysics/motorjoint/) <small class="red">not implemented</small>
+- [MotorJoint](/x_ite/components/rigidbodyphysics/motorjoint/) <small class="red">not supported</small>
 - [RigidBody](/x_ite/components/rigidbodyphysics/rigidbody/)
 - [RigidBodyCollection](/x_ite/components/rigidbodyphysics/rigidbodycollection/)
 - [SingleAxisHingeJoint](/x_ite/components/rigidbodyphysics/singleaxishingejoint/)
 - [SliderJoint](/x_ite/components/rigidbodyphysics/sliderjoint/)
-- [UniversalJoint](/x_ite/components/rigidbodyphysics/universaljoint/) <small class="red">not implemented</small>
+- [UniversalJoint](/x_ite/components/rigidbodyphysics/universaljoint/) <small class="red">not supported</small>
 
 ## Scripting
 
@@ -285,10 +285,10 @@ X3D groups nodes into components and components into profiles. This index lists 
 - [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/)
 - [Matrix3VertexAttribute](/x_ite/components/shaders/matrix3vertexattribute/)
 - [Matrix4VertexAttribute](/x_ite/components/shaders/matrix4vertexattribute/)
-- [PackagedShader](/x_ite/components/shaders/packagedshader/) <small class="red">not implemented</small>
-- [ProgramShader](/x_ite/components/shaders/programshader/) <small class="red">not implemented</small>
+- [PackagedShader](/x_ite/components/shaders/packagedshader/) <small class="red">not supported</small>
+- [ProgramShader](/x_ite/components/shaders/programshader/) <small class="red">not supported</small>
 - [ShaderPart](/x_ite/components/shaders/shaderpart/)
-- [ShaderProgram](/x_ite/components/shaders/shaderprogram/) <small class="red">not implemented</small>
+- [ShaderProgram](/x_ite/components/shaders/shaderprogram/) <small class="red">not supported</small>
 
 ## Shape
 
@@ -323,8 +323,8 @@ X3D groups nodes into components and components into profiles. This index lists 
 - [PeriodicWave](/x_ite/components/sound/periodicwave/)
 - [Sound](/x_ite/components/sound/sound/)
 - [SpatialSound](/x_ite/components/sound/spatialsound/)
-- [StreamAudioDestination](/x_ite/components/sound/streamaudiodestination/) <small class="red">not implemented</small>
-- [StreamAudioSource](/x_ite/components/sound/streamaudiosource/) <small class="red">not implemented</small>
+- [StreamAudioDestination](/x_ite/components/sound/streamaudiodestination/) <small class="red">not supported</small>
+- [StreamAudioSource](/x_ite/components/sound/streamaudiosource/) <small class="red">not supported</small>
 - [WaveShaper](/x_ite/components/sound/waveshaper/)
 
 ## Text

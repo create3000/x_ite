@@ -95,19 +95,19 @@ function updateComponents (supported)
             slug = `${component}/${node}` .toLowerCase () .replace (/_/g, "-"),
             file = sh (`cat`, `src/x_ite/Components/${component}/${node}.js`);
 
-         if (!(file .includes ("NOT IMPLEMENTED") || file .includes ("EXPERIMENTAL")))
+         if (!(file .includes ("NOT SUPPORTED") || file .includes ("EXPERIMENTAL")))
             ++ count;
 
          if (!file .includes ("EXPERIMENTAL"))
             ++ all;
 
-         if (supported && file .includes ("NOT IMPLEMENTED"))
+         if (supported && file .includes ("NOT SUPPORTED"))
             continue;
 
          list += `- [${node}](/x_ite/components/${slug}/)`;
 
-         if (file .includes ("NOT IMPLEMENTED"))
-            list += ` <small class="red">not implemented</small>`;
+         if (file .includes ("NOT SUPPORTED"))
+            list += ` <small class="red">not supported</small>`;
 
          if (file .includes ("DEPRECIATED"))
             list += ` <small class="yellow">depreciated</small>`;

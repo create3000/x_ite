@@ -53,7 +53,7 @@ import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 /**
- * NOT IMPLEMENTED
+ * THIS NODE IS NOT SUPPORTED.
  */
 
 function SignalPdu (executionContext)
