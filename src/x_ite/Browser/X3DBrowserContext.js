@@ -263,7 +263,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this [_systemTime] .stop ();
       this [_browserTime] .start ();
 
-      // time
+      // Time
 
       this .advanceTime ();
 
