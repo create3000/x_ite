@@ -45,12 +45,21 @@ function readme (version)
 
 function docs (version)
 {
-	const contentLength = Math .floor (parseInt (sh (`brotli -6 dist/x_ite.min.js --stdout | wc -c`) .trim ()) / 1000);
+	const size = Math .floor (parseInt (sh (`brotli -6 dist/x_ite.min.js --stdout | wc -c`) .trim ()) / 1000);
+
+	if (size < 270)
+		var color = "green";
+	else if (size < 290)
+		var color = "cyan";
+	else
+		var color = "blue";
+
+	systemSync (`wget -q -O - https://badgen.net/static/compressed/${size}KB/${color} > docs/assets/img/badges/compressed.svg`);
 
 	let config = sh (`cat 'docs/_config.yml'`);
 
 	config = config .replace (/\x_ite_latest_version:\s*[\d\.]+/sg, `x_ite_latest_version: ${version}`);
-	config = config .replace (/\x_ite_compressed_size:\s*[\d\.]+/sg, `x_ite_compressed_size: ${contentLength}`);
+	config = config .replace (/\x_ite_compressed_size:\s*[\d\.]+/sg, `x_ite_compressed_size: ${size}`);
 
 	fs .writeFileSync ("docs/_config.yml", config);
 }

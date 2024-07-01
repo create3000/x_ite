@@ -22,7 +22,7 @@ description: >- # used by seo meta and the atom feed
   X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML.
 
 x_ite_latest_version: 10.0.2 # x_ite latest version
-x_ite_compressed_size: 304 # size in kb
+x_ite_compressed_size: 265 # size in kb
 x3d_latest_version: 4.0 # x3d latest version
 
 # Fill in the protocol & hostname for your site.
