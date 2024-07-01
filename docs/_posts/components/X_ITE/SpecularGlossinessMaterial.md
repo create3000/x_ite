@@ -20,7 +20,7 @@ The SpecularGlossinessMaterial node belongs to the **X_ITE** component and requi
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
 
->**Deprecated:** This node is deprecated. Future versions of the standard may remove this node. Please use [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) instead.
+>**Deprecated:** This node is **deprecated** as of X3D version 4.0. Future versions of the standard may remove this node. Please use [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) instead.
 {: .prompt-danger }
 
 ## Hierarchy
