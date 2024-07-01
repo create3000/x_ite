@@ -55,7 +55,10 @@ import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack          from "../../../standard/Math/Utility/MatrixStack.js";
 import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
-import Matrix3 from "../../../standard/Math/Numbers/Matrix3.js";
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
 
 const EnvironmentLights = ObjectCache (EnvironmentLightContainer);
 

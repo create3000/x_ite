@@ -53,6 +53,10 @@ import Material             from "./Material.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
+/**
+ * THIS NODE IS DEPRECIATED.
+ */
+
 function TwoSidedMaterial (executionContext)
 {
    console .warn ("TwoSidedMaterial is depreciated, please use Appearance backMaterial field instead.");

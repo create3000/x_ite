@@ -53,6 +53,10 @@ import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function IridescenceMaterialExtension (executionContext)
 {
    X3DMaterialExtensionNode .call (this, executionContext);

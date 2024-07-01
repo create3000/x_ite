@@ -54,6 +54,10 @@ import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 import Algorithm                from "../../../standard/Math/Algorithm.js";
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function SheenMaterialExtension (executionContext)
 {
    X3DMaterialExtensionNode .call (this, executionContext);

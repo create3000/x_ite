@@ -51,6 +51,10 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DSoundSourceNode   from "./X3DSoundSourceNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
+/**
+ * NOT IMPLEMENTED
+ */
+
 function StreamAudioSource (executionContext)
 {
    X3DSoundSourceNode .call (this, executionContext);

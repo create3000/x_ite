@@ -38,12 +38,12 @@ X3D groups nodes into components and components into profiles. This index lists 
 
 ## DIS
 
-- [DISEntityManager](/x_ite/components/dis/disentitymanager/)
-- [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/)
-- [EspduTransform](/x_ite/components/dis/espdutransform/)
-- [ReceiverPdu](/x_ite/components/dis/receiverpdu/)
-- [SignalPdu](/x_ite/components/dis/signalpdu/)
-- [TransmitterPdu](/x_ite/components/dis/transmitterpdu/)
+- [DISEntityManager](/x_ite/components/dis/disentitymanager/) <small class="red">not implemented</small>
+- [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/) <small class="red">not implemented</small>
+- [EspduTransform](/x_ite/components/dis/espdutransform/) <small class="red">not implemented</small>
+- [ReceiverPdu](/x_ite/components/dis/receiverpdu/) <small class="red">not implemented</small>
+- [SignalPdu](/x_ite/components/dis/signalpdu/) <small class="red">not implemented</small>
+- [TransmitterPdu](/x_ite/components/dis/transmitterpdu/) <small class="red">not implemented</small>
 
 ## EnvironmentalEffects
 
@@ -175,7 +175,7 @@ X3D groups nodes into components and components into profiles. This index lists 
 ## Lighting
 
 - [DirectionalLight](/x_ite/components/lighting/directionallight/)
-- [EnvironmentLight](/x_ite/components/lighting/environmentlight/)
+- [EnvironmentLight](/x_ite/components/lighting/environmentlight/) <small class="blue">experimental</small>
 - [PointLight](/x_ite/components/lighting/pointlight/)
 - [SpotLight](/x_ite/components/lighting/spotlight/)
 
@@ -253,7 +253,7 @@ X3D groups nodes into components and components into profiles. This index lists 
 - [LineSet](/x_ite/components/rendering/lineset/)
 - [Normal](/x_ite/components/rendering/normal/)
 - [PointSet](/x_ite/components/rendering/pointset/)
-- [Tangent](/x_ite/components/rendering/tangent/)
+- [Tangent](/x_ite/components/rendering/tangent/) <small class="blue">experimental</small>
 - [TriangleFanSet](/x_ite/components/rendering/trianglefanset/)
 - [TriangleSet](/x_ite/components/rendering/triangleset/)
 - [TriangleStripSet](/x_ite/components/rendering/trianglestripset/)
@@ -268,12 +268,12 @@ X3D groups nodes into components and components into profiles. This index lists 
 - [CollisionSpace](/x_ite/components/rigidbodyphysics/collisionspace/)
 - [Contact](/x_ite/components/rigidbodyphysics/contact/)
 - [DoubleAxisHingeJoint](/x_ite/components/rigidbodyphysics/doubleaxishingejoint/)
-- [MotorJoint](/x_ite/components/rigidbodyphysics/motorjoint/)
+- [MotorJoint](/x_ite/components/rigidbodyphysics/motorjoint/) <small class="red">not implemented</small>
 - [RigidBody](/x_ite/components/rigidbodyphysics/rigidbody/)
 - [RigidBodyCollection](/x_ite/components/rigidbodyphysics/rigidbodycollection/)
 - [SingleAxisHingeJoint](/x_ite/components/rigidbodyphysics/singleaxishingejoint/)
 - [SliderJoint](/x_ite/components/rigidbodyphysics/sliderjoint/)
-- [UniversalJoint](/x_ite/components/rigidbodyphysics/universaljoint/)
+- [UniversalJoint](/x_ite/components/rigidbodyphysics/universaljoint/) <small class="red">not implemented</small>
 
 ## Scripting
 
@@ -285,10 +285,10 @@ X3D groups nodes into components and components into profiles. This index lists 
 - [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/)
 - [Matrix3VertexAttribute](/x_ite/components/shaders/matrix3vertexattribute/)
 - [Matrix4VertexAttribute](/x_ite/components/shaders/matrix4vertexattribute/)
-- [PackagedShader](/x_ite/components/shaders/packagedshader/)
-- [ProgramShader](/x_ite/components/shaders/programshader/)
+- [PackagedShader](/x_ite/components/shaders/packagedshader/) <small class="red">not implemented</small>
+- [ProgramShader](/x_ite/components/shaders/programshader/) <small class="red">not implemented</small>
 - [ShaderPart](/x_ite/components/shaders/shaderpart/)
-- [ShaderProgram](/x_ite/components/shaders/shaderprogram/)
+- [ShaderProgram](/x_ite/components/shaders/shaderprogram/) <small class="red">not implemented</small>
 
 ## Shape
 
@@ -300,7 +300,7 @@ X3D groups nodes into components and components into profiles. This index lists 
 - [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/)
 - [PointProperties](/x_ite/components/shape/pointproperties/)
 - [Shape](/x_ite/components/shape/shape/)
-- [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/)
+- [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/) <small class="yellow">depreciated</small>
 - [UnlitMaterial](/x_ite/components/shape/unlitmaterial/)
 
 ## Sound
@@ -323,8 +323,8 @@ X3D groups nodes into components and components into profiles. This index lists 
 - [PeriodicWave](/x_ite/components/sound/periodicwave/)
 - [Sound](/x_ite/components/sound/sound/)
 - [SpatialSound](/x_ite/components/sound/spatialsound/)
-- [StreamAudioDestination](/x_ite/components/sound/streamaudiodestination/)
-- [StreamAudioSource](/x_ite/components/sound/streamaudiosource/)
+- [StreamAudioDestination](/x_ite/components/sound/streamaudiodestination/) <small class="red">not implemented</small>
+- [StreamAudioSource](/x_ite/components/sound/streamaudiosource/) <small class="red">not implemented</small>
 - [WaveShaper](/x_ite/components/sound/waveshaper/)
 
 ## Text
@@ -354,7 +354,7 @@ X3D groups nodes into components and components into profiles. This index lists 
 
 - [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/)
 - [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/)
-- [ImageTextureAtlas](/x_ite/components/texturing3d/imagetextureatlas/)
+- [ImageTextureAtlas](/x_ite/components/texturing3d/imagetextureatlas/) <small class="blue">experimental</small>
 - [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)
 - [TextureCoordinate3D](/x_ite/components/texturing3d/texturecoordinate3d/)
 - [TextureCoordinate4D](/x_ite/components/texturing3d/texturecoordinate4d/)
@@ -383,19 +383,19 @@ X3D groups nodes into components and components into profiles. This index lists 
 
 ## X_ITE
 
-- [AnisotropyMaterialExtension](/x_ite/components/x-ite/anisotropymaterialextension/)
-- [BlendMode](/x_ite/components/x-ite/blendmode/)
-- [ClearcoatMaterialExtension](/x_ite/components/x-ite/clearcoatmaterialextension/)
-- [DepthMode](/x_ite/components/x-ite/depthmode/)
-- [DispersionMaterialExtension](/x_ite/components/x-ite/dispersionmaterialextension/)
-- [EmissiveStrengthMaterialExtension](/x_ite/components/x-ite/emissivestrengthmaterialextension/)
-- [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/)
-- [InstancedShape](/x_ite/components/x-ite/instancedshape/)
-- [IridescenceMaterialExtension](/x_ite/components/x-ite/iridescencematerialextension/)
-- [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/)
-- [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/)
-- [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/)
-- [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/)
-- [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/)
+- [AnisotropyMaterialExtension](/x_ite/components/x-ite/anisotropymaterialextension/) <small class="blue">experimental</small>
+- [BlendMode](/x_ite/components/x-ite/blendmode/) <small class="blue">experimental</small>
+- [ClearcoatMaterialExtension](/x_ite/components/x-ite/clearcoatmaterialextension/) <small class="blue">experimental</small>
+- [DepthMode](/x_ite/components/x-ite/depthmode/) <small class="blue">experimental</small>
+- [DispersionMaterialExtension](/x_ite/components/x-ite/dispersionmaterialextension/) <small class="blue">experimental</small>
+- [EmissiveStrengthMaterialExtension](/x_ite/components/x-ite/emissivestrengthmaterialextension/) <small class="blue">experimental</small>
+- [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/) <small class="blue">experimental</small>
+- [InstancedShape](/x_ite/components/x-ite/instancedshape/) <small class="blue">experimental</small>
+- [IridescenceMaterialExtension](/x_ite/components/x-ite/iridescencematerialextension/) <small class="blue">experimental</small>
+- [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/) <small class="blue">experimental</small>
+- [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) <small class="yellow">depreciated</small>
+- [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/) <small class="blue">experimental</small>
+- [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) <small class="blue">experimental</small>
+- [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) <small class="blue">experimental</small>
 
 <!-- COMPONENTS END -->

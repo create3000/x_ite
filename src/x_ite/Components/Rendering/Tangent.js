@@ -51,6 +51,10 @@ import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DGeometricPropertyNode from "./X3DGeometricPropertyNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function Tangent (executionContext)
 {
    X3DGeometricPropertyNode .call (this, executionContext);

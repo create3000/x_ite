@@ -51,6 +51,10 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
+/**
+ * NOT IMPLEMENTED
+ */
+
 function DISEntityManager (executionContext)
 {
    X3DChildNode .call (this, executionContext);

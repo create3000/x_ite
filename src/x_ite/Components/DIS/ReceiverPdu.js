@@ -52,6 +52,10 @@ import X3DSensorNode        from "../Core/X3DSensorNode.js";
 import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
+/**
+ * NOT IMPLEMENTED
+ */
+
 function ReceiverPdu (executionContext)
 {
    X3DSensorNode    .call (this, executionContext);

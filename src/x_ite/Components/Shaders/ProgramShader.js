@@ -51,6 +51,10 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DShaderNode        from "./X3DShaderNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
+/**
+ * NOT IMPLEMENTED
+ */
+
 function ProgramShader (executionContext)
 {
    X3DShaderNode .call (this, executionContext);

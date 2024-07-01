@@ -103,15 +103,15 @@ Single contained [NurbsTextureCoordinate](/x_ite/components/nurbs/nurbstextureco
 
 Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
 
-### MFNode [in] **addTrimmingContour**
+### MFNode [in] **addTrimmingContour** <small class="red">not supported</small>
 
 Input field *addTrimmingContour*.
 
-### MFNode [in] **removeTrimmingContour**
+### MFNode [in] **removeTrimmingContour** <small class="red">not supported</small>
 
 Input field *removeTrimmingContour*.
 
-### MFNode [in, out] **trimmingContour** [ ] <small>[Contour2D]</small>
+### MFNode [in, out] **trimmingContour** [ ] <small>[Contour2D]</small> <small class="red">not supported</small>
 
 A set of [Contour2D](/x_ite/components/nurbs/contour2d/) nodes are used as trimming loops.
 

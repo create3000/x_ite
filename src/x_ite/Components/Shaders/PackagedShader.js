@@ -53,6 +53,10 @@ import X3DUrlObject                from "../Networking/X3DUrlObject.js";
 import X3DProgrammableShaderObject from "./X3DProgrammableShaderObject.js";
 import X3DConstants                from "../../Base/X3DConstants.js";
 
+/**
+ * NOT IMPLEMENTED
+ */
+
 function PackagedShader (executionContext)
 {
    X3DShaderNode               .call (this, executionContext);

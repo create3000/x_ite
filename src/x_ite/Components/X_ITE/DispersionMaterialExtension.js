@@ -52,6 +52,10 @@ import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function DispersionMaterialExtension (executionContext)
 {
    X3DMaterialExtensionNode .call (this, executionContext);

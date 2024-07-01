@@ -50,7 +50,11 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DRigidJointNode    from "./X3DRigidJointNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+
+/**
+ * NOT IMPLEMENTED
+ */
 
 function MotorJoint (executionContext)
 {

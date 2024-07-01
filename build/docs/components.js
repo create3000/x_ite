@@ -8,6 +8,7 @@ const
 
 const
    components = path .resolve ("./", "src/x_ite/Components"),
+   posts      = path .resolve ("./", "docs/_posts/"),
    comp       = path .resolve ("./", "docs/_posts/components"),
    nav        = path .resolve ("./", "docs/_data/nav"),
    tabs       = path .resolve ("./", "docs/_tabs");
@@ -77,28 +78,56 @@ function updateNav ()
    }
 }
 
-function updateComponents ()
+function updateComponents (supported)
 {
-   let list = "\n\n";
+   let
+      list  = "\n\n",
+      count = 0,
+      all   = 0;
 
    for (const [component, nodes] of createIndex ())
    {
-      list += `## ${component}\n\n`;
+      list += `##${supported ? "#" : ""} ${component}\n\n`;
 
       for (const node of nodes .sort ())
       {
-         const slug = `${component}/${node}` .toLowerCase () .replace (/_/g, "-");
+         const
+            slug = `${component}/${node}` .toLowerCase () .replace (/_/g, "-"),
+            file = sh (`cat`, `src/x_ite/Components/${component}/${node}.js`);
 
-         list += `- [${node}](/x_ite/components/${slug}/)\n`;
+         if (!(file .includes ("NOT IMPLEMENTED") || file .includes (("EXPERIMENTAL"))))
+            ++ count;
+
+         if (!file .includes (("EXPERIMENTAL")))
+            ++ all;
+
+         if (supported && file .includes ("NOT IMPLEMENTED"))
+            continue;
+
+         list += `- [${node}](/x_ite/components/${slug}/)`;
+
+         if (file .includes (("NOT IMPLEMENTED")))
+            list += ` <small class="red">not implemented</small>`;
+
+         if (file .includes (("DEPRECIATED")))
+            list += ` <small class="yellow">depreciated</small>`;
+
+         if (file .includes (("EXPERIMENTAL")))
+            list += ` <small class="blue">experimental</small>`;
+
+         list += `\n`;
       }
 
       list += `\n`;
    }
 
-   const md = path .resolve (tabs, `components.md`);
+   const md = supported
+      ? path .resolve (posts, `supported-nodes.md`)
+      : path .resolve (tabs, `components.md`);
 
    let text = fs .readFileSync (md) .toString ();
 
+   text = text .replace (/Currently \d+ out of \d+ nodes \(\d+%\) are implemented./, `Currently ${count} out of ${all} nodes (${Math .ceil (count / all * 100)}%) are implemented.`)
    text = text .replace (/<!-- COMPONENTS BEGIN -->.*?<!-- COMPONENTS END -->/s, `<!-- COMPONENTS BEGIN -->${list}<!-- COMPONENTS END -->`);
 
    fs .writeFileSync (md, text);
@@ -217,5 +246,6 @@ ${fields}
 }
 
 updateNav ();
-updateComponents ();
+updateComponents (false);
+updateComponents (true);
 addNodeStubs ();

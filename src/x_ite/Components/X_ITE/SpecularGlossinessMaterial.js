@@ -53,6 +53,10 @@ import X3DCast                 from "../../Base/X3DCast.js";
 import X3DConstants            from "../../Base/X3DConstants.js";
 import Algorithm               from "../../../standard/Math/Algorithm.js";
 
+/**
+ * THIS NODE IS DEPRECIATED.
+ */
+
 function SpecularGlossinessMaterial (executionContext)
 {
    console .warn ("SpecularGlossinessMaterial is depreciated, please use PhysicalMaterial instead.");

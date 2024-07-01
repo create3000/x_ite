@@ -52,6 +52,10 @@ import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
 import X3DSensorNode        from "../Core/X3DSensorNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
+/**
+ * NOT IMPLEMENTED
+ */
+
 function EspduTransform (executionContext)
 {
    X3DGroupingNode .call (this, executionContext);

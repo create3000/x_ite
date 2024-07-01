@@ -51,6 +51,10 @@ import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
 import X3DAppearanceChildNode from "../Shape/X3DAppearanceChildNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function DepthMode (executionContext)
 {
    X3DAppearanceChildNode .call (this, executionContext);

@@ -56,6 +56,10 @@ import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3                 from "../../../standard/Math/Geometry/Box3.js";
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function InstancedShape (executionContext)
 {
    X3DShapeNode .call (this, executionContext);

@@ -53,6 +53,10 @@ import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function ImageTextureAtlas (executionContext)
 {
    X3DTexture3DNode .call (this, executionContext);

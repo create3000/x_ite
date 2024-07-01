@@ -40,7 +40,7 @@ X_ITE has achieved the [X3D Immersive Profile](https://www.web3d.org/documents/s
 
 This section documents all nodes supported by X_ITE.
 
-X_ITE supports a limited number of nodes defined by the X3D specification. Currently 250 out of 263 nodes (95%) are implemented. The implementation of these nodes is complete in the sense that the nodes support all the fields and functions required for that implementation, unless otherwise specified.
+X_ITE supports a limited number of nodes defined by the X3D specification. Currently 247 out of 260 nodes (95%) are implemented. The implementation of these nodes is complete in the sense that the nodes support all the fields and functions required for that implementation, unless otherwise specified.
 
 <!--
 Missing Nodes:
@@ -48,6 +48,8 @@ Missing Nodes:
 - 2 joints from RigidBodyCollection
 - 3 shader nodes from Shaders
 -->
+
+<!-- COMPONENTS BEGIN -->
 
 ### CADGeometry
 
@@ -73,6 +75,9 @@ Missing Nodes:
 - [ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/)
 - [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/)
 - [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/)
+
+### DIS
+
 
 ### EnvironmentalEffects
 
@@ -157,7 +162,7 @@ Missing Nodes:
 - [Switch](/x_ite/components/grouping/switch/)
 - [Transform](/x_ite/components/grouping/transform/)
 
-### H-Anim
+### HAnim
 
 - [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/)
 - [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/)
@@ -204,7 +209,7 @@ Missing Nodes:
 ### Lighting
 
 - [DirectionalLight](/x_ite/components/lighting/directionallight/)
-- [EnvironmentLight](/x_ite/components/lighting/environmentlight/)
+- [EnvironmentLight](/x_ite/components/lighting/environmentlight/) <small class="blue">experimental</small>
 - [PointLight](/x_ite/components/lighting/pointlight/)
 - [SpotLight](/x_ite/components/lighting/spotlight/)
 
@@ -282,11 +287,12 @@ Missing Nodes:
 - [LineSet](/x_ite/components/rendering/lineset/)
 - [Normal](/x_ite/components/rendering/normal/)
 - [PointSet](/x_ite/components/rendering/pointset/)
+- [Tangent](/x_ite/components/rendering/tangent/) <small class="blue">experimental</small>
 - [TriangleFanSet](/x_ite/components/rendering/trianglefanset/)
 - [TriangleSet](/x_ite/components/rendering/triangleset/)
 - [TriangleStripSet](/x_ite/components/rendering/trianglestripset/)
 
-### RigidBodyCollection
+### RigidBodyPhysics
 
 - [BallJoint](/x_ite/components/rigidbodyphysics/balljoint/)
 - [CollidableOffset](/x_ite/components/rigidbodyphysics/collidableoffset/)
@@ -323,7 +329,7 @@ Missing Nodes:
 - [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/)
 - [PointProperties](/x_ite/components/shape/pointproperties/)
 - [Shape](/x_ite/components/shape/shape/)
-- [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/)
+- [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/) <small class="yellow">depreciated</small>
 - [UnlitMaterial](/x_ite/components/shape/unlitmaterial/)
 
 ### Sound
@@ -347,11 +353,6 @@ Missing Nodes:
 - [Sound](/x_ite/components/sound/sound/)
 - [SpatialSound](/x_ite/components/sound/spatialsound/)
 - [WaveShaper](/x_ite/components/sound/waveshaper/)
-
-<!--
-- [StreamAudioDestination](/x_ite/components/sound/streamaudiodestination/)
-- [StreamAudioSource](/x_ite/components/sound/streamaudiosource/)
--->
 
 ### Text
 
@@ -380,7 +381,7 @@ Missing Nodes:
 
 - [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/)
 - [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/)
-- [ImageTextureAtlas](/x_ite/components/texturing3d/imagetextureatlas/)
+- [ImageTextureAtlas](/x_ite/components/texturing3d/imagetextureatlas/) <small class="blue">experimental</small>
 - [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)
 - [TextureCoordinate3D](/x_ite/components/texturing3d/texturecoordinate3d/)
 - [TextureCoordinate4D](/x_ite/components/texturing3d/texturecoordinate4d/)
@@ -409,6 +410,19 @@ Missing Nodes:
 
 ### X_ITE
 
-- [BlendMode](/x_ite/components/x-ite/blendmode/)
-- [DepthMode](/x_ite/components/x-ite/depthmode/)
-- [InstancedShape](/x_ite/components/x-ite/instancedshape/)
+- [AnisotropyMaterialExtension](/x_ite/components/x-ite/anisotropymaterialextension/) <small class="blue">experimental</small>
+- [BlendMode](/x_ite/components/x-ite/blendmode/) <small class="blue">experimental</small>
+- [ClearcoatMaterialExtension](/x_ite/components/x-ite/clearcoatmaterialextension/) <small class="blue">experimental</small>
+- [DepthMode](/x_ite/components/x-ite/depthmode/) <small class="blue">experimental</small>
+- [DispersionMaterialExtension](/x_ite/components/x-ite/dispersionmaterialextension/) <small class="blue">experimental</small>
+- [EmissiveStrengthMaterialExtension](/x_ite/components/x-ite/emissivestrengthmaterialextension/) <small class="blue">experimental</small>
+- [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/) <small class="blue">experimental</small>
+- [InstancedShape](/x_ite/components/x-ite/instancedshape/) <small class="blue">experimental</small>
+- [IridescenceMaterialExtension](/x_ite/components/x-ite/iridescencematerialextension/) <small class="blue">experimental</small>
+- [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/) <small class="blue">experimental</small>
+- [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) <small class="yellow">depreciated</small>
+- [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/) <small class="blue">experimental</small>
+- [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) <small class="blue">experimental</small>
+- [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) <small class="blue">experimental</small>
+
+<!-- COMPONENTS END -->
