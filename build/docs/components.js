@@ -95,10 +95,10 @@ function updateComponents (supported)
             slug = `${component}/${node}` .toLowerCase () .replace (/_/g, "-"),
             file = sh (`cat`, `src/x_ite/Components/${component}/${node}.js`);
 
-         if (!(file .includes ("NOT IMPLEMENTED") || file .includes (("EXPERIMENTAL"))))
+         if (!(file .includes ("NOT IMPLEMENTED") || file .includes ("EXPERIMENTAL")))
             ++ count;
 
-         if (!file .includes (("EXPERIMENTAL")))
+         if (!file .includes ("EXPERIMENTAL"))
             ++ all;
 
          if (supported && file .includes ("NOT IMPLEMENTED"))
@@ -106,13 +106,13 @@ function updateComponents (supported)
 
          list += `- [${node}](/x_ite/components/${slug}/)`;
 
-         if (file .includes (("NOT IMPLEMENTED")))
+         if (file .includes ("NOT IMPLEMENTED"))
             list += ` <small class="red">not implemented</small>`;
 
-         if (file .includes (("DEPRECIATED")))
+         if (file .includes ("DEPRECIATED"))
             list += ` <small class="yellow">depreciated</small>`;
 
-         if (file .includes (("EXPERIMENTAL")))
+         if (file .includes ("EXPERIMENTAL"))
             list += ` <small class="blue">experimental</small>`;
 
          list += `\n`;
