@@ -17,7 +17,7 @@ EnvironmentLight ...
 
 The EnvironmentLight node belongs to the **Lighting** component and its default container field is *children.* It is available since X3D version 4.0 or later.
 
->**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in the future. This node is available in X_ITE. This node only affects the [PhysicalMaterial](../../shape/physicalmaterial/) node and the [SpecularGlossinessMaterial](../../x-ite/specularglossinessmaterial/) node.
+>**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE. This node only affects the [PhysicalMaterial](../../shape/physicalmaterial/) node and the [SpecularGlossinessMaterial](../../x-ite/specularglossinessmaterial/) node.
 {: .prompt-info }
 
 ## Hierarchy

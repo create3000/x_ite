@@ -17,7 +17,7 @@ Tangent.
 
 The Tangent node belongs to the **Rendering** component and requires at least level **5,** its default container field is *tangent.* It is available from X3D version 4.0 or higher.
 
->**Info:** Please note that the functionality of this node is still experimental.
+>**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
 
 ## Hierarchy

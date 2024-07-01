@@ -17,7 +17,7 @@ TransmissionMaterialExtension is an extension for [PhysicalMaterial](../../shape
 
 The TransmissionMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
 
->**Info:** Please note that the functionality of this node is still experimental.
+>**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
 
 ## Hierarchy

@@ -17,7 +17,7 @@ InstancedShape can appear under any grouping node. InstancedShape can contain an
 
 The InstancedShape node belongs to the **X_ITE** component and its default container field is *children.* It is available in X_ITE.
 
->**Info:** Please note that the functionality of this node is still experimental.
+>**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
 
 ## Hierarchy
