@@ -109,10 +109,10 @@ function updateComponents (supported)
          if (file .includes ("NOT SUPPORTED"))
             list += ` <small class="red">not supported</small>`;
 
-         if (file .includes ("DEPRECIATED"))
+         else if (file .includes ("DEPRECIATED"))
             list += ` <small class="yellow">depreciated</small>`;
 
-         if (file .includes ("EXPERIMENTAL"))
+         else if (file .includes ("EXPERIMENTAL"))
             list += ` <small class="blue">experimental</small>`;
 
          list += `\n`;
