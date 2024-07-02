@@ -12,7 +12,7 @@
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.7.4, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/assets/X3D/teaser.x3d'/>
-    <meta name='modified' content='Tue, 02 Jul 2024 15:33:48 GMT'/>
+    <meta name='modified' content='Tue, 02 Jul 2024 15:38:50 GMT'/>
   </head>
   <Scene>
     <WorldInfo
@@ -60,6 +60,7 @@
         center='-3.834375 -0.643363 1'>
       <Group DEF='Animation'>
         <TimeSensor DEF='_1'
+            cycleInterval='0.5'
             startTime='1719933110.913'/>
         <OrientationInterpolator DEF='_2'
             key='0, 0.5, 1'
