@@ -26,6 +26,18 @@
             "type": "shell",
             "command": "git ls-files --others --exclude-standard",
             "problemMatcher": []
+        },
+        {
+            "label": "X_ITE Docs",
+            "type": "shell",
+            "command": "npm run docs",
+            "problemMatcher": [],
+            "options": {
+                "shell": {
+                    "executable": "zsh",
+                    "args": ["-c"]
+                }
+            }
         }
     ]
 }
