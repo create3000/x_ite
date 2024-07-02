@@ -85,14 +85,6 @@
 					default="FALSE"
 					description="*shadows* field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry."
 				></field>
-				<field name="shadowColor"
-					type="SFColor"
-					accessType="inputOutput"
-					default="0 0 0"
-					minInclusive="0"
-					maxInclusive="1"
-					description="Color of shadow, applied to colors of objects."
-				></field>
 				<field name="shadowIntensity"
 					type="SFFloat"
 					accessType="inputOutput"
@@ -100,21 +92,6 @@
 					minInclusive="0"
 					maxInclusive="1"
 					description="*shadowIntensity* field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows)."
-				></field>
-				<field name="shadowBias"
-					type="SFFloat"
-					accessType="inputOutput"
-					default="0.005"
-					minInclusive="0"
-					maxInclusive="1"
-					description="The shadowBias value controls the visibility of *shadow acne*."
-				></field>
-				<field name="shadowMapSize"
-					type="SFInt32"
-					accessType="initializeOnly"
-					default="1024"
-					minInclusive="0"
-					description="Size of the shadow map in pixels, must be power of two."
 				></field>
 				<containerField default="children" type="xs:NMTOKEN" />
 			</InterfaceDefinition>
