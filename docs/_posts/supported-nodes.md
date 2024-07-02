@@ -47,6 +47,7 @@ Missing Nodes:
 - 6 DIS
 - 2 joints from RigidBodyCollection
 - 3 shader nodes from Shaders
+- 2 sound nodes
 -->
 
 <!-- COMPONENTS BEGIN -->
