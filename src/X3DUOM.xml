@@ -43,7 +43,6 @@
 					accessType="inputOutput"
 					default="1"
 					minInclusive="0"
-					maxExclusive="∞"
 					description="Brightness of direct emission from the light."
 				></field>
 				<field name="ambientIntensity"
@@ -59,7 +58,6 @@
 					accessType="inputOutput"
 					default="0 0 1 0"
 					minInclusive="-1"
-					maxExclusive="∞"
 					description="Input/Output field *rotation*."
 				></field>
 				<field name="diffuseTexture"
@@ -116,7 +114,6 @@
 					accessType="initializeOnly"
 					default="1024"
 					minInclusive="0"
-					maxExclusive="∞"
 					description="Size of the shadow map in pixels, must be power of two."
 				></field>
 				<containerField default="children" type="xs:NMTOKEN" />
@@ -261,7 +258,6 @@
 					type="SFFloat"
 					accessType="inputOutput"
 					default="0"
-					minExclusive="-∞"
 					description="The rotation of the anisotropy in tangent, bitangent space, measured in radians counter-clockwise from the tangent. When the anisotropy texture is present, this value provides additional rotation to the vectors in the texture."
 				/>
 				<field name="anisotropyTextureMapping"
@@ -514,7 +510,6 @@
 					type="SFVec2f"
 					accessType="inputOutput"
 					default="0 0"
-					minExclusive="-∞"
 					description="Specifies the scale factors and units to calculate depth values.The offset is added before the depth test is performed and before the value is written into the depth buffer.The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0.The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0."
 				/>
 				<field name="depthRange"
@@ -639,20 +634,16 @@
 				<field name="translations"
 					type="MFVec3f"
 					accessType="inputOutput"
-					minExclusive="-∞"
 					description="Input/Output field *translations*."
 				/>
 				<field name="rotations"
 					type="MFRotation"
 					accessType="inputOutput"
-					minExclusive="-∞"
-					maxInclusive="1"
 					description="Input/Output field *rotations*."
 				/>
 				<field name="scales"
 					type="MFVec3f"
 					accessType="inputOutput"
-					minExclusive="-∞"
 					description="Input/Output field *scales*."
 				/>
 				<field name="pointerEvents"
@@ -690,7 +681,6 @@
 					type="SFVec3f"
 					accessType="initializeOnly"
 					default="0 0 0"
-					minExclusive="-∞"
 					description="Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system."
 				/>
 				<field name="appearance"
