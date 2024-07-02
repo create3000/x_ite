@@ -5,7 +5,7 @@ const { sh } = require ("shell-tools");
 const
    excludes      = new Set (["ProtoInstance"]),
    x3duom        = xml (sh (`wget -q -O - https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.0.xml`)),
-   experimental  = xml (sh (`cat`, `${__dirname}/../../src/x3duom.xml`)),
+   experimental  = xml (sh (`cat`, `${__dirname}/../../src/X3DUOM.xml`)),
    concreteNodes = new Map (x3duom .X3dUnifiedObjectModel .ConcreteNodes .ConcreteNode
       .filter (node => node .InterfaceDefinition ?.componentInfo)
       .concat (experimental .X3dUnifiedObjectModel .ConcreteNodes .ConcreteNode)
