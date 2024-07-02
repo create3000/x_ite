@@ -7,7 +7,7 @@
 
 		<ConcreteNode name="Tangent">
 			<InterfaceDefinition
-				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/tangent"
+				specificationUrl="https://create3000.github.io/x_ite/components/rendering/tangent"
 				appinfo="Tangent.">
 				<componentInfo name="Rendering" level="4" />
 				<Inheritance baseType="X3DGeometricPropertyNode" />
