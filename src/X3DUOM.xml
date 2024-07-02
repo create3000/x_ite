@@ -8,7 +8,7 @@
 		<ConcreteNode name="EnvironmentLight">
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/lighting/environmentlight"
-				appinfo="EnvironmentLight ... This node only affects the PhysicalMaterial node and the SpecularGlossinessMaterial node.">
+				appinfo="EnvironmentLight ... This node only affects PhysicalMaterial nodes and SpecularGlossinessMaterial nodes.">
 				<componentInfo name="Lighting" level="3" />
 				<Inheritance baseType="X3DLightNode" />
 				<field name="metadata"

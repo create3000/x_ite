@@ -7034,7 +7034,7 @@ interface EmissiveStrengthMaterialExtensionProxy extends X3DMaterialExtensionNod
    metadata: SFNode | null;
 }
 
-/** EnvironmentLight ... This node only affects the PhysicalMaterial node and the SpecularGlossinessMaterial node. */
+/** EnvironmentLight ... This node only affects PhysicalMaterial nodes and SpecularGlossinessMaterial nodes. */
 interface EnvironmentLightProxy extends X3DLightNodeProxy
 {
    /**
