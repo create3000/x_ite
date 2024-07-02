@@ -214,6 +214,10 @@ small, .small {
   aspect-ratio: 16 / 5;
 }
 
+.content x3d-canvas.teaser::part(surface) {
+  cursor: default !important;
+}
+
 span[data-label-text="VRML" i] {
   text-transform: uppercase;
 }

@@ -5,9 +5,100 @@
 	xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/X3dUnifiedObjectModel.xsd">
 	<ConcreteNodes>
 
+		<ConcreteNode name="EnvironmentLight">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/lighting/environmentlight"
+				appinfo="EnvironmentLight ... This node only affects PhysicalMaterial nodes and SpecularGlossinessMaterial nodes.">
+				<componentInfo name="Lighting" level="3" />
+				<Inheritance baseType="X3DLightNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				></field>
+				<field name="global"
+					type="SFBool"
+					accessType="inputOutput"
+					default="FALSE"
+					description="Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy."
+				></field>
+				<field name="on"
+					type="SFBool"
+					accessType="inputOutput"
+					default="TRUE"
+					description="Enables/disables this light source."
+				></field>
+				<field name="color"
+					type="SFColor"
+					accessType="inputOutput"
+					default="1 1 1"
+					minInclusive="0"
+					maxInclusive="1"
+					description="*color* of light, applied to colors of objects."
+				></field>
+				<field name="intensity"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1"
+					minInclusive="0"
+					description="Brightness of direct emission from the light."
+				></field>
+				<field name="ambientIntensity"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					maxInclusive="1"
+					description="Brightness of ambient (nondirectional background) emission from the light. Interchange profile"
+				></field>
+				<field name="rotation"
+					type="SFRotation"
+					accessType="inputOutput"
+					default="0 0 1 0"
+					minInclusive="-1"
+					description="Input/Output field *rotation*."
+				></field>
+				<field name="diffuseTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DEnvironmentTextureNode"
+					description="Input/Output field *diffuseTexture*."
+				></field>
+				<field name="diffuseCoefficients"
+					type="MFFloat"
+					accessType="inputOutput"
+					description="Input/Output field *diffuseCoefficients*."
+				></field>
+				<field name="specularTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DEnvironmentTextureNode"
+					description="Input/Output field *specularTexture*."
+				></field>
+				<field name="shadows"
+					type="SFBool"
+					accessType="inputOutput"
+					default="FALSE"
+					description="*shadows* field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry."
+				></field>
+				<field name="shadowIntensity"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1"
+					minInclusive="0"
+					maxInclusive="1"
+					description="*shadowIntensity* field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows)."
+				></field>
+				<containerField default="children" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
 		<ConcreteNode name="Tangent">
 			<InterfaceDefinition
-				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/tangent"
+				specificationUrl="https://create3000.github.io/x_ite/components/rendering/tangent"
 				appinfo="Tangent.">
 				<componentInfo name="Rendering" level="4" />
 				<Inheritance baseType="X3DGeometricPropertyNode" />
@@ -32,7 +123,7 @@
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/texturing3d/imagetextureatlas"
 				appinfo="ImageTextureAtlas defines a 3D image-based texture map by specifying a single image file that contains slices for complete 3D data.">
-				<componentInfo name="X_ITE" level="1" />
+				<componentInfo name="Texturing3D" level="1" />
 				<Inheritance baseType="X3DTexture3DNode" />
 				<field name="metadata"
 					type="SFNode"
@@ -144,7 +235,6 @@
 					type="SFFloat"
 					accessType="inputOutput"
 					default="0"
-					minExclusive="-∞"
 					description="The rotation of the anisotropy in tangent, bitangent space, measured in radians counter-clockwise from the tangent. When the anisotropy texture is present, this value provides additional rotation to the vectors in the texture."
 				/>
 				<field name="anisotropyTextureMapping"
@@ -397,7 +487,6 @@
 					type="SFVec2f"
 					accessType="inputOutput"
 					default="0 0"
-					minExclusive="-∞"
 					description="Specifies the scale factors and units to calculate depth values.The offset is added before the depth test is performed and before the value is written into the depth buffer.The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0.The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0."
 				/>
 				<field name="depthRange"
@@ -406,7 +495,7 @@
 					default="0 1"
 					minInclusive="0"
 					maxInclusive="1"
-					description="Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.The first value is *zNear*, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0.The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1."
+					description="Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.The first value is *zNear*, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0. The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1."
 				/>
 				<field name="depthTest"
 					type="SFBool"
@@ -522,20 +611,16 @@
 				<field name="translations"
 					type="MFVec3f"
 					accessType="inputOutput"
-					minExclusive="-∞"
 					description="Input/Output field *translations*."
 				/>
 				<field name="rotations"
 					type="MFRotation"
 					accessType="inputOutput"
-					minExclusive="-∞"
-					maxInclusive="1"
 					description="Input/Output field *rotations*."
 				/>
 				<field name="scales"
 					type="MFVec3f"
 					accessType="inputOutput"
-					minExclusive="-∞"
 					description="Input/Output field *scales*."
 				/>
 				<field name="pointerEvents"
@@ -573,7 +658,6 @@
 					type="SFVec3f"
 					accessType="initializeOnly"
 					default="0 0 0"
-					minExclusive="-∞"
 					description="Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system."
 				/>
 				<field name="appearance"

@@ -91,8 +91,8 @@ function X3DCoreContext (element)
    // Get canvas & context.
 
    const
-      browser      = $("<div></div>") .addClass ("x_ite-private-browser") .attr ("tabindex", 0),
-      surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser),
+      browser      = $("<div></div>") .addClass ("x_ite-private-browser") .attr ("part", "browser") .attr ("tabindex", 0),
+      surface      = $("<div></div>") .addClass ("x_ite-private-surface") .attr ("part", "surface") .appendTo (browser),
       splashScreen = $("<div></div>") .hide () .addClass ("x_ite-private-splash-screen") .appendTo (browser),
       spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
       progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
@@ -127,7 +127,7 @@ function X3DCoreContext (element)
    this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
    this [_element]      = element;
    this [_surface]      = surface;
-   this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
+   this [_canvas]       = $("<canvas></canvas>") .attr ("part", "canvas") .addClass ("x_ite-private-canvas") .prependTo (surface);
    this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true", this [_mobile]);
    this [_splashScreen] = splashScreen;
 
