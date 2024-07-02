@@ -3,16 +3,37 @@
 <X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <component name='Geometry2D' level='2'/>
+    <component name='PointingDeviceSensor' level='1'/>
     <component name='Scripting' level='1'/>
     <component name='Text' level='1'/>
+    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='created' content='Sat, 28 Jan 2023 13:31:50 GMT'/>
     <meta name='comment' content='Rise and Shine'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.3.3, https://create3000.github.io/sunrize/'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.4, https://create3000.github.io/sunrize/'/>
     <meta name='identifier' content='file:///Users/holger/Desktop/X_ITE/x_ite/docs/assets/X3D/teaser.x3d'/>
-    <meta name='modified' content='Wed, 13 Dec 2023 08:24:10 GMT'/>
+    <meta name='modified' content='Tue, 02 Jul 2024 15:14:19 GMT'/>
   </head>
   <Scene>
+    <WorldInfo
+        title='teaser'>
+      <MetadataSet containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet
+            name='BrowserFrame'>
+          <MetadataBoolean
+              name='fixedSize'
+              value='true'/>
+          <MetadataDouble
+              name='aspectRatio'
+              value='780, 245'/>
+          <MetadataString
+              name='backgroundColor'
+              value='""'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
     <NavigationInfo
         type='"NONE"'/>
     <Background DEF='White'
@@ -35,19 +56,38 @@
       </Shape>
     </Transform>
     <Transform DEF='Text'
-        translation='-9 -1 1'>
-      <Shape>
-        <Appearance>
-          <UnlitMaterial/>
-        </Appearance>
-        <Text DEF='_2'
-            string='"X_ITE v9.1.8"'>
-          <FontStyle
-              family='"Michroma-Regular.ttf", "SANS"'
-              size='1.2'/>
-        </Text>
-      </Shape>
+        rotation='1 0 0 180'
+        center='-3.834375 -0.643363 1'>
+      <Group DEF='Animation'>
+        <TimeSensor DEF='_1'
+            startTime='1719933110.913'/>
+        <OrientationInterpolator DEF='_2'
+            key='0, 0.5, 1'
+            keyValue='1 0 0 0, 1 0 0 90, 1 0 0 180'/>
+      </Group>
+      <Transform DEF='Front'
+          translation='-9 -0.643363 1'>
+        <Shape DEF='_3'>
+          <Appearance>
+            <UnlitMaterial/>
+          </Appearance>
+          <Text DEF='_4'
+              string='"X_ITE v10.0.2"'
+              solid='true'>
+            <FontStyle
+                family='"Michroma-Regular.ttf", "SANS"'
+                size='1.2'
+                justify='"BEGIN", "MIDDLE"'/>
+          </Text>
+        </Shape>
+      </Transform>
+      <Transform DEF='Back'
+          translation='-9 -0.643363 1'
+          rotation='1 0 0 180'>
+        <Shape USE='_3'/>
+      </Transform>
     </Transform>
+    <TouchSensor DEF='_5'/>
     <Script DEF='X_ITE'>
       <field accessType='outputOnly' type='MFString' name='string_changed'/>
 <![CDATA[ecmascript:
@@ -58,6 +98,9 @@ function initialize ()
 }
 ]]>
     </Script>
-    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_2' toField='set_string'/>
+    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_4' toField='set_string'/>
+    <ROUTE fromNode='_5' fromField='touchTime' toNode='_1' toField='set_startTime'/>
+    <ROUTE fromNode='_1' fromField='fraction_changed' toNode='_2' toField='set_fraction'/>
+    <ROUTE fromNode='_2' fromField='value_changed' toNode='Text' toField='set_rotation'/>
   </Scene>
 </X3D>
