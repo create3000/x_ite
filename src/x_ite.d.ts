@@ -1169,6 +1169,7 @@ interface X3DConstants
    readonly EdgeEnhancementVolumeStyle: number;
    readonly ElevationGrid: number;
    readonly EmissiveStrengthMaterialExtension: number;
+   readonly EnvironmentLight: number;
    readonly EspduTransform: number;
    readonly ExplosionEmitter: number;
    readonly Extrusion: number;
@@ -6283,7 +6284,7 @@ interface DepthModeProxy extends X3DAppearanceChildNodeProxy
    */
    depthMask: boolean;
    /**
-   * Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.The first value is *zNear*, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0.The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1.
+   * Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.The first value is *zNear*, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0. The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1.
    *
    * This field is of access type 'inputOutput' and type SFVec2f.
    */
@@ -7031,6 +7032,83 @@ interface EmissiveStrengthMaterialExtensionProxy extends X3DMaterialExtensionNod
    * This field is of access type 'inputOutput' and type SFNode.
    */
    metadata: SFNode | null;
+}
+
+/** EnvironmentLight ... This node only affects the PhysicalMaterial node and the SpecularGlossinessMaterial node. */
+interface EnvironmentLightProxy extends X3DLightNodeProxy
+{
+   /**
+   * Brightness of ambient (nondirectional background) emission from the light. Interchange profile
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   ambientIntensity: number;
+   /**
+   * *color* of light, applied to colors of objects.
+   *
+   * This field is of access type 'inputOutput' and type SFColor.
+   */
+   color: SFColor;
+   /**
+   * Input/Output field *diffuseCoefficients*.
+   *
+   * This field is of access type 'inputOutput' and type MFFloat.
+   */
+   diffuseCoefficients: MFFloat;
+   /**
+   * Input/Output field *diffuseTexture*.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   diffuseTexture: SFNode | null;
+   /**
+   * Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+   *
+   * This field is of access type 'inputOutput' and type SFBool.
+   */
+   global: boolean;
+   /**
+   * Brightness of direct emission from the light.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   intensity: number;
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
+   /**
+   * Enables/disables this light source.
+   *
+   * This field is of access type 'inputOutput' and type SFBool.
+   */
+   on: boolean;
+   /**
+   * Input/Output field *rotation*.
+   *
+   * This field is of access type 'inputOutput' and type SFRotation.
+   */
+   rotation: SFRotation;
+   /**
+   * *shadowIntensity* field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   shadowIntensity: number;
+   /**
+   * *shadows* field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
+   *
+   * This field is of access type 'inputOutput' and type SFBool.
+   */
+   shadows: boolean;
+   /**
+   * Input/Output field *specularTexture*.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   specularTexture: SFNode | null;
 }
 
 /** EspduTransform is a networked Transform node that can contain most nodes. */
@@ -22171,6 +22249,7 @@ type ConcreteNodeTypes = {
    EdgeEnhancementVolumeStyle: EdgeEnhancementVolumeStyleProxy,
    ElevationGrid: ElevationGridProxy,
    EmissiveStrengthMaterialExtension: EmissiveStrengthMaterialExtensionProxy,
+   EnvironmentLight: EnvironmentLightProxy,
    EspduTransform: EspduTransformProxy,
    ExplosionEmitter: ExplosionEmitterProxy,
    Extrusion: ExtrusionProxy,
