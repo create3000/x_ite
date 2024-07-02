@@ -14,7 +14,8 @@
     "./x_ite.min.js": "./dist/x_ite.min.js",
     "./x_ite.mjs": "./dist/x_ite.mjs",
     "./x_ite.min.mjs": "./dist/x_ite.min.mjs",
-    "./x_ite.d.ts": "./dist/x_ite.d.ts"
+    "./x_ite.d.ts": "./dist/x_ite.d.ts",
+    "./x3duom.xml": "./dist/x3duom.xml"
   },
   "files": [
     "dist/*"

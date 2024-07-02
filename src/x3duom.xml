@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- X3D Unified Object Model (X3DUOM) XML -->
+<!-- Missing declarations for X_ITE experimental nodes -->
+<X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" version="4.0"
+	xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/X3dUnifiedObjectModel.xsd">
+	<ConcreteNodes>
+
+		<ConcreteNode name="Tangent">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/tangent"
+				appinfo="Tangent.">
+				<componentInfo name="Rendering" level="4" />
+				<Inheritance baseType="X3DGeometricPropertyNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="vector"
+					type="MFVec4f"
+					accessType="inputOutput"
+					minInclusive="-1"
+					maxInclusive="1"
+					description="A unit XYZ vector defining a tangent direction on the surface, and a W component whose sign value (-1 or +1) indicates the handedness of the tangent base."
+				></field>
+				<containerField default="tangent" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="ImageTextureAtlas">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/texturing3d/imagetextureatlas"
+				appinfo="ImageTextureAtlas defines a 3D image-based texture map by specifying a single image file that contains slices for complete 3D data.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DTexture3DNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="description"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Author-provided prose that describes intended purpose of the url asset."
+				/>
+				<field name="load"
+					type="SFBool"
+					accessType="inputOutput"
+					default="TRUE"
+					description="*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene."
+				/>
+				<field name="url"
+					type="MFString"
+					accessType="inputOutput"
+					description="Location and filename of image. Multiple locations are more reliable, and including a Web address lets e-mail attachments work."
+				/>
+				<field name="autoRefresh"
+					type="SFTime"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					description="*autoRefresh* defines interval in seconds before automatic reload of current url asset is performed."
+				/>
+				<field name="autoRefreshTimeLimit"
+					type="SFTime"
+					accessType="inputOutput"
+					default="3600"
+					minInclusive="0"
+					description="*autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur."
+				/>
+				<field name="slicesOverX"
+					type="SFInt32"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					description="Number of images in x direction."
+				/>
+				<field name="slicesOverY"
+					type="SFInt32"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					description="Number of images in y direction."
+				/>
+				<field name="numberOfSlices"
+					type="SFInt32"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					description="Total number of images."
+				/>
+				<field name="repeatS"
+					type="SFBool"
+					accessType="initializeOnly"
+					default="FALSE"
+					description="Whether to repeat texture along S axis horizontally from left to right."
+				/>
+				<field name="repeatT"
+					type="SFBool"
+					accessType="initializeOnly"
+					default="FALSE"
+					description="Whether to repeat texture along T axis vertically from top to bottom."
+				/>
+				<field name="repeatR"
+					type="SFBool"
+					accessType="initializeOnly"
+					default="FALSE"
+					description="Whether to repeat texture along R axis from front to back."
+				/>
+				<field name="textureProperties"
+					type="SFNode"
+					accessType="initializeOnly"
+					default="NULL"
+					description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."
+				/>
+				<containerField default="texture" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="AnisotropyMaterialExtension">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/anisotropymaterialextension"
+				appinfo="AnisotropyMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DMaterialExtensionNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="anisotropyStrength"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					description="The anisotropy strength. When the anisotropy texture is present, this value is multiplied by the texture's blue channel."
+				/>
+				<field name="anisotropyRotation"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="0"
+					minExclusive="-∞"
+					description="The rotation of the anisotropy in tangent, bitangent space, measured in radians counter-clockwise from the tangent. When the anisotropy texture is present, this value provides additional rotation to the vectors in the texture."
+				/>
+				<field name="anisotropyTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *anisotropyTextureMapping*."
+				/>
+				<field name="anisotropyTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="The anisotropy texture. Red and green channels represent the anisotropy direction in tangent, bitangent space to be rotated by the anisotropy rotation. The blue channel contains strength as to be multiplied by the anisotropy strength."
+				/>
+				<containerField default="blendMode" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="BlendMode">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/blendmode"
+				appinfo="BlendMode controls how pixels of an objects are drawn. Pixels can be drawn using a function that blends the incoming (source) RGBA values with the RGBA values that are already in the frame buffer (the destination values). BlendMode is an X3DAppearanceChildNode node that handles blend operations.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DAppearanceChildNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="blendColor"
+					type="SFColorRGBA"
+					accessType="inputOutput"
+					default="0 0 0 0"
+					minInclusive="0"
+					maxInclusive="1"
+					description="The *blendColor* may be used to calculate the source and destination blending factors."
+				/>
+				<field name="sourceColorFactor"
+					type="SFString"
+					accessType="inputOutput"
+					default="SRC_ALPHA"
+					description="Specifies how the red, green, and blue source blending factors are computed.Source and destination parameters must be one of the following symbolic constants:
+- ZERO
+- ONE
+- SRC_COLOR
+- ONE_MINUS_SRC_COLOR
+- DST_COLOR
+- ONE_MINUS_DST_COLOR
+- SRC_ALPHA
+- ONE_MINUS_SRC_ALPHA
+- DST_ALPHA
+- ONE_MINUS_DST_ALPHA
+- CONSTANT_COLOR
+- ONE_MINUS_CONSTANT_COLOR
+- CONSTANT_ALPHA
+- ONE_MINUS_CONSTANT_ALPHA"
+				>
+					<enumeration value="ZERO" />
+					<enumeration value="ONE" />
+					<enumeration value="SRC_COLOR" />
+					<enumeration value="ONE_MINUS_SRC_COLOR" />
+					<enumeration value="DST_COLOR" />
+					<enumeration value="ONE_MINUS_DST_COLOR" />
+					<enumeration value="SRC_ALPHA" />
+					<enumeration value="ONE_MINUS_SRC_ALPHA" />
+					<enumeration value="DST_ALPHA" />
+					<enumeration value="ONE_MINUS_DST_ALPHA" />
+					<enumeration value="CONSTANT_COLOR" />
+					<enumeration value="ONE_MINUS_CONSTANT_COLOR" />
+					<enumeration value="CONSTANT_ALPHA" />
+					<enumeration value="ONE_MINUS_CONSTANT_ALPHA" />
+				</field>
+				<field name="sourceAlphaFactor"
+					type="SFString"
+					accessType="inputOutput"
+					default="ONE"
+					description="Specifies how the alpha source blending factors are computed."
+				>
+					<enumeration value="ZERO" />
+					<enumeration value="ONE" />
+					<enumeration value="SRC_COLOR" />
+					<enumeration value="ONE_MINUS_SRC_COLOR" />
+					<enumeration value="DST_COLOR" />
+					<enumeration value="ONE_MINUS_DST_COLOR" />
+					<enumeration value="SRC_ALPHA" />
+					<enumeration value="ONE_MINUS_SRC_ALPHA" />
+					<enumeration value="DST_ALPHA" />
+					<enumeration value="ONE_MINUS_DST_ALPHA" />
+					<enumeration value="CONSTANT_COLOR" />
+					<enumeration value="ONE_MINUS_CONSTANT_COLOR" />
+					<enumeration value="CONSTANT_ALPHA" />
+					<enumeration value="ONE_MINUS_CONSTANT_ALPHA" />
+				</field>
+				<field name="destinationColorFactor"
+					type="SFString"
+					accessType="inputOutput"
+					default="ONE_MINUS_SRC_ALPHA"
+					description="Specifies how the red, green, and blue destination blending factors are computed."
+				>
+					<enumeration value="ZERO" />
+					<enumeration value="ONE" />
+					<enumeration value="SRC_COLOR" />
+					<enumeration value="ONE_MINUS_SRC_COLOR" />
+					<enumeration value="DST_COLOR" />
+					<enumeration value="ONE_MINUS_DST_COLOR" />
+					<enumeration value="SRC_ALPHA" />
+					<enumeration value="ONE_MINUS_SRC_ALPHA" />
+					<enumeration value="DST_ALPHA" />
+					<enumeration value="ONE_MINUS_DST_ALPHA" />
+					<enumeration value="CONSTANT_COLOR" />
+					<enumeration value="ONE_MINUS_CONSTANT_COLOR" />
+					<enumeration value="CONSTANT_ALPHA" />
+					<enumeration value="ONE_MINUS_CONSTANT_ALPHA" />
+				</field>
+				<field name="destinationAlphaFactor"
+					type="SFString"
+					accessType="inputOutput"
+					default="ONE_MINUS_SRC_ALPHA"
+					description="Specifies how the alpha destination blending factors are computed."
+				>
+					<enumeration value="ZERO" />
+					<enumeration value="ONE" />
+					<enumeration value="SRC_COLOR" />
+					<enumeration value="ONE_MINUS_SRC_COLOR" />
+					<enumeration value="DST_COLOR" />
+					<enumeration value="ONE_MINUS_DST_COLOR" />
+					<enumeration value="SRC_ALPHA" />
+					<enumeration value="ONE_MINUS_SRC_ALPHA" />
+					<enumeration value="DST_ALPHA" />
+					<enumeration value="ONE_MINUS_DST_ALPHA" />
+					<enumeration value="CONSTANT_COLOR" />
+					<enumeration value="ONE_MINUS_CONSTANT_COLOR" />
+					<enumeration value="CONSTANT_ALPHA" />
+					<enumeration value="ONE_MINUS_CONSTANT_ALPHA" />
+				</field>
+				<field name="colorEquation"
+					type="SFString"
+					accessType="inputOutput"
+					default="FUNC_ADD"
+					description="Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:
+- FUNC_ADD
+- FUNC_SUBTRACT
+- FUNC_REVERSE_SUBTRACT"
+				>
+					<enumeration value="FUNC_ADD" />
+					<enumeration value="FUNC_SUBTRACT" />
+					<enumeration value="FUNC_REVERSE_SUBTRACT" />
+				</field>
+				<field name="alphaEquation"
+					type="SFString"
+					accessType="inputOutput"
+					default="FUNC_ADD"
+					description="Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:
+- FUNC_ADD
+- FUNC_SUBTRACT
+- FUNC_REVERSE_SUBTRACT"
+				>
+					<enumeration value="FUNC_ADD" />
+					<enumeration value="FUNC_SUBTRACT" />
+					<enumeration value="FUNC_REVERSE_SUBTRACT" />
+				</field>
+				<containerField default="blendMode" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="ClearcoatMaterialExtension">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/clearcoatmaterialextension"
+				appinfo="ClearcoatMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DMaterialExtensionNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="clearcoat"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					description="The clearcoat layer intensity."
+				/>
+				<field name="clearcoatTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *clearcoatTextureMapping*."
+				/>
+				<field name="clearcoatTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="The clearcoat layer intensity texture."
+				/>
+				<field name="clearcoatRoughness"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					description="The clearcoat layer roughness."
+				/>
+				<field name="clearcoatRoughnessTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *clearcoatRoughnessTextureMapping*."
+				/>
+				<field name="clearcoatRoughnessTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="The clearcoat layer roughness texture."
+				/>
+				<field name="clearcoatNormalTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *clearcoatNormalTextureMapping*."
+				/>
+				<field name="clearcoatNormalTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="The clearcoat normal map texture."
+				/>
+				<containerField default="depthMode" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="DepthMode">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/depthmode"
+				appinfo="DepthMode contains parameters that are specific for depth control, like the value used for depth buffer comparisons.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DAppearanceChildNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="polygonOffset"
+					type="SFVec2f"
+					accessType="inputOutput"
+					default="0 0"
+					minExclusive="-∞"
+					description="Specifies the scale factors and units to calculate depth values.The offset is added before the depth test is performed and before the value is written into the depth buffer.The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0.The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0."
+				/>
+				<field name="depthRange"
+					type="SFVec2f"
+					accessType="inputOutput"
+					default="0 1"
+					minInclusive="0"
+					maxInclusive="1"
+					description="Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.The first value is *zNear*, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0.The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1."
+				/>
+				<field name="depthTest"
+					type="SFBool"
+					accessType="inputOutput"
+					default="TRUE"
+					description="Activates depth comparisons and updates to the depth buffer."
+				/>
+				<field name="depthFunction"
+					type="SFString"
+					accessType="inputOutput"
+					default="LESS_EQUAL"
+					description="Specifies a function that compares incoming pixel depth to the current depth buffer value.Must be one of the following symbolic constants:* NEVER* LESS* EQUAL* LESS_EQUAL* GREATER* NOT_EQUAL* GREATER_EQUAL* ALWAYS">
+					<enumeration value="NEVER" />
+					<enumeration value="LESS" />
+					<enumeration value="EQUAL" />
+					<enumeration value="LESS_EQUAL" />
+					<enumeration value="GREATER" />
+					<enumeration value="NOT_EQUAL" />
+					<enumeration value="GREATER_EQUAL" />
+					<enumeration value="ALWAYS" />
+				</field>
+				<field name="depthMask"
+					type="SFBool"
+					accessType="inputOutput"
+					default="TRUE"
+					description="Sets whether writing into the depth buffer is enabled or disabled."
+				/>
+				<containerField default="depthMode" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="DispersionMaterialExtension">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/dispersionmaterialextension"
+				appinfo="DispersionMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DMaterialExtensionNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="dispersion"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					description="The strength of the dispersion effect, specified as 20/Abbe number."
+				/>
+				<containerField default="extensions" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="EmissiveStrengthMaterialExtension">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/emissivestrengthmaterialextension"
+				appinfo="EmissiveStrengthMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DMaterialExtensionNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="emissiveStrength"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1"
+					minInclusive="0"
+					description="The strength adjustment to be multiplied with the material's emissive value."
+				/>
+				<containerField default="extensions" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="IORMaterialExtension">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/iormaterialextension"
+				appinfo="IORMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DMaterialExtensionNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="indexOfRefraction"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1.5"
+					minInclusive="1"
+					description="The index of refraction."
+				/>
+				<containerField default="children" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="InstancedShape">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/instancedshape"
+				appinfo="InstancedShape can appear under any grouping node. InstancedShape can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DShapeNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="translations"
+					type="MFVec3f"
+					accessType="inputOutput"
+					minExclusive="-∞"
+					description="Input/Output field *translations*."
+				/>
+				<field name="rotations"
+					type="MFRotation"
+					accessType="inputOutput"
+					minExclusive="-∞"
+					maxInclusive="1"
+					description="Input/Output field *rotations*."
+				/>
+				<field name="scales"
+					type="MFVec3f"
+					accessType="inputOutput"
+					minExclusive="-∞"
+					description="Input/Output field *scales*."
+				/>
+				<field name="pointerEvents"
+					type="SFBool"
+					accessType="inputOutput"
+					default="TRUE"
+					description="*pointerEvents* defines whether this Shape becomes target for pointer events."
+				/>
+				<field name="castShadow"
+					type="SFBool"
+					accessType="inputOutput"
+					default="TRUE"
+					description="Input/Output field *castShadow*."
+				/>
+				<field name="visible"
+					type="SFBool"
+					accessType="inputOutput"
+					default="TRUE"
+					description="Whether or not renderable content within this node is visually displayed."
+				/>
+				<field name="bboxDisplay"
+					type="SFBool"
+					accessType="inputOutput"
+					default="FALSE"
+					description="Whether to display bounding box for associated geometry, aligned with world coordinates."
+				/>
+				<field name="bboxSize"
+					type="SFVec3f"
+					accessType="initializeOnly"
+					default="-1 -1 -1"
+					minInclusive="0"
+					description="Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint."
+				/>
+				<field name="bboxCenter"
+					type="SFVec3f"
+					accessType="initializeOnly"
+					default="0 0 0"
+					minExclusive="-∞"
+					description="Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system."
+				/>
+				<field name="appearance"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DAppearanceNode"
+					description="Input/Output field *appearance*."
+				/>
+				<field name="geometry"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DGeometryNode"
+					description="Input/Output field *geometry*."
+				/>
+				<containerField default="extensions" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="IridescenceMaterialExtension">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/iridescencematerialextension"
+				appinfo="IridescenceMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DMaterialExtensionNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="iridescence"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					description="The iridescence intensity factor."
+				/>
+				<field name="iridescenceTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *iridescenceTextureMapping*."
+				/>
+				<field name="iridescenceTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="The iridescence intensity texture."
+				/>
+				<field name="iridescenceIndexOfRefraction"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1.3"
+					minInclusive="1"
+					description="The index of refraction of the dielectric thin-film layer."
+				/>
+				<field name="iridescenceThicknessMinimum"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="100"
+					minInclusive="0"
+					description="The minimum thickness of the thin-film layer given in nanometers."
+				/>
+				<field name="iridescenceThicknessMaximum"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="400"
+					minInclusive="0"
+					description="The maximum thickness of the thin-film layer given in nanometers."
+				/>
+				<field name="iridescenceThicknessTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *iridescenceThicknessTextureMapping*."
+				/>
+				<field name="iridescenceThicknessTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="The thickness texture of the thin-film layer."
+				/>
+				<containerField default="extensions" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="SheenMaterialExtension">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/sheenmaterialextension"
+				appinfo="SheenMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DMaterialExtensionNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="sheenColor"
+					type="SFColor"
+					accessType="inputOutput"
+					default="0 0 0"
+					minInclusive="0"
+					maxInclusive="1"
+					description="The sheen color in linear space."
+				/>
+				<field name="sheenColorTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *sheenColorTextureMapping*."
+				/>
+				<field name="sheenColorTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="The sheen color (RGB). The sheen color is in sRGB transfer function."
+				/>
+				<field name="sheenRoughness"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					description="The sheen roughness."
+				/>
+				<field name="sheenRoughnessTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *sheenRoughnessTextureMapping*."
+				/>
+				<field name="sheenRoughnessTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="The sheen roughness (Alpha) texture."
+				/>
+				<containerField default="material" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="SpecularGlossinessMaterial">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/specularglossinessmaterial"
+				appinfo="SpecularGlossinessMaterial specifies surface rendering properties for associated geometry nodes. Material attributes are used by the X3D lighting equations during rendering.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DOneSidedMaterialNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="diffuseColor"
+					type="SFColor"
+					accessType="inputOutput"
+					default="1 1 1"
+					minInclusive="0"
+					maxInclusive="1"
+					description="The reflected diffuse factor of the material."
+				/>
+				<field name="diffuseTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *diffuseTextureMapping*."
+				/>
+				<field name="diffuseTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="The diffuse texture."
+				/>
+				<field name="specularColor"
+					type="SFColor"
+					accessType="inputOutput"
+					default="1 1 1"
+					minInclusive="0"
+					maxInclusive="1"
+					description="The specular RGB color of the material."
+				/>
+				<field name="glossiness"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1"
+					minInclusive="0"
+					maxInclusive="1"
+					description="The glossiness or smoothness of the material."
+				/>
+				<field name="specularGlossinessTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *specularGlossinessTextureMapping*."
+				/>
+				<field name="specularGlossinessTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="The specular-glossiness texture."
+				/>
+				<field name="emissiveColor"
+					type="SFColor"
+					accessType="inputOutput"
+					default="0 0 0"
+					minInclusive="0"
+					maxInclusive="1"
+					description="How much glowing light is emitted from this object."
+				/>
+				<field name="emissiveTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material."
+				/>
+				<field name="emissiveTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="When applying emissiveColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel."
+				/>
+				<field name="occlusionStrength"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1"
+					minInclusive="0"
+					maxInclusive="1"
+					description="*occlusionStrength* indicates areas of indirect lighting, typically called ambient occlusion. Higher values indicate areas that should receive full indirect lighting and lower values indicate no indirect lighting."
+				/>
+				<field name="occlusionTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material."
+				/>
+				<field name="occlusionTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="When applying occlusionStrength for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel."
+				/>
+				<field name="normalScale"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1"
+					minInclusive="0"
+					description="*normalScale* controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material."
+				/>
+				<field name="normalTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material."
+				/>
+				<field name="normalTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="When applying normalScale for this material node, the contained texture modulates the texture across the surface."
+				/>
+				<field name="transparency"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					maxInclusive="1"
+					description="How 'clear' an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile"
+				/>
+				<field name="extensions"
+					type="MFNode"
+					accessType="inputOutput"
+					inheritedFrom="X3DMaterialExtensionNode"
+					description="Input/Output field *extensions*."
+				/>
+				<containerField default="extensions" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="SpecularMaterialExtension">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/specularmaterialextension"
+				appinfo="SpecularMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DMaterialExtensionNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="specular"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1"
+					minInclusive="0"
+					description="The strength of the specular reflection."
+				/>
+				<field name="specularTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *specularTextureMapping*."
+				/>
+				<field name="specularTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description=" texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor."
+				/>
+				<field name="specularColor"
+					type="SFColor"
+					accessType="inputOutput"
+					default="1 1 1"
+					minInclusive="0"
+					maxInclusive="1"
+					description="The F0 color of the specular reflection (linear RGB)."
+				/>
+				<field name="specularColorTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *specularColorTextureMapping*."
+				/>
+				<field name="specularColorTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="A texture that defines the F0 color of the specular reflection, stored in the RGB channels and encoded in sRGB. This texture will be multiplied by specularColorFactor."
+				/>
+				<containerField default="extensions" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="TransmissionMaterialExtension">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/transmissionmaterialextension"
+				appinfo="TransmissionMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DMaterialExtensionNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="transmission"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					description="The base percentage of light that is transmitted through the surface."
+				/>
+				<field name="transmissionTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *transmissionTextureMapping*."
+				/>
+				<field name="transmissionTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="A texture that defines the transmission percentage of the surface, stored in the R channel. This will be multiplied by transmissionFactor."
+				/>
+				<containerField default="extensions" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+		<ConcreteNode name="VolumeMaterialExtension">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/volumematerialextension"
+				appinfo="VolumeMaterialExtension is an extension for PhysicalMaterial node and SpecularGlossinessMaterial node.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DMaterialExtensionNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				/>
+				<field name="thickness"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					description="The thickness of the volume beneath the surface. The value is given in the coordinate space of the mesh. If the value is 0 the material is thin-walled. Otherwise the material is a volume boundary. The doubleSided property has no effect on volume boundaries."
+				/>
+				<field name="thicknessTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *thicknessTextureMapping*."
+				/>
+				<field name="thicknessTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="A texture that defines the thickness, stored in the G channel. This will be multiplied by thicknessFactor."
+				/>
+				<field name="attenuationDistance"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="1000000"
+					minInclusive="0"
+					description="Density of the medium given as the average distance that light travels in the medium before interacting with a particle. The value is given in world space."
+				/>
+				<field name="attenuationColor"
+					type="SFColor"
+					accessType="inputOutput"
+					default="1 1 1"
+					minInclusive="0"
+					maxInclusive="1"
+					description="The color that white light turns into due to absorption when reaching the attenuation distance."
+				/>
+				<containerField default="extensions" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+
+	</ConcreteNodes>
+</X3dUnifiedObjectModel>

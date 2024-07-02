@@ -12,6 +12,7 @@ function copy_files ()
    systemSync (`rsync -q -r -x -c -v -t --progress --delete src/assets/linetype dist/assets/`);
 	systemSync (`npm run ts`);
    systemSync (`cp src/x_ite.d.ts dist/`);
+   systemSync (`cp src/x3duom.xml dist/`);
    systemSync (`cp src/example.html dist/`);
 }
 
