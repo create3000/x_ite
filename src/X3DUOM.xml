@@ -32,7 +32,7 @@
 			<InterfaceDefinition
 				specificationUrl="https://create3000.github.io/x_ite/components/texturing3d/imagetextureatlas"
 				appinfo="ImageTextureAtlas defines a 3D image-based texture map by specifying a single image file that contains slices for complete 3D data.">
-				<componentInfo name="X_ITE" level="1" />
+				<componentInfo name="Texturing3D" level="1" />
 				<Inheritance baseType="X3DTexture3DNode" />
 				<field name="metadata"
 					type="SFNode"
