@@ -52,6 +52,8 @@ class Playground
       const url = new URL (document .location .href) .searchParams .get ("url")
          ?? "/x_ite/assets/X3D/playground.x3d";
 
+      browser .baseURL = url;
+
       browser .endUpdate ();
 
       await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
