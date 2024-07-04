@@ -49,13 +49,19 @@ import X3DBrowser from "./Browser/X3DBrowser.js";
 
 class X3DCanvasElement extends HTMLElement
 {
+   browser;
+
    constructor ()
    {
       try
       {
          super ();
 
-         new X3DBrowser (this)
+         Object .defineProperty (this, "browser",
+         {
+            value: new X3DBrowser (this),
+            enumerable: true;
+         });
       }
       catch (error)
       {
