@@ -279,7 +279,7 @@ Object .assign (X3DRenderingContext .prototype,
       {
          const key = Symbol ();
 
-         const change = () =>
+         const test = () =>
          {
             if (this ._viewport [2] !== width)
                return;
@@ -294,9 +294,9 @@ Object .assign (X3DRenderingContext .prototype,
 
          this .getElement () .css ({ "width": `${width}px`, "height": `${height}px` });
 
-         this ._viewport .addFieldCallback (key, change);
+         this ._viewport .addFieldCallback (key, test);
 
-         change ();
+         test ();
       });
    },
    reshape ()

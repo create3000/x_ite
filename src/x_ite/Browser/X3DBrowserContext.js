@@ -125,7 +125,8 @@ function X3DBrowserContext (element)
                           X3DConstants .outputOnly, "timeEvents",     new SFTime (),
                           X3DConstants .outputOnly, "sensorEvents",   new SFTime (),
                           X3DConstants .outputOnly, "displayEvents",  new SFTime (),
-                          X3DConstants .outputOnly, "finishedEvents", new SFTime ());
+                          X3DConstants .outputOnly, "finishedEvents", new SFTime (),
+                          X3DConstants .outputOnly, "endEvents",      new SFTime ());
 
    this [_tainted]        = false;
    this [_previousTime]   = 0;
@@ -210,6 +211,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       return this ._finishedEvents;
    },
+   endEvents ()
+   {
+      return this ._endEvents;
+   },
    getBrowser ()
    {
       return this;
@@ -234,6 +239,21 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       this [_tainted]   = true;
       this [_animFrame] = requestAnimationFrame (this [_renderCallback]);
+   },
+   nextFrame ()
+   {
+      return new Promise (resolve =>
+      {
+         const key = Symbol ();
+
+         this .addBrowserEvent ();
+
+         this ._endEvents .addFieldCallback (key, () =>
+         {
+            this ._endEvents .removeFieldCallback (key);
+            resolve ();
+         });
+      });
    },
    [_limitFrameRate] (now)
    {
@@ -309,6 +329,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       this .getFrameBuffer () .blit ();
       this [_displayTime] .stop ();
+
+      this .addTaintedField (this ._endEvents);
+      this [_processEvents] ();
 
       // Finish
 
