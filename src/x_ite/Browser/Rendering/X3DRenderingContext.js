@@ -45,6 +45,8 @@
  *
  ******************************************************************************/
 
+import Fields                 from "../../Fields.js";
+import X3DConstants           from "../../Base/X3DConstants.js";
 import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
 import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import Vector4                from "../../../standard/Math/Numbers/Vector4.js";
@@ -62,7 +64,9 @@ const
 
 function X3DRenderingContext ()
 {
-   this [_viewport]     = new Vector4 (0, 0, 300, 150);
+
+   this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .MFInt32 (0, 0, 300, 150));
+
    this [_frameBuffer]  = new MultiSampleFrameBuffer (this, 300, 150, 4);
    this [_localObjects] = [ ]; // shader objects dumpster
    this [_depthShaders] = new Map ();
@@ -154,7 +158,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    getViewport ()
    {
-      return this [_viewport];
+      return this ._viewport;
    },
    getLocalObjects ()
    {
@@ -269,6 +273,32 @@ Object .assign (X3DRenderingContext .prototype,
 
       return shaderNode;
    },
+   resize (width, height)
+   {
+      return new Promise (resolve =>
+      {
+         const key = Symbol ();
+
+         const change = () =>
+         {
+            if (this ._viewport [2] !== width)
+               return;
+
+            if (this ._viewport [2] !== height)
+               return;
+
+            this ._viewport .removeFieldCallback (key);
+
+            resolve ();
+         }
+
+         this .getElement () .css ({ "width": `${width}px`, "height": `${height}px` });
+
+         this ._viewport .addFieldCallback (key, change);
+
+         change ();
+      });
+   },
    reshape ()
    {
       const
@@ -284,8 +314,8 @@ Object .assign (X3DRenderingContext .prototype,
       canvas .prop ("width",  width);
       canvas .prop ("height", height);
 
-      this [_viewport] [2] = width;
-      this [_viewport] [3] = height;
+      this ._viewport [2] = width;
+      this ._viewport [3] = height;
 
       if (width   === this [_frameBuffer] .getWidth ()   &&
           height  === this [_frameBuffer] .getHeight ()  &&
