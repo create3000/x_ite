@@ -214,6 +214,14 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             return value;
       }
    },
+   convertFDC (f_dc)
+   {
+      // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
+
+      const C0 = 0.28209479177387814;
+
+      return 0.5 + C0 * f_dc;
+   },
    header (elements)
    {
       Grammar .ply .parse (this);
@@ -426,7 +434,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       for (const { name } of properties)
       {
-         if (name .match (/^(?:red|green|blue|alpha|r|g|b|a|s|t|u|v|nx|ny|nz|x|y|z)$/))
+         if (name .match (/^(?:red|green|blue|alpha|r|g|b|a|f_dc_0|f_dc_1|f_dc_2|s|t|u|v|nx|ny|nz|x|y|z)$/))
             continue;
 
          attributes .set (name, [ ]);
@@ -451,6 +459,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "red": case "green": case "blue": case "alpha":
                case "r": case "g": case "b": case "a":
                   colors .push (this .convertColor (this .value, type));
+                  break;
+               case "f_dc_0": case "f_dc_1": case "f_dc_2":
+                  colors .push (this .convertFDC (this .convertColor (this .value, type)));
                   break;
                case "s": case "t":
                case "u": case "v":
