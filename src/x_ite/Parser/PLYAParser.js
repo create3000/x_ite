@@ -47,6 +47,8 @@
 
 import X3DParser   from "./X3DParser.js";
 import Expressions from "./Expressions.js";
+import Rotation4   from "../../standard/Math/Numbers/Rotation4.js";
+import Quaternion  from "../../standard/Math/Numbers/Quaternion.js";
 
 /*
  *  Grammar
@@ -421,20 +423,20 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    async parseVertices ({ count, properties })
    {
       const
-         browser    = this .getBrowser (),
-         scene      = this .getScene (),
-         colors     = [ ],
-         texCoord   = scene .createNode ("TextureCoordinate"),
-         texCoords  = [ ],
-         normal     = scene .createNode ("Normal"),
-         normals    = [ ],
-         coord      = scene .createNode ("Coordinate"),
-         points     = [ ],
-         attributes = new Map ();
+         browser     = this .getBrowser (),
+         scene       = this .getScene (),
+         colors      = [ ],
+         texCoord    = scene .createNode ("TextureCoordinate"),
+         texCoords   = [ ],
+         normal      = scene .createNode ("Normal"),
+         normals     = [ ],
+         coord       = scene .createNode ("Coordinate"),
+         points      = [ ],
+         attributes  = new Map ();
 
       for (const { name } of properties)
       {
-         if (name .match (/^(?:red|green|blue|alpha|r|g|b|a|f_dc_0|f_dc_1|f_dc_2|s|t|u|v|nx|ny|nz|x|y|z)$/))
+         if (name .match (/^(?:red|green|blue|alpha|r|g|b|a|f_dc_0|f_dc_1|f_dc_2|opacity|s|t|u|v|nx|ny|nz|x|y|z)$/))
             continue;
 
          attributes .set (name, [ ]);
@@ -462,6 +464,10 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                   break;
                case "f_dc_0": case "f_dc_1": case "f_dc_2":
                   colors .push (this .convertFDC (this .convertColor (this .value, type)));
+                  break;
+               case "opacity":
+                  // https://github.com/antimatter15/splat/blob/main/convert.py
+                  colors .push (1 / (1 + Math .exp (-this .value)));
                   break;
                case "s": case "t":
                case "u": case "v":
@@ -502,7 +508,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       // Geometric properties
 
       const
-         pAlpha = properties .some (p => p .name .match (/^(?:alpha|a)$/)),
+         pAlpha = properties .some (p => p .name .match (/^(?:alpha|a|opacity)$/)),
          alpha  = pAlpha && colors .some ((v, i) => i % 4 === 3 && v < 1),
          color  = scene .createNode (alpha ? "ColorRGBA" : "Color");
 
