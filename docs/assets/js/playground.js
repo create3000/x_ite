@@ -117,9 +117,13 @@ class Playground
 
       const fileReader = new FileReader ();
 
-      fileReader .addEventListener ("load", () =>
+      fileReader .addEventListener ("load", async () =>
       {
-         this .browser .loadURL (new X3D .MFString (fileReader .result)) .catch (Function .prototype);
+         await this .browser .loadURL (new X3D .MFString (fileReader .result)) .catch (Function .prototype);
+
+         this .editor .setValue (this .browser .currentScene .toXMLString ());
+         monaco .editor .setModelLanguage (editor .getModel (), "xml");
+         this .updateLanguage ("XML");
       });
 
       fileReader .readAsDataURL (file);
