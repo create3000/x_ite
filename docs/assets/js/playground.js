@@ -108,6 +108,11 @@ class Playground
       this .applyChanges ();
    }
 
+   openFile ()
+   {
+
+   }
+
    async applyChanges ()
    {
       const
@@ -151,6 +156,18 @@ class Playground
 
       toolbar .empty ();
 
+      // $("<button></button>")
+      //    .attr ("title", "Open file.")
+      //    .attr ("id", "open-file")
+      //    .addClass (["fa-solid", "fa-file-pen"])
+      //    .on ("click", () =>
+      //    {
+      //       this .openFile (editor);
+      //    })
+      //    .appendTo (toolbar);
+
+      // $("<span></span>") .addClass ("dot") .appendTo (toolbar);
+
       const autoUpdateButton = $("<button></button>")
          .addClass (this .autoUpdate ? "selected" : "")
          .append ($("<i></i>")
@@ -164,7 +181,7 @@ class Playground
             this .autoUpdate = !this .autoUpdate;
 
             if (this .autoUpdate && this .changed)
-               this .applyChanges (editor);
+               this .applyChanges ();
 
             autoUpdateButton
                .removeClass ("selected")
@@ -182,7 +199,7 @@ class Playground
          .addClass (["fa-solid", "fa-arrows-rotate"])
          .on ("click", () =>
          {
-            this .applyChanges (editor);
+            this .applyChanges ();
          })
          .appendTo (toolbar);
 
