@@ -108,9 +108,21 @@ class Playground
       this .applyChanges ();
    }
 
-   openFile ()
+   openFile (input)
    {
+      const file = input .prop ("files") [0];
 
+      if (!file)
+         return;
+
+      const fileReader = new FileReader ();
+
+      fileReader .addEventListener ("load", () =>
+      {
+         this .browser .loadURL (new X3D .MFString (fileReader .result)) .catch (Function .prototype);
+      });
+
+      fileReader .readAsDataURL (file);
    }
 
    async applyChanges ()
@@ -156,17 +168,26 @@ class Playground
 
       toolbar .empty ();
 
-      // $("<button></button>")
-      //    .attr ("title", "Open file.")
-      //    .attr ("id", "open-file")
-      //    .addClass (["fa-solid", "fa-file-pen"])
-      //    .on ("click", () =>
-      //    {
-      //       this .openFile (editor);
-      //    })
-      //    .appendTo (toolbar);
+      const openFile = $("<input></input>")
+         .attr ("type", "file")
+         .attr ("accept", ".x3d,.x3dz,.x3dj,.x3djz,.x3dv,.x3dvz,.wrl,.wrz.wrl,.wrz,.gltf,.glb,.obj,.stl,.ply,.svg,.svgz")
+         .css ({ "position": "absolute", "visibility": "hidden" })
+         .on ("change", () =>
+         {
+            this .openFile (openFile);
+         })
+         .appendTo (toolbar);
 
-      // $("<span></span>") .addClass ("dot") .appendTo (toolbar);
+      $("<button></button>")
+         .attr ("title", "Open file.")
+         .addClass (["fa-solid", "fa-file-pen"])
+         .on ("click", () =>
+         {
+            openFile .trigger ("click");
+         })
+         .appendTo (toolbar);
+
+      $("<span></span>") .addClass ("dot") .appendTo (toolbar);
 
       const autoUpdateButton = $("<button></button>")
          .addClass (this .autoUpdate ? "selected" : "")
