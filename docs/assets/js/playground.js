@@ -65,7 +65,7 @@ class Playground
       this .updateLanguage (encoding);
 
       editor .setValue (browser .currentScene [`to${encoding}String`] ());
-      editor .getModel () .onDidChangeContent (() => this .onDidChangeContent ());
+      editor .getModel () .onDidChangeContent (event => this .onDidChangeContent (event));
 
       browser .beginUpdate ();
 
@@ -83,8 +83,11 @@ class Playground
 
    timeoutId;
 
-   onDidChangeContent ()
+   onDidChangeContent (event)
    {
+      if (event .isFlush)
+         return;
+
       this .changed = true;
 
       $("#refresh-button") .addClass ("selected");
@@ -122,7 +125,7 @@ class Playground
          await this .browser .loadURL (new X3D .MFString (fileReader .result)) .catch (Function .prototype);
 
          this .editor .setValue (this .browser .currentScene .toXMLString ());
-         monaco .editor .setModelLanguage (editor .getModel (), "xml");
+         monaco .editor .setModelLanguage (this .editor .getModel (), "xml");
          this .updateLanguage ("XML");
       });
 
