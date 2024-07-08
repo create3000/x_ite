@@ -604,18 +604,6 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version
 >**Info:** It is no longer necessary to include the CSS file.
 {: .prompt-info }
 
-#### UNPKG CDN
-
-UNPKG CDN is a free, open-source content delivery network that serves files from npm packages, enabling developers to quickly and easily load any file from any npm package using a simple URL format​.
-
-```html
-<script src="https://www.unpkg.com/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
-<!-- or as ES module for use in scripts -->
-<script type="module">
-import X3D from "https://www.unpkg.com/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
-</script>
-```
-
 ### You Can Also Get it from NPM
 
 You can find more information about X_ITE on its [npm page](https://www.npmjs.com/package/x_ite){:target="_blank"}.
