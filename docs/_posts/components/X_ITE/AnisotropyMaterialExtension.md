@@ -54,6 +54,11 @@ Input/Output field *anisotropyTextureMapping*.
 
 The anisotropy texture. Red and green channels represent the anisotropy direction in tangent, bitangent space to be rotated by the anisotropy rotation. The blue channel contains strength as to be multiplied by the anisotropy strength.
 
+## Example
+
+- [View »Anisotropy Barn Lamp« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=AnisotropyBarnLamp)
+{: .example-links }
+
 ## See Also
 
 - [Khronos Specification of KHR_materials_anisotropy Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_anisotropy){:target="_blank"}
