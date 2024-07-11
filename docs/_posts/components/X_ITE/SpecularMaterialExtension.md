@@ -62,6 +62,10 @@ Input/Output field *specularColorTextureMapping*.
 
 A texture that defines the F0 color of the specular reflection, stored in the RGB channels and encoded in sRGB. This texture will be multiplied by specularColorFactor.
 
+## Example
+
+- [View »Specular Silk Pouf« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=SpecularSilkPouf)
+
 ## See Also
 
 - [Khronos Specification of KHR_materials_specular Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_specular){:target="_blank"}

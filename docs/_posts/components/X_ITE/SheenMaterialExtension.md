@@ -62,6 +62,10 @@ Input/Output field *sheenRoughnessTextureMapping*.
 
 The sheen roughness (Alpha) texture.
 
+## Example
+
+- [View »Sheen Cloth« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=SheenCloth)
+
 ## See Also
 
 - [Khronos Specification of KHR_materials_sheen Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_sheen){:target="_blank"}

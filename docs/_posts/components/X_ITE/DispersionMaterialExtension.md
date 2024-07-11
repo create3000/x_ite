@@ -42,6 +42,10 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 The strength of the dispersion effect, specified as 20/Abbe number.
 
+## Example
+
+- [View »Dispersion Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=DispersionTest)
+
 ## See Also
 
 - [Khronos Specification of KHR_materials_dispersion Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_dispersion){:target="_blank"}

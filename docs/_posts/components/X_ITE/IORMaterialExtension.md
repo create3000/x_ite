@@ -42,6 +42,10 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 The index of refraction.
 
+## Example
+
+- [View »IOR Test Grid« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=IORTestGrid)
+
 ## See Also
 
 - [Khronos Specification of KHR_materials_ior Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_ior){:target="_blank"}

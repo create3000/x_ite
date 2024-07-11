@@ -180,6 +180,10 @@ Input/Output field *extensions*.
 - [3D rendering](https://en.wikipedia.org/wiki/3D_rendering){:target="_blank"}
 - [Physically based rendering (PBR)](https://en.wikipedia.org/wiki/Physically_based_rendering){:target="_blank"}
 
+## Example
+
+- [View »Spec Gloss Vs Metal Rough« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=SpecGlossVsMetalRough)
+
 ## See Also
 
 - [Khronos Specification of KHR_materials_pbrSpecularGlossiness Material](https://kcoley.github.io/glTF/extensions/2.0/Khronos/KHR_materials_pbrSpecularGlossiness/#:~:text=The%20PBR%20specular%2Dglossiness%20extension,materials%20compared%20to%20metallic%2Droughness.){:target="_blank"}

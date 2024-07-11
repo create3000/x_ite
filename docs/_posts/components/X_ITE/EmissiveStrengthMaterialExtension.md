@@ -41,6 +41,11 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFFloat [in, out] **emissiveStrength** 1 <small>[0,∞)</small>
 
 The strength adjustment to be multiplied with the material's emissive value.
+ strength of the dispersion effect, specified as 20/Abbe number.
+
+## Example
+
+- [View »Emissive Strength Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=EmissiveStrengthTest)
 
 ## See Also
 

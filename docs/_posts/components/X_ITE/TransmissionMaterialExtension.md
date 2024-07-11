@@ -50,6 +50,10 @@ Input/Output field *transmissionTextureMapping*.
 
 A texture that defines the transmission percentage of the surface, stored in the R channel. This will be multiplied by transmissionFactor.
 
+## Example
+
+- [View »Transmission Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=TransmissionTest)
+
 ## See Also
 
 - [Khronos Specification of KHR_materials_transmission Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_transmission){:target="_blank"}

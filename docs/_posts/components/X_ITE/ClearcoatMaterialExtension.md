@@ -70,6 +70,10 @@ Input/Output field *clearcoatNormalTextureMapping*.
 
 The clearcoat normal map texture.
 
+## Example
+
+- [View »Clear Coat Car Paint« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=ClearCoatCarPaint)
+
 ## See Also
 
 - [Khronos Specification of KHR_materials_clearcoat Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_clearcoat){:target="_blank"}

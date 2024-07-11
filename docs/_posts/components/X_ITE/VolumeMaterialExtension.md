@@ -58,6 +58,10 @@ Density of the medium given as the average distance that light travels in the me
 
 The color that white light turns into due to absorption when reaching the attenuation distance.
 
+## Example
+
+- [View »Dragon Attenuation« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=DragonAttenuation)
+
 ## See Also
 
 - [Khronos Specification of KHR_materials_volume Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_volume){:target="_blank"}

@@ -57,7 +57,6 @@ The anisotropy texture. Red and green channels represent the anisotropy directio
 ## Example
 
 - [View »Anisotropy Barn Lamp« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=AnisotropyBarnLamp)
-{: .example-links }
 
 ## See Also
 

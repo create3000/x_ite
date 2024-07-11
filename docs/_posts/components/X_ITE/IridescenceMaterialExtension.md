@@ -70,6 +70,10 @@ Input/Output field *iridescenceThicknessTextureMapping*.
 
 The thickness texture of the thin-film layer.
 
+## Example
+
+- [View »Iridescent Dish With Olives« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=IridescentDishWithOlives)
+
 ## See Also
 
 - [Khronos Specification of KHR_materials_iridescence Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_iridescence){:target="_blank"}
