@@ -25,10 +25,10 @@ x3d-canvas {
 }
 </style>
 
-<script defer src="/x_ite/assets/laboratory/l-system/FileSaver.js-2.0.0/dist/FileSaver.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 
-<link rel="stylesheet" href="/x_ite/assets/laboratory/l-system/Huebee/huebee.css">
-<script defer src="/x_ite/assets/laboratory/l-system/Huebee/huebee.pkgd.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/huebee@2.1.1/dist/huebee.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/huebee@2.1.1/dist/huebee.pkgd.min.js"></script>
 
 <link rel="stylesheet" href="/x_ite/assets/laboratory/l-system/style.css">
 <script type="module" src="/x_ite/assets/laboratory/l-system/l-system.mjs"></script>

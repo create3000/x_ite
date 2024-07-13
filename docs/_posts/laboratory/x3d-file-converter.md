@@ -41,8 +41,8 @@ x_ite: true
 }
 </style>
 
-<script defer src="/x_ite/assets/laboratory/l-system/FileSaver.js-2.0.0/dist/FileSaver.min.js"></script>
-<script defer src="/x_ite/assets/js/x3d-file-converter.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+<script type="module" src="/x_ite/assets/js/x3d-file-converter.mjs"></script>
 
 ## Upload and Convert
 
