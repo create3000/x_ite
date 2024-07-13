@@ -148,7 +148,7 @@ function link (mimeType, name, x3dSyntax)
    const a = $("<a></a>")
       .text (name)
       .attr ("href", "#")
-      .on ("click", download .bind (null, mimeType, name, x3dSyntax));
+      .on ("click", () => download (mimeType, name, x3dSyntax));
 
    $("<li></li>") .append (a) .appendTo ($("#download-links"));
 }

@@ -41,7 +41,7 @@ x_ite: true
 }
 </style>
 
-<script defer src="https://create3000.github.io/media/laboratory/l-system/FileSaver.js-2.0.0/dist/FileSaver.min.js"></script>
+<script defer src="/x_ite/assets/laboratory/l-system/FileSaver.js-2.0.0/dist/FileSaver.min.js"></script>
 <script defer src="/x_ite/assets/js/x3d-file-converter.js"></script>
 
 ## Upload and Convert
