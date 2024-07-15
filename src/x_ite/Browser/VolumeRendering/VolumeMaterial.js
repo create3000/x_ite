@@ -81,7 +81,9 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
          browser = this .getBrowser (),
          options = [ ];
 
-      const { fogNode, objectsKeys } = renderContext;
+      const { renderObject, fogNode, objectsKeys: localObjectsKeys } = renderContext;
+
+      const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
 
       switch (fogNode ?.getFogType ())
       {
