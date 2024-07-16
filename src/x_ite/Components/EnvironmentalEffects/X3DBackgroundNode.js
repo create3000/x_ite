@@ -83,7 +83,7 @@ function X3DBackgroundNode (executionContext)
    this .textureNodes          = new Array (6);
    this .textureBits           = new BitSet ();
    this .sphereContext         = new GeometryContext ({ colorMaterial: true });
-   this .texturesContext       = new GeometryContext ({ objectsKeys: this .sphereContext .objectsKeys});
+   this .texturesContext       = new GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys});
 }
 
 Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindableNode .prototype),
@@ -434,9 +434,9 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          case TraverseType .DISPLAY:
          {
             const
-               localObjects = renderObject .getLocalObjects (),
-               clipPlanes   = this .clipPlanes,
-               objectsKeys  = this .sphereContext .objectsKeys;
+               localObjects     = renderObject .getLocalObjects (),
+               clipPlanes       = this .clipPlanes,
+               localObjectsKeys = this .sphereContext .localObjectsKeys;
 
             let c = 0;
 
@@ -446,9 +446,9 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
                   clipPlanes [c ++] = localObject;
             }
 
-            clipPlanes  .length = c;
-            objectsKeys .length = c;
-            objectsKeys .fill (0);
+            clipPlanes       .length = c;
+            localObjectsKeys .length = c;
+            localObjectsKeys .fill (0);
             return;
          }
       }

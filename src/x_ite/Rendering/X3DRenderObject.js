@@ -794,8 +794,8 @@ Object .assign (X3DRenderObject .prototype,
 
             // Clip planes and local lights
 
-            assign (renderContext .localObjects, this .localObjects); // Fog, ClipPane, X3DLightNode
-            assign (renderContext .objectsKeys,  this .localObjectsKeys);
+            assign (renderContext .localObjects,     this .localObjects); // Fog, ClipPane, X3DLightNode
+            assign (renderContext .localObjectsKeys, this .localObjectsKeys);
 
             return true;
          }
@@ -811,7 +811,7 @@ Object .assign (X3DRenderObject .prototype,
          modelViewMatrix: new Float32Array (16),
          scissor: new Vector4 (),
          localObjects: [ ],
-         objectsKeys: [ ], // [clip planes, lights]
+         localObjectsKeys: [ ], // [clip planes, lights]
       };
    },
    pointing: (() =>

@@ -59,7 +59,7 @@ function GeometryContext (options = { })
       hasNormals: false,
       hasTangents: false,
       textureNode: null,
-      objectsKeys: [ ],
+      localObjectsKeys: [ ],
       textureCoordinateMapping: new Map (),
       textureCoordinateNode: null,
    },

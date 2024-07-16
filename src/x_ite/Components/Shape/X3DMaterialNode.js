@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       if (renderContext)
       {
-         const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, humanoidNode, objectsKeys } = renderContext;
+         const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, humanoidNode, localObjectsKeys } = renderContext;
 
          key += shapeNode .getAlphaMode ();
          key += renderObject .getRenderAndGlobalLightsKey ();
@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += appearanceNode .getTextureTransformMapping () .size || 1;
          key += geometryContext .textureCoordinateMapping .size || 1;
          key += humanoidNode ?.getHumanoidKey () ?? "[]";
-         key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
+         key += localObjectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
          key += textureNode ? 2 : appearanceNode .getTextureBits () .toString (16);
       }
@@ -125,13 +125,13 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          // Rubberband, X3DBackgroundNode
 
-         const { renderObject, alphaMode, textureNode, objectsKeys } = geometryContext;
+         const { renderObject, alphaMode, textureNode, localObjectsKeys } = geometryContext;
 
          key += alphaMode;
          key += ".";
          key += renderObject .getRenderKey ();
          key += "..000011[]";
-         key += objectsKeys .sort () .join (""); // ClipPlane
+         key += localObjectsKeys .sort () .join (""); // ClipPlane
          key += ".";
          key += textureNode ?.getTextureBits () .toString (16) ?? 0;
       }
@@ -186,7 +186,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       if (renderContext)
       {
-         const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsKeys: localObjectsKeys, textureNode } = renderContext;
+         const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, localObjectsKeys, textureNode } = renderContext;
 
          const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
 
@@ -322,7 +322,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       }
       else
       {
-         const { renderObject, alphaMode, objectsKeys, textureNode } = geometryContext;
+         const { renderObject, alphaMode, localObjectsKeys, textureNode } = geometryContext;
 
          if (renderObject .getLogarithmicDepthBuffer ())
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
@@ -350,7 +350,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             }
          }
 
-         const numClipPlanes = objectsKeys .reduce ((a, c) => a + (c === 0), 0);
+         const numClipPlanes = localObjectsKeys .reduce ((a, c) => a + (c === 0), 0);
 
          if (numClipPlanes)
          {
