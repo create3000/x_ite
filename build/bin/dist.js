@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 "use strict";
 
-const { systemSync } = require ("shell-tools");
+const { systemSync, sh } = require ("shell-tools");
 
 function copy_files ()
 {
+	const version = sh (`npm pkg get version | sed 's/"//g'`) .trim ();
+
    systemSync (`rsync -q -r -x -c -v -t --progress --delete src/assets/fonts    dist/assets/`);
    systemSync (`rsync -q -r -x -c -v -t --progress --delete src/assets/hatching dist/assets/`);
    systemSync (`rsync -q -r -x -c -v -t --progress --delete src/assets/images   dist/assets/`);
@@ -14,6 +16,7 @@ function copy_files ()
    systemSync (`cp src/x_ite.d.ts dist/`);
    systemSync (`cp src/X3DUOM.xml dist/`);
    systemSync (`cp src/example.html dist/`);
+	systemSync (`perl -p0i -e 's|latest|${version}|sg' dist/example.html`);
 }
 
 function html ()
