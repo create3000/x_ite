@@ -284,7 +284,7 @@ Object .assign (X3DRenderingContext .prototype,
             if (this ._viewport [2] !== width)
                return;
 
-            if (this ._viewport [2] !== height)
+            if (this ._viewport [3] !== height)
                return;
 
             this ._viewport .removeFieldCallback (key);
