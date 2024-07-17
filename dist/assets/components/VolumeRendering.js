@@ -1944,13 +1944,14 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (UnlitMateria
    },
    getShader (geometryContext, renderContext)
    {
-      const { fogNode, objectsKeys } = renderContext;
+      const { renderObject, fogNode, localObjectsKeys } = renderContext;
 
       let key = "";
 
+      key += renderObject .getRenderAndGlobalLightsKey ();
       key += fogNode ?.getFogType () ?? 0;
       key += ".";
-      key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
+      key += localObjectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
 
       return this .volumeShaderNodes .get (key) ?? this .createShader (key, geometryContext, renderContext);
    },
@@ -1960,7 +1961,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (UnlitMateria
          browser = this .getBrowser (),
          options = [ ];
 
-      const { renderObject, fogNode, objectsKeys: localObjectsKeys } = renderContext;
+      const { renderObject, fogNode, localObjectsKeys } = renderContext;
 
       const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
 
