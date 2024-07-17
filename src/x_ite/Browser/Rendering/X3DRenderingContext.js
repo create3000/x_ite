@@ -277,14 +277,18 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return new Promise (resolve =>
       {
-         const key = Symbol ();
+         const
+            contentScale   = this .getRenderingProperty ("ContentScale"),
+            viewportWidth  = Math .max (width * contentScale, 1),
+            viewportHeight = Math .max (height * contentScale, 1),
+            key            = Symbol ();
 
          const test = () =>
          {
-            if (this ._viewport [2] !== width)
+            if (this ._viewport [2] !== viewportWidth)
                return;
 
-            if (this ._viewport [3] !== height)
+            if (this ._viewport [3] !== viewportHeight)
                return;
 
             this ._viewport .removeFieldCallback (key);
