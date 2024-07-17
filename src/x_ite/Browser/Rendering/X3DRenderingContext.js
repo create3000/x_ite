@@ -64,12 +64,11 @@ const
 
 function X3DRenderingContext ()
 {
-
    this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .MFInt32 (0, 0, 300, 150));
 
    this [_frameBuffer]  = new MultiSampleFrameBuffer (this, 300, 150, 4);
-   this [_localObjects] = [ ]; // shader objects dumpster
    this [_depthShaders] = new Map ();
+   this [_localObjects] = [ ]; // shader objects dumpster
 }
 
 Object .assign (X3DRenderingContext .prototype,
