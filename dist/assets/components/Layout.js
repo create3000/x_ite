@@ -66,7 +66,6 @@ module.exports = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("lib/jquery
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
 
 // UNUSED EXPORTS: default
 
