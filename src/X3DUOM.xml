@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- X3D Unified Object Model (X3DUOM) XML -->
 <!-- Missing declarations for X_ITE experimental nodes -->
-<!-- Online at https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.0.xml -->
+<!-- This file is an extension of https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.0.xml -->
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" version="4.0"
 	xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/X3dUnifiedObjectModel.xsd">
 	<ConcreteNodes>
