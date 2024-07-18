@@ -161,8 +161,6 @@ Now the sphere looks like an earth and you are very curious how the text will be
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
 
-META "title" "about:hello_world"
-
 Viewpoint {
   description "Home"
   position 0 -1.01581 6.02612
@@ -198,5 +196,7 @@ Transform {
   }
 }
 ```
+- [View Source in Playground](/x_ite/playground/?url=/x_ite/assets/tutorials/hello-world.x3d)
+{: .example-links }
 
 We position the text below the sphere by a translation of about 1 Meter along the y-axis. We want a blue colored text, so we assign a Material node to the *material* field of the Appearance node and set the *diffuseColor* field to 1 0 0. As geometry we take a Text node and set the *string* field to "Hello World!".

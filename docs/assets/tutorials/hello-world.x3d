@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "http://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Text' level='1'/>
+    <meta name='created' content='Thu, 18 Jul 2024 10:00:28 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.6, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Thu, 18 Jul 2024 10:00:28 GMT'/>
+  </head>
+  <Scene>
+    <Viewpoint
+        description='Home'
+        position='0 -1.01581 6.02612'
+        centerOfRotation='0 -1.01581 0'/>
+    <Transform>
+      <Shape>
+        <Appearance>
+          <ImageTexture
+              url='"earth.jpg"'/>
+        </Appearance>
+        <Sphere/>
+      </Shape>
+    </Transform>
+    <Transform
+        translation='0 -1.5 0'>
+      <Shape>
+        <Appearance>
+          <Material
+              diffuseColor='0 0.5 1'/>
+        </Appearance>
+        <Text
+            string='"Hello", "World!"'>
+          <FontStyle
+              justify='"MIDDLE", "BEGIN"'/>
+        </Text>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>
