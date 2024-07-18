@@ -4,6 +4,8 @@ date: 2022-11-28
 nav: tutorials-basic
 categories: [Tutorials]
 tags: [Hello, World]
+redirect_from:
+  - /tutorials/Hello,-World!.html
 ---
 ## Overview
 
