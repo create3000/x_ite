@@ -4,6 +4,8 @@ date: 2022-11-28
 nav: none
 categories: [Tutorials]
 tags: [Tutorials, Overview]
+redirect_from:
+  - /users-guide/tutorials/
 ---
 ## Overview
 
