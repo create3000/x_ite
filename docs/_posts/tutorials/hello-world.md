@@ -196,7 +196,12 @@ Transform {
   }
 }
 ```
-- [View Source in Playground](/x_ite/playground/?url=/x_ite/assets/tutorials/hello-world.x3d)
-{: .example-links }
 
 We position the text below the sphere by a translation of about 1 Meter along the y-axis. We want a blue colored text, so we assign a Material node to the *material* field of the Appearance node and set the *diffuseColor* field to 1 0 0. As geometry we take a Text node and set the *string* field to "Hello World!".
+
+### Result
+
+<x3d-canvas src="/x_ite/assets/tutorials/hello-world.x3d" update="auto"></x3d-canvas>
+
+- [View Source in Playground](/x_ite/playground/?url=/x_ite/assets/tutorials/hello-world.x3d)
+{: .example-links }
