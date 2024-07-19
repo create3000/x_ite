@@ -141,7 +141,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       scene .setProfile (browser .getProfile ("Interchange"));
 
       await browser .loadComponents (scene);
-      await this .processElements (this .header ([ ]))
+
+      this .processElements (this .header ([ ]))
 
       // Create nodes.
 
@@ -354,12 +355,12 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       return false;
    },
-   async processElements (elements)
+   processElements (elements)
    {
       // console .log (elements)
 
       for (const element of elements)
-         await this .processElement (element);
+         this .processElement (element);
 
       if (!this .coord)
          return;
@@ -399,12 +400,12 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       scene .rootNodes .push (shape);
    },
-   async processElement (element)
+   processElement (element)
    {
       switch (element .name)
       {
          case "vertex":
-            await this .parseVertices (element);
+            this .parseVertices (element);
             break;
          case "face":
             this .parseFaces (element);
@@ -420,7 +421,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             break;
       }
    },
-   async parseVertices ({ count, properties })
+   parseVertices ({ count, properties })
    {
       const
          browser     = this .getBrowser (),
@@ -431,16 +432,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          normal      = scene .createNode ("Normal"),
          normals     = [ ],
          coord       = scene .createNode ("Coordinate"),
-         points      = [ ],
-         attributes  = new Map ();
-
-      for (const { name } of properties)
-      {
-         if (name .match (/^(?:red|green|blue|alpha|r|g|b|a|f_dc_0|f_dc_1|f_dc_2|opacity|s|t|u|v|nx|ny|nz|x|y|z)$/))
-            continue;
-
-         attributes .set (name, [ ]);
-      }
+         points      = [ ];
 
       // console .time ("vertices")
 
@@ -456,7 +448,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             switch (name)
             {
                default:
-                  attributes .get (name) .push (this .value);
                   break;
                case "red": case "green": case "blue": case "alpha":
                case "r": case "g": case "b": case "a":
@@ -484,26 +475,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       }
 
       // console .timeEnd ("vertices")
-
-      // Attributes
-
-      if (attributes .size)
-      {
-         scene .addComponent (this .getBrowser () .getComponent ("Shaders", 1));
-
-         await browser .loadComponents (scene);
-
-         for (const [name, value] of attributes)
-         {
-            const floatVertexAttribute = scene .createNode ("FloatVertexAttribute");
-
-            floatVertexAttribute .name          = name;
-            floatVertexAttribute .numComponents = 1;
-            floatVertexAttribute .value         = value;
-
-            this .attrib .push (floatVertexAttribute);
-         }
-      }
 
       // Geometric properties
 
