@@ -424,15 +424,14 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    parseVertices ({ count, properties })
    {
       const
-         browser     = this .getBrowser (),
-         scene       = this .getScene (),
-         colors      = [ ],
-         texCoord    = scene .createNode ("TextureCoordinate"),
-         texCoords   = [ ],
-         normal      = scene .createNode ("Normal"),
-         normals     = [ ],
-         coord       = scene .createNode ("Coordinate"),
-         points      = [ ];
+         scene     = this .getScene (),
+         texCoord  = scene .createNode ("TextureCoordinate"),
+         normal    = scene .createNode ("Normal"),
+         coord     = scene .createNode ("Coordinate"),
+         colors    = [ ],
+         texCoords = [ ],
+         normals   = [ ],
+         points    = [ ];
 
       // console .time ("vertices")
 
