@@ -186,7 +186,7 @@ class Playground
          .appendTo (toolbar);
 
       $("<button></button>")
-         .attr ("title", "Open file.")
+         .attr ("title", "Open a file.")
          .addClass (["fa-solid", "fa-file-pen"])
          .on ("click", () =>
          {
