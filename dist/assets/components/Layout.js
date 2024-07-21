@@ -1,11 +1,11 @@
-/* X_ITE v10.0.4 */(() => { // webpackBootstrap
+/* X_ITE v10.0.5 */(() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 823:
 /***/ ((module) => {
 
-module.exports = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("lib/jquery");
+module.exports = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("lib/jquery");
 
 /***/ })
 
@@ -70,22 +70,22 @@ module.exports = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("lib/jquery
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Texturing/TextureProperties\")"
-const TextureProperties_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Components/Texturing/TextureProperties");
+const TextureProperties_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Components/Texturing/TextureProperties");
 var TextureProperties_default = /*#__PURE__*/__webpack_require__.n(TextureProperties_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("standard/Math/Numbers/Vector3");
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("standard/Math/Numbers/Matrix4");
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/ViewVolume\")"
-const ViewVolume_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("standard/Math/Geometry/ViewVolume");
+const ViewVolume_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("standard/Math/Geometry/ViewVolume");
 var ViewVolume_default = /*#__PURE__*/__webpack_require__.n(ViewVolume_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Layout/X3DLayoutContext.js
 /*******************************************************************************
@@ -226,19 +226,19 @@ const __default__ = X3DLayoutContext;
 Namespace_default().add ("X3DLayoutContext", "x_ite/Browser/Layout/X3DLayoutContext", __default__);
 /* harmony default export */ const Layout_X3DLayoutContext = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Components/Core/X3DChildNode");
+const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Components/Core/X3DChildNode");
 var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/X3DLayoutNode.js
 /*******************************************************************************
@@ -320,10 +320,10 @@ const X3DLayoutNode_default_ = X3DLayoutNode;
 Namespace_default().add ("X3DLayoutNode", "x_ite/Components/Layout/X3DLayoutNode", X3DLayoutNode_default_);
 /* harmony default export */ const Layout_X3DLayoutNode = (X3DLayoutNode_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector2\")"
-const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("standard/Math/Numbers/Vector2");
+const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("standard/Math/Numbers/Vector2");
 var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
-const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("standard/Math/Numbers/Rotation4");
+const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("standard/Math/Numbers/Rotation4");
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/Layout.js
 /*******************************************************************************
@@ -972,13 +972,13 @@ const Layout_default_ = Layout;
 Namespace_default().add ("Layout", "x_ite/Components/Layout/Layout", Layout_default_);
 /* harmony default export */ const Layout_Layout = (Layout_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
-const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
+const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
 var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Base/X3DCast");
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Rendering/TraverseType");
+const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Rendering/TraverseType");
 var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/LayoutGroup.js
 /*******************************************************************************
@@ -1173,10 +1173,10 @@ const LayoutGroup_default_ = LayoutGroup;
 Namespace_default().add ("LayoutGroup", "x_ite/Components/Layout/LayoutGroup", LayoutGroup_default_);
 /* harmony default export */ const Layout_LayoutGroup = (LayoutGroup_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Layering/X3DLayerNode\")"
-const X3DLayerNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Components/Layering/X3DLayerNode");
+const X3DLayerNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Components/Layering/X3DLayerNode");
 var X3DLayerNode_default = /*#__PURE__*/__webpack_require__.n(X3DLayerNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Navigation/OrthoViewpoint\")"
-const OrthoViewpoint_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Components/Navigation/OrthoViewpoint");
+const OrthoViewpoint_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Components/Navigation/OrthoViewpoint");
 var OrthoViewpoint_default = /*#__PURE__*/__webpack_require__.n(OrthoViewpoint_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/LayoutLayer.js
 /*******************************************************************************
@@ -1312,22 +1312,22 @@ const LayoutLayer_default_ = LayoutLayer;
 Namespace_default().add ("LayoutLayer", "x_ite/Components/Layout/LayoutLayer", LayoutLayer_default_);
 /* harmony default export */ const Layout_LayoutLayer = (LayoutLayer_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Text/X3DFontStyleNode\")"
-const X3DFontStyleNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Components/Text/X3DFontStyleNode");
+const X3DFontStyleNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Components/Text/X3DFontStyleNode");
 var X3DFontStyleNode_default = /*#__PURE__*/__webpack_require__.n(X3DFontStyleNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Text/X3DTextGeometry\")"
-const X3DTextGeometry_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Browser/Text/X3DTextGeometry");
+const X3DTextGeometry_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Browser/Text/X3DTextGeometry");
 var X3DTextGeometry_default = /*#__PURE__*/__webpack_require__.n(X3DTextGeometry_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Text/TextAlignment\")"
-const TextAlignment_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Browser/Text/TextAlignment");
+const TextAlignment_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Browser/Text/TextAlignment");
 var TextAlignment_default = /*#__PURE__*/__webpack_require__.n(TextAlignment_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Texturing/PixelTexture\")"
-const PixelTexture_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Components/Texturing/PixelTexture");
+const PixelTexture_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Components/Texturing/PixelTexture");
 var PixelTexture_default = /*#__PURE__*/__webpack_require__.n(PixelTexture_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Box3\")"
-const Box3_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("standard/Math/Geometry/Box3");
+const Box3_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("standard/Math/Geometry/Box3");
 var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("standard/Math/Algorithm");
+const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("standard/Math/Algorithm");
 var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Layout/ScreenText.js
 /* provided dependency */ var $ = __webpack_require__(823);
@@ -1869,7 +1869,7 @@ const ScreenFontStyle_default_ = ScreenFontStyle;
 Namespace_default().add ("ScreenFontStyle", "x_ite/Components/Layout/ScreenFontStyle", ScreenFontStyle_default_);
 /* harmony default export */ const Layout_ScreenFontStyle = (ScreenFontStyle_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Prototype/X3DProtoDeclaration\")"
-const X3DProtoDeclaration_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.4")] .require ("x_ite/Prototype/X3DProtoDeclaration");
+const X3DProtoDeclaration_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Prototype/X3DProtoDeclaration");
 var X3DProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(X3DProtoDeclaration_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/ScreenGroup.js
 /*******************************************************************************
