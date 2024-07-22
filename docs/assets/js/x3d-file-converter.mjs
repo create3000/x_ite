@@ -25,6 +25,7 @@ $("#open-files a") .on ("click", event =>
       ".x3dvz",
       ".wrl",
       ".wrz",
+      ".vrml",
       ".gltf",
       ".glb",
       ".obj",

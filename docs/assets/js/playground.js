@@ -184,6 +184,7 @@ class Playground
          ".x3dvz",
          ".wrl",
          ".wrz",
+         ".vrml",
          ".gltf",
          ".glb",
          ".obj",
