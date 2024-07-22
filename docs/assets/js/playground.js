@@ -175,9 +175,27 @@ class Playground
 
       toolbar .empty ();
 
+      const suffixes = [
+         ".x3d",
+         ".x3dz",
+         ".x3dj",
+         ".x3djz",
+         ".x3dv",
+         ".x3dvz",
+         ".wrl",
+         ".wrz",
+         ".gltf",
+         ".glb",
+         ".obj",
+         ".stl",
+         ".ply",
+         ".svg",
+         ".svgz",
+      ];
+
       const openFile = $("<input></input>")
          .attr ("type", "file")
-         .attr ("accept", ".x3d,.x3dz,.x3dj,.x3djz,.x3dv,.x3dvz,.wrl,.wrz.wrl,.wrz,.gltf,.glb,.obj,.stl,.ply,.svg,.svgz")
+         .attr ("accept", suffixes .join (","))
          .css ({ "position": "absolute", "visibility": "hidden" })
          .on ("change", () =>
          {

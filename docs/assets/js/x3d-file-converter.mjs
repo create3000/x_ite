@@ -16,8 +16,27 @@ $("#drop-zone") .on ("drop", event =>
 
 $("#open-files a") .on ("click", event =>
 {
+   const suffixes = [
+      ".x3d",
+      ".x3dz",
+      ".x3dj",
+      ".x3djz",
+      ".x3dv",
+      ".x3dvz",
+      ".wrl",
+      ".wrz",
+      ".gltf",
+      ".glb",
+      ".obj",
+      ".stl",
+      ".ply",
+      ".svg",
+      ".svgz",
+   ];
+
    const input = $("<input></input>")
       .attr ("type", "file")
+      .attr ("accept", suffixes .join (","))
       .appendTo ($("#open-files"));
 
    input .on ("change", event =>
