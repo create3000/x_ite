@@ -50,8 +50,9 @@ import Box2          from "../../../standard/Math/Geometry/Box2.js";
 import Box3          from "../../../standard/Math/Geometry/Box3.js";
 import Vector2       from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3       from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix3       from "../../../standard/Math/Numbers/Matrix3.js";
 
-var
+const
    bbox        = new Box2 (),
    lineBBox    = new Box2 (),
    min         = new Vector2 (),
@@ -175,7 +176,7 @@ Object .assign (X3DTextGeometry .prototype,
    },
    horizontal (text, fontStyle)
    {
-      var
+      const
          font        = fontStyle .getFont (),
          string      = text ._string,
          numLines    = string .length,
@@ -188,37 +189,28 @@ Object .assign (X3DTextGeometry .prototype,
 
       // Calculate bboxes.
 
-      var
+      const
          first = topToBottom ? 0 : numLines - 1,
          last  = topToBottom ? numLines : -1,
          step  = topToBottom ? 1 : -1;
 
-      for (var l = first, ll = 0; l !== last; l += step, ++ ll)
+      for (let l = first, ll = 0; l !== last; l += step, ++ ll)
       {
-         var line = string [l];
+         const line = string [l];
 
          // Get line extents.
 
-         var glyphs = this .getHorizontalLineExtents (fontStyle, line, min, max, ll);
+         this .getHorizontalLineExtents (fontStyle, line, min, max, ll);
 
          size .assign (max) .subtract (min);
 
          // Calculate and lineBounds.
 
-         var
+         const
             length = text .getLength (l),
             w      = size .x * scale;
 
          lineBound .set (w, ll == 0 ? max .y - font .descender / font .unitsPerEm * scale : spacing);
-
-         if (maxExtent)
-         {
-            if (length)
-               length = Math .min (maxExtent, length);
-
-            else
-               length = Math .min (maxExtent, size .x * scale);
-         }
 
          if (length)
          {
@@ -256,7 +248,28 @@ Object .assign (X3DTextGeometry .prototype,
          bbox .add (box2 .set (size .multiply (scale), center .multiply (scale) .add (this .translations [ll])));
       }
 
-      //console .log ("size", bbox .size, "center", bbox .center);
+      if (maxExtent)
+      {
+         const extent = text ._lineBounds .reduce ((p, c) => Math .max (p, c .x), 0);
+
+         if (extent > maxExtent)
+         {
+            const s = maxExtent / extent;
+
+            for (const i of this .translations .keys ())
+               this .translations [i] .x *= s;
+
+            for (const i of this .scales .keys ())
+               this .scales [i] *= s;
+
+            for (const i of text ._lineBounds .keys ())
+               text ._lineBounds [i] .x *= s;
+
+            bbox .multRight (new Matrix3 (s,0,0, 0,1,0, 0,0,0));
+         }
+      }
+
+      // console .log ("size", bbox .size, "center", bbox .center);
 
       // Get text extents.
 
@@ -299,7 +312,7 @@ Object .assign (X3DTextGeometry .prototype,
    },
    vertical (text, fontStyle)
    {
-      var
+      const
          font             = fontStyle .getFont (),
          string           = text ._string,
          numLines         = string .length,
@@ -315,17 +328,18 @@ Object .assign (X3DTextGeometry .prototype,
 
       // Calculate bboxes.
 
-      var
+      const
          firstL = leftToRight ? 0 : numLines - 1,
          lastL  = leftToRight ? numLines : -1,
-         stepL  = leftToRight ? 1 : -1,
-         t      = 0; // Translation index
+         stepL  = leftToRight ? 1 : -1;
 
-      for (var l = firstL; l !== lastL; l += stepL)
+      let t = 0; // Translation index
+
+      for (let l = firstL; l !== lastL; l += stepL)
       {
-         var glyphs = this .stringToGlyphs (font, string [l], true, l);
+         const glyphs = this .stringToGlyphs (font, string [l], true, l);
 
-         var
+         const
             t0       = t,
             numChars = glyphs .length;
 
@@ -333,14 +347,14 @@ Object .assign (X3DTextGeometry .prototype,
 
          lineBBox .set ();
 
-         var
+         const
             firstG = topToBottom ? 0 : numChars - 1,
             lastG  = topToBottom ? numChars : -1,
             stepG  = topToBottom ? 1 : -1;
 
-         for (var g = firstG; g !== lastG; g += stepG, ++ t)
+         for (let g = firstG; g !== lastG; g += stepG, ++ t)
          {
-            var glyph = glyphs [g];
+            const glyph = glyphs [g];
 
             // Get glyph extents.
 
@@ -371,7 +385,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          // Calculate lineBounds.
 
-         var
+         const
             lineNumber = leftToRight ? l : numLines - l - 1,
             padding    = (spacing - size .x) / 2,
             length     = text .getLength (l);
@@ -379,15 +393,6 @@ Object .assign (X3DTextGeometry .prototype,
          lineBound .set (l === 0 ? spacing - padding: spacing, numChars ? size .y : 0) .multiply (scale);
 
          const h = lineBound .y;
-
-         if (maxExtent)
-         {
-            if (length)
-               length = Math .min (maxExtent, length);
-
-            else
-               length = Math .min (maxExtent, size .y * scale);
-         }
 
          if (length)
          {
@@ -416,14 +421,14 @@ Object .assign (X3DTextGeometry .prototype,
                if (numChars)
                   this .getGlyphExtents (font, glyphs [topToBottom ? numChars - 1 : 0], primitiveQuality, glyphMin .assign (Vector2 .Zero), vector);
 
-               translation .set (lineNumber * spacing, (size .y - max .y + glyphMin .y));
+               translation .set (lineNumber * spacing, (size .y / this .scales [l] - max .y + glyphMin .y));
                break;
             }
          }
 
          // Calculate glyph translation
 
-         for (var tt = t0; tt < t; ++ tt)
+         for (let tt = t0; tt < t; ++ tt)
             this .translations [tt] .add (translation) .multiply (scale);
 
          // Calculate ypad to extend line bounds.
@@ -451,6 +456,24 @@ Object .assign (X3DTextGeometry .prototype,
          bbox .add (box2 .set (size .multiply (scale), center .add (translation) .multiply (scale)));
       }
 
+      if (maxExtent)
+      {
+         const extent = text ._lineBounds .reduce ((p, c) => Math .max (p, c .y), 0);
+
+         if (extent > maxExtent)
+         {
+            const s = maxExtent / extent;
+
+            for (const i of this .scales .keys ())
+               this .scales [i] *= s;
+
+            for (const i of text ._lineBounds .keys ())
+               text ._lineBounds [i] .y *= s;
+
+            bbox .multRight (new Matrix3 (1,0,0, 0,s,0, 0,0,0));
+         }
+      }
+
       // Get text extents.
 
       bbox .getExtents (min, max);
@@ -464,7 +487,7 @@ Object .assign (X3DTextGeometry .prototype,
          case TextAlignment .BEGIN:
          case TextAlignment .FIRST:
          {
-            var lineBounds = text ._lineBounds;
+            const lineBounds = text ._lineBounds;
 
             for (var i = 0, length = lineBounds .length; i < length; ++ i)
                lineBounds [i] .y += max .y - yPad [i] * scale;
@@ -475,7 +498,7 @@ Object .assign (X3DTextGeometry .prototype,
             break;
          case TextAlignment .END:
          {
-            var lineBounds = text ._lineBounds;
+            const lineBounds = text ._lineBounds;
 
             for (var i = 0, length = lineBounds .length; i < length; ++ i)
                lineBounds [i] .y += yPad [i] * scale - min .y;

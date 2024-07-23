@@ -295,10 +295,8 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
                      y = minorAlignment .y + translation .y * scale - max .y;
 
                   cx .save ();
-                  cx .translate (0, -text ._origin .y);
                   cx .translate (x, -y);
                   cx .scale (1, scale);
-                  cx .translate (0, text ._origin .y);
 
                   this .drawGlyph (cx, font, line [g], size);
 
