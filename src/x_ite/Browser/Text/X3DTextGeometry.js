@@ -53,24 +53,26 @@ import Vector3       from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix3       from "../../../standard/Math/Numbers/Matrix3.js";
 
 const
-   bbox        = new Box2 (),
-   lineBBox    = new Box2 (),
-   min         = new Vector2 (),
-   max         = new Vector2 (),
-   glyphMin    = new Vector2 (),
-   glyphMax    = new Vector2 (),
-   min3        = new Vector3 (),
-   max3        = new Vector3 (),
-   size        = new Vector2 (),
-   center      = new Vector2 (),
-   size1_2     = new Vector2 (),
-   translation = new Vector2 (),
-   lineBound   = new Vector2 (),
-   origin      = new Vector3 (),
-   vector      = new Vector2 (),
-   box2        = new Box2 (),
-   zero2       = new Vector2 (),
-   zero3       = new Vector3 ();
+   bbox         = new Box2 (),
+   lineBBox     = new Box2 (),
+   min          = new Vector2 (),
+   max          = new Vector2 (),
+   glyphMin     = new Vector2 (),
+   glyphMax     = new Vector2 (),
+   min3         = new Vector3 (),
+   max3         = new Vector3 (),
+   size         = new Vector2 (),
+   center       = new Vector2 (),
+   size1_2      = new Vector2 (),
+   translation  = new Vector2 (),
+   translation1 = new Vector2 (),
+   translation2 = new Vector2 (),
+   lineBound    = new Vector2 (),
+   origin       = new Vector3 (),
+   vector       = new Vector2 (),
+   box2         = new Box2 (),
+   zero2        = new Vector2 (),
+   zero3        = new Vector3 ();
 
 function X3DTextGeometry (text, fontStyle)
 {
@@ -82,7 +84,6 @@ function X3DTextGeometry (text, fontStyle)
    this .translations   = [ ];
    this .scales         = [ ];
    this .bearing        = new Vector2 ();
-   this .yPad           = [ ];
    this .bbox           = new Box3 ();
 }
 
@@ -321,7 +322,6 @@ Object .assign (X3DTextGeometry .prototype,
          topToBottom      = fontStyle ._topToBottom .getValue (),
          scale            = fontStyle .getScale (),
          spacing          = fontStyle ._spacing .getValue (),
-         yPad             = this .yPad,
          primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
 
       bbox .set ();
@@ -364,7 +364,7 @@ Object .assign (X3DTextGeometry .prototype,
 
             // Calculate glyph translation
 
-            var glyphNumber = topToBottom ? g : numChars - g - 1;
+            const glyphNumber = topToBottom ? g : numChars - g - 1;
 
             this .translations [t] .set ((spacing - size .x - min .x) / 2, -glyphNumber);
 
@@ -410,10 +410,10 @@ Object .assign (X3DTextGeometry .prototype,
          {
             case TextAlignment .BEGIN:
             case TextAlignment .FIRST:
-               translation .set (lineNumber * spacing, -max .y);
+               translation2 .assign (translation1 .set (lineNumber * spacing, -max .y));
                break;
             case TextAlignment .MIDDLE:
-               translation .set (lineNumber * spacing, (size .y / 2 - max .y));
+               translation2 .assign (translation1 .set (lineNumber * spacing, (size .y / 2 - max .y)));
                break;
             case TextAlignment .END:
             {
@@ -421,7 +421,8 @@ Object .assign (X3DTextGeometry .prototype,
                if (numChars)
                   this .getGlyphExtents (font, glyphs [topToBottom ? numChars - 1 : 0], primitiveQuality, glyphMin .assign (Vector2 .Zero), vector);
 
-               translation .set (lineNumber * spacing, (size .y / this .scales [l] - max .y + glyphMin .y));
+               translation1 .set (lineNumber * spacing, (size .y / this .scales [l] - max .y + glyphMin .y));
+               translation2 .set (lineNumber * spacing, (size .y - max .y + glyphMin .y));
                break;
             }
          }
@@ -429,23 +430,7 @@ Object .assign (X3DTextGeometry .prototype,
          // Calculate glyph translation
 
          for (let tt = t0; tt < t; ++ tt)
-            this .translations [tt] .add (translation) .multiply (scale);
-
-         // Calculate ypad to extend line bounds.
-
-         switch (fontStyle .getMajorAlignment ())
-         {
-            case TextAlignment .BEGIN:
-            case TextAlignment .FIRST:
-               yPad [l] = max .y + translation .y;
-               break;
-            case TextAlignment .MIDDLE:
-               yPad [l] = 0;
-               break;
-            case TextAlignment .END:
-               yPad [l] = min .y + translation .y;
-               break;
-         }
+            this .translations [tt] .add (translation1) .multiply (scale);
 
          // Calculate center.
 
@@ -453,7 +438,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          // Add bbox.
 
-         bbox .add (box2 .set (size .multiply (scale), center .add (translation) .multiply (scale)));
+         bbox .add (box2 .set (size .multiply (scale), center .add (translation2) .multiply (scale)));
       }
 
       if (maxExtent)
@@ -479,33 +464,6 @@ Object .assign (X3DTextGeometry .prototype,
       bbox .getExtents (min, max);
 
       size .assign (max) .subtract (min);
-
-      // Extend lineBounds.
-
-      switch (fontStyle .getMajorAlignment ())
-      {
-         case TextAlignment .BEGIN:
-         case TextAlignment .FIRST:
-         {
-            const lineBounds = text ._lineBounds;
-
-            for (var i = 0, length = lineBounds .length; i < length; ++ i)
-               lineBounds [i] .y += max .y - yPad [i] * scale;
-
-            break;
-         }
-         case TextAlignment .MIDDLE:
-            break;
-         case TextAlignment .END:
-         {
-            const lineBounds = text ._lineBounds;
-
-            for (var i = 0, length = lineBounds .length; i < length; ++ i)
-               lineBounds [i] .y += yPad [i] * scale - min .y;
-
-            break;
-         }
-      }
 
       // Calculate text position
 
