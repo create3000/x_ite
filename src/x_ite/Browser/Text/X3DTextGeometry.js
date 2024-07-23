@@ -405,7 +405,7 @@ Object .assign (X3DTextGeometry .prototype,
          {
             case TextAlignment .BEGIN:
             case TextAlignment .FIRST:
-               translation .set (lineNumber * spacing, -1);
+               translation .set (lineNumber * spacing, -max .y);
                break;
             case TextAlignment .MIDDLE:
                translation .set (lineNumber * spacing, (size .y / 2 - max .y));
