@@ -89,7 +89,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
             glyphs           = this .getGlyphs (),
             minorAlignment   = this .getMinorAlignment (),
             translations     = this .getTranslations (),
-            charSpacings     = this .getCharSpacings (),
+            scales           = this .getScales (),
             size             = fontStyle .getScale (),
             spacing          = fontStyle ._spacing .getValue (),
             origin           = text ._origin .getValue (),
@@ -113,8 +113,8 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
             {
                const
                   line        = glyphs [l],
-                  charSpacing = charSpacings [l],
-                  translation = translations [l];
+                  translation = translations [l],
+                  scale       = scales [l];
 
                let advanceWidth = 0;
 
@@ -123,14 +123,14 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
                   const
                      glyph         = line [g],
                      glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality),
-                     xOffset       = minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
+                     xOffset       = minorAlignment .x + translation .x + advanceWidth * scale,
                      yOffset       = minorAlignment .y + translation .y;
 
-                  for (let v = 0, vl = glyphVertices .length; v < vl; ++ v)
+                  for (const { x: glyphX, y: glyphY } of glyphVertices)
                   {
                      const
-                        x = glyphVertices [v] .x * size + xOffset,
-                        y = glyphVertices [v] .y * size + yOffset;
+                        x = glyphX * size * scale + xOffset,
+                        y = glyphY * size + yOffset;
 
                      texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
                      normalArray   .push (0, 0, 1);
@@ -161,6 +161,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
             {
                const
                   line     = glyphs [l],
+                  scale    = scales [l],
                   numChars = line .length,
                   firstG   = topToBottom ? 0 : numChars - 1,
                   lastG    = topToBottom ? numChars : -1,
@@ -172,11 +173,11 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
                      translation   = translations [t],
                      glyphVertices = this .getGlyphGeometry (font, line [g], primitiveQuality);
 
-                  for (let v = 0, vl = glyphVertices .length; v < vl; ++ v)
+                  for (const { x: glyphX, y: glyphY } of glyphVertices)
                   {
                      const
-                        x = glyphVertices [v] .x * size + minorAlignment .x + translation .x,
-                        y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
+                        x = glyphX * size + minorAlignment .x + translation .x,
+                        y = glyphY * size * scale + minorAlignment .y + translation .y * scale;
 
                      texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
                      normalArray   .push (0, 0, 1);
