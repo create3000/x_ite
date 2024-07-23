@@ -154,9 +154,7 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
 
       return function ()
       {
-         this .getValue () .getQuaternion (q);
-
-         return [... q];
+         return [... this .getValue () .getQuaternion (q)];
       };
    })(),
    inverse ()
