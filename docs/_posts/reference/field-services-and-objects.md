@@ -609,6 +609,10 @@ Returns the axis of rotation as an SFVec3f object.
 
 Returns the rotation matrix as an SFMatrix3f object.
 
+#### Array **getQuaternion** ()
+
+Returns the underlying quaternion as Array with the four values [x, y, z, w].
+
 #### SFRotation **inverse** ()
 
 Returns a SFRotation object whose value is the inverse of this object's rotation.
@@ -628,6 +632,10 @@ Set the axis of rotation to the vector passed in *vec*.
 #### void **setMatrix** (*matrix*)
 
 Set the value of this rotation to the rotation matrix passed in *matrix*.
+
+#### void **setQuaternion** (*x, y, z, w*)
+
+Set the value of this rotation to the quaternion passed in *x, y, z, w*.
 
 #### SFRotation **slerp** (*destRotation, t*)
 
