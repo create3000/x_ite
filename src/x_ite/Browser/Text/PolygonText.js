@@ -107,6 +107,9 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
          text .getMin () .assign (min);
          text .getMax () .assign (max);
 
+         // Scale point from center (which is origin).
+         const m = (p, s, c) => (p - c) * s + c;
+
          if (fontStyle ._horizontal .getValue ())
          {
             for (let l = 0, length = glyphs .length; l < length; ++ l)
@@ -129,7 +132,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
                   for (const { x: glyphX, y: glyphY } of glyphVertices)
                   {
                      const
-                        x = glyphX * size * scale + xOffset,
+                        x = m (glyphX, scale, 0) * size + xOffset,
                         y = glyphY * size + yOffset;
 
                      texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
@@ -177,7 +180,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
                   {
                      const
                         x = glyphX * size + minorAlignment .x + translation .x,
-                        y = glyphY * size * scale + minorAlignment .y + translation .y * scale;
+                        y = m (glyphY, scale, origin .y) * size + minorAlignment .y + translation .y * scale;
 
                      texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
                      normalArray   .push (0, 0, 1);

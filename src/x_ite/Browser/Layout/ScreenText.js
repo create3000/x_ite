@@ -247,8 +247,10 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
                      y     = minorAlignment .y + translation .y - max .y;
 
                   cx .save ();
+                  cx .translate (-text ._origin .x, 0);
                   cx .translate (x, -y);
                   cx .scale (scale, 1);
+                  cx .translate (text ._origin .x, 0);
 
                   this .drawGlyph (cx, font, glyph, size);
 
@@ -293,10 +295,10 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
                      y = minorAlignment .y + translation .y * scale - max .y;
 
                   cx .save ();
-                  cx .translate (0, -this .getBearing () .y);
+                  cx .translate (0, -text ._origin .y);
                   cx .translate (x, -y);
                   cx .scale (1, scale);
-                  cx .translate (0, this .getBearing () .y);
+                  cx .translate (0, text ._origin .y);
 
                   this .drawGlyph (cx, font, line [g], size);
 
