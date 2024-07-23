@@ -81,7 +81,6 @@ function X3DTextGeometry (text, fontStyle)
    this .translations   = [ ];
    this .charSpacings   = [ ];
    this .bearing        = new Vector2 ();
-   this .yPad           = [ ];
    this .bbox           = new Box3 ();
 }
 
@@ -309,7 +308,6 @@ Object .assign (X3DTextGeometry .prototype,
          topToBottom      = fontStyle ._topToBottom .getValue (),
          scale            = fontStyle .getScale (),
          spacing          = fontStyle ._spacing .getValue (),
-         yPad             = this .yPad,
          primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
 
       bbox .set ();
@@ -436,22 +434,6 @@ Object .assign (X3DTextGeometry .prototype,
             space += charSpacing;
          }
 
-         // Calculate ypad to extend line bounds.
-
-         switch (fontStyle .getMajorAlignment ())
-         {
-            case TextAlignment .BEGIN:
-            case TextAlignment .FIRST:
-               yPad [l] = max .y + translation .y;
-               break;
-            case TextAlignment .MIDDLE:
-               yPad [l] = 0;
-               break;
-            case TextAlignment .END:
-               yPad [l] = min .y + translation .y;
-               break;
-         }
-
          // Calculate center.
 
          center .assign (min) .add (size1_2 .assign (size) .divide (2));
@@ -466,33 +448,6 @@ Object .assign (X3DTextGeometry .prototype,
       bbox .getExtents (min, max);
 
       size .assign (max) .subtract (min);
-
-      // Extend lineBounds.
-
-      switch (fontStyle .getMajorAlignment ())
-      {
-         case TextAlignment .BEGIN:
-         case TextAlignment .FIRST:
-         {
-            var lineBounds = text ._lineBounds;
-
-            for (var i = 0, length = lineBounds .length; i < length; ++ i)
-               lineBounds [i] .y += max .y - yPad [i] * scale;
-
-            break;
-         }
-         case TextAlignment .MIDDLE:
-            break;
-         case TextAlignment .END:
-         {
-            var lineBounds = text ._lineBounds;
-
-            for (var i = 0, length = lineBounds .length; i < length; ++ i)
-               lineBounds [i] .y += yPad [i] * scale - min .y;
-
-            break;
-         }
-      }
 
       // Calculate text position
 
