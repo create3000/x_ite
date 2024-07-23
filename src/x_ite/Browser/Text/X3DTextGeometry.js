@@ -146,7 +146,7 @@ Object .assign (X3DTextGeometry .prototype,
       if (fontStyle ._horizontal .getValue ())
       {
          this .resizeArray (this .translations, numLines);
-         this .resizeArray (this .scales,       numLines);
+         this .scales .length = numLines;
 
          this .horizontal (text, fontStyle);
       }
@@ -160,7 +160,7 @@ Object .assign (X3DTextGeometry .prototype,
             numChars += string [i] .length;
 
          this .resizeArray (this .translations, numChars);
-         this .resizeArray (this .scales,       numLines);
+         this .scales .length = numLines;
 
          this .vertical (text, fontStyle);
       }
