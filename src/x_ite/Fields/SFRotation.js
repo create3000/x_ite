@@ -46,9 +46,10 @@
  ******************************************************************************/
 
 import X3DField  from "../Base/X3DField.js";
-import SFVec3    from "./SFVec3.js";
-import SFMatrix3 from "./SFMatrix3.js";
-import Rotation4 from "../../standard/Math/Numbers/Rotation4.js";
+import SFVec3     from "./SFVec3.js";
+import SFMatrix3  from "./SFMatrix3.js";
+import Rotation4  from "../../standard/Math/Numbers/Rotation4.js";
+import Quaternion from "../../standard/Math/Numbers/Quaternion.js";
 
 const
    SFVec3d    = SFVec3 .SFVec3d,
@@ -137,6 +138,27 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    {
       return new SFMatrix3f (this .getValue () .getMatrix ());
    },
+   setQuaternion: (function ()
+   {
+      const q = new Quaternion ();
+
+      return function (x, y, z, w)
+      {
+         this .getValue () .setQuaternion (q .set (x, y, z, w));
+         this .addEvent ();
+      };
+   })(),
+   getQuaternion: (function ()
+   {
+      const q = new Quaternion ();
+
+      return function ()
+      {
+         this .getValue () .getQuaternion (q);
+
+         return [... q];
+      };
+   })(),
    inverse ()
    {
       return new SFRotation (this .getValue () .copy () .inverse ());
