@@ -279,6 +279,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             for (let l = first, t = 0; l !== last; l += step)
             {
                const
+                  line     = glyphs [l],
                   numChars = line .length,
                   firstG   = topToBottom ? 0 : numChars - 1,
                   lastG    = topToBottom ? numChars : -1,
