@@ -279,12 +279,13 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             for (let l = first, t = 0; l !== last; l += step)
             {
                const
-                  line     = glyphs [l],
-                  numChars = line .length,
-                  firstG   = topToBottom ? 0 : numChars - 1,
-                  lastG    = topToBottom ? numChars : -1,
-                  stepG    = topToBottom ? 1 : -1,
-                  scale    = scales [l];
+                  line        = glyphs [l],
+                  numChars    = line .length,
+                  firstG      = topToBottom ? 0 : numChars - 1,
+                  lastG       = topToBottom ? numChars : -1,
+                  stepG       = topToBottom ? 1 : -1,
+                  charSpacing = charSpacings [l],
+                  scale       = scales [l];
 
                for (let g = firstG; g !== lastG; g += stepG, ++ t)
                {
@@ -292,7 +293,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
                   const
                      x = minorAlignment .x + translation .x - min .x,
-                     y = minorAlignment .y + translation .y * scale - max .y;
+                     y = minorAlignment .y + translation .y * scale - max .y + g * charSpacing;
 
                   cx .save ();
                   cx .translate (x, -y);

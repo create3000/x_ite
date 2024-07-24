@@ -125,8 +125,10 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
                   const
                      glyph         = line [g],
                      glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality),
-                     xOffset       = minorAlignment .x + translation .x + advanceWidth + g * scale * charSpacing,
+                     xOffset       = minorAlignment .x + translation .x + advanceWidth * scale + g * charSpacing,
                      yOffset       = minorAlignment .y + translation .y;
+
+                  console .log (scale, charSpacing)
 
                   for (const { x: glyphX, y: glyphY } of glyphVertices)
                   {
@@ -156,18 +158,19 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
                leftToRight = fontStyle ._leftToRight .getValue (),
                topToBottom = fontStyle ._topToBottom .getValue (),
                first       = leftToRight ? 0 : text ._string .length - 1,
-               last        = leftToRight ? text ._string .length  : -1,
+               last        = leftToRight ? text ._string .length : -1,
                step        = leftToRight ? 1 : -1;
 
             for (let l = first, t = 0; l !== last; l += step)
             {
                const
-                  line     = glyphs [l],
-                  scale    = scales [l],
-                  numChars = line .length,
-                  firstG   = topToBottom ? 0 : numChars - 1,
-                  lastG    = topToBottom ? numChars : -1,
-                  stepG    = topToBottom ? 1 : -1;
+                  line        = glyphs [l],
+                  numChars    = line .length,
+                  firstG      = topToBottom ? 0 : numChars - 1,
+                  lastG       = topToBottom ? numChars : -1,
+                  stepG       = topToBottom ? 1 : -1,
+                  charSpacing = charSpacings [l],
+                  scale       = scales [l];
 
                for (let g = firstG; g !== lastG; g += stepG, ++ t)
                {
@@ -179,7 +182,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
                   {
                      const
                         x = glyphX * size + minorAlignment .x + translation .x,
-                        y = glyphY * size * scale + minorAlignment .y + translation .y * scale;
+                        y = glyphY * size * scale + minorAlignment .y + translation .y * scale - g * charSpacing;
 
                      texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
                      normalArray   .push (0, 0, 1);

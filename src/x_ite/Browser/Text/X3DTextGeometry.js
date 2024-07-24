@@ -152,8 +152,9 @@ Object .assign (X3DTextGeometry .prototype,
       if (fontStyle ._horizontal .getValue ())
       {
          this .resizeArray (this .translations, numLines);
-         this .resizeArray (this .charSpacings, numLines);
-         this .scales .length = numLines;
+
+         this .charSpacings .length = numLines;
+         this .scales       .length = numLines;
 
          this .horizontal (text, fontStyle);
       }
@@ -167,8 +168,9 @@ Object .assign (X3DTextGeometry .prototype,
             numChars += string [i] .length;
 
          this .resizeArray (this .translations, numChars);
-         this .resizeArray (this .charSpacings, numChars);
-         this .scales .length = numLines;
+
+         this .charSpacings .length = numLines;
+         this .scales       .length = numLines;
 
          this .vertical (text, fontStyle);
       }
@@ -225,7 +227,9 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (length)
          {
-            charSpacing  = textCompression === 0 ? (length - lineBound .x) / (glyphs .length - 1) : 0;
+            if (textCompression === 0)
+               charSpacing = (length - lineBound .x) / (glyphs .length - 1);
+
             lineBound .x = length;
             size .x      = length / scale;
          }
@@ -269,11 +273,28 @@ Object .assign (X3DTextGeometry .prototype,
          {
             const s = maxExtent / extent;
 
+            switch (textCompression)
+            {
+               case 0:
+               {
+                  for (const i of this .charSpacings .keys ())
+                  {
+                     this .charSpacings [i] += (text ._lineBounds [i] .x - text ._lineBounds [i] .x * s) / (text ._string [i] .length - 1);
+                  }
+
+                  break;
+               }
+               case 1:
+               {
+                  for (const i of this .scales .keys ())
+                     this .scales [i] *= s;
+
+                  break;
+               }
+            }
+
             for (const i of this .translations .keys ())
                this .translations [i] .x *= s;
-
-            for (const i of this .scales .keys ())
-               this .scales [i] *= s;
 
             for (const i of text ._lineBounds .keys ())
                text ._lineBounds [i] .x *= s;
@@ -412,14 +433,16 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (length)
          {
-            charSpacing  = textCompression === 0 ? (length - lineBound .y) / (glyphs .length - 1) / scale : 0;
+            if (textCompression === 0)
+               charSpacing = (length - lineBound .y) / (glyphs .length - 1);
+
             lineBound .y = length;
             size .y      = length / scale;
             min .y       = max .y - size .y;
          }
-
-         this .scales [l]      = lineBound .y / h;
-         text ._lineBounds [l] = lineBound;
+         this .charSpacings [l] = charSpacing;
+         this .scales [l]       = textCompression === 1 ? lineBound .y / h : 1;
+         text ._lineBounds [l]  = lineBound;
 
          // Calculate line translation.
 
@@ -447,19 +470,8 @@ Object .assign (X3DTextGeometry .prototype,
 
          // Calculate glyph translation
 
-         let space = 0;
-
          for (let tt = t0; tt < t; ++ tt)
-         {
-            this .translations [tt] .add (translation1);
-
-            if (textCompression === 1)
-               this .translations [tt] .y -= space;
-
-            this .translations [tt] .multiply (scale);
-
-            space += charSpacing;
-         }
+            this .translations [tt] .add (translation1) .multiply (scale);
 
          // Calculate center.
 
@@ -478,8 +490,26 @@ Object .assign (X3DTextGeometry .prototype,
          {
             const s = maxExtent / extent;
 
-            for (const i of this .scales .keys ())
-               this .scales [i] *= s;
+            switch (textCompression)
+            {
+               case 0:
+               {
+                  for (const i of this .charSpacings .keys ())
+                  {
+                     this .charSpacings [i] += (text ._lineBounds [i] .x - text ._lineBounds [i] .x * s)
+                        / (text ._string [i] .length - 1);
+                  }
+
+                  break;
+               }
+               case 1:
+               {
+                  for (const i of this .scales .keys ())
+                     this .scales [i] *= s;
+
+                  break;
+               }
+            }
 
             for (const i of text ._lineBounds .keys ())
                text ._lineBounds [i] .y *= s;
