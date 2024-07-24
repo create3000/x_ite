@@ -139,7 +139,7 @@ Object .assign (X3DTextGeometry .prototype,
       text ._lineBounds .length = numLines;
       this .glyphs      .length = 0;
 
-      if (numLines === 0 || ! fontStyle .getFont ())
+      if (numLines === 0 || !fontStyle .getFont ())
       {
          text ._origin     .setValue (zero3);
          text ._textBounds .setValue (zero2);
@@ -160,12 +160,9 @@ Object .assign (X3DTextGeometry .prototype,
       }
       else
       {
-         const string = text ._string;
-
-         let numChars = 0;
-
-         for (var i = 0, length = string .length; i < length; ++ i)
-            numChars += string [i] .length;
+         const
+            string   = text ._string,
+            numChars = string .reduce ((p, c) => p + c .length, 0);
 
          this .resizeArray (this .translations, numChars);
 
@@ -601,22 +598,20 @@ Object .assign (X3DTextGeometry .prototype,
    },
    stringToGlyphs (font, line, normal, lineNumber)
    {
-      var glypes = this .glyphs [lineNumber];
+      const glyphs = this .glyphs [lineNumber]
+         ?? (this .glyphs [lineNumber] = [ ]);
 
-      if (! glypes)
-         glypes = this .glyphs [lineNumber] = [ ];
+      glyphs .length = line .length;
 
-      glypes .length = line .length;
-
-      var
+      const
          first = normal ? 0 : line .length - 1,
          last  = normal ? line .length : -1,
          step  = normal ? 1 : -1;
 
-      for (var c = first, g = 0; c !== last; c += step, ++ g)
-         glypes [g] = font .charToGlyph (line [c]);
+      for (let c = first, g = 0; c !== last; c += step, ++ g)
+         glyphs [g] = font .charToGlyph (line [c]);
 
-      return glypes;
+      return glyphs;
    },
    getHorizontalLineExtents (fontStyle, line, min, max, lineNumber)
    {
