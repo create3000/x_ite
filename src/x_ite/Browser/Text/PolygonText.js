@@ -89,6 +89,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
             glyphs           = this .getGlyphs (),
             minorAlignment   = this .getMinorAlignment (),
             translations     = this .getTranslations (),
+            charSpacings     = this .getCharSpacings (),
             scales           = this .getScales (),
             size             = fontStyle .getScale (),
             spacing          = fontStyle ._spacing .getValue (),
@@ -106,7 +107,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
          this .getBBox () .getExtents (min, max);
          text .getMin () .assign (min);
          text .getMax () .assign (max);
-         
+
          if (fontStyle ._horizontal .getValue ())
          {
             for (let l = 0, length = glyphs .length; l < length; ++ l)
@@ -114,6 +115,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
                const
                   line        = glyphs [l],
                   translation = translations [l],
+                  charSpacing = charSpacings [l],
                   scale       = scales [l];
 
                let advanceWidth = 0;
@@ -123,7 +125,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
                   const
                      glyph         = line [g],
                      glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality),
-                     xOffset       = minorAlignment .x + translation .x + advanceWidth * scale,
+                     xOffset       = minorAlignment .x + translation .x + advanceWidth + g * scale * charSpacing,
                      yOffset       = minorAlignment .y + translation .y;
 
                   for (const { x: glyphX, y: glyphY } of glyphVertices)

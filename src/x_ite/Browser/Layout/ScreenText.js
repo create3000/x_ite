@@ -162,6 +162,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             glyphs         = this .getGlyphs (),
             minorAlignment = this .getMinorAlignment (),
             translations   = this .getTranslations (),
+            charSpacings   = this .getCharSpacings (),
             scales         = this .getScales (),
             size           = fontStyle .getScale (), // in pixel
             sizeUnitsPerEm = size / font .unitsPerEm,
@@ -235,6 +236,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
                const
                   line        = glyphs [l],
                   translation = translations [l],
+                  charSpacing = charSpacings [l],
                   scale       = scales [l];
 
                let advanceWidth = 0;
@@ -243,7 +245,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
                {
                   const
                      glyph = line [g],
-                     x     = minorAlignment .x + translation .x + advanceWidth * scale - min .x,
+                     x     = minorAlignment .x + translation .x + advanceWidth * scale + g * charSpacing - min .x,
                      y     = minorAlignment .y + translation .y - max .y;
 
                   cx .save ();

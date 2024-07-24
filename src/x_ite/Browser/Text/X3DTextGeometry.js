@@ -231,7 +231,7 @@ Object .assign (X3DTextGeometry .prototype,
          }
 
          this .charSpacings [ll] = charSpacing;
-         this .scales [ll]       = lineBound .x / w;
+         this .scales [ll]       = textCompression === 1 ? lineBound .x / w : 1;
          text ._lineBounds [l]   = lineBound;
 
          // Calculate line translation.
