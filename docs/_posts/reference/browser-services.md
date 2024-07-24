@@ -310,6 +310,12 @@ Returns a browser option with the corresponding *name*.
          <td>true</td>
       </tr>
       <tr>
+         <td>TextCompression</td>
+         <td>Controls how Text.<em>length</em> and Text.<em>maxExtent</em> are handled. Either by adjusting char spacing or by scaling text letters. <small class="blue">non standard</small></td>
+         <td>CHAR_SPACING, SCALE</td>
+         <td>CHAR_SPACING</td>
+      </tr>
+      <tr>
          <td>Timings</td>
          <td>Whether browser timings should be displayed. <small class="blue">non standard</small></td>
          <td>Boolean</td>
