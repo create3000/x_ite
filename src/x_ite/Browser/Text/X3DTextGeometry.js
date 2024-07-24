@@ -500,22 +500,57 @@ Object .assign (X3DTextGeometry .prototype,
                      if (text ._string [i] .length < 2)
                         continue;
 
-                     this .charSpacings [i] -= d / (text ._string [i] .length - 1);
+                     this .charSpacings [i] -= (text ._lineBounds [i] .y - text ._lineBounds [i] .y * s)
+                        / (text ._string [i] .length - 1);
                   }
 
                   switch (fontStyle .getMajorAlignment ())
                   {
                      case TextAlignment .MIDDLE:
                      {
-                        for (const i of this .translations .keys ())
-                           this .translations [i] .y -= d / 2;
+                        const
+                           firstL = leftToRight ? 0 : numLines - 1,
+                           lastL  = leftToRight ? numLines : -1,
+                           stepL  = leftToRight ? 1 : -1;
+
+                        let t = 0; // Translation index
+
+                        for (let l = firstL; l !== lastL; l += stepL)
+                        {
+                           const numChars = string [l] .length;
+
+                           const
+                              firstG = topToBottom ? 0 : numChars - 1,
+                              lastG  = topToBottom ? numChars : -1,
+                              stepG  = topToBottom ? 1 : -1;
+
+                           for (let g = firstG; g !== lastG; g += stepG, ++ t)
+                              this .translations [t] .y -= (text ._lineBounds [l] .y - text ._lineBounds [l] .y * s) / 2;
+                        }
 
                         break;
                      }
                      case TextAlignment .END:
                      {
-                        for (const i of this .translations .keys ())
-                           this .translations [i] .y -= d;
+                        const
+                           firstL = leftToRight ? 0 : numLines - 1,
+                           lastL  = leftToRight ? numLines : -1,
+                           stepL  = leftToRight ? 1 : -1;
+
+                        let t = 0; // Translation index
+
+                        for (let l = firstL; l !== lastL; l += stepL)
+                        {
+                           const numChars = string [l] .length;
+
+                           const
+                              firstG = topToBottom ? 0 : numChars - 1,
+                              lastG  = topToBottom ? numChars : -1,
+                              stepG  = topToBottom ? 1 : -1;
+
+                           for (let g = firstG; g !== lastG; g += stepG, ++ t)
+                              this .translations [t] .y -= (text ._lineBounds [l] .y - text ._lineBounds [l] .y * s);
+                        }
 
                         break;
                      }
