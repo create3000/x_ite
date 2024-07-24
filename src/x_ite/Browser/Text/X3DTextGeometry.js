@@ -271,9 +271,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (extent > maxExtent)
          {
-            const
-               s = maxExtent / extent,
-               d = extent - maxExtent;
+            const s = maxExtent / extent;
 
             switch (textCompression)
             {
@@ -505,30 +503,30 @@ Object .assign (X3DTextGeometry .prototype,
                      this .charSpacings [i] -= d / (text ._string [i] .length - 1);
                   }
 
+                  switch (fontStyle .getMajorAlignment ())
+                  {
+                     case TextAlignment .MIDDLE:
+                     {
+                        for (const i of this .translations .keys ())
+                           this .translations [i] .y -= d / 2;
+
+                        break;
+                     }
+                     case TextAlignment .END:
+                     {
+                        for (const i of this .translations .keys ())
+                           this .translations [i] .y -= d;
+
+                        break;
+                     }
+                  }
+
                   break;
                }
                case 1:
                {
                   for (const i of this .scales .keys ())
                      this .scales [i] *= s;
-
-                  break;
-               }
-            }
-
-            switch (fontStyle .getMajorAlignment ())
-            {
-               case TextAlignment .MIDDLE:
-               {
-                  for (const i of this .translations .keys ())
-                     this .translations [i] .y -= d / 2;
-
-                  break;
-               }
-               case TextAlignment .END:
-               {
-                  for (const i of this .translations .keys ())
-                     this .translations [i] .y -= d;
 
                   break;
                }
