@@ -357,12 +357,8 @@ Object .assign (X3DTextGeometry .prototype,
          topToBottom      = fontStyle ._topToBottom .getValue (),
          scale            = fontStyle .getScale (),
          spacing          = fontStyle ._spacing .getValue (),
-<<<<<<< HEAD
-         primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
-=======
          primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
          textCompression  = this .getBrowser () .getBrowserOptions () .getTextCompression ();
->>>>>>> text-length
 
       bbox .set ();
 
@@ -457,11 +453,7 @@ Object .assign (X3DTextGeometry .prototype,
          {
             case TextAlignment .BEGIN:
             case TextAlignment .FIRST:
-<<<<<<< HEAD
-               translation .set (lineNumber * spacing, -max .y);
-=======
                translation2 .assign (translation1 .set (lineNumber * spacing, -max .y));
->>>>>>> text-length
                break;
             case TextAlignment .MIDDLE:
                translation2 .assign (translation1 .set (lineNumber * spacing, (size .y / 2 - max .y)));
@@ -476,23 +468,8 @@ Object .assign (X3DTextGeometry .prototype,
 
          // Calculate glyph translation
 
-<<<<<<< HEAD
-         var space = 0;
-
-         for (var tt = t0; tt < t; ++ tt)
-         {
-            this .translations [tt] .add (translation);
-
-            this .translations [tt] .y -= space;
-
-            this .translations [tt] .multiply (scale);
-
-            space += charSpacing;
-         }
-=======
          for (let tt = t0; tt < t; ++ tt)
             this .translations [tt] .add (translation1) .multiply (scale);
->>>>>>> text-length
 
          // Calculate center.
 
