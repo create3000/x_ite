@@ -88,14 +88,20 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
    },
    set_live__ ()
    {
-       X3DGeometryNode .prototype .set_live__ .call (this);
+      X3DGeometryNode .prototype .set_live__ .call (this);
 
-       const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
 
-       if (this .getLive () .getValue () || alwaysUpdate)
-          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
+      if (this .getLive () .getValue () || alwaysUpdate)
+      {
+         this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
+         this .getBrowser () .getBrowserOptions () ._TextCompression  .addInterest ("requestRebuild", this);
+      }
       else
+      {
          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .removeInterest ("requestRebuild", this);
+         this .getBrowser () .getBrowserOptions () ._TextCompression  .removeInterest ("requestRebuild", this);
+      }
    },
    set_fontStyle__ ()
    {

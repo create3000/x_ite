@@ -163,6 +163,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             minorAlignment = this .getMinorAlignment (),
             translations   = this .getTranslations (),
             charSpacings   = this .getCharSpacings (),
+            scales         = this .getScales (),
             size           = fontStyle .getScale (), // in pixel
             sizeUnitsPerEm = size / font .unitsPerEm,
             texCoordArray  = text .getTexCoords (),
@@ -179,12 +180,12 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
          this .getBBox () .getExtents (min, max);
 
-         normalArray  .push (0, 0, 1,
-                             0, 0, 1,
-                             0, 0, 1,
-                             0, 0, 1,
-                             0, 0, 1,
-                             0, 0, 1);
+         normalArray .push (0, 0, 1,
+                            0, 0, 1,
+                            0, 0, 1,
+                            0, 0, 1,
+                            0, 0, 1,
+                            0, 0, 1);
 
          vertexArray .push (min .x, min .y, 0, 1,
                             max .x, min .y, 0, 1,
@@ -234,8 +235,9 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             {
                const
                   line        = glyphs [l],
+                  translation = translations [l],
                   charSpacing = charSpacings [l],
-                  translation = translations [l];
+                  scale       = scales [l];
 
                let advanceWidth = 0;
 
@@ -243,10 +245,16 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
                {
                   const
                      glyph = line [g],
-                     x     = minorAlignment .x + translation .x + advanceWidth + g * charSpacing - min .x,
+                     x     = minorAlignment .x + translation .x + advanceWidth * scale + g * charSpacing - min .x,
                      y     = minorAlignment .y + translation .y - max .y;
 
-                  this .drawGlyph (cx, font, glyph, x, y, size);
+                  cx .save ();
+                  cx .translate (x, -y);
+                  cx .scale (scale, 1);
+
+                  this .drawGlyph (cx, font, glyph, size);
+
+                  cx .restore ();
 
                   // Calculate advanceWidth.
 
@@ -270,13 +278,14 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
             for (let l = first, t = 0; l !== last; l += step)
             {
-               const line = glyphs [l];
-
                const
-                  numChars = line .length,
-                  firstG   = topToBottom ? 0 : numChars - 1,
-                  lastG    = topToBottom ? numChars : -1,
-                  stepG    = topToBottom ? 1 : -1;
+                  line        = glyphs [l],
+                  numChars    = line .length,
+                  firstG      = topToBottom ? 0 : numChars - 1,
+                  lastG       = topToBottom ? numChars : -1,
+                  stepG       = topToBottom ? 1 : -1,
+                  charSpacing = charSpacings [l],
+                  scale       = scales [l];
 
                for (let g = firstG; g !== lastG; g += stepG, ++ t)
                {
@@ -284,9 +293,15 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
                   const
                      x = minorAlignment .x + translation .x - min .x,
-                     y = minorAlignment .y + translation .y - max .y;
+                     y = minorAlignment .y + translation .y * scale - g * charSpacing - max .y;
 
-                  this .drawGlyph (cx, font, line [g], x, y, size);
+                  cx .save ();
+                  cx .translate (x, -y);
+                  cx .scale (1, scale);
+
+                  this .drawGlyph (cx, font, line [g], size);
+
+                  cx .restore ();
                }
             }
          }
@@ -305,14 +320,14 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             this .textureNode .clear ();
       };
    })(),
-   drawGlyph (cx, font, glyph, x, y, size)
+   drawGlyph (cx, font, glyph, size)
    {
       //console .log (glyph .name, x, y);
 
       // Get curves for the current glyph.
 
       const
-         path     = glyph .getPath (x, -y, size),
+         path     = glyph .getPath (0, 0, size),
          commands = path .commands;
 
       cx .beginPath ();

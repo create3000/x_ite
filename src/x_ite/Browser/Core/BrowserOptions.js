@@ -194,6 +194,16 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       return this .textureQuality;
    },
+   getTextCompression ()
+   {
+      switch (this ._TextCompression .getValue ())
+      {
+         default: // CHAR_SPACING
+            return 0;
+         case "SCALE":
+            return 1;
+      }
+   },
    set_Rubberband__ (rubberband)
    {
       this .localStorage .Rubberband = rubberband .getValue ();
@@ -405,6 +415,7 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "Notifications",                new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "OrderIndependentTransparency", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "TextCompression",              new Fields .SFString ("CHAR_SPACING")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                      new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ToneMapping",                  new Fields .SFString ("NONE")),
       ]),
