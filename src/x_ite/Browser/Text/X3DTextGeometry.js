@@ -282,7 +282,7 @@ Object .assign (X3DTextGeometry .prototype,
                      if (text ._string [i] .length < 2)
                         continue;
 
-                     this .charSpacings [i] += (text ._lineBounds [i] .x - text ._lineBounds [i] .x * s) / (text ._string [i] .length - 1);
+                     this .charSpacings [i] -= (text ._lineBounds [i] .x - text ._lineBounds [i] .x * s) / (text ._string [i] .length - 1);
                   }
 
                   break;
@@ -430,7 +430,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          let charSpacing = 0;
 
-         lineBound .set (l === 0 ? spacing - padding: spacing, numChars ? size .y : 0) .multiply (scale);
+         lineBound .set (l === 0 ? spacing - padding : spacing, numChars ? size .y : 0) .multiply (scale);
 
          const h = lineBound .y;
 
@@ -502,7 +502,7 @@ Object .assign (X3DTextGeometry .prototype,
                      if (text ._string [i] .length < 2)
                         continue;
 
-                     this .charSpacings [i] += (text ._lineBounds [i] .y - text ._lineBounds [i] .y * s)
+                     this .charSpacings [i] -= (text ._lineBounds [i] .y - text ._lineBounds [i] .y * s)
                         / (text ._string [i] .length - 1);
                   }
 

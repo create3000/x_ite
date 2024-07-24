@@ -293,7 +293,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
                   const
                      x = minorAlignment .x + translation .x - min .x,
-                     y = minorAlignment .y + translation .y * scale + g * charSpacing - max .y;
+                     y = minorAlignment .y + translation .y * scale - g * charSpacing - max .y;
 
                   cx .save ();
                   cx .translate (x, -y);
