@@ -334,19 +334,19 @@ const Bookmarks = (() =>
          // this .browser .setBrowserOption ("OrderIndependentTransparency", true)
          // this .browser .setBrowserOption ("ContentScale", -1)
       },
-      async getEnvironmentLight (Browser, scene)
+      async getEnvironmentLight (browser)
       {
          if (this .environmentLight)
             return this .environmentLight;
 
-         const cubeMapTexturing = Browser .getComponent ("CubeMapTexturing");
+         const
+            profile    = browser .getProfile ("Interchange"),
+            components = ["CubeMapTexturing", "Lighting", "Texturing"] .map (name => browser .getComponent (name));
 
-         await Browser .loadComponents (cubeMapTexturing);
-
-         if (!scene .hasComponent (cubeMapTexturing))
-            scene .addComponent (cubeMapTexturing);
+         await browser .loadComponents (profile, ... components);
 
          const
+            scene             = browser .createScene (profile, ... components),
             environmentLight  = scene .createNode ("EnvironmentLight"),
             diffuseTexture    = scene .createNode ("ImageCubeMapTexture"),
             specularTexture   = scene .createNode ("ImageCubeMapTexture"),
