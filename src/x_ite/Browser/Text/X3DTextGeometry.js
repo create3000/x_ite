@@ -446,6 +446,7 @@ Object .assign (X3DTextGeometry .prototype,
             size .y      = length / scale;
             min .y       = max .y - size .y;
          }
+
          this .charSpacings [l] = charSpacing;
          this .scales [l]       = textCompression === 1 ? lineBound .y / h : 1;
          text ._lineBounds [l]  = lineBound;
@@ -489,9 +490,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (extent > maxExtent)
          {
-            const
-               s = maxExtent / extent,
-               d = extent - maxExtent;
+            const s = maxExtent / extent;
 
             switch (textCompression)
             {
