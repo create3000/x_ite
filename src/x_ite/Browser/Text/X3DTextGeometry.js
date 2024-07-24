@@ -360,7 +360,6 @@ Object .assign (X3DTextGeometry .prototype,
          primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
          textCompression  = this .getBrowser () .getBrowserOptions () .getTextCompression ();
 
-
       bbox .set ();
 
       // Calculate bboxes.
