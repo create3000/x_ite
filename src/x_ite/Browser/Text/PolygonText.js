@@ -128,8 +128,6 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
                      xOffset       = minorAlignment .x + translation .x + advanceWidth * scale + g * charSpacing,
                      yOffset       = minorAlignment .y + translation .y;
 
-                  console .log (scale, charSpacing)
-
                   for (const { x: glyphX, y: glyphY } of glyphVertices)
                   {
                      const

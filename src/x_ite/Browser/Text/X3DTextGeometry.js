@@ -227,7 +227,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (length)
          {
-            if (textCompression === 0)
+            if (textCompression === 0 && glyphs .length > 1)
                charSpacing = (length - lineBound .x) / (glyphs .length - 1);
 
             lineBound .x = length;
@@ -279,6 +279,9 @@ Object .assign (X3DTextGeometry .prototype,
                {
                   for (const i of this .charSpacings .keys ())
                   {
+                     if (text ._string [i] .length < 2)
+                        continue;
+
                      this .charSpacings [i] += (text ._lineBounds [i] .x - text ._lineBounds [i] .x * s) / (text ._string [i] .length - 1);
                   }
 
@@ -433,7 +436,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (length)
          {
-            if (textCompression === 0)
+            if (textCompression === 0 && glyphs .length > 1)
                charSpacing = (length - lineBound .y) / (glyphs .length - 1);
 
             lineBound .y = length;
@@ -496,7 +499,10 @@ Object .assign (X3DTextGeometry .prototype,
                {
                   for (const i of this .charSpacings .keys ())
                   {
-                     this .charSpacings [i] += (text ._lineBounds [i] .x - text ._lineBounds [i] .x * s)
+                     if (text ._string [i] .length < 2)
+                        continue;
+
+                     this .charSpacings [i] += (text ._lineBounds [i] .y - text ._lineBounds [i] .y * s)
                         / (text ._string [i] .length - 1);
                   }
 
