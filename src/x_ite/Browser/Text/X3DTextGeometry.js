@@ -82,6 +82,7 @@ function X3DTextGeometry (text, fontStyle)
    this .glyphs         = [ ];
    this .minorAlignment = new Vector2 ();
    this .translations   = [ ];
+   this .charSpacings   = [ ];
    this .scales         = [ ];
    this .bearing        = new Vector2 ();
    this .bbox           = new Box3 ();
@@ -112,6 +113,10 @@ Object .assign (X3DTextGeometry .prototype,
    getTranslations ()
    {
       return this .translations;
+   },
+   getCharSpacings ()
+   {
+      return this .charSpacings;
    },
    getScales ()
    {
@@ -147,6 +152,7 @@ Object .assign (X3DTextGeometry .prototype,
       if (fontStyle ._horizontal .getValue ())
       {
          this .resizeArray (this .translations, numLines);
+         this .resizeArray (this .charSpacings, numLines);
          this .scales .length = numLines;
 
          this .horizontal (text, fontStyle);
@@ -161,6 +167,7 @@ Object .assign (X3DTextGeometry .prototype,
             numChars += string [i] .length;
 
          this .resizeArray (this .translations, numChars);
+         this .resizeArray (this .charSpacings, numChars);
          this .scales .length = numLines;
 
          this .vertical (text, fontStyle);
@@ -178,13 +185,14 @@ Object .assign (X3DTextGeometry .prototype,
    horizontal (text, fontStyle)
    {
       const
-         font        = fontStyle .getFont (),
-         string      = text ._string,
-         numLines    = string .length,
-         maxExtent   = Math .max (0, text ._maxExtent .getValue ()),
-         topToBottom = fontStyle ._topToBottom .getValue (),
-         scale       = fontStyle .getScale (),
-         spacing     = fontStyle ._spacing .getValue ();
+         font            = fontStyle .getFont (),
+         string          = text ._string,
+         numLines        = string .length,
+         maxExtent       = Math .max (0, text ._maxExtent .getValue ()),
+         topToBottom     = fontStyle ._topToBottom .getValue (),
+         scale           = fontStyle .getScale (),
+         spacing         = fontStyle ._spacing .getValue (),
+         textCompression = this .getBrowser () .getBrowserOptions () .getTextCompression ();
 
       bbox .set ();
 
@@ -201,26 +209,30 @@ Object .assign (X3DTextGeometry .prototype,
 
          // Get line extents.
 
-         this .getHorizontalLineExtents (fontStyle, line, min, max, ll);
+         const glyphs = this .getHorizontalLineExtents (fontStyle, line, min, max, ll);
 
          size .assign (max) .subtract (min);
 
-         // Calculate and lineBounds.
+         // Calculate charSpacing and lineBounds.
 
          const
             length = text .getLength (l),
             w      = size .x * scale;
 
+         let charSpacing = 0;
+
          lineBound .set (w, ll == 0 ? max .y - font .descender / font .unitsPerEm * scale : spacing);
 
          if (length)
          {
+            charSpacing  = textCompression === 0 ? (length - lineBound .x) / (glyphs .length - 1) : 0;
             lineBound .x = length;
             size .x      = length / scale;
          }
 
-         this .scales [ll]     = lineBound .x / w;
-         text ._lineBounds [l] = lineBound;
+         this .charSpacings [ll] = charSpacing;
+         this .scales [ll]       = lineBound .x / w;
+         text ._lineBounds [l]   = lineBound;
 
          // Calculate line translation.
 
@@ -270,7 +282,7 @@ Object .assign (X3DTextGeometry .prototype,
          }
       }
 
-      // console .log ("size", bbox .size, "center", bbox .center);
+      //console .log ("size", bbox .size, "center", bbox .center);
 
       // Get text extents.
 
@@ -322,7 +334,9 @@ Object .assign (X3DTextGeometry .prototype,
          topToBottom      = fontStyle ._topToBottom .getValue (),
          scale            = fontStyle .getScale (),
          spacing          = fontStyle ._spacing .getValue (),
-         primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
+         primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
+         textCompression  = this .getBrowser () .getBrowserOptions () .getTextCompression ();
+
 
       bbox .set ();
 
@@ -383,12 +397,14 @@ Object .assign (X3DTextGeometry .prototype,
 
          size .assign (max) .subtract (min);
 
-         // Calculate lineBounds.
+         // Calculate charSpacing and lineBounds.
 
          const
             lineNumber = leftToRight ? l : numLines - l - 1,
             padding    = (spacing - size .x) / 2,
             length     = text .getLength (l);
+
+         let charSpacing = 0;
 
          lineBound .set (l === 0 ? spacing - padding: spacing, numChars ? size .y : 0) .multiply (scale);
 
@@ -396,6 +412,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (length)
          {
+            charSpacing  = textCompression === 0 ? (length - lineBound .y) / (glyphs .length - 1) / scale : 0;
             lineBound .y = length;
             size .y      = length / scale;
             min .y       = max .y - size .y;
@@ -417,7 +434,8 @@ Object .assign (X3DTextGeometry .prototype,
                break;
             case TextAlignment .END:
             {
-               // This is needed to make maxExtend work.
+               // This is needed to make maxExtend and charSpacing work.
+
                if (numChars)
                   this .getGlyphExtents (font, glyphs [topToBottom ? numChars - 1 : 0], primitiveQuality, glyphMin .assign (Vector2 .Zero), vector);
 
@@ -429,8 +447,19 @@ Object .assign (X3DTextGeometry .prototype,
 
          // Calculate glyph translation
 
+         let space = 0;
+
          for (let tt = t0; tt < t; ++ tt)
-            this .translations [tt] .add (translation1) .multiply (scale);
+         {
+            this .translations [tt] .add (translation1);
+
+            if (textCompression === 1)
+               this .translations [tt] .y -= space;
+
+            this .translations [tt] .multiply (scale);
+
+            space += charSpacing;
+         }
 
          // Calculate center.
 
@@ -530,19 +559,21 @@ Object .assign (X3DTextGeometry .prototype,
    },
    getHorizontalLineExtents (fontStyle, line, min, max, lineNumber)
    {
-      var
+      const
          font             = fontStyle .getFont (),
          normal           = fontStyle ._horizontal .getValue () ? fontStyle ._leftToRight .getValue () : fontStyle ._topToBottom .getValue (),
          glyphs           = this .stringToGlyphs (font, line, normal, lineNumber),
-         primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
-         xMin             = 0,
-         xMax             = 0,
-         yMin             = Number .POSITIVE_INFINITY,
-         yMax             = Number .NEGATIVE_INFINITY;
+         primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
 
-      for (var g = 0, length = glyphs .length; g < length; ++ g)
+      let
+         xMin = 0,
+         xMax = 0,
+         yMin = Number .POSITIVE_INFINITY,
+         yMax = Number .NEGATIVE_INFINITY;
+
+      for (const g of glyphs .keys ())
       {
-         var
+         const
             glyph   = glyphs [g],
             kerning = g + 1 < length ? font .getKerningValue (glyph, glyphs [g + 1]) : 0;
 
@@ -557,7 +588,7 @@ Object .assign (X3DTextGeometry .prototype,
       {
          this .getGlyphExtents (font, glyphs [0], primitiveQuality, glyphMin, glyphMax);
 
-         xMin  = glyphMin .x;
+         xMin = glyphMin .x;
       }
       else
       {

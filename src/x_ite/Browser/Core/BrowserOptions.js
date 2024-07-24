@@ -194,6 +194,16 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       return this .textureQuality;
    },
+   getTextCompression ()
+   {
+      switch (this ._TextCompression .getValue ())
+      {
+         default: // CHAR_SPACING
+            return 0;
+         case "SCALE":
+            return 1;
+      }
+   },
    set_Rubberband__ (rubberband)
    {
       this .localStorage .Rubberband = rubberband .getValue ();
