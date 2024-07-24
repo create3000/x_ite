@@ -271,7 +271,9 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (extent > maxExtent)
          {
-            const s = maxExtent / extent;
+            const
+               s = maxExtent / extent,
+               d = extent - maxExtent;
 
             switch (textCompression)
             {
@@ -282,7 +284,8 @@ Object .assign (X3DTextGeometry .prototype,
                      if (text ._string [i] .length < 2)
                         continue;
 
-                     this .charSpacings [i] -= (text ._lineBounds [i] .x - text ._lineBounds [i] .x * s) / (text ._string [i] .length - 1);
+                     this .charSpacings [i] -= (text ._lineBounds [i] .x - text ._lineBounds [i] .x * s)
+                        / (text ._string [i] .length - 1);
                   }
 
                   break;
@@ -460,13 +463,8 @@ Object .assign (X3DTextGeometry .prototype,
                break;
             case TextAlignment .END:
             {
-               // This is needed to make maxExtend and charSpacing work.
-
-               if (numChars)
-                  this .getGlyphExtents (font, glyphs [topToBottom ? numChars - 1 : 0], primitiveQuality, glyphMin .assign (Vector2 .Zero), vector);
-
-               translation1 .set (lineNumber * spacing, (size .y / this .scales [l] - max .y + glyphMin .y));
-               translation2 .set (lineNumber * spacing, (size .y - max .y + glyphMin .y));
+               translation1 .set (lineNumber * spacing, (size .y / this .scales [l] - max .y));
+               translation2 .set (lineNumber * spacing, (size .y - max .y));
                break;
             }
          }
@@ -491,7 +489,9 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (extent > maxExtent)
          {
-            const s = maxExtent / extent;
+            const
+               s = maxExtent / extent,
+               d = extent - maxExtent;
 
             switch (textCompression)
             {
@@ -502,8 +502,7 @@ Object .assign (X3DTextGeometry .prototype,
                      if (text ._string [i] .length < 2)
                         continue;
 
-                     this .charSpacings [i] -= (text ._lineBounds [i] .y - text ._lineBounds [i] .y * s)
-                        / (text ._string [i] .length - 1);
+                     this .charSpacings [i] -= d / (text ._string [i] .length - 1);
                   }
 
                   break;
@@ -512,6 +511,24 @@ Object .assign (X3DTextGeometry .prototype,
                {
                   for (const i of this .scales .keys ())
                      this .scales [i] *= s;
+
+                  break;
+               }
+            }
+
+            switch (fontStyle .getMajorAlignment ())
+            {
+               case TextAlignment .MIDDLE:
+               {
+                  for (const i of this .translations .keys ())
+                     this .translations [i] .y -= d / 2;
+
+                  break;
+               }
+               case TextAlignment .END:
+               {
+                  for (const i of this .translations .keys ())
+                     this .translations [i] .y -= d;
 
                   break;
                }
