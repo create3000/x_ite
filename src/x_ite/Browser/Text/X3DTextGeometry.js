@@ -64,12 +64,10 @@ const
    size         = new Vector2 (),
    center       = new Vector2 (),
    size1_2      = new Vector2 (),
-   translation  = new Vector2 (),
    translation1 = new Vector2 (),
    translation2 = new Vector2 (),
    lineBound    = new Vector2 (),
    origin       = new Vector3 (),
-   vector       = new Vector2 (),
    box2         = new Box2 (),
    zero2        = new Vector2 (),
    zero3        = new Vector3 ();
@@ -81,6 +79,7 @@ function X3DTextGeometry (text, fontStyle)
    this .fontStyle      = fontStyle;
    this .glyphs         = [ ];
    this .minorAlignment = new Vector2 ();
+   this .lineIndices    = [ ];
    this .translations   = [ ];
    this .charSpacings   = [ ];
    this .scales         = [ ];
@@ -153,6 +152,7 @@ Object .assign (X3DTextGeometry .prototype,
       {
          this .resizeArray (this .translations, numLines);
 
+         this .lineIndices  .length = 0;
          this .charSpacings .length = numLines;
          this .scales       .length = numLines;
 
@@ -169,6 +169,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          this .resizeArray (this .translations, numChars);
 
+         this .lineIndices  .length = numChars;
          this .charSpacings .length = numLines;
          this .scales       .length = numLines;
 
@@ -405,6 +406,7 @@ Object .assign (X3DTextGeometry .prototype,
 
             const glyphNumber = topToBottom ? g : numChars - g - 1;
 
+            this .lineIndices [t] = l;
             this .translations [t] .set ((spacing - size .x - min .x) / 2, -glyphNumber);
 
             // Calculate center.
@@ -508,48 +510,22 @@ Object .assign (X3DTextGeometry .prototype,
                   {
                      case TextAlignment .MIDDLE:
                      {
-                        const
-                           firstL = leftToRight ? 0 : numLines - 1,
-                           lastL  = leftToRight ? numLines : -1,
-                           stepL  = leftToRight ? 1 : -1;
-
-                        let t = 0; // Translation index
-
-                        for (let l = firstL; l !== lastL; l += stepL)
+                        for (const t of this .translations .keys ())
                         {
-                           const numChars = string [l] .length;
+                           const l = this .lineIndices [t];
 
-                           const
-                              firstG = topToBottom ? 0 : numChars - 1,
-                              lastG  = topToBottom ? numChars : -1,
-                              stepG  = topToBottom ? 1 : -1;
-
-                           for (let g = firstG; g !== lastG; g += stepG, ++ t)
-                              this .translations [t] .y -= (text ._lineBounds [l] .y - text ._lineBounds [l] .y * s) / 2;
+                           this .translations [t] .y -= (text ._lineBounds [l] .y - text ._lineBounds [l] .y * s) / 2;
                         }
 
                         break;
                      }
                      case TextAlignment .END:
                      {
-                        const
-                           firstL = leftToRight ? 0 : numLines - 1,
-                           lastL  = leftToRight ? numLines : -1,
-                           stepL  = leftToRight ? 1 : -1;
-
-                        let t = 0; // Translation index
-
-                        for (let l = firstL; l !== lastL; l += stepL)
+                        for (const t of this .translations .keys ())
                         {
-                           const numChars = string [l] .length;
+                           const l = this .lineIndices [t];
 
-                           const
-                              firstG = topToBottom ? 0 : numChars - 1,
-                              lastG  = topToBottom ? numChars : -1,
-                              stepG  = topToBottom ? 1 : -1;
-
-                           for (let g = firstG; g !== lastG; g += stepG, ++ t)
-                              this .translations [t] .y -= (text ._lineBounds [l] .y - text ._lineBounds [l] .y * s);
+                           this .translations [t] .y -= (text ._lineBounds [l] .y - text ._lineBounds [l] .y * s);
                         }
 
                         break;
