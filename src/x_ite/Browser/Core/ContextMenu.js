@@ -450,7 +450,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          if (viewpoint === currentViewpoint)
             item .className = "context-menu-selected";
 
-         menu ["Viewpoint" + viewpoint .getId ()] = item;
+         menu [`Viewpoint-${viewpoint .getId ()}`] = item;
       }
 
       return menu;
