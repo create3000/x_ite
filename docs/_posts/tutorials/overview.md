@@ -82,7 +82,8 @@ Some words about optimizing a scene
 
 ## Want to See More X3D Examples?
 
-- [X3D for Web Authors](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/index.html){:target="_blank"}
+- [X3D for Web Authors](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/){:target="_blank"}
+- [X3D for Advanced Modeling](https://www.web3d.org/x3d/content/examples/X3dForAdvancedModeling/){:target="_blank"}
 
 ## Don't Compromise on Development Experience
 
