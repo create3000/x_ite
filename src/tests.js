@@ -160,6 +160,7 @@ const X_ITE_TESTS = [
    { path: "Navigation/DifferentViewpoints.x3dv" },
    { path: "Navigation/Gravitation.x3d" },
    { path: "Navigation/ScreenScale.x3d" },
+   { path: "Navigation/ViewpointBind.x3d" },
    { path: "Navigation/ViewpointGroup.x3d" },
    { path: "Navigation/ViewpointJump.x3d" },
    { path: "Navigation/ViewpointLayers.x3d" },
