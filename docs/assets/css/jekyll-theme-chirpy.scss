@@ -186,6 +186,10 @@ html {
   color: var(--h3-color-strong);
 }
 
+.content dl dt strong {
+  color: var(--h3-color);
+}
+
 .post-tail-wrapper .nav-wrapper h2 {
   font-size: 1rem;
 }
