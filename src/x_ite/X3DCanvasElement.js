@@ -104,6 +104,8 @@ class X3DCanvasElement extends HTMLElement
          "splashScreen",
          "splashscreen",
          "src",
+         "textCompression",
+         "textcompression",
          "timings",
          "toneMapping",
          "tonemapping",

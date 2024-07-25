@@ -722,7 +722,7 @@ logarithmicDepthBuffer
 : A Boolean value (`true` or `false`) to indicate whether order logarithmic depth buffer rendering technique should be used. The default value for the *logarithmicDepthBuffer* attribute is `false`.
 
 multisampling
-: An Integer value that specifies the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of anti-aliasing. Check the [Rendering Property](/x_ite/reference/browser-services/#rendering-properties) »MaxSamples«, which is browser dependent.
+: An Integer value that specifies the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of anti-aliasing. Check the [rendering property](/x_ite/reference/browser-services/#rendering-properties) »MaxSamples«, which is browser dependent.
 
 notifications
 : A Boolean value (`true` or `false`) to indicate whether the notification bubble should be displayed. The default value for the *notifications* attribute is `true`.
@@ -749,6 +749,9 @@ splashScreen
 
 src
 : A String value containing the URL to load on page load. If no *src* attribute is specified or the *src* attribute is empty, an empty scene will be displayed.
+
+textCompression
+: A string value that determines how Text.*length* and Text.*maxExtent* are handled, either by adjusting char spacing or by scaling. The default value for the *textCompression* attribute is `"CHAR_SPACING"`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
 
 timings
 : A Boolean value (`true` or `false`) to indicate whether the Timings Panel should be displayed. The default value for the *timings* attribute is restored from the previous session, otherwise it is `false`.

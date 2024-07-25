@@ -394,6 +394,12 @@ Object .assign (X3DCoreContext .prototype,
 
             break;
          }
+         case "textCompression":
+         case "textcompression":
+         {
+            this .setBrowserOption ("TextCompression", newValue);
+            break;
+         }
          case "timings":
          {
             this .setBrowserOption ("Timings", this .parseBooleanAttribute (newValue, false));
