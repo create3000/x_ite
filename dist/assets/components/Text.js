@@ -1,7 +1,7 @@
-/* X_ITE v10.0.5 */(() => { // webpackBootstrap
+/* X_ITE v10.1.0 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 467:
+/***/ 760:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14488,7 +14488,7 @@
 /***/ ((module) => {
 
 "use strict";
-module.exports = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("lib/jquery");
+module.exports = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("lib/jquery");
 
 /***/ }),
 
@@ -14564,25 +14564,25 @@ var __webpack_exports__ = {};
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DNode\")"
-const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Components/Core/X3DNode");
+const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Components/Core/X3DNode");
 var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Networking/X3DUrlObject\")"
-const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Components/Networking/X3DUrlObject");
+const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Components/Networking/X3DUrlObject");
 var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/TextAlignment.js
 /*******************************************************************************
@@ -14648,12 +14648,12 @@ const __default__ = TextAlignment;
 Namespace_default().add ("TextAlignment", "x_ite/Browser/Text/TextAlignment", __default__);
 /* harmony default export */ const Text_TextAlignment = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/InputOutput/FileLoader\")"
-const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/InputOutput/FileLoader");
+const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/InputOutput/FileLoader");
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Networking/URLs\")"
-const URLs_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Browser/Networking/URLs");
+const URLs_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Browser/Networking/URLs");
 var URLs_default = /*#__PURE__*/__webpack_require__.n(URLs_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Text/X3DFontStyleNode.js
 /*******************************************************************************
@@ -14921,20 +14921,26 @@ const X3DFontStyleNode_default_ = X3DFontStyleNode;
 Namespace_default().add ("X3DFontStyleNode", "x_ite/Components/Text/X3DFontStyleNode", X3DFontStyleNode_default_);
 /* harmony default export */ const Text_X3DFontStyleNode = (X3DFontStyleNode_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Core/PrimitiveQuality\")"
-const PrimitiveQuality_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Browser/Core/PrimitiveQuality");
+const PrimitiveQuality_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Browser/Core/PrimitiveQuality");
 var PrimitiveQuality_default = /*#__PURE__*/__webpack_require__.n(PrimitiveQuality_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Core/TextCompression\")"
+const TextCompression_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Browser/Core/TextCompression");
+var TextCompression_default = /*#__PURE__*/__webpack_require__.n(TextCompression_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Box2\")"
-const Box2_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("standard/Math/Geometry/Box2");
+const Box2_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("standard/Math/Geometry/Box2");
 var Box2_default = /*#__PURE__*/__webpack_require__.n(Box2_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Box3\")"
-const Box3_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("standard/Math/Geometry/Box3");
+const Box3_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("standard/Math/Geometry/Box3");
 var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector2\")"
-const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("standard/Math/Numbers/Vector2");
+const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("standard/Math/Numbers/Vector2");
 var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("standard/Math/Numbers/Vector3");
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix3\")"
+const Matrix3_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("standard/Math/Numbers/Matrix3");
+var Matrix3_default = /*#__PURE__*/__webpack_require__.n(Matrix3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextGeometry.js
 /*******************************************************************************
  *
@@ -14989,25 +14995,27 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
 
 
 
-var
-   bbox        = new (Box2_default()) (),
-   lineBBox    = new (Box2_default()) (),
-   min         = new (Vector2_default()) (),
-   max         = new (Vector2_default()) (),
-   glyphMin    = new (Vector2_default()) (),
-   glyphMax    = new (Vector2_default()) (),
-   min3        = new (Vector3_default()) (),
-   max3        = new (Vector3_default()) (),
-   size        = new (Vector2_default()) (),
-   center      = new (Vector2_default()) (),
-   size1_2     = new (Vector2_default()) (),
-   translation = new (Vector2_default()) (),
-   lineBound   = new (Vector2_default()) (),
-   origin      = new (Vector3_default()) (),
-   vector      = new (Vector2_default()) (),
-   box2        = new (Box2_default()) (),
-   zero2       = new (Vector2_default()) (),
-   zero3       = new (Vector3_default()) ();
+
+
+const
+   bbox         = new (Box2_default()) (),
+   lineBBox     = new (Box2_default()) (),
+   min          = new (Vector2_default()) (),
+   max          = new (Vector2_default()) (),
+   glyphMin     = new (Vector2_default()) (),
+   glyphMax     = new (Vector2_default()) (),
+   min3         = new (Vector3_default()) (),
+   max3         = new (Vector3_default()) (),
+   size         = new (Vector2_default()) (),
+   center       = new (Vector2_default()) (),
+   size1_2      = new (Vector2_default()) (),
+   translation1 = new (Vector2_default()) (),
+   translation2 = new (Vector2_default()) (),
+   lineBound    = new (Vector2_default()) (),
+   origin       = new (Vector3_default()) (),
+   box2         = new (Box2_default()) (),
+   zero2        = new (Vector2_default()) (),
+   zero3        = new (Vector3_default()) ();
 
 function X3DTextGeometry (text, fontStyle)
 {
@@ -15016,10 +15024,11 @@ function X3DTextGeometry (text, fontStyle)
    this .fontStyle      = fontStyle;
    this .glyphs         = [ ];
    this .minorAlignment = new (Vector2_default()) ();
+   this .lineIndices    = [ ];
    this .translations   = [ ];
    this .charSpacings   = [ ];
+   this .scales         = [ ];
    this .bearing        = new (Vector2_default()) ();
-   this .yPad           = [ ];
    this .bbox           = new (Box3_default()) ();
 }
 
@@ -15053,6 +15062,10 @@ Object .assign (X3DTextGeometry .prototype,
    {
       return this .charSpacings;
    },
+   getScales ()
+   {
+      return this .scales;
+   },
    getBearing ()
    {
       return this .bearing;
@@ -15063,7 +15076,7 @@ Object .assign (X3DTextGeometry .prototype,
    },
    update ()
    {
-      var
+      const
          text      = this .text,
          fontStyle = this .fontStyle,
          numLines  = text ._string .length;
@@ -15071,7 +15084,7 @@ Object .assign (X3DTextGeometry .prototype,
       text ._lineBounds .length = numLines;
       this .glyphs      .length = 0;
 
-      if (numLines === 0 || ! fontStyle .getFont ())
+      if (numLines === 0 || !fontStyle .getFont ())
       {
          text ._origin     .setValue (zero3);
          text ._textBounds .setValue (zero2);
@@ -15083,21 +15096,24 @@ Object .assign (X3DTextGeometry .prototype,
       if (fontStyle ._horizontal .getValue ())
       {
          this .resizeArray (this .translations, numLines);
-         this .resizeArray (this .charSpacings, numLines);
+
+         this .lineIndices  .length = 0;
+         this .charSpacings .length = numLines;
+         this .scales       .length = numLines;
 
          this .horizontal (text, fontStyle);
       }
       else
       {
-         var
+         const
             string   = text ._string,
-            numChars = 0;
-
-         for (var i = 0, length = string .length; i < length; ++ i)
-            numChars += string [i] .length;
+            numChars = string .reduce ((p, c) => p + c .length, 0);
 
          this .resizeArray (this .translations, numChars);
-         this .resizeArray (this .charSpacings, numChars);
+
+         this .lineIndices  .length = numChars;
+         this .charSpacings .length = numLines;
+         this .scales       .length = numLines;
 
          this .vertical (text, fontStyle);
       }
@@ -15113,59 +15129,56 @@ Object .assign (X3DTextGeometry .prototype,
    },
    horizontal (text, fontStyle)
    {
-      var
-         font        = fontStyle .getFont (),
-         string      = text ._string,
-         numLines    = string .length,
-         maxExtent   = Math .max (0, text ._maxExtent .getValue ()),
-         topToBottom = fontStyle ._topToBottom .getValue (),
-         scale       = fontStyle .getScale (),
-         spacing     = fontStyle ._spacing .getValue ();
+      const
+         font            = fontStyle .getFont (),
+         string          = text ._string,
+         numLines        = string .length,
+         maxExtent       = Math .max (0, text ._maxExtent .getValue ()),
+         topToBottom     = fontStyle ._topToBottom .getValue (),
+         scale           = fontStyle .getScale (),
+         spacing         = fontStyle ._spacing .getValue (),
+         textCompression = this .getBrowser () .getBrowserOptions () .getTextCompression ();
 
       bbox .set ();
 
       // Calculate bboxes.
 
-      var
+      const
          first = topToBottom ? 0 : numLines - 1,
          last  = topToBottom ? numLines : -1,
          step  = topToBottom ? 1 : -1;
 
-      for (var l = first, ll = 0; l !== last; l += step, ++ ll)
+      for (let l = first, ll = 0; l !== last; l += step, ++ ll)
       {
-         var line = string [l];
+         const line = string [l];
 
          // Get line extents.
 
-         var glyphs = this .getHorizontalLineExtents (fontStyle, line, min, max, ll);
+         const glyphs = this .getHorizontalLineExtents (fontStyle, line, min, max, ll);
 
          size .assign (max) .subtract (min);
 
          // Calculate charSpacing and lineBounds.
 
-         var
-            charSpacing = 0,
-            length      = text .getLength (l);
+         const
+            length = text .getLength (l),
+            w      = size .x * scale;
 
-         lineBound .set (size .x * scale, ll == 0 ? max .y - font .descender / font .unitsPerEm * scale : spacing);
+         let charSpacing = 0;
 
-         if (maxExtent)
-         {
-            if (length)
-               length = Math .min (maxExtent, length);
-
-            else
-               length = Math .min (maxExtent, size .x * scale);
-         }
+         lineBound .set (w, ll == 0 ? max .y - font .descender / font .unitsPerEm * scale : spacing);
 
          if (length)
          {
-            charSpacing  = (length - lineBound .x) / (glyphs .length - 1);
+            if (textCompression === (TextCompression_default()).CHAR_SPACING && glyphs .length > 1)
+               charSpacing = (length - lineBound .x) / (glyphs .length - 1);
+
             lineBound .x = length;
             size .x      = length / scale;
          }
 
          this .charSpacings [ll] = charSpacing;
+         this .scales [ll]       = textCompression === (TextCompression_default()).SCALING ? lineBound .x / w : 1;
          text ._lineBounds [l]   = lineBound;
 
          // Calculate line translation.
@@ -15193,6 +15206,48 @@ Object .assign (X3DTextGeometry .prototype,
          // Add bbox.
 
          bbox .add (box2 .set (size .multiply (scale), center .multiply (scale) .add (this .translations [ll])));
+      }
+
+      if (maxExtent)
+      {
+         const extent = text ._lineBounds .reduce ((p, c) => Math .max (p, c .x), 0);
+
+         if (extent > maxExtent)
+         {
+            const s = maxExtent / extent;
+
+            switch (textCompression)
+            {
+               case (TextCompression_default()).CHAR_SPACING:
+               {
+                  for (const i of this .charSpacings .keys ())
+                  {
+                     if (text ._string [i] .length < 2)
+                        continue;
+
+                     this .charSpacings [i] -= (text ._lineBounds [i] .x - text ._lineBounds [i] .x * s)
+                        / (text ._string [i] .length - 1);
+                  }
+
+                  break;
+               }
+               case (TextCompression_default()).SCALING:
+               {
+                  for (const i of this .scales .keys ())
+                     this .scales [i] *= s;
+
+                  break;
+               }
+            }
+
+            for (const i of this .translations .keys ())
+               this .translations [i] .x *= s;
+
+            for (const i of text ._lineBounds .keys ())
+               text ._lineBounds [i] .x *= s;
+
+            bbox .multRight (new (Matrix3_default()) (s,0,0, 0,1,0, 0,0,0));
+         }
       }
 
       //console .log ("size", bbox .size, "center", bbox .center);
@@ -15238,7 +15293,7 @@ Object .assign (X3DTextGeometry .prototype,
    },
    vertical (text, fontStyle)
    {
-      var
+      const
          font             = fontStyle .getFont (),
          string           = text ._string,
          numLines         = string .length,
@@ -15247,24 +15302,25 @@ Object .assign (X3DTextGeometry .prototype,
          topToBottom      = fontStyle ._topToBottom .getValue (),
          scale            = fontStyle .getScale (),
          spacing          = fontStyle ._spacing .getValue (),
-         yPad             = this .yPad,
-         primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
+         primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
+         textCompression  = this .getBrowser () .getBrowserOptions () .getTextCompression ();
 
       bbox .set ();
 
       // Calculate bboxes.
 
-      var
+      const
          firstL = leftToRight ? 0 : numLines - 1,
          lastL  = leftToRight ? numLines : -1,
-         stepL  = leftToRight ? 1 : -1,
-         t      = 0; // Translation index
+         stepL  = leftToRight ? 1 : -1;
 
-      for (var l = firstL; l !== lastL; l += stepL)
+      let t = 0; // Translation index
+
+      for (let l = firstL; l !== lastL; l += stepL)
       {
-         var glyphs = this .stringToGlyphs (font, string [l], true, l);
+         const glyphs = this .stringToGlyphs (font, string [l], true, l);
 
-         var
+         const
             t0       = t,
             numChars = glyphs .length;
 
@@ -15272,14 +15328,14 @@ Object .assign (X3DTextGeometry .prototype,
 
          lineBBox .set ();
 
-         var
+         const
             firstG = topToBottom ? 0 : numChars - 1,
             lastG  = topToBottom ? numChars : -1,
             stepG  = topToBottom ? 1 : -1;
 
-         for (var g = firstG; g !== lastG; g += stepG, ++ t)
+         for (let g = firstG; g !== lastG; g += stepG, ++ t)
          {
-            var glyph = glyphs [g];
+            const glyph = glyphs [g];
 
             // Get glyph extents.
 
@@ -15289,8 +15345,9 @@ Object .assign (X3DTextGeometry .prototype,
 
             // Calculate glyph translation
 
-            var glyphNumber = topToBottom ? g : numChars - g - 1;
+            const glyphNumber = topToBottom ? g : numChars - g - 1;
 
+            this .lineIndices [t] = l;
             this .translations [t] .set ((spacing - size .x - min .x) / 2, -glyphNumber);
 
             // Calculate center.
@@ -15310,32 +15367,30 @@ Object .assign (X3DTextGeometry .prototype,
 
          // Calculate charSpacing and lineBounds.
 
-         var
-            lineNumber  = leftToRight ? l : numLines - l - 1,
-            padding     = (spacing - size .x) / 2,
-            charSpacing = 0,
-            length      = text .getLength (l);
+         const
+            lineNumber = leftToRight ? l : numLines - l - 1,
+            padding    = (spacing - size .x) / 2,
+            length     = text .getLength (l);
 
-         lineBound .set (l === 0 ? spacing - padding: spacing, numChars ? size .y : 0) .multiply (scale);
+         let charSpacing = 0;
 
-         if (maxExtent)
-         {
-            if (length)
-               length = Math .min (maxExtent, length);
+         lineBound .set (l === 0 ? spacing - padding : spacing, numChars ? size .y : 0) .multiply (scale);
 
-            else
-               length = Math .min (maxExtent, size .y * scale);
-         }
+         const h = lineBound .y;
 
          if (length)
          {
-            charSpacing  = (length - lineBound .y) / (glyphs .length - 1) / scale;
+            if (textCompression === (TextCompression_default()).CHAR_SPACING && glyphs .length > 1)
+               charSpacing = (length - lineBound .y) / (glyphs .length - 1);
+
             lineBound .y = length;
             size .y      = length / scale;
-            min .y       = max .y  - size .y;
+            min .y       = max .y - size .y;
          }
 
-         text ._lineBounds [l] = lineBound;
+         this .charSpacings [l] = charSpacing;
+         this .scales [l]       = textCompression === (TextCompression_default()).SCALING ? lineBound .y / h : 1;
+         text ._lineBounds [l]  = lineBound;
 
          // Calculate line translation.
 
@@ -15343,52 +15398,23 @@ Object .assign (X3DTextGeometry .prototype,
          {
             case Text_TextAlignment .BEGIN:
             case Text_TextAlignment .FIRST:
-               translation .set (lineNumber * spacing, -1);
+               translation2 .assign (translation1 .set (lineNumber * spacing, -max .y));
                break;
             case Text_TextAlignment .MIDDLE:
-               translation .set (lineNumber * spacing, (size .y / 2 - max .y));
+               translation2 .assign (translation1 .set (lineNumber * spacing, (size .y / 2 - max .y)));
                break;
             case Text_TextAlignment .END:
             {
-               // This is needed to make maxExtend and charSpacing work.
-               if (numChars)
-                  this .getGlyphExtents (font, glyphs [topToBottom ? numChars - 1 : 0], primitiveQuality, glyphMin .assign ((Vector2_default()).Zero), vector);
-
-               translation .set (lineNumber * spacing, (size .y - max .y + glyphMin .y));
+               translation1 .set (lineNumber * spacing, (size .y / this .scales [l] - max .y));
+               translation2 .set (lineNumber * spacing, (size .y - max .y));
                break;
             }
          }
 
          // Calculate glyph translation
 
-         var space = 0;
-
-         for (var tt = t0; tt < t; ++ tt)
-         {
-            this .translations [tt] .add (translation);
-
-            this .translations [tt] .y -= space;
-
-            this .translations [tt] .multiply (scale);
-
-            space += charSpacing;
-         }
-
-         // Calculate ypad to extend line bounds.
-
-         switch (fontStyle .getMajorAlignment ())
-         {
-            case Text_TextAlignment .BEGIN:
-            case Text_TextAlignment .FIRST:
-               yPad [l] = max .y + translation .y;
-               break;
-            case Text_TextAlignment .MIDDLE:
-               yPad [l] = 0;
-               break;
-            case Text_TextAlignment .END:
-               yPad [l] = min .y + translation .y;
-               break;
-         }
+         for (let tt = t0; tt < t; ++ tt)
+            this .translations [tt] .add (translation1) .multiply (scale);
 
          // Calculate center.
 
@@ -15396,7 +15422,72 @@ Object .assign (X3DTextGeometry .prototype,
 
          // Add bbox.
 
-         bbox .add (box2 .set (size .multiply (scale), center .add (translation) .multiply (scale)));
+         bbox .add (box2 .set (size .multiply (scale), center .add (translation2) .multiply (scale)));
+      }
+
+      if (maxExtent)
+      {
+         const extent = text ._lineBounds .reduce ((p, c) => Math .max (p, c .y), 0);
+
+         if (extent > maxExtent)
+         {
+            const s = maxExtent / extent;
+
+            switch (textCompression)
+            {
+               case (TextCompression_default()).CHAR_SPACING:
+               {
+                  for (const i of this .charSpacings .keys ())
+                  {
+                     if (text ._string [i] .length < 2)
+                        continue;
+
+                     this .charSpacings [i] -= (text ._lineBounds [i] .y - text ._lineBounds [i] .y * s)
+                        / (text ._string [i] .length - 1);
+                  }
+
+                  switch (fontStyle .getMajorAlignment ())
+                  {
+                     case Text_TextAlignment .MIDDLE:
+                     {
+                        for (const t of this .translations .keys ())
+                        {
+                           const l = this .lineIndices [t];
+
+                           this .translations [t] .y -= (text ._lineBounds [l] .y - text ._lineBounds [l] .y * s) / 2;
+                        }
+
+                        break;
+                     }
+                     case Text_TextAlignment .END:
+                     {
+                        for (const t of this .translations .keys ())
+                        {
+                           const l = this .lineIndices [t];
+
+                           this .translations [t] .y -= (text ._lineBounds [l] .y - text ._lineBounds [l] .y * s);
+                        }
+
+                        break;
+                     }
+                  }
+
+                  break;
+               }
+               case (TextCompression_default()).SCALING:
+               {
+                  for (const i of this .scales .keys ())
+                     this .scales [i] *= s;
+
+                  break;
+               }
+            }
+
+            for (const i of text ._lineBounds .keys ())
+               text ._lineBounds [i] .y *= s;
+
+            bbox .multRight (new (Matrix3_default()) (1,0,0, 0,s,0, 0,0,0));
+         }
       }
 
       // Get text extents.
@@ -15404,33 +15495,6 @@ Object .assign (X3DTextGeometry .prototype,
       bbox .getExtents (min, max);
 
       size .assign (max) .subtract (min);
-
-      // Extend lineBounds.
-
-      switch (fontStyle .getMajorAlignment ())
-      {
-         case Text_TextAlignment .BEGIN:
-         case Text_TextAlignment .FIRST:
-         {
-            var lineBounds = text ._lineBounds;
-
-            for (var i = 0, length = lineBounds .length; i < length; ++ i)
-               lineBounds [i] .y += max .y - yPad [i] * scale;
-
-            break;
-         }
-         case Text_TextAlignment .MIDDLE:
-            break;
-         case Text_TextAlignment .END:
-         {
-            var lineBounds = text ._lineBounds;
-
-            for (var i = 0, length = lineBounds .length; i < length; ++ i)
-               lineBounds [i] .y += yPad [i] * scale - min .y;
-
-            break;
-         }
-      }
 
       // Calculate text position
 
@@ -15478,38 +15542,38 @@ Object .assign (X3DTextGeometry .prototype,
    },
    stringToGlyphs (font, line, normal, lineNumber)
    {
-      var glypes = this .glyphs [lineNumber];
+      const glyphs = this .glyphs [lineNumber]
+         ?? (this .glyphs [lineNumber] = [ ]);
 
-      if (! glypes)
-         glypes = this .glyphs [lineNumber] = [ ];
+      glyphs .length = line .length;
 
-      glypes .length = line .length;
-
-      var
+      const
          first = normal ? 0 : line .length - 1,
          last  = normal ? line .length : -1,
          step  = normal ? 1 : -1;
 
-      for (var c = first, g = 0; c !== last; c += step, ++ g)
-         glypes [g] = font .charToGlyph (line [c]);
+      for (let c = first, g = 0; c !== last; c += step, ++ g)
+         glyphs [g] = font .charToGlyph (line [c]);
 
-      return glypes;
+      return glyphs;
    },
    getHorizontalLineExtents (fontStyle, line, min, max, lineNumber)
    {
-      var
+      const
          font             = fontStyle .getFont (),
          normal           = fontStyle ._horizontal .getValue () ? fontStyle ._leftToRight .getValue () : fontStyle ._topToBottom .getValue (),
          glyphs           = this .stringToGlyphs (font, line, normal, lineNumber),
-         primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
-         xMin             = 0,
-         xMax             = 0,
-         yMin             = Number .POSITIVE_INFINITY,
-         yMax             = Number .NEGATIVE_INFINITY;
+         primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
 
-      for (var g = 0, length = glyphs .length; g < length; ++ g)
+      let
+         xMin = 0,
+         xMax = 0,
+         yMin = Number .POSITIVE_INFINITY,
+         yMax = Number .NEGATIVE_INFINITY;
+
+      for (const g of glyphs .keys ())
       {
-         var
+         const
             glyph   = glyphs [g],
             kerning = g + 1 < length ? font .getKerningValue (glyph, glyphs [g + 1]) : 0;
 
@@ -15524,7 +15588,7 @@ Object .assign (X3DTextGeometry .prototype,
       {
          this .getGlyphExtents (font, glyphs [0], primitiveQuality, glyphMin, glyphMax);
 
-         xMin  = glyphMin .x;
+         xMin = glyphMin .x;
       }
       else
       {
@@ -15555,13 +15619,13 @@ const X3DTextGeometry_default_ = X3DTextGeometry;
 Namespace_default().add ("X3DTextGeometry", "x_ite/Browser/Text/X3DTextGeometry", X3DTextGeometry_default_);
 /* harmony default export */ const Text_X3DTextGeometry = (X3DTextGeometry_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("standard/Math/Numbers/Matrix4");
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithms/Bezier\")"
-const Bezier_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("standard/Math/Algorithms/Bezier");
+const Bezier_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("standard/Math/Algorithms/Bezier");
 var Bezier_default = /*#__PURE__*/__webpack_require__.n(Bezier_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"lib/libtess\")"
-const libtess_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("lib/libtess");
+const libtess_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("lib/libtess");
 var libtess_default = /*#__PURE__*/__webpack_require__.n(libtess_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/PolygonText.js
 /*******************************************************************************
@@ -15656,6 +15720,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
             minorAlignment   = this .getMinorAlignment (),
             translations     = this .getTranslations (),
             charSpacings     = this .getCharSpacings (),
+            scales           = this .getScales (),
             size             = fontStyle .getScale (),
             spacing          = fontStyle ._spacing .getValue (),
             origin           = text ._origin .getValue (),
@@ -15679,8 +15744,9 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
             {
                const
                   line        = glyphs [l],
+                  translation = translations [l],
                   charSpacing = charSpacings [l],
-                  translation = translations [l];
+                  scale       = scales [l];
 
                let advanceWidth = 0;
 
@@ -15689,14 +15755,14 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
                   const
                      glyph         = line [g],
                      glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality),
-                     xOffset       = minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
+                     xOffset       = minorAlignment .x + translation .x + advanceWidth * scale + g * charSpacing,
                      yOffset       = minorAlignment .y + translation .y;
 
-                  for (let v = 0, vl = glyphVertices .length; v < vl; ++ v)
+                  for (const { x: glyphX, y: glyphY } of glyphVertices)
                   {
                      const
-                        x = glyphVertices [v] .x * size + xOffset,
-                        y = glyphVertices [v] .y * size + yOffset;
+                        x = glyphX * size * scale + xOffset,
+                        y = glyphY * size + yOffset;
 
                      texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
                      normalArray   .push (0, 0, 1);
@@ -15720,17 +15786,19 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
                leftToRight = fontStyle ._leftToRight .getValue (),
                topToBottom = fontStyle ._topToBottom .getValue (),
                first       = leftToRight ? 0 : text ._string .length - 1,
-               last        = leftToRight ? text ._string .length  : -1,
+               last        = leftToRight ? text ._string .length : -1,
                step        = leftToRight ? 1 : -1;
 
             for (let l = first, t = 0; l !== last; l += step)
             {
                const
-                  line     = glyphs [l],
-                  numChars = line .length,
-                  firstG   = topToBottom ? 0 : numChars - 1,
-                  lastG    = topToBottom ? numChars : -1,
-                  stepG    = topToBottom ? 1 : -1;
+                  line        = glyphs [l],
+                  numChars    = line .length,
+                  firstG      = topToBottom ? 0 : numChars - 1,
+                  lastG       = topToBottom ? numChars : -1,
+                  stepG       = topToBottom ? 1 : -1,
+                  charSpacing = charSpacings [l],
+                  scale       = scales [l];
 
                for (let g = firstG; g !== lastG; g += stepG, ++ t)
                {
@@ -15738,11 +15806,11 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
                      translation   = translations [t],
                      glyphVertices = this .getGlyphGeometry (font, line [g], primitiveQuality);
 
-                  for (let v = 0, vl = glyphVertices .length; v < vl; ++ v)
+                  for (const { x: glyphX, y: glyphY } of glyphVertices)
                   {
                      const
-                        x = glyphVertices [v] .x * size + minorAlignment .x + translation .x,
-                        y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
+                        x = glyphX * size + minorAlignment .x + translation .x,
+                        y = glyphY * size * scale + minorAlignment .y + translation .y * scale - g * charSpacing;
 
                      texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
                      normalArray   .push (0, 0, 1);
@@ -16048,7 +16116,7 @@ Namespace_default().add ("FontStyle", "x_ite/Components/Text/FontStyle", FontSty
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(823);
-/* provided dependency */ var opentype = __webpack_require__(467);
+/* provided dependency */ var opentype = __webpack_require__(760);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16188,10 +16256,10 @@ const X3DTextContext_default_ = X3DTextContext;
 Namespace_default().add ("X3DTextContext", "x_ite/Browser/Text/X3DTextContext", X3DTextContext_default_);
 /* harmony default export */ const Text_X3DTextContext = (X3DTextContext_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
-const X3DGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Components/Rendering/X3DGeometryNode");
+const X3DGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Components/Rendering/X3DGeometryNode");
 var X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometryNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.0.5")] .require ("x_ite/Base/X3DCast");
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Text/Text.js
 /*******************************************************************************
@@ -16284,14 +16352,20 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (X3DGeometryNode_defaul
    },
    set_live__ ()
    {
-       X3DGeometryNode_default().prototype .set_live__ .call (this);
+      X3DGeometryNode_default().prototype .set_live__ .call (this);
 
-       const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
 
-       if (this .getLive () .getValue () || alwaysUpdate)
-          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
+      if (this .getLive () .getValue () || alwaysUpdate)
+      {
+         this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
+         this .getBrowser () .getBrowserOptions () ._TextCompression  .addInterest ("requestRebuild", this);
+      }
       else
+      {
          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .removeInterest ("requestRebuild", this);
+         this .getBrowser () .getBrowserOptions () ._TextCompression  .removeInterest ("requestRebuild", this);
+      }
    },
    set_fontStyle__ ()
    {
