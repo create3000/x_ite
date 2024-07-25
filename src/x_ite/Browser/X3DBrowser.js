@@ -828,7 +828,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       const viewpoints = layerNode ?.getUserViewpoints ();
 
       if (viewpoints ?.length)
-         this .bindViewpoint (layerNode, viewpoints [0]);
+         this .bindViewpoint (layerNode, viewpoints .at (0));
    },
    previousViewpoint (layerNode)
    {
