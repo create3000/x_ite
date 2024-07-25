@@ -852,15 +852,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       }
 
       if (i < viewpoints .length)
-      {
-         if (i === 0)
-            this .bindViewpoint (layerNode, viewpoints .at (-1));
-
-         else
-            this .bindViewpoint (layerNode, viewpoints [i - 1]);
-      }
+         i = i === 0 ? -1 : i - 1;
       else
-         this .bindViewpoint (layerNode, viewpoints .at (-1));
+         i = -1;
+
+      this .bindViewpoint (layerNode, viewpoints .at (i));
    },
    nextViewpoint (layerNode)
    {
@@ -881,15 +877,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       }
 
       if (i < viewpoints .length)
-      {
-         if (i === viewpoints .length - 1)
-            this .bindViewpoint (layerNode, viewpoints [0]);
-
-         else
-            this .bindViewpoint (layerNode, viewpoints [i + 1]);
-      }
+         i = i === viewpoints .length - 1 ? 0 : i + 1;
       else
-         this .bindViewpoint (layerNode, viewpoints [0]);
+         i = 0;
+
+      this .bindViewpoint (layerNode, viewpoints .at (i));
    },
    lastViewpoint (layerNode)
    {
