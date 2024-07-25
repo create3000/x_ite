@@ -845,11 +845,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       if (viewpoints .length === 0)
          return;
 
-      let i = viewpoints .findIndex (viewpointNode => viewpointNode ._isBound .getValue ());
+      const i = viewpoints .findIndex (viewpointNode => viewpointNode ._isBound .getValue ());
 
-      i = i > -1 ? i - 1 : -1;
-
-      this .bindViewpoint (layerNode, viewpoints .at (i));
+      this .bindViewpoint (layerNode, viewpoints .at (i > -1 ? i - 1 : -1));
    },
    nextViewpoint (layerNode)
    {
@@ -863,11 +861,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       if (viewpoints .length === 0)
          return;
 
-      let i = viewpoints .findIndex (viewpointNode => viewpointNode ._isBound .getValue ());
+      const i = viewpoints .findIndex (viewpointNode => viewpointNode ._isBound .getValue ());
 
-      i = (i + 1) % viewpoints .length;
-
-      this .bindViewpoint (layerNode, viewpoints .at (i));
+      this .bindViewpoint (layerNode, viewpoints .at ((i + 1) % viewpoints .length));
    },
    lastViewpoint (layerNode)
    {
