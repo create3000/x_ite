@@ -7,6 +7,12 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning){:target="_blank"}. Keep this in mind when choosing a version number.
 
+## X_ITE v10.1.0 Released
+
+*Leipzig, 28th July 2024:* This release comes with a new [browser option](/x_ite/reference/browser-services/#browser-options) `TextCompression` which determines how Text.*length* and Text.*maxExtent* are handled, i.e. either by adjusting char spacing or by scaling. These are the two options suggested by the X3D specification, and we can now offer both to let the user choose which one they want.
+
+We also noticed two problems with text rendering, particularly with vertical text, where the text did not start or end at the origin. Also *maxExtent* is now implemented as specified by X3D.
+
 ## X_ITE v10.0.0 Released
 
 *Leipzig, 23rd June 2024:* With this release, all glTF material extensions are now available, i.e. when a glTF file is parsed, these extensions are automatically converted to X3D. There is now an X3D node for each glTF extension. These nodes can also be referenced directly in X3D files. Extensions for glTF materials are converted to the new X3DMaterialExtensionNode nodes, which can be used as a child of [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) node and the new [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) node. These material nodes now have a new field »extensions« for this purpose. The introduction of the »extensions« field has only a minimal impact and leads to the greatest possible compatibility.
@@ -15,7 +21,7 @@ To get an idea of what a great difference these new material extensions make, ch
 
 ### New Browser Options
 
-There are also new [Browser Options](/x_ite/reference/browser-services/#browser-options) that are especially made for PhysicalMaterial node and SpecularGlossinessMaterial node.
+There are also new [browser options](/x_ite/reference/browser-services/#browser-options) that are especially made for PhysicalMaterial node and SpecularGlossinessMaterial node.
 
 * New browser option Exposure.
 * New browser option ToneMapping.
@@ -690,7 +696,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fix bug in Browser Options when switching texture quality.
+- Fix bug in browser options when switching texture quality.
 - Fixed picking and Layout node.
 - Fixed bug with composite glyphs in Text node.
 - Fixed bug with data URLs.

@@ -704,7 +704,7 @@ cache
 : A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the *cache* attribute is `true`. It works by appending "_={timestamp}" to the GET parameters of every request.
 
 colorSpace
-: A String value that specifies the color space in which color calculations take place. The default value for the *colorSpace* attribute is `"LINEAR_WHEN_PHYSICAL_MATERIAL"`. For a list of possible values see [Browser Options](/x_ite/reference/browser-services/#browser-options).
+: A String value that specifies the color space in which color calculations take place. The default value for the *colorSpace* attribute is `"LINEAR_WHEN_PHYSICAL_MATERIAL"`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
 
 contentScale
 : A Float value that specifies how much higher the physical resolution of the internal \<canvas\> element is. The default value for the *contentScale* attribute is `1.0`, which is sufficient for most cases. A higher value increases the resolution of the internal \<canvas\> element and can be used to increase the anti-aliasing effect, making the rendered image sharper. If set to `auto`, contentScale will match »window.devicePixelRatio«, which is useful for HiDPI or Retina displays. A value between `0.0` and `1.0` will result in a pixelated image, see also the *antialiased* attribute.
@@ -754,7 +754,7 @@ timings
 : A Boolean value (`true` or `false`) to indicate whether the Timings Panel should be displayed. The default value for the *timings* attribute is restored from the previous session, otherwise it is `false`.
 
 toneMapping
-: A String value that indicates whether tone mapping should be applied. The default value for the *toneMapping* attribute is `"NONE"`. For a list of possible values see [Browser Options](/x_ite/reference/browser-services/#browser-options).
+: A String value that indicates whether tone mapping should be applied. The default value for the *toneMapping* attribute is `"NONE"`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
 
 update
 : A Boolean value (`true`, `false` or `auto`) to indicate whether browser events should be processed. The default value for the *update* attribute is `true`. A value of `true` will enable event processing, a value of `false` will stop event processing. If the value is `auto`, the effective value is determined by the visibility of the \<x3d-canvas\> element.
@@ -770,7 +770,7 @@ url
 
 ### More Options
 
-More options can be adjusted using the [Browser object](/x_ite/reference/browser-services/#browser-object) and [Browser Options](/x_ite/reference/browser-services/#browser-options) for scene specific adjustments.
+More options can be adjusted using the [Browser object](/x_ite/reference/browser-services/#browser-object) and [browser options](/x_ite/reference/browser-services/#browser-options) for scene specific adjustments.
 
 ## Keyboard Shortcuts
 
