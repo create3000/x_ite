@@ -45,12 +45,13 @@
  *
  ******************************************************************************/
 
-import TextAlignment from "./TextAlignment.js";
-import Box2          from "../../../standard/Math/Geometry/Box2.js";
-import Box3          from "../../../standard/Math/Geometry/Box3.js";
-import Vector2       from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3       from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix3       from "../../../standard/Math/Numbers/Matrix3.js";
+import TextAlignment   from "./TextAlignment.js";
+import TextCompression from "../Core/TextCompression.js";
+import Box2            from "../../../standard/Math/Geometry/Box2.js";
+import Box3            from "../../../standard/Math/Geometry/Box3.js";
+import Vector2         from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix3         from "../../../standard/Math/Numbers/Matrix3.js";
 
 const
    bbox         = new Box2 (),
@@ -225,7 +226,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (length)
          {
-            if (textCompression === 0 && glyphs .length > 1)
+            if (textCompression === TextCompression .CHAR_SPACING && glyphs .length > 1)
                charSpacing = (length - lineBound .x) / (glyphs .length - 1);
 
             lineBound .x = length;
@@ -233,7 +234,7 @@ Object .assign (X3DTextGeometry .prototype,
          }
 
          this .charSpacings [ll] = charSpacing;
-         this .scales [ll]       = textCompression === 1 ? lineBound .x / w : 1;
+         this .scales [ll]       = textCompression === TextCompression .SCALING ? lineBound .x / w : 1;
          text ._lineBounds [l]   = lineBound;
 
          // Calculate line translation.
@@ -273,7 +274,7 @@ Object .assign (X3DTextGeometry .prototype,
 
             switch (textCompression)
             {
-               case 0:
+               case TextCompression .CHAR_SPACING:
                {
                   for (const i of this .charSpacings .keys ())
                   {
@@ -286,7 +287,7 @@ Object .assign (X3DTextGeometry .prototype,
 
                   break;
                }
-               case 1:
+               case TextCompression .SCALING:
                {
                   for (const i of this .scales .keys ())
                      this .scales [i] *= s;
@@ -435,7 +436,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (length)
          {
-            if (textCompression === 0 && glyphs .length > 1)
+            if (textCompression === TextCompression .CHAR_SPACING && glyphs .length > 1)
                charSpacing = (length - lineBound .y) / (glyphs .length - 1);
 
             lineBound .y = length;
@@ -444,7 +445,7 @@ Object .assign (X3DTextGeometry .prototype,
          }
 
          this .charSpacings [l] = charSpacing;
-         this .scales [l]       = textCompression === 1 ? lineBound .y / h : 1;
+         this .scales [l]       = textCompression === TextCompression .SCALING ? lineBound .y / h : 1;
          text ._lineBounds [l]  = lineBound;
 
          // Calculate line translation.
@@ -490,7 +491,7 @@ Object .assign (X3DTextGeometry .prototype,
 
             switch (textCompression)
             {
-               case 0:
+               case TextCompression .CHAR_SPACING:
                {
                   for (const i of this .charSpacings .keys ())
                   {
@@ -529,7 +530,7 @@ Object .assign (X3DTextGeometry .prototype,
 
                   break;
                }
-               case 1:
+               case TextCompression .SCALING:
                {
                   for (const i of this .scales .keys ())
                      this .scales [i] *= s;

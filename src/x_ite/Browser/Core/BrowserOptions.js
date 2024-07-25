@@ -53,6 +53,7 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import PrimitiveQuality     from "./PrimitiveQuality.js";
 import Shading              from "./Shading.js";
 import TextureQuality       from "./TextureQuality.js";
+import TextCompression      from "./TextCompression.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 // https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#BrowserProperties
@@ -199,9 +200,9 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       switch (this ._TextCompression .getValue ())
       {
          default: // CHAR_SPACING
-            return 0;
-         case "SCALE":
-            return 1;
+            return TextCompression .CHAR_SPACING;
+         case "SCALING":
+            return TextCompression .SCALING;
       }
    },
    set_Rubberband__ (rubberband)
