@@ -865,10 +865,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       let i = viewpoints .findIndex (viewpointNode => viewpointNode ._isBound .getValue ());
 
-      if (i < viewpoints .length)
-         i = i < viewpoints .length - 1 ? i + 1 : 0;
-      else
-         i = 0;
+      i = i < viewpoints .length ? (i + 1) % viewpoints .length : 0;
 
       this .bindViewpoint (layerNode, viewpoints .at (i));
    },
