@@ -828,21 +828,18 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
-      const viewpoints = layerNode .getUserViewpoints ();
+      const viewpoints = layerNode ?.getUserViewpoints ();
 
-      if (viewpoints .length)
+      if (viewpoints ?.length)
          this .bindViewpoint (layerNode, viewpoints [0]);
    },
    previousViewpoint (layerNode)
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
-      if (!layerNode)
-         return;
+      const viewpoints = layerNode ?.getUserViewpoints ();
 
-      const viewpoints = layerNode .getUserViewpoints ();
-
-      if (!viewpoints .length)
+      if (!viewpoints ?.length)
          return;
 
       const i = viewpoints .findIndex (viewpointNode => viewpointNode ._isBound .getValue ());
@@ -853,12 +850,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
-      if (!layerNode)
-         return;
+      const viewpoints = layerNode ?.getUserViewpoints ();
 
-      const viewpoints = layerNode .getUserViewpoints ();
-
-      if (!viewpoints .length)
+      if (!viewpoints ?.length)
          return;
 
       const i = viewpoints .findIndex (viewpointNode => viewpointNode ._isBound .getValue ());
@@ -869,12 +863,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
-      if (!layerNode)
-         return;
+      const viewpoints = layerNode ?.getUserViewpoints ();
 
-      const viewpoints = layerNode .getUserViewpoints ();
-
-      if (viewpoints .length)
+      if (viewpoints ?.length)
          this .bindViewpoint (layerNode, viewpoints .at (-1));
    },
    changeViewpoint (layerNode, name)
@@ -887,10 +878,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
-      if (!layerNode)
-         return;
-
-      const viewpointNode = layerNode .getViewpoints () .get ()
+      const viewpointNode = layerNode ?.getViewpoints () .get ()
          .find (viewpointNode => viewpointNode .getName () === name);
 
       if (viewpointNode)
