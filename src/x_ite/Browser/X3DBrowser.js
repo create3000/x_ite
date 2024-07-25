@@ -851,10 +851,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             break;
       }
 
-      if (i < viewpoints .length)
-         i = i === 0 ? -1 : i - 1;
-      else
-         i = -1;
+      i = i < viewpoints .length ? i - 1 : -1;
 
       this .bindViewpoint (layerNode, viewpoints .at (i));
    },
@@ -877,7 +874,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       }
 
       if (i < viewpoints .length)
-         i = i === viewpoints .length - 1 ? 0 : i + 1;
+         i = i < viewpoints .length - 1 ? i + 1 : 0;
       else
          i = 0;
 
