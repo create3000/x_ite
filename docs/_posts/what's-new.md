@@ -9,7 +9,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v10.1.0 Released
 
-*Leipzig, 28th July 2024:* This release comes with a new [browser option](/x_ite/reference/browser-services/#browser-options) `TextCompression` which determines how Text.*length* and Text.*maxExtent* are handled, i.e. either by adjusting char spacing or by scaling. These are the two options suggested by the X3D specification, and we can now offer both to let the user choose which one they want.
+*Leipzig, 28th July 2024:* This release comes with a new [browser option](/x_ite/reference/browser-services/#browser-options) `TextCompression` which determines how [Text](/x_ite/components/text/text/).*length* and [Text](/x_ite/components/text/text/).*maxExtent* are handled, i.e. either by adjusting char spacing or by scaling. These are the two options suggested by the X3D specification, and we can now offer both to let the user choose which one they want.
 
 We also noticed two problems with text rendering, particularly with vertical text, where the text did not start or end at the origin. Also *maxExtent* is now implemented as specified by X3D.
 
