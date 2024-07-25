@@ -97,7 +97,7 @@ Imports an X3D XML DOM document or fragment, converts it, and returns a Promise 
 
 Imports an X3D JSON document or fragment, converts it, and returns a Promise that resolves to an X3DScene object.
 
-#### String **getBrowserProperty** (*String name*)
+#### Boolean **getBrowserProperty** (*String name*)
 
 Returns a browser property with the corresponding *name*.
 
@@ -155,7 +155,7 @@ Returns a browser property with the corresponding *name*.
    </tbody>
 </table>
 
-#### String **getBrowserOption** (*String name*)
+#### Any **getBrowserOption** (*String name*)
 
 Returns a browser option with the corresponding *name*.
 
@@ -334,7 +334,7 @@ Returns a browser option with the corresponding *name*.
 
 Sets a browser option with the corresponding *name* to the given value.
 
-#### String **getRenderingProperty** (*String name*)
+#### Any **getRenderingProperty** (*String name*)
 
 Returns a rendering property with the corresponding *name*.
 
@@ -351,7 +351,7 @@ Returns a rendering property with the corresponding *name*.
    <tbody>
       <tr>
          <td>Shading</td>
-         <td>String</td>
+         <td>POINT, WIREFRAME, FLAT, GOURAUD, PHONG</td>
          <td>The type of shading algorithm in use. Typical values are Flat, Gouraud, Phong, Wireframe, Point.</td>
       </tr>
       <tr>
