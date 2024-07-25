@@ -105,7 +105,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          browser    = this .getBrowser (),
          fullscreen = browser .getElement () .fullScreen ();
 
-      if (! browser .getBrowserOption ("ContextMenu"))
+      if (!browser .getBrowserOption ("ContextMenu"))
          return;
 
       const menu = {
@@ -401,19 +401,19 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          delete menu .items ["available-viewers"];
       }
 
-      if (! browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/))
+      if (!browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/))
       {
          delete menu .items ["straighten-horizon"];
       }
 
-      if (! browser .getBrowserOption ("Debug"))
+      if (!browser .getBrowserOption ("Debug"))
       {
          delete menu .items ["shading"];
       }
 
       const worldInfo = browser .getExecutionContext () .getWorldInfos () [0];
 
-      if (! worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0))
+      if (!worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0))
       {
          delete menu .items ["world-info"];
       }
@@ -426,25 +426,17 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          browser     = this .getBrowser (),
          activeLayer = browser .getActiveLayer ();
 
-      if (! activeLayer)
+      if (!activeLayer)
          return { };
 
       const
-         enableInlineViewpoints = browser .getBrowserOption ("EnableInlineViewpoints"),
-         currentScene           = browser .currentScene,
-         viewpoints             = activeLayer .getViewpoints () .get (),
-         currentViewpoint       = activeLayer .getViewpoint (),
-         menu                   = { };
+         viewpoints       = activeLayer .getUserViewpoints (),
+         currentViewpoint = activeLayer .getViewpoint (),
+         menu             = { };
 
       for (const viewpoint of viewpoints)
       {
          const description = viewpoint .getDescriptions () .join (" » ");
-
-         if (description === "")
-            continue;
-
-         if (! enableInlineViewpoints && viewpoint .getScene () !== currentScene)
-            continue;
 
          const item = {
             name: description,
@@ -524,7 +516,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          menu  = options .build (event),
          level = 1;
 
-      if (! menu) return;
+      if (!menu) return;
 
       // Layer
 
@@ -603,7 +595,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             t = $(event .target) .closest ("li"),
             e = t .children ("ul");
 
-         if (! e .length)
+         if (!e .length)
             return;
 
          e .css ("top", "");

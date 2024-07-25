@@ -202,8 +202,14 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
    getUserViewpoints ()
    {
-      return this .viewpoints .get ()
-         .filter (viewpointNode => viewpointNode ._description .length);
+      const
+         browser                = this .getBrowser (),
+         enableInlineViewpoints = browser .getBrowserOption ("EnableInlineViewpoints"),
+         currentScene           = browser .currentScene;
+
+      return Array .from (new Set (this .viewpoints .get ()
+         .filter (viewpointNode => viewpointNode ._description .length)
+         .filter (viewpointNode => enableInlineViewpoints || viewpointNode .getScene () === currentScene)));
    },
    getBackgroundStack ()
    {

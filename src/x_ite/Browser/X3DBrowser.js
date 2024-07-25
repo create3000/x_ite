@@ -845,7 +845,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       if (viewpoints .length === 0)
          return;
 
-      for (var i = 0, length = viewpoints .length; i < length; ++ i)
+      for (var i of viewpoints .keys ())
       {
          if (viewpoints [i] ._isBound .getValue ())
             break;
@@ -874,7 +874,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       if (viewpoints .length === 0)
          return;
 
-      for (var i = 0, length = viewpoints .length; i < length; ++ i)
+      for (var i of viewpoints .keys ())
       {
          if (viewpoints [i] ._isBound .getValue ())
             break;
