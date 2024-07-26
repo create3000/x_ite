@@ -48,8 +48,8 @@ table.examples td {
 
 Convert various 3D file formats using our [Online X3D File Format Converter](x3d-file-converter/) powered by X_ITE.
 
-Looking for a command line tool to convert 3D file formats? Use [x3d-tidy](https://www.npmjs.com/package/x3d-tidy){:target="_blank"}, a command line X3D file format converter, compressor and beautifier and available on NPM.
+Looking for a command line tool to convert 3D file formats? Use [x3d-tidy](https://www.npmjs.com/package/x3d-tidy), a command line X3D file format converter, compressor and beautifier and available on NPM.
 
 ## D3-X3D
 
-[D3-X3D](https://github.com/jamesleesaunders/d3-x3d#d3-x3d){:target="_blank"} is an external JavaScript library that combines the power of **D3.js** with X3D and can be found on GitHub.
+[D3-X3D](https://github.com/jamesleesaunders/d3-x3d#d3-x3d) is an external JavaScript library that combines the power of **D3.js** with X3D and can be found on GitHub.
