@@ -19,6 +19,7 @@ X_ITE is a robust X3D JavaScript WebGL browser that is compatible with all major
 * [Accessing the External Browser](https://create3000.github.io/x_ite/accessing-the-external-browser)
 * [DOM Integration](https://create3000.github.io/x_ite/dom-integration)
 * [Custom Shaders](https://create3000.github.io/x_ite/custom-shaders)
+* [glTF Sample Viewer](https://create3000.github.io/x_ite/laboratory/gltf-sample-viewer/)
 
 ## jsDelivr CDN
 
