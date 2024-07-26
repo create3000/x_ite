@@ -751,7 +751,7 @@ src
 : A String value containing the URL to load on page load. If no *src* attribute is specified or the *src* attribute is empty, an empty scene will be displayed.
 
 textCompression
-: A string value that determines how [Text](/x_ite/components/text/text/).*length* and [Text](/x_ite/components/text/text/).*maxExtent* are handled, either by adjusting char spacing or by scaling. The default value for the *textCompression* attribute is `"CHAR_SPACING"`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
+: A string value that determines how [Text](/x_ite/components/text/text/).*length* and [Text](/x_ite/components/text/text/).*maxExtent* are handled, ie. either by adjusting char spacing or by scaling. The default value for the *textCompression* attribute is `"CHAR_SPACING"`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
 
 timings
 : A Boolean value (`true` or `false`) to indicate whether the Timings Panel should be displayed. The default value for the *timings* attribute is restored from the previous session, otherwise it is `false`.
