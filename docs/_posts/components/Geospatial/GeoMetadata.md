@@ -36,7 +36,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -64,7 +64,7 @@ Hypertext link to an external, complete metadata description.
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in *url* queries with %20 for each blank character.
-- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls)
 
 #### Warning
 
@@ -102,7 +102,7 @@ The *summary* string array contains a set of keyword/value pairs, with each keyw
 #### Hints
 
 - Example `<GeoMetadata summary=' "title" "San Francisco, California USA" '/>`.
-- [Table 25.5, GeoMetadata keywords and values](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/geospatial.html#t-keywordsandvalues
+- [Table 25.5, GeoMetadata keywords and values](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/geospatial.html#t-keywordsandvalues
 - There should always be an even (or zero) number of strings to match key-value paired strings.
 
 ### MFNode [in, out] **data** [ ]
@@ -113,8 +113,8 @@ The *summary* string array contains a set of keyword/value pairs, with each keyw
 
 ### Hints
 
-- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
-- [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf)
+- [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### Warning
 
@@ -122,4 +122,4 @@ The *summary* string array contains a set of keyword/value pairs, with each keyw
 
 ## See Also
 
-- [X3D Specification of GeoMetadata Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoMetadata){:target="_blank"}
+- [X3D Specification of GeoMetadata Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoMetadata)

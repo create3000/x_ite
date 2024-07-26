@@ -41,7 +41,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -69,7 +69,7 @@ Location and filename of image. Multiple locations are more reliable, and includ
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in *url* queries with %20 for each blank character.
-- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls)
 
 #### Warning
 
@@ -152,4 +152,4 @@ An example image can be found [here](/x_ite/assets/img/components/scan1.png).
 
 ## See Also
 
-- [X3D Specification of Texturing3D component](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html){:target="_blank"}
+- [X3D Specification of Texturing3D component](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html)

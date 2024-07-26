@@ -31,7 +31,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -56,11 +56,11 @@ Local and/or online addresses of X3D model of interest, for example: "ExtrusionE
 
 #### Hints
 
-- [See](https://www.web3d.org/x3d/content/examples/Basic/course/ExtrusionExampleShipIndex.html){:target="_blank"}
+- [See](https://www.web3d.org/x3d/content/examples/Basic/course/ExtrusionExampleShipIndex.html)
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in *url* queries with %20 for each blank character.
-- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls)
 
 #### Warning
 
@@ -126,9 +126,9 @@ Integer enumerations value for particular *subcategory* to which an entity belon
 - Values set to zero are wildcards, matching any received value.
 - DISEntityTypeMapping is contained by a parent [DISEntityManager](/x_ite/components/dis/disentitymanager/) node.
 - DisEntityManager ESPDU packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
-- [Savage Developers Guide on DIS](https://savage.nps.edu/Savage/developers.html#DIS){:target="_blank"}
-- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf){:target="_blank"}
-- [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- [Savage Developers Guide on DIS](https://savage.nps.edu/Savage/developers.html#DIS)
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf)
+- [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### Warning
 
@@ -136,4 +136,4 @@ Integer enumerations value for particular *subcategory* to which an entity belon
 
 ## See Also
 
-- [X3D Specification of DISEntityTypeMapping Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#DISEntityTypeMapping){:target="_blank"}
+- [X3D Specification of DISEntityTypeMapping Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#DISEntityTypeMapping)

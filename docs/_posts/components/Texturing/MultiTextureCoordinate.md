@@ -34,7 +34,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### MFNode [in, out] **texCoord** [ ] <small>[X3DTextureCoordinateNode]</small>
 
@@ -49,10 +49,10 @@ Zero or more contained [TextureCoordinate](/x_ite/components/texturing/textureco
 ### Hints
 
 - Add [Shape](/x_ite/components/shape/shape/) and then polygonal/planar geometry before adding MultiTextureCoordinate.
-- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 - Multitexturing is accomplished using [MultiTexture](/x_ite/components/texturing/multitexture/), MultiTextureCoordinate and [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/) nodes.
-- [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#f-Lightmapexample
-- [X3D Texturing component Table 18.2: Comparison of single texture and multitexture attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-SingleAndMultitextureAttrs
+- [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#f-Lightmapexample
+- [X3D Texturing component Table 18.2: Comparison of single texture and multitexture attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#t-SingleAndMultitextureAttrs
 
 ### Warnings
 
@@ -61,4 +61,4 @@ Zero or more contained [TextureCoordinate](/x_ite/components/texturing/textureco
 
 ## See Also
 
-- [X3D Specification of MultiTextureCoordinate Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MultiTextureCoordinate){:target="_blank"}
+- [X3D Specification of MultiTextureCoordinate Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MultiTextureCoordinate)

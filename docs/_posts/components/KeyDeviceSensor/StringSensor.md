@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -89,7 +89,7 @@ Select geometry by activating the pointing device (for example, clicking the mou
 
 ### Hint
 
-- [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter08UserInteractivity){:target="_blank"}
+- [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter08UserInteractivity)
 
 ## Example
 
@@ -101,4 +101,4 @@ Select geometry by activating the pointing device (for example, clicking the mou
 
 ## See Also
 
-- [X3D Specification of StringSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/keyboard.html#StringSensor){:target="_blank"}
+- [X3D Specification of StringSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/keyboard.html#StringSensor)

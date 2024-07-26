@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFBool [in, out] **top** TRUE
 
@@ -90,7 +90,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ### Hints
 
-- [Cylinder](https://en.wikipedia.org/wiki/Cylinder){:target="_blank"}
+- [Cylinder](https://en.wikipedia.org/wiki/Cylinder)
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ## Example
@@ -103,4 +103,4 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ## See Also
 
-- [X3D Specification of Cylinder Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cylinder){:target="_blank"}
+- [X3D Specification of Cylinder Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Cylinder)

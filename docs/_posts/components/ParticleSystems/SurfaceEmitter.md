@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFBool [in, out] **on** TRUE
 
@@ -58,8 +58,8 @@ Basic *mass* of each particle, defined in *mass* base units (default is kilogram
 #### Hints
 
 - *mass* is needed if gravity or other force-related calculations are performed on a per-particle basis.
-- [Kilogram](https://en.wikipedia.org/wiki/Kilogram){:target="_blank"}
-- [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/concepts.html#Standardunitscoordinates
+- [Kilogram](https://en.wikipedia.org/wiki/Kilogram)
+- [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/concepts.html#Standardunitscoordinates
 
 ### SFFloat [in, out] **surfaceArea** 0 <small>[0,∞)</small>
 
@@ -102,4 +102,4 @@ The geometry node provides geometry used as the emitting *surface*.
 
 ## See Also
 
-- [X3D Specification of SurfaceEmitter Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#SurfaceEmitter){:target="_blank"}
+- [X3D Specification of SurfaceEmitter Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#SurfaceEmitter)

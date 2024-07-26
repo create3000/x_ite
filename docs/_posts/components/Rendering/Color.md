@@ -34,7 +34,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### MFColor [in, out] **color** [ ] <small>[0,1]</small>
 
@@ -45,7 +45,7 @@ The *color* field defines an array of 3-tuple RGB colors.
 ### Hints
 
 - Colors are often controlled by [Material](/x_ite/components/shape/material/) instead.
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ## Example
 
@@ -57,4 +57,4 @@ The *color* field defines an array of 3-tuple RGB colors.
 
 ## See Also
 
-- [X3D Specification of Color Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Color){:target="_blank"}
+- [X3D Specification of Color Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Color)

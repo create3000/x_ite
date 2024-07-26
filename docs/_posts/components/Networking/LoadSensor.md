@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -105,7 +105,7 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 
 #### Warning
 
-- [Field originally named 'watchList' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- [Field originally named 'watchList' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ## Advice
 
@@ -114,13 +114,13 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 - Use multiple LoadSensor nodes to track multiple loading nodes individually.
 - [Background](/x_ite/components/environmentaleffects/background/) node is not sensed by LoadSensor due to node typing and multiple-image ambiguity, alternatively utilize [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) node with multiple [ImageTexture](/x_ite/components/texturing/imagetexture/) nodes each referenced inside LoadSensor.
 - Use [Inline](/x_ite/components/networking/inline/) 'load' field to prompt or defer loading.
-- [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter12EnvironmentSensorSound){:target="_blank"}
+- [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter12EnvironmentSensorSound)
 
 ### Warnings
 
 - Children (watchList) child nodes are not rendered, so normally USE copies of other nodes to sense load status.
 - New X3D node, not supported in VRML97.
-- ['children' field originally named 'watchList' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- ['children' field originally named 'watchList' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ## Example
 
@@ -132,4 +132,4 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 
 ## See Also
 
-- [X3D Specification of LoadSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#LoadSensor){:target="_blank"}
+- [X3D Specification of LoadSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#LoadSensor)

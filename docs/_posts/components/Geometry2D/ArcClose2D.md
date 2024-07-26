@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [ ] **closureType** "PIE" <small>["PIE"|"CHORD"]</small>
 
@@ -50,7 +50,7 @@ Arc extends from *startAngle* counterclockwise to endAngle, in radians.
 #### Hints
 
 - For size animation, modify the scale of a parent/ancestor [Transform](/x_ite/components/grouping/transform/) node instead.
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warning
 
@@ -63,7 +63,7 @@ Arc extends from startAngle counterclockwise to *endAngle*, in radians.
 #### Hints
 
 - For size animation, modify the scale of a parent/ancestor [Transform](/x_ite/components/grouping/transform/) node instead.
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warning
 
@@ -104,7 +104,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ### Warning
 
-- [Requires X3D `profile='Full'` or else include `<component name='Geometry2D' level='2'/>` Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
+- [Requires X3D `profile='Full'` or else include `<component name='Geometry2D' level='2'/>` Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter10Geometry2D)
 
 ## Example
 
@@ -116,4 +116,4 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ## See Also
 
-- [X3D Specification of ArcClose2D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#ArcClose2D){:target="_blank"}
+- [X3D Specification of ArcClose2D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#ArcClose2D)

@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFBool [in] **set_bind**
 
@@ -146,7 +146,7 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 #### Hints
 
 - This field may be ignored, applying the default value regardless.
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warnings
 
@@ -161,7 +161,7 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 
 - Setting the same color at two consecutive angles produces a solid color band.
 - Only one color might be rendered, others can be ignored.
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 #### Warning
 
@@ -174,7 +174,7 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 #### Hints
 
 - This field may be ignored, applying the default value regardless.
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warnings
 
@@ -189,7 +189,7 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 
 - Setting the same color at two consecutive angles produces a solid color band.
 - This field may be ignored, applying the default value regardless.
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 #### Warning
 
@@ -229,7 +229,7 @@ Event sent when node becomes active/inactive.
 
 - Background, [Fog](/x_ite/components/environmentaleffects/fog/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
 - Background node is not sensed by [LoadSensor](/x_ite/components/networking/loadsensor/) due to node typing and multiple-image ambiguity, alternatively utilize [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) node with multiple [ImageTexture](/x_ite/components/texturing/imagetexture/) nodes each referenced inside [LoadSensor](/x_ite/components/networking/loadsensor/).
-- [X3D Example Archives, Basic, Universal Media Panoramas](https://www.web3d.org/x3d/content/examples/Basic/UniversalMediaPanoramas){:target="_blank"}
+- [X3D Example Archives, Basic, Universal Media Panoramas](https://www.web3d.org/x3d/content/examples/Basic/UniversalMediaPanoramas)
 
 ### Warning
 
@@ -245,4 +245,4 @@ Event sent when node becomes active/inactive.
 
 ## See Also
 
-- [X3D Specification of Background Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Background){:target="_blank"}
+- [X3D Specification of Background Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Background)

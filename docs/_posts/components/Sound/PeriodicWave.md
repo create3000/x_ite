@@ -34,7 +34,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -54,7 +54,7 @@ The *type* field specifies shape of waveform to play, which can be one of severa
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dictdef-periodicwaveoptions){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dictdef-periodicwaveoptions)
 
 ### MFFloat [in, out] **optionsReal** [ ] <small>(-∞,∞)</small>
 
@@ -76,8 +76,8 @@ Imaginary coefficients for defining a waveform.
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#periodicwave){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#periodicwave)
 
 ## See Also
 
-- [X3D Specification of PeriodicWave Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#PeriodicWave){:target="_blank"}
+- [X3D Specification of PeriodicWave Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#PeriodicWave)

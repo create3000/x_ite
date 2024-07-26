@@ -36,7 +36,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -70,7 +70,7 @@ Clamps rotation_changed events within range of min/max values
 #### Hints
 
 - If *minAngle* \> maxAngle, rotation is not clamped.
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 ### SFFloat [in, out] **maxAngle** -1 <small>[-2π,2π]</small>
 
@@ -79,7 +79,7 @@ Clamps rotation_changed events within range of min/max values
 #### Hints
 
 - If minAngle \> *maxAngle*, rotation is not clamped.
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 ### SFFloat [in, out] **offset** 0 <small>(-∞,∞)</small>
 
@@ -133,10 +133,10 @@ Select geometry by activating the pointing device (for example, clicking the mou
 - This sensor detects user interactions affecting peer nodes and their child geometry.
 - Add semi-transparent surrounding geometry to see the effect of the sensor.
 - Initial relative bearing of pointer drag determines whether cylinder sides or end-cap disks are used for manipulation.
-- [X3D Architecture 20.2.1 Overview of pointing device sensors](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/pointingDeviceSensor.html#OverviewOfPointingDeviceSensors
-- [X3D Architecture 20.2.2 Drag sensors](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/pointingDeviceSensor.html#DragSensors
-- [X3D Architecture 20.2.3 Activating and manipulating pointing device sensors](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/pointingDeviceSensor.html#Activatingandmanipulating
-- [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter08UserInteractivity){:target="_blank"}
+- [X3D Architecture 20.2.1 Overview of pointing device sensors](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/pointingDeviceSensor.html#OverviewOfPointingDeviceSensors
+- [X3D Architecture 20.2.2 Drag sensors](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/pointingDeviceSensor.html#DragSensors
+- [X3D Architecture 20.2.3 Activating and manipulating pointing device sensors](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/pointingDeviceSensor.html#Activatingandmanipulating
+- [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter08UserInteractivity)
 
 ## Example
 
@@ -148,4 +148,4 @@ Select geometry by activating the pointing device (for example, clicking the mou
 
 ## See Also
 
-- [X3D Specification of CylinderSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#CylinderSensor){:target="_blank"}
+- [X3D Specification of CylinderSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#CylinderSensor)

@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **mapping** ""
 
@@ -43,7 +43,7 @@ The *mapping* label identifies which texture coordinates and transformations are
 
 #### Hint
 
-- [TODO support planned to perform multiple-node *mapping* validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator){:target="_blank"}
+- [TODO support planned to perform multiple-node *mapping* validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator)
 
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
 
@@ -67,7 +67,7 @@ Non-uniform planar scaling of texture about center (opposite effect appears on g
 
 - Order of operations is translation, rotation about center, non-uniform scale about center.
 - Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding TextureTransform3D.
-- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 
 ### Warning
 
@@ -75,4 +75,4 @@ Non-uniform planar scaling of texture about center (opposite effect appears on g
 
 ## See Also
 
-- [X3D Specification of TextureTransform3D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureTransform3D){:target="_blank"}
+- [X3D Specification of TextureTransform3D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureTransform3D)

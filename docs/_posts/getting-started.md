@@ -6,11 +6,11 @@ categories: []
 tags: [Getting Started]
 permalink: /
 ---
-[![npm Version](https://badgen.net/npm/v/x_ite)](https://www.npmjs.com/package/x_ite){:target="_blank" .badge-link  }
+[![npm Version](https://badgen.net/npm/v/x_ite)](https://www.npmjs.com/package/x_ite){: .badge-link }
 [![Build Size](/assets/img/badges/compressed.svg)](/x_ite/features/){: .badge-link }
-[![jsDelivr Hits](https://badgen.net/jsdelivr/hits/npm/x_ite)](https://www.jsdelivr.com/package/npm/x_ite){:target="_blank" .badge-link }
-[![npm Downloads](https://badgen.net/npm/dm/x_ite)](https://npmtrends.com/x_ite){:target="_blank" .badge-link }
-[![DeepScan grade](https://deepscan.io/api/teams/23540/projects/26814/branches/855447/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26814&bid=855447){:target="_blank" .badge-link }
+[![jsDelivr Hits](https://badgen.net/jsdelivr/hits/npm/x_ite)](https://www.jsdelivr.com/package/npm/x_ite){: .badge-link }
+[![npm Downloads](https://badgen.net/npm/dm/x_ite)](https://npmtrends.com/x_ite){: .badge-link }
+[![DeepScan grade](https://deepscan.io/api/teams/23540/projects/26814/branches/855447/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26814&bid=855447){: .badge-link }
 
 <x3d-canvas
   class="teaser"
@@ -27,7 +27,7 @@ permalink: /
 
 X_ITE is a comprehensive 3D library entirely written in JavaScript and uses WebGL for 3D rendering. Authors can publish X3D, VRML and other sources online within an HTML5 page with X_ITE that works with web browsers **without** prior plug-in installation. This gives X3D authors the ability to displays content in 3D, using WebGL 3D graphics technology to display X3D content in several different browsers across several different operating systems. Since X3D is backwardly compatible, X_ITE can also be used as a VRML viewer.
 
-X3D is an ISO-ratified, royalty-free open standards file format and run-time architecture to represent and communicate 3D scenes and objects specified by the [Web 3D Consortium](https://www.web3d.org){:target="_blank"}. X3D has evolved from its beginnings as the Virtual Reality Modeling Language (VRML) to the considerably more mature and refined ISO X3D standard. X3D provides a system for the storage, retrieval and playback of real time 3D scene in multiple applications, all within an open architecture to support a wide array of domains and user scenarios.
+X3D is an ISO-ratified, royalty-free open standards file format and run-time architecture to represent and communicate 3D scenes and objects specified by the [Web 3D Consortium](https://www.web3d.org). X3D has evolved from its beginnings as the Virtual Reality Modeling Language (VRML) to the considerably more mature and refined ISO X3D standard. X3D provides a system for the storage, retrieval and playback of real time 3D scene in multiple applications, all within an open architecture to support a wide array of domains and user scenarios.
 
 X_ITE supports custom shaders, clip planes, reflection mapping, script nodes, prototyping capabilities and event driven programming to provide you with an improved quality level of virtual effects and tools ready for the Internet.
 
@@ -42,7 +42,7 @@ Yeah, tell me!
 
 X_ITE needs your support, with a small contribution you can make a big difference.
 
-[<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: target="_blank" .patreon }
+[<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: .patreon }
 
 ## X3D Examples
 
@@ -585,9 +585,9 @@ There is a ZIP archive available to locally install X_ITE on your server. Compre
 
 ### Using X_ITE with a CDN
 
-CDNs can offer a performance benefit by hosting X_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X_ITE from the same CDN, it won't have to be re-downloaded. To use the X_ITE CDN, just reference the JavaScript file in the script element directly from the [jsDelivr](https://www.jsdelivr.com){:target="_blank"} or [UNPKG](https://www.unpkg.com){:target="_blank"} CDN domain.
+CDNs can offer a performance benefit by hosting X_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X_ITE from the same CDN, it won't have to be re-downloaded. To use the X_ITE CDN, just reference the JavaScript file in the script element directly from the [jsDelivr](https://www.jsdelivr.com) or [UNPKG](https://www.unpkg.com) CDN domain.
 
-If you are going to use X_ITE in a production environment, you should use a fixed version of X_ITE. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions){:target="_blank"}, and here a list of all [CDNs](/x_ite/releases/).
+If you are going to use X_ITE in a production environment, you should use a fixed version of X_ITE. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions), and here a list of all [CDNs](/x_ite/releases/).
 
 #### jsDelivr CDN
 
@@ -606,7 +606,7 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version
 
 ### You Can Also Get it from NPM
 
-You can find more information about X_ITE on its [npm page](https://www.npmjs.com/package/x_ite){:target="_blank"}.
+You can find more information about X_ITE on its [npm page](https://www.npmjs.com/package/x_ite).
 
 To install, use the following command:
 
@@ -817,7 +817,7 @@ Ctrl+5
 
 ## Extending the Context Menu
 
-The context menu is the jQuery Context Menu plugin, and it can be extended using the `items` syntax. The full documentation [can be found here](https://swisnl.github.io/jQuery-contextMenu/docs/items.html){:target="_blank"}.
+The context menu is the jQuery Context Menu plugin, and it can be extended using the `items` syntax. The full documentation [can be found here](https://swisnl.github.io/jQuery-contextMenu/docs/items.html).
 
 ### Example
 

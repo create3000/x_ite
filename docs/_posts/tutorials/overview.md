@@ -78,14 +78,14 @@ Some words about optimizing a scene
 
 ## There are also Books for Further Reading
 
-- [X3D: Extensible 3D Graphics for Web Authors](https://www.amazon.com/gp/product/012088500X?ie=UTF8&tag=x3dext3dgrafo-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=012088500X){:target="_blank"} by Don Brutzman and Leonard Daly
+- [X3D: Extensible 3D Graphics for Web Authors](https://www.amazon.com/gp/product/012088500X?ie=UTF8&tag=x3dext3dgrafo-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=012088500X) by Don Brutzman and Leonard Daly
 
 ## Want to See More X3D Examples?
 
 Here are two links from web3d.org with many example scenes.
 
-- [X3D for Web Authors](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/){:target="_blank"}
-- [X3D for Advanced Modeling](https://www.web3d.org/x3d/content/examples/X3dForAdvancedModeling/){:target="_blank"}
+- [X3D for Web Authors](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/)
+- [X3D for Advanced Modeling](https://www.web3d.org/x3d/content/examples/X3dForAdvancedModeling/)
 
 ## Don't Compromise on Development Experience
 

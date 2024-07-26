@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -51,7 +51,7 @@ The *global* field controls potential external scoping effects of lights found w
 
 #### Hint
 
-- [X3D Architecture, 17.2.1.2 Scoping of lights](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/lighting.html#ScopingOfLights
+- [X3D Architecture, 17.2.1.2 Scoping of lights](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/lighting.html#ScopingOfLights
 
 ### SFBool [in, out] **load** TRUE
 
@@ -68,17 +68,17 @@ Address of X3D world to load Inline with current scene, retrieved either from lo
 
 #### Hints
 
-- [Support includes .gltf and .glb](https://www.khronos.org/gltf){:target="_blank"} https://en.wikipedia.org/wiki/glTF
-- [Future work planned for PLY form](https://en.wikipedia.org/wiki/PLY_(file_format)){:target="_blank"}
-- [Future work planned for STL form](https://en.wikipedia.org/wiki/STL_(file_format)){:target="_blank"}
+- [Support includes .gltf and .glb](https://www.khronos.org/gltf) https://en.wikipedia.org/wiki/glTF
+- [Future work planned for PLY form](https://en.wikipedia.org/wiki/PLY_(file_format))
+- [Future work planned for STL form](https://en.wikipedia.org/wiki/STL_(file_format))
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in *url* queries with %20 for each blank character.
-- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls)
 
 #### Warnings
 
-- [GlTF support requires X3D version='4.0' and `profile='Full'` or else `<component name='Networking' level='4'/>` `<component name='Shape' level='4'/>` `<component name='Lighting' level='4'/>`](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/networking.html#t-supportLevels){:target="_blank"}
+- [GlTF support requires X3D version='4.0' and `profile='Full'` or else `<component name='Networking' level='4'/>` `<component name='Shape' level='4'/>` `<component name='Lighting' level='4'/>`](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/networking.html#t-supportLevels)
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
@@ -131,8 +131,8 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
-- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/grouping.html#BoundingBoxes
-- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/grouping.html#X3DBoundedObject
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#BoundingBoxes
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#X3DBoundedObject
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
@@ -141,8 +141,8 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 #### Hints
 
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
-- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/grouping.html#BoundingBoxes
-- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/grouping.html#X3DBoundedObject
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#BoundingBoxes
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#X3DBoundedObject
 
 ### Supported File Formats
 
@@ -165,12 +165,12 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ### Hints
 
-- [X3D version='4.0' support includes .gltf and .glb](https://www.khronos.org/gltf){:target="_blank"} https://en.wikipedia.org/wiki/glTF
+- [X3D version='4.0' support includes .gltf and .glb](https://www.khronos.org/gltf) https://en.wikipedia.org/wiki/glTF
 - You cannot ROUTE values directly into an Inline node, use IMPORT/EXPORT declarations instead.
 - Inline EXPORT example:https://www.web3d.org/x3d/content/examples/Basic/X3dSpecifications/InlineExportIndex.html
 - Inline IMPORT example:https://www.web3d.org/x3d/content/examples/Basic/X3dSpecifications/InlineImportIndex.html
-- [X3D Scene Authoring Hints, Inlines and Prototypes](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#InlinesPrototypes){:target="_blank"}
-- [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- [X3D Scene Authoring Hints, Inlines and Prototypes](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#InlinesPrototypes)
+- [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ## Example
 
@@ -182,4 +182,4 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ## See Also
 
-- [X3D Specification of Inline Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Inline){:target="_blank"}
+- [X3D Specification of Inline Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Inline)

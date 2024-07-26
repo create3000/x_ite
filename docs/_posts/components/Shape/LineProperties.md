@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFBool [in, out] **applied** TRUE
 
@@ -45,7 +45,7 @@ Whether or not LineProperties are *applied* to associated geometry.
 
 #### Hint
 
-- [Detailed descriptions of lineType values are found at the ISO/IEC 9973 International Register of Graphical Items](https://www.iso.org/jtc1/sc24/register){:target="_blank"} [](https://isotc.iso.org/livelink/livelink/fetch/-8916524/8916549/8916590/6208440/class_pages/*linetype*.html){:target="_blank"}
+- [Detailed descriptions of lineType values are found at the ISO/IEC 9973 International Register of Graphical Items](https://www.iso.org/jtc1/sc24/register) [](https://isotc.iso.org/livelink/livelink/fetch/-8916524/8916549/8916590/6208440/class_pages/*linetype*.html)
 
 ### SFFloat [in, out] **linewidthScaleFactor** 0 <small>(-∞,∞)</small>
 
@@ -56,7 +56,7 @@ Whether or not LineProperties are *applied* to associated geometry.
 ### Hints
 
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
-- [LineProperties illustration model](https://X3dGraphics.com/examples/X3dForWebAuthors/Chapter05AppearanceMaterialTextures/LinePropertiesExampleIndex.html){:target="_blank"}
+- [LineProperties illustration model](https://X3dGraphics.com/examples/X3dForWebAuthors/Chapter05AppearanceMaterialTextures/LinePropertiesExampleIndex.html)
 
 ### Warning
 
@@ -72,4 +72,4 @@ Whether or not LineProperties are *applied* to associated geometry.
 
 ## See Also
 
-- [X3D Specification of LineProperties Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#LineProperties){:target="_blank"}
+- [X3D Specification of LineProperties Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#LineProperties)

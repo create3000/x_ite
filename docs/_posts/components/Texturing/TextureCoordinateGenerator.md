@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **mapping** ""
 
@@ -43,7 +43,7 @@ The *mapping* label identifies which texture coordinates and transformations are
 
 #### Hint
 
-- [TODO support planned to perform multiple-node *mapping* validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator){:target="_blank"}
+- [TODO support planned to perform multiple-node *mapping* validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator)
 
 ### SFString [in, out] **mode** "SPHERE" <small>["SPHERE"|"CAMERASPACENORMAL"|"CAMERASPACEPOSITION"|"CAMERASPACEREFLECTIONVECTOR"|"SPHERE-LOCAL"|"COORD"|"COORD-EYE"|"NOISE"|"NOISE-EYE"|"SPHERE-REFLECT"|"SPHERE-REFLECT-LOCAL"]</small>
 
@@ -51,7 +51,7 @@ Parameter field defines the algorithm used to compute texture coordinates.
 
 #### Hint
 
-- [X3D Architecture Table 18.6 Texture coordinate generation modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-Texturecoordgeneration for further details.
+- [X3D Architecture Table 18.6 Texture coordinate generation modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#t-Texturecoordgeneration for further details.
 
 #### Warning
 
@@ -66,9 +66,9 @@ Parameter field defines the algorithm used to compute texture coordinates.
 ### Hints
 
 - Add [Shape](/x_ite/components/shape/shape/) and then polygonal/planar geometry before adding TextureCoordinateGenerator.
-- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
-- [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#f-TextureMapCoordSystem
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
+- [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#f-TextureMapCoordSystem
 
 ## See Also
 
-- [X3D Specification of TextureCoordinateGenerator Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureCoordinateGenerator){:target="_blank"}
+- [X3D Specification of TextureCoordinateGenerator Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureCoordinateGenerator)

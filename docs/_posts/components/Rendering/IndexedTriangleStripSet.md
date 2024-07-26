@@ -34,7 +34,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### MFInt32 [in] **set_index** <small>[0,∞) or −1</small>
 
@@ -65,7 +65,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 #### Hints
 
 - A good debugging technique for problematic polygons is to try changing the value of *ccw*, which can reverse solid effects (single-sided backface culling) and normal-vector direction.
-- [Clockwise](https://en.wikipedia.org/wiki/Clockwise){:target="_blank"}
+- [Clockwise](https://en.wikipedia.org/wiki/Clockwise)
 
 #### Warning
 
@@ -77,7 +77,7 @@ Whether [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/compon
 
 #### Hint
 
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 #### Warnings
 
@@ -102,7 +102,7 @@ Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexatt
 
 #### Hint
 
-- [X3D Architecture 32.2.2.4 Per-vertex attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/shaders.html#Pervertexattributes
+- [X3D Architecture 32.2.2.4 Per-vertex attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/shaders.html#Pervertexattributes
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
 
@@ -146,4 +146,4 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## See Also
 
-- [X3D Specification of IndexedTriangleStripSet Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#IndexedTriangleStripSet){:target="_blank"}
+- [X3D Specification of IndexedTriangleStripSet Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#IndexedTriangleStripSet)

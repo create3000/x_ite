@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -52,7 +52,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 #### Warnings
 
 - Each child image node must have a different containerField value.
-- [Field originally named 'front' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- [Field originally named 'front' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### SFNode [in, out] **backTexture** NULL <small>[X3DTexture2DNode]</small>
 
@@ -61,7 +61,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 #### Warnings
 
 - Each child image node must have a different containerField value.
-- [Field originally named 'back' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- [Field originally named 'back' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### SFNode [in, out] **leftTexture** NULL <small>[X3DTexture2DNode]</small>
 
@@ -70,7 +70,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 #### Warnings
 
 - Each child image node must have a different containerField value.
-- [Field originally named 'left' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- [Field originally named 'left' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### SFNode [in, out] **rightTexture** NULL <small>[X3DTexture2DNode]</small>
 
@@ -79,7 +79,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 #### Warnings
 
 - Each child image node must have a different containerField value.
-- [Field originally named 'right' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- [Field originally named 'right' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### SFNode [in, out] **topTexture** NULL <small>[X3DTexture2DNode]</small>
 
@@ -88,7 +88,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 #### Warnings
 
 - Each child image node must have a different containerField value.
-- [Field originally named 'top' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- [Field originally named 'top' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### SFNode [in, out] **bottomTexture** NULL <small>[X3DTexture2DNode]</small>
 
@@ -97,7 +97,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 #### Warnings
 
 - Each child image node must have a different containerField value.
-- [Field originally named 'bottom' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- [Field originally named 'bottom' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 
@@ -128,4 +128,4 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 ## See Also
 
-- [X3D Specification of ComposedCubeMapTexture Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalTexturing.html#ComposedCubeMapTexture){:target="_blank"}
+- [X3D Specification of ComposedCubeMapTexture Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalTexturing.html#ComposedCubeMapTexture)

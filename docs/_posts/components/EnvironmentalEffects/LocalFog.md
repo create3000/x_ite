@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -60,7 +60,7 @@ Specifies algorithm for rate of increasing [Fog](/x_ite/components/environmental
 #### Hints
 
 - Match [Background](/x_ite/components/environmentaleffects/background/) *color* to make objects fade away.
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ### SFFloat [in, out] **visibilityRange** 0 <small>[0,-∞)</small>
 
@@ -92,4 +92,4 @@ Distance in meters where objects are totally obscured by the fog, using local co
 
 ## See Also
 
-- [X3D Specification of LocalFog Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#LocalFog){:target="_blank"}
+- [X3D Specification of LocalFog Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#LocalFog)

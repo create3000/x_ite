@@ -32,7 +32,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
 
@@ -88,4 +88,4 @@ Interpolated output value determined by current key time, corresponding easeInEa
 
 ## See Also
 
-- [X3D Specification of EaseInEaseOut Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#EaseInEaseOut){:target="_blank"}
+- [X3D Specification of EaseInEaseOut Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#EaseInEaseOut)

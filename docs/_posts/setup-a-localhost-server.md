@@ -13,25 +13,25 @@ To work around this problem, you will need to set up a localhost server, then yo
 
 ## Using a Browser Extension
 
-You can use this [browser extension for Chrome and Edge](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/){:target="_blank"} to create a web server and serve your local files via HTTP. Very easy to use.
+You can use this [browser extension for Chrome and Edge](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/) to create a web server and serve your local files via HTTP. Very easy to use.
 
 ## Using an Application
 
 There are various applications available online for setting up a localhost server. Among them, I would like to highlight here some options:
 
-MacOS users have the options to utilize the [Personal Web Server](https://apps.apple.com/de/app/personal-web-server/id1486323797){:target="_blank"} (for Intel-based Macs) or the [Simple Web Server](https://apps.apple.com/us/app/simple-web-server/id1625925255){:target="_blank"} (for Apple Silicon-based Macs). These servers facilitate file serving via a web server and boast user-friendly interfaces. Alternatively, users can employ the provided [Node or Python script below in conjunction with Automator](https://www.macstadium.com/blog/automating-login-and-startup-events-in-macos) for additional flexibility and customization.
+MacOS users have the options to utilize the [Personal Web Server](https://apps.apple.com/de/app/personal-web-server/id1486323797) (for Intel-based Macs) or the [Simple Web Server](https://apps.apple.com/us/app/simple-web-server/id1625925255) (for Apple Silicon-based Macs). These servers facilitate file serving via a web server and boast user-friendly interfaces. Alternatively, users can employ the provided [Node or Python script below in conjunction with Automator](https://www.macstadium.com/blog/automating-login-and-startup-events-in-macos) for additional flexibility and customization.
 
-Another notable application is [XAMPP](https://www.apachefriends.org/index.html){:target="_blank"}, renowned for its versatility across multiple operating systems and widespread popularity among users. It provides a comprehensive suite of web development tools, making it a favored choice for many developers and enthusiasts alike.
+Another notable application is [XAMPP](https://www.apachefriends.org/index.html), renowned for its versatility across multiple operating systems and widespread popularity among users. It provides a comprehensive suite of web development tools, making it a favored choice for many developers and enthusiasts alike.
 
 ## Using Node
 
-The npm [http-server](https://www.npmjs.com/package/http-server){:target="_blank"} is a straightforward yet powerful tool for serving static resources over HTTP. It's a command-line program that allows quick and easy access to local file directories via a local web server. With npm http-server, developers can swiftly set up a local development environment to test web applications or host static websites. Thanks to its user-friendly interface and configuration options, npm http-server is a popular choice for developers seeking a fast and uncomplicated way to serve local files over the HTTP protocol.
+The npm [http-server](https://www.npmjs.com/package/http-server) is a straightforward yet powerful tool for serving static resources over HTTP. It's a command-line program that allows quick and easy access to local file directories via a local web server. With npm http-server, developers can swiftly set up a local development environment to test web applications or host static websites. Thanks to its user-friendly interface and configuration options, npm http-server is a popular choice for developers seeking a fast and uncomplicated way to serve local files over the HTTP protocol.
 
-Follow the instructions on their [website](https://www.npmjs.com/package/http-server){:target="_blank"} to get it up and running.
+Follow the instructions on their [website](https://www.npmjs.com/package/http-server) to get it up and running.
 
 ## Using Python
 
-If you have [Python](https://www.python.org){:target="_blank"} installed, then it is quite easy to start a **localhost** server.
+If you have [Python](https://www.python.org) installed, then it is quite easy to start a **localhost** server.
 
 Just open a Terminal and go to the directory you want to make available.
 

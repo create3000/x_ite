@@ -5,7 +5,7 @@ nav: main
 categories: []
 tags: [Electron]
 ---
-Embarking on your journey into [Electron](https://www.electronjs.org/docs/latest/api/app){:target="_blank"} app development? It's a great idea to be a bit familiar with Electron before you dive in. This foundational knowledge will help you get started smoothly and make your development process more efficient. Whether you're new to Electron or simply need a refresher, exploring the Electron documentation can be a valuable first step on your path to creating amazing Electron applications.
+Embarking on your journey into [Electron](https://www.electronjs.org/docs/latest/api/app) app development? It's a great idea to be a bit familiar with Electron before you dive in. This foundational knowledge will help you get started smoothly and make your development process more efficient. Whether you're new to Electron or simply need a refresher, exploring the Electron documentation can be a valuable first step on your path to creating amazing Electron applications.
 
 ## What Files Are Needed?
 

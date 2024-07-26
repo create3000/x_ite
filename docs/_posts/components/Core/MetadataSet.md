@@ -34,7 +34,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **name** ""
 
@@ -43,7 +43,7 @@ Depending on the metadata vocabulary, the attribute *name* is usually required f
 #### Hints
 
 - Well-defined names can simplify design and debugging through improved author understanding.
-- [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions){:target="_blank"}
+- [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions)
 
 #### Warning
 
@@ -63,12 +63,12 @@ The *value* field provides a list of X3DMetadataObject nodes whose meaning is de
 
 - Typically use `containerField='value'` if the parent node is MetadataSet.
 - Explicitly defining containerField for Metadata nodes is always allowed and also unambiguous across each version of X3D.
-- [Each of the Metadata nodes are allowed as top-level root nodes in a scene, if doing that be sure to explicitly define `containerField='metadata'.`](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-DIS/Part01/concepts.html#Rootnodes){:target="_blank"}
+- [Each of the Metadata nodes are allowed as top-level root nodes in a scene, if doing that be sure to explicitly define `containerField='metadata'.`](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-DIS/Part01/concepts.html#Rootnodes)
 - If present, an IS statement is the first child within any other node.
 - An IS statement precedes any sibling Metadata* node, which in turn precedes any other sibling nodes.
 - MetadataSet can contain other MetadataSet nodes.
 - Comments are not readable when a model file is loaded for viewing, but [WorldInfo](/x_ite/components/core/worldinfo/) and Metadata* nodes are persistent and inspectable at run time.
-- [X3D for Web Authors, Chapter 15, Metadata Information](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html){:target="_blank"}
+- [X3D for Web Authors, Chapter 15, Metadata Information](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html)
 
 ### Warnings
 
@@ -77,4 +77,4 @@ The *value* field provides a list of X3DMetadataObject nodes whose meaning is de
 
 ## See Also
 
-- [X3D Specification of MetadataSet Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataSet){:target="_blank"}
+- [X3D Specification of MetadataSet Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataSet)

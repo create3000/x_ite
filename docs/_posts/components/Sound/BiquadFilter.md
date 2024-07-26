@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -79,7 +79,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-biquadfiltertype){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-biquadfiltertype)
 
 ### SFFloat [in, out] **frequency** 350 <small>[0,∞)</small>
 
@@ -87,7 +87,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 #### Hint
 
-- [Wikipedia Hertz](https://en.wikipedia.org/wiki/Hertz){:target="_blank"}
+- [Wikipedia Hertz](https://en.wikipedia.org/wiki/Hertz)
 
 ### SFFloat [in, out] **qualityFactor** 1 <small>[0,∞)</small>
 
@@ -95,7 +95,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 #### Hint
 
-- [Wikipedia Q factor](https://en.wikipedia.org/wiki/Q_factor){:target="_blank"}
+- [Wikipedia Q factor](https://en.wikipedia.org/wiki/Q_factor)
 
 ### SFInt32 [in, out] **channelCount**
 
@@ -103,7 +103,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount)
 
 ### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
 
@@ -111,7 +111,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode)
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
@@ -119,7 +119,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation)
 
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
@@ -202,7 +202,7 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#biquadfilternode){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#biquadfilternode)
 
 ### Warning
 
@@ -210,4 +210,4 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ## See Also
 
-- [X3D Specification of BiquadFilter Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#BiquadFilter){:target="_blank"}
+- [X3D Specification of BiquadFilter Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#BiquadFilter)

@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFVec3f [ ] **size** 2 2 2 <small>(0,∞)</small>
 
@@ -66,8 +66,8 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ### Hints
 
-- [Cuboid](https://en.wikipedia.org/wiki/Cuboid){:target="_blank"}
-- [Parallelepiped](https://en.wikipedia.org/wiki/Parallelepiped){:target="_blank"}
+- [Cuboid](https://en.wikipedia.org/wiki/Cuboid)
+- [Parallelepiped](https://en.wikipedia.org/wiki/Parallelepiped)
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ## Example
@@ -80,4 +80,4 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ## See Also
 
-- [X3D Specification of Box Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Box){:target="_blank"}
+- [X3D Specification of Box Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Box)

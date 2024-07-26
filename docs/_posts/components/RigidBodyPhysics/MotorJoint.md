@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFBool [ ] **autoCalc** FALSE
 
@@ -49,7 +49,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 ### SFFloat [in, out] **axis2Angle** 0 <small>[-π,π]</small>
 
@@ -57,7 +57,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 ### SFFloat [in, out] **axis3Angle** 0 <small>[-π,π]</small>
 
@@ -65,7 +65,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 ### SFFloat [in, out] **axis1Torque** 0 <small>(-∞,∞)</small>
 
@@ -161,7 +161,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warning
 
@@ -173,7 +173,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warning
 
@@ -185,7 +185,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warning
 
@@ -232,4 +232,4 @@ The body1 and *body2* fields indicate the two [RigidBody](/x_ite/components/rigi
 
 ## See Also
 
-- [X3D Specification of MotorJoint Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#MotorJoint){:target="_blank"}
+- [X3D Specification of MotorJoint Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#MotorJoint)

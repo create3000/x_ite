@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **language** ""
 
@@ -41,10 +41,10 @@ Language codes consist of a primary code and a (possibly empty) series of subcod
 
 #### Hints
 
-- [See ISO639.2 Codes for the Representation of Names of Languages](https://www.loc.gov/standards/iso639-2/php/code_list.php){:target="_blank"}
-- [See RFC3066 Tags for the Identification of Languages](https://tools.ietf.org/html/rfc3066){:target="_blank"}
-- [See ISO3166 or](https://xml.coverpages.org/languageIdentifiers.html){:target="_blank"}
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- [See ISO639.2 Codes for the Representation of Names of Languages](https://www.loc.gov/standards/iso639-2/php/code_list.php)
+- [See RFC3066 Tags for the Identification of Languages](https://tools.ietf.org/html/rfc3066)
+- [See ISO3166 or](https://xml.coverpages.org/languageIdentifiers.html)
+- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warning
@@ -62,8 +62,8 @@ Array of quoted font *family* names in preference order, browsers use the first 
 - SERIF and SANS are variable-width fonts (for example, Times Roman and Arial).
 - TYPEWRITER is a fixed-width font (for example, Courier).
 - MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
-- [See 15.2.2.2 Font *family* and style](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/text.html#Fontfamilyandstyle for details.
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- [See 15.2.2.2 Font *family* and style](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/text.html#Fontfamilyandstyle for details.
+- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warning
@@ -76,13 +76,13 @@ Pick one of four values for text *style* (PLAIN or BOLD or ITALIC or BOLDITALIC)
 
 #### Hints
 
-- [See 15.2.2.2 Font family and *style*](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/text.html#Fontfamilyandstyle for details.
+- [See 15.2.2.2 Font family and *style*](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/text.html#Fontfamilyandstyle for details.
 - Overlapping functionality with CSS *style* attribute provides a "best of both worlds" approach. The *style* attribute provides an inline block of CSS source for element styling, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets.
-- [X3D Architecture Annex L, HTML authoring guidelines, CSS considerations](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/htmlGuidelines.html#CSS
-- [W3C Cascading Style Sheets](https://www.w3.org/Style/CSS){:target="_blank"}
-- [CSS Snapshot](https://www.w3.org/TR/css-2018){:target="_blank"}
+- [X3D Architecture Annex L, HTML authoring guidelines, CSS considerations](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/htmlGuidelines.html#CSS
+- [W3C Cascading Style Sheets](https://www.w3.org/Style/CSS)
+- [CSS Snapshot](https://www.w3.org/TR/css-2018)
 - Https://www.w3.org/TR/css-*style*-attr
-- [Wikibooks, XML - Managing Data Exchange/XSLT and Style Sheets](https://en.wikibooks.org/wiki/XML_-_Managing_Data_Exchange/XSLT_and_Style_Sheets){:target="_blank"}
+- [Wikibooks, XML - Managing Data Exchange/XSLT and Style Sheets](https://en.wikibooks.org/wiki/XML_-_Managing_Data_Exchange/XSLT_and_Style_Sheets)
 
 #### Warnings
 
@@ -112,8 +112,8 @@ Whether text direction is *horizontal* (true) or vertical (false).
 
 #### Hints
 
-- [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/text.html#Directionandjustification for details.
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/text.html#Directionandjustification for details.
+- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **leftToRight** TRUE
@@ -122,8 +122,8 @@ Whether text direction is left-to-right (true) or right-to-left (false).
 
 #### Hints
 
-- [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/text.html#Directionandjustification for details.
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/text.html#Directionandjustification for details.
+- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **topToBottom** TRUE
@@ -132,8 +132,8 @@ Whether text direction is top-to-bottom (true) or bottom-to-top (false).
 
 #### Hints
 
-- [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/text.html#Directionandjustification for details.
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/text.html#Directionandjustification for details.
+- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### MFString [in, out] **justify** "BEGIN" <small>["BEGIN", "END", "FIRST", "MIDDLE", ""]</small>
@@ -144,7 +144,7 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 
 - Preferred value is usually *justify*=' "MIDDLE" "MIDDLE" ' for centered justification horizontally and vertically.
 - MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
-- [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/text.html#Directionandjustification for details.
+- [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/text.html#Directionandjustification for details.
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warnings
@@ -167,9 +167,9 @@ It is possible to specify in the *family* field a URL of a custom font file of t
 ### Hints
 
 - First add a [Text](/x_ite/components/text/text/) node as a parent.
-- [Wikipedia](https://en.wikipedia.org/wiki/Font){:target="_blank"}
-- [Wikipedia](https://en.wikipedia.org/wiki/Typeface){:target="_blank"}
+- [Wikipedia](https://en.wikipedia.org/wiki/Font)
+- [Wikipedia](https://en.wikipedia.org/wiki/Typeface)
 
 ## See Also
 
-- [X3D Specification of ScreenFontStyle Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#ScreenFontStyle){:target="_blank"}
+- [X3D Specification of ScreenFontStyle Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#ScreenFontStyle)

@@ -385,4 +385,4 @@ The init function is called when the scene is loaded and installs a field callba
 
 ### The HTML and X3D
 
-The scene defines different named nodes with the »DEF« attribute, which can be accessed later. Download [adrenaline.html](https://create3000.github.io/media/x_ite/external-browser/adrenaline.html){:target="_blank"} and [adrenaline.x3d](https://create3000.github.io/media/x_ite/external-browser/adrenaline.x3d).
+The scene defines different named nodes with the »DEF« attribute, which can be accessed later. Download [adrenaline.html](https://create3000.github.io/media/x_ite/external-browser/adrenaline.html) and [adrenaline.x3d](https://create3000.github.io/media/x_ite/external-browser/adrenaline.x3d).

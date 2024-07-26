@@ -9,7 +9,7 @@ tags: [Releases]
 
 When deploying X_ITE in a production environment, it's crucial to select and use a fixed, stable version to ensure reliability and avoid potential issues arising from updates or changes. Using a fixed version minimizes the risk of unexpected behavior or compatibility problems that could disrupt your application.
 
-To find the appropriate version for your needs, you can refer to the list of all available versions [on npm](https://www.npmjs.com/package/x_ite?activeTab=versions){:target="_blank"}, where detailed version history and related documentation are available. This approach helps maintain a consistent and predictable production setup, ensuring that your application runs smoothly and efficiently.
+To find the appropriate version for your needs, you can refer to the list of all available versions [on npm](https://www.npmjs.com/package/x_ite?activeTab=versions), where detailed version history and related documentation are available. This approach helps maintain a consistent and predictable production setup, ensuring that your application runs smoothly and efficiently.
 
 There are compressed (x_ite.min.js) and uncompressed (x_ite.js) versions available.
 

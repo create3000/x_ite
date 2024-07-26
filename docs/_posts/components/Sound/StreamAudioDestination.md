@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -71,7 +71,7 @@ Stream identification TBD
 
 #### Hint
 
-- [W3C Media Capture and Streams](https://www.w3.org/TR/mediacapture-streams){:target="_blank"}
+- [W3C Media Capture and Streams](https://www.w3.org/TR/mediacapture-streams)
 
 ### SFInt32 [in, out] **channelCount**
 
@@ -79,7 +79,7 @@ Stream identification TBD
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount)
 
 ### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
 
@@ -87,7 +87,7 @@ Stream identification TBD
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode)
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
@@ -95,7 +95,7 @@ Stream identification TBD
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation)
 
 ### SFBool [out] **isActive**
 
@@ -121,7 +121,7 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#mediastreamaudiodestinationnode){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#mediastreamaudiodestinationnode)
 
 ### Warning
 
@@ -129,4 +129,4 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ## See Also
 
-- [X3D Specification of StreamAudioDestination Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#StreamAudioDestination){:target="_blank"}
+- [X3D Specification of StreamAudioDestination Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#StreamAudioDestination)

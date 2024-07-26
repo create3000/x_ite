@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### MFInt32 [in, out] **vertexCount** [ ] <small>[2,∞)</small>
 
@@ -45,7 +45,7 @@ Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexatt
 
 #### Hint
 
-- [X3D Architecture 32.2.2.4 Per-vertex attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/shaders.html#Pervertexattributes
+- [X3D Architecture 32.2.2.4 Per-vertex attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/shaders.html#Pervertexattributes
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
 
@@ -79,7 +79,7 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ### Hints
 
-- [Polygonal chain](https://en.wikipedia.org/wiki/Polygonal_chain){:target="_blank"}
+- [Polygonal chain](https://en.wikipedia.org/wiki/Polygonal_chain)
 - Either values in a contained [Color](/x_ite/components/rendering/color/) node, or else [Material](/x_ite/components/shape/material/) emissiveColor in corresponding [Appearance](/x_ite/components/shape/appearance/) node, are used for rendering lines and points.
 - Adding [LineProperties](/x_ite/components/shape/lineproperties/) to the corresponding [Appearance](/x_ite/components/shape/appearance/) node can modify the rendering style of these lines.
 - Step-wise variation or linear interpolation of color values can be used as a good scientific visualization technique to map arbitrary function values to a color map.
@@ -102,4 +102,4 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## See Also
 
-- [X3D Specification of LineSet Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#LineSet){:target="_blank"}
+- [X3D Specification of LineSet Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#LineSet)

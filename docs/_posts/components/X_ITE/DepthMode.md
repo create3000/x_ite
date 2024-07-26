@@ -37,7 +37,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFVec2f [in, out] **polygonOffset** 0 0 <small>(-∞,∞)</small>
 
@@ -90,4 +90,4 @@ Sets whether writing into the depth buffer is enabled or disabled.
 
 ## See Also
 
-* [Z-buffering](https://en.wikipedia.org/wiki/Z-buffering){:target="_blank"}
+* [Z-buffering](https://en.wikipedia.org/wiki/Z-buffering)

@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### MFString [in, out] **forceOutput** "NONE" <small>["ALL", "NONE", ...]</small>
 
@@ -53,7 +53,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 ### SFFloat [in, out] **maxAngle** π <small>[-π,π)</small> <small class="red">not supported</small>
 
@@ -61,7 +61,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 ### SFFloat [in, out] **stopBounce** 0 <small>[0,1]</small> <small class="red">not supported</small>
 
@@ -135,4 +135,4 @@ The body1 and *body2* fields indicate the two [RigidBody](/x_ite/components/rigi
 
 ## See Also
 
-- [X3D Specification of SingleAxisHingeJoint Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#SingleAxisHingeJoint){:target="_blank"}
+- [X3D Specification of SingleAxisHingeJoint Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#SingleAxisHingeJoint)

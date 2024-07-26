@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFBool [in, out] **filled** TRUE
 
@@ -49,7 +49,7 @@ Whether or not associated geometry is *hatched*.
 
 #### Hint
 
-- [Detailed descriptions of hatchstyle values are found at the ISO/IEC 9973 International Register of Graphical Items](https://www.iso.org/jtc1/sc24/register){:target="_blank"} [](https://isotc.iso.org/livelink/livelink/fetch/-8916524/8916549/8916590/6208440/class_pages/hatchstyle.html){:target="_blank"}
+- [Detailed descriptions of hatchstyle values are found at the ISO/IEC 9973 International Register of Graphical Items](https://www.iso.org/jtc1/sc24/register) [](https://isotc.iso.org/livelink/livelink/fetch/-8916524/8916549/8916590/6208440/class_pages/hatchstyle.html)
 
 ### SFColor [in, out] **hatchColor** 1 1 1 <small>[0,1]</small>
 
@@ -75,4 +75,4 @@ Whether or not associated geometry is *hatched*.
 
 ## See Also
 
-- [X3D Specification of FillProperties Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#FillProperties){:target="_blank"}
+- [X3D Specification of FillProperties Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#FillProperties)

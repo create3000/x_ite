@@ -36,7 +36,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -64,13 +64,13 @@ List of address links for runnable script files.
 - Embedded ecmascript: source can also be contained in the sourceCode pseudo-field without escape characters, equivalent to last entry in the *url* list, when using other API codebases and file encodings.
 - Browsers are not required to support any particular scripting language, but ECMAScript (JavaScript) is widely supported.
 - Equivalent script code written in multiple programming languages can be provided for portability, the first runnable version is chosen at run time.
-- [X3D Scene Authoring Hints, Scripts](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scripts){:target="_blank"}
+- [X3D Scene Authoring Hints, Scripts](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scripts)
 - If both *url* field and CDATA section are provided simultaneously, the *url* field is processed first. This approach allows utilization of update modifications or live queries in external scripts, while still providing reliable script source as a fallback alternative within the model itself.
-- [X3D XML Encoding, 4.3.13 Encapsulating Script node code](https://www.web3d.org/documents/specifications/19776-1/V3.3/Part01/concepts.html#EncapsulatingScriptNodeCode){:target="_blank"}
+- [X3D XML Encoding, 4.3.13 Encapsulating Script node code](https://www.web3d.org/documents/specifications/19776-1/V3.3/Part01/concepts.html#EncapsulatingScriptNodeCode)
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in *url* queries with %20 for each blank character.
-- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls)
 
 #### Warnings
 
@@ -126,8 +126,8 @@ If *mustEvaluate* false, then the X3D player may delay sending input events to S
 
 - Insert an XML Character Data (CDATA) block within the Script node to contain source code embedded within an X3D scene, avoiding the need for escape characters.
 - A contained XML Character Data (CDATA) block for source code protects whitespace, line breaks, and literal characters (such as &amp; for ampersand character, \< for less-than-sign character, and \> for greater-than-sign character) from unintended escape-character modifications by XML parsers.
-- [X3D Scene Authoring Hints, Scripts](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scripts){:target="_blank"}
-- [Apply `containerField='watchList'` when parent node is LoadSensor.ECMAScript-262 specification](https://www.ecma-international.org/publications/standards/Ecma-262.htm){:target="_blank"}
+- [X3D Scene Authoring Hints, Scripts](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scripts)
+- [Apply `containerField='watchList'` when parent node is LoadSensor.ECMAScript-262 specification](https://www.ecma-international.org/publications/standards/Ecma-262.htm)
 - Embedded ecmascript: source can also be contained in the sourceCode pseudo-field without escape characters, equivalent to last entry in the url list, when using other API codebases and file encodings.
 
 ### Warning
@@ -136,5 +136,5 @@ If *mustEvaluate* false, then the X3D player may delay sending input events to S
 
 ## See Also
 
-- [X3D Specification of Script Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/scripting.html#Script){:target="_blank"}
+- [X3D Specification of Script Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/scripting.html#Script)
 - [Script Node Authoring Interface](/x_ite/reference/script-node-authoring-interface/)

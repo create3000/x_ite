@@ -34,7 +34,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -56,10 +56,10 @@ Unique *name* attribute must be defined so that HAnimSite node can be identified
 - HAnimSite nodes containing a [Viewpoint](/x_ite/components/navigation/viewpoint/) location have '_view' suffix appended to the *name*.
 - HAnimSite nodes serving other purposes have '_pt' suffix appended to the *name*.
 - Additional example *name* bases (such as cervicale l_infraorbitale supramenton etc.) are listed in HAnim Specification.
-- [HAnim Specification part 1, LOA-3 default Site object translations](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/BodyDimensionsAndLOAs.html#LOA3DefaultSiteTranslations){:target="_blank"}
+- [HAnim Specification part 1, LOA-3 default Site object translations](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/BodyDimensionsAndLOAs.html#LOA3DefaultSiteTranslations)
 - Well-defined names can simplify design and debugging through improved author understanding.
-- [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions){:target="_blank"}
-- [HAnim2 Names HAnim1 Alias Tables](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2NameHAnim1AliasTables.txt){:target="_blank"}
+- [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions)
+- [HAnim2 Names HAnim1 Alias Tables](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2NameHAnim1AliasTables.txt)
 - Candidate names found in the HAnim Specification are skull_vertex, glabella, sellion, l_infraorbitale, l_tragion, l_gonion, r_infraorbitale, r_tragion, r_gonion, supramenton, cervicale, adams_apple, suprasternale, substernale, l_clavicle, l_acromion, l_axilla_proximal, l_axilla_distal, l_axilla_posterior_folds, r_clavicle, r_acromion, r_axilla_proximal, r_axilla_distal, r_axilla_posterior_folds, spine_1_middle_back, spine_2_lower_back, waist_preferred_anterior, waist_preferred_posterior, l_rib10, l_thelion, r_rib10, r_thelion, l_asis, l_iliocristale, l_psis, r_asis, r_iliocristale, r_psis, crotch, l_femoral_lateral_epicondyle, l_femoral_medial_epicondyle, l_suprapatella, l_trochanterion, r_femoral_lateral_epicondyle, r_femoral_medial_epicondyle, r_suprapatella, r_trochanterion, l_tibiale, l_medial_malleolus, l_lateral_malleolus, l_sphyrion, r_tibiale, r_medial_malleolus, r_lateral_malleolus, r_sphyrion, l_metatarsal_phalanx_1, l_metatarsal_phalanx_5, l_dactylion, l_calcaneus_posterior, r_metatarsal_phalanx_1, r_metatarsal_phalanx_5, r_dactylion, r_calcaneus_posterior, l_humeral_lateral_epicondyle, l_humeral_medial_epicondyle, l_olecranon, r_humeral_lateral_epicondyle, r_humeral_medial_epicondyle, r_olecranon, l_radiale, l_ulnar_styloid, l_radial_styloid, r_radiale, r_ulnar_styloid, r_radial_styloid, l_metacarpal_phalanx_2, l_metacarpal_phalanx_3, l_metacarpal_phalanx_5, r_metacarpal_phalanx_2, r_metacarpal_phalanx_3, r_metacarpal_phalanx_5, nuchale, l_neck_base, r_neck_base, navel, l_ectocanthus, r_ectocanthus, menton, mesosternale, opisthocranion, l_knee_crease, r_knee_crease, rear_center_midsagittal_plane, buttocks_standing_wall_contact_point, l_chest_midsagittal_plane, r_chest_midsagittal_plane, l_bideltoid, r_bideltoid, l_carpal_distal_phalanx_1, l_carpal_distal_phalanx_2, l_carpal_distal_phalanx_3, l_carpal_distal_phalanx_4, l_carpal_distal_phalanx_5, r_carpal_distal_phalanx_1, r_carpal_distal_phalanx_2, r_carpal_distal_phalanx_3, r_carpal_distal_phalanx_4, r_carpal_distal_phalanx_5, l_tarsal_distal_phalanx_1, l_tarsal_distal_phalanx_2, l_tarsal_distal_phalanx_3, l_tarsal_distal_phalanx_4, l_tarsal_distal_phalanx_5, r_tarsal_distal_phalanx_1, r_tarsal_distal_phalanx_2, r_tarsal_distal_phalanx_3, r_tarsal_distal_phalanx_4, r_tarsal_distal_phalanx_5
 
 #### Warnings
@@ -122,8 +122,8 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
-- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/grouping.html#BoundingBoxes
-- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/grouping.html#X3DBoundedObject
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#BoundingBoxes
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#X3DBoundedObject
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
@@ -132,8 +132,8 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 #### Hints
 
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
-- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/grouping.html#BoundingBoxes
-- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/grouping.html#X3DBoundedObject
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#BoundingBoxes
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#X3DBoundedObject
 
 ### MFNode [in] **addChildren**
 
@@ -152,18 +152,18 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Each grouping node defines a coordinate space for its *children*, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
 - InputOnly MFNode addChildren field can append new X3DChildNode nodes via a ROUTE connection, duplicate input nodes (i.e. matching DEF, USE values) are ignored.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
-- [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/grouping.html#GroupingAndChildrenNodes
+- [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/grouping.html#GroupingAndChildrenNodes
 
 ## Advice
 
 ### Hints
 
 - HAnimSite nodes are stored as children of an [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node.
-- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0){:target="_blank"}
-- [HAnim Specification part 1, Site](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Site){:target="_blank"}
-- [HAnim Specification part 1, Annex B, Feature points for the human body](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/FeaturePoints.html){:target="_blank"}
-- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf){:target="_blank"}
-- [HAnim2 default values for Joint and Site (feature point) nodes](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2DefaultValuesJointsFeaturePoints.txt){:target="_blank"}
+- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
+- [HAnim Specification part 1, Site](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Site)
+- [HAnim Specification part 1, Annex B, Feature points for the human body](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/FeaturePoints.html)
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf)
+- [HAnim2 default values for Joint and Site (feature point) nodes](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2DefaultValuesJointsFeaturePoints.txt)
 
 ### Warnings
 
@@ -174,4 +174,4 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## See Also
 
-- [X3D Specification of HAnimSite Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimSite){:target="_blank"}
+- [X3D Specification of HAnimSite Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimSite)

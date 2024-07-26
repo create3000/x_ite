@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -46,8 +46,8 @@ If (a,b,c,d) is the *plane*, with the first three components being a normalized 
 #### Hints
 
 - Negate all *plane* values to reverse which side of *plane* has visibility clipped.
-- [*plane*-geometry equations](https://en.wikipedia.org/wiki/Plane_(geometry)#Point-normal_form_and_general_form_of_the_equation_of_a_plane){:target="_blank"}
-- [*plane*-geometry distance to point](https://en.wikipedia.org/wiki/Plane_(geometry)#Distance_from_a_point_to_a_plane){:target="_blank"}
+- [*plane*-geometry equations](https://en.wikipedia.org/wiki/Plane_(geometry)#Point-normal_form_and_general_form_of_the_equation_of_a_plane)
+- [*plane*-geometry distance to point](https://en.wikipedia.org/wiki/Plane_(geometry)#Distance_from_a_point_to_a_plane)
 
 #### Warning
 
@@ -61,7 +61,7 @@ If (a,b,c,d) is the *plane*, with the first three components being a normalized 
 
 ### Warning
 
-- [Requires X3D `profile='Full'` or else include `<component name='Rendering' level='5'/>` Examples: X3D Example Archives, Basic, CAD, Clip Plane Example](https://www.web3d.org/x3d/content/examples/Basic/CAD/ClipPlaneExampleIndex.html){:target="_blank"}
+- [Requires X3D `profile='Full'` or else include `<component name='Rendering' level='5'/>` Examples: X3D Example Archives, Basic, CAD, Clip Plane Example](https://www.web3d.org/x3d/content/examples/Basic/CAD/ClipPlaneExampleIndex.html)
 
 ## Example
 
@@ -73,4 +73,4 @@ If (a,b,c,d) is the *plane*, with the first three components being a normalized 
 
 ## See Also
 
-- [X3D Specification of ClipPlane Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#ClipPlane){:target="_blank"}
+- [X3D Specification of ClipPlane Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#ClipPlane)

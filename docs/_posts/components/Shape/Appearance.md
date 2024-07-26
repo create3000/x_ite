@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **alphaMode** "AUTO" <small>["AUTO"|"OPAQUE"|"MASK"|"BLEND"]</small>
 
@@ -41,7 +41,7 @@ Provides options for control of alpha transparency handling for textures. AUTO m
 
 #### Hint
 
-- [GlTF version 2 Alpha Coverage](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html#alpha-coverage){:target="_blank"}
+- [GlTF version 2 Alpha Coverage](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html#alpha-coverage)
 
 ### SFFloat [in, out] **alphaCutoff** 0.5 <small>[0,1]</small>
 
@@ -49,7 +49,7 @@ Threshold value used for pixel rendering either transparent or opaque, used when
 
 #### Hint
 
-- [GlTF version 2 Alpha Coverage](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html#alpha-coverage){:target="_blank"}
+- [GlTF version 2 Alpha Coverage](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html#alpha-coverage)
 
 ### SFNode [in, out] **acousticProperties** NULL <small>[AcousticProperties]</small>
 
@@ -86,9 +86,9 @@ Single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imag
 #### Hints
 
 - If *texture* node is NULL or unspecified, corresponding [Shape](/x_ite/components/shape/shape/) geometry for this Appearance is not textured.
-- [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images){:target="_blank"}
-- [X3D Architecture 18 Texturing component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html
-- [X3D Architecture 33 Texturing3D component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texture3D.html
+- [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images)
+- [X3D Architecture 18 Texturing component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html
+- [X3D Architecture 33 Texturing3D component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texture3D.html
 
 ### SFNode [in, out] **textureTransform** NULL <small>[X3DTextureTransformNode]</small>
 
@@ -105,7 +105,7 @@ Zero or more contained programmable shader nodes ([ComposedShader](/x_ite/compon
 
 #### Hint
 
-- [X3D Architecture 31 Programmable *shaders* component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/*shaders*.html
+- [X3D Architecture 31 Programmable *shaders* component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/*shaders*.html
 
 ### SFNode [in, out] **blendMode** NULL <small>[BlendMode]</small> <small class="blue">non standard</small>
 
@@ -123,8 +123,8 @@ Single contained [DepthMode](../../x-ite/depthmode) node that defines depth mode
 - Only [Material](/x_ite/components/shape/material/) and [ImageTexture](/x_ite/components/texturing/imagetexture/) children are allowed.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - Advanced uses can contain [MultiTexture](/x_ite/components/texturing/multitexture/), [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/)/[TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/)/[TextureTransform3D](/x_ite/components/texturing3d/texturetransform3d/), [ComposedShader](/x_ite/components/shaders/composedshader/)/[PackagedShader](/x_ite/components/shaders/packagedshader/)/[ProgramShader](/x_ite/components/shaders/programshader/), [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/)/[ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/)/[PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/), or [ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/)/[GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/)/[ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/).
-- [X3D Architecture 12.2.2 Appearance node](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/shape.html#Appearancenode
-- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/lighting.html#Lightingmodel
+- [X3D Architecture 12.2.2 Appearance node](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/shape.html#Appearancenode
+- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/lighting.html#Lightingmodel
 
 ## Example
 
@@ -136,4 +136,4 @@ Single contained [DepthMode](../../x-ite/depthmode) node that defines depth mode
 
 ## See Also
 
-- [X3D Specification of Appearance Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance){:target="_blank"}
+- [X3D Specification of Appearance Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance)

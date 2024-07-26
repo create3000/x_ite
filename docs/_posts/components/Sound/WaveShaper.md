@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -75,7 +75,7 @@ The *oversample* field is specifies what type of oversampling (if any) should be
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-oversampletype){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-oversampletype)
 
 ### SFInt32 [in, out] **channelCount**
 
@@ -83,7 +83,7 @@ The *oversample* field is specifies what type of oversampling (if any) should be
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount)
 
 ### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
 
@@ -91,7 +91,7 @@ The *oversample* field is specifies what type of oversampling (if any) should be
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode)
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
@@ -99,7 +99,7 @@ The *oversample* field is specifies what type of oversampling (if any) should be
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation)
 
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
@@ -182,8 +182,8 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#waveshapernode){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#waveshapernode)
 
 ## See Also
 
-- [X3D Specification of WaveShaper Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#WaveShaper){:target="_blank"}
+- [X3D Specification of WaveShaper Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#WaveShaper)

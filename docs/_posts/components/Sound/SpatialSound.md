@@ -34,7 +34,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -95,7 +95,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hints
 
 - ConeOuterAngle value is greater than or equal to *coneInnerAngle*.
-- [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/sound.html#f-AudioPannerListenerRelationships
+- [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/sound.html#f-AudioPannerListenerRelationships
 
 ### SFFloat [in, out] **coneOuterAngle** 6.2832 <small>[0,2π]</small>
 
@@ -104,7 +104,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hints
 
 - *coneOuterAngle* value is greater than or equal to coneInnerAngle.
-- [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/sound.html#f-AudioPannerListenerRelationships
+- [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/sound.html#f-AudioPannerListenerRelationships
 
 ### SFString [in, out] **distanceModel** "INVERSE" <small>["LINEAR" "INVERSE" "EXPONENTIAL"]</small>
 
@@ -112,7 +112,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-distancemodeltype){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-distancemodeltype)
 
 ### SFFloat [in, out] **maxDistance** 10000 <small>[0,∞)</small>
 
@@ -124,7 +124,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-pannernode-refdistance){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-pannernode-refdistance)
 
 ### SFFloat [in, out] **rolloffFactor** 1 <small>[0,∞)</small>
 
@@ -132,7 +132,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-pannernode-rollofffactor){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-pannernode-rollofffactor)
 
 ### SFBool [in, out] **enableHRTF** FALSE
 
@@ -140,8 +140,8 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Hints
 
-- [W3C Audio API](https://www.w3.org/TR/webaudio/#enumdef-panningmodeltype){:target="_blank"}
-- [Wikipedia HRTF](https://en.wikipedia.org/wiki/3D_sound_localization#Head-related_Transfer_Function_(HRTF)){:target="_blank"}
+- [W3C Audio API](https://www.w3.org/TR/webaudio/#enumdef-panningmodeltype)
+- [Wikipedia HRTF](https://en.wikipedia.org/wiki/3D_sound_localization#Head-related_Transfer_Function_(HRTF))
 
 ### SFBool [in, out] **dopplerEnabled** FALSE <small class="red">not supported</small>
 
@@ -150,7 +150,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hints
 
 - Functional support requires player support for [Sound](/x_ite/components/sound/sound/) component level 3.
-- [Wikipedia Doppler effect](https://en.wikipedia.org/wiki/Doppler_effect){:target="_blank"}
+- [Wikipedia Doppler effect](https://en.wikipedia.org/wiki/Doppler_effect)
 
 ### SFFloat [in, out] **priority** 0 <small>[0,1]</small>
 
@@ -173,10 +173,10 @@ The *children* field specifies audio-graph sound sources providing input signals
 ### Hints
 
 - If the audio source is stereo or multi-channel, channel separation is retained during playback.
-- [X3D Sound component Figure 16.2 Sound Node Geometry](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/sound.html#f-Soundnodegeometry
-- [W3C Web Audio API, PannerNode Interface](https://www.w3.org/TR/webaudio/#pannernode){:target="_blank"}
-- [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio){:target="_blank"}
-- [Wikipedia 3D sound localization](https://en.wikipedia.org/wiki/3D_sound_localization){:target="_blank"}
+- [X3D Sound component Figure 16.2 Sound Node Geometry](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/sound.html#f-Soundnodegeometry
+- [W3C Web Audio API, PannerNode Interface](https://www.w3.org/TR/webaudio/#pannernode)
+- [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio)
+- [Wikipedia 3D sound localization](https://en.wikipedia.org/wiki/3D_sound_localization)
 
 ### Warning
 
@@ -184,4 +184,4 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ## See Also
 
-- [X3D Specification of SpatialSound Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#SpatialSound){:target="_blank"}
+- [X3D Specification of SpatialSound Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#SpatialSound)

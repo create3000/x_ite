@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -59,7 +59,7 @@ Input/Output field *numberOfChannels*.
 
 #### Hint
 
-- [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation){:target="_blank"}
+- [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation)
 
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
@@ -87,7 +87,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount)
 
 ### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
 
@@ -95,7 +95,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode)
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
@@ -103,7 +103,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation)
 
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
@@ -187,8 +187,8 @@ The *children* field specifies audio-graph sound sources providing input signals
 ### Hints
 
 - Potential modifications include chorus effects, reverberation, and telephone-like speech.
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#ConvolverNode){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#ConvolverNode)
 
 ## See Also
 
-- [X3D Specification of Convolver Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Convolver){:target="_blank"}
+- [X3D Specification of Convolver Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Convolver)

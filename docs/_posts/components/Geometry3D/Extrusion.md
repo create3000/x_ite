@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### MFVec2f [in] **set_crossSection** <small>(-∞,∞)</small>
 
@@ -128,7 +128,7 @@ The *ccw* field indicates counterclockwise ordering of vertex-coordinates orient
 #### Hints
 
 - A good debugging technique for problematic polygons is to try changing the value of *ccw*, which can reverse solid effects (single-sided backface culling) and normal-vector direction.
-- [Clockwise](https://en.wikipedia.org/wiki/Clockwise){:target="_blank"}
+- [Clockwise](https://en.wikipedia.org/wiki/Clockwise)
 
 #### Warning
 
@@ -142,8 +142,8 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 
 - Concave is the opposite of *convex*.
 - Select *convex*=false (i.e. concave) and solid=false (i.e. two-sided display) for greatest visibility of geometry.
-- [*convex* polygon](https://en.wikipedia.org/wiki/Convex_polygon){:target="_blank"}
-- [Tessellation](https://en.wikipedia.org/wiki/Tessellation){:target="_blank"}
+- [*convex* polygon](https://en.wikipedia.org/wiki/Convex_polygon)
+- [Tessellation](https://en.wikipedia.org/wiki/Tessellation)
 
 #### Warning
 
@@ -156,7 +156,7 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 #### Hints
 
 - *creaseAngle*=0 means render all edges sharply, *creaseAngle*=3.14159 means render all edges smoothly.
-- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 ### MFVec2f [ ] **crossSection** [ 1 1, 1 -1, -1 -1, -1 1, 1 1 ] <small>(-∞,∞)</small>
 
@@ -213,7 +213,7 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 
 ### Hints
 
-- [Extrusion](https://en.wikipedia.org/wiki/Extrusion){:target="_blank"}
+- [Extrusion](https://en.wikipedia.org/wiki/Extrusion)
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ### Warning
@@ -230,4 +230,4 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 
 ## See Also
 
-- [X3D Specification of Extrusion Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Extrusion){:target="_blank"}
+- [X3D Specification of Extrusion Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Extrusion)

@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -146,8 +146,8 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#oscillatornode){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#oscillatornode)
 
 ## See Also
 
-- [X3D Specification of OscillatorSource Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#OscillatorSource){:target="_blank"}
+- [X3D Specification of OscillatorSource Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#OscillatorSource)

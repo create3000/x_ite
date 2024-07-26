@@ -34,7 +34,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### MFVec3f [in, out] **vector** [ ] <small>[-1,1]</small>
 
@@ -52,7 +52,7 @@ Set of unit-length normal vectors, corresponding to indexed polygons or vertices
 - Custom Normal values can produce special effects.
 - If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 - Computation of normal values is performed quite quickly on modern 3D graphics hardware, often with no perceptible delay.
-- [Normal vectors perpendicular to 3D surface](https://en.wikipedia.org/wiki/Normal_(geometry)){:target="_blank"}
+- [Normal vectors perpendicular to 3D surface](https://en.wikipedia.org/wiki/Normal_(geometry))
 
 ### Warning
 
@@ -60,4 +60,4 @@ Set of unit-length normal vectors, corresponding to indexed polygons or vertices
 
 ## See Also
 
-- [X3D Specification of Normal Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Normal){:target="_blank"}
+- [X3D Specification of Normal Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Normal)

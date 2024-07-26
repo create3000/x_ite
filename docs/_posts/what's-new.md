@@ -5,7 +5,7 @@ nav: main
 categories: []
 tags: [New, Releases]
 ---
-X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning){:target="_blank"}. Keep this in mind when choosing a version number.
+X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
 ## X_ITE v10.1.0 Released
 
@@ -121,7 +121,7 @@ With the [glTF Sample Viewer](https://create3000.github.io/x_ite/laboratory/gltf
 
 *Leipzig, 14th May 2023:* This release comes with a breaking change: `Browser.createX3DFromString` is now asynchronous and returns now a Promise. This ensures that all components are loaded, and all necessary nodes can be provided.
 
-In addition, there is now an [automated test suite](https://github.com/create3000/x_ite-tests){:target="_blank"}, which is being expanded on a daily basis.
+In addition, there is now an [automated test suite](https://github.com/create3000/x_ite-tests), which is being expanded on a daily basis.
 
 ### Breaking Changes
 

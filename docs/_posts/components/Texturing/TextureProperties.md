@@ -32,7 +32,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFColorRGBA [in, out] **borderColor** 0 0 0 0 <small>[0,1]</small>
 
@@ -40,7 +40,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ### SFInt32 [in, out] **borderWidth** 0 <small>[0,1]</small>
 
@@ -52,8 +52,8 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hints
 
-- [Anisotropy indicates directional dependence of properties.](https://en.wikipedia.org/wiki/Anisotropy){:target="_blank"}
-- [OpenGL EXT_texture_filter_anisotropic](https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_filter_anisotropic.txt){:target="_blank"}
+- [Anisotropy indicates directional dependence of properties.](https://en.wikipedia.org/wiki/Anisotropy)
+- [OpenGL EXT_texture_filter_anisotropic](https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_filter_anisotropic.txt)
 
 ### SFBool [ ] **generateMipMaps** FALSE
 
@@ -63,8 +63,8 @@ Determines whether MIPMAPs are generated for texture images.
 
 - Mipmap preprocessing is a low-level rendering technique that can increase rendering speed and reduce aliasing artifacts.
 - Mipmap pyramids are pre-calculated, optimized sequences of images, each of which is a progressively lower resolution representation of the same image. The height and width of each image level in the mipmap is a power of two smaller than the previous level.
-- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"}
-- [Mipmap](https://en.wikipedia.org/wiki/Mipmap){:target="_blank"}
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing) and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics))
+- [Mipmap](https://en.wikipedia.org/wiki/Mipmap)
 
 #### Warning
 
@@ -76,7 +76,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.9 Texture minification modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-TextureMinificationModes for details.
+- [X3D Architecture Table 18.9 Texture minification modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#t-TextureMinificationModes for details.
 
 #### Warning
 
@@ -88,7 +88,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.8 Texture magnification modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-TextureMagnificationModes for details.
+- [X3D Architecture Table 18.8 Texture magnification modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#t-TextureMagnificationModes for details.
 
 #### Warning
 
@@ -100,7 +100,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-TextureBoundaryModes for details.
+- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#t-TextureBoundaryModes for details.
 
 #### Warning
 
@@ -112,7 +112,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-TextureBoundaryModes for details.
+- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#t-TextureBoundaryModes for details.
 
 #### Warning
 
@@ -124,7 +124,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-TextureBoundaryModes for details.
+- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#t-TextureBoundaryModes for details.
 
 #### Warning
 
@@ -136,8 +136,8 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hints
 
-- [X3D Architecture Table 18.10 Texture compression modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texturing.html#t-TextureCompressionModes for details.
-- [Texture compression](https://en.wikipedia.org/wiki/Texture_compression){:target="_blank"}
+- [X3D Architecture Table 18.10 Texture compression modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#t-TextureCompressionModes for details.
+- [Texture compression](https://en.wikipedia.org/wiki/Texture_compression)
 
 #### Warning
 
@@ -151,7 +151,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 ### Hint
 
-- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 
 ### Warning
 
@@ -159,4 +159,4 @@ Determines whether MIPMAPs are generated for texture images.
 
 ## See Also
 
-- [X3D Specification of TextureProperties Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureProperties){:target="_blank"}
+- [X3D Specification of TextureProperties Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureProperties)

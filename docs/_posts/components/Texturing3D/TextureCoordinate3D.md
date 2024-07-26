@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **mapping** ""
 
@@ -43,7 +43,7 @@ The *mapping* label identifies which texture coordinates and transformations are
 
 #### Hint
 
-- [TODO support planned to perform multiple-node *mapping* validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator){:target="_blank"}
+- [TODO support planned to perform multiple-node *mapping* validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator)
 
 ### MFVec3f [in, out] **point** [ ] <small>(-∞,∞)</small>
 
@@ -54,7 +54,7 @@ Triplets of 3D (s,t,r) texture coordinates, either in range [0,1] or higher if r
 ### Hints
 
 - Add [Shape](/x_ite/components/shape/shape/) and then polygonal/planar geometry before adding texture coordinates.
-- [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/texture3D.html#3DTextureconcepts
+- [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texture3D.html#3DTextureconcepts
 
 ### Warning
 
@@ -62,4 +62,4 @@ Triplets of 3D (s,t,r) texture coordinates, either in range [0,1] or higher if r
 
 ## See Also
 
-- [X3D Specification of TextureCoordinate3D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureCoordinate3D){:target="_blank"}
+- [X3D Specification of TextureCoordinate3D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureCoordinate3D)

@@ -34,7 +34,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -46,7 +46,7 @@ Enables/disables node operation.
 
 #### Hint
 
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ### SFColorRGBA [in, out] **warmColor** 1 1 0 0 <small>[0,1]</small>
 
@@ -54,7 +54,7 @@ Enables/disables node operation.
 
 #### Hint
 
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ### SFNode [in, out] **surfaceNormals** NULL <small>[X3DTexture3DNode]</small>
 
@@ -65,7 +65,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 ### Hints
 
 - ToneMappedVolumeStyle can contain a single Texture3D node with `containerField='surfaceNormals'`
-- [Gooch shading](https://en.wikipedia.org/wiki/Gooch_shading){:target="_blank"}
+- [Gooch shading](https://en.wikipedia.org/wiki/Gooch_shading)
 
 ### Warning
 
@@ -81,4 +81,4 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ## See Also
 
-- [X3D Specification of ToneMappedVolumeStyle Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#ToneMappedVolumeStyle){:target="_blank"}
+- [X3D Specification of ToneMappedVolumeStyle Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#ToneMappedVolumeStyle)

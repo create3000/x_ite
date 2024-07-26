@@ -34,7 +34,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
 
@@ -92,7 +92,7 @@ Output values for nonlinear interpolation, each corresponding to an input-fracti
 
 #### Hint
 
-- [X3D 19.2.3 Non-linear interpolation](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/interpolators.html#NonlinearInterpolation
+- [X3D 19.2.3 Non-linear interpolation](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/interpolators.html#NonlinearInterpolation
 
 ### SFVec2f [out] **value_changed**
 
@@ -115,4 +115,4 @@ Nonlinearly interpolated output value computed by using current time fraction al
 
 ## See Also
 
-- [X3D Specification of SplinePositionInterpolator2D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#SplinePositionInterpolator2D){:target="_blank"}
+- [X3D Specification of SplinePositionInterpolator2D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#SplinePositionInterpolator2D)

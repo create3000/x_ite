@@ -165,6 +165,6 @@ x3d-canvas {
 
 <h2>See Also</h2>
 <ul>
-   <li><a href="https://en.wikipedia.org/wiki/L-system" target="_blank">https://en.wikipedia.org/wiki/L-system</a></li>
+   <li><a href="https://en.wikipedia.org/wiki/L-system">https://en.wikipedia.org/wiki/L-system</a></li>
 </ul>
 </div>

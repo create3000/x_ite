@@ -36,7 +36,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -77,14 +77,14 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 ### Hints
 
 - This is a good way to bundle image(s) into a single scene file, avoiding multiple downloads.
-- [X3D-Edit includes PixelTexture image-conversion import capabilities.](https://savage.nps.edu/X3D-Edit/images/PixelTextureImportImage.png){:target="_blank"}
+- [X3D-Edit includes PixelTexture image-conversion import capabilities.](https://savage.nps.edu/X3D-Edit/images/PixelTextureImportImage.png)
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
 - Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
-- [X3D Scene Authoring Hints, Images and Videos](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images){:target="_blank"}
+- [X3D Scene Authoring Hints, Images and Videos](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images)
 - If a texture is opaque, omitting values in the alpha channel can help avoid rendering artifacts related to transparency.
 - Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
-- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
-- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/lighting.html#Lightingmodel
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
+- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/lighting.html#Lightingmodel
 
 ### Warnings
 
@@ -101,4 +101,4 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 ## See Also
 
-- [X3D Specification of PixelTexture Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#PixelTexture){:target="_blank"}
+- [X3D Specification of PixelTexture Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#PixelTexture)

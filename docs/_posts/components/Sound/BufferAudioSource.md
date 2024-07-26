@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS){:target="_blank"} /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
 
 ### SFString [in, out] **description** ""
 
@@ -67,7 +67,7 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 - MFString arrays can have multiple values, so separate each individual string by quote marks. "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in *url* queries with %20 for each blank character.
-- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls)
 
 #### Warning
 
@@ -110,7 +110,7 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 
 - Sample-rate converters (variable speed processors) are not supported in real-time processing.
 - Nyquist frequency is half this *sampleRate* value.
-- [Wikipedia Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency){:target="_blank"}
+- [Wikipedia Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency)
 
 ### SFInt32 [in, out] **bufferLength**
 
@@ -122,7 +122,7 @@ Location and filename of sound file. Support for .wav format is required, .midi 
 
 #### Hint
 
-- [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation){:target="_blank"}
+- [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation)
 
 ### SFTime [out] **bufferDuration** 0 <small>[0,∞)</small>
 
@@ -182,7 +182,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount)
 
 ### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
 
@@ -190,7 +190,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcountmode)
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
@@ -198,7 +198,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation)
 
 ### SFBool [in, out] **loop** FALSE
 
@@ -283,7 +283,7 @@ Any audio file format supported by the web browser, but at least:
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#AudioBufferSourceNode){:target="_blank"}
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#AudioBufferSourceNode)
 
 ### Warning
 
@@ -291,4 +291,4 @@ Any audio file format supported by the web browser, but at least:
 
 ## See Also
 
-- [X3D Specification of BufferAudioSource Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#BufferAudioSource){:target="_blank"}
+- [X3D Specification of BufferAudioSource Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#BufferAudioSource)

@@ -21,7 +21,7 @@ The X_ITE package is optimized in size with Terser to achieve the smallest size 
 
 X_ITE is designed for optimal performance with event driven programming. The flow of the program is determined by events such as user actions (mouse clicks, key presses), sensor outputs, or messages from other scripts.
 
-All code is held by [CREATE3000](https://github.com/create3000){:target="_blank"} and all contributors are selected and all contributions become verified.
+All code is held by [CREATE3000](https://github.com/create3000) and all contributors are selected and all contributions become verified.
 
 ## Core Features
 
