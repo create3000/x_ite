@@ -233,7 +233,7 @@ ${fields}
 
 ## External Links
 
-- [X3D Specification of ${node}](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/${component .toLowerCase ()}.html#${node}){:target="_blank"}
+- [X3D Specification of ${node}](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/${component .toLowerCase ()}.html#${node})
 `;
 
          text = text .trim () .replace (/\n{3,}/g, "\n\n");
