@@ -2355,7 +2355,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const node = this .nodes [target .node] ?.transformNode;
 
-      if (!node)
+      if (!node && target .path !== "pointer")
          return [ ];
 
       const sampler = samplers [channel .sampler];
@@ -3250,6 +3250,22 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             }
 
             return interpolatorNodes;
+         }
+         case "pointer":
+         {
+            // const
+            //    pointer = target .extensions ?.KHR_animation_pointer ?.pointer ?? "",
+            //    path    = pointer .split ("/") .filter (p => p)
+            //    name    = path .pop ();
+
+            // let glTF = this .input;
+
+            // for (const property of path)
+            //    glTF = glTF [property]
+
+            // console .log (glTF)
+
+            return [ ];
          }
          default:
          {
