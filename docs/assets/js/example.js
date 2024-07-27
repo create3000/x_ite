@@ -32,6 +32,7 @@ $("table.examples a") .on ("click", function ()
 
       zip = $("<a></a>")
          .addClass ("zip")
+         .attr ("download", "")
          .text ("Download ZIP Archive")
          .appendTo (footer);
 
