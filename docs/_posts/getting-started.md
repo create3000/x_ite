@@ -581,7 +581,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 
 There is a ZIP archive available to locally install X_ITE on your server. Compressed and uncompressed copies of X_ITE files are available. The uncompressed file (x_ite.js) is best used during development or debugging; the compressed file (x_ite.min.js) saves bandwidth and improves performance in production.
 
-[Download X_ITE ZIP archive](https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.zip)
+[Download X_ITE ZIP archive](https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.zip){: download }
 
 ### Using X_ITE with a CDN
 
