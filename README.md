@@ -23,6 +23,8 @@ X_ITE is a robust X3D JavaScript WebGL browser that is compatible with all major
 
 ## Using X_ITE with a CDN
 
+Using a CDN improves website performance, reliability, and security by caching content closer to users, distributing traffic loads, and providing protection against attacks.
+
 If you are going to use X_ITE in a production environment, you should use a fixed version of X_ITE. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions).
 
 ### jsDelivr CDN
