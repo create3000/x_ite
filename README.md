@@ -21,13 +21,13 @@ X_ITE is a robust X3D JavaScript WebGL browser that is compatible with all major
 * [Custom Shaders](https://create3000.github.io/x_ite/custom-shaders)
 * [glTF Sample Viewer](https://create3000.github.io/x_ite/laboratory/gltf-sample-viewer/)
 
-## jsDelivr CDN
-
-jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
-
-### For Production
+## Using X_ITE with a CDN
 
 If you are going to use X_ITE in a production environment, you should use a fixed version of X_ITE. You can get a list of all available versions [here on npm](https://www.npmjs.com/package/x_ite?activeTab=versions).
+
+### jsDelivr CDN
+
+jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@10.0.5/dist/x_ite.min.js"></script>
