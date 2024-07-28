@@ -45,7 +45,7 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@10.1.0/dist/x_ite.min.mjs";
 
 >**Info:** It is no longer necessary to include the CSS file.
 
-## Get it from NPM
+### Get it from NPM
 
 To install, use the following command:
 
