@@ -330,7 +330,7 @@ Returns a browser option with the corresponding *name*.
    </tbody>
 </table>
 
-#### void **setBrowserOption** (*String name, Object value*)
+#### void **setBrowserOption** (*String name, Any value*)
 
 Sets a browser option with the corresponding *name* to the given value.
 
