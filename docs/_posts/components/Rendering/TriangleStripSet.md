@@ -122,7 +122,7 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 
 #### Warning
 
-- *normal* vectors increase file size, typically doubling geometry definitions.
+- *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non standard</small>
 

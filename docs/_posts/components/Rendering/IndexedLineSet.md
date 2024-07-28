@@ -43,7 +43,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - If *colorIndex* array is not provided, then [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
-- If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
+- If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions. Omitting duplicative *colorIndex* fields can reduce file size.
 - This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
@@ -77,7 +77,7 @@ Whether [Color](/x_ite/components/rendering/color/) node color values are applie
 
 #### Hints
 
-- If *colorIndex* array is not provided, then [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are indexed according to the coordIndex field. Omitting duplicative *colorIndex* fields can reduce file size.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 - If rendering [Coordinate](/x_ite/components/rendering/coordinate/) points originally defined for an [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), index values may need to repeat initial each initial vertex to close the polygons.
@@ -125,7 +125,7 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 
 #### Warning
 
-- *normal* vectors increase file size, typically doubling geometry definitions.
+- *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non standard</small>
 

@@ -42,7 +42,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hints
 
-- If *colorIndex* array is not provided, then [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are indexed according to the coordIndex field. Omitting duplicative *colorIndex* fields can reduce file size.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 - This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
@@ -57,7 +57,8 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 #### Hints
 
-- Use a tool!
+- Use an authoring tool!
+- If *texCoordIndex* array is not provided, then [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) values are indexed according to the coordIndex field. Omitting duplicative *texCoordIndex* fields can reduce file size.
 - This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
@@ -71,6 +72,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 #### Hints
 
 - This field may be ignored, applying the default value regardless.
+- If *normalIndex* array is not provided, then [Normal](/x_ite/components/rendering/normal/) values are indexed according to the coordIndex field. Omitting duplicative *normalIndex* fields can reduce file size.
 - This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
@@ -169,7 +171,7 @@ Whether [Normal](/x_ite/components/rendering/normal/) node vector values are app
 
 #### Hints
 
-- If *colorIndex* array is not provided, then [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are indexed according to the coordIndex field. Omitting duplicative *colorIndex* fields can reduce file size.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 
@@ -183,8 +185,8 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 #### Hints
 
-- If *texCoordIndex* array is not provided, then [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) values are indexed according to the coordIndex field.
-- Use a tool!
+- If *texCoordIndex* array is not provided, then [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) values are indexed according to the coordIndex field. Omitting duplicative *texCoordIndex* fields can reduce file size.
+- Use an authoring tool!
 
 ### MFInt32 [ ] **normalIndex** [ ] <small>[0,∞) or -1</small>
 
@@ -192,14 +194,11 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 #### Hints
 
+- If *normalIndex* array is not provided, then [Normal](/x_ite/components/rendering/normal/) values are indexed according to the coordIndex field. Omitting duplicative *normalIndex* fields can reduce file size.
 - If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 - If no child [Normal](/x_ite/components/rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices. Interchange profile
 - This field may be ignored, applying the default value regardless.
-
-#### Warning
-
-- If *normalIndex* array is not provided, then [Normal](/x_ite/components/rendering/normal/) values are indexed according to the coordIndex field.
 
 ### MFInt32 [ ] **coordIndex** [ ] <small>[0,∞) or -1</small>
 
@@ -243,7 +242,7 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 
 #### Warning
 
-- *normal* vectors increase file size, typically doubling geometry definitions.
+- *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected. [Normal](/x_ite/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non standard</small>
 
