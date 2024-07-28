@@ -12,6 +12,10 @@ X_ITE is a robust X3D JavaScript WebGL browser that is compatible with all major
 
 🚀 For more information and a live preview, please visit our [home page](https://create3000.github.io/x_ite/).
 
+## Funding
+
+X_ITE needs your support. If you become a [Patreon](https://patreon.com/X_ITE), we can improve X_ITE even better.
+
 ## Quick Links
 
 * [Getting Started](https://create3000.github.io/x_ite/)
@@ -40,6 +44,16 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@10.1.0/dist/x_ite.min.mjs";
 ```
 
 >**Info:** It is no longer necessary to include the CSS file.
+
+## Get it from NPM
+
+To install, use the following command:
+
+```console
+$ npm install x_ite
+```
+
+Maybe you are curious now [how to use X_ITE with Electron](https://create3000.github.io/x_ite/how-to-use-x-ite-with-electron)?
 
 ## Usage
 
@@ -155,20 +169,6 @@ scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_ro
 <!-- x3d-canvas element comes here: -->
 <x3d-canvas></x3d-canvas>
 ```
-
-## NPM Usage
-
-To install, use the following command:
-
-```console
-$ npm install x_ite
-```
-
-Maybe you are curious now [how to use X_ITE with Electron](https://create3000.github.io/x_ite/how-to-use-x-ite-with-electron)?
-
-## Funding
-
-X_ITE needs your support. If you become a [Patreon](https://patreon.com/X_ITE), we can improve X_ITE even better.
 
 ## License
 
