@@ -48,7 +48,7 @@ As a result, it seems like the Examine Viewer treats all the objects in your sce
 - **Pan:** Drag while holding down the middle mouse button (or scroll wheel) to move the scene. Alternatively hold down the *Alt* or *Option*-key and drag to move the scene.
 - **Zoom:** Scroll the mouse wheel to move closer or farther away.
 
-When using the Examine Viewer you will notice, that the horizon is always horizontal. You can disable this behavior in the context menu under "Straighten Horizon", when disabled there are no such constrains and navigation feels more freely. There is also a [browser option](/x_ite/reference/browser-services/#string-getbrowseroption-string-name) "StraightenHorizon" which can be read and written.
+When using the Examine Viewer you will notice, that the horizon is always horizontal. You can disable this behavior in the context menu under "Straighten Horizon", when disabled there are no such constrains and navigation feels more freely. There is also a [browser option](/x_ite/reference/browser-services/#browser-options) "StraightenHorizon" which can be read and written.
 
 ## Walk Viewer
 
