@@ -264,9 +264,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    loadComponents: (() =>
    {
-      function loadComponents (components, seen)
+      async function loadComponents (components, seen)
       {
-         return Promise .all (components .map (component => loadComponent .call (this, component, seen)))
+         await Promise .all (components .map (component => loadComponent .call (this, component, seen)));
       }
 
       async function loadComponent ({ name, providerURL, external, dependencies }, seen)
@@ -282,7 +282,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          {
             case "NODE":
             {
-               global .require (global .require ("url") .fileURLToPath (providerURL))
+               global .require (global .require ("url") .fileURLToPath (providerURL));
                break;
             }
             case "BROWSER":
