@@ -659,7 +659,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                value = this .sparseObject (accessor .sparse, value, components);
                value = this .normalizedArray (accessor .normalized, accessor .componentType, value);
 
-               Object .defineProperty (accessor, "array", { value: value });
+               Object .defineProperty (accessor, "array", { value });
 
                return value;
             },
@@ -1533,15 +1533,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!this .draco)
          return;
 
-      function indicesCallback (array)
+      function indicesCallback (value)
       {
-         Object .defineProperty (primitive .indices, "array", { value: array });
+         Object .defineProperty (primitive .indices, "array", { value });
       }
 
-      function attributeCallback (key, array)
+      function attributeCallback (key, value)
       {
          if (attributes [key])
-            Object .defineProperty (attributes [key], "array", { value: array });
+            Object .defineProperty (attributes [key], "array", { value });
       }
 
       const
