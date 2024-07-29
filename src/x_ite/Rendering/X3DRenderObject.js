@@ -1153,9 +1153,6 @@ Object .assign (X3DRenderObject .prototype,
       for (const light of lights)
          light .setGlobalVariables (this);
 
-      for (const light of globalLights)
-         globalLightsKeys .push (light .lightNode .getLightKey ());
-
       this .renderAndGlobalLightsKey = `.${this .renderKey}.${globalLightsKeys .sort () .join ("")}.`;
       this .globalShadow             = globalShadows .at (-1);
 

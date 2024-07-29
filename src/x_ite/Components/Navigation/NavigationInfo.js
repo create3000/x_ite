@@ -287,8 +287,13 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
       if (type !== TraverseType .DISPLAY)
          return;
 
-      if (this ._headlight .getValue ())
-         renderObject .getGlobalLights () .push (this .getBrowser () .getHeadlight ());
+      if (!this ._headlight .getValue ())
+         return;
+
+      const headlight = this .getBrowser () .getHeadlight ();
+
+      renderObject .getGlobalLights () .push (headlight);
+      renderObject .getGlobalLightsKeys () .push (headlight .lightNode .getLightKey ());
    },
    traverse (type, renderObject)
    {

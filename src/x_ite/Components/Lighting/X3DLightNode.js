@@ -164,6 +164,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
             renderObject .getLights ()       .push (lightContainer);
 
             renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
+            renderObject .getGlobalLightsKeys () .push (this .getLightKey ());
          }
          else
          {
@@ -190,6 +191,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
             renderObject .getLights ()       .push (lightContainer);
 
             renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
+            renderObject .getGlobalLightsKeys () .push (this .getLightKey ());
          }
          else
          {
