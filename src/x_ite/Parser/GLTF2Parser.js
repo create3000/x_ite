@@ -637,11 +637,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   length     = Math .min (stride * count, (bufferView .byteLength - byteOffset) / TypedArray .BYTES_PER_ELEMENT),
                   array      = new TypedArray (bufferView .buffer, byteOffset, length);
 
-               let value = stride === components
-                  ? array
-                  : this .denseArray (TypedArray, components, count, stride, array);
+               let value;
 
-               value = this .sparseObject (accessor, value, components);
+               value = this .denseArray (TypedArray, components, count, stride, array);
+               value = this .sparseObject (accessor, components, value);
                value = this .normalizedArray (accessor, value);
 
                Object .defineProperty (accessor, "array", { value });
@@ -654,6 +653,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    })(),
    denseArray (TypedArray, components, count, stride, array)
    {
+      if (stride === components)
+         return array;
+
       const
          length = count * components,
          dense  = new TypedArray (length);
@@ -674,7 +676,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          [5125, Uint32Array],
       ]);
 
-      return function ({ sparse }, array, components)
+      return function ({ sparse }, components, array)
       {
          if (!(sparse instanceof Object))
             return array;
@@ -710,27 +712,27 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return array;
       };
    })(),
-   normalizedArray ({ normalized, componentType }, value)
+   normalizedArray ({ normalized, componentType }, array)
    {
       if (!normalized)
-         return value;
+         return array;
 
       switch (componentType)
       {
          case 5120: // Int8Array
-            return Float32Array .from (value, v => Math .max (v / 127, -1));
+            return Float32Array .from (array, v => Math .max (v / 127, -1));
          case 5121: // Uint8Array
-            return Float32Array .from (value, v => v / 255);
+            return Float32Array .from (array, v => v / 255);
          case 5122: // Int16Array
-            return Float32Array .from (value, v => Math .max (v / 32767, -1));
+            return Float32Array .from (array, v => Math .max (v / 32767, -1));
          case 5123: // Uint16Array
-            return Float32Array .from (value, v => v / 65535);
+            return Float32Array .from (array, v => v / 65535);
          case 5124: // Int32Array
-            return Float32Array .from (value, v => Math .max (v / 2147483647, -1));
+            return Float32Array .from (array, v => Math .max (v / 2147483647, -1));
          case 5125: // Uint32Array
-            return Float32Array .from (value, v => v / 4294967295);
+            return Float32Array .from (array, v => v / 4294967295);
          case 5126: // Float32Array
-            return value;
+            return array;
       }
    },
    samplersArray (samplers)
