@@ -639,11 +639,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                if (stride === components)
                {
-                  const value = this .sparseObject (accessor .sparse, array, components);
-
-                  Object .defineProperty (accessor, "array", { value: value });
-
-                  return value;
+                  var value = this .normalizedArray (accessor .normalized, accessor .componentType, this .sparseObject (accessor .sparse, array, components));
                }
                else
                {
@@ -657,46 +653,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                         dense [i] = array [j + c];
                   }
 
-                  const value = this .sparseObject (accessor .sparse, dense, components);
-
-                  Object .defineProperty (accessor, "array", { value: value });
-
-                  return value;
-               }
-            },
-            configurable: true,
-         });
-
-         Object .defineProperty (accessor, "normalizedArray",
-         {
-            get: () =>
-            {
-               switch (accessor .componentType)
-               {
-                  case 5120: // Int8Array
-                     var value = Float32Array .from (accessor .array, v => Math .max (v / 127, -1));
-                     break;
-                  case 5121: // Uint8Array
-                     var value = Float32Array .from (accessor .array, v => v / 255);
-                     break;
-                  case 5122: // Int16Array
-                     var value = Float32Array .from (accessor .array, v => Math .max (v / 32767, -1));
-                     break;
-                  case 5123: // Uint16Array
-                     var value = Float32Array .from (accessor .array, v => v / 65535);
-                     break;
-                  case 5124: // Int32Array
-                     var value = Float32Array .from (accessor .array, v => Math .max (v / 2147483647, -1));
-                     break;
-                  case 5125: // Uint32Array
-                     var value = Float32Array .from (accessor .array, v => v / 4294967295);
-                     break;
-                  case 5126: // Float32Array
-                     var value = accessor .array;
-                     break;
+                  var value = this .normalizedArray (accessor .normalized, accessor .componentType, this .sparseObject (accessor .sparse, dense, components));
                }
 
-               Object .defineProperty (accessor, "normalizedArray", { value: value });
+               Object .defineProperty (accessor, "array", { value: value });
 
                return value;
             },
@@ -748,6 +708,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return array;
       };
    })(),
+   normalizedArray (normalized, componentType, value)
+   {
+      if (!normalized)
+         return value;
+
+      switch (componentType)
+      {
+         case 5120: // Int8Array
+            return Float32Array .from (value, v => Math .max (v / 127, -1));
+         case 5121: // Uint8Array
+            return Float32Array .from (value, v => v / 255);
+         case 5122: // Int16Array
+            return Float32Array .from (value, v => Math .max (v / 32767, -1));
+         case 5123: // Uint16Array
+            return Float32Array .from (value, v => v / 65535);
+         case 5124: // Int32Array
+            return Float32Array .from (value, v => Math .max (v / 2147483647, -1));
+         case 5125: // Uint32Array
+            return Float32Array .from (value, v => v / 4294967295);
+         case 5126: // Float32Array
+            return value;
+      }
+   },
    samplersArray (samplers)
    {
       if (!(samplers instanceof Array))
@@ -2436,7 +2419,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene              = this .getScene (),
          instancedShapeNode = scene .createNode ("InstancedShape", false),
          translationArray   = translation ?.array,
-         rotationArray      = rotation ?.normalizedArray,
+         rotationArray      = rotation ?.array,
          scaleArray         = scale ?.array;
 
       if (translationArray)
@@ -2880,8 +2863,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             colorNode      = scene .createNode (opaque ? "Color" : typeName, false);
 
          colorNode ._color = opaque && typeName !== "Color"
-            ? color .normalizedArray .filter ((_, i) => (i + 1) % 4)
-            : color .normalizedArray;
+            ? color .array .filter ((_, i) => (i + 1) % 4)
+            : color .array;
 
          colorNode .setup ();
 
@@ -2944,7 +2927,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
 
       textureCoordinateNode ._mapping = mapping;
-      textureCoordinateNode ._point   = texCoord .normalizedArray;
+      textureCoordinateNode ._point   = texCoord .array;
 
       textureCoordinateNode .setup ();
 
@@ -2962,7 +2945,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene      = this .getScene (),
          normalNode = scene .createNode ("Normal", false);
 
-      normalNode ._vector = normal .normalizedArray;
+      normalNode ._vector = normal .array;
 
       if ((targets instanceof Array) && (weights instanceof Array))
       {
@@ -3061,7 +3044,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const
          start        = skin .coordinateNode ._point .length,
          jointsArray  = joints .array,
-         weightsArray = weights .normalizedArray,
+         weightsArray = weights .array,
          numVertices  = jointsArray .length / 4;
 
       for (let v = 0; v < numVertices; ++ v)
@@ -3190,7 +3173,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
          case "rotation":
          {
-            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues .normalizedArray, cycleInterval);
+            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues .array, cycleInterval);
 
             scene .addNamedNode (scene .getUniqueName ("RotationInterpolator"), interpolatorNode);
 
@@ -3228,7 +3211,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                if (!geometryNode)
                   continue;
 
-               const coordinateInterpolatorNode = this .createArrayInterpolator ("CoordinateInterpolator", interpolation, times, keyValues .normalizedArray, cycleInterval, targets, attributes, "POSITION", false);
+               const coordinateInterpolatorNode = this .createArrayInterpolator ("CoordinateInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "POSITION");
 
                if (coordinateInterpolatorNode)
                {
@@ -3238,7 +3221,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "set_point");
                }
 
-               const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .normalizedArray, cycleInterval, targets, attributes, "NORMAL", true);
+               const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "NORMAL");
 
                if (normalInterpolatorNode)
                {
@@ -3440,7 +3423,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   createArrayInterpolator (typeName, interpolation, times, weights, cycleInterval, targets, accessors, key, normalized)
+   createArrayInterpolator (typeName, interpolation, times, weights, cycleInterval, targets, accessors, key)
    {
       const
          scene    = this .getScene (),
@@ -3466,14 +3449,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             const w = Array .from (targets .keys (), i => weights [i]);
 
-            for (const value of this .applyMorphTargets (accessor .field, targets, key, w, normalized))
+            for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
                interpolatorNode ._keyValue .push (value);
 
             for (let t = 1, length = times .length; t < length; ++ t)
             {
                const
                   w      = Array .from (targets .keys (), i => weights [t * targets .length + i]),
-                  values = this .applyMorphTargets (accessor .field, targets, key, w, normalized);
+                  values = this .applyMorphTargets (accessor .field, targets, key, w);
 
                for (const value of values)
                   interpolatorNode ._keyValue .push (value);
@@ -3503,7 +3486,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             {
                const w = Array .from (targets .keys (), i => weights [t * targets .length + i]);
 
-               for (const value of this .applyMorphTargets (accessor .field, targets, key, w, normalized))
+               for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
                   interpolatorNode ._keyValue .push (value);
             }
 
@@ -3531,7 +3514,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                const w = Array .from (targets .keys (), i => this .cubicSplineScalarArray (t, times, weights, targets .length, i));
 
-               for (const value of this .applyMorphTargets (accessor .field, targets, key, w, normalized))
+               for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
                   interpolatorNode ._keyValue .push (value);
             }
 
@@ -3547,7 +3530,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       const value = new Vector3 ();
 
-      return function (array, targets, key, weights, normalized)
+      return function (array, targets, key, weights)
       {
          const vectors = Array .from (array, v => v .getValue () .copy ());
 
@@ -3564,7 +3547,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                continue;
 
             const
-               array  = accessor [normalized ? "normalizedArray" : "array"],
+               array  = accessor .array,
                length = array .length;
 
             for (let a = 0, p = 0; a < length; a += 3, ++ p)
