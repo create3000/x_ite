@@ -496,6 +496,17 @@ const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/XmpMetadataRoundedCube/glTF-Binary/XmpMetadataRoundedCube.glb",
 ];
 
+const quantized = [
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AnimatedMorphCube/glTF-Quantized/AnimatedMorphCube.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF-Quantized/Avocado.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Quantized/Duck.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Lantern/glTF-Quantized/Lantern.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnimatedMorphCube/glTF-Quantized/AnimatedMorphCube.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/Avocado/glTF-Quantized/Avocado.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/Duck/glTF-Quantized/Duck.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/Lantern/glTF-Quantized/Lantern.gltf",
+];
+
 const draco = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/2CylinderEngine/glTF-Draco/2CylinderEngine.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF-Draco/Avocado.gltf",
@@ -640,13 +651,14 @@ class SampleViewer
          background: false,
       });
 
-      this .createList ("glTF Random Models",          models);
-      this .createList ("glTF Sample Models",          glTF);
-      this .createList ("glb Sample Models",           glb);
-      this .createList ("glTF Draco Sample Models",    draco);
-      this .createList ("glTF Embedded Sample Models", embedded);
-      this .createList ("glTF IBL Sample Models",      ibl);
-      this .createList ("glTF KTX Sample Models",      ktx);
+      this .createList ("glTF Random Models",           models);
+      this .createList ("glTF Sample Models",           glTF);
+      this .createList ("glb Sample Models",            glb);
+      this .createList ("glTF Quantized Sample Models", quantized);
+      this .createList ("glTF Draco Sample Models",     draco);
+      this .createList ("glTF Embedded Sample Models",  embedded);
+      this .createList ("glTF IBL Sample Models",       ibl);
+      this .createList ("glTF KTX Sample Models",       ktx);
 
       $(".viewer-column2") .on ("scroll", () =>
       {
