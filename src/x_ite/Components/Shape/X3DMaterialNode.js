@@ -256,9 +256,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          if (numEnvironmentLights)
          {
+            // Although we count this kind of light here, only one is supported.
             options .push ("X3D_USE_IBL")
             options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxLights ())}`);
-            // Although we count this kind of light here, only one is supported.
          }
 
          if (numTextureProjectors)
