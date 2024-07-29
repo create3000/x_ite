@@ -637,24 +637,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   length     = Math .min (stride * count, (bufferView .byteLength - byteOffset) / TypedArray .BYTES_PER_ELEMENT),
                   array      = new TypedArray (bufferView .buffer, byteOffset, length);
 
-               if (stride === components)
-               {
-                  var value = array;
-               }
-               else
-               {
-                  const
-                     length = count * components,
-                     dense  = new TypedArray (length);
-
-                  for (let i = 0, j = 0; i < length; j += stride)
-                  {
-                     for (let c = 0; c < components; ++ c, ++ i)
-                        dense [i] = array [j + c];
-                  }
-
-                  var value = dense;
-               }
+               let value = stride === components
+                  ? array
+                  : this .denseArray (components, count, stride, array);
 
                value = this .sparseObject (accessor, value, components);
                value = this .normalizedArray (accessor, value);
@@ -667,6 +652,20 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          });
       };
    })(),
+   denseArray (components, count, stride, array)
+   {
+      const
+         length = count * components,
+         dense  = new TypedArray (length);
+
+      for (let i = 0, j = 0; i < length; j += stride)
+      {
+         for (let c = 0; c < components; ++ c, ++ i)
+            dense [i] = array [j + c];
+      }
+
+      return dense;
+   },
    sparseObject: (() =>
    {
       const TypedArrays = new Map ([
