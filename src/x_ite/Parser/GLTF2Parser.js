@@ -639,7 +639,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                let value = stride === components
                   ? array
-                  : this .denseArray (components, count, stride, array);
+                  : this .denseArray (TypedArray, components, count, stride, array);
 
                value = this .sparseObject (accessor, value, components);
                value = this .normalizedArray (accessor, value);
@@ -652,7 +652,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          });
       };
    })(),
-   denseArray (components, count, stride, array)
+   denseArray (TypedArray, components, count, stride, array)
    {
       const
          length = count * components,
