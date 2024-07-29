@@ -639,7 +639,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                if (stride === components)
                {
-                  var value = this .normalizedArray (accessor .normalized, accessor .componentType, this .sparseObject (accessor .sparse, array, components));
+                  var value = array;
                }
                else
                {
@@ -653,8 +653,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                         dense [i] = array [j + c];
                   }
 
-                  var value = this .normalizedArray (accessor .normalized, accessor .componentType, this .sparseObject (accessor .sparse, dense, components));
+                  var value = dense;
                }
+
+               value = this .sparseObject (accessor .sparse, value, components);
+               value = this .normalizedArray (accessor .normalized, accessor .componentType, value);
 
                Object .defineProperty (accessor, "array", { value: value });
 
