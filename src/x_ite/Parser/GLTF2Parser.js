@@ -656,8 +656,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   var value = dense;
                }
 
-               value = this .sparseObject (accessor .sparse, value, components);
-               value = this .normalizedArray (accessor .normalized, accessor .componentType, value);
+               value = this .sparseObject (accessor, value, components);
+               value = this .normalizedArray (accessor, value);
 
                Object .defineProperty (accessor, "array", { value });
 
@@ -675,7 +675,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          [5125, Uint32Array],
       ]);
 
-      return function (sparse, array, components)
+      return function ({ sparse }, array, components)
       {
          if (!(sparse instanceof Object))
             return array;
@@ -711,7 +711,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return array;
       };
    })(),
-   normalizedArray (normalized, componentType, value)
+   normalizedArray ({ normalized, componentType }, value)
    {
       if (!normalized)
          return value;
