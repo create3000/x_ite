@@ -209,7 +209,7 @@ getMaterialColor ()
 
       #if defined (X3D_SHEEN_MATERIAL_EXT)
          f_sheen            = getIBLRadianceCharlie (n, v, materialInfo .sheenRoughnessFactor, materialInfo .sheenColorFactor);
-         albedoSheenScaling = 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInf .sheenRoughnessFactor);
+         albedoSheenScaling = 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor);
       #endif
 
       color = mix (f_dielectric_brdf_ibl, f_metal_brdf_ibl, materialInfo .metallic);
@@ -314,7 +314,7 @@ getMaterialColor ()
 
          // Calculation of analytical light
          // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
-         vec3 intensity = getLightIntensity (light, l, distanceToLight);
+         vec3 intensity = getLightIntensity (light, l, length (light .matrix * pointToLight));
 
          #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
             l_specular_metal      = intensity * NdotL * BRDF_specularGGXAnisotropy (materialInfo .alphaRoughness, materialInfo .anisotropyStrength, n, v, l, h, materialInfo .anisotropicT, materialInfo .anisotropicB);
@@ -336,9 +336,9 @@ getMaterialColor ()
             l_clearcoat_brdf = intensity * getPunctualRadianceClearCoat (materialInfo .clearcoatNormal, v, l, h, VdotH, materialInfo .clearcoatF0, materialInfo .clearcoatF90, materialInfo .clearcoatRoughness);
          #endif
 
-         #ifdef MATERIAL_SHEEN
+         #if defined (X3D_SHEEN_MATERIAL_EXT)
             l_sheen              = intensity * getPunctualRadianceSheen (materialInfo .sheenColorFactor, materialInfo .sheenRoughnessFactor, NdotL, NdotV, NdotH);
-            l_albedoSheenScaling = min(1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor), 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotL, materialInfo .sheenRoughnessFactor));
+            l_albedoSheenScaling = min (1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor), 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotL, materialInfo .sheenRoughnessFactor));
          #endif
 
          vec3 l_color = mix (l_dielectric_brdf, l_metal_brdf, materialInfo .metallic);
