@@ -837,9 +837,9 @@ class SampleViewer
       textureProperties .minificationFilter  = "NICEST";
       textureProperties .magnificationFilter = "NICEST";
 
-      diffuseTexture  .url               = new X3D .MFString (new URL ("/x_ite/assets/img/glTF/helipad-diffuse.jpg",  location));
+      diffuseTexture  .url               = new X3D .MFString (new URL ("/x_ite/assets/laboratory/gltf-sample-viewer/images/helipad-diffuse.jpg",  location));
       diffuseTexture  .textureProperties = textureProperties;
-      specularTexture .url               = new X3D .MFString (new URL ("/x_ite/assets/img/glTF/helipad-specular.jpg", location));
+      specularTexture .url               = new X3D .MFString (new URL ("/x_ite/assets/laboratory/gltf-sample-viewer/images/helipad-specular.jpg", location));
       specularTexture .textureProperties = textureProperties;
 
       environmentLight .intensity       = 1;
