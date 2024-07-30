@@ -6,12 +6,14 @@ struct MaterialInfo
 {
    float ior;
    float perceptualRoughness;      // roughness value, as authored by the model creator (input to shader)
-   vec3 f0;                        // full reflectance color (n incidence angle)
+   vec3 f0_dielectric;             // full reflectance color (n incidence angle)
 
    float alphaRoughness;           // roughness mapped to a more linear change in the roughness (proposed by [2])
-   vec3 c_diff;
+
+   float fresnel_w;
 
    vec3 f90;                       // reflectance color at grazing angle
+   vec3 f90_dielectric;
    float metallic;
 
    vec3 baseColor;
@@ -38,6 +40,9 @@ struct MaterialInfo
    float iridescenceFactor;
    float iridescenceIor;
    float iridescenceThickness;
+
+   float diffuseTransmissionFactor;
+   vec3 diffuseTransmissionColorFactor;
 
    // KHR_materials_anisotropy
    vec3 anisotropicT;
@@ -98,18 +103,17 @@ ${MaterialTextures .texture ("x3d_SpecularGlossinessTexture", "rgba", "linear")}
 MaterialInfo
 getSpecularGlossinessInfo (in MaterialInfo info)
 {
-   info .f0                  = x3d_Material .specularColor;
+   info .f0_dielectric       = x3d_Material .specularColor;
    info .perceptualRoughness = x3d_Material .glossiness;
 
    #if defined (X3D_SPECULAR_GLOSSINESS_TEXTURE)
       vec4 sgSample = getSpecularGlossinessTexture ();
 
       info .perceptualRoughness *= sgSample .a ;  // glossiness to roughness
-      info .f0                  *= sgSample .rgb; // specular
+      info .f0_dielectric       *= sgSample .rgb; // specular
    #endif
 
    info .perceptualRoughness = 1.0 - info .perceptualRoughness; // 1 - glossiness
-   info .c_diff              = info .baseColor .rgb * (1.0 - max (max (info .f0 .r, info .f0 .g), info .f0 .b));
 
    return info;
 }
@@ -138,10 +142,6 @@ getMetallicRoughnessInfo (in MaterialInfo info)
       info .metallic            *= mrSample .b;
       info .perceptualRoughness *= mrSample .g;
    #endif
-
-   // Achromatic f0 based on IOR.
-   info .c_diff = mix (info .baseColor .rgb, vec3 (0.0), info .metallic);
-   info .f0     = mix (info .f0, info .baseColor .rgb, info .metallic);
 
    return info;
 }
@@ -193,8 +193,8 @@ uniform float x3d_IorEXT;
 MaterialInfo
 getIorInfo (in MaterialInfo info)
 {
-    info .f0   = vec3 (pow ((x3d_IorEXT - 1.0) / (x3d_IorEXT + 1.0), 2.0));
-    info .ior = x3d_IorEXT;
+    info .f0_dielectric = vec3 (pow ((x3d_IorEXT - 1.0) / (x3d_IorEXT + 1.0), 2.0));
+    info .ior           = x3d_IorEXT;
 
     return info;
 }
@@ -310,11 +310,9 @@ getSpecularInfo (in MaterialInfo info)
       specularTexture .rgb = getSpecularColorTextureEXT ();
    #endif
 
-   vec3 dielectricSpecularF0 = min (info .f0 * x3d_SpecularColorEXT * specularTexture .rgb, vec3 (1.0));
-
-   info .f0             = mix (dielectricSpecularF0, info .baseColor .rgb, info .metallic);
-   info .specularWeight = x3d_SpecularEXT * specularTexture .a;
-   info .c_diff         = mix (info .baseColor .rgb, vec3 (0.0), info .metallic);
+   info .f0_dielectric  = min (info .f0_dielectric * x3d_SpecularColorEXT * specularTexture .rgb, vec3 (1.0));
+   info .specularWeight = x3d_SpecularColorEXT * specularTexture .a;
+   info .f90_dielectric = vec3 (info .specularWeight);
 
    return info;
 }

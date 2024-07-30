@@ -48,7 +48,7 @@ getPunctualRadianceClearCoat (const in vec3 clearcoatNormal, const in vec3 v, co
     float NdotV = clamp (dot (clearcoatNormal, v), 0.0, 1.0);
     float NdotH = clamp (dot (clearcoatNormal, h), 0.0, 1.0);
 
-    return NdotL * BRDF_specularGGX (f0, f90, clearcoatRoughness * clearcoatRoughness, 1.0, VdotH, NdotL, NdotV, NdotH);
+    return NdotL * BRDF_specularGGX (clearcoatRoughness * clearcoatRoughness, NdotL, NdotV, NdotH);
 }
 #endif
 

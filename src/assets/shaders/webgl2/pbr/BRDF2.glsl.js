@@ -2,9 +2,18 @@ export default /* glsl */ `
 
 const float M_PI = 3.1415926535897932384626433832795;
 
-float max3 (const in vec3 value)
+float
+max3 (const in vec3 value)
 {
    return max (max (value .x, value .y), value .z);
+}
+
+vec3
+rgb_mix (const in vec3 base, const in vec3 layer, const in vec3 rgb_alpha)
+{
+    float rgb_alpha_max = max (rgb_alpha .r, max (rgb_alpha .g, rgb_alpha .b));
+
+    return (1.0 - rgb_alpha_max) * base + rgb_alpha * layer;
 }
 
 // The following equation models the Fresnel reflectance term of the spec equation (aka F())
@@ -122,21 +131,20 @@ D_GGX (const in float NdotH, const in float alphaRoughness)
 
 //https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
 vec3
-BRDF_lambertian (const in vec3 f0, const in vec3 f90, const in vec3 diffuseColor, const in float specularWeight, const in float VdotH)
+BRDF_lambertian (const in vec3 diffuseColor)
 {
-   // see https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/
-   return (1.0 - specularWeight * F_Schlick (f0, f90, VdotH)) * (diffuseColor / M_PI);
+    // see https://seblagarde.wordpress.com/2012/01/08/pi-or-not-to-pi-in-game-lighting-equation/
+    return diffuseColor / M_PI;
 }
 
 //  https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
 vec3
-BRDF_specularGGX (const in vec3 f0, const in vec3 f90, const in float alphaRoughness, const in float specularWeight, const in float VdotH, const in float NdotL, const in float NdotV, const in float NdotH)
+BRDF_specularGGX (const in float alphaRoughness, const in float NdotL, const in float NdotV, const in float NdotH)
 {
-   vec3  F   = F_Schlick (f0, f90, VdotH);
-   float Vis = V_GGX (NdotL, NdotV, alphaRoughness);
-   float D   = D_GGX (NdotH, alphaRoughness);
+    float Vis = V_GGX (NdotL, NdotV, alphaRoughness);
+    float D   = D_GGX (NdotH, alphaRoughness);
 
-   return specularWeight * F * Vis * D;
+    return vec3 (Vis * D);
 }
 
 #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
@@ -194,23 +202,20 @@ V_GGX_anisotropic (const in float NdotL, const in float NdotV, const in float Bd
 }
 
 vec3
-BRDF_specularGGXAnisotropy (const in vec3 f0, const in vec3 f90, const in float alphaRoughness, const in float anisotropy, const in vec3 n, const in vec3 v, const in vec3 l, const in vec3 h, const in vec3 t, const in vec3 b)
+BRDF_specularGGXAnisotropy (const in float alphaRoughness, const in float anisotropy, const in vec3 n, const in vec3 v, const in vec3 l, const in vec3 h, const in vec3 t, const in vec3 b)
 {
-   // Roughness along the anisotropy bitangent is the material roughness, while the tangent roughness increases with anisotropy.
-   float at = mix (alphaRoughness, 1.0, anisotropy * anisotropy);
-   float ab = clamp (alphaRoughness, 0.001, 1.0);
+    // Roughness along the anisotropy bitangent is the material roughness, while the tangent roughness increases with anisotropy.
+    float at = mix (alphaRoughness, 1.0, anisotropy * anisotropy);
+    float ab = clamp (alphaRoughness, 0.001, 1.0);
 
-   float NdotL = clamp (dot (n, l), 0.0, 1.0);
-   float NdotH = clamp (dot (n, h), 0.001, 1.0);
-   float NdotV = dot (n, v);
-   float VdotH = clamp (dot (v, h), 0.0, 1.0);
+    float NdotL = clamp (dot(n, l), 0.0, 1.0);
+    float NdotH = clamp (dot(n, h), 0.001, 1.0);
+    float NdotV = dot (n, v);
 
-   float V = V_GGX_anisotropic (NdotL, NdotV, dot (b, v), dot (t, v), dot (t, l), dot (b, l), at, ab);
-   float D = D_GGX_anisotropic (NdotH, dot (t, h), dot (b, h), anisotropy, at, ab);
+    float V = V_GGX_anisotropic (NdotL, NdotV, dot (b, v), dot (t, v), dot (t, l), dot (b, l), at, ab);
+    float D = D_GGX_anisotropic (NdotH, dot (t, h), dot (b, h), anisotropy, at, ab);
 
-   vec3 F = F_Schlick (f0, f90, VdotH);
-
-   return F * V * D;
+    return vec3 (V * D);
 }
 #endif
 
