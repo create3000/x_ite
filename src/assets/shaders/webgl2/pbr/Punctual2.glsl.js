@@ -11,25 +11,57 @@ applyIorToRoughness (const in float roughness, const in float ior)
 
 #if defined (X3D_LIGHTING)
 
-#pragma X3D include "../common/Lighting.glsl"
+// https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_lights_punctual/README.md#range-property
+float
+getRangeAttenuation (const in float range, const in float _distance)
+{
+   if (range <= 0.0)
+   {
+      // negative range means unlimited
+      return 1.0 / pow (_distance, 2.0);
+   }
+
+   return max (min (1.0 - pow (_distance / range, 4.0), 1.0), 0.0) / pow (_distance, 2.0);
+}
+
+// https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_lights_punctual/README.md#inner-and-outer-cone-angles
+float
+getSpotAttenuation (const in vec3 pointToLight, const in vec3 spotDirection, const in float outerConeCos, const in float innerConeCos)
+{
+    float actualCos = dot (normalize (spotDirection), normalize (-pointToLight));
+
+    if (actualCos > outerConeCos)
+    {
+        if (actualCos < innerConeCos)
+        {
+            float angularAttenuation = (actualCos - outerConeCos) / (innerConeCos - outerConeCos);
+
+            return angularAttenuation * angularAttenuation;
+        }
+
+        return 1.0;
+    }
+
+    return 0.0;
+}
 
 vec3
 getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 pointToLight, const in float distanceToLight)
 {
-   float attenuationFactor = 1.0;
-   float spotFactor        = 1.0;
+   float rangeAttenuation = 1.0;
+   float spotAttenuation  = 1.0;
 
    if (light .type != x3d_DirectionalLight)
    {
-      attenuationFactor = getAttenuation (light .attenuation, distanceToLight);
+      rangeAttenuation = getRangeAttenuation (light .radius, distanceToLight);
    }
 
    if (light .type == x3d_SpotLight)
    {
-      spotFactor = getSpotFactor (pointToLight, light .direction, light .cutOffAngle, light .beamWidth);
+      spotAttenuation = getSpotAttenuation (pointToLight, light .direction, light .cutOffAngle, light .beamWidth);
    }
 
-   return attenuationFactor * spotFactor * light .intensity * light .color;
+   return rangeAttenuation * spotAttenuation * light .intensity * light .color;
 }
 
 #if defined (X3D_SHEEN_MATERIAL_EXT)
