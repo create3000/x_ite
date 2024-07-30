@@ -70,7 +70,7 @@ vec3
 getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness, const in vec3 F0, const in float specularWeight)
 {
    float NdotV      = clamp (dot (n, v), 0.0, 1.0);
-   float lod        = roughness * float (x3d_EnvironmentLightSource .specularTextureLevels);
+   float lod        = pow (roughness, 0.5) * float (x3d_EnvironmentLightSource .specularTextureLevels); // Holger: added pow.
    vec3  reflection = normalize (reflect (-v, n));
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
@@ -128,7 +128,7 @@ vec3
 getIBLRadianceGGXIridescence (const in vec3 n, const in vec3 v, const in float roughness, const in vec3 F0, const in vec3 iridescenceFresnel, const in float iridescenceFactor, const in float specularWeight)
 {
    float NdotV      = clamp (dot (n, v), 0.0, 1.0);
-   float lod        = roughness * float (x3d_EnvironmentLightSource .specularTextureLevels);
+   float lod        = pow (roughness, 0.5) * float (x3d_EnvironmentLightSource .specularTextureLevels); // Holger: added pow.
    vec3  reflection = normalize (reflect (-v, n));
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
@@ -293,7 +293,7 @@ getIBLRadianceAnisotropy (const in vec3 n, const in vec3 v, const in float rough
    float bendFactorPow4     = bendFactor * bendFactor * bendFactor * bendFactor;
    vec3  bentNormal         = normalize (mix (anisotropicNormal, n, bendFactorPow4));
 
-   float lod        = roughness * float (x3d_EnvironmentLightSource .specularTextureLevels);
+   float lod        = pow (roughness, 0.5) * float (x3d_EnvironmentLightSource .specularTextureLevels); // Holger: added pow.
    vec3  reflection = normalize (reflect (-v, bentNormal));
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
