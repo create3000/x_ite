@@ -779,6 +779,7 @@ class SampleViewer
       $("#scenes, #viewpoints, #material-variants, #animations") .hide ();
 
       await this .browser .loadURL (new X3D .MFString (filename));
+      await this .browser .nextFrame ();
 
       if (!this .browser .getActiveViewpoint () ._description .getValue ())
          this .browser .viewAll (0);
