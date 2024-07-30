@@ -14,7 +14,7 @@ permalink: /
 
 <x3d-canvas
   class="teaser"
-  src="/x_ite/assets/X3D/teaser/teaser.x3d"
+  src="/x_ite/assets/teaser/teaser.x3d"
   update="auto"
   splashScreen="false"
   contextMenu="false"
@@ -46,7 +46,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 
 ## X3D Examples
 
-<script type="module" src="assets/js/example.js"></script>
+<script type="module" src="assets/js/examples.js"></script>
 
 <table class="examples">
   <tr>
