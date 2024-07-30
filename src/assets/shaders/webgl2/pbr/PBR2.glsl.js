@@ -217,6 +217,7 @@ getMaterialColor ()
       color = mix (color, clearcoat_brdf, clearcoatFactor * clearcoatFresnel);
    #endif
 
+   // Holger: moved occlusion out of IBL.
    #if defined (X3D_OCCLUSION_TEXTURE)
       float ao = getOcclusionFactor ();
 
