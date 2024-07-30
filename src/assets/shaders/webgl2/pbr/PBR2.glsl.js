@@ -267,7 +267,7 @@ getMaterialColor ()
          vec3 lightIntensity = getLightIntensity (light, l, distanceToLight);
 
          #if defined (X3D_SHADOWS)
-            lightIntensity = mix (intensity, light .shadowColor, getShadowIntensity (i, light));
+            lightIntensity = mix (lightIntensity, light .shadowColor, getShadowIntensity (i, light));
          #endif
 
          vec3  l_diffuse             = lightIntensity * NdotL * BRDF_lambertian (baseColor .rgb);
