@@ -259,91 +259,88 @@ getMaterialColor ()
          float NdotH = clamp (dot (n, h), 0.0, 1.0);
          float VdotH = clamp (dot (v, h), 0.0, 1.0);
 
-         if (NdotL > 0.0 || NdotV > 0.0)
-         {
-            vec3 dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (VdotH));
-            vec3 metal_fresnel      = F_Schlick (baseColor.rgb, vec3 (1.0), abs (VdotH));
+         vec3 dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (VdotH));
+         vec3 metal_fresnel      = F_Schlick (baseColor.rgb, vec3 (1.0), abs (VdotH));
 
-            // Calculation of analytical light
-            // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
-            vec3 lightIntensity = getLightIntensity (light, l, distanceToLight);
+         // Calculation of analytical light
+         // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
+         vec3 lightIntensity = getLightIntensity (light, l, distanceToLight);
 
-            #if defined (X3D_SHADOWS)
-               lightIntensity = mix (intensity, light .shadowColor, getShadowIntensity (i, light));
+         #if defined (X3D_SHADOWS)
+            lightIntensity = mix (intensity, light .shadowColor, getShadowIntensity (i, light));
+         #endif
+
+         vec3  l_diffuse             = lightIntensity * NdotL * BRDF_lambertian (baseColor .rgb);
+         vec3  l_specular_dielectric = vec3 (0.0);
+         vec3  l_specular_metal      = vec3 (0.0);
+         vec3  l_dielectric_brdf     = vec3 (0.0);
+         vec3  l_metal_brdf          = vec3 (0.0);
+         vec3  l_clearcoat_brdf      = vec3 (0.0);
+         vec3  l_sheen               = vec3 (0.0);
+         float l_albedoSheenScaling  = 1.0;
+
+         #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+            vec3 diffuse_btdf = lightIntensity * clamp (dot (-n, l), 0.0, 1.0) * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
+
+            #if defined (X3D_VOLUME_MATERIAL_EXT)
+               diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
             #endif
 
-            vec3  l_diffuse             = lightIntensity * NdotL * BRDF_lambertian (baseColor .rgb);
-            vec3  l_specular_dielectric = vec3 (0.0);
-            vec3  l_specular_metal      = vec3 (0.0);
-            vec3  l_dielectric_brdf     = vec3 (0.0);
-            vec3  l_metal_brdf          = vec3 (0.0);
-            vec3  l_clearcoat_brdf      = vec3 (0.0);
-            vec3  l_sheen               = vec3 (0.0);
-            float l_albedoSheenScaling  = 1.0;
+            l_diffuse = mix (l_diffuse, diffuse_btdf, materialInfo .diffuseTransmissionFactor);
+         #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
-            #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-               vec3 diffuse_btdf = lightIntensity * clamp (dot (-n, l), 0.0, 1.0) * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
+         // BTDF (Bidirectional Transmittance Distribution Function)
+         #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+            // If the light ray travels through the geometry, use the point it exits the geometry again.
+            // That will change the angle to the light source, if the material refracts the light ray.
+            vec3 transmissionRay = getVolumeTransmissionRay (n, v, materialInfo .thickness, materialInfo .ior, x3d_ModelViewMatrix); // x3d_ModelMatrix
 
-               #if defined (X3D_VOLUME_MATERIAL_EXT)
-                  diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
-               #endif
+            pointToLight -= transmissionRay;
+            l             = normalize (pointToLight);
 
-               l_diffuse = mix (l_diffuse, diffuse_btdf, materialInfo .diffuseTransmissionFactor);
-            #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
+            vec3 transmittedLight = lightIntensity * getPunctualRadianceTransmission (n, v, l, materialInfo .alphaRoughness, materialInfo .f0_dielectric, materialInfo .f90, baseColor .rgb, materialInfo .ior);
 
-            // BTDF (Bidirectional Transmittance Distribution Function)
-            #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
-               // If the light ray travels through the geometry, use the point it exits the geometry again.
-               // That will change the angle to the light source, if the material refracts the light ray.
-               vec3 transmissionRay = getVolumeTransmissionRay (n, v, materialInfo .thickness, materialInfo .ior, x3d_ModelViewMatrix); // x3d_ModelMatrix
-
-               pointToLight -= transmissionRay;
-               l             = normalize (pointToLight);
-
-               vec3 transmittedLight = lightIntensity * getPunctualRadianceTransmission (n, v, l, materialInfo .alphaRoughness, materialInfo .f0_dielectric, materialInfo .f90, baseColor .rgb, materialInfo .ior);
-
-               #if defined (X3D_VOLUME_MATERIAL_EXT)
-                  transmittedLight = applyVolumeAttenuation (transmittedLight, length (transmissionRay), materialInfo .attenuationColor, materialInfo .attenuationDistance);
-               #endif
-
-               l_diffuse = mix (l_diffuse, transmittedLight, materialInfo .transmissionFactor);
+            #if defined (X3D_VOLUME_MATERIAL_EXT)
+               transmittedLight = applyVolumeAttenuation (transmittedLight, length (transmissionRay), materialInfo .attenuationColor, materialInfo .attenuationDistance);
             #endif
 
-            // Calculation of analytical light
-            // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
-            vec3 intensity = getLightIntensity (light, l, distanceToLight);
+            l_diffuse = mix (l_diffuse, transmittedLight, materialInfo .transmissionFactor);
+         #endif
 
-            #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
-               l_specular_metal      = intensity * NdotL * BRDF_specularGGXAnisotropy (materialInfo .alphaRoughness, materialInfo .anisotropyStrength, n, v, l, h, materialInfo .anisotropicT, materialInfo .anisotropicB);
-               l_specular_dielectric = l_specular_metal;
-            #else
-               l_specular_metal      = intensity * NdotL * BRDF_specularGGX (materialInfo .alphaRoughness, NdotL, NdotV, NdotH);
-               l_specular_dielectric = l_specular_metal;
-            #endif
+         // Calculation of analytical light
+         // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
+         vec3 intensity = getLightIntensity (light, l, distanceToLight);
 
-            l_metal_brdf      = metal_fresnel * l_specular_metal;
-            l_dielectric_brdf = mix (l_diffuse, l_specular_dielectric, dielectric_fresnel); // Do we need to handle vec3 fresnel here?
+         #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
+            l_specular_metal      = intensity * NdotL * BRDF_specularGGXAnisotropy (materialInfo .alphaRoughness, materialInfo .anisotropyStrength, n, v, l, h, materialInfo .anisotropicT, materialInfo .anisotropicB);
+            l_specular_dielectric = l_specular_metal;
+         #else
+            l_specular_metal      = intensity * NdotL * BRDF_specularGGX (materialInfo .alphaRoughness, NdotL, NdotV, NdotH);
+            l_specular_dielectric = l_specular_metal;
+         #endif
 
-            #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
-               l_metal_brdf      = mix (l_metal_brdf, l_specular_metal * iridescenceFresnel_metallic, materialInfo .iridescenceFactor);
-               l_dielectric_brdf = mix (l_dielectric_brdf, rgb_mix (l_diffuse, l_specular_dielectric, iridescenceFresnel_dielectric), materialInfo.iridescenceFactor);
-            #endif
+         l_metal_brdf      = metal_fresnel * l_specular_metal;
+         l_dielectric_brdf = mix (l_diffuse, l_specular_dielectric, dielectric_fresnel); // Do we need to handle vec3 fresnel here?
 
-            #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
-               l_clearcoat_brdf = intensity * getPunctualRadianceClearCoat (materialInfo .clearcoatNormal, v, l, h, VdotH, materialInfo .clearcoatF0, materialInfo .clearcoatF90, materialInfo .clearcoatRoughness);
-            #endif
+         #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
+            l_metal_brdf      = mix (l_metal_brdf, l_specular_metal * iridescenceFresnel_metallic, materialInfo .iridescenceFactor);
+            l_dielectric_brdf = mix (l_dielectric_brdf, rgb_mix (l_diffuse, l_specular_dielectric, iridescenceFresnel_dielectric), materialInfo.iridescenceFactor);
+         #endif
 
-            #ifdef MATERIAL_SHEEN
-               l_sheen              = intensity * getPunctualRadianceSheen (materialInfo .sheenColorFactor, materialInfo .sheenRoughnessFactor, NdotL, NdotV, NdotH);
-               l_albedoSheenScaling = min(1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor), 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotL, materialInfo .sheenRoughnessFactor));
-            #endif
+         #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
+            l_clearcoat_brdf = intensity * getPunctualRadianceClearCoat (materialInfo .clearcoatNormal, v, l, h, VdotH, materialInfo .clearcoatF0, materialInfo .clearcoatF90, materialInfo .clearcoatRoughness);
+         #endif
 
-            vec3 l_color = mix (l_dielectric_brdf, l_metal_brdf, materialInfo .metallic);
+         #ifdef MATERIAL_SHEEN
+            l_sheen              = intensity * getPunctualRadianceSheen (materialInfo .sheenColorFactor, materialInfo .sheenRoughnessFactor, NdotL, NdotV, NdotH);
+            l_albedoSheenScaling = min(1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor), 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotL, materialInfo .sheenRoughnessFactor));
+         #endif
 
-            l_color = l_sheen + l_color * l_albedoSheenScaling;
-            l_color = mix (l_color, l_clearcoat_brdf, clearcoatFactor * clearcoatFresnel);
-            color  += l_color;
-         }
+         vec3 l_color = mix (l_dielectric_brdf, l_metal_brdf, materialInfo .metallic);
+
+         l_color = l_sheen + l_color * l_albedoSheenScaling;
+         l_color = mix (l_color, l_clearcoat_brdf, clearcoatFactor * clearcoatFresnel);
+         color  += l_color;
       }
    }
    #endif
