@@ -73,10 +73,10 @@ getIBLGGXFresnel (const in vec3 n, const in vec3 v, const in float roughness, co
 
    vec3  Fr     = max (vec3 (1.0 - roughness), F0) - F0;
    vec3  k_S    = F0 + Fr * pow (1.0 - NdotV, 5.0);
-   vec3  FssEss = specularWeight * (k_S * f_ab.x + f_ab.y);
+   vec3  FssEss = specularWeight * (k_S * f_ab .x + f_ab .y);
 
    // Multiple scattering, from Fdez-Aguera
-   float Ems    = (1.0 - (f_ab.x + f_ab.y));
+   float Ems    = (1.0 - (f_ab .x + f_ab .y));
    vec3  F_avg  = specularWeight * (F0 + (1.0 - F0) / 21.0);
    vec3  FmsEms = Ems * FssEss * F_avg / (1.0 - F_avg * Ems);
 

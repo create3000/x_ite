@@ -53,7 +53,7 @@ getMaterialColor ()
 
    // Anything less than 2% is physically impossible and is instead considered to be shadowing. Compare to "Real-Time-Rendering" 4th edition on page 325.
    materialInfo .f90            = vec3 (1.0);
-   materialInfo .f90_dielectric = materialInfo.f90;
+   materialInfo .f90_dielectric = materialInfo .f90;
 
    #if defined (X3D_IOR_MATERIAL_EXT)
       materialInfo = getIorInfo (materialInfo);
@@ -128,8 +128,8 @@ getMaterialColor ()
    float diffuseTransmissionThickness = 1.0;
 
    #if defined (X3D_IRIDESCENCE_MATERIAL_EXT) && (defined (X3D_USE_IBL) || defined (X3D_LIGHTING))
-      vec3 iridescenceFresnel_dielectric = evalIridescence (1.0, materialInfo .iridescenceIor, NdotV, materialInfo .iridescenceThickness, materialInfo.f0_dielectric);
-      vec3 iridescenceFresnel_metallic   = evalIridescence (1.0, materialInfo .iridescenceIor, NdotV, materialInfo .iridescenceThickness, baseColor.rgb);
+      vec3 iridescenceFresnel_dielectric = evalIridescence (1.0, materialInfo .iridescenceIor, NdotV, materialInfo .iridescenceThickness, materialInfo .f0_dielectric);
+      vec3 iridescenceFresnel_metallic   = evalIridescence (1.0, materialInfo .iridescenceIor, NdotV, materialInfo .iridescenceThickness, baseColor .rgb);
 
       if (materialInfo .iridescenceThickness == 0.0)
          materialInfo .iridescenceFactor = 0.0;
@@ -137,12 +137,12 @@ getMaterialColor ()
 
    #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
    #if defined (X3D_VOLUME_MATERIAL_EXT)
-      diffuseTransmissionThickness = materialInfo.thickness * (length (vec3 (u_ModelMatrix[0] .xyz)) + length (vec3 (u_ModelMatrix[1] .xyz)) + length (vec3 (u_ModelMatrix[2] .xyz))) / 3.0;
+      diffuseTransmissionThickness = materialInfo .thickness * (length (vec3 (u_ModelMatrix[0] .xyz)) + length (vec3 (u_ModelMatrix[1] .xyz)) + length (vec3 (u_ModelMatrix[2] .xyz))) / 3.0;
    #endif
    #endif
 
    #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
-      clearcoatFactor  = materialInfo.clearcoatFactor;
+      clearcoatFactor  = materialInfo .clearcoatFactor;
       clearcoatFresnel = F_Schlick (materialInfo .clearcoatF0, materialInfo .clearcoatF90, clamp (dot (materialInfo .clearcoatNormal, v), 0.0, 1.0));
    #endif
 
@@ -200,7 +200,7 @@ getMaterialColor ()
 
       #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
          f_metal_brdf_ibl      = mix (f_metal_brdf_ibl, f_specular_metal * iridescenceFresnel_metallic, materialInfo .iridescenceFactor);
-         f_dielectric_brdf_ibl = mix (f_dielectric_brdf_ibl, rgb_mix (f_diffuse, f_specular_dielectric, iridescenceFresnel_dielectric), materialInfo.iridescenceFactor);
+         f_dielectric_brdf_ibl = mix (f_dielectric_brdf_ibl, rgb_mix (f_diffuse, f_specular_dielectric, iridescenceFresnel_dielectric), materialInfo .iridescenceFactor);
       #endif
 
       #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
@@ -209,7 +209,7 @@ getMaterialColor ()
 
       #if defined (X3D_SHEEN_MATERIAL_EXT)
          f_sheen            = getIBLRadianceCharlie (n, v, materialInfo .sheenRoughnessFactor, materialInfo .sheenColorFactor);
-         albedoSheenScaling = 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo.sheenRoughnessFactor);
+         albedoSheenScaling = 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInf .sheenRoughnessFactor);
       #endif
 
       color = mix (f_dielectric_brdf_ibl, f_metal_brdf_ibl, materialInfo .metallic);
@@ -265,7 +265,7 @@ getMaterialColor ()
             continue;
 
          vec3 dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (VdotH));
-         vec3 metal_fresnel      = F_Schlick (baseColor.rgb, vec3 (1.0), abs (VdotH));
+         vec3 metal_fresnel      = F_Schlick (baseColo .rgb, vec3 (1.0), abs (VdotH));
 
          // Calculation of analytical light
          // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
@@ -329,7 +329,7 @@ getMaterialColor ()
 
          #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
             l_metal_brdf      = mix (l_metal_brdf, l_specular_metal * iridescenceFresnel_metallic, materialInfo .iridescenceFactor);
-            l_dielectric_brdf = mix (l_dielectric_brdf, rgb_mix (l_diffuse, l_specular_dielectric, iridescenceFresnel_dielectric), materialInfo.iridescenceFactor);
+            l_dielectric_brdf = mix (l_dielectric_brdf, rgb_mix (l_diffuse, l_specular_dielectric, iridescenceFresnel_dielectric), materialInfo .iridescenceFactor);
          #endif
 
          #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
