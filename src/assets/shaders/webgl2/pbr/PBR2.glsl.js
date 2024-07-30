@@ -159,7 +159,7 @@ getMaterialColor ()
       #endif
 
       #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
-         f_transmission += getIBLVolumeRefraction (
+         f_specular_transmission += getIBLVolumeRefraction (
             n,
             v,
             materialInfo .perceptualRoughness,

@@ -311,7 +311,7 @@ getSpecularInfo (in MaterialInfo info)
    #endif
 
    info .f0_dielectric  = min (info .f0_dielectric * x3d_SpecularColorEXT * specularTexture .rgb, vec3 (1.0));
-   info .specularWeight = x3d_SpecularColorEXT * specularTexture .a;
+   info .specularWeight = x3d_SpecularEXT * specularTexture .a;
    info .f90_dielectric = vec3 (info .specularWeight);
 
    return info;
