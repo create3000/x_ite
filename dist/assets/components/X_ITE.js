@@ -49,15 +49,359 @@ var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefi
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
 const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Shape/X3DAppearanceChildNode\")"
-const X3DAppearanceChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Components/Shape/X3DAppearanceChildNode");
-var X3DAppearanceChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DAppearanceChildNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DNode\")"
+const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Components/Core/X3DNode");
+var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
 const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Utility/BitSet\")"
+const BitSet_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("standard/Utility/BitSet");
+var BitSet_default = /*#__PURE__*/__webpack_require__.n(BitSet_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
 const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/X3DMaterialExtensionNode.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+function X3DMaterialExtensionNode (executionContext)
+{
+   X3DNode_default().call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).X3DMaterialExtensionNode);
+
+   this .textureBits = new (BitSet_default()) ();
+}
+
+Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, (X3DNode_default()).prototype),
+{
+   setTexture (index, textureNode)
+   {
+      index *= 4;
+
+      this .textureBits .remove (index, 0xf);
+      this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
+   },
+   getTextureBits ()
+   {
+      return this .textureBits;
+   },
+});
+
+Object .defineProperties (X3DMaterialExtensionNode,
+{
+   typeName:
+   {
+      value: "X3DMaterialExtensionNode",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
+      enumerable: true,
+   },
+});
+
+const __default__ = X3DMaterialExtensionNode;
+;
+
+Namespace_default().add ("X3DMaterialExtensionNode", "x_ite/Components/X_ITE/X3DMaterialExtensionNode", __default__);
+/* harmony default export */ const X_ITE_X3DMaterialExtensionNode = (__default__);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Base/X3DCast");
+var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Browser/X_ITE/ExtensionKeys.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+let i = 0;
+
+const ExtensionKeys =
+{
+   ANISOTROPY_MATERIAL_EXTENSION:        i ++,
+   CLEARCOAT_MATERIAL_EXTENSION:         i ++,
+   DIFFUSE_TRANSMISSION_EXTENSION:       i ++,
+   DISPERSION_MATERIAL_EXTENSION:        i ++,
+   EMISSIVE_STRENGTH_MATERIAL_EXTENSION: i ++,
+   IOR_MATERIAL_EXTENSION:               i ++,
+   IRIDESCENCE_MATERIAL_EXTENSION:       i ++,
+   SHEEN_MATERIAL_EXTENSION:             i ++,
+   SPECULAR_MATERIAL_EXTENSION:          i ++,
+   TRANSMISSION_MATERIAL_EXTENSION:      i ++,
+   UNLIT_MATERIAL_EXTENSION:             i ++,
+   VOLUME_MATERIAL_EXTENSION:            i ++,
+};
+
+const ExtensionKeys_default_ = ExtensionKeys;
+;
+
+Namespace_default().add ("ExtensionKeys", "x_ite/Browser/X_ITE/ExtensionKeys", ExtensionKeys_default_);
+/* harmony default export */ const X_ITE_ExtensionKeys = (ExtensionKeys_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/AnisotropyMaterialExtension.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function AnisotropyMaterialExtension (executionContext)
+{
+   X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).AnisotropyMaterialExtension);
+
+   this .anisotropyArray = new Float32Array (3);
+}
+
+Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
+{
+   initialize ()
+   {
+      X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._anisotropyStrength .addInterest ("set_anisotropyStrength__", this);
+      this ._anisotropyRotation .addInterest ("set_anisotropyRotation__", this);
+      this ._anisotropyTexture  .addInterest ("set_anisotropyTexture__",  this);
+
+      this .set_anisotropyStrength__ ();
+      this .set_anisotropyRotation__ ();
+      this .set_anisotropyTexture__ ();
+   },
+   set_anisotropyStrength__ ()
+   {
+      this .anisotropyArray [2] = Math .max (this ._anisotropyStrength .getValue (), 0);
+   },
+   set_anisotropyRotation__ ()
+   {
+      const anisotropyRotation = this ._anisotropyRotation .getValue ();
+
+      this .anisotropyArray [0] = Math .cos (anisotropyRotation);
+      this .anisotropyArray [1] = Math .sin (anisotropyRotation);
+   },
+   set_anisotropyTexture__ ()
+   {
+      this .anisotropyTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._anisotropyTexture);
+
+      this .setTexture (0, this .anisotropyTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .ANISOTROPY_MATERIAL_EXTENSION;
+   },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_ANISOTROPY_MATERIAL_EXT");
+
+      if (!+this .getTextureBits ())
+         return;
+
+      options .push ("X3D_MATERIAL_TEXTURES");
+
+      this .anisotropyTextureNode ?.getShaderOptions (options, "ANISOTROPY", true);
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+      gl .uniform3fv (shaderObject .x3d_AnisotropyEXT, this .anisotropyArray);
+
+      this .anisotropyTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_AnisotropyTextureEXT,
+         this ._anisotropyTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+   },
+});
+
+Object .defineProperties (AnisotropyMaterialExtension,
+{
+   typeName:
+   {
+      value: "AnisotropyMaterialExtension",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "extensions",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                 new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anisotropyStrength",       new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anisotropyRotation",       new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anisotropyTextureMapping", new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anisotropyTexture",        new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const AnisotropyMaterialExtension_default_ = AnisotropyMaterialExtension;
+;
+
+Namespace_default().add ("AnisotropyMaterialExtension", "x_ite/Components/X_ITE/AnisotropyMaterialExtension", AnisotropyMaterialExtension_default_);
+/* harmony default export */ const X_ITE_AnisotropyMaterialExtension = (AnisotropyMaterialExtension_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Shape/X3DAppearanceChildNode\")"
+const X3DAppearanceChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Components/Shape/X3DAppearanceChildNode");
+var X3DAppearanceChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DAppearanceChildNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/BlendMode.js
 /*******************************************************************************
  *
@@ -255,11 +599,221 @@ Object .defineProperties (BlendMode,
    },
 });
 
-const __default__ = BlendMode;
+const BlendMode_default_ = BlendMode;
 ;
 
-Namespace_default().add ("BlendMode", "x_ite/Components/X_ITE/BlendMode", __default__);
-/* harmony default export */ const X_ITE_BlendMode = (__default__);
+Namespace_default().add ("BlendMode", "x_ite/Components/X_ITE/BlendMode", BlendMode_default_);
+/* harmony default export */ const X_ITE_BlendMode = (BlendMode_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
+const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("standard/Math/Algorithm");
+var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/ClearcoatMaterialExtension.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function ClearcoatMaterialExtension (executionContext)
+{
+   X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).ClearcoatMaterialExtension);
+}
+
+Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
+{
+   initialize ()
+   {
+      X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._clearcoat                 .addInterest ("set_clearcoat__",                 this);
+      this ._clearcoatTexture          .addInterest ("set_clearcoatTexture__",          this);
+      this ._clearcoatRoughness        .addInterest ("set_clearcoatRoughness__",        this);
+      this ._clearcoatRoughnessTexture .addInterest ("set_clearcoatRoughnessTexture__", this);
+      this ._clearcoatNormalTexture    .addInterest ("set_clearcoatNormalTexture__",    this);
+
+      this .set_clearcoat__ ();
+      this .set_clearcoatTexture__ ();
+      this .set_clearcoatRoughness__ ();
+      this .set_clearcoatRoughnessTexture__ ();
+      this .set_clearcoatNormalTexture__ ();
+   },
+   set_clearcoat__ ()
+   {
+      this .clearcoat = Math .max (this ._clearcoat .getValue (), 0);
+   },
+   set_clearcoatTexture__ ()
+   {
+      this .clearcoatTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatTexture);
+
+      this .setTexture (0, this .clearcoatTextureNode);
+   },
+   set_clearcoatRoughness__ ()
+   {
+      this .clearcoatRoughness = Algorithm_default().clamp (this ._clearcoatRoughness .getValue (), 0, 1);
+   },
+   set_clearcoatRoughnessTexture__ ()
+   {
+      this .clearcoatRoughnessTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatRoughnessTexture);
+
+      this .setTexture (1, this .clearcoatRoughnessTextureNode);
+   },
+   set_clearcoatNormalTexture__ ()
+   {
+      this .clearcoatNormalTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatNormalTexture);
+
+      this .setTexture (2, this .clearcoatNormalTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .CLEARCOAT_MATERIAL_EXTENSION;
+   },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_CLEARCOAT_MATERIAL_EXT");
+
+      if (!+this .getTextureBits ())
+         return;
+
+      options .push ("X3D_MATERIAL_TEXTURES");
+
+      this .clearcoatTextureNode          ?.getShaderOptions (options, "CLEARCOAT",           true);
+      this .clearcoatRoughnessTextureNode ?.getShaderOptions (options, "CLEARCOAT_ROUGHNESS", true);
+      this .clearcoatNormalTextureNode    ?.getShaderOptions (options, "CLEARCOAT_NORMAL",    true);
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+      gl .uniform1f (shaderObject .x3d_ClearcoatEXT,          this .clearcoat);
+      gl .uniform1f (shaderObject .x3d_ClearcoatRoughnessEXT, this .clearcoatRoughness);
+
+      if (!+this .getTextureBits ())
+         return;
+
+      this .clearcoatTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_ClearcoatTextureEXT,
+         this ._clearcoatTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+
+      this .clearcoatRoughnessTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_ClearcoatRoughnessTextureEXT,
+         this ._clearcoatRoughnessTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+
+      this .clearcoatNormalTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_ClearcoatNormalTextureEXT,
+         this ._clearcoatNormalTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+   },
+});
+
+Object .defineProperties (ClearcoatMaterialExtension,
+{
+   typeName:
+   {
+      value: "ClearcoatMaterialExtension",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "extensions",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoat",                        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatTextureMapping",          new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatTexture",                 new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatRoughness",               new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatRoughnessTextureMapping", new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatRoughnessTexture",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatNormalTextureMapping",    new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatNormalTexture",           new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const ClearcoatMaterialExtension_default_ = ClearcoatMaterialExtension;
+;
+
+Namespace_default().add ("ClearcoatMaterialExtension", "x_ite/Components/X_ITE/ClearcoatMaterialExtension", ClearcoatMaterialExtension_default_);
+/* harmony default export */ const X_ITE_ClearcoatMaterialExtension = (ClearcoatMaterialExtension_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/DepthMode.js
 /*******************************************************************************
  *
@@ -430,6 +984,466 @@ const DepthMode_default_ = DepthMode;
 
 Namespace_default().add ("DepthMode", "x_ite/Components/X_ITE/DepthMode", DepthMode_default_);
 /* harmony default export */ const X_ITE_DepthMode = (DepthMode_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/DiffuseTransmissionMaterialExtension.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function DiffuseTransmissionMaterialExtension (executionContext)
+{
+   X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).DiffuseTransmissionMaterialExtension);
+
+   this .diffuseTransmissionColorArray = new Float32Array (3);
+}
+
+Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
+{
+   initialize ()
+   {
+      X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._diffuseTransmission             .addInterest ("set_diffuseTransmission__",             this);
+      this ._diffuseTransmissionTexture      .addInterest ("set_diffuseTransmissionTexture__",      this);
+      this ._diffuseTransmissionColor        .addInterest ("set_diffuseTransmissionColor__",        this);
+      this ._diffuseTransmissionColorTexture .addInterest ("set_diffuseTransmissionColorTexture__", this);
+
+      this .set_diffuseTransmission__ ();
+      this .set_diffuseTransmissionTexture__ ();
+      this .set_diffuseTransmissionColor__ ();
+      this .set_diffuseTransmissionColorTexture__ ();
+   },
+   set_diffuseTransmission__ ()
+   {
+      this .diffuseTransmission = Math .max (this ._diffuseTransmission .getValue (), 0);
+   },
+   set_diffuseTransmissionTexture__ ()
+   {
+      this .diffuseTransmissionTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._diffuseTransmissionTexture);
+
+      this .setTexture (0, this .diffuseTransmissionTextureNode);
+   },
+   set_diffuseTransmissionColor__ ()
+   {
+      //We cannot use this in Windows Edge:
+      //this .diffuseTransmissionColorArray .set (this ._diffuseTransmissionColor .getValue ());
+
+      const
+         diffuseTransmissionColorArray = this .diffuseTransmissionColorArray,
+         diffuseTransmissionColor      = this ._diffuseTransmissionColor .getValue ();
+
+      diffuseTransmissionColorArray [0] = diffuseTransmissionColor .r;
+      diffuseTransmissionColorArray [1] = diffuseTransmissionColor .g;
+      diffuseTransmissionColorArray [2] = diffuseTransmissionColor .b;
+   },
+   set_diffuseTransmissionColorTexture__ ()
+   {
+      this .diffuseTransmissionColorTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._diffuseTransmissionColorTexture);
+
+      this .setTexture (1, this .diffuseTransmissionColorTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .DIFFUSE_TRANSMISSION_EXTENSION;
+   },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT");
+
+      if (!+this .getTextureBits ())
+         return;
+
+      options .push ("X3D_MATERIAL_TEXTURES");
+
+      this .diffuseTransmissionTextureNode      ?.getShaderOptions (options, "DIFFUSE_TRANSMISSION",       true);
+      this .diffuseTransmissionColorTextureNode ?.getShaderOptions (options, "DIFFUSE_TRANSMISSION_COLOR", true);
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+      gl .uniform1f  (shaderObject .x3d_DiffuseTransmissionEXT,      this .diffuseTransmission);
+      gl .uniform3fv (shaderObject .x3d_DiffuseTransmissionColorEXT, this .diffuseTransmissionColorArray);
+
+      if (!+this .getTextureBits ())
+         return;
+
+      this .diffuseTransmissionTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_DiffuseTransmissionTextureEXT,
+         this ._diffuseTransmissionTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+
+      this .diffuseTransmissionColorTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_DiffuseTransmissionColorTextureEXT,
+         this ._diffuseTransmissionColorTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+   },
+});
+
+Object .defineProperties (DiffuseTransmissionMaterialExtension,
+{
+   typeName:
+   {
+      value: "DiffuseTransmissionMaterialExtension",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "extensions",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                               new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTransmission",                    new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTransmissionTextureMapping",      new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTransmissionTexture",             new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTransmissionColor",               new (Fields_default()).SFColor (1, 1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTransmissionColorTextureMapping", new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTransmissionColorTexture",        new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const DiffuseTransmissionMaterialExtension_default_ = DiffuseTransmissionMaterialExtension;
+;
+
+Namespace_default().add ("DiffuseTransmissionMaterialExtension", "x_ite/Components/X_ITE/DiffuseTransmissionMaterialExtension", DiffuseTransmissionMaterialExtension_default_);
+/* harmony default export */ const X_ITE_DiffuseTransmissionMaterialExtension = (DiffuseTransmissionMaterialExtension_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/DispersionMaterialExtension.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function DispersionMaterialExtension (executionContext)
+{
+   X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).DispersionMaterialExtension);
+}
+
+Object .assign (Object .setPrototypeOf (DispersionMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
+{
+   initialize ()
+   {
+      X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._dispersion .addInterest ("set_dispersion__", this);
+
+      this .set_dispersion__ ();
+   },
+   set_dispersion__ ()
+   {
+      this .dispersion = Math .max (this ._dispersion .getValue (), 0);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .DISPERSION_MATERIAL_EXTENSION;
+   },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_DISPERSION_MATERIAL_EXT");
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+      gl .uniform1f (shaderObject .x3d_DispersionEXT, this .dispersion);
+   },
+});
+
+Object .defineProperties (DispersionMaterialExtension,
+{
+   typeName:
+   {
+      value: "DispersionMaterialExtension",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "extensions",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",   new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "dispersion", new (Fields_default()).SFFloat ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const DispersionMaterialExtension_default_ = DispersionMaterialExtension;
+;
+
+Namespace_default().add ("DispersionMaterialExtension", "x_ite/Components/X_ITE/DispersionMaterialExtension", DispersionMaterialExtension_default_);
+/* harmony default export */ const X_ITE_DispersionMaterialExtension = (DispersionMaterialExtension_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/EmissiveStrengthMaterialExtension.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function EmissiveStrengthMaterialExtension (executionContext)
+{
+   X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).EmissiveStrengthMaterialExtension);
+}
+
+Object .assign (Object .setPrototypeOf (EmissiveStrengthMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
+{
+   initialize ()
+   {
+      X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._emissiveStrength .addInterest ("set_emissiveStrength__", this);
+
+      this .set_emissiveStrength__ ();
+   },
+   set_emissiveStrength__ ()
+   {
+      this .emissiveStrength = Math .max (this ._emissiveStrength .getValue (), 0);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .EMISSIVE_STRENGTH_MATERIAL_EXTENSION;
+   },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_EMISSIVE_STRENGTH_MATERIAL_EXT");
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+      gl .uniform1f (shaderObject .x3d_EmissiveStrengthEXT, this .emissiveStrength);
+   },
+});
+
+Object .defineProperties (EmissiveStrengthMaterialExtension,
+{
+   typeName:
+   {
+      value: "EmissiveStrengthMaterialExtension",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "extensions",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "emissiveStrength", new (Fields_default()).SFFloat (1)),
+      ]),
+      enumerable: true,
+   },
+});
+
+const EmissiveStrengthMaterialExtension_default_ = EmissiveStrengthMaterialExtension;
+;
+
+Namespace_default().add ("EmissiveStrengthMaterialExtension", "x_ite/Components/X_ITE/EmissiveStrengthMaterialExtension", EmissiveStrengthMaterialExtension_default_);
+/* harmony default export */ const X_ITE_EmissiveStrengthMaterialExtension = (EmissiveStrengthMaterialExtension_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Shape/X3DShapeNode\")"
 const X3DShapeNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Components/Shape/X3DShapeNode");
 var X3DShapeNode_default = /*#__PURE__*/__webpack_require__.n(X3DShapeNode_namespaceObject);
@@ -778,1183 +1792,6 @@ const InstancedShape_default_ = InstancedShape;
 
 Namespace_default().add ("InstancedShape", "x_ite/Components/X_ITE/InstancedShape", InstancedShape_default_);
 /* harmony default export */ const X_ITE_InstancedShape = (InstancedShape_default_);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Shape/X3DOneSidedMaterialNode\")"
-const X3DOneSidedMaterialNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Components/Shape/X3DOneSidedMaterialNode");
-var X3DOneSidedMaterialNode_default = /*#__PURE__*/__webpack_require__.n(X3DOneSidedMaterialNode_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Base/X3DCast");
-var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("standard/Math/Algorithm");
-var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/SpecularGlossinessMaterial.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-
-/**
- * THIS NODE IS DEPRECIATED.
- */
-
-function SpecularGlossinessMaterial (executionContext)
-{
-   console .warn ("SpecularGlossinessMaterial is depreciated, please use PhysicalMaterial instead.");
-
-   X3DOneSidedMaterialNode_default().call (this, executionContext);
-
-   this .addType ((X3DConstants_default()).SpecularGlossinessMaterial);
-
-   this .materialKey        = "4/";
-   this .diffuseColorArray  = new Float32Array (3);
-   this .specularColorArray = new Float32Array (3);
-   this .extensionNodes     = [ ];
-}
-
-Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (X3DOneSidedMaterialNode_default()).prototype),
-{
-   initialize ()
-   {
-      X3DOneSidedMaterialNode_default().prototype .initialize .call (this);
-
-      this ._diffuseColor              .addInterest ("set_diffuseColor__",              this);
-      this ._diffuseTexture            .addInterest ("set_diffuseTexture__",            this);
-      this ._diffuseTexture            .addInterest ("set_transparent__",               this);
-      this ._specularColor             .addInterest ("set_specularColor__",             this);
-      this ._glossiness                .addInterest ("set_glossiness__",                this);
-      this ._specularGlossinessTexture .addInterest ("set_specularGlossinessTexture__", this);
-      this ._occlusionStrength         .addInterest ("set_occlusionStrength__",         this);
-      this ._occlusionTexture          .addInterest ("set_occlusionTexture__",          this);
-      this ._extensions                .addInterest ("set_extensions__",                this);
-
-      this .set_diffuseColor__ ();
-      this .set_diffuseTexture__ ();
-      this .set_specularColor__ ();
-      this .set_glossiness__ ();
-      this .set_specularGlossinessTexture__ ();
-      this .set_occlusionStrength__ ();
-      this .set_occlusionTexture__ ();
-      this .set_extensions__ ();
-      this .set_transparent__ ();
-   },
-   getMaterialKey ()
-   {
-      return this .materialKey;
-   },
-   getTextureIndices: (() =>
-   {
-      let i = 0;
-
-      const textureIndices = {
-         DIFFUSE_TEXTURE: i ++,
-         SPECULAR_GLOSSINESS_TEXTURE: i ++,
-         EMISSIVE_TEXTURE: i ++,
-         OCCLUSION_TEXTURE: i ++,
-         NORMAL_TEXTURE: i ++,
-      };
-
-      return function ()
-      {
-         return textureIndices;
-      };
-   })(),
-   getBaseTexture ()
-   {
-      return this .diffuseTextureNode;
-   },
-   set_diffuseColor__ ()
-   {
-      //We cannot use this in Windows Edge:
-      //this .diffuseColorArray .set (this ._diffuseColor .getValue ());
-
-      const
-         diffuseColorArray = this .diffuseColorArray,
-         diffuseColor      = this ._diffuseColor .getValue ();
-
-      diffuseColorArray [0] = diffuseColor .r;
-      diffuseColorArray [1] = diffuseColor .g;
-      diffuseColorArray [2] = diffuseColor .b;
-   },
-   set_diffuseTexture__ ()
-   {
-      const index = this .getTextureIndices () .DIFFUSE_TEXTURE;
-
-      if (this .diffuseTextureNode)
-      {
-         this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__",  this);
-         this .diffuseTextureNode ._linear      .removeInterest (`setTexture${index}`, this);
-      }
-
-      this .diffuseTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._diffuseTexture);
-
-      if (this .diffuseTextureNode)
-      {
-         this .diffuseTextureNode ._transparent .addInterest ("set_transparent__",  this);
-         this .diffuseTextureNode ._linear      .addInterest (`setTexture${index}`, this, index, this .diffuseTextureNode);
-      }
-
-      this .setTexture (index, this .diffuseTextureNode);
-   },
-   set_specularColor__ ()
-   {
-      //We cannot use this in Windows Edge:
-      //this .specularColorArray .set (this ._specularColor .getValue ());
-
-      const
-         specularColorArray = this .specularColorArray,
-         specularColor      = this ._specularColor .getValue ();
-
-      specularColorArray [0] = specularColor .r;
-      specularColorArray [1] = specularColor .g;
-      specularColorArray [2] = specularColor .b;
-   },
-   set_glossiness__ ()
-   {
-      this .glossiness = Algorithm_default().clamp (this ._glossiness .getValue (), 0, 1);
-   },
-   set_specularGlossinessTexture__ ()
-   {
-      this .specularGlossinessTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._specularGlossinessTexture);
-
-      this .setTexture (this .getTextureIndices () .SPECULAR_GLOSSINESS_TEXTURE, this .specularGlossinessTextureNode);
-   },
-   set_occlusionStrength__ ()
-   {
-      this .occlusionStrength = Algorithm_default().clamp (this ._occlusionStrength .getValue (), 0, 1);
-   },
-   set_occlusionTexture__ ()
-   {
-      this .occlusionTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._occlusionTexture);
-
-      this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
-   },
-   set_transparent__ ()
-   {
-      this .setTransparent (this .getTransparency () ||
-                            this .diffuseTextureNode ?.isTransparent ());
-   },
-   set_extensions__ ()
-   {
-      const extensionNodes = this .extensionNodes;
-
-      for (const extensionNode of extensionNodes)
-         extensionNode .removeInterest ("set_extensionsKey__", this);
-
-      extensionNodes .length = 0;
-
-      for (const node of this ._extensions)
-      {
-         const extensionNode = X3DCast_default() ((X3DConstants_default()).X3DMaterialExtensionNode, node);
-
-         if (extensionNode)
-            extensionNodes .push (extensionNode);
-      }
-
-      extensionNodes .sort ((a, b) => a .getExtensionKey () - b .getExtensionKey ());
-
-      for (const extensionNode of extensionNodes)
-         extensionNode .addInterest ("set_extensionsKey__", this);
-
-      this .setTransmission (extensionNodes .some (extensionNode => extensionNode .getType () .includes ((X3DConstants_default()).TransmissionMaterialExtension)));
-
-      this .set_extensionsKey__ ();
-   },
-   set_extensionsKey__ ()
-   {
-      const extensionsKey = this .extensionNodes
-         .map (extensionNode => `${extensionNode .getExtensionKey () .toString (16)}${extensionNode .getTextureBits () .toString (16)}`)
-         .join ("");
-
-      this .materialKey = `[4.${extensionsKey}]`;
-   },
-   createShader (key, geometryContext, renderContext)
-   {
-      const
-         browser = this .getBrowser (),
-         options = this .getShaderOptions (geometryContext, renderContext);
-
-      for (const extensionNode of this .extensionNodes)
-         extensionNode .getShaderOptions (options);
-
-      options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_SPECULAR_GLOSSINESS");
-
-      if (+this .getTextureBits ())
-      {
-         this .diffuseTextureNode            ?.getShaderOptions (options, "DIFFUSE");
-         this .specularGlossinessTextureNode ?.getShaderOptions (options, "SPECULAR_GLOSSINESS");
-         this .occlusionTextureNode          ?.getShaderOptions (options, "OCCLUSION");
-      }
-
-      const shaderNode = browser .createShader ("SpecularGlossiness", "Default", "Physical", options);
-
-      browser .getShaders () .set (key, shaderNode);
-
-      return shaderNode;
-   },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
-   {
-      X3DOneSidedMaterialNode_default().prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
-
-      for (const extensionNode of this .extensionNodes)
-         extensionNode .setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
-
-      gl .uniform3fv (shaderObject .x3d_DiffuseColor,  this .diffuseColorArray);
-      gl .uniform3fv (shaderObject .x3d_SpecularColor, this .specularColorArray);
-      gl .uniform1f  (shaderObject .x3d_Glossiness,    this .glossiness);
-
-      if (!+this .getTextureBits ())
-         return;
-
-      this .diffuseTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
-         shaderObject .x3d_DiffuseTexture,
-         this ._diffuseTextureMapping .getValue (),
-         textureTransformMapping,
-         textureCoordinateMapping);
-
-      this .specularGlossinessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
-         shaderObject .x3d_SpecularGlossinessTexture,
-         this ._specularGlossinessTextureMapping .getValue (),
-         textureTransformMapping,
-         textureCoordinateMapping);
-
-      if (this .occlusionTextureNode)
-         gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
-
-      this .occlusionTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
-         shaderObject .x3d_OcclusionTexture,
-         this ._occlusionTextureMapping .getValue (),
-         textureTransformMapping,
-         textureCoordinateMapping);
-   },
-});
-
-Object .defineProperties (SpecularGlossinessMaterial,
-{
-   typeName:
-   {
-      value: "SpecularGlossinessMaterial",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "material",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseColor",                     new (Fields_default()).SFColor (1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTextureMapping",            new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTexture",                   new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularColor",                    new (Fields_default()).SFColor (1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "glossiness",                       new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularGlossinessTextureMapping", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularGlossinessTexture",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "emissiveColor",                    new (Fields_default()).SFColor ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "emissiveTextureMapping",           new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "emissiveTexture",                  new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "occlusionStrength",                new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "occlusionTextureMapping",          new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "occlusionTexture",                 new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "normalScale",                      new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "normalTextureMapping",             new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "normalTexture",                    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "transparency",                     new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "extensions",                       new (Fields_default()).MFNode ()), // experimental
-      ]),
-      enumerable: true,
-   },
-});
-
-for (const index of Object .values (SpecularGlossinessMaterial .prototype .getTextureIndices ()))
-{
-   SpecularGlossinessMaterial .prototype [`setTexture${index}`] = function (index, textureNode)
-   {
-      this .setTexture (index, textureNode);
-   };
-}
-
-const SpecularGlossinessMaterial_default_ = SpecularGlossinessMaterial;
-;
-
-Namespace_default().add ("SpecularGlossinessMaterial", "x_ite/Components/X_ITE/SpecularGlossinessMaterial", SpecularGlossinessMaterial_default_);
-/* harmony default export */ const X_ITE_SpecularGlossinessMaterial = (SpecularGlossinessMaterial_default_);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DNode\")"
-const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Components/Core/X3DNode");
-var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Utility/BitSet\")"
-const BitSet_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("standard/Utility/BitSet");
-var BitSet_default = /*#__PURE__*/__webpack_require__.n(BitSet_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/X3DMaterialExtensionNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-function X3DMaterialExtensionNode (executionContext)
-{
-   X3DNode_default().call (this, executionContext);
-
-   this .addType ((X3DConstants_default()).X3DMaterialExtensionNode);
-
-   this .textureBits = new (BitSet_default()) ();
-}
-
-Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, (X3DNode_default()).prototype),
-{
-   setTexture (index, textureNode)
-   {
-      index *= 4;
-
-      this .textureBits .remove (index, 0xf);
-      this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
-   },
-   getTextureBits ()
-   {
-      return this .textureBits;
-   },
-});
-
-Object .defineProperties (X3DMaterialExtensionNode,
-{
-   typeName:
-   {
-      value: "X3DMaterialExtensionNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-});
-
-const X3DMaterialExtensionNode_default_ = X3DMaterialExtensionNode;
-;
-
-Namespace_default().add ("X3DMaterialExtensionNode", "x_ite/Components/X_ITE/X3DMaterialExtensionNode", X3DMaterialExtensionNode_default_);
-/* harmony default export */ const X_ITE_X3DMaterialExtensionNode = (X3DMaterialExtensionNode_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/X_ITE/ExtensionKeys.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-let i = 0;
-
-const ExtensionKeys =
-{
-   ANISOTROPY_MATERIAL_EXTENSION:        i ++,
-   CLEARCOAT_MATERIAL_EXTENSION:         i ++,
-   DISPERSION_MATERIAL_EXTENSION:        i ++,
-   EMISSIVE_STRENGTH_MATERIAL_EXTENSION: i ++,
-   IOR_MATERIAL_EXTENSION:               i ++,
-   IRIDESCENCE_MATERIAL_EXTENSION:       i ++,
-   SHEEN_MATERIAL_EXTENSION:             i ++,
-   SPECULAR_MATERIAL_EXTENSION:          i ++,
-   TRANSMISSION_MATERIAL_EXTENSION:      i ++,
-   UNLIT_MATERIAL_EXTENSION:             i ++,
-   VOLUME_MATERIAL_EXTENSION:            i ++,
-};
-
-const ExtensionKeys_default_ = ExtensionKeys;
-;
-
-Namespace_default().add ("ExtensionKeys", "x_ite/Browser/X_ITE/ExtensionKeys", ExtensionKeys_default_);
-/* harmony default export */ const X_ITE_ExtensionKeys = (ExtensionKeys_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/AnisotropyMaterialExtension.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-
-/**
- * THIS NODE IS STILL EXPERIMENTAL.
- */
-
-function AnisotropyMaterialExtension (executionContext)
-{
-   X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
-
-   this .addType ((X3DConstants_default()).AnisotropyMaterialExtension);
-
-   this .anisotropyArray = new Float32Array (3);
-}
-
-Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
-{
-   initialize ()
-   {
-      X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
-
-      this ._anisotropyStrength .addInterest ("set_anisotropyStrength__", this);
-      this ._anisotropyRotation .addInterest ("set_anisotropyRotation__", this);
-      this ._anisotropyTexture  .addInterest ("set_anisotropyTexture__",  this);
-
-      this .set_anisotropyStrength__ ();
-      this .set_anisotropyRotation__ ();
-      this .set_anisotropyTexture__ ();
-   },
-   set_anisotropyStrength__ ()
-   {
-      this .anisotropyArray [2] = Math .max (this ._anisotropyStrength .getValue (), 0);
-   },
-   set_anisotropyRotation__ ()
-   {
-      const anisotropyRotation = this ._anisotropyRotation .getValue ();
-
-      this .anisotropyArray [0] = Math .cos (anisotropyRotation);
-      this .anisotropyArray [1] = Math .sin (anisotropyRotation);
-   },
-   set_anisotropyTexture__ ()
-   {
-      this .anisotropyTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._anisotropyTexture);
-
-      this .setTexture (0, this .anisotropyTextureNode);
-   },
-   getExtensionKey ()
-   {
-      return X_ITE_ExtensionKeys .ANISOTROPY_MATERIAL_EXTENSION;
-   },
-   getShaderOptions (options)
-   {
-      options .push ("X3D_ANISOTROPY_MATERIAL_EXT");
-
-      if (!+this .getTextureBits ())
-         return;
-
-      options .push ("X3D_MATERIAL_TEXTURES");
-
-      this .anisotropyTextureNode ?.getShaderOptions (options, "ANISOTROPY", true);
-   },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
-   {
-      gl .uniform3fv (shaderObject .x3d_AnisotropyEXT, this .anisotropyArray);
-
-      this .anisotropyTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
-         shaderObject .x3d_AnisotropyTextureEXT,
-         this ._anisotropyTextureMapping .getValue (),
-         textureTransformMapping,
-         textureCoordinateMapping);
-   },
-});
-
-Object .defineProperties (AnisotropyMaterialExtension,
-{
-   typeName:
-   {
-      value: "AnisotropyMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                 new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anisotropyStrength",       new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anisotropyRotation",       new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anisotropyTextureMapping", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anisotropyTexture",        new (Fields_default()).SFNode ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const AnisotropyMaterialExtension_default_ = AnisotropyMaterialExtension;
-;
-
-Namespace_default().add ("AnisotropyMaterialExtension", "x_ite/Components/X_ITE/AnisotropyMaterialExtension", AnisotropyMaterialExtension_default_);
-/* harmony default export */ const X_ITE_AnisotropyMaterialExtension = (AnisotropyMaterialExtension_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/ClearcoatMaterialExtension.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-
-
-/**
- * THIS NODE IS STILL EXPERIMENTAL.
- */
-
-function ClearcoatMaterialExtension (executionContext)
-{
-   X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
-
-   this .addType ((X3DConstants_default()).ClearcoatMaterialExtension);
-}
-
-Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
-{
-   initialize ()
-   {
-      X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
-
-      this ._clearcoat                 .addInterest ("set_clearcoat__",                 this);
-      this ._clearcoatTexture          .addInterest ("set_clearcoatTexture__",          this);
-      this ._clearcoatRoughness        .addInterest ("set_clearcoatRoughness__",        this);
-      this ._clearcoatRoughnessTexture .addInterest ("set_clearcoatRoughnessTexture__", this);
-      this ._clearcoatNormalTexture    .addInterest ("set_clearcoatNormalTexture__",    this);
-
-      this .set_clearcoat__ ();
-      this .set_clearcoatTexture__ ();
-      this .set_clearcoatRoughness__ ();
-      this .set_clearcoatRoughnessTexture__ ();
-      this .set_clearcoatNormalTexture__ ();
-   },
-   set_clearcoat__ ()
-   {
-      this .clearcoat = Math .max (this ._clearcoat .getValue (), 0);
-   },
-   set_clearcoatTexture__ ()
-   {
-      this .clearcoatTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatTexture);
-
-      this .setTexture (0, this .clearcoatTextureNode);
-   },
-   set_clearcoatRoughness__ ()
-   {
-      this .clearcoatRoughness = Algorithm_default().clamp (this ._clearcoatRoughness .getValue (), 0, 1);
-   },
-   set_clearcoatRoughnessTexture__ ()
-   {
-      this .clearcoatRoughnessTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatRoughnessTexture);
-
-      this .setTexture (1, this .clearcoatRoughnessTextureNode);
-   },
-   set_clearcoatNormalTexture__ ()
-   {
-      this .clearcoatNormalTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatNormalTexture);
-
-      this .setTexture (2, this .clearcoatNormalTextureNode);
-   },
-   getExtensionKey ()
-   {
-      return X_ITE_ExtensionKeys .CLEARCOAT_MATERIAL_EXTENSION;
-   },
-   getShaderOptions (options)
-   {
-      options .push ("X3D_CLEARCOAT_MATERIAL_EXT");
-
-      if (!+this .getTextureBits ())
-         return;
-
-      options .push ("X3D_MATERIAL_TEXTURES");
-
-      this .clearcoatTextureNode          ?.getShaderOptions (options, "CLEARCOAT",           true);
-      this .clearcoatRoughnessTextureNode ?.getShaderOptions (options, "CLEARCOAT_ROUGHNESS", true);
-      this .clearcoatNormalTextureNode    ?.getShaderOptions (options, "CLEARCOAT_NORMAL",    true);
-   },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
-   {
-      gl .uniform1f (shaderObject .x3d_ClearcoatEXT,          this .clearcoat);
-      gl .uniform1f (shaderObject .x3d_ClearcoatRoughnessEXT, this .clearcoatRoughness);
-
-      if (!+this .getTextureBits ())
-         return;
-
-      this .clearcoatTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
-         shaderObject .x3d_ClearcoatTextureEXT,
-         this ._clearcoatTextureMapping .getValue (),
-         textureTransformMapping,
-         textureCoordinateMapping);
-
-      this .clearcoatRoughnessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
-         shaderObject .x3d_ClearcoatRoughnessTextureEXT,
-         this ._clearcoatRoughnessTextureMapping .getValue (),
-         textureTransformMapping,
-         textureCoordinateMapping);
-
-      this .clearcoatNormalTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
-         shaderObject .x3d_ClearcoatNormalTextureEXT,
-         this ._clearcoatNormalTextureMapping .getValue (),
-         textureTransformMapping,
-         textureCoordinateMapping);
-   },
-});
-
-Object .defineProperties (ClearcoatMaterialExtension,
-{
-   typeName:
-   {
-      value: "ClearcoatMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoat",                        new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatTextureMapping",          new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatTexture",                 new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatRoughness",               new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatRoughnessTextureMapping", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatRoughnessTexture",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatNormalTextureMapping",    new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatNormalTexture",           new (Fields_default()).SFNode ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const ClearcoatMaterialExtension_default_ = ClearcoatMaterialExtension;
-;
-
-Namespace_default().add ("ClearcoatMaterialExtension", "x_ite/Components/X_ITE/ClearcoatMaterialExtension", ClearcoatMaterialExtension_default_);
-/* harmony default export */ const X_ITE_ClearcoatMaterialExtension = (ClearcoatMaterialExtension_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/DispersionMaterialExtension.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-/**
- * THIS NODE IS STILL EXPERIMENTAL.
- */
-
-function DispersionMaterialExtension (executionContext)
-{
-   X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
-
-   this .addType ((X3DConstants_default()).DispersionMaterialExtension);
-}
-
-Object .assign (Object .setPrototypeOf (DispersionMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
-{
-   initialize ()
-   {
-      X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
-
-      this ._dispersion .addInterest ("set_dispersion__", this);
-
-      this .set_dispersion__ ();
-   },
-   set_dispersion__ ()
-   {
-      this .dispersion = Math .max (this ._dispersion .getValue (), 0);
-   },
-   getExtensionKey ()
-   {
-      return X_ITE_ExtensionKeys .DISPERSION_MATERIAL_EXTENSION;
-   },
-   getShaderOptions (options)
-   {
-      options .push ("X3D_DISPERSION_MATERIAL_EXT");
-   },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
-   {
-      gl .uniform1f (shaderObject .x3d_DispersionEXT, this .dispersion);
-   },
-});
-
-Object .defineProperties (DispersionMaterialExtension,
-{
-   typeName:
-   {
-      value: "DispersionMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",   new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "dispersion", new (Fields_default()).SFFloat ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const DispersionMaterialExtension_default_ = DispersionMaterialExtension;
-;
-
-Namespace_default().add ("DispersionMaterialExtension", "x_ite/Components/X_ITE/DispersionMaterialExtension", DispersionMaterialExtension_default_);
-/* harmony default export */ const X_ITE_DispersionMaterialExtension = (DispersionMaterialExtension_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/EmissiveStrengthMaterialExtension.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-/**
- * THIS NODE IS STILL EXPERIMENTAL.
- */
-
-function EmissiveStrengthMaterialExtension (executionContext)
-{
-   X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
-
-   this .addType ((X3DConstants_default()).EmissiveStrengthMaterialExtension);
-}
-
-Object .assign (Object .setPrototypeOf (EmissiveStrengthMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
-{
-   initialize ()
-   {
-      X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
-
-      this ._emissiveStrength .addInterest ("set_emissiveStrength__", this);
-
-      this .set_emissiveStrength__ ();
-   },
-   set_emissiveStrength__ ()
-   {
-      this .emissiveStrength = Math .max (this ._emissiveStrength .getValue (), 0);
-   },
-   getExtensionKey ()
-   {
-      return X_ITE_ExtensionKeys .EMISSIVE_STRENGTH_MATERIAL_EXTENSION;
-   },
-   getShaderOptions (options)
-   {
-      options .push ("X3D_EMISSIVE_STRENGTH_MATERIAL_EXT");
-   },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
-   {
-      gl .uniform1f (shaderObject .x3d_EmissiveStrengthEXT, this .emissiveStrength);
-   },
-});
-
-Object .defineProperties (EmissiveStrengthMaterialExtension,
-{
-   typeName:
-   {
-      value: "EmissiveStrengthMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "emissiveStrength", new (Fields_default()).SFFloat (1)),
-      ]),
-      enumerable: true,
-   },
-});
-
-const EmissiveStrengthMaterialExtension_default_ = EmissiveStrengthMaterialExtension;
-;
-
-Namespace_default().add ("EmissiveStrengthMaterialExtension", "x_ite/Components/X_ITE/EmissiveStrengthMaterialExtension", EmissiveStrengthMaterialExtension_default_);
-/* harmony default export */ const X_ITE_EmissiveStrengthMaterialExtension = (EmissiveStrengthMaterialExtension_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/IORMaterialExtension.js
 /*******************************************************************************
  *
@@ -2497,6 +2334,368 @@ const SheenMaterialExtension_default_ = SheenMaterialExtension;
 
 Namespace_default().add ("SheenMaterialExtension", "x_ite/Components/X_ITE/SheenMaterialExtension", SheenMaterialExtension_default_);
 /* harmony default export */ const X_ITE_SheenMaterialExtension = (SheenMaterialExtension_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Shape/X3DOneSidedMaterialNode\")"
+const X3DOneSidedMaterialNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/Components/Shape/X3DOneSidedMaterialNode");
+var X3DOneSidedMaterialNode_default = /*#__PURE__*/__webpack_require__.n(X3DOneSidedMaterialNode_namespaceObject);
+;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/SpecularGlossinessMaterial.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * THIS NODE IS DEPRECIATED.
+ */
+
+function SpecularGlossinessMaterial (executionContext)
+{
+   console .warn ("SpecularGlossinessMaterial is depreciated, please use PhysicalMaterial instead.");
+
+   X3DOneSidedMaterialNode_default().call (this, executionContext);
+
+   this .addType ((X3DConstants_default()).SpecularGlossinessMaterial);
+
+   this .materialKey        = "4/";
+   this .diffuseColorArray  = new Float32Array (3);
+   this .specularColorArray = new Float32Array (3);
+   this .extensionNodes     = [ ];
+}
+
+Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (X3DOneSidedMaterialNode_default()).prototype),
+{
+   initialize ()
+   {
+      X3DOneSidedMaterialNode_default().prototype .initialize .call (this);
+
+      this ._diffuseColor              .addInterest ("set_diffuseColor__",              this);
+      this ._diffuseTexture            .addInterest ("set_diffuseTexture__",            this);
+      this ._diffuseTexture            .addInterest ("set_transparent__",               this);
+      this ._specularColor             .addInterest ("set_specularColor__",             this);
+      this ._glossiness                .addInterest ("set_glossiness__",                this);
+      this ._specularGlossinessTexture .addInterest ("set_specularGlossinessTexture__", this);
+      this ._occlusionStrength         .addInterest ("set_occlusionStrength__",         this);
+      this ._occlusionTexture          .addInterest ("set_occlusionTexture__",          this);
+      this ._extensions                .addInterest ("set_extensions__",                this);
+
+      this .set_diffuseColor__ ();
+      this .set_diffuseTexture__ ();
+      this .set_specularColor__ ();
+      this .set_glossiness__ ();
+      this .set_specularGlossinessTexture__ ();
+      this .set_occlusionStrength__ ();
+      this .set_occlusionTexture__ ();
+      this .set_extensions__ ();
+      this .set_transparent__ ();
+   },
+   getMaterialKey ()
+   {
+      return this .materialKey;
+   },
+   getTextureIndices: (() =>
+   {
+      let i = 0;
+
+      const textureIndices = {
+         DIFFUSE_TEXTURE: i ++,
+         SPECULAR_GLOSSINESS_TEXTURE: i ++,
+         EMISSIVE_TEXTURE: i ++,
+         OCCLUSION_TEXTURE: i ++,
+         NORMAL_TEXTURE: i ++,
+      };
+
+      return function ()
+      {
+         return textureIndices;
+      };
+   })(),
+   getBaseTexture ()
+   {
+      return this .diffuseTextureNode;
+   },
+   set_diffuseColor__ ()
+   {
+      //We cannot use this in Windows Edge:
+      //this .diffuseColorArray .set (this ._diffuseColor .getValue ());
+
+      const
+         diffuseColorArray = this .diffuseColorArray,
+         diffuseColor      = this ._diffuseColor .getValue ();
+
+      diffuseColorArray [0] = diffuseColor .r;
+      diffuseColorArray [1] = diffuseColor .g;
+      diffuseColorArray [2] = diffuseColor .b;
+   },
+   set_diffuseTexture__ ()
+   {
+      const index = this .getTextureIndices () .DIFFUSE_TEXTURE;
+
+      if (this .diffuseTextureNode)
+      {
+         this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__",  this);
+         this .diffuseTextureNode ._linear      .removeInterest (`setTexture${index}`, this);
+      }
+
+      this .diffuseTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._diffuseTexture);
+
+      if (this .diffuseTextureNode)
+      {
+         this .diffuseTextureNode ._transparent .addInterest ("set_transparent__",  this);
+         this .diffuseTextureNode ._linear      .addInterest (`setTexture${index}`, this, index, this .diffuseTextureNode);
+      }
+
+      this .setTexture (index, this .diffuseTextureNode);
+   },
+   set_specularColor__ ()
+   {
+      //We cannot use this in Windows Edge:
+      //this .specularColorArray .set (this ._specularColor .getValue ());
+
+      const
+         specularColorArray = this .specularColorArray,
+         specularColor      = this ._specularColor .getValue ();
+
+      specularColorArray [0] = specularColor .r;
+      specularColorArray [1] = specularColor .g;
+      specularColorArray [2] = specularColor .b;
+   },
+   set_glossiness__ ()
+   {
+      this .glossiness = Algorithm_default().clamp (this ._glossiness .getValue (), 0, 1);
+   },
+   set_specularGlossinessTexture__ ()
+   {
+      this .specularGlossinessTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._specularGlossinessTexture);
+
+      this .setTexture (this .getTextureIndices () .SPECULAR_GLOSSINESS_TEXTURE, this .specularGlossinessTextureNode);
+   },
+   set_occlusionStrength__ ()
+   {
+      this .occlusionStrength = Algorithm_default().clamp (this ._occlusionStrength .getValue (), 0, 1);
+   },
+   set_occlusionTexture__ ()
+   {
+      this .occlusionTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._occlusionTexture);
+
+      this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
+   },
+   set_transparent__ ()
+   {
+      this .setTransparent (this .getTransparency () ||
+                            this .diffuseTextureNode ?.isTransparent ());
+   },
+   set_extensions__ ()
+   {
+      const extensionNodes = this .extensionNodes;
+
+      for (const extensionNode of extensionNodes)
+         extensionNode .removeInterest ("set_extensionsKey__", this);
+
+      extensionNodes .length = 0;
+
+      for (const node of this ._extensions)
+      {
+         const extensionNode = X3DCast_default() ((X3DConstants_default()).X3DMaterialExtensionNode, node);
+
+         if (extensionNode)
+            extensionNodes .push (extensionNode);
+      }
+
+      extensionNodes .sort ((a, b) => a .getExtensionKey () - b .getExtensionKey ());
+
+      for (const extensionNode of extensionNodes)
+         extensionNode .addInterest ("set_extensionsKey__", this);
+
+      this .setTransmission (extensionNodes .some (extensionNode => extensionNode .getType () .includes ((X3DConstants_default()).TransmissionMaterialExtension)));
+
+      this .set_extensionsKey__ ();
+   },
+   set_extensionsKey__ ()
+   {
+      const extensionsKey = this .extensionNodes
+         .map (extensionNode => `${extensionNode .getExtensionKey () .toString (16)}${extensionNode .getTextureBits () .toString (16)}`)
+         .join ("");
+
+      this .materialKey = `[4.${extensionsKey}]`;
+   },
+   createShader (key, geometryContext, renderContext)
+   {
+      const
+         browser = this .getBrowser (),
+         options = this .getShaderOptions (geometryContext, renderContext);
+
+      for (const extensionNode of this .extensionNodes)
+         extensionNode .getShaderOptions (options);
+
+      options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_SPECULAR_GLOSSINESS");
+
+      if (+this .getTextureBits ())
+      {
+         this .diffuseTextureNode            ?.getShaderOptions (options, "DIFFUSE");
+         this .specularGlossinessTextureNode ?.getShaderOptions (options, "SPECULAR_GLOSSINESS");
+         this .occlusionTextureNode          ?.getShaderOptions (options, "OCCLUSION");
+      }
+
+      const shaderNode = browser .createShader ("SpecularGlossiness", "Default", "Physical", options);
+
+      browser .getShaders () .set (key, shaderNode);
+
+      return shaderNode;
+   },
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+      X3DOneSidedMaterialNode_default().prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+
+      for (const extensionNode of this .extensionNodes)
+         extensionNode .setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+
+      gl .uniform3fv (shaderObject .x3d_DiffuseColor,  this .diffuseColorArray);
+      gl .uniform3fv (shaderObject .x3d_SpecularColor, this .specularColorArray);
+      gl .uniform1f  (shaderObject .x3d_Glossiness,    this .glossiness);
+
+      if (!+this .getTextureBits ())
+         return;
+
+      this .diffuseTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_DiffuseTexture,
+         this ._diffuseTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+
+      this .specularGlossinessTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_SpecularGlossinessTexture,
+         this ._specularGlossinessTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+
+      if (this .occlusionTextureNode)
+         gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+
+      this .occlusionTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject,
+         renderObject,
+         shaderObject .x3d_OcclusionTexture,
+         this ._occlusionTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+   },
+});
+
+Object .defineProperties (SpecularGlossinessMaterial,
+{
+   typeName:
+   {
+      value: "SpecularGlossinessMaterial",
+      enumerable: true,
+   },
+   componentInfo:
+   {
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "material",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseColor",                     new (Fields_default()).SFColor (1, 1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTextureMapping",            new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTexture",                   new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularColor",                    new (Fields_default()).SFColor (1, 1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "glossiness",                       new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularGlossinessTextureMapping", new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularGlossinessTexture",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "emissiveColor",                    new (Fields_default()).SFColor ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "emissiveTextureMapping",           new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "emissiveTexture",                  new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "occlusionStrength",                new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "occlusionTextureMapping",          new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "occlusionTexture",                 new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "normalScale",                      new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "normalTextureMapping",             new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "normalTexture",                    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "transparency",                     new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "extensions",                       new (Fields_default()).MFNode ()), // experimental
+      ]),
+      enumerable: true,
+   },
+});
+
+for (const index of Object .values (SpecularGlossinessMaterial .prototype .getTextureIndices ()))
+{
+   SpecularGlossinessMaterial .prototype [`setTexture${index}`] = function (index, textureNode)
+   {
+      this .setTexture (index, textureNode);
+   };
+}
+
+const SpecularGlossinessMaterial_default_ = SpecularGlossinessMaterial;
+;
+
+Namespace_default().add ("SpecularGlossinessMaterial", "x_ite/Components/X_ITE/SpecularGlossinessMaterial", SpecularGlossinessMaterial_default_);
+/* harmony default export */ const X_ITE_SpecularGlossinessMaterial = (SpecularGlossinessMaterial_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/SpecularMaterialExtension.js
 /*******************************************************************************
  *
@@ -3117,21 +3316,23 @@ Namespace_default().add ("VolumeMaterialExtension", "x_ite/Components/X_ITE/Volu
 
 
 
+
 Components_default().add ({
    name: "X_ITE",
    concreteNodes:
    [
-      X_ITE_BlendMode,
-      X_ITE_DepthMode,
-      X_ITE_InstancedShape,
-      X_ITE_SpecularGlossinessMaterial,
       X_ITE_AnisotropyMaterialExtension,
+      X_ITE_BlendMode,
       X_ITE_ClearcoatMaterialExtension,
+      X_ITE_DepthMode,
+      X_ITE_DiffuseTransmissionMaterialExtension,
       X_ITE_DispersionMaterialExtension,
       X_ITE_EmissiveStrengthMaterialExtension,
+      X_ITE_InstancedShape,
       X_ITE_IORMaterialExtension,
       X_ITE_IridescenceMaterialExtension,
       X_ITE_SheenMaterialExtension,
+      X_ITE_SpecularGlossinessMaterial,
       X_ITE_SpecularMaterialExtension,
       X_ITE_TransmissionMaterialExtension,
       X_ITE_VolumeMaterialExtension,
