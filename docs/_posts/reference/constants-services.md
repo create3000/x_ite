@@ -154,6 +154,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - CylinderSensor
 - Delay
 - DepthMode
+- DiffuseTransmissionMaterialExtension
 - DirectionalLight
 - DISEntityManager
 - DISEntityTypeMapping
