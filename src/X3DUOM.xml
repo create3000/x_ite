@@ -1092,5 +1092,63 @@
 			</InterfaceDefinition>
 		</ConcreteNode>
 
+		<ConcreteNode name="DiffuseTransmissionMaterialExtension">
+			<InterfaceDefinition
+				specificationUrl="https://create3000.github.io/x_ite/components/x-ite/diffusetransmissionmaterialextension"
+				appinfo="DiffuseTransmissionMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node.">
+				<componentInfo name="X_ITE" level="1" />
+				<Inheritance baseType="X3DMaterialExtensionNode" />
+				<field name="metadata"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DMetadataObject"
+					description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
+				></field>
+				<field name="diffuseTransmission"
+					type="SFFloat"
+					accessType="inputOutput"
+					default="0"
+					minInclusive="0"
+					description="The percentage of reflected, non-specularly reflected light that is transmitted through the surface via the Lambertian diffuse transmission, i.e., the strength of the diffuse transmission effect."
+				></field>
+				<field name="diffuseTransmissionTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *diffuseTransmissionTextureMapping*."
+				></field>
+				<field name="diffuseTransmissionTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="A texture that defines the strength of the diffuse transmission effect, stored in the alpha (A) channel. Will be multiplied by the diffuseTransmissionFactor."
+				></field>
+				<field name="diffuseTransmissionColor"
+					type="SFColor"
+					accessType="inputOutput"
+					default="1 1 1"
+					minInclusive="0"
+					maxInclusive="1"
+					description="The color of the transmitted light."
+				></field>
+				<field name="diffuseTransmissionColorTextureMapping"
+					type="SFString"
+					accessType="inputOutput"
+					default=""
+					description="Input/Output field *diffuseTransmissionColorTextureMapping*."
+				></field>
+				<field name="diffuseTransmissionColorTexture"
+					type="SFNode"
+					accessType="inputOutput"
+					default="NULL"
+					inheritedFrom="X3DSingleTextureNode"
+					description="A texture that defines the color of the transmitted light, stored in the RGB channels and encoded in sRGB. This texture will be multiplied by diffuseTransmissionColorFactor."
+				></field>
+				<containerField default="extensions" type="xs:NMTOKEN" />
+			</InterfaceDefinition>
+		</ConcreteNode>
+
 	</ConcreteNodes>
 </X3dUnifiedObjectModel>

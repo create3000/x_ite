@@ -1158,6 +1158,7 @@ interface X3DConstants
    readonly CylinderSensor: number;
    readonly Delay: number;
    readonly DepthMode: number;
+   readonly DiffuseTransmissionMaterialExtension: number;
    readonly DirectionalLight: number;
    readonly DISEntityManager: number;
    readonly DISEntityTypeMapping: number;
@@ -6307,6 +6308,53 @@ interface DepthModeProxy extends X3DAppearanceChildNodeProxy
    * This field is of access type 'inputOutput' and type SFVec2f.
    */
    polygonOffset: SFVec2f;
+}
+
+/** DiffuseTransmissionMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
+interface DiffuseTransmissionMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+{
+   /**
+   * The percentage of reflected, non-specularly reflected light that is transmitted through the surface via the Lambertian diffuse transmission, i.e., the strength of the diffuse transmission effect.
+   *
+   * This field is of access type 'inputOutput' and type SFFloat.
+   */
+   diffuseTransmission: number;
+   /**
+   * The color of the transmitted light.
+   *
+   * This field is of access type 'inputOutput' and type SFColor.
+   */
+   diffuseTransmissionColor: SFColor;
+   /**
+   * A texture that defines the color of the transmitted light, stored in the RGB channels and encoded in sRGB. This texture will be multiplied by diffuseTransmissionColorFactor.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   diffuseTransmissionColorTexture: SFNode | null;
+   /**
+   * Input/Output field *diffuseTransmissionColorTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   diffuseTransmissionColorTextureMapping: string;
+   /**
+   * A texture that defines the strength of the diffuse transmission effect, stored in the alpha (A) channel. Will be multiplied by the diffuseTransmissionFactor.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   diffuseTransmissionTexture: SFNode | null;
+   /**
+   * Input/Output field *diffuseTransmissionTextureMapping*.
+   *
+   * This field is of access type 'inputOutput' and type SFString.
+   */
+   diffuseTransmissionTextureMapping: string;
+   /**
+   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+   *
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   metadata: SFNode | null;
 }
 
 /** DirectionalLight might not be scoped by parent Group or Transform at levels 1 or 2. */
@@ -22238,6 +22286,7 @@ type ConcreteNodeTypes = {
    CylinderSensor: CylinderSensorProxy,
    Delay: DelayProxy,
    DepthMode: DepthModeProxy,
+   DiffuseTransmissionMaterialExtension: DiffuseTransmissionMaterialExtensionProxy,
    DirectionalLight: DirectionalLightProxy,
    DISEntityManager: DISEntityManagerProxy,
    DISEntityTypeMapping: DISEntityTypeMappingProxy,
