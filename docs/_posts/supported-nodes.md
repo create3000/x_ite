@@ -417,6 +417,7 @@ Missing Nodes:
 - [BlendMode](/x_ite/components/x-ite/blendmode/) <small class="blue">experimental</small>
 - [ClearcoatMaterialExtension](/x_ite/components/x-ite/clearcoatmaterialextension/) <small class="blue">experimental</small>
 - [DepthMode](/x_ite/components/x-ite/depthmode/) <small class="blue">experimental</small>
+- [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) <small class="blue">experimental</small>
 - [DispersionMaterialExtension](/x_ite/components/x-ite/dispersionmaterialextension/) <small class="blue">experimental</small>
 - [EmissiveStrengthMaterialExtension](/x_ite/components/x-ite/emissivestrengthmaterialextension/) <small class="blue">experimental</small>
 - [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/) <small class="blue">experimental</small>

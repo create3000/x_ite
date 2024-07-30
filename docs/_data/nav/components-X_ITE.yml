@@ -8,6 +8,8 @@
       url: /components/x-ite/clearcoatmaterialextension/
     - title: "DepthMode"
       url: /components/x-ite/depthmode/
+    - title: "DiffuseTransmissionMaterialExtension"
+      url: /components/x-ite/diffusetransmissionmaterialextension/
     - title: "DispersionMaterialExtension"
       url: /components/x-ite/dispersionmaterialextension/
     - title: "EmissiveStrengthMaterialExtension"
