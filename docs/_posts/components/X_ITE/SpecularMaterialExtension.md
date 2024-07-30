@@ -13,7 +13,7 @@ tags: [SpecularMaterialExtension, X_ITE]
 
 ## Overview
 
-SpecularMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node. For this node to have an effect, add an [EnvironmentLight](../../lighting/environmentlight) node.
+SpecularMaterialExtension is an extension for the [PhysicalMaterial](../../shape/physicalmaterial/) and [SpecularGlossinessMaterial](../specularglossinessmaterial/) nodes. For this node to have an effect, add an [EnvironmentLight](../../lighting/environmentlight) node.
 
 The SpecularMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
 
