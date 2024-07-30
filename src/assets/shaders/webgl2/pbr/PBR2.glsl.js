@@ -152,9 +152,11 @@ getMaterialColor ()
 
       #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
          vec3 diffuseTransmissionIBL = getDiffuseLight (-n) * materialInfo .diffuseTransmissionColorFactor;
-      #if defined (X3D_VOLUME_MATERIAL_EXT)
-         diffuseTransmissionIBL = applyVolumeAttenuation (diffuseTransmissionIBL, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
-      #endif
+
+         #if defined (X3D_VOLUME_MATERIAL_EXT)
+            diffuseTransmissionIBL = applyVolumeAttenuation (diffuseTransmissionIBL, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+         #endif
+
          f_diffuse = mix (f_diffuse, diffuseTransmissionIBL, materialInfo .diffuseTransmissionFactor);
       #endif
 

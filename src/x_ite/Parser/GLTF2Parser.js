@@ -295,6 +295,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_pbrSpecularGlossiness":
             case "KHR_materials_anisotropy":
             case "KHR_materials_clearcoat":
+            case "KHR_materials_diffuse_transmission":
             case "KHR_materials_dispersion":
             case "KHR_materials_emissive_strength":
             case "KHR_materials_ior":
@@ -1135,6 +1136,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_clearcoat":
                this .khrMaterialsClearcoatObject (value, materialNode);
                break;
+            case "KHR_materials_diffuse_transmission":
+               this .khrMaterialsDiffuseTransmissionObject (value, materialNode);
+               break;
             case "KHR_materials_dispersion":
                this .khrMaterialsDispersionObject (value, materialNode);
                break;
@@ -1195,6 +1199,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       extension ._clearcoatNormalTexture        = this .textureInfo (KHR_materials_clearcoat .clearcoatNormalTexture);
       extension ._clearcoatNormalTextureMapping = this .textureMapping (KHR_materials_clearcoat .clearcoatNormalTexture);
+
+      extension .setup ();
+
+      materialNode ._extensions .push (extension);
+   },
+   khrMaterialsDiffuseTransmissionObject (KHR_materials_diffuse_transmission, materialNode)
+   {
+      if (!(KHR_materials_diffuse_transmission instanceof Object))
+         return;
+
+      const extension = this .getScene () .createNode ("DiffuseTransmissionMaterialExtension", false);
+
+      extension ._diffuseTransmission               = this .numberValue (KHR_materials_diffuse_transmission .diffuseTransmissionFactor, 0);
+      extension ._diffuseTransmissionTexture        = this .textureInfo (KHR_materials_diffuse_transmission .diffuseTransmissionTexture);
+      extension ._diffuseTransmissionTextureMapping = this .textureMapping (KHR_materials_diffuse_transmission .diffuseTransmissionTexture);
+
+      const diffuseTransmissionColorFactor = new Color3 ();
+
+      if (this .vectorValue (KHR_materials_diffuse_transmission .diffuseTransmissionColorFactor, diffuseTransmissionColorFactor))
+         extension ._diffuseTransmissionColor = diffuseTransmissionColorFactor;
+
+      extension ._diffuseTransmissionColorTexture        = this .textureInfo (KHR_materials_diffuse_transmission .diffuseTransmissionColorTexture);
+      extension ._diffuseTransmissionColorTextureMapping = this .textureMapping (KHR_materials_diffuse_transmission .diffuseTransmissionColorTexture);
 
       extension .setup ();
 

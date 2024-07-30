@@ -238,6 +238,32 @@ albedoSheenScalingLUT (const in float NdotV, const in float sheenRoughnessFactor
 }
 #endif
 
+#if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+
+${MaterialTextures .texture ("x3d_DiffuseTransmissionTextureEXT",      "a")}
+${MaterialTextures .texture ("x3d_DiffuseTransmissionColorTextureEXT", "rgb", "linear")}
+
+uniform float x3d_DiffuseTransmissionEXT;
+uniform vec3  x3d_DiffuseTransmissionColorEXT;
+
+MaterialInfo
+getDiffuseTransmissionInfo (in MaterialInfo info)
+{
+   info .diffuseTransmissionFactor      = x3d_DiffuseTransmissionEXT;
+   info .diffuseTransmissionColorFactor = x3d_DiffuseTransmissionColorEXT;
+
+   #if defined (X3D_DIFFUSE_TRANSMISSION_TEXTURE_EXT)
+      info .diffuseTransmissionFactor *= getDiffuseTransmissionTextureEXT ();
+   #endif
+
+   #if defined (X3D_DIFFUSE_TRANSMISSION_COLOR_TEXTURE_EXT)
+      info .diffuseTransmissionColorFactor *= getDiffuseTransmissionColorTextureEXT ();
+   #endif
+
+   return info;
+}
+#endif
+
 #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
 
 ${MaterialTextures .texture ("x3d_ClearcoatTextureEXT",          "r")}
