@@ -1,7 +1,7 @@
 /* X_ITE v10.1.0 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 967:
+/***/ 746:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 673:
+/***/ 484:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 885:
+/***/ 320:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 417:
+/***/ 132:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -7341,10 +7341,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(885);
-/* provided dependency */ var JpegImage = __webpack_require__(417);
-/* provided dependency */ var CharLS = __webpack_require__(967);
-/* provided dependency */ var OpenJPEG = __webpack_require__(673);
+/* provided dependency */ var dicomParser = __webpack_require__(320);
+/* provided dependency */ var JpegImage = __webpack_require__(132);
+/* provided dependency */ var CharLS = __webpack_require__(746);
+/* provided dependency */ var OpenJPEG = __webpack_require__(484);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

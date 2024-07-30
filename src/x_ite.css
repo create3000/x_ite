@@ -4,7 +4,30 @@
 
 @charset "utf-8";
 
-@import url("assets/fonts/PT_Sans/PTSans.css");
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url("assets/fonts/PT_Sans/PTSans-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url("assets/fonts/PT_Sans/PTSans-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: 'PT Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: url("assets/fonts/PT_Sans/PTSans-Italic.ttf") format("truetype");
+}
+@font-face {
+  font-family: 'PT Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: url("assets/fonts/PT_Sans/PTSans-BoldItalic.ttf") format("truetype");
+}
 
 :host,
 X3DCanvas {
