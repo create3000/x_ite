@@ -124,6 +124,10 @@ Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_i
 
 Single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
+### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non standard</small>
+
+Input/Output field *tangent*.
+
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
 Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
@@ -135,10 +139,6 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 #### Warning
 
 - *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
-
-### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non standard</small>
-
-Input/Output field *tangent*.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 

@@ -55,6 +55,10 @@ Single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoord
 
 Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
+### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non standard</small>
+
+Input/Output field *tangent*.
+
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
 Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
@@ -66,10 +70,6 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 #### Warning
 
 - *normal* vectors increase file size, typically doubling geometry definitions. [Normal](/x_ite/components/rendering/normal/) vectors are rapidly computed at run time by GPUs and thus are rarely needed in model files if no special effects are expected.
-
-### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non standard</small>
-
-Input/Output field *tangent*.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 
