@@ -59,22 +59,22 @@ import URLs          from "../../Browser/Networking/URLs.js";
 
 const Fonts = new Map ([
    ["SERIF", new Map ([
-      ["PLAIN",      URLs .getFontsURL ("DroidSerif-Regular.ttf")],
-      ["ITALIC",     URLs .getFontsURL ("DroidSerif-Italic.ttf")],
-      ["BOLD",       URLs .getFontsURL ("DroidSerif-Bold.ttf")],
-      ["BOLDITALIC", URLs .getFontsURL ("DroidSerif-BoldItalic.ttf")],
+      ["PLAIN",      URLs .getFontsURL ("Droid/DroidSerif-Regular.ttf")],
+      ["ITALIC",     URLs .getFontsURL ("Droid/DroidSerif-Italic.ttf")],
+      ["BOLD",       URLs .getFontsURL ("Droid/DroidSerif-Bold.ttf")],
+      ["BOLDITALIC", URLs .getFontsURL ("Droid/DroidSerif-BoldItalic.ttf")],
    ])],
    ["SANS", new Map ([
-      ["PLAIN",      URLs .getFontsURL ("Ubuntu-R.ttf")],
-      ["ITALIC",     URLs .getFontsURL ("Ubuntu-RI.ttf")],
-      ["BOLD",       URLs .getFontsURL ("Ubuntu-B.ttf")],
-      ["BOLDITALIC", URLs .getFontsURL ("Ubuntu-BI.ttf")],
+      ["PLAIN",      URLs .getFontsURL ("Ubuntu/Ubuntu-R.ttf")],
+      ["ITALIC",     URLs .getFontsURL ("Ubuntu/Ubuntu-RI.ttf")],
+      ["BOLD",       URLs .getFontsURL ("Ubuntu/Ubuntu-B.ttf")],
+      ["BOLDITALIC", URLs .getFontsURL ("Ubuntu/Ubuntu-BI.ttf")],
    ])],
    ["TYPEWRITER", new Map ([
-      ["PLAIN",      URLs .getFontsURL ("UbuntuMono-R.ttf")],
-      ["ITALIC",     URLs .getFontsURL ("UbuntuMono-RI.ttf")],
-      ["BOLD",       URLs .getFontsURL ("UbuntuMono-B.ttf")],
-      ["BOLDITALIC", URLs .getFontsURL ("UbuntuMono-BI.ttf")],
+      ["PLAIN",      URLs .getFontsURL ("Ubuntu/UbuntuMono-R.ttf")],
+      ["ITALIC",     URLs .getFontsURL ("Ubuntu/UbuntuMono-RI.ttf")],
+      ["BOLD",       URLs .getFontsURL ("Ubuntu/UbuntuMono-B.ttf")],
+      ["BOLDITALIC", URLs .getFontsURL ("Ubuntu/UbuntuMono-BI.ttf")],
    ])],
 ]);
 

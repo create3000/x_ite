@@ -1,7 +1,7 @@
 /* X_ITE v10.1.0 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 786:
+/***/ 163:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14717,22 +14717,22 @@ var URLs_default = /*#__PURE__*/__webpack_require__.n(URLs_namespaceObject);
 
 const Fonts = new Map ([
    ["SERIF", new Map ([
-      ["PLAIN",      URLs_default().getFontsURL ("DroidSerif-Regular.ttf")],
-      ["ITALIC",     URLs_default().getFontsURL ("DroidSerif-Italic.ttf")],
-      ["BOLD",       URLs_default().getFontsURL ("DroidSerif-Bold.ttf")],
-      ["BOLDITALIC", URLs_default().getFontsURL ("DroidSerif-BoldItalic.ttf")],
+      ["PLAIN",      URLs_default().getFontsURL ("Droid/DroidSerif-Regular.ttf")],
+      ["ITALIC",     URLs_default().getFontsURL ("Droid/DroidSerif-Italic.ttf")],
+      ["BOLD",       URLs_default().getFontsURL ("Droid/DroidSerif-Bold.ttf")],
+      ["BOLDITALIC", URLs_default().getFontsURL ("Droid/DroidSerif-BoldItalic.ttf")],
    ])],
    ["SANS", new Map ([
-      ["PLAIN",      URLs_default().getFontsURL ("Ubuntu-R.ttf")],
-      ["ITALIC",     URLs_default().getFontsURL ("Ubuntu-RI.ttf")],
-      ["BOLD",       URLs_default().getFontsURL ("Ubuntu-B.ttf")],
-      ["BOLDITALIC", URLs_default().getFontsURL ("Ubuntu-BI.ttf")],
+      ["PLAIN",      URLs_default().getFontsURL ("Ubuntu/Ubuntu-R.ttf")],
+      ["ITALIC",     URLs_default().getFontsURL ("Ubuntu/Ubuntu-RI.ttf")],
+      ["BOLD",       URLs_default().getFontsURL ("Ubuntu/Ubuntu-B.ttf")],
+      ["BOLDITALIC", URLs_default().getFontsURL ("Ubuntu/Ubuntu-BI.ttf")],
    ])],
    ["TYPEWRITER", new Map ([
-      ["PLAIN",      URLs_default().getFontsURL ("UbuntuMono-R.ttf")],
-      ["ITALIC",     URLs_default().getFontsURL ("UbuntuMono-RI.ttf")],
-      ["BOLD",       URLs_default().getFontsURL ("UbuntuMono-B.ttf")],
-      ["BOLDITALIC", URLs_default().getFontsURL ("UbuntuMono-BI.ttf")],
+      ["PLAIN",      URLs_default().getFontsURL ("Ubuntu/UbuntuMono-R.ttf")],
+      ["ITALIC",     URLs_default().getFontsURL ("Ubuntu/UbuntuMono-RI.ttf")],
+      ["BOLD",       URLs_default().getFontsURL ("Ubuntu/UbuntuMono-B.ttf")],
+      ["BOLDITALIC", URLs_default().getFontsURL ("Ubuntu/UbuntuMono-BI.ttf")],
    ])],
 ]);
 
@@ -16116,7 +16116,7 @@ Namespace_default().add ("FontStyle", "x_ite/Components/Text/FontStyle", FontSty
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(823);
-/* provided dependency */ var opentype = __webpack_require__(786);
+/* provided dependency */ var opentype = __webpack_require__(163);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
