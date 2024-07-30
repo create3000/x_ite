@@ -13,7 +13,7 @@ tags: [IORMaterialExtension, X_ITE]
 
 ## Overview
 
-IORMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node.
+IORMaterialExtension is an extension for [PhysicalMaterial](../../shape/physicalmaterial/) node and [SpecularGlossinessMaterial](../specularglossinessmaterial/) node. For this node to have an effect, add an [EnvironmentLight](../../lighting/environmentlight) node.
 
 The IORMaterialExtension node belongs to the **X_ITE** component and requires at least level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
 
