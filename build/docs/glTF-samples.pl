@@ -86,6 +86,8 @@ $string .= "\n";
 $string .= glTF ("glTF-IBL", ".gltf", "ibl");
 $string .= "\n";
 $string .= glTF ("glTF-KTX-BasisU", ".gltf", "ktx");
+$string .= "\n";
+$string .= glTF ("glTF-JPG-PNG", ".gltf", "jpg");
 $string .= "\n// SAMPLES_END";
 
 $viewer =~ s|// SAMPLES_BEGIN.*?// SAMPLES_END|$string|s;

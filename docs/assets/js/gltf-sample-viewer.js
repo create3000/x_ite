@@ -629,6 +629,11 @@ const ktx = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/StainedGlassLamp/glTF-KTX-BasisU/StainedGlassLamp.gltf",
 ];
 
+const jpg = [
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/StainedGlassLamp/glTF-JPG-PNG/StainedGlassLamp.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/StainedGlassLamp/glTF-JPG-PNG/StainedGlassLamp.gltf",
+];
+
 // SAMPLES_END
 
 $.try = function (callback)
@@ -658,7 +663,8 @@ class SampleViewer
       this .createList ("glTF Draco Sample Models",     draco);
       this .createList ("glTF Embedded Sample Models",  embedded);
       this .createList ("glTF IBL Sample Models",       ibl);
-      this .createList ("glTF KTX Sample Models",       ktx);
+      this .createList ("glTF KTX2 Sample Models",      ktx);
+      this .createList ("glTF JPG/PNG Sample Models",   jpg);
 
       $(".viewer-column2") .on ("scroll", () =>
       {
