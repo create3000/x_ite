@@ -2923,7 +2923,7 @@ interface AnchorProxy extends X3DGroupingNodeProxy, X3DUrlObjectProxy
    visible: boolean;
 }
 
-/** AnisotropyMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
+/** AnisotropyMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
 interface AnisotropyMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
 {
    /**
@@ -4602,7 +4602,7 @@ interface Circle2DProxy extends X3DGeometryNodeProxy
    radius: number;
 }
 
-/** ClearcoatMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
+/** ClearcoatMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
 interface ClearcoatMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
 {
    /**
@@ -6533,7 +6533,7 @@ interface Disk2DProxy extends X3DGeometryNodeProxy
    solid: boolean;
 }
 
-/** DispersionMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
+/** DispersionMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
 interface DispersionMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
 {
    /**
@@ -7034,7 +7034,7 @@ interface EmissiveStrengthMaterialExtensionProxy extends X3DMaterialExtensionNod
    metadata: SFNode | null;
 }
 
-/** EnvironmentLight ... This node only affects thePhysicalMaterial nodes and SpecularGlossinessMaterial nodes. */
+/** EnvironmentLight ... This node only affects the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
 interface EnvironmentLightProxy extends X3DLightNodeProxy
 {
    /**
@@ -10736,7 +10736,7 @@ interface IntegerTriggerProxy extends X3DTriggerNodeProxy
    readonly triggerValue: number;
 }
 
-/** IORMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
+/** IORMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
 interface IORMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
 {
    /**
@@ -10753,7 +10753,7 @@ interface IORMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
    metadata: SFNode | null;
 }
 
-/** IridescenceMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
+/** IridescenceMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
 interface IridescenceMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
 {
    /**
@@ -16303,7 +16303,7 @@ interface ShapeProxy extends X3DShapeNodeProxy
    visible: boolean;
 }
 
-/** SheenMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
+/** SheenMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
 interface SheenMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
 {
    /**
@@ -17083,7 +17083,7 @@ interface SpecularGlossinessMaterialProxy extends X3DOneSidedMaterialNodeProxy
    transparency: number;
 }
 
-/** SpecularMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
+/** SpecularMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
 interface SpecularMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
 {
    /**
@@ -18990,7 +18990,7 @@ interface TransformSensorProxy extends X3DEnvironmentalSensorNodeProxy
    targetObject: X3DGroupingNodeProxy | X3DShapeNodeProxy | null;
 }
 
-/** TransmissionMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
+/** TransmissionMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
 interface TransmissionMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
 {
    /**
@@ -20181,7 +20181,7 @@ interface VolumeEmitterProxy extends X3DParticleEmitterNodeProxy
    variation: number;
 }
 
-/** VolumeMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
+/** VolumeMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
 interface VolumeMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
 {
    /**
