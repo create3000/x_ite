@@ -265,7 +265,7 @@ getMaterialColor ()
             continue;
 
          vec3 dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (VdotH));
-         vec3 metal_fresnel      = F_Schlick (baseColo .rgb, vec3 (1.0), abs (VdotH));
+         vec3 metal_fresnel      = F_Schlick (baseColor .rgb, vec3 (1.0), abs (VdotH));
 
          // Calculation of analytical light
          // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
