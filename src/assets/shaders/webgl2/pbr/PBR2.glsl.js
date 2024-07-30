@@ -91,7 +91,7 @@ getMaterialColor ()
       materialInfo = getIridescenceInfo (materialInfo);
    #endif
 
-   #if defined (X3D_DIFFUSE_TRANSMISSION_EXT)
+   #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
       materialInfo = getDiffuseTransmissionInfo (materialInfo);
    #endif
 
@@ -135,7 +135,7 @@ getMaterialColor ()
          materialInfo .iridescenceFactor = 0.0;
    #endif
 
-   #if defined (X3D_DIFFUSE_TRANSMISSION_EXT)
+   #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
    #if defined (X3D_VOLUME_MATERIAL_EXT)
       diffuseTransmissionThickness = materialInfo.thickness * (length (vec3 (u_ModelMatrix[0] .xyz)) + length (vec3 (u_ModelMatrix[1] .xyz)) + length (vec3 (u_ModelMatrix[2] .xyz))) / 3.0;
    #endif
@@ -150,7 +150,7 @@ getMaterialColor ()
    #if defined (X3D_USE_IBL)
       f_diffuse = getDiffuseLight (n) * baseColor .rgb;
 
-      #if defined (X3D_DIFFUSE_TRANSMISSION_EXT)
+      #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
          vec3 diffuseTransmissionIBL = getDiffuseLight (-n) * materialInfo .diffuseTransmissionColorFactor;
       #if defined (X3D_VOLUME_MATERIAL_EXT)
          diffuseTransmissionIBL = applyVolumeAttenuation (diffuseTransmissionIBL, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
@@ -279,7 +279,7 @@ getMaterialColor ()
             vec3  l_sheen               = vec3 (0.0);
             float l_albedoSheenScaling  = 1.0;
 
-            #if defined (X3D_DIFFUSE_TRANSMISSION_EXT)
+            #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
                vec3 diffuse_btdf = lightIntensity * clamp (dot (-n, l), 0.0, 1.0) * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
 
                #if defined (X3D_VOLUME_MATERIAL_EXT)
@@ -287,7 +287,7 @@ getMaterialColor ()
                #endif
 
                l_diffuse = mix (l_diffuse, diffuse_btdf, materialInfo .diffuseTransmissionFactor);
-            #endif // X3D_DIFFUSE_TRANSMISSION_EXT
+            #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
             // BTDF (Bidirectional Transmittance Distribution Function)
             #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
