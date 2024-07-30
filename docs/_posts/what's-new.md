@@ -7,6 +7,14 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v10.2.0 Released
+
+*Leipzig, 4th August 2024:* This release comes with the following improvements:
+
+- Implemented KHR_materials_diffuse_transmission as [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) node.
+- Implemented KHR_mesh_quantization in glTF parser.
+- PhysicalMaterial node uses now glTF light equations.
+
 ## X_ITE v10.1.0 Released
 
 *Leipzig, 28th July 2024:* This release comes with a new [browser option](/x_ite/reference/browser-services/#browser-options) `TextCompression` which determines how [Text](/x_ite/components/text/text/).*length* and [Text](/x_ite/components/text/text/).*maxExtent* are handled, i.e. either by adjusting char spacing or by scaling. These are the two options suggested by the X3D specification, and we can now offer both to let the user choose which one they want. The option can be changed programmatically via `setBrowserOption` or via a new attribute of the \<x3d-canvas\> element.
