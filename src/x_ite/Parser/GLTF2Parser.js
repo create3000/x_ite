@@ -80,6 +80,7 @@ function GLTF2Parser (scene)
    this .extensions            = new Set ();
    this .envLights             = [ ];
    this .lights                = [ ];
+   this .lightNodes            = [ ];
    this .usedLights            = 0;
    this .materialVariants      = [ ];
    this .materialVariantNodes  = [ ];
@@ -216,7 +217,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .viewpointsCenterOfRotation (this .getScene ());
       this .optimizeSceneGraph (this .getScene () .getRootNodes ());
-      this .viewpointsGroup ();
+
+      this .exportGroup ("Viewpoints", this .viewpointNodes);
+      this .exportGroup ("Lights",     this .lightNodes);
+
       this .materialVariantsSwitch ();
 
       return this .getScene ();
@@ -433,6 +437,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       lightNode .setup ();
 
+      this .lightNodes .push (lightNode);
+
       return light .node = lightNode;
    },
    khrLightsPunctualObject (KHR_lights_punctual)
@@ -478,6 +484,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
       scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
+
+      this .lightNodes .push (lightNode);
 
       return light .node = lightNode;
    },
@@ -2234,20 +2242,20 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       return this .nodeChildrenArray (nodes);
    },
-   viewpointsGroup ()
+   exportGroup (name, nodes)
    {
-      if (!this .viewpointNodes .length)
+      if (!nodes .length)
          return;
 
       const
          scene     = this .getScene (),
          groupNode = scene .createNode ("Group", false);
 
-      scene .addNamedNode    (scene .getUniqueName       ("Viewpoints"), groupNode);
-      scene .addExportedNode (scene .getUniqueExportName ("Viewpoints"), groupNode);
+      scene .addNamedNode    (scene .getUniqueName       (name), groupNode);
+      scene .addExportedNode (scene .getUniqueExportName (name), groupNode);
 
       groupNode ._visible  = false;
-      groupNode ._children = this .viewpointNodes;
+      groupNode ._children = nodes;
 
       groupNode .setup ();
 
