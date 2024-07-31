@@ -16,11 +16,12 @@ applyIorToRoughness (const in float roughness, const in float ior)
 float
 getAttenuationPBR (const in vec3 attenuation, const in float distanceToLight, const in float radius)
 {
-   if (radius <= 0.0)
-      return 1.0 / dot (attenuation, vec3 (1.0, distanceToLight, distanceToLight * distanceToLight));
+   float d = dot (attenuation, vec3 (1.0, distanceToLight, distanceToLight * distanceToLight));
 
-   return max (min (1.0 - pow (distanceToLight / radius, 4.0), 1.0), 0.0)
-      / dot (attenuation, vec3 (1.0, distanceToLight, distanceToLight * distanceToLight));
+   if (radius <= 0.0)
+      return 1.0 / d;
+
+   return max (min (1.0 - pow (distanceToLight / radius, 4.0), 1.0), 0.0) / d;
 }
 
 vec3
