@@ -14,10 +14,13 @@ applyIorToRoughness (const in float roughness, const in float ior)
 #pragma X3D include "../common/Lighting.glsl"
 
 float
-getAttenuationPBR (const in vec3 attenuation, const in float distanceToLight)
+getAttenuationPBR (const in vec3 attenuation, const in float distanceToLight, const in float radius)
 {
-   // Modified version without max, comes closer to original PBR equation.
-   return 1.0 / dot (attenuation, vec3 (1.0, distanceToLight, distanceToLight * distanceToLight));
+   if (radius <= 0.0)
+      return 1.0 / dot (attenuation, vec3 (1.0, distanceToLight, distanceToLight * distanceToLight));
+
+   return max (min (1.0 - pow (distanceToLight / radius, 4.0), 1.0), 0.0)
+      / dot (attenuation, vec3 (1.0, distanceToLight, distanceToLight * distanceToLight));
 }
 
 vec3
@@ -28,7 +31,7 @@ getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 point
 
    if (light .type != x3d_DirectionalLight)
    {
-      attenuationFactor = getAttenuationPBR (light .attenuation, distanceToLight);
+      attenuationFactor = getAttenuationPBR (light .attenuation, distanceToLight, light .radius);
    }
 
    if (light .type == x3d_SpotLight)
