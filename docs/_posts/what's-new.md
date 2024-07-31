@@ -13,7 +13,6 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 - Implemented KHR_materials_diffuse_transmission as [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) node.
 - Implemented KHR_mesh_quantization in glTF parser.
-- PhysicalMaterial node uses now glTF light equations.
 
 ## X_ITE v10.1.0 Released
 
