@@ -13,7 +13,7 @@ tags: [EnvironmentLight, Lighting]
 
 ## Overview
 
-EnvironmentLight ...
+EnvironmentLight is a light node for [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) and [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) nodes.
 
 The EnvironmentLight node belongs to the **Lighting** component and its default container field is *children.* It is available since X3D version 4.0 or later.
 
