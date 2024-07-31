@@ -2295,22 +2295,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          .map (animation => this .animationObject (animation))
          .filter (node => node);
 
-      if (!animationNodes .length)
-         return;
-
-      const
-         scene     = this .getScene (),
-         groupNode = scene .createNode ("Group", false);
-
-      scene .addNamedNode    (scene .getUniqueName       ("Animations"), groupNode);
-      scene .addExportedNode (scene .getUniqueExportName ("Animations"), groupNode);
-
-      groupNode ._visible  = false;
-      groupNode ._children = animationNodes;
-
-      groupNode .setup ();
-
-      scene .getRootNodes () .push (groupNode);
+      this .exportGroup ("Animations", animationNodes);
    },
    animationObject (animation)
    {
