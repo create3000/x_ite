@@ -260,10 +260,6 @@ getMaterialColor ()
          float NdotH = clamp (dot (n, h), 0.0, 1.0);
          float VdotH = clamp (dot (v, h), 0.0, 1.0);
 
-         // Holger: added this.
-         if (NdotL == 0.0)
-            continue;
-
          vec3 dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (VdotH));
          vec3 metal_fresnel      = F_Schlick (baseColor .rgb, vec3 (1.0), abs (VdotH));
 
