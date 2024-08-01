@@ -455,7 +455,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Convert coordinate system handedness to respect output format of MikkTSpace.
       for (let i = 3; i < length; i += 4)
-         tangents [i] = -tangents [i]; // Flip w-channel
+         tangents [i] = -tangents [i]; // Flip w-channel.
 
       this .tangents .assign (tangents);
       this .tangents .shrinkToFit ();

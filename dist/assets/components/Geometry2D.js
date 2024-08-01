@@ -1512,7 +1512,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (X3DGeometryNode_defa
    {
       this .intersectsLine         = base .prototype .intersectsLine;
       this .intersectsBox          = base .prototype .intersectsBox;
-      this .buildTexCoords         = base .prototype .buildTexCoords;
+      this .generateTexCoords         = base .prototype .generateTexCoords;
       this .displaySimple          = base .prototype .displaySimple;
       this .display                = base .prototype .display;
       this .displaySimpleInstanced = base .prototype .displaySimpleInstanced;
@@ -2029,7 +2029,7 @@ Object .assign (Object .setPrototypeOf (TriangleSet2D .prototype, (X3DGeometryNo
 
       this .setSolid (this ._solid .getValue ());
    },
-   buildTexCoords ()
+   generateTexCoords ()
    {
       const texCoordArray = this .getTexCoords ();
 
