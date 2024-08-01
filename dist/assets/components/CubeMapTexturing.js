@@ -2,7 +2,7 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 823:
+/***/ 204:
 /***/ ((module) => {
 
 module.exports = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("lib/jquery");
@@ -1097,7 +1097,7 @@ var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject
 const DEVELOPMENT_namespaceObject = window [Symbol .for ("X_ITE.X3D-10.1.0")] .require ("x_ite/DEVELOPMENT");
 var DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(DEVELOPMENT_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js
-/* provided dependency */ var $ = __webpack_require__(823);
+/* provided dependency */ var $ = __webpack_require__(204);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
