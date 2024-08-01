@@ -57,9 +57,9 @@ getNormalInfo (const in float normalScale)
    // For a back-facing surface, the tangential basis vectors are negated.
    if (gl_FrontFacing == false)
    {
-      t  *= -1.0;
-      b  *= -1.0;
-      ng *= -1.0;
+      t  = -t;
+      b  = -b;
+      ng = -ng;
    }
 
    // Compute normals:
