@@ -7,12 +7,14 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+<!--
 ## X_ITE v10.2.0 Released
 
 *Leipzig, 4th August 2024:* This release comes with the following improvements:
 
 - Implemented KHR_materials_diffuse_transmission as [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) node.
 - Implemented KHR_mesh_quantization in glTF parser.
+-->
 
 ## X_ITE v10.1.0 Released
 
