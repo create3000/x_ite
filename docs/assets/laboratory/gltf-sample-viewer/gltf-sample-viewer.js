@@ -792,7 +792,7 @@ class SampleViewer
       this .setBackground (this .localStorage .background);
       this .addScenes ();
       this .addViewpoints ();
-      this .addVariants ();
+      this .addMaterialVariants ();
       this .addAnimations ();
    }
 
@@ -1009,7 +1009,7 @@ class SampleViewer
       $("#viewpoints") .show ();
    }
 
-   addVariants ()
+   addMaterialVariants ()
    {
       const switchNode = $.try (() => this .scene .getExportedNode ("MaterialVariants"));
 
@@ -1027,10 +1027,15 @@ class SampleViewer
          })
          .appendTo ($("#material-variants"));
 
+      $("<option></option>")
+         .prop ("selected", true)
+         .val (switchNode .getValue () .getMetaData ("MaterialVariants/names") .length)
+         .text ("None")
+         .appendTo (select);
+
       for (const [i, name] of switchNode .getValue () .getMetaData ("MaterialVariants/names") .entries ())
       {
          $("<option></option>")
-            .prop ("selected", i === 0)
             .val (i)
             .text (name)
             .appendTo (select);

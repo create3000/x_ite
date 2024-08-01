@@ -1513,7 +1513,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions, shapeNode);
 
       if (variantsNode)
+      {
+         for (const i of variantsNode ._children .keys ())
+         {
+            if (!variantsNode ._children [i])
+               variantsNode ._children [i] = shapeNode;
+         }
+
+         // Last child ist default material.
          variantsNode ._children [this .materialVariants .length] = shapeNode;
+      }
 
       shapeNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
    },
@@ -1717,10 +1726,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene        = this .getScene (),
          variantsNode = scene .createNode ("Switch", false);
 
-      variantsNode ._whichChoice = 0;
-
       for (const mapping of mappings)
          this .khrMaterialsVariantsObjectMapping (mapping, shapeNode, variantsNode);
+
+      variantsNode ._whichChoice = this .materialVariants .length;
 
       variantsNode .setup ();
 
