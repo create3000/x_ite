@@ -132,10 +132,7 @@ let promise;
 
 async function init ()
 {
-   if (promise)
-      return promise;
-
-   return promise = new Promise (async resolve =>
+   return promise = promise ?? new Promise (async resolve =>
    {
       const imports =
       {
