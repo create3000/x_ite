@@ -541,6 +541,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 /* Spinner */
 
 .x_ite-private-splash-screen {
+  pointer-events: none;
   position: absolute;
   top: 0;
   right: 0;
