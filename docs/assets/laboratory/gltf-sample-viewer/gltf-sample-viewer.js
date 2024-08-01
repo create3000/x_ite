@@ -48,6 +48,7 @@ const ibl_files = [
    "NormalTangentTest",
    "PotOfCoals",
    "PrimitiveModeNormalsTest",
+   "RecursiveSkeletons",
    "Sheen",
    "SimpleInstancing",
    "SpecGlossVsMetalRough",
