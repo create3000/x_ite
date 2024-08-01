@@ -444,6 +444,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    })(),
    async generateTangents ()
    {
+      if (this .geometryType < 2)
+         return;
+
       await MikkTSpace .init ();
 
       const
