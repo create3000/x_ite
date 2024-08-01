@@ -1514,6 +1514,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (variantsNode)
       {
+         // Fall back to default material if no active variant.
          for (const i of variantsNode ._children .keys ())
          {
             if (!variantsNode ._children [i])
