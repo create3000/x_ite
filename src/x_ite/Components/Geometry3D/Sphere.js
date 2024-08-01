@@ -81,6 +81,7 @@ Object .assign (Object .setPrototypeOf (Sphere .prototype, X3DGeometryNode .prot
          radius   = Math .abs (this ._radius .getValue ());
 
       this .setMultiTexCoords (geometry .getMultiTexCoords ());
+      this .setTangents       (geometry .getTangents ());
       this .setNormals        (geometry .getNormals ());
 
       if (radius === 1)

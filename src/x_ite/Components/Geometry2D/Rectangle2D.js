@@ -77,6 +77,7 @@ Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, X3DGeometryNode 
             size     = this ._size .getValue ();
 
          this .setMultiTexCoords (geometry .getMultiTexCoords ());
+         this .setTangents       (geometry .getTangents ());
          this .setNormals        (geometry .getNormals ());
 
          if (size .equals (defaultSize))

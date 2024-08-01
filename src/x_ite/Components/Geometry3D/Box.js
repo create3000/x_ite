@@ -75,6 +75,7 @@ Object .assign (Object .setPrototypeOf (Box .prototype, X3DGeometryNode .prototy
             size     = this ._size .getValue ();
 
          this .setMultiTexCoords (geometry .getMultiTexCoords ());
+         this .setTangents       (geometry .getTangents ());
          this .setNormals        (geometry .getNormals ());
 
          if (size .equals (defaultSize))
