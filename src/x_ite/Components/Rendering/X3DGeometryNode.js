@@ -447,6 +447,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       if (this .geometryType < 2)
          return;
 
+      if (!this .vertices .getValue () .length)
+         return;
+
       await MikkTSpace .init ();
 
       const
