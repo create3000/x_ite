@@ -12,31 +12,6 @@ struct NormalInfo
 uniform x3d_NormalTextureParameters x3d_NormalTexture;
 #endif
 
-#if !defined (X3D_TANGENTS)
-mat3
-generateTBN (const in vec3 normal)
-{
-   vec3  bitangent = vec3 (0.0, 1.0, 0.0);
-   float NdotUp    = dot (normal, vec3 (0.0, 1.0, 0.0));
-   float epsilon   = 0.0000001;
-
-   if (1.0 - abs (NdotUp) <= epsilon)
-   {
-      // Sampling +Y or -Y, so we need a more robust bitangent.
-      if (NdotUp > 0.0)
-         bitangent = vec3 (0.0, 0.0, 1.0);
-      else
-         bitangent = vec3 (0.0, 0.0, -1.0);
-   }
-
-   vec3 tangent = normalize (cross (bitangent, normal));
-
-   bitangent = cross (normal, tangent);
-
-   return mat3 (tangent, bitangent, normal);
-}
-#endif
-
 NormalInfo
 getNormalInfo (const in float normalScale)
 {
@@ -46,6 +21,8 @@ getNormalInfo (const in float normalScale)
       #if defined (X3D_NORMAL_TEXTURE_FLIP_Y)
          UV .t = 1.0 - UV .t;
       #endif
+   #else
+      vec3 UV = vec3 (0.0);
    #endif
 
    vec3 n, t, b, ng;
@@ -58,27 +35,23 @@ getNormalInfo (const in float normalScale)
       b  = normalize (TBN [1]);
       ng = normalize (TBN [2]);
    #else
-      mat3 TBN = generateTBN (normalize (normal));
+      vec2 uv_dx = dFdx (UV .st);
+      vec2 uv_dy = dFdy (UV .st);
 
-      t  = TBN [0];
-      b  = TBN [1];
-      ng = TBN [2];
+      if (length (uv_dx) <= 1e-2)
+         uv_dx = vec2 (1.0, 0.0);
 
-      // vec2 uv_dx = dFdx (UV .st);
-      // vec2 uv_dy = dFdy (UV .st);
+      if (length (uv_dy) <= 1e-2)
+         uv_dy = vec2 (0.0, 1.0);
 
-      // if (length (uv_dx) <= 1e-2)
-      //    uv_dx = vec2 (1.0, 0.0);
+      // TODO: Unfortunately, if we use vertex in dFdx/dFdy, we can see the hard faces in the TBN.
+      // This can only be solved with precomputed tangents.
+      vec3 t_ = (uv_dy .t * dFdx (vertex) - uv_dx .t * dFdy (vertex)) / (uv_dx .s * uv_dy .t - uv_dy .s * uv_dx .t);
 
-      // if (length (uv_dy) <= 1e-2)
-      //    uv_dy = vec2 (0.0, 1.0);
-
-      // vec3 t_ = (uv_dy .t * dFdx (vertex) - uv_dx .t * dFdy (vertex)) / (uv_dx .s * uv_dy .t - uv_dy .s * uv_dx .t);
-
-      // // Normals are either present as vertex attributes or approximated.
-      // ng = normalize (normal);
-      // t  = normalize (t_ - ng * dot (ng, t_));
-      // b  = cross (ng, t);
+      // Normals are either present as vertex attributes or approximated.
+      ng = normalize (normal);
+      t  = normalize (t_ - ng * dot (ng, t_));
+      b  = cross (ng, t);
    #endif
 
    // For a back-facing surface, the tangential basis vectors are negated.
