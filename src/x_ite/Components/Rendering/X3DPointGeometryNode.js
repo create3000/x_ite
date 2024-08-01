@@ -69,7 +69,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    {
       return false;
    },
-   buildTexCoords ()
+   generateTexCoords ()
    { },
    display (gl, renderContext)
    {

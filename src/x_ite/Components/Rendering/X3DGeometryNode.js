@@ -49,6 +49,7 @@ import Fields       from "../../Fields.js";
 import VertexArray  from "../../Rendering/VertexArray.js";
 import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import MikkTSpace   from "../../Browser/Rendering/MikkTSpace.js";
 import Shading      from "../../Browser/Core/Shading.js";
 import Vector2      from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
@@ -360,7 +361,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       this .updateInstances = true;
    },
-   buildTexCoords ()
+   generateTexCoords ()
    {
       const texCoords = this .texCoords;
 
@@ -441,6 +442,24 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          return texCoordParams;
       };
    })(),
+   async generateTangents ()
+   {
+      await MikkTSpace .init ();
+
+      const
+         vertices  = this .vertices .getValue () .filter ((v, i) => i % 4 < 3),
+         normals   = this .normals .getValue (),
+         texCoords = this .multiTexCoords [0] .getValue () .filter ((v, i) => i % 4 < 2),
+         tangents  = MikkTSpace .generateTangents (vertices, normals, texCoords),
+         length    = tangents .length;
+
+      // Convert coordinate system handedness to respect output format of MikkTSpace.
+      for (let i = 3; i < length; i += 4)
+         tangents [i] = -tangents [i]; // Flip w-channel
+
+      this .tangents .assign (tangents);
+      this .tangents .shrinkToFit ();
+   },
    refineNormals (normalIndex, normals, creaseAngle)
    {
       if (creaseAngle === 0)
@@ -781,7 +800,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       const point = new Vector3 ();
 
-      return function ()
+      return async function ()
       {
          this .clear ();
          this .build ();
@@ -835,8 +854,12 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          // Generate texCoord if needed.
 
-         if (this .multiTexCoords .length === 0)
-            this .buildTexCoords ();
+         if (!this .multiTexCoords .length)
+            this .generateTexCoords ();
+
+         // Generate tangents if needed.
+         if (!this .tangents .length)
+            await this .generateTangents ();
 
          // Transfer arrays and update.
 

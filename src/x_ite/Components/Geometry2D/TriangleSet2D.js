@@ -79,7 +79,7 @@ Object .assign (Object .setPrototypeOf (TriangleSet2D .prototype, X3DGeometryNod
 
       this .setSolid (this ._solid .getValue ());
    },
-   buildTexCoords ()
+   generateTexCoords ()
    {
       const texCoordArray = this .getTexCoords ();
 

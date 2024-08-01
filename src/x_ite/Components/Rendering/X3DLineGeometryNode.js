@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       this .thickLinesVertexArrayObject .update ();
    },
-   buildTexCoords ()
+   generateTexCoords ()
    {
       // Line stipple support.
 
