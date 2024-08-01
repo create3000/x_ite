@@ -994,7 +994,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       appearanceNode ._alphaMode        = this .stringValue (material .alphaMode, "OPAQUE");
       appearanceNode ._alphaCutoff      = this .numberValue (material .alphaCutoff, 0.5);
       appearanceNode ._material         = this .khrMaterialsUnlitObject (material .extensions ?.KHR_materials_unlit, materialNode);
-      appearanceNode ._textureTransform = this .createMultiTextureTransform (materialNode);
+      appearanceNode ._textureTransform = this .createMultiTextureTransform (appearanceNode ._material .getValue ());
 
       appearanceNode .setup ();
 
