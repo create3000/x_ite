@@ -208,8 +208,8 @@ BRDF_specularGGXAnisotropy (const in float alphaRoughness, const in float anisot
     float at = mix (alphaRoughness, 1.0, anisotropy * anisotropy);
     float ab = clamp (alphaRoughness, 0.001, 1.0);
 
-    float NdotL = clamp (dot(n, l), 0.0, 1.0);
-    float NdotH = clamp (dot(n, h), 0.001, 1.0);
+    float NdotL = clamp (dot (n, l), 0.0, 1.0);
+    float NdotH = clamp (dot (n, h), 0.001, 1.0);
     float NdotV = dot (n, v);
 
     float V = V_GGX_anisotropic (NdotL, NdotV, dot (b, v), dot (t, v), dot (t, l), dot (b, l), at, ab);
