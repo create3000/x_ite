@@ -99,9 +99,9 @@ function X3DGeometryNode (executionContext)
    this .texCoords                = X3DGeometryNode .createArray ();
    this .fogDepths                = X3DGeometryNode .createArray ();
    this .colors                   = X3DGeometryNode .createArray ();
+   this .tangents                 = X3DGeometryNode .createArray ();
    this .normals                  = X3DGeometryNode .createArray ();
    this .flatNormals              = X3DGeometryNode .createArray ();
-   this .tangents                 = X3DGeometryNode .createArray ();
    this .vertices                 = X3DGeometryNode .createArray ();
    this .hasFogCoords             = false;
    this .hasNormals               = false;
@@ -181,8 +181,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .texCoordBuffers       = Array .from ({length: browser .getMaxTexCoords ()}, () => gl .createBuffer ());
       this .fogDepthBuffer        = gl .createBuffer ();
       this .colorBuffer           = gl .createBuffer ();
-      this .normalBuffer          = gl .createBuffer ();
       this .tangentBuffer         = gl .createBuffer ();
+      this .normalBuffer          = gl .createBuffer ();
       this .vertexBuffer          = gl .createBuffer ();
       this .vertexArrayObject     = new VertexArray (gl);
 
@@ -331,14 +331,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       this .textureCoordinateNode .getTextureCoordinateMapping (this .textureCoordinateMapping);
    },
-   setNormals (value)
-   {
-      this .normals .assign (value);
-   },
-   getNormals ()
-   {
-      return this .normals;
-   },
    setTangents (value)
    {
       this .tangents .assign (value);
@@ -346,6 +338,14 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    getTangents ()
    {
       return this .tangents;
+   },
+   setNormals (value)
+   {
+      this .normals .assign (value);
+   },
+   getNormals ()
+   {
+      return this .normals;
    },
    setVertices (value)
    {
@@ -822,8 +822,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .coordIndices .shrinkToFit ();
          this .fogDepths    .shrinkToFit ();
          this .colors       .shrinkToFit ();
-         this .normals      .shrinkToFit ();
          this .tangents     .shrinkToFit ();
+         this .normals      .shrinkToFit ();
          this .vertices     .shrinkToFit ();
 
          // Determine bbox.
@@ -905,8 +905,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .colors         .length = 0;
       this .multiTexCoords .length = 0;
       this .texCoords      .length = 0;
-      this .normals        .length = 0;
       this .tangents       .length = 0;
+      this .normals        .length = 0;
       this .flatNormals    .length = 0;
       this .vertices       .length = 0;
    },
@@ -962,17 +962,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .DYNAMIC_DRAW);
       }
 
-      // Transfer normals or flat normals.
-
-      const lastHasNormals = this .hasNormals;
-
-      this .set_shading__ (this .getBrowser () .getBrowserOptions () ._Shading);
-
-      this .hasNormals = !! this .normals .length;
-
-      if (this .hasNormals !== lastHasNormals)
-         this .updateVertexArrays ();
-
       // Transfer tangents.
 
       const lastHasTangents = this .hasTangents;
@@ -983,6 +972,17 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .hasTangents = !! this .tangents .length;
 
       if (this .hasTangents !== lastHasTangents)
+         this .updateVertexArrays ();
+
+      // Transfer normals or flat normals.
+
+      const lastHasNormals = this .hasNormals;
+
+      this .set_shading__ (this .getBrowser () .getBrowserOptions () ._Shading);
+
+      this .hasNormals = !! this .normals .length;
+
+      if (this .hasNormals !== lastHasNormals)
          this .updateVertexArrays ();
 
       // Transfer vertices.
