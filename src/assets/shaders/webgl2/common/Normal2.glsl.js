@@ -65,6 +65,22 @@ getNormalInfo (const in float normalScale)
       t  = TBN [0];
       b  = TBN [1];
       ng = TBN [2];
+
+      // vec2 uv_dx = dFdx (UV .st);
+      // vec2 uv_dy = dFdy (UV .st);
+
+      // if (length (uv_dx) <= 1e-2)
+      //    uv_dx = vec2 (1.0, 0.0);
+
+      // if (length (uv_dy) <= 1e-2)
+      //    uv_dy = vec2 (0.0, 1.0);
+
+      // vec3 t_ = (uv_dy .t * dFdx (vertex) - uv_dx .t * dFdy (vertex)) / (uv_dx .s * uv_dy .t - uv_dy .s * uv_dx .t);
+
+      // // Normals are either present as vertex attributes or approximated.
+      // ng = normalize (normal);
+      // t  = normalize (t_ - ng * dot (ng, t_));
+      // b  = cross (ng, t);
    #endif
 
    // For a back-facing surface, the tangential basis vectors are negated.
