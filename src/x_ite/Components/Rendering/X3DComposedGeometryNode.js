@@ -258,12 +258,12 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
       // Autogenerate normal if not specified.
 
       if (!this .getNormal ())
-         this .buildNormals (verticesPerPolygon, polygonsSize, trianglesSize);
+         this .generateNormals (verticesPerPolygon, polygonsSize, trianglesSize);
 
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
    },
-   buildNormals (verticesPerPolygon, polygonsSize, trianglesSize)
+   generateNormals (verticesPerPolygon, polygonsSize, trianglesSize)
    {
       const
          normals     = this .createNormals (verticesPerPolygon, polygonsSize),

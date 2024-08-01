@@ -227,7 +227,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       }
 
       this .buildNurbsTexCoords (uClosed, vClosed, this ._uOrder .getValue (), this ._vOrder .getValue (), uKnots, vKnots, this ._uDimension .getValue (), this ._vDimension .getValue (), surface .domain);
-      this .buildNormals (faces, points);
+      this .generateNormals (faces, points);
       this .setSolid (this ._solid .getValue ());
       this .setCCW (true);
    },
@@ -308,7 +308,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
          this .getMultiTexCoords () .push (this .getTexCoords ());
       };
    })(),
-   buildNormals (faces, points)
+   generateNormals (faces, points)
    {
       const
          normals     = this .createNormals (faces, points),

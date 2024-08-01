@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
       // Autogenerate normals if not specified.
 
       if (!this .getNormal ())
-         this .buildNormals (polygons);
+         this .generateNormals (polygons);
 
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
@@ -291,7 +291,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
          Triangle3 .triangulatePolygon (polygon, triangles);
       };
    })(),
-   buildNormals (polygons)
+   generateNormals (polygons)
    {
       const
          normals     = this .createNormals (polygons),
