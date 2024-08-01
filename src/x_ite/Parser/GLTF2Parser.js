@@ -1719,8 +1719,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       variantsNode ._whichChoice = this .materialVariants .length;
 
-      variantsNode .setup ();
-
       if (!variantsNode ._children .length)
          return;
 
@@ -1733,6 +1731,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (!variantsNode ._children [i])
             variantsNode ._children [i] = shapeNode;
       }
+
+      variantsNode .setup ();
 
       this .materialVariantNodes .push (variantsNode);
 
