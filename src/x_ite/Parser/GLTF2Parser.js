@@ -1724,15 +1724,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!variantsNode ._children .length)
          return;
 
+      // Last child ist default material.
+      variantsNode ._children [this .materialVariants .length] = shapeNode;
+
       // Fall back to default material if no active variant.
       for (const i of variantsNode ._children .keys ())
       {
          if (!variantsNode ._children [i])
             variantsNode ._children [i] = shapeNode;
       }
-
-      // Last child ist default material.
-      variantsNode ._children [this .materialVariants .length] = shapeNode;
 
       this .materialVariantNodes .push (variantsNode);
 
