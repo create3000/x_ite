@@ -46,6 +46,7 @@ const ibl_files = [
    "NeilArmstrong",
    "NormalTangentMirrorTest",
    "NormalTangentTest",
+   "OrientationTest",
    "PotOfCoals",
    "PrimitiveModeNormalsTest",
    "RecursiveSkeletons",
