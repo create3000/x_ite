@@ -49,6 +49,7 @@ import de from "./de.js";
 import fr from "./fr.js";
 
 const locales = new Map ([
+   ["en", undefined], // default language
    ["de", de],
    ["fr", fr],
 ]);
@@ -59,7 +60,7 @@ function getLanguage ()
    {
       const language = value .split ("-") [0];
 
-      if (locales .get (language))
+      if (locales .has (language))
          return language;
    }
 
