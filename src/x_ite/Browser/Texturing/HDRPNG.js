@@ -99,13 +99,13 @@ async function loadHDR (gl, buffer)
    }
 
    const
-      data    = _rgbeToFloat (img),
-      texture = gl .createTexture (),
-      max     = data .reduce ((a, b) => Math .max (a, b), 0),
-      intData = Uint8Array .from (data, v => Math .round (v / max * 255));
+      data       = _rgbeToFloat (img),
+      texture    = gl .createTexture (),
+      max        = data .reduce ((a, b) => Math .max (a, b), 0),
+      normalized = Uint8Array .from (data, v => Math .round (v / max * 255));
 
    gl .bindTexture (gl .TEXTURE_2D, texture);
-   gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB, width, height, 0, gl .RGB, gl .UNSIGNED_BYTE, intData);
+   gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB, width, height, 0, gl .RGB, gl .UNSIGNED_BYTE, normalized);
 
    return {
       texture: texture,
