@@ -424,7 +424,7 @@ Object .assign (X3DTexturingContext .prototype,
    },
    loadHDR (buffer)
    {
-      return loadHDR (buffer);
+      return loadHDR (this .getContext (), buffer);
    },
 });
 

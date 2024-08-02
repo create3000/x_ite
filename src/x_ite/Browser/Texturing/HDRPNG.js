@@ -4,21 +4,26 @@
  * Refactored and simplified.
  */
 
-function _rgbeToFloat(buffer) {
-   const length = buffer.byteLength >> 2;
-   const result = new Float32Array(length * 3);
+function _rgbeToFloat (buffer)
+{
+   const
+      length = buffer .byteLength >> 2,
+      result = new Float32Array (length * 3);
 
-   for (let i = 0; i < length; i++) {
-      const s = Math.pow(2, buffer[i * 4 + 3] - (128 + 8));
+   for (let i = 0; i < length; i++)
+   {
+      const s = Math .pow (2, buffer [i * 4 + 3] - (128 + 8));
 
-      result[i * 3] = buffer[i * 4] * s;
-      result[i * 3 + 1] = buffer[i * 4 + 1] * s;
-      result[i * 3 + 2] = buffer[i * 4 + 2] * s;
+      result[i * 3]     = buffer [i * 4] * s;
+      result[i * 3 + 1] = buffer [i * 4 + 1] * s;
+      result[i * 3 + 2] = buffer [i * 4 + 2] * s;
    }
+
    return result;
 }
 
-async function loadHDR(buffer) {
+async function loadHDR (gl, buffer)
+{
    let header = '';
    let pos = 0;
    const d8 = buffer;
@@ -93,10 +98,17 @@ async function loadHDR(buffer) {
       }
    }
 
-   const data = _rgbeToFloat(img);
+   const
+      data    = _rgbeToFloat (img),
+      texture = gl .createTexture (),
+      max     = data .reduce ((a, b) => Math .max (a, b), 0),
+      intData = Uint8Array .from (data, v => Math .round (v / max * 255));
+
+   gl .bindTexture (gl .TEXTURE_2D, texture);
+   gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB, width, height, 0, gl .RGB, gl .UNSIGNED_BYTE, intData);
 
    return {
-      data: data,
+      texture: texture,
       width: width,
       height: height
    };
