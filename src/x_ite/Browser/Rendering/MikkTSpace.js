@@ -75,97 +75,107 @@ function getInt32Memory0() {
 function getArrayF32FromWasm0(ptr, len) {
    return getFloat32Memory0().subarray(ptr / 4, ptr / 4 + len);
 }
-/**
-* Generates vertex tangents for the given position/normal/texcoord attributes.
-* @param {Float32Array} position
-* @param {Float32Array} normal
-* @param {Float32Array} texcoord
-* @returns {Float32Array}
-*/
-function generateTangents(position, normal, texcoord) {
-   try {
-       const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-       const ptr0 = passArrayF32ToWasm0(position, wasm.__wbindgen_malloc);
-       const len0 = WASM_VECTOR_LEN;
-       const ptr1 = passArrayF32ToWasm0(normal, wasm.__wbindgen_malloc);
-       const len1 = WASM_VECTOR_LEN;
-       const ptr2 = passArrayF32ToWasm0(texcoord, wasm.__wbindgen_malloc);
-       const len2 = WASM_VECTOR_LEN;
-       wasm.generateTangents(retptr, ptr0, len0, ptr1, len1, ptr2, len2);
-       const r0 = getInt32Memory0()[retptr / 4 + 0];
-       const r1 = getInt32Memory0()[retptr / 4 + 1];
-       const v3 = getArrayF32FromWasm0(r0, r1).slice();
-       wasm.__wbindgen_free(r0, r1 * 4);
-       return v3;
-   } finally {
-       wasm.__wbindgen_add_to_stack_pointer(16);
-   }
-}
 
-async function load (response, imports)
+export default new class MikkTSpace
 {
-   if (typeof WebAssembly .instantiateStreaming === "function")
+   /**
+   * Generates vertex tangents for the given position/normal/texcoord attributes.
+   * @param {Float32Array} position vec3
+   * @param {Float32Array} normal vec3
+   * @param {Float32Array} texcoord vec2
+   * @returns {Float32Array} vec4
+   */
+   generateTangents (position, normal, texcoord)
    {
       try
       {
-         return await WebAssembly .instantiateStreaming (response, imports);
+         const
+            retptr = wasm.__wbindgen_add_to_stack_pointer(-16),
+            ptr0   = passArrayF32ToWasm0(position, wasm.__wbindgen_malloc),
+            len0   = WASM_VECTOR_LEN,
+            ptr1   = passArrayF32ToWasm0(normal, wasm.__wbindgen_malloc),
+            len1   = WASM_VECTOR_LEN,
+            ptr2   = passArrayF32ToWasm0(texcoord, wasm.__wbindgen_malloc),
+            len2   = WASM_VECTOR_LEN;
+
+         wasm .generateTangents (retptr, ptr0, len0, ptr1, len1, ptr2, len2);
+
+         const
+            r0 = getInt32Memory0 () [retptr / 4 + 0],
+            r1 = getInt32Memory0( ) [retptr / 4 + 1],
+            v3 = getArrayF32FromWasm0 (r0, r1) .slice ();
+
+         wasm .__wbindgen_free (r0, r1 * 4);
+
+         return v3;
       }
-      catch (error)
+      finally
       {
-         if (response .headers .get ("Content-Type") !== "application/wasm")
-         {
-            console .warn("`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", error);
-         }
-         else
-         {
-            throw error;
-         }
+         wasm .__wbindgen_add_to_stack_pointer (16);
       }
    }
 
-   const bytes = await response .arrayBuffer ();
-
-   return await WebAssembly .instantiate (bytes, imports);
-}
-
-let promise;
-
-async function initialize ()
-{
-   return promise = promise ?? new Promise (async resolve =>
+   async #load (response, imports)
    {
-      const imports =
+      if (typeof WebAssembly .instantiateStreaming === "function")
       {
-         wbg:
+         try
          {
-            __wbindgen_string_new: function (arg0, arg1)
+            return await WebAssembly .instantiateStreaming (response, imports);
+         }
+         catch (error)
+         {
+            if (response .headers .get ("Content-Type") !== "application/wasm")
             {
-               const ret = getStringFromWasm0 (arg0, arg1);
-
-               return addHeapObject (ret);
-            },
-            __wbindgen_rethrow: function (arg0)
+               console .warn("`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", error);
+            }
+            else
             {
-               throw takeObject (arg0);
+               throw error;
+            }
+         }
+      }
+
+      const bytes = await response .arrayBuffer ();
+
+      return await WebAssembly .instantiate (bytes, imports);
+   }
+
+   #promise;
+
+   async initialize ()
+   {
+      return this .#promise = this .#promise ?? new Promise (async resolve =>
+      {
+         const imports =
+         {
+            wbg:
+            {
+               __wbindgen_string_new: function (arg0, arg1)
+               {
+                  const ret = getStringFromWasm0 (arg0, arg1);
+
+                  return addHeapObject (ret);
+               },
+               __wbindgen_rethrow: function (arg0)
+               {
+                  throw takeObject (arg0);
+               },
             },
-         },
-      };
+         };
 
-      const input = await fetch (URLs .getLibraryURL ("mikktspace_bg.wasm"));
+         const input = await fetch (URLs .getLibraryURL ("mikktspace_bg.wasm"));
 
-      const { instance, module } = await load (input, imports);
+         const { instance } = await this .#load (input, imports);
 
-      wasm = instance .exports;
+         wasm = instance .exports;
 
-      initialize .__wbindgen_wasm_module = module;
+         resolve ();
+      });
+   }
 
-      resolve ();
-   });
-}
-
-function isInitialized ()
-{
-   return !! wasm;
-}
-
-export default { initialize, isInitialized, generateTangents };
+   isInitialized ()
+   {
+      return !! wasm;
+   }
+};
