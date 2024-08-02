@@ -78,69 +78,6 @@ function getArrayF32FromWasm0(ptr, len) {
 
 export default new class MikkTSpace
 {
-   /**
-   * Generates vertex tangents for the given position/normal/texcoord attributes.
-   * @param {Float32Array} position vec3
-   * @param {Float32Array} normal vec3
-   * @param {Float32Array} texcoord vec2
-   * @returns {Float32Array} vec4
-   */
-   generateTangents (position, normal, texcoord)
-   {
-      try
-      {
-         const
-            retptr = wasm.__wbindgen_add_to_stack_pointer(-16),
-            ptr0   = passArrayF32ToWasm0(position, wasm.__wbindgen_malloc),
-            len0   = WASM_VECTOR_LEN,
-            ptr1   = passArrayF32ToWasm0(normal, wasm.__wbindgen_malloc),
-            len1   = WASM_VECTOR_LEN,
-            ptr2   = passArrayF32ToWasm0(texcoord, wasm.__wbindgen_malloc),
-            len2   = WASM_VECTOR_LEN;
-
-         wasm .generateTangents (retptr, ptr0, len0, ptr1, len1, ptr2, len2);
-
-         const
-            r0 = getInt32Memory0 () [retptr / 4 + 0],
-            r1 = getInt32Memory0( ) [retptr / 4 + 1],
-            v3 = getArrayF32FromWasm0 (r0, r1) .slice ();
-
-         wasm .__wbindgen_free (r0, r1 * 4);
-
-         return v3;
-      }
-      finally
-      {
-         wasm .__wbindgen_add_to_stack_pointer (16);
-      }
-   }
-
-   async #load (response, imports)
-   {
-      if (typeof WebAssembly .instantiateStreaming === "function")
-      {
-         try
-         {
-            return await WebAssembly .instantiateStreaming (response, imports);
-         }
-         catch (error)
-         {
-            if (response .headers .get ("Content-Type") !== "application/wasm")
-            {
-               console .warn("`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", error);
-            }
-            else
-            {
-               throw error;
-            }
-         }
-      }
-
-      const bytes = await response .arrayBuffer ();
-
-      return await WebAssembly .instantiate (bytes, imports);
-   }
-
    #promise;
 
    async initialize ()
@@ -177,5 +114,68 @@ export default new class MikkTSpace
    isInitialized ()
    {
       return !! wasm;
+   }
+
+   async #load (response, imports)
+   {
+      if (typeof WebAssembly .instantiateStreaming === "function")
+      {
+         try
+         {
+            return await WebAssembly .instantiateStreaming (response, imports);
+         }
+         catch (error)
+         {
+            if (response .headers .get ("Content-Type") !== "application/wasm")
+            {
+               console .warn("`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", error);
+            }
+            else
+            {
+               throw error;
+            }
+         }
+      }
+
+      const bytes = await response .arrayBuffer ();
+
+      return await WebAssembly .instantiate (bytes, imports);
+   }
+
+   /**
+   * Generates vertex tangents for the given position/normal/texcoord attributes.
+   * @param {Float32Array} position vec3
+   * @param {Float32Array} normal vec3
+   * @param {Float32Array} texcoord vec2
+   * @returns {Float32Array} vec4
+   */
+   generateTangents (position, normal, texcoord)
+   {
+      try
+      {
+         const
+            retptr = wasm.__wbindgen_add_to_stack_pointer(-16),
+            ptr0   = passArrayF32ToWasm0(position, wasm.__wbindgen_malloc),
+            len0   = WASM_VECTOR_LEN,
+            ptr1   = passArrayF32ToWasm0(normal, wasm.__wbindgen_malloc),
+            len1   = WASM_VECTOR_LEN,
+            ptr2   = passArrayF32ToWasm0(texcoord, wasm.__wbindgen_malloc),
+            len2   = WASM_VECTOR_LEN;
+
+         wasm .generateTangents (retptr, ptr0, len0, ptr1, len1, ptr2, len2);
+
+         const
+            r0 = getInt32Memory0 () [retptr / 4 + 0],
+            r1 = getInt32Memory0( ) [retptr / 4 + 1],
+            v3 = getArrayF32FromWasm0 (r0, r1) .slice ();
+
+         wasm .__wbindgen_free (r0, r1 * 4);
+
+         return v3;
+      }
+      finally
+      {
+         wasm .__wbindgen_add_to_stack_pointer (16);
+      }
    }
 };
