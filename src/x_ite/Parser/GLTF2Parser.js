@@ -2924,9 +2924,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
          default:
          {
-            const textureCoordinateNodes = Array .from (material .texCoordMappings .entries (), ([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
-               .filter (node => node)
-               .sort ((a, b) => Algorithm .cmp (a ._mapping .getValue (), b ._mapping .getValue ()));
+            const textureCoordinateNodes = Array .from (material .texCoordMappings .entries ())
+               .sort ((a, b) => a [1] - b [1])
+               .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping));
 
             if (!textureCoordinateNodes .length)
                return null;
