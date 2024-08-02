@@ -1,5 +1,7 @@
 import URLs from "../Networking/URLs.js";
 
+// See: https://github.com/donmccurdy/mikktspace-wasm
+
 export default new class MikkTSpace
 {
    #promise;
