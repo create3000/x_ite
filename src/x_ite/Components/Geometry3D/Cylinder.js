@@ -81,6 +81,7 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, X3DGeometryNode .pr
          height1_2     = Math .abs (this ._height .getValue ()) / 2,
          radius        = Math .abs (this ._radius .getValue ()),
          texCoordArray = this .getTexCoords (),
+         tangentArray  = this .getTangents (),
          normalArray   = this .getNormals (),
          vertexArray   = this .getVertices ();
 
@@ -94,6 +95,9 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, X3DGeometryNode .pr
 
          for (const t of geometry .getMultiTexCoords () [0])
             texCoordArray .push (t);
+
+         for (const t of geometry .getTangents ())
+            tangentArray .push (t);
 
          for (const n of geometry .getNormals ())
             normalArray .push (n);
@@ -116,6 +120,9 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, X3DGeometryNode .pr
          for (const t of geometry .getMultiTexCoords () [0])
             texCoordArray .push (t);
 
+         for (const t of geometry .getTangents ())
+            tangentArray .push (t);
+
          for (const n of geometry .getNormals ())
             normalArray .push (n);
 
@@ -136,6 +143,9 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, X3DGeometryNode .pr
 
          for (const t of geometry .getMultiTexCoords () [0])
             texCoordArray .push (t);
+
+         for (const t of geometry .getTangents ())
+            tangentArray .push (t);
 
          for (const n of geometry .getNormals ())
             normalArray .push (n);
