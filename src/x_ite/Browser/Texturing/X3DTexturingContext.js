@@ -50,6 +50,7 @@ import TextureTransform  from "../../Components/Texturing/TextureTransform.js";
 import TextureCoordinate from "../../Components/Texturing/TextureCoordinate.js";
 import TextureQuality    from "../Core/TextureQuality.js";
 import KTXDecoder        from "./KTXDecoder.js";
+import loadHDR           from "./HDRPNG.js";
 import URLs              from "../Networking/URLs.js";
 
 import { maxTextureTransforms, maxTexCoords, maxTextures } from "./TexturingConfiguration.js";
@@ -420,6 +421,10 @@ Object .assign (X3DTexturingContext .prototype,
          libktx   = await new Function (text) ();
 
       return this [_libktx] = libktx;
+   },
+   loadHDR (buffer)
+   {
+      return loadHDR (buffer);
    },
 });
 

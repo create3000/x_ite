@@ -53,6 +53,7 @@ import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
+import FileLoader from "../../InputOutput/FileLoader.js";
 
 function ImageTexture (executionContext)
 {
@@ -119,6 +120,18 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
             .then (texture => this .setKTXTexture (texture))
             .catch (error => this .setError ({ type: error .message }));
       }
+      else if (this .URL .pathname .match (/\.hdr?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/hdr[;,]/))
+      {
+         this .setLinear (true);
+         this .setMipMaps (true);
+
+         new FileLoader (this) .loadDocument (new Fields .MFString (this .URL), (data, URL) =>
+         {
+            this .getBrowser () .loadHDR (new Uint8Array (data))
+               .then (data => this .setHDRTexture (data))
+               .catch (error => this .setError ({ type: error .message }));
+         });
+      }
       else
       {
          this .setLinear (false);
@@ -158,6 +171,42 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setWidth (texture .baseWidth);
          this .setHeight (texture .baseHeight);
          this .updateTextureParameters ();
+
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+      }
+      catch (error)
+      {
+         // Catch security error from cross origin requests.
+         this .setError ({ type: error .message });
+      }
+   },
+   setHDRTexture ({ width, height, data })
+   {
+      if (DEVELOPMENT)
+      {
+         if (this .URL .protocol !== "data:")
+            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'.`);
+      }
+
+      try
+      {
+         // Create texture.
+
+         const
+            gl      = this .getBrowser () .getContext (),
+            texture = gl .createTexture (),
+            max     = data .reduce ((a, b) => Math .max (a, b), 0);
+
+         gl .bindTexture (gl .TEXTURE_2D, texture);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB16F, width, height, 0, gl .RGB, gl .FLOAT, data .map (v => v / max));
+
+         this .setTexture (texture);
+         this .setTransparent (false);
+         this .setWidth (width);
+         this .setHeight (height);
+         this .updateTextureParameters ();
+
+         // Update load state.
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
