@@ -57,7 +57,7 @@ Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_i
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non standard</small>
 
-Input/Output field *tangent*.
+Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/rendering/tangent/) node, the MikkTSpace algorithm is used to generate tangent vectors.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
