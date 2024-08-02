@@ -52,7 +52,7 @@ export default new class MikkTSpace
          {
             if (response .headers .get ("Content-Type") !== "application/wasm")
             {
-               console .warn("`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", error);
+               console .warn ("`WebAssembly.instantiateStreaming` failed because your server does not serve wasm with `application/wasm` MIME type. Falling back to `WebAssembly.instantiate` which is slower. Original error:\n", error);
             }
             else
             {
@@ -78,7 +78,7 @@ export default new class MikkTSpace
       try
       {
          const
-            retptr = this .#wasm .__wbindgen_add_to_stack_pointer(-16),
+            retptr = this .#wasm .__wbindgen_add_to_stack_pointer (-16),
             ptr0   = this .#passArrayF32ToWasm0 (position, this .#wasm .__wbindgen_malloc),
             len0   = this .#WASM_VECTOR_LEN,
             ptr1   = this .#passArrayF32ToWasm0 (normal, this .#wasm .__wbindgen_malloc),
@@ -90,7 +90,7 @@ export default new class MikkTSpace
 
          const
             r0 = this .#getInt32Memory0 () [retptr / 4 + 0],
-            r1 = this .#getInt32Memory0( ) [retptr / 4 + 1],
+            r1 = this .#getInt32Memory0 () [retptr / 4 + 1],
             v3 = this .#getArrayF32FromWasm0 (r0, r1) .slice ();
 
          this .#wasm .__wbindgen_free (r0, r1 * 4);
@@ -104,20 +104,20 @@ export default new class MikkTSpace
    }
 
    #wasm;
-   #cachedTextDecoder = new TextDecoder ("utf-8", { ignoreBOM: true, fatal: true });
-   #cachegetUint8Memory0 = null;
+   #textDecoder = new TextDecoder ("utf-8", { ignoreBOM: true, fatal: true });
+   #uint8Memory0;
 
    #getUint8Memory0 ()
    {
-      if (this .#cachegetUint8Memory0 === null || this .#cachegetUint8Memory0 .buffer !== this .#wasm .memory .buffer)
-         this .#cachegetUint8Memory0 = new Uint8Array (this .#wasm .memory .buffer);
+      if (this .#uint8Memory0 ?.buffer !== this .#wasm .memory .buffer)
+         this .#uint8Memory0 = new Uint8Array (this .#wasm .memory .buffer);
 
-      return this .#cachegetUint8Memory0;
+      return this .#uint8Memory0;
    }
 
    #getStringFromWasm0 (ptr, len)
    {
-      return this .#cachedTextDecoder .decode (this .#getUint8Memory0 () .subarray (ptr, ptr + len));
+      return this .#textDecoder .decode (this .#getUint8Memory0 () .subarray (ptr, ptr + len));
    }
 
    #heap = new Array (32) .fill (undefined) .toSpliced (32, 0, undefined, null, true, false);
@@ -160,14 +160,14 @@ export default new class MikkTSpace
       return ret;
    }
 
-   #cachegetFloat32Memory0 = null;
+   #float32Memory0;
 
    #getFloat32Memory0 ()
    {
-      if (this .#cachegetFloat32Memory0 === null || this .#cachegetFloat32Memory0 .buffer !== this .#wasm .memory.buffer)
-         this .#cachegetFloat32Memory0 = new Float32Array (this .#wasm .memory .buffer);
+      if (this .#float32Memory0 ?.buffer !== this .#wasm .memory .buffer)
+         this .#float32Memory0 = new Float32Array (this .#wasm .memory .buffer);
 
-      return this .#cachegetFloat32Memory0;
+      return this .#float32Memory0;
    }
 
    #WASM_VECTOR_LEN = 0;
@@ -183,14 +183,14 @@ export default new class MikkTSpace
       return ptr;
    }
 
-   #cachegetInt32Memory0 = null;
+   #int32Memory0;
 
    #getInt32Memory0 ()
    {
-      if (this .#cachegetInt32Memory0 === null || this .#cachegetInt32Memory0 .buffer !== this .#wasm .memory .buffer)
-         this .#cachegetInt32Memory0 = new Int32Array (this .#wasm .memory .buffer);
+      if (this .#int32Memory0 ?.buffer !== this .#wasm .memory .buffer)
+         this .#int32Memory0 = new Int32Array (this .#wasm .memory .buffer);
 
-      return this .#cachegetInt32Memory0;
+      return this .#int32Memory0;
    }
 
    #getArrayF32FromWasm0 (ptr, len)
