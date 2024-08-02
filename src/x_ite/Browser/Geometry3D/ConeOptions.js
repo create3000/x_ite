@@ -74,14 +74,14 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
    getSideGeometry ()
    {
       if (!this .sideGeometry)
-         this .eventsProcessed ();
+         this .build ();
 
       return this .sideGeometry;
    },
    getBottomGeometry ()
    {
       if (!this .bottomGeometry)
-         this .eventsProcessed ();
+         this .build ();
 
       return this .bottomGeometry;
    },
@@ -231,7 +231,7 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
 
       point .push (new Vector3 (0, 1, 0));
    },
-   eventsProcessed ()
+   build ()
    {
       this .sideGeometry            = new IndexedFaceSet (this .getExecutionContext ());
       this .sideGeometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
@@ -262,6 +262,11 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
       coord          .setup ();
       sideGeometry   .setup ();
       bottomGeometry .setup ();
+   },
+   eventsProcessed ()
+   {
+      this .sideGeometry   = null;
+      this .bottomGeometry = null;
    },
 });
 

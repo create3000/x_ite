@@ -74,21 +74,21 @@ Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode 
    getSideGeometry ()
    {
       if (!this .sideGeometry)
-         this .eventsProcessed ();
+         this .build ();
 
       return this .sideGeometry;
    },
    getTopGeometry ()
    {
       if (!this .topGeometry)
-         this .eventsProcessed ();
+         this .build ();
 
       return this .topGeometry;
    },
    getBottomGeometry ()
    {
       if (!this .bottomGeometry)
-         this .eventsProcessed ();
+         this .build ();
 
       return this .bottomGeometry;
    },
@@ -277,7 +277,7 @@ Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode 
          point  .push (new Vector3 (p .imag, 1, p .real));
       }
    },
-   eventsProcessed ()
+   build ()
    {
       this .sideGeometry            = new IndexedFaceSet (this .getExecutionContext ());
       this .sideGeometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
@@ -315,6 +315,12 @@ Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode 
       sideGeometry   .setup ();
       bottomGeometry .setup ();
       topGeometry    .setup ();
+   },
+   eventsProcessed ()
+   {
+      this .sideGeometry   = null;
+      this .bottomGeometry = null;
+      this .topGeometry    = null;
    },
 });
 

@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (QuadSphereOptions .prototype, X3DBaseNod
    getGeometry ()
    {
       if (!this .geometry)
-         this .eventsProcessed ();
+         this .build ();
 
       return this .geometry;
    },
@@ -251,7 +251,7 @@ Object .assign (Object .setPrototypeOf (QuadSphereOptions .prototype, X3DBaseNod
       // South pole
       point .push (new Vector3 (0, -1, 0));
    },
-   eventsProcessed ()
+   build ()
    {
       this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
       this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
@@ -272,6 +272,10 @@ Object .assign (Object .setPrototypeOf (QuadSphereOptions .prototype, X3DBaseNod
       texCoord .setup ();
       coord    .setup ();
       geometry .setup ();
+   },
+   eventsProcessed ()
+   {
+      this .geometry = null;
    },
 });
 

@@ -130,7 +130,7 @@ async function load (response, imports)
 
 let promise;
 
-async function init ()
+async function initialize ()
 {
    return promise = promise ?? new Promise (async resolve =>
    {
@@ -157,10 +157,15 @@ async function init ()
 
       wasm = instance .exports;
 
-      init .__wbindgen_wasm_module = module;
+      initialize .__wbindgen_wasm_module = module;
 
       resolve ();
    });
 }
 
-export default { init, generateTangents };
+function isInitialized ()
+{
+   return !! wasm;
+}
+
+export default { initialize, isInitialized, generateTangents };

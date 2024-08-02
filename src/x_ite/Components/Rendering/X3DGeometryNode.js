@@ -59,6 +59,8 @@ import Plane3       from "../../../standard/Math/Geometry/Plane3.js";
 import Triangle3    from "../../../standard/Math/Geometry/Triangle3.js";
 import Algorithm    from "../../../standard/Math/Algorithm.js";
 
+MikkTSpace .initialize ();
+
 // Box normals for bbox / line intersection.
 const boxNormals = [
    new Vector3 (0,  0,  1), // front
@@ -442,7 +444,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          return texCoordParams;
       };
    })(),
-   async generateTangents ()
+   generateTangents ()
    {
       if (this .geometryType < 2)
          return;
@@ -450,7 +452,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       if (!this .vertices .getValue () .length)
          return;
 
-      await MikkTSpace .init ();
+      if (!MikkTSpace .isInitialized ())
+         return void (MikkTSpace .initialize () .then (() => this .requestRebuild ()));
 
       const
          vertices  = this .vertices .getValue () .filter ((v, i) => i % 4 < 3),
@@ -865,7 +868,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          // Generate tangents if needed.
          if (!this .tangents .length)
-            await this .generateTangents ();
+            this .generateTangents ();
 
          // Transfer arrays and update.
 

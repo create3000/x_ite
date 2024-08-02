@@ -72,11 +72,11 @@ Object .assign (Object .setPrototypeOf (IcoSphereOptions .prototype, X3DBaseNode
    getGeometry ()
    {
       if (!this .geometry)
-         this .eventsProcessed ();
+         this .build ();
 
       return this .geometry;
    },
-   eventsProcessed ()
+   build ()
    {
       this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
       this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
@@ -98,6 +98,10 @@ Object .assign (Object .setPrototypeOf (IcoSphereOptions .prototype, X3DBaseNode
       texCoord .setup ();
       coord    .setup ();
       geometry .setup ();
+   },
+   eventsProcessed ()
+   {
+      this .geometry = null;
    },
 });
 
