@@ -545,6 +545,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          gl .disable (gl .BLEND);
 
       gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
+
+      gl .uniform1f (shaderNode .x3d_Exposure, browser .getBrowserOption ("Exposure"));
    },
    drawCube: (() =>
    {
@@ -584,6 +586,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             gl .uniform1f (shaderNode .x3d_Exposure,                           1);
 
             this .drawRectangle (gl, browser, shaderNode, renderObject, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
+
+            gl .uniform1f (shaderNode .x3d_Exposure, browser .getBrowserOption ("Exposure"));
          }
       };
    })(),
