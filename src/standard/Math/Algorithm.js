@@ -162,23 +162,6 @@ const Algorithm =
    {
       return lhs > rhs ? 1 : lhs < rhs ? -1 : 0;
    },
-   // lexicographicallyCompare (lhs, rhs)
-   // {
-   //    const
-   //       length1 = lhs .length,
-   //       length2 = rhs .length;
-
-   //    for (let i = 0; i < length1 && i < length2; ++ i)
-   //    {
-   //       if (lhs [i] < rhs [i])
-   //          return -1;
-
-   //       if (rhs [i] < lhs [i])
-   //          return 1;
-   //    }
-
-   //    return Algorithm .cmp (length1, length2);
-   // },
    less (lhs, rhs)
    {
       return lhs < rhs;
