@@ -1,80 +1,4 @@
-import URLs  from "../Networking/URLs.js";
-
-let wasm;
-
-let cachedTextDecoder = new TextDecoder("utf-8", { ignoreBOM: true, fatal: true });
-
-cachedTextDecoder.decode();
-
-let cachegetUint8Memory0 = null;
-function getUint8Memory0() {
-   if (cachegetUint8Memory0 === null || cachegetUint8Memory0.buffer !== wasm.memory.buffer) {
-       cachegetUint8Memory0 = new Uint8Array(wasm.memory.buffer);
-   }
-   return cachegetUint8Memory0;
-}
-
-function getStringFromWasm0(ptr, len) {
-   return cachedTextDecoder.decode(getUint8Memory0().subarray(ptr, ptr + len));
-}
-
-const heap = new Array(32).fill(undefined);
-
-heap.push(undefined, null, true, false);
-
-let heap_next = heap.length;
-
-function addHeapObject(obj) {
-   if (heap_next === heap.length) heap.push(heap.length + 1);
-   const idx = heap_next;
-   heap_next = heap[idx];
-
-   heap[idx] = obj;
-   return idx;
-}
-
-function getObject(idx) { return heap[idx]; }
-
-function dropObject(idx) {
-   if (idx < 36) return;
-   heap[idx] = heap_next;
-   heap_next = idx;
-}
-
-function takeObject(idx) {
-   const ret = getObject(idx);
-   dropObject(idx);
-   return ret;
-}
-
-let cachegetFloat32Memory0 = null;
-function getFloat32Memory0() {
-   if (cachegetFloat32Memory0 === null || cachegetFloat32Memory0.buffer !== wasm.memory.buffer) {
-       cachegetFloat32Memory0 = new Float32Array(wasm.memory.buffer);
-   }
-   return cachegetFloat32Memory0;
-}
-
-let WASM_VECTOR_LEN = 0;
-
-function passArrayF32ToWasm0(arg, malloc) {
-   const ptr = malloc(arg.length * 4);
-   getFloat32Memory0().set(arg, ptr / 4);
-   WASM_VECTOR_LEN = arg.length;
-   return ptr;
-}
-
-let cachegetInt32Memory0 = null;
-function getInt32Memory0() {
-   if (cachegetInt32Memory0 === null || cachegetInt32Memory0.buffer !== wasm.memory.buffer) {
-       cachegetInt32Memory0 = new Int32Array(wasm.memory.buffer);
-   }
-   return cachegetInt32Memory0;
-}
-
-function getArrayF32FromWasm0(ptr, len) {
-   return getFloat32Memory0().subarray(ptr / 4, ptr / 4 + len);
-}
+import URLs from "../Networking/URLs.js";
 
 export default new class MikkTSpace
 {
@@ -88,15 +12,15 @@ export default new class MikkTSpace
          {
             wbg:
             {
-               __wbindgen_string_new: function (arg0, arg1)
+               __wbindgen_string_new: (arg0, arg1) =>
                {
-                  const ret = getStringFromWasm0 (arg0, arg1);
+                  const ret = this .#getStringFromWasm0 (arg0, arg1);
 
-                  return addHeapObject (ret);
+                  return this .#addHeapObject (ret);
                },
-               __wbindgen_rethrow: function (arg0)
+               __wbindgen_rethrow: (arg0) =>
                {
-                  throw takeObject (arg0);
+                  throw this .#takeObject (arg0);
                },
             },
          };
@@ -105,7 +29,7 @@ export default new class MikkTSpace
 
          const { instance } = await this .#load (input, imports);
 
-         wasm = instance .exports;
+         this .#wasm = instance .exports;
 
          resolve ();
       });
@@ -113,7 +37,7 @@ export default new class MikkTSpace
 
    isInitialized ()
    {
-      return !! wasm;
+      return !! this .#wasm;
    }
 
    async #load (response, imports)
@@ -154,28 +78,123 @@ export default new class MikkTSpace
       try
       {
          const
-            retptr = wasm.__wbindgen_add_to_stack_pointer(-16),
-            ptr0   = passArrayF32ToWasm0(position, wasm.__wbindgen_malloc),
-            len0   = WASM_VECTOR_LEN,
-            ptr1   = passArrayF32ToWasm0(normal, wasm.__wbindgen_malloc),
-            len1   = WASM_VECTOR_LEN,
-            ptr2   = passArrayF32ToWasm0(texcoord, wasm.__wbindgen_malloc),
-            len2   = WASM_VECTOR_LEN;
+            retptr = this .#wasm .__wbindgen_add_to_stack_pointer(-16),
+            ptr0   = this .#passArrayF32ToWasm0 (position, this .#wasm .__wbindgen_malloc),
+            len0   = this .#WASM_VECTOR_LEN,
+            ptr1   = this .#passArrayF32ToWasm0 (normal, this .#wasm .__wbindgen_malloc),
+            len1   = this .#WASM_VECTOR_LEN,
+            ptr2   = this .#passArrayF32ToWasm0 (texcoord, this .#wasm .__wbindgen_malloc),
+            len2   = this .#WASM_VECTOR_LEN;
 
-         wasm .generateTangents (retptr, ptr0, len0, ptr1, len1, ptr2, len2);
+         this .#wasm .generateTangents (retptr, ptr0, len0, ptr1, len1, ptr2, len2);
 
          const
-            r0 = getInt32Memory0 () [retptr / 4 + 0],
-            r1 = getInt32Memory0( ) [retptr / 4 + 1],
-            v3 = getArrayF32FromWasm0 (r0, r1) .slice ();
+            r0 = this .#getInt32Memory0 () [retptr / 4 + 0],
+            r1 = this .#getInt32Memory0( ) [retptr / 4 + 1],
+            v3 = this .#getArrayF32FromWasm0 (r0, r1) .slice ();
 
-         wasm .__wbindgen_free (r0, r1 * 4);
+         this .#wasm .__wbindgen_free (r0, r1 * 4);
 
          return v3;
       }
       finally
       {
-         wasm .__wbindgen_add_to_stack_pointer (16);
+         this .#wasm .__wbindgen_add_to_stack_pointer (16);
       }
+   }
+
+   #wasm;
+   #cachedTextDecoder = new TextDecoder ("utf-8", { ignoreBOM: true, fatal: true });
+   #cachegetUint8Memory0 = null;
+
+   #getUint8Memory0 ()
+   {
+      if (this .#cachegetUint8Memory0 === null || this .#cachegetUint8Memory0 .buffer !== this .#wasm .memory .buffer)
+         this .#cachegetUint8Memory0 = new Uint8Array (this .#wasm .memory .buffer);
+
+      return this .#cachegetUint8Memory0;
+   }
+
+   #getStringFromWasm0 (ptr, len)
+   {
+      return this .#cachedTextDecoder .decode (this .#getUint8Memory0 () .subarray (ptr, ptr + len));
+   }
+
+   #heap = new Array (32) .fill (undefined) .toSpliced (32, 0, undefined, null, true, false);
+   #heap_next = this .#heap .length;
+
+   #addHeapObject (obj)
+   {
+      if (this .#heap_next === this .#heap .length)
+         this .#heap .push (this .#heap .length + 1);
+
+      const i = this .#heap_next;
+
+      this .#heap_next = this .#heap [i];
+      this .#heap [i]  = obj;
+
+      return i;
+   }
+
+   #getObject (i)
+   {
+      return this .#heap [i];
+   }
+
+   #dropObject (i)
+   {
+      if (i < 36)
+         return;
+
+      this .#heap [i] = this .#heap_next;
+
+      this .#heap_next = i;
+   }
+
+   #takeObject (i)
+   {
+      const ret = this .#getObject (i);
+
+      this .#dropObject (i);
+
+      return ret;
+   }
+
+   #cachegetFloat32Memory0 = null;
+
+   #getFloat32Memory0 ()
+   {
+      if (this .#cachegetFloat32Memory0 === null || this .#cachegetFloat32Memory0 .buffer !== this .#wasm .memory.buffer)
+         this .#cachegetFloat32Memory0 = new Float32Array (this .#wasm .memory .buffer);
+
+      return this .#cachegetFloat32Memory0;
+   }
+
+   #WASM_VECTOR_LEN = 0;
+
+   #passArrayF32ToWasm0 (arg, malloc)
+   {
+      const ptr = malloc (arg .length * 4);
+
+      this .#getFloat32Memory0 () .set (arg, ptr / 4);
+
+      this .#WASM_VECTOR_LEN = arg .length;
+
+      return ptr;
+   }
+
+   #cachegetInt32Memory0 = null;
+
+   #getInt32Memory0 ()
+   {
+      if (this .#cachegetInt32Memory0 === null || this .#cachegetInt32Memory0 .buffer !== this .#wasm .memory .buffer)
+         this .#cachegetInt32Memory0 = new Int32Array (this .#wasm .memory .buffer);
+
+      return this .#cachegetInt32Memory0;
+   }
+
+   #getArrayF32FromWasm0 (ptr, len)
+   {
+      return this .#getFloat32Memory0 () .subarray (ptr / 4, ptr / 4 + len);
    }
 };
