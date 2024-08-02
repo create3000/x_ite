@@ -33,6 +33,10 @@ An \<x3d-canvas\> can be created with the `document.createElement` function to g
 const canvas = document .createElement ("x3d-canvas")
 ```
 
+### Attributes
+
+The X3DCanvasElement defines several attributes [that are documented here](/x_ite/#attributes-of-the-x3d-canvas-element).
+
 ### Properties
 
 #### **browser**
