@@ -937,7 +937,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const texCoordIndices = this .getTexCoordIndices ("", material);
 
-      this .texCoordIndex         = Array .from (texCoordIndices) .reduce (Math .max, -1);
+      this .texCoordIndex         = Array .from (texCoordIndices) .reduce ((p, c) => Math .max (p, c), -1);
       this .textureTransformNodes = [ ];
       this .texCoordMappings      = new Map ();
       this .texCoordOfNode        = new Map ();
