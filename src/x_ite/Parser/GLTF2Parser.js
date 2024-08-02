@@ -2925,7 +2925,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          default:
          {
             const textureCoordinateNodes = Array .from (material .texCoordMappings .entries ())
-               .sort ((a, b) => a [0] .localeCompare (b [0]))
+               .sort ((a, b) => Algorithm .cmp (a [0], b [0]))
                .sort ((a, b) => a [1] - b [1])
                .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping));
 
