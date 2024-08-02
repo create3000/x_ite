@@ -195,10 +195,11 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          const
             gl      = this .getBrowser () .getContext (),
             texture = gl .createTexture (),
-            max     = data .reduce ((a, b) => Math .max (a, b), 0);
+            max     = data .reduce ((a, b) => Math .max (a, b), 0),
+            intData = Uint8Array .from (data, v => v / max * 255);
 
          gl .bindTexture (gl .TEXTURE_2D, texture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB16F, width, height, 0, gl .RGB, gl .FLOAT, data .map (v => v / max));
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB, width, height, 0, gl .RGB, gl .UNSIGNED_BYTE, intData);
 
          this .setTexture (texture);
          this .setTransparent (false);

@@ -114,7 +114,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
       if (value !== this ._linear .getValue ())
          this ._linear = value;
    },
-   getMipMaps ()
+   canMipMaps ()
    {
       return this .mipMaps;
    },
@@ -166,7 +166,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
          gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
          gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
       }
-      else if (this .getMipMaps () && textureProperties ._generateMipMaps .getValue ())
+      else if (this .canMipMaps () && textureProperties ._generateMipMaps .getValue ())
       {
          // Can MipMaps and wants MipMaps.
          gl .generateMipmap (target);
