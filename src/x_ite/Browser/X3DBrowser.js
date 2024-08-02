@@ -67,6 +67,7 @@ import X3DCast             from "../Base/X3DCast.js";
 import X3DConstants        from "../Base/X3DConstants.js";
 import Features            from "../Features.js";
 import Algorithm           from "../../standard/Math/Algorithm.js";
+import MikkTSpace          from "./Rendering/MikkTSpace.js";
 import _                   from "../../locale/gettext.js";
 import DEVELOPMENT         from "../DEVELOPMENT.js";
 
@@ -264,9 +265,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    loadComponents: (() =>
    {
-      async function loadComponents (components, seen)
+      function loadComponents (components, seen)
       {
-         await Promise .all (components .map (component => loadComponent .call (this, component, seen)));
+         return Promise .all (components .map (component => loadComponent .call (this, component, seen)));
       }
 
       async function loadComponent ({ name, providerURL, external, dependencies }, seen)
@@ -317,7 +318,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          }
 
          // Load array of component names.
-         return loadComponents .call (this, component, new Set ());
+         return Promise .all ([
+            MikkTSpace .initialize (),
+            loadComponents .call (this, component, new Set ()),
+         ]);
       };
    })(),
    addConcreteNode (ConcreteNode)

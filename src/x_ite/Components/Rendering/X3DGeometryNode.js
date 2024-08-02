@@ -59,8 +59,6 @@ import Plane3       from "../../../standard/Math/Geometry/Plane3.js";
 import Triangle3    from "../../../standard/Math/Geometry/Triangle3.js";
 import Algorithm    from "../../../standard/Math/Algorithm.js";
 
-MikkTSpace .initialize ();
-
 // Box normals for bbox / line intersection.
 const boxNormals = [
    new Vector3 (0,  0,  1), // front
