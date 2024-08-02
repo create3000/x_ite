@@ -205,7 +205,7 @@ const Bookmarks = (() =>
             })
             .appendTo ($("#toolbar"));
 
-         if (this .browser .getLocalStorage () ["Bookmarks.environmentLight"])
+         if (this .browser .getLocalStorage () ["Bookmarks.environmentLight"] && this .browser .currentScene .encoding === "GLTF")
             environmentLightButton .trigger ("click");
 
          $("<span></span>") .addClass ("separator") .appendTo ($("#toolbar"));
