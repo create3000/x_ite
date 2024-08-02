@@ -935,7 +935,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (material .appearanceNode)
          return material .appearanceNode;
 
-      const texCoordIndices = this .texCoordIndices ("", material);
+      const texCoordIndices = this .getTexCoordIndices ("", material);
 
       this .texCoordIndex         = Array .from (texCoordIndices) .reduce (Math .max, -1);
       this .textureTransformNodes = [ ];
@@ -1000,7 +1000,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return material .appearanceNode = appearanceNode;
    },
-   texCoordIndices (key, object, indices = new Set ())
+   getTexCoordIndices (key, object, indices = new Set ())
    {
       if (!(object instanceof Object))
          return indices;
@@ -1009,7 +1009,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          indices .add (object .texCoord || 0);
 
       for (const [key, value] of Object .entries (object))
-         this .texCoordIndices (key, value, indices);
+         this .getTexCoordIndices (key, value, indices);
 
       return indices;
    },
@@ -1431,8 +1431,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          textureTransformNode = scene .createNode ("TextureTransformMatrix3D", false),
          mapping              = `TEXCOORD_${this .texCoordIndex + this .textureTransformNodes .length + 1}`;
 
-      textureTransformNode ._mapping   = mapping;
-      textureTransformNode ._matrix    = matrix;
+      textureTransformNode ._mapping = mapping;
+      textureTransformNode ._matrix  = matrix;
 
       textureTransformNode .setup ();
 
