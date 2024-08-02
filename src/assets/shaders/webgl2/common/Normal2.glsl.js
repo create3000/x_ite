@@ -22,7 +22,7 @@ getNormalInfo (const in float normalScale)
          UV .t = 1.0 - UV .t;
       #endif
    #else
-      vec3 UV = vec3 (0.0);
+      vec3 UV = vertex;
    #endif
 
    vec3 n, t, b, ng;
