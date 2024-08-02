@@ -319,7 +319,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          // Load array of component names.
          return Promise .all ([
-            MikkTSpace .initialize (),
+            MikkTSpace .initialize (), // Required by Rendering component.
             loadComponents .call (this, component, new Set ()),
          ]);
       };
