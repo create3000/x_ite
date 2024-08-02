@@ -275,12 +275,15 @@ Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, (X3DBaseNode
 {
    initialize ()
    {
-      this .addInterest ("build", this);
+      X3DBaseNode_default().prototype .initialize .call (this);
 
-      this .build ();
+      this .addInterest ("eventsProcessed", this);
    },
    getVertices ()
    {
+      if (!this .vertices .length)
+         this .build ();
+
       return this .vertices;
    },
    build ()
@@ -289,8 +292,6 @@ Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, (X3DBaseNode
          dimension = this ._dimension .getValue (),
          angle     = Math .PI * 2 / dimension,
          vertices  = this .vertices;
-
-      vertices .length = 0;
 
       for (let n = 0; n < dimension; ++ n)
       {
@@ -303,6 +304,10 @@ Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, (X3DBaseNode
       }
 
       vertices .shrinkToFit ();
+   },
+   eventsProcessed ()
+   {
+      this .vertices .length = 0;
    },
 });
 
@@ -390,24 +395,36 @@ Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (X3DBaseNode_d
 {
    initialize ()
    {
-      this .addInterest ("build", this);
+      X3DBaseNode_default().prototype .initialize .call (this);
 
-      this .build ();
+      this .addInterest ("eventsProcessed", this);
    },
    getCircleVertices ()
    {
+      if (!this .circleVertices .length)
+         this .build ();
+
       return this .circleVertices;
    },
    getDiskTexCoords ()
    {
+      if (!this .diskTexCoords .length)
+         this .build ();
+
       return this .diskTexCoords;
    },
    getDiskNormals ()
    {
+      if (!this .diskNormals .length)
+         this .build ();
+
       return this .diskNormals;
    },
    getDiskVertices ()
    {
+      if (!this .diskVertices .length)
+         this .build ();
+
       return this .diskVertices;
    },
    build: (() =>
@@ -428,11 +445,6 @@ Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (X3DBaseNode_d
             diskTexCoords  = this .diskTexCoords,
             diskNormals    = this .diskNormals,
             diskVertices   = this .diskVertices;
-
-         circleVertices .length = 0;
-         diskTexCoords  .length = 0;
-         diskNormals    .length = 0;
-         diskVertices   .length = 0;
 
          for (let n = 0; n < dimension; ++ n)
          {
@@ -469,6 +481,13 @@ Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (X3DBaseNode_d
          diskVertices   .shrinkToFit ();
       };
    })(),
+   eventsProcessed ()
+   {
+      this .circleVertices .length = 0;
+      this .diskTexCoords  .length = 0;
+      this .diskNormals    .length = 0;
+      this .diskVertices   .length = 0;
+   },
 });
 
 Object .defineProperties (Disk2DOptions,
@@ -554,10 +573,6 @@ function Rectangle2DOptions (executionContext)
 
 Object .assign (Object .setPrototypeOf (Rectangle2DOptions .prototype, (X3DBaseNode_default()).prototype),
 {
-   initialize ()
-   {
-      X3DBaseNode_default().prototype .initialize .call (this);
-   },
    getGeometry ()
    {
       if (this .geometry)
@@ -1875,6 +1890,7 @@ Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, (X3DGeometryNode
             size     = this ._size .getValue ();
 
          this .setMultiTexCoords (geometry .getMultiTexCoords ());
+         this .setTangents       (geometry .getTangents ());
          this .setNormals        (geometry .getNormals ());
 
          if (size .equals (defaultSize))
