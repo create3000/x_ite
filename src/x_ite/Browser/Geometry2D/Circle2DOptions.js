@@ -64,12 +64,15 @@ Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, X3DBaseNode 
 {
    initialize ()
    {
-      this .addInterest ("build", this);
+      X3DBaseNode .prototype .initialize .call (this);
 
-      this .build ();
+      this .addInterest ("eventsProcessed", this);
    },
    getVertices ()
    {
+      if (!this .vertices .length)
+         this .build ();
+
       return this .vertices;
    },
    build ()
@@ -78,8 +81,6 @@ Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, X3DBaseNode 
          dimension = this ._dimension .getValue (),
          angle     = Math .PI * 2 / dimension,
          vertices  = this .vertices;
-
-      vertices .length = 0;
 
       for (let n = 0; n < dimension; ++ n)
       {
@@ -92,6 +93,10 @@ Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, X3DBaseNode 
       }
 
       vertices .shrinkToFit ();
+   },
+   eventsProcessed ()
+   {
+      this .vertices .length = 0;
    },
 });
 

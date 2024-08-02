@@ -57,10 +57,6 @@ function Rectangle2DOptions (executionContext)
 
 Object .assign (Object .setPrototypeOf (Rectangle2DOptions .prototype, X3DBaseNode .prototype),
 {
-   initialize ()
-   {
-      X3DBaseNode .prototype .initialize .call (this);
-   },
    getGeometry ()
    {
       if (this .geometry)
