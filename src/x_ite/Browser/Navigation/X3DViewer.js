@@ -189,14 +189,14 @@ function tbProjectToSphere (r, x, y)
 {
    const d = Math .hypot (x, y);
 
-   if (d < r * Math .sqrt (0.5)) // Inside sphere
+   if (d < r * Math .SQRT1_2) // Inside sphere
    {
       return Math .sqrt (r * r - d * d);
    }
 
    // On hyperbola
 
-   const t = r / Math .sqrt (2);
+   const t = r / Math .SQRT2;
 
    return t * t / d;
 }
