@@ -824,11 +824,9 @@ class SampleViewer
       if (this .environmentLight)
          return this .environmentLight;
 
-      const cubeMapTexturing = this .browser .getComponent ("CubeMapTexturing");
+      this .scene .addComponent (this .browser .getComponent ("CubeMapTexturing"));
 
-      await this .browser .loadComponents (cubeMapTexturing);
-
-      this .scene .addComponent (cubeMapTexturing);
+      await this .browser .loadComponents (this .scene);
 
       const
          environmentLight  = this .scene .createNode ("EnvironmentLight"),
