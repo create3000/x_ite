@@ -59,7 +59,7 @@ import Color3       from "../../standard/Math/Numbers/Color3.js";
 import Color4       from "../../standard/Math/Numbers/Color4.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
-// https://github.com/KhronosGroup/glTF-Sample-Models
+// https://github.com/KhronosGroup/glTF-Sample-Assets
 
 const SAMPLES_PER_SECOND = 30; // in 1/s
 
