@@ -48,7 +48,6 @@
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Fields       from "../Fields.js";
-import X3DConstants from "../Base/X3DConstants.js";
 import URLs         from "../Browser/Networking/URLs.js";
 import Algorithm    from "../../standard/Math/Algorithm.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
@@ -2248,7 +2247,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       if (!(array instanceof Array))
          return;
-      
+
       const nodes = array .map (object => object .node) .filter (node => node);
 
       if (!nodes .length)
