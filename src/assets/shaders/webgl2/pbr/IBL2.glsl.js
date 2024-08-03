@@ -53,7 +53,7 @@ getSheenLight (const in vec3 reflection, const in float lod)
 {
    // TODO: use sheenTexture.
 
-   vec3 texCoord = x3d_EnvironmentLightSource .rotation * reflection * vec3 (-1.0, 1.0, 1.0);
+   vec3 texCoord = x3d_EnvironmentLightSource .rotation * reflection; // * vec3 (-1.0, 1.0, 1.0);
 
    #if __VERSION__ == 100
       vec3 textureColor = textureCubeLodEXT (x3d_EnvironmentLightSource .diffuseTexture, texCoord, lod) .rgb;
