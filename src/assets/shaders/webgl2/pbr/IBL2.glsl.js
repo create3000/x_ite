@@ -53,7 +53,7 @@ getSheenLight (const in vec3 reflection, const in float lod)
 {
    // return textureLod (u_CharlieEnvSampler, u_EnvRotation * reflection, lod) * u_EnvIntensity;
 
-   return vec3 (0.5) * (lod / float (x3d_EnvironmentLightSource .specularTextureLevels)) * x3d_EnvironmentLightSource .intensity;
+   return abs (reflection) * 0.1 * (lod / float (x3d_EnvironmentLightSource .specularTextureLevels)) * x3d_EnvironmentLightSource .intensity;
 }
 #endif
 
