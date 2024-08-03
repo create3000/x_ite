@@ -68,6 +68,7 @@ const ibl_files = [
 ];
 
 const no_headlight = [
+   "DiffuseTransmissionPlant",
    "LightsPunctualLamp",
    "SheenTestGrid",
    "ToyCar",
