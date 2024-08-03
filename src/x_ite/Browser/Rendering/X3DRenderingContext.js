@@ -49,10 +49,9 @@ import Fields                 from "../../Fields.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
 import TextureBuffer          from "../../Rendering/TextureBuffer.js";
-import Vector4                from "../../../standard/Math/Numbers/Vector4.js";
+import { maxClipPlanes }      from "./RenderingConfiguration.js";
 
 const
-   _viewport           = Symbol (),
    _frameBuffer        = Symbol (),
    _transmissionBuffer = Symbol (),
    _resizer            = Symbol (),
@@ -138,7 +137,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    getMaxClipPlanes ()
    {
-      return 6;
+      return maxClipPlanes;
    },
    getDepthSize ()
    {

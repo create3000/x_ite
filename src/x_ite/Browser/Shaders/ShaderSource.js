@@ -45,11 +45,7 @@
  *
  ******************************************************************************/
 
-import Types                              from "../../../assets/shaders/Types.glsl.js";
-import MultiTextureModeType               from "../Texturing/ModeType.js";
-import MultiTextureSourceType             from "../Texturing/SourceType.js";
-import MultiTextureFunctionType           from "../Texturing/FunctionType.js";
-import TextureCoordinateGeneratorModeType from "../Texturing/TextureCoordinateGeneratorModeType.js";
+import Types from "../../../assets/shaders/Types.glsl.js";
 
 const ShaderSource =
 {
@@ -89,90 +85,15 @@ const ShaderSource =
 
       // Constants
 
-      let constants = "";
-
-      constants += "#define X_ITE\n";
+      let defines = "";
 
       if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-         constants += "#define X3D_DEPTH_TEXTURE\n";
+         defines += "#define X3D_DEPTH_TEXTURE\n";
 
       for (const option of options)
-         constants += "#define " + option + "\n";
+         defines += `#define ${option}\n`;
 
-      // Definitions
-
-      let definitions = "";
-
-      definitions += "#define x3d_None 0\n";
-
-      definitions += "#define x3d_Points      0\n";
-      definitions += "#define x3d_Lines       1\n";
-      definitions += "#define x3d_Geometry2D  2\n";
-      definitions += "#define x3d_Geometry3D  3\n";
-
-      definitions += "#define x3d_MaxClipPlanes  " + browser .getMaxClipPlanes () + "\n";
-
-      definitions += "#define x3d_LinearFog        1\n";
-      definitions += "#define x3d_ExponentialFog   2\n";
-      definitions += "#define x3d_Exponential2Fog  3\n";
-
-      definitions += "#define x3d_MaxLights         " + browser .getMaxLights () + "\n";
-      definitions += "#define x3d_DirectionalLight  1\n";
-      definitions += "#define x3d_PointLight        2\n";
-      definitions += "#define x3d_SpotLight         3\n";
-
-      definitions += "#define x3d_MaxTextures      " + browser .getMaxTextures () + "\n";
-      definitions += "#define x3d_TextureType2D    2\n";
-      definitions += "#define x3d_TextureType3D    3\n";
-      definitions += "#define x3d_TextureTypeCube  4\n";
-
-      definitions += "#define x3d_Replace                   " + MultiTextureModeType .REPLACE                   + "\n";
-      definitions += "#define x3d_Modulate                  " + MultiTextureModeType .MODULATE                  + "\n";
-      definitions += "#define x3d_Modulate2X                " + MultiTextureModeType .MODULATE2X                + "\n";
-      definitions += "#define x3d_Modulate4X                " + MultiTextureModeType .MODULATE4X                + "\n";
-      definitions += "#define x3d_Add                       " + MultiTextureModeType .ADD                       + "\n";
-      definitions += "#define x3d_AddSigned                 " + MultiTextureModeType .ADDSIGNED                 + "\n";
-      definitions += "#define x3d_AddSigned2X               " + MultiTextureModeType .ADDSIGNED2X               + "\n";
-      definitions += "#define x3d_AddSmooth                 " + MultiTextureModeType .ADDSMOOTH                 + "\n";
-      definitions += "#define x3d_Subtract                  " + MultiTextureModeType .SUBTRACT                  + "\n";
-      definitions += "#define x3d_BlendDiffuseAlpha         " + MultiTextureModeType .BLENDDIFFUSEALPHA         + "\n";
-      definitions += "#define x3d_BlendTextureAlpha         " + MultiTextureModeType .BLENDTEXTUREALPHA         + "\n";
-      definitions += "#define x3d_BlendFactorAlpha          " + MultiTextureModeType .BLENDFACTORALPHA          + "\n";
-      definitions += "#define x3d_BlendCurrentAlpha         " + MultiTextureModeType .BLENDCURRENTALPHA         + "\n";
-      definitions += "#define x3d_ModulateAlphaAddColor     " + MultiTextureModeType .MODULATEALPHA_ADDCOLOR    + "\n";
-      definitions += "#define x3d_ModulateInvAlphaAddColor  " + MultiTextureModeType .MODULATEINVALPHA_ADDCOLOR + "\n";
-      definitions += "#define x3d_ModulateInvColorAddAlpha  " + MultiTextureModeType .MODULATEINVCOLOR_ADDALPHA + "\n";
-      definitions += "#define x3d_DotProduct3               " + MultiTextureModeType .DOTPRODUCT3               + "\n";
-      definitions += "#define x3d_SelectArg1                " + MultiTextureModeType .SELECTARG1                + "\n";
-      definitions += "#define x3d_SelectArg2                " + MultiTextureModeType .SELECTARG2                + "\n";
-      definitions += "#define x3d_Off                       " + MultiTextureModeType .OFF                       + "\n";
-
-      definitions += "#define x3d_Diffuse  " + MultiTextureSourceType .DIFFUSE  + "\n";
-      definitions += "#define x3d_Specular " + MultiTextureSourceType .SPECULAR + "\n";
-      definitions += "#define x3d_Factor   " + MultiTextureSourceType .FACTOR   + "\n";
-
-      definitions += "#define x3d_Complement     " + MultiTextureFunctionType .COMPLEMENT     + "\n";
-      definitions += "#define x3d_AlphaReplicate " + MultiTextureFunctionType .ALPHAREPLICATE + "\n";
-
-      definitions += "#define x3d_Sphere                      " + TextureCoordinateGeneratorModeType .SPHERE                      + "\n";
-      definitions += "#define x3d_CameraSpaceNormal           " + TextureCoordinateGeneratorModeType .CAMERASPACENORMAL           + "\n";
-      definitions += "#define x3d_CameraSpacePosition         " + TextureCoordinateGeneratorModeType .CAMERASPACEPOSITION         + "\n";
-      definitions += "#define x3d_CameraSpaceReflectionVector " + TextureCoordinateGeneratorModeType .CAMERASPACEREFLECTIONVECTOR + "\n";
-      definitions += "#define x3d_SphereLocal                 " + TextureCoordinateGeneratorModeType .SPHERE_LOCAL                + "\n";
-      definitions += "#define x3d_Coord                       " + TextureCoordinateGeneratorModeType .COORD                       + "\n";
-      definitions += "#define x3d_CoordEye                    " + TextureCoordinateGeneratorModeType .COORD_EYE                   + "\n";
-      definitions += "#define x3d_Noise                       " + TextureCoordinateGeneratorModeType .NOISE                       + "\n";
-      definitions += "#define x3d_NoiseEye                    " + TextureCoordinateGeneratorModeType .NOISE_EYE                   + "\n";
-      definitions += "#define x3d_SphereReflect               " + TextureCoordinateGeneratorModeType .SPHERE_REFLECT              + "\n";
-      definitions += "#define x3d_SphereReflectLocal          " + TextureCoordinateGeneratorModeType .SPHERE_REFLECT_LOCAL        + "\n";
-
-      // Legacy
-      definitions += "#define x3d_GeometryPoints  0\n";
-      definitions += "#define x3d_GeometryLines   1\n";
-      definitions += "#define x3d_NoneClipPlane   vec4 (88.0, 51.0, 68.0, 33.0)\n";
-      definitions += "#define x3d_NoneFog         0\n";
-      definitions += "#define x3d_NoneLight       0\n";
-      definitions += "#define x3d_NoneTexture     0\n";
+      defines += `#define x3d_MaxLights  ${browser .getMaxLights ()}`;
 
       // Adjust precision of struct types;
 
@@ -188,7 +109,7 @@ const ShaderSource =
 
       const lines = (match [1] .match (/\n/g) || [ ]) .length + 1;
 
-      return `${match [1]}${constants}${definitions}${types}#line ${lines + 1} -1\n${source .substring (match [0] .length)}`;
+      return `${match [1]}${defines}${types}#line ${lines + 1} -1\n${source .substring (match [0] .length)}`;
    },
 };
 
