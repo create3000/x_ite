@@ -219,10 +219,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .viewpointsCenterOfRotation (this .getScene ());
       this .optimizeSceneGraph (this .getScene () .getRootNodes ());
 
-      this .exportGroup ("Viewpoints",        this .viewpointNodes .filter (node => node));
-      this .exportGroup ("EnvironmentLights", this .envLightNodes  .filter (node => node));
-      this .exportGroup ("Lights",            this .lightNodes     .filter (node => node));
-      this .exportGroup ("Animations",        this .animationNodes .filter (node => node));
+      this .exportGroup ("Viewpoints",        this .viewpointNodes);
+      this .exportGroup ("EnvironmentLights", this .envLightNodes);
+      this .exportGroup ("Lights",            this .lightNodes);
+      this .exportGroup ("Animations",        this .animationNodes);
 
       this .materialVariantsSwitch ();
 
@@ -2256,6 +2256,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    exportGroup (name, nodes)
    {
+      nodes = nodes .filter (node => node);
+
       if (!nodes .length)
          return;
 
