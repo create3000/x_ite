@@ -179,6 +179,10 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 Input/Output field *extensions*.
 
+## Example
+
+- [View »Damaged Helmet« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=DamagedHelmet)
+
 ## Advice
 
 ### Hints
