@@ -67,11 +67,13 @@ const ibl_files = [
    "YetiWarrior",
 ];
 
+// KHR_lights_punctual
 const no_headlight = [
    "DiffuseTransmissionPlant",
+   "DirectionalLight",
+   "GlamVelvetSofa",
+   "IridescenceSuzanne",
    "LightsPunctualLamp",
-   "SheenTestGrid",
-   "ToyCar",
 ];
 
 // SAMPLES_BEGIN
