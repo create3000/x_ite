@@ -109,6 +109,7 @@ x3d-canvas {
                <option value="" selected>None</option>
                <option value="cannon-exterior:2">Cannon Exterior</option>
                <option value="helipad:1">Helipad Goldenhour</option>
+               <option value="footprint-court:1">Footprint Court</option>
             </select>
             <button class="check" for="headlight"><i id="headlight" class="fa-solid fa-xmark"></i>Headlight</button>
          </div>
