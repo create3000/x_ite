@@ -79,9 +79,7 @@ function GLTF2Parser (scene)
 
    this .extensions            = new Set ();
    this .envLights             = [ ];
-   this .envLightNodes         = [ ];
    this .lights                = [ ];
-   this .lightNodes            = [ ];
    this .usedLights            = 0;
    this .materialVariants      = [ ];
    this .materialVariantNodes  = [ ];
@@ -93,11 +91,9 @@ function GLTF2Parser (scene)
    this .textureTransformNodes = [ ];
    this .meshes                = [ ];
    this .cameras               = [ ];
-   this .viewpointNodes        = [ ];
    this .nodes                 = [ ];
    this .skins                 = [ ];
    this .joints                = new Set ();
-   this .animationNodes        = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
@@ -219,10 +215,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .viewpointsCenterOfRotation (this .getScene ());
       this .optimizeSceneGraph (this .getScene () .getRootNodes ());
 
-      this .exportGroup ("Viewpoints",        this .viewpointNodes);
-      this .exportGroup ("EnvironmentLights", this .envLightNodes);
-      this .exportGroup ("Lights",            this .lightNodes);
-      this .exportGroup ("Animations",        this .animationNodes);
+      this .exportGroup ("Viewpoints",        this .cameras);
+      this .exportGroup ("EnvironmentLights", this .envLights);
+      this .exportGroup ("Lights",            this .lights);
+      this .exportGroup ("Animations",        glTF .animations);
 
       this .materialVariantsSwitch ();
 
@@ -440,8 +436,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       lightNode .setup ();
 
-      this .envLightNodes [id] = lightNode;
-
       return light .node = lightNode;
    },
    khrLightsPunctualObject (KHR_lights_punctual)
@@ -487,8 +481,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
       scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
-
-      this .lightNodes [id] = lightNode;
 
       return light .node = lightNode;
    },
@@ -1779,13 +1771,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(camera instanceof Object))
          return null;
 
-      if (camera .viewpointNode !== undefined)
-         return camera .viewpointNode;
+      if (camera .node !== undefined)
+         return camera .node;
 
       const viewpointNode = this .cameraType (camera);
 
       if (!viewpointNode)
-         return camera .viewpointNode = null;
+         return camera .node = null;
 
       const
          scene = this .getScene (),
@@ -1799,12 +1791,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene .addExportedNode (scene .getUniqueExportName (name), viewpointNode);
       }
 
-      this .viewpointNodes [id] = viewpointNode;
-
       viewpointNode ._description = this .description (camera .name || `Viewpoint ${id}`);
       viewpointNode ._position    = Vector3 .Zero;
 
-      return camera .viewpointNode = viewpointNode;
+      return camera .node = viewpointNode;
    },
    cameraType (camera)
    {
@@ -2254,9 +2244,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       return this .nodeChildrenArray (nodes);
    },
-   exportGroup (name, nodes)
+   exportGroup (name, array)
    {
-      nodes = nodes .filter (node => node);
+      if (!(array instanceof Array))
+         return;
+      
+      const nodes = array .map (object => object .node) .filter (node => node);
 
       if (!nodes .length)
          return;
@@ -2337,7 +2330,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       timeSensorNode .setup ();
       groupNode .setup ();
 
-      this .animationNodes [id] = groupNode;
+      animation .node = groupNode;
    },
    animationChannelsArray (channels, samplers, timeSensorNode)
    {
