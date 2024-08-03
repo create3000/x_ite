@@ -51,9 +51,15 @@ getSpecularLight (const in vec3 reflection, const in float lod)
 vec3
 getSheenLight (const in vec3 reflection, const in float lod)
 {
-   // return textureLod (u_CharlieEnvSampler, u_EnvRotation * reflection, lod) * u_EnvIntensity;
+   vec3 texCoord = x3d_EnvironmentLightSource .rotation * reflection * vec3 (-1.0, 1.0, 1.0);
 
-   return abs (reflection) * 0.1 * (lod / float (x3d_EnvironmentLightSource .specularTextureLevels)) * x3d_EnvironmentLightSource .intensity;
+   #if __VERSION__ == 100
+      vec3 textureColor = textureCubeLodEXT (x3d_EnvironmentLightSource .diffuseTexture, texCoord, lod) .rgb;
+   #else
+      vec3 textureColor = textureLod (x3d_EnvironmentLightSource .diffuseTexture, texCoord, lod) .rgb;
+   #endif
+
+   return textureColor * 0.5 * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
 }
 #endif
 
