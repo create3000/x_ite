@@ -86,6 +86,7 @@ const models = [
    "https://create3000.github.io/media/glTF/FurInstancing/FurInstancing.glb",
    "https://create3000.github.io/media/glTF/GunBot/GunBot.glb",
    "https://create3000.github.io/media/glTF/NeilArmstrong/NeilArmstrong.glb",
+   "https://create3000.github.io/media/glTF/Telephone/Telephone.gltf",
    "https://create3000.github.io/media/glTF/Walking Alien/Walking Alien.gltf",
    "https://create3000.github.io/media/glTF/WebP/WebP.gltf",
    "https://create3000.github.io/media/glTF/YetiWarrior/YetiWarrior.gltf",
