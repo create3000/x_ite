@@ -79,7 +79,6 @@ function GLTF2Parser (scene)
    this .extensions            = new Set ();
    this .envLights             = [ ];
    this .lights                = [ ];
-   this .usedLights            = 0;
    this .materialVariants      = [ ];
    this .materialVariantNodes  = [ ];
    this .buffers               = [ ];
@@ -2063,8 +2062,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!lightNode)
          return;
 
-      ++ this .usedLights;
-
       transformNode ._children .push (lightNode);
    },
    nodeChildrenArray (children)
@@ -2166,9 +2163,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             if (sceneNumber === 0)
             {
-               if (this .usedLights)
-                  scene .getRootNodes () .push (this .createNavigationInfo ());
-
                scene .getRootNodes () .push (children [0]);
                return;
             }
@@ -2178,9 +2172,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          default:
          {
             // Root
-
-            if (this .usedLights)
-               scene .getRootNodes () .push (this .createNavigationInfo ());
 
             const switchNode = scene .createNode ("Switch", false);
 
@@ -2386,18 +2377,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return [ ];
 
       return this .createInterpolator (timeSensorNode, node, target, sampler .interpolation, input .array, output, timeSensorNode ._cycleInterval .getValue ());
-   },
-   createNavigationInfo ()
-   {
-      const
-         scene              = this .getScene (),
-         navigationInfoNode = scene .createNode ("NavigationInfo", false);
-
-      navigationInfoNode ._headlight = false;
-
-      navigationInfoNode .setup ();
-
-      return navigationInfoNode;
    },
    createShape (primitive, weights, skin, EXT_mesh_gpu_instancing)
    {
