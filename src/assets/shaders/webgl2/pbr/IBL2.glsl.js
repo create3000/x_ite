@@ -53,7 +53,7 @@ getSheenLight (const in vec3 reflection, const in float lod)
 {
    // TODO: use sheenTexture.
 
-   vec3 texCoord = x3d_EnvironmentLightSource .rotation * reflection; // * vec3 (-1.0, 1.0, 1.0);
+   vec3 texCoord = x3d_EnvironmentLightSource .rotation * reflection * vec3 (-1.0, 1.0, 1.0);
 
    #if __VERSION__ == 100
       vec3 textureColor = textureCubeLodEXT (x3d_EnvironmentLightSource .diffuseTexture, texCoord, lod) .rgb;
@@ -231,7 +231,7 @@ getIBLRadianceCharlie (const in vec3 n, const in vec3 v, const in float sheenRou
    // TODO: use sheenTexture.
 
    float NdotV           = clamp (dot (n, v), 0.0, 1.0);
-   float lod             = sheenRoughness * float (x3d_EnvironmentLightSource .specularTextureLevels);
+   float lod             = sheenRoughness * float (x3d_EnvironmentLightSource .diffuseTextureLevels);
    vec3  reflection      = normalize (reflect (-v, n));
    vec2  brdfSamplePoint = clamp (vec2 (NdotV, sheenRoughness), vec2 (0.0), vec2 (1.0));
 

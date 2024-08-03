@@ -114,12 +114,15 @@ Object .assign (EnvironmentLightContainer .prototype,
       // https://stackoverflow.com/a/25640078/1818915
       // The system will automatically clamp the specified parameter appropriately.
       // In GLSL 4 there is a textureQueryLevels function.
-      const specularTextureLevels = 1 + Math .floor (Math .log2 (specularTexture ?.getSize () ?? 1));
+      const
+         diffuseTextureLevels  = 1 + Math .floor (Math .log2 (diffuseTexture ?.getSize () ?? 1)),
+         specularTextureLevels = 1 + Math .floor (Math .log2 (specularTexture ?.getSize () ?? 1));
 
       gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 color .r, color .g, color .b);
       gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,             lightNode .getIntensity ());
       gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,       this .rotationMatrix);
       gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLinear,  diffuseTexture ?.isLinear ());
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLevels,  diffuseTextureLevels);
       gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLinear, specularTexture ?.isLinear ());
       gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLevels, specularTextureLevels);
 

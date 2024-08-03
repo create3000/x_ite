@@ -193,6 +193,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_EnvironmentLightRotation              = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.rotation");
       this .x3d_EnvironmentLightDiffuseTexture        = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTexture");
       this .x3d_EnvironmentLightDiffuseTextureLinear  = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTextureLinear");
+      this .x3d_EnvironmentLightDiffuseTextureLevels  = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTextureLevels");
       this .x3d_EnvironmentLightSpecularTexture       = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTexture");
       this .x3d_EnvironmentLightSpecularTextureLinear = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLinear");
       this .x3d_EnvironmentLightSpecularTextureLevels = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLevels");
