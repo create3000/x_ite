@@ -98,7 +98,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
       // In GLSL 4 there is a textureQueryLevels function,
       // otherwise: levels = 1 + floor (log2 (size)).
       // We subtract one (1) here, because glsl texture lod starts with 0.
-      this .levels = Math .floor (Math .log2 (value || 1));
+      this .levels = Math .floor (Math .log2 (Math .max (value, 1)));
    },
    getLevels ()
    {
