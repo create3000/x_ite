@@ -230,11 +230,10 @@ vec3
 getIBLRadianceCharlie (const in vec3 n, const in vec3 v, const in float sheenRoughness, const in vec3 sheenColor)
 {
    // TODO: use sheenTexture.
-   
-   float NdotV      = clamp (dot (n, v), 0.0, 1.0);
-   float lod        = sheenRoughness * float (x3d_EnvironmentLightSource .specularTextureLevels);
-   vec3  reflection = normalize (reflect (-v, n));
 
+   float NdotV           = clamp (dot (n, v), 0.0, 1.0);
+   float lod             = sheenRoughness * float (x3d_EnvironmentLightSource .specularTextureLevels);
+   vec3  reflection      = normalize (reflect (-v, n));
    vec2  brdfSamplePoint = clamp (vec2 (NdotV, sheenRoughness), vec2 (0.0), vec2 (1.0));
 
    #if __VERSION__ == 100
