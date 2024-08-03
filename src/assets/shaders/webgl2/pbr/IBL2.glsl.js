@@ -87,9 +87,9 @@ getIBLGGXFresnel (const in vec3 n, const in vec3 v, const in float roughness, co
       vec2 f_ab = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
    #endif
 
-   vec3  Fr     = max (vec3 (1.0 - roughness), F0) - F0;
-   vec3  k_S    = F0 + Fr * pow (1.0 - NdotV, 5.0);
-   vec3  FssEss = specularWeight * (k_S * f_ab .x + f_ab .y);
+   vec3 Fr     = max (vec3 (1.0 - roughness), F0) - F0;
+   vec3 k_S    = F0 + Fr * pow (1.0 - NdotV, 5.0);
+   vec3 FssEss = specularWeight * (k_S * f_ab .x + f_ab .y);
 
    // Multiple scattering, from Fdez-Aguera
    float Ems    = (1.0 - (f_ab .x + f_ab .y));
@@ -216,10 +216,9 @@ getIBLRadianceAnisotropy (const in vec3 n, const in vec3 v, const in float rough
    vec3  bentNormal         = normalize (mix (anisotropicNormal, n, bendFactorPow4));
 
    // Holger: https://blender.stackexchange.com/questions/93790/is-the-roughness-setting-is-based-on-a-standard-measuring-unit
-   float lod        = pow (roughness, 0.5) * float (x3d_EnvironmentLightSource .specularTextureLevels); // Holger: added pow.
-   vec3  reflection = normalize (reflect (-v, bentNormal));
-
-   vec3 specularLight = getSpecularLight (reflection, lod);
+   float lod           = pow (roughness, 0.5) * float (x3d_EnvironmentLightSource .specularTextureLevels); // Holger: added pow.
+   vec3  reflection    = normalize (reflect (-v, bentNormal));
+   vec3  specularLight = getSpecularLight (reflection, lod);
 
    return specularLight;
 }
