@@ -654,7 +654,7 @@ class SampleViewer
 
       this .localStorage .setDefaultValues ({
          scrollTop: 0,
-         ibl: "helipad:1",
+         ibl: "cannon-exterior:2",
          toneMapping: "KHR_PBR_NEUTRAL",
          background: false,
       });
