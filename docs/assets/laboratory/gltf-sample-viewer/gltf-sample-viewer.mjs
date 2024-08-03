@@ -67,6 +67,12 @@ const ibl_files = [
    "YetiWarrior",
 ];
 
+const no_headlight = [
+   "LightsPunctualLamp",
+   "SheenTestGrid",
+   "ToyCar",
+];
+
 // SAMPLES_BEGIN
 
 const models = [
@@ -788,7 +794,7 @@ class SampleViewer
          this .browser .viewAll (0);
 
       this .setEnvironmentLight (ibl_files .some (name => filename .includes (name)));
-      this .setHeadlight (true);
+      this .setHeadlight (!no_headlight .some (name => filename .includes (name)));
       this .setToneMapping (this .localStorage .toneMapping);
       this .setBackground (this .localStorage .background);
       this .addScenes ();
