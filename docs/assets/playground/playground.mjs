@@ -49,7 +49,7 @@ class Playground
 
       // Handle url parameter.
 
-      const url = new URL (document .location .href) .searchParams .get ("url")
+      const url = new URL (location) .searchParams .get ("url")
          ?? "/x_ite/assets/playground/playground.x3d";
 
       browser .baseURL = url;

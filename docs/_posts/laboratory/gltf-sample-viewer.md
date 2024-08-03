@@ -84,7 +84,7 @@ x3d-canvas {
 }
 </style>
 
-<script defer src="/x_ite/assets/laboratory/gltf-sample-viewer/gltf-sample-viewer.js"></script>
+<script type="module" src="/x_ite/assets/laboratory/gltf-sample-viewer/gltf-sample-viewer.mjs"></script>
 
 <div class="viewer viewer-row">
    <div class="viewer-column1">
