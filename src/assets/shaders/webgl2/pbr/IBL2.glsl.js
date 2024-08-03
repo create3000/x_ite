@@ -104,7 +104,7 @@ getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness)
 {
    // Holger: https://blender.stackexchange.com/questions/93790/is-the-roughness-setting-is-based-on-a-standard-measuring-unit
    float NdotV         = clamp (dot (n, v), 0.0, 1.0);
-   float lod           = pow (roughness, 0.5) * float (x3d_EnvironmentLightSource .specularTextureLevels); // Holger: added pow.
+   float lod           = sqrt (roughness) * float (x3d_EnvironmentLightSource .specularTextureLevels); // Holger: added sqrt.
    vec3  reflection    = normalize (reflect (-v, n));
    vec3  specularLight = getSpecularLight (reflection, lod);
 
@@ -216,7 +216,7 @@ getIBLRadianceAnisotropy (const in vec3 n, const in vec3 v, const in float rough
    vec3  bentNormal         = normalize (mix (anisotropicNormal, n, bendFactorPow4));
 
    // Holger: https://blender.stackexchange.com/questions/93790/is-the-roughness-setting-is-based-on-a-standard-measuring-unit
-   float lod           = pow (roughness, 0.5) * float (x3d_EnvironmentLightSource .specularTextureLevels); // Holger: added pow.
+   float lod           = sqrt (roughness) * float (x3d_EnvironmentLightSource .specularTextureLevels); // Holger: added sqrt.
    vec3  reflection    = normalize (reflect (-v, bentNormal));
    vec3  specularLight = getSpecularLight (reflection, lod);
 
