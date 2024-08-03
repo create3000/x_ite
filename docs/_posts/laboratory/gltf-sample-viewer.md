@@ -104,8 +104,12 @@ x3d-canvas {
       </x3d-canvas>
       <div id="options">
          <div id="lighting">
-            <b>Lighting</b>
-            <button class="check" for="ibl"><i id="ibl" class="fa-solid fa-xmark"></i>Image Based Lighting</button>
+            <b>Image Based Lighting</b>
+            <select id="ibl" class="select">
+               <option value="" selected>None</option>
+               <option value="cannon-exterior:2">Cannon Exterior</option>
+               <option value="helipad:1">Helipad Goldenhour</option>
+            </select>
             <button class="check" for="headlight"><i id="headlight" class="fa-solid fa-xmark"></i>Headlight</button>
          </div>
          <div>

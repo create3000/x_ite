@@ -654,6 +654,7 @@ class SampleViewer
 
       this .localStorage .setDefaultValues ({
          scrollTop: 0,
+         ibl: "helipad:1",
          toneMapping: "KHR_PBR_NEUTRAL",
          background: false,
       });
@@ -674,9 +675,9 @@ class SampleViewer
       })
       .scrollTop (this .localStorage .scrollTop);
 
-      $("[for=ibl]") .on ("click", () =>
+      $("#ibl") .on ("change", () =>
       {
-         this .setEnvironmentLight (!$("#ibl") .hasClass ("selected"));
+         this .setEnvironmentLight (!!$("#ibl") .val (), $("#ibl") .val () || undefined);
       });
 
       $("[for=headlight]") .on ("click", () =>
@@ -796,25 +797,34 @@ class SampleViewer
       this .addAnimations ();
    }
 
-   async setEnvironmentLight (on)
+   async setEnvironmentLight (on, ibl = this .localStorage .ibl)
    {
-      if (on)
-      {
-         $("#ibl") .removeClass ("fa-xmark") .addClass ("fa-check");
-         $("#ibl, [for=ibl]") .addClass ("selected");
-      }
-      else
-      {
-         $("#ibl") .removeClass ("fa-check") .addClass ("fa-xmark");
-         $("#ibl, [for=ibl]") .removeClass ("selected");
+      this .localStorage .ibl = ibl;
 
+      $("#ibl") .val (on ? ibl : "");
+
+      if (!on)
+      {
          if (!this .environmentLight)
             return;
       }
 
-      const environmentLight = await this .getEnvironmentLight ();
+      const
+         environmentLight   = await this .getEnvironmentLight (),
+         [image, intensity] = ibl .split (":");
 
-      environmentLight .on = on;
+      environmentLight .on        = on;
+      environmentLight .intensity = parseFloat (intensity);
+
+      const
+         diffuseURL  = new X3D .MFString (new URL (`images/${image}-diffuse.jpg`,  import .meta .url)),
+         specularURL = new X3D .MFString (new URL (`images/${image}-specular.jpg`, import .meta .url));
+
+      if (!environmentLight .diffuseTexture .url .equals (diffuseURL))
+         environmentLight .diffuseTexture .url = diffuseURL;
+
+      if (!environmentLight .specularTexture .url .equals (specularURL))
+         environmentLight .specularTexture .url = specularURL;
 
       this .scene .addRootNode (environmentLight);
    }
@@ -838,9 +848,7 @@ class SampleViewer
       textureProperties .minificationFilter  = "NICEST";
       textureProperties .magnificationFilter = "NICEST";
 
-      diffuseTexture  .url               = new X3D .MFString (new URL ("images/helipad-diffuse.jpg",  import .meta .url));
       diffuseTexture  .textureProperties = textureProperties;
-      specularTexture .url               = new X3D .MFString (new URL ("images/helipad-specular.jpg", import .meta .url));
       specularTexture .textureProperties = textureProperties;
 
       environmentLight .intensity       = 1;
