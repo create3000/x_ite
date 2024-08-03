@@ -375,7 +375,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const
          scene      = this .getScene (),
          lightNode  = scene .createNode ("EnvironmentLight", false),
-         name       = `EnvironmentLight${id}`,
+         name       = `EnvironmentLight${id + 1}`,
          quaternion = new Quaternion ();
 
       scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
@@ -465,7 +465,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          scene = this .getScene (),
-         name  = this .sanitizeName (light .name) || `Light${id}`;
+         name  = this .sanitizeName (light .name) || `Light${id + 1}`;
 
       const color = new Color3 (1, 1, 1);
 
@@ -1789,7 +1789,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene .addExportedNode (scene .getUniqueExportName (name), viewpointNode);
       }
 
-      viewpointNode ._description = this .description (camera .name || `Viewpoint ${id}`);
+      viewpointNode ._description = this .description (camera .name || `Viewpoint ${id + 1}`);
       viewpointNode ._position    = Vector3 .Zero;
 
       return camera .node = viewpointNode;
@@ -2308,12 +2308,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          groupNode = scene .createNode ("Group", false),
          name      = this .sanitizeName (animation .name);
 
-      scene .addNamedNode (scene .getUniqueName (name || `Animation${id}`), groupNode);
-      scene .addNamedNode (scene .getUniqueName (`Timer${id}`), timeSensorNode);
-      scene .addExportedNode (scene .getUniqueExportName (name || `Animation${id}`), groupNode);
-      scene .addExportedNode (scene .getUniqueExportName (`Timer${id}`), timeSensorNode);
+      scene .addNamedNode (scene .getUniqueName (name || `Animation${id + 1}`), groupNode);
+      scene .addNamedNode (scene .getUniqueName (`Timer${id + 1}`), timeSensorNode);
+      scene .addExportedNode (scene .getUniqueExportName (name || `Animation${id + 1}`), groupNode);
+      scene .addExportedNode (scene .getUniqueExportName (`Timer${id + 1}`), timeSensorNode);
 
-      timeSensorNode ._description = this .description (animation .name) || `Animation ${id}`;
+      timeSensorNode ._description = this .description (animation .name) || `Animation ${id + 1}`;
       groupNode ._visible = false;
       groupNode ._children .push (timeSensorNode, ... channelNodes);
 
