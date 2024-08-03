@@ -67,7 +67,8 @@ function X3DEnvironmentTextureNode (executionContext)
       gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, // Bottom
    ];
 
-   this .size = 1;
+   this .size   = 1;
+   this .levels = 0;
 }
 
 Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3DSingleTextureNode .prototype),
@@ -91,6 +92,17 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
    setSize (value)
    {
       this .size = value;
+
+      // https://stackoverflow.com/a/25640078/1818915
+      // The system will automatically clamp the specified parameter appropriately.
+      // In GLSL 4 there is a textureQueryLevels function,
+      // otherwise: levels = 1 + floor (log2 (size)).
+      // We subtract one (1) here, because glsl texture lod starts with 0.
+      this .levels = Math .floor (Math .log2 (value || 1));
+   },
+   getLevels ()
+   {
+      return this .levels;
    },
    clearTexture: (() =>
    {
