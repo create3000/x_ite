@@ -52,13 +52,13 @@ vec3
 getSheenLight (const in vec3 reflection, const in float lod)
 {
    // TODO: use sheenTexture.
-   
+
    vec3 texCoord = x3d_EnvironmentLightSource .rotation * reflection * vec3 (-1.0, 1.0, 1.0);
 
    #if __VERSION__ == 100
-      vec3 textureColor = textureCubeLodEXT (x3d_EnvironmentLightSource .diffuseTexture, texCoord, lod + 2.0) .rgb;
+      vec3 textureColor = textureCubeLodEXT (x3d_EnvironmentLightSource .diffuseTexture, texCoord, lod) .rgb;
    #else
-      vec3 textureColor = textureLod (x3d_EnvironmentLightSource .diffuseTexture, texCoord, lod + 2.0) .rgb;
+      vec3 textureColor = textureLod (x3d_EnvironmentLightSource .diffuseTexture, texCoord, lod) .rgb;
    #endif
 
    #if defined (X3D_COLORSPACE_SRGB)
@@ -69,7 +69,7 @@ getSheenLight (const in vec3 reflection, const in float lod)
          textureColor = sRGBToLinear (textureColor);
    #endif
 
-   return textureColor * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity * 0.5;
+   return textureColor * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
 }
 #endif
 
@@ -229,6 +229,8 @@ getIBLRadianceAnisotropy (const in vec3 n, const in vec3 v, const in float rough
 vec3
 getIBLRadianceCharlie (const in vec3 n, const in vec3 v, const in float sheenRoughness, const in vec3 sheenColor)
 {
+   // TODO: use sheenTexture.
+   
    float NdotV      = clamp (dot (n, v), 0.0, 1.0);
    float lod        = sheenRoughness * float (x3d_EnvironmentLightSource .specularTextureLevels);
    vec3  reflection = normalize (reflect (-v, n));
