@@ -57,6 +57,7 @@ const ibl_files = [
    "Sponza",
    "StainedGlassLamp",
    "Suzanne",
+   "Telephone",
    "TextureEncodingTest",
    "TextureTransformMultiTest",
    "ToyCar",
