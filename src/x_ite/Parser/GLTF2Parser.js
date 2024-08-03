@@ -79,6 +79,7 @@ function GLTF2Parser (scene)
 
    this .extensions            = new Set ();
    this .envLights             = [ ];
+   this .envLightNodes         = [ ];
    this .lights                = [ ];
    this .lightNodes            = [ ];
    this .usedLights            = 0;
@@ -218,9 +219,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .viewpointsCenterOfRotation (this .getScene ());
       this .optimizeSceneGraph (this .getScene () .getRootNodes ());
 
-      this .exportGroup ("Viewpoints", this .viewpointNodes);
-      this .exportGroup ("Lights",     this .lightNodes);
-      this .exportGroup ("Animations", this .animationNodes);
+      this .exportGroup ("Viewpoints",        this .viewpointNodes .filter (node => node));
+      this .exportGroup ("EnvironmentLights", this .envLightNodes  .filter (node => node));
+      this .exportGroup ("Lights",            this .lightNodes     .filter (node => node));
+      this .exportGroup ("Animations",        this .animationNodes .filter (node => node));
 
       this .materialVariantsSwitch ();
 
@@ -438,7 +440,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       lightNode .setup ();
 
-      this .lightNodes .push (lightNode);
+      this .envLightNodes [id] = lightNode;
 
       return light .node = lightNode;
    },
@@ -486,7 +488,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
       scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
 
-      this .lightNodes .push (lightNode);
+      this .lightNodes [id] = lightNode;
 
       return light .node = lightNode;
    },
@@ -1772,7 +1774,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .cameras = cameras;
    },
-   cameraObject (camera)
+   cameraObject (id, camera)
    {
       if (!(camera instanceof Object))
          return null;
@@ -1797,9 +1799,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene .addExportedNode (scene .getUniqueExportName (name), viewpointNode);
       }
 
-      this .viewpointNodes .push (viewpointNode);
+      this .viewpointNodes [id] = viewpointNode;
 
-      viewpointNode ._description = this .description (camera .name || `Viewpoint ${this .viewpointNodes .length}`);
+      viewpointNode ._description = this .description (camera .name || `Viewpoint ${id}`);
       viewpointNode ._position    = Vector3 .Zero;
 
       return camera .viewpointNode = viewpointNode;
@@ -1991,7 +1993,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Add camera.
 
-      const viewpointNode = this .cameraObject (this .cameras [node .camera]);
+      const viewpointNode = this .cameraObject (node .camera, this .cameras [node .camera]);
 
       if (viewpointNode)
          transformNode ._children .push (viewpointNode);
@@ -2301,10 +2303,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(animations instanceof Array))
          return;
 
-      for (const animation of animations)
-         this .animationObject (animation);
+      for (const [i, animation] of animations .entries ())
+         this .animationObject (i, animation);
    },
-   animationObject (animation)
+   animationObject (id, animation)
    {
       if (!(animation instanceof Object))
          return null;
@@ -2321,21 +2323,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          groupNode = scene .createNode ("Group", false),
          name      = this .sanitizeName (animation .name);
 
-      this .animationNodes .push (groupNode);
+      scene .addNamedNode (scene .getUniqueName (name || `Animation${id}`), groupNode);
+      scene .addNamedNode (scene .getUniqueName (`Timer${id}`), timeSensorNode);
+      scene .addExportedNode (scene .getUniqueExportName (name || `Animation${id}`), groupNode);
+      scene .addExportedNode (scene .getUniqueExportName (`Timer${id}`), timeSensorNode);
 
-      const animations = this .animationNodes .length;
-
-      scene .addNamedNode (scene .getUniqueName (name || `Animation${animations}`), groupNode);
-      scene .addNamedNode (scene .getUniqueName (`Timer${animations}`), timeSensorNode);
-      scene .addExportedNode (scene .getUniqueExportName (name || `Animation${animations}`), groupNode);
-      scene .addExportedNode (scene .getUniqueExportName (`Timer${animations}`), timeSensorNode);
-
-      timeSensorNode ._description = this .description (animation .name) || `Animation ${animations}`;
+      timeSensorNode ._description = this .description (animation .name) || `Animation ${id}`;
       groupNode ._visible = false;
       groupNode ._children .push (timeSensorNode, ... channelNodes);
 
       timeSensorNode .setup ();
       groupNode .setup ();
+
+      this .animationNodes [id] = groupNode;
    },
    animationChannelsArray (channels, samplers, timeSensorNode)
    {
