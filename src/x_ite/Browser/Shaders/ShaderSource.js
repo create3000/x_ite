@@ -85,12 +85,11 @@ const ShaderSource =
 
       // Constants
 
-      let defines = "";
+      const defines = /* glsl */ `
+      ${options .map (option => `#define ${option}`) .join ("\n")}
 
-      for (const option of options)
-         defines += `#define ${option}\n`;
-
-      defines += `#define x3d_MaxLights  ${browser .getMaxLights ()}`;
+      #define x3d_MaxLights ${browser .getMaxLights ()}
+      `;
 
       // Adjust precision of struct types;
 
