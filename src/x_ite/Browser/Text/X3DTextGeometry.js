@@ -629,7 +629,9 @@ Object .assign (X3DTextGeometry .prototype,
 
       for (const [g, glyph] of glyphs .entries ())
       {
-         const kerning = g + 1 < glyphs .length ? font .getKerningValue (glyph, glyphs [g + 1]) : 0;
+         const
+            nextGlyph = glyphs [g + 1],
+            kerning   = nextGlyph ? font .getKerningValue (glyph, nextGlyph) : 0;
 
          this .getGlyphExtents (font, glyph, primitiveQuality, glyphMin, glyphMax);
 
