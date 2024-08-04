@@ -45,7 +45,8 @@
  *
  ******************************************************************************/
 
-import Features from "../../Features.js";
+import Features        from "../../Features.js";
+import BROWSER_VERSION from "../../BROWSER_VERSION.js";
 
 const URLs =
 {
@@ -69,6 +70,9 @@ const URLs =
             break;
          }
       }
+
+      // Prevent caching issues with jsDelivr and UNPKG.
+      src = src .replace ("/x_ite@latest/", `/x_ite@${BROWSER_VERSION}/`);
 
       return function ()
       {
