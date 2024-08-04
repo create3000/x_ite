@@ -63,12 +63,12 @@ const ShaderSource =
          DEFINE       = "#define\\s+(?:[^\\n\\\\]|\\\\[^\\r\\n]|\\\\\\r?\\n)*\\n",
          UNDEF        = "#undef\\s+.*?\\n",
          PRAGMA       = "#pragma\\s+.*?\\n",
-         PREPROCESSOR =  LINE + "|" + IF + "|" + ELIF + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + UNDEF + "|" + PRAGMA,
+         PREPROCESSOR =  `${LINE}|${IF}|${ELIF}|${IFDEF}|${IFNDEF}|${ELSE}|${ENDIF}|${DEFINE}|${UNDEF}|${PRAGMA}`,
          VERSION      = "#version\\s+.*?\\n",
          EXTENSION    = "#extension\\s+.*?\\n";
 
       const
-         GLSL  = new RegExp ("^((?:" + COMMENTS + "|" + PREPROCESSOR + ")*(?:" + VERSION + ")?(?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)", "s"),
+         GLSL  = new RegExp (`^((?:${COMMENTS}|${PREPROCESSOR})*(?:${VERSION})?(?:${COMMENTS}|${PREPROCESSOR}|${EXTENSION})*)`, "s"),
          match = source .match (GLSL);
 
       // const
@@ -87,9 +87,6 @@ const ShaderSource =
 
       let defines = "";
 
-      if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-         defines += "#define X3D_DEPTH_TEXTURE\n";
-
       for (const option of options)
          defines += `#define ${option}\n`;
 
@@ -104,8 +101,8 @@ const ShaderSource =
          precisionInt   = matchInt   ?.[1] ?? "mediump";
 
       const types = Types
-         .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, precisionFloat + " $1")
-         .replace (/mediump\s+(int)/g,                       precisionInt   + " $1");
+         .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, `${precisionFloat} \$1`)
+         .replace (/mediump\s+(int)/g,                       `${precisionInt} \$1`);
 
       const lines = (match [1] .match (/\n/g) || [ ]) .length + 1;
 
