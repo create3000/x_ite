@@ -29,120 +29,118 @@
 
    <script type="module">
 import X3D from "./x_ite.js";
-window .X3D = X3D;
 
-X3D (() =>
+window .X3D = X3D; // Add this for debugging.
+
+const
+   Browser      = X3D .getBrowser (),
+   localStorage = Browser .getLocalStorage ();
+
+Browser .getContextMenu () .setUserMenu (() =>
 {
-   const
-      Browser      = X3D .getBrowser (),
-      localStorage = Browser .getLocalStorage ();
-
-   Browser .getContextMenu () .setUserMenu (() =>
-   {
-      return {
-         "transforms": {
-            "name": "CSS Transforms",
-            "items": {
-               "default": {
-                  "name": "Default",
-                  "callback": () => $("#transforms") .css ("transform", "matrix(1, 0, 0, 1, 0, 0)"),
-               },
-               "75 %": {
-                  "name": "75 %",
-                  "callback": () => $("#transforms") .css ("transform", "matrix(0.75, 0, 0, 0.75, 0, 0)"),
-               },
-               "50 %": {
-                  "name": "50 %",
-                  "callback": () => $("#transforms") .css ("transform", "matrix(0.5, 0, 0, 0.5, 0, 0)"),
-               },
+   return {
+      "transforms": {
+         "name": "CSS Transforms",
+         "items": {
+            "default": {
+               "name": "Default",
+               "callback": () => $("#transforms") .css ("transform", "matrix(1, 0, 0, 1, 0, 0)"),
+            },
+            "75 %": {
+               "name": "75 %",
+               "callback": () => $("#transforms") .css ("transform", "matrix(0.75, 0, 0, 0.75, 0, 0)"),
+            },
+            "50 %": {
+               "name": "50 %",
+               "callback": () => $("#transforms") .css ("transform", "matrix(0.5, 0, 0, 0.5, 0, 0)"),
             },
          },
-         ... (typeof createTestMenu !== "undefined" ? createTestMenu () : { }),
-      };
-   });
+      },
+      ... (typeof createTestMenu !== "undefined" ? createTestMenu () : { }),
+   };
+});
 
-   localStorage .setDefaultValues ({
-      "Bookmarks.history": ["https://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"],
-   });
+localStorage .setDefaultValues ({
+   "Bookmarks.history": ["https://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"],
+});
 
-   let index = localStorage ["Bookmarks.history"] .length - 1;
+let index = localStorage ["Bookmarks.history"] .length - 1;
 
-   async function loadURL (url)
+async function loadURL (url)
+{
+   const history = localStorage ["Bookmarks.history"];
+
+   localStorage ["Bookmarks.url"] = url;
+
+   if (url !== history .at (-1) && !url .match (/^(?:data|blob):/))
    {
-      const history = localStorage ["Bookmarks.history"];
-
-      localStorage ["Bookmarks.url"] = url;
-
-      if (url !== history .at (-1) && !url .match (/^(?:data|blob):/))
-      {
-         history .push (url);
-         history .splice (0, history .length - 100);
-         localStorage ["Bookmarks.history"] = history;
-         index = history .length - 1;
-      }
-
-      if (location .href .includes (".min.html") && url .startsWith ("tests/"))
-         url = "src/" + url;
-
-      $("#file") .removeClass ("loaded");
-
-      bookmarks .loadURL (url);
+      history .push (url);
+      history .splice (0, history .length - 100);
+      localStorage ["Bookmarks.history"] = history;
+      index = history .length - 1;
    }
 
-   function toVRMLString ()
+   if (location .href .includes (".min.html") && url .startsWith ("tests/"))
+      url = "src/" + url;
+
+   $("#file") .removeClass ("loaded");
+
+   bookmarks .loadURL (url);
+}
+
+function toVRMLString ()
+{
+   console .log (Browser .toVRMLString ());
+}
+
+function toXMLString ()
+{
+   console .log (Browser .toXMLString ());
+}
+
+function toJSONString ()
+{
+   console .log (Browser .toJSONString ());
+}
+
+const bookmarks = new Bookmarks (Browser, $("#examples-box"));
+
+bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
+loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
+
+$("#version") .text (Browser .name + " v" + Browser .version);
+$("#location-entry") .val (localStorage ["Bookmarks.history"] [index])
+$("#location-go") .on ("click", () => loadURL ($("#location-entry") .val ()));
+$("#print-vrml") .on ("click", toVRMLString);
+$("#print-xml") .on ("click", toXMLString);
+$("#print-json") .on ("click", toJSONString);
+$("#browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = Browser .getWorldURL ());
+
+$("#location-entry") .keydown (event =>
+{
+   switch (event .key)
    {
-      console .log (Browser .toVRMLString ());
+      case "Enter":
+         return loadURL ($("#location-entry") .val ())
+      case "ArrowUp":
+         if (index > 0)
+            $("#location-entry") .val (localStorage ["Bookmarks.history"] [--index])
+         return
+      case "ArrowDown":
+         if (index < localStorage ["Bookmarks.history"] .length - 1)
+            $("#location-entry") .val (localStorage ["Bookmarks.history"] [++index])
+         return
    }
+});
 
-   function toXMLString ()
+$("#blob") .on ("click", () =>
+{
+   fetch('https://db-api.unstable.life/get?url=cgg.mff.cuni.cz/~jaroslav/projects/celts/world/kelti.wrl')
+   .then(r => r .blob ())
+   .then(r =>
    {
-      console .log (Browser .toXMLString ());
-   }
-
-   function toJSONString ()
-   {
-      console .log (Browser .toJSONString ());
-   }
-
-   const bookmarks = new Bookmarks (Browser, $("#examples-box"));
-
-   bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
-   loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
-
-   $("#version") .text (Browser .name + " v" + Browser .version);
-   $("#location-entry") .val (localStorage ["Bookmarks.history"] [index])
-   $("#location-go") .on ("click", () => loadURL ($("#location-entry") .val ()));
-   $("#print-vrml") .on ("click", toVRMLString);
-   $("#print-xml") .on ("click", toXMLString);
-   $("#print-json") .on ("click", toJSONString);
-   $("#browser") .on ("initialized", () => localStorage ["Bookmarks.url"] = Browser .getWorldURL ());
-
-   $("#location-entry") .keydown (event =>
-   {
-      switch (event .key)
-      {
-         case "Enter":
-            return loadURL ($("#location-entry") .val ())
-         case "ArrowUp":
-            if (index > 0)
-               $("#location-entry") .val (localStorage ["Bookmarks.history"] [--index])
-            return
-         case "ArrowDown":
-            if (index < localStorage ["Bookmarks.history"] .length - 1)
-               $("#location-entry") .val (localStorage ["Bookmarks.history"] [++index])
-            return
-      }
-   });
-
-   $("#blob") .on ("click", () =>
-   {
-      fetch('https://db-api.unstable.life/get?url=cgg.mff.cuni.cz/~jaroslav/projects/celts/world/kelti.wrl')
-      .then(r => r .blob ())
-      .then(r =>
-      {
-         // Browser .baseURL = "https://cgg.mff.cuni.cz/~jaroslav/projects/celts/world/";
-         Browser .loadURL (new X3D .MFString (URL .createObjectURL (r)));
-      });
+      // Browser .baseURL = "https://cgg.mff.cuni.cz/~jaroslav/projects/celts/world/";
+      Browser .loadURL (new X3D .MFString (URL .createObjectURL (r)));
    });
 });
       </script>
