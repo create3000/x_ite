@@ -70,18 +70,16 @@ Object .assign (ShaderCompiler .prototype,
 
       source = "";
 
-      for (let i = 0, length = lines .length; i < length; ++ i)
+      for (const [i, line] of lines .entries ())
       {
-         const
-            line  = lines [i],
-            match = line .match (include);
+         const match = line .match (include);
 
          if (match)
          {
-            source += "#line 1 " + this .sourceFileNumbers [match [1]] + "\n";
+            source += `#line 1 ${this .sourceFileNumbers [match [1]]}\n`;
             source += this .process (this .includes [match [1]], this .sourceFileNumbers [match [1]]);
             source += "\n";
-            source += "#line " + (i + 2) + " " + parent + "\n";
+            source += `#line ${i + 2} ${parent}\n`;
          }
          else
          {
