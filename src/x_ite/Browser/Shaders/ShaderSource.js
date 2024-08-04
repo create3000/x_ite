@@ -103,7 +103,7 @@ const ShaderSource =
          .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, `${precisionFloat} \$1`)
          .replace (/mediump\s+(int)/g,                       `${precisionInt} \$1`);
 
-      const lines = (match [1] .match (/\n/g) || [ ]) .length + 1;
+      const lines = (match [1] .match (/\n/g) ?.length ?? 0) + 1;
 
       return `${match [1]}${defines}${types}#line ${lines + 1} -1\n${source .substring (match [0] .length)}`;
    },
