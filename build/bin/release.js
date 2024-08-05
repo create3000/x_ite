@@ -45,7 +45,7 @@ function readme (version)
 
 function docs (version)
 {
-	const size = Math .floor (parseInt (sh (`brotli -6 dist/x_ite.min.js --stdout | wc -c`) .trim ()) / 1000);
+	const size = Math .floor (parseInt (sh (`brotli -6 dist/x_ite.min.mjs --stdout | wc -c`) .trim ()) / 1000);
 
 	if (size < 270)
 		var color = "green";
