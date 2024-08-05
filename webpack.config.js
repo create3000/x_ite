@@ -24,22 +24,22 @@ module .exports = async () =>
    {
       const
          graph = await madge (filename),
-         deps  = new Set ()
+         deps  = new Set ();
 
       for (const files of Object .values (graph .obj ()))
       {
          for (const file of files)
-            deps .add (path .resolve (path .dirname (filename), file))
+            deps .add (path .resolve (path .dirname (filename), file));
       }
 
-      return deps
+      return deps;
    }
 
    const
       x_ite_deps = await deps (path .resolve (__dirname, "src/x_ite.js")),
-      targets    = [ ]
+      targets    = [ ];
 
-   x_ite_deps .add (path .resolve (__dirname, "src/x_ite/Namespace.js"))
+   x_ite_deps .add (path .resolve (__dirname, "src/x_ite/Namespace.js"));
 
    const namespace =
    {
@@ -57,7 +57,7 @@ module .exports = async () =>
                            ns   = path .resolve (__dirname, "src/x_ite/Namespace.js"),
                            rel  = path .relative (path .dirname (this .resourcePath), ns),
                            key  = path .relative (path .resolve (__dirname, "src"), this .resourcePath) .replace (/\.js$/, ""),
-                           base = path .basename (key)
+                           base = path .basename (key);
 
                         return `const __default__ = ${m};
 import Namespace from "./${rel}";
@@ -69,7 +69,7 @@ export default __default__;`;
             }),
          },
       ],
-   }
+   };
 
    const compress_glsl = {
       test: /\.js$/,
@@ -117,7 +117,7 @@ export default __default__;`;
             }),
          },
       ],
-   }
+   };
 
    targets .push ({
       entry: {
@@ -214,7 +214,7 @@ export default __default__;`;
          maxEntrypointSize: 10_000_000,
          maxAssetSize: 10_000_000,
       },
-   })
+   });
 
    targets .push ({
       entry: {
@@ -247,7 +247,7 @@ export default __default__;`;
                               pattern: /\/\/ var/sg,
                               replacement: function (match, m, offset, string)
                               {
-                                 return "var"
+                                 return "var";
                               },
                            },
                         ],
@@ -265,7 +265,7 @@ export default __default__;`;
                               pattern: /MODULE = false/sg,
                               replacement: function (match, m, offset, string)
                               {
-                                 return "MODULE = true"
+                                 return "MODULE = true";
                               },
                            },
                         ],
@@ -346,32 +346,32 @@ export default __default__;`;
          maxEntrypointSize: 10_000_000,
          maxAssetSize: 10_000_000,
       },
-   })
+   });
 
    const dependencies = {
       "Layout": ["Text"],
       "Picking": ["RigidBodyPhysics"],
       "VolumeRendering": ["CADGeometry", "Texturing3D"],
-   }
+   };
 
    function resolveDeps (name)
    {
-      let deps = [ ]
+      let deps = [ ];
 
       for (const d of dependencies [name] || [ ])
-         deps = [... deps, ... resolveDeps (d), d]
+         deps = [... deps, ... resolveDeps (d), d];
 
-      return deps
+      return deps;
    }
 
    for (const filename of fs .readdirSync ("./src/assets/components/"))
    {
       const
          name           = path .parse (filename) .name,
-         component_deps = [x_ite_deps]
+         component_deps = [x_ite_deps];
 
       for (const dependency of resolveDeps (name))
-         component_deps .push (await deps (path .resolve (__dirname, `src/assets/components/${dependency}.js`)))
+         component_deps .push (await deps (path .resolve (__dirname, `src/assets/components/${dependency}.js`)));
 
       targets .push ({
          entry: {
@@ -455,19 +455,19 @@ export default __default__;`;
          externals: [
             function ({ context, request }, callback)
             {
-               const filename = path .resolve (context, request)
+               const filename = path .resolve (context, request);
 
                for (const deps of component_deps)
                {
                   if (!deps .has (filename))
-                     continue
+                     continue;
 
-                  const module = path .relative (path .resolve (__dirname, "src"), filename) .replace (/\.js$/, "")
+                  const module = path .relative (path .resolve (__dirname, "src"), filename) .replace (/\.js$/, "");
 
-                  return callback (null, `var window [Symbol .for ("X_ITE.X3D")] .require ("${module}")`)
+                  return callback (null, `var window [Symbol .for ("X_ITE.X3D")] .require ("${module}")`);
                }
 
-               return callback ()
+               return callback ();
             },
          ],
          resolve: {
@@ -483,7 +483,7 @@ export default __default__;`;
             maxEntrypointSize: 10_000_000,
             maxAssetSize: 10_000_000,
          },
-      })
+      });
    }
 
    console .log (`Using ${os .cpus () .length} CPUs to package X_ITE.`);
