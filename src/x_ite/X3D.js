@@ -133,6 +133,9 @@ function X3D (callback, fallback)
 
 Object .assign (X3D, Namespace, Namespace .Fields,
 {
+   /**
+   * @deprecated Use X3D.ModuleName instead.
+   */
    require (id)
    {
       if (!Namespace .has (id))
