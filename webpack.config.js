@@ -370,8 +370,8 @@ export default __default__;`;
          name           = path .parse (filename) .name,
          component_deps = [x_ite_deps];
 
-      for (const dependency of resolveDeps (name))
-         component_deps .push (await deps (path .resolve (__dirname, `src/assets/components/${dependency}.js`)));
+      component_deps .push (... await Promise .all (resolveDeps (name)
+         .map (dependency => deps (path .resolve (__dirname, `src/assets/components/${dependency}.js`)))));
 
       targets .push ({
          entry: {
