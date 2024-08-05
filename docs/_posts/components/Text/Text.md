@@ -126,3 +126,4 @@ The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle
 ## See Also
 
 - [X3D Specification of Text Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#Text)
+- [Browser option »TextCompression«](/x_ite/reference/browser-services/#browser-options)
