@@ -16,7 +16,8 @@ for (const filename of fs .readdirSync ("./src/assets/lib/") .filter (filename =
 const
    TerserPlugin           = require ("terser-webpack-plugin"),
    WebpackShellPluginNext = require ("webpack-shell-plugin-next"),
-   StringReplacePlugin    = require ("string-replace-webpack-plugin");
+   StringReplacePlugin    = require ("string-replace-webpack-plugin"),
+   WrapperPlugin          = require ("wrapper-webpack-plugin");
 
 module .exports = async () =>
 {
@@ -182,7 +183,7 @@ export default __default__;`;
                scripts: [
                   // Version
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.js`,
-                  `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite{,.min}.js`,
+                  `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/x_ite{,.min}.js`,
                   // Source Maps
                   `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/x_ite{,.min}.js`,
                   // Debug
@@ -319,7 +320,7 @@ export default __default__;`;
                scripts: [
                   // Version
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.mjs`,
-                  `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite{,.min}.mjs`,
+                  `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/x_ite{,.min}.mjs`,
                   // Source Maps
                   `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/x_ite{,.min}.mjs`,
                   // Debug
@@ -407,6 +408,10 @@ export default __default__;`;
          },
          plugins: [
             new StringReplacePlugin (),
+            new WrapperPlugin ({
+               test: /\.js$/,
+               header: `const X_ITE_X3D = window [Symbol .for ("X_ITE.X3D")];\n`,
+            }),
             new webpack .ProvidePlugin ({
                $: path .resolve (__dirname, "src/lib/jquery.js"),
                jQuery: path .resolve (__dirname, "src/lib/jquery.js"),
@@ -437,7 +442,7 @@ export default __default__;`;
                   scripts: [
                      // Version
                      `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}{,.min}.js`,
-                     `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */|sg' dist/assets/components/${name}{,.min}.js`,
+                     `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/assets/components/${name}{,.min}.js`,
                      // Source Maps
                      `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/assets/components/${name}{,.min}.js`,
                      // Per component
@@ -466,7 +471,7 @@ export default __default__;`;
 
                   const module = path .relative (path .resolve (__dirname, "src"), filename) .replace (/\.js$/, "");
 
-                  return callback (null, `var window [Symbol .for ("X_ITE.X3D")] .require ("${module}")`);
+                  return callback (null, `var X_ITE_X3D .require ("${module}")`);
                }
 
                return callback ();

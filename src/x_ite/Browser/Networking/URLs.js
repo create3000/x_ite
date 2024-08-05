@@ -81,15 +81,13 @@ const URLs =
    })(),
    getProviderURL (component)
    {
-      if (component)
-      {
-         if (this .getScriptURL () .match (/\.min\.js$/))
-            component += ".min";
+      if (!component)
+         return "https://create3000.github.io/x_ite/";
 
-         return new URL ("assets/components/" + component + ".js", this .getScriptURL ()) .href;
-      }
+      if (this .getScriptURL () .match (/\.min\.m?js$/))
+         component += ".min";
 
-      return "https://create3000.github.io/x_ite/";
+      return new URL ("assets/components/" + component + ".js", this .getScriptURL ()) .href;
    },
    getFontsURL (file)
    {

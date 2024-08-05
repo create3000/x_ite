@@ -24,7 +24,7 @@ function html ()
    systemSync (`cp src/x_ite.html x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|\\s*<!-- X_ITE START.*?X_ITE END -->|\\n|sg'  x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|<!-- JQUERY -->|<script src="https://code.jquery.com/jquery-latest.js"></script>|sg' x_ite.min.html`);
-	systemSync (`perl -p0i -e 's|"./x_ite.js"|"./dist/x_ite.mjs"|sg'           x_ite.min.html`);
+	systemSync (`perl -p0i -e 's|"./x_ite.js"|"./dist/x_ite.min.mjs"|sg'       x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'            x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|\\.\\./x_ite.min.html|src/x_ite.html|sg'      x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|id="links"|id="links" class="min-links"|sg'   x_ite.min.html`);
