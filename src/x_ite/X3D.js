@@ -136,12 +136,9 @@ Object .assign (X3D, Namespace, Namespace .Fields,
    /**
    * @deprecated Use X3D.ModuleName instead.
    */
-   require (id)
+   require (path)
    {
-      if (!Namespace .has (id))
-         throw new Error (`Unknown module '${id}'.`);
-
-      return Namespace .get (id);
+      return Namespace [path .match (/([^\/]+)$/) [1]];
    },
    noConflict: (() =>
    {
