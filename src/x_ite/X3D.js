@@ -133,49 +133,6 @@ function X3D (callback, fallback)
 
 Object .assign (X3D, Namespace, Namespace .Fields,
 {
-   /**
-   * @deprecated Use X3D.ModuleName instead.
-   */
-   require (path)
-   {
-      return Namespace [path .match (/([^\/]+)$/) ?.[1]];
-   },
-   noConflict: (() =>
-   {
-      const
-         _had = window .hasOwnProperty ("X3D"),
-         _X3D = window .X3D;
-
-      return function ()
-      {
-         if (window .X3D === X3D)
-         {
-            if (_had)
-               window .X3D = _X3D;
-            else
-               delete window .X3D;
-         }
-
-         return X3D;
-      };
-   })(),
-   getBrowser (element)
-   {
-      return $(element || "x3d-canvas, X3DCanvas") .prop ("browser");
-   },
-   createBrowser (url, parameter)
-   {
-      const element = document .createElement ("x3d-canvas");
-
-      if (arguments .length)
-         element .browser .loadURL (url, parameter);
-
-      return element;
-   },
-});
-
-Object .assign (X3D,
-{
    X3DConstants:                X3DConstants,
    X3DBrowser:                  X3DBrowser,
    X3DExecutionContext:         X3DExecutionContext,
@@ -247,6 +204,47 @@ Object .assign (X3D,
    MFVec3f:                     Fields .MFVec3f,
    MFVec4d:                     Fields .MFVec4d,
    MFVec4f:                     Fields .MFVec4f,
+},
+{
+   /**
+   * @deprecated Use X3D.ModuleName instead.
+   */
+   require (path)
+   {
+      return Namespace [path .match (/([^\/]+)$/) ?.[1]];
+   },
+   noConflict: (() =>
+   {
+      const
+         _had = window .hasOwnProperty ("X3D"),
+         _X3D = window .X3D;
+
+      return function ()
+      {
+         if (window .X3D === X3D)
+         {
+            if (_had)
+               window .X3D = _X3D;
+            else
+               delete window .X3D;
+         }
+
+         return X3D;
+      };
+   })(),
+   getBrowser (element)
+   {
+      return $(element || "x3d-canvas, X3DCanvas") .prop ("browser");
+   },
+   createBrowser (url, parameter)
+   {
+      const element = document .createElement ("x3d-canvas");
+
+      if (arguments .length)
+         element .browser .loadURL (url, parameter);
+
+      return element;
+   },
 });
 
 export default X3D;
