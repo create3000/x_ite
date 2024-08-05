@@ -45,31 +45,22 @@
  *
  ******************************************************************************/
 
-const Namespace = new Map ();
+const Namespace = { };
 
 Object .defineProperty (Namespace, "add",
 {
-   value (name, path, module)
+   value (name, module)
    {
-      if (Namespace .hasOwnProperty (name))
-      {
-         // if (!path .match (/\/components\/\w+$/i))
-         //    console .warn (`Module ${name} (${path}) already defined.`);
-      }
-      else
-      {
-         const X3D = window [Symbol .for ("X_ITE.X3D")];
+      const X3D = window [Symbol .for ("X_ITE.X3D")];
 
-         if (X3D)
-            X3D [name] = module;
+      if (X3D)
+         X3D [name] = module;
 
-         Namespace [name] = module;
-      }
-
-      Namespace .set (path, module);
+      // For x_ite.js:
+      Namespace [name] = module;
    },
 });
 
-Namespace .add ("Namespace", "x_ite/Namespace", Namespace);
+Namespace .add ("Namespace", Namespace);
 
 export default Namespace;

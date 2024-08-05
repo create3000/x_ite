@@ -236,7 +236,7 @@ Object .defineProperties (Contour2D,
 const __default__ = Contour2D;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Contour2D", "x_ite/Components/NURBS/Contour2D", __default__);
+external_X_ITE_X3D_Namespace_default().add ("Contour2D", __default__);
 /* harmony default export */ const NURBS_Contour2D = (__default__);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/X3DNurbsControlCurveNode.js
 /*******************************************************************************
@@ -315,7 +315,7 @@ Object .defineProperties (X3DNurbsControlCurveNode,
 const X3DNurbsControlCurveNode_default_ = X3DNurbsControlCurveNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DNurbsControlCurveNode", "x_ite/Components/NURBS/X3DNurbsControlCurveNode", X3DNurbsControlCurveNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DNurbsControlCurveNode", X3DNurbsControlCurveNode_default_);
 /* harmony default export */ const NURBS_X3DNurbsControlCurveNode = (X3DNurbsControlCurveNode_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
@@ -488,7 +488,7 @@ Object .defineProperties (ContourPolyline2D,
 const ContourPolyline2D_default_ = ContourPolyline2D;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ContourPolyline2D", "x_ite/Components/NURBS/ContourPolyline2D", ContourPolyline2D_default_);
+external_X_ITE_X3D_Namespace_default().add ("ContourPolyline2D", ContourPolyline2D_default_);
 /* harmony default export */ const NURBS_ContourPolyline2D = (ContourPolyline2D_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGeometryNode"
 const external_X_ITE_X3D_X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DGeometryNode;
@@ -973,7 +973,7 @@ const NURBS = {
 const NURBS_default_ = NURBS;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("NURBS", "x_ite/Browser/NURBS/NURBS", NURBS_default_);
+external_X_ITE_X3D_Namespace_default().add ("NURBS", NURBS_default_);
 /* harmony default export */ const NURBS_NURBS = (NURBS_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/X3DParametricGeometryNode.js
 /*******************************************************************************
@@ -1059,7 +1059,7 @@ Object .defineProperties (X3DParametricGeometryNode,
 const X3DParametricGeometryNode_default_ = X3DParametricGeometryNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DParametricGeometryNode", "x_ite/Components/NURBS/X3DParametricGeometryNode", X3DParametricGeometryNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DParametricGeometryNode", X3DParametricGeometryNode_default_);
 /* harmony default export */ const NURBS_X3DParametricGeometryNode = (X3DParametricGeometryNode_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLineGeometryNode"
 const external_X_ITE_X3D_X3DLineGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DLineGeometryNode;
@@ -1083,7 +1083,7 @@ const is_ndarray_default_ = function (arr)
 };
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("is-ndarray", "lib/nurbs/src/utils/is-ndarray", is_ndarray_default_);
+external_X_ITE_X3D_Namespace_default().add ("is-ndarray", is_ndarray_default_);
 /* harmony default export */ const is_ndarray = (is_ndarray_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/is-ndarray-like.js
 
@@ -1101,7 +1101,7 @@ const is_ndarray_like_default_ = function (arr)
 };
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("is-ndarray-like", "lib/nurbs/src/utils/is-ndarray-like", is_ndarray_like_default_);
+external_X_ITE_X3D_Namespace_default().add ("is-ndarray-like", is_ndarray_like_default_);
 /* harmony default export */ const is_ndarray_like = (is_ndarray_like_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/is-array-like.js
 
@@ -1111,7 +1111,7 @@ const is_array_like_default_ = function isArrayLike (data)
 };
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("is-array-like", "lib/nurbs/src/utils/is-array-like", is_array_like_default_);
+external_X_ITE_X3D_Namespace_default().add ("is-array-like", is_array_like_default_);
 /* harmony default export */ const is_array_like = (is_array_like_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/infer-type.js
 
@@ -1160,7 +1160,7 @@ inferType .PACKED           = "PackArr";
 const infer_type_default_ = inferType;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("infer-type", "lib/nurbs/src/utils/infer-type", infer_type_default_);
+external_X_ITE_X3D_Namespace_default().add ("infer-type", infer_type_default_);
 /* harmony default export */ const infer_type = (infer_type_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/cache-key.js
 
@@ -1215,7 +1215,7 @@ const cache_key_default_ = function (nurbs, debug, checkBounds, pointType, weigh
 };
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("cache-key", "lib/nurbs/src/utils/cache-key", cache_key_default_);
+external_X_ITE_X3D_Namespace_default().add ("cache-key", cache_key_default_);
 /* harmony default export */ const cache_key = (cache_key_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/variable.js
 
@@ -1246,7 +1246,7 @@ createVariable.sum = function (parts) {
 const variable_default_ = createVariable;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("variable", "lib/nurbs/src/utils/variable", variable_default_);
+external_X_ITE_X3D_Namespace_default().add ("variable", variable_default_);
 /* harmony default export */ const variable = (variable_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/create-accessors.js
 
@@ -1354,7 +1354,7 @@ const create_accessors_default_ = function (nurbs)
 };
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("create-accessors", "lib/nurbs/src/utils/create-accessors", create_accessors_default_);
+external_X_ITE_X3D_Namespace_default().add ("create-accessors", create_accessors_default_);
 /* harmony default export */ const create_accessors = (create_accessors_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/numerical-derivative.js
 
@@ -1408,7 +1408,7 @@ const numerical_derivative_default_ = function numericalDerivative (out, order, 
 };
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("numerical-derivative", "lib/nurbs/src/numerical-derivative", numerical_derivative_default_);
+external_X_ITE_X3D_Namespace_default().add ("numerical-derivative", numerical_derivative_default_);
 /* harmony default export */ const numerical_derivative = (numerical_derivative_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/ndloop.js
 
@@ -1431,7 +1431,7 @@ const ndloop_default_ = function ndloop (n, callback) {
 };
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ndloop", "lib/nurbs/src/utils/ndloop", ndloop_default_);
+external_X_ITE_X3D_Namespace_default().add ("ndloop", ndloop_default_);
 /* harmony default export */ const ndloop = (ndloop_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/accessor-preamble.js
 
@@ -1463,7 +1463,7 @@ const accessor_preamble_default_ = function (nurbs, variableName, propertyName, 
 };
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("accessor-preamble", "lib/nurbs/src/utils/accessor-preamble", accessor_preamble_default_);
+external_X_ITE_X3D_Namespace_default().add ("accessor-preamble", accessor_preamble_default_);
 /* harmony default export */ const accessor_preamble = (accessor_preamble_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/size-getter.js
 
@@ -1484,7 +1484,7 @@ const size_getter_default_ = function (data, dataVariableName, dimension) {
 };
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("size-getter", "lib/nurbs/src/utils/size-getter", size_getter_default_);
+external_X_ITE_X3D_Namespace_default().add ("size-getter", size_getter_default_);
 /* harmony default export */ const size_getter = (size_getter_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/evaluator.js
 
@@ -1891,7 +1891,7 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
 };
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("evaluator", "lib/nurbs/src/evaluator", evaluator_default_);
+external_X_ITE_X3D_Namespace_default().add ("evaluator", evaluator_default_);
 /* harmony default export */ const evaluator = (evaluator_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/transform.js
 
@@ -1966,7 +1966,7 @@ const transform_default_ = function createTransform (cacheKey, nurbs, accessors,
 };
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("transform", "lib/nurbs/src/transform", transform_default_);
+external_X_ITE_X3D_Namespace_default().add ("transform", transform_default_);
 /* harmony default export */ const transform = (transform_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/support.js
 
@@ -2111,7 +2111,7 @@ const support_default_ = function (cacheKey, nurbs, accessors, debug, checkBound
 };
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("support", "lib/nurbs/src/support", support_default_);
+external_X_ITE_X3D_Namespace_default().add ("support", support_default_);
 /* harmony default export */ const support = (support_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/extras/sample.js
 var tmp1 = [ ];
@@ -2345,7 +2345,7 @@ const sample_default_ = function (mesh, surface, opts)
 };
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("sample", "lib/nurbs/extras/sample", sample_default_);
+external_X_ITE_X3D_Namespace_default().add ("sample", sample_default_);
 /* harmony default export */ const sample = (sample_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/nurbs.js
 
@@ -2675,7 +2675,7 @@ nurbs .sample = sample;
 const nurbs_default_ = nurbs;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("nurbs", "lib/nurbs/nurbs", nurbs_default_);
+external_X_ITE_X3D_Namespace_default().add ("nurbs", nurbs_default_);
 /* harmony default export */ const nurbs_nurbs = (nurbs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsCurve.js
 /*******************************************************************************
@@ -2914,7 +2914,7 @@ Object .defineProperties (NurbsCurve,
 const NurbsCurve_default_ = NurbsCurve;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("NurbsCurve", "x_ite/Components/NURBS/NurbsCurve", NurbsCurve_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsCurve", NurbsCurve_default_);
 /* harmony default export */ const NURBS_NurbsCurve = (NurbsCurve_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsCurve2D.js
 /*******************************************************************************
@@ -3131,7 +3131,7 @@ Object .defineProperties (NurbsCurve2D,
 const NurbsCurve2D_default_ = NurbsCurve2D;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("NurbsCurve2D", "x_ite/Components/NURBS/NurbsCurve2D", NurbsCurve2D_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsCurve2D", NurbsCurve2D_default_);
 /* harmony default export */ const NURBS_NurbsCurve2D = (NurbsCurve2D_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
@@ -3374,7 +3374,7 @@ Object .defineProperties (NurbsOrientationInterpolator,
 const NurbsOrientationInterpolator_default_ = NurbsOrientationInterpolator;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("NurbsOrientationInterpolator", "x_ite/Components/NURBS/NurbsOrientationInterpolator", NurbsOrientationInterpolator_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsOrientationInterpolator", NurbsOrientationInterpolator_default_);
 /* harmony default export */ const NURBS_NurbsOrientationInterpolator = (NurbsOrientationInterpolator_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
@@ -3778,7 +3778,7 @@ Object .defineProperties (X3DNurbsSurfaceGeometryNode,
 const X3DNurbsSurfaceGeometryNode_default_ = X3DNurbsSurfaceGeometryNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DNurbsSurfaceGeometryNode", "x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode", X3DNurbsSurfaceGeometryNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DNurbsSurfaceGeometryNode", X3DNurbsSurfaceGeometryNode_default_);
 /* harmony default export */ const NURBS_X3DNurbsSurfaceGeometryNode = (X3DNurbsSurfaceGeometryNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsPatchSurface.js
 /*******************************************************************************
@@ -3891,7 +3891,7 @@ Object .defineProperties (NurbsPatchSurface,
 const NurbsPatchSurface_default_ = NurbsPatchSurface;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("NurbsPatchSurface", "x_ite/Components/NURBS/NurbsPatchSurface", NurbsPatchSurface_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsPatchSurface", NurbsPatchSurface_default_);
 /* harmony default export */ const NURBS_NurbsPatchSurface = (NurbsPatchSurface_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .PositionInterpolator"
 const external_X_ITE_X3D_PositionInterpolator_namespaceObject = __X_ITE_X3D__ .PositionInterpolator;
@@ -4116,7 +4116,7 @@ Object .defineProperties (NurbsPositionInterpolator,
 const NurbsPositionInterpolator_default_ = NurbsPositionInterpolator;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("NurbsPositionInterpolator", "x_ite/Components/NURBS/NurbsPositionInterpolator", NurbsPositionInterpolator_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsPositionInterpolator", NurbsPositionInterpolator_default_);
 /* harmony default export */ const NURBS_NurbsPositionInterpolator = (NurbsPositionInterpolator_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DBoundedObject"
 const external_X_ITE_X3D_X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .X3DBoundedObject;
@@ -4310,7 +4310,7 @@ Object .defineProperties (NurbsSet,
 const NurbsSet_default_ = NurbsSet;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("NurbsSet", "x_ite/Components/NURBS/NurbsSet", NurbsSet_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsSet", NurbsSet_default_);
 /* harmony default export */ const NURBS_NurbsSet = (NurbsSet_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Line3"
 const external_X_ITE_X3D_Line3_namespaceObject = __X_ITE_X3D__ .Line3;
@@ -4396,7 +4396,7 @@ const Triangle2 =
 const Triangle2_default_ = Triangle2;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Triangle2", "standard/Math/Geometry/Triangle2", Triangle2_default_);
+external_X_ITE_X3D_Namespace_default().add ("Triangle2", Triangle2_default_);
 /* harmony default export */ const Geometry_Triangle2 = (Triangle2_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSurfaceInterpolator.js
 /*******************************************************************************
@@ -4590,7 +4590,7 @@ Object .defineProperties (NurbsSurfaceInterpolator,
 const NurbsSurfaceInterpolator_default_ = NurbsSurfaceInterpolator;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("NurbsSurfaceInterpolator", "x_ite/Components/NURBS/NurbsSurfaceInterpolator", NurbsSurfaceInterpolator_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsSurfaceInterpolator", NurbsSurfaceInterpolator_default_);
 /* harmony default export */ const NURBS_NurbsSurfaceInterpolator = (NurbsSurfaceInterpolator_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Extrusion"
 const external_X_ITE_X3D_Extrusion_namespaceObject = __X_ITE_X3D__ .Extrusion;
@@ -4777,7 +4777,7 @@ Object .defineProperties (NurbsSweptSurface,
 const NurbsSweptSurface_default_ = NurbsSweptSurface;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("NurbsSweptSurface", "x_ite/Components/NURBS/NurbsSweptSurface", NurbsSweptSurface_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsSweptSurface", NurbsSweptSurface_default_);
 /* harmony default export */ const NURBS_NurbsSweptSurface = (NurbsSweptSurface_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSwungSurface.js
 /*******************************************************************************
@@ -4963,7 +4963,7 @@ Object .defineProperties (NurbsSwungSurface,
 const NurbsSwungSurface_default_ = NurbsSwungSurface;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("NurbsSwungSurface", "x_ite/Components/NURBS/NurbsSwungSurface", NurbsSwungSurface_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsSwungSurface", NurbsSwungSurface_default_);
 /* harmony default export */ const NURBS_NurbsSwungSurface = (NurbsSwungSurface_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsTextureCoordinate.js
 /*******************************************************************************
@@ -5124,7 +5124,7 @@ Object .defineProperties (NurbsTextureCoordinate,
 const NurbsTextureCoordinate_default_ = NurbsTextureCoordinate;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("NurbsTextureCoordinate", "x_ite/Components/NURBS/NurbsTextureCoordinate", NurbsTextureCoordinate_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsTextureCoordinate", NurbsTextureCoordinate_default_);
 /* harmony default export */ const NURBS_NurbsTextureCoordinate = (NurbsTextureCoordinate_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsTrimmedSurface.js
 /*******************************************************************************
@@ -5306,7 +5306,7 @@ Object .defineProperties (NurbsTrimmedSurface,
 const NurbsTrimmedSurface_default_ = NurbsTrimmedSurface;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("NurbsTrimmedSurface", "x_ite/Components/NURBS/NurbsTrimmedSurface", NurbsTrimmedSurface_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsTrimmedSurface", NurbsTrimmedSurface_default_);
 /* harmony default export */ const NURBS_NurbsTrimmedSurface = (NurbsTrimmedSurface_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/NURBS.js
 /*******************************************************************************
@@ -5403,7 +5403,7 @@ external_X_ITE_X3D_Components_default().add ({
 const components_NURBS_default_ = undefined;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("NURBS", "assets/components/NURBS", components_NURBS_default_);
+external_X_ITE_X3D_Namespace_default().add ("NURBS", components_NURBS_default_);
 /* harmony default export */ const components_NURBS = ((/* unused pure expression or super */ null && (components_NURBS_default_)));
 /******/ })()
 ;

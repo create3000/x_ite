@@ -178,7 +178,7 @@ Object .defineProperties (AnnotationLayer,
 const __default__ = AnnotationLayer;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("AnnotationLayer", "x_ite/Components/Annotation/AnnotationLayer", __default__);
+external_X_ITE_X3D_Namespace_default().add ("AnnotationLayer", __default__);
 /* harmony default export */ const Annotation_AnnotationLayer = (__default__);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
@@ -290,7 +290,7 @@ Object .defineProperties (AnnotationTarget,
 const AnnotationTarget_default_ = AnnotationTarget;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("AnnotationTarget", "x_ite/Components/Annotation/AnnotationTarget", AnnotationTarget_default_);
+external_X_ITE_X3D_Namespace_default().add ("AnnotationTarget", AnnotationTarget_default_);
 /* harmony default export */ const Annotation_AnnotationTarget = (AnnotationTarget_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGroupingNode"
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
@@ -378,7 +378,7 @@ Object .defineProperties (X3DAnnotationNode,
 const X3DAnnotationNode_default_ = X3DAnnotationNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DAnnotationNode", "x_ite/Components/Annotation/X3DAnnotationNode", X3DAnnotationNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DAnnotationNode", X3DAnnotationNode_default_);
 /* harmony default export */ const Annotation_X3DAnnotationNode = (X3DAnnotationNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/GroupAnnotation.js
 /*******************************************************************************
@@ -502,7 +502,7 @@ Object .defineProperties (GroupAnnotation,
 const GroupAnnotation_default_ = GroupAnnotation;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("GroupAnnotation", "x_ite/Components/Annotation/GroupAnnotation", GroupAnnotation_default_);
+external_X_ITE_X3D_Namespace_default().add ("GroupAnnotation", GroupAnnotation_default_);
 /* harmony default export */ const Annotation_GroupAnnotation = (GroupAnnotation_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DUrlObject"
 const external_X_ITE_X3D_X3DUrlObject_namespaceObject = __X_ITE_X3D__ .X3DUrlObject;
@@ -627,7 +627,7 @@ Object .defineProperties (IconAnnotation,
 const IconAnnotation_default_ = IconAnnotation;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("IconAnnotation", "x_ite/Components/Annotation/IconAnnotation", IconAnnotation_default_);
+external_X_ITE_X3D_Namespace_default().add ("IconAnnotation", IconAnnotation_default_);
 /* harmony default export */ const Annotation_IconAnnotation = (IconAnnotation_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/TextAnnotation.js
 /*******************************************************************************
@@ -737,7 +737,7 @@ Object .defineProperties (TextAnnotation,
 const TextAnnotation_default_ = TextAnnotation;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("TextAnnotation", "x_ite/Components/Annotation/TextAnnotation", TextAnnotation_default_);
+external_X_ITE_X3D_Namespace_default().add ("TextAnnotation", TextAnnotation_default_);
 /* harmony default export */ const Annotation_TextAnnotation = (TextAnnotation_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/URLAnnotation.js
 /*******************************************************************************
@@ -846,7 +846,7 @@ Object .defineProperties (URLAnnotation,
 const URLAnnotation_default_ = URLAnnotation;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("URLAnnotation", "x_ite/Components/Annotation/URLAnnotation", URLAnnotation_default_);
+external_X_ITE_X3D_Namespace_default().add ("URLAnnotation", URLAnnotation_default_);
 /* harmony default export */ const Annotation_URLAnnotation = (URLAnnotation_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/Annotation.js
 /*******************************************************************************
@@ -925,7 +925,7 @@ external_X_ITE_X3D_Components_default().add ({
 const Annotation_default_ = undefined;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Annotation", "assets/components/Annotation", Annotation_default_);
+external_X_ITE_X3D_Namespace_default().add ("Annotation", Annotation_default_);
 /* harmony default export */ const Annotation = ((/* unused pure expression or super */ null && (Annotation_default_)));
 /******/ })()
 ;

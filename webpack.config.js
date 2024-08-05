@@ -57,12 +57,11 @@ module .exports = async () =>
                         const
                            ns   = path .resolve (__dirname, "src/x_ite/Namespace.js"),
                            rel  = path .relative (path .dirname (this .resourcePath), ns),
-                           key  = path .relative (path .resolve (__dirname, "src"), this .resourcePath) .replace (/\.js$/, ""),
-                           base = path .basename (key);
+                           base = path .basename (this .resourcePath, ".js");
 
                         return `const __default__ = ${m};
 import Namespace from "./${rel}";
-Namespace .add ("${base}", "${key}", __default__);
+Namespace .add ("${base}", __default__);
 export default __default__;`;
                      },
                   },
@@ -469,9 +468,9 @@ export default __default__;`;
                   if (!deps .has (filename))
                      continue;
 
-                  const module = filename .match (/([^\/]+)\.js/);
+                  const module = path .basename (filename, ".js");
 
-                  return callback (null, `var __X_ITE_X3D__ .${module [1]}`);
+                  return callback (null, `var __X_ITE_X3D__ .${module}`);
                }
 
                return callback ();

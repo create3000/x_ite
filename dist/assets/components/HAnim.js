@@ -164,7 +164,7 @@ Object .defineProperties (HAnimDisplacer,
 const __default__ = HAnimDisplacer;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("HAnimDisplacer", "x_ite/Components/HAnim/HAnimDisplacer", __default__);
+external_X_ITE_X3D_Namespace_default().add ("HAnimDisplacer", __default__);
 /* harmony default export */ const HAnim_HAnimDisplacer = (__default__);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
@@ -880,7 +880,7 @@ class Lock
 const HAnimHumanoid_default_ = HAnimHumanoid;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("HAnimHumanoid", "x_ite/Components/HAnim/HAnimHumanoid", HAnimHumanoid_default_);
+external_X_ITE_X3D_Namespace_default().add ("HAnimHumanoid", HAnimHumanoid_default_);
 /* harmony default export */ const HAnim_HAnimHumanoid = (HAnimHumanoid_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DTransformNode"
 const external_X_ITE_X3D_X3DTransformNode_namespaceObject = __X_ITE_X3D__ .X3DTransformNode;
@@ -1089,7 +1089,7 @@ Object .defineProperties (HAnimJoint,
 const HAnimJoint_default_ = HAnimJoint;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("HAnimJoint", "x_ite/Components/HAnim/HAnimJoint", HAnimJoint_default_);
+external_X_ITE_X3D_Namespace_default().add ("HAnimJoint", HAnimJoint_default_);
 /* harmony default export */ const HAnim_HAnimJoint = (HAnimJoint_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TimeSensor"
 const external_X_ITE_X3D_TimeSensor_namespaceObject = __X_ITE_X3D__ .TimeSensor;
@@ -1529,7 +1529,7 @@ Object .defineProperties (HAnimMotion,
 const HAnimMotion_default_ = HAnimMotion;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("HAnimMotion", "x_ite/Components/HAnim/HAnimMotion", HAnimMotion_default_);
+external_X_ITE_X3D_Namespace_default().add ("HAnimMotion", HAnimMotion_default_);
 /* harmony default export */ const HAnim_HAnimMotion = (HAnimMotion_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGroupingNode"
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
@@ -1647,7 +1647,7 @@ Object .defineProperties (HAnimSegment,
 const HAnimSegment_default_ = HAnimSegment;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("HAnimSegment", "x_ite/Components/HAnim/HAnimSegment", HAnimSegment_default_);
+external_X_ITE_X3D_Namespace_default().add ("HAnimSegment", HAnimSegment_default_);
 /* harmony default export */ const HAnim_HAnimSegment = (HAnimSegment_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimSite.js
 /*******************************************************************************
@@ -1760,7 +1760,7 @@ Object .defineProperties (HAnimSite,
 const HAnimSite_default_ = HAnimSite;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("HAnimSite", "x_ite/Components/HAnim/HAnimSite", HAnimSite_default_);
+external_X_ITE_X3D_Namespace_default().add ("HAnimSite", HAnimSite_default_);
 /* harmony default export */ const HAnim_HAnimSite = (HAnimSite_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/HAnim.js
 /*******************************************************************************
@@ -1837,7 +1837,7 @@ external_X_ITE_X3D_Components_default().add ({
 const HAnim_default_ = undefined;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("HAnim", "assets/components/HAnim", HAnim_default_);
+external_X_ITE_X3D_Namespace_default().add ("HAnim", HAnim_default_);
 /* harmony default export */ const HAnim = ((/* unused pure expression or super */ null && (HAnim_default_)));
 /******/ })()
 ;

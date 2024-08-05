@@ -149,7 +149,7 @@ Object .assign (Spheroid3 .prototype,
 const __default__ = Spheroid3;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Spheroid3", "standard/Math/Geometry/Spheroid3", __default__);
+external_X_ITE_X3D_Namespace_default().add ("Spheroid3", __default__);
 /* harmony default export */ const Geometry_Spheroid3 = (__default__);
 ;// CONCATENATED MODULE: ./src/standard/Geospatial/ReferenceEllipsoids.js
 /*******************************************************************************
@@ -246,7 +246,7 @@ const ReferenceEllipsoids =
 const ReferenceEllipsoids_default_ = ReferenceEllipsoids;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ReferenceEllipsoids", "standard/Geospatial/ReferenceEllipsoids", ReferenceEllipsoids_default_);
+external_X_ITE_X3D_Namespace_default().add ("ReferenceEllipsoids", ReferenceEllipsoids_default_);
 /* harmony default export */ const Geospatial_ReferenceEllipsoids = (ReferenceEllipsoids_default_);
 ;// CONCATENATED MODULE: ./src/standard/Geospatial/Geodetic.js
 /*******************************************************************************
@@ -435,7 +435,7 @@ Object .assign (Geodetic .prototype,
 const Geodetic_default_ = Geodetic;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Geodetic", "standard/Geospatial/Geodetic", Geodetic_default_);
+external_X_ITE_X3D_Namespace_default().add ("Geodetic", Geodetic_default_);
 /* harmony default export */ const Geospatial_Geodetic = (Geodetic_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
@@ -647,7 +647,7 @@ Object .assign (UniversalTransverseMercator .prototype,
 const UniversalTransverseMercator_default_ = UniversalTransverseMercator;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("UniversalTransverseMercator", "standard/Geospatial/UniversalTransverseMercator", UniversalTransverseMercator_default_);
+external_X_ITE_X3D_Namespace_default().add ("UniversalTransverseMercator", UniversalTransverseMercator_default_);
 /* harmony default export */ const Geospatial_UniversalTransverseMercator = (UniversalTransverseMercator_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geospatial/Geocentric.js
 /*******************************************************************************
@@ -727,7 +727,7 @@ Object .assign (Geocentric .prototype,
 const Geocentric_default_ = Geocentric;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Geocentric", "x_ite/Browser/Geospatial/Geocentric", Geocentric_default_);
+external_X_ITE_X3D_Namespace_default().add ("Geocentric", Geocentric_default_);
 /* harmony default export */ const Geospatial_Geocentric = (Geocentric_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geospatial/GeospatialObject.js
 /*******************************************************************************
@@ -937,7 +937,7 @@ const GeospatialObject =
 const GeospatialObject_default_ = GeospatialObject;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("GeospatialObject", "x_ite/Browser/Geospatial/GeospatialObject", GeospatialObject_default_);
+external_X_ITE_X3D_Namespace_default().add ("GeospatialObject", GeospatialObject_default_);
 /* harmony default export */ const Geospatial_GeospatialObject = (GeospatialObject_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
@@ -1223,7 +1223,7 @@ Object .defineProperties (X3DGeospatialObject,
 const X3DGeospatialObject_default_ = X3DGeospatialObject;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DGeospatialObject", "x_ite/Components/Geospatial/X3DGeospatialObject", X3DGeospatialObject_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DGeospatialObject", X3DGeospatialObject_default_);
 /* harmony default export */ const Geospatial_X3DGeospatialObject = (X3DGeospatialObject_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Triangle3"
 const external_X_ITE_X3D_Triangle3_namespaceObject = __X_ITE_X3D__ .Triangle3;
@@ -1470,7 +1470,7 @@ Object .defineProperties (GeoCoordinate,
 const GeoCoordinate_default_ = GeoCoordinate;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("GeoCoordinate", "x_ite/Components/Geospatial/GeoCoordinate", GeoCoordinate_default_);
+external_X_ITE_X3D_Namespace_default().add ("GeoCoordinate", GeoCoordinate_default_);
 /* harmony default export */ const Geospatial_GeoCoordinate = (GeoCoordinate_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGeometryNode"
 const external_X_ITE_X3D_X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DGeometryNode;
@@ -1908,7 +1908,7 @@ Object .defineProperties (GeoElevationGrid,
 const GeoElevationGrid_default_ = GeoElevationGrid;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("GeoElevationGrid", "x_ite/Components/Geospatial/GeoElevationGrid", GeoElevationGrid_default_);
+external_X_ITE_X3D_Namespace_default().add ("GeoElevationGrid", GeoElevationGrid_default_);
 /* harmony default export */ const Geospatial_GeoElevationGrid = (GeoElevationGrid_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
@@ -2397,7 +2397,7 @@ Object .defineProperties (GeoLOD,
 const GeoLOD_default_ = GeoLOD;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("GeoLOD", "x_ite/Components/Geospatial/GeoLOD", GeoLOD_default_);
+external_X_ITE_X3D_Namespace_default().add ("GeoLOD", GeoLOD_default_);
 /* harmony default export */ const Geospatial_GeoLOD = (GeoLOD_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DTransformMatrix3DNode"
 const external_X_ITE_X3D_X3DTransformMatrix3DNode_namespaceObject = __X_ITE_X3D__ .X3DTransformMatrix3DNode;
@@ -2535,7 +2535,7 @@ Object .defineProperties (GeoLocation,
 const GeoLocation_default_ = GeoLocation;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("GeoLocation", "x_ite/Components/Geospatial/GeoLocation", GeoLocation_default_);
+external_X_ITE_X3D_Namespace_default().add ("GeoLocation", GeoLocation_default_);
 /* harmony default export */ const Geospatial_GeoLocation = (GeoLocation_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DInfoNode"
 const external_X_ITE_X3D_X3DInfoNode_namespaceObject = __X_ITE_X3D__ .X3DInfoNode;
@@ -2664,7 +2664,7 @@ Object .defineProperties (GeoMetadata,
 const GeoMetadata_default_ = GeoMetadata;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("GeoMetadata", "x_ite/Components/Geospatial/GeoMetadata", GeoMetadata_default_);
+external_X_ITE_X3D_Namespace_default().add ("GeoMetadata", GeoMetadata_default_);
 /* harmony default export */ const Geospatial_GeoMetadata = (GeoMetadata_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
@@ -2790,7 +2790,7 @@ Object .defineProperties (GeoOrigin,
 const GeoOrigin_default_ = GeoOrigin;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("GeoOrigin", "x_ite/Components/Geospatial/GeoOrigin", GeoOrigin_default_);
+external_X_ITE_X3D_Namespace_default().add ("GeoOrigin", GeoOrigin_default_);
 /* harmony default export */ const Geospatial_GeoOrigin = (GeoOrigin_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DInterpolatorNode"
 const external_X_ITE_X3D_X3DInterpolatorNode_namespaceObject = __X_ITE_X3D__ .X3DInterpolatorNode;
@@ -2954,7 +2954,7 @@ Object .defineProperties (GeoPositionInterpolator,
 const GeoPositionInterpolator_default_ = GeoPositionInterpolator;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("GeoPositionInterpolator", "x_ite/Components/Geospatial/GeoPositionInterpolator", GeoPositionInterpolator_default_);
+external_X_ITE_X3D_Namespace_default().add ("GeoPositionInterpolator", GeoPositionInterpolator_default_);
 /* harmony default export */ const Geospatial_GeoPositionInterpolator = (GeoPositionInterpolator_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DEnvironmentalSensorNode"
 const external_X_ITE_X3D_X3DEnvironmentalSensorNode_namespaceObject = __X_ITE_X3D__ .X3DEnvironmentalSensorNode;
@@ -3132,7 +3132,7 @@ Object .defineProperties (GeoProximitySensor,
 const GeoProximitySensor_default_ = GeoProximitySensor;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("GeoProximitySensor", "x_ite/Components/Geospatial/GeoProximitySensor", GeoProximitySensor_default_);
+external_X_ITE_X3D_Namespace_default().add ("GeoProximitySensor", GeoProximitySensor_default_);
 /* harmony default export */ const Geospatial_GeoProximitySensor = (GeoProximitySensor_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DTouchSensorNode"
 const external_X_ITE_X3D_X3DTouchSensorNode_namespaceObject = __X_ITE_X3D__ .X3DTouchSensorNode;
@@ -3275,7 +3275,7 @@ Object .defineProperties (GeoTouchSensor,
 const GeoTouchSensor_default_ = GeoTouchSensor;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("GeoTouchSensor", "x_ite/Components/Geospatial/GeoTouchSensor", GeoTouchSensor_default_);
+external_X_ITE_X3D_Namespace_default().add ("GeoTouchSensor", GeoTouchSensor_default_);
 /* harmony default export */ const Geospatial_GeoTouchSensor = (GeoTouchSensor_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/GeoTransform.js
 /*******************************************************************************
@@ -3425,7 +3425,7 @@ Object .defineProperties (GeoTransform,
 const GeoTransform_default_ = GeoTransform;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("GeoTransform", "x_ite/Components/Geospatial/GeoTransform", GeoTransform_default_);
+external_X_ITE_X3D_Namespace_default().add ("GeoTransform", GeoTransform_default_);
 /* harmony default export */ const Geospatial_GeoTransform = (GeoTransform_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DViewpointNode"
 const external_X_ITE_X3D_X3DViewpointNode_namespaceObject = __X_ITE_X3D__ .X3DViewpointNode;
@@ -3749,7 +3749,7 @@ Object .defineProperties (GeoViewpoint,
 const GeoViewpoint_default_ = GeoViewpoint;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("GeoViewpoint", "x_ite/Components/Geospatial/GeoViewpoint", GeoViewpoint_default_);
+external_X_ITE_X3D_Namespace_default().add ("GeoViewpoint", GeoViewpoint_default_);
 /* harmony default export */ const Geospatial_GeoViewpoint = (GeoViewpoint_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/Geospatial.js
 /*******************************************************************************
@@ -3838,7 +3838,7 @@ external_X_ITE_X3D_Components_default().add ({
 const Geospatial_default_ = undefined;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Geospatial", "assets/components/Geospatial", Geospatial_default_);
+external_X_ITE_X3D_Namespace_default().add ("Geospatial", Geospatial_default_);
 /* harmony default export */ const Geospatial = ((/* unused pure expression or super */ null && (Geospatial_default_)));
 /******/ })()
 ;

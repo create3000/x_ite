@@ -173,7 +173,7 @@ Object .defineProperties (DISEntityManager,
 const __default__ = DISEntityManager;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("DISEntityManager", "x_ite/Components/DIS/DISEntityManager", __default__);
+external_X_ITE_X3D_Namespace_default().add ("DISEntityManager", __default__);
 /* harmony default export */ const DIS_DISEntityManager = (__default__);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DInfoNode"
 const external_X_ITE_X3D_X3DInfoNode_namespaceObject = __X_ITE_X3D__ .X3DInfoNode;
@@ -309,7 +309,7 @@ Object .defineProperties (DISEntityTypeMapping,
 const DISEntityTypeMapping_default_ = DISEntityTypeMapping;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("DISEntityTypeMapping", "x_ite/Components/DIS/DISEntityTypeMapping", DISEntityTypeMapping_default_);
+external_X_ITE_X3D_Namespace_default().add ("DISEntityTypeMapping", DISEntityTypeMapping_default_);
 /* harmony default export */ const DIS_DISEntityTypeMapping = (DISEntityTypeMapping_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGroupingNode"
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
@@ -529,7 +529,7 @@ Object .defineProperties (EspduTransform,
 const EspduTransform_default_ = EspduTransform;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("EspduTransform", "x_ite/Components/DIS/EspduTransform", EspduTransform_default_);
+external_X_ITE_X3D_Namespace_default().add ("EspduTransform", EspduTransform_default_);
 /* harmony default export */ const DIS_EspduTransform = (EspduTransform_default_);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DBoundedObject"
 const external_X_ITE_X3D_X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .X3DBoundedObject;
@@ -691,7 +691,7 @@ Object .defineProperties (ReceiverPdu,
 const ReceiverPdu_default_ = ReceiverPdu;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ReceiverPdu", "x_ite/Components/DIS/ReceiverPdu", ReceiverPdu_default_);
+external_X_ITE_X3D_Namespace_default().add ("ReceiverPdu", ReceiverPdu_default_);
 /* harmony default export */ const DIS_ReceiverPdu = (ReceiverPdu_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/SignalPdu.js
 /*******************************************************************************
@@ -849,7 +849,7 @@ Object .defineProperties (SignalPdu,
 const SignalPdu_default_ = SignalPdu;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("SignalPdu", "x_ite/Components/DIS/SignalPdu", SignalPdu_default_);
+external_X_ITE_X3D_Namespace_default().add ("SignalPdu", SignalPdu_default_);
 /* harmony default export */ const DIS_SignalPdu = (SignalPdu_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/DIS/TransmitterPdu.js
 /*******************************************************************************
@@ -1023,7 +1023,7 @@ Object .defineProperties (TransmitterPdu,
 const TransmitterPdu_default_ = TransmitterPdu;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("TransmitterPdu", "x_ite/Components/DIS/TransmitterPdu", TransmitterPdu_default_);
+external_X_ITE_X3D_Namespace_default().add ("TransmitterPdu", TransmitterPdu_default_);
 /* harmony default export */ const DIS_TransmitterPdu = (TransmitterPdu_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/DIS.js
 /*******************************************************************************
@@ -1100,7 +1100,7 @@ external_X_ITE_X3D_Components_default().add ({
 const DIS_default_ = undefined;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("DIS", "assets/components/DIS", DIS_default_);
+external_X_ITE_X3D_Namespace_default().add ("DIS", DIS_default_);
 /* harmony default export */ const DIS = ((/* unused pure expression or super */ null && (DIS_default_)));
 /******/ })()
 ;

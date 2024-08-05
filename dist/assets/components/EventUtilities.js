@@ -181,7 +181,7 @@ Object .defineProperties (BooleanFilter,
 const __default__ = BooleanFilter;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("BooleanFilter", "x_ite/Components/EventUtilities/BooleanFilter", __default__);
+external_X_ITE_X3D_Namespace_default().add ("BooleanFilter", __default__);
 /* harmony default export */ const EventUtilities_BooleanFilter = (__default__);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
@@ -342,7 +342,7 @@ Object .defineProperties (X3DSequencerNode,
 const X3DSequencerNode_default_ = X3DSequencerNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DSequencerNode", "x_ite/Components/EventUtilities/X3DSequencerNode", X3DSequencerNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DSequencerNode", X3DSequencerNode_default_);
 /* harmony default export */ const EventUtilities_X3DSequencerNode = (X3DSequencerNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/BooleanSequencer.js
 /*******************************************************************************
@@ -463,7 +463,7 @@ Object .defineProperties (BooleanSequencer,
 const BooleanSequencer_default_ = BooleanSequencer;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("BooleanSequencer", "x_ite/Components/EventUtilities/BooleanSequencer", BooleanSequencer_default_);
+external_X_ITE_X3D_Namespace_default().add ("BooleanSequencer", BooleanSequencer_default_);
 /* harmony default export */ const EventUtilities_BooleanSequencer = (BooleanSequencer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/BooleanToggle.js
 /*******************************************************************************
@@ -577,7 +577,7 @@ Object .defineProperties (BooleanToggle,
 const BooleanToggle_default_ = BooleanToggle;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("BooleanToggle", "x_ite/Components/EventUtilities/BooleanToggle", BooleanToggle_default_);
+external_X_ITE_X3D_Namespace_default().add ("BooleanToggle", BooleanToggle_default_);
 /* harmony default export */ const EventUtilities_BooleanToggle = (BooleanToggle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/X3DTriggerNode.js
 /*******************************************************************************
@@ -656,7 +656,7 @@ Object .defineProperties (X3DTriggerNode,
 const X3DTriggerNode_default_ = X3DTriggerNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DTriggerNode", "x_ite/Components/EventUtilities/X3DTriggerNode", X3DTriggerNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DTriggerNode", X3DTriggerNode_default_);
 /* harmony default export */ const EventUtilities_X3DTriggerNode = (X3DTriggerNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/BooleanTrigger.js
 /*******************************************************************************
@@ -769,7 +769,7 @@ Object .defineProperties (BooleanTrigger,
 const BooleanTrigger_default_ = BooleanTrigger;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("BooleanTrigger", "x_ite/Components/EventUtilities/BooleanTrigger", BooleanTrigger_default_);
+external_X_ITE_X3D_Namespace_default().add ("BooleanTrigger", BooleanTrigger_default_);
 /* harmony default export */ const EventUtilities_BooleanTrigger = (BooleanTrigger_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/IntegerSequencer.js
 /*******************************************************************************
@@ -890,7 +890,7 @@ Object .defineProperties (IntegerSequencer,
 const IntegerSequencer_default_ = IntegerSequencer;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("IntegerSequencer", "x_ite/Components/EventUtilities/IntegerSequencer", IntegerSequencer_default_);
+external_X_ITE_X3D_Namespace_default().add ("IntegerSequencer", IntegerSequencer_default_);
 /* harmony default export */ const EventUtilities_IntegerSequencer = (IntegerSequencer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/IntegerTrigger.js
 /*******************************************************************************
@@ -1004,7 +1004,7 @@ Object .defineProperties (IntegerTrigger,
 const IntegerTrigger_default_ = IntegerTrigger;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("IntegerTrigger", "x_ite/Components/EventUtilities/IntegerTrigger", IntegerTrigger_default_);
+external_X_ITE_X3D_Namespace_default().add ("IntegerTrigger", IntegerTrigger_default_);
 /* harmony default export */ const EventUtilities_IntegerTrigger = (IntegerTrigger_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/TimeTrigger.js
 /*******************************************************************************
@@ -1117,7 +1117,7 @@ Object .defineProperties (TimeTrigger,
 const TimeTrigger_default_ = TimeTrigger;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("TimeTrigger", "x_ite/Components/EventUtilities/TimeTrigger", TimeTrigger_default_);
+external_X_ITE_X3D_Namespace_default().add ("TimeTrigger", TimeTrigger_default_);
 /* harmony default export */ const EventUtilities_TimeTrigger = (TimeTrigger_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/EventUtilities.js
 /*******************************************************************************
@@ -1200,7 +1200,7 @@ external_X_ITE_X3D_Components_default().add ({
 const EventUtilities_default_ = undefined;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("EventUtilities", "assets/components/EventUtilities", EventUtilities_default_);
+external_X_ITE_X3D_Namespace_default().add ("EventUtilities", EventUtilities_default_);
 /* harmony default export */ const EventUtilities = ((/* unused pure expression or super */ null && (EventUtilities_default_)));
 /******/ })()
 ;
