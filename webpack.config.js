@@ -155,6 +155,7 @@ export default __default__;`;
          ],
       },
       plugins: [
+         new StringReplacePlugin (),
          new webpack .ProvidePlugin ({
             $: "jquery",
             jQuery: "jquery",
@@ -293,6 +294,7 @@ export default __default__;`;
          ],
       },
       plugins: [
+         new StringReplacePlugin (),
          new webpack .ProvidePlugin ({
             $: "jquery",
             jQuery: "jquery",
@@ -404,6 +406,7 @@ export default __default__;`;
             ],
          },
          plugins: [
+            new StringReplacePlugin (),
             new webpack .ProvidePlugin ({
                $: path .resolve (__dirname, "src/lib/jquery.js"),
                jQuery: path .resolve (__dirname, "src/lib/jquery.js"),
