@@ -4,10 +4,10 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 588:
+/***/ 254:
 /***/ ((module) => {
 
-module.exports = __X_ITE_X3D__ .require ("lib/jquery");
+module.exports = __X_ITE_X3D__ .jquery;
 
 /***/ })
 
@@ -71,24 +71,24 @@ module.exports = __X_ITE_X3D__ .require ("lib/jquery");
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
-const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
-var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Texturing/TextureProperties\")"
-const TextureProperties_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Texturing/TextureProperties");
-var TextureProperties_default = /*#__PURE__*/__webpack_require__.n(TextureProperties_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector3");
-var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Matrix4");
-var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Geometry/ViewVolume\")"
-const ViewVolume_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Geometry/ViewVolume");
-var ViewVolume_default = /*#__PURE__*/__webpack_require__.n(ViewVolume_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
-var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
+var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TextureProperties"
+const external_X_ITE_X3D_TextureProperties_namespaceObject = __X_ITE_X3D__ .TextureProperties;
+var external_X_ITE_X3D_TextureProperties_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TextureProperties_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
+var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
+var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ViewVolume"
+const external_X_ITE_X3D_ViewVolume_namespaceObject = __X_ITE_X3D__ .ViewVolume;
+var external_X_ITE_X3D_ViewVolume_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ViewVolume_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Layout/X3DLayoutContext.js
 /*******************************************************************************
  *
@@ -151,7 +151,7 @@ Object .assign (X3DLayoutContext .prototype,
 {
    getScreenTextureProperties ()
    {
-      this [_screenTextureProperties] = new (TextureProperties_default()) (this .getPrivateScene ());
+      this [_screenTextureProperties] = new (external_X_ITE_X3D_TextureProperties_default()) (this .getPrivateScene ());
 
       this [_screenTextureProperties] ._boundaryModeS       = "CLAMP_TO_EDGE";
       this [_screenTextureProperties] ._boundaryModeT       = "CLAMP_TO_EDGE";
@@ -172,9 +172,9 @@ Object .assign (X3DLayoutContext .prototype,
    getScreenScaleMatrix: (() =>
    {
       const
-         screenScale  = new (Vector3_default()) (),
-         screenPoint  = new (Vector3_default()) (),
-         screenMatrix = new (Matrix4_default()) ();
+         screenScale  = new (external_X_ITE_X3D_Vector3_default()) (),
+         screenPoint  = new (external_X_ITE_X3D_Vector3_default()) (),
+         screenMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
 
       return function (renderObject, matrix, contentScale, snap)
       {
@@ -204,12 +204,12 @@ Object .assign (X3DLayoutContext .prototype,
 
          if (snap)
          {
-            ViewVolume_default().projectPoint ((Vector3_default()).Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
+            external_X_ITE_X3D_ViewVolume_default().projectPoint ((external_X_ITE_X3D_Vector3_default()).Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
 
             screenPoint .x = Math .round (screenPoint .x);
             screenPoint .y = Math .round (screenPoint .y);
 
-            ViewVolume_default().unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
+            external_X_ITE_X3D_ViewVolume_default().unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
 
             screenPoint .z = 0;
             screenMatrix .translate (screenPoint);
@@ -225,23 +225,23 @@ Object .assign (X3DLayoutContext .prototype,
 const __default__ = X3DLayoutContext;
 ;
 
-Namespace_default().add ("X3DLayoutContext", "x_ite/Browser/Layout/X3DLayoutContext", __default__);
+external_X_ITE_X3D_Namespace_default().add ("X3DLayoutContext", "x_ite/Browser/Layout/X3DLayoutContext", __default__);
 /* harmony default export */ const Layout_X3DLayoutContext = (__default__);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
-var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
-var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DChildNode");
-var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
+var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
+var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
+var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
+const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
+var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
+var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/X3DLayoutNode.js
 /*******************************************************************************
  *
@@ -295,12 +295,12 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 function X3DLayoutNode (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DLayoutNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DLayoutNode);
 }
 
-Object .setPrototypeOf (X3DLayoutNode .prototype, (X3DChildNode_default()).prototype);
+Object .setPrototypeOf (X3DLayoutNode .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype);
 
 Object .defineProperties (X3DLayoutNode,
 {
@@ -319,14 +319,14 @@ Object .defineProperties (X3DLayoutNode,
 const X3DLayoutNode_default_ = X3DLayoutNode;
 ;
 
-Namespace_default().add ("X3DLayoutNode", "x_ite/Components/Layout/X3DLayoutNode", X3DLayoutNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DLayoutNode", "x_ite/Components/Layout/X3DLayoutNode", X3DLayoutNode_default_);
 /* harmony default export */ const Layout_X3DLayoutNode = (X3DLayoutNode_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector2\")"
-const Vector2_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector2");
-var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Rotation4\")"
-const Rotation4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Rotation4");
-var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector2"
+const external_X_ITE_X3D_Vector2_namespaceObject = __X_ITE_X3D__ .Vector2;
+var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector2_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Rotation4"
+const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
+var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/Layout.js
 /*******************************************************************************
  *
@@ -403,7 +403,7 @@ function Layout (executionContext)
 {
    Layout_X3DLayoutNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).Layout);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).Layout);
 
    this .alignX          = CENTER;
    this .alignY          = CENTER;
@@ -418,22 +418,22 @@ function Layout (executionContext)
    this .scaleModeX      = NONE;
    this .scaleModeY      = NONE;
    this .parent          = null;
-   this .rectangleCenter = new (Vector2_default()) ();
-   this .rectangleSize   = new (Vector2_default()) ();
-   this .matrix          = new (Matrix4_default()) ();
+   this .rectangleCenter = new (external_X_ITE_X3D_Vector2_default()) ();
+   this .rectangleSize   = new (external_X_ITE_X3D_Vector2_default()) ();
+   this .matrix          = new (external_X_ITE_X3D_Matrix4_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode .prototype),
 {
-   viewportPixel: new (Vector2_default()) (),
-   pixelSize: new (Vector2_default()) (),
-   translation: new (Vector3_default()) (),
-   offset: new (Vector3_default()) (),
-   scale: new (Vector3_default()) (1, 1, 1),
-   currentTranslation: new (Vector3_default()) (),
-   currentRotation: new (Rotation4_default()) (),
-   currentScale: new (Vector3_default()) (),
-   modelViewMatrix: new (Matrix4_default()) (),
+   viewportPixel: new (external_X_ITE_X3D_Vector2_default()) (),
+   pixelSize: new (external_X_ITE_X3D_Vector2_default()) (),
+   translation: new (external_X_ITE_X3D_Vector3_default()) (),
+   offset: new (external_X_ITE_X3D_Vector3_default()) (),
+   scale: new (external_X_ITE_X3D_Vector3_default()) (1, 1, 1),
+   currentTranslation: new (external_X_ITE_X3D_Vector3_default()) (),
+   currentRotation: new (external_X_ITE_X3D_Rotation4_default()) (),
+   currentScale: new (external_X_ITE_X3D_Vector3_default()) (),
+   modelViewMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
    initialize ()
    {
       Layout_X3DLayoutNode .prototype .initialize .call (this);
@@ -955,14 +955,14 @@ Object .defineProperties (Layout,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "align",       new (Fields_default()).MFString ("CENTER", "CENTER")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "offsetUnits", new (Fields_default()).MFString ("WORLD", "WORLD")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "offset",      new (Fields_default()).MFFloat (0, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sizeUnits",   new (Fields_default()).MFString ("WORLD", "WORLD")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "size",        new (Fields_default()).MFFloat (1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "scaleMode",   new (Fields_default()).MFString ("NONE", "NONE")),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "align",       new (external_X_ITE_X3D_Fields_default()).MFString ("CENTER", "CENTER")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "offsetUnits", new (external_X_ITE_X3D_Fields_default()).MFString ("WORLD", "WORLD")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "offset",      new (external_X_ITE_X3D_Fields_default()).MFFloat (0, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "sizeUnits",   new (external_X_ITE_X3D_Fields_default()).MFString ("WORLD", "WORLD")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "size",        new (external_X_ITE_X3D_Fields_default()).MFFloat (1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "scaleMode",   new (external_X_ITE_X3D_Fields_default()).MFString ("NONE", "NONE")),
       ]),
       enumerable: true,
    },
@@ -971,17 +971,17 @@ Object .defineProperties (Layout,
 const Layout_default_ = Layout;
 ;
 
-Namespace_default().add ("Layout", "x_ite/Components/Layout/Layout", Layout_default_);
+external_X_ITE_X3D_Namespace_default().add ("Layout", "x_ite/Components/Layout/Layout", Layout_default_);
 /* harmony default export */ const Layout_Layout = (Layout_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
-const X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Grouping/X3DGroupingNode");
-var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DCast");
-var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Rendering/TraverseType");
-var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGroupingNode"
+const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
+var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
+var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TraverseType"
+const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
+var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/LayoutGroup.js
 /*******************************************************************************
  *
@@ -1041,22 +1041,22 @@ var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_names
 
 function LayoutGroup (executionContext)
 {
-   X3DGroupingNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DGroupingNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).LayoutGroup);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).LayoutGroup);
 
    this .viewportNode    = null;
    this .layoutNode      = null;
-   this .matrix          = new (Matrix4_default()) ();
-   this .modelViewMatrix = new (Matrix4_default()) ();
-   this .screenMatrix    = new (Matrix4_default()) ();
+   this .matrix          = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .modelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .screenMatrix    = new (external_X_ITE_X3D_Matrix4_default()) ();
 }
 
-Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (X3DGroupingNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype),
 {
    initialize ()
    {
-      X3DGroupingNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DGroupingNode_default().prototype .initialize .call (this);
 
       this ._viewport .addInterest ("set_viewport__", this);
       this ._layout   .addInterest ("set_layout__", this);
@@ -1066,15 +1066,15 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (X3DGroupingNode
    },
    set_viewport__ ()
    {
-      this .viewportNode = X3DCast_default() ((X3DConstants_default()).X3DViewportNode, this ._viewport);
+      this .viewportNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DViewportNode, this ._viewport);
    },
    set_layout__ ()
    {
-      this .layoutNode = X3DCast_default() ((X3DConstants_default()).X3DLayoutNode, this ._layout);
+      this .layoutNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DLayoutNode, this ._layout);
    },
    getBBox (bbox, shadows)
    {
-      return X3DGroupingNode_default().prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
+      return external_X_ITE_X3D_X3DGroupingNode_default().prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
    },
    getMatrix ()
    {
@@ -1091,7 +1091,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (X3DGroupingNode
    {
       switch (type)
       {
-         case (TraverseType_default()).COLLISION:
+         case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
          {
             return;
          }
@@ -1110,14 +1110,14 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (X3DGroupingNode
                modelViewMatrix .pushMatrix (this .screenMatrix);
                renderObject .getLayouts () .push (this .layoutNode);
 
-               X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+               external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
 
                renderObject .getLayouts () .pop ();
                modelViewMatrix .pop ();
             }
             else
             {
-               X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+               external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
             }
 
             if (this .viewportNode)
@@ -1153,17 +1153,17 @@ Object .defineProperties (LayoutGroup,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "layout",         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "viewport",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "layout",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "viewport",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",    new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",       new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",     new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "addChildren",    new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "removeChildren", new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "children",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -1172,14 +1172,14 @@ Object .defineProperties (LayoutGroup,
 const LayoutGroup_default_ = LayoutGroup;
 ;
 
-Namespace_default().add ("LayoutGroup", "x_ite/Components/Layout/LayoutGroup", LayoutGroup_default_);
+external_X_ITE_X3D_Namespace_default().add ("LayoutGroup", "x_ite/Components/Layout/LayoutGroup", LayoutGroup_default_);
 /* harmony default export */ const Layout_LayoutGroup = (LayoutGroup_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Layering/X3DLayerNode\")"
-const X3DLayerNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Layering/X3DLayerNode");
-var X3DLayerNode_default = /*#__PURE__*/__webpack_require__.n(X3DLayerNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Navigation/OrthoViewpoint\")"
-const OrthoViewpoint_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Navigation/OrthoViewpoint");
-var OrthoViewpoint_default = /*#__PURE__*/__webpack_require__.n(OrthoViewpoint_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLayerNode"
+const external_X_ITE_X3D_X3DLayerNode_namespaceObject = __X_ITE_X3D__ .X3DLayerNode;
+var external_X_ITE_X3D_X3DLayerNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DLayerNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .OrthoViewpoint"
+const external_X_ITE_X3D_OrthoViewpoint_namespaceObject = __X_ITE_X3D__ .OrthoViewpoint;
+var external_X_ITE_X3D_OrthoViewpoint_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_OrthoViewpoint_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/LayoutLayer.js
 /*******************************************************************************
  *
@@ -1238,19 +1238,19 @@ var OrthoViewpoint_default = /*#__PURE__*/__webpack_require__.n(OrthoViewpoint_n
 
 function LayoutLayer (executionContext)
 {
-   X3DLayerNode_default().call (this,
+   external_X_ITE_X3D_X3DLayerNode_default().call (this,
                        executionContext,
-                       new (OrthoViewpoint_default()) (executionContext),
+                       new (external_X_ITE_X3D_OrthoViewpoint_default()) (executionContext),
                        new Layout_LayoutGroup (executionContext));
 
-   this .addType ((X3DConstants_default()).LayoutLayer);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).LayoutLayer);
 }
 
-Object .assign (Object .setPrototypeOf (LayoutLayer .prototype, (X3DLayerNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (LayoutLayer .prototype, (external_X_ITE_X3D_X3DLayerNode_default()).prototype),
 {
    initialize ()
    {
-      X3DLayerNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DLayerNode_default().prototype .initialize .call (this);
 
       const groupNode = this .getGroups () ._children [0] .getValue ();
 
@@ -1293,16 +1293,16 @@ Object .defineProperties (LayoutLayer,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pickable",       new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "objectType",     new (Fields_default()).MFString ("ALL")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "visible",        new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "layout",         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "viewport",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "addChildren",    new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "removeChildren", new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "children",       new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "pickable",       new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "objectType",     new (external_X_ITE_X3D_Fields_default()).MFString ("ALL")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "visible",        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "layout",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "viewport",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "addChildren",    new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "removeChildren", new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "children",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -1311,28 +1311,28 @@ Object .defineProperties (LayoutLayer,
 const LayoutLayer_default_ = LayoutLayer;
 ;
 
-Namespace_default().add ("LayoutLayer", "x_ite/Components/Layout/LayoutLayer", LayoutLayer_default_);
+external_X_ITE_X3D_Namespace_default().add ("LayoutLayer", "x_ite/Components/Layout/LayoutLayer", LayoutLayer_default_);
 /* harmony default export */ const Layout_LayoutLayer = (LayoutLayer_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Text/X3DFontStyleNode\")"
-const X3DFontStyleNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Text/X3DFontStyleNode");
-var X3DFontStyleNode_default = /*#__PURE__*/__webpack_require__.n(X3DFontStyleNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Browser/Text/X3DTextGeometry\")"
-const X3DTextGeometry_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Browser/Text/X3DTextGeometry");
-var X3DTextGeometry_default = /*#__PURE__*/__webpack_require__.n(X3DTextGeometry_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Browser/Text/TextAlignment\")"
-const TextAlignment_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Browser/Text/TextAlignment");
-var TextAlignment_default = /*#__PURE__*/__webpack_require__.n(TextAlignment_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Texturing/PixelTexture\")"
-const PixelTexture_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Texturing/PixelTexture");
-var PixelTexture_default = /*#__PURE__*/__webpack_require__.n(PixelTexture_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Geometry/Box3\")"
-const Box3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Geometry/Box3");
-var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Algorithm");
-var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFontStyleNode"
+const external_X_ITE_X3D_X3DFontStyleNode_namespaceObject = __X_ITE_X3D__ .X3DFontStyleNode;
+var external_X_ITE_X3D_X3DFontStyleNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFontStyleNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DTextGeometry"
+const external_X_ITE_X3D_X3DTextGeometry_namespaceObject = __X_ITE_X3D__ .X3DTextGeometry;
+var external_X_ITE_X3D_X3DTextGeometry_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DTextGeometry_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TextAlignment"
+const external_X_ITE_X3D_TextAlignment_namespaceObject = __X_ITE_X3D__ .TextAlignment;
+var external_X_ITE_X3D_TextAlignment_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TextAlignment_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .PixelTexture"
+const external_X_ITE_X3D_PixelTexture_namespaceObject = __X_ITE_X3D__ .PixelTexture;
+var external_X_ITE_X3D_PixelTexture_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_PixelTexture_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Box3"
+const external_X_ITE_X3D_Box3_namespaceObject = __X_ITE_X3D__ .Box3;
+var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
+const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
+var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Layout/ScreenText.js
-/* provided dependency */ var $ = __webpack_require__(588);
+/* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -1390,22 +1390,22 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
 
 function ScreenText (text, fontStyle)
 {
-   X3DTextGeometry_default().call (this, text, fontStyle);
+   external_X_ITE_X3D_X3DTextGeometry_default().call (this, text, fontStyle);
 
    text .setTransparent (true);
 
-   this .textureNode   = new (PixelTexture_default()) (text .getExecutionContext ());
+   this .textureNode   = new (external_X_ITE_X3D_PixelTexture_default()) (text .getExecutionContext ());
    this .canvas        = $("<canvas></canvas>");
    this .context       = this .canvas [0] .getContext ("2d", { willReadFrequently: true });
-   this .matrix        = new (Matrix4_default()) ();
+   this .matrix        = new (external_X_ITE_X3D_Matrix4_default()) ();
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
 }
 
-Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_default()).prototype),
+Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X3D_X3DTextGeometry_default()).prototype),
 {
-   modelViewMatrix: new (Matrix4_default()) (),
+   modelViewMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
    isTransparent ()
    {
       return true;
@@ -1417,12 +1417,12 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
    update: (() =>
    {
       const
-         min = new (Vector3_default()) (),
-         max = new (Vector3_default()) (1, 1, 0);
+         min = new (external_X_ITE_X3D_Vector3_default()) (),
+         max = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 0);
 
       return function ()
       {
-         X3DTextGeometry_default().prototype .update .call (this);
+         external_X_ITE_X3D_X3DTextGeometry_default().prototype .update .call (this);
 
          const
             fontStyle = this .getFontStyle (),
@@ -1439,16 +1439,16 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
 
          switch (fontStyle .getMajorAlignment ())
          {
-            case (TextAlignment_default()).BEGIN:
-            case (TextAlignment_default()).FIRST:
+            case (external_X_ITE_X3D_TextAlignment_default()).BEGIN:
+            case (external_X_ITE_X3D_TextAlignment_default()).FIRST:
                min .x = Math .floor (min .x);
                max .x = min .x + text ._textBounds .x;
                break;
-            case (TextAlignment_default()).MIDDLE:
+            case (external_X_ITE_X3D_TextAlignment_default()).MIDDLE:
                min .x = Math .round (min .x);
                max .x = min .x + text ._textBounds .x;
                break;
-            case (TextAlignment_default()).END:
+            case (external_X_ITE_X3D_TextAlignment_default()).END:
                max .x = Math .ceil (max .x);
                min .x = max .x - text ._textBounds .x;
                break;
@@ -1456,16 +1456,16 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
 
          switch (fontStyle .getMinorAlignment ())
          {
-            case (TextAlignment_default()).BEGIN:
-            case (TextAlignment_default()).FIRST:
+            case (external_X_ITE_X3D_TextAlignment_default()).BEGIN:
+            case (external_X_ITE_X3D_TextAlignment_default()).FIRST:
                max .y = Math .ceil (max .y);
                min .y = max .y - text ._textBounds .y;
                break;
-            case (TextAlignment_default()).MIDDLE:
+            case (external_X_ITE_X3D_TextAlignment_default()).MIDDLE:
                max .y = Math .round (max .y);
                min .y = max .y - text ._textBounds .y;
                break;
-            case (TextAlignment_default()).END:
+            case (external_X_ITE_X3D_TextAlignment_default()).END:
                min .y = Math .floor (min .y);
                max .y = min .y + text ._textBounds .y;
                break;
@@ -1480,8 +1480,8 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
    build: (() =>
    {
       const
-         min = new (Vector3_default()) (),
-         max = new (Vector3_default()) (1, 1, 0);
+         min = new (external_X_ITE_X3D_Vector3_default()) (),
+         max = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 0);
 
       return function ()
       {
@@ -1537,8 +1537,8 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
 
          // Scale canvas.
 
-         canvas .width  = Algorithm_default().nextPowerOfTwo (width),
-         canvas .height = Algorithm_default().nextPowerOfTwo (height);
+         canvas .width  = external_X_ITE_X3D_Algorithm_default().nextPowerOfTwo (width),
+         canvas .height = external_X_ITE_X3D_Algorithm_default().nextPowerOfTwo (height);
 
          const
             w = width  / canvas .width,
@@ -1719,7 +1719,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
    },
    traverse: (() =>
    {
-      const bbox = new (Box3_default()) ();
+      const bbox = new (external_X_ITE_X3D_Box3_default()) ();
 
       return function (type, renderObject)
       {
@@ -1734,13 +1734,13 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
    })(),
    display (gl, renderContext)
    {
-      Matrix4_default().prototype .multLeft .call (renderContext .modelViewMatrix, this .matrix);
+      external_X_ITE_X3D_Matrix4_default().prototype .multLeft .call (renderContext .modelViewMatrix, this .matrix);
 
       renderContext .textureNode = this .textureNode;
    },
    transformLine: (() =>
    {
-      const invMatrix = new (Matrix4_default()) ();
+      const invMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
 
       return function (line)
       {
@@ -1758,7 +1758,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
 const ScreenText_default_ = ScreenText;
 ;
 
-Namespace_default().add ("ScreenText", "x_ite/Browser/Layout/ScreenText", ScreenText_default_);
+external_X_ITE_X3D_Namespace_default().add ("ScreenText", "x_ite/Browser/Layout/ScreenText", ScreenText_default_);
 /* harmony default export */ const Layout_ScreenText = (ScreenText_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/ScreenFontStyle.js
 /*******************************************************************************
@@ -1817,16 +1817,16 @@ Namespace_default().add ("ScreenText", "x_ite/Browser/Layout/ScreenText", Screen
 
 function ScreenFontStyle (executionContext)
 {
-   X3DFontStyleNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DFontStyleNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ScreenFontStyle);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ScreenFontStyle);
 }
 
-Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, (X3DFontStyleNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, (external_X_ITE_X3D_X3DFontStyleNode_default()).prototype),
 {
    initialize ()
    {
-      X3DFontStyleNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DFontStyleNode_default().prototype .initialize .call (this);
 
       this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("addNodeEvent", this);
    },
@@ -1864,17 +1864,17 @@ Object .defineProperties (ScreenFontStyle,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "language",    new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "family",      new (Fields_default()).MFString ("SERIF")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "style",       new (Fields_default()).SFString ("PLAIN")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pointSize",   new (Fields_default()).SFFloat (12)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "spacing",     new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "horizontal",  new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "leftToRight", new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "topToBottom", new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "justify",     new (Fields_default()).MFString ("BEGIN")),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "language",    new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "family",      new (external_X_ITE_X3D_Fields_default()).MFString ("SERIF")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "style",       new (external_X_ITE_X3D_Fields_default()).SFString ("PLAIN")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "pointSize",   new (external_X_ITE_X3D_Fields_default()).SFFloat (12)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "spacing",     new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "horizontal",  new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "leftToRight", new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "topToBottom", new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "justify",     new (external_X_ITE_X3D_Fields_default()).MFString ("BEGIN")),
       ]),
       enumerable: true,
    },
@@ -1883,11 +1883,11 @@ Object .defineProperties (ScreenFontStyle,
 const ScreenFontStyle_default_ = ScreenFontStyle;
 ;
 
-Namespace_default().add ("ScreenFontStyle", "x_ite/Components/Layout/ScreenFontStyle", ScreenFontStyle_default_);
+external_X_ITE_X3D_Namespace_default().add ("ScreenFontStyle", "x_ite/Components/Layout/ScreenFontStyle", ScreenFontStyle_default_);
 /* harmony default export */ const Layout_ScreenFontStyle = (ScreenFontStyle_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Prototype/X3DProtoDeclaration\")"
-const X3DProtoDeclaration_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Prototype/X3DProtoDeclaration");
-var X3DProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(X3DProtoDeclaration_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DProtoDeclaration"
+const external_X_ITE_X3D_X3DProtoDeclaration_namespaceObject = __X_ITE_X3D__ .X3DProtoDeclaration;
+var external_X_ITE_X3D_X3DProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DProtoDeclaration_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/ScreenGroup.js
 /*******************************************************************************
  *
@@ -1947,17 +1947,17 @@ var X3DProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(X3DProtoDec
 
 function ScreenGroup (executionContext)
 {
-   X3DGroupingNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DGroupingNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ScreenGroup);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ScreenGroup);
 
-   if (executionContext .getOuterNode () instanceof (X3DProtoDeclaration_default()))
-      this .matrix = new (Matrix4_default()) ();
+   if (executionContext .getOuterNode () instanceof (external_X_ITE_X3D_X3DProtoDeclaration_default()))
+      this .matrix = new (external_X_ITE_X3D_Matrix4_default()) ();
    else
-      this .matrix = new (Matrix4_default()) (0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0);
+      this .matrix = new (external_X_ITE_X3D_Matrix4_default()) (0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0);
 }
 
-Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (X3DGroupingNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype),
 {
    getBBox (bbox, shadows)
    {
@@ -1971,9 +1971,9 @@ Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (X3DGroupingNode
    {
       switch (type)
       {
-         case (TraverseType_default()).CAMERA:
-         case (TraverseType_default()).PICKING:
-         case (TraverseType_default()).SHADOW: // ???
+         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
+         case (external_X_ITE_X3D_TraverseType_default()).PICKING:
+         case (external_X_ITE_X3D_TraverseType_default()).SHADOW: // ???
             // No clone support for shadows, generated cube map texture and bbox
             break;
          default:
@@ -1990,7 +1990,7 @@ Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (X3DGroupingNode
       modelViewMatrix .push ();
       modelViewMatrix .multLeft (this .matrix);
 
-      X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+      external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
 
       modelViewMatrix .pop ();
    },
@@ -2020,15 +2020,15 @@ Object .defineProperties (ScreenGroup,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",    new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",       new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",     new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "addChildren",    new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "removeChildren", new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "children",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -2037,7 +2037,7 @@ Object .defineProperties (ScreenGroup,
 const ScreenGroup_default_ = ScreenGroup;
 ;
 
-Namespace_default().add ("ScreenGroup", "x_ite/Components/Layout/ScreenGroup", ScreenGroup_default_);
+external_X_ITE_X3D_Namespace_default().add ("ScreenGroup", "x_ite/Components/Layout/ScreenGroup", ScreenGroup_default_);
 /* harmony default export */ const Layout_ScreenGroup = (ScreenGroup_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/Layout.js
 /*******************************************************************************
@@ -2096,7 +2096,7 @@ Namespace_default().add ("ScreenGroup", "x_ite/Components/Layout/ScreenGroup", S
 
 
 
-Components_default().add ({
+external_X_ITE_X3D_Components_default().add ({
    name: "Layout",
    concreteNodes:
    [
@@ -2116,7 +2116,7 @@ Components_default().add ({
 const components_Layout_default_ = undefined;
 ;
 
-Namespace_default().add ("Layout", "assets/components/Layout", components_Layout_default_);
+external_X_ITE_X3D_Namespace_default().add ("Layout", "assets/components/Layout", components_Layout_default_);
 /* harmony default export */ const components_Layout = ((/* unused pure expression or super */ null && (components_Layout_default_)));
 /******/ })()
 ;

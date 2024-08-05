@@ -469,9 +469,9 @@ export default __default__;`;
                   if (!deps .has (filename))
                      continue;
 
-                  const module = path .relative (path .resolve (__dirname, "src"), filename) .replace (/\.js$/, "");
+                  const module = filename .match (/([^\/]+)\.js/);
 
-                  return callback (null, `var __X_ITE_X3D__ .require ("${module}")`);
+                  return callback (null, `var __X_ITE_X3D__ .${module [1]}`);
                }
 
                return callback ();

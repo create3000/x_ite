@@ -80,33 +80,33 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
-const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
-var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
-var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
-var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DNode\")"
-const X3DNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DNode");
-var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DCast");
-var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Matrix4");
-var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
-var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
+var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
+var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
+var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
+var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
+var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
+var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
+var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/X3DRigidJointNode.js
 /*******************************************************************************
  *
@@ -163,24 +163,24 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 function X3DRigidJointNode (executionContext)
 {
-   X3DNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DRigidJointNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DRigidJointNode);
 
-   this .addChildObjects ((X3DConstants_default()).inputOutput, "collection", new (Fields_default()).SFNode ());
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "collection", new (external_X_ITE_X3D_Fields_default()).SFNode ());
 
    this .bodyNode1             = null;
    this .bodyNode2             = null;
-   this .initialInverseMatrix1 = new (Matrix4_default()) ();
-   this .initialInverseMatrix2 = new (Matrix4_default()) ();
+   this .initialInverseMatrix1 = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .initialInverseMatrix2 = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .output                = false;
 }
 
-Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, (X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
 {
    initialize ()
    {
-      X3DNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DNode_default().prototype .initialize .call (this);
 
       this ._forceOutput .addInterest ("set_forceOutput__", this);
       this ._body1       .addInterest ("set_body1__",       this);
@@ -260,7 +260,7 @@ Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, (X3DNode_d
          this .bodyNode1 ._collection .removeInterest ("set_joint__", this);
       }
 
-      this .bodyNode1 = X3DCast_default() ((X3DConstants_default()).RigidBody, this ._body1);
+      this .bodyNode1 = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).RigidBody, this ._body1);
 
       if (this .bodyNode1)
       {
@@ -281,7 +281,7 @@ Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, (X3DNode_d
          this .bodyNode2 ._collection .removeInterest ("set_joint__", this);
       }
 
-      this .bodyNode2 = X3DCast_default() ((X3DConstants_default()).RigidBody, this ._body2);
+      this .bodyNode2 = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).RigidBody, this ._body2);
 
       if (this .bodyNode2)
       {
@@ -310,7 +310,7 @@ Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, (X3DNode_d
    {
       this .removeJoint ();
 
-      X3DNode_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -331,11 +331,11 @@ Object .defineProperties (X3DRigidJointNode,
 const __default__ = X3DRigidJointNode;
 ;
 
-Namespace_default().add ("X3DRigidJointNode", "x_ite/Components/RigidBodyPhysics/X3DRigidJointNode", __default__);
+external_X_ITE_X3D_Namespace_default().add ("X3DRigidJointNode", "x_ite/Components/RigidBodyPhysics/X3DRigidJointNode", __default__);
 /* harmony default export */ const RigidBodyPhysics_X3DRigidJointNode = (__default__);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector3");
-var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
+var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/lib/ammojs/ammo.js
 var ammo_dirname = "/";
 
@@ -375,7 +375,7 @@ var ga=[oI,Un,ZF,rz,IF,OF,lD,Fp,Ep,Fp,oI,oI,oI,oI,oI,oI];var ha=[QH,Uv];var ia=[
 const ammo_default_ = Ammo;
 ;
 
-Namespace_default().add ("ammo", "lib/ammojs/ammo", ammo_default_);
+external_X_ITE_X3D_Namespace_default().add ("ammo", "lib/ammojs/ammo", ammo_default_);
 /* harmony default export */ const ammo = (ammo_default_);
 ;// CONCATENATED MODULE: ./src/lib/ammojs/AmmoClass.js
 /*******************************************************************************
@@ -430,7 +430,7 @@ Namespace_default().add ("ammo", "lib/ammojs/ammo", ammo_default_);
 const AmmoClass_default_ = new ammo ();
 ;
 
-Namespace_default().add ("AmmoClass", "lib/ammojs/AmmoClass", AmmoClass_default_);
+external_X_ITE_X3D_Namespace_default().add ("AmmoClass", "lib/ammojs/AmmoClass", AmmoClass_default_);
 /* harmony default export */ const AmmoClass = (AmmoClass_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/BallJoint.js
 /*******************************************************************************
@@ -492,14 +492,14 @@ function BallJoint (executionContext)
 {
    RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).BallJoint);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).BallJoint);
 
    this ._anchorPoint .setUnit ("length");
 
    this .joint             = null;
    this .outputs           = new Set ();
-   this .localAnchorPoint1 = new (Vector3_default()) ();
-   this .localAnchorPoint2 = new (Vector3_default()) ();
+   this .localAnchorPoint1 = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .localAnchorPoint2 = new (external_X_ITE_X3D_Vector3_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype),
@@ -584,7 +584,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
    },
    update1: (() =>
    {
-      var localAnchorPoint1 = new (Vector3_default()) ();
+      var localAnchorPoint1 = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -594,7 +594,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
    })(),
    update2: (() =>
    {
-      var localAnchorPoint2 = new (Vector3_default()) ();
+      var localAnchorPoint2 = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -628,14 +628,14 @@ Object .defineProperties (BallJoint,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "forceOutput",      new (Fields_default()).MFString ("NONE")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anchorPoint",      new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body1AnchorPoint", new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body2AnchorPoint", new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body1",            new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body2",            new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "forceOutput",      new (external_X_ITE_X3D_Fields_default()).MFString ("NONE")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "anchorPoint",      new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "body1AnchorPoint", new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "body2AnchorPoint", new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body1",            new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body2",            new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -644,14 +644,14 @@ Object .defineProperties (BallJoint,
 const BallJoint_default_ = BallJoint;
 ;
 
-Namespace_default().add ("BallJoint", "x_ite/Components/RigidBodyPhysics/BallJoint", BallJoint_default_);
+external_X_ITE_X3D_Namespace_default().add ("BallJoint", "x_ite/Components/RigidBodyPhysics/BallJoint", BallJoint_default_);
 /* harmony default export */ const RigidBodyPhysics_BallJoint = (BallJoint_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DChildNode");
-var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Grouping/X3DBoundedObject\")"
-const X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Grouping/X3DBoundedObject");
-var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObject_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
+const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
+var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DBoundedObject"
+const external_X_ITE_X3D_X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .X3DBoundedObject;
+var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBoundedObject_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode.js
 /*******************************************************************************
  *
@@ -710,13 +710,13 @@ var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObje
 
 function X3DNBodyCollidableNode (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
-   X3DBoundedObject_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DNBodyCollidableNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode);
 
-   this .addChildObjects ((X3DConstants_default()).inputOutput, "body",                  new (Fields_default()).SFNode (),
-                          (X3DConstants_default()).outputOnly,  "compoundShape_changed", new (Fields_default()).SFTime ());
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body",                  new (external_X_ITE_X3D_Fields_default()).SFNode (),
+                          (external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "compoundShape_changed", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
    // Units
 
@@ -725,17 +725,17 @@ function X3DNBodyCollidableNode (executionContext)
    // Members
 
    this .compoundShape  = new AmmoClass .btCompoundShape ()
-   this .offset         = new (Vector3_default()) ();
-   this .matrix         = new (Matrix4_default()) ();
+   this .offset         = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .matrix         = new (external_X_ITE_X3D_Matrix4_default()) ();
 }
 
-Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (X3DChildNode_default()).prototype),
-   (X3DBoundedObject_default()).prototype,
+Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
+   (external_X_ITE_X3D_X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
-      X3DChildNode_default().prototype .initialize .call (this);
-      X3DBoundedObject_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
 
@@ -744,7 +744,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (X3DC
    getLocalTransform: (() =>
    {
       var
-         m = new (Matrix4_default()) (),
+         m = new (external_X_ITE_X3D_Matrix4_default()) (),
          o = new AmmoClass .btVector3 (0, 0, 0),
          l = new AmmoClass .btTransform ();
 
@@ -800,8 +800,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (X3DC
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype .dispose .call (this);
-      X3DChildNode_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -822,11 +822,11 @@ Object .defineProperties (X3DNBodyCollidableNode,
 const X3DNBodyCollidableNode_default_ = X3DNBodyCollidableNode;
 ;
 
-Namespace_default().add ("X3DNBodyCollidableNode", "x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode", X3DNBodyCollidableNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DNBodyCollidableNode", "x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode", X3DNBodyCollidableNode_default_);
 /* harmony default export */ const RigidBodyPhysics_X3DNBodyCollidableNode = (X3DNBodyCollidableNode_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Rendering/TraverseType");
-var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TraverseType"
+const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
+var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollidableOffset.js
 /*******************************************************************************
  *
@@ -887,7 +887,7 @@ function CollidableOffset (executionContext)
 {
    RigidBodyPhysics_X3DNBodyCollidableNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).CollidableOffset);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).CollidableOffset);
 
    this .collidableNode = null;
 }
@@ -924,7 +924,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
          this .collidableNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
       }
 
-      this .collidableNode = X3DCast_default() ((X3DConstants_default()).X3DNBodyCollidableNode, this ._collidable);
+      this .collidableNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, this ._collidable);
 
       if (this .collidableNode)
       {
@@ -988,9 +988,9 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
    {
       switch (type)
       {
-         case (TraverseType_default()).POINTER:
-         case (TraverseType_default()).CAMERA:
-         case (TraverseType_default()).SHADOW:
+         case (external_X_ITE_X3D_TraverseType_default()).POINTER:
+         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
+         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
          {
             const modelViewMatrix = renderObject .getModelViewMatrix ();
 
@@ -1002,7 +1002,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
             modelViewMatrix .pop ();
             return;
          }
-         case (TraverseType_default()).PICKING:
+         case (external_X_ITE_X3D_TraverseType_default()).PICKING:
          {
             const
                browser          = this .getBrowser (),
@@ -1019,7 +1019,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
             pickingHierarchy .pop ();
             break;
          }
-         case (TraverseType_default()).COLLISION:
+         case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
          {
             const modelViewMatrix = renderObject .getModelViewMatrix ();
 
@@ -1031,7 +1031,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
             modelViewMatrix .pop ();
             break;
          }
-         case (TraverseType_default()).DISPLAY:
+         case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
             const modelViewMatrix = renderObject .getModelViewMatrix ();
 
@@ -1073,16 +1073,16 @@ Object .defineProperties (CollidableOffset,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",     new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "translation", new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rotation",    new (Fields_default()).SFRotation ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",     new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay", new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",    new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",  new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "collidable",  new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "enabled",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "translation", new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "rotation",    new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay", new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",    new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",  new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "collidable",  new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -1091,7 +1091,7 @@ Object .defineProperties (CollidableOffset,
 const CollidableOffset_default_ = CollidableOffset;
 ;
 
-Namespace_default().add ("CollidableOffset", "x_ite/Components/RigidBodyPhysics/CollidableOffset", CollidableOffset_default_);
+external_X_ITE_X3D_Namespace_default().add ("CollidableOffset", "x_ite/Components/RigidBodyPhysics/CollidableOffset", CollidableOffset_default_);
 /* harmony default export */ const RigidBodyPhysics_CollidableOffset = (CollidableOffset_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollidableShape.js
 /*******************************************************************************
@@ -1154,7 +1154,7 @@ function CollidableShape (executionContext)
 {
    RigidBodyPhysics_X3DNBodyCollidableNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).CollidableShape);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).CollidableShape);
 
    this .convex         = false;
    this .shapeNode      = null;
@@ -1256,7 +1256,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
          this .shapeNode ._geometry .removeInterest ("set_geometry__", this);
       }
 
-      this .shapeNode = X3DCast_default() ((X3DConstants_default()).Shape, this ._shape);
+      this .shapeNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).Shape, this ._shape);
 
       if (this .shapeNode)
       {
@@ -1341,7 +1341,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
             {
                switch (type [t])
                {
-                  case (X3DConstants_default()).Box:
+                  case (external_X_ITE_X3D_X3DConstants_default()).Box:
                   {
                      var
                         box  = this .geometryNode,
@@ -1350,7 +1350,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                      this .collisionShape = new AmmoClass .btBoxShape (new AmmoClass .btVector3 (size .x / 2, size .y / 2, size .z / 2));
                      break;
                   }
-                  case (X3DConstants_default()).Cone:
+                  case (external_X_ITE_X3D_X3DConstants_default()).Cone:
                   {
                      var cone = this .geometryNode;
 
@@ -1361,7 +1361,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
 
                      break;
                   }
-                  case (X3DConstants_default()).Cylinder:
+                  case (external_X_ITE_X3D_X3DConstants_default()).Cylinder:
                   {
                      var
                         cylinder  = this .geometryNode,
@@ -1375,7 +1375,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
 
                      break;
                   }
-                  case (X3DConstants_default()).ElevationGrid:
+                  case (external_X_ITE_X3D_X3DConstants_default()).ElevationGrid:
                   {
                      var elevationGrid = this .geometryNode;
 
@@ -1418,14 +1418,14 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
 
                      break;
                   }
-                  case (X3DConstants_default()).Sphere:
+                  case (external_X_ITE_X3D_X3DConstants_default()).Sphere:
                   {
                      var sphere = this .geometryNode;
 
                      this .collisionShape = new AmmoClass .btSphereShape (sphere ._radius .getValue ());
                      break;
                   }
-                  case (X3DConstants_default()).X3DGeometryNode:
+                  case (external_X_ITE_X3D_X3DConstants_default()).X3DGeometryNode:
                   {
                      if (this .convex)
                         this .collisionShape = this .createConvexGeometry ();
@@ -1482,9 +1482,9 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    {
       switch (type)
       {
-         case (TraverseType_default()).POINTER:
-         case (TraverseType_default()).CAMERA:
-         case (TraverseType_default()).SHADOW:
+         case (external_X_ITE_X3D_TraverseType_default()).POINTER:
+         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
+         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
          {
             const modelViewMatrix = renderObject .getModelViewMatrix ();
 
@@ -1496,7 +1496,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
             modelViewMatrix .pop ();
             return;
          }
-         case (TraverseType_default()).PICKING:
+         case (external_X_ITE_X3D_TraverseType_default()).PICKING:
          {
             const
                browser          = this .getBrowser (),
@@ -1513,7 +1513,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
             pickingHierarchy .pop ();
             return;
          }
-         case (TraverseType_default()).COLLISION:
+         case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
          {
             const modelViewMatrix = renderObject .getModelViewMatrix ();
 
@@ -1525,7 +1525,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
             modelViewMatrix .pop ();
             return;
          }
-         case (TraverseType_default()).DISPLAY:
+         case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
             const modelViewMatrix = renderObject .getModelViewMatrix ();
 
@@ -1573,16 +1573,16 @@ Object .defineProperties (CollidableShape,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",     new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "translation", new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rotation",    new (Fields_default()).SFRotation ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",     new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay", new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",    new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",  new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "shape",       new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "enabled",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "translation", new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "rotation",    new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay", new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",    new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",  new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "shape",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -1591,7 +1591,7 @@ Object .defineProperties (CollidableShape,
 const CollidableShape_default_ = CollidableShape;
 ;
 
-Namespace_default().add ("CollidableShape", "x_ite/Components/RigidBodyPhysics/CollidableShape", CollidableShape_default_);
+external_X_ITE_X3D_Namespace_default().add ("CollidableShape", "x_ite/Components/RigidBodyPhysics/CollidableShape", CollidableShape_default_);
 /* harmony default export */ const RigidBodyPhysics_CollidableShape = (CollidableShape_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/RigidBodyPhysics/AppliedParametersType.js
 /*******************************************************************************
@@ -1659,7 +1659,7 @@ const AppliedParametersType =
 const AppliedParametersType_default_ = AppliedParametersType;
 ;
 
-Namespace_default().add ("AppliedParametersType", "x_ite/Browser/RigidBodyPhysics/AppliedParametersType", AppliedParametersType_default_);
+external_X_ITE_X3D_Namespace_default().add ("AppliedParametersType", "x_ite/Browser/RigidBodyPhysics/AppliedParametersType", AppliedParametersType_default_);
 /* harmony default export */ const RigidBodyPhysics_AppliedParametersType = (AppliedParametersType_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollisionCollection.js
 /*******************************************************************************
@@ -1720,10 +1720,10 @@ Namespace_default().add ("AppliedParametersType", "x_ite/Browser/RigidBodyPhysic
 
 function CollisionCollection (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
-   X3DBoundedObject_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).CollisionCollection);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).CollisionCollection);
 
    this ._minBounceSpeed           .setUnit ("speed");
    this ._surfaceSpeed             .setUnit ("speed");
@@ -1734,13 +1734,13 @@ function CollisionCollection (executionContext)
    this .collisionSpaceNodes = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (X3DChildNode_default()).prototype),
-   (X3DBoundedObject_default()).prototype,
+Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
+   (external_X_ITE_X3D_X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
-      X3DChildNode_default().prototype .initialize .call (this);
-      X3DBoundedObject_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
       this ._appliedParameters .addInterest ("set_appliedParameters__", this);
       this ._collidables       .addInterest ("set_collidables__",       this);
@@ -1798,7 +1798,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (X3DChil
 
       for (var i = 0, length = this ._collidables .length; i < length; ++ i)
       {
-         var collisionSpaceNode = X3DCast_default() ((X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         var collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
 
          if (collisionSpaceNode)
          {
@@ -1821,7 +1821,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (X3DChil
 
       for (var i = 0, length = this ._collidables .length; i < length; ++ i)
       {
-         var collidableNode = X3DCast_default() ((X3DConstants_default()).X3DNBodyCollidableNode, this ._collidables [i]);
+         var collidableNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, this ._collidables [i]);
 
          if (collidableNode)
          {
@@ -1829,7 +1829,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (X3DChil
             continue;
          }
 
-         var collisionSpaceNode = X3DCast_default() ((X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         var collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
 
          if (collisionSpaceNode)
          {
@@ -1842,8 +1842,8 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (X3DChil
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype .dispose .call (this);
-      X3DChildNode_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -1871,23 +1871,23 @@ Object .defineProperties (CollisionCollection,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                 new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",              new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                  new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "appliedParameters",        new (Fields_default()).MFString ("BOUNCE")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bounce",                   new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "minBounceSpeed",           new (Fields_default()).SFFloat (0.1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "frictionCoefficients",     new (Fields_default()).SFVec2f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceSpeed",             new (Fields_default()).SFVec2f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "slipFactors",              new (Fields_default()).SFVec2f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "softnessConstantForceMix", new (Fields_default()).SFFloat (0.0001)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "softnessErrorCorrection",  new (Fields_default()).SFFloat (0.8)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "collidables",              new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",                  new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",              new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",                 new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",               new (Fields_default()).SFVec3f ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",                 new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",              new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "enabled",                  new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "appliedParameters",        new (external_X_ITE_X3D_Fields_default()).MFString ("BOUNCE")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bounce",                   new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "minBounceSpeed",           new (external_X_ITE_X3D_Fields_default()).SFFloat (0.1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "frictionCoefficients",     new (external_X_ITE_X3D_Fields_default()).SFVec2f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "surfaceSpeed",             new (external_X_ITE_X3D_Fields_default()).SFVec2f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "slipFactors",              new (external_X_ITE_X3D_Fields_default()).SFVec2f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "softnessConstantForceMix", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.0001)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "softnessErrorCorrection",  new (external_X_ITE_X3D_Fields_default()).SFFloat (0.8)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "collidables",              new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",                  new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",                 new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",               new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
       ]),
       enumerable: true,
    },
@@ -1896,11 +1896,11 @@ Object .defineProperties (CollisionCollection,
 const CollisionCollection_default_ = CollisionCollection;
 ;
 
-Namespace_default().add ("CollisionCollection", "x_ite/Components/RigidBodyPhysics/CollisionCollection", CollisionCollection_default_);
+external_X_ITE_X3D_Namespace_default().add ("CollisionCollection", "x_ite/Components/RigidBodyPhysics/CollisionCollection", CollisionCollection_default_);
 /* harmony default export */ const RigidBodyPhysics_CollisionCollection = (CollisionCollection_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DSensorNode\")"
-const X3DSensorNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DSensorNode");
-var X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DSensorNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSensorNode"
+const external_X_ITE_X3D_X3DSensorNode_namespaceObject = __X_ITE_X3D__ .X3DSensorNode;
+var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSensorNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollisionSensor.js
 /*******************************************************************************
  *
@@ -1959,19 +1959,19 @@ var X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DSensorNode_nam
 
 function CollisionSensor (executionContext)
 {
-   X3DSensorNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DSensorNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).CollisionSensor);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).CollisionSensor);
 
    this .colliderNode = null;
    this .contactCache = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (external_X_ITE_X3D_X3DSensorNode_default()).prototype),
 {
    initialize ()
    {
-      X3DSensorNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DSensorNode_default().prototype .initialize .call (this);
 
       this .getLive () .addInterest ("set_live__", this);
 
@@ -1992,7 +1992,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (X3DSensorNo
    },
    set_collider__ ()
    {
-      this .colliderNode = X3DCast_default() ((X3DConstants_default()).CollisionCollection, this ._collider);
+      this .colliderNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).CollisionCollection, this ._collider);
 
       this .set_live__ ();
    },
@@ -2003,8 +2003,8 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (X3DSensorNo
          collisionWorlds      = new Set (),
          intersectionNodes    = new Set (),
          contactNodes         = [ ],
-         position             = new (Vector3_default()) (),
-         contactNormal        = new (Vector3_default()) ();
+         position             = new (external_X_ITE_X3D_Vector3_default()) (),
+         contactNormal        = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -2170,14 +2170,14 @@ Object .defineProperties (CollisionSensor,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "description",   new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",       new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isActive",      new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "intersections", new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "contacts",      new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "collider",      new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",   new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",       new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "isActive",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "intersections", new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "contacts",      new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "collider",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -2186,7 +2186,7 @@ Object .defineProperties (CollisionSensor,
 const CollisionSensor_default_ = CollisionSensor;
 ;
 
-Namespace_default().add ("CollisionSensor", "x_ite/Components/RigidBodyPhysics/CollisionSensor", CollisionSensor_default_);
+external_X_ITE_X3D_Namespace_default().add ("CollisionSensor", "x_ite/Components/RigidBodyPhysics/CollisionSensor", CollisionSensor_default_);
 /* harmony default export */ const RigidBodyPhysics_CollisionSensor = (CollisionSensor_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode.js
 /*******************************************************************************
@@ -2242,24 +2242,24 @@ Namespace_default().add ("CollisionSensor", "x_ite/Components/RigidBodyPhysics/C
 
 function X3DNBodyCollisionSpaceNode (executionContext)
 {
-   X3DNode_default().call (this, executionContext);
-   X3DBoundedObject_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DNBodyCollisionSpaceNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode);
 }
 
-Object .assign (Object .setPrototypeOf (X3DNBodyCollisionSpaceNode .prototype, (X3DNode_default()).prototype),
-   (X3DBoundedObject_default()).prototype,
+Object .assign (Object .setPrototypeOf (X3DNBodyCollisionSpaceNode .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
+   (external_X_ITE_X3D_X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
-      X3DNode_default().prototype .initialize .call (this);
-      X3DBoundedObject_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype .dispose .call (this);
-      X3DNode_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -2280,7 +2280,7 @@ Object .defineProperties (X3DNBodyCollisionSpaceNode,
 const X3DNBodyCollisionSpaceNode_default_ = X3DNBodyCollisionSpaceNode;
 ;
 
-Namespace_default().add ("X3DNBodyCollisionSpaceNode", "x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode", X3DNBodyCollisionSpaceNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DNBodyCollisionSpaceNode", "x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode", X3DNBodyCollisionSpaceNode_default_);
 /* harmony default export */ const RigidBodyPhysics_X3DNBodyCollisionSpaceNode = (X3DNBodyCollisionSpaceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollisionSpace.js
 /*******************************************************************************
@@ -2341,7 +2341,7 @@ function CollisionSpace (executionContext)
 {
    RigidBodyPhysics_X3DNBodyCollisionSpaceNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).CollisionSpace);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).CollisionSpace);
 
    this .collidableNodes     = [ ];
    this .collisionSpaceNodes = [ ];
@@ -2380,7 +2380,7 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhys
 
       for (var i = 0, length = this ._collidables .length; i < length; ++ i)
       {
-         var collisionSpaceNode = X3DCast_default() ((X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         var collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
 
          if (collisionSpaceNode)
          {
@@ -2403,7 +2403,7 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhys
 
       for (var i = 0, length = this ._collidables .length; i < length; ++ i)
       {
-         var collidableNode = X3DCast_default() ((X3DConstants_default()).X3DNBodyCollidableNode, this ._collidables [i]);
+         var collidableNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, this ._collidables [i]);
 
          if (collidableNode)
          {
@@ -2411,7 +2411,7 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhys
             continue;
          }
 
-         var collisionSpaceNode = X3DCast_default() ((X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         var collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
 
          if (collisionSpaceNode)
          {
@@ -2448,15 +2448,15 @@ Object .defineProperties (CollisionSpace,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",     new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "useGeometry", new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",     new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay", new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",    new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",  new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "collidables", new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "enabled",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "useGeometry", new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay", new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",    new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",  new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "collidables", new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -2465,7 +2465,7 @@ Object .defineProperties (CollisionSpace,
 const CollisionSpace_default_ = CollisionSpace;
 ;
 
-Namespace_default().add ("CollisionSpace", "x_ite/Components/RigidBodyPhysics/CollisionSpace", CollisionSpace_default_);
+external_X_ITE_X3D_Namespace_default().add ("CollisionSpace", "x_ite/Components/RigidBodyPhysics/CollisionSpace", CollisionSpace_default_);
 /* harmony default export */ const RigidBodyPhysics_CollisionSpace = (CollisionSpace_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/Contact.js
 /*******************************************************************************
@@ -2523,9 +2523,9 @@ Namespace_default().add ("CollisionSpace", "x_ite/Components/RigidBodyPhysics/Co
 
 function Contact (executionContext)
 {
-   X3DNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).Contact);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).Contact);
 
    // Units
 
@@ -2536,7 +2536,7 @@ function Contact (executionContext)
    this ._softnessConstantForceMix .setUnit ("force");
 }
 
-Object .setPrototypeOf (Contact .prototype, (X3DNode_default()).prototype);
+Object .setPrototypeOf (Contact .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype);
 
 Object .defineProperties (Contact,
 {
@@ -2562,24 +2562,24 @@ Object .defineProperties (Contact,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                 new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "position",                 new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "contactNormal",            new (Fields_default()).SFVec3f (0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "depth",                    new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "appliedParameters",        new (Fields_default()).MFString ("BOUNCE")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "bounce",                   new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "minBounceSpeed",           new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frictionDirection",        new (Fields_default()).SFVec3f (0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frictionCoefficients",     new (Fields_default()).SFVec2f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceSpeed",             new (Fields_default()).SFVec2f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "slipCoefficients",         new (Fields_default()).SFVec2f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "softnessConstantForceMix", new (Fields_default()).SFFloat (0.0001)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "softnessErrorCorrection",  new (Fields_default()).SFFloat (0.8)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "geometry1",                new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "geometry2",                new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body1",                    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body2",                    new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                 new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "position",                 new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "contactNormal",            new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "depth",                    new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "appliedParameters",        new (external_X_ITE_X3D_Fields_default()).MFString ("BOUNCE")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "bounce",                   new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "minBounceSpeed",           new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "frictionDirection",        new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "frictionCoefficients",     new (external_X_ITE_X3D_Fields_default()).SFVec2f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceSpeed",             new (external_X_ITE_X3D_Fields_default()).SFVec2f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "slipCoefficients",         new (external_X_ITE_X3D_Fields_default()).SFVec2f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "softnessConstantForceMix", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.0001)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "softnessErrorCorrection",  new (external_X_ITE_X3D_Fields_default()).SFFloat (0.8)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "geometry1",                new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "geometry2",                new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body1",                    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body2",                    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -2588,11 +2588,11 @@ Object .defineProperties (Contact,
 const Contact_default_ = Contact;
 ;
 
-Namespace_default().add ("Contact", "x_ite/Components/RigidBodyPhysics/Contact", Contact_default_);
+external_X_ITE_X3D_Namespace_default().add ("Contact", "x_ite/Components/RigidBodyPhysics/Contact", Contact_default_);
 /* harmony default export */ const RigidBodyPhysics_Contact = (Contact_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Rotation4\")"
-const Rotation4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Rotation4");
-var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Rotation4"
+const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
+var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint.js
 /*******************************************************************************
  *
@@ -2655,7 +2655,7 @@ function DoubleAxisHingeJoint (executionContext)
 {
    RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).DoubleAxisHingeJoint);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).DoubleAxisHingeJoint);
 
    // Units
 
@@ -2675,18 +2675,18 @@ function DoubleAxisHingeJoint (executionContext)
       this .addAlias ("stopConstantForceMix1", this ._stop1ConstantForceMix);
       this .addAlias ("stopErrorCorrection1",  this ._stop1ErrorCorrection);
 
-      this ._axis1 = new (Vector3_default()) ();
-      this ._axis2 = new (Vector3_default()) ();
+      this ._axis1 = new (external_X_ITE_X3D_Vector3_default()) ();
+      this ._axis2 = new (external_X_ITE_X3D_Vector3_default()) ();
    }
 
    // Private properties
 
    this .joint             = null;
    this .outputs           = new Set ();
-   this .localAnchorPoint1 = new (Vector3_default()) ();
-   this .localAnchorPoint2 = new (Vector3_default()) ();
-   this .localAxis1        = new (Vector3_default()) ();
-   this .localAxis2        = new (Vector3_default()) ();
+   this .localAnchorPoint1 = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .localAnchorPoint2 = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .localAxis1        = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .localAxis2        = new (external_X_ITE_X3D_Vector3_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype),
@@ -2702,10 +2702,10 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
    addJoint: (() =>
    {
       var
-         localAnchorPoint1 = new (Vector3_default()) (),
-         localAnchorPoint2 = new (Vector3_default()) (),
-         localAxis1        = new (Vector3_default()) (),
-         localAxis2        = new (Vector3_default()) ();
+         localAnchorPoint1 = new (external_X_ITE_X3D_Vector3_default()) (),
+         localAnchorPoint2 = new (external_X_ITE_X3D_Vector3_default()) (),
+         localAxis1        = new (external_X_ITE_X3D_Vector3_default()) (),
+         localAxis2        = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -2785,10 +2785,10 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
    update1: (() =>
    {
       var
-         localAnchorPoint1 = new (Vector3_default()) (),
-         localAxis1        = new (Vector3_default()) (),
-         difference        = new (Matrix4_default()) (),
-         rotation          = new (Rotation4_default()) ();
+         localAnchorPoint1 = new (external_X_ITE_X3D_Vector3_default()) (),
+         localAxis1        = new (external_X_ITE_X3D_Vector3_default()) (),
+         difference        = new (external_X_ITE_X3D_Matrix4_default()) (),
+         rotation          = new (external_X_ITE_X3D_Rotation4_default()) ();
 
       return function ()
       {
@@ -2815,10 +2815,10 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
    update2: (() =>
    {
       var
-         localAnchorPoint2 = new (Vector3_default()) (),
-         localAxis2        = new (Vector3_default()) (),
-         difference        = new (Matrix4_default()) (),
-         rotation          = new (Rotation4_default()) ();
+         localAnchorPoint2 = new (external_X_ITE_X3D_Vector3_default()) (),
+         localAxis2        = new (external_X_ITE_X3D_Vector3_default()) (),
+         difference        = new (external_X_ITE_X3D_Matrix4_default()) (),
+         rotation          = new (external_X_ITE_X3D_Rotation4_default()) ();
 
       return function ()
       {
@@ -2868,33 +2868,33 @@ Object .defineProperties (DoubleAxisHingeJoint,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                  new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "forceOutput",               new (Fields_default()).MFString ("NONE")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anchorPoint",               new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis1",                     new (Fields_default()).SFVec3f (1, 0, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis2",                     new (Fields_default()).SFVec3f (0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "minAngle1",                 new (Fields_default()).SFFloat (-3.141592653)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "maxAngle1",                 new (Fields_default()).SFFloat (3.141592653)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "desiredAngularVelocity1",   new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "desiredAngularVelocity2",   new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "maxTorque1",                new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "maxTorque2",                new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stop1Bounce",               new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stop1ConstantForceMix",     new (Fields_default()).SFFloat (0.001)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stop1ErrorCorrection",      new (Fields_default()).SFFloat (0.8)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "suspensionForce",           new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "suspensionErrorCorrection", new (Fields_default()).SFFloat (0.8)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body1AnchorPoint",          new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body2AnchorPoint",          new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body1Axis",                 new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body2Axis",                 new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "hinge1Angle",               new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "hinge2Angle",               new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "hinge1AngleRate",           new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "hinge2AngleRate",           new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body1",                     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body2",                     new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                  new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "forceOutput",               new (external_X_ITE_X3D_Fields_default()).MFString ("NONE")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "anchorPoint",               new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "axis1",                     new (external_X_ITE_X3D_Fields_default()).SFVec3f (1, 0, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "axis2",                     new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "minAngle1",                 new (external_X_ITE_X3D_Fields_default()).SFFloat (-3.141592653)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "maxAngle1",                 new (external_X_ITE_X3D_Fields_default()).SFFloat (3.141592653)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "desiredAngularVelocity1",   new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "desiredAngularVelocity2",   new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "maxTorque1",                new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "maxTorque2",                new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "stop1Bounce",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "stop1ConstantForceMix",     new (external_X_ITE_X3D_Fields_default()).SFFloat (0.001)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "stop1ErrorCorrection",      new (external_X_ITE_X3D_Fields_default()).SFFloat (0.8)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "suspensionForce",           new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "suspensionErrorCorrection", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.8)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "body1AnchorPoint",          new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "body2AnchorPoint",          new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "body1Axis",                 new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "body2Axis",                 new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "hinge1Angle",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "hinge2Angle",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "hinge1AngleRate",           new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "hinge2AngleRate",           new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body1",                     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body2",                     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -2903,7 +2903,7 @@ Object .defineProperties (DoubleAxisHingeJoint,
 const DoubleAxisHingeJoint_default_ = DoubleAxisHingeJoint;
 ;
 
-Namespace_default().add ("DoubleAxisHingeJoint", "x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint", DoubleAxisHingeJoint_default_);
+external_X_ITE_X3D_Namespace_default().add ("DoubleAxisHingeJoint", "x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint", DoubleAxisHingeJoint_default_);
 /* harmony default export */ const RigidBodyPhysics_DoubleAxisHingeJoint = (DoubleAxisHingeJoint_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/MotorJoint.js
 /*******************************************************************************
@@ -2968,7 +2968,7 @@ function MotorJoint (executionContext)
 {
    RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).MotorJoint);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).MotorJoint);
 
    // Units
 
@@ -2986,9 +2986,9 @@ function MotorJoint (executionContext)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
    {
-      this ._motor1Axis = new (Vector3_default()) ();
-      this ._motor2Axis = new (Vector3_default()) ();
-      this ._motor3Axis = new (Vector3_default()) ();
+      this ._motor1Axis = new (external_X_ITE_X3D_Vector3_default()) ();
+      this ._motor2Axis = new (external_X_ITE_X3D_Vector3_default()) ();
+      this ._motor3Axis = new (external_X_ITE_X3D_Vector3_default()) ();
    }
 }
 
@@ -3018,34 +3018,34 @@ Object .defineProperties (MotorJoint,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",             new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "autoCalc",             new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "forceOutput",          new (Fields_default()).MFString ("NONE")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "axis1Angle",           new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "axis2Angle",           new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "axis3Angle",           new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "axis1Torque",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "axis2Torque",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "axis3Torque",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabledAxes",          new (Fields_default()).SFInt32 (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "motor1Axis",           new (Fields_default()).SFVec3f (1, 0, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "motor2Axis",           new (Fields_default()).SFVec3f (0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "motor3Axis",           new (Fields_default()).SFVec3f (0, 0, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "stop1Bounce",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "stop2Bounce",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "stop3Bounce",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "stop1ErrorCorrection", new (Fields_default()).SFFloat (0.8)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "stop2ErrorCorrection", new (Fields_default()).SFFloat (0.8)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "stop3ErrorCorrection", new (Fields_default()).SFFloat (0.8)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "motor1Angle",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "motor2Angle",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "motor3Angle",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "motor1AngleRate",      new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "motor2AngleRate",      new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "motor3AngleRate",      new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "body1",                new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "body2",                new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "autoCalc",             new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "forceOutput",          new (external_X_ITE_X3D_Fields_default()).MFString ("NONE")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "axis1Angle",           new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "axis2Angle",           new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "axis3Angle",           new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "axis1Torque",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "axis2Torque",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "axis3Torque",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "enabledAxes",          new (external_X_ITE_X3D_Fields_default()).SFInt32 (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "motor1Axis",           new (external_X_ITE_X3D_Fields_default()).SFVec3f (1, 0, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "motor2Axis",           new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "motor3Axis",           new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "stop1Bounce",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "stop2Bounce",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "stop3Bounce",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "stop1ErrorCorrection", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.8)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "stop2ErrorCorrection", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.8)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "stop3ErrorCorrection", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.8)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "motor1Angle",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "motor2Angle",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "motor3Angle",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "motor1AngleRate",      new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "motor2AngleRate",      new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "motor3AngleRate",      new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "body1",                new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "body2",                new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -3054,11 +3054,11 @@ Object .defineProperties (MotorJoint,
 const MotorJoint_default_ = MotorJoint;
 ;
 
-Namespace_default().add ("MotorJoint", "x_ite/Components/RigidBodyPhysics/MotorJoint", MotorJoint_default_);
+external_X_ITE_X3D_Namespace_default().add ("MotorJoint", "x_ite/Components/RigidBodyPhysics/MotorJoint", MotorJoint_default_);
 /* harmony default export */ const RigidBodyPhysics_MotorJoint = (MotorJoint_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Quaternion\")"
-const Quaternion_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Quaternion");
-var Quaternion_default = /*#__PURE__*/__webpack_require__.n(Quaternion_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Quaternion"
+const external_X_ITE_X3D_Quaternion_namespaceObject = __X_ITE_X3D__ .Quaternion;
+var external_X_ITE_X3D_Quaternion_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Quaternion_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/RigidBody.js
 /*******************************************************************************
  *
@@ -3122,14 +3122,14 @@ var Quaternion_default = /*#__PURE__*/__webpack_require__.n(Quaternion_namespace
 
 function RigidBody (executionContext)
 {
-   X3DNode_default().call (this, executionContext);
-   X3DBoundedObject_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).RigidBody);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).RigidBody);
 
-   this .addChildObjects ((X3DConstants_default()).inputOutput, "collection",    new (Fields_default()).SFNode (),
-                          (X3DConstants_default()).inputOutput, "transform",     new (Fields_default()).SFTime (),
-                          (X3DConstants_default()).inputOutput, "otherGeometry", new (Fields_default()).MFNode ());
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "collection",    new (external_X_ITE_X3D_Fields_default()).SFNode (),
+                          (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "transform",     new (external_X_ITE_X3D_Fields_default()).SFTime (),
+                          (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "otherGeometry", new (external_X_ITE_X3D_Fields_default()).MFNode ());
 
    this ._position            .setUnit ("length");
    this ._linearVelocity      .setUnit ("speed");
@@ -3146,18 +3146,18 @@ function RigidBody (executionContext)
    this .rigidBody          = new AmmoClass .btRigidBody (this .constructionInfo);
    this .geometryNodes      = [ ];
    this .otherGeometryNodes = [ ];
-   this .matrix             = new (Matrix4_default()) ();
-   this .force              = new (Vector3_default()) ();
-   this .torque             = new (Vector3_default()) ();
+   this .matrix             = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .force              = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .torque             = new (external_X_ITE_X3D_Vector3_default()) ();
 }
 
-Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()).prototype),
-   (X3DBoundedObject_default()).prototype,
+Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
+   (external_X_ITE_X3D_X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
-      X3DNode_default().prototype .initialize .call (this);
-      X3DBoundedObject_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
       this ._angularVelocity      .addInterest ("set_angularVelocity__",    this);
@@ -3220,7 +3220,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
       var
          o  = new AmmoClass .btVector3 (0, 0, 0),
          t  = new AmmoClass .btTransform (),
-         im = new (Matrix4_default()) (),
+         im = new (external_X_ITE_X3D_Matrix4_default()) (),
          it = new AmmoClass .btTransform (),
          io = new AmmoClass .btVector3 (0, 0, 0);
 
@@ -3403,7 +3403,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
 
       for (var i = 0, length = this ._geometry .length; i < length; ++ i)
       {
-         var geometryNode = X3DCast_default() ((X3DConstants_default()).X3DNBodyCollidableNode, this ._geometry [i]);
+         var geometryNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollidableNode, this ._geometry [i]);
 
          if (! geometryNode)
             continue;
@@ -3496,11 +3496,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
    {
       var
          transform       = new AmmoClass .btTransform (),
-         position        = new (Vector3_default()) (),
-         quaternion      = new (Quaternion_default()) (),
-         orientation     = new (Rotation4_default()) (),
-         linearVelocity  = new (Vector3_default()) (),
-         angularVelocity = new (Vector3_default()) ();
+         position        = new (external_X_ITE_X3D_Vector3_default()) (),
+         quaternion      = new (external_X_ITE_X3D_Quaternion_default()) (),
+         orientation     = new (external_X_ITE_X3D_Rotation4_default()) (),
+         linearVelocity  = new (external_X_ITE_X3D_Vector3_default()) (),
+         angularVelocity = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -3527,8 +3527,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
       AmmoClass .destroy (this .motionState);
       AmmoClass .destroy (this .compoundShape);
 
-      X3DBoundedObject_default().prototype .dispose .call (this);
-      X3DNode_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -3556,35 +3556,35 @@ Object .defineProperties (RigidBody,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",             new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",              new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fixed",                new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "position",             new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "orientation",          new (Fields_default()).SFRotation ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "linearVelocity",       new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "angularVelocity",      new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "useFiniteRotation",    new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "finiteRotationAxis",   new (Fields_default()).SFVec3f (0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoDamp",             new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "linearDampingFactor",  new (Fields_default()).SFFloat (0.001)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "angularDampingFactor", new (Fields_default()).SFFloat (0.001)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "mass",                 new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "centerOfMass",         new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "massDensityModel",     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "useGlobalGravity",     new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "forces",               new (Fields_default()).MFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "torques",              new (Fields_default()).MFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "inertia",              new (Fields_default()).SFMatrix3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoDisable",          new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "disableTime",          new (Fields_default()).SFTime ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "disableLinearSpeed",   new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "disableAngularSpeed",  new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geometry",             new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",              new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",          new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",             new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",           new (Fields_default()).SFVec3f ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "enabled",              new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "fixed",                new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "position",             new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "orientation",          new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "linearVelocity",       new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "angularVelocity",      new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "useFiniteRotation",    new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "finiteRotationAxis",   new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoDamp",             new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "linearDampingFactor",  new (external_X_ITE_X3D_Fields_default()).SFFloat (0.001)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "angularDampingFactor", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.001)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "mass",                 new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "centerOfMass",         new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "massDensityModel",     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "useGlobalGravity",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "forces",               new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "torques",              new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "inertia",              new (external_X_ITE_X3D_Fields_default()).SFMatrix3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoDisable",          new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableTime",          new (external_X_ITE_X3D_Fields_default()).SFTime ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableLinearSpeed",   new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableAngularSpeed",  new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "geometry",             new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",              new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",          new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",             new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",           new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
       ]),
       enumerable: true,
    },
@@ -3593,7 +3593,7 @@ Object .defineProperties (RigidBody,
 const RigidBody_default_ = RigidBody;
 ;
 
-Namespace_default().add ("RigidBody", "x_ite/Components/RigidBodyPhysics/RigidBody", RigidBody_default_);
+external_X_ITE_X3D_Namespace_default().add ("RigidBody", "x_ite/Components/RigidBodyPhysics/RigidBody", RigidBody_default_);
 /* harmony default export */ const RigidBodyPhysics_RigidBody = (RigidBody_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/RigidBodyCollection.js
 /*******************************************************************************
@@ -3655,10 +3655,10 @@ Namespace_default().add ("RigidBody", "x_ite/Components/RigidBodyPhysics/RigidBo
 
 function RigidBodyCollection (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
-   X3DBoundedObject_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).RigidBodyCollection);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).RigidBodyCollection);
 
    // Units
 
@@ -3685,13 +3685,13 @@ function RigidBodyCollection (executionContext)
    this .otherJointNodes        = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChildNode_default()).prototype),
-   (X3DBoundedObject_default()).prototype,
+Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
+   (external_X_ITE_X3D_X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
-      X3DChildNode_default().prototype .initialize .call (this);
-      X3DBoundedObject_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
       this .getLive () .addInterest ("set_enabled__", this);
 
@@ -3756,7 +3756,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChil
    },
    set_collider__ ()
    {
-      this .colliderNode = X3DCast_default() ((X3DConstants_default()).CollisionCollection, this ._collider);
+      this .colliderNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).CollisionCollection, this ._collider);
    },
    set_bounce__ ()
    {
@@ -3828,7 +3828,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChil
 
       for (var i = 0, length = this ._bodies .length; i < length; ++ i)
       {
-         var bodyNode = X3DCast_default() ((X3DConstants_default()).RigidBody, this ._bodies [i]);
+         var bodyNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).RigidBody, this ._bodies [i]);
 
          if (! bodyNode)
             continue;
@@ -3886,7 +3886,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChil
 
       for (var i = 0, length = this ._joints .length; i < length; ++ i)
       {
-         var jointNode = X3DCast_default() ((X3DConstants_default()).X3DRigidJointNode, this ._joints [i]);
+         var jointNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DRigidJointNode, this ._joints [i]);
 
          if (! jointNode)
             continue;
@@ -3945,8 +3945,8 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChil
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype .dispose .call (this);
-      X3DChildNode_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -3974,28 +3974,28 @@ Object .defineProperties (RigidBodyCollection,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                 new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_contacts",            new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "gravity",                 new (Fields_default()).SFVec3f (0, -9.8, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "preferAccuracy",          new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "errorCorrection",         new (Fields_default()).SFFloat (0.8)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "iterations",              new (Fields_default()).SFInt32 (10)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "constantForceMix",        new (Fields_default()).SFFloat (0.0001)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "maxCorrectionSpeed",      new (Fields_default()).SFFloat (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "contactSurfaceThickness", new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoDisable",             new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "disableTime",             new (Fields_default()).SFTime ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "disableLinearSpeed",      new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "disableAngularSpeed",     new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "collider",                new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bodies",                  new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "joints",                  new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",                 new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",             new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",                new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",              new (Fields_default()).SFVec3f ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",                new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "enabled",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "set_contacts",            new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "gravity",                 new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, -9.8, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "preferAccuracy",          new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "errorCorrection",         new (external_X_ITE_X3D_Fields_default()).SFFloat (0.8)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "iterations",              new (external_X_ITE_X3D_Fields_default()).SFInt32 (10)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "constantForceMix",        new (external_X_ITE_X3D_Fields_default()).SFFloat (0.0001)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "maxCorrectionSpeed",      new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "contactSurfaceThickness", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoDisable",             new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableTime",             new (external_X_ITE_X3D_Fields_default()).SFTime ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableLinearSpeed",      new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "disableAngularSpeed",     new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "collider",                new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bodies",                  new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "joints",                  new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",             new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",                new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",              new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
       ]),
       enumerable: true,
    },
@@ -4004,7 +4004,7 @@ Object .defineProperties (RigidBodyCollection,
 const RigidBodyCollection_default_ = RigidBodyCollection;
 ;
 
-Namespace_default().add ("RigidBodyCollection", "x_ite/Components/RigidBodyPhysics/RigidBodyCollection", RigidBodyCollection_default_);
+external_X_ITE_X3D_Namespace_default().add ("RigidBodyCollection", "x_ite/Components/RigidBodyPhysics/RigidBodyCollection", RigidBodyCollection_default_);
 /* harmony default export */ const RigidBodyPhysics_RigidBodyCollection = (RigidBodyCollection_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint.js
 /*******************************************************************************
@@ -4068,7 +4068,7 @@ function SingleAxisHingeJoint (executionContext)
 {
    RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).SingleAxisHingeJoint);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).SingleAxisHingeJoint);
 
    // Units
 
@@ -4083,14 +4083,14 @@ function SingleAxisHingeJoint (executionContext)
    // Legacy
 
    if (executionContext .getSpecificationVersion () <= 3.3)
-      this ._axis = new (Vector3_default()) ();
+      this ._axis = new (external_X_ITE_X3D_Vector3_default()) ();
 
    // Private properties
 
    this .joint             = null;
    this .outputs           = new Set ();
-   this .localAnchorPoint1 = new (Vector3_default()) ();
-   this .localAnchorPoint2 = new (Vector3_default()) ();
+   this .localAnchorPoint1 = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .localAnchorPoint2 = new (external_X_ITE_X3D_Vector3_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype),
@@ -4105,8 +4105,8 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
    addJoint: (() =>
    {
       var
-         localAxis1 = new (Vector3_default()) (),
-         localAxis2 = new (Vector3_default()) ();
+         localAxis1 = new (external_X_ITE_X3D_Vector3_default()) (),
+         localAxis2 = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -4185,7 +4185,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
    },
    update1: (() =>
    {
-      var localAnchorPoint1 = new (Vector3_default()) ();
+      var localAnchorPoint1 = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -4196,9 +4196,9 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
    update2: (() =>
    {
       var
-         localAnchorPoint2 = new (Vector3_default()) (),
-         difference        = new (Matrix4_default()) (),
-         rotation          = new (Rotation4_default()) ();
+         localAnchorPoint2 = new (external_X_ITE_X3D_Vector3_default()) (),
+         difference        = new (external_X_ITE_X3D_Matrix4_default()) (),
+         rotation          = new (external_X_ITE_X3D_Rotation4_default()) ();
 
       return function ()
       {
@@ -4245,21 +4245,21 @@ Object .defineProperties (SingleAxisHingeJoint,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",            new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "forceOutput",         new (Fields_default()).MFString ("NONE")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anchorPoint",         new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis",                new (Fields_default()).SFVec3f (0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "minAngle",            new (Fields_default()).SFFloat (-3.141592653)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "maxAngle",            new (Fields_default()).SFFloat (3.141592653)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stopBounce",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stopErrorCorrection", new (Fields_default()).SFFloat (0.8)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body1AnchorPoint",    new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body2AnchorPoint",    new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "angle",               new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "angleRate",           new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body1",               new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body2",               new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",            new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "forceOutput",         new (external_X_ITE_X3D_Fields_default()).MFString ("NONE")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "anchorPoint",         new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "axis",                new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "minAngle",            new (external_X_ITE_X3D_Fields_default()).SFFloat (-3.141592653)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "maxAngle",            new (external_X_ITE_X3D_Fields_default()).SFFloat (3.141592653)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "stopBounce",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "stopErrorCorrection", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.8)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "body1AnchorPoint",    new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "body2AnchorPoint",    new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "angle",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "angleRate",           new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body1",               new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body2",               new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -4268,7 +4268,7 @@ Object .defineProperties (SingleAxisHingeJoint,
 const SingleAxisHingeJoint_default_ = SingleAxisHingeJoint;
 ;
 
-Namespace_default().add ("SingleAxisHingeJoint", "x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint", SingleAxisHingeJoint_default_);
+external_X_ITE_X3D_Namespace_default().add ("SingleAxisHingeJoint", "x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint", SingleAxisHingeJoint_default_);
 /* harmony default export */ const RigidBodyPhysics_SingleAxisHingeJoint = (SingleAxisHingeJoint_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SliderJoint.js
 /*******************************************************************************
@@ -4332,7 +4332,7 @@ function SliderJoint (executionContext)
 {
    RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).SliderJoint);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).SliderJoint);
 
    this ._minSeparation  .setUnit ("length");
    this ._maxSeparation  .setUnit ("length");
@@ -4357,9 +4357,9 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
    addJoint: (() =>
    {
       var
-         axisRotation = new (Rotation4_default()) (),
-         matrixA      = new (Matrix4_default()) (),
-         matrixB      = new (Matrix4_default()) (),
+         axisRotation = new (external_X_ITE_X3D_Rotation4_default()) (),
+         matrixA      = new (external_X_ITE_X3D_Matrix4_default()) (),
+         matrixB      = new (external_X_ITE_X3D_Matrix4_default()) (),
          origin       = new AmmoClass .btVector3 (0, 0, 0),
          frameInA     = new AmmoClass .btTransform (),
          frameInB     = new AmmoClass .btTransform ();
@@ -4381,7 +4381,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
          if (this .getBody2 () .getCollection () !== this .getCollection ())
             return;
 
-         axisRotation .setFromToVec ((Vector3_default()).xAxis, this ._axis .getValue ());
+         axisRotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).xAxis, this ._axis .getValue ());
 
          matrixA .set (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
          matrixB .set (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
@@ -4481,19 +4481,19 @@ Object .defineProperties (SliderJoint,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",            new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "forceOutput",         new (Fields_default()).MFString ("NONE")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis",                new (Fields_default()).SFVec3f (0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "minSeparation",       new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "maxSeparation",       new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sliderForce",         new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stopBounce",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stopErrorCorrection", new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "separation",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "separationRate",      new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body1",               new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body2",               new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",            new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "forceOutput",         new (external_X_ITE_X3D_Fields_default()).MFString ("NONE")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "axis",                new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "minSeparation",       new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "maxSeparation",       new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "sliderForce",         new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "stopBounce",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "stopErrorCorrection", new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "separation",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "separationRate",      new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body1",               new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body2",               new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -4502,7 +4502,7 @@ Object .defineProperties (SliderJoint,
 const SliderJoint_default_ = SliderJoint;
 ;
 
-Namespace_default().add ("SliderJoint", "x_ite/Components/RigidBodyPhysics/SliderJoint", SliderJoint_default_);
+external_X_ITE_X3D_Namespace_default().add ("SliderJoint", "x_ite/Components/RigidBodyPhysics/SliderJoint", SliderJoint_default_);
 /* harmony default export */ const RigidBodyPhysics_SliderJoint = (SliderJoint_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/UniversalJoint.js
 /*******************************************************************************
@@ -4567,7 +4567,7 @@ function UniversalJoint (executionContext)
 {
    RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).UniversalJoint);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).UniversalJoint);
 
    // Units
 
@@ -4579,8 +4579,8 @@ function UniversalJoint (executionContext)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
    {
-      this ._axis1 = new (Vector3_default()) ();
-      this ._axis2 = new (Vector3_default()) ();
+      this ._axis1 = new (external_X_ITE_X3D_Vector3_default()) ();
+      this ._axis2 = new (external_X_ITE_X3D_Vector3_default()) ();
    }
 }
 
@@ -4610,22 +4610,22 @@ Object .defineProperties (UniversalJoint,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",             new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "forceOutput",          new (Fields_default()).MFString ("NONE")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anchorPoint",          new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis1",                new (Fields_default()).SFVec3f (1, 0, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis2",                new (Fields_default()).SFVec3f (0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stop1Bounce",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stop2Bounce",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stop1ErrorCorrection", new (Fields_default()).SFFloat (0.8)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stop2ErrorCorrection", new (Fields_default()).SFFloat (0.8)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body1Axis",            new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body2Axis",            new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body1AnchorPoint",     new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body2AnchorPoint",     new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body1",                new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "body2",                new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "forceOutput",          new (external_X_ITE_X3D_Fields_default()).MFString ("NONE")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "anchorPoint",          new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "axis1",                new (external_X_ITE_X3D_Fields_default()).SFVec3f (1, 0, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "axis2",                new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "stop1Bounce",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "stop2Bounce",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "stop1ErrorCorrection", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.8)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "stop2ErrorCorrection", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.8)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "body1Axis",            new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "body2Axis",            new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "body1AnchorPoint",     new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "body2AnchorPoint",     new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body1",                new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "body2",                new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -4634,7 +4634,7 @@ Object .defineProperties (UniversalJoint,
 const UniversalJoint_default_ = UniversalJoint;
 ;
 
-Namespace_default().add ("UniversalJoint", "x_ite/Components/RigidBodyPhysics/UniversalJoint", UniversalJoint_default_);
+external_X_ITE_X3D_Namespace_default().add ("UniversalJoint", "x_ite/Components/RigidBodyPhysics/UniversalJoint", UniversalJoint_default_);
 /* harmony default export */ const RigidBodyPhysics_UniversalJoint = (UniversalJoint_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/RigidBodyPhysics.js
 /*******************************************************************************
@@ -4703,7 +4703,7 @@ Namespace_default().add ("UniversalJoint", "x_ite/Components/RigidBodyPhysics/Un
 
 
 
-Components_default().add ({
+external_X_ITE_X3D_Components_default().add ({
    name: "RigidBodyPhysics",
    concreteNodes:
    [
@@ -4733,7 +4733,7 @@ Components_default().add ({
 const RigidBodyPhysics_default_ = undefined;
 ;
 
-Namespace_default().add ("RigidBodyPhysics", "assets/components/RigidBodyPhysics", RigidBodyPhysics_default_);
+external_X_ITE_X3D_Namespace_default().add ("RigidBodyPhysics", "assets/components/RigidBodyPhysics", RigidBodyPhysics_default_);
 /* harmony default export */ const RigidBodyPhysics = ((/* unused pure expression or super */ null && (RigidBodyPhysics_default_)));
 })();
 

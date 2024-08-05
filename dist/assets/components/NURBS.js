@@ -39,30 +39,30 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
-const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
-var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
-var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
-var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DNode\")"
-const X3DNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DNode");
-var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DCast");
-var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
-var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
+var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
+var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
+var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
+var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
+var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
+var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/Contour2D.js
 /*******************************************************************************
  *
@@ -120,18 +120,18 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 function Contour2D (executionContext)
 {
-   X3DNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).Contour2D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).Contour2D);
 
    this .childNodes = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (Contour2D .prototype, (X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Contour2D .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
 {
    initialize ()
    {
-      X3DNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DNode_default().prototype .initialize .call (this);
 
       this ._addChildren    .addInterest ("set_addChildren__",    this);
       this ._removeChildren .addInterest ("set_removeChildren__", this);
@@ -166,7 +166,7 @@ Object .assign (Object .setPrototypeOf (Contour2D .prototype, (X3DNode_default()
 
       for (const node of this ._children)
       {
-         const childNode = X3DCast_default() ((X3DConstants_default()).NurbsCurve2D, node);
+         const childNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).NurbsCurve2D, node);
 
          if (childNode)
          {
@@ -175,7 +175,7 @@ Object .assign (Object .setPrototypeOf (Contour2D .prototype, (X3DNode_default()
          }
          else
          {
-            const childNode = X3DCast_default() ((X3DConstants_default()).ContourPolyline2D, node);
+            const childNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).ContourPolyline2D, node);
 
             if (childNode)
             {
@@ -223,11 +223,11 @@ Object .defineProperties (Contour2D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "addChildren",    new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "removeChildren", new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "children",       new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "addChildren",    new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "removeChildren", new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "children",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -236,7 +236,7 @@ Object .defineProperties (Contour2D,
 const __default__ = Contour2D;
 ;
 
-Namespace_default().add ("Contour2D", "x_ite/Components/NURBS/Contour2D", __default__);
+external_X_ITE_X3D_Namespace_default().add ("Contour2D", "x_ite/Components/NURBS/Contour2D", __default__);
 /* harmony default export */ const NURBS_Contour2D = (__default__);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/X3DNurbsControlCurveNode.js
 /*******************************************************************************
@@ -291,12 +291,12 @@ Namespace_default().add ("Contour2D", "x_ite/Components/NURBS/Contour2D", __defa
 
 function X3DNurbsControlCurveNode (executionContext)
 {
-   X3DNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DNurbsControlCurveNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DNurbsControlCurveNode);
 }
 
-Object .setPrototypeOf (X3DNurbsControlCurveNode .prototype, (X3DNode_default()).prototype);
+Object .setPrototypeOf (X3DNurbsControlCurveNode .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype);
 
 Object .defineProperties (X3DNurbsControlCurveNode,
 {
@@ -315,11 +315,11 @@ Object .defineProperties (X3DNurbsControlCurveNode,
 const X3DNurbsControlCurveNode_default_ = X3DNurbsControlCurveNode;
 ;
 
-Namespace_default().add ("X3DNurbsControlCurveNode", "x_ite/Components/NURBS/X3DNurbsControlCurveNode", X3DNurbsControlCurveNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DNurbsControlCurveNode", "x_ite/Components/NURBS/X3DNurbsControlCurveNode", X3DNurbsControlCurveNode_default_);
 /* harmony default export */ const NURBS_X3DNurbsControlCurveNode = (X3DNurbsControlCurveNode_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector3");
-var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
+var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/ContourPolyline2D.js
 /*******************************************************************************
  *
@@ -379,7 +379,7 @@ function ContourPolyline2D (executionContext)
 {
    NURBS_X3DNurbsControlCurveNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ContourPolyline2D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ContourPolyline2D);
 
    this .controlPoints = [ ];
 }
@@ -442,7 +442,7 @@ Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, NURBS_X3DN
             {
                const i2 = i * 2;
 
-               controlPoints [i] = new (Vector3_default()) (controlPointArray [i2 + 0], controlPointArray [i2 + 1], 0);
+               controlPoints [i] = new (external_X_ITE_X3D_Vector3_default()) (controlPointArray [i2 + 0], controlPointArray [i2 + 1], 0);
             }
 
             controlPoints .length = length;
@@ -477,9 +477,9 @@ Object .defineProperties (ContourPolyline2D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "controlPoint", new (Fields_default()).MFVec2d ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "controlPoint", new (external_X_ITE_X3D_Fields_default()).MFVec2d ()),
       ]),
       enumerable: true,
    },
@@ -488,17 +488,17 @@ Object .defineProperties (ContourPolyline2D,
 const ContourPolyline2D_default_ = ContourPolyline2D;
 ;
 
-Namespace_default().add ("ContourPolyline2D", "x_ite/Components/NURBS/ContourPolyline2D", ContourPolyline2D_default_);
+external_X_ITE_X3D_Namespace_default().add ("ContourPolyline2D", "x_ite/Components/NURBS/ContourPolyline2D", ContourPolyline2D_default_);
 /* harmony default export */ const NURBS_ContourPolyline2D = (ContourPolyline2D_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
-const X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/X3DGeometryNode");
-var X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometryNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector2\")"
-const Vector2_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector2");
-var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector4\")"
-const Vector4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector4");
-var Vector4_default = /*#__PURE__*/__webpack_require__.n(Vector4_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGeometryNode"
+const external_X_ITE_X3D_X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DGeometryNode;
+var external_X_ITE_X3D_X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGeometryNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector2"
+const external_X_ITE_X3D_Vector2_namespaceObject = __X_ITE_X3D__ .Vector2;
+var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector2_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector4"
+const external_X_ITE_X3D_Vector4_namespaceObject = __X_ITE_X3D__ .Vector4;
+var external_X_ITE_X3D_Vector4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/NURBS/NURBS.js
 /*******************************************************************************
  *
@@ -591,8 +591,8 @@ const NURBS = {
    getClosed: (() =>
    {
       const
-         firstPoint = new (Vector3_default()) (),
-         lastPoint  = new (Vector3_default()) ();
+         firstPoint = new (external_X_ITE_X3D_Vector3_default()) (),
+         lastPoint  = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (order, knot, weight, controlPointNode)
       {
@@ -624,8 +624,8 @@ const NURBS = {
    getUClosed: (() =>
    {
       const
-         firstPoint = new (Vector3_default()) (),
-         lastPoint  = new (Vector3_default()) ();
+         firstPoint = new (external_X_ITE_X3D_Vector3_default()) (),
+         lastPoint  = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
       {
@@ -662,8 +662,8 @@ const NURBS = {
    getVClosed: (() =>
    {
       const
-         firstPoint = new (Vector3_default()) (),
-         lastPoint  = new (Vector3_default()) ();
+         firstPoint = new (external_X_ITE_X3D_Vector3_default()) (),
+         lastPoint  = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
       {
@@ -823,7 +823,7 @@ const NURBS = {
          controlPointArray = controlPoint .getValue (),
          dimension         = controlPoint .length,
          haveWeights       = !! weights,
-         Vector            = haveWeights ? (Vector3_default()) : (Vector2_default());
+         Vector            = haveWeights ? (external_X_ITE_X3D_Vector3_default()) : (external_X_ITE_X3D_Vector2_default());
 
       if (controlPoints .haveWeights !== haveWeights)
       {
@@ -856,7 +856,7 @@ const NURBS = {
          controlPoints = result || [ ],
          dimension     = controlPointNode .getSize (),
          haveWeights   = !! weights,
-         Vector        = haveWeights ? (Vector4_default()) : (Vector3_default());
+         Vector        = haveWeights ? (external_X_ITE_X3D_Vector4_default()) : (external_X_ITE_X3D_Vector3_default());
 
       if (controlPoints .haveWeights !== haveWeights)
       {
@@ -887,7 +887,7 @@ const NURBS = {
       const
          controlPoints = result || [ ],
          haveWeights   = !! weights,
-         Vector        = haveWeights ? (Vector4_default()) : (Vector3_default());
+         Vector        = haveWeights ? (external_X_ITE_X3D_Vector4_default()) : (external_X_ITE_X3D_Vector3_default());
 
       if (controlPoints .haveWeights !== haveWeights)
       {
@@ -946,7 +946,7 @@ const NURBS = {
          {
             const index = v * uDimension + u;
 
-            cp [v] = controlPointNode .get1Point (index, cp [v] || new (Vector4_default()) ());
+            cp [v] = controlPointNode .get1Point (index, cp [v] || new (external_X_ITE_X3D_Vector4_default()) ());
          }
 
          cp .length = vDimension;
@@ -973,7 +973,7 @@ const NURBS = {
 const NURBS_default_ = NURBS;
 ;
 
-Namespace_default().add ("NURBS", "x_ite/Browser/NURBS/NURBS", NURBS_default_);
+external_X_ITE_X3D_Namespace_default().add ("NURBS", "x_ite/Browser/NURBS/NURBS", NURBS_default_);
 /* harmony default export */ const NURBS_NURBS = (NURBS_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/X3DParametricGeometryNode.js
 /*******************************************************************************
@@ -1029,12 +1029,12 @@ Namespace_default().add ("NURBS", "x_ite/Browser/NURBS/NURBS", NURBS_default_);
 
 function X3DParametricGeometryNode (executionContext)
 {
-   X3DGeometryNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DGeometryNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DParametricGeometryNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DParametricGeometryNode);
 }
 
-Object .assign (Object .setPrototypeOf (X3DParametricGeometryNode .prototype, (X3DGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DParametricGeometryNode .prototype, (external_X_ITE_X3D_X3DGeometryNode_default()).prototype),
 {
    getKnots (result, closed, order, dimension, knot)
    {
@@ -1059,11 +1059,11 @@ Object .defineProperties (X3DParametricGeometryNode,
 const X3DParametricGeometryNode_default_ = X3DParametricGeometryNode;
 ;
 
-Namespace_default().add ("X3DParametricGeometryNode", "x_ite/Components/NURBS/X3DParametricGeometryNode", X3DParametricGeometryNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DParametricGeometryNode", "x_ite/Components/NURBS/X3DParametricGeometryNode", X3DParametricGeometryNode_default_);
 /* harmony default export */ const NURBS_X3DParametricGeometryNode = (X3DParametricGeometryNode_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/X3DLineGeometryNode\")"
-const X3DLineGeometryNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/X3DLineGeometryNode");
-var X3DLineGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DLineGeometryNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLineGeometryNode"
+const external_X_ITE_X3D_X3DLineGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DLineGeometryNode;
+var external_X_ITE_X3D_X3DLineGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DLineGeometryNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/is-ndarray.js
 
 // Source: https://github.com/scijs/isndarray
@@ -1083,7 +1083,7 @@ const is_ndarray_default_ = function (arr)
 };
 ;
 
-Namespace_default().add ("is-ndarray", "lib/nurbs/src/utils/is-ndarray", is_ndarray_default_);
+external_X_ITE_X3D_Namespace_default().add ("is-ndarray", "lib/nurbs/src/utils/is-ndarray", is_ndarray_default_);
 /* harmony default export */ const is_ndarray = (is_ndarray_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/is-ndarray-like.js
 
@@ -1101,7 +1101,7 @@ const is_ndarray_like_default_ = function (arr)
 };
 ;
 
-Namespace_default().add ("is-ndarray-like", "lib/nurbs/src/utils/is-ndarray-like", is_ndarray_like_default_);
+external_X_ITE_X3D_Namespace_default().add ("is-ndarray-like", "lib/nurbs/src/utils/is-ndarray-like", is_ndarray_like_default_);
 /* harmony default export */ const is_ndarray_like = (is_ndarray_like_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/is-array-like.js
 
@@ -1111,7 +1111,7 @@ const is_array_like_default_ = function isArrayLike (data)
 };
 ;
 
-Namespace_default().add ("is-array-like", "lib/nurbs/src/utils/is-array-like", is_array_like_default_);
+external_X_ITE_X3D_Namespace_default().add ("is-array-like", "lib/nurbs/src/utils/is-array-like", is_array_like_default_);
 /* harmony default export */ const is_array_like = (is_array_like_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/infer-type.js
 
@@ -1160,7 +1160,7 @@ inferType .PACKED           = "PackArr";
 const infer_type_default_ = inferType;
 ;
 
-Namespace_default().add ("infer-type", "lib/nurbs/src/utils/infer-type", infer_type_default_);
+external_X_ITE_X3D_Namespace_default().add ("infer-type", "lib/nurbs/src/utils/infer-type", infer_type_default_);
 /* harmony default export */ const infer_type = (infer_type_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/cache-key.js
 
@@ -1215,7 +1215,7 @@ const cache_key_default_ = function (nurbs, debug, checkBounds, pointType, weigh
 };
 ;
 
-Namespace_default().add ("cache-key", "lib/nurbs/src/utils/cache-key", cache_key_default_);
+external_X_ITE_X3D_Namespace_default().add ("cache-key", "lib/nurbs/src/utils/cache-key", cache_key_default_);
 /* harmony default export */ const cache_key = (cache_key_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/variable.js
 
@@ -1246,7 +1246,7 @@ createVariable.sum = function (parts) {
 const variable_default_ = createVariable;
 ;
 
-Namespace_default().add ("variable", "lib/nurbs/src/utils/variable", variable_default_);
+external_X_ITE_X3D_Namespace_default().add ("variable", "lib/nurbs/src/utils/variable", variable_default_);
 /* harmony default export */ const variable = (variable_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/create-accessors.js
 
@@ -1354,7 +1354,7 @@ const create_accessors_default_ = function (nurbs)
 };
 ;
 
-Namespace_default().add ("create-accessors", "lib/nurbs/src/utils/create-accessors", create_accessors_default_);
+external_X_ITE_X3D_Namespace_default().add ("create-accessors", "lib/nurbs/src/utils/create-accessors", create_accessors_default_);
 /* harmony default export */ const create_accessors = (create_accessors_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/numerical-derivative.js
 
@@ -1408,7 +1408,7 @@ const numerical_derivative_default_ = function numericalDerivative (out, order, 
 };
 ;
 
-Namespace_default().add ("numerical-derivative", "lib/nurbs/src/numerical-derivative", numerical_derivative_default_);
+external_X_ITE_X3D_Namespace_default().add ("numerical-derivative", "lib/nurbs/src/numerical-derivative", numerical_derivative_default_);
 /* harmony default export */ const numerical_derivative = (numerical_derivative_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/ndloop.js
 
@@ -1431,7 +1431,7 @@ const ndloop_default_ = function ndloop (n, callback) {
 };
 ;
 
-Namespace_default().add ("ndloop", "lib/nurbs/src/utils/ndloop", ndloop_default_);
+external_X_ITE_X3D_Namespace_default().add ("ndloop", "lib/nurbs/src/utils/ndloop", ndloop_default_);
 /* harmony default export */ const ndloop = (ndloop_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/accessor-preamble.js
 
@@ -1463,7 +1463,7 @@ const accessor_preamble_default_ = function (nurbs, variableName, propertyName, 
 };
 ;
 
-Namespace_default().add ("accessor-preamble", "lib/nurbs/src/utils/accessor-preamble", accessor_preamble_default_);
+external_X_ITE_X3D_Namespace_default().add ("accessor-preamble", "lib/nurbs/src/utils/accessor-preamble", accessor_preamble_default_);
 /* harmony default export */ const accessor_preamble = (accessor_preamble_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/utils/size-getter.js
 
@@ -1484,7 +1484,7 @@ const size_getter_default_ = function (data, dataVariableName, dimension) {
 };
 ;
 
-Namespace_default().add ("size-getter", "lib/nurbs/src/utils/size-getter", size_getter_default_);
+external_X_ITE_X3D_Namespace_default().add ("size-getter", "lib/nurbs/src/utils/size-getter", size_getter_default_);
 /* harmony default export */ const size_getter = (size_getter_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/evaluator.js
 
@@ -1891,7 +1891,7 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
 };
 ;
 
-Namespace_default().add ("evaluator", "lib/nurbs/src/evaluator", evaluator_default_);
+external_X_ITE_X3D_Namespace_default().add ("evaluator", "lib/nurbs/src/evaluator", evaluator_default_);
 /* harmony default export */ const evaluator = (evaluator_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/transform.js
 
@@ -1966,7 +1966,7 @@ const transform_default_ = function createTransform (cacheKey, nurbs, accessors,
 };
 ;
 
-Namespace_default().add ("transform", "lib/nurbs/src/transform", transform_default_);
+external_X_ITE_X3D_Namespace_default().add ("transform", "lib/nurbs/src/transform", transform_default_);
 /* harmony default export */ const transform = (transform_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/src/support.js
 
@@ -2111,7 +2111,7 @@ const support_default_ = function (cacheKey, nurbs, accessors, debug, checkBound
 };
 ;
 
-Namespace_default().add ("support", "lib/nurbs/src/support", support_default_);
+external_X_ITE_X3D_Namespace_default().add ("support", "lib/nurbs/src/support", support_default_);
 /* harmony default export */ const support = (support_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/extras/sample.js
 var tmp1 = [ ];
@@ -2345,7 +2345,7 @@ const sample_default_ = function (mesh, surface, opts)
 };
 ;
 
-Namespace_default().add ("sample", "lib/nurbs/extras/sample", sample_default_);
+external_X_ITE_X3D_Namespace_default().add ("sample", "lib/nurbs/extras/sample", sample_default_);
 /* harmony default export */ const sample = (sample_default_);
 ;// CONCATENATED MODULE: ./src/lib/nurbs/nurbs.js
 
@@ -2675,7 +2675,7 @@ nurbs .sample = sample;
 const nurbs_default_ = nurbs;
 ;
 
-Namespace_default().add ("nurbs", "lib/nurbs/nurbs", nurbs_default_);
+external_X_ITE_X3D_Namespace_default().add ("nurbs", "lib/nurbs/nurbs", nurbs_default_);
 /* harmony default export */ const nurbs_nurbs = (nurbs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsCurve.js
 /*******************************************************************************
@@ -2738,9 +2738,9 @@ Namespace_default().add ("nurbs", "lib/nurbs/nurbs", nurbs_default_);
 function NurbsCurve (executionContext)
 {
    NURBS_X3DParametricGeometryNode .call (this, executionContext);
-   X3DLineGeometryNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DLineGeometryNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).NurbsCurve);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).NurbsCurve);
 
    this .knots         = [ ];
    this .weights       = [ ];
@@ -2750,7 +2750,7 @@ function NurbsCurve (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, NURBS_X3DParametricGeometryNode .prototype),
-   (X3DLineGeometryNode_default()).prototype,
+   (external_X_ITE_X3D_X3DLineGeometryNode_default()).prototype,
 {
    initialize ()
    {
@@ -2765,7 +2765,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, NURBS_X3DParametr
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
 
-      this .controlPointNode = X3DCast_default() ((X3DConstants_default()).X3DCoordinateNode, this ._controlPoint);
+      this .controlPointNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DCoordinateNode, this ._controlPoint);
 
       if (this .controlPointNode)
          this .controlPointNode .addInterest ("requestRebuild", this);
@@ -2898,14 +2898,14 @@ Object .defineProperties (NurbsCurve,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tessellation", new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "closed",       new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "order",        new (Fields_default()).SFInt32 (3)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "knot",         new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",       new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint", new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "tessellation", new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "closed",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "order",        new (external_X_ITE_X3D_Fields_default()).SFInt32 (3)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "knot",         new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "weight",       new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "controlPoint", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -2914,7 +2914,7 @@ Object .defineProperties (NurbsCurve,
 const NurbsCurve_default_ = NurbsCurve;
 ;
 
-Namespace_default().add ("NurbsCurve", "x_ite/Components/NURBS/NurbsCurve", NurbsCurve_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsCurve", "x_ite/Components/NURBS/NurbsCurve", NurbsCurve_default_);
 /* harmony default export */ const NURBS_NurbsCurve = (NurbsCurve_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsCurve2D.js
 /*******************************************************************************
@@ -2977,7 +2977,7 @@ function NurbsCurve2D (executionContext)
 {
    NURBS_X3DNurbsControlCurveNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).NurbsCurve2D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).NurbsCurve2D);
 
    this .knots         = [ ];
    this .weights       = [ ];
@@ -3080,7 +3080,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, NURBS_X3DNurbsC
          {
             for (let i = 0, length = points .length; i < length; i += 2)
             {
-               array .push (new (Vector3_default()) (points [i], points [i + 1], 0));
+               array .push (new (external_X_ITE_X3D_Vector3_default()) (points [i], points [i + 1], 0));
             }
 
             break;
@@ -3115,14 +3115,14 @@ Object .defineProperties (NurbsCurve2D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tessellation", new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "closed",       new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "order",        new (Fields_default()).SFInt32 (3)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "knot",         new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",       new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint", new (Fields_default()).MFVec2d ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "tessellation", new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "closed",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "order",        new (external_X_ITE_X3D_Fields_default()).SFInt32 (3)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "knot",         new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "weight",       new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "controlPoint", new (external_X_ITE_X3D_Fields_default()).MFVec2d ()),
       ]),
       enumerable: true,
    },
@@ -3131,17 +3131,17 @@ Object .defineProperties (NurbsCurve2D,
 const NurbsCurve2D_default_ = NurbsCurve2D;
 ;
 
-Namespace_default().add ("NurbsCurve2D", "x_ite/Components/NURBS/NurbsCurve2D", NurbsCurve2D_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsCurve2D", "x_ite/Components/NURBS/NurbsCurve2D", NurbsCurve2D_default_);
 /* harmony default export */ const NURBS_NurbsCurve2D = (NurbsCurve2D_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DChildNode");
-var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Interpolation/OrientationInterpolator\")"
-const OrientationInterpolator_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Interpolation/OrientationInterpolator");
-var OrientationInterpolator_default = /*#__PURE__*/__webpack_require__.n(OrientationInterpolator_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Rotation4\")"
-const Rotation4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Rotation4");
-var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
+const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
+var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .OrientationInterpolator"
+const external_X_ITE_X3D_OrientationInterpolator_namespaceObject = __X_ITE_X3D__ .OrientationInterpolator;
+var external_X_ITE_X3D_OrientationInterpolator_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_OrientationInterpolator_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Rotation4"
+const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
+var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsOrientationInterpolator.js
 /*******************************************************************************
  *
@@ -3204,13 +3204,13 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
 
 function NurbsOrientationInterpolator (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).NurbsOrientationInterpolator);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).NurbsOrientationInterpolator);
 
-   this .addChildObjects ((X3DConstants_default()).inputOutput, "rebuild", new (Fields_default()).SFTime ());
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "rebuild", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
-   this .interpolator  = new (OrientationInterpolator_default()) (executionContext);
+   this .interpolator  = new (external_X_ITE_X3D_OrientationInterpolator_default()) (executionContext);
    this .knots         = [ ];
    this .weights       = [ ];
    this .controlPoints = [ ];
@@ -3218,11 +3218,11 @@ function NurbsOrientationInterpolator (executionContext)
    this .sampleOptions = { resolution: [ 128 ] };
 }
 
-Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype, (X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
 {
    initialize ()
    {
-      X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
 
       this ._order        .addInterest ("requestRebuild",     this);
       this ._knot         .addInterest ("requestRebuild",     this);
@@ -3243,7 +3243,7 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
 
-      this .controlPointNode = X3DCast_default() ((X3DConstants_default()).X3DCoordinateNode, this ._controlPoint);
+      this .controlPointNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DCoordinateNode, this ._controlPoint);
 
       if (this .controlPointNode)
          this .controlPointNode .addInterest ("requestRebuild", this);
@@ -3318,12 +3318,12 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
 
       for (let i = 0, length = points .length - 3; i < length; i += 3)
       {
-         const direction = new (Vector3_default()) (points [i + 3] - points [i + 0],
+         const direction = new (external_X_ITE_X3D_Vector3_default()) (points [i + 3] - points [i + 0],
                                         points [i + 4] - points [i + 1],
                                         points [i + 5] - points [i + 2]);
 
          interpolator ._key      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
-         interpolator ._keyValue. push (new (Rotation4_default()) ((Vector3_default()).zAxis, direction));
+         interpolator ._keyValue. push (new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).zAxis, direction));
       }
 
       if (closed)
@@ -3358,14 +3358,14 @@ Object .defineProperties (NurbsOrientationInterpolator,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_fraction",  new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "order",         new (Fields_default()).SFInt32 (3)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "knot",          new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weight",        new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "controlPoint",  new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFRotation ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "set_fraction",  new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "order",         new (external_X_ITE_X3D_Fields_default()).SFInt32 (3)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "knot",          new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "weight",        new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "controlPoint",  new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "value_changed", new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
       ]),
       enumerable: true,
    },
@@ -3374,14 +3374,14 @@ Object .defineProperties (NurbsOrientationInterpolator,
 const NurbsOrientationInterpolator_default_ = NurbsOrientationInterpolator;
 ;
 
-Namespace_default().add ("NurbsOrientationInterpolator", "x_ite/Components/NURBS/NurbsOrientationInterpolator", NurbsOrientationInterpolator_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsOrientationInterpolator", "x_ite/Components/NURBS/NurbsOrientationInterpolator", NurbsOrientationInterpolator_default_);
 /* harmony default export */ const NURBS_NurbsOrientationInterpolator = (NurbsOrientationInterpolator_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Algorithm");
-var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Geometry/Triangle3\")"
-const Triangle3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Geometry/Triangle3");
-var Triangle3_default = /*#__PURE__*/__webpack_require__.n(Triangle3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
+const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
+var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Triangle3"
+const external_X_ITE_X3D_Triangle3_namespaceObject = __X_ITE_X3D__ .Triangle3;
+var external_X_ITE_X3D_Triangle3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Triangle3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js
 /*******************************************************************************
  *
@@ -3443,7 +3443,7 @@ function X3DNurbsSurfaceGeometryNode (executionContext)
 {
    NURBS_X3DParametricGeometryNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DNurbsSurfaceGeometryNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DNurbsSurfaceGeometryNode);
 
    this .tessellationScale = 1;
    this .uKnots            = [ ];
@@ -3476,8 +3476,8 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       this .texCoordNode      ?.removeInterest ("requestRebuild", this);
       this .nurbsTexCoordNode ?.removeInterest ("requestRebuild", this);
 
-      this .texCoordNode      = X3DCast_default() ((X3DConstants_default()).X3DTextureCoordinateNode, this ._texCoord);
-      this .nurbsTexCoordNode = X3DCast_default() ((X3DConstants_default()).NurbsTextureCoordinate,   this ._texCoord);
+      this .texCoordNode      = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTextureCoordinateNode, this ._texCoord);
+      this .nurbsTexCoordNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).NurbsTextureCoordinate,   this ._texCoord);
 
       this .texCoordNode      ?.addInterest ("requestRebuild", this);
       this .nurbsTexCoordNode ?.addInterest ("requestRebuild", this);
@@ -3487,7 +3487,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
 
-      this .controlPointNode = X3DCast_default() ((X3DConstants_default()).X3DCoordinateNode, this ._controlPoint);
+      this .controlPointNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DCoordinateNode, this ._controlPoint);
 
       if (this .controlPointNode)
          this .controlPointNode .addInterest ("requestRebuild", this);
@@ -3721,14 +3721,14 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
          pointIndex .push (i);
       }
 
-      return this .refineNormals (normalIndex, normals, Algorithm_default().radians (85));
+      return this .refineNormals (normalIndex, normals, external_X_ITE_X3D_Algorithm_default().radians (85));
    },
    createFaceNormals: (() =>
    {
       const
-         v1 = new (Vector3_default()) (),
-         v2 = new (Vector3_default()) (),
-         v3 = new (Vector3_default()) ();
+         v1 = new (external_X_ITE_X3D_Vector3_default()) (),
+         v2 = new (external_X_ITE_X3D_Vector3_default()) (),
+         v3 = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (faces, points)
       {
@@ -3747,7 +3747,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
             v2 .set (points [index2], points [index2 + 1], points [index2 + 2]);
             v3 .set (points [index3], points [index3 + 1], points [index3 + 2]);
 
-            const normal = Triangle3_default().normal (v1, v2 ,v3, normals [i] || new (Vector3_default()) ());
+            const normal = external_X_ITE_X3D_Triangle3_default().normal (v1, v2 ,v3, normals [i] || new (external_X_ITE_X3D_Vector3_default()) ());
 
             normals [i]     = normal;
             normals [i + 1] = normal;
@@ -3778,7 +3778,7 @@ Object .defineProperties (X3DNurbsSurfaceGeometryNode,
 const X3DNurbsSurfaceGeometryNode_default_ = X3DNurbsSurfaceGeometryNode;
 ;
 
-Namespace_default().add ("X3DNurbsSurfaceGeometryNode", "x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode", X3DNurbsSurfaceGeometryNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DNurbsSurfaceGeometryNode", "x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode", X3DNurbsSurfaceGeometryNode_default_);
 /* harmony default export */ const NURBS_X3DNurbsSurfaceGeometryNode = (X3DNurbsSurfaceGeometryNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsPatchSurface.js
 /*******************************************************************************
@@ -3838,7 +3838,7 @@ function NurbsPatchSurface (executionContext)
 {
    NURBS_X3DNurbsSurfaceGeometryNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).NurbsPatchSurface);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).NurbsPatchSurface);
 }
 
 Object .setPrototypeOf (NurbsPatchSurface .prototype, NURBS_X3DNurbsSurfaceGeometryNode .prototype);
@@ -3867,22 +3867,22 @@ Object .defineProperties (NurbsPatchSurface,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",      new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "uTessellation", new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "vTessellation", new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",         new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uClosed",       new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vClosed",       new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",        new (Fields_default()).SFInt32 (3)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vOrder",        new (Fields_default()).SFInt32 (3)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uDimension",    new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vDimension",    new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uKnot",         new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vKnot",         new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",        new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",      new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint",  new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "uTessellation", new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "vTessellation", new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "solid",         new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uClosed",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vClosed",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uOrder",        new (external_X_ITE_X3D_Fields_default()).SFInt32 (3)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vOrder",        new (external_X_ITE_X3D_Fields_default()).SFInt32 (3)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uDimension",    new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vDimension",    new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uKnot",         new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vKnot",         new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "weight",        new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "texCoord",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "controlPoint",  new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -3891,11 +3891,11 @@ Object .defineProperties (NurbsPatchSurface,
 const NurbsPatchSurface_default_ = NurbsPatchSurface;
 ;
 
-Namespace_default().add ("NurbsPatchSurface", "x_ite/Components/NURBS/NurbsPatchSurface", NurbsPatchSurface_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsPatchSurface", "x_ite/Components/NURBS/NurbsPatchSurface", NurbsPatchSurface_default_);
 /* harmony default export */ const NURBS_NurbsPatchSurface = (NurbsPatchSurface_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Interpolation/PositionInterpolator\")"
-const PositionInterpolator_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Interpolation/PositionInterpolator");
-var PositionInterpolator_default = /*#__PURE__*/__webpack_require__.n(PositionInterpolator_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .PositionInterpolator"
+const external_X_ITE_X3D_PositionInterpolator_namespaceObject = __X_ITE_X3D__ .PositionInterpolator;
+var external_X_ITE_X3D_PositionInterpolator_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_PositionInterpolator_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsPositionInterpolator.js
 /*******************************************************************************
  *
@@ -3956,13 +3956,13 @@ var PositionInterpolator_default = /*#__PURE__*/__webpack_require__.n(PositionIn
 
 function NurbsPositionInterpolator (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).NurbsPositionInterpolator);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).NurbsPositionInterpolator);
 
-   this .addChildObjects ((X3DConstants_default()).inputOutput, "rebuild", new (Fields_default()).SFTime ());
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "rebuild", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
-   this .interpolator  = new (PositionInterpolator_default()) (executionContext);
+   this .interpolator  = new (external_X_ITE_X3D_PositionInterpolator_default()) (executionContext);
    this .knots         = [ ];
    this .weights       = [ ];
    this .controlPoints = [ ];
@@ -3970,11 +3970,11 @@ function NurbsPositionInterpolator (executionContext)
    this .sampleOptions = { resolution: [ 128 ] };
 }
 
-Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, (X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
 {
    initialize ()
    {
-      X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
 
       this ._order        .addInterest ("requestRebuild",     this);
       this ._knot         .addInterest ("requestRebuild",     this);
@@ -3995,7 +3995,7 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, (X
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
 
-      this .controlPointNode = X3DCast_default() ((X3DConstants_default()).X3DCoordinateNode, this ._controlPoint);
+      this .controlPointNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DCoordinateNode, this ._controlPoint);
 
       if (this .controlPointNode)
          this .controlPointNode .addInterest ("requestRebuild", this);
@@ -4071,7 +4071,7 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, (X
       for (let i = 0, length = points .length; i < length; i += 3)
       {
          interpolator ._key      .push (knots [0] + i / (length - 3) * scale);
-         interpolator ._keyValue. push (new (Fields_default()).SFVec3f (points [i], points [i + 1], points [i + 2]));
+         interpolator ._keyValue. push (new (external_X_ITE_X3D_Fields_default()).SFVec3f (points [i], points [i + 1], points [i + 2]));
       }
    },
 });
@@ -4100,14 +4100,14 @@ Object .defineProperties (NurbsPositionInterpolator,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_fraction",  new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "order",         new (Fields_default()).SFInt32 (3)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "knot",          new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weight",        new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "controlPoint",  new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFVec3f ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "set_fraction",  new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "order",         new (external_X_ITE_X3D_Fields_default()).SFInt32 (3)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "knot",          new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "weight",        new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "controlPoint",  new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "value_changed", new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
       ]),
       enumerable: true,
    },
@@ -4116,11 +4116,11 @@ Object .defineProperties (NurbsPositionInterpolator,
 const NurbsPositionInterpolator_default_ = NurbsPositionInterpolator;
 ;
 
-Namespace_default().add ("NurbsPositionInterpolator", "x_ite/Components/NURBS/NurbsPositionInterpolator", NurbsPositionInterpolator_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsPositionInterpolator", "x_ite/Components/NURBS/NurbsPositionInterpolator", NurbsPositionInterpolator_default_);
 /* harmony default export */ const NURBS_NurbsPositionInterpolator = (NurbsPositionInterpolator_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Grouping/X3DBoundedObject\")"
-const X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Grouping/X3DBoundedObject");
-var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObject_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DBoundedObject"
+const external_X_ITE_X3D_X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .X3DBoundedObject;
+var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBoundedObject_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSet.js
 /*******************************************************************************
  *
@@ -4179,21 +4179,21 @@ var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObje
 
 function NurbsSet (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
-   X3DBoundedObject_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).NurbsSet);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).NurbsSet);
 
    this .geometryNodes = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (NurbsSet .prototype, (X3DChildNode_default()).prototype),
-   (X3DBoundedObject_default()).prototype,
+Object .assign (Object .setPrototypeOf (NurbsSet .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
+   (external_X_ITE_X3D_X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
-      X3DChildNode_default().prototype .initialize .call (this);
-      X3DBoundedObject_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
       this ._tessellationScale .addInterest ("set_tessellationScale__", this);
       this ._addGeometry       .addInterest ("set_addGeometry__",       this);
@@ -4246,7 +4246,7 @@ Object .assign (Object .setPrototypeOf (NurbsSet .prototype, (X3DChildNode_defau
 
       for (const node of this ._geometry)
       {
-         const geometryNode = X3DCast_default() ((X3DConstants_default()).X3DNurbsSurfaceGeometryNode, node);
+         const geometryNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNurbsSurfaceGeometryNode, node);
 
          if (geometryNode)
             this .geometryNodes .push (geometryNode);
@@ -4256,8 +4256,8 @@ Object .assign (Object .setPrototypeOf (NurbsSet .prototype, (X3DChildNode_defau
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype .dispose .call (this);
-      X3DChildNode_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -4292,16 +4292,16 @@ Object .defineProperties (NurbsSet,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tessellationScale", new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",       new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",          new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",        new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addGeometry",       new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeGeometry",    new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geometry",          new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "tessellationScale", new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",          new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",        new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "addGeometry",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "removeGeometry",    new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "geometry",          new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -4310,11 +4310,11 @@ Object .defineProperties (NurbsSet,
 const NurbsSet_default_ = NurbsSet;
 ;
 
-Namespace_default().add ("NurbsSet", "x_ite/Components/NURBS/NurbsSet", NurbsSet_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsSet", "x_ite/Components/NURBS/NurbsSet", NurbsSet_default_);
 /* harmony default export */ const NURBS_NurbsSet = (NurbsSet_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Geometry/Line3\")"
-const Line3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Geometry/Line3");
-var Line3_default = /*#__PURE__*/__webpack_require__.n(Line3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Line3"
+const external_X_ITE_X3D_Line3_namespaceObject = __X_ITE_X3D__ .Line3;
+var external_X_ITE_X3D_Line3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Line3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle2.js
 /*******************************************************************************
  *
@@ -4396,7 +4396,7 @@ const Triangle2 =
 const Triangle2_default_ = Triangle2;
 ;
 
-Namespace_default().add ("Triangle2", "standard/Math/Geometry/Triangle2", Triangle2_default_);
+external_X_ITE_X3D_Namespace_default().add ("Triangle2", "standard/Math/Geometry/Triangle2", Triangle2_default_);
 /* harmony default export */ const Geometry_Triangle2 = (Triangle2_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSurfaceInterpolator.js
 /*******************************************************************************
@@ -4458,14 +4458,14 @@ Namespace_default().add ("Triangle2", "standard/Math/Geometry/Triangle2", Triang
 
 function NurbsSurfaceInterpolator (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).NurbsSurfaceInterpolator);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).NurbsSurfaceInterpolator);
 
    this .geometry = new NURBS_NurbsPatchSurface (executionContext);
 }
 
-Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, (X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
 {
    initialize ()
    {
@@ -4496,11 +4496,11 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, (X3
    set_fraction__: (() =>
    {
       const
-         a     = new (Vector3_default()) (),
-         b     = new (Vector3_default()) (),
-         c     = new (Vector3_default()) (),
-         point = new (Vector3_default()) (),
-         line  = new (Line3_default()) ((Vector3_default()).Zero, (Vector3_default()).zAxis),
+         a     = new (external_X_ITE_X3D_Vector3_default()) (),
+         b     = new (external_X_ITE_X3D_Vector3_default()) (),
+         c     = new (external_X_ITE_X3D_Vector3_default()) (),
+         point = new (external_X_ITE_X3D_Vector3_default()) (),
+         line  = new (external_X_ITE_X3D_Line3_default()) ((external_X_ITE_X3D_Vector3_default()).Zero, (external_X_ITE_X3D_Vector3_default()).zAxis),
          uvt   = { };
 
       return function ()
@@ -4519,7 +4519,7 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, (X3
 
             if (Geometry_Triangle2 .isPointInTriangle (a, b, c, fraction))
             {
-               line .set (point .set (fraction .x, fraction .y, 0), (Vector3_default()).zAxis);
+               line .set (point .set (fraction .x, fraction .y, 0), (external_X_ITE_X3D_Vector3_default()).zAxis);
 
                if (line .intersectsTriangle (a, b, c, uvt))
                {
@@ -4528,11 +4528,11 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, (X3
                      v = uvt .v,
                      t = uvt .t;
 
-                  const normal = new (Vector3_default()) (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
+                  const normal = new (external_X_ITE_X3D_Vector3_default()) (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
                                               t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
                                               t * normalArray [i3 + 2] + u * normalArray [i3 + 5] + v * normalArray [i3 + 8]);
 
-                  const position = new (Vector3_default()) (t * verticesArray [i4 + 0] + u * verticesArray [i4 + 4] + v * verticesArray [i4 +  8],
+                  const position = new (external_X_ITE_X3D_Vector3_default()) (t * verticesArray [i4 + 0] + u * verticesArray [i4 + 4] + v * verticesArray [i4 +  8],
                                                 t * verticesArray [i4 + 1] + u * verticesArray [i4 + 5] + v * verticesArray [i4 +  9],
                                                 t * verticesArray [i4 + 2] + u * verticesArray [i4 + 6] + v * verticesArray [i4 + 10]);
 
@@ -4569,19 +4569,19 @@ Object .defineProperties (NurbsSurfaceInterpolator,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_fraction",     new (Fields_default()).SFVec2f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",           new (Fields_default()).SFInt32 (3)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vOrder",           new (Fields_default()).SFInt32 (3)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uDimension",       new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vDimension",       new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uKnot",            new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vKnot",            new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",           new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint",     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "normal_changed",   new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "position_changed", new (Fields_default()).SFVec3f ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "set_fraction",     new (external_X_ITE_X3D_Fields_default()).SFVec2f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uOrder",           new (external_X_ITE_X3D_Fields_default()).SFInt32 (3)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vOrder",           new (external_X_ITE_X3D_Fields_default()).SFInt32 (3)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uDimension",       new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vDimension",       new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uKnot",            new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vKnot",            new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "weight",           new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "controlPoint",     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "normal_changed",   new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "position_changed", new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
       ]),
       enumerable: true,
    },
@@ -4590,11 +4590,11 @@ Object .defineProperties (NurbsSurfaceInterpolator,
 const NurbsSurfaceInterpolator_default_ = NurbsSurfaceInterpolator;
 ;
 
-Namespace_default().add ("NurbsSurfaceInterpolator", "x_ite/Components/NURBS/NurbsSurfaceInterpolator", NurbsSurfaceInterpolator_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsSurfaceInterpolator", "x_ite/Components/NURBS/NurbsSurfaceInterpolator", NurbsSurfaceInterpolator_default_);
 /* harmony default export */ const NURBS_NurbsSurfaceInterpolator = (NurbsSurfaceInterpolator_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Geometry3D/Extrusion\")"
-const Extrusion_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Geometry3D/Extrusion");
-var Extrusion_default = /*#__PURE__*/__webpack_require__.n(Extrusion_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Extrusion"
+const external_X_ITE_X3D_Extrusion_namespaceObject = __X_ITE_X3D__ .Extrusion;
+var external_X_ITE_X3D_Extrusion_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Extrusion_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSweptSurface.js
 /*******************************************************************************
  *
@@ -4655,9 +4655,9 @@ function NurbsSweptSurface (executionContext)
 {
    NURBS_X3DParametricGeometryNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).NurbsSweptSurface);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).NurbsSweptSurface);
 
-   this .extrusion = new (Extrusion_default()) (executionContext);
+   this .extrusion = new (external_X_ITE_X3D_Extrusion_default()) (executionContext);
 }
 
 Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, NURBS_X3DParametricGeometryNode .prototype),
@@ -4691,7 +4691,7 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, NURBS_X3DP
       if (this .crossSectionCurveNode)
          this .crossSectionCurveNode .removeInterest ("requestRebuild", this);
 
-      this .crossSectionCurveNode = X3DCast_default() ((X3DConstants_default()).X3DNurbsControlCurveNode, this ._crossSectionCurve);
+      this .crossSectionCurveNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNurbsControlCurveNode, this ._crossSectionCurve);
 
       if (this .crossSectionCurveNode)
          this .crossSectionCurveNode .addInterest ("requestRebuild", this);
@@ -4700,7 +4700,7 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, NURBS_X3DP
    {
       this .trajectoryCurveNode ?._rebuild .removeInterest ("requestRebuild", this);
 
-      this .trajectoryCurveNode = X3DCast_default() ((X3DConstants_default()).NurbsCurve, this ._trajectoryCurve);
+      this .trajectoryCurveNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).NurbsCurve, this ._trajectoryCurve);
 
       this .trajectoryCurveNode ?._rebuild .addInterest ("requestRebuild", this);
    },
@@ -4763,12 +4763,12 @@ Object .defineProperties (NurbsSweptSurface,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",             new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "ccw",               new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "crossSectionCurve", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "trajectoryCurve",   new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "solid",             new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "ccw",               new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "crossSectionCurve", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "trajectoryCurve",   new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -4777,7 +4777,7 @@ Object .defineProperties (NurbsSweptSurface,
 const NurbsSweptSurface_default_ = NurbsSweptSurface;
 ;
 
-Namespace_default().add ("NurbsSweptSurface", "x_ite/Components/NURBS/NurbsSweptSurface", NurbsSweptSurface_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsSweptSurface", "x_ite/Components/NURBS/NurbsSweptSurface", NurbsSweptSurface_default_);
 /* harmony default export */ const NURBS_NurbsSweptSurface = (NurbsSweptSurface_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSwungSurface.js
 /*******************************************************************************
@@ -4839,9 +4839,9 @@ function NurbsSwungSurface (executionContext)
 {
    NURBS_X3DParametricGeometryNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).NurbsSwungSurface);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).NurbsSwungSurface);
 
-   this .extrusion = new (Extrusion_default()) (executionContext);
+   this .extrusion = new (external_X_ITE_X3D_Extrusion_default()) (executionContext);
 }
 
 Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, NURBS_X3DParametricGeometryNode .prototype),
@@ -4875,7 +4875,7 @@ Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, NURBS_X3DP
       if (this .profileCurveNode)
          this .profileCurveNode .removeInterest ("requestRebuild", this);
 
-      this .profileCurveNode = X3DCast_default() ((X3DConstants_default()).X3DNurbsControlCurveNode, this ._profileCurve);
+      this .profileCurveNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNurbsControlCurveNode, this ._profileCurve);
 
       if (this .profileCurveNode)
          this .profileCurveNode .addInterest ("requestRebuild", this);
@@ -4885,7 +4885,7 @@ Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, NURBS_X3DP
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
 
-      this .trajectoryCurveNode = X3DCast_default() ((X3DConstants_default()).X3DNurbsControlCurveNode, this ._trajectoryCurve);
+      this .trajectoryCurveNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNurbsControlCurveNode, this ._trajectoryCurve);
 
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode .addInterest ("requestRebuild", this);
@@ -4949,12 +4949,12 @@ Object .defineProperties (NurbsSwungSurface,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "ccw",             new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "profileCurve",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "trajectoryCurve", new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "solid",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "ccw",             new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "profileCurve",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "trajectoryCurve", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -4963,7 +4963,7 @@ Object .defineProperties (NurbsSwungSurface,
 const NurbsSwungSurface_default_ = NurbsSwungSurface;
 ;
 
-Namespace_default().add ("NurbsSwungSurface", "x_ite/Components/NURBS/NurbsSwungSurface", NurbsSwungSurface_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsSwungSurface", "x_ite/Components/NURBS/NurbsSwungSurface", NurbsSwungSurface_default_);
 /* harmony default export */ const NURBS_NurbsSwungSurface = (NurbsSwungSurface_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsTextureCoordinate.js
 /*******************************************************************************
@@ -5022,18 +5022,18 @@ Namespace_default().add ("NurbsSwungSurface", "x_ite/Components/NURBS/NurbsSwung
 
 function NurbsTextureCoordinate (executionContext)
 {
-   X3DNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).NurbsTextureCoordinate);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).NurbsTextureCoordinate);
 
    this .controlPoints = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, (X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
 {
    initialize ()
    {
-      X3DNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DNode_default().prototype .initialize .call (this);
    },
    getControlPoints (texWeights)
    {
@@ -5052,7 +5052,7 @@ Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, (X3DN
          {
             const
                index = v * uDimension + u,
-               p     = cp [v] || new (Vector4_default()) (),
+               p     = cp [v] || new (external_X_ITE_X3D_Vector4_default()) (),
                i     = index * 2;
 
             cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights ? texWeights [index] : 1);
@@ -5106,16 +5106,16 @@ Object .defineProperties (NurbsTextureCoordinate,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",       new (Fields_default()).SFInt32 (3)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vOrder",       new (Fields_default()).SFInt32 (3)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uDimension",   new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vDimension",   new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uKnot",        new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vKnot",        new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",       new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint", new (Fields_default()).MFVec2f ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uOrder",       new (external_X_ITE_X3D_Fields_default()).SFInt32 (3)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vOrder",       new (external_X_ITE_X3D_Fields_default()).SFInt32 (3)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uDimension",   new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vDimension",   new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uKnot",        new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vKnot",        new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "weight",       new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "controlPoint", new (external_X_ITE_X3D_Fields_default()).MFVec2f ()),
       ]),
       enumerable: true,
    },
@@ -5124,7 +5124,7 @@ Object .defineProperties (NurbsTextureCoordinate,
 const NurbsTextureCoordinate_default_ = NurbsTextureCoordinate;
 ;
 
-Namespace_default().add ("NurbsTextureCoordinate", "x_ite/Components/NURBS/NurbsTextureCoordinate", NurbsTextureCoordinate_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsTextureCoordinate", "x_ite/Components/NURBS/NurbsTextureCoordinate", NurbsTextureCoordinate_default_);
 /* harmony default export */ const NURBS_NurbsTextureCoordinate = (NurbsTextureCoordinate_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsTrimmedSurface.js
 /*******************************************************************************
@@ -5185,7 +5185,7 @@ function NurbsTrimmedSurface (executionContext)
 {
    NURBS_X3DNurbsSurfaceGeometryNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).NurbsTrimmedSurface);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).NurbsTrimmedSurface);
 
    this .trimmingContourNodes = [ ];
 }
@@ -5229,7 +5229,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, NURBS_X3
 
       for (const node of this ._trimmingContour)
       {
-         const trimmingContourNode = X3DCast_default() ((X3DConstants_default()).Contour2D, node);
+         const trimmingContourNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).Contour2D, node);
 
          if (trimmingContourNode)
             trimmingContourNodes .push (trimmingContourNode);
@@ -5279,25 +5279,25 @@ Object .defineProperties (NurbsTrimmedSurface,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",              new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "uTessellation",         new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "vTessellation",         new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",                 new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uClosed",               new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vClosed",               new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",                new (Fields_default()).SFInt32 (3)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vOrder",                new (Fields_default()).SFInt32 (3)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uDimension",            new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vDimension",            new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uKnot",                 new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vKnot",                 new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",                new (Fields_default()).MFDouble ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",              new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addTrimmingContour",    new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeTrimmingContour", new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "trimmingContour",       new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",              new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "uTessellation",         new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "vTessellation",         new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "solid",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uClosed",               new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vClosed",               new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uOrder",                new (external_X_ITE_X3D_Fields_default()).SFInt32 (3)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vOrder",                new (external_X_ITE_X3D_Fields_default()).SFInt32 (3)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uDimension",            new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vDimension",            new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "uKnot",                 new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "vKnot",                 new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "weight",                new (external_X_ITE_X3D_Fields_default()).MFDouble ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "texCoord",              new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "controlPoint",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "addTrimmingContour",    new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "removeTrimmingContour", new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "trimmingContour",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -5306,7 +5306,7 @@ Object .defineProperties (NurbsTrimmedSurface,
 const NurbsTrimmedSurface_default_ = NurbsTrimmedSurface;
 ;
 
-Namespace_default().add ("NurbsTrimmedSurface", "x_ite/Components/NURBS/NurbsTrimmedSurface", NurbsTrimmedSurface_default_);
+external_X_ITE_X3D_Namespace_default().add ("NurbsTrimmedSurface", "x_ite/Components/NURBS/NurbsTrimmedSurface", NurbsTrimmedSurface_default_);
 /* harmony default export */ const NURBS_NurbsTrimmedSurface = (NurbsTrimmedSurface_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/NURBS.js
 /*******************************************************************************
@@ -5374,7 +5374,7 @@ Namespace_default().add ("NurbsTrimmedSurface", "x_ite/Components/NURBS/NurbsTri
 
 
 
-Components_default().add ({
+external_X_ITE_X3D_Components_default().add ({
    name: "NURBS",
    concreteNodes:
    [
@@ -5403,7 +5403,7 @@ Components_default().add ({
 const components_NURBS_default_ = undefined;
 ;
 
-Namespace_default().add ("NURBS", "assets/components/NURBS", components_NURBS_default_);
+external_X_ITE_X3D_Namespace_default().add ("NURBS", "assets/components/NURBS", components_NURBS_default_);
 /* harmony default export */ const components_NURBS = ((/* unused pure expression or super */ null && (components_NURBS_default_)));
 /******/ })()
 ;

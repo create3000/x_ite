@@ -39,27 +39,27 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
-const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
-var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
-var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
-var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DChildNode");
-var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
-var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
+var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
+var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
+var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
+var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
+const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
+var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
+var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/BooleanFilter.js
 /*******************************************************************************
  *
@@ -116,16 +116,16 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 function BooleanFilter (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).BooleanFilter);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).BooleanFilter);
 }
 
-Object .assign (Object .setPrototypeOf (BooleanFilter .prototype, (X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (BooleanFilter .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
 {
    initialize ()
    {
-      X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
@@ -167,12 +167,12 @@ Object .defineProperties (BooleanFilter,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean", new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "inputTrue",   new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "inputFalse",  new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "inputNegate", new (Fields_default()).SFBool ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "set_boolean", new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "inputTrue",   new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "inputFalse",  new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "inputNegate", new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,
    },
@@ -181,11 +181,11 @@ Object .defineProperties (BooleanFilter,
 const __default__ = BooleanFilter;
 ;
 
-Namespace_default().add ("BooleanFilter", "x_ite/Components/EventUtilities/BooleanFilter", __default__);
+external_X_ITE_X3D_Namespace_default().add ("BooleanFilter", "x_ite/Components/EventUtilities/BooleanFilter", __default__);
 /* harmony default export */ const EventUtilities_BooleanFilter = (__default__);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Algorithm");
-var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
+const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
+var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/X3DSequencerNode.js
 /*******************************************************************************
  *
@@ -240,18 +240,18 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
 
 function X3DSequencerNode (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DSequencerNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DSequencerNode);
 
    this .index = -1;
 }
 
-Object .assign (Object .setPrototypeOf (X3DSequencerNode .prototype, (X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DSequencerNode .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
 {
    initialize ()
    {
-      X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
 
       this ._set_fraction .addInterest ("set_fraction__", this);
       this ._previous     .addInterest ("set_previous__", this);
@@ -278,7 +278,7 @@ Object .assign (Object .setPrototypeOf (X3DSequencerNode .prototype, (X3DChildNo
 
       else
       {
-         const index = Algorithm_default().upperBound (key, 0, length, fraction);
+         const index = external_X_ITE_X3D_Algorithm_default().upperBound (key, 0, length, fraction);
 
          i = index - 1;
       }
@@ -342,7 +342,7 @@ Object .defineProperties (X3DSequencerNode,
 const X3DSequencerNode_default_ = X3DSequencerNode;
 ;
 
-Namespace_default().add ("X3DSequencerNode", "x_ite/Components/EventUtilities/X3DSequencerNode", X3DSequencerNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DSequencerNode", "x_ite/Components/EventUtilities/X3DSequencerNode", X3DSequencerNode_default_);
 /* harmony default export */ const EventUtilities_X3DSequencerNode = (X3DSequencerNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/BooleanSequencer.js
 /*******************************************************************************
@@ -402,7 +402,7 @@ function BooleanSequencer (executionContext)
 {
    EventUtilities_X3DSequencerNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).BooleanSequencer);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).BooleanSequencer);
 }
 
 Object .assign (Object .setPrototypeOf (BooleanSequencer .prototype, EventUtilities_X3DSequencerNode .prototype),
@@ -447,14 +447,14 @@ Object .defineProperties (BooleanSequencer,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_fraction",  new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "previous",      new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "next",          new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "key",           new (Fields_default()).MFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "keyValue",      new (Fields_default()).MFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFBool ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "set_fraction",  new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "previous",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "next",          new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "key",           new (external_X_ITE_X3D_Fields_default()).MFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "keyValue",      new (external_X_ITE_X3D_Fields_default()).MFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "value_changed", new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,
    },
@@ -463,7 +463,7 @@ Object .defineProperties (BooleanSequencer,
 const BooleanSequencer_default_ = BooleanSequencer;
 ;
 
-Namespace_default().add ("BooleanSequencer", "x_ite/Components/EventUtilities/BooleanSequencer", BooleanSequencer_default_);
+external_X_ITE_X3D_Namespace_default().add ("BooleanSequencer", "x_ite/Components/EventUtilities/BooleanSequencer", BooleanSequencer_default_);
 /* harmony default export */ const EventUtilities_BooleanSequencer = (BooleanSequencer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/BooleanToggle.js
 /*******************************************************************************
@@ -521,16 +521,16 @@ Namespace_default().add ("BooleanSequencer", "x_ite/Components/EventUtilities/Bo
 
 function BooleanToggle (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).BooleanToggle);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).BooleanToggle);
 }
 
-Object .assign (Object .setPrototypeOf (BooleanToggle .prototype, (X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (BooleanToggle .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
 {
    initialize ()
    {
-      X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
@@ -565,10 +565,10 @@ Object .defineProperties (BooleanToggle,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean", new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "toggle",      new (Fields_default()).SFBool ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "set_boolean", new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "toggle",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,
    },
@@ -577,7 +577,7 @@ Object .defineProperties (BooleanToggle,
 const BooleanToggle_default_ = BooleanToggle;
 ;
 
-Namespace_default().add ("BooleanToggle", "x_ite/Components/EventUtilities/BooleanToggle", BooleanToggle_default_);
+external_X_ITE_X3D_Namespace_default().add ("BooleanToggle", "x_ite/Components/EventUtilities/BooleanToggle", BooleanToggle_default_);
 /* harmony default export */ const EventUtilities_BooleanToggle = (BooleanToggle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/X3DTriggerNode.js
 /*******************************************************************************
@@ -632,12 +632,12 @@ Namespace_default().add ("BooleanToggle", "x_ite/Components/EventUtilities/Boole
 
 function X3DTriggerNode (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DTriggerNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DTriggerNode);
 }
 
-Object .setPrototypeOf (X3DTriggerNode .prototype, (X3DChildNode_default()).prototype);
+Object .setPrototypeOf (X3DTriggerNode .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype);
 
 Object .defineProperties (X3DTriggerNode,
 {
@@ -656,7 +656,7 @@ Object .defineProperties (X3DTriggerNode,
 const X3DTriggerNode_default_ = X3DTriggerNode;
 ;
 
-Namespace_default().add ("X3DTriggerNode", "x_ite/Components/EventUtilities/X3DTriggerNode", X3DTriggerNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DTriggerNode", "x_ite/Components/EventUtilities/X3DTriggerNode", X3DTriggerNode_default_);
 /* harmony default export */ const EventUtilities_X3DTriggerNode = (X3DTriggerNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/BooleanTrigger.js
 /*******************************************************************************
@@ -716,7 +716,7 @@ function BooleanTrigger (executionContext)
 {
    EventUtilities_X3DTriggerNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).BooleanTrigger);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).BooleanTrigger);
 }
 
 Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, EventUtilities_X3DTriggerNode .prototype),
@@ -757,10 +757,10 @@ Object .defineProperties (BooleanTrigger,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_triggerTime", new (Fields_default()).SFTime ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "triggerTrue",     new (Fields_default()).SFBool ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "set_triggerTime", new (external_X_ITE_X3D_Fields_default()).SFTime ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "triggerTrue",     new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,
    },
@@ -769,7 +769,7 @@ Object .defineProperties (BooleanTrigger,
 const BooleanTrigger_default_ = BooleanTrigger;
 ;
 
-Namespace_default().add ("BooleanTrigger", "x_ite/Components/EventUtilities/BooleanTrigger", BooleanTrigger_default_);
+external_X_ITE_X3D_Namespace_default().add ("BooleanTrigger", "x_ite/Components/EventUtilities/BooleanTrigger", BooleanTrigger_default_);
 /* harmony default export */ const EventUtilities_BooleanTrigger = (BooleanTrigger_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/IntegerSequencer.js
 /*******************************************************************************
@@ -829,7 +829,7 @@ function IntegerSequencer (executionContext)
 {
    EventUtilities_X3DSequencerNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).IntegerSequencer);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).IntegerSequencer);
 }
 
 Object .assign (Object .setPrototypeOf (IntegerSequencer .prototype, EventUtilities_X3DSequencerNode .prototype),
@@ -874,14 +874,14 @@ Object .defineProperties (IntegerSequencer,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_fraction",  new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "previous",      new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "next",          new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "key",           new (Fields_default()).MFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "keyValue",      new (Fields_default()).MFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFInt32 ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "set_fraction",  new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "previous",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "next",          new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "key",           new (external_X_ITE_X3D_Fields_default()).MFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "keyValue",      new (external_X_ITE_X3D_Fields_default()).MFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "value_changed", new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
       ]),
       enumerable: true,
    },
@@ -890,7 +890,7 @@ Object .defineProperties (IntegerSequencer,
 const IntegerSequencer_default_ = IntegerSequencer;
 ;
 
-Namespace_default().add ("IntegerSequencer", "x_ite/Components/EventUtilities/IntegerSequencer", IntegerSequencer_default_);
+external_X_ITE_X3D_Namespace_default().add ("IntegerSequencer", "x_ite/Components/EventUtilities/IntegerSequencer", IntegerSequencer_default_);
 /* harmony default export */ const EventUtilities_IntegerSequencer = (IntegerSequencer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/IntegerTrigger.js
 /*******************************************************************************
@@ -950,7 +950,7 @@ function IntegerTrigger (executionContext)
 {
    EventUtilities_X3DTriggerNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).IntegerTrigger);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).IntegerTrigger);
 }
 
 Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, EventUtilities_X3DTriggerNode .prototype),
@@ -991,11 +991,11 @@ Object .defineProperties (IntegerTrigger,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean",  new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "integerKey",   new (Fields_default()).SFInt32 (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "triggerValue", new (Fields_default()).SFInt32 ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "set_boolean",  new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "integerKey",   new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "triggerValue", new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
       ]),
       enumerable: true,
    },
@@ -1004,7 +1004,7 @@ Object .defineProperties (IntegerTrigger,
 const IntegerTrigger_default_ = IntegerTrigger;
 ;
 
-Namespace_default().add ("IntegerTrigger", "x_ite/Components/EventUtilities/IntegerTrigger", IntegerTrigger_default_);
+external_X_ITE_X3D_Namespace_default().add ("IntegerTrigger", "x_ite/Components/EventUtilities/IntegerTrigger", IntegerTrigger_default_);
 /* harmony default export */ const EventUtilities_IntegerTrigger = (IntegerTrigger_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/TimeTrigger.js
 /*******************************************************************************
@@ -1064,7 +1064,7 @@ function TimeTrigger (executionContext)
 {
    EventUtilities_X3DTriggerNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).TimeTrigger);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).TimeTrigger);
 }
 
 Object .assign (Object .setPrototypeOf (TimeTrigger .prototype, EventUtilities_X3DTriggerNode .prototype),
@@ -1105,10 +1105,10 @@ Object .defineProperties (TimeTrigger,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean", new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "triggerTime", new (Fields_default()).SFTime ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "set_boolean", new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "triggerTime", new (external_X_ITE_X3D_Fields_default()).SFTime ()),
       ]),
       enumerable: true,
    },
@@ -1117,7 +1117,7 @@ Object .defineProperties (TimeTrigger,
 const TimeTrigger_default_ = TimeTrigger;
 ;
 
-Namespace_default().add ("TimeTrigger", "x_ite/Components/EventUtilities/TimeTrigger", TimeTrigger_default_);
+external_X_ITE_X3D_Namespace_default().add ("TimeTrigger", "x_ite/Components/EventUtilities/TimeTrigger", TimeTrigger_default_);
 /* harmony default export */ const EventUtilities_TimeTrigger = (TimeTrigger_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/EventUtilities.js
 /*******************************************************************************
@@ -1178,7 +1178,7 @@ Namespace_default().add ("TimeTrigger", "x_ite/Components/EventUtilities/TimeTri
 
 
 
-Components_default().add ({
+external_X_ITE_X3D_Components_default().add ({
    name: "EventUtilities",
    concreteNodes:
    [
@@ -1200,7 +1200,7 @@ Components_default().add ({
 const EventUtilities_default_ = undefined;
 ;
 
-Namespace_default().add ("EventUtilities", "assets/components/EventUtilities", EventUtilities_default_);
+external_X_ITE_X3D_Namespace_default().add ("EventUtilities", "assets/components/EventUtilities", EventUtilities_default_);
 /* harmony default export */ const EventUtilities = ((/* unused pure expression or super */ null && (EventUtilities_default_)));
 /******/ })()
 ;

@@ -39,12 +39,12 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
-const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
-var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
-var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
+var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext.js
 /*******************************************************************************
  *
@@ -143,23 +143,23 @@ Object .assign (X3DKeyDeviceSensorContext .prototype,
 const __default__ = X3DKeyDeviceSensorContext;
 ;
 
-Namespace_default().add ("X3DKeyDeviceSensorContext", "x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext", __default__);
+external_X_ITE_X3D_Namespace_default().add ("X3DKeyDeviceSensorContext", "x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext", __default__);
 /* harmony default export */ const KeyDeviceSensor_X3DKeyDeviceSensorContext = (__default__);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
-var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
-var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DSensorNode\")"
-const X3DSensorNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DSensorNode");
-var X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DSensorNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
+var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
+var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
+var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSensorNode"
+const external_X_ITE_X3D_X3DSensorNode_namespaceObject = __X_ITE_X3D__ .X3DSensorNode;
+var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSensorNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
+var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode.js
 /*******************************************************************************
  *
@@ -213,16 +213,16 @@ var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_names
 
 function X3DKeyDeviceSensorNode (executionContext)
 {
-   X3DSensorNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DSensorNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DKeyDeviceSensorNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DKeyDeviceSensorNode);
 }
 
-Object .assign (Object .setPrototypeOf (X3DKeyDeviceSensorNode .prototype, (X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DKeyDeviceSensorNode .prototype, (external_X_ITE_X3D_X3DSensorNode_default()).prototype),
 {
    initialize ()
    {
-      X3DSensorNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DSensorNode_default().prototype .initialize .call (this);
 
       this .getLive () .addInterest ("set_live__", this);
 
@@ -283,7 +283,7 @@ Object .defineProperties (X3DKeyDeviceSensorNode,
 const X3DKeyDeviceSensorNode_default_ = X3DKeyDeviceSensorNode;
 ;
 
-Namespace_default().add ("X3DKeyDeviceSensorNode", "x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode", X3DKeyDeviceSensorNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DKeyDeviceSensorNode", "x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode", X3DKeyDeviceSensorNode_default_);
 /* harmony default export */ const KeyDeviceSensor_X3DKeyDeviceSensorNode = (X3DKeyDeviceSensorNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/KeyDeviceSensor/KeySensor.js
 /*******************************************************************************
@@ -366,7 +366,7 @@ function KeySensor (executionContext)
 {
    KeyDeviceSensor_X3DKeyDeviceSensorNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).KeySensor);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).KeySensor);
 }
 
 Object .assign (Object .setPrototypeOf (KeySensor .prototype, KeyDeviceSensor_X3DKeyDeviceSensorNode .prototype),
@@ -648,18 +648,18 @@ Object .defineProperties (KeySensor,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "description",      new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",          new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "controlKey",       new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "shiftKey",         new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "altKey",           new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "actionKeyPress",   new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "actionKeyRelease", new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "keyPress",         new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "keyRelease",       new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isActive",         new (Fields_default()).SFBool ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",      new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",          new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "controlKey",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "shiftKey",         new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "altKey",           new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "actionKeyPress",   new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "actionKeyRelease", new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "keyPress",         new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "keyRelease",       new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "isActive",         new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,
    },
@@ -668,7 +668,7 @@ Object .defineProperties (KeySensor,
 const KeySensor_default_ = KeySensor;
 ;
 
-Namespace_default().add ("KeySensor", "x_ite/Components/KeyDeviceSensor/KeySensor", KeySensor_default_);
+external_X_ITE_X3D_Namespace_default().add ("KeySensor", "x_ite/Components/KeyDeviceSensor/KeySensor", KeySensor_default_);
 /* harmony default export */ const KeyDeviceSensor_KeySensor = (KeySensor_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/KeyDeviceSensor/StringSensor.js
 /*******************************************************************************
@@ -728,7 +728,7 @@ function StringSensor (executionContext)
 {
    KeyDeviceSensor_X3DKeyDeviceSensorNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).StringSensor);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).StringSensor);
 }
 
 Object .assign (Object .setPrototypeOf (StringSensor .prototype, KeyDeviceSensor_X3DKeyDeviceSensorNode .prototype),
@@ -822,14 +822,14 @@ Object .defineProperties (StringSensor,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "description",     new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",         new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "deletionAllowed", new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "enteredText",     new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "finalText",       new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isActive",        new (Fields_default()).SFBool ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",     new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",         new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "deletionAllowed", new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "enteredText",     new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "finalText",       new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "isActive",        new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,
    },
@@ -838,7 +838,7 @@ Object .defineProperties (StringSensor,
 const StringSensor_default_ = StringSensor;
 ;
 
-Namespace_default().add ("StringSensor", "x_ite/Components/KeyDeviceSensor/StringSensor", StringSensor_default_);
+external_X_ITE_X3D_Namespace_default().add ("StringSensor", "x_ite/Components/KeyDeviceSensor/StringSensor", StringSensor_default_);
 /* harmony default export */ const KeyDeviceSensor_StringSensor = (StringSensor_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/KeyDeviceSensor.js
 /*******************************************************************************
@@ -894,7 +894,7 @@ Namespace_default().add ("StringSensor", "x_ite/Components/KeyDeviceSensor/Strin
 
 
 
-Components_default().add ({
+external_X_ITE_X3D_Components_default().add ({
    name: "KeyDeviceSensor",
    concreteNodes:
    [
@@ -911,7 +911,7 @@ Components_default().add ({
 const KeyDeviceSensor_default_ = undefined;
 ;
 
-Namespace_default().add ("KeyDeviceSensor", "assets/components/KeyDeviceSensor", KeyDeviceSensor_default_);
+external_X_ITE_X3D_Namespace_default().add ("KeyDeviceSensor", "assets/components/KeyDeviceSensor", KeyDeviceSensor_default_);
 /* harmony default export */ const KeyDeviceSensor = ((/* unused pure expression or super */ null && (KeyDeviceSensor_default_)));
 /******/ })()
 ;

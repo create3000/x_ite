@@ -3,7 +3,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 579:
+/***/ 923:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 493:
+/***/ 973:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -74,7 +74,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 129:
+/***/ 81:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4030,7 +4030,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 645:
+/***/ 957:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5185,11 +5185,11 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 588:
+/***/ 254:
 /***/ ((module) => {
 
 "use strict";
-module.exports = __X_ITE_X3D__ .require ("lib/jquery");
+module.exports = __X_ITE_X3D__ .jquery;
 
 /***/ }),
 
@@ -5291,27 +5291,27 @@ module.exports = __X_ITE_X3D__ .require ("lib/jquery");
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
-const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
-var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
-var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
-var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Texturing/X3DSingleTextureNode\")"
-const X3DSingleTextureNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Texturing/X3DSingleTextureNode");
-var X3DSingleTextureNode_default = /*#__PURE__*/__webpack_require__.n(X3DSingleTextureNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
-var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
+var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
+var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
+var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
+var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSingleTextureNode"
+const external_X_ITE_X3D_X3DSingleTextureNode_namespaceObject = __X_ITE_X3D__ .X3DSingleTextureNode;
+var external_X_ITE_X3D_X3DSingleTextureNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSingleTextureNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
+var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/X3DTexture3DNode.js
 /*******************************************************************************
  *
@@ -5367,9 +5367,9 @@ const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
 function X3DTexture3DNode (executionContext)
 {
-   X3DSingleTextureNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DSingleTextureNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DTexture3DNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode);
 
    const gl = this .getBrowser () .getContext ();
 
@@ -5379,11 +5379,11 @@ function X3DTexture3DNode (executionContext)
    this .depth  = 0;
 }
 
-Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (X3DSingleTextureNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (external_X_ITE_X3D_X3DSingleTextureNode_default()).prototype),
 {
    initialize ()
    {
-      X3DSingleTextureNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DSingleTextureNode_default().prototype .initialize .call (this);
 
       this ._repeatS .addInterest ("updateTextureParameters", this);
       this ._repeatT .addInterest ("updateTextureParameters", this);
@@ -5459,7 +5459,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (X3DSingleT
    },
    updateTextureParameters ()
    {
-      X3DSingleTextureNode_default().prototype .updateTextureParameters .call (this,
+      external_X_ITE_X3D_X3DSingleTextureNode_default().prototype .updateTextureParameters .call (this,
                                                                       this .target,
                                                                       this ._textureProperties .getValue (),
                                                                       this .texturePropertiesNode,
@@ -5496,11 +5496,11 @@ Object .defineProperties (X3DTexture3DNode,
 const __default__ = X3DTexture3DNode;
 ;
 
-Namespace_default().add ("X3DTexture3DNode", "x_ite/Components/Texturing3D/X3DTexture3DNode", __default__);
+external_X_ITE_X3D_Namespace_default().add ("X3DTexture3DNode", "x_ite/Components/Texturing3D/X3DTexture3DNode", __default__);
 /* harmony default export */ const Texturing3D_X3DTexture3DNode = (__default__);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DCast");
-var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
+var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ComposedTexture3D.js
 /*******************************************************************************
  *
@@ -5560,9 +5560,9 @@ function ComposedTexture3D (executionContext)
 {
    Texturing3D_X3DTexture3DNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ComposedTexture3D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ComposedTexture3D);
 
-   this .addChildObjects ((X3DConstants_default()).inputOutput, "update",    new (Fields_default()).SFTime ());
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "update",    new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
    this .textureNodes = [ ];
 }
@@ -5589,7 +5589,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3
 
       for (const node of this ._texture)
       {
-         const textureNode = X3DCast_default() ((X3DConstants_default()).X3DTexture2DNode, node);
+         const textureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture2DNode, node);
 
          if (textureNode)
             textureNodes .push (textureNode);
@@ -5606,7 +5606,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3
    },
    isComplete ()
    {
-      return this .textureNodes .every (textureNode => textureNode .checkLoadState () === (X3DConstants_default()).COMPLETE_STATE);
+      return this .textureNodes .every (textureNode => textureNode .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
    },
    update ()
    {
@@ -5696,14 +5696,14 @@ Object .defineProperties (ComposedTexture3D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",       new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "repeatS",           new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "repeatT",           new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "repeatR",           new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texture",           new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",       new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatS",           new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatT",           new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatR",           new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "textureProperties", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "texture",           new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -5712,17 +5712,17 @@ Object .defineProperties (ComposedTexture3D,
 const ComposedTexture3D_default_ = ComposedTexture3D;
 ;
 
-Namespace_default().add ("ComposedTexture3D", "x_ite/Components/Texturing3D/ComposedTexture3D", ComposedTexture3D_default_);
+external_X_ITE_X3D_Namespace_default().add ("ComposedTexture3D", "x_ite/Components/Texturing3D/ComposedTexture3D", ComposedTexture3D_default_);
 /* harmony default export */ const Texturing3D_ComposedTexture3D = (ComposedTexture3D_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Networking/X3DUrlObject\")"
-const X3DUrlObject_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Networking/X3DUrlObject");
-var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Parser/Expressions\")"
-const Expressions_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Parser/Expressions");
-var Expressions_default = /*#__PURE__*/__webpack_require__.n(Expressions_namespaceObject);
-// EXTERNAL MODULE: external "__X_ITE_X3D__ .require (\"lib/jquery\")"
-var jquery_ = __webpack_require__(588);
-var jquery_default = /*#__PURE__*/__webpack_require__.n(jquery_);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DUrlObject"
+const external_X_ITE_X3D_X3DUrlObject_namespaceObject = __X_ITE_X3D__ .X3DUrlObject;
+var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DUrlObject_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Expressions"
+const external_X_ITE_X3D_Expressions_namespaceObject = __X_ITE_X3D__ .Expressions;
+var external_X_ITE_X3D_Expressions_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Expressions_namespaceObject);
+// EXTERNAL MODULE: external "__X_ITE_X3D__ .jquery"
+var external_X_ITE_X3D_jquery_ = __webpack_require__(254);
+var external_X_ITE_X3D_jquery_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_jquery_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/NRRDParser.js
 /*******************************************************************************
  *
@@ -5776,7 +5776,7 @@ var jquery_default = /*#__PURE__*/__webpack_require__.n(jquery_);
 
 // Grammar
 
-const Grammar = Expressions_default() ({
+const Grammar = external_X_ITE_X3D_Expressions_default() ({
    NRRD: /^NRRD(\d+)\n/gy,
    field: /([\w\s]+):\s*(.+?)\n/gy,
    comment: /#[^\n]*\n/gy,
@@ -5813,7 +5813,7 @@ Object .assign (NRRDParser .prototype,
    setInput (value)
    {
       this .dataView     = new DataView (value);
-      this .input        = jquery_default().decodeText (value);
+      this .input        = external_X_ITE_X3D_jquery_default().decodeText (value);
       this .lastIndex    = 0;
       this .nrrd         = { };
       this .littleEndian = true;
@@ -6171,7 +6171,7 @@ Object .assign (NRRDParser .prototype,
 
          const
             input       = this .dataView .buffer .slice (this .lastIndex),
-            arrayBuffer = jquery_default().ungzip (input);
+            arrayBuffer = external_X_ITE_X3D_jquery_default().ungzip (input);
 
          this .dataView = new DataView (arrayBuffer);
 
@@ -6187,7 +6187,7 @@ Object .assign (NRRDParser .prototype,
 const NRRDParser_default_ = NRRDParser;
 ;
 
-Namespace_default().add ("NRRDParser", "x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
+external_X_ITE_X3D_Namespace_default().add ("NRRDParser", "x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./node_modules/jpeg-lossless-decoder-js/release/lossless.js
 var __defProp = Object.defineProperty;
@@ -7343,10 +7343,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(129);
-/* provided dependency */ var JpegImage = __webpack_require__(645);
-/* provided dependency */ var CharLS = __webpack_require__(579);
-/* provided dependency */ var OpenJPEG = __webpack_require__(493);
+/* provided dependency */ var dicomParser = __webpack_require__(81);
+/* provided dependency */ var JpegImage = __webpack_require__(957);
+/* provided dependency */ var CharLS = __webpack_require__(923);
+/* provided dependency */ var OpenJPEG = __webpack_require__(973);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8447,14 +8447,14 @@ Object .assign (DicomParser .prototype,
 const DICOMParser_default_ = DicomParser;
 ;
 
-Namespace_default().add ("DICOMParser", "x_ite/Browser/Texturing3D/DICOMParser", DICOMParser_default_);
+external_X_ITE_X3D_Namespace_default().add ("DICOMParser", "x_ite/Browser/Texturing3D/DICOMParser", DICOMParser_default_);
 /* harmony default export */ const DICOMParser = (DICOMParser_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/InputOutput/FileLoader\")"
-const FileLoader_namespaceObject = __X_ITE_X3D__ .require ("x_ite/InputOutput/FileLoader");
-var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/DEVELOPMENT\")"
-const DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .require ("x_ite/DEVELOPMENT");
-var DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(DEVELOPMENT_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FileLoader"
+const external_X_ITE_X3D_FileLoader_namespaceObject = __X_ITE_X3D__ .FileLoader;
+var external_X_ITE_X3D_FileLoader_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FileLoader_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .DEVELOPMENT"
+const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
+var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ImageTexture3D.js
 /*******************************************************************************
  *
@@ -8517,18 +8517,18 @@ var DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(DEVELOPMENT_namespa
 function ImageTexture3D (executionContext)
 {
    Texturing3D_X3DTexture3DNode .call (this, executionContext);
-   X3DUrlObject_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DUrlObject_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ImageTexture3D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ImageTexture3D);
 }
 
 Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X3DTexture3DNode .prototype),
-   (X3DUrlObject_default()).prototype,
+   (external_X_ITE_X3D_X3DUrlObject_default()).prototype,
 {
    initialize ()
    {
       Texturing3D_X3DTexture3DNode .prototype .initialize .call (this);
-      X3DUrlObject_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
@@ -8554,12 +8554,12 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
    },
    loadData ()
    {
-      new (FileLoader_default()) (this) .loadDocument (this ._url, (data, URL) =>
+      new (external_X_ITE_X3D_FileLoader_default()) (this) .loadDocument (this ._url, (data, URL) =>
       {
          if (data === null)
          {
             // No URL could be loaded.
-            this .setLoadState ((X3DConstants_default()).FAILED_STATE);
+            this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
             this .clearTexture ();
          }
          else if (data instanceof ArrayBuffer)
@@ -8586,7 +8586,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
                   transparent  = !(nrrd .components & 1);
 
                this .setTextureData (nrrd .width, nrrd .height, nrrd .depth, transparent, internalType, nrrd .data);
-               this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
+               this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
                return;
             }
 
@@ -8599,7 +8599,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
                   transparent  = !(dicom .components & 1);
 
                this .setTextureData (dicom .width, dicom .height, dicom .depth, transparent, internalType, dicom .data);
-               this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
+               this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
                return;
             }
 
@@ -8612,7 +8612,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
       if (texture .target !== this .getTarget ())
          throw new Error ("Invalid KTX texture target, must be 'TEXTURE_3D'.");
 
-      if ((DEVELOPMENT_default()))
+      if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
          if (URL .protocol !== "data:")
             console .info (`Done loading image texture 3D '${decodeURI (URL .href)}'.`);
@@ -8625,11 +8625,11 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
       this .setDepth (texture .baseDepth); // TODO: Always 1
       this .updateTextureParameters ();
 
-      this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
+      this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
    },
    dispose ()
    {
-      X3DUrlObject_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DUrlObject_default().prototype .dispose .call (this);
       Texturing3D_X3DTexture3DNode .prototype .dispose .call (this);
    },
 });
@@ -8658,17 +8658,17 @@ Object .defineProperties (ImageTexture3D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",             new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",          new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "load",                 new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "url",                  new (Fields_default()).MFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoRefresh",          new (Fields_default()).SFTime ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "repeatS",              new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "repeatT",              new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "repeatR",              new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties",    new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "load",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "url",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatS",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatT",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatR",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "textureProperties",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -8677,10 +8677,10 @@ Object .defineProperties (ImageTexture3D,
 const ImageTexture3D_default_ = ImageTexture3D;
 ;
 
-Namespace_default().add ("ImageTexture3D", "x_ite/Components/Texturing3D/ImageTexture3D", ImageTexture3D_default_);
+external_X_ITE_X3D_Namespace_default().add ("ImageTexture3D", "x_ite/Components/Texturing3D/ImageTexture3D", ImageTexture3D_default_);
 /* harmony default export */ const Texturing3D_ImageTexture3D = (ImageTexture3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ImageTextureAtlas.js
-/* provided dependency */ var $ = __webpack_require__(588);
+/* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8743,21 +8743,21 @@ Namespace_default().add ("ImageTexture3D", "x_ite/Components/Texturing3D/ImageTe
 function ImageTextureAtlas (executionContext)
 {
    Texturing3D_X3DTexture3DNode .call (this, executionContext);
-   X3DUrlObject_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DUrlObject_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ImageTextureAtlas);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ImageTextureAtlas);
 
    this .image    = $("<img></img>");
-   this .urlStack = new (Fields_default()).MFString ();
+   this .urlStack = new (external_X_ITE_X3D_Fields_default()).MFString ();
 }
 
 Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3D_X3DTexture3DNode .prototype),
-   (X3DUrlObject_default()).prototype,
+   (external_X_ITE_X3D_X3DUrlObject_default()).prototype,
 {
    initialize ()
    {
       Texturing3D_X3DTexture3DNode .prototype .initialize .call (this);
-      X3DUrlObject_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
 
       this .image .on ("load",        this .setImage .bind (this));
       this .image .on ("abort error", this .setError .bind (this));
@@ -8779,7 +8779,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
       if (this .urlStack .length === 0)
       {
          this .clearTexture ();
-         this .setLoadState ((X3DConstants_default()).FAILED_STATE);
+         this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
          return;
       }
 
@@ -8804,7 +8804,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
    },
    setImage ()
    {
-      if ((DEVELOPMENT_default()))
+      if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading image '${decodeURI (this .URL .href)}'.`);
@@ -8816,7 +8816,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
 
          if (gl .getVersion () === 1)
          {
-            this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
+            this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
             return;
          }
 
@@ -8876,11 +8876,11 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
          this .setHeight (height);
          this .setDepth (depth);
          this .updateTextureParameters ();
-         this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
+         this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
       }
       catch (error)
       {
-         if ((DEVELOPMENT_default()))
+         if ((external_X_ITE_X3D_DEVELOPMENT_default()))
             console .log (error)
 
          // Catch security error from cross origin requests.
@@ -8889,7 +8889,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
    },
    dispose ()
    {
-      X3DUrlObject_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DUrlObject_default().prototype .dispose .call (this);
       Texturing3D_X3DTexture3DNode .prototype .dispose .call (this);
    },
 });
@@ -8918,20 +8918,20 @@ Object .defineProperties (ImageTextureAtlas,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",             new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",          new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "load",                 new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "url",                  new (Fields_default()).MFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoRefresh",          new (Fields_default()).SFTime ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "slicesOverX",          new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "slicesOverY",          new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "numberOfSlices",       new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "repeatS",              new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "repeatT",              new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "repeatR",              new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties",    new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "load",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "url",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "slicesOverX",          new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "slicesOverY",          new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "numberOfSlices",       new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatS",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatT",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatR",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "textureProperties",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -8940,7 +8940,7 @@ Object .defineProperties (ImageTextureAtlas,
 const ImageTextureAtlas_default_ = ImageTextureAtlas;
 ;
 
-Namespace_default().add ("ImageTextureAtlas", "x_ite/Components/Texturing3D/ImageTextureAtlas", ImageTextureAtlas_default_);
+external_X_ITE_X3D_Namespace_default().add ("ImageTextureAtlas", "x_ite/Components/Texturing3D/ImageTextureAtlas", ImageTextureAtlas_default_);
 /* harmony default export */ const Texturing3D_ImageTextureAtlas = (ImageTextureAtlas_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/PixelTexture3D.js
 /*******************************************************************************
@@ -9000,7 +9000,7 @@ function PixelTexture3D (executionContext)
 {
    Texturing3D_X3DTexture3DNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).PixelTexture3D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).PixelTexture3D);
 }
 
 Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X3DTexture3DNode .prototype),
@@ -9141,14 +9141,14 @@ Object .defineProperties (PixelTexture3D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",       new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "image",             new (Fields_default()).MFInt32 (0, 0, 0, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "repeatS",           new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "repeatT",           new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "repeatR",           new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties", new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",       new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "image",             new (external_X_ITE_X3D_Fields_default()).MFInt32 (0, 0, 0, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatS",           new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatT",           new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatR",           new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "textureProperties", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -9157,14 +9157,14 @@ Object .defineProperties (PixelTexture3D,
 const PixelTexture3D_default_ = PixelTexture3D;
 ;
 
-Namespace_default().add ("PixelTexture3D", "x_ite/Components/Texturing3D/PixelTexture3D", PixelTexture3D_default_);
+external_X_ITE_X3D_Namespace_default().add ("PixelTexture3D", "x_ite/Components/Texturing3D/PixelTexture3D", PixelTexture3D_default_);
 /* harmony default export */ const Texturing3D_PixelTexture3D = (PixelTexture3D_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode\")"
-const X3DSingleTextureCoordinateNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Texturing/X3DSingleTextureCoordinateNode");
-var X3DSingleTextureCoordinateNode_default = /*#__PURE__*/__webpack_require__.n(X3DSingleTextureCoordinateNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector3");
-var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSingleTextureCoordinateNode"
+const external_X_ITE_X3D_X3DSingleTextureCoordinateNode_namespaceObject = __X_ITE_X3D__ .X3DSingleTextureCoordinateNode;
+var external_X_ITE_X3D_X3DSingleTextureCoordinateNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSingleTextureCoordinateNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
+var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/TextureCoordinate3D.js
 /*******************************************************************************
  *
@@ -9222,16 +9222,16 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
 
 function TextureCoordinate3D (executionContext)
 {
-   X3DSingleTextureCoordinateNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DSingleTextureCoordinateNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).TextureCoordinate3D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).TextureCoordinate3D);
 }
 
-Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, (X3DSingleTextureCoordinateNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, (external_X_ITE_X3D_X3DSingleTextureCoordinateNode_default()).prototype),
 {
    initialize ()
    {
-      X3DSingleTextureCoordinateNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DSingleTextureCoordinateNode_default().prototype .initialize .call (this);
 
       this ._point .addInterest ("set_point__", this);
 
@@ -9267,7 +9267,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, (X3DSing
    },
    set1Point: (function ()
    {
-      const point = new (Vector3_default()) ();
+      const point = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (index, { x, y, z, w })
       {
@@ -9326,10 +9326,10 @@ Object .defineProperties (TextureCoordinate3D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mapping",  new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "point",    new (Fields_default()).MFVec3f ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "mapping",  new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "point",    new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
       ]),
       enumerable: true,
    },
@@ -9338,7 +9338,7 @@ Object .defineProperties (TextureCoordinate3D,
 const TextureCoordinate3D_default_ = TextureCoordinate3D;
 ;
 
-Namespace_default().add ("TextureCoordinate3D", "x_ite/Components/Texturing3D/TextureCoordinate3D", TextureCoordinate3D_default_);
+external_X_ITE_X3D_Namespace_default().add ("TextureCoordinate3D", "x_ite/Components/Texturing3D/TextureCoordinate3D", TextureCoordinate3D_default_);
 /* harmony default export */ const Texturing3D_TextureCoordinate3D = (TextureCoordinate3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/TextureCoordinate4D.js
 /*******************************************************************************
@@ -9396,16 +9396,16 @@ Namespace_default().add ("TextureCoordinate3D", "x_ite/Components/Texturing3D/Te
 
 function TextureCoordinate4D (executionContext)
 {
-   X3DSingleTextureCoordinateNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DSingleTextureCoordinateNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).TextureCoordinate4D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).TextureCoordinate4D);
 }
 
-Object .assign (Object .setPrototypeOf (TextureCoordinate4D .prototype, (X3DSingleTextureCoordinateNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (TextureCoordinate4D .prototype, (external_X_ITE_X3D_X3DSingleTextureCoordinateNode_default()).prototype),
 {
    initialize ()
    {
-      X3DSingleTextureCoordinateNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DSingleTextureCoordinateNode_default().prototype .initialize .call (this);
 
       this ._point .addInterest ("set_point__", this);
 
@@ -9495,10 +9495,10 @@ Object .defineProperties (TextureCoordinate4D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mapping",  new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "point",    new (Fields_default()).MFVec4f ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "mapping",  new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "point",    new (external_X_ITE_X3D_Fields_default()).MFVec4f ()),
       ]),
       enumerable: true,
    },
@@ -9507,17 +9507,17 @@ Object .defineProperties (TextureCoordinate4D,
 const TextureCoordinate4D_default_ = TextureCoordinate4D;
 ;
 
-Namespace_default().add ("TextureCoordinate4D", "x_ite/Components/Texturing3D/TextureCoordinate4D", TextureCoordinate4D_default_);
+external_X_ITE_X3D_Namespace_default().add ("TextureCoordinate4D", "x_ite/Components/Texturing3D/TextureCoordinate4D", TextureCoordinate4D_default_);
 /* harmony default export */ const Texturing3D_TextureCoordinate4D = (TextureCoordinate4D_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Texturing/X3DSingleTextureTransformNode\")"
-const X3DSingleTextureTransformNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Texturing/X3DSingleTextureTransformNode");
-var X3DSingleTextureTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DSingleTextureTransformNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Rotation4\")"
-const Rotation4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Rotation4");
-var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Matrix4");
-var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSingleTextureTransformNode"
+const external_X_ITE_X3D_X3DSingleTextureTransformNode_namespaceObject = __X_ITE_X3D__ .X3DSingleTextureTransformNode;
+var external_X_ITE_X3D_X3DSingleTextureTransformNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSingleTextureTransformNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Rotation4"
+const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
+var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
+var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/TextureTransform3D.js
 /*******************************************************************************
  *
@@ -9577,18 +9577,18 @@ var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject
 
 function TextureTransform3D (executionContext)
 {
-   X3DSingleTextureTransformNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DSingleTextureTransformNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).TextureTransform3D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).TextureTransform3D);
 
-   this .matrix = new (Matrix4_default()) ();
+   this .matrix = new (external_X_ITE_X3D_Matrix4_default()) ();
 }
 
-Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, (X3DSingleTextureTransformNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, (external_X_ITE_X3D_X3DSingleTextureTransformNode_default()).prototype),
 {
    initialize ()
    {
-      X3DSingleTextureTransformNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DSingleTextureTransformNode_default().prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
 
@@ -9596,7 +9596,7 @@ Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, (X3DSingl
    },
    eventsProcessed: (() =>
    {
-      const vector = new (Vector3_default()) ();
+      const vector = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -9609,19 +9609,19 @@ Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, (X3DSingl
 
          matrix4 .identity ();
 
-         if (! center .equals ((Vector3_default()).Zero))
+         if (! center .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
             matrix4 .translate (vector .assign (center) .negate ());
 
-         if (! scale .equals ((Vector3_default()).One))
+         if (! scale .equals ((external_X_ITE_X3D_Vector3_default()).One))
             matrix4 .scale (scale);
 
-         if (! rotation .equals ((Rotation4_default()).Identity))
+         if (! rotation .equals ((external_X_ITE_X3D_Rotation4_default()).Identity))
             matrix4 .rotate (rotation);
 
-         if (! center .equals ((Vector3_default()).Zero))
+         if (! center .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
             matrix4 .translate (center);
 
-         if (! translation .equals ((Vector3_default()).Zero))
+         if (! translation .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
             matrix4 .translate (translation);
 
          this .setMatrix (matrix4);
@@ -9653,13 +9653,13 @@ Object .defineProperties (TextureTransform3D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mapping",     new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "translation", new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "rotation",    new (Fields_default()).SFRotation ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "scale",       new (Fields_default()).SFVec3f (1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "center",      new (Fields_default()).SFVec3f ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "mapping",     new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "translation", new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "rotation",    new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "scale",       new (external_X_ITE_X3D_Fields_default()).SFVec3f (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "center",      new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
       ]),
       enumerable: true,
    },
@@ -9668,7 +9668,7 @@ Object .defineProperties (TextureTransform3D,
 const TextureTransform3D_default_ = TextureTransform3D;
 ;
 
-Namespace_default().add ("TextureTransform3D", "x_ite/Components/Texturing3D/TextureTransform3D", TextureTransform3D_default_);
+external_X_ITE_X3D_Namespace_default().add ("TextureTransform3D", "x_ite/Components/Texturing3D/TextureTransform3D", TextureTransform3D_default_);
 /* harmony default export */ const Texturing3D_TextureTransform3D = (TextureTransform3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/TextureTransformMatrix3D.js
 /*******************************************************************************
@@ -9726,16 +9726,16 @@ Namespace_default().add ("TextureTransform3D", "x_ite/Components/Texturing3D/Tex
 
 function TextureTransformMatrix3D (executionContext)
 {
-   X3DSingleTextureTransformNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DSingleTextureTransformNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).TextureTransformMatrix3D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).TextureTransformMatrix3D);
 }
 
-Object .assign (Object .setPrototypeOf (TextureTransformMatrix3D .prototype, (X3DSingleTextureTransformNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (TextureTransformMatrix3D .prototype, (external_X_ITE_X3D_X3DSingleTextureTransformNode_default()).prototype),
 {
    initialize ()
    {
-      X3DSingleTextureTransformNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DSingleTextureTransformNode_default().prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
 
@@ -9771,10 +9771,10 @@ Object .defineProperties (TextureTransformMatrix3D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mapping",  new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "matrix",   new (Fields_default()).SFMatrix4f ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "mapping",  new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "matrix",   new (external_X_ITE_X3D_Fields_default()).SFMatrix4f ()),
       ]),
       enumerable: true,
    },
@@ -9783,7 +9783,7 @@ Object .defineProperties (TextureTransformMatrix3D,
 const TextureTransformMatrix3D_default_ = TextureTransformMatrix3D;
 ;
 
-Namespace_default().add ("TextureTransformMatrix3D", "x_ite/Components/Texturing3D/TextureTransformMatrix3D", TextureTransformMatrix3D_default_);
+external_X_ITE_X3D_Namespace_default().add ("TextureTransformMatrix3D", "x_ite/Components/Texturing3D/TextureTransformMatrix3D", TextureTransformMatrix3D_default_);
 /* harmony default export */ const Texturing3D_TextureTransformMatrix3D = (TextureTransformMatrix3D_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/Texturing3D.js
 /*******************************************************************************
@@ -9844,7 +9844,7 @@ Namespace_default().add ("TextureTransformMatrix3D", "x_ite/Components/Texturing
 
 
 
-Components_default().add ({
+external_X_ITE_X3D_Components_default().add ({
    name: "Texturing3D",
    concreteNodes:
    [
@@ -9866,7 +9866,7 @@ Components_default().add ({
 const Texturing3D_default_ = undefined;
 ;
 
-Namespace_default().add ("Texturing3D", "assets/components/Texturing3D", Texturing3D_default_);
+external_X_ITE_X3D_Namespace_default().add ("Texturing3D", "assets/components/Texturing3D", Texturing3D_default_);
 /* harmony default export */ const Texturing3D = ((/* unused pure expression or super */ null && (Texturing3D_default_)));
 })();
 

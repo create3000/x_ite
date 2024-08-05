@@ -39,30 +39,30 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
-const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
-var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
-var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
-var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
-const X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Grouping/X3DGroupingNode");
-var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DChildNode");
-var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
-var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
+var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
+var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
+var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
+var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGroupingNode"
+const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
+var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
+const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
+var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
+var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CADGeometry/X3DProductStructureChildNode.js
 /*******************************************************************************
  *
@@ -116,12 +116,12 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 function X3DProductStructureChildNode (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DProductStructureChildNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DProductStructureChildNode);
 }
 
-Object .setPrototypeOf (X3DProductStructureChildNode .prototype, (X3DChildNode_default()).prototype);
+Object .setPrototypeOf (X3DProductStructureChildNode .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype);
 
 Object .defineProperties (X3DProductStructureChildNode,
 {
@@ -140,7 +140,7 @@ Object .defineProperties (X3DProductStructureChildNode,
 const __default__ = X3DProductStructureChildNode;
 ;
 
-Namespace_default().add ("X3DProductStructureChildNode", "x_ite/Components/CADGeometry/X3DProductStructureChildNode", __default__);
+external_X_ITE_X3D_Namespace_default().add ("X3DProductStructureChildNode", "x_ite/Components/CADGeometry/X3DProductStructureChildNode", __default__);
 /* harmony default export */ const CADGeometry_X3DProductStructureChildNode = (__default__);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CADGeometry/CADAssembly.js
 /*******************************************************************************
@@ -199,13 +199,13 @@ Namespace_default().add ("X3DProductStructureChildNode", "x_ite/Components/CADGe
 
 function CADAssembly (executionContext)
 {
-   X3DGroupingNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DGroupingNode_default().call (this, executionContext);
    CADGeometry_X3DProductStructureChildNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).CADAssembly);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).CADAssembly);
 }
 
-Object .assign (Object .setPrototypeOf (CADAssembly .prototype, (X3DGroupingNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (CADAssembly .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype),
    //X3DProductStructureChildNode .prototype,
 {
 });
@@ -234,16 +234,16 @@ Object .defineProperties (CADAssembly,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "name",           new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "name",           new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",    new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",       new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",     new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "addChildren",    new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "removeChildren", new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "children",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -252,17 +252,17 @@ Object .defineProperties (CADAssembly,
 const CADAssembly_default_ = CADAssembly;
 ;
 
-Namespace_default().add ("CADAssembly", "x_ite/Components/CADGeometry/CADAssembly", CADAssembly_default_);
+external_X_ITE_X3D_Namespace_default().add ("CADAssembly", "x_ite/Components/CADGeometry/CADAssembly", CADAssembly_default_);
 /* harmony default export */ const CADGeometry_CADAssembly = (CADAssembly_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Grouping/X3DBoundedObject\")"
-const X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Grouping/X3DBoundedObject");
-var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObject_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Rendering/TraverseType");
-var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DCast");
-var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DBoundedObject"
+const external_X_ITE_X3D_X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .X3DBoundedObject;
+var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBoundedObject_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TraverseType"
+const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
+var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
+var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CADGeometry/CADFace.js
 /*******************************************************************************
  *
@@ -323,9 +323,9 @@ var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject
 function CADFace (executionContext)
 {
    CADGeometry_X3DProductStructureChildNode .call (this, executionContext);
-   X3DBoundedObject_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).CADFace);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).CADFace);
 
    this .childNode     = null;
    this .visibleNode   = null;
@@ -333,12 +333,12 @@ function CADFace (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProductStructureChildNode .prototype),
-   (X3DBoundedObject_default()).prototype,
+   (external_X_ITE_X3D_X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
       CADGeometry_X3DProductStructureChildNode .prototype .initialize .call (this);
-      X3DBoundedObject_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
       this ._shape .addInterest ("set_shape__", this);
 
@@ -364,7 +364,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
 
       this .childNode = null;
 
-      const childNode = X3DCast_default() ((X3DConstants_default()).X3DChildNode, this ._shape);
+      const childNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DChildNode, this ._shape);
 
       if (childNode)
       {
@@ -374,9 +374,9 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
          {
             switch (type [t])
             {
-               case (X3DConstants_default()).LOD:
-               case (X3DConstants_default()).Transform:
-               case (X3DConstants_default()).X3DShapeNode:
+               case (external_X_ITE_X3D_X3DConstants_default()).LOD:
+               case (external_X_ITE_X3D_X3DConstants_default()).Transform:
+               case (external_X_ITE_X3D_X3DConstants_default()).X3DShapeNode:
                {
                   childNode ._isCameraObject   .addInterest ("set_cameraObject__",     this);
                   childNode ._isPickableObject .addInterest ("set_transformSensors__", this);
@@ -436,14 +436,14 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
    {
       switch (type)
       {
-         case (TraverseType_default()).POINTER:
-         case (TraverseType_default()).CAMERA:
-         case (TraverseType_default()).SHADOW:
+         case (external_X_ITE_X3D_TraverseType_default()).POINTER:
+         case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
+         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
          {
             this .visibleNode ?.traverse (type, renderObject);
             return;
          }
-         case (TraverseType_default()).PICKING:
+         case (external_X_ITE_X3D_TraverseType_default()).PICKING:
          {
             const
                browser          = this .getBrowser (),
@@ -456,12 +456,12 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
             pickingHierarchy .pop ();
             return;
          }
-         case (TraverseType_default()).COLLISION:
+         case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
          {
             this .visibleNode ?.traverse (type, renderObject);
             return;
          }
-         case (TraverseType_default()).DISPLAY:
+         case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
             this .visibleNode ?.traverse (type, renderObject);
 
@@ -472,7 +472,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .dispose .call (this);
       CADGeometry_X3DProductStructureChildNode .prototype .dispose .call (this);
    },
 });
@@ -501,14 +501,14 @@ Object .defineProperties (CADFace,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "name",        new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",     new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay", new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",    new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",  new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shape",       new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "name",        new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay", new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",    new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",  new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "shape",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -517,7 +517,7 @@ Object .defineProperties (CADFace,
 const CADFace_default_ = CADFace;
 ;
 
-Namespace_default().add ("CADFace", "x_ite/Components/CADGeometry/CADFace", CADFace_default_);
+external_X_ITE_X3D_Namespace_default().add ("CADFace", "x_ite/Components/CADGeometry/CADFace", CADFace_default_);
 /* harmony default export */ const CADGeometry_CADFace = (CADFace_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CADGeometry/CADLayer.js
 /*******************************************************************************
@@ -575,12 +575,12 @@ Namespace_default().add ("CADFace", "x_ite/Components/CADGeometry/CADFace", CADF
 
 function CADLayer (executionContext)
 {
-   X3DGroupingNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DGroupingNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).CADLayer);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).CADLayer);
 }
 
-Object .setPrototypeOf (CADLayer .prototype, (X3DGroupingNode_default()).prototype);
+Object .setPrototypeOf (CADLayer .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype);
 
 Object .defineProperties (CADLayer,
 {
@@ -606,16 +606,16 @@ Object .defineProperties (CADLayer,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "name",           new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "name",           new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",    new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",       new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",     new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "addChildren",    new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "removeChildren", new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "children",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -624,11 +624,11 @@ Object .defineProperties (CADLayer,
 const CADLayer_default_ = CADLayer;
 ;
 
-Namespace_default().add ("CADLayer", "x_ite/Components/CADGeometry/CADLayer", CADLayer_default_);
+external_X_ITE_X3D_Namespace_default().add ("CADLayer", "x_ite/Components/CADGeometry/CADLayer", CADLayer_default_);
 /* harmony default export */ const CADGeometry_CADLayer = (CADLayer_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Grouping/X3DTransformNode\")"
-const X3DTransformNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Grouping/X3DTransformNode");
-var X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DTransformNode"
+const external_X_ITE_X3D_X3DTransformNode_namespaceObject = __X_ITE_X3D__ .X3DTransformNode;
+var external_X_ITE_X3D_X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DTransformNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CADGeometry/CADPart.js
 /*******************************************************************************
  *
@@ -686,13 +686,13 @@ var X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformNo
 
 function CADPart (executionContext)
 {
-   X3DTransformNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DTransformNode_default().call (this, executionContext);
    CADGeometry_X3DProductStructureChildNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).CADPart);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).CADPart);
 }
 
-Object .assign (Object .setPrototypeOf (CADPart .prototype, (X3DTransformNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (CADPart .prototype, (external_X_ITE_X3D_X3DTransformNode_default()).prototype),
    //X3DProductStructureChildNode .prototype,
 {
 });
@@ -721,21 +721,21 @@ Object .defineProperties (CADPart,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "name",             new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "translation",      new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rotation",         new (Fields_default()).SFRotation ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scale",            new (Fields_default()).SFVec3f (1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scaleOrientation", new (Fields_default()).SFRotation ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "center",           new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",          new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",      new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",         new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",       new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",      new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",   new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",         new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "name",             new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "translation",      new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "rotation",         new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scale",            new (external_X_ITE_X3D_Fields_default()).SFVec3f (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scaleOrientation", new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "center",           new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",          new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",       new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "addChildren",      new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "removeChildren",   new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "children",         new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -744,11 +744,11 @@ Object .defineProperties (CADPart,
 const CADPart_default_ = CADPart;
 ;
 
-Namespace_default().add ("CADPart", "x_ite/Components/CADGeometry/CADPart", CADPart_default_);
+external_X_ITE_X3D_Namespace_default().add ("CADPart", "x_ite/Components/CADGeometry/CADPart", CADPart_default_);
 /* harmony default export */ const CADGeometry_CADPart = (CADPart_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/X3DComposedGeometryNode\")"
-const X3DComposedGeometryNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/X3DComposedGeometryNode");
-var X3DComposedGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DComposedGeometryNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DComposedGeometryNode"
+const external_X_ITE_X3D_X3DComposedGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DComposedGeometryNode;
+var external_X_ITE_X3D_X3DComposedGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DComposedGeometryNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CADGeometry/IndexedQuadSet.js
 /*******************************************************************************
  *
@@ -805,16 +805,16 @@ var X3DComposedGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DComp
 
 function IndexedQuadSet (executionContext)
 {
-   X3DComposedGeometryNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DComposedGeometryNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).IndexedQuadSet);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).IndexedQuadSet);
 }
 
-Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, (X3DComposedGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, (external_X_ITE_X3D_X3DComposedGeometryNode_default()).prototype),
 {
    initialize ()
    {
-      X3DComposedGeometryNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DComposedGeometryNode_default().prototype .initialize .call (this);
 
       this ._set_index .addFieldInterest (this ._index);
    },
@@ -842,7 +842,7 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, (X3DComposedG
 
       length -= length % 4;
 
-      X3DComposedGeometryNode_default().prototype .build .call (this, 4, length, 6, length / 4 * 6);
+      external_X_ITE_X3D_X3DComposedGeometryNode_default().prototype .build .call (this, 4, length, 6, length / 4 * 6);
    },
 });
 
@@ -870,21 +870,21 @@ Object .defineProperties (IndexedQuadSet,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_index",       new (Fields_default()).MFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "ccw",             new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "colorPerVertex",  new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "normalPerVertex", new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "index",           new (Fields_default()).MFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "attrib",          new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fogCoord",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "color",           new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tangent",         new (Fields_default()).SFNode ()), // experimental
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "normal",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "coord",           new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "set_index",       new (external_X_ITE_X3D_Fields_default()).MFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "solid",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "ccw",             new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "colorPerVertex",  new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "normalPerVertex", new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "index",           new (external_X_ITE_X3D_Fields_default()).MFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "attrib",          new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "fogCoord",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "color",           new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "texCoord",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "tangent",         new (external_X_ITE_X3D_Fields_default()).SFNode ()), // experimental
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "normal",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "coord",           new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -893,7 +893,7 @@ Object .defineProperties (IndexedQuadSet,
 const IndexedQuadSet_default_ = IndexedQuadSet;
 ;
 
-Namespace_default().add ("IndexedQuadSet", "x_ite/Components/CADGeometry/IndexedQuadSet", IndexedQuadSet_default_);
+external_X_ITE_X3D_Namespace_default().add ("IndexedQuadSet", "x_ite/Components/CADGeometry/IndexedQuadSet", IndexedQuadSet_default_);
 /* harmony default export */ const CADGeometry_IndexedQuadSet = (IndexedQuadSet_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CADGeometry/QuadSet.js
 /*******************************************************************************
@@ -951,12 +951,12 @@ Namespace_default().add ("IndexedQuadSet", "x_ite/Components/CADGeometry/Indexed
 
 function QuadSet (executionContext)
 {
-   X3DComposedGeometryNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DComposedGeometryNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).QuadSet);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).QuadSet);
 }
 
-Object .assign (Object .setPrototypeOf (QuadSet .prototype, (X3DComposedGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (QuadSet .prototype, (external_X_ITE_X3D_X3DComposedGeometryNode_default()).prototype),
 {
    getTriangleIndex (i)
    {
@@ -981,7 +981,7 @@ Object .assign (Object .setPrototypeOf (QuadSet .prototype, (X3DComposedGeometry
 
       length -= length % 4;
 
-      X3DComposedGeometryNode_default().prototype .build .call (this, 4, length, 6, length / 4 * 6);
+      external_X_ITE_X3D_X3DComposedGeometryNode_default().prototype .build .call (this, 4, length, 6, length / 4 * 6);
    },
    createNormals (verticesPerPolygon, polygonsSize)
    {
@@ -1013,19 +1013,19 @@ Object .defineProperties (QuadSet,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "ccw",             new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "colorPerVertex",  new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "normalPerVertex", new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "attrib",          new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fogCoord",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "color",           new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tangent",         new (Fields_default()).SFNode ()), // experimental
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "normal",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "coord",           new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "solid",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "ccw",             new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "colorPerVertex",  new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "normalPerVertex", new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "attrib",          new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "fogCoord",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "color",           new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "texCoord",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "tangent",         new (external_X_ITE_X3D_Fields_default()).SFNode ()), // experimental
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "normal",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "coord",           new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -1034,7 +1034,7 @@ Object .defineProperties (QuadSet,
 const QuadSet_default_ = QuadSet;
 ;
 
-Namespace_default().add ("QuadSet", "x_ite/Components/CADGeometry/QuadSet", QuadSet_default_);
+external_X_ITE_X3D_Namespace_default().add ("QuadSet", "x_ite/Components/CADGeometry/QuadSet", QuadSet_default_);
 /* harmony default export */ const CADGeometry_QuadSet = (QuadSet_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/CADGeometry.js
 /*******************************************************************************
@@ -1093,7 +1093,7 @@ Namespace_default().add ("QuadSet", "x_ite/Components/CADGeometry/QuadSet", Quad
 
 
 
-Components_default().add ({
+external_X_ITE_X3D_Components_default().add ({
    name: "CADGeometry",
    concreteNodes:
    [
@@ -1113,7 +1113,7 @@ Components_default().add ({
 const CADGeometry_default_ = undefined;
 ;
 
-Namespace_default().add ("CADGeometry", "assets/components/CADGeometry", CADGeometry_default_);
+external_X_ITE_X3D_Namespace_default().add ("CADGeometry", "assets/components/CADGeometry", CADGeometry_default_);
 /* harmony default export */ const CADGeometry = ((/* unused pure expression or super */ null && (CADGeometry_default_)));
 /******/ })()
 ;

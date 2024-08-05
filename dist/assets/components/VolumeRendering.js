@@ -39,33 +39,33 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
-const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
-var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Texturing/PixelTexture\")"
-const PixelTexture_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Texturing/PixelTexture");
-var PixelTexture_default = /*#__PURE__*/__webpack_require__.n(PixelTexture_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Texturing/TextureProperties\")"
-const TextureProperties_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Texturing/TextureProperties");
-var TextureProperties_default = /*#__PURE__*/__webpack_require__.n(TextureProperties_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
-var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
-var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DNode\")"
-const X3DNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DNode");
-var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
-var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
+var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .PixelTexture"
+const external_X_ITE_X3D_PixelTexture_namespaceObject = __X_ITE_X3D__ .PixelTexture;
+var external_X_ITE_X3D_PixelTexture_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_PixelTexture_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TextureProperties"
+const external_X_ITE_X3D_TextureProperties_namespaceObject = __X_ITE_X3D__ .TextureProperties;
+var external_X_ITE_X3D_TextureProperties_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TextureProperties_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
+var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
+var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
+var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
+var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode.js
 /*******************************************************************************
  *
@@ -119,14 +119,14 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 function X3DVolumeRenderStyleNode (executionContext)
 {
-   X3DNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DVolumeRenderStyleNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DVolumeRenderStyleNode);
 
    this .volumeDataNodes = new Set ();
 }
 
-Object .assign (Object .setPrototypeOf (X3DVolumeRenderStyleNode .prototype, (X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DVolumeRenderStyleNode .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
 {
    addShaderFields (shaderNode)
    { },
@@ -207,7 +207,7 @@ Object .defineProperties (X3DVolumeRenderStyleNode,
 const __default__ = X3DVolumeRenderStyleNode;
 ;
 
-Namespace_default().add ("X3DVolumeRenderStyleNode", "x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode", __default__);
+external_X_ITE_X3D_Namespace_default().add ("X3DVolumeRenderStyleNode", "x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode", __default__);
 /* harmony default export */ const VolumeRendering_X3DVolumeRenderStyleNode = (__default__);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode.js
 /*******************************************************************************
@@ -264,7 +264,7 @@ function X3DComposableVolumeRenderStyleNode (executionContext)
 {
    VolumeRendering_X3DVolumeRenderStyleNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DComposableVolumeRenderStyleNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DComposableVolumeRenderStyleNode);
 }
 
 Object .setPrototypeOf (X3DComposableVolumeRenderStyleNode .prototype, VolumeRendering_X3DVolumeRenderStyleNode .prototype);
@@ -286,11 +286,11 @@ Object .defineProperties (X3DComposableVolumeRenderStyleNode,
 const X3DComposableVolumeRenderStyleNode_default_ = X3DComposableVolumeRenderStyleNode;
 ;
 
-Namespace_default().add ("X3DComposableVolumeRenderStyleNode", "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode", X3DComposableVolumeRenderStyleNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DComposableVolumeRenderStyleNode", "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode", X3DComposableVolumeRenderStyleNode_default_);
 /* harmony default export */ const VolumeRendering_X3DComposableVolumeRenderStyleNode = (X3DComposableVolumeRenderStyleNode_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DCast");
-var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
+var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/OpacityMapVolumeStyle.js
 /*******************************************************************************
  *
@@ -350,7 +350,7 @@ function OpacityMapVolumeStyle (executionContext)
 {
    VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).OpacityMapVolumeStyle);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).OpacityMapVolumeStyle);
 }
 
 Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
@@ -370,10 +370,10 @@ Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, Volume
    },
    set_transferFunction__ ()
    {
-      this .transferFunctionNode = X3DCast_default() ((X3DConstants_default()).X3DTexture2DNode, this ._transferFunction);
+      this .transferFunctionNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture2DNode, this ._transferFunction);
 
       if (! this .transferFunctionNode)
-         this .transferFunctionNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._transferFunction);
+         this .transferFunctionNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._transferFunction);
 
       if (! this .transferFunctionNode)
          this .transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
@@ -383,7 +383,7 @@ Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, Volume
       if (! this ._enabled .getValue ())
          return;
 
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "transferFunction_" + this .getId (), new (Fields_default()).SFNode (this .transferFunctionNode));
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "transferFunction_" + this .getId (), new (external_X_ITE_X3D_Fields_default()).SFNode (this .transferFunctionNode));
    },
    getUniformsText ()
    {
@@ -396,7 +396,7 @@ Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, Volume
       string += "// OpacityMapVolumeStyle\n";
       string += "\n";
 
-      if (this .transferFunctionNode .getType () .includes ((X3DConstants_default()).X3DTexture2DNode))
+      if (this .transferFunctionNode .getType () .includes ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture2DNode))
       {
          string += "uniform sampler2D transferFunction_" + this .getId () + ";\n";
 
@@ -461,10 +461,10 @@ Object .defineProperties (OpacityMapVolumeStyle,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",          new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "transferFunction", new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",          new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "transferFunction", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -473,7 +473,7 @@ Object .defineProperties (OpacityMapVolumeStyle,
 const OpacityMapVolumeStyle_default_ = OpacityMapVolumeStyle;
 ;
 
-Namespace_default().add ("OpacityMapVolumeStyle", "x_ite/Components/VolumeRendering/OpacityMapVolumeStyle", OpacityMapVolumeStyle_default_);
+external_X_ITE_X3D_Namespace_default().add ("OpacityMapVolumeStyle", "x_ite/Components/VolumeRendering/OpacityMapVolumeStyle", OpacityMapVolumeStyle_default_);
 /* harmony default export */ const VolumeRendering_OpacityMapVolumeStyle = (OpacityMapVolumeStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext.js
 /*******************************************************************************
@@ -579,7 +579,7 @@ Object .assign (X3DVolumeRenderingContext .prototype,
    },
    getDefaultTransferFunction ()
    {
-      const textureProperties = new (TextureProperties_default()) (this .getPrivateScene ());
+      const textureProperties = new (external_X_ITE_X3D_TextureProperties_default()) (this .getPrivateScene ());
       textureProperties ._boundaryModeS       = "CLAMP_TO_EDGE";
       textureProperties ._boundaryModeT       = "REPEAT";
       textureProperties ._magnificationFilter = "DEFAULT";
@@ -589,7 +589,7 @@ Object .assign (X3DVolumeRenderingContext .prototype,
       textureProperties .setPrivate (true);
       textureProperties .setup ();
 
-      this [_defaultTransferFunction] = new (PixelTexture_default()) (this .getPrivateScene ());
+      this [_defaultTransferFunction] = new (external_X_ITE_X3D_PixelTexture_default()) (this .getPrivateScene ());
       this [_defaultTransferFunction] ._textureProperties = textureProperties;
       this [_defaultTransferFunction] ._image .width      = 256;
       this [_defaultTransferFunction] ._image .height     = 1;
@@ -609,7 +609,7 @@ Object .assign (X3DVolumeRenderingContext .prototype,
 const X3DVolumeRenderingContext_default_ = X3DVolumeRenderingContext;
 ;
 
-Namespace_default().add ("X3DVolumeRenderingContext", "x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext", X3DVolumeRenderingContext_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DVolumeRenderingContext", "x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext", X3DVolumeRenderingContext_default_);
 /* harmony default export */ const VolumeRendering_X3DVolumeRenderingContext = (X3DVolumeRenderingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/BlendedVolumeStyle.js
 /*******************************************************************************
@@ -670,7 +670,7 @@ function BlendedVolumeStyle (executionContext)
 {
    VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).BlendedVolumeStyle);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).BlendedVolumeStyle);
 }
 
 Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
@@ -710,11 +710,11 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRen
    },
    set_weightTransferFunction1__ ()
    {
-      this .weightTransferFunction1Node = X3DCast_default() ((X3DConstants_default()).X3DTexture2DNode, this ._weightTransferFunction1);
+      this .weightTransferFunction1Node = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture2DNode, this ._weightTransferFunction1);
    },
    set_weightTransferFunction2__ ()
    {
-      this .weightTransferFunction2Node = X3DCast_default() ((X3DConstants_default()).X3DTexture2DNode, this ._weightTransferFunction2);
+      this .weightTransferFunction2Node = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture2DNode, this ._weightTransferFunction2);
    },
    set_renderStyle__ ()
    {
@@ -726,7 +726,7 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRen
             this .renderStyleNode .removeVolumeData (volumeDataNode);
       }
 
-      this .renderStyleNode = X3DCast_default() ((X3DConstants_default()).X3DComposableVolumeRenderStyleNode, this ._renderStyle);
+      this .renderStyleNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DComposableVolumeRenderStyleNode, this ._renderStyle);
 
       if (this .renderStyleNode)
       {
@@ -738,25 +738,25 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRen
    },
    set_voxels__ ()
    {
-      this .voxelsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._voxels);
+      this .voxelsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._voxels);
    },
    addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
 
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "weightConstant1_" + this .getId (), this ._weightConstant1 .copy ());
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "weightConstant2_" + this .getId (), this ._weightConstant2 .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "weightConstant1_" + this .getId (), this ._weightConstant1 .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "weightConstant2_" + this .getId (), this ._weightConstant2 .copy ());
 
       if (this .weightTransferFunction1Node)
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "weightTransferFunction1_" + this .getId (), new (Fields_default()).SFNode (this .weightTransferFunction1Node));
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "weightTransferFunction1_" + this .getId (), new (external_X_ITE_X3D_Fields_default()).SFNode (this .weightTransferFunction1Node));
 
       if (this .weightTransferFunction2Node)
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "weightTransferFunction2_" + this .getId (), new (Fields_default()).SFNode (this .weightTransferFunction2Node));
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "weightTransferFunction2_" + this .getId (), new (external_X_ITE_X3D_Fields_default()).SFNode (this .weightTransferFunction2Node));
 
       if (this .voxelsNode)
       {
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "voxels_" + this .getId (), new (Fields_default()).SFNode (this .voxelsNode));
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "voxels_" + this .getId (), new (external_X_ITE_X3D_Fields_default()).SFNode (this .voxelsNode));
       }
 
       this .getBrowser () .getDefaultBlendedVolumeStyle () .addShaderFields (shaderNode);
@@ -950,17 +950,17 @@ Object .defineProperties (BlendedVolumeStyle,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",                 new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightConstant1",         new (Fields_default()).SFFloat (0.5)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightConstant2",         new (Fields_default()).SFFloat (0.5)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightFunction1",         new (Fields_default()).SFString ("CONSTANT")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightFunction2",         new (Fields_default()).SFString ("CONSTANT")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightTransferFunction1", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weightTransferFunction2", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "renderStyle",             new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "voxels",                  new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "weightConstant1",         new (external_X_ITE_X3D_Fields_default()).SFFloat (0.5)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "weightConstant2",         new (external_X_ITE_X3D_Fields_default()).SFFloat (0.5)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "weightFunction1",         new (external_X_ITE_X3D_Fields_default()).SFString ("CONSTANT")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "weightFunction2",         new (external_X_ITE_X3D_Fields_default()).SFString ("CONSTANT")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "weightTransferFunction1", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "weightTransferFunction2", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "renderStyle",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "voxels",                  new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -969,7 +969,7 @@ Object .defineProperties (BlendedVolumeStyle,
 const BlendedVolumeStyle_default_ = BlendedVolumeStyle;
 ;
 
-Namespace_default().add ("BlendedVolumeStyle", "x_ite/Components/VolumeRendering/BlendedVolumeStyle", BlendedVolumeStyle_default_);
+external_X_ITE_X3D_Namespace_default().add ("BlendedVolumeStyle", "x_ite/Components/VolumeRendering/BlendedVolumeStyle", BlendedVolumeStyle_default_);
 /* harmony default export */ const VolumeRendering_BlendedVolumeStyle = (BlendedVolumeStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/BoundaryEnhancementVolumeStyle.js
 /*******************************************************************************
@@ -1029,7 +1029,7 @@ function BoundaryEnhancementVolumeStyle (executionContext)
 {
    VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).BoundaryEnhancementVolumeStyle);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).BoundaryEnhancementVolumeStyle);
 }
 
 Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
@@ -1039,9 +1039,9 @@ Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototyp
       if (! this ._enabled .getValue ())
          return;
 
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "retainedOpacity_" + this .getId (), this ._retainedOpacity .copy ());
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "boundaryOpacity_" + this .getId (), this ._boundaryOpacity .copy ());
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "opacityFactor_"   + this .getId (), this ._opacityFactor   .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "retainedOpacity_" + this .getId (), this ._retainedOpacity .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "boundaryOpacity_" + this .getId (), this ._boundaryOpacity .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "opacityFactor_"   + this .getId (), this ._opacityFactor   .copy ());
    },
    getUniformsText ()
    {
@@ -1114,12 +1114,12 @@ Object .defineProperties (BoundaryEnhancementVolumeStyle,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",         new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "retainedOpacity", new (Fields_default()).SFFloat (0.2)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "boundaryOpacity", new (Fields_default()).SFFloat (0.9)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "opacityFactor",   new (Fields_default()).SFFloat (2)),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",         new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "retainedOpacity", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.2)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "boundaryOpacity", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.9)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "opacityFactor",   new (external_X_ITE_X3D_Fields_default()).SFFloat (2)),
       ]),
       enumerable: true,
    },
@@ -1128,7 +1128,7 @@ Object .defineProperties (BoundaryEnhancementVolumeStyle,
 const BoundaryEnhancementVolumeStyle_default_ = BoundaryEnhancementVolumeStyle;
 ;
 
-Namespace_default().add ("BoundaryEnhancementVolumeStyle", "x_ite/Components/VolumeRendering/BoundaryEnhancementVolumeStyle", BoundaryEnhancementVolumeStyle_default_);
+external_X_ITE_X3D_Namespace_default().add ("BoundaryEnhancementVolumeStyle", "x_ite/Components/VolumeRendering/BoundaryEnhancementVolumeStyle", BoundaryEnhancementVolumeStyle_default_);
 /* harmony default export */ const VolumeRendering_BoundaryEnhancementVolumeStyle = (BoundaryEnhancementVolumeStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/CartoonVolumeStyle.js
 /*******************************************************************************
@@ -1189,7 +1189,7 @@ function CartoonVolumeStyle (executionContext)
 {
    VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).CartoonVolumeStyle);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).CartoonVolumeStyle);
 }
 
 Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
@@ -1209,19 +1209,19 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRen
    },
    set_surfaceNormals__ ()
    {
-      this .surfaceNormalsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
+      this .surfaceNormalsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
    },
    addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
 
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "colorSteps_"      + this .getId (), this ._colorSteps      .copy ());
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "orthogonalColor_" + this .getId (), this ._orthogonalColor .copy ());
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "parallelColor_"   + this .getId (), this ._parallelColor   .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "colorSteps_"      + this .getId (), this ._colorSteps      .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "orthogonalColor_" + this .getId (), this ._orthogonalColor .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "parallelColor_"   + this .getId (), this ._parallelColor   .copy ());
 
       if (this .surfaceNormalsNode)
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (Fields_default()).SFNode (this .surfaceNormalsNode));
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (external_X_ITE_X3D_Fields_default()).SFNode (this .surfaceNormalsNode));
    },
    getUniformsText ()
    {
@@ -1429,13 +1429,13 @@ Object .defineProperties (CartoonVolumeStyle,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",         new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "colorSteps",      new (Fields_default()).SFInt32 (4)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "orthogonalColor", new (Fields_default()).SFColorRGBA (1, 1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "parallelColor",   new (Fields_default()).SFColorRGBA (0, 0, 0, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals",  new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",         new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "colorSteps",      new (external_X_ITE_X3D_Fields_default()).SFInt32 (4)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "orthogonalColor", new (external_X_ITE_X3D_Fields_default()).SFColorRGBA (1, 1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "parallelColor",   new (external_X_ITE_X3D_Fields_default()).SFColorRGBA (0, 0, 0, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceNormals",  new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -1444,7 +1444,7 @@ Object .defineProperties (CartoonVolumeStyle,
 const CartoonVolumeStyle_default_ = CartoonVolumeStyle;
 ;
 
-Namespace_default().add ("CartoonVolumeStyle", "x_ite/Components/VolumeRendering/CartoonVolumeStyle", CartoonVolumeStyle_default_);
+external_X_ITE_X3D_Namespace_default().add ("CartoonVolumeStyle", "x_ite/Components/VolumeRendering/CartoonVolumeStyle", CartoonVolumeStyle_default_);
 /* harmony default export */ const VolumeRendering_CartoonVolumeStyle = (CartoonVolumeStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ComposedVolumeStyle.js
 /*******************************************************************************
@@ -1505,7 +1505,7 @@ function ComposedVolumeStyle (executionContext)
 {
    VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ComposedVolumeStyle);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ComposedVolumeStyle);
 
    this .renderStyleNodes = [ ];
 }
@@ -1555,7 +1555,7 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, VolumeRe
 
       for (const node of this ._renderStyle)
       {
-         const renderStyleNode = X3DCast_default() ((X3DConstants_default()).X3DComposableVolumeRenderStyleNode, node);
+         const renderStyleNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DComposableVolumeRenderStyleNode, node);
 
          if (renderStyleNode)
             renderStyleNodes .push (renderStyleNode);
@@ -1641,10 +1641,10 @@ Object .defineProperties (ComposedVolumeStyle,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",     new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "renderStyle", new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "renderStyle", new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -1653,7 +1653,7 @@ Object .defineProperties (ComposedVolumeStyle,
 const ComposedVolumeStyle_default_ = ComposedVolumeStyle;
 ;
 
-Namespace_default().add ("ComposedVolumeStyle", "x_ite/Components/VolumeRendering/ComposedVolumeStyle", ComposedVolumeStyle_default_);
+external_X_ITE_X3D_Namespace_default().add ("ComposedVolumeStyle", "x_ite/Components/VolumeRendering/ComposedVolumeStyle", ComposedVolumeStyle_default_);
 /* harmony default export */ const VolumeRendering_ComposedVolumeStyle = (ComposedVolumeStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/EdgeEnhancementVolumeStyle.js
 /*******************************************************************************
@@ -1714,7 +1714,7 @@ function EdgeEnhancementVolumeStyle (executionContext)
 {
    VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).EdgeEnhancementVolumeStyle);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).EdgeEnhancementVolumeStyle);
 }
 
 Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
@@ -1734,18 +1734,18 @@ Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, V
    },
    set_surfaceNormals__ ()
    {
-      this .surfaceNormalsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
+      this .surfaceNormalsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
    },
    addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
 
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "edgeColor_"         + this .getId (), this ._edgeColor         .copy ());
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "gradientThreshold_" + this .getId (), this ._gradientThreshold .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "edgeColor_"         + this .getId (), this ._edgeColor         .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "gradientThreshold_" + this .getId (), this ._gradientThreshold .copy ());
 
       if (this .surfaceNormalsNode)
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (Fields_default()).SFNode (this .surfaceNormalsNode));
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (external_X_ITE_X3D_Fields_default()).SFNode (this .surfaceNormalsNode));
    },
    getUniformsText ()
    {
@@ -1824,12 +1824,12 @@ Object .defineProperties (EdgeEnhancementVolumeStyle,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "edgeColor",         new (Fields_default()).SFColorRGBA (0, 0, 0, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "gradientThreshold", new (Fields_default()).SFFloat (0.4)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals",    new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "edgeColor",         new (external_X_ITE_X3D_Fields_default()).SFColorRGBA (0, 0, 0, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "gradientThreshold", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.4)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceNormals",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -1838,26 +1838,26 @@ Object .defineProperties (EdgeEnhancementVolumeStyle,
 const EdgeEnhancementVolumeStyle_default_ = EdgeEnhancementVolumeStyle;
 ;
 
-Namespace_default().add ("EdgeEnhancementVolumeStyle", "x_ite/Components/VolumeRendering/EdgeEnhancementVolumeStyle", EdgeEnhancementVolumeStyle_default_);
+external_X_ITE_X3D_Namespace_default().add ("EdgeEnhancementVolumeStyle", "x_ite/Components/VolumeRendering/EdgeEnhancementVolumeStyle", EdgeEnhancementVolumeStyle_default_);
 /* harmony default export */ const VolumeRendering_EdgeEnhancementVolumeStyle = (EdgeEnhancementVolumeStyle_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DChildNode");
-var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Grouping/X3DBoundedObject\")"
-const X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Grouping/X3DBoundedObject");
-var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObject_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Browser/Core/TextureQuality\")"
-const TextureQuality_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Browser/Core/TextureQuality");
-var TextureQuality_default = /*#__PURE__*/__webpack_require__.n(TextureQuality_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Shape/UnlitMaterial\")"
-const UnlitMaterial_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Shape/UnlitMaterial");
-var UnlitMaterial_default = /*#__PURE__*/__webpack_require__.n(UnlitMaterial_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
+const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
+var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DBoundedObject"
+const external_X_ITE_X3D_X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .X3DBoundedObject;
+var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBoundedObject_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TextureQuality"
+const external_X_ITE_X3D_TextureQuality_namespaceObject = __X_ITE_X3D__ .TextureQuality;
+var external_X_ITE_X3D_TextureQuality_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TextureQuality_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .UnlitMaterial"
+const external_X_ITE_X3D_UnlitMaterial_namespaceObject = __X_ITE_X3D__ .UnlitMaterial;
+var external_X_ITE_X3D_UnlitMaterial_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_UnlitMaterial_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/VolumeStyle.vs.js
 const VolumeStyle_vs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;uniform mat4 x3d_TextureMatrix[1];in vec4 x3d_TexCoord0;in vec4 x3d_Vertex;out vec3 vertex;out vec4 texCoord;void main(){vec4 position=x3d_ModelViewMatrix*x3d_Vertex;vertex=position.xyz;texCoord=x3d_TextureMatrix[0]*x3d_TexCoord0;gl_Position=x3d_ProjectionMatrix*position;}`
 ;
 
-Namespace_default().add ("VolumeStyle.vs", "x_ite/Browser/VolumeRendering/VolumeStyle.vs", VolumeStyle_vs_default_);
+external_X_ITE_X3D_Namespace_default().add ("VolumeStyle.vs", "x_ite/Browser/VolumeRendering/VolumeStyle.vs", VolumeStyle_vs_default_);
 /* harmony default export */ const VolumeStyle_vs = (VolumeStyle_vs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/VolumeStyle.fs.js
 const VolumeStyle_fs_default_ = /* glsl */ `#version 300 es
@@ -1875,7 +1875,7 @@ finalColor.rgb=getFogColor(finalColor.rgb);
 x3d_FragColor=finalColor;}`
 ;
 
-Namespace_default().add ("VolumeStyle.fs", "x_ite/Browser/VolumeRendering/VolumeStyle.fs", VolumeStyle_fs_default_);
+external_X_ITE_X3D_Namespace_default().add ("VolumeStyle.fs", "x_ite/Browser/VolumeRendering/VolumeStyle.fs", VolumeStyle_fs_default_);
 /* harmony default export */ const VolumeStyle_fs = (VolumeStyle_fs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/VolumeMaterial.js
 /*******************************************************************************
@@ -1931,13 +1931,13 @@ Namespace_default().add ("VolumeStyle.fs", "x_ite/Browser/VolumeRendering/Volume
 
 function VolumeMaterial (executionContext, volumeDataNode)
 {
-   UnlitMaterial_default().call (this, executionContext);
+   external_X_ITE_X3D_UnlitMaterial_default().call (this, executionContext);
 
    this .volumeDataNode    = volumeDataNode;
    this .volumeShaderNodes = new Map ();
 }
 
-Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (UnlitMaterial_default()).prototype),
+Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (external_X_ITE_X3D_UnlitMaterial_default()).prototype),
 {
    getVolumeShaders ()
    {
@@ -2023,21 +2023,21 @@ Object .defineProperties (VolumeMaterial,
    },
    fieldDefinitions:
    {
-      value: (UnlitMaterial_default()).fieldDefinitions,
+      value: (external_X_ITE_X3D_UnlitMaterial_default()).fieldDefinitions,
    },
 });
 
 const VolumeMaterial_default_ = VolumeMaterial;
 ;
 
-Namespace_default().add ("VolumeMaterial", "x_ite/Browser/VolumeRendering/VolumeMaterial", VolumeMaterial_default_);
+external_X_ITE_X3D_Namespace_default().add ("VolumeMaterial", "x_ite/Browser/VolumeRendering/VolumeMaterial", VolumeMaterial_default_);
 /* harmony default export */ const VolumeRendering_VolumeMaterial = (VolumeMaterial_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector3");
-var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Matrix4");
-var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
+var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
+var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/X3DVolumeDataNode.js
 /*******************************************************************************
  *
@@ -2097,10 +2097,10 @@ var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject
 
 function X3DVolumeDataNode (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
-   X3DBoundedObject_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DVolumeDataNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DVolumeDataNode);
 
    const browser = this .getBrowser ();
 
@@ -2118,13 +2118,13 @@ function X3DVolumeDataNode (executionContext)
    this .setCameraObject (true);
 }
 
-Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (X3DChildNode_default()).prototype),
-   (X3DBoundedObject_default()).prototype,
+Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
+   (external_X_ITE_X3D_X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
-      X3DChildNode_default().prototype .initialize .call (this);
-      X3DBoundedObject_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
       const
          browser = this .getBrowser (),
@@ -2132,15 +2132,15 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (X3DChildN
 
       this ._bboxDisplay .addFieldInterest (this .transformNode ._bboxDisplay);
 
-      this .proximitySensorNode ._size         = new (Fields_default()).SFVec3f (-1, -1, -1);
-      this .transformNode ._children           = new (Fields_default()).MFNode (this .shapeNode);
+      this .proximitySensorNode ._size         = new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1);
+      this .transformNode ._children           = new (external_X_ITE_X3D_Fields_default()).MFNode (this .shapeNode);
       this .shapeNode ._appearance             = this .appearanceNode;
       this .shapeNode ._geometry               = this .geometryNode;
       this .appearanceNode ._alphaMode         = "BLEND";
       this .appearanceNode ._material          = this .volumeMaterialNode;
       this .appearanceNode ._textureTransform  = this .textureTransformNode;
-      this .textureTransformNode ._translation = new (Fields_default()).SFVec3f (0.5, 0.5, 0.5);
-      this .textureTransformNode ._center      = new (Fields_default()).SFVec3f (-0.5, -0.5, -0.5);
+      this .textureTransformNode ._translation = new (external_X_ITE_X3D_Fields_default()).SFVec3f (0.5, 0.5, 0.5);
+      this .textureTransformNode ._center      = new (external_X_ITE_X3D_Fields_default()).SFVec3f (-0.5, -0.5, -0.5);
       this .geometryNode ._texCoord            = this .textureCoordinateNode;
       this .geometryNode ._coord               = this .coordinateNode;
 
@@ -2182,7 +2182,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (X3DChildN
    getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-         return bbox .set (this ._dimensions .getValue (), (Vector3_default()).Zero);
+         return bbox .set (this ._dimensions .getValue (), (external_X_ITE_X3D_Vector3_default()).Zero);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
@@ -2202,15 +2202,15 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (X3DChildN
    {
       switch (this .getBrowser () .getBrowserOptions () .getTextureQuality ())
       {
-         case (TextureQuality_default()).LOW:
+         case (external_X_ITE_X3D_TextureQuality_default()).LOW:
          {
             return 200;
          }
-         case (TextureQuality_default()).MEDIUM:
+         case (external_X_ITE_X3D_TextureQuality_default()).MEDIUM:
          {
             return 400;
          }
-         case (TextureQuality_default()).HIGH:
+         case (external_X_ITE_X3D_TextureQuality_default()).HIGH:
          {
             return 600;
          }
@@ -2249,13 +2249,13 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (X3DChildN
 
       this .coordinateNode ._point        = points;
       this .textureCoordinateNode ._point = points;
-      this .textureTransformNode ._scale  = new (Fields_default()).SFVec3f (1 / this ._dimensions .x,
+      this .textureTransformNode ._scale  = new (external_X_ITE_X3D_Fields_default()).SFVec3f (1 / this ._dimensions .x,
                                                                  1 / this ._dimensions .y,
                                                                  1 / this ._dimensions .z);
    },
    set_textureTransform__ ()
    {
-      this .textureNormalMatrixArray .set (new (Matrix4_default()) (... this .textureTransformNode .getMatrix ()) .submatrix .inverse ());
+      this .textureNormalMatrixArray .set (new (external_X_ITE_X3D_Matrix4_default()) (... this .textureTransformNode .getMatrix ()) .submatrix .inverse ());
    },
    traverse (type, renderObject)
    {
@@ -2268,8 +2268,8 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (X3DChildN
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype .dispose .call (this);
-      X3DChildNode_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DBoundedObject_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -2290,14 +2290,14 @@ Object .defineProperties (X3DVolumeDataNode,
 const X3DVolumeDataNode_default_ = X3DVolumeDataNode;
 ;
 
-Namespace_default().add ("X3DVolumeDataNode", "x_ite/Components/VolumeRendering/X3DVolumeDataNode", X3DVolumeDataNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DVolumeDataNode", "x_ite/Components/VolumeRendering/X3DVolumeDataNode", X3DVolumeDataNode_default_);
 /* harmony default export */ const VolumeRendering_X3DVolumeDataNode = (X3DVolumeDataNode_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Shaders/ComposedShader\")"
-const ComposedShader_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Shaders/ComposedShader");
-var ComposedShader_default = /*#__PURE__*/__webpack_require__.n(ComposedShader_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Shaders/ShaderPart\")"
-const ShaderPart_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Shaders/ShaderPart");
-var ShaderPart_default = /*#__PURE__*/__webpack_require__.n(ShaderPart_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ComposedShader"
+const external_X_ITE_X3D_ComposedShader_namespaceObject = __X_ITE_X3D__ .ComposedShader;
+var external_X_ITE_X3D_ComposedShader_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ComposedShader_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ShaderPart"
+const external_X_ITE_X3D_ShaderPart_namespaceObject = __X_ITE_X3D__ .ShaderPart;
+var external_X_ITE_X3D_ShaderPart_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ShaderPart_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/IsoSurfaceVolumeData.js
 /*******************************************************************************
  *
@@ -2359,7 +2359,7 @@ function IsoSurfaceVolumeData (executionContext)
 {
    VolumeRendering_X3DVolumeDataNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).IsoSurfaceVolumeData);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).IsoSurfaceVolumeData);
 
    this .renderStyleNodes = [ ];
 }
@@ -2391,7 +2391,7 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
    },
    set_gradients__ ()
    {
-      this .gradientsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._gradients);
+      this .gradientsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._gradients);
    },
    set_renderStyle__ ()
    {
@@ -2407,7 +2407,7 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
 
       for (const node of this ._renderStyle)
       {
-         const renderStyleNode = X3DCast_default() ((X3DConstants_default()).X3DComposableVolumeRenderStyleNode, node);
+         const renderStyleNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DComposableVolumeRenderStyleNode, node);
 
          if (renderStyleNode)
             renderStyleNodes .push (renderStyleNode);
@@ -2421,7 +2421,7 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
    },
    set_voxels__ ()
    {
-      this .voxelsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._voxels);
+      this .voxelsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._voxels);
 
       if (this .voxelsNode)
          this .getAppearance () ._texture = this ._voxels;
@@ -2577,14 +2577,14 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
       // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
 
-      const vertexShader = new (ShaderPart_default()) (this .getExecutionContext ());
+      const vertexShader = new (external_X_ITE_X3D_ShaderPart_default()) (this .getExecutionContext ());
       vertexShader ._url .push (encodeURI ("data:x-shader/x-vertex," + vs));
       vertexShader .setPrivate (true);
       vertexShader .setName ("VolumeDataVertexShader");
       vertexShader .setOptions (options);
       vertexShader .setup ();
 
-      const fragmentShader = new (ShaderPart_default()) (this .getExecutionContext ());
+      const fragmentShader = new (external_X_ITE_X3D_ShaderPart_default()) (this .getExecutionContext ());
       fragmentShader ._type = "FRAGMENT";
       fragmentShader ._url .push (encodeURI ("data:x-shader/x-fragment," + fs));
       fragmentShader .setPrivate (true);
@@ -2592,18 +2592,18 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
       fragmentShader .setOptions (options);
       fragmentShader .setup ();
 
-      const shaderNode = new (ComposedShader_default()) (this .getExecutionContext ());
+      const shaderNode = new (external_X_ITE_X3D_ComposedShader_default()) (this .getExecutionContext ());
       shaderNode ._language = "GLSL";
       shaderNode ._parts .push (vertexShader);
       shaderNode ._parts .push (fragmentShader);
       shaderNode .setPrivate (true);
       shaderNode .setName ("VolumeDataShader");
 
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "surfaceValues",    this ._surfaceValues    .copy ());
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "surfaceTolerance", this ._surfaceTolerance .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceValues",    this ._surfaceValues    .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceTolerance", this ._surfaceTolerance .copy ());
 
       if (this .gradientsNode)
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "gradients", new (Fields_default()).SFNode (this .gradientsNode));
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "gradients", new (external_X_ITE_X3D_Fields_default()).SFNode (this .gradientsNode));
 
       opacityMapVolumeStyle .addShaderFields (shaderNode);
 
@@ -2645,19 +2645,19 @@ Object .defineProperties (IsoSurfaceVolumeData,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "dimensions",       new (Fields_default()).SFVec3f (1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "contourStepSize",  new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceValues",    new (Fields_default()).MFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceTolerance", new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",          new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",      new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",         new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",       new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "renderStyle",      new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "gradients",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "voxels",           new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "dimensions",       new (external_X_ITE_X3D_Fields_default()).SFVec3f (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "contourStepSize",  new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "surfaceValues",    new (external_X_ITE_X3D_Fields_default()).MFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "surfaceTolerance", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",          new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",       new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "renderStyle",      new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "gradients",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "voxels",           new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -2666,7 +2666,7 @@ Object .defineProperties (IsoSurfaceVolumeData,
 const IsoSurfaceVolumeData_default_ = IsoSurfaceVolumeData;
 ;
 
-Namespace_default().add ("IsoSurfaceVolumeData", "x_ite/Components/VolumeRendering/IsoSurfaceVolumeData", IsoSurfaceVolumeData_default_);
+external_X_ITE_X3D_Namespace_default().add ("IsoSurfaceVolumeData", "x_ite/Components/VolumeRendering/IsoSurfaceVolumeData", IsoSurfaceVolumeData_default_);
 /* harmony default export */ const VolumeRendering_IsoSurfaceVolumeData = (IsoSurfaceVolumeData_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ProjectionVolumeStyle.js
 /*******************************************************************************
@@ -2726,7 +2726,7 @@ function ProjectionVolumeStyle (executionContext)
 {
    VolumeRendering_X3DVolumeRenderStyleNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ProjectionVolumeStyle);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ProjectionVolumeStyle);
 }
 
 Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, VolumeRendering_X3DVolumeRenderStyleNode .prototype),
@@ -2736,7 +2736,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, Volume
       if (! this ._enabled .getValue ())
          return;
 
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "intensityThreshold_" + this .getId (), this ._intensityThreshold .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "intensityThreshold_" + this .getId (), this ._intensityThreshold .copy ());
    },
    getUniformsText ()
    {
@@ -2888,11 +2888,11 @@ Object .defineProperties (ProjectionVolumeStyle,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",           new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",            new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "type",               new (Fields_default()).SFString ("MAX")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "intensityThreshold", new (Fields_default()).SFFloat ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",           new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",            new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "type",               new (external_X_ITE_X3D_Fields_default()).SFString ("MAX")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "intensityThreshold", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
       ]),
       enumerable: true,
    },
@@ -2901,7 +2901,7 @@ Object .defineProperties (ProjectionVolumeStyle,
 const ProjectionVolumeStyle_default_ = ProjectionVolumeStyle;
 ;
 
-Namespace_default().add ("ProjectionVolumeStyle", "x_ite/Components/VolumeRendering/ProjectionVolumeStyle", ProjectionVolumeStyle_default_);
+external_X_ITE_X3D_Namespace_default().add ("ProjectionVolumeStyle", "x_ite/Components/VolumeRendering/ProjectionVolumeStyle", ProjectionVolumeStyle_default_);
 /* harmony default export */ const VolumeRendering_ProjectionVolumeStyle = (ProjectionVolumeStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/SegmentedVolumeData.js
 /*******************************************************************************
@@ -2964,7 +2964,7 @@ function SegmentedVolumeData (executionContext)
 {
    VolumeRendering_X3DVolumeDataNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).SegmentedVolumeData);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).SegmentedVolumeData);
 
    this .segmentIdentifiersNode = null;
    this .renderStyleNodes       = [ ];
@@ -3000,7 +3000,7 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
    },
    set_segmentIdentifiers__ ()
    {
-      this .segmentIdentifiersNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._segmentIdentifiers);
+      this .segmentIdentifiersNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._segmentIdentifiers);
    },
    set_renderStyle__ ()
    {
@@ -3016,7 +3016,7 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
 
       for (const node of this ._renderStyle)
       {
-         const renderStyleNode = X3DCast_default() ((X3DConstants_default()).X3DComposableVolumeRenderStyleNode, node);
+         const renderStyleNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DComposableVolumeRenderStyleNode, node);
 
          if (renderStyleNode)
             renderStyleNodes .push (renderStyleNode);
@@ -3030,7 +3030,7 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
    },
    set_voxels__ ()
    {
-      this .voxelsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._voxels);
+      this .voxelsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._voxels);
 
       if (this .voxelsNode)
          this .getAppearance () ._texture = this ._voxels;
@@ -3097,14 +3097,14 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
       // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
 
-      const vertexShader = new (ShaderPart_default()) (this .getExecutionContext ());
+      const vertexShader = new (external_X_ITE_X3D_ShaderPart_default()) (this .getExecutionContext ());
       vertexShader ._url .push (encodeURI ("data:x-shader/x-vertex," + vs));
       vertexShader .setPrivate (true);
       vertexShader .setName ("SegmentedVolumeDataVertexShader");
       vertexShader .setOptions (options);
       vertexShader .setup ();
 
-      const fragmentShader = new (ShaderPart_default()) (this .getExecutionContext ());
+      const fragmentShader = new (external_X_ITE_X3D_ShaderPart_default()) (this .getExecutionContext ());
       fragmentShader ._type = "FRAGMENT";
       fragmentShader ._url .push (encodeURI ("data:x-shader/x-fragment," + fs));
       fragmentShader .setPrivate (true);
@@ -3112,7 +3112,7 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
       fragmentShader .setOptions (options);
       fragmentShader .setup ();
 
-      const shaderNode = new (ComposedShader_default()) (this .getExecutionContext ());
+      const shaderNode = new (external_X_ITE_X3D_ComposedShader_default()) (this .getExecutionContext ());
       shaderNode ._language = "GLSL";
       shaderNode ._parts .push (vertexShader);
       shaderNode ._parts .push (fragmentShader);
@@ -3120,7 +3120,7 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
       shaderNode .setName ("SegmentedVolumeDataShader");
 
       if (this .segmentIdentifiersNode)
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "segmentIdentifiers", new (Fields_default()).SFNode (this .segmentIdentifiersNode));
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "segmentIdentifiers", new (external_X_ITE_X3D_Fields_default()).SFNode (this .segmentIdentifiersNode));
 
       opacityMapVolumeStyle .addShaderFields (shaderNode);
 
@@ -3165,17 +3165,17 @@ Object .defineProperties (SegmentedVolumeData,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",           new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "dimensions",         new (Fields_default()).SFVec3f (1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "segmentEnabled",     new (Fields_default()).MFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",            new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",        new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",           new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",         new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "segmentIdentifiers", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "renderStyle",        new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "voxels",             new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",           new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "dimensions",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "segmentEnabled",     new (external_X_ITE_X3D_Fields_default()).MFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",            new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",        new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",           new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",         new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "segmentIdentifiers", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "renderStyle",        new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "voxels",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -3184,7 +3184,7 @@ Object .defineProperties (SegmentedVolumeData,
 const SegmentedVolumeData_default_ = SegmentedVolumeData;
 ;
 
-Namespace_default().add ("SegmentedVolumeData", "x_ite/Components/VolumeRendering/SegmentedVolumeData", SegmentedVolumeData_default_);
+external_X_ITE_X3D_Namespace_default().add ("SegmentedVolumeData", "x_ite/Components/VolumeRendering/SegmentedVolumeData", SegmentedVolumeData_default_);
 /* harmony default export */ const VolumeRendering_SegmentedVolumeData = (SegmentedVolumeData_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ShadedVolumeStyle.js
 /*******************************************************************************
@@ -3245,7 +3245,7 @@ function ShadedVolumeStyle (executionContext)
 {
    VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ShadedVolumeStyle);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ShadedVolumeStyle);
 }
 
 Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
@@ -3270,14 +3270,14 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRend
       if (this .materialNode)
          this .materialNode .removeInterest ("addNodeEvent", this);
 
-      this .materialNode = X3DCast_default() ((X3DConstants_default()).X3DMaterialNode, this ._material);
+      this .materialNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DMaterialNode, this ._material);
 
       if (this .materialNode)
          this .materialNode .addInterest ("addNodeEvent", this);
    },
    set_surfaceNormals__ ()
    {
-      this .surfaceNormalsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
+      this .surfaceNormalsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
    },
    addShaderFields (shaderNode)
    {
@@ -3286,16 +3286,16 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRend
 
       if (this .materialNode)
       {
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "ambientIntensity_" + this .getId (), this .materialNode ._ambientIntensity .copy ());
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "diffuseColor_"     + this .getId (), this .materialNode ._diffuseColor     .copy ());
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "specularColor_"    + this .getId (), this .materialNode ._specularColor    .copy ());
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "emissiveColor_"    + this .getId (), this .materialNode ._emissiveColor    .copy ());
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "shininess_"        + this .getId (), this .materialNode ._shininess        .copy ());
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "transparency_"     + this .getId (), this .materialNode ._transparency     .copy ());
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "ambientIntensity_" + this .getId (), this .materialNode ._ambientIntensity .copy ());
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "diffuseColor_"     + this .getId (), this .materialNode ._diffuseColor     .copy ());
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularColor_"    + this .getId (), this .materialNode ._specularColor    .copy ());
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "emissiveColor_"    + this .getId (), this .materialNode ._emissiveColor    .copy ());
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "shininess_"        + this .getId (), this .materialNode ._shininess        .copy ());
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "transparency_"     + this .getId (), this .materialNode ._transparency     .copy ());
       }
 
       if (this .surfaceNormalsNode)
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (Fields_default()).SFNode (this .surfaceNormalsNode));
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (external_X_ITE_X3D_Fields_default()).SFNode (this .surfaceNormalsNode));
    },
    getUniformsText ()
    {
@@ -3453,14 +3453,14 @@ Object .defineProperties (ShadedVolumeStyle,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",        new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "lighting",       new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadows",        new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "phaseFunction",  new (Fields_default()).SFString ("Henyey-Greenstein")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "material",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceNormals", new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "enabled",        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "lighting",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "shadows",        new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "phaseFunction",  new (external_X_ITE_X3D_Fields_default()).SFString ("Henyey-Greenstein")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "material",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "surfaceNormals", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -3469,7 +3469,7 @@ Object .defineProperties (ShadedVolumeStyle,
 const ShadedVolumeStyle_default_ = ShadedVolumeStyle;
 ;
 
-Namespace_default().add ("ShadedVolumeStyle", "x_ite/Components/VolumeRendering/ShadedVolumeStyle", ShadedVolumeStyle_default_);
+external_X_ITE_X3D_Namespace_default().add ("ShadedVolumeStyle", "x_ite/Components/VolumeRendering/ShadedVolumeStyle", ShadedVolumeStyle_default_);
 /* harmony default export */ const VolumeRendering_ShadedVolumeStyle = (ShadedVolumeStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/SilhouetteEnhancementVolumeStyle.js
 /*******************************************************************************
@@ -3530,7 +3530,7 @@ function SilhouetteEnhancementVolumeStyle (executionContext)
 {
    VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).SilhouetteEnhancementVolumeStyle);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).SilhouetteEnhancementVolumeStyle);
 }
 
 Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
@@ -3550,19 +3550,19 @@ Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .protot
    },
    set_surfaceNormals__ ()
    {
-      this .surfaceNormalsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
+      this .surfaceNormalsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
    },
    addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
 
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "silhouetteRetainedOpacity_" + this .getId (), this ._silhouetteRetainedOpacity .copy ());
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "silhouetteBoundaryOpacity_" + this .getId (), this ._silhouetteBoundaryOpacity .copy ());
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "silhouetteSharpness_"       + this .getId (), this ._silhouetteSharpness       .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "silhouetteRetainedOpacity_" + this .getId (), this ._silhouetteRetainedOpacity .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "silhouetteBoundaryOpacity_" + this .getId (), this ._silhouetteBoundaryOpacity .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "silhouetteSharpness_"       + this .getId (), this ._silhouetteSharpness       .copy ());
 
       if (this .surfaceNormalsNode)
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (Fields_default()).SFNode (this .surfaceNormalsNode));
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (external_X_ITE_X3D_Fields_default()).SFNode (this .surfaceNormalsNode));
    },
    getUniformsText ()
    {
@@ -3638,13 +3638,13 @@ Object .defineProperties (SilhouetteEnhancementVolumeStyle,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                  new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",                   new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "silhouetteRetainedOpacity", new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "silhouetteBoundaryOpacity", new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "silhouetteSharpness",       new (Fields_default()).SFFloat (0.5)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals",            new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                  new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",                   new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "silhouetteRetainedOpacity", new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "silhouetteBoundaryOpacity", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "silhouetteSharpness",       new (external_X_ITE_X3D_Fields_default()).SFFloat (0.5)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceNormals",            new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -3653,7 +3653,7 @@ Object .defineProperties (SilhouetteEnhancementVolumeStyle,
 const SilhouetteEnhancementVolumeStyle_default_ = SilhouetteEnhancementVolumeStyle;
 ;
 
-Namespace_default().add ("SilhouetteEnhancementVolumeStyle", "x_ite/Components/VolumeRendering/SilhouetteEnhancementVolumeStyle", SilhouetteEnhancementVolumeStyle_default_);
+external_X_ITE_X3D_Namespace_default().add ("SilhouetteEnhancementVolumeStyle", "x_ite/Components/VolumeRendering/SilhouetteEnhancementVolumeStyle", SilhouetteEnhancementVolumeStyle_default_);
 /* harmony default export */ const VolumeRendering_SilhouetteEnhancementVolumeStyle = (SilhouetteEnhancementVolumeStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ToneMappedVolumeStyle.js
 /*******************************************************************************
@@ -3714,7 +3714,7 @@ function ToneMappedVolumeStyle (executionContext)
 {
    VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ToneMappedVolumeStyle);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ToneMappedVolumeStyle);
 }
 
 Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
@@ -3734,18 +3734,18 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, Volume
    },
    set_surfaceNormals__ ()
    {
-      this .surfaceNormalsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
+      this .surfaceNormalsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
    },
    addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
 
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "coolColor_" + this .getId (), this ._coolColor .copy ());
-      shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "warmColor_" + this .getId (), this ._warmColor .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "coolColor_" + this .getId (), this ._coolColor .copy ());
+      shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "warmColor_" + this .getId (), this ._warmColor .copy ());
 
       if (this .surfaceNormalsNode)
-         shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (Fields_default()).SFNode (this .surfaceNormalsNode));
+         shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (external_X_ITE_X3D_Fields_default()).SFNode (this .surfaceNormalsNode));
    },
    getUniformsText ()
    {
@@ -3830,12 +3830,12 @@ Object .defineProperties (ToneMappedVolumeStyle,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",        new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coolColor",      new (Fields_default()).SFColorRGBA (0, 0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "warmColor",      new (Fields_default()).SFColorRGBA (1, 1, 0, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceNormals", new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "coolColor",      new (external_X_ITE_X3D_Fields_default()).SFColorRGBA (0, 0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "warmColor",      new (external_X_ITE_X3D_Fields_default()).SFColorRGBA (1, 1, 0, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceNormals", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -3844,7 +3844,7 @@ Object .defineProperties (ToneMappedVolumeStyle,
 const ToneMappedVolumeStyle_default_ = ToneMappedVolumeStyle;
 ;
 
-Namespace_default().add ("ToneMappedVolumeStyle", "x_ite/Components/VolumeRendering/ToneMappedVolumeStyle", ToneMappedVolumeStyle_default_);
+external_X_ITE_X3D_Namespace_default().add ("ToneMappedVolumeStyle", "x_ite/Components/VolumeRendering/ToneMappedVolumeStyle", ToneMappedVolumeStyle_default_);
 /* harmony default export */ const VolumeRendering_ToneMappedVolumeStyle = (ToneMappedVolumeStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/VolumeData.js
 /*******************************************************************************
@@ -3907,7 +3907,7 @@ function VolumeData (executionContext)
 {
    VolumeRendering_X3DVolumeDataNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).VolumeData);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).VolumeData);
 
    this .renderStyleNode = null;
   }
@@ -3940,7 +3940,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
          this .renderStyleNode .removeVolumeData (this);
       }
 
-      this .renderStyleNode = X3DCast_default() ((X3DConstants_default()).X3DVolumeRenderStyleNode, this ._renderStyle);
+      this .renderStyleNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DVolumeRenderStyleNode, this ._renderStyle);
 
       if (this .renderStyleNode)
       {
@@ -3950,7 +3950,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
    },
    set_voxels__ ()
    {
-      this .voxelsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._voxels);
+      this .voxelsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._voxels);
 
       if (this .voxelsNode)
          this .getAppearance () ._texture = this ._voxels;
@@ -3981,14 +3981,14 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
       // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
 
-      const vertexShader = new (ShaderPart_default()) (this .getExecutionContext ());
+      const vertexShader = new (external_X_ITE_X3D_ShaderPart_default()) (this .getExecutionContext ());
       vertexShader ._url .push (encodeURI ("data:x-shader/x-vertex," + vs));
       vertexShader .setPrivate (true);
       vertexShader .setName ("VolumeDataVertexShader");
       vertexShader .setOptions (options);
       vertexShader .setup ();
 
-      const fragmentShader = new (ShaderPart_default()) (this .getExecutionContext ());
+      const fragmentShader = new (external_X_ITE_X3D_ShaderPart_default()) (this .getExecutionContext ());
       fragmentShader ._type = "FRAGMENT";
       fragmentShader ._url .push (encodeURI ("data:x-shader/x-fragment," + fs));
       fragmentShader .setPrivate (true);
@@ -3996,7 +3996,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
       fragmentShader .setOptions (options);
       fragmentShader .setup ();
 
-      const shaderNode = new (ComposedShader_default()) (this .getExecutionContext ());
+      const shaderNode = new (external_X_ITE_X3D_ComposedShader_default()) (this .getExecutionContext ());
       shaderNode ._language = "GLSL";
       shaderNode ._parts .push (vertexShader);
       shaderNode ._parts .push (fragmentShader);
@@ -4043,15 +4043,15 @@ Object .defineProperties (VolumeData,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "dimensions",  new (Fields_default()).SFVec3f (1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",     new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay", new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",    new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",  new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "renderStyle", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "voxels",      new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "dimensions",  new (external_X_ITE_X3D_Fields_default()).SFVec3f (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay", new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",    new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",  new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "renderStyle", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "voxels",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -4060,7 +4060,7 @@ Object .defineProperties (VolumeData,
 const VolumeData_default_ = VolumeData;
 ;
 
-Namespace_default().add ("VolumeData", "x_ite/Components/VolumeRendering/VolumeData", VolumeData_default_);
+external_X_ITE_X3D_Namespace_default().add ("VolumeData", "x_ite/Components/VolumeRendering/VolumeData", VolumeData_default_);
 /* harmony default export */ const VolumeRendering_VolumeData = (VolumeData_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/VolumeRendering.js
 /*******************************************************************************
@@ -4129,7 +4129,7 @@ Namespace_default().add ("VolumeData", "x_ite/Components/VolumeRendering/VolumeD
 
 
 
-Components_default().add ({
+external_X_ITE_X3D_Components_default().add ({
    name: "VolumeRendering",
    concreteNodes:
    [
@@ -4159,7 +4159,7 @@ Components_default().add ({
 const VolumeRendering_default_ = undefined;
 ;
 
-Namespace_default().add ("VolumeRendering", "assets/components/VolumeRendering", VolumeRendering_default_);
+external_X_ITE_X3D_Namespace_default().add ("VolumeRendering", "assets/components/VolumeRendering", VolumeRendering_default_);
 /* harmony default export */ const VolumeRendering = ((/* unused pure expression or super */ null && (VolumeRendering_default_)));
 /******/ })()
 ;

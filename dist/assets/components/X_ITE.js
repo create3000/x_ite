@@ -39,30 +39,30 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
-const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
-var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
-var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
-var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DNode\")"
-const X3DNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DNode");
-var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Utility/BitSet\")"
-const BitSet_namespaceObject = __X_ITE_X3D__ .require ("standard/Utility/BitSet");
-var BitSet_default = /*#__PURE__*/__webpack_require__.n(BitSet_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
-var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
+var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
+var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
+var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
+var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
+var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .BitSet"
+const external_X_ITE_X3D_BitSet_namespaceObject = __X_ITE_X3D__ .BitSet;
+var external_X_ITE_X3D_BitSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_BitSet_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/X3DMaterialExtensionNode.js
 /*******************************************************************************
  *
@@ -117,14 +117,14 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 function X3DMaterialExtensionNode (executionContext)
 {
-   X3DNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DMaterialExtensionNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DMaterialExtensionNode);
 
-   this .textureBits = new (BitSet_default()) ();
+   this .textureBits = new (external_X_ITE_X3D_BitSet_default()) ();
 }
 
-Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, (X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
 {
    setTexture (index, textureNode)
    {
@@ -156,11 +156,11 @@ Object .defineProperties (X3DMaterialExtensionNode,
 const __default__ = X3DMaterialExtensionNode;
 ;
 
-Namespace_default().add ("X3DMaterialExtensionNode", "x_ite/Components/X_ITE/X3DMaterialExtensionNode", __default__);
+external_X_ITE_X3D_Namespace_default().add ("X3DMaterialExtensionNode", "x_ite/Components/X_ITE/X3DMaterialExtensionNode", __default__);
 /* harmony default export */ const X_ITE_X3DMaterialExtensionNode = (__default__);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DCast");
-var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
+var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X_ITE/ExtensionKeys.js
 /*******************************************************************************
  *
@@ -230,7 +230,7 @@ const ExtensionKeys =
 const ExtensionKeys_default_ = ExtensionKeys;
 ;
 
-Namespace_default().add ("ExtensionKeys", "x_ite/Browser/X_ITE/ExtensionKeys", ExtensionKeys_default_);
+external_X_ITE_X3D_Namespace_default().add ("ExtensionKeys", "x_ite/Browser/X_ITE/ExtensionKeys", ExtensionKeys_default_);
 /* harmony default export */ const X_ITE_ExtensionKeys = (ExtensionKeys_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/AnisotropyMaterialExtension.js
 /*******************************************************************************
@@ -296,7 +296,7 @@ function AnisotropyMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).AnisotropyMaterialExtension);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).AnisotropyMaterialExtension);
 
    this .anisotropyArray = new Float32Array (3);
 }
@@ -328,7 +328,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    },
    set_anisotropyTexture__ ()
    {
-      this .anisotropyTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._anisotropyTexture);
+      this .anisotropyTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._anisotropyTexture);
 
       this .setTexture (0, this .anisotropyTextureNode);
    },
@@ -385,12 +385,12 @@ Object .defineProperties (AnisotropyMaterialExtension,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                 new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anisotropyStrength",       new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anisotropyRotation",       new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anisotropyTextureMapping", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anisotropyTexture",        new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                 new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "anisotropyStrength",       new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "anisotropyRotation",       new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "anisotropyTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "anisotropyTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -399,11 +399,11 @@ Object .defineProperties (AnisotropyMaterialExtension,
 const AnisotropyMaterialExtension_default_ = AnisotropyMaterialExtension;
 ;
 
-Namespace_default().add ("AnisotropyMaterialExtension", "x_ite/Components/X_ITE/AnisotropyMaterialExtension", AnisotropyMaterialExtension_default_);
+external_X_ITE_X3D_Namespace_default().add ("AnisotropyMaterialExtension", "x_ite/Components/X_ITE/AnisotropyMaterialExtension", AnisotropyMaterialExtension_default_);
 /* harmony default export */ const X_ITE_AnisotropyMaterialExtension = (AnisotropyMaterialExtension_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Shape/X3DAppearanceChildNode\")"
-const X3DAppearanceChildNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Shape/X3DAppearanceChildNode");
-var X3DAppearanceChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DAppearanceChildNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DAppearanceChildNode"
+const external_X_ITE_X3D_X3DAppearanceChildNode_namespaceObject = __X_ITE_X3D__ .X3DAppearanceChildNode;
+var external_X_ITE_X3D_X3DAppearanceChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DAppearanceChildNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/BlendMode.js
 /*******************************************************************************
  *
@@ -464,19 +464,19 @@ var X3DAppearanceChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DAppea
 
 function BlendMode (executionContext)
 {
-   X3DAppearanceChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DAppearanceChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).BlendMode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).BlendMode);
 
    this .factorTypes   = new Map ();
    this .equationTypes = new Map ();
 }
 
-Object .assign (Object .setPrototypeOf (BlendMode .prototype, (X3DAppearanceChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (BlendMode .prototype, (external_X_ITE_X3D_X3DAppearanceChildNode_default()).prototype),
 {
    initialize ()
    {
-      X3DAppearanceChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DAppearanceChildNode_default().prototype .initialize .call (this);
 
       const
          gl  = this .getBrowser () .getContext (),
@@ -587,15 +587,15 @@ Object .defineProperties (BlendMode,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "blendColor",              new (Fields_default()).SFColorRGBA ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sourceColorFactor",       new (Fields_default()).SFString ("SRC_ALPHA")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sourceAlphaFactor",       new (Fields_default()).SFString ("ONE")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "destinationColorFactor",  new (Fields_default()).SFString ("ONE_MINUS_SRC_ALPHA")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "destinationAlphaFactor",  new (Fields_default()).SFString ("ONE_MINUS_SRC_ALPHA")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "colorEquation",           new (Fields_default()).SFString ("FUNC_ADD")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "alphaEquation",           new (Fields_default()).SFString ("FUNC_ADD")),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "blendColor",              new (external_X_ITE_X3D_Fields_default()).SFColorRGBA ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "sourceColorFactor",       new (external_X_ITE_X3D_Fields_default()).SFString ("SRC_ALPHA")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "sourceAlphaFactor",       new (external_X_ITE_X3D_Fields_default()).SFString ("ONE")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "destinationColorFactor",  new (external_X_ITE_X3D_Fields_default()).SFString ("ONE_MINUS_SRC_ALPHA")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "destinationAlphaFactor",  new (external_X_ITE_X3D_Fields_default()).SFString ("ONE_MINUS_SRC_ALPHA")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "colorEquation",           new (external_X_ITE_X3D_Fields_default()).SFString ("FUNC_ADD")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "alphaEquation",           new (external_X_ITE_X3D_Fields_default()).SFString ("FUNC_ADD")),
       ]),
       enumerable: true,
    },
@@ -604,11 +604,11 @@ Object .defineProperties (BlendMode,
 const BlendMode_default_ = BlendMode;
 ;
 
-Namespace_default().add ("BlendMode", "x_ite/Components/X_ITE/BlendMode", BlendMode_default_);
+external_X_ITE_X3D_Namespace_default().add ("BlendMode", "x_ite/Components/X_ITE/BlendMode", BlendMode_default_);
 /* harmony default export */ const X_ITE_BlendMode = (BlendMode_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Algorithm");
-var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
+const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
+var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/ClearcoatMaterialExtension.js
 /*******************************************************************************
  *
@@ -674,7 +674,7 @@ function ClearcoatMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ClearcoatMaterialExtension);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ClearcoatMaterialExtension);
 }
 
 Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
@@ -701,23 +701,23 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    },
    set_clearcoatTexture__ ()
    {
-      this .clearcoatTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatTexture);
+      this .clearcoatTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatTexture);
 
       this .setTexture (0, this .clearcoatTextureNode);
    },
    set_clearcoatRoughness__ ()
    {
-      this .clearcoatRoughness = Algorithm_default().clamp (this ._clearcoatRoughness .getValue (), 0, 1);
+      this .clearcoatRoughness = external_X_ITE_X3D_Algorithm_default().clamp (this ._clearcoatRoughness .getValue (), 0, 1);
    },
    set_clearcoatRoughnessTexture__ ()
    {
-      this .clearcoatRoughnessTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatRoughnessTexture);
+      this .clearcoatRoughnessTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatRoughnessTexture);
 
       this .setTexture (1, this .clearcoatRoughnessTextureNode);
    },
    set_clearcoatNormalTexture__ ()
    {
-      this .clearcoatNormalTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatNormalTexture);
+      this .clearcoatNormalTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatNormalTexture);
 
       this .setTexture (2, this .clearcoatNormalTextureNode);
    },
@@ -796,16 +796,16 @@ Object .defineProperties (ClearcoatMaterialExtension,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoat",                        new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatTextureMapping",          new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatTexture",                 new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatRoughness",               new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatRoughnessTextureMapping", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatRoughnessTexture",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatNormalTextureMapping",    new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "clearcoatNormalTexture",           new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "clearcoat",                        new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "clearcoatTextureMapping",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "clearcoatTexture",                 new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "clearcoatRoughness",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "clearcoatRoughnessTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "clearcoatRoughnessTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "clearcoatNormalTextureMapping",    new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "clearcoatNormalTexture",           new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -814,7 +814,7 @@ Object .defineProperties (ClearcoatMaterialExtension,
 const ClearcoatMaterialExtension_default_ = ClearcoatMaterialExtension;
 ;
 
-Namespace_default().add ("ClearcoatMaterialExtension", "x_ite/Components/X_ITE/ClearcoatMaterialExtension", ClearcoatMaterialExtension_default_);
+external_X_ITE_X3D_Namespace_default().add ("ClearcoatMaterialExtension", "x_ite/Components/X_ITE/ClearcoatMaterialExtension", ClearcoatMaterialExtension_default_);
 /* harmony default export */ const X_ITE_ClearcoatMaterialExtension = (ClearcoatMaterialExtension_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/DepthMode.js
 /*******************************************************************************
@@ -876,18 +876,18 @@ Namespace_default().add ("ClearcoatMaterialExtension", "x_ite/Components/X_ITE/C
 
 function DepthMode (executionContext)
 {
-   X3DAppearanceChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DAppearanceChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).DepthMode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).DepthMode);
 
    this .addAlias ("depthFunc", this ._depthFunction);
 }
 
-Object .assign (Object .setPrototypeOf (DepthMode .prototype, (X3DAppearanceChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (DepthMode .prototype, (external_X_ITE_X3D_X3DAppearanceChildNode_default()).prototype),
 {
    initialize ()
    {
-      X3DAppearanceChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DAppearanceChildNode_default().prototype .initialize .call (this);
 
       this ._depthFunction .addInterest ("set_depthFunction__", this);
 
@@ -969,13 +969,13 @@ Object .defineProperties (DepthMode,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "polygonOffset", new (Fields_default()).SFVec2f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "depthRange",    new (Fields_default()).SFVec2f (0, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "depthTest",     new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "depthFunction", new (Fields_default()).SFString ("LESS_EQUAL")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "depthMask",     new (Fields_default()).SFBool (true)),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "polygonOffset", new (external_X_ITE_X3D_Fields_default()).SFVec2f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "depthRange",    new (external_X_ITE_X3D_Fields_default()).SFVec2f (0, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "depthTest",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "depthFunction", new (external_X_ITE_X3D_Fields_default()).SFString ("LESS_EQUAL")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "depthMask",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
       ]),
       enumerable: true,
    },
@@ -984,7 +984,7 @@ Object .defineProperties (DepthMode,
 const DepthMode_default_ = DepthMode;
 ;
 
-Namespace_default().add ("DepthMode", "x_ite/Components/X_ITE/DepthMode", DepthMode_default_);
+external_X_ITE_X3D_Namespace_default().add ("DepthMode", "x_ite/Components/X_ITE/DepthMode", DepthMode_default_);
 /* harmony default export */ const X_ITE_DepthMode = (DepthMode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/DiffuseTransmissionMaterialExtension.js
 /*******************************************************************************
@@ -1050,7 +1050,7 @@ function DiffuseTransmissionMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).DiffuseTransmissionMaterialExtension);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).DiffuseTransmissionMaterialExtension);
 
    this .diffuseTransmissionColorArray = new Float32Array (3);
 }
@@ -1077,7 +1077,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    },
    set_diffuseTransmissionTexture__ ()
    {
-      this .diffuseTransmissionTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._diffuseTransmissionTexture);
+      this .diffuseTransmissionTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._diffuseTransmissionTexture);
 
       this .setTexture (0, this .diffuseTransmissionTextureNode);
    },
@@ -1096,7 +1096,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    },
    set_diffuseTransmissionColorTexture__ ()
    {
-      this .diffuseTransmissionColorTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._diffuseTransmissionColorTexture);
+      this .diffuseTransmissionColorTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._diffuseTransmissionColorTexture);
 
       this .setTexture (1, this .diffuseTransmissionColorTextureNode);
    },
@@ -1166,14 +1166,14 @@ Object .defineProperties (DiffuseTransmissionMaterialExtension,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                               new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTransmission",                    new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTransmissionTextureMapping",      new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTransmissionTexture",             new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTransmissionColor",               new (Fields_default()).SFColor (1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTransmissionColorTextureMapping", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTransmissionColorTexture",        new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                               new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "diffuseTransmission",                    new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "diffuseTransmissionTextureMapping",      new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "diffuseTransmissionTexture",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "diffuseTransmissionColor",               new (external_X_ITE_X3D_Fields_default()).SFColor (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "diffuseTransmissionColorTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "diffuseTransmissionColorTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -1182,7 +1182,7 @@ Object .defineProperties (DiffuseTransmissionMaterialExtension,
 const DiffuseTransmissionMaterialExtension_default_ = DiffuseTransmissionMaterialExtension;
 ;
 
-Namespace_default().add ("DiffuseTransmissionMaterialExtension", "x_ite/Components/X_ITE/DiffuseTransmissionMaterialExtension", DiffuseTransmissionMaterialExtension_default_);
+external_X_ITE_X3D_Namespace_default().add ("DiffuseTransmissionMaterialExtension", "x_ite/Components/X_ITE/DiffuseTransmissionMaterialExtension", DiffuseTransmissionMaterialExtension_default_);
 /* harmony default export */ const X_ITE_DiffuseTransmissionMaterialExtension = (DiffuseTransmissionMaterialExtension_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/DispersionMaterialExtension.js
 /*******************************************************************************
@@ -1247,7 +1247,7 @@ function DispersionMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).DispersionMaterialExtension);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).DispersionMaterialExtension);
 }
 
 Object .assign (Object .setPrototypeOf (DispersionMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
@@ -1302,9 +1302,9 @@ Object .defineProperties (DispersionMaterialExtension,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",   new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "dispersion", new (Fields_default()).SFFloat ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",   new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dispersion", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
       ]),
       enumerable: true,
    },
@@ -1313,7 +1313,7 @@ Object .defineProperties (DispersionMaterialExtension,
 const DispersionMaterialExtension_default_ = DispersionMaterialExtension;
 ;
 
-Namespace_default().add ("DispersionMaterialExtension", "x_ite/Components/X_ITE/DispersionMaterialExtension", DispersionMaterialExtension_default_);
+external_X_ITE_X3D_Namespace_default().add ("DispersionMaterialExtension", "x_ite/Components/X_ITE/DispersionMaterialExtension", DispersionMaterialExtension_default_);
 /* harmony default export */ const X_ITE_DispersionMaterialExtension = (DispersionMaterialExtension_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/EmissiveStrengthMaterialExtension.js
 /*******************************************************************************
@@ -1378,7 +1378,7 @@ function EmissiveStrengthMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).EmissiveStrengthMaterialExtension);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).EmissiveStrengthMaterialExtension);
 }
 
 Object .assign (Object .setPrototypeOf (EmissiveStrengthMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
@@ -1433,9 +1433,9 @@ Object .defineProperties (EmissiveStrengthMaterialExtension,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "emissiveStrength", new (Fields_default()).SFFloat (1)),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "emissiveStrength", new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
       ]),
       enumerable: true,
    },
@@ -1444,26 +1444,26 @@ Object .defineProperties (EmissiveStrengthMaterialExtension,
 const EmissiveStrengthMaterialExtension_default_ = EmissiveStrengthMaterialExtension;
 ;
 
-Namespace_default().add ("EmissiveStrengthMaterialExtension", "x_ite/Components/X_ITE/EmissiveStrengthMaterialExtension", EmissiveStrengthMaterialExtension_default_);
+external_X_ITE_X3D_Namespace_default().add ("EmissiveStrengthMaterialExtension", "x_ite/Components/X_ITE/EmissiveStrengthMaterialExtension", EmissiveStrengthMaterialExtension_default_);
 /* harmony default export */ const X_ITE_EmissiveStrengthMaterialExtension = (EmissiveStrengthMaterialExtension_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Shape/X3DShapeNode\")"
-const X3DShapeNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Shape/X3DShapeNode");
-var X3DShapeNode_default = /*#__PURE__*/__webpack_require__.n(X3DShapeNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Rendering/TraverseType");
-var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Rendering/VertexArray\")"
-const VertexArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Rendering/VertexArray");
-var VertexArray_default = /*#__PURE__*/__webpack_require__.n(VertexArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector3");
-var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Matrix4");
-var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Geometry/Box3\")"
-const Box3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Geometry/Box3");
-var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DShapeNode"
+const external_X_ITE_X3D_X3DShapeNode_namespaceObject = __X_ITE_X3D__ .X3DShapeNode;
+var external_X_ITE_X3D_X3DShapeNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DShapeNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TraverseType"
+const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
+var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .VertexArray"
+const external_X_ITE_X3D_VertexArray_namespaceObject = __X_ITE_X3D__ .VertexArray;
+var external_X_ITE_X3D_VertexArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_VertexArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
+var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
+var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Box3"
+const external_X_ITE_X3D_Box3_namespaceObject = __X_ITE_X3D__ .Box3;
+var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/InstancedShape.js
 /*******************************************************************************
  *
@@ -1529,15 +1529,15 @@ var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
 
 function InstancedShape (executionContext)
 {
-   X3DShapeNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DShapeNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).InstancedShape);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).InstancedShape);
 
-   this .addChildObjects ((X3DConstants_default()).outputOnly, "matrices", new (Fields_default()).SFTime ());
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "matrices", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
-   this .min   = new (Vector3_default()) ();
-   this .max   = new (Vector3_default()) ();
-   this .scale = new (Vector3_default()) (1, 1, 1);
+   this .min   = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .max   = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .scale = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 1);
 
    this .numInstances       = 0;
    this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (16 + 9); // mat4 + mat3
@@ -1545,11 +1545,11 @@ function InstancedShape (executionContext)
    this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * 16;
 }
 
-Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (X3DShapeNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_ITE_X3D_X3DShapeNode_default()).prototype),
 {
    initialize ()
    {
-      X3DShapeNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DShapeNode_default().prototype .initialize .call (this);
 
       const
          browser = this .getBrowser (),
@@ -1562,8 +1562,8 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (X3DShapeNode
 
       this .instances = Object .assign (gl .createBuffer (),
       {
-         vertexArrayObject: new (VertexArray_default()) (gl),
-         thickLinesVertexArrayObject: new (VertexArray_default()) (gl),
+         vertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
+         thickLinesVertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
          lineTrianglesBuffer: gl .createBuffer (),
          numLines: 0,
       });
@@ -1590,9 +1590,9 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (X3DShapeNode
    set_bbox__: (function ()
    {
       const
-         min  = new (Vector3_default()) (),
-         max  = new (Vector3_default()) (),
-         bbox = new (Box3_default()) ();
+         min  = new (external_X_ITE_X3D_Vector3_default()) (),
+         max  = new (external_X_ITE_X3D_Vector3_default()) (),
+         bbox = new (external_X_ITE_X3D_Box3_default()) ();
 
       return function ()
       {
@@ -1647,14 +1647,14 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (X3DShapeNode
          stride          = this .instancesStride / Float32Array .BYTES_PER_ELEMENT,
          length          = this .instancesStride * numInstances,
          data            = new Float32Array (length),
-         matrix          = new (Matrix4_default()) ();
+         matrix          = new (external_X_ITE_X3D_Matrix4_default()) ();
 
       this .numInstances = numInstances;
 
       const
          min   = this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
          max   = this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY),
-         scale = this .scale .assign (numScales ? max : (Vector3_default()).One);
+         scale = this .scale .assign (numScales ? max : (external_X_ITE_X3D_Vector3_default()).One);
 
       for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
       {
@@ -1679,7 +1679,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (X3DShapeNode
    },
    set_geometry__ ()
    {
-      X3DShapeNode_default().prototype .set_geometry__ .call (this);
+      external_X_ITE_X3D_X3DShapeNode_default().prototype .set_geometry__ .call (this);
 
       if (this .getGeometry ())
          delete this .traverse;
@@ -1699,30 +1699,30 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (X3DShapeNode
 
       switch (type)
       {
-         case (TraverseType_default()).POINTER:
+         case (external_X_ITE_X3D_TraverseType_default()).POINTER:
          {
             if (this ._pointerEvents .getValue ())
                renderObject .addPointingShape (this);
 
             break;
          }
-         case (TraverseType_default()).PICKING:
+         case (external_X_ITE_X3D_TraverseType_default()).PICKING:
          {
             break;
          }
-         case (TraverseType_default()).COLLISION:
+         case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
          {
             renderObject .addCollisionShape (this);
             break;
          }
-         case (TraverseType_default()).SHADOW:
+         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
          {
             if (this ._castShadow .getValue ())
                renderObject .addShadowShape (this);
 
             break;
          }
-         case (TraverseType_default()).DISPLAY:
+         case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
             if (renderObject .addDisplayShape (this))
             {
@@ -1771,19 +1771,19 @@ Object .defineProperties (InstancedShape,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",      new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "translations",  new (Fields_default()).MFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rotations",     new (Fields_default()).MFRotation ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scales",        new (Fields_default()).MFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pointerEvents", new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "castShadow",    new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",       new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",   new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",      new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",    new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "appearance",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geometry",      new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "translations",  new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "rotations",     new (external_X_ITE_X3D_Fields_default()).MFRotation ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scales",        new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pointerEvents", new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "castShadow",    new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",       new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",   new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",      new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",    new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "appearance",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "geometry",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -1792,7 +1792,7 @@ Object .defineProperties (InstancedShape,
 const InstancedShape_default_ = InstancedShape;
 ;
 
-Namespace_default().add ("InstancedShape", "x_ite/Components/X_ITE/InstancedShape", InstancedShape_default_);
+external_X_ITE_X3D_Namespace_default().add ("InstancedShape", "x_ite/Components/X_ITE/InstancedShape", InstancedShape_default_);
 /* harmony default export */ const X_ITE_InstancedShape = (InstancedShape_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/IORMaterialExtension.js
 /*******************************************************************************
@@ -1857,7 +1857,7 @@ function IORMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).IORMaterialExtension);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).IORMaterialExtension);
 }
 
 Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
@@ -1912,9 +1912,9 @@ Object .defineProperties (IORMaterialExtension,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "indexOfRefraction", new (Fields_default()).SFFloat (1.5)),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "indexOfRefraction", new (external_X_ITE_X3D_Fields_default()).SFFloat (1.5)),
       ]),
       enumerable: true,
    },
@@ -1923,7 +1923,7 @@ Object .defineProperties (IORMaterialExtension,
 const IORMaterialExtension_default_ = IORMaterialExtension;
 ;
 
-Namespace_default().add ("IORMaterialExtension", "x_ite/Components/X_ITE/IORMaterialExtension", IORMaterialExtension_default_);
+external_X_ITE_X3D_Namespace_default().add ("IORMaterialExtension", "x_ite/Components/X_ITE/IORMaterialExtension", IORMaterialExtension_default_);
 /* harmony default export */ const X_ITE_IORMaterialExtension = (IORMaterialExtension_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/IridescenceMaterialExtension.js
 /*******************************************************************************
@@ -1989,7 +1989,7 @@ function IridescenceMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).IridescenceMaterialExtension);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).IridescenceMaterialExtension);
 }
 
 Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
@@ -2018,7 +2018,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    },
    set_iridescenceTexture__ ()
    {
-      this .iridescenceTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._iridescenceTexture);
+      this .iridescenceTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._iridescenceTexture);
 
       this .setTexture (0, this .iridescenceTextureNode);
    },
@@ -2036,7 +2036,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    },
    set_iridescenceThicknessTexture__ ()
    {
-      this .iridescenceThicknessTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._iridescenceThicknessTexture);
+      this .iridescenceThicknessTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._iridescenceThicknessTexture);
 
       this .setTexture (1, this .iridescenceThicknessTextureNode);
    },
@@ -2108,16 +2108,16 @@ Object .defineProperties (IridescenceMaterialExtension,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                           new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "iridescence",                        new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "iridescenceTextureMapping",          new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "iridescenceTexture",                 new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "iridescenceIndexOfRefraction",       new (Fields_default()).SFFloat (1.3)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "iridescenceThicknessMinimum",        new (Fields_default()).SFFloat (100)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "iridescenceThicknessMaximum",        new (Fields_default()).SFFloat (400)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "iridescenceThicknessTextureMapping", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "iridescenceThicknessTexture",        new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                           new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "iridescence",                        new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "iridescenceTextureMapping",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "iridescenceTexture",                 new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "iridescenceIndexOfRefraction",       new (external_X_ITE_X3D_Fields_default()).SFFloat (1.3)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "iridescenceThicknessMinimum",        new (external_X_ITE_X3D_Fields_default()).SFFloat (100)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "iridescenceThicknessMaximum",        new (external_X_ITE_X3D_Fields_default()).SFFloat (400)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "iridescenceThicknessTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "iridescenceThicknessTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -2126,7 +2126,7 @@ Object .defineProperties (IridescenceMaterialExtension,
 const IridescenceMaterialExtension_default_ = IridescenceMaterialExtension;
 ;
 
-Namespace_default().add ("IridescenceMaterialExtension", "x_ite/Components/X_ITE/IridescenceMaterialExtension", IridescenceMaterialExtension_default_);
+external_X_ITE_X3D_Namespace_default().add ("IridescenceMaterialExtension", "x_ite/Components/X_ITE/IridescenceMaterialExtension", IridescenceMaterialExtension_default_);
 /* harmony default export */ const X_ITE_IridescenceMaterialExtension = (IridescenceMaterialExtension_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/SheenMaterialExtension.js
 /*******************************************************************************
@@ -2193,7 +2193,7 @@ function SheenMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).SheenMaterialExtension);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).SheenMaterialExtension);
 
    this .sheenColorArray = new Float32Array (3);
 }
@@ -2229,17 +2229,17 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
    },
    set_sheenColorTexture__ ()
    {
-      this .sheenColorTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._sheenColorTexture);
+      this .sheenColorTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._sheenColorTexture);
 
       this .setTexture (0, this .sheenColorTextureNode);
    },
    set_sheenRoughness__ ()
    {
-      this .sheenRoughness = Algorithm_default().clamp (this ._sheenRoughness .getValue (), 0, 1);
+      this .sheenRoughness = external_X_ITE_X3D_Algorithm_default().clamp (this ._sheenRoughness .getValue (), 0, 1);
    },
    set_sheenRoughnessTexture__ ()
    {
-      this .sheenRoughnessTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._sheenRoughnessTexture);
+      this .sheenRoughnessTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._sheenRoughnessTexture);
 
       this .setTexture (1, this .sheenRoughnessTextureNode);
    },
@@ -2318,14 +2318,14 @@ Object .defineProperties (SheenMaterialExtension,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sheenColor",                   new (Fields_default()).SFColor ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sheenColorTextureMapping",     new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sheenColorTexture",            new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sheenRoughness",               new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sheenRoughnessTextureMapping", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sheenRoughnessTexture",        new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "sheenColor",                   new (external_X_ITE_X3D_Fields_default()).SFColor ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "sheenColorTextureMapping",     new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "sheenColorTexture",            new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "sheenRoughness",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "sheenRoughnessTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "sheenRoughnessTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -2334,11 +2334,11 @@ Object .defineProperties (SheenMaterialExtension,
 const SheenMaterialExtension_default_ = SheenMaterialExtension;
 ;
 
-Namespace_default().add ("SheenMaterialExtension", "x_ite/Components/X_ITE/SheenMaterialExtension", SheenMaterialExtension_default_);
+external_X_ITE_X3D_Namespace_default().add ("SheenMaterialExtension", "x_ite/Components/X_ITE/SheenMaterialExtension", SheenMaterialExtension_default_);
 /* harmony default export */ const X_ITE_SheenMaterialExtension = (SheenMaterialExtension_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Shape/X3DOneSidedMaterialNode\")"
-const X3DOneSidedMaterialNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Shape/X3DOneSidedMaterialNode");
-var X3DOneSidedMaterialNode_default = /*#__PURE__*/__webpack_require__.n(X3DOneSidedMaterialNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DOneSidedMaterialNode"
+const external_X_ITE_X3D_X3DOneSidedMaterialNode_namespaceObject = __X_ITE_X3D__ .X3DOneSidedMaterialNode;
+var external_X_ITE_X3D_X3DOneSidedMaterialNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DOneSidedMaterialNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/SpecularGlossinessMaterial.js
 /*******************************************************************************
  *
@@ -2403,9 +2403,9 @@ function SpecularGlossinessMaterial (executionContext)
 {
    console .warn ("SpecularGlossinessMaterial is depreciated, please use PhysicalMaterial instead.");
 
-   X3DOneSidedMaterialNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DOneSidedMaterialNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).SpecularGlossinessMaterial);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).SpecularGlossinessMaterial);
 
    this .materialKey        = "4/";
    this .diffuseColorArray  = new Float32Array (3);
@@ -2413,11 +2413,11 @@ function SpecularGlossinessMaterial (executionContext)
    this .extensionNodes     = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (X3DOneSidedMaterialNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (external_X_ITE_X3D_X3DOneSidedMaterialNode_default()).prototype),
 {
    initialize ()
    {
-      X3DOneSidedMaterialNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DOneSidedMaterialNode_default().prototype .initialize .call (this);
 
       this ._diffuseColor              .addInterest ("set_diffuseColor__",              this);
       this ._diffuseTexture            .addInterest ("set_diffuseTexture__",            this);
@@ -2487,7 +2487,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
          this .diffuseTextureNode ._linear      .removeInterest (`setTexture${index}`, this);
       }
 
-      this .diffuseTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._diffuseTexture);
+      this .diffuseTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._diffuseTexture);
 
       if (this .diffuseTextureNode)
       {
@@ -2512,21 +2512,21 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
    },
    set_glossiness__ ()
    {
-      this .glossiness = Algorithm_default().clamp (this ._glossiness .getValue (), 0, 1);
+      this .glossiness = external_X_ITE_X3D_Algorithm_default().clamp (this ._glossiness .getValue (), 0, 1);
    },
    set_specularGlossinessTexture__ ()
    {
-      this .specularGlossinessTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._specularGlossinessTexture);
+      this .specularGlossinessTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._specularGlossinessTexture);
 
       this .setTexture (this .getTextureIndices () .SPECULAR_GLOSSINESS_TEXTURE, this .specularGlossinessTextureNode);
    },
    set_occlusionStrength__ ()
    {
-      this .occlusionStrength = Algorithm_default().clamp (this ._occlusionStrength .getValue (), 0, 1);
+      this .occlusionStrength = external_X_ITE_X3D_Algorithm_default().clamp (this ._occlusionStrength .getValue (), 0, 1);
    },
    set_occlusionTexture__ ()
    {
-      this .occlusionTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._occlusionTexture);
+      this .occlusionTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._occlusionTexture);
 
       this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
@@ -2546,7 +2546,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
 
       for (const node of this ._extensions)
       {
-         const extensionNode = X3DCast_default() ((X3DConstants_default()).X3DMaterialExtensionNode, node);
+         const extensionNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DMaterialExtensionNode, node);
 
          if (extensionNode)
             extensionNodes .push (extensionNode);
@@ -2557,7 +2557,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
       for (const extensionNode of extensionNodes)
          extensionNode .addInterest ("set_extensionsKey__", this);
 
-      this .setTransmission (extensionNodes .some (extensionNode => extensionNode .getType () .includes ((X3DConstants_default()).TransmissionMaterialExtension)));
+      this .setTransmission (extensionNodes .some (extensionNode => extensionNode .getType () .includes ((external_X_ITE_X3D_X3DConstants_default()).TransmissionMaterialExtension)));
 
       this .set_extensionsKey__ ();
    },
@@ -2595,7 +2595,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      X3DOneSidedMaterialNode_default().prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+      external_X_ITE_X3D_X3DOneSidedMaterialNode_default().prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
       for (const extensionNode of this .extensionNodes)
          extensionNode .setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
@@ -2660,26 +2660,26 @@ Object .defineProperties (SpecularGlossinessMaterial,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseColor",                     new (Fields_default()).SFColor (1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTextureMapping",            new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "diffuseTexture",                   new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularColor",                    new (Fields_default()).SFColor (1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "glossiness",                       new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularGlossinessTextureMapping", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularGlossinessTexture",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "emissiveColor",                    new (Fields_default()).SFColor ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "emissiveTextureMapping",           new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "emissiveTexture",                  new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "occlusionStrength",                new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "occlusionTextureMapping",          new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "occlusionTexture",                 new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "normalScale",                      new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "normalTextureMapping",             new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "normalTexture",                    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "transparency",                     new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "extensions",                       new (Fields_default()).MFNode ()), // experimental
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "diffuseColor",                     new (external_X_ITE_X3D_Fields_default()).SFColor (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "diffuseTextureMapping",            new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "diffuseTexture",                   new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularColor",                    new (external_X_ITE_X3D_Fields_default()).SFColor (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "glossiness",                       new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularGlossinessTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularGlossinessTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "emissiveColor",                    new (external_X_ITE_X3D_Fields_default()).SFColor ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "emissiveTextureMapping",           new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "emissiveTexture",                  new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "occlusionStrength",                new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "occlusionTextureMapping",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "occlusionTexture",                 new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "normalScale",                      new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "normalTextureMapping",             new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "normalTexture",                    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "transparency",                     new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "extensions",                       new (external_X_ITE_X3D_Fields_default()).MFNode ()), // experimental
       ]),
       enumerable: true,
    },
@@ -2696,7 +2696,7 @@ for (const index of Object .values (SpecularGlossinessMaterial .prototype .getTe
 const SpecularGlossinessMaterial_default_ = SpecularGlossinessMaterial;
 ;
 
-Namespace_default().add ("SpecularGlossinessMaterial", "x_ite/Components/X_ITE/SpecularGlossinessMaterial", SpecularGlossinessMaterial_default_);
+external_X_ITE_X3D_Namespace_default().add ("SpecularGlossinessMaterial", "x_ite/Components/X_ITE/SpecularGlossinessMaterial", SpecularGlossinessMaterial_default_);
 /* harmony default export */ const X_ITE_SpecularGlossinessMaterial = (SpecularGlossinessMaterial_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/SpecularMaterialExtension.js
 /*******************************************************************************
@@ -2762,7 +2762,7 @@ function SpecularMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).SpecularMaterialExtension);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).SpecularMaterialExtension);
 
    this .specularColorArray = new Float32Array (3);
 }
@@ -2789,7 +2789,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
    },
    set_specularTexture__ ()
    {
-      this .specularTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._specularTexture);
+      this .specularTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._specularTexture);
 
       this .setTexture (0, this .specularTextureNode);
    },
@@ -2808,7 +2808,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
    },
    set_specularColorTexture__ ()
    {
-      this .specularColorTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._specularColorTexture);
+      this .specularColorTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._specularColorTexture);
 
       this .setTexture (1, this .specularColorTextureNode);
    },
@@ -2878,14 +2878,14 @@ Object .defineProperties (SpecularMaterialExtension,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specular",                    new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularTextureMapping",      new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularTexture",             new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularColor",               new (Fields_default()).SFColor (1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularColorTextureMapping", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "specularColorTexture",        new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specular",                    new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularTextureMapping",      new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularTexture",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularColor",               new (external_X_ITE_X3D_Fields_default()).SFColor (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularColorTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularColorTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -2894,7 +2894,7 @@ Object .defineProperties (SpecularMaterialExtension,
 const SpecularMaterialExtension_default_ = SpecularMaterialExtension;
 ;
 
-Namespace_default().add ("SpecularMaterialExtension", "x_ite/Components/X_ITE/SpecularMaterialExtension", SpecularMaterialExtension_default_);
+external_X_ITE_X3D_Namespace_default().add ("SpecularMaterialExtension", "x_ite/Components/X_ITE/SpecularMaterialExtension", SpecularMaterialExtension_default_);
 /* harmony default export */ const X_ITE_SpecularMaterialExtension = (SpecularMaterialExtension_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/TransmissionMaterialExtension.js
 /*******************************************************************************
@@ -2960,7 +2960,7 @@ function TransmissionMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).TransmissionMaterialExtension);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).TransmissionMaterialExtension);
 }
 
 Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
@@ -2981,7 +2981,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    },
    set_transmissionTexture__ ()
    {
-      this .transmissionTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._transmissionTexture);
+      this .transmissionTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._transmissionTexture);
 
       this .setTexture (0, this .transmissionTextureNode);
    },
@@ -3051,11 +3051,11 @@ Object .defineProperties (TransmissionMaterialExtension,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                   new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "transmission",               new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "transmissionTextureMapping", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "transmissionTexture",        new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                   new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "transmission",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "transmissionTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "transmissionTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -3064,7 +3064,7 @@ Object .defineProperties (TransmissionMaterialExtension,
 const TransmissionMaterialExtension_default_ = TransmissionMaterialExtension;
 ;
 
-Namespace_default().add ("TransmissionMaterialExtension", "x_ite/Components/X_ITE/TransmissionMaterialExtension", TransmissionMaterialExtension_default_);
+external_X_ITE_X3D_Namespace_default().add ("TransmissionMaterialExtension", "x_ite/Components/X_ITE/TransmissionMaterialExtension", TransmissionMaterialExtension_default_);
 /* harmony default export */ const X_ITE_TransmissionMaterialExtension = (TransmissionMaterialExtension_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/X_ITE/VolumeMaterialExtension.js
 /*******************************************************************************
@@ -3130,7 +3130,7 @@ function VolumeMaterialExtension (executionContext)
 {
    X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).VolumeMaterialExtension);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).VolumeMaterialExtension);
 
    this .attenuationColorArray = new Float32Array (3);
 }
@@ -3157,7 +3157,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X_IT
    },
    set_thicknessTexture__ ()
    {
-      this .thicknessTextureNode = X3DCast_default() ((X3DConstants_default()).X3DSingleTextureNode, this ._thicknessTexture);
+      this .thicknessTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._thicknessTexture);
 
       this .setTexture (0, this .thicknessTextureNode);
    },
@@ -3236,13 +3236,13 @@ Object .defineProperties (VolumeMaterialExtension,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "thickness",               new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "thicknessTextureMapping", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "thicknessTexture",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "attenuationDistance",     new (Fields_default()).SFFloat (1_000_000)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "attenuationColor",        new (Fields_default()).SFColor (1, 1, 1)),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "thickness",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "thicknessTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "thicknessTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "attenuationDistance",     new (external_X_ITE_X3D_Fields_default()).SFFloat (1_000_000)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "attenuationColor",        new (external_X_ITE_X3D_Fields_default()).SFColor (1, 1, 1)),
       ]),
       enumerable: true,
    },
@@ -3251,7 +3251,7 @@ Object .defineProperties (VolumeMaterialExtension,
 const VolumeMaterialExtension_default_ = VolumeMaterialExtension;
 ;
 
-Namespace_default().add ("VolumeMaterialExtension", "x_ite/Components/X_ITE/VolumeMaterialExtension", VolumeMaterialExtension_default_);
+external_X_ITE_X3D_Namespace_default().add ("VolumeMaterialExtension", "x_ite/Components/X_ITE/VolumeMaterialExtension", VolumeMaterialExtension_default_);
 /* harmony default export */ const X_ITE_VolumeMaterialExtension = (VolumeMaterialExtension_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/X_ITE.js
 /*******************************************************************************
@@ -3319,7 +3319,7 @@ Namespace_default().add ("VolumeMaterialExtension", "x_ite/Components/X_ITE/Volu
 
 
 
-Components_default().add ({
+external_X_ITE_X3D_Components_default().add ({
    name: "X_ITE",
    concreteNodes:
    [
@@ -3348,7 +3348,7 @@ Components_default().add ({
 const X_ITE_default_ = undefined;
 ;
 
-Namespace_default().add ("X_ITE", "assets/components/X_ITE", X_ITE_default_);
+external_X_ITE_X3D_Namespace_default().add ("X_ITE", "assets/components/X_ITE", X_ITE_default_);
 /* harmony default export */ const X_ITE = ((/* unused pure expression or super */ null && (X_ITE_default_)));
 /******/ })()
 ;

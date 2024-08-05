@@ -39,21 +39,21 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
-const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
-var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DBaseNode\")"
-const X3DBaseNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DBaseNode");
-var X3DBaseNode_default = /*#__PURE__*/__webpack_require__.n(X3DBaseNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
-var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
+var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DBaseNode"
+const external_X_ITE_X3D_X3DBaseNode_namespaceObject = __X_ITE_X3D__ .X3DBaseNode;
+var external_X_ITE_X3D_X3DBaseNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBaseNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
+var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
+var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Arc2DOptions.js
 /*******************************************************************************
  *
@@ -108,12 +108,12 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 function Arc2DOptions (executionContext)
 {
-   X3DBaseNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ((X3DConstants_default()).inputOutput, "dimension", new (Fields_default()).SFInt32 (40))
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
 }
 
-Object .setPrototypeOf (Arc2DOptions .prototype, (X3DBaseNode_default()).prototype);
+Object .setPrototypeOf (Arc2DOptions .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype);
 
 Object .defineProperties (Arc2DOptions,
 {
@@ -127,7 +127,7 @@ Object .defineProperties (Arc2DOptions,
 const __default__ = Arc2DOptions;
 ;
 
-Namespace_default().add ("Arc2DOptions", "x_ite/Browser/Geometry2D/Arc2DOptions", __default__);
+external_X_ITE_X3D_Namespace_default().add ("Arc2DOptions", "x_ite/Browser/Geometry2D/Arc2DOptions", __default__);
 /* harmony default export */ const Geometry2D_Arc2DOptions = (__default__);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/ArcClose2DOptions.js
 /*******************************************************************************
@@ -183,12 +183,12 @@ Namespace_default().add ("Arc2DOptions", "x_ite/Browser/Geometry2D/Arc2DOptions"
 
 function ArcClose2DOptions (executionContext)
 {
-   X3DBaseNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ((X3DConstants_default()).inputOutput, "dimension", new (Fields_default()).SFInt32 (40))
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
 }
 
-Object .setPrototypeOf (ArcClose2DOptions .prototype, (X3DBaseNode_default()).prototype);
+Object .setPrototypeOf (ArcClose2DOptions .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype);
 
 Object .defineProperties (ArcClose2DOptions,
 {
@@ -202,14 +202,14 @@ Object .defineProperties (ArcClose2DOptions,
 const ArcClose2DOptions_default_ = ArcClose2DOptions;
 ;
 
-Namespace_default().add ("ArcClose2DOptions", "x_ite/Browser/Geometry2D/ArcClose2DOptions", ArcClose2DOptions_default_);
+external_X_ITE_X3D_Namespace_default().add ("ArcClose2DOptions", "x_ite/Browser/Geometry2D/ArcClose2DOptions", ArcClose2DOptions_default_);
 /* harmony default export */ const Geometry2D_ArcClose2DOptions = (ArcClose2DOptions_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
-const X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/X3DGeometryNode");
-var X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometryNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Complex\")"
-const Complex_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Complex");
-var Complex_default = /*#__PURE__*/__webpack_require__.n(Complex_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGeometryNode"
+const external_X_ITE_X3D_X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DGeometryNode;
+var external_X_ITE_X3D_X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGeometryNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Complex"
+const external_X_ITE_X3D_Complex_namespaceObject = __X_ITE_X3D__ .Complex;
+var external_X_ITE_X3D_Complex_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Complex_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Circle2DOptions.js
 /*******************************************************************************
  *
@@ -266,18 +266,18 @@ var Complex_default = /*#__PURE__*/__webpack_require__.n(Complex_namespaceObject
 
 function Circle2DOptions (executionContext)
 {
-   X3DBaseNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ((X3DConstants_default()).inputOutput, "dimension", new (Fields_default()).SFInt32 (40))
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
 
-   this .vertices = X3DGeometryNode_default().createArray ();
+   this .vertices = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
 }
 
-Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, (X3DBaseNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype),
 {
    initialize ()
    {
-      X3DBaseNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DBaseNode_default().prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
    },
@@ -298,8 +298,8 @@ Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, (X3DBaseNode
       for (let n = 0; n < dimension; ++ n)
       {
          const
-            point1 = Complex_default().Polar (1, angle * n),
-            point2 = Complex_default().Polar (1, angle * (n + 1));
+            point1 = external_X_ITE_X3D_Complex_default().Polar (1, angle * n),
+            point2 = external_X_ITE_X3D_Complex_default().Polar (1, angle * (n + 1));
 
          vertices .push (point1 .real, point1 .imag, 0, 1);
          vertices .push (point2 .real, point2 .imag, 0, 1);
@@ -325,7 +325,7 @@ Object .defineProperties (Circle2DOptions,
 const Circle2DOptions_default_ = Circle2DOptions;
 ;
 
-Namespace_default().add ("Circle2DOptions", "x_ite/Browser/Geometry2D/Circle2DOptions", Circle2DOptions_default_);
+external_X_ITE_X3D_Namespace_default().add ("Circle2DOptions", "x_ite/Browser/Geometry2D/Circle2DOptions", Circle2DOptions_default_);
 /* harmony default export */ const Geometry2D_Circle2DOptions = (Circle2DOptions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Disk2DOptions.js
 /*******************************************************************************
@@ -383,21 +383,21 @@ Namespace_default().add ("Circle2DOptions", "x_ite/Browser/Geometry2D/Circle2DOp
 
 function Disk2DOptions (executionContext)
 {
-   X3DBaseNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ((X3DConstants_default()).inputOutput, "dimension", new (Fields_default()).SFInt32 (40))
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
 
-   this .circleVertices = X3DGeometryNode_default().createArray ();
-   this .diskTexCoords  = X3DGeometryNode_default().createArray ();
-   this .diskNormals    = X3DGeometryNode_default().createArray ();
-   this .diskVertices   = X3DGeometryNode_default().createArray ();
+   this .circleVertices = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
+   this .diskTexCoords  = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
+   this .diskNormals    = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
+   this .diskVertices   = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
 }
 
-Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (X3DBaseNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype),
 {
    initialize ()
    {
-      X3DBaseNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DBaseNode_default().prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
    },
@@ -432,11 +432,11 @@ Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (X3DBaseNode_d
    build: (() =>
    {
       const
-         half      = new (Complex_default()) (0.5, 0.5),
-         texCoord1 = new (Complex_default()) (),
-         texCoord2 = new (Complex_default()) (),
-         point1    = new (Complex_default()) (),
-         point2    = new (Complex_default()) ();
+         half      = new (external_X_ITE_X3D_Complex_default()) (0.5, 0.5),
+         texCoord1 = new (external_X_ITE_X3D_Complex_default()) (),
+         texCoord2 = new (external_X_ITE_X3D_Complex_default()) (),
+         point1    = new (external_X_ITE_X3D_Complex_default()) (),
+         point2    = new (external_X_ITE_X3D_Complex_default()) ();
 
       return function ()
       {
@@ -504,17 +504,17 @@ Object .defineProperties (Disk2DOptions,
 const Disk2DOptions_default_ = Disk2DOptions;
 ;
 
-Namespace_default().add ("Disk2DOptions", "x_ite/Browser/Geometry2D/Disk2DOptions", Disk2DOptions_default_);
+external_X_ITE_X3D_Namespace_default().add ("Disk2DOptions", "x_ite/Browser/Geometry2D/Disk2DOptions", Disk2DOptions_default_);
 /* harmony default export */ const Geometry2D_Disk2DOptions = (Disk2DOptions_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Geometry3D/IndexedFaceSet\")"
-const IndexedFaceSet_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Geometry3D/IndexedFaceSet");
-var IndexedFaceSet_default = /*#__PURE__*/__webpack_require__.n(IndexedFaceSet_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/Coordinate\")"
-const Coordinate_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/Coordinate");
-var Coordinate_default = /*#__PURE__*/__webpack_require__.n(Coordinate_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Texturing/TextureCoordinate\")"
-const TextureCoordinate_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Texturing/TextureCoordinate");
-var TextureCoordinate_default = /*#__PURE__*/__webpack_require__.n(TextureCoordinate_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .IndexedFaceSet"
+const external_X_ITE_X3D_IndexedFaceSet_namespaceObject = __X_ITE_X3D__ .IndexedFaceSet;
+var external_X_ITE_X3D_IndexedFaceSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_IndexedFaceSet_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Coordinate"
+const external_X_ITE_X3D_Coordinate_namespaceObject = __X_ITE_X3D__ .Coordinate;
+var external_X_ITE_X3D_Coordinate_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Coordinate_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TextureCoordinate"
+const external_X_ITE_X3D_TextureCoordinate_namespaceObject = __X_ITE_X3D__ .TextureCoordinate;
+var external_X_ITE_X3D_TextureCoordinate_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TextureCoordinate_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Rectangle2DOptions.js
 /*******************************************************************************
  *
@@ -570,19 +570,19 @@ var TextureCoordinate_default = /*#__PURE__*/__webpack_require__.n(TextureCoordi
 
 function Rectangle2DOptions (executionContext)
 {
-   X3DBaseNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 }
 
-Object .assign (Object .setPrototypeOf (Rectangle2DOptions .prototype, (X3DBaseNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Rectangle2DOptions .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype),
 {
    getGeometry ()
    {
       if (this .geometry)
          return this .geometry;
 
-      this .geometry            = new (IndexedFaceSet_default()) (this .getExecutionContext ());
-      this .geometry ._texCoord = new (TextureCoordinate_default()) (this .getExecutionContext ());
-      this .geometry ._coord    = new (Coordinate_default()) (this .getExecutionContext ());
+      this .geometry            = new (external_X_ITE_X3D_IndexedFaceSet_default()) (this .getExecutionContext ());
+      this .geometry ._texCoord = new (external_X_ITE_X3D_TextureCoordinate_default()) (this .getExecutionContext ());
+      this .geometry ._coord    = new (external_X_ITE_X3D_Coordinate_default()) (this .getExecutionContext ());
 
       const
          geometry = this .geometry,
@@ -614,11 +614,11 @@ Object .defineProperties (Rectangle2DOptions,
 const Rectangle2DOptions_default_ = Rectangle2DOptions;
 ;
 
-Namespace_default().add ("Rectangle2DOptions", "x_ite/Browser/Geometry2D/Rectangle2DOptions", Rectangle2DOptions_default_);
+external_X_ITE_X3D_Namespace_default().add ("Rectangle2DOptions", "x_ite/Browser/Geometry2D/Rectangle2DOptions", Rectangle2DOptions_default_);
 /* harmony default export */ const Geometry2D_Rectangle2DOptions = (Rectangle2DOptions_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Browser/Core/PrimitiveQuality\")"
-const PrimitiveQuality_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Browser/Core/PrimitiveQuality");
-var PrimitiveQuality_default = /*#__PURE__*/__webpack_require__.n(PrimitiveQuality_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .PrimitiveQuality"
+const external_X_ITE_X3D_PrimitiveQuality_namespaceObject = __X_ITE_X3D__ .PrimitiveQuality;
+var external_X_ITE_X3D_PrimitiveQuality_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_PrimitiveQuality_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/X3DGeometry2DContext.js
 /*******************************************************************************
  *
@@ -712,7 +712,7 @@ Object .assign (X3DGeometry2DContext .prototype,
 
       switch (primitiveQuality)
       {
-         case (PrimitiveQuality_default()).LOW:
+         case (external_X_ITE_X3D_PrimitiveQuality_default()).LOW:
          {
             arc      ._dimension = 20;
             arcClose ._dimension = 20;
@@ -720,7 +720,7 @@ Object .assign (X3DGeometry2DContext .prototype,
             disk     ._dimension = 20;
             break;
          }
-         case (PrimitiveQuality_default()).MEDIUM:
+         case (external_X_ITE_X3D_PrimitiveQuality_default()).MEDIUM:
          {
             arc      ._dimension = 40;
             arcClose ._dimension = 40;
@@ -728,7 +728,7 @@ Object .assign (X3DGeometry2DContext .prototype,
             disk     ._dimension = 40;
             break;
          }
-         case (PrimitiveQuality_default()).HIGH:
+         case (external_X_ITE_X3D_PrimitiveQuality_default()).HIGH:
          {
             arc      ._dimension = 80;
             arcClose ._dimension = 80;
@@ -756,20 +756,20 @@ function getOptionNode (key, OptionNode)
 const X3DGeometry2DContext_default_ = X3DGeometry2DContext;
 ;
 
-Namespace_default().add ("X3DGeometry2DContext", "x_ite/Browser/Geometry2D/X3DGeometry2DContext", X3DGeometry2DContext_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DGeometry2DContext", "x_ite/Browser/Geometry2D/X3DGeometry2DContext", X3DGeometry2DContext_default_);
 /* harmony default export */ const Geometry2D_X3DGeometry2DContext = (X3DGeometry2DContext_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
-var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
-var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/X3DLineGeometryNode\")"
-const X3DLineGeometryNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/X3DLineGeometryNode");
-var X3DLineGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DLineGeometryNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Algorithm");
-var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
+var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
+var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLineGeometryNode"
+const external_X_ITE_X3D_X3DLineGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DLineGeometryNode;
+var external_X_ITE_X3D_X3DLineGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DLineGeometryNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
+const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
+var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Arc2D.js
 /*******************************************************************************
  *
@@ -828,20 +828,20 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
 
 function Arc2D (executionContext)
 {
-   X3DLineGeometryNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DLineGeometryNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).Arc2D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).Arc2D);
 
    this ._startAngle .setUnit ("angle");
    this ._endAngle   .setUnit ("angle");
    this ._radius     .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (Arc2D .prototype, (X3DLineGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Arc2D .prototype, (external_X_ITE_X3D_X3DLineGeometryNode_default()).prototype),
 {
    set_live__ ()
    {
-      X3DLineGeometryNode_default().prototype .set_live__ .call (this);
+      external_X_ITE_X3D_X3DLineGeometryNode_default().prototype .set_live__ .call (this);
 
       const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
 
@@ -853,8 +853,8 @@ Object .assign (Object .setPrototypeOf (Arc2D .prototype, (X3DLineGeometryNode_d
    getSweepAngle ()
    {
       const
-         start = Algorithm_default().interval (this ._startAngle .getValue (), 0, Math .PI * 2),
-         end   = Algorithm_default().interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
+         start = external_X_ITE_X3D_Algorithm_default().interval (this ._startAngle .getValue (), 0, Math .PI * 2),
+         end   = external_X_ITE_X3D_Algorithm_default().interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
 
       if (start === end)
          return Math .PI * 2;
@@ -886,10 +886,10 @@ Object .assign (Object .setPrototypeOf (Arc2D .prototype, (X3DLineGeometryNode_d
          const
             t1     = n / steps,
             theta1 = startAngle + (sweepAngle * t1),
-            point1 = Complex_default().Polar (radius, theta1),
+            point1 = external_X_ITE_X3D_Complex_default().Polar (radius, theta1),
             t2     = (n + 1) / steps,
             theta2 = startAngle + (sweepAngle * t2),
-            point2 = Complex_default().Polar (radius, theta2);
+            point2 = external_X_ITE_X3D_Complex_default().Polar (radius, theta2);
 
          vertexArray .push (point1 .real, point1 .imag, 0, 1);
          vertexArray .push (point2 .real, point2 .imag, 0, 1);
@@ -924,11 +924,11 @@ Object .defineProperties (Arc2D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",   new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "startAngle", new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "endAngle",   new (Fields_default()).SFFloat (1.570796)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "radius",     new (Fields_default()).SFFloat (1)),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",   new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "startAngle", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "endAngle",   new (external_X_ITE_X3D_Fields_default()).SFFloat (1.570796)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "radius",     new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
       ]),
       enumerable: true,
    },
@@ -937,7 +937,7 @@ Object .defineProperties (Arc2D,
 const Arc2D_default_ = Arc2D;
 ;
 
-Namespace_default().add ("Arc2D", "x_ite/Components/Geometry2D/Arc2D", Arc2D_default_);
+external_X_ITE_X3D_Namespace_default().add ("Arc2D", "x_ite/Components/Geometry2D/Arc2D", Arc2D_default_);
 /* harmony default export */ const Geometry2D_Arc2D = (Arc2D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/ArcClose2D.js
 /*******************************************************************************
@@ -997,9 +997,9 @@ Namespace_default().add ("Arc2D", "x_ite/Components/Geometry2D/Arc2D", Arc2D_def
 
 function ArcClose2D (executionContext)
 {
-   X3DGeometryNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DGeometryNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ArcClose2D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ArcClose2D);
 
    this .setGeometryType (2);
 
@@ -1008,11 +1008,11 @@ function ArcClose2D (executionContext)
    this ._radius     .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, (X3DGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, (external_X_ITE_X3D_X3DGeometryNode_default()).prototype),
 {
    set_live__ ()
    {
-      X3DGeometryNode_default().prototype .set_live__ .call (this);
+      external_X_ITE_X3D_X3DGeometryNode_default().prototype .set_live__ .call (this);
 
       const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
 
@@ -1024,8 +1024,8 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, (X3DGeometryNode_
    getSweepAngle ()
    {
       const
-         start = Algorithm_default().interval (this ._startAngle .getValue (), 0, Math .PI * 2),
-         end   = Algorithm_default().interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
+         start = external_X_ITE_X3D_Algorithm_default().interval (this ._startAngle .getValue (), 0, Math .PI * 2),
+         end   = external_X_ITE_X3D_Algorithm_default().interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
 
       if (start === end)
          return Math .PI * 2;
@@ -1043,7 +1043,7 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, (X3DGeometryNode_
    },
    build: (() =>
    {
-      const half = new (Complex_default()) (0.5, 0.5);
+      const half = new (external_X_ITE_X3D_Complex_default()) (0.5, 0.5);
 
       return function ()
       {
@@ -1071,8 +1071,8 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, (X3DGeometryNode_
                t     = n / steps_1,
                theta = startAngle + (sweepAngle * t);
 
-            texCoords .push (Complex_default().Polar (0.5, theta) .add (half));
-            points    .push (Complex_default().Polar (radius, theta));
+            texCoords .push (external_X_ITE_X3D_Complex_default().Polar (0.5, theta) .add (half));
+            points    .push (external_X_ITE_X3D_Complex_default().Polar (radius, theta));
          }
 
          if (chord)
@@ -1156,13 +1156,13 @@ Object .defineProperties (ArcClose2D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "closureType", new (Fields_default()).SFString ("PIE")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "startAngle",  new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "endAngle",    new (Fields_default()).SFFloat (1.570796)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "radius",      new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",       new (Fields_default()).SFBool ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "closureType", new (external_X_ITE_X3D_Fields_default()).SFString ("PIE")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "startAngle",  new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "endAngle",    new (external_X_ITE_X3D_Fields_default()).SFFloat (1.570796)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "radius",      new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "solid",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,
    },
@@ -1171,7 +1171,7 @@ Object .defineProperties (ArcClose2D,
 const ArcClose2D_default_ = ArcClose2D;
 ;
 
-Namespace_default().add ("ArcClose2D", "x_ite/Components/Geometry2D/ArcClose2D", ArcClose2D_default_);
+external_X_ITE_X3D_Namespace_default().add ("ArcClose2D", "x_ite/Components/Geometry2D/ArcClose2D", ArcClose2D_default_);
 /* harmony default export */ const Geometry2D_ArcClose2D = (ArcClose2D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Circle2D.js
 /*******************************************************************************
@@ -1229,18 +1229,18 @@ Namespace_default().add ("ArcClose2D", "x_ite/Components/Geometry2D/ArcClose2D",
 
 function Circle2D (executionContext)
 {
-   X3DLineGeometryNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DLineGeometryNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).Circle2D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).Circle2D);
 
    this ._radius .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (Circle2D .prototype, (X3DLineGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Circle2D .prototype, (external_X_ITE_X3D_X3DLineGeometryNode_default()).prototype),
 {
    set_live__ ()
    {
-      X3DLineGeometryNode_default().prototype .set_live__ .call (this);
+      external_X_ITE_X3D_X3DLineGeometryNode_default().prototype .set_live__ .call (this);
 
       const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
 
@@ -1297,9 +1297,9 @@ Object .defineProperties (Circle2D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "radius",   new (Fields_default()).SFFloat (1)),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "radius",   new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
       ]),
       enumerable: true,
    },
@@ -1308,11 +1308,11 @@ Object .defineProperties (Circle2D,
 const Circle2D_default_ = Circle2D;
 ;
 
-Namespace_default().add ("Circle2D", "x_ite/Components/Geometry2D/Circle2D", Circle2D_default_);
+external_X_ITE_X3D_Namespace_default().add ("Circle2D", "x_ite/Components/Geometry2D/Circle2D", Circle2D_default_);
 /* harmony default export */ const Geometry2D_Circle2D = (Circle2D_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/X3DPointGeometryNode\")"
-const X3DPointGeometryNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/X3DPointGeometryNode");
-var X3DPointGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DPointGeometryNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DPointGeometryNode"
+const external_X_ITE_X3D_X3DPointGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DPointGeometryNode;
+var external_X_ITE_X3D_X3DPointGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DPointGeometryNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Disk2D.js
 /*******************************************************************************
  *
@@ -1371,23 +1371,23 @@ var X3DPointGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DPointGe
 
 function Disk2D (executionContext)
 {
-   X3DLineGeometryNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DLineGeometryNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).Disk2D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).Disk2D);
 
    this ._innerRadius .setUnit ("length");
    this ._outerRadius .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (Disk2D .prototype, (X3DGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X3DGeometryNode_default()).prototype),
 {
    initialize ()
    {
-      X3DGeometryNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DGeometryNode_default().prototype .initialize .call (this);
    },
    set_live__ ()
    {
-      X3DGeometryNode_default().prototype .set_live__ .call (this);
+      external_X_ITE_X3D_X3DGeometryNode_default().prototype .set_live__ .call (this);
 
       const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
 
@@ -1421,7 +1421,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (X3DGeometryNode_defa
             this .setGeometryType (0);
             this .setPrimitiveMode (gl .POINTS);
             this .setTransparent (true);
-            this .setBase ((X3DPointGeometryNode_default()));
+            this .setBase ((external_X_ITE_X3D_X3DPointGeometryNode_default()));
             return;
          }
 
@@ -1445,7 +1445,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (X3DGeometryNode_defa
          this .setGeometryType (1);
          this .setPrimitiveMode (gl .LINES);
          this .setTransparent (false);
-         this .setBase ((X3DLineGeometryNode_default()));
+         this .setBase ((external_X_ITE_X3D_X3DLineGeometryNode_default()));
          return;
       }
 
@@ -1477,7 +1477,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (X3DGeometryNode_defa
          this .setPrimitiveMode (gl .TRIANGLES);
          this .setTransparent (false);
          this .setSolid (this ._solid .getValue ());
-         this .setBase ((X3DGeometryNode_default()));
+         this .setBase ((external_X_ITE_X3D_X3DGeometryNode_default()));
          return;
       }
 
@@ -1523,7 +1523,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (X3DGeometryNode_defa
       this .setPrimitiveMode (gl .TRIANGLES);
       this .setTransparent (false);
       this .setSolid (this ._solid .getValue ());
-      this .setBase ((X3DGeometryNode_default()));
+      this .setBase ((external_X_ITE_X3D_X3DGeometryNode_default()));
    },
    setBase (base)
    {
@@ -1563,11 +1563,11 @@ Object .defineProperties (Disk2D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "innerRadius", new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "outerRadius", new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",       new (Fields_default()).SFBool ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "innerRadius", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "outerRadius", new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "solid",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,
    },
@@ -1576,7 +1576,7 @@ Object .defineProperties (Disk2D,
 const Disk2D_default_ = Disk2D;
 ;
 
-Namespace_default().add ("Disk2D", "x_ite/Components/Geometry2D/Disk2D", Disk2D_default_);
+external_X_ITE_X3D_Namespace_default().add ("Disk2D", "x_ite/Components/Geometry2D/Disk2D", Disk2D_default_);
 /* harmony default export */ const Geometry2D_Disk2D = (Disk2D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Polyline2D.js
 /*******************************************************************************
@@ -1634,14 +1634,14 @@ Namespace_default().add ("Disk2D", "x_ite/Components/Geometry2D/Disk2D", Disk2D_
 
 function Polyline2D (executionContext)
 {
-   X3DLineGeometryNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DLineGeometryNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).Polyline2D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).Polyline2D);
 
    this ._lineSegments .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (Polyline2D .prototype, (X3DLineGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Polyline2D .prototype, (external_X_ITE_X3D_X3DLineGeometryNode_default()).prototype),
 {
    build ()
    {
@@ -1681,9 +1681,9 @@ Object .defineProperties (Polyline2D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "lineSegments", new (Fields_default()).MFVec2f ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "lineSegments", new (external_X_ITE_X3D_Fields_default()).MFVec2f ()),
       ]),
       enumerable: true,
    },
@@ -1692,7 +1692,7 @@ Object .defineProperties (Polyline2D,
 const Polyline2D_default_ = Polyline2D;
 ;
 
-Namespace_default().add ("Polyline2D", "x_ite/Components/Geometry2D/Polyline2D", Polyline2D_default_);
+external_X_ITE_X3D_Namespace_default().add ("Polyline2D", "x_ite/Components/Geometry2D/Polyline2D", Polyline2D_default_);
 /* harmony default export */ const Geometry2D_Polyline2D = (Polyline2D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Polypoint2D.js
 /*******************************************************************************
@@ -1750,14 +1750,14 @@ Namespace_default().add ("Polyline2D", "x_ite/Components/Geometry2D/Polyline2D",
 
 function Polypoint2D (executionContext)
 {
-   X3DPointGeometryNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DPointGeometryNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).Polypoint2D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).Polypoint2D);
 
    this ._point .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (Polypoint2D .prototype, (X3DPointGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Polypoint2D .prototype, (external_X_ITE_X3D_X3DPointGeometryNode_default()).prototype),
 {
    build ()
    {
@@ -1796,9 +1796,9 @@ Object .defineProperties (Polypoint2D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "point",    new (Fields_default()).MFVec2f ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "point",    new (external_X_ITE_X3D_Fields_default()).MFVec2f ()),
       ]),
       enumerable: true,
    },
@@ -1807,11 +1807,11 @@ Object .defineProperties (Polypoint2D,
 const Polypoint2D_default_ = Polypoint2D;
 ;
 
-Namespace_default().add ("Polypoint2D", "x_ite/Components/Geometry2D/Polypoint2D", Polypoint2D_default_);
+external_X_ITE_X3D_Namespace_default().add ("Polypoint2D", "x_ite/Components/Geometry2D/Polypoint2D", Polypoint2D_default_);
 /* harmony default export */ const Geometry2D_Polypoint2D = (Polypoint2D_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector2\")"
-const Vector2_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector2");
-var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector2"
+const external_X_ITE_X3D_Vector2_namespaceObject = __X_ITE_X3D__ .Vector2;
+var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector2_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Rectangle2D.js
 /*******************************************************************************
  *
@@ -1869,20 +1869,20 @@ var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject
 
 function Rectangle2D (executionContext)
 {
-   X3DGeometryNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DGeometryNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).Rectangle2D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).Rectangle2D);
 
    this .setGeometryType (2);
 
    this ._size .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, (X3DGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, (external_X_ITE_X3D_X3DGeometryNode_default()).prototype),
 {
    build: (() =>
    {
-      const defaultSize = new (Vector2_default()) (2, 2);
+      const defaultSize = new (external_X_ITE_X3D_Vector2_default()) (2, 2);
 
       return function ()
       {
@@ -1951,10 +1951,10 @@ Object .defineProperties (Rectangle2D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "size",     new (Fields_default()).SFVec2f (2, 2)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",    new (Fields_default()).SFBool ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "size",     new (external_X_ITE_X3D_Fields_default()).SFVec2f (2, 2)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "solid",    new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,
    },
@@ -1963,7 +1963,7 @@ Object .defineProperties (Rectangle2D,
 const Rectangle2D_default_ = Rectangle2D;
 ;
 
-Namespace_default().add ("Rectangle2D", "x_ite/Components/Geometry2D/Rectangle2D", Rectangle2D_default_);
+external_X_ITE_X3D_Namespace_default().add ("Rectangle2D", "x_ite/Components/Geometry2D/Rectangle2D", Rectangle2D_default_);
 /* harmony default export */ const Geometry2D_Rectangle2D = (Rectangle2D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/TriangleSet2D.js
 /*******************************************************************************
@@ -2021,16 +2021,16 @@ Namespace_default().add ("Rectangle2D", "x_ite/Components/Geometry2D/Rectangle2D
 
 function TriangleSet2D (executionContext)
 {
-   X3DGeometryNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DGeometryNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).TriangleSet2D);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).TriangleSet2D);
 
    this .setGeometryType (2);
 
    this ._vertices .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (TriangleSet2D .prototype, (X3DGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (TriangleSet2D .prototype, (external_X_ITE_X3D_X3DGeometryNode_default()).prototype),
 {
    build ()
    {
@@ -2098,10 +2098,10 @@ Object .defineProperties (TriangleSet2D,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "vertices", new (Fields_default()).MFVec2f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",    new (Fields_default()).SFBool ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "vertices", new (external_X_ITE_X3D_Fields_default()).MFVec2f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "solid",    new (external_X_ITE_X3D_Fields_default()).SFBool ()),
       ]),
       enumerable: true,
    },
@@ -2110,7 +2110,7 @@ Object .defineProperties (TriangleSet2D,
 const TriangleSet2D_default_ = TriangleSet2D;
 ;
 
-Namespace_default().add ("TriangleSet2D", "x_ite/Components/Geometry2D/TriangleSet2D", TriangleSet2D_default_);
+external_X_ITE_X3D_Namespace_default().add ("TriangleSet2D", "x_ite/Components/Geometry2D/TriangleSet2D", TriangleSet2D_default_);
 /* harmony default export */ const Geometry2D_TriangleSet2D = (TriangleSet2D_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/Geometry2D.js
 /*******************************************************************************
@@ -2171,7 +2171,7 @@ Namespace_default().add ("TriangleSet2D", "x_ite/Components/Geometry2D/TriangleS
 
 
 
-Components_default().add ({
+external_X_ITE_X3D_Components_default().add ({
    name: "Geometry2D",
    concreteNodes:
    [
@@ -2193,7 +2193,7 @@ Components_default().add ({
 const Geometry2D_default_ = undefined;
 ;
 
-Namespace_default().add ("Geometry2D", "assets/components/Geometry2D", Geometry2D_default_);
+external_X_ITE_X3D_Namespace_default().add ("Geometry2D", "assets/components/Geometry2D", Geometry2D_default_);
 /* harmony default export */ const Geometry2D = ((/* unused pure expression or super */ null && (Geometry2D_default_)));
 /******/ })()
 ;

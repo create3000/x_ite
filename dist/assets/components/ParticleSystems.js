@@ -4,10 +4,10 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 588:
+/***/ 254:
 /***/ ((module) => {
 
-module.exports = __X_ITE_X3D__ .require ("lib/jquery");
+module.exports = __X_ITE_X3D__ .jquery;
 
 /***/ })
 
@@ -71,30 +71,30 @@ module.exports = __X_ITE_X3D__ .require ("lib/jquery");
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
-const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
-var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
-var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
-var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DNode\")"
-const X3DNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DNode");
-var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Browser/ParticleSystems/GeometryTypes\")"
-const GeometryTypes_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Browser/ParticleSystems/GeometryTypes");
-var GeometryTypes_default = /*#__PURE__*/__webpack_require__.n(GeometryTypes_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
-var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
+var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
+var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
+var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
+var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .GeometryTypes"
+const external_X_ITE_X3D_GeometryTypes_namespaceObject = __X_ITE_X3D__ .GeometryTypes;
+var external_X_ITE_X3D_GeometryTypes_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_GeometryTypes_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
+var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/Line3.glsl.js
 const __default__ = /* glsl */ `
 #if defined(X3D_BOUNDED_VOLUME)||defined(X3D_VOLUME_EMITTER)
@@ -103,7 +103,7 @@ struct Line3{vec3 point;vec3 direction;};bool intersects(const in Line3 line,con
 `
 ;
 
-Namespace_default().add ("Line3.glsl", "x_ite/Browser/ParticleSystems/Line3.glsl", __default__);
+external_X_ITE_X3D_Namespace_default().add ("Line3.glsl", "x_ite/Browser/ParticleSystems/Line3.glsl", __default__);
 /* harmony default export */ const Line3_glsl = (__default__);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/Plane3.glsl.js
 const Plane3_glsl_default_ = /* glsl */ `
@@ -113,7 +113,7 @@ struct Plane3{vec3 normal;float distanceFromOrigin;};Plane3 plane3(const in vec3
 `
 ;
 
-Namespace_default().add ("Plane3.glsl", "x_ite/Browser/ParticleSystems/Plane3.glsl", Plane3_glsl_default_);
+external_X_ITE_X3D_Namespace_default().add ("Plane3.glsl", "x_ite/Browser/ParticleSystems/Plane3.glsl", Plane3_glsl_default_);
 /* harmony default export */ const Plane3_glsl = (Plane3_glsl_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/Box3.glsl.js
 const Box3_glsl_default_ = /* glsl */ `
@@ -123,7 +123,7 @@ bool intersects(const in vec3 min,const in vec3 max,const in Line3 line){vec3 in
 `
 ;
 
-Namespace_default().add ("Box3.glsl", "x_ite/Browser/ParticleSystems/Box3.glsl", Box3_glsl_default_);
+external_X_ITE_X3D_Namespace_default().add ("Box3.glsl", "x_ite/Browser/ParticleSystems/Box3.glsl", Box3_glsl_default_);
 /* harmony default export */ const Box3_glsl = (Box3_glsl_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/BVH.glsl.js
 const BVH_glsl_default_ = /* glsl */ `
@@ -142,7 +142,7 @@ int getIntersections(const in sampler2D volume,const in int verticesIndex,const 
 `
 ;
 
-Namespace_default().add ("BVH.glsl", "x_ite/Browser/ParticleSystems/BVH.glsl", BVH_glsl_default_);
+external_X_ITE_X3D_Namespace_default().add ("BVH.glsl", "x_ite/Browser/ParticleSystems/BVH.glsl", BVH_glsl_default_);
 /* harmony default export */ const BVH_glsl = (BVH_glsl_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/X3DParticleEmitterNode.js
 /*******************************************************************************
@@ -203,11 +203,11 @@ Namespace_default().add ("BVH.glsl", "x_ite/Browser/ParticleSystems/BVH.glsl", B
 
 function X3DParticleEmitterNode (executionContext)
 {
-   X3DNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DParticleEmitterNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DParticleEmitterNode);
 
-   this .addChildObjects ((X3DConstants_default()).outputOnly, "bbox_changed", new (Fields_default()).SFTime ());
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "bbox_changed", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
    this ._speed       .setUnit ("speed");
    this ._mass        .setUnit ("mass");
@@ -221,11 +221,11 @@ function X3DParticleEmitterNode (executionContext)
    this .programs  = new Map ();
 }
 
-Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
 {
    initialize ()
    {
-      X3DNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DNode_default().prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -491,7 +491,7 @@ uniform int texCoordCount;uniform sampler2D texCoordRamp;
 #endif
 ${Array .from (this .uniforms .values ()) .join ("\n")}
 in vec4 input0;in vec4 input2;in vec4 input6;out vec4 output0;out vec4 output1;out vec4 output2;out vec4 output3;out vec4 output4;out vec4 output5;out vec4 output6;
-${Object .entries ((GeometryTypes_default())) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
+${Object .entries ((external_X_ITE_X3D_GeometryTypes_default())) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
 const int ARRAY_SIZE=32;const float M_PI=3.14159265359;uniform float NaN;vec4 texelFetch(const in sampler2D sampler,const in int index,const in int lod){int x=textureSize(sampler,lod).x;ivec2 p=ivec2(index % x,index/x);vec4 t=texelFetch(sampler,p,lod);return t;}vec3 save_normalize(const in vec3 vector){float l=length(vector);if(l==0.0)return vec3(0.0);return vector/l;}vec4 Quaternion(const in vec3 fromVector,const in vec3 toVector){vec3 from=save_normalize(fromVector);vec3 to=save_normalize(toVector);float cos_angle=dot(from,to);vec3 cross_vec=cross(from,to);float cross_len=length(cross_vec);if(cross_len==0.0){if(cos_angle>0.0){return vec4(0.0,0.0,0.0,1.0);}else{vec3 t=cross(from,vec3(1.0,0.0,0.0));if(dot(t,t)==0.0)t=cross(from,vec3(0.0,1.0,0.0));t=save_normalize(t);return vec4(t,0.0);}}else{float s=sqrt(abs(1.0-cos_angle)*0.5);cross_vec=save_normalize(cross_vec);return vec4(cross_vec*s,sqrt(abs(1.0+cos_angle)*0.5));}}vec3 multVecQuat(const in vec3 v,const in vec4 q){float a=q.w*q.w-q.x*q.x-q.y*q.y-q.z*q.z;float b=2.0*(v.x*q.x+v.y*q.y+v.z*q.z);float c=2.0*q.w;vec3 r=a*v.xyz+b*q.xyz+c*(q.yzx*v.zxy-q.zxy*v.yzx);return r;}mat3 Matrix3(const in vec4 quaternion){float x=quaternion.x;float y=quaternion.y;float z=quaternion.z;float w=quaternion.w;float A=y*y;float B=z*z;float C=x*y;float D=z*w;float E=z*x;float F=y*w;float G=x*x;float H=y*z;float I=x*w;return mat3(1.0-2.0*(A+B),2.0*(C+D),2.0*(E-F),2.0*(C-D),1.0-2.0*(B+G),2.0*(H+I),2.0*(E+F),2.0*(H-I),1.0-2.0*(A+G));}uint seed=1u;void srand(const in int value){seed=uint(value);}float random(){seed=seed*1103515245u+12345u;return float(seed)/4294967295.0;}float getRandomValue(const in float min,const in float max){return min+random()*(max-min);}float getRandomLifetime(){float v=particleLifetime*lifetimeVariation;float min_=max(0.0,particleLifetime-v);float max_=particleLifetime+v;return getRandomValue(min_,max_);}float getRandomSpeed(){float v=speed*variation;float min_=max(0.0,speed-v);float max_=speed+v;return getRandomValue(min_,max_);}vec3 getRandomNormal(){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(-1.0,1.0);float r=sqrt(1.0-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithAngle(const in float angle){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(cos(angle),1.0);float r=sqrt(1.0-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithDirectionAndAngle(const in vec3 direction,const in float angle){vec4 rotation=Quaternion(vec3(0.0,0.0,1.0),direction);vec3 normal=getRandomNormalWithAngle(angle);return multVecQuat(normal,rotation);}vec3 getRandomSurfaceNormal(const in vec3 direction){float theta=getRandomValue(-M_PI,M_PI);float cphi=pow(random(),1.0/3.0);float r=sqrt(1.0-cphi*cphi);vec3 normal=vec3(sin(theta)*r,cos(theta)*r,cphi);vec4 rotation=Quaternion(vec3(0.0,0.0,1.0),direction);return multVecQuat(normal,rotation);}vec3 getRandomSphericalVelocity(){vec3 normal=getRandomNormal();float speed=getRandomSpeed();return normal*speed;}int upperBound(const in sampler2D sampler,in int count,const in float value){int first=0;int step=0;while(count>0){int index=first;step=count>>1;index+=step;if(value<texelFetch(sampler,index,0).x){count=step;}else{first=++index;count-=step+1;}}return first;}
 #if X3D_NUM_COLORS>0||defined(X3D_POLYLINE_EMITTER)||defined(X3D_SURFACE_EMITTER)||defined(X3D_VOLUME_EMITTER)
 void interpolate(const in sampler2D sampler,const in int count,const in float fraction,out int index0,out int index1,out float weight){if(count==1||fraction<=texelFetch(sampler,0,0).x){index0=0;index1=0;weight=0.0;}else if(fraction>=texelFetch(sampler,count-1,0).x){index0=count-2;index1=count-1;weight=1.0;}else{int index=upperBound(sampler,count,fraction);if(index<count){index1=index;index0=index-1;float key0=texelFetch(sampler,index0,0).x;float key1=texelFetch(sampler,index1,0).x;weight=clamp((fraction-key0)/(key1-key0),0.0,1.0);}else{index0=0;index1=0;weight=0.0;}}}
@@ -683,11 +683,11 @@ Object .defineProperties (X3DParticleEmitterNode,
 const X3DParticleEmitterNode_default_ = X3DParticleEmitterNode;
 ;
 
-Namespace_default().add ("X3DParticleEmitterNode", "x_ite/Components/ParticleSystems/X3DParticleEmitterNode", X3DParticleEmitterNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DParticleEmitterNode", "x_ite/Components/ParticleSystems/X3DParticleEmitterNode", X3DParticleEmitterNode_default_);
 /* harmony default export */ const ParticleSystems_X3DParticleEmitterNode = (X3DParticleEmitterNode_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector3");
-var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
+var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/PointEmitter.js
 /*******************************************************************************
  *
@@ -747,7 +747,7 @@ function PointEmitter (executionContext)
 {
    ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).PointEmitter);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).PointEmitter);
 
    this ._position .setUnit ("length");
 }
@@ -788,7 +788,7 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems
    },
    getBBox: (function ()
    {
-      const bboxSize = new (Vector3_default()) ();
+      const bboxSize = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (bbox, { particleLifetime, lifetimeVariation })
       {
@@ -810,7 +810,7 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems
    },
    set_direction__: (() =>
    {
-      const direction = new (Vector3_default()) ();
+      const direction = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -845,15 +845,15 @@ Object .defineProperties (PointEmitter,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "position",    new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",   new (Fields_default()).SFVec3f (0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "on",          new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "position",    new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "direction",   new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "speed",       new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "variation",   new (external_X_ITE_X3D_Fields_default()).SFFloat (0.25)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "mass",        new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceArea", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
       ]),
       enumerable: true,
    },
@@ -862,7 +862,7 @@ Object .defineProperties (PointEmitter,
 const PointEmitter_default_ = PointEmitter;
 ;
 
-Namespace_default().add ("PointEmitter", "x_ite/Components/ParticleSystems/PointEmitter", PointEmitter_default_);
+external_X_ITE_X3D_Namespace_default().add ("PointEmitter", "x_ite/Components/ParticleSystems/PointEmitter", PointEmitter_default_);
 /* harmony default export */ const ParticleSystems_PointEmitter = (PointEmitter_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/X3DParticleSystemsContext.js
 /*******************************************************************************
@@ -937,7 +937,7 @@ Object .assign (X3DParticleSystemsContext .prototype,
 const X3DParticleSystemsContext_default_ = X3DParticleSystemsContext;
 ;
 
-Namespace_default().add ("X3DParticleSystemsContext", "x_ite/Browser/ParticleSystems/X3DParticleSystemsContext", X3DParticleSystemsContext_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DParticleSystemsContext", "x_ite/Browser/ParticleSystems/X3DParticleSystemsContext", X3DParticleSystemsContext_default_);
 /* harmony default export */ const ParticleSystems_X3DParticleSystemsContext = (X3DParticleSystemsContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode.js
 /*******************************************************************************
@@ -992,12 +992,12 @@ Namespace_default().add ("X3DParticleSystemsContext", "x_ite/Browser/ParticleSys
 
 function X3DParticlePhysicsModelNode (executionContext)
 {
-   X3DNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DParticlePhysicsModelNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DParticlePhysicsModelNode);
 }
 
-Object .assign (Object .setPrototypeOf (X3DParticlePhysicsModelNode .prototype, (X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DParticlePhysicsModelNode .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
 {
    addForce ()
    { },
@@ -1020,11 +1020,11 @@ Object .defineProperties (X3DParticlePhysicsModelNode,
 const X3DParticlePhysicsModelNode_default_ = X3DParticlePhysicsModelNode;
 ;
 
-Namespace_default().add ("X3DParticlePhysicsModelNode", "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode", X3DParticlePhysicsModelNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DParticlePhysicsModelNode", "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode", X3DParticlePhysicsModelNode_default_);
 /* harmony default export */ const ParticleSystems_X3DParticlePhysicsModelNode = (X3DParticlePhysicsModelNode_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DCast");
-var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
+var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/BoundedPhysicsModel.js
 /*******************************************************************************
  *
@@ -1084,7 +1084,7 @@ function BoundedPhysicsModel (executionContext)
 {
    ParticleSystems_X3DParticlePhysicsModelNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).BoundedPhysicsModel);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).BoundedPhysicsModel);
 }
 
 Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, ParticleSystems_X3DParticlePhysicsModelNode .prototype),
@@ -1105,7 +1105,7 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, Particle
    {
       this .geometryNode ?._rebuild .removeInterest ("addNodeEvent", this);
 
-      this .geometryNode = X3DCast_default() ((X3DConstants_default()).X3DGeometryNode, this ._geometry);
+      this .geometryNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DGeometryNode, this ._geometry);
 
       this .geometryNode ?._rebuild .addInterest ("addNodeEvent", this);
    },
@@ -1154,11 +1154,11 @@ Object .defineProperties (BoundedPhysicsModel,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",  new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "damping",  new (Fields_default()).SFFloat (1)), // skip test
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "geometry", new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",  new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "damping",  new (external_X_ITE_X3D_Fields_default()).SFFloat (1)), // skip test
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "geometry", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -1167,7 +1167,7 @@ Object .defineProperties (BoundedPhysicsModel,
 const BoundedPhysicsModel_default_ = BoundedPhysicsModel;
 ;
 
-Namespace_default().add ("BoundedPhysicsModel", "x_ite/Components/ParticleSystems/BoundedPhysicsModel", BoundedPhysicsModel_default_);
+external_X_ITE_X3D_Namespace_default().add ("BoundedPhysicsModel", "x_ite/Components/ParticleSystems/BoundedPhysicsModel", BoundedPhysicsModel_default_);
 /* harmony default export */ const ParticleSystems_BoundedPhysicsModel = (BoundedPhysicsModel_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ConeEmitter.js
 /*******************************************************************************
@@ -1228,7 +1228,7 @@ function ConeEmitter (executionContext)
 {
    ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ConeEmitter);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ConeEmitter);
 
    this ._position .setUnit ("length");
    this ._angle    .setUnit ("angle");
@@ -1279,7 +1279,7 @@ Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, ParticleSystems_
    },
    getBBox: (function ()
    {
-      const bboxSize = new (Vector3_default()) ();
+      const bboxSize = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (bbox, { particleLifetime, lifetimeVariation })
       {
@@ -1335,16 +1335,16 @@ Object .defineProperties (ConeEmitter,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "position",    new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",   new (Fields_default()).SFVec3f (0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "angle",       new (Fields_default()).SFFloat (0.785398)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "on",          new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "position",    new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "direction",   new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "angle",       new (external_X_ITE_X3D_Fields_default()).SFFloat (0.785398)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "speed",       new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "variation",   new (external_X_ITE_X3D_Fields_default()).SFFloat (0.25)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "mass",        new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceArea", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
       ]),
       enumerable: true,
    },
@@ -1353,7 +1353,7 @@ Object .defineProperties (ConeEmitter,
 const ConeEmitter_default_ = ConeEmitter;
 ;
 
-Namespace_default().add ("ConeEmitter", "x_ite/Components/ParticleSystems/ConeEmitter", ConeEmitter_default_);
+external_X_ITE_X3D_Namespace_default().add ("ConeEmitter", "x_ite/Components/ParticleSystems/ConeEmitter", ConeEmitter_default_);
 /* harmony default export */ const ParticleSystems_ConeEmitter = (ConeEmitter_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ExplosionEmitter.js
 /*******************************************************************************
@@ -1414,7 +1414,7 @@ function ExplosionEmitter (executionContext)
 {
    ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ExplosionEmitter);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ExplosionEmitter);
 
    this ._position .setUnit ("length");
 }
@@ -1446,7 +1446,7 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, ParticleSys
    },
    getBBox: (function ()
    {
-      const bboxSize = new (Vector3_default()) ();
+      const bboxSize = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (bbox, { particleLifetime, lifetimeVariation })
       {
@@ -1496,14 +1496,14 @@ Object .defineProperties (ExplosionEmitter,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "position",    new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "on",          new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "position",    new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "speed",       new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "variation",   new (external_X_ITE_X3D_Fields_default()).SFFloat (0.25)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "mass",        new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceArea", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
       ]),
       enumerable: true,
    },
@@ -1512,7 +1512,7 @@ Object .defineProperties (ExplosionEmitter,
 const ExplosionEmitter_default_ = ExplosionEmitter;
 ;
 
-Namespace_default().add ("ExplosionEmitter", "x_ite/Components/ParticleSystems/ExplosionEmitter", ExplosionEmitter_default_);
+external_X_ITE_X3D_Namespace_default().add ("ExplosionEmitter", "x_ite/Components/ParticleSystems/ExplosionEmitter", ExplosionEmitter_default_);
 /* harmony default export */ const ParticleSystems_ExplosionEmitter = (ExplosionEmitter_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ForcePhysicsModel.js
 /*******************************************************************************
@@ -1573,7 +1573,7 @@ function ForcePhysicsModel (executionContext)
 {
    ParticleSystems_X3DParticlePhysicsModelNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ForcePhysicsModel);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ForcePhysicsModel);
 
    this ._force .setUnit ("force");
 }
@@ -1582,7 +1582,7 @@ Object .assign (Object .setPrototypeOf (ForcePhysicsModel .prototype, ParticleSy
 {
    addForce: (() =>
    {
-      const force = new (Vector3_default()) ();
+      const force = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (i, emitterNode, timeByMass, forces)
       {
@@ -1625,10 +1625,10 @@ Object .defineProperties (ForcePhysicsModel,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",  new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "force",    new (Fields_default()).SFVec3f (0, -9.8, 0)),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata", new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",  new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "force",    new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, -9.8, 0)),
       ]),
       enumerable: true,
    },
@@ -1637,38 +1637,38 @@ Object .defineProperties (ForcePhysicsModel,
 const ForcePhysicsModel_default_ = ForcePhysicsModel;
 ;
 
-Namespace_default().add ("ForcePhysicsModel", "x_ite/Components/ParticleSystems/ForcePhysicsModel", ForcePhysicsModel_default_);
+external_X_ITE_X3D_Namespace_default().add ("ForcePhysicsModel", "x_ite/Components/ParticleSystems/ForcePhysicsModel", ForcePhysicsModel_default_);
 /* harmony default export */ const ParticleSystems_ForcePhysicsModel = (ForcePhysicsModel_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Shape/X3DShapeNode\")"
-const X3DShapeNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Shape/X3DShapeNode");
-var X3DShapeNode_default = /*#__PURE__*/__webpack_require__.n(X3DShapeNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Browser/Rendering/GeometryContext\")"
-const GeometryContext_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Browser/Rendering/GeometryContext");
-var GeometryContext_default = /*#__PURE__*/__webpack_require__.n(GeometryContext_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Rendering/VertexArray\")"
-const VertexArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Rendering/VertexArray");
-var VertexArray_default = /*#__PURE__*/__webpack_require__.n(VertexArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Rendering/TraverseType");
-var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Browser/Shape/AlphaMode\")"
-const AlphaMode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Browser/Shape/AlphaMode");
-var AlphaMode_default = /*#__PURE__*/__webpack_require__.n(AlphaMode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/LineSet\")"
-const LineSet_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/LineSet");
-var LineSet_default = /*#__PURE__*/__webpack_require__.n(LineSet_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/Coordinate\")"
-const Coordinate_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/Coordinate");
-var Coordinate_default = /*#__PURE__*/__webpack_require__.n(Coordinate_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Matrix4");
-var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Matrix3\")"
-const Matrix3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Matrix3");
-var Matrix3_default = /*#__PURE__*/__webpack_require__.n(Matrix3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Geometry/Plane3\")"
-const Plane3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Geometry/Plane3");
-var Plane3_default = /*#__PURE__*/__webpack_require__.n(Plane3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DShapeNode"
+const external_X_ITE_X3D_X3DShapeNode_namespaceObject = __X_ITE_X3D__ .X3DShapeNode;
+var external_X_ITE_X3D_X3DShapeNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DShapeNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .GeometryContext"
+const external_X_ITE_X3D_GeometryContext_namespaceObject = __X_ITE_X3D__ .GeometryContext;
+var external_X_ITE_X3D_GeometryContext_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_GeometryContext_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .VertexArray"
+const external_X_ITE_X3D_VertexArray_namespaceObject = __X_ITE_X3D__ .VertexArray;
+var external_X_ITE_X3D_VertexArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_VertexArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TraverseType"
+const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
+var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .AlphaMode"
+const external_X_ITE_X3D_AlphaMode_namespaceObject = __X_ITE_X3D__ .AlphaMode;
+var external_X_ITE_X3D_AlphaMode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_AlphaMode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .LineSet"
+const external_X_ITE_X3D_LineSet_namespaceObject = __X_ITE_X3D__ .LineSet;
+var external_X_ITE_X3D_LineSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_LineSet_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Coordinate"
+const external_X_ITE_X3D_Coordinate_namespaceObject = __X_ITE_X3D__ .Coordinate;
+var external_X_ITE_X3D_Coordinate_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Coordinate_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
+var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix3"
+const external_X_ITE_X3D_Matrix3_namespaceObject = __X_ITE_X3D__ .Matrix3;
+var external_X_ITE_X3D_Matrix3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Plane3"
+const external_X_ITE_X3D_Plane3_namespaceObject = __X_ITE_X3D__ .Plane3;
+var external_X_ITE_X3D_Plane3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Plane3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/standard/Math/Algorithms/QuickSort.js
 /*******************************************************************************
  *
@@ -1778,7 +1778,7 @@ Object .assign (QuickSort .prototype,
 const QuickSort_default_ = QuickSort;
 ;
 
-Namespace_default().add ("QuickSort", "standard/Math/Algorithms/QuickSort", QuickSort_default_);
+external_X_ITE_X3D_Namespace_default().add ("QuickSort", "standard/Math/Algorithms/QuickSort", QuickSort_default_);
 /* harmony default export */ const Algorithms_QuickSort = (QuickSort_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Utility/BVH.js
 /*******************************************************************************
@@ -1833,18 +1833,18 @@ Namespace_default().add ("QuickSort", "standard/Math/Algorithms/QuickSort", Quic
 
 
 const
-   v0  = new (Vector3_default()) (),
-   v1  = new (Vector3_default()) (),
-   v2  = new (Vector3_default()) (),
+   v0  = new (external_X_ITE_X3D_Vector3_default()) (),
+   v1  = new (external_X_ITE_X3D_Vector3_default()) (),
+   v2  = new (external_X_ITE_X3D_Vector3_default()) (),
    uvt = { u: 0, v: 0, t: 0 };
 
 // Box normals for bbox / line intersection.
 const boxNormals = [
-   new (Vector3_default()) (0,  0,  1), // front
-   new (Vector3_default()) (0,  0, -1), // back
-   new (Vector3_default()) (0,  1,  0), // top
-   new (Vector3_default()) (0, -1,  0), // bottom
-   new (Vector3_default()) (1,  0,  0)  // right
+   new (external_X_ITE_X3D_Vector3_default()) (0,  0,  1), // front
+   new (external_X_ITE_X3D_Vector3_default()) (0,  0, -1), // back
+   new (external_X_ITE_X3D_Vector3_default()) (0,  1,  0), // top
+   new (external_X_ITE_X3D_Vector3_default()) (0, -1,  0), // bottom
+   new (external_X_ITE_X3D_Vector3_default()) (1,  0,  0)  // right
    // left: We do not have to test for left.
 ];
 
@@ -1898,7 +1898,7 @@ Object .assign (Triangle .prototype,
          const i = intersections .size ++;
 
          if (i >= intersections .length)
-            intersections .push (new (Vector3_default()) ());
+            intersections .push (new (external_X_ITE_X3D_Vector3_default()) ());
 
          intersections [i] .set (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
                                  t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
@@ -1907,7 +1907,7 @@ Object .assign (Triangle .prototype,
          if (intersectionNormals)
          {
             if (i >= intersectionNormals .length)
-               intersectionNormals .push (new (Vector3_default()) ());
+               intersectionNormals .push (new (external_X_ITE_X3D_Vector3_default()) ());
 
             intersectionNormals [i] .set (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
                                           t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
@@ -1927,10 +1927,10 @@ Object .assign (Triangle .prototype,
 
 function Node (tree, triangles, first, size)
 {
-   this .min          = new (Vector3_default()) ();
-   this .max          = new (Vector3_default()) ();
+   this .min          = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .max          = new (external_X_ITE_X3D_Vector3_default()) ();
    this .planes       = [ ];
-   this .intersection = new (Vector3_default()) ();
+   this .intersection = new (external_X_ITE_X3D_Vector3_default()) ();
 
    const
       vertices = tree .vertices,
@@ -1958,7 +1958,7 @@ function Node (tree, triangles, first, size)
    }
 
    for (let i = 0; i < 5; ++ i)
-      this .planes [i] = new (Plane3_default()) (i % 2 ? min : max, boxNormals [i]);
+      this .planes [i] = new (external_X_ITE_X3D_Plane3_default()) (i % 2 ? min : max, boxNormals [i]);
 
    // Sort and split array
 
@@ -2161,10 +2161,10 @@ Object .assign (BVH .prototype,
 const BVH_default_ = BVH;
 ;
 
-Namespace_default().add ("BVH", "standard/Math/Utility/BVH", BVH_default_);
+external_X_ITE_X3D_Namespace_default().add ("BVH", "standard/Math/Utility/BVH", BVH_default_);
 /* harmony default export */ const Utility_BVH = (BVH_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ParticleSystem.js
-/* provided dependency */ var $ = __webpack_require__(588);
+/* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -2260,9 +2260,9 @@ const QuadGeometry = new Float32Array ([
 
 function ParticleSystem (executionContext)
 {
-   X3DShapeNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DShapeNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).ParticleSystem);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).ParticleSystem);
 
    // Units
 
@@ -2289,7 +2289,7 @@ function ParticleSystem (executionContext)
    this .boundedVertices          = [ ];
    this .colorRamp                = new Float32Array ();
    this .texCoordRamp             = new Float32Array ();
-   this .geometryContext          = new (GeometryContext_default()) ({ textureCoordinateNode: browser .getDefaultTextureCoordinate () });
+   this .geometryContext          = new (external_X_ITE_X3D_GeometryContext_default()) ({ textureCoordinateNode: browser .getDefaultTextureCoordinate () });
    this .creationTime             = 0;
    this .pauseTime                = 0;
    this .deltaTime                = 0;
@@ -2303,11 +2303,11 @@ function ParticleSystem (executionContext)
    this .instancesStride          = this .particlesStride;
 }
 
-Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_ITE_X3D_X3DShapeNode_default()).prototype),
 {
    initialize ()
    {
-      X3DShapeNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DShapeNode_default().prototype .initialize .call (this);
 
       const
          browser = this .getBrowser (),
@@ -2343,16 +2343,16 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
       this .inputParticles = Object .assign (gl .createBuffer (),
       {
-         vertexArrayObject: new (VertexArray_default()) (gl),
-         thickLinesVertexArrayObject: new (VertexArray_default()) (gl),
+         vertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
+         thickLinesVertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
          lineTrianglesBuffer: gl .createBuffer (),
          numLines: 0,
       });
 
       this .outputParticles = Object .assign (gl .createBuffer (),
       {
-         vertexArrayObject: new (VertexArray_default()) (gl),
-         thickLinesVertexArrayObject: new (VertexArray_default()) (gl),
+         vertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
+         thickLinesVertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
          lineTrianglesBuffer: gl .createBuffer (),
          numLines: 0,
       });
@@ -2371,8 +2371,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
       // Create geometry for LINE geometryType.
 
-      this .lineGeometryNode   = new (LineSet_default()) (this .getExecutionContext ());
-      this .lineCoordinateNode = new (Coordinate_default()) (this .getExecutionContext ());
+      this .lineGeometryNode   = new (external_X_ITE_X3D_LineSet_default()) (this .getExecutionContext ());
+      this .lineCoordinateNode = new (external_X_ITE_X3D_Coordinate_default()) (this .getExecutionContext ());
 
       this .lineCoordinateNode ._point = [0, 0, -0.5,   0, 0, 0.5];
 
@@ -2404,7 +2404,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
    {
       switch (this .geometryType)
       {
-         case (GeometryTypes_default()).GEOMETRY:
+         case (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY:
             return this .getGeometry ();
          default:
             return this .geometryContext;
@@ -2455,11 +2455,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
    {
       const alphaMode = this .appearanceNode .getAlphaMode ();
 
-      if (alphaMode === (AlphaMode_default()).AUTO)
+      if (alphaMode === (external_X_ITE_X3D_AlphaMode_default()).AUTO)
       {
          switch (this .geometryType)
          {
-            case (GeometryTypes_default()).POINT:
+            case (external_X_ITE_X3D_GeometryTypes_default()).POINT:
             {
                this .setTransparent (true);
                break;
@@ -2468,17 +2468,17 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
             {
                this .setTransparent (this .getAppearance () .isTransparent () ||
                                      this .colorRampNode ?.isTransparent () ||
-                                     (this .geometryType === (GeometryTypes_default()).GEOMETRY &&
+                                     (this .geometryType === (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY &&
                                       this .geometryNode ?.isTransparent ()));
                break;
             }
          }
 
-         this .setAlphaMode (this .isTransparent () ? (AlphaMode_default()).BLEND : (AlphaMode_default()).OPAQUE);
+         this .setAlphaMode (this .isTransparent () ? (external_X_ITE_X3D_AlphaMode_default()).BLEND : (external_X_ITE_X3D_AlphaMode_default()).OPAQUE);
       }
       else
       {
-         this .setTransparent (alphaMode === (AlphaMode_default()).BLEND);
+         this .setTransparent (alphaMode === (external_X_ITE_X3D_AlphaMode_default()).BLEND);
          this .setAlphaMode (alphaMode);
       }
    },
@@ -2554,13 +2554,13 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
       // Get geometryType.
 
-      this .geometryType = $.enum ((GeometryTypes_default()), this ._geometryType .getValue (), (GeometryTypes_default()).QUAD);
+      this .geometryType = $.enum ((external_X_ITE_X3D_GeometryTypes_default()), this ._geometryType .getValue (), (external_X_ITE_X3D_GeometryTypes_default()).QUAD);
 
       // Create buffers.
 
       switch (this .geometryType)
       {
-         case (GeometryTypes_default()).POINT:
+         case (external_X_ITE_X3D_GeometryTypes_default()).POINT:
          {
             this .geometryContext .geometryType = 0;
             this .geometryContext .hasNormals   = false;
@@ -2576,7 +2576,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
             break;
          }
-         case (GeometryTypes_default()).LINE:
+         case (external_X_ITE_X3D_GeometryTypes_default()).LINE:
          {
             this .geometryContext .geometryType = 1;
             this .geometryContext .hasNormals   = false;
@@ -2584,9 +2584,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
             this .texCoordCount = 0;
             break;
          }
-         case (GeometryTypes_default()).TRIANGLE:
-         case (GeometryTypes_default()).QUAD:
-         case (GeometryTypes_default()).SPRITE:
+         case (external_X_ITE_X3D_GeometryTypes_default()).TRIANGLE:
+         case (external_X_ITE_X3D_GeometryTypes_default()).QUAD:
+         case (external_X_ITE_X3D_GeometryTypes_default()).SPRITE:
          {
             this .geometryContext .geometryType = 2;
             this .geometryContext .hasNormals   = true;
@@ -2604,7 +2604,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
             break;
          }
-         case (GeometryTypes_default()).GEOMETRY:
+         case (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY:
          {
             this .texCoordCount = 0;
             break;
@@ -2648,7 +2648,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
    {
       this .emitterNode ?._bbox_changed .removeInterest ("set_bbox__", this);
 
-      this .emitterNode = X3DCast_default() ((X3DConstants_default()).X3DParticleEmitterNode, this ._emitter)
+      this .emitterNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DParticleEmitterNode, this ._emitter)
          ?? this .getBrowser () .getDefaultEmitter ();
 
       this .emitterNode ._bbox_changed .addInterest ("set_bbox__", this);
@@ -2681,13 +2681,13 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
             {
                switch (type [t])
                {
-                  case (X3DConstants_default()).ForcePhysicsModel:
-                  case (X3DConstants_default()).WindPhysicsModel:
+                  case (external_X_ITE_X3D_X3DConstants_default()).ForcePhysicsModel:
+                  case (external_X_ITE_X3D_X3DConstants_default()).WindPhysicsModel:
                   {
                      forcePhysicsModelNodes .push (innerNode);
                      break;
                   }
-                  case (X3DConstants_default()).BoundedPhysicsModel:
+                  case (external_X_ITE_X3D_X3DConstants_default()).BoundedPhysicsModel:
                   {
                      boundedPhysicsModelNodes .push (innerNode);
                      break;
@@ -2764,7 +2764,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       if (this .colorRampNode)
          this .colorRampNode .removeInterest ("set_color__", this);
 
-      this .colorRampNode = X3DCast_default() ((X3DConstants_default()).X3DColorNode, this ._color);
+      this .colorRampNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DColorNode, this ._color);
 
       if (this .colorRampNode)
          this .colorRampNode .addInterest ("set_color__", this);
@@ -2810,7 +2810,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       if (this .texCoordRampNode)
          this .texCoordRampNode .removeInterest ("set_texCoord__", this);
 
-      this .texCoordRampNode = X3DCast_default() ((X3DConstants_default()).X3DTextureCoordinateNode, this ._texCoord);
+      this .texCoordRampNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTextureCoordinateNode, this ._texCoord);
 
       if (this .texCoordRampNode)
          this .texCoordRampNode .addInterest ("set_texCoord__", this);
@@ -3015,17 +3015,17 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       const data = new Float32Array (QuadGeometry);
 
       const quad = [
-         new (Vector3_default()) (-0.5, -0.5, 0),
-         new (Vector3_default()) ( 0.5, -0.5, 0),
-         new (Vector3_default()) ( 0.5,  0.5, 0),
-         new (Vector3_default()) (-0.5, -0.5, 0),
-         new (Vector3_default()) ( 0.5,  0.5, 0),
-         new (Vector3_default()) (-0.5,  0.5, 0),
+         new (external_X_ITE_X3D_Vector3_default()) (-0.5, -0.5, 0),
+         new (external_X_ITE_X3D_Vector3_default()) ( 0.5, -0.5, 0),
+         new (external_X_ITE_X3D_Vector3_default()) ( 0.5,  0.5, 0),
+         new (external_X_ITE_X3D_Vector3_default()) (-0.5, -0.5, 0),
+         new (external_X_ITE_X3D_Vector3_default()) ( 0.5,  0.5, 0),
+         new (external_X_ITE_X3D_Vector3_default()) (-0.5,  0.5, 0),
       ];
 
       const
-         vertex = new (Vector3_default()) (),
-         size   = new (Vector3_default()) ();
+         vertex = new (external_X_ITE_X3D_Vector3_default()) (),
+         size   = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (gl, rotation)
       {
@@ -3062,26 +3062,26 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
       switch (type)
       {
-         case (TraverseType_default()).POINTER:
+         case (external_X_ITE_X3D_TraverseType_default()).POINTER:
          {
             if (this ._pointerEvents .getValue ())
                renderObject .addPointingShape (this);
 
             break;
          }
-         case (TraverseType_default()).PICKING:
-         case (TraverseType_default()).COLLISION:
+         case (external_X_ITE_X3D_TraverseType_default()).PICKING:
+         case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
          {
             break;
          }
-         case (TraverseType_default()).SHADOW:
+         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
          {
             if (this ._castShadow .getValue ())
                renderObject .addShadowShape (this);
 
             break;
          }
-         case (TraverseType_default()).DISPLAY:
+         case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
             if (renderObject .addDisplayShape (this))
             {
@@ -3093,7 +3093,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
          }
       }
 
-      if (this .geometryType === (GeometryTypes_default()).GEOMETRY)
+      if (this .geometryType === (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY)
       {
          // Currently used for ScreenText and Tools.
          this .getGeometry () ?.traverse (type, renderObject);
@@ -3105,17 +3105,17 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
       switch (this .geometryType)
       {
-         case (GeometryTypes_default()).LINE:
+         case (external_X_ITE_X3D_GeometryTypes_default()).LINE:
          {
             this .lineGeometryNode .displaySimpleInstanced (gl, shaderNode, this);
             break;
          }
-         case (GeometryTypes_default()).GEOMETRY:
+         case (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY:
          {
             this .getGeometry () ?.displaySimpleInstanced (gl, shaderNode, this);
             break;
          }
-         case (GeometryTypes_default()).SPRITE:
+         case (external_X_ITE_X3D_GeometryTypes_default()).SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
             // [fall trough]
@@ -3144,25 +3144,25 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
       switch (this .geometryType)
       {
-         case (GeometryTypes_default()).LINE:
+         case (external_X_ITE_X3D_GeometryTypes_default()).LINE:
          {
             this .lineGeometryNode .displayInstanced (gl, renderContext, this);
             break;
          }
-         case (GeometryTypes_default()).GEOMETRY:
+         case (external_X_ITE_X3D_GeometryTypes_default()).GEOMETRY:
          {
             this .getGeometry () ?.displayInstanced (gl, renderContext, this);
             break;
          }
-         case (GeometryTypes_default()).SPRITE:
+         case (external_X_ITE_X3D_GeometryTypes_default()).SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
             // [fall trough]
          }
-         case (GeometryTypes_default()).QUAD:
-         case (GeometryTypes_default()).TRIANGLE:
+         case (external_X_ITE_X3D_GeometryTypes_default()).QUAD:
+         case (external_X_ITE_X3D_GeometryTypes_default()).TRIANGLE:
          {
-            const positiveScale = Matrix4_default().prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
+            const positiveScale = external_X_ITE_X3D_Matrix4_default().prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
 
             gl .frontFace (positiveScale ? gl .CCW : gl .CW);
             gl .enable (gl .CULL_FACE);
@@ -3237,17 +3237,17 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
    getScreenAlignedRotation: (() =>
    {
       const
-         invModelViewMatrix = new (Matrix4_default()) (),
-         billboardToScreen  = new (Vector3_default()) (),
-         viewerYAxis        = new (Vector3_default()) (),
-         y                  = new (Vector3_default()) (),
-         rotation           = new (Matrix3_default()) (9);
+         invModelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) (),
+         billboardToScreen  = new (external_X_ITE_X3D_Vector3_default()) (),
+         viewerYAxis        = new (external_X_ITE_X3D_Vector3_default()) (),
+         y                  = new (external_X_ITE_X3D_Vector3_default()) (),
+         rotation           = new (external_X_ITE_X3D_Matrix3_default()) (9);
 
       return function (modelViewMatrix)
       {
          invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-         invModelViewMatrix .multDirMatrix (billboardToScreen .assign ((Vector3_default()).zAxis));
-         invModelViewMatrix .multDirMatrix (viewerYAxis .assign ((Vector3_default()).yAxis));
+         invModelViewMatrix .multDirMatrix (billboardToScreen .assign ((external_X_ITE_X3D_Vector3_default()).zAxis));
+         invModelViewMatrix .multDirMatrix (viewerYAxis .assign ((external_X_ITE_X3D_Vector3_default()).yAxis));
 
          const x = viewerYAxis .cross (billboardToScreen);
          y .assign (billboardToScreen) .cross (x);
@@ -3292,30 +3292,30 @@ Object .defineProperties (ParticleSystem,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "createParticles",   new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geometryType",      new (Fields_default()).SFString ("QUAD")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "maxParticles",      new (Fields_default()).SFInt32 (200)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "particleLifetime",  new (Fields_default()).SFFloat (5)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "lifetimeVariation", new (Fields_default()).SFFloat (0.25)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "particleSize",      new (Fields_default()).SFVec2f (0.02, 0.02)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "emitter",           new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "physics",           new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "colorKey",          new (Fields_default()).MFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "color",             new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "texCoordKey",       new (Fields_default()).MFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "texCoord",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",          new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pointerEvents",     new (Fields_default()).SFBool (true)), // skip test
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "castShadow",        new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",       new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",          new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",        new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "appearance",        new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geometry",          new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "enabled",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "createParticles",   new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "geometryType",      new (external_X_ITE_X3D_Fields_default()).SFString ("QUAD")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "maxParticles",      new (external_X_ITE_X3D_Fields_default()).SFInt32 (200)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "particleLifetime",  new (external_X_ITE_X3D_Fields_default()).SFFloat (5)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "lifetimeVariation", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.25)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "particleSize",      new (external_X_ITE_X3D_Fields_default()).SFVec2f (0.02, 0.02)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "emitter",           new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "physics",           new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "colorKey",          new (external_X_ITE_X3D_Fields_default()).MFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "color",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "texCoordKey",       new (external_X_ITE_X3D_Fields_default()).MFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "texCoord",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "isActive",          new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pointerEvents",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)), // skip test
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "castShadow",        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",          new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",        new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "appearance",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "geometry",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -3324,11 +3324,11 @@ Object .defineProperties (ParticleSystem,
 const ParticleSystem_default_ = ParticleSystem;
 ;
 
-Namespace_default().add ("ParticleSystem", "x_ite/Components/ParticleSystems/ParticleSystem", ParticleSystem_default_);
+external_X_ITE_X3D_Namespace_default().add ("ParticleSystem", "x_ite/Components/ParticleSystems/ParticleSystem", ParticleSystem_default_);
 /* harmony default export */ const ParticleSystems_ParticleSystem = (ParticleSystem_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/IndexedLineSet\")"
-const IndexedLineSet_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/IndexedLineSet");
-var IndexedLineSet_default = /*#__PURE__*/__webpack_require__.n(IndexedLineSet_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .IndexedLineSet"
+const external_X_ITE_X3D_IndexedLineSet_namespaceObject = __X_ITE_X3D__ .IndexedLineSet;
+var external_X_ITE_X3D_IndexedLineSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_IndexedLineSet_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/PolylineEmitter.js
 /*******************************************************************************
  *
@@ -3389,10 +3389,10 @@ function PolylineEmitter (executionContext)
 {
    ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).PolylineEmitter);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).PolylineEmitter);
 
    this .verticesIndex  = -1;
-   this .polylinesNode  = new (IndexedLineSet_default()) (executionContext);
+   this .polylinesNode  = new (external_X_ITE_X3D_IndexedLineSet_default()) (executionContext);
    this .polylinesArray = new Float32Array ();
 }
 
@@ -3480,7 +3480,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
    },
    getBBox: (function ()
    {
-      const bboxSize = new (Vector3_default()) ();
+      const bboxSize = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (bbox, { particleLifetime, lifetimeVariation })
       {
@@ -3495,7 +3495,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
    })(),
    set_direction__: (() =>
    {
-      const direction = new (Vector3_default()) ();
+      const direction = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -3511,8 +3511,8 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
    set_polylines__: (() =>
    {
       const
-         vertex1 = new (Vector3_default()) (),
-         vertex2 = new (Vector3_default()) ();
+         vertex1 = new (external_X_ITE_X3D_Vector3_default()) (),
+         vertex2 = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -3586,17 +3586,17 @@ Object .defineProperties (PolylineEmitter,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_coordIndex", new (Fields_default()).MFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "on",             new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "direction",      new (Fields_default()).SFVec3f (0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "speed",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "variation",      new (Fields_default()).SFFloat (0.25)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "mass",           new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceArea",    new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "coordIndex",     new (Fields_default()).MFInt32 (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "coord",          new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "set_coordIndex", new (external_X_ITE_X3D_Fields_default()).MFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "on",             new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "direction",      new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "speed",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "variation",      new (external_X_ITE_X3D_Fields_default()).SFFloat (0.25)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "mass",           new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "surfaceArea",    new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "coordIndex",     new (external_X_ITE_X3D_Fields_default()).MFInt32 (-1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "coord",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -3605,11 +3605,11 @@ Object .defineProperties (PolylineEmitter,
 const PolylineEmitter_default_ = PolylineEmitter;
 ;
 
-Namespace_default().add ("PolylineEmitter", "x_ite/Components/ParticleSystems/PolylineEmitter", PolylineEmitter_default_);
+external_X_ITE_X3D_Namespace_default().add ("PolylineEmitter", "x_ite/Components/ParticleSystems/PolylineEmitter", PolylineEmitter_default_);
 /* harmony default export */ const ParticleSystems_PolylineEmitter = (PolylineEmitter_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Geometry/Triangle3\")"
-const Triangle3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Geometry/Triangle3");
-var Triangle3_default = /*#__PURE__*/__webpack_require__.n(Triangle3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Triangle3"
+const external_X_ITE_X3D_Triangle3_namespaceObject = __X_ITE_X3D__ .Triangle3;
+var external_X_ITE_X3D_Triangle3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Triangle3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/SurfaceEmitter.js
 /*******************************************************************************
  *
@@ -3671,7 +3671,7 @@ function SurfaceEmitter (executionContext)
 {
    ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).SurfaceEmitter);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).SurfaceEmitter);
 
    this .verticesIndex = -1;
    this .normalsIndex  = -1;
@@ -3738,7 +3738,7 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
    },
    getBBox: (function ()
    {
-      const bboxSize = new (Vector3_default()) ();
+      const bboxSize = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (bbox, { particleLifetime, lifetimeVariation })
       {
@@ -3762,7 +3762,7 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
          this .surfaceNode ._rebuild .removeInterest ("set_geometry__", this);
       }
 
-      this .surfaceNode = X3DCast_default() ((X3DConstants_default()).X3DGeometryNode, this ._surface);
+      this .surfaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DGeometryNode, this ._surface);
 
       if (this .surfaceNode)
       {
@@ -3788,9 +3788,9 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
    set_geometry__: (() =>
    {
       const
-         vertex1  = new (Vector3_default()) (),
-         vertex2  = new (Vector3_default()) (),
-         vertex3  = new (Vector3_default()) ();
+         vertex1  = new (external_X_ITE_X3D_Vector3_default()) (),
+         vertex2  = new (external_X_ITE_X3D_Vector3_default()) (),
+         vertex3  = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -3822,7 +3822,7 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
                vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
                vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
 
-               surfaceArray [i / 3 + 4] = areaSoFar += Triangle3_default().area (vertex1, vertex2, vertex3);
+               surfaceArray [i / 3 + 4] = areaSoFar += external_X_ITE_X3D_Triangle3_default().area (vertex1, vertex2, vertex3);
             }
 
             surfaceArray .set (vertices, verticesIndex * 4);
@@ -3886,14 +3886,14 @@ Object .defineProperties (SurfaceEmitter,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",    new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "on",          new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "speed",       new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "variation",   new (Fields_default()).SFFloat (0.25)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "mass",        new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceArea", new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "surface",     new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "on",          new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "speed",       new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "variation",   new (external_X_ITE_X3D_Fields_default()).SFFloat (0.25)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "mass",        new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "surfaceArea", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "surface",     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -3902,11 +3902,11 @@ Object .defineProperties (SurfaceEmitter,
 const SurfaceEmitter_default_ = SurfaceEmitter;
 ;
 
-Namespace_default().add ("SurfaceEmitter", "x_ite/Components/ParticleSystems/SurfaceEmitter", SurfaceEmitter_default_);
+external_X_ITE_X3D_Namespace_default().add ("SurfaceEmitter", "x_ite/Components/ParticleSystems/SurfaceEmitter", SurfaceEmitter_default_);
 /* harmony default export */ const ParticleSystems_SurfaceEmitter = (SurfaceEmitter_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Geometry3D/IndexedFaceSet\")"
-const IndexedFaceSet_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Geometry3D/IndexedFaceSet");
-var IndexedFaceSet_default = /*#__PURE__*/__webpack_require__.n(IndexedFaceSet_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .IndexedFaceSet"
+const external_X_ITE_X3D_IndexedFaceSet_namespaceObject = __X_ITE_X3D__ .IndexedFaceSet;
+var external_X_ITE_X3D_IndexedFaceSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_IndexedFaceSet_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/VolumeEmitter.js
 /*******************************************************************************
  *
@@ -3969,13 +3969,13 @@ function VolumeEmitter (executionContext)
 {
    ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).VolumeEmitter);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).VolumeEmitter);
 
    this .verticesIndex  = -1;
    this .normalsIndex   = -1;
    this .hierarchyIndex = -1;
    this .hierarchyRoot  = -1;
-   this .volumeNode     = new (IndexedFaceSet_default()) (executionContext);
+   this .volumeNode     = new (external_X_ITE_X3D_IndexedFaceSet_default()) (executionContext);
    this .volumeArray    = new Float32Array ();
 }
 
@@ -4085,7 +4085,7 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
    },
    getBBox: (function ()
    {
-      const bboxSize = new (Vector3_default()) ();
+      const bboxSize = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (bbox, { particleLifetime, lifetimeVariation })
       {
@@ -4100,7 +4100,7 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
    })(),
    set_direction__: (() =>
    {
-      const direction = new (Vector3_default()) ();
+      const direction = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -4128,9 +4128,9 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
    set_geometry__: (() =>
    {
       const
-         vertex1 = new (Vector3_default()) (),
-         vertex2 = new (Vector3_default()) (),
-         vertex3 = new (Vector3_default()) ();
+         vertex1 = new (external_X_ITE_X3D_Vector3_default()) (),
+         vertex2 = new (external_X_ITE_X3D_Vector3_default()) (),
+         vertex3 = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -4163,7 +4163,7 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
             vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
             vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
 
-            volumeArray [i / 3 + 4] = areaSoFar += Triangle3_default().area (vertex1, vertex2, vertex3);
+            volumeArray [i / 3 + 4] = areaSoFar += external_X_ITE_X3D_Triangle3_default().area (vertex1, vertex2, vertex3);
          }
 
          volumeArray .set (vertices, verticesIndex * 4);
@@ -4227,18 +4227,18 @@ Object .defineProperties (VolumeEmitter,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_coordIndex", new (Fields_default()).MFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "on",             new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "internal",       new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "direction",      new (Fields_default()).SFVec3f (0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "speed",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "variation",      new (Fields_default()).SFFloat (0.25)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "mass",           new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceArea",    new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "coordIndex",     new (Fields_default()).MFInt32 (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "coord",          new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "set_coordIndex", new (external_X_ITE_X3D_Fields_default()).MFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "on",             new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "internal",       new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "direction",      new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "speed",          new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "variation",      new (external_X_ITE_X3D_Fields_default()).SFFloat (0.25)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "mass",           new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "surfaceArea",    new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "coordIndex",     new (external_X_ITE_X3D_Fields_default()).MFInt32 (-1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "coord",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -4247,11 +4247,11 @@ Object .defineProperties (VolumeEmitter,
 const VolumeEmitter_default_ = VolumeEmitter;
 ;
 
-Namespace_default().add ("VolumeEmitter", "x_ite/Components/ParticleSystems/VolumeEmitter", VolumeEmitter_default_);
+external_X_ITE_X3D_Namespace_default().add ("VolumeEmitter", "x_ite/Components/ParticleSystems/VolumeEmitter", VolumeEmitter_default_);
 /* harmony default export */ const ParticleSystems_VolumeEmitter = (VolumeEmitter_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Algorithm");
-var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
+const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
+var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/WindPhysicsModel.js
 /*******************************************************************************
  *
@@ -4312,7 +4312,7 @@ function WindPhysicsModel (executionContext)
 {
    ParticleSystems_X3DParticlePhysicsModelNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).WindPhysicsModel);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).WindPhysicsModel);
 
    // Units
 
@@ -4321,7 +4321,7 @@ function WindPhysicsModel (executionContext)
    // Legacy
 
    if (executionContext .getSpecificationVersion () <= 3.3)
-      this ._direction = new (Vector3_default()) ();
+      this ._direction = new (external_X_ITE_X3D_Vector3_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, ParticleSystems_X3DParticlePhysicsModelNode .prototype),
@@ -4336,7 +4336,7 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, ParticleSys
    },
    addForce: (() =>
    {
-      const force = new (Vector3_default()) ();
+      const force = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (i, emitterNode, timeByMass, forces)
       {
@@ -4347,13 +4347,13 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, ParticleSys
                speed       = this .getRandomSpeed (emitterNode),
                pressure    = 10 ** (2 * Math .log (speed)) * 0.64615;
 
-            if (this ._direction .getValue () .equals ((Vector3_default()).Zero))
+            if (this ._direction .getValue () .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
                emitterNode .getRandomNormal (force);
             else
                force .assign (this ._direction .getValue ()) .normalize ();
 
             forces .set (force .multiply (surfaceArea * pressure * timeByMass), i * 4);
-            forces [i * 4 + 3] = Math .PI * Algorithm_default().clamp (this ._turbulence .getValue (), 0, 1);
+            forces [i * 4 + 3] = Math .PI * external_X_ITE_X3D_Algorithm_default().clamp (this ._turbulence .getValue (), 0, 1);
 
             return true;
          }
@@ -4389,13 +4389,13 @@ Object .defineProperties (WindPhysicsModel,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",   new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",    new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",  new (Fields_default()).SFVec3f (1, 0, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",      new (Fields_default()).SFFloat (0.1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "gustiness",  new (Fields_default()).SFFloat (0.1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "turbulence", new (Fields_default()).SFFloat ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",   new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",    new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "direction",  new (external_X_ITE_X3D_Fields_default()).SFVec3f (1, 0, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "speed",      new (external_X_ITE_X3D_Fields_default()).SFFloat (0.1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "gustiness",  new (external_X_ITE_X3D_Fields_default()).SFFloat (0.1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "turbulence", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
       ]),
       enumerable: true,
    },
@@ -4404,7 +4404,7 @@ Object .defineProperties (WindPhysicsModel,
 const WindPhysicsModel_default_ = WindPhysicsModel;
 ;
 
-Namespace_default().add ("WindPhysicsModel", "x_ite/Components/ParticleSystems/WindPhysicsModel", WindPhysicsModel_default_);
+external_X_ITE_X3D_Namespace_default().add ("WindPhysicsModel", "x_ite/Components/ParticleSystems/WindPhysicsModel", WindPhysicsModel_default_);
 /* harmony default export */ const ParticleSystems_WindPhysicsModel = (WindPhysicsModel_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/ParticleSystems.js
 /*******************************************************************************
@@ -4469,7 +4469,7 @@ Namespace_default().add ("WindPhysicsModel", "x_ite/Components/ParticleSystems/W
 
 
 
-Components_default().add ({
+external_X_ITE_X3D_Components_default().add ({
    name: "ParticleSystems",
    concreteNodes:
    [
@@ -4495,7 +4495,7 @@ Components_default().add ({
 const ParticleSystems_default_ = undefined;
 ;
 
-Namespace_default().add ("ParticleSystems", "assets/components/ParticleSystems", ParticleSystems_default_);
+external_X_ITE_X3D_Namespace_default().add ("ParticleSystems", "assets/components/ParticleSystems", ParticleSystems_default_);
 /* harmony default export */ const ParticleSystems = ((/* unused pure expression or super */ null && (ParticleSystems_default_)));
 /******/ })()
 ;

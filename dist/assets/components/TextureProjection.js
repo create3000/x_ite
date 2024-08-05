@@ -39,39 +39,39 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
-const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
-var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
-var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
-var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Lighting/X3DLightNode\")"
-const X3DLightNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Lighting/X3DLightNode");
-var X3DLightNode_default = /*#__PURE__*/__webpack_require__.n(X3DLightNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DCast");
-var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector3");
-var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Rotation4\")"
-const Rotation4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Rotation4");
-var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Matrix4");
-var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
-var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
+var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
+var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
+var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
+var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLightNode"
+const external_X_ITE_X3D_X3DLightNode_namespaceObject = __X_ITE_X3D__ .X3DLightNode;
+var external_X_ITE_X3D_X3DLightNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DLightNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
+var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
+const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
+var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
+const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
+var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Rotation4"
+const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
+var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
+var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjection/X3DTextureProjectorNode.js
 /*******************************************************************************
  *
@@ -129,20 +129,20 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 function X3DTextureProjectorNode (executionContext)
 {
-   X3DLightNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DLightNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DTextureProjectorNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DTextureProjectorNode);
 
    this ._location    .setUnit ("length");
    this ._farDistance .setUnit ("length");
    this ._location    .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3DLightNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (external_X_ITE_X3D_X3DLightNode_default()).prototype),
 {
    initialize ()
    {
-      X3DLightNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DLightNode_default().prototype .initialize .call (this);
 
       this ._nearDistance .addInterest ("set_nearDistance__", this);
       this ._farDistance  .addInterest ("set_farDistance__",  this);
@@ -191,7 +191,7 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3D
    getBiasMatrix: (() =>
    {
       // Transforms normalized coords from range (-1, 1) to (0, 1).
-      const biasMatrix = new (Matrix4_default()) (0.5, 0.0, 0.0, 0.0,
+      const biasMatrix = new (external_X_ITE_X3D_Matrix4_default()) (0.5, 0.0, 0.0, 0.0,
                                       0.0, 0.5, 0.0, 0.0,
                                       0.0, 0.0, 0.5, 0.0,
                                       0.5, 0.5, 0.5, 1.0);
@@ -223,7 +223,7 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3D
    {
       this .textureNode ?.removeInterest ("set_aspectRatio__", this);
 
-      this .textureNode = X3DCast_default() ((X3DConstants_default()).X3DTexture2DNode, this ._texture);
+      this .textureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture2DNode, this ._texture);
 
       this .textureNode ?.addInterest ("set_aspectRatio__", this);
 
@@ -258,17 +258,17 @@ Object .defineProperties (X3DTextureProjectorNode,
 const __default__ = X3DTextureProjectorNode;
 ;
 
-Namespace_default().add ("X3DTextureProjectorNode", "x_ite/Components/TextureProjection/X3DTextureProjectorNode", __default__);
+external_X_ITE_X3D_Namespace_default().add ("X3DTextureProjectorNode", "x_ite/Components/TextureProjection/X3DTextureProjectorNode", __default__);
 /* harmony default export */ const TextureProjection_X3DTextureProjectorNode = (__default__);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Geometry/Camera\")"
-const Camera_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Geometry/Camera");
-var Camera_default = /*#__PURE__*/__webpack_require__.n(Camera_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Utility/MatrixStack\")"
-const MatrixStack_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Utility/MatrixStack");
-var MatrixStack_default = /*#__PURE__*/__webpack_require__.n(MatrixStack_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Utility/ObjectCache\")"
-const ObjectCache_namespaceObject = __X_ITE_X3D__ .require ("standard/Utility/ObjectCache");
-var ObjectCache_default = /*#__PURE__*/__webpack_require__.n(ObjectCache_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Camera"
+const external_X_ITE_X3D_Camera_namespaceObject = __X_ITE_X3D__ .Camera;
+var external_X_ITE_X3D_Camera_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Camera_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .MatrixStack"
+const external_X_ITE_X3D_MatrixStack_namespaceObject = __X_ITE_X3D__ .MatrixStack;
+var external_X_ITE_X3D_MatrixStack_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_MatrixStack_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ObjectCache"
+const external_X_ITE_X3D_ObjectCache_namespaceObject = __X_ITE_X3D__ .ObjectCache;
+var external_X_ITE_X3D_ObjectCache_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ObjectCache_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjection/TextureProjector.js
 /*******************************************************************************
  *
@@ -329,22 +329,22 @@ var ObjectCache_default = /*#__PURE__*/__webpack_require__.n(ObjectCache_namespa
 
 
 
-const TextureProjectorCache = ObjectCache_default() (TextureProjectorContainer);
+const TextureProjectorCache = external_X_ITE_X3D_ObjectCache_default() (TextureProjectorContainer);
 
 function TextureProjectorContainer ()
 {
-   this .projectionMatrix                = new (Matrix4_default()) ();
-   this .modelViewMatrix                 = new (MatrixStack_default()) ((Matrix4_default()));
-   this .modelMatrix                     = new (Matrix4_default()) ();
-   this .invTextureSpaceMatrix           = new (Matrix4_default()) ();
-   this .invTextureSpaceProjectionMatrix = new (Matrix4_default()) ();
-   this .location                        = new (Vector3_default()) ();
+   this .projectionMatrix                = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .modelViewMatrix                 = new (external_X_ITE_X3D_MatrixStack_default()) ((external_X_ITE_X3D_Matrix4_default()));
+   this .modelMatrix                     = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .invTextureSpaceMatrix           = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .invTextureSpaceProjectionMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .location                        = new (external_X_ITE_X3D_Vector3_default()) ();
    this .locationArray                   = new Float32Array (3);
-   this .direction                       = new (Vector3_default()) ();
-   this .rotation                        = new (Rotation4_default()) ();
-   this .matrix                          = new (Matrix4_default()) ();
+   this .direction                       = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .rotation                        = new (external_X_ITE_X3D_Rotation4_default()) ();
+   this .matrix                          = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .matrixArray                     = new Float32Array (16);
-   this .textureMatrix                   = new (Matrix4_default()) ();
+   this .textureMatrix                   = new (external_X_ITE_X3D_Matrix4_default()) ();
 }
 
 Object .assign (TextureProjectorContainer .prototype,
@@ -366,9 +366,9 @@ Object .assign (TextureProjectorContainer .prototype,
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (Matrix4_default()).Identity);
+         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).Identity);
 
-      this .rotation .setFromToVec ((Vector3_default()).zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
+      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
       lightNode .straightenHorizon (this .rotation);
 
       invTextureSpaceMatrix .translate (lightNode .getLocation ());
@@ -382,7 +382,7 @@ Object .assign (TextureProjectorContainer .prototype,
          farDistance  = lightNode .getFarDistance (),
          fieldOfView  = lightNode .getFieldOfView ();
 
-      Camera_default().perspective (fieldOfView, nearDistance, farDistance, width, height, this .projectionMatrix);
+      external_X_ITE_X3D_Camera_default().perspective (fieldOfView, nearDistance, farDistance, width, height, this .projectionMatrix);
 
       if (!this .global)
          invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
@@ -439,7 +439,7 @@ function TextureProjector (executionContext)
 {
    TextureProjection_X3DTextureProjectorNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).TextureProjector);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).TextureProjector);
 
    this ._fieldOfView .setUnit ("angle");
 }
@@ -486,29 +486,29 @@ Object .defineProperties (TextureProjector,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",      new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "global",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "on",               new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "color",            new (Fields_default()).SFColor (1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "intensity",        new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "ambientIntensity", new (Fields_default()).SFFloat ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",      new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "global",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "on",               new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "color",            new (external_X_ITE_X3D_Fields_default()).SFColor (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "intensity",        new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "ambientIntensity", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
 
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "location",         new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "direction",        new (Fields_default()).SFVec3f (0, 0, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "upVector",         new (Fields_default()).SFVec3f (0, 0, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fieldOfView",      new (Fields_default()).SFFloat (0.785398)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "nearDistance",     new (Fields_default()).SFFloat (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "farDistance",      new (Fields_default()).SFFloat (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "aspectRatio",      new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texture",          new (Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "location",         new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "direction",        new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "upVector",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "fieldOfView",      new (external_X_ITE_X3D_Fields_default()).SFFloat (0.785398)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "nearDistance",     new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "farDistance",      new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "aspectRatio",      new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "texture",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
 
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadows",          new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadowColor",      new (Fields_default()).SFColor ()),      // skip test
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadowIntensity",  new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadowBias",       new (Fields_default()).SFFloat (0.005)), // skip test
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "shadowMapSize",    new (Fields_default()).SFInt32 (1024)),  // skip test
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "shadows",          new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "shadowColor",      new (external_X_ITE_X3D_Fields_default()).SFColor ()),      // skip test
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "shadowIntensity",  new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "shadowBias",       new (external_X_ITE_X3D_Fields_default()).SFFloat (0.005)), // skip test
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "shadowMapSize",    new (external_X_ITE_X3D_Fields_default()).SFInt32 (1024)),  // skip test
       ]),
       enumerable: true,
    },
@@ -517,7 +517,7 @@ Object .defineProperties (TextureProjector,
 const TextureProjector_default_ = TextureProjector;
 ;
 
-Namespace_default().add ("TextureProjector", "x_ite/Components/TextureProjection/TextureProjector", TextureProjector_default_);
+external_X_ITE_X3D_Namespace_default().add ("TextureProjector", "x_ite/Components/TextureProjection/TextureProjector", TextureProjector_default_);
 /* harmony default export */ const TextureProjection_TextureProjector = (TextureProjector_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjection/TextureProjectorParallel.js
 /*******************************************************************************
@@ -579,22 +579,22 @@ Namespace_default().add ("TextureProjector", "x_ite/Components/TextureProjection
 
 
 
-const TextureProjectorParallelCache = ObjectCache_default() (TextureProjectorParallelContainer);
+const TextureProjectorParallelCache = external_X_ITE_X3D_ObjectCache_default() (TextureProjectorParallelContainer);
 
 function TextureProjectorParallelContainer ()
 {
-   this .projectionMatrix                = new (Matrix4_default()) ();
-   this .modelViewMatrix                 = new (MatrixStack_default()) ((Matrix4_default()));
-   this .modelMatrix                     = new (Matrix4_default()) ();
-   this .invTextureSpaceMatrix           = new (Matrix4_default()) ();
-   this .location                        = new (Vector3_default()) ();
+   this .projectionMatrix                = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .modelViewMatrix                 = new (external_X_ITE_X3D_MatrixStack_default()) ((external_X_ITE_X3D_Matrix4_default()));
+   this .modelMatrix                     = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .invTextureSpaceMatrix           = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .location                        = new (external_X_ITE_X3D_Vector3_default()) ();
    this .locationArray                   = new Float32Array (3);
-   this .invTextureSpaceProjectionMatrix = new (Matrix4_default()) ();
-   this .direction                       = new (Vector3_default()) ();
-   this .rotation                        = new (Rotation4_default()) ();
-   this .matrix                          = new (Matrix4_default()) ();
+   this .invTextureSpaceProjectionMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .direction                       = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .rotation                        = new (external_X_ITE_X3D_Rotation4_default()) ();
+   this .matrix                          = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .matrixArray                     = new Float32Array (16);
-   this .textureMatrix                   = new (Matrix4_default()) ();
+   this .textureMatrix                   = new (external_X_ITE_X3D_Matrix4_default()) ();
 }
 
 Object .assign (TextureProjectorParallelContainer .prototype,
@@ -616,9 +616,9 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (Matrix4_default()).Identity);
+         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).Identity);
 
-      this .rotation .setFromToVec ((Vector3_default()).zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
+      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
       lightNode .straightenHorizon (this .rotation);
 
       invTextureSpaceMatrix .translate (lightNode .getLocation ());
@@ -644,7 +644,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
             center  = (minimumX + maximumX) / 2,
             size1_2 = (sizeY * aspect) / 2;
 
-         Camera_default().ortho (center - size1_2, center + size1_2, minimumY, maximumY, nearDistance, farDistance, this .projectionMatrix);
+         external_X_ITE_X3D_Camera_default().ortho (center - size1_2, center + size1_2, minimumY, maximumY, nearDistance, farDistance, this .projectionMatrix);
       }
       else
       {
@@ -652,7 +652,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
             center  = (minimumY + maximumY) / 2,
             size1_2 = (sizeX / aspect) / 2;
 
-         Camera_default().ortho (minimumX, maximumX, center - size1_2, center + size1_2, nearDistance, farDistance, this .projectionMatrix);
+         external_X_ITE_X3D_Camera_default().ortho (minimumX, maximumX, center - size1_2, center + size1_2, nearDistance, farDistance, this .projectionMatrix);
       }
 
       if (!this .global)
@@ -710,7 +710,7 @@ function TextureProjectorParallel (executionContext)
 {
    TextureProjection_X3DTextureProjectorNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).TextureProjectorParallel);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).TextureProjectorParallel);
 
    this ._fieldOfView .setUnit ("length");
 }
@@ -791,29 +791,29 @@ Object .defineProperties (TextureProjectorParallel,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",      new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "global",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "on",               new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "color",            new (Fields_default()).SFColor (1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "intensity",        new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "ambientIntensity", new (Fields_default()).SFFloat ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",      new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "global",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "on",               new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "color",            new (external_X_ITE_X3D_Fields_default()).SFColor (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "intensity",        new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "ambientIntensity", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
 
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "location",         new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "direction",        new (Fields_default()).SFVec3f (0, 0, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "upVector",         new (Fields_default()).SFVec3f (0, 0, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fieldOfView",      new (Fields_default()).MFFloat (-1, -1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "nearDistance",     new (Fields_default()).SFFloat (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "farDistance",      new (Fields_default()).SFFloat (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "aspectRatio",      new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texture",          new (Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "location",         new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "direction",        new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "upVector",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "fieldOfView",      new (external_X_ITE_X3D_Fields_default()).MFFloat (-1, -1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "nearDistance",     new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "farDistance",      new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "aspectRatio",      new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "texture",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
 
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadows",          new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadowColor",      new (Fields_default()).SFColor ()),      // skip test
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadowIntensity",  new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadowBias",       new (Fields_default()).SFFloat (0.005)), // skip test
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "shadowMapSize",    new (Fields_default()).SFInt32 (1024)),  // skip test
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "shadows",          new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "shadowColor",      new (external_X_ITE_X3D_Fields_default()).SFColor ()),      // skip test
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "shadowIntensity",  new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "shadowBias",       new (external_X_ITE_X3D_Fields_default()).SFFloat (0.005)), // skip test
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "shadowMapSize",    new (external_X_ITE_X3D_Fields_default()).SFInt32 (1024)),  // skip test
       ]),
       enumerable: true,
    },
@@ -822,7 +822,7 @@ Object .defineProperties (TextureProjectorParallel,
 const TextureProjectorParallel_default_ = TextureProjectorParallel;
 ;
 
-Namespace_default().add ("TextureProjectorParallel", "x_ite/Components/TextureProjection/TextureProjectorParallel", TextureProjectorParallel_default_);
+external_X_ITE_X3D_Namespace_default().add ("TextureProjectorParallel", "x_ite/Components/TextureProjection/TextureProjectorParallel", TextureProjectorParallel_default_);
 /* harmony default export */ const TextureProjection_TextureProjectorParallel = (TextureProjectorParallel_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/TextureProjection.js
 /*******************************************************************************
@@ -877,7 +877,7 @@ Namespace_default().add ("TextureProjectorParallel", "x_ite/Components/TexturePr
 
 
 
-Components_default().add ({
+external_X_ITE_X3D_Components_default().add ({
    name: "TextureProjection",
    concreteNodes:
    [
@@ -893,7 +893,7 @@ Components_default().add ({
 const TextureProjection_default_ = undefined;
 ;
 
-Namespace_default().add ("TextureProjection", "assets/components/TextureProjection", TextureProjection_default_);
+external_X_ITE_X3D_Namespace_default().add ("TextureProjection", "assets/components/TextureProjection", TextureProjection_default_);
 /* harmony default export */ const TextureProjection = ((/* unused pure expression or super */ null && (TextureProjection_default_)));
 /******/ })()
 ;

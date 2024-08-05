@@ -39,33 +39,33 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
-const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
-var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
-var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
-var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
-var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Layering/X3DLayerNode\")"
-const X3DLayerNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Layering/X3DLayerNode");
-var X3DLayerNode_default = /*#__PURE__*/__webpack_require__.n(X3DLayerNode_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Navigation/Viewpoint\")"
-const Viewpoint_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Navigation/Viewpoint");
-var Viewpoint_default = /*#__PURE__*/__webpack_require__.n(Viewpoint_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Grouping/Group\")"
-const Group_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Grouping/Group");
-var Group_default = /*#__PURE__*/__webpack_require__.n(Group_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
-var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Components"
+const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
+var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
+const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
+var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFieldDefinition"
+const external_X_ITE_X3D_X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .X3DFieldDefinition;
+var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFieldDefinition_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
+const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
+var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLayerNode"
+const external_X_ITE_X3D_X3DLayerNode_namespaceObject = __X_ITE_X3D__ .X3DLayerNode;
+var external_X_ITE_X3D_X3DLayerNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DLayerNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Viewpoint"
+const external_X_ITE_X3D_Viewpoint_namespaceObject = __X_ITE_X3D__ .Viewpoint;
+var external_X_ITE_X3D_Viewpoint_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Viewpoint_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Group"
+const external_X_ITE_X3D_Group_namespaceObject = __X_ITE_X3D__ .Group;
+var external_X_ITE_X3D_Group_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Group_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DConstants"
+const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
+var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/AnnotationLayer.js
 /*******************************************************************************
  *
@@ -124,19 +124,19 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 function AnnotationLayer (executionContext)
 {
-   X3DLayerNode_default().call (this,
+   external_X_ITE_X3D_X3DLayerNode_default().call (this,
                        executionContext,
-                       new (Viewpoint_default()) (executionContext),
-                       new (Group_default()) (executionContext));
+                       new (external_X_ITE_X3D_Viewpoint_default()) (executionContext),
+                       new (external_X_ITE_X3D_Group_default()) (executionContext));
 
-   this .addType ((X3DConstants_default()).AnnotationLayer);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).AnnotationLayer);
 }
 
-Object .assign (Object .setPrototypeOf (AnnotationLayer .prototype, (X3DLayerNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (AnnotationLayer .prototype, (external_X_ITE_X3D_X3DLayerNode_default()).prototype),
 {
    initialize ()
    {
-      X3DLayerNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DLayerNode_default().prototype .initialize .call (this);
    },
 });
 
@@ -164,12 +164,12 @@ Object .defineProperties (AnnotationLayer,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "isPickable",   new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "layoutPolicy", new (Fields_default()).MFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "shownGroupID", new (Fields_default()).MFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "viewport",     new (Fields_default()).SFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "isPickable",   new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "layoutPolicy", new (external_X_ITE_X3D_Fields_default()).MFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "shownGroupID", new (external_X_ITE_X3D_Fields_default()).MFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "viewport",     new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -178,11 +178,11 @@ Object .defineProperties (AnnotationLayer,
 const __default__ = AnnotationLayer;
 ;
 
-Namespace_default().add ("AnnotationLayer", "x_ite/Components/Annotation/AnnotationLayer", __default__);
+external_X_ITE_X3D_Namespace_default().add ("AnnotationLayer", "x_ite/Components/Annotation/AnnotationLayer", __default__);
 /* harmony default export */ const Annotation_AnnotationLayer = (__default__);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DChildNode");
-var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
+const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
+var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/AnnotationTarget.js
 /*******************************************************************************
  *
@@ -239,16 +239,16 @@ var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_names
 
 function AnnotationTarget (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).AnnotationTarget);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).AnnotationTarget);
 }
 
-Object .assign (Object .setPrototypeOf (AnnotationTarget .prototype, (X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (AnnotationTarget .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
 {
    initialize ()
    {
-      X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
    },
 });
 
@@ -276,12 +276,12 @@ Object .defineProperties (AnnotationTarget,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "referencePoint", new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "leadLineStyle",  new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "marker",         new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "annotations",    new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",       new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "referencePoint", new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "leadLineStyle",  new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "marker",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "annotations",    new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -290,11 +290,11 @@ Object .defineProperties (AnnotationTarget,
 const AnnotationTarget_default_ = AnnotationTarget;
 ;
 
-Namespace_default().add ("AnnotationTarget", "x_ite/Components/Annotation/AnnotationTarget", AnnotationTarget_default_);
+external_X_ITE_X3D_Namespace_default().add ("AnnotationTarget", "x_ite/Components/Annotation/AnnotationTarget", AnnotationTarget_default_);
 /* harmony default export */ const Annotation_AnnotationTarget = (AnnotationTarget_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
-const X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Grouping/X3DGroupingNode");
-var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGroupingNode"
+const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
+var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/X3DAnnotationNode.js
 /*******************************************************************************
  *
@@ -348,16 +348,16 @@ var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode
 
 function X3DAnnotationNode (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DAnnotationNode);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DAnnotationNode);
 }
 
-Object .assign (Object .setPrototypeOf (X3DAnnotationNode .prototype, (X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DAnnotationNode .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
 {
    initialize ()
    {
-      X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
    },
 });
 
@@ -378,7 +378,7 @@ Object .defineProperties (X3DAnnotationNode,
 const X3DAnnotationNode_default_ = X3DAnnotationNode;
 ;
 
-Namespace_default().add ("X3DAnnotationNode", "x_ite/Components/Annotation/X3DAnnotationNode", X3DAnnotationNode_default_);
+external_X_ITE_X3D_Namespace_default().add ("X3DAnnotationNode", "x_ite/Components/Annotation/X3DAnnotationNode", X3DAnnotationNode_default_);
 /* harmony default export */ const Annotation_X3DAnnotationNode = (X3DAnnotationNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/GroupAnnotation.js
 /*******************************************************************************
@@ -437,24 +437,24 @@ Namespace_default().add ("X3DAnnotationNode", "x_ite/Components/Annotation/X3DAn
 
 function GroupAnnotation (executionContext)
 {
-   X3DGroupingNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DGroupingNode_default().call (this, executionContext);
    Annotation_X3DAnnotationNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).GroupAnnotation);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).GroupAnnotation);
 }
 
-Object .assign (Object .setPrototypeOf (GroupAnnotation .prototype, (X3DGroupingNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GroupAnnotation .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype),
    Annotation_X3DAnnotationNode .prototype,
 {
    initialize ()
    {
-      X3DGroupingNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DGroupingNode_default().prototype .initialize .call (this);
       Annotation_X3DAnnotationNode .prototype .initialize .call (this);
    },
    dispose ()
    {
       Annotation_X3DAnnotationNode .prototype .dispose .call (this);
-      X3DGroupingNode_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DGroupingNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -482,18 +482,18 @@ Object .defineProperties (GroupAnnotation,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "annotationGroupID", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "displayPolicy",     new (Fields_default()).SFString ("NEVER")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",       new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",          new (Fields_default()).SFVec3f (-1, -1, -1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",        new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",       new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",    new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",          new (Fields_default()).MFNode ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "enabled",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "annotationGroupID", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "displayPolicy",     new (external_X_ITE_X3D_Fields_default()).SFString ("NEVER")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",          new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",        new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "addChildren",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "removeChildren",    new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "children",          new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -502,11 +502,11 @@ Object .defineProperties (GroupAnnotation,
 const GroupAnnotation_default_ = GroupAnnotation;
 ;
 
-Namespace_default().add ("GroupAnnotation", "x_ite/Components/Annotation/GroupAnnotation", GroupAnnotation_default_);
+external_X_ITE_X3D_Namespace_default().add ("GroupAnnotation", "x_ite/Components/Annotation/GroupAnnotation", GroupAnnotation_default_);
 /* harmony default export */ const Annotation_GroupAnnotation = (GroupAnnotation_default_);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Networking/X3DUrlObject\")"
-const X3DUrlObject_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Networking/X3DUrlObject");
-var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DUrlObject"
+const external_X_ITE_X3D_X3DUrlObject_namespaceObject = __X_ITE_X3D__ .X3DUrlObject;
+var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DUrlObject_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/IconAnnotation.js
 /*******************************************************************************
  *
@@ -565,24 +565,24 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
 function IconAnnotation (executionContext)
 {
    Annotation_X3DAnnotationNode .call (this, executionContext);
-   X3DUrlObject_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DUrlObject_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).IconAnnotation);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).IconAnnotation);
 }
 
 Object .assign (Object .setPrototypeOf (IconAnnotation .prototype, Annotation_X3DAnnotationNode .prototype),
-   (X3DUrlObject_default()).prototype,
+   (external_X_ITE_X3D_X3DUrlObject_default()).prototype,
 {
    initialize ()
    {
       Annotation_X3DAnnotationNode .prototype .initialize .call (this);
-      X3DUrlObject_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
    },
    requestImmediateLoad (cache = true)
    { },
    dispose ()
    {
-      X3DUrlObject_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DUrlObject_default().prototype .dispose .call (this);
       Annotation_X3DAnnotationNode .prototype .dispose .call (this);
    },
 });
@@ -611,14 +611,14 @@ Object .defineProperties (IconAnnotation,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",             new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",              new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "annotationGroupID",    new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "displayPolicy",        new (Fields_default()).SFString ("NEVER")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "url",                  new (Fields_default()).MFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefresh",          new (Fields_default()).SFTime ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",              new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "annotationGroupID",    new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "displayPolicy",        new (external_X_ITE_X3D_Fields_default()).SFString ("NEVER")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "url",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600)),
       ]),
       enumerable: true,
    },
@@ -627,7 +627,7 @@ Object .defineProperties (IconAnnotation,
 const IconAnnotation_default_ = IconAnnotation;
 ;
 
-Namespace_default().add ("IconAnnotation", "x_ite/Components/Annotation/IconAnnotation", IconAnnotation_default_);
+external_X_ITE_X3D_Namespace_default().add ("IconAnnotation", "x_ite/Components/Annotation/IconAnnotation", IconAnnotation_default_);
 /* harmony default export */ const Annotation_IconAnnotation = (IconAnnotation_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/TextAnnotation.js
 /*******************************************************************************
@@ -687,7 +687,7 @@ function TextAnnotation (executionContext)
 {
    Annotation_X3DAnnotationNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).TextAnnotation);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).TextAnnotation);
 }
 
 Object .assign (Object .setPrototypeOf (TextAnnotation .prototype, Annotation_X3DAnnotationNode .prototype),
@@ -722,13 +722,13 @@ Object .defineProperties (TextAnnotation,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "annotationGroupID", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "displayPolicy",     new (Fields_default()).SFString ("NEVER")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "contentType",       new (Fields_default()).SFString ("text/plain")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "text",              new (Fields_default()).SFString ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "annotationGroupID", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "displayPolicy",     new (external_X_ITE_X3D_Fields_default()).SFString ("NEVER")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "contentType",       new (external_X_ITE_X3D_Fields_default()).SFString ("text/plain")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "text",              new (external_X_ITE_X3D_Fields_default()).SFString ()),
       ]),
       enumerable: true,
    },
@@ -737,7 +737,7 @@ Object .defineProperties (TextAnnotation,
 const TextAnnotation_default_ = TextAnnotation;
 ;
 
-Namespace_default().add ("TextAnnotation", "x_ite/Components/Annotation/TextAnnotation", TextAnnotation_default_);
+external_X_ITE_X3D_Namespace_default().add ("TextAnnotation", "x_ite/Components/Annotation/TextAnnotation", TextAnnotation_default_);
 /* harmony default export */ const Annotation_TextAnnotation = (TextAnnotation_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Annotation/URLAnnotation.js
 /*******************************************************************************
@@ -797,7 +797,7 @@ function URLAnnotation (executionContext)
 {
    Annotation_X3DAnnotationNode .call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).URLAnnotation);
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).URLAnnotation);
 }
 
 Object .assign (Object .setPrototypeOf (URLAnnotation .prototype, Annotation_X3DAnnotationNode .prototype),
@@ -832,12 +832,12 @@ Object .defineProperties (URLAnnotation,
    },
    fieldDefinitions:
    {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "annotationGroupID", new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "displayPolicy",     new (Fields_default()).SFString ("NEVER")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "url",               new (Fields_default()).MFString ()),
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "annotationGroupID", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "displayPolicy",     new (external_X_ITE_X3D_Fields_default()).SFString ("NEVER")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "url",               new (external_X_ITE_X3D_Fields_default()).MFString ()),
       ]),
       enumerable: true,
    },
@@ -846,7 +846,7 @@ Object .defineProperties (URLAnnotation,
 const URLAnnotation_default_ = URLAnnotation;
 ;
 
-Namespace_default().add ("URLAnnotation", "x_ite/Components/Annotation/URLAnnotation", URLAnnotation_default_);
+external_X_ITE_X3D_Namespace_default().add ("URLAnnotation", "x_ite/Components/Annotation/URLAnnotation", URLAnnotation_default_);
 /* harmony default export */ const Annotation_URLAnnotation = (URLAnnotation_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/Annotation.js
 /*******************************************************************************
@@ -905,7 +905,7 @@ Namespace_default().add ("URLAnnotation", "x_ite/Components/Annotation/URLAnnota
 
 
 
-Components_default().add ({
+external_X_ITE_X3D_Components_default().add ({
    name: "Annotation",
    concreteNodes:
    [
@@ -925,7 +925,7 @@ Components_default().add ({
 const Annotation_default_ = undefined;
 ;
 
-Namespace_default().add ("Annotation", "assets/components/Annotation", Annotation_default_);
+external_X_ITE_X3D_Namespace_default().add ("Annotation", "assets/components/Annotation", Annotation_default_);
 /* harmony default export */ const Annotation = ((/* unused pure expression or super */ null && (Annotation_default_)));
 /******/ })()
 ;
