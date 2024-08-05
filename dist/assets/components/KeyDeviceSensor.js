@@ -1,5 +1,5 @@
 /* X_ITE v10.2.0 */
-const X_ITE_X3D = window [Symbol .for ("X_ITE.X3D-10.2.0")];
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -39,11 +39,11 @@ const X_ITE_X3D = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components\")"
-const Components_namespaceObject = X_ITE_X3D .require ("x_ite/Components");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
+const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = X_ITE_X3D .require ("x_ite/Namespace");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
+const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext.js
 /*******************************************************************************
@@ -145,20 +145,20 @@ const __default__ = X3DKeyDeviceSensorContext;
 
 Namespace_default().add ("X3DKeyDeviceSensorContext", "x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext", __default__);
 /* harmony default export */ const KeyDeviceSensor_X3DKeyDeviceSensorContext = (__default__);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = X_ITE_X3D .require ("x_ite/Fields");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
+const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = X_ITE_X3D .require ("x_ite/Base/X3DFieldDefinition");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
+const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = X_ITE_X3D .require ("x_ite/Base/FieldDefinitionArray");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
+const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components/Core/X3DSensorNode\")"
-const X3DSensorNode_namespaceObject = X_ITE_X3D .require ("x_ite/Components/Core/X3DSensorNode");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DSensorNode\")"
+const X3DSensorNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DSensorNode");
 var X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DSensorNode_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = X_ITE_X3D .require ("x_ite/Base/X3DConstants");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
+const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode.js
 /*******************************************************************************

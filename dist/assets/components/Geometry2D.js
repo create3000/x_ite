@@ -1,5 +1,5 @@
 /* X_ITE v10.2.0 */
-const X_ITE_X3D = window [Symbol .for ("X_ITE.X3D-10.2.0")];
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -39,20 +39,20 @@ const X_ITE_X3D = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components\")"
-const Components_namespaceObject = X_ITE_X3D .require ("x_ite/Components");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
+const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/X3DBaseNode\")"
-const X3DBaseNode_namespaceObject = X_ITE_X3D .require ("x_ite/Base/X3DBaseNode");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DBaseNode\")"
+const X3DBaseNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DBaseNode");
 var X3DBaseNode_default = /*#__PURE__*/__webpack_require__.n(X3DBaseNode_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = X_ITE_X3D .require ("x_ite/Base/X3DConstants");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
+const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = X_ITE_X3D .require ("x_ite/Fields");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
+const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = X_ITE_X3D .require ("x_ite/Namespace");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
+const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Arc2DOptions.js
 /*******************************************************************************
@@ -204,11 +204,11 @@ const ArcClose2DOptions_default_ = ArcClose2DOptions;
 
 Namespace_default().add ("ArcClose2DOptions", "x_ite/Browser/Geometry2D/ArcClose2DOptions", ArcClose2DOptions_default_);
 /* harmony default export */ const Geometry2D_ArcClose2DOptions = (ArcClose2DOptions_default_);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
-const X3DGeometryNode_namespaceObject = X_ITE_X3D .require ("x_ite/Components/Rendering/X3DGeometryNode");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
+const X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/X3DGeometryNode");
 var X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometryNode_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"standard/Math/Numbers/Complex\")"
-const Complex_namespaceObject = X_ITE_X3D .require ("standard/Math/Numbers/Complex");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Complex\")"
+const Complex_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Complex");
 var Complex_default = /*#__PURE__*/__webpack_require__.n(Complex_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Circle2DOptions.js
 /*******************************************************************************
@@ -506,14 +506,14 @@ const Disk2DOptions_default_ = Disk2DOptions;
 
 Namespace_default().add ("Disk2DOptions", "x_ite/Browser/Geometry2D/Disk2DOptions", Disk2DOptions_default_);
 /* harmony default export */ const Geometry2D_Disk2DOptions = (Disk2DOptions_default_);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components/Geometry3D/IndexedFaceSet\")"
-const IndexedFaceSet_namespaceObject = X_ITE_X3D .require ("x_ite/Components/Geometry3D/IndexedFaceSet");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Geometry3D/IndexedFaceSet\")"
+const IndexedFaceSet_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Geometry3D/IndexedFaceSet");
 var IndexedFaceSet_default = /*#__PURE__*/__webpack_require__.n(IndexedFaceSet_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components/Rendering/Coordinate\")"
-const Coordinate_namespaceObject = X_ITE_X3D .require ("x_ite/Components/Rendering/Coordinate");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/Coordinate\")"
+const Coordinate_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/Coordinate");
 var Coordinate_default = /*#__PURE__*/__webpack_require__.n(Coordinate_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components/Texturing/TextureCoordinate\")"
-const TextureCoordinate_namespaceObject = X_ITE_X3D .require ("x_ite/Components/Texturing/TextureCoordinate");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Texturing/TextureCoordinate\")"
+const TextureCoordinate_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Texturing/TextureCoordinate");
 var TextureCoordinate_default = /*#__PURE__*/__webpack_require__.n(TextureCoordinate_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Rectangle2DOptions.js
 /*******************************************************************************
@@ -616,8 +616,8 @@ const Rectangle2DOptions_default_ = Rectangle2DOptions;
 
 Namespace_default().add ("Rectangle2DOptions", "x_ite/Browser/Geometry2D/Rectangle2DOptions", Rectangle2DOptions_default_);
 /* harmony default export */ const Geometry2D_Rectangle2DOptions = (Rectangle2DOptions_default_);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Browser/Core/PrimitiveQuality\")"
-const PrimitiveQuality_namespaceObject = X_ITE_X3D .require ("x_ite/Browser/Core/PrimitiveQuality");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Browser/Core/PrimitiveQuality\")"
+const PrimitiveQuality_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Browser/Core/PrimitiveQuality");
 var PrimitiveQuality_default = /*#__PURE__*/__webpack_require__.n(PrimitiveQuality_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/X3DGeometry2DContext.js
 /*******************************************************************************
@@ -758,17 +758,17 @@ const X3DGeometry2DContext_default_ = X3DGeometry2DContext;
 
 Namespace_default().add ("X3DGeometry2DContext", "x_ite/Browser/Geometry2D/X3DGeometry2DContext", X3DGeometry2DContext_default_);
 /* harmony default export */ const Geometry2D_X3DGeometry2DContext = (X3DGeometry2DContext_default_);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = X_ITE_X3D .require ("x_ite/Base/X3DFieldDefinition");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
+const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = X_ITE_X3D .require ("x_ite/Base/FieldDefinitionArray");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
+const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components/Rendering/X3DLineGeometryNode\")"
-const X3DLineGeometryNode_namespaceObject = X_ITE_X3D .require ("x_ite/Components/Rendering/X3DLineGeometryNode");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/X3DLineGeometryNode\")"
+const X3DLineGeometryNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/X3DLineGeometryNode");
 var X3DLineGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DLineGeometryNode_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = X_ITE_X3D .require ("standard/Math/Algorithm");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Algorithm\")"
+const Algorithm_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Algorithm");
 var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Arc2D.js
 /*******************************************************************************
@@ -1310,8 +1310,8 @@ const Circle2D_default_ = Circle2D;
 
 Namespace_default().add ("Circle2D", "x_ite/Components/Geometry2D/Circle2D", Circle2D_default_);
 /* harmony default export */ const Geometry2D_Circle2D = (Circle2D_default_);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components/Rendering/X3DPointGeometryNode\")"
-const X3DPointGeometryNode_namespaceObject = X_ITE_X3D .require ("x_ite/Components/Rendering/X3DPointGeometryNode");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Rendering/X3DPointGeometryNode\")"
+const X3DPointGeometryNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Rendering/X3DPointGeometryNode");
 var X3DPointGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DPointGeometryNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Disk2D.js
 /*******************************************************************************
@@ -1809,8 +1809,8 @@ const Polypoint2D_default_ = Polypoint2D;
 
 Namespace_default().add ("Polypoint2D", "x_ite/Components/Geometry2D/Polypoint2D", Polypoint2D_default_);
 /* harmony default export */ const Geometry2D_Polypoint2D = (Polypoint2D_default_);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"standard/Math/Numbers/Vector2\")"
-const Vector2_namespaceObject = X_ITE_X3D .require ("standard/Math/Numbers/Vector2");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector2\")"
+const Vector2_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector2");
 var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Rectangle2D.js
 /*******************************************************************************

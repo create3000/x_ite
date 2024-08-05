@@ -1,5 +1,5 @@
 /* X_ITE v10.2.0 */
-const X_ITE_X3D = window [Symbol .for ("X_ITE.X3D-10.2.0")];
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -39,26 +39,26 @@ const X_ITE_X3D = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components\")"
-const Components_namespaceObject = X_ITE_X3D .require ("x_ite/Components");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
+const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = X_ITE_X3D .require ("x_ite/Fields");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
+const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = X_ITE_X3D .require ("x_ite/Base/X3DFieldDefinition");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
+const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = X_ITE_X3D .require ("x_ite/Base/FieldDefinitionArray");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
+const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = X_ITE_X3D .require ("x_ite/Components/Core/X3DChildNode");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DChildNode\")"
+const X3DChildNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DChildNode");
 var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = X_ITE_X3D .require ("x_ite/Base/X3DConstants");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
+const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = X_ITE_X3D .require ("x_ite/Namespace");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
+const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/BooleanFilter.js
 /*******************************************************************************
@@ -183,8 +183,8 @@ const __default__ = BooleanFilter;
 
 Namespace_default().add ("BooleanFilter", "x_ite/Components/EventUtilities/BooleanFilter", __default__);
 /* harmony default export */ const EventUtilities_BooleanFilter = (__default__);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = X_ITE_X3D .require ("standard/Math/Algorithm");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Algorithm\")"
+const Algorithm_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Algorithm");
 var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/EventUtilities/X3DSequencerNode.js
 /*******************************************************************************

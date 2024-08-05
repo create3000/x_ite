@@ -1,5 +1,5 @@
 /* X_ITE v10.2.0 */
-const X_ITE_X3D = window [Symbol .for ("X_ITE.X3D-10.2.0")];
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -39,29 +39,29 @@ const X_ITE_X3D = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
 // UNUSED EXPORTS: default
 
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components\")"
-const Components_namespaceObject = X_ITE_X3D .require ("x_ite/Components");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components\")"
+const Components_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = X_ITE_X3D .require ("x_ite/Fields");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Fields\")"
+const Fields_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = X_ITE_X3D .require ("x_ite/Base/X3DFieldDefinition");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DFieldDefinition\")"
+const X3DFieldDefinition_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = X_ITE_X3D .require ("x_ite/Base/FieldDefinitionArray");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/FieldDefinitionArray\")"
+const FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components/Core/X3DSensorNode\")"
-const X3DSensorNode_namespaceObject = X_ITE_X3D .require ("x_ite/Components/Core/X3DSensorNode");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Core/X3DSensorNode\")"
+const X3DSensorNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Core/X3DSensorNode");
 var X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DSensorNode_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = X_ITE_X3D .require ("x_ite/Rendering/TraverseType");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Rendering/TraverseType\")"
+const TraverseType_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Rendering/TraverseType");
 var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = X_ITE_X3D .require ("x_ite/Base/X3DConstants");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DConstants\")"
+const X3DConstants_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = X_ITE_X3D .require ("x_ite/Namespace");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Namespace\")"
+const Namespace_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Picking/MatchCriterion.js
 /*******************************************************************************
@@ -249,8 +249,8 @@ const SortOrder_default_ = SortOrder;
 
 Namespace_default().add ("SortOrder", "x_ite/Browser/Picking/SortOrder", SortOrder_default_);
 /* harmony default export */ const Picking_SortOrder = (SortOrder_default_);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = X_ITE_X3D .require ("standard/Math/Numbers/Matrix4");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Matrix4\")"
+const Matrix4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/standard/Math/Algorithms/QuickSort.js
 /*******************************************************************************
@@ -363,8 +363,8 @@ const QuickSort_default_ = QuickSort;
 
 Namespace_default().add ("QuickSort", "standard/Math/Algorithms/QuickSort", QuickSort_default_);
 /* harmony default export */ const Algorithms_QuickSort = (QuickSort_default_);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"standard/Utility/ObjectCache\")"
-const ObjectCache_namespaceObject = X_ITE_X3D .require ("standard/Utility/ObjectCache");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Utility/ObjectCache\")"
+const ObjectCache_namespaceObject = __X_ITE_X3D__ .require ("standard/Utility/ObjectCache");
 var ObjectCache_default = /*#__PURE__*/__webpack_require__.n(ObjectCache_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Picking/X3DPickSensorNode.js
 /*******************************************************************************
@@ -812,14 +812,14 @@ const X3DPickSensorNode_default_ = X3DPickSensorNode;
 
 Namespace_default().add ("X3DPickSensorNode", "x_ite/Components/Picking/X3DPickSensorNode", X3DPickSensorNode_default_);
 /* harmony default export */ const Picking_X3DPickSensorNode = (X3DPickSensorNode_default_);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = X_ITE_X3D .require ("standard/Math/Numbers/Vector3");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Vector3\")"
+const Vector3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"standard/Math/Geometry/Box3\")"
-const Box3_namespaceObject = X_ITE_X3D .require ("standard/Math/Geometry/Box3");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Geometry/Box3\")"
+const Box3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Geometry/Box3");
 var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"standard/Math/Geometry/Line3\")"
-const Line3_namespaceObject = X_ITE_X3D .require ("standard/Math/Geometry/Line3");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Geometry/Line3\")"
+const Line3_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Geometry/Line3");
 var Line3_default = /*#__PURE__*/__webpack_require__.n(Line3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Picking/LinePickSensor.js
 /*******************************************************************************
@@ -1166,8 +1166,8 @@ const LinePickSensor_default_ = LinePickSensor;
 
 Namespace_default().add ("LinePickSensor", "x_ite/Components/Picking/LinePickSensor", LinePickSensor_default_);
 /* harmony default export */ const Picking_LinePickSensor = (LinePickSensor_default_);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
-const X3DGroupingNode_namespaceObject = X_ITE_X3D .require ("x_ite/Components/Grouping/X3DGroupingNode");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
+const X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Components/Grouping/X3DGroupingNode");
 var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Picking/X3DPickableObject.js
 /*******************************************************************************
@@ -1497,14 +1497,14 @@ const PickableGroup_default_ = PickableGroup;
 
 Namespace_default().add ("PickableGroup", "x_ite/Components/Picking/PickableGroup", PickableGroup_default_);
 /* harmony default export */ const Picking_PickableGroup = (PickableGroup_default_);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = X_ITE_X3D .require ("x_ite/Base/X3DCast");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"x_ite/Base/X3DCast\")"
+const X3DCast_namespaceObject = __X_ITE_X3D__ .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"standard/Math/Numbers/Rotation4\")"
-const Rotation4_namespaceObject = X_ITE_X3D .require ("standard/Math/Numbers/Rotation4");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"standard/Math/Numbers/Rotation4\")"
+const Rotation4_namespaceObject = __X_ITE_X3D__ .require ("standard/Math/Numbers/Rotation4");
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
-;// CONCATENATED MODULE: external "X_ITE_X3D .require (\"lib/ammojs/AmmoClass\")"
-const AmmoClass_namespaceObject = X_ITE_X3D .require ("lib/ammojs/AmmoClass");
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .require (\"lib/ammojs/AmmoClass\")"
+const AmmoClass_namespaceObject = __X_ITE_X3D__ .require ("lib/ammojs/AmmoClass");
 var AmmoClass_default = /*#__PURE__*/__webpack_require__.n(AmmoClass_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Picking/VolumePicker.js
 /*******************************************************************************

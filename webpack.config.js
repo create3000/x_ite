@@ -410,7 +410,7 @@ export default __default__;`;
             new StringReplacePlugin (),
             new WrapperPlugin ({
                test: /\.js$/,
-               header: `const X_ITE_X3D = window [Symbol .for ("X_ITE.X3D")];\n`,
+               header: `const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];\n`,
             }),
             new webpack .ProvidePlugin ({
                $: path .resolve (__dirname, "src/lib/jquery.js"),
@@ -471,7 +471,7 @@ export default __default__;`;
 
                   const module = path .relative (path .resolve (__dirname, "src"), filename) .replace (/\.js$/, "");
 
-                  return callback (null, `var X_ITE_X3D .require ("${module}")`);
+                  return callback (null, `var __X_ITE_X3D__ .require ("${module}")`);
                }
 
                return callback ();
