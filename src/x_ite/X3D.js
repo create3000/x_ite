@@ -138,7 +138,7 @@ Object .assign (X3D, Namespace, Namespace .Fields,
    */
    require (path)
    {
-      return Namespace [path .match (/([^\/]+)$/) [1]];
+      return Namespace [path .match (/([^\/]+)$/) ?.[1]];
    },
    noConflict: (() =>
    {
