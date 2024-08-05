@@ -61,8 +61,7 @@ module .exports = async () =>
 
                         return `const __default__ = ${m};
 import Namespace from "./${rel}";
-Namespace .add ("${base}", __default__);
-export default __default__;`;
+export default Namespace .add ("${base}", __default__);`;
                      },
                   },
                ],

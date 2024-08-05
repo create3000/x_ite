@@ -143,8 +143,7 @@ Object .assign (X3DKeyDeviceSensorContext .prototype,
 const __default__ = X3DKeyDeviceSensorContext;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DKeyDeviceSensorContext", __default__);
-/* harmony default export */ const KeyDeviceSensor_X3DKeyDeviceSensorContext = (__default__);
+/* harmony default export */ const KeyDeviceSensor_X3DKeyDeviceSensorContext = (external_X_ITE_X3D_Namespace_default().add ("X3DKeyDeviceSensorContext", __default__));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
@@ -283,8 +282,7 @@ Object .defineProperties (X3DKeyDeviceSensorNode,
 const X3DKeyDeviceSensorNode_default_ = X3DKeyDeviceSensorNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DKeyDeviceSensorNode", X3DKeyDeviceSensorNode_default_);
-/* harmony default export */ const KeyDeviceSensor_X3DKeyDeviceSensorNode = (X3DKeyDeviceSensorNode_default_);
+/* harmony default export */ const KeyDeviceSensor_X3DKeyDeviceSensorNode = (external_X_ITE_X3D_Namespace_default().add ("X3DKeyDeviceSensorNode", X3DKeyDeviceSensorNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/KeyDeviceSensor/KeySensor.js
 /*******************************************************************************
  *
@@ -668,8 +666,7 @@ Object .defineProperties (KeySensor,
 const KeySensor_default_ = KeySensor;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("KeySensor", KeySensor_default_);
-/* harmony default export */ const KeyDeviceSensor_KeySensor = (KeySensor_default_);
+/* harmony default export */ const KeyDeviceSensor_KeySensor = (external_X_ITE_X3D_Namespace_default().add ("KeySensor", KeySensor_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/KeyDeviceSensor/StringSensor.js
 /*******************************************************************************
  *
@@ -838,8 +835,7 @@ Object .defineProperties (StringSensor,
 const StringSensor_default_ = StringSensor;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("StringSensor", StringSensor_default_);
-/* harmony default export */ const KeyDeviceSensor_StringSensor = (StringSensor_default_);
+/* harmony default export */ const KeyDeviceSensor_StringSensor = (external_X_ITE_X3D_Namespace_default().add ("StringSensor", StringSensor_default_));
 ;// CONCATENATED MODULE: ./src/assets/components/KeyDeviceSensor.js
 /*******************************************************************************
  *
@@ -911,7 +907,6 @@ external_X_ITE_X3D_Components_default().add ({
 const KeyDeviceSensor_default_ = undefined;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("KeyDeviceSensor", KeyDeviceSensor_default_);
-/* harmony default export */ const KeyDeviceSensor = ((/* unused pure expression or super */ null && (KeyDeviceSensor_default_)));
+/* harmony default export */ const KeyDeviceSensor = (external_X_ITE_X3D_Namespace_default().add ("KeyDeviceSensor", KeyDeviceSensor_default_));
 /******/ })()
 ;

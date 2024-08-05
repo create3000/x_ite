@@ -57,10 +57,8 @@ Object .defineProperty (Namespace, "add",
          X3D [name] = module;
 
       // For x_ite.js:
-      Namespace [name] = module;
+      return Namespace [name] = module;
    },
 });
 
-Namespace .add ("Namespace", Namespace);
-
-export default Namespace;
+export default Namespace .add ("Namespace", Namespace);

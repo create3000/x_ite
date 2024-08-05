@@ -331,8 +331,7 @@ Object .defineProperties (X3DRigidJointNode,
 const __default__ = X3DRigidJointNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DRigidJointNode", __default__);
-/* harmony default export */ const RigidBodyPhysics_X3DRigidJointNode = (__default__);
+/* harmony default export */ const RigidBodyPhysics_X3DRigidJointNode = (external_X_ITE_X3D_Namespace_default().add ("X3DRigidJointNode", __default__));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
@@ -375,8 +374,7 @@ var ga=[oI,Un,ZF,rz,IF,OF,lD,Fp,Ep,Fp,oI,oI,oI,oI,oI,oI];var ha=[QH,Uv];var ia=[
 const ammo_default_ = Ammo;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ammo", ammo_default_);
-/* harmony default export */ const ammo = (ammo_default_);
+/* harmony default export */ const ammo = (external_X_ITE_X3D_Namespace_default().add ("ammo", ammo_default_));
 ;// CONCATENATED MODULE: ./src/lib/ammojs/AmmoClass.js
 /*******************************************************************************
  *
@@ -430,8 +428,7 @@ external_X_ITE_X3D_Namespace_default().add ("ammo", ammo_default_);
 const AmmoClass_default_ = new ammo ();
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("AmmoClass", AmmoClass_default_);
-/* harmony default export */ const AmmoClass = (AmmoClass_default_);
+/* harmony default export */ const AmmoClass = (external_X_ITE_X3D_Namespace_default().add ("AmmoClass", AmmoClass_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/BallJoint.js
 /*******************************************************************************
  *
@@ -644,8 +641,7 @@ Object .defineProperties (BallJoint,
 const BallJoint_default_ = BallJoint;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("BallJoint", BallJoint_default_);
-/* harmony default export */ const RigidBodyPhysics_BallJoint = (BallJoint_default_);
+/* harmony default export */ const RigidBodyPhysics_BallJoint = (external_X_ITE_X3D_Namespace_default().add ("BallJoint", BallJoint_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
@@ -822,8 +818,7 @@ Object .defineProperties (X3DNBodyCollidableNode,
 const X3DNBodyCollidableNode_default_ = X3DNBodyCollidableNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DNBodyCollidableNode", X3DNBodyCollidableNode_default_);
-/* harmony default export */ const RigidBodyPhysics_X3DNBodyCollidableNode = (X3DNBodyCollidableNode_default_);
+/* harmony default export */ const RigidBodyPhysics_X3DNBodyCollidableNode = (external_X_ITE_X3D_Namespace_default().add ("X3DNBodyCollidableNode", X3DNBodyCollidableNode_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TraverseType"
 const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
 var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
@@ -1091,8 +1086,7 @@ Object .defineProperties (CollidableOffset,
 const CollidableOffset_default_ = CollidableOffset;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("CollidableOffset", CollidableOffset_default_);
-/* harmony default export */ const RigidBodyPhysics_CollidableOffset = (CollidableOffset_default_);
+/* harmony default export */ const RigidBodyPhysics_CollidableOffset = (external_X_ITE_X3D_Namespace_default().add ("CollidableOffset", CollidableOffset_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollidableShape.js
 /*******************************************************************************
  *
@@ -1591,8 +1585,7 @@ Object .defineProperties (CollidableShape,
 const CollidableShape_default_ = CollidableShape;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("CollidableShape", CollidableShape_default_);
-/* harmony default export */ const RigidBodyPhysics_CollidableShape = (CollidableShape_default_);
+/* harmony default export */ const RigidBodyPhysics_CollidableShape = (external_X_ITE_X3D_Namespace_default().add ("CollidableShape", CollidableShape_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/RigidBodyPhysics/AppliedParametersType.js
 /*******************************************************************************
  *
@@ -1659,8 +1652,7 @@ const AppliedParametersType =
 const AppliedParametersType_default_ = AppliedParametersType;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("AppliedParametersType", AppliedParametersType_default_);
-/* harmony default export */ const RigidBodyPhysics_AppliedParametersType = (AppliedParametersType_default_);
+/* harmony default export */ const RigidBodyPhysics_AppliedParametersType = (external_X_ITE_X3D_Namespace_default().add ("AppliedParametersType", AppliedParametersType_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollisionCollection.js
 /*******************************************************************************
  *
@@ -1896,8 +1888,7 @@ Object .defineProperties (CollisionCollection,
 const CollisionCollection_default_ = CollisionCollection;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("CollisionCollection", CollisionCollection_default_);
-/* harmony default export */ const RigidBodyPhysics_CollisionCollection = (CollisionCollection_default_);
+/* harmony default export */ const RigidBodyPhysics_CollisionCollection = (external_X_ITE_X3D_Namespace_default().add ("CollisionCollection", CollisionCollection_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSensorNode"
 const external_X_ITE_X3D_X3DSensorNode_namespaceObject = __X_ITE_X3D__ .X3DSensorNode;
 var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSensorNode_namespaceObject);
@@ -2186,8 +2177,7 @@ Object .defineProperties (CollisionSensor,
 const CollisionSensor_default_ = CollisionSensor;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("CollisionSensor", CollisionSensor_default_);
-/* harmony default export */ const RigidBodyPhysics_CollisionSensor = (CollisionSensor_default_);
+/* harmony default export */ const RigidBodyPhysics_CollisionSensor = (external_X_ITE_X3D_Namespace_default().add ("CollisionSensor", CollisionSensor_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode.js
 /*******************************************************************************
  *
@@ -2280,8 +2270,7 @@ Object .defineProperties (X3DNBodyCollisionSpaceNode,
 const X3DNBodyCollisionSpaceNode_default_ = X3DNBodyCollisionSpaceNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DNBodyCollisionSpaceNode", X3DNBodyCollisionSpaceNode_default_);
-/* harmony default export */ const RigidBodyPhysics_X3DNBodyCollisionSpaceNode = (X3DNBodyCollisionSpaceNode_default_);
+/* harmony default export */ const RigidBodyPhysics_X3DNBodyCollisionSpaceNode = (external_X_ITE_X3D_Namespace_default().add ("X3DNBodyCollisionSpaceNode", X3DNBodyCollisionSpaceNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollisionSpace.js
 /*******************************************************************************
  *
@@ -2465,8 +2454,7 @@ Object .defineProperties (CollisionSpace,
 const CollisionSpace_default_ = CollisionSpace;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("CollisionSpace", CollisionSpace_default_);
-/* harmony default export */ const RigidBodyPhysics_CollisionSpace = (CollisionSpace_default_);
+/* harmony default export */ const RigidBodyPhysics_CollisionSpace = (external_X_ITE_X3D_Namespace_default().add ("CollisionSpace", CollisionSpace_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/Contact.js
 /*******************************************************************************
  *
@@ -2588,8 +2576,7 @@ Object .defineProperties (Contact,
 const Contact_default_ = Contact;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Contact", Contact_default_);
-/* harmony default export */ const RigidBodyPhysics_Contact = (Contact_default_);
+/* harmony default export */ const RigidBodyPhysics_Contact = (external_X_ITE_X3D_Namespace_default().add ("Contact", Contact_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Rotation4"
 const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
 var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
@@ -2903,8 +2890,7 @@ Object .defineProperties (DoubleAxisHingeJoint,
 const DoubleAxisHingeJoint_default_ = DoubleAxisHingeJoint;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("DoubleAxisHingeJoint", DoubleAxisHingeJoint_default_);
-/* harmony default export */ const RigidBodyPhysics_DoubleAxisHingeJoint = (DoubleAxisHingeJoint_default_);
+/* harmony default export */ const RigidBodyPhysics_DoubleAxisHingeJoint = (external_X_ITE_X3D_Namespace_default().add ("DoubleAxisHingeJoint", DoubleAxisHingeJoint_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/MotorJoint.js
 /*******************************************************************************
  *
@@ -3054,8 +3040,7 @@ Object .defineProperties (MotorJoint,
 const MotorJoint_default_ = MotorJoint;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("MotorJoint", MotorJoint_default_);
-/* harmony default export */ const RigidBodyPhysics_MotorJoint = (MotorJoint_default_);
+/* harmony default export */ const RigidBodyPhysics_MotorJoint = (external_X_ITE_X3D_Namespace_default().add ("MotorJoint", MotorJoint_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Quaternion"
 const external_X_ITE_X3D_Quaternion_namespaceObject = __X_ITE_X3D__ .Quaternion;
 var external_X_ITE_X3D_Quaternion_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Quaternion_namespaceObject);
@@ -3593,8 +3578,7 @@ Object .defineProperties (RigidBody,
 const RigidBody_default_ = RigidBody;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("RigidBody", RigidBody_default_);
-/* harmony default export */ const RigidBodyPhysics_RigidBody = (RigidBody_default_);
+/* harmony default export */ const RigidBodyPhysics_RigidBody = (external_X_ITE_X3D_Namespace_default().add ("RigidBody", RigidBody_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/RigidBodyCollection.js
 /*******************************************************************************
  *
@@ -4004,8 +3988,7 @@ Object .defineProperties (RigidBodyCollection,
 const RigidBodyCollection_default_ = RigidBodyCollection;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("RigidBodyCollection", RigidBodyCollection_default_);
-/* harmony default export */ const RigidBodyPhysics_RigidBodyCollection = (RigidBodyCollection_default_);
+/* harmony default export */ const RigidBodyPhysics_RigidBodyCollection = (external_X_ITE_X3D_Namespace_default().add ("RigidBodyCollection", RigidBodyCollection_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint.js
 /*******************************************************************************
  *
@@ -4268,8 +4251,7 @@ Object .defineProperties (SingleAxisHingeJoint,
 const SingleAxisHingeJoint_default_ = SingleAxisHingeJoint;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("SingleAxisHingeJoint", SingleAxisHingeJoint_default_);
-/* harmony default export */ const RigidBodyPhysics_SingleAxisHingeJoint = (SingleAxisHingeJoint_default_);
+/* harmony default export */ const RigidBodyPhysics_SingleAxisHingeJoint = (external_X_ITE_X3D_Namespace_default().add ("SingleAxisHingeJoint", SingleAxisHingeJoint_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SliderJoint.js
 /*******************************************************************************
  *
@@ -4502,8 +4484,7 @@ Object .defineProperties (SliderJoint,
 const SliderJoint_default_ = SliderJoint;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("SliderJoint", SliderJoint_default_);
-/* harmony default export */ const RigidBodyPhysics_SliderJoint = (SliderJoint_default_);
+/* harmony default export */ const RigidBodyPhysics_SliderJoint = (external_X_ITE_X3D_Namespace_default().add ("SliderJoint", SliderJoint_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/UniversalJoint.js
 /*******************************************************************************
  *
@@ -4634,8 +4615,7 @@ Object .defineProperties (UniversalJoint,
 const UniversalJoint_default_ = UniversalJoint;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("UniversalJoint", UniversalJoint_default_);
-/* harmony default export */ const RigidBodyPhysics_UniversalJoint = (UniversalJoint_default_);
+/* harmony default export */ const RigidBodyPhysics_UniversalJoint = (external_X_ITE_X3D_Namespace_default().add ("UniversalJoint", UniversalJoint_default_));
 ;// CONCATENATED MODULE: ./src/assets/components/RigidBodyPhysics.js
 /*******************************************************************************
  *
@@ -4733,8 +4713,7 @@ external_X_ITE_X3D_Components_default().add ({
 const RigidBodyPhysics_default_ = undefined;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("RigidBodyPhysics", RigidBodyPhysics_default_);
-/* harmony default export */ const RigidBodyPhysics = ((/* unused pure expression or super */ null && (RigidBodyPhysics_default_)));
+/* harmony default export */ const RigidBodyPhysics = (external_X_ITE_X3D_Namespace_default().add ("RigidBodyPhysics", RigidBodyPhysics_default_));
 })();
 
 /******/ })()

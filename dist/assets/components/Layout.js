@@ -225,8 +225,7 @@ Object .assign (X3DLayoutContext .prototype,
 const __default__ = X3DLayoutContext;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DLayoutContext", __default__);
-/* harmony default export */ const Layout_X3DLayoutContext = (__default__);
+/* harmony default export */ const Layout_X3DLayoutContext = (external_X_ITE_X3D_Namespace_default().add ("X3DLayoutContext", __default__));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
@@ -319,8 +318,7 @@ Object .defineProperties (X3DLayoutNode,
 const X3DLayoutNode_default_ = X3DLayoutNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DLayoutNode", X3DLayoutNode_default_);
-/* harmony default export */ const Layout_X3DLayoutNode = (X3DLayoutNode_default_);
+/* harmony default export */ const Layout_X3DLayoutNode = (external_X_ITE_X3D_Namespace_default().add ("X3DLayoutNode", X3DLayoutNode_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector2"
 const external_X_ITE_X3D_Vector2_namespaceObject = __X_ITE_X3D__ .Vector2;
 var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector2_namespaceObject);
@@ -971,8 +969,7 @@ Object .defineProperties (Layout,
 const Layout_default_ = Layout;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Layout", Layout_default_);
-/* harmony default export */ const Layout_Layout = (Layout_default_);
+/* harmony default export */ const Layout_Layout = (external_X_ITE_X3D_Namespace_default().add ("Layout", Layout_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGroupingNode"
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
 var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
@@ -1172,8 +1169,7 @@ Object .defineProperties (LayoutGroup,
 const LayoutGroup_default_ = LayoutGroup;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("LayoutGroup", LayoutGroup_default_);
-/* harmony default export */ const Layout_LayoutGroup = (LayoutGroup_default_);
+/* harmony default export */ const Layout_LayoutGroup = (external_X_ITE_X3D_Namespace_default().add ("LayoutGroup", LayoutGroup_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLayerNode"
 const external_X_ITE_X3D_X3DLayerNode_namespaceObject = __X_ITE_X3D__ .X3DLayerNode;
 var external_X_ITE_X3D_X3DLayerNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DLayerNode_namespaceObject);
@@ -1311,8 +1307,7 @@ Object .defineProperties (LayoutLayer,
 const LayoutLayer_default_ = LayoutLayer;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("LayoutLayer", LayoutLayer_default_);
-/* harmony default export */ const Layout_LayoutLayer = (LayoutLayer_default_);
+/* harmony default export */ const Layout_LayoutLayer = (external_X_ITE_X3D_Namespace_default().add ("LayoutLayer", LayoutLayer_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DFontStyleNode"
 const external_X_ITE_X3D_X3DFontStyleNode_namespaceObject = __X_ITE_X3D__ .X3DFontStyleNode;
 var external_X_ITE_X3D_X3DFontStyleNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DFontStyleNode_namespaceObject);
@@ -1758,8 +1753,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
 const ScreenText_default_ = ScreenText;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ScreenText", ScreenText_default_);
-/* harmony default export */ const Layout_ScreenText = (ScreenText_default_);
+/* harmony default export */ const Layout_ScreenText = (external_X_ITE_X3D_Namespace_default().add ("ScreenText", ScreenText_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/ScreenFontStyle.js
 /*******************************************************************************
  *
@@ -1883,8 +1877,7 @@ Object .defineProperties (ScreenFontStyle,
 const ScreenFontStyle_default_ = ScreenFontStyle;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ScreenFontStyle", ScreenFontStyle_default_);
-/* harmony default export */ const Layout_ScreenFontStyle = (ScreenFontStyle_default_);
+/* harmony default export */ const Layout_ScreenFontStyle = (external_X_ITE_X3D_Namespace_default().add ("ScreenFontStyle", ScreenFontStyle_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DProtoDeclaration"
 const external_X_ITE_X3D_X3DProtoDeclaration_namespaceObject = __X_ITE_X3D__ .X3DProtoDeclaration;
 var external_X_ITE_X3D_X3DProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DProtoDeclaration_namespaceObject);
@@ -2037,8 +2030,7 @@ Object .defineProperties (ScreenGroup,
 const ScreenGroup_default_ = ScreenGroup;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ScreenGroup", ScreenGroup_default_);
-/* harmony default export */ const Layout_ScreenGroup = (ScreenGroup_default_);
+/* harmony default export */ const Layout_ScreenGroup = (external_X_ITE_X3D_Namespace_default().add ("ScreenGroup", ScreenGroup_default_));
 ;// CONCATENATED MODULE: ./src/assets/components/Layout.js
 /*******************************************************************************
  *
@@ -2116,7 +2108,6 @@ external_X_ITE_X3D_Components_default().add ({
 const components_Layout_default_ = undefined;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Layout", components_Layout_default_);
-/* harmony default export */ const components_Layout = ((/* unused pure expression or super */ null && (components_Layout_default_)));
+/* harmony default export */ const components_Layout = (external_X_ITE_X3D_Namespace_default().add ("Layout", components_Layout_default_));
 /******/ })()
 ;

@@ -258,8 +258,7 @@ Object .defineProperties (X3DTextureProjectorNode,
 const __default__ = X3DTextureProjectorNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DTextureProjectorNode", __default__);
-/* harmony default export */ const TextureProjection_X3DTextureProjectorNode = (__default__);
+/* harmony default export */ const TextureProjection_X3DTextureProjectorNode = (external_X_ITE_X3D_Namespace_default().add ("X3DTextureProjectorNode", __default__));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Camera"
 const external_X_ITE_X3D_Camera_namespaceObject = __X_ITE_X3D__ .Camera;
 var external_X_ITE_X3D_Camera_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Camera_namespaceObject);
@@ -517,8 +516,7 @@ Object .defineProperties (TextureProjector,
 const TextureProjector_default_ = TextureProjector;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("TextureProjector", TextureProjector_default_);
-/* harmony default export */ const TextureProjection_TextureProjector = (TextureProjector_default_);
+/* harmony default export */ const TextureProjection_TextureProjector = (external_X_ITE_X3D_Namespace_default().add ("TextureProjector", TextureProjector_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjection/TextureProjectorParallel.js
 /*******************************************************************************
  *
@@ -822,8 +820,7 @@ Object .defineProperties (TextureProjectorParallel,
 const TextureProjectorParallel_default_ = TextureProjectorParallel;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("TextureProjectorParallel", TextureProjectorParallel_default_);
-/* harmony default export */ const TextureProjection_TextureProjectorParallel = (TextureProjectorParallel_default_);
+/* harmony default export */ const TextureProjection_TextureProjectorParallel = (external_X_ITE_X3D_Namespace_default().add ("TextureProjectorParallel", TextureProjectorParallel_default_));
 ;// CONCATENATED MODULE: ./src/assets/components/TextureProjection.js
 /*******************************************************************************
  *
@@ -893,7 +890,6 @@ external_X_ITE_X3D_Components_default().add ({
 const TextureProjection_default_ = undefined;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("TextureProjection", TextureProjection_default_);
-/* harmony default export */ const TextureProjection = ((/* unused pure expression or super */ null && (TextureProjection_default_)));
+/* harmony default export */ const TextureProjection = (external_X_ITE_X3D_Namespace_default().add ("TextureProjection", TextureProjection_default_));
 /******/ })()
 ;

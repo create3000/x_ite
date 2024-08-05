@@ -103,8 +103,7 @@ struct Line3{vec3 point;vec3 direction;};bool intersects(const in Line3 line,con
 `
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Line3.glsl", __default__);
-/* harmony default export */ const Line3_glsl = (__default__);
+/* harmony default export */ const Line3_glsl = (external_X_ITE_X3D_Namespace_default().add ("Line3.glsl", __default__));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/Plane3.glsl.js
 const Plane3_glsl_default_ = /* glsl */ `
 #if defined(X3D_BOUNDED_VOLUME)||defined(X3D_VOLUME_EMITTER)
@@ -113,8 +112,7 @@ struct Plane3{vec3 normal;float distanceFromOrigin;};Plane3 plane3(const in vec3
 `
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Plane3.glsl", Plane3_glsl_default_);
-/* harmony default export */ const Plane3_glsl = (Plane3_glsl_default_);
+/* harmony default export */ const Plane3_glsl = (external_X_ITE_X3D_Namespace_default().add ("Plane3.glsl", Plane3_glsl_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/Box3.glsl.js
 const Box3_glsl_default_ = /* glsl */ `
 #if defined(X3D_VOLUME_EMITTER)||defined(X3D_BOUNDED_VOLUME)
@@ -123,8 +121,7 @@ bool intersects(const in vec3 min,const in vec3 max,const in Line3 line){vec3 in
 `
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Box3.glsl", Box3_glsl_default_);
-/* harmony default export */ const Box3_glsl = (Box3_glsl_default_);
+/* harmony default export */ const Box3_glsl = (external_X_ITE_X3D_Namespace_default().add ("Box3.glsl", Box3_glsl_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/BVH.glsl.js
 const BVH_glsl_default_ = /* glsl */ `
 #if defined(X3D_VOLUME_EMITTER)||defined(X3D_BOUNDED_VOLUME)
@@ -142,8 +139,7 @@ int getIntersections(const in sampler2D volume,const in int verticesIndex,const 
 `
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("BVH.glsl", BVH_glsl_default_);
-/* harmony default export */ const BVH_glsl = (BVH_glsl_default_);
+/* harmony default export */ const BVH_glsl = (external_X_ITE_X3D_Namespace_default().add ("BVH.glsl", BVH_glsl_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/X3DParticleEmitterNode.js
 /*******************************************************************************
  *
@@ -683,8 +679,7 @@ Object .defineProperties (X3DParticleEmitterNode,
 const X3DParticleEmitterNode_default_ = X3DParticleEmitterNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DParticleEmitterNode", X3DParticleEmitterNode_default_);
-/* harmony default export */ const ParticleSystems_X3DParticleEmitterNode = (X3DParticleEmitterNode_default_);
+/* harmony default export */ const ParticleSystems_X3DParticleEmitterNode = (external_X_ITE_X3D_Namespace_default().add ("X3DParticleEmitterNode", X3DParticleEmitterNode_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
@@ -862,8 +857,7 @@ Object .defineProperties (PointEmitter,
 const PointEmitter_default_ = PointEmitter;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("PointEmitter", PointEmitter_default_);
-/* harmony default export */ const ParticleSystems_PointEmitter = (PointEmitter_default_);
+/* harmony default export */ const ParticleSystems_PointEmitter = (external_X_ITE_X3D_Namespace_default().add ("PointEmitter", PointEmitter_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/X3DParticleSystemsContext.js
 /*******************************************************************************
  *
@@ -937,8 +931,7 @@ Object .assign (X3DParticleSystemsContext .prototype,
 const X3DParticleSystemsContext_default_ = X3DParticleSystemsContext;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DParticleSystemsContext", X3DParticleSystemsContext_default_);
-/* harmony default export */ const ParticleSystems_X3DParticleSystemsContext = (X3DParticleSystemsContext_default_);
+/* harmony default export */ const ParticleSystems_X3DParticleSystemsContext = (external_X_ITE_X3D_Namespace_default().add ("X3DParticleSystemsContext", X3DParticleSystemsContext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode.js
 /*******************************************************************************
  *
@@ -1020,8 +1013,7 @@ Object .defineProperties (X3DParticlePhysicsModelNode,
 const X3DParticlePhysicsModelNode_default_ = X3DParticlePhysicsModelNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DParticlePhysicsModelNode", X3DParticlePhysicsModelNode_default_);
-/* harmony default export */ const ParticleSystems_X3DParticlePhysicsModelNode = (X3DParticlePhysicsModelNode_default_);
+/* harmony default export */ const ParticleSystems_X3DParticlePhysicsModelNode = (external_X_ITE_X3D_Namespace_default().add ("X3DParticlePhysicsModelNode", X3DParticlePhysicsModelNode_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
@@ -1167,8 +1159,7 @@ Object .defineProperties (BoundedPhysicsModel,
 const BoundedPhysicsModel_default_ = BoundedPhysicsModel;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("BoundedPhysicsModel", BoundedPhysicsModel_default_);
-/* harmony default export */ const ParticleSystems_BoundedPhysicsModel = (BoundedPhysicsModel_default_);
+/* harmony default export */ const ParticleSystems_BoundedPhysicsModel = (external_X_ITE_X3D_Namespace_default().add ("BoundedPhysicsModel", BoundedPhysicsModel_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ConeEmitter.js
 /*******************************************************************************
  *
@@ -1353,8 +1344,7 @@ Object .defineProperties (ConeEmitter,
 const ConeEmitter_default_ = ConeEmitter;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ConeEmitter", ConeEmitter_default_);
-/* harmony default export */ const ParticleSystems_ConeEmitter = (ConeEmitter_default_);
+/* harmony default export */ const ParticleSystems_ConeEmitter = (external_X_ITE_X3D_Namespace_default().add ("ConeEmitter", ConeEmitter_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ExplosionEmitter.js
 /*******************************************************************************
  *
@@ -1512,8 +1502,7 @@ Object .defineProperties (ExplosionEmitter,
 const ExplosionEmitter_default_ = ExplosionEmitter;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ExplosionEmitter", ExplosionEmitter_default_);
-/* harmony default export */ const ParticleSystems_ExplosionEmitter = (ExplosionEmitter_default_);
+/* harmony default export */ const ParticleSystems_ExplosionEmitter = (external_X_ITE_X3D_Namespace_default().add ("ExplosionEmitter", ExplosionEmitter_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ForcePhysicsModel.js
 /*******************************************************************************
  *
@@ -1637,8 +1626,7 @@ Object .defineProperties (ForcePhysicsModel,
 const ForcePhysicsModel_default_ = ForcePhysicsModel;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ForcePhysicsModel", ForcePhysicsModel_default_);
-/* harmony default export */ const ParticleSystems_ForcePhysicsModel = (ForcePhysicsModel_default_);
+/* harmony default export */ const ParticleSystems_ForcePhysicsModel = (external_X_ITE_X3D_Namespace_default().add ("ForcePhysicsModel", ForcePhysicsModel_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DShapeNode"
 const external_X_ITE_X3D_X3DShapeNode_namespaceObject = __X_ITE_X3D__ .X3DShapeNode;
 var external_X_ITE_X3D_X3DShapeNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DShapeNode_namespaceObject);
@@ -1778,8 +1766,7 @@ Object .assign (QuickSort .prototype,
 const QuickSort_default_ = QuickSort;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("QuickSort", QuickSort_default_);
-/* harmony default export */ const Algorithms_QuickSort = (QuickSort_default_);
+/* harmony default export */ const Algorithms_QuickSort = (external_X_ITE_X3D_Namespace_default().add ("QuickSort", QuickSort_default_));
 ;// CONCATENATED MODULE: ./src/standard/Math/Utility/BVH.js
 /*******************************************************************************
  *
@@ -2161,8 +2148,7 @@ Object .assign (BVH .prototype,
 const BVH_default_ = BVH;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("BVH", BVH_default_);
-/* harmony default export */ const Utility_BVH = (BVH_default_);
+/* harmony default export */ const Utility_BVH = (external_X_ITE_X3D_Namespace_default().add ("BVH", BVH_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ParticleSystem.js
 /* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
@@ -3324,8 +3310,7 @@ Object .defineProperties (ParticleSystem,
 const ParticleSystem_default_ = ParticleSystem;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ParticleSystem", ParticleSystem_default_);
-/* harmony default export */ const ParticleSystems_ParticleSystem = (ParticleSystem_default_);
+/* harmony default export */ const ParticleSystems_ParticleSystem = (external_X_ITE_X3D_Namespace_default().add ("ParticleSystem", ParticleSystem_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .IndexedLineSet"
 const external_X_ITE_X3D_IndexedLineSet_namespaceObject = __X_ITE_X3D__ .IndexedLineSet;
 var external_X_ITE_X3D_IndexedLineSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_IndexedLineSet_namespaceObject);
@@ -3605,8 +3590,7 @@ Object .defineProperties (PolylineEmitter,
 const PolylineEmitter_default_ = PolylineEmitter;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("PolylineEmitter", PolylineEmitter_default_);
-/* harmony default export */ const ParticleSystems_PolylineEmitter = (PolylineEmitter_default_);
+/* harmony default export */ const ParticleSystems_PolylineEmitter = (external_X_ITE_X3D_Namespace_default().add ("PolylineEmitter", PolylineEmitter_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Triangle3"
 const external_X_ITE_X3D_Triangle3_namespaceObject = __X_ITE_X3D__ .Triangle3;
 var external_X_ITE_X3D_Triangle3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Triangle3_namespaceObject);
@@ -3902,8 +3886,7 @@ Object .defineProperties (SurfaceEmitter,
 const SurfaceEmitter_default_ = SurfaceEmitter;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("SurfaceEmitter", SurfaceEmitter_default_);
-/* harmony default export */ const ParticleSystems_SurfaceEmitter = (SurfaceEmitter_default_);
+/* harmony default export */ const ParticleSystems_SurfaceEmitter = (external_X_ITE_X3D_Namespace_default().add ("SurfaceEmitter", SurfaceEmitter_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .IndexedFaceSet"
 const external_X_ITE_X3D_IndexedFaceSet_namespaceObject = __X_ITE_X3D__ .IndexedFaceSet;
 var external_X_ITE_X3D_IndexedFaceSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_IndexedFaceSet_namespaceObject);
@@ -4247,8 +4230,7 @@ Object .defineProperties (VolumeEmitter,
 const VolumeEmitter_default_ = VolumeEmitter;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("VolumeEmitter", VolumeEmitter_default_);
-/* harmony default export */ const ParticleSystems_VolumeEmitter = (VolumeEmitter_default_);
+/* harmony default export */ const ParticleSystems_VolumeEmitter = (external_X_ITE_X3D_Namespace_default().add ("VolumeEmitter", VolumeEmitter_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
@@ -4404,8 +4386,7 @@ Object .defineProperties (WindPhysicsModel,
 const WindPhysicsModel_default_ = WindPhysicsModel;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("WindPhysicsModel", WindPhysicsModel_default_);
-/* harmony default export */ const ParticleSystems_WindPhysicsModel = (WindPhysicsModel_default_);
+/* harmony default export */ const ParticleSystems_WindPhysicsModel = (external_X_ITE_X3D_Namespace_default().add ("WindPhysicsModel", WindPhysicsModel_default_));
 ;// CONCATENATED MODULE: ./src/assets/components/ParticleSystems.js
 /*******************************************************************************
  *
@@ -4495,7 +4476,6 @@ external_X_ITE_X3D_Components_default().add ({
 const ParticleSystems_default_ = undefined;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ParticleSystems", ParticleSystems_default_);
-/* harmony default export */ const ParticleSystems = ((/* unused pure expression or super */ null && (ParticleSystems_default_)));
+/* harmony default export */ const ParticleSystems = (external_X_ITE_X3D_Namespace_default().add ("ParticleSystems", ParticleSystems_default_));
 /******/ })()
 ;

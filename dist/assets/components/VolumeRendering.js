@@ -207,8 +207,7 @@ Object .defineProperties (X3DVolumeRenderStyleNode,
 const __default__ = X3DVolumeRenderStyleNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DVolumeRenderStyleNode", __default__);
-/* harmony default export */ const VolumeRendering_X3DVolumeRenderStyleNode = (__default__);
+/* harmony default export */ const VolumeRendering_X3DVolumeRenderStyleNode = (external_X_ITE_X3D_Namespace_default().add ("X3DVolumeRenderStyleNode", __default__));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode.js
 /*******************************************************************************
  *
@@ -286,8 +285,7 @@ Object .defineProperties (X3DComposableVolumeRenderStyleNode,
 const X3DComposableVolumeRenderStyleNode_default_ = X3DComposableVolumeRenderStyleNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DComposableVolumeRenderStyleNode", X3DComposableVolumeRenderStyleNode_default_);
-/* harmony default export */ const VolumeRendering_X3DComposableVolumeRenderStyleNode = (X3DComposableVolumeRenderStyleNode_default_);
+/* harmony default export */ const VolumeRendering_X3DComposableVolumeRenderStyleNode = (external_X_ITE_X3D_Namespace_default().add ("X3DComposableVolumeRenderStyleNode", X3DComposableVolumeRenderStyleNode_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
@@ -473,8 +471,7 @@ Object .defineProperties (OpacityMapVolumeStyle,
 const OpacityMapVolumeStyle_default_ = OpacityMapVolumeStyle;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("OpacityMapVolumeStyle", OpacityMapVolumeStyle_default_);
-/* harmony default export */ const VolumeRendering_OpacityMapVolumeStyle = (OpacityMapVolumeStyle_default_);
+/* harmony default export */ const VolumeRendering_OpacityMapVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("OpacityMapVolumeStyle", OpacityMapVolumeStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext.js
 /*******************************************************************************
  *
@@ -609,8 +606,7 @@ Object .assign (X3DVolumeRenderingContext .prototype,
 const X3DVolumeRenderingContext_default_ = X3DVolumeRenderingContext;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DVolumeRenderingContext", X3DVolumeRenderingContext_default_);
-/* harmony default export */ const VolumeRendering_X3DVolumeRenderingContext = (X3DVolumeRenderingContext_default_);
+/* harmony default export */ const VolumeRendering_X3DVolumeRenderingContext = (external_X_ITE_X3D_Namespace_default().add ("X3DVolumeRenderingContext", X3DVolumeRenderingContext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/BlendedVolumeStyle.js
 /*******************************************************************************
  *
@@ -969,8 +965,7 @@ Object .defineProperties (BlendedVolumeStyle,
 const BlendedVolumeStyle_default_ = BlendedVolumeStyle;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("BlendedVolumeStyle", BlendedVolumeStyle_default_);
-/* harmony default export */ const VolumeRendering_BlendedVolumeStyle = (BlendedVolumeStyle_default_);
+/* harmony default export */ const VolumeRendering_BlendedVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("BlendedVolumeStyle", BlendedVolumeStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/BoundaryEnhancementVolumeStyle.js
 /*******************************************************************************
  *
@@ -1128,8 +1123,7 @@ Object .defineProperties (BoundaryEnhancementVolumeStyle,
 const BoundaryEnhancementVolumeStyle_default_ = BoundaryEnhancementVolumeStyle;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("BoundaryEnhancementVolumeStyle", BoundaryEnhancementVolumeStyle_default_);
-/* harmony default export */ const VolumeRendering_BoundaryEnhancementVolumeStyle = (BoundaryEnhancementVolumeStyle_default_);
+/* harmony default export */ const VolumeRendering_BoundaryEnhancementVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("BoundaryEnhancementVolumeStyle", BoundaryEnhancementVolumeStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/CartoonVolumeStyle.js
 /*******************************************************************************
  *
@@ -1444,8 +1438,7 @@ Object .defineProperties (CartoonVolumeStyle,
 const CartoonVolumeStyle_default_ = CartoonVolumeStyle;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("CartoonVolumeStyle", CartoonVolumeStyle_default_);
-/* harmony default export */ const VolumeRendering_CartoonVolumeStyle = (CartoonVolumeStyle_default_);
+/* harmony default export */ const VolumeRendering_CartoonVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("CartoonVolumeStyle", CartoonVolumeStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ComposedVolumeStyle.js
 /*******************************************************************************
  *
@@ -1653,8 +1646,7 @@ Object .defineProperties (ComposedVolumeStyle,
 const ComposedVolumeStyle_default_ = ComposedVolumeStyle;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ComposedVolumeStyle", ComposedVolumeStyle_default_);
-/* harmony default export */ const VolumeRendering_ComposedVolumeStyle = (ComposedVolumeStyle_default_);
+/* harmony default export */ const VolumeRendering_ComposedVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("ComposedVolumeStyle", ComposedVolumeStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/EdgeEnhancementVolumeStyle.js
 /*******************************************************************************
  *
@@ -1838,8 +1830,7 @@ Object .defineProperties (EdgeEnhancementVolumeStyle,
 const EdgeEnhancementVolumeStyle_default_ = EdgeEnhancementVolumeStyle;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("EdgeEnhancementVolumeStyle", EdgeEnhancementVolumeStyle_default_);
-/* harmony default export */ const VolumeRendering_EdgeEnhancementVolumeStyle = (EdgeEnhancementVolumeStyle_default_);
+/* harmony default export */ const VolumeRendering_EdgeEnhancementVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("EdgeEnhancementVolumeStyle", EdgeEnhancementVolumeStyle_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
@@ -1857,8 +1848,7 @@ const VolumeStyle_vs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;uniform mat4 x3d_TextureMatrix[1];in vec4 x3d_TexCoord0;in vec4 x3d_Vertex;out vec3 vertex;out vec4 texCoord;void main(){vec4 position=x3d_ModelViewMatrix*x3d_Vertex;vertex=position.xyz;texCoord=x3d_TextureMatrix[0]*x3d_TexCoord0;gl_Position=x3d_ProjectionMatrix*position;}`
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("VolumeStyle.vs", VolumeStyle_vs_default_);
-/* harmony default export */ const VolumeStyle_vs = (VolumeStyle_vs_default_);
+/* harmony default export */ const VolumeStyle_vs = (external_X_ITE_X3D_Namespace_default().add ("VolumeStyle.vs", VolumeStyle_vs_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/VolumeStyle.fs.js
 const VolumeStyle_fs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler3D;in vec3 vertex;in vec4 texCoord;uniform sampler3D x3d_Texture3D[1];uniform mat3 x3d_TextureNormalMatrix;uniform x3d_LightSourceParameters x3d_LightSource[x3d_MaxLights];const float M_PI=3.14159265359;
@@ -1875,8 +1865,7 @@ finalColor.rgb=getFogColor(finalColor.rgb);
 x3d_FragColor=finalColor;}`
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("VolumeStyle.fs", VolumeStyle_fs_default_);
-/* harmony default export */ const VolumeStyle_fs = (VolumeStyle_fs_default_);
+/* harmony default export */ const VolumeStyle_fs = (external_X_ITE_X3D_Namespace_default().add ("VolumeStyle.fs", VolumeStyle_fs_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/VolumeMaterial.js
 /*******************************************************************************
  *
@@ -2030,8 +2019,7 @@ Object .defineProperties (VolumeMaterial,
 const VolumeMaterial_default_ = VolumeMaterial;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("VolumeMaterial", VolumeMaterial_default_);
-/* harmony default export */ const VolumeRendering_VolumeMaterial = (VolumeMaterial_default_);
+/* harmony default export */ const VolumeRendering_VolumeMaterial = (external_X_ITE_X3D_Namespace_default().add ("VolumeMaterial", VolumeMaterial_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
@@ -2290,8 +2278,7 @@ Object .defineProperties (X3DVolumeDataNode,
 const X3DVolumeDataNode_default_ = X3DVolumeDataNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DVolumeDataNode", X3DVolumeDataNode_default_);
-/* harmony default export */ const VolumeRendering_X3DVolumeDataNode = (X3DVolumeDataNode_default_);
+/* harmony default export */ const VolumeRendering_X3DVolumeDataNode = (external_X_ITE_X3D_Namespace_default().add ("X3DVolumeDataNode", X3DVolumeDataNode_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ComposedShader"
 const external_X_ITE_X3D_ComposedShader_namespaceObject = __X_ITE_X3D__ .ComposedShader;
 var external_X_ITE_X3D_ComposedShader_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ComposedShader_namespaceObject);
@@ -2666,8 +2653,7 @@ Object .defineProperties (IsoSurfaceVolumeData,
 const IsoSurfaceVolumeData_default_ = IsoSurfaceVolumeData;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("IsoSurfaceVolumeData", IsoSurfaceVolumeData_default_);
-/* harmony default export */ const VolumeRendering_IsoSurfaceVolumeData = (IsoSurfaceVolumeData_default_);
+/* harmony default export */ const VolumeRendering_IsoSurfaceVolumeData = (external_X_ITE_X3D_Namespace_default().add ("IsoSurfaceVolumeData", IsoSurfaceVolumeData_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ProjectionVolumeStyle.js
 /*******************************************************************************
  *
@@ -2901,8 +2887,7 @@ Object .defineProperties (ProjectionVolumeStyle,
 const ProjectionVolumeStyle_default_ = ProjectionVolumeStyle;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ProjectionVolumeStyle", ProjectionVolumeStyle_default_);
-/* harmony default export */ const VolumeRendering_ProjectionVolumeStyle = (ProjectionVolumeStyle_default_);
+/* harmony default export */ const VolumeRendering_ProjectionVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("ProjectionVolumeStyle", ProjectionVolumeStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/SegmentedVolumeData.js
 /*******************************************************************************
  *
@@ -3184,8 +3169,7 @@ Object .defineProperties (SegmentedVolumeData,
 const SegmentedVolumeData_default_ = SegmentedVolumeData;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("SegmentedVolumeData", SegmentedVolumeData_default_);
-/* harmony default export */ const VolumeRendering_SegmentedVolumeData = (SegmentedVolumeData_default_);
+/* harmony default export */ const VolumeRendering_SegmentedVolumeData = (external_X_ITE_X3D_Namespace_default().add ("SegmentedVolumeData", SegmentedVolumeData_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ShadedVolumeStyle.js
 /*******************************************************************************
  *
@@ -3469,8 +3453,7 @@ Object .defineProperties (ShadedVolumeStyle,
 const ShadedVolumeStyle_default_ = ShadedVolumeStyle;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ShadedVolumeStyle", ShadedVolumeStyle_default_);
-/* harmony default export */ const VolumeRendering_ShadedVolumeStyle = (ShadedVolumeStyle_default_);
+/* harmony default export */ const VolumeRendering_ShadedVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("ShadedVolumeStyle", ShadedVolumeStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/SilhouetteEnhancementVolumeStyle.js
 /*******************************************************************************
  *
@@ -3653,8 +3636,7 @@ Object .defineProperties (SilhouetteEnhancementVolumeStyle,
 const SilhouetteEnhancementVolumeStyle_default_ = SilhouetteEnhancementVolumeStyle;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("SilhouetteEnhancementVolumeStyle", SilhouetteEnhancementVolumeStyle_default_);
-/* harmony default export */ const VolumeRendering_SilhouetteEnhancementVolumeStyle = (SilhouetteEnhancementVolumeStyle_default_);
+/* harmony default export */ const VolumeRendering_SilhouetteEnhancementVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("SilhouetteEnhancementVolumeStyle", SilhouetteEnhancementVolumeStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/ToneMappedVolumeStyle.js
 /*******************************************************************************
  *
@@ -3844,8 +3826,7 @@ Object .defineProperties (ToneMappedVolumeStyle,
 const ToneMappedVolumeStyle_default_ = ToneMappedVolumeStyle;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("ToneMappedVolumeStyle", ToneMappedVolumeStyle_default_);
-/* harmony default export */ const VolumeRendering_ToneMappedVolumeStyle = (ToneMappedVolumeStyle_default_);
+/* harmony default export */ const VolumeRendering_ToneMappedVolumeStyle = (external_X_ITE_X3D_Namespace_default().add ("ToneMappedVolumeStyle", ToneMappedVolumeStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/VolumeData.js
 /*******************************************************************************
  *
@@ -4060,8 +4041,7 @@ Object .defineProperties (VolumeData,
 const VolumeData_default_ = VolumeData;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("VolumeData", VolumeData_default_);
-/* harmony default export */ const VolumeRendering_VolumeData = (VolumeData_default_);
+/* harmony default export */ const VolumeRendering_VolumeData = (external_X_ITE_X3D_Namespace_default().add ("VolumeData", VolumeData_default_));
 ;// CONCATENATED MODULE: ./src/assets/components/VolumeRendering.js
 /*******************************************************************************
  *
@@ -4159,7 +4139,6 @@ external_X_ITE_X3D_Components_default().add ({
 const VolumeRendering_default_ = undefined;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("VolumeRendering", VolumeRendering_default_);
-/* harmony default export */ const VolumeRendering = ((/* unused pure expression or super */ null && (VolumeRendering_default_)));
+/* harmony default export */ const VolumeRendering = (external_X_ITE_X3D_Namespace_default().add ("VolumeRendering", VolumeRendering_default_));
 /******/ })()
 ;

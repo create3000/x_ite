@@ -235,8 +235,7 @@ function evaluate (thisArg, globalObject, sourceText)
 const __default__ = evaluate;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("evaluate", __default__);
-/* harmony default export */ const Scripting_evaluate = (__default__);
+/* harmony default export */ const Scripting_evaluate = (external_X_ITE_X3D_Namespace_default().add ("evaluate", __default__));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
@@ -338,8 +337,7 @@ Object .defineProperties (X3DScriptNode,
 const X3DScriptNode_default_ = X3DScriptNode;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("X3DScriptNode", X3DScriptNode_default_);
-/* harmony default export */ const Scripting_X3DScriptNode = (X3DScriptNode_default_);
+/* harmony default export */ const Scripting_X3DScriptNode = (external_X_ITE_X3D_Namespace_default().add ("X3DScriptNode", X3DScriptNode_default_));
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FileLoader"
 const external_X_ITE_X3D_FileLoader_namespaceObject = __X_ITE_X3D__ .FileLoader;
 var external_X_ITE_X3D_FileLoader_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FileLoader_namespaceObject);
@@ -854,8 +852,7 @@ Object .defineProperties (Script,
 const Script_default_ = Script;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Script", Script_default_);
-/* harmony default export */ const Scripting_Script = (Script_default_);
+/* harmony default export */ const Scripting_Script = (external_X_ITE_X3D_Namespace_default().add ("Script", Script_default_));
 ;// CONCATENATED MODULE: ./src/assets/components/Scripting.js
 /*******************************************************************************
  *
@@ -923,7 +920,6 @@ external_X_ITE_X3D_Components_default().add ({
 const Scripting_default_ = undefined;
 ;
 
-external_X_ITE_X3D_Namespace_default().add ("Scripting", Scripting_default_);
-/* harmony default export */ const Scripting = ((/* unused pure expression or super */ null && (Scripting_default_)));
+/* harmony default export */ const Scripting = (external_X_ITE_X3D_Namespace_default().add ("Scripting", Scripting_default_));
 /******/ })()
 ;
