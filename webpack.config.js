@@ -283,6 +283,7 @@ export default Namespace .add ("${base}", __default__);`;
                parallel: true,
                extractComments: true,
                terserOptions: {
+                  module: true,
                   compress: true,
                   mangle: true,
                   format: {
@@ -395,6 +396,7 @@ export default Namespace .add ("${base}", __default__);`;
                   parallel: true,
                   extractComments: false,
                   terserOptions: {
+                     module: true,
                      compress: true,
                      mangle: true,
                      format: {
