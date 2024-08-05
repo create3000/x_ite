@@ -88,12 +88,12 @@ const
 let initialized = false;
 
 /**
- *
- * @param {function?} callback
- * @param {function?} fallback
- * @returns {Promise<void>} Promise
- */
-function X3D (callback, fallback)
+*
+* @param {function?} callback
+* @param {function?} fallback
+* @returns {Promise<void>} Promise
+*/
+export default Object .assign (function (callback, fallback)
 {
    return new Promise ((resolve, reject) =>
    {
@@ -129,9 +129,8 @@ function X3D (callback, fallback)
          }
       });
    });
-}
-
-Object .assign (X3D, Namespace, Namespace .Fields,
+},
+Namespace, Namespace .Fields,
 {
    X3DConstants:                X3DConstants,
    X3DBrowser:                  X3DBrowser,
@@ -246,5 +245,3 @@ Object .assign (X3D, Namespace, Namespace .Fields,
       return element;
    },
 });
-
-export default X3D;
