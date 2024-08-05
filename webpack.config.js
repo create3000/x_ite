@@ -188,6 +188,7 @@ export default Namespace .add ("${base}", __default__);`;
                   `perl -p0i -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEVELOPMENT.js`,
                   // Licenses
                   `cp LICENSE.md dist/LICENSE.md`,
+                  `echo '\nADDITIONAL LICENSES\n-------------------\n' >> dist/LICENSE.md`,
                   `echo '\`\`\`' >> dist/LICENSE.md`,
                   `cat dist/x_ite.min.js.LICENSE.txt >> dist/LICENSE.md`,
                   `rm dist/x_ite.min.js.LICENSE.txt`,
