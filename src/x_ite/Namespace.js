@@ -51,6 +51,9 @@ Object .defineProperty (Namespace, "add",
 {
    value (name, module)
    {
+      if (Namespace .hasOwnProperty (name))
+         return module;
+
       const X3D = window [Symbol .for ("X_ITE.X3D")];
 
       if (X3D)
