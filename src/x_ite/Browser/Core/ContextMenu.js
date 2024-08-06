@@ -50,7 +50,9 @@ import _           from "../../../locale/gettext.js";
 
 typeof jquery_fullscreen; // import plugin
 
-const _userMenu = Symbol ();
+const
+   _options  = Symbol (),
+   _userMenu = Symbol ();
 
 function ContextMenu (executionContext)
 {
@@ -67,12 +69,14 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       const browser = this .getBrowser ();
 
-      this .init ({
+      this [_options] = {
          element: browser .getElement (),
          appendTo: browser .getShadow (),
          build: this .build .bind (this),
-         animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
-      });
+         animation: { duration: 500, show: "fadeIn", hide: "fadeOut" },
+      };
+
+      this [_options] .element .on ("contextmenu", event => this .show (event));
    },
    getUserMenu ()
    {
@@ -98,6 +102,196 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       }
 
       return userMenu;
+   },
+   hide (event)
+   {
+      // Will be overridden by a generated function on show.
+   },
+   show (event)
+   {
+      const
+         options = this [_options],
+         menu    = options .build (event),
+         level   = 1;
+
+      if (!menu) return;
+
+      // Layer
+
+      const layer = $("<div></div>")
+         .addClass ("context-menu-layer")
+         .addClass (menu .className)
+         .appendTo (options .appendTo);
+
+      const hide = this .hide = () =>
+      {
+         delete this .hide;
+
+         layer .remove ();
+
+         ul [options .animation .hide] (options .animation .duration, function ()
+         {
+            ul .remove ();
+
+            if (options .events && typeof options .events .hide === "function")
+               options .events .hide ();
+         });
+
+         return false;
+      };
+
+      // Menu
+
+      const ul = $("<ul></ul>")
+         .hide ()
+         .addClass ("context-menu-root")
+         .addClass ("context-menu-list")
+         .addClass (menu .className)
+         .appendTo (options .appendTo)
+         .offset ({ "left": event .pageX, "top": event .pageY });
+
+      for (const k in menu .items)
+         ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1, hide));
+
+      ul [options .animation .show] (options .animation .duration);
+
+      // Reposition menu if to right or to low.
+
+      ul .offset ({ "left": event .pageX, "top": event .pageY }); // Do it again!
+
+      if (ul .offset () .left - $(document) .scrollLeft () + ul .outerWidth () > $(window) .width ())
+         ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .outerWidth ()) });
+
+      if (ul .offset () .top - $(document) .scrollTop () + ul .outerHeight () > $(window) .height ())
+         ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
+
+      // Display submenus on the left or right side.
+      // If the submenu is higher than vh, add scrollbars.
+
+      ul .find ("ul") .each ((i, e) =>
+      {
+         e = $(e);
+
+         const
+            width    = e .outerWidth () + ul .outerWidth (),
+            position = ul .offset () .left - $(document) .scrollLeft () + width > $(window) .width () ? "right" : "left";
+
+         e .css ("width", e .outerWidth ());
+         e .css (position, e .parent () .closest ("ul") .width ());
+
+         if (e .outerHeight () >= $(window) .height ())
+            e .css ({ "max-height": "100vh", "overflow-y": "scroll" });
+      });
+
+      // If the submenu is higher than vh, reposition it.
+
+      ul .find ("li") .on ("mouseenter touchstart", function (event)
+      {
+         event .stopImmediatePropagation ();
+
+         const
+            t = $(event .target) .closest ("li"),
+            e = t .children ("ul");
+
+         if (!e .length)
+            return;
+
+         e .css ("top", "");
+
+         const bottom = e .offset () .top + e .outerHeight () - $(window) .scrollTop () - $(window) .height ();
+
+         if (bottom > 0)
+            e .offset ({ "top": e .offset () .top - bottom });
+      });
+
+      // Layer
+
+      layer .on ("click contextmenu", hide);
+      ul .on ("contextmenu", hide);
+
+      // Show
+
+      if (options .events && typeof options .events .show === "function")
+         options .events .show (ul);
+
+      return false;
+   },
+   createItem (item, parent, key, level, hide)
+   {
+      const li = $("<li></li>") .addClass ("context-menu-item");
+
+      switch (typeof item)
+      {
+         case "string":
+         {
+            if (item .match (/^-+$/))
+               li .addClass (["context-menu-separator", "context-menu-not-selectable"]);
+
+            break;
+         }
+         case "object":
+         {
+            if (item .className)
+               li .addClass (item .className);
+
+            switch (item .type)
+            {
+               case "radio":
+               case "checkbox":
+               {
+                  const
+                     label = $("<label></label>") .appendTo (li),
+                     input = $("<input></input>") .appendTo (label);
+
+                  input
+                     .attr ("type", item .type)
+                     .attr ("name", "context-menu-input-" + (item .radio || parent));
+
+                  $("<span></span>") .text (item .name) .appendTo (label);
+
+                  if (item .selected)
+                     input .attr ("checked", "checked");
+
+                  for (const k in item .events)
+                  {
+                     if (typeof item .events [k] === "function")
+                        input .on (k, item .events [k]);
+                  }
+
+                  li .addClass ("context-menu-input");
+
+                  break;
+               }
+               default:
+               {
+                  if (item .name)
+                     $("<span></span>") .text (item .name) .appendTo (li);
+
+                  if (typeof item .callback === "function")
+                     li .on ("click", item .callback) .on ("click", hide);
+
+                  break;
+               }
+            }
+
+            break;
+         }
+      }
+
+      if (typeof item .items === "object" && level < 3)
+      {
+         const ul = $("<ul></ul>")
+            .addClass ("context-menu-list")
+            .css ({ "z-index": level })
+            .appendTo (li);
+
+         for (const k in item .items)
+            ul .append (this .createItem (item .items [k], key, k, level + 1, hide));
+
+         li .addClass ("context-menu-submenu");
+      }
+
+      return li;
    },
    build (event)
    {
@@ -499,201 +693,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          case "NONE":
             return _("None Viewer");
       }
-   },
-   init (options)
-   {
-      this .show = this .createRoot .bind (this, options);
-
-      options .element .on ("contextmenu", this .show);
-   },
-   show (event)
-   { },
-   hide (event)
-   { },
-   createRoot (options, event)
-   {
-      const
-         menu  = options .build (event),
-         level = 1;
-
-      if (!menu) return;
-
-      // Layer
-
-      const layer = $("<div></div>")
-         .addClass ("context-menu-layer")
-         .addClass (menu .className)
-         .appendTo (options .appendTo);
-
-      const hide = this .hide = () =>
-      {
-         delete this .hide;
-
-         layer .remove ();
-
-         ul [options .animation .hide] (options .animation .duration, function ()
-         {
-            ul .remove ();
-
-            if (options .events && typeof options .events .hide === "function")
-               options .events .hide ();
-         });
-
-         return false;
-      };
-
-      // Menu
-
-      const ul = $("<ul></ul>")
-         .hide ()
-         .addClass ("context-menu-root")
-         .addClass ("context-menu-list")
-         .addClass (menu .className)
-         .appendTo (options .appendTo)
-         .offset ({ "left": event .pageX, "top": event .pageY });
-
-      for (const k in menu .items)
-         ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1, hide));
-
-      ul [options .animation .show] (options .animation .duration);
-
-      // Reposition menu if to right or to low.
-
-      ul .offset ({ "left": event .pageX, "top": event .pageY }); // Do it again!
-
-      if (ul .offset () .left - $(document) .scrollLeft () + ul .outerWidth () > $(window) .width ())
-         ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .outerWidth ()) });
-
-      if (ul .offset () .top - $(document) .scrollTop () + ul .outerHeight () > $(window) .height ())
-         ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
-
-      // Display submenus on the left or right side.
-      // If the submenu is higher than vh, add scrollbars.
-
-      ul .find ("ul") .each ((i, e) =>
-      {
-         e = $(e);
-
-         const
-            width    = e .outerWidth () + ul .outerWidth (),
-            position = ul .offset () .left - $(document) .scrollLeft () + width > $(window) .width () ? "right" : "left";
-
-         e .css ("width", e .outerWidth ());
-         e .css (position, e .parent () .closest ("ul") .width ());
-
-         if (e .outerHeight () >= $(window) .height ())
-            e .css ({ "max-height": "100vh", "overflow-y": "scroll" });
-      });
-
-      // If the submenu is higher than vh, reposition it.
-
-      ul .find ("li") .on ("mouseenter touchstart", function (event)
-      {
-         event .stopImmediatePropagation ();
-
-         const
-            t = $(event .target) .closest ("li"),
-            e = t .children ("ul");
-
-         if (!e .length)
-            return;
-
-         e .css ("top", "");
-
-         const bottom = e .offset () .top + e .outerHeight () - $(window) .scrollTop () - $(window) .height ();
-
-         if (bottom > 0)
-            e .offset ({ "top": e .offset () .top - bottom });
-      });
-
-      // Layer
-
-      layer .on ("click contextmenu", hide);
-      ul .on ("contextmenu", hide);
-
-      // Show
-
-      if (options .events && typeof options .events .show === "function")
-         options .events .show (ul);
-
-      return false;
-   },
-   createItem (item, parent, key, level, hide)
-   {
-      const li = $("<li></li>") .addClass ("context-menu-item");
-
-      switch (typeof item)
-      {
-         case "string":
-         {
-            if (item .match (/^-+$/))
-               li .addClass (["context-menu-separator", "context-menu-not-selectable"]);
-
-            break;
-         }
-         case "object":
-         {
-            if (item .className)
-               li .addClass (item .className);
-
-            switch (item .type)
-            {
-               case "radio":
-               case "checkbox":
-               {
-                  const
-                     label = $("<label></label>") .appendTo (li),
-                     input = $("<input></input>") .appendTo (label);
-
-                  input
-                     .attr ("type", item .type)
-                     .attr ("name", "context-menu-input-" + (item .radio || parent));
-
-                  $("<span></span>") .text (item .name) .appendTo (label);
-
-                  if (item .selected)
-                     input .attr ("checked", "checked");
-
-                  for (const k in item .events)
-                  {
-                     if (typeof item .events [k] === "function")
-                        input .on (k, item .events [k]);
-                  }
-
-                  li .addClass ("context-menu-input");
-
-                  break;
-               }
-               default:
-               {
-                  if (item .name)
-                     $("<span></span>") .text (item .name) .appendTo (li);
-
-                  if (typeof item .callback === "function")
-                     li .on ("click", item .callback) .on ("click", hide);
-
-                  break;
-               }
-            }
-
-            break;
-         }
-      }
-
-      if (typeof item .items === "object" && level < 3)
-      {
-         const ul = $("<ul></ul>")
-            .addClass ("context-menu-list")
-            .css ({ "z-index": level })
-            .appendTo (li);
-
-         for (const k in item .items)
-            ul .append (this .createItem (item .items [k], key, k, level + 1, hide));
-
-         li .addClass ("context-menu-submenu");
-      }
-
-      return li;
    },
 });
 
