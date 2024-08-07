@@ -1057,6 +1057,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    },
 });
 
-Object .defineProperties (X3DPrototypeInstance, X3DNode .getStaticProperties ("X3DPrototypeInstance", "Core", 2));
+
+Object .defineProperties (X3DPrototypeInstance, X3DNode .getStaticProperties ("X3DPrototypeInstance", "Core", 2, "children", "2.0"));
 
 export default X3DPrototypeInstance;
