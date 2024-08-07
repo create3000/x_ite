@@ -87,11 +87,11 @@ const URLs =
       if (this .getScriptURL () .match (/\.min\.m?js$/))
          component += ".min";
 
-      return new URL ("assets/components/" + component + ".js", this .getScriptURL ()) .href;
+      return new URL (`assets/components/${component}Component.js`, this .getScriptURL ()) .href;
    },
    getFontsURL (file)
    {
-      return new URL ("assets/fonts/" + file, this .getScriptURL ()) .href;
+      return new URL (`assets/fonts/${file}`, this .getScriptURL ()) .href;
    },
    getLinetypeURL ()
    {
@@ -99,11 +99,11 @@ const URLs =
    },
    getHatchingURL (index)
    {
-      return new URL ("assets/hatching/" + index + ".png", this .getScriptURL ()) .href;
+      return new URL (`assets/hatching/${index}.png`, this .getScriptURL ()) .href;
    },
    getLibraryURL (file)
    {
-      return new URL ("assets/lib/" + file, this .getScriptURL ()) .href;
+      return new URL (`assets/lib/${file}`, this .getScriptURL ()) .href;
    },
 };
 
