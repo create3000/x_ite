@@ -212,7 +212,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
 });
 
-Object .defineProperties (EnvironmentLight, X3DNode .staticProperties ("EnvironmentLight", "Lighting", 3, "children", "4.0", "Infinity"));
+Object .defineProperties (EnvironmentLight, X3DNode .staticProperties ("EnvironmentLight", "Lighting", 3, "children", "4.0"));
 
 Object .defineProperties (EnvironmentLight,
 {

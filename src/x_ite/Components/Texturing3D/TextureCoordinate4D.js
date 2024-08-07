@@ -129,7 +129,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate4D .prototype, X3DSingl
    },
 });
 
-Object .defineProperties (TextureCoordinate4D, X3DNode .staticProperties ("TextureCoordinate4D", "Texturing3D", 1, "texCoord", "3.1", "Infinity"));
+Object .defineProperties (TextureCoordinate4D, X3DNode .staticProperties ("TextureCoordinate4D", "Texturing3D", 1, "texCoord", "3.1"));
 
 Object .defineProperties (TextureCoordinate4D,
 {

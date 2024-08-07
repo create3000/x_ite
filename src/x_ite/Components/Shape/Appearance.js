@@ -417,7 +417,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
 });
 
-Object .defineProperties (Appearance, X3DNode .staticProperties ("Appearance", "Shape", 1, "appearance", "2.0", "Infinity"));
+Object .defineProperties (Appearance, X3DNode .staticProperties ("Appearance", "Shape", 1, "appearance", "2.0"));
 
 Object .defineProperties (Appearance,
 {

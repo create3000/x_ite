@@ -212,7 +212,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
 });
 
-Object .defineProperties (CADFace, X3DNode .staticProperties ("CADFace", "CADGeometry", 2, "children", "3.1", "Infinity"));
+Object .defineProperties (CADFace, X3DNode .staticProperties ("CADFace", "CADGeometry", 2, "children", "3.1"));
 
 Object .defineProperties (CADFace,
 {

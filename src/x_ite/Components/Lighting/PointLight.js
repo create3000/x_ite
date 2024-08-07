@@ -292,7 +292,7 @@ Object .assign (Object .setPrototypeOf (PointLight .prototype, X3DLightNode .pro
    },
 });
 
-Object .defineProperties (PointLight, X3DNode .staticProperties ("PointLight", "Lighting", 2, "children", "2.0", "Infinity"));
+Object .defineProperties (PointLight, X3DNode .staticProperties ("PointLight", "Lighting", 2, "children", "2.0"));
 
 Object .defineProperties (PointLight,
 {

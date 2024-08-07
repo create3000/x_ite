@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, X3DSensorNode .p
    },
 });
 
-Object .defineProperties (ReceiverPdu, X3DNode .staticProperties ("ReceiverPdu", "DIS", 1, "children", "3.0", "Infinity"));
+Object .defineProperties (ReceiverPdu, X3DNode .staticProperties ("ReceiverPdu", "DIS", 1, "children", "3.0"));
 
 Object .defineProperties (ReceiverPdu,
 {

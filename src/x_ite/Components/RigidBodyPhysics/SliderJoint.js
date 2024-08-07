@@ -185,7 +185,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, X3DRigidJointNod
    },
 });
 
-Object .defineProperties (SliderJoint, X3DNode .staticProperties ("SliderJoint", "RigidBodyPhysics", 2, "joints", "3.2", "Infinity"));
+Object .defineProperties (SliderJoint, X3DNode .staticProperties ("SliderJoint", "RigidBodyPhysics", 2, "joints", "3.2"));
 
 Object .defineProperties (SliderJoint,
 {

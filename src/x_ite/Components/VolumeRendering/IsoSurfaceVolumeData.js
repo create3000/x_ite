@@ -321,7 +321,7 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, X3DVolu
    },
 });
 
-Object .defineProperties (IsoSurfaceVolumeData, X3DNode .staticProperties ("IsoSurfaceVolumeData", "VolumeRendering", 2, "children", "3.3", "Infinity"));
+Object .defineProperties (IsoSurfaceVolumeData, X3DNode .staticProperties ("IsoSurfaceVolumeData", "VolumeRendering", 2, "children", "3.3"));
 
 Object .defineProperties (IsoSurfaceVolumeData,
 {

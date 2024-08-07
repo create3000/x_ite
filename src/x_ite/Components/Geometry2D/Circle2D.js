@@ -98,7 +98,7 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, X3DLineGeometryNode
    },
 });
 
-Object .defineProperties (Circle2D, X3DNode .staticProperties ("Circle2D", "Geometry2D", 2, "geometry", "3.0", "Infinity"));
+Object .defineProperties (Circle2D, X3DNode .staticProperties ("Circle2D", "Geometry2D", 2, "geometry", "3.0"));
 
 Object .defineProperties (Circle2D,
 {

@@ -80,7 +80,7 @@ function UniversalJoint (executionContext)
 
 Object .setPrototypeOf (UniversalJoint .prototype, X3DRigidJointNode .prototype);
 
-Object .defineProperties (UniversalJoint, X3DNode .staticProperties ("UniversalJoint", "RigidBodyPhysics", 2, "joints", "3.2", "Infinity"));
+Object .defineProperties (UniversalJoint, X3DNode .staticProperties ("UniversalJoint", "RigidBodyPhysics", 2, "joints", "3.2"));
 
 Object .defineProperties (UniversalJoint,
 {

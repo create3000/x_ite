@@ -82,7 +82,7 @@ Object .assign (Object .setPrototypeOf (TriangleSet .prototype, X3DComposedGeome
    },
 });
 
-Object .defineProperties (TriangleSet, X3DNode .staticProperties ("TriangleSet", "Rendering", 3, "geometry", "3.0", "Infinity"));
+Object .defineProperties (TriangleSet, X3DNode .staticProperties ("TriangleSet", "Rendering", 3, "geometry", "3.0"));
 
 Object .defineProperties (TriangleSet,
 {

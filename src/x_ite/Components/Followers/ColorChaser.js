@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (ColorChaser .prototype, X3DChaserNode .p
    },
 });
 
-Object .defineProperties (ColorChaser, X3DNode .staticProperties ("ColorChaser", "Followers", 1, "children", "3.3", "Infinity"));
+Object .defineProperties (ColorChaser, X3DNode .staticProperties ("ColorChaser", "Followers", 1, "children", "3.3"));
 
 Object .defineProperties (ColorChaser,
 {

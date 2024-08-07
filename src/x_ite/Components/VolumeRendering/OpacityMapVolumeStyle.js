@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, X3DCom
    },
 });
 
-Object .defineProperties (OpacityMapVolumeStyle, X3DNode .staticProperties ("OpacityMapVolumeStyle", "VolumeRendering", 1, "renderStyle", "3.3", "Infinity"));
+Object .defineProperties (OpacityMapVolumeStyle, X3DNode .staticProperties ("OpacityMapVolumeStyle", "VolumeRendering", 1, "renderStyle", "3.3"));
 
 Object .defineProperties (OpacityMapVolumeStyle,
 {

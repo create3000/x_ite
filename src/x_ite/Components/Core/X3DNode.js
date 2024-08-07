@@ -1778,7 +1778,7 @@ Object .defineProperties (X3DNode,
 {
    staticProperties:
    {
-      value: function (typeName, componentName, componentLevel, containerField, fromVersion, toVersion)
+      value: function (typeName, componentName, componentLevel, containerField, fromVersion, toVersion = "Infinity")
       {
          return {
             typeName:

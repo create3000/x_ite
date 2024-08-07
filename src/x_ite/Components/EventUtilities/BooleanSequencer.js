@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (BooleanSequencer .prototype, X3DSequence
    },
 });
 
-Object .defineProperties (BooleanSequencer, X3DNode .staticProperties ("BooleanSequencer", "EventUtilities", 1, "children", "3.0", "Infinity"));
+Object .defineProperties (BooleanSequencer, X3DNode .staticProperties ("BooleanSequencer", "EventUtilities", 1, "children", "3.0"));
 
 Object .defineProperties (BooleanSequencer,
 {

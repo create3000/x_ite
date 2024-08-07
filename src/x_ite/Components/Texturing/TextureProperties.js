@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .p
    })(),
 });
 
-Object .defineProperties (TextureProperties, X3DNode .staticProperties ("TextureProperties", "Texturing", 2, "textureProperties", "3.0", "Infinity"));
+Object .defineProperties (TextureProperties, X3DNode .staticProperties ("TextureProperties", "Texturing", 2, "textureProperties", "3.0"));
 
 Object .defineProperties (TextureProperties,
 {

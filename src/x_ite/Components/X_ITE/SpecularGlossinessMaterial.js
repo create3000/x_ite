@@ -295,7 +295,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    },
 });
 
-Object .defineProperties (SpecularGlossinessMaterial, X3DNode .staticProperties ("SpecularGlossinessMaterial", "X_ITE", 1, "material", "4.0", "Infinity"));
+Object .defineProperties (SpecularGlossinessMaterial, X3DNode .staticProperties ("SpecularGlossinessMaterial", "X_ITE", 1, "material", "4.0"));
 
 Object .defineProperties (SpecularGlossinessMaterial,
 {

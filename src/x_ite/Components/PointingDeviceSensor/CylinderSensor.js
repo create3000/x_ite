@@ -277,7 +277,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
    },
 });
 
-Object .defineProperties (CylinderSensor, X3DNode .staticProperties ("CylinderSensor", "PointingDeviceSensor", 1, "children", "2.0", "Infinity"));
+Object .defineProperties (CylinderSensor, X3DNode .staticProperties ("CylinderSensor", "PointingDeviceSensor", 1, "children", "2.0"));
 
 Object .defineProperties (CylinderSensor,
 {

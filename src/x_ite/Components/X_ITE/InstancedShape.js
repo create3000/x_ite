@@ -281,7 +281,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    },
 });
 
-Object .defineProperties (InstancedShape, X3DNode .staticProperties ("InstancedShape", "X_ITE", 1, "children", "2.0", "Infinity"));
+Object .defineProperties (InstancedShape, X3DNode .staticProperties ("InstancedShape", "X_ITE", 1, "children", "2.0"));
 
 Object .defineProperties (InstancedShape,
 {

@@ -294,7 +294,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
    })(),
 });
 
-Object .defineProperties (LinePickSensor, X3DNode .staticProperties ("LinePickSensor", "Picking", 1, "children", "3.2", "Infinity"));
+Object .defineProperties (LinePickSensor, X3DNode .staticProperties ("LinePickSensor", "Picking", 1, "children", "3.2"));
 
 Object .defineProperties (LinePickSensor,
 {

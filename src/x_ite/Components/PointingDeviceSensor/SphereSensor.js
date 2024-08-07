@@ -178,7 +178,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
    },
 });
 
-Object .defineProperties (SphereSensor, X3DNode .staticProperties ("SphereSensor", "PointingDeviceSensor", 1, "children", "2.0", "Infinity"));
+Object .defineProperties (SphereSensor, X3DNode .staticProperties ("SphereSensor", "PointingDeviceSensor", 1, "children", "2.0"));
 
 Object .defineProperties (SphereSensor,
 {

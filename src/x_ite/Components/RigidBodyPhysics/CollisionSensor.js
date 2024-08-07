@@ -243,7 +243,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
    },
 });
 
-Object .defineProperties (CollisionSensor, X3DNode .staticProperties ("CollisionSensor", "RigidBodyPhysics", 1, "children", "3.2", "Infinity"));
+Object .defineProperties (CollisionSensor, X3DNode .staticProperties ("CollisionSensor", "RigidBodyPhysics", 1, "children", "3.2"));
 
 Object .defineProperties (CollisionSensor,
 {

@@ -605,7 +605,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
 });
 
-Object .defineProperties (HAnimHumanoid, X3DNode .staticProperties ("HAnimHumanoid", "HAnim", 1, "children", "3.0", "Infinity"));
+Object .defineProperties (HAnimHumanoid, X3DNode .staticProperties ("HAnimHumanoid", "HAnim", 1, "children", "3.0"));
 
 Object .defineProperties (HAnimHumanoid,
 {

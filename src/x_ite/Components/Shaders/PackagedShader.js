@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (PackagedShader .prototype, X3DShaderNode
    },
 });
 
-Object .defineProperties (PackagedShader, X3DNode .staticProperties ("PackagedShader", "Shaders", 1, "shaders", "3.0", "Infinity"));
+Object .defineProperties (PackagedShader, X3DNode .staticProperties ("PackagedShader", "Shaders", 1, "shaders", "3.0"));
 
 Object .defineProperties (PackagedShader,
 {

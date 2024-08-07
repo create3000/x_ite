@@ -120,7 +120,7 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, X3DEnviro
    },
 });
 
-Object .defineProperties (GeoProximitySensor, X3DNode .staticProperties ("GeoProximitySensor", "Geospatial", 2, "children", "3.2", "Infinity"));
+Object .defineProperties (GeoProximitySensor, X3DNode .staticProperties ("GeoProximitySensor", "Geospatial", 2, "children", "3.2"));
 
 Object .defineProperties (GeoProximitySensor,
 {

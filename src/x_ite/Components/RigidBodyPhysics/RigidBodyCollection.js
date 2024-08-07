@@ -353,7 +353,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
 });
 
-Object .defineProperties (RigidBodyCollection, X3DNode .staticProperties ("RigidBodyCollection", "RigidBodyPhysics", 2, "children", "3.2", "Infinity"));
+Object .defineProperties (RigidBodyCollection, X3DNode .staticProperties ("RigidBodyCollection", "RigidBodyPhysics", 2, "children", "3.2"));
 
 Object .defineProperties (RigidBodyCollection,
 {

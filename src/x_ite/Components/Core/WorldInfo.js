@@ -82,7 +82,7 @@ Object .assign (Object .setPrototypeOf (WorldInfo .prototype, X3DInfoNode .proto
    },
 });
 
-Object .defineProperties (WorldInfo, X3DNode .staticProperties ("WorldInfo", "Core", 1, "children", "2.0", "Infinity"));
+Object .defineProperties (WorldInfo, X3DNode .staticProperties ("WorldInfo", "Core", 1, "children", "2.0"));
 
 Object .defineProperties (WorldInfo,
 {

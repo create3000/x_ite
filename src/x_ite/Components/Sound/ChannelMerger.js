@@ -114,7 +114,7 @@ Object .assign (Object .setPrototypeOf (ChannelMerger .prototype, X3DSoundChanne
    },
 });
 
-Object .defineProperties (ChannelMerger, X3DNode .staticProperties ("ChannelMerger", "Sound", 2, "children", "4.0", "Infinity"));
+Object .defineProperties (ChannelMerger, X3DNode .staticProperties ("ChannelMerger", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (ChannelMerger,
 {

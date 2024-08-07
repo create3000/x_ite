@@ -63,7 +63,7 @@ function Coordinate (executionContext)
 
 Object .setPrototypeOf (Coordinate .prototype, X3DCoordinateNode .prototype);
 
-Object .defineProperties (Coordinate, X3DNode .staticProperties ("Coordinate", "Rendering", 1, "coord", "2.0", "Infinity"));
+Object .defineProperties (Coordinate, X3DNode .staticProperties ("Coordinate", "Rendering", 1, "coord", "2.0"));
 
 Object .defineProperties (Coordinate,
 {

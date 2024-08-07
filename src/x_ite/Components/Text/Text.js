@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
    },
 });
 
-Object .defineProperties (Text, X3DNode .staticProperties ("Text", "Text", 1, "geometry", "2.0", "Infinity"));
+Object .defineProperties (Text, X3DNode .staticProperties ("Text", "Text", 1, "geometry", "2.0"));
 
 Object .defineProperties (Text,
 {

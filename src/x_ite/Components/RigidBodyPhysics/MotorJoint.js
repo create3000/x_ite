@@ -87,7 +87,7 @@ function MotorJoint (executionContext)
 
 Object .setPrototypeOf (MotorJoint .prototype, X3DRigidJointNode .prototype);
 
-Object .defineProperties (MotorJoint, X3DNode .staticProperties ("MotorJoint", "RigidBodyPhysics", 2, "joints", "3.2", "Infinity"));
+Object .defineProperties (MotorJoint, X3DNode .staticProperties ("MotorJoint", "RigidBodyPhysics", 2, "joints", "3.2"));
 
 Object .defineProperties (MotorJoint,
 {

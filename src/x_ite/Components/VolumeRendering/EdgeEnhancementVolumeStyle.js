@@ -143,7 +143,7 @@ Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, X
    },
 });
 
-Object .defineProperties (EdgeEnhancementVolumeStyle, X3DNode .staticProperties ("EdgeEnhancementVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3", "Infinity"));
+Object .defineProperties (EdgeEnhancementVolumeStyle, X3DNode .staticProperties ("EdgeEnhancementVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"));
 
 Object .defineProperties (EdgeEnhancementVolumeStyle,
 {

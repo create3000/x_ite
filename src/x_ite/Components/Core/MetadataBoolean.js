@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (MetadataBoolean .prototype, X3DNode .pro
    },
 });
 
-Object .defineProperties (MetadataBoolean, X3DNode .staticProperties ("MetadataBoolean", "Core", 1, "value", "3.3", "Infinity"));
+Object .defineProperties (MetadataBoolean, X3DNode .staticProperties ("MetadataBoolean", "Core", 1, "value", "3.3"));
 
 Object .defineProperties (MetadataBoolean,
 {

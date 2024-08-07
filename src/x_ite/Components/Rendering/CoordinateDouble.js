@@ -61,7 +61,7 @@ function CoordinateDouble (executionContext)
 
 Object .setPrototypeOf (CoordinateDouble .prototype, X3DCoordinateNode .prototype);
 
-Object .defineProperties (CoordinateDouble, X3DNode .staticProperties ("CoordinateDouble", "Rendering", 1, "coord", "3.0", "Infinity"));
+Object .defineProperties (CoordinateDouble, X3DNode .staticProperties ("CoordinateDouble", "Rendering", 1, "coord", "3.0"));
 
 Object .defineProperties (CoordinateDouble,
 {

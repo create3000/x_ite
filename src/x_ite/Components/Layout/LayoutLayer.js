@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (LayoutLayer .prototype, X3DLayerNode .pr
    },
 });
 
-Object .defineProperties (LayoutLayer, X3DNode .staticProperties ("LayoutLayer", "Layout", 1, "layers", "3.2", "Infinity"));
+Object .defineProperties (LayoutLayer, X3DNode .staticProperties ("LayoutLayer", "Layout", 1, "layers", "3.2"));
 
 Object .defineProperties (LayoutLayer,
 {

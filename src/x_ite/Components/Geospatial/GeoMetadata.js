@@ -78,7 +78,7 @@ Object .assign (Object .setPrototypeOf (GeoMetadata .prototype, X3DInfoNode .pro
    },
 });
 
-Object .defineProperties (GeoMetadata, X3DNode .staticProperties ("GeoMetadata", "Geospatial", 1, "children", "3.0", "Infinity"));
+Object .defineProperties (GeoMetadata, X3DNode .staticProperties ("GeoMetadata", "Geospatial", 1, "children", "3.0"));
 
 Object .defineProperties (GeoMetadata,
 {

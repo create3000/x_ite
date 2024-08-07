@@ -114,7 +114,7 @@ Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, X3DNo
    }
 });
 
-Object .defineProperties (NurbsTextureCoordinate, X3DNode .staticProperties ("NurbsTextureCoordinate", "NURBS", 1, "texCoord", "3.0", "Infinity"));
+Object .defineProperties (NurbsTextureCoordinate, X3DNode .staticProperties ("NurbsTextureCoordinate", "NURBS", 1, "texCoord", "3.0"));
 
 Object .defineProperties (NurbsTextureCoordinate,
 {

@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode 
    },
 });
 
-Object .defineProperties (ScreenGroup, X3DNode .staticProperties ("ScreenGroup", "Layout", 2, "children", "3.2", "Infinity"));
+Object .defineProperties (ScreenGroup, X3DNode .staticProperties ("ScreenGroup", "Layout", 2, "children", "3.2"));
 
 Object .defineProperties (ScreenGroup,
 {

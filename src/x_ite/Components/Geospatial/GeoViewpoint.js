@@ -257,7 +257,7 @@ function traverse (type, renderObject)
    this .geoNavigationInfoNode .traverse (type, renderObject);
 }
 
-Object .defineProperties (GeoViewpoint, X3DNode .staticProperties ("GeoViewpoint", "Geospatial", 1, "children", "3.0", "Infinity"));
+Object .defineProperties (GeoViewpoint, X3DNode .staticProperties ("GeoViewpoint", "Geospatial", 1, "children", "3.0"));
 
 Object .defineProperties (GeoViewpoint,
 {

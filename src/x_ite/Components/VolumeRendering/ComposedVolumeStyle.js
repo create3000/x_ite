@@ -169,7 +169,7 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, X3DCompo
    }
 });
 
-Object .defineProperties (ComposedVolumeStyle, X3DNode .staticProperties ("ComposedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3", "Infinity"));
+Object .defineProperties (ComposedVolumeStyle, X3DNode .staticProperties ("ComposedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3"));
 
 Object .defineProperties (ComposedVolumeStyle,
 {

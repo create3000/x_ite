@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    },
 });
 
-Object .defineProperties (AnisotropyMaterialExtension, X3DNode .staticProperties ("AnisotropyMaterialExtension", "X_ITE", 1, "extensions", "4.0", "Infinity"));
+Object .defineProperties (AnisotropyMaterialExtension, X3DNode .staticProperties ("AnisotropyMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
 
 Object .defineProperties (AnisotropyMaterialExtension,
 {

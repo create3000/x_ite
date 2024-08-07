@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, X3DTriggerNod
    },
 });
 
-Object .defineProperties (BooleanTrigger, X3DNode .staticProperties ("BooleanTrigger", "EventUtilities", 1, "children", "3.0", "Infinity"));
+Object .defineProperties (BooleanTrigger, X3DNode .staticProperties ("BooleanTrigger", "EventUtilities", 1, "children", "3.0"));
 
 Object .defineProperties (BooleanTrigger,
 {

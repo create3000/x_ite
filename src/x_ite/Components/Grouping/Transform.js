@@ -61,7 +61,7 @@ function Transform (executionContext)
 
 Object .setPrototypeOf (Transform .prototype, X3DTransformNode .prototype);
 
-Object .defineProperties (Transform, X3DNode .staticProperties ("Transform", "Grouping", 1, "children", "2.0", "Infinity"));
+Object .defineProperties (Transform, X3DNode .staticProperties ("Transform", "Grouping", 1, "children", "2.0"));
 
 Object .defineProperties (Transform,
 {

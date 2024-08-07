@@ -246,7 +246,7 @@ Object .assign (Object .setPrototypeOf (DirectionalLight .prototype, X3DLightNod
    },
 });
 
-Object .defineProperties (DirectionalLight, X3DNode .staticProperties ("DirectionalLight", "Lighting", 1, "children", "2.0", "Infinity"));
+Object .defineProperties (DirectionalLight, X3DNode .staticProperties ("DirectionalLight", "Lighting", 1, "children", "2.0"));
 
 Object .defineProperties (DirectionalLight,
 {

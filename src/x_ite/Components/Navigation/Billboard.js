@@ -147,7 +147,7 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .p
    },
 });
 
-Object .defineProperties (Billboard, X3DNode .staticProperties ("Billboard", "Navigation", 2, "children", "2.0", "Infinity"));
+Object .defineProperties (Billboard, X3DNode .staticProperties ("Billboard", "Navigation", 2, "children", "2.0"));
 
 Object .defineProperties (Billboard,
 {

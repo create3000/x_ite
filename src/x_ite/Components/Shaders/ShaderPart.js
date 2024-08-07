@@ -198,7 +198,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
    },
 });
 
-Object .defineProperties (ShaderPart, X3DNode .staticProperties ("ShaderPart", "Shaders", 1, "parts", "3.0", "Infinity"));
+Object .defineProperties (ShaderPart, X3DNode .staticProperties ("ShaderPart", "Shaders", 1, "parts", "3.0"));
 
 Object .defineProperties (ShaderPart,
 {

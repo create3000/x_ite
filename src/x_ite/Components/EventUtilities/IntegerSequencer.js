@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (IntegerSequencer .prototype, X3DSequence
    },
 });
 
-Object .defineProperties (IntegerSequencer, X3DNode .staticProperties ("IntegerSequencer", "EventUtilities", 1, "children", "3.0", "Infinity"));
+Object .defineProperties (IntegerSequencer, X3DNode .staticProperties ("IntegerSequencer", "EventUtilities", 1, "children", "3.0"));
 
 Object .defineProperties (IntegerSequencer,
 {

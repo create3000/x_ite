@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (QuadSet .prototype, X3DComposedGeometryN
    },
 });
 
-Object .defineProperties (QuadSet, X3DNode .staticProperties ("QuadSet", "CADGeometry", 1, "geometry", "3.1", "Infinity"));
+Object .defineProperties (QuadSet, X3DNode .staticProperties ("QuadSet", "CADGeometry", 1, "geometry", "3.1"));
 
 Object .defineProperties (QuadSet,
 {

@@ -81,7 +81,7 @@ Object .assign (Object .setPrototypeOf (BooleanFilter .prototype, X3DChildNode .
    },
 });
 
-Object .defineProperties (BooleanFilter, X3DNode .staticProperties ("BooleanFilter", "EventUtilities", 1, "children", "3.0", "Infinity"));
+Object .defineProperties (BooleanFilter, X3DNode .staticProperties ("BooleanFilter", "EventUtilities", 1, "children", "3.0"));
 
 Object .defineProperties (BooleanFilter,
 {

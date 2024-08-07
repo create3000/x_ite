@@ -78,7 +78,7 @@ Object .assign (Object .setPrototypeOf (IconAnnotation .prototype, X3DAnnotation
    },
 });
 
-Object .defineProperties (IconAnnotation, X3DNode .staticProperties ("IconAnnotation", "Annotation", 1, "children", "4.0", "Infinity"));
+Object .defineProperties (IconAnnotation, X3DNode .staticProperties ("IconAnnotation", "Annotation", 1, "children", "4.0"));
 
 Object .defineProperties (IconAnnotation,
 {

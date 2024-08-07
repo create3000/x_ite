@@ -136,7 +136,7 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleStripSet .prototype, X3DC
    },
 });
 
-Object .defineProperties (IndexedTriangleStripSet, X3DNode .staticProperties ("IndexedTriangleStripSet", "Rendering", 3, "geometry", "3.0", "Infinity"));
+Object .defineProperties (IndexedTriangleStripSet, X3DNode .staticProperties ("IndexedTriangleStripSet", "Rendering", 3, "geometry", "3.0"));
 
 Object .defineProperties (IndexedTriangleStripSet,
 {

@@ -250,7 +250,7 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
    },
 });
 
-Object .defineProperties (SurfaceEmitter, X3DNode .staticProperties ("SurfaceEmitter", "ParticleSystems", 2, "emitter", "3.2", "Infinity"));
+Object .defineProperties (SurfaceEmitter, X3DNode .staticProperties ("SurfaceEmitter", "ParticleSystems", 2, "emitter", "3.2"));
 
 Object .defineProperties (SurfaceEmitter,
 {

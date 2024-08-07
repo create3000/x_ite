@@ -222,7 +222,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
    },
 });
 
-Object .defineProperties (BufferAudioSource, X3DNode .staticProperties ("BufferAudioSource", "Sound", 2, "children", "4.0", "Infinity"));
+Object .defineProperties (BufferAudioSource, X3DNode .staticProperties ("BufferAudioSource", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (BufferAudioSource,
 {

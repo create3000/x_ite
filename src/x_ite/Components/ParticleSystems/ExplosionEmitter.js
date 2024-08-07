@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, X3DParticle
    },
 });
 
-Object .defineProperties (ExplosionEmitter, X3DNode .staticProperties ("ExplosionEmitter", "ParticleSystems", 1, "emitter", "3.2", "Infinity"));
+Object .defineProperties (ExplosionEmitter, X3DNode .staticProperties ("ExplosionEmitter", "ParticleSystems", 1, "emitter", "3.2"));
 
 Object .defineProperties (ExplosionEmitter,
 {

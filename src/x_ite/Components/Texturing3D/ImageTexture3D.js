@@ -177,7 +177,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
    },
 });
 
-Object .defineProperties (ImageTexture3D, X3DNode .staticProperties ("ImageTexture3D", "Texturing3D", 2, "texture", "3.1", "Infinity"));
+Object .defineProperties (ImageTexture3D, X3DNode .staticProperties ("ImageTexture3D", "Texturing3D", 2, "texture", "3.1"));
 
 Object .defineProperties (ImageTexture3D,
 {

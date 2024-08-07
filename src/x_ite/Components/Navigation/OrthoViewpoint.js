@@ -331,7 +331,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
 });
 
-Object .defineProperties (OrthoViewpoint, X3DNode .staticProperties ("OrthoViewpoint", "Navigation", 3, "children", "3.0", "Infinity"));
+Object .defineProperties (OrthoViewpoint, X3DNode .staticProperties ("OrthoViewpoint", "Navigation", 3, "children", "3.0"));
 
 Object .defineProperties (OrthoViewpoint,
 {

@@ -61,7 +61,7 @@ function CADLayer (executionContext)
 
 Object .setPrototypeOf (CADLayer .prototype, X3DGroupingNode .prototype);
 
-Object .defineProperties (CADLayer, X3DNode .staticProperties ("CADLayer", "CADGeometry", 2, "children", "3.1", "Infinity"));
+Object .defineProperties (CADLayer, X3DNode .staticProperties ("CADLayer", "CADGeometry", 2, "children", "3.1"));
 
 Object .defineProperties (CADLayer,
 {

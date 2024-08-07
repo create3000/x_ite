@@ -133,7 +133,7 @@ function filter (array, remove)
    return array .filter (value => !set .has (value));
 }
 
-Object .defineProperties (Contour2D, X3DNode .staticProperties ("Contour2D", "NURBS", 4, "trimmingContour", "3.0", "Infinity"));
+Object .defineProperties (Contour2D, X3DNode .staticProperties ("Contour2D", "NURBS", 4, "trimmingContour", "3.0"));
 
 Object .defineProperties (Contour2D,
 {

@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (TriangleStripSet .prototype, X3DComposed
    },
 });
 
-Object .defineProperties (TriangleStripSet, X3DNode .staticProperties ("TriangleStripSet", "Rendering", 3, "geometry", "3.0", "Infinity"));
+Object .defineProperties (TriangleStripSet, X3DNode .staticProperties ("TriangleStripSet", "Rendering", 3, "geometry", "3.0"));
 
 Object .defineProperties (TriangleStripSet,
 {

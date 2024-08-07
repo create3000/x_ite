@@ -101,7 +101,7 @@ Object .assign (Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessin
    })(),
 });
 
-Object .defineProperties (WaveShaper, X3DNode .staticProperties ("WaveShaper", "Sound", 2, "children", "4.0", "Infinity"));
+Object .defineProperties (WaveShaper, X3DNode .staticProperties ("WaveShaper", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (WaveShaper,
 {

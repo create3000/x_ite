@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
    },
 });
 
-Object .defineProperties (Collision, X3DNode .staticProperties ("Collision", "Navigation", 2, "children", "2.0", "Infinity"));
+Object .defineProperties (Collision, X3DNode .staticProperties ("Collision", "Navigation", 2, "children", "2.0"));
 
 Object .defineProperties (Collision,
 {

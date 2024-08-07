@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, X3DParamet
    },
 });
 
-Object .defineProperties (NurbsSweptSurface, X3DNode .staticProperties ("NurbsSweptSurface", "NURBS", 3, "geometry", "3.0", "Infinity"));
+Object .defineProperties (NurbsSweptSurface, X3DNode .staticProperties ("NurbsSweptSurface", "NURBS", 3, "geometry", "3.0"));
 
 Object .defineProperties (NurbsSweptSurface,
 {

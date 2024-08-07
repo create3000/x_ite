@@ -94,7 +94,7 @@ Object .assign (Object .setPrototypeOf (OrientationChaser .prototype, X3DChaserN
    },
 });
 
-Object .defineProperties (OrientationChaser, X3DNode .staticProperties ("OrientationChaser", "Followers", 1, "children", "3.2", "Infinity"));
+Object .defineProperties (OrientationChaser, X3DNode .staticProperties ("OrientationChaser", "Followers", 1, "children", "3.2"));
 
 Object .defineProperties (OrientationChaser,
 {

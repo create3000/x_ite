@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (CoordinateDamper .prototype, X3DDamperNo
    },
 });
 
-Object .defineProperties (CoordinateDamper, X3DNode .staticProperties ("CoordinateDamper", "Followers", 1, "children", "3.2", "Infinity"));
+Object .defineProperties (CoordinateDamper, X3DNode .staticProperties ("CoordinateDamper", "Followers", 1, "children", "3.2"));
 
 Object .defineProperties (CoordinateDamper,
 {

@@ -169,7 +169,7 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, X3DGeometryNode .protot
    },
 });
 
-Object .defineProperties (Cone, X3DNode .staticProperties ("Cone", "Geometry3D", 1, "geometry", "2.0", "Infinity"));
+Object .defineProperties (Cone, X3DNode .staticProperties ("Cone", "Geometry3D", 1, "geometry", "2.0"));
 
 Object .defineProperties (Cone,
 {

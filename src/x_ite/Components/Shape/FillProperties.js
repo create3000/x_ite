@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (FillProperties .prototype, X3DAppearance
    },
 });
 
-Object .defineProperties (FillProperties, X3DNode .staticProperties ("FillProperties", "Shape", 3, "fillProperties", "3.0", "Infinity"));
+Object .defineProperties (FillProperties, X3DNode .staticProperties ("FillProperties", "Shape", 3, "fillProperties", "3.0"));
 
 Object .defineProperties (FillProperties,
 {

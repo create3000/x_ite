@@ -68,7 +68,7 @@ Object .assign (Object .setPrototypeOf (PositionChaser .prototype, X3DChaserNode
    },
 });
 
-Object .defineProperties (PositionChaser, X3DNode .staticProperties ("PositionChaser", "Followers", 1, "children", "3.2", "Infinity"));
+Object .defineProperties (PositionChaser, X3DNode .staticProperties ("PositionChaser", "Followers", 1, "children", "3.2"));
 
 Object .defineProperties (PositionChaser,
 {

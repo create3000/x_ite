@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
    },
 });
 
-Object .defineProperties (NurbsCurve2D, X3DNode .staticProperties ("NurbsCurve2D", "NURBS", 3, "children", "3.0", "Infinity"));
+Object .defineProperties (NurbsCurve2D, X3DNode .staticProperties ("NurbsCurve2D", "NURBS", 3, "children", "3.0"));
 
 Object .defineProperties (NurbsCurve2D,
 {

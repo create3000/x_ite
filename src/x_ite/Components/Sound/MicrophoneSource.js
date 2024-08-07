@@ -166,7 +166,7 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
    },
 });
 
-Object .defineProperties (MicrophoneSource, X3DNode .staticProperties ("MicrophoneSource", "Sound", 2, "children", "4.0", "Infinity"));
+Object .defineProperties (MicrophoneSource, X3DNode .staticProperties ("MicrophoneSource", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (MicrophoneSource,
 {

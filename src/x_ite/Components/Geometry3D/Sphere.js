@@ -114,7 +114,7 @@ Object .assign (Object .setPrototypeOf (Sphere .prototype, X3DGeometryNode .prot
    },
 });
 
-Object .defineProperties (Sphere, X3DNode .staticProperties ("Sphere", "Geometry3D", 1, "geometry", "2.0", "Infinity"));
+Object .defineProperties (Sphere, X3DNode .staticProperties ("Sphere", "Geometry3D", 1, "geometry", "2.0"));
 
 Object .defineProperties (Sphere,
 {

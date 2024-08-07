@@ -163,7 +163,7 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
    },
 });
 
-Object .defineProperties (Viewpoint, X3DNode .staticProperties ("Viewpoint", "Navigation", 1, "children", "2.0", "Infinity"));
+Object .defineProperties (Viewpoint, X3DNode .staticProperties ("Viewpoint", "Navigation", 1, "children", "2.0"));
 
 Object .defineProperties (Viewpoint,
 {

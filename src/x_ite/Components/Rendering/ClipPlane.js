@@ -147,7 +147,7 @@ Object .assign (Object .setPrototypeOf (ClipPlane .prototype, X3DChildNode .prot
    },
 });
 
-Object .defineProperties (ClipPlane, X3DNode .staticProperties ("ClipPlane", "Rendering", 5, "children", "3.2", "Infinity"));
+Object .defineProperties (ClipPlane, X3DNode .staticProperties ("ClipPlane", "Rendering", 5, "children", "3.2"));
 
 Object .defineProperties (ClipPlane,
 {

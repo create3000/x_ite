@@ -128,7 +128,7 @@ Object .assign (Object .setPrototypeOf (Arc2D .prototype, X3DLineGeometryNode .p
    },
 });
 
-Object .defineProperties (Arc2D, X3DNode .staticProperties ("Arc2D", "Geometry2D", 2, "geometry", "3.0", "Infinity"));
+Object .defineProperties (Arc2D, X3DNode .staticProperties ("Arc2D", "Geometry2D", 2, "geometry", "3.0"));
 
 Object .defineProperties (Arc2D,
 {

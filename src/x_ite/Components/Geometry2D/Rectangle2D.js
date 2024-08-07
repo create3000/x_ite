@@ -113,7 +113,7 @@ Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, X3DGeometryNode 
    })(),
 });
 
-Object .defineProperties (Rectangle2D, X3DNode .staticProperties ("Rectangle2D", "Geometry2D", 1, "geometry", "3.0", "Infinity"));
+Object .defineProperties (Rectangle2D, X3DNode .staticProperties ("Rectangle2D", "Geometry2D", 1, "geometry", "3.0"));
 
 Object .defineProperties (Rectangle2D,
 {

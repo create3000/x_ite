@@ -170,7 +170,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode 
    })(),
 });
 
-Object .defineProperties (BallJoint, X3DNode .staticProperties ("BallJoint", "RigidBodyPhysics", 2, "joints", "3.2", "Infinity"));
+Object .defineProperties (BallJoint, X3DNode .staticProperties ("BallJoint", "RigidBodyPhysics", 2, "joints", "3.2"));
 
 Object .defineProperties (BallJoint,
 {

@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (OrientationInterpolator .prototype, X3DI
    }) (),
 });
 
-Object .defineProperties (OrientationInterpolator, X3DNode .staticProperties ("OrientationInterpolator", "Interpolation", 1, "children", "2.0", "Infinity"));
+Object .defineProperties (OrientationInterpolator, X3DNode .staticProperties ("OrientationInterpolator", "Interpolation", 1, "children", "2.0"));
 
 Object .defineProperties (OrientationInterpolator,
 {

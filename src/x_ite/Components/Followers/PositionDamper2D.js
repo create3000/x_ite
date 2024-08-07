@@ -68,7 +68,7 @@ Object .assign (Object .setPrototypeOf (PositionDamper2D .prototype, X3DDamperNo
    },
 });
 
-Object .defineProperties (PositionDamper2D, X3DNode .staticProperties ("PositionDamper2D", "Followers", 1, "children", "3.2", "Infinity"));
+Object .defineProperties (PositionDamper2D, X3DNode .staticProperties ("PositionDamper2D", "Followers", 1, "children", "3.2"));
 
 Object .defineProperties (PositionDamper2D,
 {

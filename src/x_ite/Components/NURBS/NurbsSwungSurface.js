@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, X3DParamet
    },
 });
 
-Object .defineProperties (NurbsSwungSurface, X3DNode .staticProperties ("NurbsSwungSurface", "NURBS", 3, "geometry", "3.0", "Infinity"));
+Object .defineProperties (NurbsSwungSurface, X3DNode .staticProperties ("NurbsSwungSurface", "NURBS", 3, "geometry", "3.0"));
 
 Object .defineProperties (NurbsSwungSurface,
 {

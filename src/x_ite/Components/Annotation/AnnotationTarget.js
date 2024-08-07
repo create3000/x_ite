@@ -67,7 +67,7 @@ Object .assign (Object .setPrototypeOf (AnnotationTarget .prototype, X3DChildNod
    },
 });
 
-Object .defineProperties (AnnotationTarget, X3DNode .staticProperties ("AnnotationTarget", "Annotation", 1, "children", "4.0", "Infinity"));
+Object .defineProperties (AnnotationTarget, X3DNode .staticProperties ("AnnotationTarget", "Annotation", 1, "children", "4.0"));
 
 Object .defineProperties (AnnotationTarget,
 {

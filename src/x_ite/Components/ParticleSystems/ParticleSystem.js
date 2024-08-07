@@ -1102,7 +1102,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    })(),
 });
 
-Object .defineProperties (ParticleSystem, X3DNode .staticProperties ("ParticleSystem", "ParticleSystems", 2, "children", "3.2", "Infinity"));
+Object .defineProperties (ParticleSystem, X3DNode .staticProperties ("ParticleSystem", "ParticleSystems", 2, "children", "3.2"));
 
 Object .defineProperties (ParticleSystem,
 {

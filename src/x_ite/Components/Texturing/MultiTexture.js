@@ -307,7 +307,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    },
 });
 
-Object .defineProperties (MultiTexture, X3DNode .staticProperties ("MultiTexture", "Texturing", 2, "texture", "3.0", "Infinity"));
+Object .defineProperties (MultiTexture, X3DNode .staticProperties ("MultiTexture", "Texturing", 2, "texture", "3.0"));
 
 Object .defineProperties (MultiTexture,
 {

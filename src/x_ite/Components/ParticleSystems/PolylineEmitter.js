@@ -231,7 +231,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
    },
 });
 
-Object .defineProperties (PolylineEmitter, X3DNode .staticProperties ("PolylineEmitter", "ParticleSystems", 1, "emitter", "3.2", "Infinity"));
+Object .defineProperties (PolylineEmitter, X3DNode .staticProperties ("PolylineEmitter", "ParticleSystems", 1, "emitter", "3.2"));
 
 Object .defineProperties (PolylineEmitter,
 {

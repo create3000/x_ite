@@ -229,7 +229,7 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorN
    },
 });
 
-Object .defineProperties (LoadSensor, X3DNode .staticProperties ("LoadSensor", "Networking", 3, "children", "3.0", "Infinity"));
+Object .defineProperties (LoadSensor, X3DNode .staticProperties ("LoadSensor", "Networking", 3, "children", "3.0"));
 
 Object .defineProperties (LoadSensor,
 {

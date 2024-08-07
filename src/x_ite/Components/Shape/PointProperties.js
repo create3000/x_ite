@@ -130,7 +130,7 @@ Object .assign (Object .setPrototypeOf (PointProperties .prototype, X3DAppearanc
    },
 });
 
-Object .defineProperties (PointProperties, X3DNode .staticProperties ("PointProperties", "Shape", 5, "pointProperties", "4.0", "Infinity"));
+Object .defineProperties (PointProperties, X3DNode .staticProperties ("PointProperties", "Shape", 5, "pointProperties", "4.0"));
 
 Object .defineProperties (PointProperties,
 {

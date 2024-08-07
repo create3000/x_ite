@@ -241,7 +241,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
    },
 });
 
-Object .defineProperties (ShadedVolumeStyle, X3DNode .staticProperties ("ShadedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3", "Infinity"));
+Object .defineProperties (ShadedVolumeStyle, X3DNode .staticProperties ("ShadedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3"));
 
 Object .defineProperties (ShadedVolumeStyle,
 {

@@ -116,7 +116,7 @@ Object .assign (Object .setPrototypeOf (FogCoordinate .prototype, X3DGeometricPr
    },
 });
 
-Object .defineProperties (FogCoordinate, X3DNode .staticProperties ("FogCoordinate", "EnvironmentalEffects", 4, "fogCoord", "3.0", "Infinity"));
+Object .defineProperties (FogCoordinate, X3DNode .staticProperties ("FogCoordinate", "EnvironmentalEffects", 4, "fogCoord", "3.0"));
 
 Object .defineProperties (FogCoordinate,
 {

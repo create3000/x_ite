@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    },
 });
 
-Object .defineProperties (AudioDestination, X3DNode .staticProperties ("AudioDestination", "Sound", 2, "children", "4.0", "Infinity"));
+Object .defineProperties (AudioDestination, X3DNode .staticProperties ("AudioDestination", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (AudioDestination,
 {

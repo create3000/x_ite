@@ -278,7 +278,7 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    },
 });
 
-Object .defineProperties (Inline, X3DNode .staticProperties ("Inline", "Networking", 2, "children", "2.0", "Infinity"));
+Object .defineProperties (Inline, X3DNode .staticProperties ("Inline", "Networking", 2, "children", "2.0"));
 
 Object .defineProperties (Inline,
 {

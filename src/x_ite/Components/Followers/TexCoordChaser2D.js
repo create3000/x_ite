@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (TexCoordChaser2D .prototype, X3DChaserNo
    },
 });
 
-Object .defineProperties (TexCoordChaser2D, X3DNode .staticProperties ("TexCoordChaser2D", "Followers", 1, "children", "3.3", "Infinity"));
+Object .defineProperties (TexCoordChaser2D, X3DNode .staticProperties ("TexCoordChaser2D", "Followers", 1, "children", "3.3"));
 
 Object .defineProperties (TexCoordChaser2D,
 {

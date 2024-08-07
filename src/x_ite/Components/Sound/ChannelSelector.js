@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (ChannelSelector .prototype, X3DSoundChan
    },
 });
 
-Object .defineProperties (ChannelSelector, X3DNode .staticProperties ("ChannelSelector", "Sound", 2, "children", "4.0", "Infinity"));
+Object .defineProperties (ChannelSelector, X3DNode .staticProperties ("ChannelSelector", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (ChannelSelector,
 {

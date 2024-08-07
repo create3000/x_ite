@@ -203,7 +203,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
    },
 });
 
-Object .defineProperties (GeoCoordinate, X3DNode .staticProperties ("GeoCoordinate", "Geospatial", 1, "coord", "3.0", "Infinity"));
+Object .defineProperties (GeoCoordinate, X3DNode .staticProperties ("GeoCoordinate", "Geospatial", 1, "coord", "3.0"));
 
 Object .defineProperties (GeoCoordinate,
 {

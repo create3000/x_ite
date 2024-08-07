@@ -118,7 +118,7 @@ Object .assign (Object .setPrototypeOf (Tangent .prototype, X3DGeometricProperty
    },
 });
 
-Object .defineProperties (Tangent, X3DNode .staticProperties ("Tangent", "Rendering", 5, "tangent", "4.0", "Infinity"));
+Object .defineProperties (Tangent, X3DNode .staticProperties ("Tangent", "Rendering", 5, "tangent", "4.0"));
 
 Object .defineProperties (Tangent,
 {

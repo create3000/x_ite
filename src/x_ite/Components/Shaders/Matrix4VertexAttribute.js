@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (Matrix4VertexAttribute .prototype, X3DVe
    },
 });
 
-Object .defineProperties (Matrix4VertexAttribute, X3DNode .staticProperties ("Matrix4VertexAttribute", "Shaders", 1, "attrib", "3.0", "Infinity"));
+Object .defineProperties (Matrix4VertexAttribute, X3DNode .staticProperties ("Matrix4VertexAttribute", "Shaders", 1, "attrib", "3.0"));
 
 Object .defineProperties (Matrix4VertexAttribute,
 {

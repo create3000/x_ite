@@ -84,7 +84,7 @@ Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSo
    },
 });
 
-Object .defineProperties (StreamAudioDestination, X3DNode .staticProperties ("StreamAudioDestination", "Sound", 2, "children", "4.0", "Infinity"));
+Object .defineProperties (StreamAudioDestination, X3DNode .staticProperties ("StreamAudioDestination", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (StreamAudioDestination,
 {

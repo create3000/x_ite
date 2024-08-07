@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (ScalarInterpolator .prototype, X3DInterp
    },
 });
 
-Object .defineProperties (ScalarInterpolator, X3DNode .staticProperties ("ScalarInterpolator", "Interpolation", 1, "children", "2.0", "Infinity"));
+Object .defineProperties (ScalarInterpolator, X3DNode .staticProperties ("ScalarInterpolator", "Interpolation", 1, "children", "2.0"));
 
 Object .defineProperties (ScalarInterpolator,
 {

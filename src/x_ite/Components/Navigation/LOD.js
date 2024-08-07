@@ -297,7 +297,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    })(),
 });
 
-Object .defineProperties (LOD, X3DNode .staticProperties ("LOD", "Navigation", 2, "children", "2.0", "Infinity"));
+Object .defineProperties (LOD, X3DNode .staticProperties ("LOD", "Navigation", 2, "children", "2.0"));
 
 Object .defineProperties (LOD,
 {

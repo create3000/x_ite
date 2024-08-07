@@ -174,7 +174,7 @@ Object .assign (Object .setPrototypeOf (Anchor .prototype, X3DGroupingNode .prot
    },
 });
 
-Object .defineProperties (Anchor, X3DNode .staticProperties ("Anchor", "Networking", 2, "children", "2.0", "Infinity"));
+Object .defineProperties (Anchor, X3DNode .staticProperties ("Anchor", "Networking", 2, "children", "2.0"));
 
 Object .defineProperties (Anchor,
 {
