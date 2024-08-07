@@ -73,18 +73,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, X3D
    },
 });
 
-Object .defineProperties (X3DMaterialExtensionNode,
-{
-   typeName:
-   {
-      value: "X3DMaterialExtensionNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DMaterialExtensionNode, X3DNode .staticProperties ("X3DMaterialExtensionNode", "X_ITE", 1));
 
 export default X3DMaterialExtensionNode;

@@ -64,18 +64,6 @@ Object .assign (Object .setPrototypeOf (X3DAnnotationNode .prototype, X3DChildNo
    },
 });
 
-Object .defineProperties (X3DAnnotationNode,
-{
-   typeName:
-   {
-      value: "X3DAnnotationNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Annotation", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DAnnotationNode, X3DNode .staticProperties ("X3DAnnotationNode", "Annotation", 1));
 
 export default X3DAnnotationNode;

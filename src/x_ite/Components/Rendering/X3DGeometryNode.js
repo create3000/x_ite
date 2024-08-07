@@ -1301,18 +1301,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
 });
 
-Object .defineProperties (X3DGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DGeometryNode, X3DNode .staticProperties ("X3DGeometryNode", "Rendering", 1));
 
 export default X3DGeometryNode;

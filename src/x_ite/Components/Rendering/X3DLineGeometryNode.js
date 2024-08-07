@@ -695,18 +695,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
    })(),
 });
 
-Object .defineProperties (X3DLineGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DLineGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DLineGeometryNode, X3DNode .staticProperties ("X3DLineGeometryNode", "Rendering", 1));
 
 export default X3DLineGeometryNode;

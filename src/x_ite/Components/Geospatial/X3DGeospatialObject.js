@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DNode          from "../Core/X3DNode.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
 import GeospatialObject from "../../Browser/Geospatial/GeospatialObject.js";
 import X3DCast          from "../../Base/X3DCast.js";
@@ -255,18 +256,6 @@ function getStandardLocationMatrix (geoPoint, result)
                        t .x, t .y, t .z, 1);
 }
 
-Object .defineProperties (X3DGeospatialObject,
-{
-   typeName:
-   {
-      value: "X3DGeospatialObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DGeospatialObject, X3DNode .staticProperties ("X3DGeospatialObject", "Geospatial", 1));
 
 export default X3DGeospatialObject;

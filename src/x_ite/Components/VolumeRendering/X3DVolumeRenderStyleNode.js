@@ -121,18 +121,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeRenderStyleNode .prototype, X3D
    },
 });
 
-Object .defineProperties (X3DVolumeRenderStyleNode,
-{
-   typeName:
-   {
-      value: "X3DVolumeRenderStyleNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DVolumeRenderStyleNode, X3DNode .staticProperties ("X3DVolumeRenderStyleNode", "VolumeRendering", 1));
 
 export default X3DVolumeRenderStyleNode;

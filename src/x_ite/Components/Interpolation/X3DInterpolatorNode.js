@@ -121,18 +121,6 @@ Object .assign (Object .setPrototypeOf (X3DInterpolatorNode .prototype, X3DChild
    interpolate () { },
 });
 
-Object .defineProperties (X3DInterpolatorNode,
-{
-   typeName:
-   {
-      value: "X3DInterpolatorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DInterpolatorNode, X3DNode .staticProperties ("X3DInterpolatorNode", "Interpolation", 1));
 
 export default X3DInterpolatorNode;

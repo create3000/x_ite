@@ -88,18 +88,6 @@ Object .assign (Object .setPrototypeOf (X3DShaderNode .prototype, X3DAppearanceC
    },
 });
 
-Object .defineProperties (X3DShaderNode,
-{
-   typeName:
-   {
-      value: "X3DShaderNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DShaderNode, X3DNode .staticProperties ("X3DShaderNode", "Shaders", 1));
 
 export default X3DShaderNode;

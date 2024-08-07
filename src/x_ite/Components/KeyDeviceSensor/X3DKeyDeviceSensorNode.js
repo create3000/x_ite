@@ -104,18 +104,6 @@ Object .assign (Object .setPrototypeOf (X3DKeyDeviceSensorNode .prototype, X3DSe
    release () { },
 });
 
-Object .defineProperties (X3DKeyDeviceSensorNode,
-{
-   typeName:
-   {
-      value: "X3DKeyDeviceSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "KeyDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DKeyDeviceSensorNode, X3DNode .staticProperties ("X3DKeyDeviceSensorNode", "KeyDeviceSensor", 1));
 
 export default X3DKeyDeviceSensorNode;

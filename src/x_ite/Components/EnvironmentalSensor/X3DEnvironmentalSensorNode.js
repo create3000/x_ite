@@ -127,18 +127,6 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentalSensorNode .prototype, X
    update () { },
 });
 
-Object .defineProperties (X3DEnvironmentalSensorNode,
-{
-   typeName:
-   {
-      value: "X3DEnvironmentalSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalSensor", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DEnvironmentalSensorNode, X3DNode .staticProperties ("X3DEnvironmentalSensorNode", "EnvironmentalSensor", 1));
 
 export default X3DEnvironmentalSensorNode;

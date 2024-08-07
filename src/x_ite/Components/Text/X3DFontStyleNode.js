@@ -243,18 +243,6 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
 });
 
-Object .defineProperties (X3DFontStyleNode,
-{
-   typeName:
-   {
-      value: "X3DFontStyleNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Text", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DFontStyleNode, X3DNode .staticProperties ("X3DFontStyleNode", "Text", 1));
 
 export default X3DFontStyleNode;

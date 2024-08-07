@@ -58,18 +58,6 @@ function X3DTextureCoordinateNode (executionContext)
 
 Object .setPrototypeOf (X3DTextureCoordinateNode .prototype, X3DGeometricPropertyNode .prototype);
 
-Object .defineProperties (X3DTextureCoordinateNode,
-{
-   typeName:
-   {
-      value: "X3DTextureCoordinateNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTextureCoordinateNode, X3DNode .staticProperties ("X3DTextureCoordinateNode", "Texturing", 1));
 
 export default X3DTextureCoordinateNode;

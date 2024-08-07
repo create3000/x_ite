@@ -187,18 +187,6 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    },
 });
 
-Object .defineProperties (X3DPointGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DPointGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DPointGeometryNode, X3DNode .staticProperties ("X3DPointGeometryNode", "Rendering", 1));
 
 export default X3DPointGeometryNode;

@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 
 function X3DPickableObject (executionContext)
@@ -78,18 +79,6 @@ Object .assign (X3DPickableObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DPickableObject,
-{
-   typeName:
-   {
-      value: "X3DPickableObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Picking", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DPickableObject, X3DNode .staticProperties ("X3DPickableObject", "Picking", 1));
 
 export default X3DPickableObject;

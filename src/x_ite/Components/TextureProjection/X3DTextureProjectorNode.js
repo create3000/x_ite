@@ -167,18 +167,6 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DL
    },
 });
 
-Object .defineProperties (X3DTextureProjectorNode,
-{
-   typeName:
-   {
-      value: "X3DTextureProjectorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "TextureProjection", level: 4 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTextureProjectorNode, X3DNode .staticProperties ("X3DTextureProjectorNode", "TextureProjection", 4));
 
 export default X3DTextureProjectorNode;

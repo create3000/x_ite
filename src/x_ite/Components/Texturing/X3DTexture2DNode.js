@@ -171,18 +171,6 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    },
 });
 
-Object .defineProperties (X3DTexture2DNode,
-{
-   typeName:
-   {
-      value: "X3DTexture2DNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTexture2DNode, X3DNode .staticProperties ("X3DTexture2DNode", "Texturing", 1));
 
 export default X3DTexture2DNode;

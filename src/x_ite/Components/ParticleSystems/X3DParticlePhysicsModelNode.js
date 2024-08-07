@@ -61,18 +61,6 @@ Object .assign (Object .setPrototypeOf (X3DParticlePhysicsModelNode .prototype, 
    { },
 });
 
-Object .defineProperties (X3DParticlePhysicsModelNode,
-{
-   typeName:
-   {
-      value: "X3DParticlePhysicsModelNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DParticlePhysicsModelNode, X3DNode .staticProperties ("X3DParticlePhysicsModelNode", "ParticleSystems", 1));
 
 export default X3DParticlePhysicsModelNode;

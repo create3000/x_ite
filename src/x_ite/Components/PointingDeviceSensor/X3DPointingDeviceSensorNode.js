@@ -116,18 +116,6 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
    },
 });
 
-Object .defineProperties (X3DPointingDeviceSensorNode,
-{
-   typeName:
-   {
-      value: "X3DPointingDeviceSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DPointingDeviceSensorNode, X3DNode .staticProperties ("X3DPointingDeviceSensorNode", "PointingDeviceSensor", 1));
 
 export default X3DPointingDeviceSensorNode;

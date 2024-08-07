@@ -204,18 +204,6 @@ Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, X3DNode .p
    },
 });
 
-Object .defineProperties (X3DRigidJointNode,
-{
-   typeName:
-   {
-      value: "X3DRigidJointNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DRigidJointNode, X3DNode .staticProperties ("X3DRigidJointNode", "RigidBodyPhysics", 2));
 
 export default X3DRigidJointNode;

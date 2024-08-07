@@ -82,18 +82,6 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureCoordinateNode .prototyp
    },
 });
 
-Object .defineProperties (X3DSingleTextureCoordinateNode,
-{
-   typeName:
-   {
-      value: "X3DSingleTextureCoordinateNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSingleTextureCoordinateNode, X3DNode .staticProperties ("X3DSingleTextureCoordinateNode", "Texturing", 1));
 
 export default X3DSingleTextureCoordinateNode;

@@ -65,18 +65,6 @@ Object .assign (Object .setPrototypeOf (X3DParametricGeometryNode .prototype, X3
    },
 });
 
-Object .defineProperties (X3DParametricGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DParametricGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DParametricGeometryNode, X3DNode .staticProperties ("X3DParametricGeometryNode", "NURBS", 1));
 
 export default X3DParametricGeometryNode;

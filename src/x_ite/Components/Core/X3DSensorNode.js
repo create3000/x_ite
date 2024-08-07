@@ -58,18 +58,6 @@ function X3DSensorNode (executionContext)
 
 Object .setPrototypeOf (X3DSensorNode .prototype, X3DChildNode .prototype);
 
-Object .defineProperties (X3DSensorNode,
-{
-   typeName:
-   {
-      value: "X3DSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSensorNode, X3DNode .staticProperties ("X3DSensorNode", "Core", 1));
 
 export default X3DSensorNode;

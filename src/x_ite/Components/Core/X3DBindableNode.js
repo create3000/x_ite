@@ -84,18 +84,10 @@ Object .assign (Object .setPrototypeOf (X3DBindableNode .prototype, X3DChildNode
    }
 });
 
+Object .defineProperties (X3DBindableNode, X3DNode .staticProperties ("X3DBindableNode", "Core", 1));
+
 Object .defineProperties (X3DBindableNode,
 {
-   typeName:
-   {
-      value: "X3DBindableNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
    getModificationCount:
    {
       value: function ()

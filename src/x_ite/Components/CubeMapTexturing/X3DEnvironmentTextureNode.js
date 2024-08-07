@@ -145,18 +145,6 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
    },
 });
 
-Object .defineProperties (X3DEnvironmentTextureNode,
-{
-   typeName:
-   {
-      value: "X3DEnvironmentTextureNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CubeMapTexturing", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DEnvironmentTextureNode, X3DNode .staticProperties ("X3DEnvironmentTextureNode", "CubeMapTexturing", 1));
 
 export default X3DEnvironmentTextureNode;

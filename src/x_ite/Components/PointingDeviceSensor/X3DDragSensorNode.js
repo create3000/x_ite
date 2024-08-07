@@ -60,18 +60,6 @@ function X3DDragSensorNode (executionContext)
 
 Object .setPrototypeOf (X3DDragSensorNode .prototype, X3DPointingDeviceSensorNode .prototype);
 
-Object .defineProperties (X3DDragSensorNode,
-{
-   typeName:
-   {
-      value: "X3DDragSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DDragSensorNode, X3DNode .staticProperties ("X3DDragSensorNode", "PointingDeviceSensor", 1));
 
 export default X3DDragSensorNode;

@@ -73,18 +73,6 @@ Object .assign (Object .setPrototypeOf (X3DVertexAttributeNode .prototype, X3DGe
    },
 });
 
-Object .defineProperties (X3DVertexAttributeNode,
-{
-   typeName:
-   {
-      value: "X3DVertexAttributeNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DVertexAttributeNode, X3DNode .staticProperties ("X3DVertexAttributeNode", "Shaders", 1));
 
 export default X3DVertexAttributeNode;

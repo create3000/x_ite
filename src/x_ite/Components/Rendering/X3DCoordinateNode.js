@@ -180,18 +180,6 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometr
    })(),
 });
 
-Object .defineProperties (X3DCoordinateNode,
-{
-   typeName:
-   {
-      value: "X3DCoordinateNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DCoordinateNode, X3DNode .staticProperties ("X3DCoordinateNode", "Rendering", 1));
 
 export default X3DCoordinateNode;

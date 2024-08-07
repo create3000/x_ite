@@ -377,18 +377,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    },
 });
 
-Object .defineProperties (X3DMaterialNode,
-{
-   typeName:
-   {
-      value: "X3DMaterialNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DMaterialNode, X3DNode .staticProperties ("X3DMaterialNode", "Shape", 1));
 
 export default X3DMaterialNode;

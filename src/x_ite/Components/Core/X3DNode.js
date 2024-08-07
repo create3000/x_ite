@@ -1776,16 +1776,26 @@ for (const key of Object .keys (X3DNode .prototype))
 
 Object .defineProperties (X3DNode,
 {
-   typeName:
+   staticProperties:
    {
-      value: "X3DNode",
-      enumerable: true,
+      value: function (typeName, componentName, componentLevel)
+      {
+         return {
+            typeName:
+            {
+               value: typeName,
+               enumerable: true,
+            },
+            componentInfo:
+            {
+               value: Object .freeze ({ name: componentName, level: componentLevel }),
+               enumerable: true,
+            },
+         };
+      },
    },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-});
+})
+
+Object .defineProperties (X3DNode, X3DNode .staticProperties ("X3DNode", "Core", 1));
 
 export default X3DNode;

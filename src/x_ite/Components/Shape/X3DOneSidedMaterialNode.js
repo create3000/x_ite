@@ -173,18 +173,6 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    },
 });
 
-Object .defineProperties (X3DOneSidedMaterialNode,
-{
-   typeName:
-   {
-      value: "X3DOneSidedMaterialNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 4 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DOneSidedMaterialNode, X3DNode .staticProperties ("X3DOneSidedMaterialNode", "Shape", 4));
 
 export default X3DOneSidedMaterialNode;

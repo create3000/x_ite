@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import Fields       from "../../Fields.js";
+import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import ObjectCache  from "../../../standard/Utility/ObjectCache.js";
 
@@ -161,18 +162,6 @@ Object .assign (X3DFogObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DFogObject,
-{
-   typeName:
-   {
-      value: "X3DFogObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DFogObject, X3DNode .staticProperties ("X3DFogObject", "EnvironmentalEffects", 1));
 
 export default X3DFogObject;

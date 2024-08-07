@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import Fields       from "../../Fields.js";
+import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 
 const
@@ -280,18 +281,6 @@ Object .assign (X3DUrlObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DUrlObject,
-{
-   typeName:
-   {
-      value: "X3DUrlObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Networking", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DUrlObject, X3DNode .staticProperties ("X3DUrlObject", "Networking", 1));
 
 export default X3DUrlObject;

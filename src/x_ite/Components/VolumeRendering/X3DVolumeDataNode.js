@@ -233,18 +233,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    },
 });
 
-Object .defineProperties (X3DVolumeDataNode,
-{
-   typeName:
-   {
-      value: "X3DVolumeDataNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DVolumeDataNode, X3DNode .staticProperties ("X3DVolumeDataNode", "VolumeRendering", 1));
 
 export default X3DVolumeDataNode;

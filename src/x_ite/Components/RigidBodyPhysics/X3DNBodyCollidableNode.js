@@ -151,18 +151,6 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    },
 });
 
-Object .defineProperties (X3DNBodyCollidableNode,
-{
-   typeName:
-   {
-      value: "X3DNBodyCollidableNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DNBodyCollidableNode, X3DNode .staticProperties ("X3DNBodyCollidableNode", "RigidBodyPhysics", 1));
 
 export default X3DNBodyCollidableNode;

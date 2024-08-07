@@ -79,18 +79,6 @@ Object .assign (Object .setPrototypeOf (X3DTransformNode .prototype, X3DTransfor
    },
 });
 
-Object .defineProperties (X3DTransformNode,
-{
-   typeName:
-   {
-      value: "X3DTransformNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTransformNode, X3DNode .staticProperties ("X3DTransformNode", "Grouping", 1));
 
 export default X3DTransformNode;

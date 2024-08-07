@@ -253,18 +253,6 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    },
 });
 
-Object .defineProperties (X3DSingleTextureNode,
-{
-   typeName:
-   {
-      value: "X3DSingleTextureNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSingleTextureNode, X3DNode .staticProperties ("X3DSingleTextureNode", "Texturing", 1));
 
 export default X3DSingleTextureNode;

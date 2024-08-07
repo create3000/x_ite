@@ -179,18 +179,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundN
    },
 });
 
-Object .defineProperties (X3DSoundSourceNode,
-{
-   typeName:
-   {
-      value: "X3DSoundSourceNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSoundSourceNode, X3DNode .staticProperties ("X3DSoundSourceNode", "Sound", 1));
 
 export default X3DSoundSourceNode;

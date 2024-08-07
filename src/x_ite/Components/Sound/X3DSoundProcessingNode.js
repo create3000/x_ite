@@ -221,18 +221,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DSo
    },
 });
 
-Object .defineProperties (X3DSoundProcessingNode,
-{
-   typeName:
-   {
-      value: "X3DSoundProcessingNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSoundProcessingNode, X3DNode .staticProperties ("X3DSoundProcessingNode", "Sound", 2));
 
 export default X3DSoundProcessingNode;

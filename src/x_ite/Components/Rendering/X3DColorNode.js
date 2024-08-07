@@ -72,18 +72,6 @@ Object .assign (Object .setPrototypeOf (X3DColorNode .prototype, X3DGeometricPro
    },
 });
 
-Object .defineProperties (X3DColorNode,
-{
-   typeName:
-   {
-      value: "X3DColorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DColorNode, X3DNode .staticProperties ("X3DColorNode", "Rendering", 1));
 
 export default X3DColorNode;

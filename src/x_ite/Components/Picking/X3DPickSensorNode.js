@@ -425,18 +425,6 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    },
 });
 
-Object .defineProperties (X3DPickSensorNode,
-{
-   typeName:
-   {
-      value: "X3DPickSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Picking", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DPickSensorNode, X3DNode .staticProperties ("X3DPickSensorNode", "Picking", 1));
 
 export default X3DPickSensorNode;

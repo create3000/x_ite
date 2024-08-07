@@ -353,18 +353,6 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
    })(),
 });
 
-Object .defineProperties (X3DComposedGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DComposedGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DComposedGeometryNode, X3DNode .staticProperties ("X3DComposedGeometryNode", "Rendering", 1));
 
 export default X3DComposedGeometryNode;

@@ -58,18 +58,6 @@ function X3DLayoutNode (executionContext)
 
 Object .setPrototypeOf (X3DLayoutNode .prototype, X3DChildNode .prototype);
 
-Object .defineProperties (X3DLayoutNode,
-{
-   typeName:
-   {
-      value: "X3DLayoutNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layout", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DLayoutNode, X3DNode .staticProperties ("X3DLayoutNode", "Layout", 1));
 
 export default X3DLayoutNode;

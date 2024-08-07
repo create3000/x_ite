@@ -72,18 +72,6 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollisionSpaceNode .prototype, X
    },
 });
 
-Object .defineProperties (X3DNBodyCollisionSpaceNode,
-{
-   typeName:
-   {
-      value: "X3DNBodyCollisionSpaceNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DNBodyCollisionSpaceNode, X3DNode .staticProperties ("X3DNBodyCollisionSpaceNode", "RigidBodyPhysics", 1));
 
 export default X3DNBodyCollisionSpaceNode;

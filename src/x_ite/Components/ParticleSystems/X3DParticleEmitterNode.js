@@ -1035,18 +1035,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
    },
 });
 
-Object .defineProperties (X3DParticleEmitterNode,
-{
-   typeName:
-   {
-      value: "X3DParticleEmitterNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DParticleEmitterNode, X3DNode .staticProperties ("X3DParticleEmitterNode", "ParticleSystems", 1));
 
 export default X3DParticleEmitterNode;

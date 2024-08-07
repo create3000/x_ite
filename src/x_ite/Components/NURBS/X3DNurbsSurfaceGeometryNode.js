@@ -377,18 +377,6 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    })(),
 });
 
-Object .defineProperties (X3DNurbsSurfaceGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DNurbsSurfaceGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DNurbsSurfaceGeometryNode, X3DNode .staticProperties ("X3DNurbsSurfaceGeometryNode", "NURBS", 1));
 
 export default X3DNurbsSurfaceGeometryNode;

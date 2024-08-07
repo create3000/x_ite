@@ -58,18 +58,6 @@ function X3DViewportNode (executionContext)
 
 Object .setPrototypeOf (X3DViewportNode .prototype, X3DGroupingNode .prototype);
 
-Object .defineProperties (X3DViewportNode,
-{
-   typeName:
-   {
-      value: "X3DViewportNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DViewportNode, X3DNode .staticProperties ("X3DViewportNode", "Layering", 1));
 
 export default X3DViewportNode;

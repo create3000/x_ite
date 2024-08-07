@@ -587,18 +587,6 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    }
 });
 
-Object .defineProperties (X3DViewpointNode,
-{
-   typeName:
-   {
-      value: "X3DViewpointNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DViewpointNode, X3DNode .staticProperties ("X3DViewpointNode", "Navigation", 1));
 
 export default X3DViewpointNode;

@@ -57,18 +57,6 @@ function X3DAppearanceChildNode (executionContext)
 
 Object .setPrototypeOf (X3DAppearanceChildNode .prototype, X3DNode .prototype);
 
-Object .defineProperties (X3DAppearanceChildNode,
-{
-   typeName:
-   {
-      value: "X3DAppearanceChildNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DAppearanceChildNode, X3DNode .staticProperties ("X3DAppearanceChildNode", "Shape", 1));
 
 export default X3DAppearanceChildNode;

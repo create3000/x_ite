@@ -45,8 +45,9 @@
  *
  ******************************************************************************/
 
-import X3DCast          from "../../Base/X3DCast.js";
+import X3DNode          from "../Core/X3DNode.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
+import X3DCast          from "../../Base/X3DCast.js";
 import Matrix3          from "../../../standard/Math/Numbers/Matrix3.js";
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
 
@@ -1435,18 +1436,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DProgrammableShaderObject,
-{
-   typeName:
-   {
-      value: "X3DProgrammableShaderObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DProgrammableShaderObject, X3DNode .staticProperties ("X3DProgrammableShaderObject", "Shaders", 1));
 
 export default X3DProgrammableShaderObject;

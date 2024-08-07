@@ -58,18 +58,6 @@ function X3DComposableVolumeRenderStyleNode (executionContext)
 
 Object .setPrototypeOf (X3DComposableVolumeRenderStyleNode .prototype, X3DVolumeRenderStyleNode .prototype);
 
-Object .defineProperties (X3DComposableVolumeRenderStyleNode,
-{
-   typeName:
-   {
-      value: "X3DComposableVolumeRenderStyleNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DComposableVolumeRenderStyleNode, X3DNode .staticProperties ("X3DComposableVolumeRenderStyleNode", "VolumeRendering", 1));
 
 export default X3DComposableVolumeRenderStyleNode;

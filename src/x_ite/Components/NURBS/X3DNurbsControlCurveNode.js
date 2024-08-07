@@ -57,18 +57,6 @@ function X3DNurbsControlCurveNode (executionContext)
 
 Object .setPrototypeOf (X3DNurbsControlCurveNode .prototype, X3DNode .prototype);
 
-Object .defineProperties (X3DNurbsControlCurveNode,
-{
-   typeName:
-   {
-      value: "X3DNurbsControlCurveNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DNurbsControlCurveNode, X3DNode .staticProperties ("X3DNurbsControlCurveNode", "NURBS", 1));
 
 export default X3DNurbsControlCurveNode;

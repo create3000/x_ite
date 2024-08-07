@@ -93,18 +93,6 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    },
 });
 
-Object .defineProperties (X3DChildNode,
-{
-   typeName:
-   {
-      value: "X3DChildNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DChildNode, X3DNode .staticProperties ("X3DChildNode", "Core", 1));
 
 export default X3DChildNode;

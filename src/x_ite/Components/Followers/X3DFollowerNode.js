@@ -135,18 +135,6 @@ Object .assign (Object .setPrototypeOf (X3DFollowerNode .prototype, X3DChildNode
    },
 });
 
-Object .defineProperties (X3DFollowerNode,
-{
-   typeName:
-   {
-      value: "X3DFollowerNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DFollowerNode, X3DNode .staticProperties ("X3DFollowerNode", "Followers", 1));
 
 export default X3DFollowerNode;

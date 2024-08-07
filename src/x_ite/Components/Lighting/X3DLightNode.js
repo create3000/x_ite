@@ -219,18 +219,6 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    },
 });
 
-Object .defineProperties (X3DLightNode,
-{
-   typeName:
-   {
-      value: "X3DLightNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Lighting", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DLightNode, X3DNode .staticProperties ("X3DLightNode", "Lighting", 1));
 
 export default X3DLightNode;

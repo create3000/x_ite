@@ -137,18 +137,6 @@ Object .assign (Object .setPrototypeOf (X3DSequencerNode .prototype, X3DChildNod
    },
 });
 
-Object .defineProperties (X3DSequencerNode,
-{
-   typeName:
-   {
-      value: "X3DSequencerNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSequencerNode, X3DNode .staticProperties ("X3DSequencerNode", "EventUtilities", 1));
 
 export default X3DSequencerNode;

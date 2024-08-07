@@ -1057,28 +1057,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    },
 });
 
-Object .defineProperties (X3DPrototypeInstance,
-{
-   typeName:
-   {
-      value: "X3DPrototypeInstance",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DPrototypeInstance, X3DNode .staticProperties ("X3DPrototypeInstance", "Core", 2));
 
 export default X3DPrototypeInstance;

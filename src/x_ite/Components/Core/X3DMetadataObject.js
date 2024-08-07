@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DNode      from "./X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 
 function X3DMetadataObject (executionContext)
@@ -58,18 +59,6 @@ Object .assign (X3DMetadataObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DMetadataObject,
-{
-   typeName:
-   {
-      value: "X3DMetadataObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DMetadataObject, X3DNode .staticProperties ("X3DMetadataObject", "Core", 1));
 
 export default X3DMetadataObject;

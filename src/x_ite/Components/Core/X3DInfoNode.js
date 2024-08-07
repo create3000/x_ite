@@ -58,18 +58,6 @@ function X3DInfoNode (executionContext)
 
 Object .setPrototypeOf (X3DInfoNode .prototype, X3DChildNode .prototype);
 
-Object .defineProperties (X3DInfoNode,
-{
-   typeName:
-   {
-      value: "X3DInfoNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DInfoNode, X3DNode .staticProperties ("X3DInfoNode", "Core", 1));
 
 export default X3DInfoNode;

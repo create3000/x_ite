@@ -73,18 +73,6 @@ Object .assign (Object .setPrototypeOf (X3DScriptNode .prototype, X3DChildNode .
    },
 });
 
-Object .defineProperties (X3DScriptNode,
-{
-   typeName:
-   {
-      value: "X3DScriptNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Scripting", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DScriptNode, X3DNode .staticProperties ("X3DScriptNode", "Scripting", 1));
 
 export default X3DScriptNode;

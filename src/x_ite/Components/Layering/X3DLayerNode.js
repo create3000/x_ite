@@ -422,18 +422,6 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
 });
 
-Object .defineProperties (X3DLayerNode,
-{
-   typeName:
-   {
-      value: "X3DLayerNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DLayerNode, X3DNode .staticProperties ("X3DLayerNode", "Layering", 1));
 
 export default X3DLayerNode;
