@@ -116,10 +116,9 @@ Object .assign (Object .setPrototypeOf (FogCoordinate .prototype, X3DGeometricPr
    },
 });
 
-Object .defineProperties (FogCoordinate, X3DNode .getStaticProperties ("FogCoordinate", "EnvironmentalEffects", 4, "fogCoord", "3.0"));
-
 Object .defineProperties (FogCoordinate,
 {
+   ... X3DNode .getStaticProperties ("FogCoordinate", "EnvironmentalEffects", 4, "fogCoord", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

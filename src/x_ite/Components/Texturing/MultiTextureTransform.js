@@ -120,10 +120,9 @@ Object .assign (Object .setPrototypeOf (MultiTextureTransform .prototype, X3DTex
    },
 });
 
-Object .defineProperties (MultiTextureTransform, X3DNode .getStaticProperties ("MultiTextureTransform", "Texturing", 2, "textureTransform", "3.0"));
-
 Object .defineProperties (MultiTextureTransform,
 {
+   ... X3DNode .getStaticProperties ("MultiTextureTransform", "Texturing", 2, "textureTransform", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -114,10 +114,9 @@ Object .assign (Object .setPrototypeOf (Color .prototype, X3DColorNode .prototyp
    },
 });
 
-Object .defineProperties (Color, X3DNode .getStaticProperties ("Color", "Rendering", 1, "color", "2.0"));
-
 Object .defineProperties (Color,
 {
+   ... X3DNode .getStaticProperties ("Color", "Rendering", 1, "color", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

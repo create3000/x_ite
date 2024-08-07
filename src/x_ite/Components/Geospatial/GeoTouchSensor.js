@@ -91,10 +91,9 @@ Object .assign (Object .setPrototypeOf (GeoTouchSensor .prototype, X3DTouchSenso
    },
 });
 
-Object .defineProperties (GeoTouchSensor, X3DNode .getStaticProperties ("GeoTouchSensor", "Geospatial", 1, "children", "3.0"));
-
 Object .defineProperties (GeoTouchSensor,
 {
+   ... X3DNode .getStaticProperties ("GeoTouchSensor", "Geospatial", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

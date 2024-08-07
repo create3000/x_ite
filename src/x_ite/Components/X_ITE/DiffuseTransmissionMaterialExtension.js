@@ -154,10 +154,9 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    },
 });
 
-Object .defineProperties (DiffuseTransmissionMaterialExtension, X3DNode .getStaticProperties ("DiffuseTransmissionMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
-
 Object .defineProperties (DiffuseTransmissionMaterialExtension,
 {
+   ... X3DNode .getStaticProperties ("DiffuseTransmissionMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

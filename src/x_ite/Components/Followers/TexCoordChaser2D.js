@@ -73,10 +73,9 @@ Object .assign (Object .setPrototypeOf (TexCoordChaser2D .prototype, X3DChaserNo
    },
 });
 
-Object .defineProperties (TexCoordChaser2D, X3DNode .getStaticProperties ("TexCoordChaser2D", "Followers", 1, "children", "3.3"));
-
 Object .defineProperties (TexCoordChaser2D,
 {
+   ... X3DNode .getStaticProperties ("TexCoordChaser2D", "Followers", 1, "children", "3.3"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

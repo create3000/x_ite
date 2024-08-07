@@ -149,10 +149,9 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, X3DCom
    },
 });
 
-Object .defineProperties (ToneMappedVolumeStyle, X3DNode .getStaticProperties ("ToneMappedVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"));
-
 Object .defineProperties (ToneMappedVolumeStyle,
 {
+   ... X3DNode .getStaticProperties ("ToneMappedVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

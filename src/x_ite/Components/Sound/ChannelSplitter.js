@@ -147,10 +147,9 @@ Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChan
    },
 });
 
-Object .defineProperties (ChannelSplitter, X3DNode .getStaticProperties ("ChannelSplitter", "Sound", 2, "children", "4.0"));
-
 Object .defineProperties (ChannelSplitter,
 {
+   ... X3DNode .getStaticProperties ("ChannelSplitter", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -88,10 +88,9 @@ Object .assign (Object .setPrototypeOf (OrientationDamper .prototype, X3DDamperN
    },
 });
 
-Object .defineProperties (OrientationDamper, X3DNode .getStaticProperties ("OrientationDamper", "Followers", 1, "children", "3.2"));
-
 Object .defineProperties (OrientationDamper,
 {
+   ... X3DNode .getStaticProperties ("OrientationDamper", "Followers", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

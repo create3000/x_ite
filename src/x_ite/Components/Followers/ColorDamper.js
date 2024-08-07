@@ -103,10 +103,9 @@ Object .assign (Object .setPrototypeOf (ColorDamper .prototype, X3DDamperNode .p
    },
 });
 
-Object .defineProperties (ColorDamper, X3DNode .getStaticProperties ("ColorDamper", "Followers", 1, "children", "3.2"));
-
 Object .defineProperties (ColorDamper,
 {
+   ... X3DNode .getStaticProperties ("ColorDamper", "Followers", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

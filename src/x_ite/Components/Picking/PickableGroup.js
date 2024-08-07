@@ -180,10 +180,9 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, X3DGroupingNod
    },
 });
 
-Object .defineProperties (PickableGroup, X3DNode .getStaticProperties ("PickableGroup", "Picking", 1, "children", "3.2"));
-
 Object .defineProperties (PickableGroup,
 {
+   ... X3DNode .getStaticProperties ("PickableGroup", "Picking", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

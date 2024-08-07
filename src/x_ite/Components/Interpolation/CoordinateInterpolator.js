@@ -95,10 +95,9 @@ Object .assign (Object .setPrototypeOf (CoordinateInterpolator .prototype, X3DIn
    },
 });
 
-Object .defineProperties (CoordinateInterpolator, X3DNode .getStaticProperties ("CoordinateInterpolator", "Interpolation", 1, "children", "2.0"));
-
 Object .defineProperties (CoordinateInterpolator,
 {
+   ... X3DNode .getStaticProperties ("CoordinateInterpolator", "Interpolation", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

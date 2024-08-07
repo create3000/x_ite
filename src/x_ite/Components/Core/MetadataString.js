@@ -83,10 +83,9 @@ Object .assign (Object .setPrototypeOf (MetadataString .prototype, X3DNode .prot
    },
 });
 
-Object .defineProperties (MetadataString, X3DNode .getStaticProperties ("MetadataString", "Core", 1, "value", "3.0"));
-
 Object .defineProperties (MetadataString,
 {
+   ... X3DNode .getStaticProperties ("MetadataString", "Core", 1, "value", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

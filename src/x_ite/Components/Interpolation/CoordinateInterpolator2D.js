@@ -92,10 +92,9 @@ Object .assign (Object .setPrototypeOf (CoordinateInterpolator2D .prototype, X3D
    },
 });
 
-Object .defineProperties (CoordinateInterpolator2D, X3DNode .getStaticProperties ("CoordinateInterpolator2D", "Interpolation", 3, "children", "3.0"));
-
 Object .defineProperties (CoordinateInterpolator2D,
 {
+   ... X3DNode .getStaticProperties ("CoordinateInterpolator2D", "Interpolation", 3, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

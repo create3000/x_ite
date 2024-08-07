@@ -144,10 +144,9 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
    },
 });
 
-Object .defineProperties (VolumeMaterialExtension, X3DNode .getStaticProperties ("VolumeMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
-
 Object .defineProperties (VolumeMaterialExtension,
 {
+   ... X3DNode .getStaticProperties ("VolumeMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

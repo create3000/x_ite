@@ -13,29 +13,14 @@ for (const filename of files)
 
    let file = sh (`cat ${filename}`)
 
-   let m = file .match (/(\s*\{\s*typeName:.*?\}\);)/s)
-
-   if (!m)
-   {
-      console .log ("no:", filename)
-      continue
-   }
-
    // continue;
    console .log (filename)
 
-   let n = m [1] .match (/typeName:\s*\{\s*value:\s*"(.*?)"/s)
-   let c = m [1] .match (/name:\s*"(.*?)",\s*level:\s*(\d+)/s)
-   let f = m [1] .match (/containerField:\s*\{\s*value:\s*"(.*?)"/s)
-   let s = m [1] .match (/from:\s*"(.*?)",\s*to:\s*"(.*?)"/s)
-   let d = m [1] .match (/(fieldDefinitions:.*?\},)/s)
+   let s= file .match (/Object .defineProperties \((\w+), (X3DNode .getStaticProperties \(.*?\))\);/s)
 
-   file = file .replace (/\s*\{\s*typeName:.*?\}\);/s, ` X3DNode .staticProperties ("${n [1]}", "${c [1]}", ${c [2]}, "${f [1]}", "${s [1]}", "${s [2]}"));
+   file = file .replace (/Object .defineProperties \((\w+), (X3DNode .getStaticProperties \(.*?\))\);\n+/s, ``)
 
-Object .defineProperties (${n [1]},
-{
-   ${d [1]}
-});`)
+   file = file .replace (/\{\s*fieldDefinitions:/s, `{\n   ... ${s [2]},\n   fieldDefinitions:`)
 
    // console .log (file)
 

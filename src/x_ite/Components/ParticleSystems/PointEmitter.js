@@ -131,10 +131,9 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, X3DParticleEmit
    })(),
 });
 
-Object .defineProperties (PointEmitter, X3DNode .getStaticProperties ("PointEmitter", "ParticleSystems", 1, "emitter", "3.2"));
-
 Object .defineProperties (PointEmitter,
 {
+   ... X3DNode .getStaticProperties ("PointEmitter", "ParticleSystems", 1, "emitter", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

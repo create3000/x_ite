@@ -127,10 +127,9 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
    },
 });
 
-Object .defineProperties (DepthMode, X3DNode .getStaticProperties ("DepthMode", "X_ITE", 1, "depthMode", "4.0"));
-
 Object .defineProperties (DepthMode,
 {
+   ... X3DNode .getStaticProperties ("DepthMode", "X_ITE", 1, "depthMode", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -92,10 +92,9 @@ Object .assign (Object .setPrototypeOf (LocalFog .prototype, X3DChildNode .proto
    },
 });
 
-Object .defineProperties (LocalFog, X3DNode .getStaticProperties ("LocalFog", "EnvironmentalEffects", 4, "children", "3.0"));
-
 Object .defineProperties (LocalFog,
 {
+   ... X3DNode .getStaticProperties ("LocalFog", "EnvironmentalEffects", 4, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

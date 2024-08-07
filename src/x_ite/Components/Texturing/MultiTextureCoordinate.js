@@ -159,10 +159,9 @@ Object .assign (Object .setPrototypeOf (MultiTextureCoordinate .prototype, X3DTe
    },
 });
 
-Object .defineProperties (MultiTextureCoordinate, X3DNode .getStaticProperties ("MultiTextureCoordinate", "Texturing", 2, "texCoord", "3.0"));
-
 Object .defineProperties (MultiTextureCoordinate,
 {
+   ... X3DNode .getStaticProperties ("MultiTextureCoordinate", "Texturing", 2, "texCoord", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

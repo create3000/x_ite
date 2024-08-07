@@ -375,10 +375,9 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
    },
 });
 
-Object .defineProperties (GeoElevationGrid, X3DNode .getStaticProperties ("GeoElevationGrid", "Geospatial", 1, "geometry", "3.0"));
-
 Object .defineProperties (GeoElevationGrid,
 {
+   ... X3DNode .getStaticProperties ("GeoElevationGrid", "Geospatial", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

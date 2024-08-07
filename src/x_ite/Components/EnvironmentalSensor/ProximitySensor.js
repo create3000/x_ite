@@ -233,10 +233,9 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
    },
 });
 
-Object .defineProperties (ProximitySensor, X3DNode .getStaticProperties ("ProximitySensor", "EnvironmentalSensor", 1, "children", "2.0"));
-
 Object .defineProperties (ProximitySensor,
 {
+   ... X3DNode .getStaticProperties ("ProximitySensor", "EnvironmentalSensor", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

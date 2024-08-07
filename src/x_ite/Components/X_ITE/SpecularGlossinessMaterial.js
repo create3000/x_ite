@@ -295,10 +295,9 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    },
 });
 
-Object .defineProperties (SpecularGlossinessMaterial, X3DNode .getStaticProperties ("SpecularGlossinessMaterial", "X_ITE", 1, "material", "4.0"));
-
 Object .defineProperties (SpecularGlossinessMaterial,
 {
+   ... X3DNode .getStaticProperties ("SpecularGlossinessMaterial", "X_ITE", 1, "material", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

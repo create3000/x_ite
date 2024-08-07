@@ -164,10 +164,9 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
    },
 });
 
-Object .defineProperties (SheenMaterialExtension, X3DNode .getStaticProperties ("SheenMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
-
 Object .defineProperties (SheenMaterialExtension,
 {
+   ... X3DNode .getStaticProperties ("SheenMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

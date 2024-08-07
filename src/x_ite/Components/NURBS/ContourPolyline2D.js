@@ -131,10 +131,9 @@ Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, X3DNurbsCo
    },
 });
 
-Object .defineProperties (ContourPolyline2D, X3DNode .getStaticProperties ("ContourPolyline2D", "NURBS", 3, "children", "3.0"));
-
 Object .defineProperties (ContourPolyline2D,
 {
+   ... X3DNode .getStaticProperties ("ContourPolyline2D", "NURBS", 3, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

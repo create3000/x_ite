@@ -107,10 +107,9 @@ Object .assign (Object .setPrototypeOf (SplinePositionInterpolator2D .prototype,
    },
 });
 
-Object .defineProperties (SplinePositionInterpolator2D, X3DNode .getStaticProperties ("SplinePositionInterpolator2D", "Interpolation", 4, "children", "3.2"));
-
 Object .defineProperties (SplinePositionInterpolator2D,
 {
+   ... X3DNode .getStaticProperties ("SplinePositionInterpolator2D", "Interpolation", 4, "children", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

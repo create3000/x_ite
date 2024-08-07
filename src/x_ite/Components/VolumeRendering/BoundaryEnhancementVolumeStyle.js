@@ -117,10 +117,9 @@ Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototyp
    },
 });
 
-Object .defineProperties (BoundaryEnhancementVolumeStyle, X3DNode .getStaticProperties ("BoundaryEnhancementVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"));
-
 Object .defineProperties (BoundaryEnhancementVolumeStyle,
 {
+   ... X3DNode .getStaticProperties ("BoundaryEnhancementVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

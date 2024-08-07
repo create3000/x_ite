@@ -99,10 +99,9 @@ Object .assign (Object .setPrototypeOf (SquadOrientationInterpolator .prototype,
    },
 });
 
-Object .defineProperties (SquadOrientationInterpolator, X3DNode .getStaticProperties ("SquadOrientationInterpolator", "Interpolation", 5, "children", "3.2"));
-
 Object .defineProperties (SquadOrientationInterpolator,
 {
+   ... X3DNode .getStaticProperties ("SquadOrientationInterpolator", "Interpolation", 5, "children", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

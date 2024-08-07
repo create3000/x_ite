@@ -74,10 +74,9 @@ Object .assign (Object .setPrototypeOf (StreamAudioSource .prototype, X3DSoundSo
 });
 
 
-Object .defineProperties (StreamAudioSource, X3DNode .getStaticProperties ("StreamAudioSource", "Sound", 2, "children", "4.0"));
-
 Object .defineProperties (StreamAudioSource,
 {
+   ... X3DNode .getStaticProperties ("StreamAudioSource", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

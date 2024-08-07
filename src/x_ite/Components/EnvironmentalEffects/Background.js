@@ -113,10 +113,9 @@ Object .assign (Object .setPrototypeOf (Background .prototype, X3DBackgroundNode
    }
 });
 
-Object .defineProperties (Background, X3DNode .getStaticProperties ("Background", "EnvironmentalEffects", 1, "children", "2.0"));
-
 Object .defineProperties (Background,
 {
+   ... X3DNode .getStaticProperties ("Background", "EnvironmentalEffects", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -95,10 +95,9 @@ Object .assign (Object .setPrototypeOf (ColorInterpolator .prototype, X3DInterpo
    })(),
 });
 
-Object .defineProperties (ColorInterpolator, X3DNode .getStaticProperties ("ColorInterpolator", "Interpolation", 2, "children", "2.0"));
-
 Object .defineProperties (ColorInterpolator,
 {
+   ... X3DNode .getStaticProperties ("ColorInterpolator", "Interpolation", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

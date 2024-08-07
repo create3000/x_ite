@@ -82,10 +82,9 @@ Object .assign (Object .setPrototypeOf (WorldInfo .prototype, X3DInfoNode .proto
    },
 });
 
-Object .defineProperties (WorldInfo, X3DNode .getStaticProperties ("WorldInfo", "Core", 1, "children", "2.0"));
-
 Object .defineProperties (WorldInfo,
 {
+   ... X3DNode .getStaticProperties ("WorldInfo", "Core", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

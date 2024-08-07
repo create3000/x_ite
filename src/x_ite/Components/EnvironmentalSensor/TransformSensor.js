@@ -277,10 +277,9 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
    },
 });
 
-Object .defineProperties (TransformSensor, X3DNode .getStaticProperties ("TransformSensor", "EnvironmentalSensor", 3, "children", "3.2"));
-
 Object .defineProperties (TransformSensor,
 {
+   ... X3DNode .getStaticProperties ("TransformSensor", "EnvironmentalSensor", 3, "children", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

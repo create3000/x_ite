@@ -250,10 +250,9 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterial
    },
 });
 
-Object .defineProperties (TwoSidedMaterial, X3DNode .getStaticProperties ("TwoSidedMaterial", "Shape", 4, "material", "3.2", "4.0"));
-
 Object .defineProperties (TwoSidedMaterial,
 {
+   ... X3DNode .getStaticProperties ("TwoSidedMaterial", "Shape", 4, "material", "3.2", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

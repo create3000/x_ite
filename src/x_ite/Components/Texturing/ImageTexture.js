@@ -242,10 +242,9 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    },
 });
 
-Object .defineProperties (ImageTexture, X3DNode .getStaticProperties ("ImageTexture", "Texturing", 1, "texture", "2.0"));
-
 Object .defineProperties (ImageTexture,
 {
+   ... X3DNode .getStaticProperties ("ImageTexture", "Texturing", 1, "texture", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

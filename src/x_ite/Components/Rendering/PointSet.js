@@ -197,10 +197,9 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
    },
 });
 
-Object .defineProperties (PointSet, X3DNode .getStaticProperties ("PointSet", "Rendering", 1, "geometry", "2.0"));
-
 Object .defineProperties (PointSet,
 {
+   ... X3DNode .getStaticProperties ("PointSet", "Rendering", 1, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

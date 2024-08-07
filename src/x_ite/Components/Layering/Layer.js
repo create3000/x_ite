@@ -85,10 +85,9 @@ Object .assign (Object .setPrototypeOf (Layer .prototype, X3DLayerNode .prototyp
    },
 });
 
-Object .defineProperties (Layer, X3DNode .getStaticProperties ("Layer", "Layering", 1, "layers", "3.2"));
-
 Object .defineProperties (Layer,
 {
+   ... X3DNode .getStaticProperties ("Layer", "Layering", 1, "layers", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

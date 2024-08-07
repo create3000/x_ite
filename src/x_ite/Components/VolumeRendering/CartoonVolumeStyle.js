@@ -273,10 +273,9 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, X3DCompos
    },
 });
 
-Object .defineProperties (CartoonVolumeStyle, X3DNode .getStaticProperties ("CartoonVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3"));
-
 Object .defineProperties (CartoonVolumeStyle,
 {
+   ... X3DNode .getStaticProperties ("CartoonVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

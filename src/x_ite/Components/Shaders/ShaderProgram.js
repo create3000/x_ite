@@ -90,10 +90,9 @@ Object .assign (Object .setPrototypeOf (ShaderProgram .prototype, X3DNode .proto
    },
 });
 
-Object .defineProperties (ShaderProgram, X3DNode .getStaticProperties ("ShaderProgram", "Shaders", 1, "programs", "3.0"));
-
 Object .defineProperties (ShaderProgram,
 {
+   ... X3DNode .getStaticProperties ("ShaderProgram", "Shaders", 1, "programs", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

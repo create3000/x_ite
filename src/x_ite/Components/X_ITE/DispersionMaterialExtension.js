@@ -92,10 +92,9 @@ Object .assign (Object .setPrototypeOf (DispersionMaterialExtension .prototype, 
    },
 });
 
-Object .defineProperties (DispersionMaterialExtension, X3DNode .getStaticProperties ("DispersionMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
-
 Object .defineProperties (DispersionMaterialExtension,
 {
+   ... X3DNode .getStaticProperties ("DispersionMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

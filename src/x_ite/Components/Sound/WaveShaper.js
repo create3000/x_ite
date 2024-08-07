@@ -101,10 +101,9 @@ Object .assign (Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessin
    })(),
 });
 
-Object .defineProperties (WaveShaper, X3DNode .getStaticProperties ("WaveShaper", "Sound", 2, "children", "4.0"));
-
 Object .defineProperties (WaveShaper,
 {
+   ... X3DNode .getStaticProperties ("WaveShaper", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

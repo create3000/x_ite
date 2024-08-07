@@ -138,10 +138,9 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
    })(),
 });
 
-Object .defineProperties (VisibilitySensor, X3DNode .getStaticProperties ("VisibilitySensor", "EnvironmentalSensor", 2, "children", "2.0"));
-
 Object .defineProperties (VisibilitySensor,
 {
+   ... X3DNode .getStaticProperties ("VisibilitySensor", "EnvironmentalSensor", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

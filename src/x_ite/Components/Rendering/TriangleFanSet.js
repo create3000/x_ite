@@ -111,10 +111,9 @@ Object .assign (Object .setPrototypeOf (TriangleFanSet .prototype, X3DComposedGe
    },
 });
 
-Object .defineProperties (TriangleFanSet, X3DNode .getStaticProperties ("TriangleFanSet", "Rendering", 3, "geometry", "3.0"));
-
 Object .defineProperties (TriangleFanSet,
 {
+   ... X3DNode .getStaticProperties ("TriangleFanSet", "Rendering", 3, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

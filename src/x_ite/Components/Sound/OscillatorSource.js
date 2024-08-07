@@ -169,10 +169,9 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
    },
 });
 
-Object .defineProperties (OscillatorSource, X3DNode .getStaticProperties ("OscillatorSource", "Sound", 2, "children", "4.0"));
-
 Object .defineProperties (OscillatorSource,
 {
+   ... X3DNode .getStaticProperties ("OscillatorSource", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

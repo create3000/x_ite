@@ -254,10 +254,9 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    },
 });
 
-Object .defineProperties (MovieTexture, X3DNode .getStaticProperties ("MovieTexture", "Texturing", 3, "texture", "2.0"));
-
 Object .defineProperties (MovieTexture,
 {
+   ... X3DNode .getStaticProperties ("MovieTexture", "Texturing", 3, "texture", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

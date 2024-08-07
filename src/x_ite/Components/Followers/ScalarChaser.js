@@ -96,10 +96,9 @@ Object .assign (Object .setPrototypeOf (ScalarChaser .prototype, X3DChaserNode .
    },
 });
 
-Object .defineProperties (ScalarChaser, X3DNode .getStaticProperties ("ScalarChaser", "Followers", 1, "children", "3.2"));
-
 Object .defineProperties (ScalarChaser,
 {
+   ... X3DNode .getStaticProperties ("ScalarChaser", "Followers", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

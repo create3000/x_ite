@@ -76,10 +76,9 @@ Object .assign (Object .setPrototypeOf (GroupAnnotation .prototype, X3DGroupingN
    },
 });
 
-Object .defineProperties (GroupAnnotation, X3DNode .getStaticProperties ("GroupAnnotation", "Annotation", 1, "children", "4.0"));
-
 Object .defineProperties (GroupAnnotation,
 {
+   ... X3DNode .getStaticProperties ("GroupAnnotation", "Annotation", 1, "children", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

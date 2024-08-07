@@ -224,10 +224,9 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
    { },
 });
 
-Object .defineProperties (Disk2D, X3DNode .getStaticProperties ("Disk2D", "Geometry2D", 2, "geometry", "3.0"));
-
 Object .defineProperties (Disk2D,
 {
+   ... X3DNode .getStaticProperties ("Disk2D", "Geometry2D", 2, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

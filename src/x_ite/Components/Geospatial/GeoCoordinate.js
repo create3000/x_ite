@@ -203,10 +203,9 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
    },
 });
 
-Object .defineProperties (GeoCoordinate, X3DNode .getStaticProperties ("GeoCoordinate", "Geospatial", 1, "coord", "3.0"));
-
 Object .defineProperties (GeoCoordinate,
 {
+   ... X3DNode .getStaticProperties ("GeoCoordinate", "Geospatial", 1, "coord", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

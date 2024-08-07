@@ -85,10 +85,9 @@ Object .assign (Object .setPrototypeOf (PeriodicWave .prototype, X3DSoundNode .p
    },
 });
 
-Object .defineProperties (PeriodicWave, X3DNode .getStaticProperties ("PeriodicWave", "Sound", 2, "periodicWave", "4.0"));
-
 Object .defineProperties (PeriodicWave,
 {
+   ... X3DNode .getStaticProperties ("PeriodicWave", "Sound", 2, "periodicWave", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

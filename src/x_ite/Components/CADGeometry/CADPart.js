@@ -66,10 +66,9 @@ Object .assign (Object .setPrototypeOf (CADPart .prototype, X3DTransformNode .pr
 {
 });
 
-Object .defineProperties (CADPart, X3DNode .getStaticProperties ("CADPart", "CADGeometry", 2, "children", "3.1"));
-
 Object .defineProperties (CADPart,
 {
+   ... X3DNode .getStaticProperties ("CADPart", "CADGeometry", 2, "children", "3.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

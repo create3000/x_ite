@@ -114,10 +114,9 @@ Object .assign (Object .setPrototypeOf (Normal .prototype, X3DNormalNode .protot
    },
 });
 
-Object .defineProperties (Normal, X3DNode .getStaticProperties ("Normal", "Rendering", 2, "normal", "2.0"));
-
 Object .defineProperties (Normal,
 {
+   ... X3DNode .getStaticProperties ("Normal", "Rendering", 2, "normal", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

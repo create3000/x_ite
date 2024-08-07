@@ -63,10 +63,9 @@ function HAnimDisplacer (executionContext)
 
 Object .setPrototypeOf (HAnimDisplacer .prototype, X3DGeometricPropertyNode .prototype);
 
-Object .defineProperties (HAnimDisplacer, X3DNode .getStaticProperties ("HAnimDisplacer", "HAnim", 1, "displacers", "3.0"));
-
 Object .defineProperties (HAnimDisplacer,
 {
+   ... X3DNode .getStaticProperties ("HAnimDisplacer", "HAnim", 1, "displacers", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

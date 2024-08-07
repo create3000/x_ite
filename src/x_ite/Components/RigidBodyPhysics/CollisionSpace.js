@@ -140,10 +140,9 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, X3DNBodyColli
    },
 });
 
-Object .defineProperties (CollisionSpace, X3DNode .getStaticProperties ("CollisionSpace", "RigidBodyPhysics", 1, "children", "3.2"));
-
 Object .defineProperties (CollisionSpace,
 {
+   ... X3DNode .getStaticProperties ("CollisionSpace", "RigidBodyPhysics", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

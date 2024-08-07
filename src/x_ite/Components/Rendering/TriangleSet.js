@@ -82,10 +82,9 @@ Object .assign (Object .setPrototypeOf (TriangleSet .prototype, X3DComposedGeome
    },
 });
 
-Object .defineProperties (TriangleSet, X3DNode .getStaticProperties ("TriangleSet", "Rendering", 3, "geometry", "3.0"));
-
 Object .defineProperties (TriangleSet,
 {
+   ... X3DNode .getStaticProperties ("TriangleSet", "Rendering", 3, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -114,10 +114,9 @@ Object .assign (Object .setPrototypeOf (Sphere .prototype, X3DGeometryNode .prot
    },
 });
 
-Object .defineProperties (Sphere, X3DNode .getStaticProperties ("Sphere", "Geometry3D", 1, "geometry", "2.0"));
-
 Object .defineProperties (Sphere,
 {
+   ... X3DNode .getStaticProperties ("Sphere", "Geometry3D", 1, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

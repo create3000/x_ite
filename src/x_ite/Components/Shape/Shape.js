@@ -174,10 +174,9 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
    },
 });
 
-Object .defineProperties (Shape, X3DNode .getStaticProperties ("Shape", "Shape", 1, "children", "2.0"));
-
 Object .defineProperties (Shape,
 {
+   ... X3DNode .getStaticProperties ("Shape", "Shape", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

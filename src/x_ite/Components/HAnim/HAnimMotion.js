@@ -371,10 +371,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    },
 });
 
-Object .defineProperties (HAnimMotion, X3DNode .getStaticProperties ("HAnimMotion", "HAnim", 2, "motions", "4.0"));
-
 Object .defineProperties (HAnimMotion,
 {
+   ... X3DNode .getStaticProperties ("HAnimMotion", "HAnim", 2, "motions", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

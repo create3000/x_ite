@@ -92,10 +92,9 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X3DMate
    },
 });
 
-Object .defineProperties (IORMaterialExtension, X3DNode .getStaticProperties ("IORMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
-
 Object .defineProperties (IORMaterialExtension,
 {
+   ... X3DNode .getStaticProperties ("IORMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

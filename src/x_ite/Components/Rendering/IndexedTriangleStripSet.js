@@ -136,10 +136,9 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleStripSet .prototype, X3DC
    },
 });
 
-Object .defineProperties (IndexedTriangleStripSet, X3DNode .getStaticProperties ("IndexedTriangleStripSet", "Rendering", 3, "geometry", "3.0"));
-
 Object .defineProperties (IndexedTriangleStripSet,
 {
+   ... X3DNode .getStaticProperties ("IndexedTriangleStripSet", "Rendering", 3, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

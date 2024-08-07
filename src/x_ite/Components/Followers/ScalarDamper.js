@@ -84,10 +84,9 @@ Object .assign (Object .setPrototypeOf (ScalarDamper .prototype, X3DDamperNode .
    },
 });
 
-Object .defineProperties (ScalarDamper, X3DNode .getStaticProperties ("ScalarDamper", "Followers", 1, "children", "3.3"));
-
 Object .defineProperties (ScalarDamper,
 {
+   ... X3DNode .getStaticProperties ("ScalarDamper", "Followers", 1, "children", "3.3"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

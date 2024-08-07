@@ -214,10 +214,9 @@ Object .assign (Object .setPrototypeOf (LineSet .prototype, X3DLineGeometryNode 
    },
 });
 
-Object .defineProperties (LineSet, X3DNode .getStaticProperties ("LineSet", "Rendering", 1, "geometry", "3.0"));
-
 Object .defineProperties (LineSet,
 {
+   ... X3DNode .getStaticProperties ("LineSet", "Rendering", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

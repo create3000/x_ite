@@ -215,10 +215,9 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
    },
 });
 
-Object .defineProperties (ComposedCubeMapTexture, X3DNode .getStaticProperties ("ComposedCubeMapTexture", "CubeMapTexturing", 1, "texture", "3.1"));
-
 Object .defineProperties (ComposedCubeMapTexture,
 {
+   ... X3DNode .getStaticProperties ("ComposedCubeMapTexture", "CubeMapTexturing", 1, "texture", "3.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

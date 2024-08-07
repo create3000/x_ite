@@ -81,10 +81,9 @@ Object .assign (Object .setPrototypeOf (GeoOrigin .prototype, X3DNode .prototype
    },
 });
 
-Object .defineProperties (GeoOrigin, X3DNode .getStaticProperties ("GeoOrigin", "Geospatial", 1, "geoOrigin", "3.0"));
-
 Object .defineProperties (GeoOrigin,
 {
+   ... X3DNode .getStaticProperties ("GeoOrigin", "Geospatial", 1, "geoOrigin", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

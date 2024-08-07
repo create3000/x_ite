@@ -313,10 +313,9 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, X3DCompos
    },
 });
 
-Object .defineProperties (BlendedVolumeStyle, X3DNode .getStaticProperties ("BlendedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3"));
-
 Object .defineProperties (BlendedVolumeStyle,
 {
+   ... X3DNode .getStaticProperties ("BlendedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

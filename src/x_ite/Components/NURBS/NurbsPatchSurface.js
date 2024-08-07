@@ -61,10 +61,9 @@ function NurbsPatchSurface (executionContext)
 
 Object .setPrototypeOf (NurbsPatchSurface .prototype, X3DNurbsSurfaceGeometryNode .prototype);
 
-Object .defineProperties (NurbsPatchSurface, X3DNode .getStaticProperties ("NurbsPatchSurface", "NURBS", 1, "geometry", "3.0"));
-
 Object .defineProperties (NurbsPatchSurface,
 {
+   ... X3DNode .getStaticProperties ("NurbsPatchSurface", "NURBS", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

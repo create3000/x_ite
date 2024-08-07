@@ -169,10 +169,9 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, X3DCompo
    }
 });
 
-Object .defineProperties (ComposedVolumeStyle, X3DNode .getStaticProperties ("ComposedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3"));
-
 Object .defineProperties (ComposedVolumeStyle,
 {
+   ... X3DNode .getStaticProperties ("ComposedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

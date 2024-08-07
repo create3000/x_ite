@@ -87,10 +87,9 @@ Object .assign (Object .setPrototypeOf (TextureBackground .prototype, X3DBackgro
    },
 });
 
-Object .defineProperties (TextureBackground, X3DNode .getStaticProperties ("TextureBackground", "EnvironmentalEffects", 3, "children", "3.0"));
-
 Object .defineProperties (TextureBackground,
 {
+   ... X3DNode .getStaticProperties ("TextureBackground", "EnvironmentalEffects", 3, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

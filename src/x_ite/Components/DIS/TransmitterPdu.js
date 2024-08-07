@@ -87,10 +87,9 @@ Object .assign (Object .setPrototypeOf (TransmitterPdu .prototype, X3DSensorNode
    },
 });
 
-Object .defineProperties (TransmitterPdu, X3DNode .getStaticProperties ("TransmitterPdu", "DIS", 1, "children", "3.0"));
-
 Object .defineProperties (TransmitterPdu,
 {
+   ... X3DNode .getStaticProperties ("TransmitterPdu", "DIS", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

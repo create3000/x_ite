@@ -161,10 +161,9 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    },
 });
 
-Object .defineProperties (ClearcoatMaterialExtension, X3DNode .getStaticProperties ("ClearcoatMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
-
 Object .defineProperties (ClearcoatMaterialExtension,
 {
+   ... X3DNode .getStaticProperties ("ClearcoatMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -331,10 +331,9 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
 });
 
-Object .defineProperties (OrthoViewpoint, X3DNode .getStaticProperties ("OrthoViewpoint", "Navigation", 3, "children", "3.0"));
-
 Object .defineProperties (OrthoViewpoint,
 {
+   ... X3DNode .getStaticProperties ("OrthoViewpoint", "Navigation", 3, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

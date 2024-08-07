@@ -121,10 +121,9 @@ Object .assign (Object .setPrototypeOf (NormalInterpolator .prototype, X3DInterp
    })(),
 });
 
-Object .defineProperties (NormalInterpolator, X3DNode .getStaticProperties ("NormalInterpolator", "Interpolation", 2, "children", "2.0"));
-
 Object .defineProperties (NormalInterpolator,
 {
+   ... X3DNode .getStaticProperties ("NormalInterpolator", "Interpolation", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

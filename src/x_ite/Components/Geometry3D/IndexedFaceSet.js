@@ -401,10 +401,9 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
    })(),
 });
 
-Object .defineProperties (IndexedFaceSet, X3DNode .getStaticProperties ("IndexedFaceSet", "Geometry3D", 2, "geometry", "2.0"));
-
 Object .defineProperties (IndexedFaceSet,
 {
+   ... X3DNode .getStaticProperties ("IndexedFaceSet", "Geometry3D", 2, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

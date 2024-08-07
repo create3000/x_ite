@@ -80,10 +80,9 @@ Object .assign (Object .setPrototypeOf (DISEntityTypeMapping .prototype, X3DInfo
    },
 });
 
-Object .defineProperties (DISEntityTypeMapping, X3DNode .getStaticProperties ("DISEntityTypeMapping", "DIS", 2, "children", "3.0"));
-
 Object .defineProperties (DISEntityTypeMapping,
 {
+   ... X3DNode .getStaticProperties ("DISEntityTypeMapping", "DIS", 2, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

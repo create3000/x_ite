@@ -85,10 +85,9 @@ Object .assign (Object .setPrototypeOf (ForcePhysicsModel .prototype, X3DParticl
    })(),
 });
 
-Object .defineProperties (ForcePhysicsModel, X3DNode .getStaticProperties ("ForcePhysicsModel", "ParticleSystems", 1, "physics", "3.2"));
-
 Object .defineProperties (ForcePhysicsModel,
 {
+   ... X3DNode .getStaticProperties ("ForcePhysicsModel", "ParticleSystems", 1, "physics", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

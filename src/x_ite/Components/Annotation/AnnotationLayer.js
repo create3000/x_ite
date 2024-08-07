@@ -72,10 +72,9 @@ Object .assign (Object .setPrototypeOf (AnnotationLayer .prototype, X3DLayerNode
    },
 });
 
-Object .defineProperties (AnnotationLayer, X3DNode .getStaticProperties ("AnnotationLayer", "Annotation", 1, "layers", "4.0"));
-
 Object .defineProperties (AnnotationLayer,
 {
+   ... X3DNode .getStaticProperties ("AnnotationLayer", "Annotation", 1, "layers", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

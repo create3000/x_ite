@@ -220,10 +220,9 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    },
 });
 
-Object .defineProperties (Switch, X3DNode .getStaticProperties ("Switch", "Grouping", 2, "children", "2.0"));
-
 Object .defineProperties (Switch,
 {
+   ... X3DNode .getStaticProperties ("Switch", "Grouping", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

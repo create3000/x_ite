@@ -61,10 +61,9 @@ function AcousticProperties (executionContext)
 
 Object .setPrototypeOf (AcousticProperties .prototype, X3DAppearanceChildNode .prototype);
 
-Object .defineProperties (AcousticProperties, X3DNode .getStaticProperties ("AcousticProperties", "Shape", 5, "acousticProperties", "4.0"));
-
 Object .defineProperties (AcousticProperties,
 {
+   ... X3DNode .getStaticProperties ("AcousticProperties", "Shape", 5, "acousticProperties", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

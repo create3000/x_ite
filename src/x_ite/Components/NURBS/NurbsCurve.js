@@ -195,10 +195,9 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
    },
 });
 
-Object .defineProperties (NurbsCurve, X3DNode .getStaticProperties ("NurbsCurve", "NURBS", 1, "geometry", "3.0"));
-
 Object .defineProperties (NurbsCurve,
 {
+   ... X3DNode .getStaticProperties ("NurbsCurve", "NURBS", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

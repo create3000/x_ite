@@ -66,10 +66,9 @@ Object .assign (Object .setPrototypeOf (CADAssembly .prototype, X3DGroupingNode 
 {
 });
 
-Object .defineProperties (CADAssembly, X3DNode .getStaticProperties ("CADAssembly", "CADGeometry", 2, "children", "3.1"));
-
 Object .defineProperties (CADAssembly,
 {
+   ... X3DNode .getStaticProperties ("CADAssembly", "CADGeometry", 2, "children", "3.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

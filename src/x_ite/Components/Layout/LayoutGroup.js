@@ -145,10 +145,9 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
    },
 });
 
-Object .defineProperties (LayoutGroup, X3DNode .getStaticProperties ("LayoutGroup", "Layout", 1, "children", "3.2"));
-
 Object .defineProperties (LayoutGroup,
 {
+   ... X3DNode .getStaticProperties ("LayoutGroup", "Layout", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

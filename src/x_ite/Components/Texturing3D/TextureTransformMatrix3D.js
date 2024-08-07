@@ -75,10 +75,9 @@ Object .assign (Object .setPrototypeOf (TextureTransformMatrix3D .prototype, X3D
    },
 });
 
-Object .defineProperties (TextureTransformMatrix3D, X3DNode .getStaticProperties ("TextureTransformMatrix3D", "Texturing3D", 1, "textureTransform", "3.1"));
-
 Object .defineProperties (TextureTransformMatrix3D,
 {
+   ... X3DNode .getStaticProperties ("TextureTransformMatrix3D", "Texturing3D", 1, "textureTransform", "3.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

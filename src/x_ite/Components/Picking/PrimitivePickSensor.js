@@ -228,10 +228,9 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
    })(),
 });
 
-Object .defineProperties (PrimitivePickSensor, X3DNode .getStaticProperties ("PrimitivePickSensor", "Picking", 2, "children", "3.2"));
-
 Object .defineProperties (PrimitivePickSensor,
 {
+   ... X3DNode .getStaticProperties ("PrimitivePickSensor", "Picking", 2, "children", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -682,10 +682,9 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
    },
 });
 
-Object .defineProperties (Extrusion, X3DNode .getStaticProperties ("Extrusion", "Geometry3D", 4, "geometry", "2.0"));
-
 Object .defineProperties (Extrusion,
 {
+   ... X3DNode .getStaticProperties ("Extrusion", "Geometry3D", 4, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

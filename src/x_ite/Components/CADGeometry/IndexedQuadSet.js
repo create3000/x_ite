@@ -95,10 +95,9 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, X3DComposedGe
    },
 });
 
-Object .defineProperties (IndexedQuadSet, X3DNode .getStaticProperties ("IndexedQuadSet", "CADGeometry", 1, "geometry", "3.1"));
-
 Object .defineProperties (IndexedQuadSet,
 {
+   ... X3DNode .getStaticProperties ("IndexedQuadSet", "CADGeometry", 1, "geometry", "3.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -135,10 +135,9 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, X3DSingl
    },
 });
 
-Object .defineProperties (TextureCoordinate3D, X3DNode .getStaticProperties ("TextureCoordinate3D", "Texturing3D", 1, "texCoord", "3.1"));
-
 Object .defineProperties (TextureCoordinate3D,
 {
+   ... X3DNode .getStaticProperties ("TextureCoordinate3D", "Texturing3D", 1, "texCoord", "3.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -176,10 +176,9 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    },
 });
 
-Object .defineProperties (TimeSensor, X3DNode .getStaticProperties ("TimeSensor", "Time", 1, "children", "2.0"));
-
 Object .defineProperties (TimeSensor,
 {
+   ... X3DNode .getStaticProperties ("TimeSensor", "Time", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

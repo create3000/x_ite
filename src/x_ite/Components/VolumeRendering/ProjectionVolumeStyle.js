@@ -194,10 +194,9 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
    },
 });
 
-Object .defineProperties (ProjectionVolumeStyle, X3DNode .getStaticProperties ("ProjectionVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"));
-
 Object .defineProperties (ProjectionVolumeStyle,
 {
+   ... X3DNode .getStaticProperties ("ProjectionVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

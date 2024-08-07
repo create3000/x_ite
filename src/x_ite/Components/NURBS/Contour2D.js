@@ -133,10 +133,9 @@ function filter (array, remove)
    return array .filter (value => !set .has (value));
 }
 
-Object .defineProperties (Contour2D, X3DNode .getStaticProperties ("Contour2D", "NURBS", 4, "trimmingContour", "3.0"));
-
 Object .defineProperties (Contour2D,
 {
+   ... X3DNode .getStaticProperties ("Contour2D", "NURBS", 4, "trimmingContour", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

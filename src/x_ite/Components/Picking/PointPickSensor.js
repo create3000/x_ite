@@ -307,10 +307,9 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
    })(),
 });
 
-Object .defineProperties (PointPickSensor, X3DNode .getStaticProperties ("PointPickSensor", "Picking", 1, "children", "3.2"));
-
 Object .defineProperties (PointPickSensor,
 {
+   ... X3DNode .getStaticProperties ("PointPickSensor", "Picking", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

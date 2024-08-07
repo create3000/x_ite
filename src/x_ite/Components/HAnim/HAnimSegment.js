@@ -63,10 +63,9 @@ function HAnimSegment (executionContext)
 
 Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode .prototype);
 
-Object .defineProperties (HAnimSegment, X3DNode .getStaticProperties ("HAnimSegment", "HAnim", 1, "children", "3.0"));
-
 Object .defineProperties (HAnimSegment,
 {
+   ... X3DNode .getStaticProperties ("HAnimSegment", "HAnim", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

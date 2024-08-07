@@ -605,10 +605,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
 });
 
-Object .defineProperties (HAnimHumanoid, X3DNode .getStaticProperties ("HAnimHumanoid", "HAnim", 1, "children", "3.0"));
-
 Object .defineProperties (HAnimHumanoid,
 {
+   ... X3DNode .getStaticProperties ("HAnimHumanoid", "HAnim", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

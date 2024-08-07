@@ -246,10 +246,9 @@ Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, X3D
    },
 });
 
-Object .defineProperties (TextureProjectorParallel, X3DNode .getStaticProperties ("TextureProjectorParallel", "TextureProjection", 2, "children", "4.0"));
-
 Object .defineProperties (TextureProjectorParallel,
 {
+   ... X3DNode .getStaticProperties ("TextureProjectorParallel", "TextureProjection", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -67,10 +67,9 @@ Object .assign (Object .setPrototypeOf (TextAnnotation .prototype, X3DAnnotation
    },
 });
 
-Object .defineProperties (TextAnnotation, X3DNode .getStaticProperties ("TextAnnotation", "Annotation", 1, "children", "4.0"));
-
 Object .defineProperties (TextAnnotation,
 {
+   ... X3DNode .getStaticProperties ("TextAnnotation", "Annotation", 1, "children", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

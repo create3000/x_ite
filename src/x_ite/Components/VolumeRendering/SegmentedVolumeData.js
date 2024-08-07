@@ -236,10 +236,9 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, X3DVolum
    },
 });
 
-Object .defineProperties (SegmentedVolumeData, X3DNode .getStaticProperties ("SegmentedVolumeData", "VolumeRendering", 2, "children", "3.3"));
-
 Object .defineProperties (SegmentedVolumeData,
 {
+   ... X3DNode .getStaticProperties ("SegmentedVolumeData", "VolumeRendering", 2, "children", "3.3"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -178,10 +178,9 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
    },
 });
 
-Object .defineProperties (SphereSensor, X3DNode .getStaticProperties ("SphereSensor", "PointingDeviceSensor", 1, "children", "2.0"));
-
 Object .defineProperties (SphereSensor,
 {
+   ... X3DNode .getStaticProperties ("SphereSensor", "PointingDeviceSensor", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

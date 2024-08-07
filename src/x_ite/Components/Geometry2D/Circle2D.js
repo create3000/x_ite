@@ -98,10 +98,9 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, X3DLineGeometryNode
    },
 });
 
-Object .defineProperties (Circle2D, X3DNode .getStaticProperties ("Circle2D", "Geometry2D", 2, "geometry", "3.0"));
-
 Object .defineProperties (Circle2D,
 {
+   ... X3DNode .getStaticProperties ("Circle2D", "Geometry2D", 2, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

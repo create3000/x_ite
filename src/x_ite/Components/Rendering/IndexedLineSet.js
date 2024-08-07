@@ -272,10 +272,9 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
    },
 });
 
-Object .defineProperties (IndexedLineSet, X3DNode .getStaticProperties ("IndexedLineSet", "Rendering", 1, "geometry", "2.0"));
-
 Object .defineProperties (IndexedLineSet,
 {
+   ... X3DNode .getStaticProperties ("IndexedLineSet", "Rendering", 1, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -87,10 +87,9 @@ Object .assign (Object .setPrototypeOf (GeoLocation .prototype, X3DTransformMatr
    },
 });
 
-Object .defineProperties (GeoLocation, X3DNode .getStaticProperties ("GeoLocation", "Geospatial", 1, "children", "3.0"));
-
 Object .defineProperties (GeoLocation,
 {
+   ... X3DNode .getStaticProperties ("GeoLocation", "Geospatial", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

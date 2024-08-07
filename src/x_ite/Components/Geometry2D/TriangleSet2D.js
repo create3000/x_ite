@@ -107,10 +107,9 @@ Object .assign (Object .setPrototypeOf (TriangleSet2D .prototype, X3DGeometryNod
    },
 });
 
-Object .defineProperties (TriangleSet2D, X3DNode .getStaticProperties ("TriangleSet2D", "Geometry2D", 1, "geometry", "3.0"));
-
 Object .defineProperties (TriangleSet2D,
 {
+   ... X3DNode .getStaticProperties ("TriangleSet2D", "Geometry2D", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

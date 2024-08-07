@@ -144,10 +144,9 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode 
    },
 });
 
-Object .defineProperties (HAnimJoint, X3DNode .getStaticProperties ("HAnimJoint", "HAnim", 1, "children", "3.0"));
-
 Object .defineProperties (HAnimJoint,
 {
+   ... X3DNode .getStaticProperties ("HAnimJoint", "HAnim", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

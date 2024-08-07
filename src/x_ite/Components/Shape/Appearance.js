@@ -417,10 +417,9 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
 });
 
-Object .defineProperties (Appearance, X3DNode .getStaticProperties ("Appearance", "Shape", 1, "appearance", "2.0"));
-
 Object .defineProperties (Appearance,
 {
+   ... X3DNode .getStaticProperties ("Appearance", "Shape", 1, "appearance", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

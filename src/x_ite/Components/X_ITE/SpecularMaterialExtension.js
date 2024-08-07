@@ -154,10 +154,9 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    },
 });
 
-Object .defineProperties (SpecularMaterialExtension, X3DNode .getStaticProperties ("SpecularMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
-
 Object .defineProperties (SpecularMaterialExtension,
 {
+   ... X3DNode .getStaticProperties ("SpecularMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

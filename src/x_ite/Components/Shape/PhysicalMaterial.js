@@ -279,10 +279,9 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
 });
 
-Object .defineProperties (PhysicalMaterial, X3DNode .getStaticProperties ("PhysicalMaterial", "Shape", 2, "material", "4.0"));
-
 Object .defineProperties (PhysicalMaterial,
 {
+   ... X3DNode .getStaticProperties ("PhysicalMaterial", "Shape", 2, "material", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -70,10 +70,9 @@ function DISEntityManager (executionContext)
 
 Object .setPrototypeOf (DISEntityManager .prototype, X3DChildNode .prototype);
 
-Object .defineProperties (DISEntityManager, X3DNode .getStaticProperties ("DISEntityManager", "DIS", 2, "children", "3.0"));
-
 Object .defineProperties (DISEntityManager,
 {
+   ... X3DNode .getStaticProperties ("DISEntityManager", "DIS", 2, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

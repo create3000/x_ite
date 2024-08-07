@@ -63,10 +63,9 @@ function Coordinate (executionContext)
 
 Object .setPrototypeOf (Coordinate .prototype, X3DCoordinateNode .prototype);
 
-Object .defineProperties (Coordinate, X3DNode .getStaticProperties ("Coordinate", "Rendering", 1, "coord", "2.0"));
-
 Object .defineProperties (Coordinate,
 {
+   ... X3DNode .getStaticProperties ("Coordinate", "Rendering", 1, "coord", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

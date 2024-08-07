@@ -190,10 +190,9 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
    },
 });
 
-Object .defineProperties (NurbsOrientationInterpolator, X3DNode .getStaticProperties ("NurbsOrientationInterpolator", "NURBS", 1, "children", "3.0"));
-
 Object .defineProperties (NurbsOrientationInterpolator,
 {
+   ... X3DNode .getStaticProperties ("NurbsOrientationInterpolator", "NURBS", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -139,10 +139,9 @@ Object .assign (Object .setPrototypeOf (Analyser .prototype, X3DSoundProcessingN
    },
 });
 
-Object .defineProperties (Analyser, X3DNode .getStaticProperties ("Analyser", "Sound", 2, "children", "4.0"));
-
 Object .defineProperties (Analyser,
 {
+   ... X3DNode .getStaticProperties ("Analyser", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -315,10 +315,9 @@ Object .assign (Object .setPrototypeOf (SpotLight .prototype, X3DLightNode .prot
    },
 });
 
-Object .defineProperties (SpotLight, X3DNode .getStaticProperties ("SpotLight", "Lighting", 2, "children", "2.0"));
-
 Object .defineProperties (SpotLight,
 {
+   ... X3DNode .getStaticProperties ("SpotLight", "Lighting", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

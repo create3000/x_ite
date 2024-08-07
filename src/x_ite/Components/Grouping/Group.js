@@ -61,10 +61,9 @@ function Group (executionContext)
 
 Object .setPrototypeOf (Group .prototype, X3DGroupingNode .prototype);
 
-Object .defineProperties (Group, X3DNode .getStaticProperties ("Group", "Grouping", 1, "children", "2.0"));
-
 Object .defineProperties (Group,
 {
+   ... X3DNode .getStaticProperties ("Group", "Grouping", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

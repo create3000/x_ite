@@ -93,10 +93,9 @@ Object .assign (Object .setPrototypeOf (Fog .prototype, X3DBindableNode .prototy
    },
 });
 
-Object .defineProperties (Fog, X3DNode .getStaticProperties ("Fog", "EnvironmentalEffects", 2, "children", "2.0"));
-
 Object .defineProperties (Fog,
 {
+   ... X3DNode .getStaticProperties ("Fog", "EnvironmentalEffects", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

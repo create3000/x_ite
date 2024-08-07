@@ -126,10 +126,9 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    },
 });
 
-Object .defineProperties (AudioClip, X3DNode .getStaticProperties ("AudioClip", "Sound", 1, "source", "2.0"));
-
 Object .defineProperties (AudioClip,
 {
+   ... X3DNode .getStaticProperties ("AudioClip", "Sound", 1, "source", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

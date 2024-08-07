@@ -78,10 +78,9 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, X3DFontStyle
    },
 });
 
-Object .defineProperties (ScreenFontStyle, X3DNode .getStaticProperties ("ScreenFontStyle", "Layout", 2, "fontStyle", "3.2"));
-
 Object .defineProperties (ScreenFontStyle,
 {
+   ... X3DNode .getStaticProperties ("ScreenFontStyle", "Layout", 2, "fontStyle", "3.2"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

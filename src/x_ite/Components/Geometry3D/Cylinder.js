@@ -196,10 +196,9 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, X3DGeometryNode .pr
    },
 });
 
-Object .defineProperties (Cylinder, X3DNode .getStaticProperties ("Cylinder", "Geometry3D", 1, "geometry", "2.0"));
-
 Object .defineProperties (Cylinder,
 {
+   ... X3DNode .getStaticProperties ("Cylinder", "Geometry3D", 1, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

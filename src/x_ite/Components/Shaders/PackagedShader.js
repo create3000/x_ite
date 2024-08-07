@@ -91,10 +91,9 @@ Object .assign (Object .setPrototypeOf (PackagedShader .prototype, X3DShaderNode
    },
 });
 
-Object .defineProperties (PackagedShader, X3DNode .getStaticProperties ("PackagedShader", "Shaders", 1, "shaders", "3.0"));
-
 Object .defineProperties (PackagedShader,
 {
+   ... X3DNode .getStaticProperties ("PackagedShader", "Shaders", 1, "shaders", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

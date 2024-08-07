@@ -83,10 +83,9 @@ Object .assign (Object .setPrototypeOf (EspduTransform .prototype, X3DGroupingNo
    },
 });
 
-Object .defineProperties (EspduTransform, X3DNode .getStaticProperties ("EspduTransform", "DIS", 1, "children", "3.0"));
-
 Object .defineProperties (EspduTransform,
 {
+   ... X3DNode .getStaticProperties ("EspduTransform", "DIS", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
