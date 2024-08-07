@@ -151,6 +151,6 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    },
 });
 
-Object .defineProperties (X3DNBodyCollidableNode, X3DNode .staticProperties ("X3DNBodyCollidableNode", "RigidBodyPhysics", 1));
+Object .defineProperties (X3DNBodyCollidableNode, X3DNode .getStaticProperties ("X3DNBodyCollidableNode", "RigidBodyPhysics", 1));
 
 export default X3DNBodyCollidableNode;

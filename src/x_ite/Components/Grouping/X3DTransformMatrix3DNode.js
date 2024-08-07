@@ -122,6 +122,6 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
    groupTraverse: X3DGroupingNode .prototype .traverse,
 });
 
-Object .defineProperties (X3DTransformMatrix3DNode, X3DNode .staticProperties ("X3DTransformMatrix3DNode", "Grouping", 1));
+Object .defineProperties (X3DTransformMatrix3DNode, X3DNode .getStaticProperties ("X3DTransformMatrix3DNode", "Grouping", 1));
 
 export default X3DTransformMatrix3DNode;

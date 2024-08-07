@@ -346,7 +346,7 @@ function getMaterialKey ()
    }
 }
 
-Object .defineProperties (Material, X3DNode .staticProperties ("Material", "Shape", 1, "material", "2.0"));
+Object .defineProperties (Material, X3DNode .getStaticProperties ("Material", "Shape", 1, "material", "2.0"));
 
 Object .defineProperties (Material,
 {

@@ -135,6 +135,6 @@ Object .assign (Object .setPrototypeOf (X3DFollowerNode .prototype, X3DChildNode
    },
 });
 
-Object .defineProperties (X3DFollowerNode, X3DNode .staticProperties ("X3DFollowerNode", "Followers", 1));
+Object .defineProperties (X3DFollowerNode, X3DNode .getStaticProperties ("X3DFollowerNode", "Followers", 1));
 
 export default X3DFollowerNode;

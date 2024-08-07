@@ -139,7 +139,7 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .pr
    },
 });
 
-Object .defineProperties (Viewport, X3DNode .staticProperties ("Viewport", "Layering", 1, "viewport", "3.2"));
+Object .defineProperties (Viewport, X3DNode .getStaticProperties ("Viewport", "Layering", 1, "viewport", "3.2"));
 
 Object .defineProperties (Viewport,
 {

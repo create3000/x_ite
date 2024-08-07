@@ -65,6 +65,6 @@ Object .assign (Object .setPrototypeOf (X3DParametricGeometryNode .prototype, X3
    },
 });
 
-Object .defineProperties (X3DParametricGeometryNode, X3DNode .staticProperties ("X3DParametricGeometryNode", "NURBS", 1));
+Object .defineProperties (X3DParametricGeometryNode, X3DNode .getStaticProperties ("X3DParametricGeometryNode", "NURBS", 1));
 
 export default X3DParametricGeometryNode;

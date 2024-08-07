@@ -93,6 +93,6 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    },
 });
 
-Object .defineProperties (X3DChildNode, X3DNode .staticProperties ("X3DChildNode", "Core", 1));
+Object .defineProperties (X3DChildNode, X3DNode .getStaticProperties ("X3DChildNode", "Core", 1));
 
 export default X3DChildNode;

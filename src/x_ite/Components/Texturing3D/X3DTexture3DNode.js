@@ -165,6 +165,6 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTe
    },
 });
 
-Object .defineProperties (X3DTexture3DNode, X3DNode .staticProperties ("X3DTexture3DNode", "Texturing3D", 1));
+Object .defineProperties (X3DTexture3DNode, X3DNode .getStaticProperties ("X3DTexture3DNode", "Texturing3D", 1));
 
 export default X3DTexture3DNode;

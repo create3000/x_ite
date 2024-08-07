@@ -236,6 +236,6 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
 });
 
-Object .defineProperties (X3DShapeNode, X3DNode .staticProperties ("X3DShapeNode", "Shape", 1));
+Object .defineProperties (X3DShapeNode, X3DNode .getStaticProperties ("X3DShapeNode", "Shape", 1));
 
 export default X3DShapeNode;

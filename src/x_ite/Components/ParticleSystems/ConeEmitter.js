@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, X3DParticleEmitt
    },
 });
 
-Object .defineProperties (ConeEmitter, X3DNode .staticProperties ("ConeEmitter", "ParticleSystems", 1, "emitter", "3.2"));
+Object .defineProperties (ConeEmitter, X3DNode .getStaticProperties ("ConeEmitter", "ParticleSystems", 1, "emitter", "3.2"));
 
 Object .defineProperties (ConeEmitter,
 {

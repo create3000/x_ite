@@ -98,7 +98,7 @@ Object .assign (Object .setPrototypeOf (GeoTransform .prototype, X3DTransformMat
    },
 });
 
-Object .defineProperties (GeoTransform, X3DNode .staticProperties ("GeoTransform", "Geospatial", 2, "children", "3.0"));
+Object .defineProperties (GeoTransform, X3DNode .getStaticProperties ("GeoTransform", "Geospatial", 2, "children", "3.0"));
 
 Object .defineProperties (GeoTransform,
 {

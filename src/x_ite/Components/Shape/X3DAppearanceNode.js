@@ -81,6 +81,6 @@ Object .assign (Object .setPrototypeOf (X3DAppearanceNode .prototype, X3DNode .p
    },
 });
 
-Object .defineProperties (X3DAppearanceNode, X3DNode .staticProperties ("X3DAppearanceNode", "Shape", 1));
+Object .defineProperties (X3DAppearanceNode, X3DNode .getStaticProperties ("X3DAppearanceNode", "Shape", 1));
 
 export default X3DAppearanceNode;

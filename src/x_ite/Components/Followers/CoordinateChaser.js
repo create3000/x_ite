@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (CoordinateChaser .prototype, X3DChaserNo
    },
 });
 
-Object .defineProperties (CoordinateChaser, X3DNode .staticProperties ("CoordinateChaser", "Followers", 1, "children", "3.3"));
+Object .defineProperties (CoordinateChaser, X3DNode .getStaticProperties ("CoordinateChaser", "Followers", 1, "children", "3.3"));
 
 Object .defineProperties (CoordinateChaser,
 {

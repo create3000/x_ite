@@ -233,6 +233,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    },
 });
 
-Object .defineProperties (X3DVolumeDataNode, X3DNode .staticProperties ("X3DVolumeDataNode", "VolumeRendering", 1));
+Object .defineProperties (X3DVolumeDataNode, X3DNode .getStaticProperties ("X3DVolumeDataNode", "VolumeRendering", 1));
 
 export default X3DVolumeDataNode;

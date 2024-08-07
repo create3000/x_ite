@@ -127,6 +127,6 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentalSensorNode .prototype, X
    update () { },
 });
 
-Object .defineProperties (X3DEnvironmentalSensorNode, X3DNode .staticProperties ("X3DEnvironmentalSensorNode", "EnvironmentalSensor", 1));
+Object .defineProperties (X3DEnvironmentalSensorNode, X3DNode .getStaticProperties ("X3DEnvironmentalSensorNode", "EnvironmentalSensor", 1));
 
 export default X3DEnvironmentalSensorNode;

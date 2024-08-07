@@ -58,6 +58,6 @@ function X3DSoundNode (executionContext)
 
 Object .setPrototypeOf (X3DSoundNode .prototype, X3DChildNode .prototype);
 
-Object .defineProperties (X3DSoundNode, X3DNode .staticProperties ("X3DSoundNode", "Sound", 1));
+Object .defineProperties (X3DSoundNode, X3DNode .getStaticProperties ("X3DSoundNode", "Sound", 1));
 
 export default X3DSoundNode;

@@ -294,7 +294,7 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
    })(),
 });
 
-Object .defineProperties (SpatialSound, X3DNode .staticProperties ("SpatialSound", "Sound", 2, "children", "4.0"));
+Object .defineProperties (SpatialSound, X3DNode .getStaticProperties ("SpatialSound", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (SpatialSound,
 {

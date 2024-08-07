@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (EmissiveStrengthMaterialExtension .proto
    },
 });
 
-Object .defineProperties (EmissiveStrengthMaterialExtension, X3DNode .staticProperties ("EmissiveStrengthMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
+Object .defineProperties (EmissiveStrengthMaterialExtension, X3DNode .getStaticProperties ("EmissiveStrengthMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
 
 Object .defineProperties (EmissiveStrengthMaterialExtension,
 {

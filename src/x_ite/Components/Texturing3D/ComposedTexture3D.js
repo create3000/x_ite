@@ -169,7 +169,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
    },
 });
 
-Object .defineProperties (ComposedTexture3D, X3DNode .staticProperties ("ComposedTexture3D", "Texturing3D", 1, "texture", "3.1"));
+Object .defineProperties (ComposedTexture3D, X3DNode .getStaticProperties ("ComposedTexture3D", "Texturing3D", 1, "texture", "3.1"));
 
 Object .defineProperties (ComposedTexture3D,
 {

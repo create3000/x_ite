@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (EaseInEaseOut .prototype, X3DInterpolato
    },
 });
 
-Object .defineProperties (EaseInEaseOut, X3DNode .staticProperties ("EaseInEaseOut", "Interpolation", 4, "children", "3.2"));
+Object .defineProperties (EaseInEaseOut, X3DNode .getStaticProperties ("EaseInEaseOut", "Interpolation", 4, "children", "3.2"));
 
 Object .defineProperties (EaseInEaseOut,
 {

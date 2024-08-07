@@ -67,7 +67,7 @@ Object .assign (Object .setPrototypeOf (URLAnnotation .prototype, X3DAnnotationN
    },
 });
 
-Object .defineProperties (URLAnnotation, X3DNode .staticProperties ("URLAnnotation", "Annotation", 1, "children", "4.0"));
+Object .defineProperties (URLAnnotation, X3DNode .getStaticProperties ("URLAnnotation", "Annotation", 1, "children", "4.0"));
 
 Object .defineProperties (URLAnnotation,
 {

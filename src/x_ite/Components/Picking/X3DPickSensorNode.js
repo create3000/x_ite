@@ -425,6 +425,6 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    },
 });
 
-Object .defineProperties (X3DPickSensorNode, X3DNode .staticProperties ("X3DPickSensorNode", "Picking", 1));
+Object .defineProperties (X3DPickSensorNode, X3DNode .getStaticProperties ("X3DPickSensorNode", "Picking", 1));
 
 export default X3DPickSensorNode;

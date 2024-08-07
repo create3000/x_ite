@@ -1301,6 +1301,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
 });
 
-Object .defineProperties (X3DGeometryNode, X3DNode .staticProperties ("X3DGeometryNode", "Rendering", 1));
+Object .defineProperties (X3DGeometryNode, X3DNode .getStaticProperties ("X3DGeometryNode", "Rendering", 1));
 
 export default X3DGeometryNode;

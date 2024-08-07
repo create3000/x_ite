@@ -129,7 +129,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    },
 });
 
-Object .defineProperties (TransmissionMaterialExtension, X3DNode .staticProperties ("TransmissionMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
+Object .defineProperties (TransmissionMaterialExtension, X3DNode .getStaticProperties ("TransmissionMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
 
 Object .defineProperties (TransmissionMaterialExtension,
 {

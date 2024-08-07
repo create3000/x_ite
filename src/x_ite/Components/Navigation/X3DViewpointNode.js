@@ -587,6 +587,6 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    }
 });
 
-Object .defineProperties (X3DViewpointNode, X3DNode .staticProperties ("X3DViewpointNode", "Navigation", 1));
+Object .defineProperties (X3DViewpointNode, X3DNode .getStaticProperties ("X3DViewpointNode", "Navigation", 1));
 
 export default X3DViewpointNode;

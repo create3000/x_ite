@@ -61,7 +61,7 @@ function Gain (executionContext)
 
 Object .setPrototypeOf (Gain .prototype, X3DSoundProcessingNode .prototype);
 
-Object .defineProperties (Gain, X3DNode .staticProperties ("Gain", "Sound", 2, "children", "4.0"));
+Object .defineProperties (Gain, X3DNode .getStaticProperties ("Gain", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (Gain,
 {

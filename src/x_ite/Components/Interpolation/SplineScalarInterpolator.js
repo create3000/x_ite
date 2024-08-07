@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (SplineScalarInterpolator .prototype, X3D
    },
 });
 
-Object .defineProperties (SplineScalarInterpolator, X3DNode .staticProperties ("SplineScalarInterpolator", "Interpolation", 4, "children", "3.2"));
+Object .defineProperties (SplineScalarInterpolator, X3DNode .getStaticProperties ("SplineScalarInterpolator", "Interpolation", 4, "children", "3.2"));
 
 Object .defineProperties (SplineScalarInterpolator,
 {

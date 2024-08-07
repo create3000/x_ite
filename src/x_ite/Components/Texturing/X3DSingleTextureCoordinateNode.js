@@ -82,6 +82,6 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureCoordinateNode .prototyp
    },
 });
 
-Object .defineProperties (X3DSingleTextureCoordinateNode, X3DNode .staticProperties ("X3DSingleTextureCoordinateNode", "Texturing", 1));
+Object .defineProperties (X3DSingleTextureCoordinateNode, X3DNode .getStaticProperties ("X3DSingleTextureCoordinateNode", "Texturing", 1));
 
 export default X3DSingleTextureCoordinateNode;

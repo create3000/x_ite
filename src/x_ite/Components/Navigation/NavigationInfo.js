@@ -305,7 +305,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    }
 });
 
-Object .defineProperties (NavigationInfo, X3DNode .staticProperties ("NavigationInfo", "Navigation", 1, "children", "2.0"));
+Object .defineProperties (NavigationInfo, X3DNode .getStaticProperties ("NavigationInfo", "Navigation", 1, "children", "2.0"));
 
 Object .defineProperties (NavigationInfo,
 {

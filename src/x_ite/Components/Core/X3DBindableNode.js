@@ -84,7 +84,7 @@ Object .assign (Object .setPrototypeOf (X3DBindableNode .prototype, X3DChildNode
    }
 });
 
-Object .defineProperties (X3DBindableNode, X3DNode .staticProperties ("X3DBindableNode", "Core", 1));
+Object .defineProperties (X3DBindableNode, X3DNode .getStaticProperties ("X3DBindableNode", "Core", 1));
 
 Object .defineProperties (X3DBindableNode,
 {

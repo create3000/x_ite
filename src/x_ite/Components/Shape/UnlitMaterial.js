@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMat
    },
 });
 
-Object .defineProperties (UnlitMaterial, X3DNode .staticProperties ("UnlitMaterial", "Shape", 1, "material", "4.0"));
+Object .defineProperties (UnlitMaterial, X3DNode .getStaticProperties ("UnlitMaterial", "Shape", 1, "material", "4.0"));
 
 Object .defineProperties (UnlitMaterial,
 {

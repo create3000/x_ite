@@ -116,6 +116,6 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
    },
 });
 
-Object .defineProperties (X3DPointingDeviceSensorNode, X3DNode .staticProperties ("X3DPointingDeviceSensorNode", "PointingDeviceSensor", 1));
+Object .defineProperties (X3DPointingDeviceSensorNode, X3DNode .getStaticProperties ("X3DPointingDeviceSensorNode", "PointingDeviceSensor", 1));
 
 export default X3DPointingDeviceSensorNode;

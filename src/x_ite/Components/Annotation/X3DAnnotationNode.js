@@ -64,6 +64,6 @@ Object .assign (Object .setPrototypeOf (X3DAnnotationNode .prototype, X3DChildNo
    },
 });
 
-Object .defineProperties (X3DAnnotationNode, X3DNode .staticProperties ("X3DAnnotationNode", "Annotation", 1));
+Object .defineProperties (X3DAnnotationNode, X3DNode .getStaticProperties ("X3DAnnotationNode", "Annotation", 1));
 
 export default X3DAnnotationNode;

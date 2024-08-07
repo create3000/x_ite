@@ -58,6 +58,6 @@ function X3DTextureTransformNode (executionContext)
 
 Object .setPrototypeOf (X3DTextureTransformNode .prototype, X3DAppearanceChildNode .prototype);
 
-Object .defineProperties (X3DTextureTransformNode, X3DNode .staticProperties ("X3DTextureTransformNode", "Texturing", 1));
+Object .defineProperties (X3DTextureTransformNode, X3DNode .getStaticProperties ("X3DTextureTransformNode", "Texturing", 1));
 
 export default X3DTextureTransformNode;

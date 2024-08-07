@@ -366,7 +366,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
    },
 });
 
-Object .defineProperties (ImageCubeMapTexture, X3DNode .staticProperties ("ImageCubeMapTexture", "CubeMapTexturing", 2, "texture", "3.0"));
+Object .defineProperties (ImageCubeMapTexture, X3DNode .getStaticProperties ("ImageCubeMapTexture", "CubeMapTexturing", 2, "texture", "3.0"));
 
 Object .defineProperties (ImageCubeMapTexture,
 {

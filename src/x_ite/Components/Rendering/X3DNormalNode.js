@@ -58,6 +58,6 @@ function X3DNormalNode (executionContext)
 
 Object .setPrototypeOf (X3DNormalNode .prototype, X3DGeometricPropertyNode .prototype);
 
-Object .defineProperties (X3DNormalNode, X3DNode .staticProperties ("X3DNormalNode", "Rendering", 2));
+Object .defineProperties (X3DNormalNode, X3DNode .getStaticProperties ("X3DNormalNode", "Rendering", 2));
 
 export default X3DNormalNode;

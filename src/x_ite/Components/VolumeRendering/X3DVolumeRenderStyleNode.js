@@ -121,6 +121,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeRenderStyleNode .prototype, X3D
    },
 });
 
-Object .defineProperties (X3DVolumeRenderStyleNode, X3DNode .staticProperties ("X3DVolumeRenderStyleNode", "VolumeRendering", 1));
+Object .defineProperties (X3DVolumeRenderStyleNode, X3DNode .getStaticProperties ("X3DVolumeRenderStyleNode", "VolumeRendering", 1));
 
 export default X3DVolumeRenderStyleNode;

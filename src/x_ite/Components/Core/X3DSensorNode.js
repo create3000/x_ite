@@ -58,6 +58,6 @@ function X3DSensorNode (executionContext)
 
 Object .setPrototypeOf (X3DSensorNode .prototype, X3DChildNode .prototype);
 
-Object .defineProperties (X3DSensorNode, X3DNode .staticProperties ("X3DSensorNode", "Core", 1));
+Object .defineProperties (X3DSensorNode, X3DNode .getStaticProperties ("X3DSensorNode", "Core", 1));
 
 export default X3DSensorNode;

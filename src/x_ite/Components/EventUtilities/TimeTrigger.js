@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (TimeTrigger .prototype, X3DTriggerNode .
    },
 });
 
-Object .defineProperties (TimeTrigger, X3DNode .staticProperties ("TimeTrigger", "EventUtilities", 1, "children", "3.0"));
+Object .defineProperties (TimeTrigger, X3DNode .getStaticProperties ("TimeTrigger", "EventUtilities", 1, "children", "3.0"));
 
 Object .defineProperties (TimeTrigger,
 {

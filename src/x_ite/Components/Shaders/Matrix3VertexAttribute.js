@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (Matrix3VertexAttribute .prototype, X3DVe
    },
 });
 
-Object .defineProperties (Matrix3VertexAttribute, X3DNode .staticProperties ("Matrix3VertexAttribute", "Shaders", 1, "attrib", "3.0"));
+Object .defineProperties (Matrix3VertexAttribute, X3DNode .getStaticProperties ("Matrix3VertexAttribute", "Shaders", 1, "attrib", "3.0"));
 
 Object .defineProperties (Matrix3VertexAttribute,
 {

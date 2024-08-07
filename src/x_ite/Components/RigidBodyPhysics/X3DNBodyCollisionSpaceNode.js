@@ -72,6 +72,6 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollisionSpaceNode .prototype, X
    },
 });
 
-Object .defineProperties (X3DNBodyCollisionSpaceNode, X3DNode .staticProperties ("X3DNBodyCollisionSpaceNode", "RigidBodyPhysics", 1));
+Object .defineProperties (X3DNBodyCollisionSpaceNode, X3DNode .getStaticProperties ("X3DNBodyCollisionSpaceNode", "RigidBodyPhysics", 1));
 
 export default X3DNBodyCollisionSpaceNode;

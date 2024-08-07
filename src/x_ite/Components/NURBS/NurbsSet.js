@@ -145,7 +145,7 @@ function filter (array, remove)
    return array .filter (value => !set .has (value));
 }
 
-Object .defineProperties (NurbsSet, X3DNode .staticProperties ("NurbsSet", "NURBS", 2, "children", "3.0"));
+Object .defineProperties (NurbsSet, X3DNode .getStaticProperties ("NurbsSet", "NURBS", 2, "children", "3.0"));
 
 Object .defineProperties (NurbsSet,
 {

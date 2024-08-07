@@ -695,6 +695,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
    })(),
 });
 
-Object .defineProperties (X3DLineGeometryNode, X3DNode .staticProperties ("X3DLineGeometryNode", "Rendering", 1));
+Object .defineProperties (X3DLineGeometryNode, X3DNode .getStaticProperties ("X3DLineGeometryNode", "Rendering", 1));
 
 export default X3DLineGeometryNode;

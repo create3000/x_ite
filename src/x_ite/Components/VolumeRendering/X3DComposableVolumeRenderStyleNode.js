@@ -58,6 +58,6 @@ function X3DComposableVolumeRenderStyleNode (executionContext)
 
 Object .setPrototypeOf (X3DComposableVolumeRenderStyleNode .prototype, X3DVolumeRenderStyleNode .prototype);
 
-Object .defineProperties (X3DComposableVolumeRenderStyleNode, X3DNode .staticProperties ("X3DComposableVolumeRenderStyleNode", "VolumeRendering", 1));
+Object .defineProperties (X3DComposableVolumeRenderStyleNode, X3DNode .getStaticProperties ("X3DComposableVolumeRenderStyleNode", "VolumeRendering", 1));
 
 export default X3DComposableVolumeRenderStyleNode;

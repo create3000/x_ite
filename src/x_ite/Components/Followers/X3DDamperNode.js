@@ -160,6 +160,6 @@ Object .assign (Object .setPrototypeOf (X3DDamperNode .prototype, X3DFollowerNod
    },
 });
 
-Object .defineProperties (X3DDamperNode, X3DNode .staticProperties ("X3DDamperNode", "Followers", 1));
+Object .defineProperties (X3DDamperNode, X3DNode .getStaticProperties ("X3DDamperNode", "Followers", 1));
 
 export default X3DDamperNode;

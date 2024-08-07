@@ -221,6 +221,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DSo
    },
 });
 
-Object .defineProperties (X3DSoundProcessingNode, X3DNode .staticProperties ("X3DSoundProcessingNode", "Sound", 2));
+Object .defineProperties (X3DSoundProcessingNode, X3DNode .getStaticProperties ("X3DSoundProcessingNode", "Sound", 2));
 
 export default X3DSoundProcessingNode;

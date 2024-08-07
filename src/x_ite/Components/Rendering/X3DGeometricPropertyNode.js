@@ -57,6 +57,6 @@ function X3DGeometricPropertyNode (executionContext)
 
 Object .setPrototypeOf (X3DGeometricPropertyNode .prototype, X3DNode .prototype);
 
-Object .defineProperties (X3DGeometricPropertyNode, X3DNode .staticProperties ("X3DGeometricPropertyNode", "Rendering", 1));
+Object .defineProperties (X3DGeometricPropertyNode, X3DNode .getStaticProperties ("X3DGeometricPropertyNode", "Rendering", 1));
 
 export default X3DGeometricPropertyNode;

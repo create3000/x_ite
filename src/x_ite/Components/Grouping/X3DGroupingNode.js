@@ -661,6 +661,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
 });
 
-Object .defineProperties (X3DGroupingNode, X3DNode .staticProperties ("X3DGroupingNode", "Grouping", 1));
+Object .defineProperties (X3DGroupingNode, X3DNode .getStaticProperties ("X3DGroupingNode", "Grouping", 1));
 
 export default X3DGroupingNode;

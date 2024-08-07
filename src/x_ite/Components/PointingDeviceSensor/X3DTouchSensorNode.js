@@ -90,6 +90,6 @@ Object .assign (Object .setPrototypeOf (X3DTouchSensorNode .prototype, X3DPointi
    })(),
 });
 
-Object .defineProperties (X3DTouchSensorNode, X3DNode .staticProperties ("X3DTouchSensorNode", "PointingDeviceSensor", 1));
+Object .defineProperties (X3DTouchSensorNode, X3DNode .getStaticProperties ("X3DTouchSensorNode", "PointingDeviceSensor", 1));
 
 export default X3DTouchSensorNode;

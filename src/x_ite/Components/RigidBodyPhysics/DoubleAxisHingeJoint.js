@@ -249,7 +249,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
    })(),
 });
 
-Object .defineProperties (DoubleAxisHingeJoint, X3DNode .staticProperties ("DoubleAxisHingeJoint", "RigidBodyPhysics", 2, "joints", "3.2"));
+Object .defineProperties (DoubleAxisHingeJoint, X3DNode .getStaticProperties ("DoubleAxisHingeJoint", "RigidBodyPhysics", 2, "joints", "3.2"));
 
 Object .defineProperties (DoubleAxisHingeJoint,
 {

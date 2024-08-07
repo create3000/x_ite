@@ -68,7 +68,7 @@ function Contact (executionContext)
 
 Object .setPrototypeOf (Contact .prototype, X3DNode .prototype);
 
-Object .defineProperties (Contact, X3DNode .staticProperties ("Contact", "RigidBodyPhysics", 2, "contacts", "3.2"));
+Object .defineProperties (Contact, X3DNode .getStaticProperties ("Contact", "RigidBodyPhysics", 2, "contacts", "3.2"));
 
 Object .defineProperties (Contact,
 {

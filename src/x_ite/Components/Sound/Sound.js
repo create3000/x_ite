@@ -373,7 +373,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    })(),
 });
 
-Object .defineProperties (Sound, X3DNode .staticProperties ("Sound", "Sound", 1, "children", "2.0"));
+Object .defineProperties (Sound, X3DNode .getStaticProperties ("Sound", "Sound", 1, "children", "2.0"));
 
 Object .defineProperties (Sound,
 {

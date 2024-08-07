@@ -191,7 +191,7 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, X3DGeometryNode .
    })(),
 });
 
-Object .defineProperties (ArcClose2D, X3DNode .staticProperties ("ArcClose2D", "Geometry2D", 2, "geometry", "3.0"));
+Object .defineProperties (ArcClose2D, X3DNode .getStaticProperties ("ArcClose2D", "Geometry2D", 2, "geometry", "3.0"));
 
 Object .defineProperties (ArcClose2D,
 {

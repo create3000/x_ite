@@ -111,7 +111,7 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, X3DParticle
    })(),
 });
 
-Object .defineProperties (WindPhysicsModel, X3DNode .staticProperties ("WindPhysicsModel", "ParticleSystems", 1, "physics", "3.2"));
+Object .defineProperties (WindPhysicsModel, X3DNode .getStaticProperties ("WindPhysicsModel", "ParticleSystems", 1, "physics", "3.2"));
 
 Object .defineProperties (WindPhysicsModel,
 {

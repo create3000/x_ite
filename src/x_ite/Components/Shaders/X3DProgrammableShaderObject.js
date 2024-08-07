@@ -1436,6 +1436,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DProgrammableShaderObject, X3DNode .staticProperties ("X3DProgrammableShaderObject", "Shaders", 1));
+Object .defineProperties (X3DProgrammableShaderObject, X3DNode .getStaticProperties ("X3DProgrammableShaderObject", "Shaders", 1));
 
 export default X3DProgrammableShaderObject;

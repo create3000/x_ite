@@ -203,7 +203,7 @@ Object .assign (Object .setPrototypeOf (VolumePickSensor .prototype, X3DPickSens
    })(),
 });
 
-Object .defineProperties (VolumePickSensor, X3DNode .staticProperties ("VolumePickSensor", "Picking", 3, "children", "3.2"));
+Object .defineProperties (VolumePickSensor, X3DNode .getStaticProperties ("VolumePickSensor", "Picking", 3, "children", "3.2"));
 
 Object .defineProperties (VolumePickSensor,
 {

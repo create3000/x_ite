@@ -422,6 +422,6 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
 });
 
-Object .defineProperties (X3DLayerNode, X3DNode .staticProperties ("X3DLayerNode", "Layering", 1));
+Object .defineProperties (X3DLayerNode, X3DNode .getStaticProperties ("X3DLayerNode", "Layering", 1));
 
 export default X3DLayerNode;

@@ -148,7 +148,7 @@ Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearance
    },
 });
 
-Object .defineProperties (LineProperties, X3DNode .staticProperties ("LineProperties", "Shape", 2, "lineProperties", "3.0"));
+Object .defineProperties (LineProperties, X3DNode .getStaticProperties ("LineProperties", "Shape", 2, "lineProperties", "3.0"));
 
 Object .defineProperties (LineProperties,
 {

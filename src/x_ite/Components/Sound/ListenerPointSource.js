@@ -148,7 +148,7 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSound
    })(),
 });
 
-Object .defineProperties (ListenerPointSource, X3DNode .staticProperties ("ListenerPointSource", "Sound", 2, "children", "4.0"));
+Object .defineProperties (ListenerPointSource, X3DNode .getStaticProperties ("ListenerPointSource", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (ListenerPointSource,
 {

@@ -187,6 +187,6 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    },
 });
 
-Object .defineProperties (X3DPointGeometryNode, X3DNode .staticProperties ("X3DPointGeometryNode", "Rendering", 1));
+Object .defineProperties (X3DPointGeometryNode, X3DNode .getStaticProperties ("X3DPointGeometryNode", "Rendering", 1));
 
 export default X3DPointGeometryNode;

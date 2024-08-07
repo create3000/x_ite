@@ -243,6 +243,6 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
 });
 
-Object .defineProperties (X3DFontStyleNode, X3DNode .staticProperties ("X3DFontStyleNode", "Text", 1));
+Object .defineProperties (X3DFontStyleNode, X3DNode .getStaticProperties ("X3DFontStyleNode", "Text", 1));
 
 export default X3DFontStyleNode;

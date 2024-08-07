@@ -377,6 +377,6 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    })(),
 });
 
-Object .defineProperties (X3DNurbsSurfaceGeometryNode, X3DNode .staticProperties ("X3DNurbsSurfaceGeometryNode", "NURBS", 1));
+Object .defineProperties (X3DNurbsSurfaceGeometryNode, X3DNode .getStaticProperties ("X3DNurbsSurfaceGeometryNode", "NURBS", 1));
 
 export default X3DNurbsSurfaceGeometryNode;

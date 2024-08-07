@@ -170,7 +170,7 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
    },
 });
 
-Object .defineProperties (LayerSet, X3DNode .staticProperties ("LayerSet", "Layering", 1, "children", "3.2"));
+Object .defineProperties (LayerSet, X3DNode .getStaticProperties ("LayerSet", "Layering", 1, "children", "3.2"));
 
 Object .defineProperties (LayerSet,
 {

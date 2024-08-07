@@ -225,6 +225,6 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
    },
 });
 
-Object .defineProperties (X3DChaserNode, X3DNode .staticProperties ("X3DChaserNode", "Followers", 1));
+Object .defineProperties (X3DChaserNode, X3DNode .getStaticProperties ("X3DChaserNode", "Followers", 1));
 
 export default X3DChaserNode;

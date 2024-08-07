@@ -206,7 +206,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    },
 });
 
-Object .defineProperties (StaticGroup, X3DNode .staticProperties ("StaticGroup", "Grouping", 3, "children", "3.0"));
+Object .defineProperties (StaticGroup, X3DNode .getStaticProperties ("StaticGroup", "Grouping", 3, "children", "3.0"));
 
 Object .defineProperties (StaticGroup,
 {

@@ -281,6 +281,6 @@ Object .assign (X3DUrlObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DUrlObject, X3DNode .staticProperties ("X3DUrlObject", "Networking", 1));
+Object .defineProperties (X3DUrlObject, X3DNode .getStaticProperties ("X3DUrlObject", "Networking", 1));
 
 export default X3DUrlObject;

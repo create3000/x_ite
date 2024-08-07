@@ -137,6 +137,6 @@ Object .assign (Object .setPrototypeOf (X3DSequencerNode .prototype, X3DChildNod
    },
 });
 
-Object .defineProperties (X3DSequencerNode, X3DNode .staticProperties ("X3DSequencerNode", "EventUtilities", 1));
+Object .defineProperties (X3DSequencerNode, X3DNode .getStaticProperties ("X3DSequencerNode", "EventUtilities", 1));
 
 export default X3DSequencerNode;

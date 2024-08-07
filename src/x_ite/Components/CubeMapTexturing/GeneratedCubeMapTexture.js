@@ -265,7 +265,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
    })(),
 });
 
-Object .defineProperties (GeneratedCubeMapTexture, X3DNode .staticProperties ("GeneratedCubeMapTexture", "CubeMapTexturing", 3, "texture", "3.0"));
+Object .defineProperties (GeneratedCubeMapTexture, X3DNode .getStaticProperties ("GeneratedCubeMapTexture", "CubeMapTexturing", 3, "texture", "3.0"));
 
 Object .defineProperties (GeneratedCubeMapTexture,
 {

@@ -58,6 +58,6 @@ function X3DProductStructureChildNode (executionContext)
 
 Object .setPrototypeOf (X3DProductStructureChildNode .prototype, X3DChildNode .prototype);
 
-Object .defineProperties (X3DProductStructureChildNode, X3DNode .staticProperties ("X3DProductStructureChildNode", "CADGeometry", 2));
+Object .defineProperties (X3DProductStructureChildNode, X3DNode .getStaticProperties ("X3DProductStructureChildNode", "CADGeometry", 2));
 
 export default X3DProductStructureChildNode;

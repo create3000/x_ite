@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (FloatVertexAttribute .prototype, X3DVert
    },
 });
 
-Object .defineProperties (FloatVertexAttribute, X3DNode .staticProperties ("FloatVertexAttribute", "Shaders", 1, "attrib", "3.0"));
+Object .defineProperties (FloatVertexAttribute, X3DNode .getStaticProperties ("FloatVertexAttribute", "Shaders", 1, "attrib", "3.0"));
 
 Object .defineProperties (FloatVertexAttribute,
 {

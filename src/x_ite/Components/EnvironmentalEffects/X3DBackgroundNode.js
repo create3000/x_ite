@@ -615,7 +615,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
 });
 
-Object .defineProperties (X3DBackgroundNode, X3DNode .staticProperties ("X3DBackgroundNode", "EnvironmentalEffects", 1));
+Object .defineProperties (X3DBackgroundNode, X3DNode .getStaticProperties ("X3DBackgroundNode", "EnvironmentalEffects", 1));
 
 for (let index = 0; index < 6; ++ index)
 {

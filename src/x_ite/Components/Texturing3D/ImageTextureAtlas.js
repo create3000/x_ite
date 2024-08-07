@@ -212,7 +212,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
    },
 });
 
-Object .defineProperties (ImageTextureAtlas, X3DNode .staticProperties ("ImageTextureAtlas", "Texturing3D", 1, "texture", "4.0"));
+Object .defineProperties (ImageTextureAtlas, X3DNode .getStaticProperties ("ImageTextureAtlas", "Texturing3D", 1, "texture", "4.0"));
 
 Object .defineProperties (ImageTextureAtlas,
 {

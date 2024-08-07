@@ -127,7 +127,7 @@ function filter (array, remove)
    return array .filter (value => !set .has (value));
 }
 
-Object .defineProperties (NurbsTrimmedSurface, X3DNode .staticProperties ("NurbsTrimmedSurface", "NURBS", 4, "geometry", "3.0"));
+Object .defineProperties (NurbsTrimmedSurface, X3DNode .getStaticProperties ("NurbsTrimmedSurface", "NURBS", 4, "geometry", "3.0"));
 
 Object .defineProperties (NurbsTrimmedSurface,
 {

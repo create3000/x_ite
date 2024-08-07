@@ -219,6 +219,6 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    },
 });
 
-Object .defineProperties (X3DLightNode, X3DNode .staticProperties ("X3DLightNode", "Lighting", 1));
+Object .defineProperties (X3DLightNode, X3DNode .getStaticProperties ("X3DLightNode", "Lighting", 1));
 
 export default X3DLightNode;

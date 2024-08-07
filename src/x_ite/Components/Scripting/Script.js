@@ -464,7 +464,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
 });
 
-Object .defineProperties (Script, X3DNode .staticProperties ("Script", "Scripting", 1, "children", "2.0"));
+Object .defineProperties (Script, X3DNode .getStaticProperties ("Script", "Scripting", 1, "children", "2.0"));
 
 Object .defineProperties (Script,
 {

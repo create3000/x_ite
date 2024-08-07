@@ -109,7 +109,7 @@ Object .assign (Object .setPrototypeOf (Convolver .prototype, X3DSoundProcessing
    },
 });
 
-Object .defineProperties (Convolver, X3DNode .staticProperties ("Convolver", "Sound", 2, "children", "4.0"));
+Object .defineProperties (Convolver, X3DNode .getStaticProperties ("Convolver", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (Convolver,
 {

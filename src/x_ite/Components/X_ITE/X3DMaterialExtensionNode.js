@@ -73,6 +73,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, X3D
    },
 });
 
-Object .defineProperties (X3DMaterialExtensionNode, X3DNode .staticProperties ("X3DMaterialExtensionNode", "X_ITE", 1));
+Object .defineProperties (X3DMaterialExtensionNode, X3DNode .getStaticProperties ("X3DMaterialExtensionNode", "X_ITE", 1));
 
 export default X3DMaterialExtensionNode;

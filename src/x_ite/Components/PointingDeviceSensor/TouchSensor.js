@@ -63,7 +63,7 @@ function TouchSensor (executionContext)
 
 Object .setPrototypeOf (TouchSensor .prototype, X3DTouchSensorNode .prototype);
 
-Object .defineProperties (TouchSensor, X3DNode .staticProperties ("TouchSensor", "PointingDeviceSensor", 1, "children", "2.0"));
+Object .defineProperties (TouchSensor, X3DNode .getStaticProperties ("TouchSensor", "PointingDeviceSensor", 1, "children", "2.0"));
 
 Object .defineProperties (TouchSensor,
 {

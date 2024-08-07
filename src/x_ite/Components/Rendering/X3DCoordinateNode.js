@@ -180,6 +180,6 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometr
    })(),
 });
 
-Object .defineProperties (X3DCoordinateNode, X3DNode .staticProperties ("X3DCoordinateNode", "Rendering", 1));
+Object .defineProperties (X3DCoordinateNode, X3DNode .getStaticProperties ("X3DCoordinateNode", "Rendering", 1));
 
 export default X3DCoordinateNode;

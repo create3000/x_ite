@@ -121,6 +121,6 @@ Object .assign (Object .setPrototypeOf (X3DInterpolatorNode .prototype, X3DChild
    interpolate () { },
 });
 
-Object .defineProperties (X3DInterpolatorNode, X3DNode .staticProperties ("X3DInterpolatorNode", "Interpolation", 1));
+Object .defineProperties (X3DInterpolatorNode, X3DNode .getStaticProperties ("X3DInterpolatorNode", "Interpolation", 1));
 
 export default X3DInterpolatorNode;

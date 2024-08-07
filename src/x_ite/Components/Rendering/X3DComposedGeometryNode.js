@@ -353,6 +353,6 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
    })(),
 });
 
-Object .defineProperties (X3DComposedGeometryNode, X3DNode .staticProperties ("X3DComposedGeometryNode", "Rendering", 1));
+Object .defineProperties (X3DComposedGeometryNode, X3DNode .getStaticProperties ("X3DComposedGeometryNode", "Rendering", 1));
 
 export default X3DComposedGeometryNode;

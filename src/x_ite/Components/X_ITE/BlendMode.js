@@ -157,7 +157,7 @@ Object .assign (Object .setPrototypeOf (BlendMode .prototype, X3DAppearanceChild
    },
 });
 
-Object .defineProperties (BlendMode, X3DNode .staticProperties ("BlendMode", "X_ITE", 1, "blendMode", "3.3"));
+Object .defineProperties (BlendMode, X3DNode .getStaticProperties ("BlendMode", "X_ITE", 1, "blendMode", "3.3"));
 
 Object .defineProperties (BlendMode,
 {

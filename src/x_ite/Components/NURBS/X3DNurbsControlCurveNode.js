@@ -57,6 +57,6 @@ function X3DNurbsControlCurveNode (executionContext)
 
 Object .setPrototypeOf (X3DNurbsControlCurveNode .prototype, X3DNode .prototype);
 
-Object .defineProperties (X3DNurbsControlCurveNode, X3DNode .staticProperties ("X3DNurbsControlCurveNode", "NURBS", 1));
+Object .defineProperties (X3DNurbsControlCurveNode, X3DNode .getStaticProperties ("X3DNurbsControlCurveNode", "NURBS", 1));
 
 export default X3DNurbsControlCurveNode;

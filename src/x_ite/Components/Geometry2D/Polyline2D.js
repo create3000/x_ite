@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (Polyline2D .prototype, X3DLineGeometryNo
    },
 });
 
-Object .defineProperties (Polyline2D, X3DNode .staticProperties ("Polyline2D", "Geometry2D", 1, "geometry", "3.0"));
+Object .defineProperties (Polyline2D, X3DNode .getStaticProperties ("Polyline2D", "Geometry2D", 1, "geometry", "3.0"));
 
 Object .defineProperties (Polyline2D,
 {

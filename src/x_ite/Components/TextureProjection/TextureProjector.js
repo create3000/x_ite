@@ -191,7 +191,7 @@ Object .assign (Object .setPrototypeOf (TextureProjector .prototype, X3DTextureP
    },
 });
 
-Object .defineProperties (TextureProjector, X3DNode .staticProperties ("TextureProjector", "TextureProjection", 2, "children", "4.0"));
+Object .defineProperties (TextureProjector, X3DNode .getStaticProperties ("TextureProjector", "TextureProjection", 2, "children", "4.0"));
 
 Object .defineProperties (TextureProjector,
 {

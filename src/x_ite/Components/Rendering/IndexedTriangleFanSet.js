@@ -128,7 +128,7 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleFanSet .prototype, X3DCom
    },
 });
 
-Object .defineProperties (IndexedTriangleFanSet, X3DNode .staticProperties ("IndexedTriangleFanSet", "Rendering", 3, "geometry", "3.0"));
+Object .defineProperties (IndexedTriangleFanSet, X3DNode .getStaticProperties ("IndexedTriangleFanSet", "Rendering", 3, "geometry", "3.0"));
 
 Object .defineProperties (IndexedTriangleFanSet,
 {

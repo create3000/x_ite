@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (TexCoordDamper2D .prototype, X3DDamperNo
    },
 });
 
-Object .defineProperties (TexCoordDamper2D, X3DNode .staticProperties ("TexCoordDamper2D", "Followers", 1, "children", "3.2"));
+Object .defineProperties (TexCoordDamper2D, X3DNode .getStaticProperties ("TexCoordDamper2D", "Followers", 1, "children", "3.2"));
 
 Object .defineProperties (TexCoordDamper2D,
 {

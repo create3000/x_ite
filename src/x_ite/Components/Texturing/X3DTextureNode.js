@@ -72,6 +72,6 @@ Object .assign (Object .setPrototypeOf (X3DTextureNode .prototype, X3DAppearance
    },
 });
 
-Object .defineProperties (X3DTextureNode, X3DNode .staticProperties ("X3DTextureNode", "Texturing", 1));
+Object .defineProperties (X3DTextureNode, X3DNode .getStaticProperties ("X3DTextureNode", "Texturing", 1));
 
 export default X3DTextureNode;

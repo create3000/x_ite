@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (BooleanToggle .prototype, X3DChildNode .
    },
 });
 
-Object .defineProperties (BooleanToggle, X3DNode .staticProperties ("BooleanToggle", "EventUtilities", 1, "children", "3.0"));
+Object .defineProperties (BooleanToggle, X3DNode .getStaticProperties ("BooleanToggle", "EventUtilities", 1, "children", "3.0"));
 
 Object .defineProperties (BooleanToggle,
 {

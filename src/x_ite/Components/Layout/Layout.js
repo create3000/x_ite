@@ -602,7 +602,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    },
 });
 
-Object .defineProperties (Layout, X3DNode .staticProperties ("Layout", "Layout", 1, "layout", "3.2"));
+Object .defineProperties (Layout, X3DNode .getStaticProperties ("Layout", "Layout", 1, "layout", "3.2"));
 
 Object .defineProperties (Layout,
 {

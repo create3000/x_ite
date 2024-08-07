@@ -104,6 +104,6 @@ Object .assign (Object .setPrototypeOf (X3DKeyDeviceSensorNode .prototype, X3DSe
    release () { },
 });
 
-Object .defineProperties (X3DKeyDeviceSensorNode, X3DNode .staticProperties ("X3DKeyDeviceSensorNode", "KeyDeviceSensor", 1));
+Object .defineProperties (X3DKeyDeviceSensorNode, X3DNode .getStaticProperties ("X3DKeyDeviceSensorNode", "KeyDeviceSensor", 1));
 
 export default X3DKeyDeviceSensorNode;

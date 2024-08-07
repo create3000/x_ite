@@ -173,6 +173,6 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    },
 });
 
-Object .defineProperties (X3DOneSidedMaterialNode, X3DNode .staticProperties ("X3DOneSidedMaterialNode", "Shape", 4));
+Object .defineProperties (X3DOneSidedMaterialNode, X3DNode .getStaticProperties ("X3DOneSidedMaterialNode", "Shape", 4));
 
 export default X3DOneSidedMaterialNode;

@@ -470,7 +470,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
 });
 
-Object .defineProperties (RigidBody, X3DNode .staticProperties ("RigidBody", "RigidBodyPhysics", 2, "bodies", "3.2"));
+Object .defineProperties (RigidBody, X3DNode .getStaticProperties ("RigidBody", "RigidBodyPhysics", 2, "bodies", "3.2"));
 
 Object .defineProperties (RigidBody,
 {

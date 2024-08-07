@@ -61,7 +61,7 @@ function HAnimSite (executionContext)
 
 Object .setPrototypeOf (HAnimSite .prototype, X3DTransformNode .prototype);
 
-Object .defineProperties (HAnimSite, X3DNode .staticProperties ("HAnimSite", "HAnim", 1, "children", "3.0"));
+Object .defineProperties (HAnimSite, X3DNode .getStaticProperties ("HAnimSite", "HAnim", 1, "children", "3.0"));
 
 Object .defineProperties (HAnimSite,
 {

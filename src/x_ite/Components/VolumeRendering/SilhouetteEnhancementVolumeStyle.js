@@ -141,7 +141,7 @@ Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .protot
    },
 });
 
-Object .defineProperties (SilhouetteEnhancementVolumeStyle, X3DNode .staticProperties ("SilhouetteEnhancementVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"));
+Object .defineProperties (SilhouetteEnhancementVolumeStyle, X3DNode .getStaticProperties ("SilhouetteEnhancementVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"));
 
 Object .defineProperties (SilhouetteEnhancementVolumeStyle,
 {

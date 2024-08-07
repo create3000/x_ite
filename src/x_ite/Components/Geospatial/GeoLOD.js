@@ -417,7 +417,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
    },
 });
 
-Object .defineProperties (GeoLOD, X3DNode .staticProperties ("GeoLOD", "Geospatial", 1, "children", "3.0"));
+Object .defineProperties (GeoLOD, X3DNode .getStaticProperties ("GeoLOD", "Geospatial", 1, "children", "3.0"));
 
 Object .defineProperties (GeoLOD,
 {

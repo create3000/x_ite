@@ -120,7 +120,7 @@ Object .assign (Object .setPrototypeOf (TextureTransform .prototype, X3DSingleTe
    })(),
 });
 
-Object .defineProperties (TextureTransform, X3DNode .staticProperties ("TextureTransform", "Texturing", 1, "textureTransform", "2.0"));
+Object .defineProperties (TextureTransform, X3DNode .getStaticProperties ("TextureTransform", "Texturing", 1, "textureTransform", "2.0"));
 
 Object .defineProperties (TextureTransform,
 {

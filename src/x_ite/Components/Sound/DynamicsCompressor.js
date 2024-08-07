@@ -114,7 +114,7 @@ Object .assign (Object .setPrototypeOf (DynamicsCompressor .prototype, X3DSoundP
    },
 });
 
-Object .defineProperties (DynamicsCompressor, X3DNode .staticProperties ("DynamicsCompressor", "Sound", 2, "children", "4.0"));
+Object .defineProperties (DynamicsCompressor, X3DNode .getStaticProperties ("DynamicsCompressor", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (DynamicsCompressor,
 {

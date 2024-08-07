@@ -1035,6 +1035,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
    },
 });
 
-Object .defineProperties (X3DParticleEmitterNode, X3DNode .staticProperties ("X3DParticleEmitterNode", "ParticleSystems", 1));
+Object .defineProperties (X3DParticleEmitterNode, X3DNode .getStaticProperties ("X3DParticleEmitterNode", "ParticleSystems", 1));
 
 export default X3DParticleEmitterNode;

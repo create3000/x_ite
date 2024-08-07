@@ -157,7 +157,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    },
 });
 
-Object .defineProperties (IridescenceMaterialExtension, X3DNode .staticProperties ("IridescenceMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
+Object .defineProperties (IridescenceMaterialExtension, X3DNode .getStaticProperties ("IridescenceMaterialExtension", "X_ITE", 1, "extensions", "4.0"));
 
 Object .defineProperties (IridescenceMaterialExtension,
 {

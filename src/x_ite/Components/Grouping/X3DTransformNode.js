@@ -79,6 +79,6 @@ Object .assign (Object .setPrototypeOf (X3DTransformNode .prototype, X3DTransfor
    },
 });
 
-Object .defineProperties (X3DTransformNode, X3DNode .staticProperties ("X3DTransformNode", "Grouping", 1));
+Object .defineProperties (X3DTransformNode, X3DNode .getStaticProperties ("X3DTransformNode", "Grouping", 1));
 
 export default X3DTransformNode;

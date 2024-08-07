@@ -153,7 +153,7 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
    },
 });
 
-Object .defineProperties (MetadataSet, X3DNode .staticProperties ("MetadataSet", "Core", 1, "value", "3.0"));
+Object .defineProperties (MetadataSet, X3DNode .getStaticProperties ("MetadataSet", "Core", 1, "value", "3.0"));
 
 Object .defineProperties (MetadataSet,
 {

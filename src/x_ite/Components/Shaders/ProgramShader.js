@@ -65,7 +65,7 @@ function ProgramShader (executionContext)
 
 Object .setPrototypeOf (ProgramShader .prototype, X3DShaderNode .prototype);
 
-Object .defineProperties (ProgramShader, X3DNode .staticProperties ("ProgramShader", "Shaders", 1, "shaders", "3.0"));
+Object .defineProperties (ProgramShader, X3DNode .getStaticProperties ("ProgramShader", "Shaders", 1, "shaders", "3.0"));
 
 Object .defineProperties (ProgramShader,
 {

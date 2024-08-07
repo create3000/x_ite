@@ -73,6 +73,6 @@ Object .assign (Object .setPrototypeOf (X3DScriptNode .prototype, X3DChildNode .
    },
 });
 
-Object .defineProperties (X3DScriptNode, X3DNode .staticProperties ("X3DScriptNode", "Scripting", 1));
+Object .defineProperties (X3DScriptNode, X3DNode .getStaticProperties ("X3DScriptNode", "Scripting", 1));
 
 export default X3DScriptNode;

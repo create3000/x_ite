@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (FontStyle .prototype, X3DFontStyleNode .
    },
 });
 
-Object .defineProperties (FontStyle, X3DNode .staticProperties ("FontStyle", "Text", 1, "fontStyle", "2.0"));
+Object .defineProperties (FontStyle, X3DNode .getStaticProperties ("FontStyle", "Text", 1, "fontStyle", "2.0"));
 
 Object .defineProperties (FontStyle,
 {

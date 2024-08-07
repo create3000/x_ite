@@ -191,7 +191,7 @@ Object .assign (Object .setPrototypeOf (ComposedShader .prototype, X3DShaderNode
    },
 });
 
-Object .defineProperties (ComposedShader, X3DNode .staticProperties ("ComposedShader", "Shaders", 1, "shaders", "3.0"));
+Object .defineProperties (ComposedShader, X3DNode .getStaticProperties ("ComposedShader", "Shaders", 1, "shaders", "3.0"));
 
 Object .defineProperties (ComposedShader,
 {

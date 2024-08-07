@@ -60,6 +60,6 @@ function X3DDragSensorNode (executionContext)
 
 Object .setPrototypeOf (X3DDragSensorNode .prototype, X3DPointingDeviceSensorNode .prototype);
 
-Object .defineProperties (X3DDragSensorNode, X3DNode .staticProperties ("X3DDragSensorNode", "PointingDeviceSensor", 1));
+Object .defineProperties (X3DDragSensorNode, X3DNode .getStaticProperties ("X3DDragSensorNode", "PointingDeviceSensor", 1));
 
 export default X3DDragSensorNode;

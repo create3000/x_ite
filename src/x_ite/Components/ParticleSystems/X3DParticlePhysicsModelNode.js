@@ -61,6 +61,6 @@ Object .assign (Object .setPrototypeOf (X3DParticlePhysicsModelNode .prototype, 
    { },
 });
 
-Object .defineProperties (X3DParticlePhysicsModelNode, X3DNode .staticProperties ("X3DParticlePhysicsModelNode", "ParticleSystems", 1));
+Object .defineProperties (X3DParticlePhysicsModelNode, X3DNode .getStaticProperties ("X3DParticlePhysicsModelNode", "ParticleSystems", 1));
 
 export default X3DParticlePhysicsModelNode;

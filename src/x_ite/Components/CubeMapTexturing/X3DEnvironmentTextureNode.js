@@ -145,6 +145,6 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
    },
 });
 
-Object .defineProperties (X3DEnvironmentTextureNode, X3DNode .staticProperties ("X3DEnvironmentTextureNode", "CubeMapTexturing", 1));
+Object .defineProperties (X3DEnvironmentTextureNode, X3DNode .getStaticProperties ("X3DEnvironmentTextureNode", "CubeMapTexturing", 1));
 
 export default X3DEnvironmentTextureNode;

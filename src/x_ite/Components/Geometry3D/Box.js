@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (Box .prototype, X3DGeometryNode .prototy
    })(),
 });
 
-Object .defineProperties (Box, X3DNode .staticProperties ("Box", "Geometry3D", 1, "geometry", "2.0"));
+Object .defineProperties (Box, X3DNode .getStaticProperties ("Box", "Geometry3D", 1, "geometry", "2.0"));
 
 Object .defineProperties (Box,
 {

@@ -58,6 +58,6 @@ function X3DViewportNode (executionContext)
 
 Object .setPrototypeOf (X3DViewportNode .prototype, X3DGroupingNode .prototype);
 
-Object .defineProperties (X3DViewportNode, X3DNode .staticProperties ("X3DViewportNode", "Layering", 1));
+Object .defineProperties (X3DViewportNode, X3DNode .getStaticProperties ("X3DViewportNode", "Layering", 1));
 
 export default X3DViewportNode;

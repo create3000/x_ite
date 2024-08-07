@@ -163,6 +163,6 @@ Object .assign (X3DBoundedObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DBoundedObject, X3DNode .staticProperties ("X3DBoundedObject", "Grouping", 1));
+Object .defineProperties (X3DBoundedObject, X3DNode .getStaticProperties ("X3DBoundedObject", "Grouping", 1));
 
 export default X3DBoundedObject;

@@ -58,6 +58,6 @@ function X3DLayoutNode (executionContext)
 
 Object .setPrototypeOf (X3DLayoutNode .prototype, X3DChildNode .prototype);
 
-Object .defineProperties (X3DLayoutNode, X3DNode .staticProperties ("X3DLayoutNode", "Layout", 1));
+Object .defineProperties (X3DLayoutNode, X3DNode .getStaticProperties ("X3DLayoutNode", "Layout", 1));
 
 export default X3DLayoutNode;

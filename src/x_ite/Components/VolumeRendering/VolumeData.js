@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode
    },
 });
 
-Object .defineProperties (VolumeData, X3DNode .staticProperties ("VolumeData", "VolumeRendering", 1, "children", "3.3"));
+Object .defineProperties (VolumeData, X3DNode .getStaticProperties ("VolumeData", "VolumeRendering", 1, "children", "3.3"));
 
 Object .defineProperties (VolumeData,
 {

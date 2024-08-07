@@ -204,6 +204,6 @@ Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, X3DNode .p
    },
 });
 
-Object .defineProperties (X3DRigidJointNode, X3DNode .staticProperties ("X3DRigidJointNode", "RigidBodyPhysics", 2));
+Object .defineProperties (X3DRigidJointNode, X3DNode .getStaticProperties ("X3DRigidJointNode", "RigidBodyPhysics", 2));
 
 export default X3DRigidJointNode;

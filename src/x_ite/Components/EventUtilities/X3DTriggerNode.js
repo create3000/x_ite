@@ -58,6 +58,6 @@ function X3DTriggerNode (executionContext)
 
 Object .setPrototypeOf (X3DTriggerNode .prototype, X3DChildNode .prototype);
 
-Object .defineProperties (X3DTriggerNode, X3DNode .staticProperties ("X3DTriggerNode", "EventUtilities", 1));
+Object .defineProperties (X3DTriggerNode, X3DNode .getStaticProperties ("X3DTriggerNode", "EventUtilities", 1));
 
 export default X3DTriggerNode;

@@ -343,6 +343,6 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    },
 });
 
-Object .defineProperties (X3DTimeDependentNode, X3DNode .staticProperties ("X3DTimeDependentNode", "Time", 1));
+Object .defineProperties (X3DTimeDependentNode, X3DNode .getStaticProperties ("X3DTimeDependentNode", "Time", 1));
 
 export default X3DTimeDependentNode;

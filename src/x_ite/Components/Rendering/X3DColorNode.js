@@ -72,6 +72,6 @@ Object .assign (Object .setPrototypeOf (X3DColorNode .prototype, X3DGeometricPro
    },
 });
 
-Object .defineProperties (X3DColorNode, X3DNode .staticProperties ("X3DColorNode", "Rendering", 1));
+Object .defineProperties (X3DColorNode, X3DNode .getStaticProperties ("X3DColorNode", "Rendering", 1));
 
 export default X3DColorNode;

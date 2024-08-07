@@ -179,6 +179,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundN
    },
 });
 
-Object .defineProperties (X3DSoundSourceNode, X3DNode .staticProperties ("X3DSoundSourceNode", "Sound", 1));
+Object .defineProperties (X3DSoundSourceNode, X3DNode .getStaticProperties ("X3DSoundSourceNode", "Sound", 1));
 
 export default X3DSoundSourceNode;

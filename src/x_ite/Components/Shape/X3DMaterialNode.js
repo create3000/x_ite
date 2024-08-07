@@ -377,6 +377,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    },
 });
 
-Object .defineProperties (X3DMaterialNode, X3DNode .staticProperties ("X3DMaterialNode", "Shape", 1));
+Object .defineProperties (X3DMaterialNode, X3DNode .getStaticProperties ("X3DMaterialNode", "Shape", 1));
 
 export default X3DMaterialNode;

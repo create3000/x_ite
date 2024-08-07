@@ -58,6 +58,6 @@ function X3DNetworkSensorNode (executionContext)
 
 Object .setPrototypeOf (X3DNetworkSensorNode .prototype, X3DSensorNode .prototype);
 
-Object .defineProperties (X3DNetworkSensorNode, X3DNode .staticProperties ("X3DNetworkSensorNode", "Networking", 1));
+Object .defineProperties (X3DNetworkSensorNode, X3DNode .getStaticProperties ("X3DNetworkSensorNode", "Networking", 1));
 
 export default X3DNetworkSensorNode;

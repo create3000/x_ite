@@ -256,6 +256,6 @@ function getStandardLocationMatrix (geoPoint, result)
                        t .x, t .y, t .z, 1);
 }
 
-Object .defineProperties (X3DGeospatialObject, X3DNode .staticProperties ("X3DGeospatialObject", "Geospatial", 1));
+Object .defineProperties (X3DGeospatialObject, X3DNode .getStaticProperties ("X3DGeospatialObject", "Geospatial", 1));
 
 export default X3DGeospatialObject;

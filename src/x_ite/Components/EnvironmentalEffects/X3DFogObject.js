@@ -162,6 +162,6 @@ Object .assign (X3DFogObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DFogObject, X3DNode .staticProperties ("X3DFogObject", "EnvironmentalEffects", 1));
+Object .defineProperties (X3DFogObject, X3DNode .getStaticProperties ("X3DFogObject", "EnvironmentalEffects", 1));
 
 export default X3DFogObject;

@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (PositionInterpolator .prototype, X3DInte
    })(),
 });
 
-Object .defineProperties (PositionInterpolator, X3DNode .staticProperties ("PositionInterpolator", "Interpolation", 1, "children", "2.0"));
+Object .defineProperties (PositionInterpolator, X3DNode .getStaticProperties ("PositionInterpolator", "Interpolation", 1, "children", "2.0"));
 
 Object .defineProperties (PositionInterpolator,
 {

@@ -116,7 +116,7 @@ Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, X3DI
    },
 });
 
-Object .defineProperties (GeoPositionInterpolator, X3DNode .staticProperties ("GeoPositionInterpolator", "Geospatial", 1, "children", "3.0"));
+Object .defineProperties (GeoPositionInterpolator, X3DNode .getStaticProperties ("GeoPositionInterpolator", "Geospatial", 1, "children", "3.0"));
 
 Object .defineProperties (GeoPositionInterpolator,
 {

@@ -76,7 +76,7 @@ Object .assign (Object .setPrototypeOf (Polypoint2D .prototype, X3DPointGeometry
    },
 });
 
-Object .defineProperties (Polypoint2D, X3DNode .staticProperties ("Polypoint2D", "Geometry2D", 1, "geometry", "3.0"));
+Object .defineProperties (Polypoint2D, X3DNode .getStaticProperties ("Polypoint2D", "Geometry2D", 1, "geometry", "3.0"));
 
 Object .defineProperties (Polypoint2D,
 {

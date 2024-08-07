@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, X3DParti
    },
 });
 
-Object .defineProperties (BoundedPhysicsModel, X3DNode .staticProperties ("BoundedPhysicsModel", "ParticleSystems", 2, "physics", "3.2"));
+Object .defineProperties (BoundedPhysicsModel, X3DNode .getStaticProperties ("BoundedPhysicsModel", "ParticleSystems", 2, "physics", "3.2"));
 
 Object .defineProperties (BoundedPhysicsModel,
 {

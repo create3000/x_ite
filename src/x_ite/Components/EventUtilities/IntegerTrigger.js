@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, X3DTriggerNod
    },
 });
 
-Object .defineProperties (IntegerTrigger, X3DNode .staticProperties ("IntegerTrigger", "EventUtilities", 1, "children", "3.0"));
+Object .defineProperties (IntegerTrigger, X3DNode .getStaticProperties ("IntegerTrigger", "EventUtilities", 1, "children", "3.0"));
 
 Object .defineProperties (IntegerTrigger,
 {

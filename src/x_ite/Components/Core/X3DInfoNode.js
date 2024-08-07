@@ -58,6 +58,6 @@ function X3DInfoNode (executionContext)
 
 Object .setPrototypeOf (X3DInfoNode .prototype, X3DChildNode .prototype);
 
-Object .defineProperties (X3DInfoNode, X3DNode .staticProperties ("X3DInfoNode", "Core", 1));
+Object .defineProperties (X3DInfoNode, X3DNode .getStaticProperties ("X3DInfoNode", "Core", 1));
 
 export default X3DInfoNode;

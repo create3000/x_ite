@@ -1776,7 +1776,7 @@ for (const key of Object .keys (X3DNode .prototype))
 
 Object .defineProperties (X3DNode,
 {
-   staticProperties:
+   getStaticProperties:
    {
       value: function (typeName, componentName, componentLevel, containerField, fromVersion, toVersion = "Infinity")
       {
@@ -1812,6 +1812,6 @@ Object .defineProperties (X3DNode,
    },
 })
 
-Object .defineProperties (X3DNode, X3DNode .staticProperties ("X3DNode", "Core", 1));
+Object .defineProperties (X3DNode, X3DNode .getStaticProperties ("X3DNode", "Core", 1));
 
 export default X3DNode;

@@ -145,7 +145,7 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
    })(),
 });
 
-Object .defineProperties (NurbsSurfaceInterpolator, X3DNode .staticProperties ("NurbsSurfaceInterpolator", "NURBS", 1, "children", "3.0"));
+Object .defineProperties (NurbsSurfaceInterpolator, X3DNode .getStaticProperties ("NurbsSurfaceInterpolator", "NURBS", 1, "children", "3.0"));
 
 Object .defineProperties (NurbsSurfaceInterpolator,
 {

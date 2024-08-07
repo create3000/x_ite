@@ -116,7 +116,7 @@ Object .assign (Object .setPrototypeOf (BiquadFilter .prototype, X3DSoundProcess
    },
 });
 
-Object .defineProperties (BiquadFilter, X3DNode .staticProperties ("BiquadFilter", "Sound", 2, "children", "4.0"));
+Object .defineProperties (BiquadFilter, X3DNode .getStaticProperties ("BiquadFilter", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (BiquadFilter,
 {

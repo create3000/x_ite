@@ -88,6 +88,6 @@ Object .assign (Object .setPrototypeOf (X3DShaderNode .prototype, X3DAppearanceC
    },
 });
 
-Object .defineProperties (X3DShaderNode, X3DNode .staticProperties ("X3DShaderNode", "Shaders", 1));
+Object .defineProperties (X3DShaderNode, X3DNode .getStaticProperties ("X3DShaderNode", "Shaders", 1));
 
 export default X3DShaderNode;

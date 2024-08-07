@@ -337,7 +337,7 @@ Object .assign (Object .setPrototypeOf (KeySensor .prototype, X3DKeyDeviceSensor
    },
 });
 
-Object .defineProperties (KeySensor, X3DNode .staticProperties ("KeySensor", "KeyDeviceSensor", 1, "children", "3.0"));
+Object .defineProperties (KeySensor, X3DNode .getStaticProperties ("KeySensor", "KeyDeviceSensor", 1, "children", "3.0"));
 
 Object .defineProperties (KeySensor,
 {

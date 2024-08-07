@@ -101,7 +101,7 @@ Object .assign (Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode
    },
 });
 
-Object .defineProperties (Delay, X3DNode .staticProperties ("Delay", "Sound", 2, "children", "4.0"));
+Object .defineProperties (Delay, X3DNode .getStaticProperties ("Delay", "Sound", 2, "children", "4.0"));
 
 Object .defineProperties (Delay,
 {

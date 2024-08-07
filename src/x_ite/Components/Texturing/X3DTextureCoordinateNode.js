@@ -58,6 +58,6 @@ function X3DTextureCoordinateNode (executionContext)
 
 Object .setPrototypeOf (X3DTextureCoordinateNode .prototype, X3DGeometricPropertyNode .prototype);
 
-Object .defineProperties (X3DTextureCoordinateNode, X3DNode .staticProperties ("X3DTextureCoordinateNode", "Texturing", 1));
+Object .defineProperties (X3DTextureCoordinateNode, X3DNode .getStaticProperties ("X3DTextureCoordinateNode", "Texturing", 1));
 
 export default X3DTextureCoordinateNode;
