@@ -278,28 +278,10 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    },
 });
 
+Object .defineProperties (Inline, X3DNode .staticProperties ("Inline", "Networking", 2, "children", "2.0", "Infinity"));
+
 Object .defineProperties (Inline,
 {
-   typeName:
-   {
-      value: "Inline",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Networking", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

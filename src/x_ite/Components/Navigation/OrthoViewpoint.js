@@ -331,28 +331,10 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
 });
 
+Object .defineProperties (OrthoViewpoint, X3DNode .staticProperties ("OrthoViewpoint", "Navigation", 3, "children", "3.0", "Infinity"));
+
 Object .defineProperties (OrthoViewpoint,
 {
-   typeName:
-   {
-      value: "OrthoViewpoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

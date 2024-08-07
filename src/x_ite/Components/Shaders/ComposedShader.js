@@ -191,28 +191,10 @@ Object .assign (Object .setPrototypeOf (ComposedShader .prototype, X3DShaderNode
    },
 });
 
+Object .defineProperties (ComposedShader, X3DNode .staticProperties ("ComposedShader", "Shaders", 1, "shaders", "3.0", "Infinity"));
+
 Object .defineProperties (ComposedShader,
 {
-   typeName:
-   {
-      value: "ComposedShader",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "shaders",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

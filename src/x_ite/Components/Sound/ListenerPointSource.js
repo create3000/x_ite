@@ -148,28 +148,10 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSound
    })(),
 });
 
+Object .defineProperties (ListenerPointSource, X3DNode .staticProperties ("ListenerPointSource", "Sound", 2, "children", "4.0", "Infinity"));
+
 Object .defineProperties (ListenerPointSource,
 {
-   typeName:
-   {
-      value: "ListenerPointSource",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

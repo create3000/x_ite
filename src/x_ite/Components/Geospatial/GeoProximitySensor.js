@@ -120,28 +120,10 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, X3DEnviro
    },
 });
 
+Object .defineProperties (GeoProximitySensor, X3DNode .staticProperties ("GeoProximitySensor", "Geospatial", 2, "children", "3.2", "Infinity"));
+
 Object .defineProperties (GeoProximitySensor,
 {
-   typeName:
-   {
-      value: "GeoProximitySensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

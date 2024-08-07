@@ -133,28 +133,10 @@ function filter (array, remove)
    return array .filter (value => !set .has (value));
 }
 
+Object .defineProperties (Contour2D, X3DNode .staticProperties ("Contour2D", "NURBS", 4, "trimmingContour", "3.0", "Infinity"));
+
 Object .defineProperties (Contour2D,
 {
-   typeName:
-   {
-      value: "Contour2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "trimmingContour",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

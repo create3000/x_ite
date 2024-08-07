@@ -135,28 +135,10 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, X3DSingl
    },
 });
 
+Object .defineProperties (TextureCoordinate3D, X3DNode .staticProperties ("TextureCoordinate3D", "Texturing3D", 1, "texCoord", "3.1", "Infinity"));
+
 Object .defineProperties (TextureCoordinate3D,
 {
-   typeName:
-   {
-      value: "TextureCoordinate3D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texCoord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

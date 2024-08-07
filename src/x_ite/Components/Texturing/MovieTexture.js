@@ -254,28 +254,10 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    },
 });
 
+Object .defineProperties (MovieTexture, X3DNode .staticProperties ("MovieTexture", "Texturing", 3, "texture", "2.0", "Infinity"));
+
 Object .defineProperties (MovieTexture,
 {
-   typeName:
-   {
-      value: "MovieTexture",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

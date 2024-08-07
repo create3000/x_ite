@@ -93,28 +93,10 @@ Object .assign (Object .setPrototypeOf (Fog .prototype, X3DBindableNode .prototy
    },
 });
 
+Object .defineProperties (Fog, X3DNode .staticProperties ("Fog", "EnvironmentalEffects", 2, "children", "2.0", "Infinity"));
+
 Object .defineProperties (Fog,
 {
-   typeName:
-   {
-      value: "Fog",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

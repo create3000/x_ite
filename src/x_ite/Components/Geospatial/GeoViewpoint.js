@@ -257,28 +257,10 @@ function traverse (type, renderObject)
    this .geoNavigationInfoNode .traverse (type, renderObject);
 }
 
+Object .defineProperties (GeoViewpoint, X3DNode .staticProperties ("GeoViewpoint", "Geospatial", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (GeoViewpoint,
 {
-   typeName:
-   {
-      value: "GeoViewpoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

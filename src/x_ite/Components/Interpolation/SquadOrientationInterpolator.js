@@ -99,28 +99,10 @@ Object .assign (Object .setPrototypeOf (SquadOrientationInterpolator .prototype,
    },
 });
 
+Object .defineProperties (SquadOrientationInterpolator, X3DNode .staticProperties ("SquadOrientationInterpolator", "Interpolation", 5, "children", "3.2", "Infinity"));
+
 Object .defineProperties (SquadOrientationInterpolator,
 {
-   typeName:
-   {
-      value: "SquadOrientationInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 5 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

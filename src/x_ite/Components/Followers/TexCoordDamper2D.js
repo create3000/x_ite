@@ -73,28 +73,10 @@ Object .assign (Object .setPrototypeOf (TexCoordDamper2D .prototype, X3DDamperNo
    },
 });
 
+Object .defineProperties (TexCoordDamper2D, X3DNode .staticProperties ("TexCoordDamper2D", "Followers", 1, "children", "3.2", "Infinity"));
+
 Object .defineProperties (TexCoordDamper2D,
 {
-   typeName:
-   {
-      value: "TexCoordDamper2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

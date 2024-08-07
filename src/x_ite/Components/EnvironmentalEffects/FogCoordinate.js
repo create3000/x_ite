@@ -116,28 +116,10 @@ Object .assign (Object .setPrototypeOf (FogCoordinate .prototype, X3DGeometricPr
    },
 });
 
+Object .defineProperties (FogCoordinate, X3DNode .staticProperties ("FogCoordinate", "EnvironmentalEffects", 4, "fogCoord", "3.0", "Infinity"));
+
 Object .defineProperties (FogCoordinate,
 {
-   typeName:
-   {
-      value: "FogCoordinate",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "fogCoord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

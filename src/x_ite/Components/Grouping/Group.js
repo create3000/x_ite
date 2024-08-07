@@ -61,28 +61,10 @@ function Group (executionContext)
 
 Object .setPrototypeOf (Group .prototype, X3DGroupingNode .prototype);
 
+Object .defineProperties (Group, X3DNode .staticProperties ("Group", "Grouping", 1, "children", "2.0", "Infinity"));
+
 Object .defineProperties (Group,
 {
-   typeName:
-   {
-      value: "Group",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

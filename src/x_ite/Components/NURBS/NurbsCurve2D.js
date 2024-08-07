@@ -173,28 +173,10 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
    },
 });
 
+Object .defineProperties (NurbsCurve2D, X3DNode .staticProperties ("NurbsCurve2D", "NURBS", 3, "children", "3.0", "Infinity"));
+
 Object .defineProperties (NurbsCurve2D,
 {
-   typeName:
-   {
-      value: "NurbsCurve2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

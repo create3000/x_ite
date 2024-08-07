@@ -87,28 +87,10 @@ function MotorJoint (executionContext)
 
 Object .setPrototypeOf (MotorJoint .prototype, X3DRigidJointNode .prototype);
 
+Object .defineProperties (MotorJoint, X3DNode .staticProperties ("MotorJoint", "RigidBodyPhysics", 2, "joints", "3.2", "Infinity"));
+
 Object .defineProperties (MotorJoint,
 {
-   typeName:
-   {
-      value: "MotorJoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "joints",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

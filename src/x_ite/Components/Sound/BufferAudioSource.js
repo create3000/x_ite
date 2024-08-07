@@ -222,28 +222,10 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
    },
 });
 
+Object .defineProperties (BufferAudioSource, X3DNode .staticProperties ("BufferAudioSource", "Sound", 2, "children", "4.0", "Infinity"));
+
 Object .defineProperties (BufferAudioSource,
 {
-   typeName:
-   {
-      value: "BufferAudioSource",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -92,28 +92,10 @@ Object .assign (Object .setPrototypeOf (EmissiveStrengthMaterialExtension .proto
    },
 });
 
+Object .defineProperties (EmissiveStrengthMaterialExtension, X3DNode .staticProperties ("EmissiveStrengthMaterialExtension", "X_ITE", 1, "extensions", "4.0", "Infinity"));
+
 Object .defineProperties (EmissiveStrengthMaterialExtension,
 {
-   typeName:
-   {
-      value: "EmissiveStrengthMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

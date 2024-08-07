@@ -78,28 +78,10 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, X3DFontStyle
    },
 });
 
+Object .defineProperties (ScreenFontStyle, X3DNode .staticProperties ("ScreenFontStyle", "Layout", 2, "fontStyle", "3.2", "Infinity"));
+
 Object .defineProperties (ScreenFontStyle,
 {
-   typeName:
-   {
-      value: "ScreenFontStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layout", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "fontStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

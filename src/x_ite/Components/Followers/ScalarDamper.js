@@ -84,28 +84,10 @@ Object .assign (Object .setPrototypeOf (ScalarDamper .prototype, X3DDamperNode .
    },
 });
 
+Object .defineProperties (ScalarDamper, X3DNode .staticProperties ("ScalarDamper", "Followers", 1, "children", "3.3", "Infinity"));
+
 Object .defineProperties (ScalarDamper,
 {
-   typeName:
-   {
-      value: "ScalarDamper",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

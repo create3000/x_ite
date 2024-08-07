@@ -246,28 +246,10 @@ Object .assign (Object .setPrototypeOf (DirectionalLight .prototype, X3DLightNod
    },
 });
 
+Object .defineProperties (DirectionalLight, X3DNode .staticProperties ("DirectionalLight", "Lighting", 1, "children", "2.0", "Infinity"));
+
 Object .defineProperties (DirectionalLight,
 {
-   typeName:
-   {
-      value: "DirectionalLight",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Lighting", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

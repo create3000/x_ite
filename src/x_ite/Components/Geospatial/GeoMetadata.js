@@ -78,28 +78,10 @@ Object .assign (Object .setPrototypeOf (GeoMetadata .prototype, X3DInfoNode .pro
    },
 });
 
+Object .defineProperties (GeoMetadata, X3DNode .staticProperties ("GeoMetadata", "Geospatial", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (GeoMetadata,
 {
-   typeName:
-   {
-      value: "GeoMetadata",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

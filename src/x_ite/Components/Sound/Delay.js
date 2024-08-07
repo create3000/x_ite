@@ -101,28 +101,10 @@ Object .assign (Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode
    },
 });
 
+Object .defineProperties (Delay, X3DNode .staticProperties ("Delay", "Sound", 2, "children", "4.0", "Infinity"));
+
 Object .defineProperties (Delay,
 {
-   typeName:
-   {
-      value: "Delay",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

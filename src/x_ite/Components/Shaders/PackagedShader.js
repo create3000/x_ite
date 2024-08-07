@@ -91,28 +91,10 @@ Object .assign (Object .setPrototypeOf (PackagedShader .prototype, X3DShaderNode
    },
 });
 
+Object .defineProperties (PackagedShader, X3DNode .staticProperties ("PackagedShader", "Shaders", 1, "shaders", "3.0", "Infinity"));
+
 Object .defineProperties (PackagedShader,
 {
-   typeName:
-   {
-      value: "PackagedShader",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "shaders",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

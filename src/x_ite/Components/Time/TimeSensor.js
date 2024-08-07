@@ -176,28 +176,10 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    },
 });
 
+Object .defineProperties (TimeSensor, X3DNode .staticProperties ("TimeSensor", "Time", 1, "children", "2.0", "Infinity"));
+
 Object .defineProperties (TimeSensor,
 {
-   typeName:
-   {
-      value: "TimeSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Time", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

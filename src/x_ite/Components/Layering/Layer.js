@@ -85,28 +85,10 @@ Object .assign (Object .setPrototypeOf (Layer .prototype, X3DLayerNode .prototyp
    },
 });
 
+Object .defineProperties (Layer, X3DNode .staticProperties ("Layer", "Layering", 1, "layers", "3.2", "Infinity"));
+
 Object .defineProperties (Layer,
 {
-   typeName:
-   {
-      value: "Layer",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "layers",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

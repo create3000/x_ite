@@ -87,28 +87,10 @@ Object .assign (Object .setPrototypeOf (SignalPdu .prototype, X3DSensorNode .pro
    },
 });
 
+Object .defineProperties (SignalPdu, X3DNode .staticProperties ("SignalPdu", "DIS", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (SignalPdu,
 {
-   typeName:
-   {
-      value: "SignalPdu",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "DIS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

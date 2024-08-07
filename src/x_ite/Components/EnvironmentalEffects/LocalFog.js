@@ -92,28 +92,10 @@ Object .assign (Object .setPrototypeOf (LocalFog .prototype, X3DChildNode .proto
    },
 });
 
+Object .defineProperties (LocalFog, X3DNode .staticProperties ("LocalFog", "EnvironmentalEffects", 4, "children", "3.0", "Infinity"));
+
 Object .defineProperties (LocalFog,
 {
-   typeName:
-   {
-      value: "LocalFog",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

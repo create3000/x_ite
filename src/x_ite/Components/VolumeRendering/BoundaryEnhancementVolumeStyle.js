@@ -117,28 +117,10 @@ Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototyp
    },
 });
 
+Object .defineProperties (BoundaryEnhancementVolumeStyle, X3DNode .staticProperties ("BoundaryEnhancementVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3", "Infinity"));
+
 Object .defineProperties (BoundaryEnhancementVolumeStyle,
 {
-   typeName:
-   {
-      value: "BoundaryEnhancementVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

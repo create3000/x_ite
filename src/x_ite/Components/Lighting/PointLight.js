@@ -292,28 +292,10 @@ Object .assign (Object .setPrototypeOf (PointLight .prototype, X3DLightNode .pro
    },
 });
 
+Object .defineProperties (PointLight, X3DNode .staticProperties ("PointLight", "Lighting", 2, "children", "2.0", "Infinity"));
+
 Object .defineProperties (PointLight,
 {
-   typeName:
-   {
-      value: "PointLight",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Lighting", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -127,28 +127,10 @@ function filter (array, remove)
    return array .filter (value => !set .has (value));
 }
 
+Object .defineProperties (NurbsTrimmedSurface, X3DNode .staticProperties ("NurbsTrimmedSurface", "NURBS", 4, "geometry", "3.0", "Infinity"));
+
 Object .defineProperties (NurbsTrimmedSurface,
 {
-   typeName:
-   {
-      value: "NurbsTrimmedSurface",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -682,28 +682,10 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
    },
 });
 
+Object .defineProperties (Extrusion, X3DNode .staticProperties ("Extrusion", "Geometry3D", 4, "geometry", "2.0", "Infinity"));
+
 Object .defineProperties (Extrusion,
 {
-   typeName:
-   {
-      value: "Extrusion",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry3D", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

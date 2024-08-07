@@ -68,28 +68,10 @@ function Contact (executionContext)
 
 Object .setPrototypeOf (Contact .prototype, X3DNode .prototype);
 
+Object .defineProperties (Contact, X3DNode .staticProperties ("Contact", "RigidBodyPhysics", 2, "contacts", "3.2", "Infinity"));
+
 Object .defineProperties (Contact,
 {
-   typeName:
-   {
-      value: "Contact",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "contacts",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

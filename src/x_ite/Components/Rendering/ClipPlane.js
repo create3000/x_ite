@@ -147,28 +147,10 @@ Object .assign (Object .setPrototypeOf (ClipPlane .prototype, X3DChildNode .prot
    },
 });
 
+Object .defineProperties (ClipPlane, X3DNode .staticProperties ("ClipPlane", "Rendering", 5, "children", "3.2", "Infinity"));
+
 Object .defineProperties (ClipPlane,
 {
-   typeName:
-   {
-      value: "ClipPlane",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 5 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

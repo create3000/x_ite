@@ -145,28 +145,10 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
    },
 });
 
+Object .defineProperties (LayoutGroup, X3DNode .staticProperties ("LayoutGroup", "Layout", 1, "children", "3.2", "Infinity"));
+
 Object .defineProperties (LayoutGroup,
 {
-   typeName:
-   {
-      value: "LayoutGroup",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layout", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

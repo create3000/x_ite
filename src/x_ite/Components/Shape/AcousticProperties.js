@@ -61,28 +61,10 @@ function AcousticProperties (executionContext)
 
 Object .setPrototypeOf (AcousticProperties .prototype, X3DAppearanceChildNode .prototype);
 
+Object .defineProperties (AcousticProperties, X3DNode .staticProperties ("AcousticProperties", "Shape", 5, "acousticProperties", "4.0", "Infinity"));
+
 Object .defineProperties (AcousticProperties,
 {
-   typeName:
-   {
-      value: "AcousticProperties",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 5 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "acousticProperties",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

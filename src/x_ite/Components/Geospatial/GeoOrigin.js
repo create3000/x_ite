@@ -81,28 +81,10 @@ Object .assign (Object .setPrototypeOf (GeoOrigin .prototype, X3DNode .prototype
    },
 });
 
+Object .defineProperties (GeoOrigin, X3DNode .staticProperties ("GeoOrigin", "Geospatial", 1, "geoOrigin", "3.0", "Infinity"));
+
 Object .defineProperties (GeoOrigin,
 {
-   typeName:
-   {
-      value: "GeoOrigin",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geoOrigin",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

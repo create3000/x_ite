@@ -190,28 +190,10 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
    },
 });
 
+Object .defineProperties (NurbsOrientationInterpolator, X3DNode .staticProperties ("NurbsOrientationInterpolator", "NURBS", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (NurbsOrientationInterpolator,
 {
-   typeName:
-   {
-      value: "NurbsOrientationInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -80,28 +80,10 @@ Object .assign (Object .setPrototypeOf (DISEntityTypeMapping .prototype, X3DInfo
    },
 });
 
+Object .defineProperties (DISEntityTypeMapping, X3DNode .staticProperties ("DISEntityTypeMapping", "DIS", 2, "children", "3.0", "Infinity"));
+
 Object .defineProperties (DISEntityTypeMapping,
 {
-   typeName:
-   {
-      value: "DISEntityTypeMapping",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "DIS", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

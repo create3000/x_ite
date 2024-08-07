@@ -277,28 +277,10 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
    },
 });
 
+Object .defineProperties (TransformSensor, X3DNode .staticProperties ("TransformSensor", "EnvironmentalSensor", 3, "children", "3.2", "Infinity"));
+
 Object .defineProperties (TransformSensor,
 {
-   typeName:
-   {
-      value: "TransformSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalSensor", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

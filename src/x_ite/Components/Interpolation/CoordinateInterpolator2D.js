@@ -92,28 +92,10 @@ Object .assign (Object .setPrototypeOf (CoordinateInterpolator2D .prototype, X3D
    },
 });
 
+Object .defineProperties (CoordinateInterpolator2D, X3DNode .staticProperties ("CoordinateInterpolator2D", "Interpolation", 3, "children", "3.0", "Infinity"));
+
 Object .defineProperties (CoordinateInterpolator2D,
 {
-   typeName:
-   {
-      value: "CoordinateInterpolator2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

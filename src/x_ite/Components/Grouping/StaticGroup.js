@@ -206,28 +206,10 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    },
 });
 
+Object .defineProperties (StaticGroup, X3DNode .staticProperties ("StaticGroup", "Grouping", 3, "children", "3.0", "Infinity"));
+
 Object .defineProperties (StaticGroup,
 {
-   typeName:
-   {
-      value: "StaticGroup",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -115,28 +115,10 @@ Object .assign (Object .setPrototypeOf (FloatVertexAttribute .prototype, X3DVert
    },
 });
 
+Object .defineProperties (FloatVertexAttribute, X3DNode .staticProperties ("FloatVertexAttribute", "Shaders", 1, "attrib", "3.0", "Infinity"));
+
 Object .defineProperties (FloatVertexAttribute,
 {
-   typeName:
-   {
-      value: "FloatVertexAttribute",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "attrib",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

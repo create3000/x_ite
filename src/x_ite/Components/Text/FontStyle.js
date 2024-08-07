@@ -74,28 +74,10 @@ Object .assign (Object .setPrototypeOf (FontStyle .prototype, X3DFontStyleNode .
    },
 });
 
+Object .defineProperties (FontStyle, X3DNode .staticProperties ("FontStyle", "Text", 1, "fontStyle", "2.0", "Infinity"));
+
 Object .defineProperties (FontStyle,
 {
-   typeName:
-   {
-      value: "FontStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Text", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "fontStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

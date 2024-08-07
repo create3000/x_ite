@@ -113,28 +113,10 @@ Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, X3DGeometryNode 
    })(),
 });
 
+Object .defineProperties (Rectangle2D, X3DNode .staticProperties ("Rectangle2D", "Geometry2D", 1, "geometry", "3.0", "Infinity"));
+
 Object .defineProperties (Rectangle2D,
 {
-   typeName:
-   {
-      value: "Rectangle2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -106,28 +106,10 @@ Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode 
    },
 });
 
+Object .defineProperties (ScreenGroup, X3DNode .staticProperties ("ScreenGroup", "Layout", 2, "children", "3.2", "Infinity"));
+
 Object .defineProperties (ScreenGroup,
 {
-   typeName:
-   {
-      value: "ScreenGroup",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layout", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

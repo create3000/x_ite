@@ -90,28 +90,10 @@ Object .assign (Object .setPrototypeOf (ShaderProgram .prototype, X3DNode .proto
    },
 });
 
+Object .defineProperties (ShaderProgram, X3DNode .staticProperties ("ShaderProgram", "Shaders", 1, "programs", "3.0", "Infinity"));
+
 Object .defineProperties (ShaderProgram,
 {
-   typeName:
-   {
-      value: "ShaderProgram",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "programs",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

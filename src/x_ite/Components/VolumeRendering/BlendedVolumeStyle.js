@@ -313,28 +313,10 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, X3DCompos
    },
 });
 
+Object .defineProperties (BlendedVolumeStyle, X3DNode .staticProperties ("BlendedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3", "Infinity"));
+
 Object .defineProperties (BlendedVolumeStyle,
 {
-   typeName:
-   {
-      value: "BlendedVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

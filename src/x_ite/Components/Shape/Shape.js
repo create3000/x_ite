@@ -174,28 +174,10 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
    },
 });
 
+Object .defineProperties (Shape, X3DNode .staticProperties ("Shape", "Shape", 1, "children", "2.0", "Infinity"));
+
 Object .defineProperties (Shape,
 {
-   typeName:
-   {
-      value: "Shape",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -61,28 +61,10 @@ function CADLayer (executionContext)
 
 Object .setPrototypeOf (CADLayer .prototype, X3DGroupingNode .prototype);
 
+Object .defineProperties (CADLayer, X3DNode .staticProperties ("CADLayer", "CADGeometry", 2, "children", "3.1", "Infinity"));
+
 Object .defineProperties (CADLayer,
 {
-   typeName:
-   {
-      value: "CADLayer",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -118,28 +118,10 @@ Object .assign (Object .setPrototypeOf (Tangent .prototype, X3DGeometricProperty
    },
 });
 
+Object .defineProperties (Tangent, X3DNode .staticProperties ("Tangent", "Rendering", 5, "tangent", "4.0", "Infinity"));
+
 Object .defineProperties (Tangent,
 {
-   typeName:
-   {
-      value: "Tangent",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 5 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "tangent",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

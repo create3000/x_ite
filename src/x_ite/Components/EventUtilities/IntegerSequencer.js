@@ -77,28 +77,10 @@ Object .assign (Object .setPrototypeOf (IntegerSequencer .prototype, X3DSequence
    },
 });
 
+Object .defineProperties (IntegerSequencer, X3DNode .staticProperties ("IntegerSequencer", "EventUtilities", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (IntegerSequencer,
 {
-   typeName:
-   {
-      value: "IntegerSequencer",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

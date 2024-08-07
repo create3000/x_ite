@@ -220,28 +220,10 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prot
    },
 });
 
+Object .defineProperties (Switch, X3DNode .staticProperties ("Switch", "Grouping", 2, "children", "2.0", "Infinity"));
+
 Object .defineProperties (Switch,
 {
-   typeName:
-   {
-      value: "Switch",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

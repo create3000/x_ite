@@ -161,28 +161,10 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    },
 });
 
+Object .defineProperties (ClearcoatMaterialExtension, X3DNode .staticProperties ("ClearcoatMaterialExtension", "X_ITE", 1, "extensions", "4.0", "Infinity"));
+
 Object .defineProperties (ClearcoatMaterialExtension,
 {
-   typeName:
-   {
-      value: "ClearcoatMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

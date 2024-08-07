@@ -152,28 +152,10 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
    },
 });
 
+Object .defineProperties (Text, X3DNode .staticProperties ("Text", "Text", 1, "geometry", "2.0", "Infinity"));
+
 Object .defineProperties (Text,
 {
-   typeName:
-   {
-      value: "Text",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Text", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

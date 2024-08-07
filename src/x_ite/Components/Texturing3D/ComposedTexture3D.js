@@ -169,28 +169,10 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
    },
 });
 
+Object .defineProperties (ComposedTexture3D, X3DNode .staticProperties ("ComposedTexture3D", "Texturing3D", 1, "texture", "3.1", "Infinity"));
+
 Object .defineProperties (ComposedTexture3D,
 {
-   typeName:
-   {
-      value: "ComposedTexture3D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

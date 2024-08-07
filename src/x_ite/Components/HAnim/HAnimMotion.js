@@ -371,28 +371,10 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    },
 });
 
+Object .defineProperties (HAnimMotion, X3DNode .staticProperties ("HAnimMotion", "HAnim", 2, "motions", "4.0", "Infinity"));
+
 Object .defineProperties (HAnimMotion,
 {
-   typeName:
-   {
-      value: "HAnimMotion",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "HAnim", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "motions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -85,28 +85,10 @@ Object .assign (Object .setPrototypeOf (PeriodicWave .prototype, X3DSoundNode .p
    },
 });
 
+Object .defineProperties (PeriodicWave, X3DNode .staticProperties ("PeriodicWave", "Sound", 2, "periodicWave", "4.0", "Infinity"));
+
 Object .defineProperties (PeriodicWave,
 {
-   typeName:
-   {
-      value: "PeriodicWave",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "periodicWave",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

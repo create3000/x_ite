@@ -212,28 +212,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
 });
 
+Object .defineProperties (CADFace, X3DNode .staticProperties ("CADFace", "CADGeometry", 2, "children", "3.1", "Infinity"));
+
 Object .defineProperties (CADFace,
 {
-   typeName:
-   {
-      value: "CADFace",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

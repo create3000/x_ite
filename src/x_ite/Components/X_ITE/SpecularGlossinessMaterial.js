@@ -295,28 +295,10 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    },
 });
 
+Object .defineProperties (SpecularGlossinessMaterial, X3DNode .staticProperties ("SpecularGlossinessMaterial", "X_ITE", 1, "material", "4.0", "Infinity"));
+
 Object .defineProperties (SpecularGlossinessMaterial,
 {
-   typeName:
-   {
-      value: "SpecularGlossinessMaterial",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "material",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

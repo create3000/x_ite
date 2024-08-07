@@ -126,28 +126,10 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    },
 });
 
+Object .defineProperties (AudioClip, X3DNode .staticProperties ("AudioClip", "Sound", 1, "source", "2.0", "Infinity"));
+
 Object .defineProperties (AudioClip,
 {
-   typeName:
-   {
-      value: "AudioClip",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "source",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -123,28 +123,10 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    },
 });
 
+Object .defineProperties (AudioDestination, X3DNode .staticProperties ("AudioDestination", "Sound", 2, "children", "4.0", "Infinity"));
+
 Object .defineProperties (AudioDestination,
 {
-   typeName:
-   {
-      value: "AudioDestination",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

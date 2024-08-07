@@ -144,28 +144,10 @@ Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, X3DParamet
    },
 });
 
+Object .defineProperties (NurbsSwungSurface, X3DNode .staticProperties ("NurbsSwungSurface", "NURBS", 3, "geometry", "3.0", "Infinity"));
+
 Object .defineProperties (NurbsSwungSurface,
 {
-   typeName:
-   {
-      value: "NurbsSwungSurface",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

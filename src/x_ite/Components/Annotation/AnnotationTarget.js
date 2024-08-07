@@ -67,28 +67,10 @@ Object .assign (Object .setPrototypeOf (AnnotationTarget .prototype, X3DChildNod
    },
 });
 
+Object .defineProperties (AnnotationTarget, X3DNode .staticProperties ("AnnotationTarget", "Annotation", 1, "children", "4.0", "Infinity"));
+
 Object .defineProperties (AnnotationTarget,
 {
-   typeName:
-   {
-      value: "AnnotationTarget",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Annotation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

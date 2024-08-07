@@ -121,28 +121,10 @@ Object .assign (Object .setPrototypeOf (NormalInterpolator .prototype, X3DInterp
    })(),
 });
 
+Object .defineProperties (NormalInterpolator, X3DNode .staticProperties ("NormalInterpolator", "Interpolation", 2, "children", "2.0", "Infinity"));
+
 Object .defineProperties (NormalInterpolator,
 {
-   typeName:
-   {
-      value: "NormalInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

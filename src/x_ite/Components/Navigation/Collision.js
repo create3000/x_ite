@@ -142,28 +142,10 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
    },
 });
 
+Object .defineProperties (Collision, X3DNode .staticProperties ("Collision", "Navigation", 2, "children", "2.0", "Infinity"));
+
 Object .defineProperties (Collision,
 {
-   typeName:
-   {
-      value: "Collision",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

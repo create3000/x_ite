@@ -605,28 +605,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
 });
 
+Object .defineProperties (HAnimHumanoid, X3DNode .staticProperties ("HAnimHumanoid", "HAnim", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (HAnimHumanoid,
 {
-   typeName:
-   {
-      value: "HAnimHumanoid",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "HAnim", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

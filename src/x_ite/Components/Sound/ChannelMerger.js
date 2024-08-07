@@ -114,28 +114,10 @@ Object .assign (Object .setPrototypeOf (ChannelMerger .prototype, X3DSoundChanne
    },
 });
 
+Object .defineProperties (ChannelMerger, X3DNode .staticProperties ("ChannelMerger", "Sound", 2, "children", "4.0", "Infinity"));
+
 Object .defineProperties (ChannelMerger,
 {
-   typeName:
-   {
-      value: "ChannelMerger",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

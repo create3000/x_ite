@@ -61,28 +61,10 @@ function Gain (executionContext)
 
 Object .setPrototypeOf (Gain .prototype, X3DSoundProcessingNode .prototype);
 
+Object .defineProperties (Gain, X3DNode .staticProperties ("Gain", "Sound", 2, "children", "4.0", "Infinity"));
+
 Object .defineProperties (Gain,
 {
-   typeName:
-   {
-      value: "Gain",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

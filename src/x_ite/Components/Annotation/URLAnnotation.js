@@ -67,28 +67,10 @@ Object .assign (Object .setPrototypeOf (URLAnnotation .prototype, X3DAnnotationN
    },
 });
 
+Object .defineProperties (URLAnnotation, X3DNode .staticProperties ("URLAnnotation", "Annotation", 1, "children", "4.0", "Infinity"));
+
 Object .defineProperties (URLAnnotation,
 {
-   typeName:
-   {
-      value: "URLAnnotation",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Annotation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

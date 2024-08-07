@@ -167,28 +167,10 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
    },
 });
 
+Object .defineProperties (ViewpointGroup, X3DNode .staticProperties ("ViewpointGroup", "Navigation", 3, "children", "3.2", "Infinity"));
+
 Object .defineProperties (ViewpointGroup,
 {
-   typeName:
-   {
-      value: "ViewpointGroup",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

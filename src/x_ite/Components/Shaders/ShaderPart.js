@@ -198,28 +198,10 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
    },
 });
 
+Object .defineProperties (ShaderPart, X3DNode .staticProperties ("ShaderPart", "Shaders", 1, "parts", "3.0", "Infinity"));
+
 Object .defineProperties (ShaderPart,
 {
-   typeName:
-   {
-      value: "ShaderPart",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "parts",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

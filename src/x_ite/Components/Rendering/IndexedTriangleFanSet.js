@@ -128,28 +128,10 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleFanSet .prototype, X3DCom
    },
 });
 
+Object .defineProperties (IndexedTriangleFanSet, X3DNode .staticProperties ("IndexedTriangleFanSet", "Rendering", 3, "geometry", "3.0", "Infinity"));
+
 Object .defineProperties (IndexedTriangleFanSet,
 {
-   typeName:
-   {
-      value: "IndexedTriangleFanSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

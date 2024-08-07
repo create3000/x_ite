@@ -61,28 +61,10 @@ function NurbsPatchSurface (executionContext)
 
 Object .setPrototypeOf (NurbsPatchSurface .prototype, X3DNurbsSurfaceGeometryNode .prototype);
 
+Object .defineProperties (NurbsPatchSurface, X3DNode .staticProperties ("NurbsPatchSurface", "NURBS", 1, "geometry", "3.0", "Infinity"));
+
 Object .defineProperties (NurbsPatchSurface,
 {
-   typeName:
-   {
-      value: "NurbsPatchSurface",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

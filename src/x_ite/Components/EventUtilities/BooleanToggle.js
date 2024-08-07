@@ -74,28 +74,10 @@ Object .assign (Object .setPrototypeOf (BooleanToggle .prototype, X3DChildNode .
    },
 });
 
+Object .defineProperties (BooleanToggle, X3DNode .staticProperties ("BooleanToggle", "EventUtilities", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (BooleanToggle,
 {
-   typeName:
-   {
-      value: "BooleanToggle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

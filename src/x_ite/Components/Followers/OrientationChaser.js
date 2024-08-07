@@ -94,28 +94,10 @@ Object .assign (Object .setPrototypeOf (OrientationChaser .prototype, X3DChaserN
    },
 });
 
+Object .defineProperties (OrientationChaser, X3DNode .staticProperties ("OrientationChaser", "Followers", 1, "children", "3.2", "Infinity"));
+
 Object .defineProperties (OrientationChaser,
 {
-   typeName:
-   {
-      value: "OrientationChaser",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

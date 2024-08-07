@@ -346,28 +346,10 @@ function getMaterialKey ()
    }
 }
 
+Object .defineProperties (Material, X3DNode .staticProperties ("Material", "Shape", 1, "material", "2.0", "Infinity"));
+
 Object .defineProperties (Material,
 {
-   typeName:
-   {
-      value: "Material",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "material",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

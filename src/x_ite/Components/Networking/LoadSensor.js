@@ -229,28 +229,10 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorN
    },
 });
 
+Object .defineProperties (LoadSensor, X3DNode .staticProperties ("LoadSensor", "Networking", 3, "children", "3.0", "Infinity"));
+
 Object .defineProperties (LoadSensor,
 {
-   typeName:
-   {
-      value: "LoadSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Networking", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

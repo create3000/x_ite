@@ -130,28 +130,10 @@ Object .assign (Object .setPrototypeOf (PointProperties .prototype, X3DAppearanc
    },
 });
 
+Object .defineProperties (PointProperties, X3DNode .staticProperties ("PointProperties", "Shape", 5, "pointProperties", "4.0", "Infinity"));
+
 Object .defineProperties (PointProperties,
 {
-   typeName:
-   {
-      value: "PointProperties",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 5 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "pointProperties",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

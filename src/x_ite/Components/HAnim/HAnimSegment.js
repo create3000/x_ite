@@ -63,28 +63,10 @@ function HAnimSegment (executionContext)
 
 Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode .prototype);
 
+Object .defineProperties (HAnimSegment, X3DNode .staticProperties ("HAnimSegment", "HAnim", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (HAnimSegment,
 {
-   typeName:
-   {
-      value: "HAnimSegment",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "HAnim", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

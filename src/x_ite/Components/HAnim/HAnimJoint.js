@@ -144,28 +144,10 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode 
    },
 });
 
+Object .defineProperties (HAnimJoint, X3DNode .staticProperties ("HAnimJoint", "HAnim", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (HAnimJoint,
 {
-   typeName:
-   {
-      value: "HAnimJoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "HAnim", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

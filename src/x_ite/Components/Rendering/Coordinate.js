@@ -63,28 +63,10 @@ function Coordinate (executionContext)
 
 Object .setPrototypeOf (Coordinate .prototype, X3DCoordinateNode .prototype);
 
+Object .defineProperties (Coordinate, X3DNode .staticProperties ("Coordinate", "Rendering", 1, "coord", "2.0", "Infinity"));
+
 Object .defineProperties (Coordinate,
 {
-   typeName:
-   {
-      value: "Coordinate",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "coord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

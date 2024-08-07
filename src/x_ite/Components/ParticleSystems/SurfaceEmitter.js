@@ -250,28 +250,10 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
    },
 });
 
+Object .defineProperties (SurfaceEmitter, X3DNode .staticProperties ("SurfaceEmitter", "ParticleSystems", 2, "emitter", "3.2", "Infinity"));
+
 Object .defineProperties (SurfaceEmitter,
 {
-   typeName:
-   {
-      value: "SurfaceEmitter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "emitter",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

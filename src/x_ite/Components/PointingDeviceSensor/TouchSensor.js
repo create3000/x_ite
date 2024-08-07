@@ -63,28 +63,10 @@ function TouchSensor (executionContext)
 
 Object .setPrototypeOf (TouchSensor .prototype, X3DTouchSensorNode .prototype);
 
+Object .defineProperties (TouchSensor, X3DNode .staticProperties ("TouchSensor", "PointingDeviceSensor", 1, "children", "2.0", "Infinity"));
+
 Object .defineProperties (TouchSensor,
 {
-   typeName:
-   {
-      value: "TouchSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

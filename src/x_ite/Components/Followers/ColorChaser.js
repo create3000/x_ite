@@ -107,28 +107,10 @@ Object .assign (Object .setPrototypeOf (ColorChaser .prototype, X3DChaserNode .p
    },
 });
 
+Object .defineProperties (ColorChaser, X3DNode .staticProperties ("ColorChaser", "Followers", 1, "children", "3.3", "Infinity"));
+
 Object .defineProperties (ColorChaser,
 {
-   typeName:
-   {
-      value: "ColorChaser",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -80,28 +80,10 @@ function UniversalJoint (executionContext)
 
 Object .setPrototypeOf (UniversalJoint .prototype, X3DRigidJointNode .prototype);
 
+Object .defineProperties (UniversalJoint, X3DNode .staticProperties ("UniversalJoint", "RigidBodyPhysics", 2, "joints", "3.2", "Infinity"));
+
 Object .defineProperties (UniversalJoint,
 {
-   typeName:
-   {
-      value: "UniversalJoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "joints",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

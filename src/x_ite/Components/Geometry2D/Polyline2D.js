@@ -77,28 +77,10 @@ Object .assign (Object .setPrototypeOf (Polyline2D .prototype, X3DLineGeometryNo
    },
 });
 
+Object .defineProperties (Polyline2D, X3DNode .staticProperties ("Polyline2D", "Geometry2D", 1, "geometry", "3.0", "Infinity"));
+
 Object .defineProperties (Polyline2D,
 {
-   typeName:
-   {
-      value: "Polyline2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

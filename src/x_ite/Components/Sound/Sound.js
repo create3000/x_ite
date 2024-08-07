@@ -373,28 +373,10 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    })(),
 });
 
+Object .defineProperties (Sound, X3DNode .staticProperties ("Sound", "Sound", 1, "children", "2.0", "Infinity"));
+
 Object .defineProperties (Sound,
 {
-   typeName:
-   {
-      value: "Sound",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -88,28 +88,10 @@ Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, X3DSensorNode .p
    },
 });
 
+Object .defineProperties (ReceiverPdu, X3DNode .staticProperties ("ReceiverPdu", "DIS", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (ReceiverPdu,
 {
-   typeName:
-   {
-      value: "ReceiverPdu",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "DIS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

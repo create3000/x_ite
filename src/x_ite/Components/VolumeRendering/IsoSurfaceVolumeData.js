@@ -321,28 +321,10 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, X3DVolu
    },
 });
 
+Object .defineProperties (IsoSurfaceVolumeData, X3DNode .staticProperties ("IsoSurfaceVolumeData", "VolumeRendering", 2, "children", "3.3", "Infinity"));
+
 Object .defineProperties (IsoSurfaceVolumeData,
 {
-   typeName:
-   {
-      value: "IsoSurfaceVolumeData",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

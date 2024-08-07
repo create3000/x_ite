@@ -127,28 +127,10 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
    },
 });
 
+Object .defineProperties (DepthMode, X3DNode .staticProperties ("DepthMode", "X_ITE", 1, "depthMode", "4.0", "Infinity"));
+
 Object .defineProperties (DepthMode,
 {
-   typeName:
-   {
-      value: "DepthMode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "depthMode",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

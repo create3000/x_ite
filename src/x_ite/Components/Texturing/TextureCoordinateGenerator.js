@@ -123,28 +123,10 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, X
    },
 });
 
+Object .defineProperties (TextureCoordinateGenerator, X3DNode .staticProperties ("TextureCoordinateGenerator", "Texturing", 2, "texCoord", "3.0", "Infinity"));
+
 Object .defineProperties (TextureCoordinateGenerator,
 {
-   typeName:
-   {
-      value: "TextureCoordinateGenerator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texCoord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

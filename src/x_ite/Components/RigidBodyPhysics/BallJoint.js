@@ -170,28 +170,10 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode 
    })(),
 });
 
+Object .defineProperties (BallJoint, X3DNode .staticProperties ("BallJoint", "RigidBodyPhysics", 2, "joints", "3.2", "Infinity"));
+
 Object .defineProperties (BallJoint,
 {
-   typeName:
-   {
-      value: "BallJoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "joints",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

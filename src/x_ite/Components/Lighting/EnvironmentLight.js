@@ -212,28 +212,10 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
 });
 
+Object .defineProperties (EnvironmentLight, X3DNode .staticProperties ("EnvironmentLight", "Lighting", 3, "children", "4.0", "Infinity"));
+
 Object .defineProperties (EnvironmentLight,
 {
-   typeName:
-   {
-      value: "EnvironmentLight",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Lighting", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

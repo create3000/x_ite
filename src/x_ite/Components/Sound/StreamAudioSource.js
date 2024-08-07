@@ -74,28 +74,10 @@ Object .assign (Object .setPrototypeOf (StreamAudioSource .prototype, X3DSoundSo
 });
 
 
+Object .defineProperties (StreamAudioSource, X3DNode .staticProperties ("StreamAudioSource", "Sound", 2, "children", "4.0", "Infinity"));
+
 Object .defineProperties (StreamAudioSource,
 {
-   typeName:
-   {
-      value: "StreamAudioSource",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

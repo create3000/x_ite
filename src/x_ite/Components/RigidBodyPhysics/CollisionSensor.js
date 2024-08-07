@@ -243,28 +243,10 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
    },
 });
 
+Object .defineProperties (CollisionSensor, X3DNode .staticProperties ("CollisionSensor", "RigidBodyPhysics", 1, "children", "3.2", "Infinity"));
+
 Object .defineProperties (CollisionSensor,
 {
-   typeName:
-   {
-      value: "CollisionSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

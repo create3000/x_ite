@@ -307,28 +307,10 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    },
 });
 
+Object .defineProperties (MultiTexture, X3DNode .staticProperties ("MultiTexture", "Texturing", 2, "texture", "3.0", "Infinity"));
+
 Object .defineProperties (MultiTexture,
 {
-   typeName:
-   {
-      value: "MultiTexture",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

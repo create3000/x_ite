@@ -307,28 +307,10 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
    })(),
 });
 
+Object .defineProperties (PointPickSensor, X3DNode .staticProperties ("PointPickSensor", "Picking", 1, "children", "3.2", "Infinity"));
+
 Object .defineProperties (PointPickSensor,
 {
-   typeName:
-   {
-      value: "PointPickSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Picking", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

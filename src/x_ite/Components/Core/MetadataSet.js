@@ -153,28 +153,10 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
    },
 });
 
+Object .defineProperties (MetadataSet, X3DNode .staticProperties ("MetadataSet", "Core", 1, "value", "3.0", "Infinity"));
+
 Object .defineProperties (MetadataSet,
 {
-   typeName:
-   {
-      value: "MetadataSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "value",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

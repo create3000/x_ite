@@ -145,28 +145,10 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
    })(),
 });
 
+Object .defineProperties (NurbsSurfaceInterpolator, X3DNode .staticProperties ("NurbsSurfaceInterpolator", "NURBS", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (NurbsSurfaceInterpolator,
 {
-   typeName:
-   {
-      value: "NurbsSurfaceInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -114,28 +114,10 @@ Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, X3DNo
    }
 });
 
+Object .defineProperties (NurbsTextureCoordinate, X3DNode .staticProperties ("NurbsTextureCoordinate", "NURBS", 1, "texCoord", "3.0", "Infinity"));
+
 Object .defineProperties (NurbsTextureCoordinate,
 {
-   typeName:
-   {
-      value: "NurbsTextureCoordinate",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texCoord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -24,12 +24,20 @@ for (const filename of files)
    // continue;
    console .log (filename)
 
-   let n = m [1] .match (/value:\s*"(.*?)"/)
-   let c = m [1] .match (/name:\s*"(.*?)",\s*level:\s*(\d+)/)
+   let n = m [1] .match (/typeName:\s*\{\s*value:\s*"(.*?)"/s)
+   let c = m [1] .match (/name:\s*"(.*?)",\s*level:\s*(\d+)/s)
+   let f = m [1] .match (/containerField:\s*\{\s*value:\s*"(.*?)"/s)
+   let s = m [1] .match (/from:\s*"(.*?)",\s*to:\s*"(.*?)"/s)
+   let d = m [1] .match (/(fieldDefinitions:.*?\},)/s)
 
-   file = file .replace (/\s*\{\s*typeName:.*?\}\);/s, ` X3DNode .staticProperties ("${n [1]}", "${c [1]}", ${c [2]}));`)
+   file = file .replace (/\s*\{\s*typeName:.*?\}\);/s, ` X3DNode .staticProperties ("${n [1]}", "${c [1]}", ${c [2]}, "${f [1]}", "${s [1]}", "${s [2]}"));
 
-   console .log (file)
+Object .defineProperties (${n [1]},
+{
+   ${d [1]}
+});`)
 
-   // fs .writeFileSync (filename, file);
+   // console .log (file)
+
+   fs .writeFileSync (filename, file);
 }

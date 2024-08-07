@@ -1778,7 +1778,7 @@ Object .defineProperties (X3DNode,
 {
    staticProperties:
    {
-      value: function (typeName, componentName, componentLevel)
+      value: function (typeName, componentName, componentLevel, containerField, fromVersion, toVersion)
       {
          return {
             typeName:
@@ -1791,6 +1791,22 @@ Object .defineProperties (X3DNode,
                value: Object .freeze ({ name: componentName, level: componentLevel }),
                enumerable: true,
             },
+            ... containerField ?
+            {
+               containerField:
+               {
+                  value: containerField,
+                  enumerable: true,
+               },
+            } : { },
+            ... fromVersion && toVersion ?
+            {
+               specificationRange:
+               {
+                  value: Object .freeze ({ from: fromVersion, to: toVersion }),
+                  enumerable: true,
+               },
+            } : { },
          };
       },
    },

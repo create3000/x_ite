@@ -73,28 +73,10 @@ Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, X3DTriggerNod
    },
 });
 
+Object .defineProperties (IntegerTrigger, X3DNode .staticProperties ("IntegerTrigger", "EventUtilities", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (IntegerTrigger,
 {
-   typeName:
-   {
-      value: "IntegerTrigger",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

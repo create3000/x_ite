@@ -154,28 +154,10 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    },
 });
 
+Object .defineProperties (SpecularMaterialExtension, X3DNode .staticProperties ("SpecularMaterialExtension", "X_ITE", 1, "extensions", "4.0", "Infinity"));
+
 Object .defineProperties (SpecularMaterialExtension,
 {
-   typeName:
-   {
-      value: "SpecularMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

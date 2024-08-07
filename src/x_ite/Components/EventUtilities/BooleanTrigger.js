@@ -73,28 +73,10 @@ Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, X3DTriggerNod
    },
 });
 
+Object .defineProperties (BooleanTrigger, X3DNode .staticProperties ("BooleanTrigger", "EventUtilities", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (BooleanTrigger,
 {
-   typeName:
-   {
-      value: "BooleanTrigger",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

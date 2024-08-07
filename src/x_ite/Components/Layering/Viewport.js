@@ -139,28 +139,10 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .pr
    },
 });
 
+Object .defineProperties (Viewport, X3DNode .staticProperties ("Viewport", "Layering", 1, "viewport", "3.2", "Infinity"));
+
 Object .defineProperties (Viewport,
 {
-   typeName:
-   {
-      value: "Viewport",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "viewport",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

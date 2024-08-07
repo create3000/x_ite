@@ -76,28 +76,10 @@ Object .assign (Object .setPrototypeOf (GroupAnnotation .prototype, X3DGroupingN
    },
 });
 
+Object .defineProperties (GroupAnnotation, X3DNode .staticProperties ("GroupAnnotation", "Annotation", 1, "children", "4.0", "Infinity"));
+
 Object .defineProperties (GroupAnnotation,
 {
-   typeName:
-   {
-      value: "GroupAnnotation",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Annotation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

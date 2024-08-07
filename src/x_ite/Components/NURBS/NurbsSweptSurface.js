@@ -142,28 +142,10 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, X3DParamet
    },
 });
 
+Object .defineProperties (NurbsSweptSurface, X3DNode .staticProperties ("NurbsSweptSurface", "NURBS", 3, "geometry", "3.0", "Infinity"));
+
 Object .defineProperties (NurbsSweptSurface,
 {
-   typeName:
-   {
-      value: "NurbsSweptSurface",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

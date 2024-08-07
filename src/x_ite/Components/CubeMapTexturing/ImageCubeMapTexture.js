@@ -366,28 +366,10 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
    },
 });
 
+Object .defineProperties (ImageCubeMapTexture, X3DNode .staticProperties ("ImageCubeMapTexture", "CubeMapTexturing", 2, "texture", "3.0", "Infinity"));
+
 Object .defineProperties (ImageCubeMapTexture,
 {
-   typeName:
-   {
-      value: "ImageCubeMapTexture",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CubeMapTexturing", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

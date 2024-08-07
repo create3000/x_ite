@@ -305,28 +305,10 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    }
 });
 
+Object .defineProperties (NavigationInfo, X3DNode .staticProperties ("NavigationInfo", "Navigation", 1, "children", "2.0", "Infinity"));
+
 Object .defineProperties (NavigationInfo,
 {
-   typeName:
-   {
-      value: "NavigationInfo",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

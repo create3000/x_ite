@@ -96,28 +96,10 @@ Object .assign (Object .setPrototypeOf (ScalarChaser .prototype, X3DChaserNode .
    },
 });
 
+Object .defineProperties (ScalarChaser, X3DNode .staticProperties ("ScalarChaser", "Followers", 1, "children", "3.2", "Infinity"));
+
 Object .defineProperties (ScalarChaser,
 {
-   typeName:
-   {
-      value: "ScalarChaser",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

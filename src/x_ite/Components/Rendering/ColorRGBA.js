@@ -116,28 +116,10 @@ Object .assign (Object .setPrototypeOf (ColorRGBA .prototype, X3DColorNode .prot
    },
 });
 
+Object .defineProperties (ColorRGBA, X3DNode .staticProperties ("ColorRGBA", "Rendering", 1, "color", "3.0", "Infinity"));
+
 Object .defineProperties (ColorRGBA,
 {
-   typeName:
-   {
-      value: "ColorRGBA",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "color",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

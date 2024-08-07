@@ -65,28 +65,10 @@ function ProgramShader (executionContext)
 
 Object .setPrototypeOf (ProgramShader .prototype, X3DShaderNode .prototype);
 
+Object .defineProperties (ProgramShader, X3DNode .staticProperties ("ProgramShader", "Shaders", 1, "shaders", "3.0", "Infinity"));
+
 Object .defineProperties (ProgramShader,
 {
-   typeName:
-   {
-      value: "ProgramShader",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "shaders",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

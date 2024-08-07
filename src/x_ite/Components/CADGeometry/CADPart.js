@@ -66,28 +66,10 @@ Object .assign (Object .setPrototypeOf (CADPart .prototype, X3DTransformNode .pr
 {
 });
 
+Object .defineProperties (CADPart, X3DNode .staticProperties ("CADPart", "CADGeometry", 2, "children", "3.1", "Infinity"));
+
 Object .defineProperties (CADPart,
 {
-   typeName:
-   {
-      value: "CADPart",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

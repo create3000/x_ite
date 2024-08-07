@@ -140,28 +140,10 @@ Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, X3DParticleEmitt
    },
 });
 
+Object .defineProperties (ConeEmitter, X3DNode .staticProperties ("ConeEmitter", "ParticleSystems", 1, "emitter", "3.2", "Infinity"));
+
 Object .defineProperties (ConeEmitter,
 {
-   typeName:
-   {
-      value: "ConeEmitter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "emitter",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

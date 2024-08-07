@@ -88,28 +88,10 @@ Object .assign (Object .setPrototypeOf (PositionInterpolator2D .prototype, X3DIn
    })(),
 });
 
+Object .defineProperties (PositionInterpolator2D, X3DNode .staticProperties ("PositionInterpolator2D", "Interpolation", 3, "children", "3.0", "Infinity"));
+
 Object .defineProperties (PositionInterpolator2D,
 {
-   typeName:
-   {
-      value: "PositionInterpolator2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

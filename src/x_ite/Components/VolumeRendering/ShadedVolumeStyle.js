@@ -241,28 +241,10 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
    },
 });
 
+Object .defineProperties (ShadedVolumeStyle, X3DNode .staticProperties ("ShadedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3", "Infinity"));
+
 Object .defineProperties (ShadedVolumeStyle,
 {
-   typeName:
-   {
-      value: "ShadedVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

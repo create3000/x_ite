@@ -87,28 +87,10 @@ Object .assign (Object .setPrototypeOf (LayoutLayer .prototype, X3DLayerNode .pr
    },
 });
 
+Object .defineProperties (LayoutLayer, X3DNode .staticProperties ("LayoutLayer", "Layout", 1, "layers", "3.2", "Infinity"));
+
 Object .defineProperties (LayoutLayer,
 {
-   typeName:
-   {
-      value: "LayoutLayer",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layout", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "layers",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

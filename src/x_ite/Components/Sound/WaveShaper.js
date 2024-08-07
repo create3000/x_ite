@@ -101,28 +101,10 @@ Object .assign (Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessin
    })(),
 });
 
+Object .defineProperties (WaveShaper, X3DNode .staticProperties ("WaveShaper", "Sound", 2, "children", "4.0", "Infinity"));
+
 Object .defineProperties (WaveShaper,
 {
-   typeName:
-   {
-      value: "WaveShaper",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

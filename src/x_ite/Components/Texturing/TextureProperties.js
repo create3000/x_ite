@@ -162,28 +162,10 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .p
    })(),
 });
 
+Object .defineProperties (TextureProperties, X3DNode .staticProperties ("TextureProperties", "Texturing", 2, "textureProperties", "3.0", "Infinity"));
+
 Object .defineProperties (TextureProperties,
 {
-   typeName:
-   {
-      value: "TextureProperties",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "textureProperties",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

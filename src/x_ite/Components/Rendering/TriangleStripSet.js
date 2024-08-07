@@ -115,28 +115,10 @@ Object .assign (Object .setPrototypeOf (TriangleStripSet .prototype, X3DComposed
    },
 });
 
+Object .defineProperties (TriangleStripSet, X3DNode .staticProperties ("TriangleStripSet", "Rendering", 3, "geometry", "3.0", "Infinity"));
+
 Object .defineProperties (TriangleStripSet,
 {
-   typeName:
-   {
-      value: "TriangleStripSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

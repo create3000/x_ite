@@ -174,28 +174,10 @@ Object .assign (Object .setPrototypeOf (Anchor .prototype, X3DGroupingNode .prot
    },
 });
 
+Object .defineProperties (Anchor, X3DNode .staticProperties ("Anchor", "Networking", 2, "children", "2.0", "Infinity"));
+
 Object .defineProperties (Anchor,
 {
-   typeName:
-   {
-      value: "Anchor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Networking", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

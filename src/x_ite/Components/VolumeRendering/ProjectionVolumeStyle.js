@@ -194,28 +194,10 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
    },
 });
 
+Object .defineProperties (ProjectionVolumeStyle, X3DNode .staticProperties ("ProjectionVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3", "Infinity"));
+
 Object .defineProperties (ProjectionVolumeStyle,
 {
-   typeName:
-   {
-      value: "ProjectionVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

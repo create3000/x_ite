@@ -107,28 +107,10 @@ Object .assign (Object .setPrototypeOf (Matrix3VertexAttribute .prototype, X3DVe
    },
 });
 
+Object .defineProperties (Matrix3VertexAttribute, X3DNode .staticProperties ("Matrix3VertexAttribute", "Shaders", 1, "attrib", "3.0", "Infinity"));
+
 Object .defineProperties (Matrix3VertexAttribute,
 {
-   typeName:
-   {
-      value: "Matrix3VertexAttribute",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "attrib",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -116,28 +116,10 @@ Object .assign (Object .setPrototypeOf (BiquadFilter .prototype, X3DSoundProcess
    },
 });
 
+Object .defineProperties (BiquadFilter, X3DNode .staticProperties ("BiquadFilter", "Sound", 2, "children", "4.0", "Infinity"));
+
 Object .defineProperties (BiquadFilter,
 {
-   typeName:
-   {
-      value: "BiquadFilter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -157,28 +157,10 @@ Object .assign (Object .setPrototypeOf (BlendMode .prototype, X3DAppearanceChild
    },
 });
 
+Object .defineProperties (BlendMode, X3DNode .staticProperties ("BlendMode", "X_ITE", 1, "blendMode", "3.3", "Infinity"));
+
 Object .defineProperties (BlendMode,
 {
-   typeName:
-   {
-      value: "BlendMode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "blendMode",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

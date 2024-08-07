@@ -401,28 +401,10 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
    })(),
 });
 
+Object .defineProperties (IndexedFaceSet, X3DNode .staticProperties ("IndexedFaceSet", "Geometry3D", 2, "geometry", "2.0", "Infinity"));
+
 Object .defineProperties (IndexedFaceSet,
 {
-   typeName:
-   {
-      value: "IndexedFaceSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry3D", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

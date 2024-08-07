@@ -144,28 +144,10 @@ Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, X3DCom
    },
 });
 
+Object .defineProperties (OpacityMapVolumeStyle, X3DNode .staticProperties ("OpacityMapVolumeStyle", "VolumeRendering", 1, "renderStyle", "3.3", "Infinity"));
+
 Object .defineProperties (OpacityMapVolumeStyle,
 {
-   typeName:
-   {
-      value: "OpacityMapVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

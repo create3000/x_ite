@@ -73,28 +73,10 @@ Object .assign (Object .setPrototypeOf (TexCoordChaser2D .prototype, X3DChaserNo
    },
 });
 
+Object .defineProperties (TexCoordChaser2D, X3DNode .staticProperties ("TexCoordChaser2D", "Followers", 1, "children", "3.3", "Infinity"));
+
 Object .defineProperties (TexCoordChaser2D,
 {
-   typeName:
-   {
-      value: "TexCoordChaser2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

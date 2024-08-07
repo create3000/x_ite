@@ -138,28 +138,10 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
    })(),
 });
 
+Object .defineProperties (VisibilitySensor, X3DNode .staticProperties ("VisibilitySensor", "EnvironmentalSensor", 2, "children", "2.0", "Infinity"));
+
 Object .defineProperties (VisibilitySensor,
 {
-   typeName:
-   {
-      value: "VisibilitySensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalSensor", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

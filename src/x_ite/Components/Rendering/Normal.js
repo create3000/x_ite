@@ -114,28 +114,10 @@ Object .assign (Object .setPrototypeOf (Normal .prototype, X3DNormalNode .protot
    },
 });
 
+Object .defineProperties (Normal, X3DNode .staticProperties ("Normal", "Rendering", 2, "normal", "2.0", "Infinity"));
+
 Object .defineProperties (Normal,
 {
-   typeName:
-   {
-      value: "Normal",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "normal",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

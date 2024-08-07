@@ -602,28 +602,10 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    },
 });
 
+Object .defineProperties (Layout, X3DNode .staticProperties ("Layout", "Layout", 1, "layout", "3.2", "Infinity"));
+
 Object .defineProperties (Layout,
 {
-   typeName:
-   {
-      value: "Layout",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layout", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "layout",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

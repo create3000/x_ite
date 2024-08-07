@@ -107,28 +107,10 @@ Object .assign (Object .setPrototypeOf (TriangleSet2D .prototype, X3DGeometryNod
    },
 });
 
+Object .defineProperties (TriangleSet2D, X3DNode .staticProperties ("TriangleSet2D", "Geometry2D", 1, "geometry", "3.0", "Infinity"));
+
 Object .defineProperties (TriangleSet2D,
 {
-   typeName:
-   {
-      value: "TriangleSet2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -273,28 +273,10 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, X3DCompos
    },
 });
 
+Object .defineProperties (CartoonVolumeStyle, X3DNode .staticProperties ("CartoonVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3", "Infinity"));
+
 Object .defineProperties (CartoonVolumeStyle,
 {
-   typeName:
-   {
-      value: "CartoonVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

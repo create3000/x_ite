@@ -87,28 +87,10 @@ Object .assign (Object .setPrototypeOf (TextureBackground .prototype, X3DBackgro
    },
 });
 
+Object .defineProperties (TextureBackground, X3DNode .staticProperties ("TextureBackground", "EnvironmentalEffects", 3, "children", "3.0", "Infinity"));
+
 Object .defineProperties (TextureBackground,
 {
-   typeName:
-   {
-      value: "TextureBackground",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

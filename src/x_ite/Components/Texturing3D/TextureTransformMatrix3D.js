@@ -75,28 +75,10 @@ Object .assign (Object .setPrototypeOf (TextureTransformMatrix3D .prototype, X3D
    },
 });
 
+Object .defineProperties (TextureTransformMatrix3D, X3DNode .staticProperties ("TextureTransformMatrix3D", "Texturing3D", 1, "textureTransform", "3.1", "Infinity"));
+
 Object .defineProperties (TextureTransformMatrix3D,
 {
-   typeName:
-   {
-      value: "TextureTransformMatrix3D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "textureTransform",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

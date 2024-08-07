@@ -126,28 +126,10 @@ Object .assign (Object .setPrototypeOf (StringSensor .prototype, X3DKeyDeviceSen
    },
 });
 
+Object .defineProperties (StringSensor, X3DNode .staticProperties ("StringSensor", "KeyDeviceSensor", 2, "children", "3.0", "Infinity"));
+
 Object .defineProperties (StringSensor,
 {
-   typeName:
-   {
-      value: "StringSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "KeyDeviceSensor", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

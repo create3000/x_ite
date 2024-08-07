@@ -82,28 +82,10 @@ Object .assign (Object .setPrototypeOf (WorldInfo .prototype, X3DInfoNode .proto
    },
 });
 
+Object .defineProperties (WorldInfo, X3DNode .staticProperties ("WorldInfo", "Core", 1, "children", "2.0", "Infinity"));
+
 Object .defineProperties (WorldInfo,
 {
-   typeName:
-   {
-      value: "WorldInfo",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

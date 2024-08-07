@@ -203,28 +203,10 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
    },
 });
 
+Object .defineProperties (GeoCoordinate, X3DNode .staticProperties ("GeoCoordinate", "Geospatial", 1, "coord", "3.0", "Infinity"));
+
 Object .defineProperties (GeoCoordinate,
 {
-   typeName:
-   {
-      value: "GeoCoordinate",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "coord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

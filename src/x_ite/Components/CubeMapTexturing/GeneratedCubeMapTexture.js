@@ -265,28 +265,10 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
    })(),
 });
 
+Object .defineProperties (GeneratedCubeMapTexture, X3DNode .staticProperties ("GeneratedCubeMapTexture", "CubeMapTexturing", 3, "texture", "3.0", "Infinity"));
+
 Object .defineProperties (GeneratedCubeMapTexture,
 {
-   typeName:
-   {
-      value: "GeneratedCubeMapTexture",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CubeMapTexturing", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

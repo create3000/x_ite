@@ -147,28 +147,10 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .p
    },
 });
 
+Object .defineProperties (Billboard, X3DNode .staticProperties ("Billboard", "Navigation", 2, "children", "2.0", "Infinity"));
+
 Object .defineProperties (Billboard,
 {
-   typeName:
-   {
-      value: "Billboard",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -164,28 +164,10 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
    },
 });
 
+Object .defineProperties (SheenMaterialExtension, X3DNode .staticProperties ("SheenMaterialExtension", "X_ITE", 1, "extensions", "4.0", "Infinity"));
+
 Object .defineProperties (SheenMaterialExtension,
 {
-   typeName:
-   {
-      value: "SheenMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

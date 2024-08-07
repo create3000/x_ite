@@ -114,28 +114,10 @@ Object .assign (Object .setPrototypeOf (Color .prototype, X3DColorNode .prototyp
    },
 });
 
+Object .defineProperties (Color, X3DNode .staticProperties ("Color", "Rendering", 1, "color", "2.0", "Infinity"));
+
 Object .defineProperties (Color,
 {
-   typeName:
-   {
-      value: "Color",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "color",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

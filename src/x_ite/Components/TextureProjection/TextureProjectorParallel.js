@@ -246,28 +246,10 @@ Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, X3D
    },
 });
 
+Object .defineProperties (TextureProjectorParallel, X3DNode .staticProperties ("TextureProjectorParallel", "TextureProjection", 2, "children", "4.0", "Infinity"));
+
 Object .defineProperties (TextureProjectorParallel,
 {
-   typeName:
-   {
-      value: "TextureProjectorParallel",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "TextureProjection", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

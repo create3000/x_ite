@@ -236,28 +236,10 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, X3DVolum
    },
 });
 
+Object .defineProperties (SegmentedVolumeData, X3DNode .staticProperties ("SegmentedVolumeData", "VolumeRendering", 2, "children", "3.3", "Infinity"));
+
 Object .defineProperties (SegmentedVolumeData,
 {
-   typeName:
-   {
-      value: "SegmentedVolumeData",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

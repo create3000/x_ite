@@ -95,28 +95,10 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, X3DComposedGe
    },
 });
 
+Object .defineProperties (IndexedQuadSet, X3DNode .staticProperties ("IndexedQuadSet", "CADGeometry", 1, "geometry", "3.1", "Infinity"));
+
 Object .defineProperties (IndexedQuadSet,
 {
-   typeName:
-   {
-      value: "IndexedQuadSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

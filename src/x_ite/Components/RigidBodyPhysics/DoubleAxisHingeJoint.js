@@ -249,28 +249,10 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
    })(),
 });
 
+Object .defineProperties (DoubleAxisHingeJoint, X3DNode .staticProperties ("DoubleAxisHingeJoint", "RigidBodyPhysics", 2, "joints", "3.2", "Infinity"));
+
 Object .defineProperties (DoubleAxisHingeJoint,
 {
-   typeName:
-   {
-      value: "DoubleAxisHingeJoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "joints",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

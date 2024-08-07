@@ -143,28 +143,10 @@ Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, X
    },
 });
 
+Object .defineProperties (EdgeEnhancementVolumeStyle, X3DNode .staticProperties ("EdgeEnhancementVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3", "Infinity"));
+
 Object .defineProperties (EdgeEnhancementVolumeStyle,
 {
-   typeName:
-   {
-      value: "EdgeEnhancementVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

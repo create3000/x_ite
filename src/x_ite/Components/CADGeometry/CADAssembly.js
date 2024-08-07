@@ -66,28 +66,10 @@ Object .assign (Object .setPrototypeOf (CADAssembly .prototype, X3DGroupingNode 
 {
 });
 
+Object .defineProperties (CADAssembly, X3DNode .staticProperties ("CADAssembly", "CADGeometry", 2, "children", "3.1", "Infinity"));
+
 Object .defineProperties (CADAssembly,
 {
-   typeName:
-   {
-      value: "CADAssembly",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

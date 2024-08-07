@@ -73,28 +73,10 @@ Object .assign (Object .setPrototypeOf (CoordinateChaser .prototype, X3DChaserNo
    },
 });
 
+Object .defineProperties (CoordinateChaser, X3DNode .staticProperties ("CoordinateChaser", "Followers", 1, "children", "3.3", "Infinity"));
+
 Object .defineProperties (CoordinateChaser,
 {
-   typeName:
-   {
-      value: "CoordinateChaser",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

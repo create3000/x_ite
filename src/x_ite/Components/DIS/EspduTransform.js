@@ -83,28 +83,10 @@ Object .assign (Object .setPrototypeOf (EspduTransform .prototype, X3DGroupingNo
    },
 });
 
+Object .defineProperties (EspduTransform, X3DNode .staticProperties ("EspduTransform", "DIS", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (EspduTransform,
 {
-   typeName:
-   {
-      value: "EspduTransform",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "DIS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

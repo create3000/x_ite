@@ -171,28 +171,10 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode
    },
 });
 
+Object .defineProperties (VolumeData, X3DNode .staticProperties ("VolumeData", "VolumeRendering", 1, "children", "3.3", "Infinity"));
+
 Object .defineProperties (VolumeData,
 {
-   typeName:
-   {
-      value: "VolumeData",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

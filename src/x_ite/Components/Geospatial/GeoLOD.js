@@ -417,28 +417,10 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
    },
 });
 
+Object .defineProperties (GeoLOD, X3DNode .staticProperties ("GeoLOD", "Geospatial", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (GeoLOD,
 {
-   typeName:
-   {
-      value: "GeoLOD",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

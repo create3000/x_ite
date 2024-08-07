@@ -107,28 +107,10 @@ Object .assign (Object .setPrototypeOf (SplineScalarInterpolator .prototype, X3D
    },
 });
 
+Object .defineProperties (SplineScalarInterpolator, X3DNode .staticProperties ("SplineScalarInterpolator", "Interpolation", 4, "children", "3.2", "Infinity"));
+
 Object .defineProperties (SplineScalarInterpolator,
 {
-   typeName:
-   {
-      value: "SplineScalarInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

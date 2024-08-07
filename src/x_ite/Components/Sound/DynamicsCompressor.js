@@ -114,28 +114,10 @@ Object .assign (Object .setPrototypeOf (DynamicsCompressor .prototype, X3DSoundP
    },
 });
 
+Object .defineProperties (DynamicsCompressor, X3DNode .staticProperties ("DynamicsCompressor", "Sound", 2, "children", "4.0", "Infinity"));
+
 Object .defineProperties (DynamicsCompressor,
 {
-   typeName:
-   {
-      value: "DynamicsCompressor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -279,28 +279,10 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
 });
 
+Object .defineProperties (PhysicalMaterial, X3DNode .staticProperties ("PhysicalMaterial", "Shape", 2, "material", "4.0", "Infinity"));
+
 Object .defineProperties (PhysicalMaterial,
 {
-   typeName:
-   {
-      value: "PhysicalMaterial",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "material",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -231,28 +231,10 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
    },
 });
 
+Object .defineProperties (PolylineEmitter, X3DNode .staticProperties ("PolylineEmitter", "ParticleSystems", 1, "emitter", "3.2", "Infinity"));
+
 Object .defineProperties (PolylineEmitter,
 {
-   typeName:
-   {
-      value: "PolylineEmitter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "emitter",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

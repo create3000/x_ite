@@ -68,28 +68,10 @@ Object .assign (Object .setPrototypeOf (PositionChaser2D .prototype, X3DChaserNo
    },
 });
 
+Object .defineProperties (PositionChaser2D, X3DNode .staticProperties ("PositionChaser2D", "Followers", 1, "children", "3.2", "Infinity"));
+
 Object .defineProperties (PositionChaser2D,
 {
-   typeName:
-   {
-      value: "PositionChaser2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

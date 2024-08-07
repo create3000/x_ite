@@ -383,28 +383,10 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
    },
 });
 
+Object .defineProperties (ElevationGrid, X3DNode .staticProperties ("ElevationGrid", "Geometry3D", 3, "geometry", "2.0", "Infinity"));
+
 Object .defineProperties (ElevationGrid,
 {
-   typeName:
-   {
-      value: "ElevationGrid",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry3D", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -169,28 +169,10 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, X3DCompo
    }
 });
 
+Object .defineProperties (ComposedVolumeStyle, X3DNode .staticProperties ("ComposedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3", "Infinity"));
+
 Object .defineProperties (ComposedVolumeStyle,
 {
-   typeName:
-   {
-      value: "ComposedVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

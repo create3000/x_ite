@@ -92,28 +92,10 @@ Object .assign (Object .setPrototypeOf (QuadSet .prototype, X3DComposedGeometryN
    },
 });
 
+Object .defineProperties (QuadSet, X3DNode .staticProperties ("QuadSet", "CADGeometry", 1, "geometry", "3.1", "Infinity"));
+
 Object .defineProperties (QuadSet,
 {
-   typeName:
-   {
-      value: "QuadSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

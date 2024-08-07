@@ -131,28 +131,10 @@ Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, X3DNurbsCo
    },
 });
 
+Object .defineProperties (ContourPolyline2D, X3DNode .staticProperties ("ContourPolyline2D", "NURBS", 3, "children", "3.0", "Infinity"));
+
 Object .defineProperties (ContourPolyline2D,
 {
-   typeName:
-   {
-      value: "ContourPolyline2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

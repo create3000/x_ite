@@ -250,28 +250,10 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterial
    },
 });
 
+Object .defineProperties (TwoSidedMaterial, X3DNode .staticProperties ("TwoSidedMaterial", "Shape", 4, "material", "3.2", "4.0"));
+
 Object .defineProperties (TwoSidedMaterial,
 {
-   typeName:
-   {
-      value: "TwoSidedMaterial",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "material",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "4.0" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

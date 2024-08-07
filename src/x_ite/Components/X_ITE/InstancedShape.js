@@ -281,28 +281,10 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    },
 });
 
+Object .defineProperties (InstancedShape, X3DNode .staticProperties ("InstancedShape", "X_ITE", 1, "children", "2.0", "Infinity"));
+
 Object .defineProperties (InstancedShape,
 {
-   typeName:
-   {
-      value: "InstancedShape",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

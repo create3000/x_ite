@@ -197,28 +197,10 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
    },
 });
 
+Object .defineProperties (PointSet, X3DNode .staticProperties ("PointSet", "Rendering", 1, "geometry", "2.0", "Infinity"));
+
 Object .defineProperties (PointSet,
 {
-   typeName:
-   {
-      value: "PointSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

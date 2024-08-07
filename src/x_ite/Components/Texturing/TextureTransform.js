@@ -120,28 +120,10 @@ Object .assign (Object .setPrototypeOf (TextureTransform .prototype, X3DSingleTe
    })(),
 });
 
+Object .defineProperties (TextureTransform, X3DNode .staticProperties ("TextureTransform", "Texturing", 1, "textureTransform", "2.0", "Infinity"));
+
 Object .defineProperties (TextureTransform,
 {
-   typeName:
-   {
-      value: "TextureTransform",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "textureTransform",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

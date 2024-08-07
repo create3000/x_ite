@@ -95,28 +95,10 @@ Object .assign (Object .setPrototypeOf (ColorInterpolator .prototype, X3DInterpo
    })(),
 });
 
+Object .defineProperties (ColorInterpolator, X3DNode .staticProperties ("ColorInterpolator", "Interpolation", 2, "children", "2.0", "Infinity"));
+
 Object .defineProperties (ColorInterpolator,
 {
-   typeName:
-   {
-      value: "ColorInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

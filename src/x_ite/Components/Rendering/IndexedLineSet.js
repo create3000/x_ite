@@ -272,28 +272,10 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
    },
 });
 
+Object .defineProperties (IndexedLineSet, X3DNode .staticProperties ("IndexedLineSet", "Rendering", 1, "geometry", "2.0", "Infinity"));
+
 Object .defineProperties (IndexedLineSet,
 {
-   typeName:
-   {
-      value: "IndexedLineSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -61,28 +61,10 @@ function CoordinateDouble (executionContext)
 
 Object .setPrototypeOf (CoordinateDouble .prototype, X3DCoordinateNode .prototype);
 
+Object .defineProperties (CoordinateDouble, X3DNode .staticProperties ("CoordinateDouble", "Rendering", 1, "coord", "3.0", "Infinity"));
+
 Object .defineProperties (CoordinateDouble,
 {
-   typeName:
-   {
-      value: "CoordinateDouble",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "coord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

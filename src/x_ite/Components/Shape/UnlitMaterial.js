@@ -115,28 +115,10 @@ Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMat
    },
 });
 
+Object .defineProperties (UnlitMaterial, X3DNode .staticProperties ("UnlitMaterial", "Shape", 1, "material", "4.0", "Infinity"));
+
 Object .defineProperties (UnlitMaterial,
 {
-   typeName:
-   {
-      value: "UnlitMaterial",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "material",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

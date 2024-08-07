@@ -470,28 +470,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
 });
 
+Object .defineProperties (RigidBody, X3DNode .staticProperties ("RigidBody", "RigidBodyPhysics", 2, "bodies", "3.2", "Infinity"));
+
 Object .defineProperties (RigidBody,
 {
-   typeName:
-   {
-      value: "RigidBody",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "bodies",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

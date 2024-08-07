@@ -212,28 +212,10 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
    },
 });
 
+Object .defineProperties (ImageTextureAtlas, X3DNode .staticProperties ("ImageTextureAtlas", "Texturing3D", 1, "texture", "4.0", "Infinity"));
+
 Object .defineProperties (ImageTextureAtlas,
 {
-   typeName:
-   {
-      value: "ImageTextureAtlas",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

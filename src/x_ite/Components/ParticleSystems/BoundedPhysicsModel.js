@@ -103,28 +103,10 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, X3DParti
    },
 });
 
+Object .defineProperties (BoundedPhysicsModel, X3DNode .staticProperties ("BoundedPhysicsModel", "ParticleSystems", 2, "physics", "3.2", "Infinity"));
+
 Object .defineProperties (BoundedPhysicsModel,
 {
-   typeName:
-   {
-      value: "BoundedPhysicsModel",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "physics",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

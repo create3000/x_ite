@@ -159,28 +159,10 @@ Object .assign (Object .setPrototypeOf (MultiTextureCoordinate .prototype, X3DTe
    },
 });
 
+Object .defineProperties (MultiTextureCoordinate, X3DNode .staticProperties ("MultiTextureCoordinate", "Texturing", 2, "texCoord", "3.0", "Infinity"));
+
 Object .defineProperties (MultiTextureCoordinate,
 {
-   typeName:
-   {
-      value: "MultiTextureCoordinate",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texCoord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

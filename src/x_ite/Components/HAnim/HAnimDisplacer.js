@@ -63,28 +63,10 @@ function HAnimDisplacer (executionContext)
 
 Object .setPrototypeOf (HAnimDisplacer .prototype, X3DGeometricPropertyNode .prototype);
 
+Object .defineProperties (HAnimDisplacer, X3DNode .staticProperties ("HAnimDisplacer", "HAnim", 1, "displacers", "3.0", "Infinity"));
+
 Object .defineProperties (HAnimDisplacer,
 {
-   typeName:
-   {
-      value: "HAnimDisplacer",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "HAnim", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "displacers",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

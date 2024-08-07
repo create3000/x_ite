@@ -68,28 +68,10 @@ Object .assign (Object .setPrototypeOf (PositionDamper .prototype, X3DDamperNode
    },
 });
 
+Object .defineProperties (PositionDamper, X3DNode .staticProperties ("PositionDamper", "Followers", 1, "children", "3.2", "Infinity"));
+
 Object .defineProperties (PositionDamper,
 {
-   typeName:
-   {
-      value: "PositionDamper",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

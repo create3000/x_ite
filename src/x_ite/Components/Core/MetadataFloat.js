@@ -83,28 +83,10 @@ Object .assign (Object .setPrototypeOf (MetadataFloat .prototype, X3DNode .proto
    },
 });
 
+Object .defineProperties (MetadataFloat, X3DNode .staticProperties ("MetadataFloat", "Core", 1, "value", "3.0", "Infinity"));
+
 Object .defineProperties (MetadataFloat,
 {
-   typeName:
-   {
-      value: "MetadataFloat",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "value",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

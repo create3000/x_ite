@@ -148,28 +148,10 @@ Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearance
    },
 });
 
+Object .defineProperties (LineProperties, X3DNode .staticProperties ("LineProperties", "Shape", 2, "lineProperties", "3.0", "Infinity"));
+
 Object .defineProperties (LineProperties,
 {
-   typeName:
-   {
-      value: "LineProperties",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "lineProperties",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

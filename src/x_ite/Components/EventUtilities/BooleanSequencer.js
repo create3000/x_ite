@@ -77,28 +77,10 @@ Object .assign (Object .setPrototypeOf (BooleanSequencer .prototype, X3DSequence
    },
 });
 
+Object .defineProperties (BooleanSequencer, X3DNode .staticProperties ("BooleanSequencer", "EventUtilities", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (BooleanSequencer,
 {
-   typeName:
-   {
-      value: "BooleanSequencer",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

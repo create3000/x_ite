@@ -70,28 +70,10 @@ function DISEntityManager (executionContext)
 
 Object .setPrototypeOf (DISEntityManager .prototype, X3DChildNode .prototype);
 
+Object .defineProperties (DISEntityManager, X3DNode .staticProperties ("DISEntityManager", "DIS", 2, "children", "3.0", "Infinity"));
+
 Object .defineProperties (DISEntityManager,
 {
-   typeName:
-   {
-      value: "DISEntityManager",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "DIS", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

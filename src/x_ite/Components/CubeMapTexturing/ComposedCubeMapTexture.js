@@ -215,28 +215,10 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
    },
 });
 
+Object .defineProperties (ComposedCubeMapTexture, X3DNode .staticProperties ("ComposedCubeMapTexture", "CubeMapTexturing", 1, "texture", "3.1", "Infinity"));
+
 Object .defineProperties (ComposedCubeMapTexture,
 {
-   typeName:
-   {
-      value: "ComposedCubeMapTexture",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CubeMapTexturing", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

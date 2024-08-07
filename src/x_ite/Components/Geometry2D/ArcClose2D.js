@@ -191,28 +191,10 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, X3DGeometryNode .
    })(),
 });
 
+Object .defineProperties (ArcClose2D, X3DNode .staticProperties ("ArcClose2D", "Geometry2D", 2, "geometry", "3.0", "Infinity"));
+
 Object .defineProperties (ArcClose2D,
 {
-   typeName:
-   {
-      value: "ArcClose2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry2D", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

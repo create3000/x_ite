@@ -61,28 +61,10 @@ function Transform (executionContext)
 
 Object .setPrototypeOf (Transform .prototype, X3DTransformNode .prototype);
 
+Object .defineProperties (Transform, X3DNode .staticProperties ("Transform", "Grouping", 1, "children", "2.0", "Infinity"));
+
 Object .defineProperties (Transform,
 {
-   typeName:
-   {
-      value: "Transform",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

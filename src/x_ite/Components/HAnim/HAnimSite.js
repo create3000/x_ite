@@ -61,28 +61,10 @@ function HAnimSite (executionContext)
 
 Object .setPrototypeOf (HAnimSite .prototype, X3DTransformNode .prototype);
 
+Object .defineProperties (HAnimSite, X3DNode .staticProperties ("HAnimSite", "HAnim", 1, "children", "3.0", "Infinity"));
+
 Object .defineProperties (HAnimSite,
 {
-   typeName:
-   {
-      value: "HAnimSite",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "HAnim", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

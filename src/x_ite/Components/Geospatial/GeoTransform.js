@@ -98,28 +98,10 @@ Object .assign (Object .setPrototypeOf (GeoTransform .prototype, X3DTransformMat
    },
 });
 
+Object .defineProperties (GeoTransform, X3DNode .staticProperties ("GeoTransform", "Geospatial", 2, "children", "3.0", "Infinity"));
+
 Object .defineProperties (GeoTransform,
 {
-   typeName:
-   {
-      value: "GeoTransform",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -203,28 +203,10 @@ Object .assign (Object .setPrototypeOf (VolumePickSensor .prototype, X3DPickSens
    })(),
 });
 
+Object .defineProperties (VolumePickSensor, X3DNode .staticProperties ("VolumePickSensor", "Picking", 3, "children", "3.2", "Infinity"));
+
 Object .defineProperties (VolumePickSensor,
 {
-   typeName:
-   {
-      value: "VolumePickSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Picking", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

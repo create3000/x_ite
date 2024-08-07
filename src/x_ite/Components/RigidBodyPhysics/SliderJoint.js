@@ -185,28 +185,10 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, X3DRigidJointNod
    },
 });
 
+Object .defineProperties (SliderJoint, X3DNode .staticProperties ("SliderJoint", "RigidBodyPhysics", 2, "joints", "3.2", "Infinity"));
+
 Object .defineProperties (SliderJoint,
 {
-   typeName:
-   {
-      value: "SliderJoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "joints",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

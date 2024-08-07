@@ -196,28 +196,10 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, X3DGeometryNode .pr
    },
 });
 
+Object .defineProperties (Cylinder, X3DNode .staticProperties ("Cylinder", "Geometry3D", 1, "geometry", "2.0", "Infinity"));
+
 Object .defineProperties (Cylinder,
 {
-   typeName:
-   {
-      value: "Cylinder",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

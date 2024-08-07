@@ -1102,28 +1102,10 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    })(),
 });
 
+Object .defineProperties (ParticleSystem, X3DNode .staticProperties ("ParticleSystem", "ParticleSystems", 2, "children", "3.2", "Infinity"));
+
 Object .defineProperties (ParticleSystem,
 {
-   typeName:
-   {
-      value: "ParticleSystem",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

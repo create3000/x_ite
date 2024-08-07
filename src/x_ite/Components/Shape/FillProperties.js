@@ -144,28 +144,10 @@ Object .assign (Object .setPrototypeOf (FillProperties .prototype, X3DAppearance
    },
 });
 
+Object .defineProperties (FillProperties, X3DNode .staticProperties ("FillProperties", "Shape", 3, "fillProperties", "3.0", "Infinity"));
+
 Object .defineProperties (FillProperties,
 {
-   typeName:
-   {
-      value: "FillProperties",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "fillProperties",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

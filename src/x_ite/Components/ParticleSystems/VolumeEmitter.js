@@ -294,28 +294,10 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
    },
 });
 
+Object .defineProperties (VolumeEmitter, X3DNode .staticProperties ("VolumeEmitter", "ParticleSystems", 2, "emitter", "3.2", "Infinity"));
+
 Object .defineProperties (VolumeEmitter,
 {
-   typeName:
-   {
-      value: "VolumeEmitter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "emitter",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

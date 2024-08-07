@@ -220,28 +220,10 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
    },
 });
 
+Object .defineProperties (CollidableOffset, X3DNode .staticProperties ("CollidableOffset", "RigidBodyPhysics", 1, "children", "3.2", "Infinity"));
+
 Object .defineProperties (CollidableOffset,
 {
-   typeName:
-   {
-      value: "CollidableOffset",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

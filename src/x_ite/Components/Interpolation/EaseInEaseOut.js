@@ -112,28 +112,10 @@ Object .assign (Object .setPrototypeOf (EaseInEaseOut .prototype, X3DInterpolato
    },
 });
 
+Object .defineProperties (EaseInEaseOut, X3DNode .staticProperties ("EaseInEaseOut", "Interpolation", 4, "children", "3.2", "Infinity"));
+
 Object .defineProperties (EaseInEaseOut,
 {
-   typeName:
-   {
-      value: "EaseInEaseOut",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

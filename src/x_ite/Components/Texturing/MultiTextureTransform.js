@@ -120,28 +120,10 @@ Object .assign (Object .setPrototypeOf (MultiTextureTransform .prototype, X3DTex
    },
 });
 
+Object .defineProperties (MultiTextureTransform, X3DNode .staticProperties ("MultiTextureTransform", "Texturing", 2, "textureTransform", "3.0", "Infinity"));
+
 Object .defineProperties (MultiTextureTransform,
 {
-   typeName:
-   {
-      value: "MultiTextureTransform",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "textureTransform",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
