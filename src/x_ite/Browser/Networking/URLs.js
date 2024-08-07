@@ -84,10 +84,9 @@ const URLs =
       if (!component)
          return "https://create3000.github.io/x_ite/";
 
-      if (this .getScriptURL () .match (/\.min\.m?js$/))
-         component += ".min";
+      const min = this .getScriptURL () .match (/\.min\.m?js$/) && false ? ".min" : "";
 
-      return new URL (`assets/components/${component}Component.js`, this .getScriptURL ()) .href;
+      return new URL (`assets/components/${component}Component${min}.js`, this .getScriptURL ()) .href;
    },
    getFontsURL (file)
    {

@@ -625,6 +625,10 @@ copy of the Program in return for a fee.
 
 END OF TERMS AND CONDITIONS
 ---------------------------
+
+ADDITIONAL LICENSES
+-------------------
+
 ```
 /*!
  * jQuery JavaScript Library v3.7.1

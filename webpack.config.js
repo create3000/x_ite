@@ -370,16 +370,16 @@ export default Namespace .add ("${base}", __default__);`;
    for (const filename of fs .readdirSync ("./src/assets/components/"))
    {
       const
-         name           = path .parse (filename) .name,
+         name           = path .parse (filename) .name .replace (/Component$/, ""),
          component_deps = [x_ite_deps];
 
       component_deps .push (... await Promise .all (resolveDeps (name)
-         .map (dependency => deps (path .resolve (__dirname, `src/assets/components/${dependency}.js`)))));
+         .map (dependency => deps (path .resolve (__dirname, `src/assets/components/${dependency}Component.js`)))));
 
       targets .push ({
          entry: {
-            [name]: "./src/assets/components/" + filename,
-            [name + ".min"]: "./src/assets/components/" + filename,
+            [`${name}Component`]: "./src/assets/components/" + filename,
+            [`${name}Component.min`]: "./src/assets/components/" + filename,
          },
          output: {
             path: path .resolve (__dirname, "dist/assets/components"),
@@ -442,15 +442,15 @@ export default Namespace .add ("${base}", __default__);`;
                onBuildEnd: {
                   scripts: [
                      // Version
-                     `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}{,.min}.js`,
-                     `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/assets/components/${name}{,.min}.js`,
+                     `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}Component{,.min}.js`,
+                     `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/assets/components/${name}Component{,.min}.js`,
                      // Source Maps
-                     `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/assets/components/${name}{,.min}.js`,
+                     `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/assets/components/${name}Component{,.min}.js`,
                      // Per component
                      ... {
                         Texturing3D: [
-                           `perl -p0i -e 's|("./index.js"\\).*?\\})|$1.bind({})|sg' dist/assets/components/${name}{,.min}.js`,
-                           `perl -p0i -e 's/[,;]*(var\\s+)?(CharLS|OpenJPEG)\\s*=\\s*function/;module.exports=function/sg' dist/assets/components/${name}{,.min}.js`,
+                           `perl -p0i -e 's|("./index.js"\\).*?\\})|$1.bind({})|sg' dist/assets/components/${name}Component{,.min}.js`,
+                           `perl -p0i -e 's/[,;]*(var\\s+)?(CharLS|OpenJPEG)\\s*=\\s*function/;module.exports=function/sg' dist/assets/components/${name}Component{,.min}.js`,
                         ],
                      }
                      [name] || [ ],
