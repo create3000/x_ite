@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DNode         from "../Core/X3DNode.js";
 import X3DGroupingNode from "./X3DGroupingNode.js";
 import X3DConstants    from "../../Base/X3DConstants.js";
 import Vector3         from "../../../standard/Math/Numbers/Vector3.js";

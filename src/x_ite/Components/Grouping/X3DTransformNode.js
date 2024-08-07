@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DNode                  from "../Core/X3DNode.js";
 import X3DTransformMatrix3DNode from "./X3DTransformMatrix3DNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 

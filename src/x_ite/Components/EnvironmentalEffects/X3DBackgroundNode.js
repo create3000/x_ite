@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import Fields          from "../../Fields.js";
+import X3DNode         from "../Core/X3DNode.js";
 import X3DBindableNode from "../Core/X3DBindableNode.js";
 import GeometryContext from "../../Browser/Rendering/GeometryContext.js";
 import VertexArray     from "../../Rendering/VertexArray.js";

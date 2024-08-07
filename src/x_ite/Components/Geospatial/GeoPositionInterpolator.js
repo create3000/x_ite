@@ -48,6 +48,7 @@
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DInterpolatorNode  from "../Interpolation/X3DInterpolatorNode.js";
 import X3DGeospatialObject  from "./X3DGeospatialObject.js";
 import Geocentric           from "../../Browser/Geospatial/Geocentric.js";

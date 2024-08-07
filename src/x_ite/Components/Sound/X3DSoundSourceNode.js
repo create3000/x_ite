@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DNode              from "../Core/X3DNode.js";
 import X3DSoundNode         from "./X3DSoundNode.js";
 import X3DTimeDependentNode from "../Time/X3DTimeDependentNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";

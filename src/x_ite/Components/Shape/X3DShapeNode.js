@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DNode          from "../Core/X3DNode.js";
 import X3DChildNode     from "../Core/X3DChildNode.js";
 import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
 import X3DCast          from "../../Base/X3DCast.js";

@@ -48,6 +48,7 @@
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DFontStyleNode     from "../Text/X3DFontStyleNode.js";
 import ScreenText           from "../../Browser/Layout/ScreenText.js";
 import X3DConstants         from "../../Base/X3DConstants.js";

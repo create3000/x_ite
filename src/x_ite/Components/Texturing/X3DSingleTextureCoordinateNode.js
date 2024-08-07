@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DNode                  from "../Core/X3DNode.js";
 import X3DTextureCoordinateNode from "./X3DTextureCoordinateNode.js";
 import X3DGeometryNode          from "../Rendering/X3DGeometryNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";

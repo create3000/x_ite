@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DNode                  from "../Core/X3DNode.js";
 import X3DVolumeRenderStyleNode from "./X3DVolumeRenderStyleNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 

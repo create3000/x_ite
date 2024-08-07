@@ -48,6 +48,7 @@
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DViewpointNode     from "../Navigation/X3DViewpointNode.js";
 import X3DGeospatialObject  from "./X3DGeospatialObject.js";
 import Viewpoint            from "../Navigation/Viewpoint.js";

@@ -48,6 +48,7 @@
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DVolumeDataNode    from "./X3DVolumeDataNode.js";
 import ComposedShader       from "../Shaders/ComposedShader.js";
 import ShaderPart           from "../Shaders/ShaderPart.js";

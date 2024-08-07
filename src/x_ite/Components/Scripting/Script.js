@@ -75,6 +75,7 @@ import X3DProtoDeclarationNode     from "../../Prototype/X3DProtoDeclarationNode
 import RouteArray                  from "../../Routing/RouteArray.js";
 import X3DRoute                    from "../../Routing/X3DRoute.js";
 import evaluate                    from "../../Browser/Scripting/evaluate.js";
+import X3DNode                     from "../Core/X3DNode.js";
 import X3DScriptNode               from "./X3DScriptNode.js";
 import FileLoader                  from "../../InputOutput/FileLoader.js";
 import X3DConstants                from "../../Base/X3DConstants.js";

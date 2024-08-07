@@ -48,6 +48,7 @@
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DGeometryNode      from "../Rendering/X3DGeometryNode.js";
 import X3DLineGeometryNode  from "../Rendering/X3DLineGeometryNode.js";
 import X3DPointGeometryNode from "../Rendering/X3DPointGeometryNode.js";

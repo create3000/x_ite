@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DNode         from "../Core/X3DNode.js";
 import X3DMaterialNode from "./X3DMaterialNode.js";
 import X3DCast         from "../../Base/X3DCast.js";
 import X3DConstants    from "../../Base/X3DConstants.js";

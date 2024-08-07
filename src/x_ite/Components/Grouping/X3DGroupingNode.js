@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DNode          from "../Core/X3DNode.js";
 import X3DChildNode     from "../Core/X3DChildNode.js";
 import X3DBoundedObject from "./X3DBoundedObject.js";
 import TraverseType     from "../../Rendering/TraverseType.js";

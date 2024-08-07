@@ -48,6 +48,7 @@
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
 import X3DShapeNode         from "../Shape/X3DShapeNode.js";
 import GeometryContext      from "../../Browser/Rendering/GeometryContext.js";
 import GeometryTypes        from "../../Browser/ParticleSystems/GeometryTypes.js";

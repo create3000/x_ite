@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DNode                 from "../Core/X3DNode.js";
 import X3DTextureTransformNode from "./X3DTextureTransformNode.js";
 import X3DConstants            from "../../Base/X3DConstants.js";
 import Matrix4                 from "../../../standard/Math/Numbers/Matrix4.js";

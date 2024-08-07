@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DNode         from "../Core/X3DNode.js";
 import X3DGeometryNode from "./X3DGeometryNode.js";
 
 function X3DPointGeometryNode (executionContext)
