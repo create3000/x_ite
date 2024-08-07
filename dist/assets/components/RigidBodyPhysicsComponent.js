@@ -314,19 +314,7 @@ Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, (external_
    },
 });
 
-Object .defineProperties (X3DRigidJointNode,
-{
-   typeName:
-   {
-      value: "X3DRigidJointNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DRigidJointNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DRigidJointNode", "RigidBodyPhysics", 2));
 
 const __default__ = X3DRigidJointNode;
 ;
@@ -485,6 +473,7 @@ const AmmoClass_default_ = new ammo ();
 
 
 
+
 function BallJoint (executionContext)
 {
    RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
@@ -603,26 +592,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
 
 Object .defineProperties (BallJoint,
 {
-   typeName:
-   {
-      value: "BallJoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "joints",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("BallJoint", "RigidBodyPhysics", 2, "joints", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -695,6 +665,7 @@ var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -801,19 +772,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
    },
 });
 
-Object .defineProperties (X3DNBodyCollidableNode,
-{
-   typeName:
-   {
-      value: "X3DNBodyCollidableNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DNBodyCollidableNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DNBodyCollidableNode", "RigidBodyPhysics", 1));
 
 const X3DNBodyCollidableNode_default_ = X3DNBodyCollidableNode;
 ;
@@ -869,6 +828,7 @@ var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1046,26 +1006,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
 
 Object .defineProperties (CollidableOffset,
 {
-   typeName:
-   {
-      value: "CollidableOffset",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("CollidableOffset", "RigidBodyPhysics", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1134,6 +1075,7 @@ const CollidableOffset_default_ = CollidableOffset;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1545,26 +1487,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
 
 Object .defineProperties (CollidableShape,
 {
-   typeName:
-   {
-      value: "CollidableShape",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("CollidableShape", "RigidBodyPhysics", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1710,6 +1633,7 @@ const AppliedParametersType_default_ = AppliedParametersType;
 
 
 
+
 function CollisionCollection (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -1841,26 +1765,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (externa
 
 Object .defineProperties (CollisionCollection,
 {
-   typeName:
-   {
-      value: "CollisionCollection",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "collider",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("CollisionCollection", "RigidBodyPhysics", 1, "collider", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1939,6 +1844,7 @@ var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -2139,26 +2045,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (external_X_
 
 Object .defineProperties (CollisionSensor,
 {
-   typeName:
-   {
-      value: "CollisionSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("CollisionSensor", "RigidBodyPhysics", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2253,19 +2140,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollisionSpaceNode .prototype, (
    },
 });
 
-Object .defineProperties (X3DNBodyCollisionSpaceNode,
-{
-   typeName:
-   {
-      value: "X3DNBodyCollisionSpaceNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DNBodyCollisionSpaceNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DNBodyCollisionSpaceNode", "RigidBodyPhysics", 1));
 
 const X3DNBodyCollisionSpaceNode_default_ = X3DNBodyCollisionSpaceNode;
 ;
@@ -2318,6 +2193,7 @@ const X3DNBodyCollisionSpaceNode_default_ = X3DNBodyCollisionSpaceNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -2415,26 +2291,7 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhys
 
 Object .defineProperties (CollisionSpace,
 {
-   typeName:
-   {
-      value: "CollisionSpace",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("CollisionSpace", "RigidBodyPhysics", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2528,26 +2385,7 @@ Object .setPrototypeOf (Contact .prototype, (external_X_ITE_X3D_X3DNode_default(
 
 Object .defineProperties (Contact,
 {
-   typeName:
-   {
-      value: "Contact",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "contacts",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("Contact", "RigidBodyPhysics", 2, "contacts", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2627,6 +2465,7 @@ var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -2833,26 +2672,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
 
 Object .defineProperties (DoubleAxisHingeJoint,
 {
-   typeName:
-   {
-      value: "DoubleAxisHingeJoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "joints",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("DoubleAxisHingeJoint", "RigidBodyPhysics", 2, "joints", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2946,6 +2766,7 @@ const DoubleAxisHingeJoint_default_ = DoubleAxisHingeJoint;
 
 
 
+
 /**
  * THIS NODE IS NOT SUPPORTED.
  */
@@ -2982,26 +2803,7 @@ Object .setPrototypeOf (MotorJoint .prototype, RigidBodyPhysics_X3DRigidJointNod
 
 Object .defineProperties (MotorJoint,
 {
-   typeName:
-   {
-      value: "MotorJoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "joints",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("MotorJoint", "RigidBodyPhysics", 2, "joints", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3519,26 +3321,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
 
 Object .defineProperties (RigidBody,
 {
-   typeName:
-   {
-      value: "RigidBody",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "bodies",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("RigidBody", "RigidBodyPhysics", 2, "bodies", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3626,6 +3409,7 @@ const RigidBody_default_ = RigidBody;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3936,26 +3720,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
 
 Object .defineProperties (RigidBodyCollection,
 {
-   typeName:
-   {
-      value: "RigidBodyCollection",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("RigidBodyCollection", "RigidBodyPhysics", 2, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -4036,6 +3801,7 @@ const RigidBodyCollection_default_ = RigidBodyCollection;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -4206,26 +3972,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
 
 Object .defineProperties (SingleAxisHingeJoint,
 {
-   typeName:
-   {
-      value: "SingleAxisHingeJoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "joints",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("SingleAxisHingeJoint", "RigidBodyPhysics", 2, "joints", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -4299,6 +4046,7 @@ const SingleAxisHingeJoint_default_ = SingleAxisHingeJoint;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -4441,26 +4189,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
 
 Object .defineProperties (SliderJoint,
 {
-   typeName:
-   {
-      value: "SliderJoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "joints",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("SliderJoint", "RigidBodyPhysics", 2, "joints", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -4540,6 +4269,7 @@ const SliderJoint_default_ = SliderJoint;
 
 
 
+
 /**
  * THIS NODE IS NOT SUPPORTED.
  */
@@ -4569,26 +4299,7 @@ Object .setPrototypeOf (UniversalJoint .prototype, RigidBodyPhysics_X3DRigidJoin
 
 Object .defineProperties (UniversalJoint,
 {
-   typeName:
-   {
-      value: "UniversalJoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "joints",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("UniversalJoint", "RigidBodyPhysics", 2, "joints", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

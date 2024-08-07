@@ -153,6 +153,9 @@ var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_requi
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSensorNode"
 const external_X_ITE_X3D_X3DSensorNode_namespaceObject = __X_ITE_X3D__ .X3DSensorNode;
 var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSensorNode_namespaceObject);
@@ -206,6 +209,7 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -265,19 +269,7 @@ Object .assign (Object .setPrototypeOf (X3DKeyDeviceSensorNode .prototype, (exte
    release () { },
 });
 
-Object .defineProperties (X3DKeyDeviceSensorNode,
-{
-   typeName:
-   {
-      value: "X3DKeyDeviceSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "KeyDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DKeyDeviceSensorNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DKeyDeviceSensorNode", "KeyDeviceSensor", 1));
 
 const X3DKeyDeviceSensorNode_default_ = X3DKeyDeviceSensorNode;
 ;
@@ -330,6 +322,7 @@ const X3DKeyDeviceSensorNode_default_ = X3DKeyDeviceSensorNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -624,26 +617,7 @@ Object .assign (Object .setPrototypeOf (KeySensor .prototype, KeyDeviceSensor_X3
 
 Object .defineProperties (KeySensor,
 {
-   typeName:
-   {
-      value: "KeySensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "KeyDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("KeySensor", "KeyDeviceSensor", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -714,6 +688,7 @@ const KeySensor_default_ = KeySensor;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -797,26 +772,7 @@ Object .assign (Object .setPrototypeOf (StringSensor .prototype, KeyDeviceSensor
 
 Object .defineProperties (StringSensor,
 {
-   typeName:
-   {
-      value: "StringSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "KeyDeviceSensor", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("StringSensor", "KeyDeviceSensor", 2, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

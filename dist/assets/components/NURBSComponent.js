@@ -201,26 +201,7 @@ function filter (array, remove)
 
 Object .defineProperties (Contour2D,
 {
-   typeName:
-   {
-      value: "Contour2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "trimmingContour",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("Contour2D", "NURBS", 4, "trimmingContour", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -297,19 +278,7 @@ function X3DNurbsControlCurveNode (executionContext)
 
 Object .setPrototypeOf (X3DNurbsControlCurveNode .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype);
 
-Object .defineProperties (X3DNurbsControlCurveNode,
-{
-   typeName:
-   {
-      value: "X3DNurbsControlCurveNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DNurbsControlCurveNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DNurbsControlCurveNode", "NURBS", 1));
 
 const X3DNurbsControlCurveNode_default_ = X3DNurbsControlCurveNode;
 ;
@@ -365,6 +334,7 @@ var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(exte
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -453,26 +423,7 @@ Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, NURBS_X3DN
 
 Object .defineProperties (ContourPolyline2D,
 {
-   typeName:
-   {
-      value: "ContourPolyline2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ContourPolyline2D", "NURBS", 3, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1023,6 +974,7 @@ const NURBS_default_ = NURBS;
 
 
 
+
 function X3DParametricGeometryNode (executionContext)
 {
    external_X_ITE_X3D_X3DGeometryNode_default().call (this, executionContext);
@@ -1038,19 +990,7 @@ Object .assign (Object .setPrototypeOf (X3DParametricGeometryNode .prototype, (e
    },
 });
 
-Object .defineProperties (X3DParametricGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DParametricGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DParametricGeometryNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DParametricGeometryNode", "NURBS", 1));
 
 const X3DParametricGeometryNode_default_ = X3DParametricGeometryNode;
 ;
@@ -2714,6 +2654,7 @@ const nurbs_default_ = nurbs;
 
 
 
+
 function NurbsCurve (executionContext)
 {
    NURBS_X3DParametricGeometryNode .call (this, executionContext);
@@ -2855,26 +2796,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, NURBS_X3DParametr
 
 Object .defineProperties (NurbsCurve,
 {
-   typeName:
-   {
-      value: "NurbsCurve",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("NurbsCurve", "NURBS", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2941,6 +2863,7 @@ const NurbsCurve_default_ = NurbsCurve;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3071,26 +2994,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, NURBS_X3DNurbsC
 
 Object .defineProperties (NurbsCurve2D,
 {
-   typeName:
-   {
-      value: "NurbsCurve2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("NurbsCurve2D", "NURBS", 3, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3166,6 +3070,7 @@ var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3313,26 +3218,7 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
 
 Object .defineProperties (NurbsOrientationInterpolator,
 {
-   typeName:
-   {
-      value: "NurbsOrientationInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("NurbsOrientationInterpolator", "NURBS", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3405,6 +3291,7 @@ var external_X_ITE_X3D_Triangle3_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3737,19 +3624,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    })(),
 });
 
-Object .defineProperties (X3DNurbsSurfaceGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DNurbsSurfaceGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DNurbsSurfaceGeometryNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DNurbsSurfaceGeometryNode", "NURBS", 1));
 
 const X3DNurbsSurfaceGeometryNode_default_ = X3DNurbsSurfaceGeometryNode;
 ;
@@ -3809,6 +3684,7 @@ const X3DNurbsSurfaceGeometryNode_default_ = X3DNurbsSurfaceGeometryNode;
 
 
 
+
 function NurbsPatchSurface (executionContext)
 {
    NURBS_X3DNurbsSurfaceGeometryNode .call (this, executionContext);
@@ -3820,26 +3696,7 @@ Object .setPrototypeOf (NurbsPatchSurface .prototype, NURBS_X3DNurbsSurfaceGeome
 
 Object .defineProperties (NurbsPatchSurface,
 {
-   typeName:
-   {
-      value: "NurbsPatchSurface",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("NurbsPatchSurface", "NURBS", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3917,6 +3774,7 @@ var external_X_ITE_X3D_PositionInterpolator_default = /*#__PURE__*/__webpack_req
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -4052,26 +3910,7 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, (e
 
 Object .defineProperties (NurbsPositionInterpolator,
 {
-   typeName:
-   {
-      value: "NurbsPositionInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("NurbsPositionInterpolator", "NURBS", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -4141,6 +3980,7 @@ var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -4243,26 +4083,7 @@ function NurbsSet_filter (array, remove)
 
 Object .defineProperties (NurbsSet,
 {
-   typeName:
-   {
-      value: "NurbsSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("NurbsSet", "NURBS", 2, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -4427,6 +4248,7 @@ const Triangle2_default_ = Triangle2;
 
 
 
+
 function NurbsSurfaceInterpolator (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -4518,26 +4340,7 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, (ex
 
 Object .defineProperties (NurbsSurfaceInterpolator,
 {
-   typeName:
-   {
-      value: "NurbsSurfaceInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("NurbsSurfaceInterpolator", "NURBS", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -4612,6 +4415,7 @@ var external_X_ITE_X3D_Extrusion_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -4711,26 +4515,7 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, NURBS_X3DP
 
 Object .defineProperties (NurbsSweptSurface,
 {
-   typeName:
-   {
-      value: "NurbsSweptSurface",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("NurbsSweptSurface", "NURBS", 3, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -4795,6 +4580,7 @@ const NurbsSweptSurface_default_ = NurbsSweptSurface;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -4896,26 +4682,7 @@ Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, NURBS_X3DP
 
 Object .defineProperties (NurbsSwungSurface,
 {
-   typeName:
-   {
-      value: "NurbsSwungSurface",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("NurbsSwungSurface", "NURBS", 3, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -5052,26 +4819,7 @@ Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, (exte
 
 Object .defineProperties (NurbsTextureCoordinate,
 {
-   typeName:
-   {
-      value: "NurbsTextureCoordinate",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texCoord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("NurbsTextureCoordinate", "NURBS", 1, "texCoord", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -5140,6 +4888,7 @@ const NurbsTextureCoordinate_default_ = NurbsTextureCoordinate;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -5224,26 +4973,7 @@ function NurbsTrimmedSurface_filter (array, remove)
 
 Object .defineProperties (NurbsTrimmedSurface,
 {
-   typeName:
-   {
-      value: "NurbsTrimmedSurface",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("NurbsTrimmedSurface", "NURBS", 4, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

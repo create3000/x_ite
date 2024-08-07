@@ -758,6 +758,9 @@ var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_requi
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLineGeometryNode"
 const external_X_ITE_X3D_X3DLineGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DLineGeometryNode;
 var external_X_ITE_X3D_X3DLineGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DLineGeometryNode_namespaceObject);
@@ -811,6 +814,7 @@ var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -896,26 +900,7 @@ Object .assign (Object .setPrototypeOf (Arc2D .prototype, (external_X_ITE_X3D_X3
 
 Object .defineProperties (Arc2D,
 {
-   typeName:
-   {
-      value: "Arc2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry2D", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("Arc2D", "Geometry2D", 2, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -979,6 +964,7 @@ const Arc2D_default_ = Arc2D;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1127,26 +1113,7 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, (external_X_ITE_X
 
 Object .defineProperties (ArcClose2D,
 {
-   typeName:
-   {
-      value: "ArcClose2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry2D", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ArcClose2D", "Geometry2D", 2, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1219,6 +1186,7 @@ const ArcClose2D_default_ = ArcClose2D;
 
 
 
+
 function Circle2D (executionContext)
 {
    external_X_ITE_X3D_X3DLineGeometryNode_default().call (this, executionContext);
@@ -1267,26 +1235,7 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, (external_X_ITE_X3D
 
 Object .defineProperties (Circle2D,
 {
-   typeName:
-   {
-      value: "Circle2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry2D", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("Circle2D", "Geometry2D", 2, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1351,6 +1300,7 @@ var external_X_ITE_X3D_X3DPointGeometryNode_default = /*#__PURE__*/__webpack_req
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1532,26 +1482,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
 
 Object .defineProperties (Disk2D,
 {
-   typeName:
-   {
-      value: "Disk2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry2D", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("Disk2D", "Geometry2D", 2, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1622,6 +1553,7 @@ const Disk2D_default_ = Disk2D;
 
 
 
+
 function Polyline2D (executionContext)
 {
    external_X_ITE_X3D_X3DLineGeometryNode_default().call (this, executionContext);
@@ -1649,26 +1581,7 @@ Object .assign (Object .setPrototypeOf (Polyline2D .prototype, (external_X_ITE_X
 
 Object .defineProperties (Polyline2D,
 {
-   typeName:
-   {
-      value: "Polyline2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("Polyline2D", "Geometry2D", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1737,6 +1650,7 @@ const Polyline2D_default_ = Polyline2D;
 
 
 
+
 function Polypoint2D (executionContext)
 {
    external_X_ITE_X3D_X3DPointGeometryNode_default().call (this, executionContext);
@@ -1763,26 +1677,7 @@ Object .assign (Object .setPrototypeOf (Polypoint2D .prototype, (external_X_ITE_
 
 Object .defineProperties (Polypoint2D,
 {
-   typeName:
-   {
-      value: "Polypoint2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("Polypoint2D", "Geometry2D", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1855,6 +1750,7 @@ var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(exte
 
 
 
+
 function Rectangle2D (executionContext)
 {
    external_X_ITE_X3D_X3DGeometryNode_default().call (this, executionContext);
@@ -1917,26 +1813,7 @@ Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, (external_X_ITE_
 
 Object .defineProperties (Rectangle2D,
 {
-   typeName:
-   {
-      value: "Rectangle2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("Rectangle2D", "Geometry2D", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2006,6 +1883,7 @@ const Rectangle2D_default_ = Rectangle2D;
 
 
 
+
 function TriangleSet2D (executionContext)
 {
    external_X_ITE_X3D_X3DGeometryNode_default().call (this, executionContext);
@@ -2063,26 +1941,7 @@ Object .assign (Object .setPrototypeOf (TriangleSet2D .prototype, (external_X_IT
 
 Object .defineProperties (TriangleSet2D,
 {
-   typeName:
-   {
-      value: "TriangleSet2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("TriangleSet2D", "Geometry2D", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

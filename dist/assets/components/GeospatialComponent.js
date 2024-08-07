@@ -51,6 +51,9 @@ var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_requi
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DCoordinateNode"
 const external_X_ITE_X3D_X3DCoordinateNode_namespaceObject = __X_ITE_X3D__ .X3DCoordinateNode;
 var external_X_ITE_X3D_X3DCoordinateNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCoordinateNode_namespaceObject);
@@ -996,6 +999,7 @@ var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(exte
 
 
 
+
 const
    vector = new (external_X_ITE_X3D_Vector3_default()) (),
    result = new (external_X_ITE_X3D_Vector3_default()) (),
@@ -1200,19 +1204,7 @@ function getStandardLocationMatrix (geoPoint, result)
                        t .x, t .y, t .z, 1);
 }
 
-Object .defineProperties (X3DGeospatialObject,
-{
-   typeName:
-   {
-      value: "X3DGeospatialObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DGeospatialObject, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DGeospatialObject", "Geospatial", 1));
 
 const X3DGeospatialObject_default_ = X3DGeospatialObject;
 ;
@@ -1268,6 +1260,7 @@ var external_X_ITE_X3D_Triangle3_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1428,26 +1421,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (external_X_IT
 
 Object .defineProperties (GeoCoordinate,
 {
-   typeName:
-   {
-      value: "GeoCoordinate",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "coord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GeoCoordinate", "Geospatial", 1, "coord", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1517,6 +1491,7 @@ var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(exte
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1849,26 +1824,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
 
 Object .defineProperties (GeoElevationGrid,
 {
-   typeName:
-   {
-      value: "GeoElevationGrid",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GeoElevationGrid", "Geospatial", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1966,6 +1922,7 @@ var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(externa
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -2340,26 +2297,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
 
 Object .defineProperties (GeoLOD,
 {
-   typeName:
-   {
-      value: "GeoLOD",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GeoLOD", "Geospatial", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2448,6 +2386,7 @@ var external_X_ITE_X3D_X3DTransformMatrix3DNode_default = /*#__PURE__*/__webpack
 
 
 
+
 var locationMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
 
 function GeoLocation (executionContext)
@@ -2483,26 +2422,7 @@ Object .assign (Object .setPrototypeOf (GeoLocation .prototype, (external_X_ITE_
 
 Object .defineProperties (GeoLocation,
 {
-   typeName:
-   {
-      value: "GeoLocation",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GeoLocation", "Geospatial", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2587,6 +2507,7 @@ var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n
 
 
 
+
 function GeoMetadata (executionContext)
 {
    external_X_ITE_X3D_X3DInfoNode_default().call (this, executionContext);
@@ -2614,26 +2535,7 @@ Object .assign (Object .setPrototypeOf (GeoMetadata .prototype, (external_X_ITE_
 
 Object .defineProperties (GeoMetadata,
 {
-   typeName:
-   {
-      value: "GeoMetadata",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GeoMetadata", "Geospatial", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2654,9 +2556,6 @@ const GeoMetadata_default_ = GeoMetadata;
 ;
 
 /* harmony default export */ const Geospatial_GeoMetadata = (external_X_ITE_X3D_Namespace_default().add ("GeoMetadata", GeoMetadata_default_));
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
-const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
-var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geospatial/GeoOrigin.js
 /*******************************************************************************
  *
@@ -2743,26 +2642,7 @@ Object .assign (Object .setPrototypeOf (GeoOrigin .prototype, (external_X_ITE_X3
 
 Object .defineProperties (GeoOrigin,
 {
-   typeName:
-   {
-      value: "GeoOrigin",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geoOrigin",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GeoOrigin", "Geospatial", 1, "geoOrigin", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2839,6 +2719,7 @@ var external_X_ITE_X3D_X3DInterpolatorNode_default = /*#__PURE__*/__webpack_requ
 
 
 
+
 function GeoPositionInterpolator (executionContext)
 {
    external_X_ITE_X3D_X3DInterpolatorNode_default().call (this, executionContext);
@@ -2902,26 +2783,7 @@ Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, (ext
 
 Object .defineProperties (GeoPositionInterpolator,
 {
-   typeName:
-   {
-      value: "GeoPositionInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GeoPositionInterpolator", "Geospatial", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3005,6 +2867,7 @@ var external_X_ITE_X3D_ProximitySensor_default = /*#__PURE__*/__webpack_require_
 
 
 
+
 var geoCoord = new (external_X_ITE_X3D_Vector3_default()) ();
 
 function GeoProximitySensor (executionContext)
@@ -3072,26 +2935,7 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, (external
 
 Object .defineProperties (GeoProximitySensor,
 {
-   typeName:
-   {
-      value: "GeoProximitySensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GeoProximitySensor", "Geospatial", 2, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3178,6 +3022,7 @@ var external_X_ITE_X3D_X3DTouchSensorNode_default = /*#__PURE__*/__webpack_requi
 
 
 
+
 function GeoTouchSensor (executionContext)
 {
    external_X_ITE_X3D_X3DTouchSensorNode_default().call (this, executionContext);
@@ -3217,26 +3062,7 @@ Object .assign (Object .setPrototypeOf (GeoTouchSensor .prototype, (external_X_I
 
 Object .defineProperties (GeoTouchSensor,
 {
-   typeName:
-   {
-      value: "GeoTouchSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GeoTouchSensor", "Geospatial", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3317,6 +3143,7 @@ const GeoTouchSensor_default_ = GeoTouchSensor;
 
 
 
+
 var
    matrix         = new (external_X_ITE_X3D_Matrix4_default()) (),
    GeoTransform_locationMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
@@ -3363,26 +3190,7 @@ Object .assign (Object .setPrototypeOf (GeoTransform .prototype, (external_X_ITE
 
 Object .defineProperties (GeoTransform,
 {
-   typeName:
-   {
-      value: "GeoTransform",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GeoTransform", "Geospatial", 2, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3469,6 +3277,7 @@ var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3683,26 +3492,7 @@ function traverse (type, renderObject)
 
 Object .defineProperties (GeoViewpoint,
 {
-   typeName:
-   {
-      value: "GeoViewpoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GeoViewpoint", "Geospatial", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

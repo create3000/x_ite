@@ -3,7 +3,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 222:
+/***/ 373:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 936:
+/***/ 551:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -74,7 +74,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 636:
+/***/ 679:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4030,7 +4030,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 928:
+/***/ 343:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5303,6 +5303,9 @@ var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_requi
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSingleTextureNode"
 const external_X_ITE_X3D_X3DSingleTextureNode_namespaceObject = __X_ITE_X3D__ .X3DSingleTextureNode;
 var external_X_ITE_X3D_X3DSingleTextureNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSingleTextureNode_namespaceObject);
@@ -5359,6 +5362,7 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -5479,19 +5483,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (external_X
    },
 });
 
-Object .defineProperties (X3DTexture3DNode,
-{
-   typeName:
-   {
-      value: "X3DTexture3DNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTexture3DNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DTexture3DNode", "Texturing3D", 1));
 
 const __default__ = X3DTexture3DNode;
 ;
@@ -5547,6 +5539,7 @@ var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(exte
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -5673,26 +5666,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3
 
 Object .defineProperties (ComposedTexture3D,
 {
-   typeName:
-   {
-      value: "ComposedTexture3D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ComposedTexture3D", "Texturing3D", 1, "texture", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -7340,10 +7314,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(636);
-/* provided dependency */ var JpegImage = __webpack_require__(928);
-/* provided dependency */ var CharLS = __webpack_require__(222);
-/* provided dependency */ var OpenJPEG = __webpack_require__(936);
+/* provided dependency */ var dicomParser = __webpack_require__(679);
+/* provided dependency */ var JpegImage = __webpack_require__(343);
+/* provided dependency */ var CharLS = __webpack_require__(373);
+/* provided dependency */ var OpenJPEG = __webpack_require__(551);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8510,6 +8484,7 @@ var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(
 
 
 
+
 function ImageTexture3D (executionContext)
 {
    Texturing3D_X3DTexture3DNode .call (this, executionContext);
@@ -8632,26 +8607,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
 
 Object .defineProperties (ImageTexture3D,
 {
-   typeName:
-   {
-      value: "ImageTexture3D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing3D", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ImageTexture3D", "Texturing3D", 2, "texture", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -8722,6 +8678,7 @@ const ImageTexture3D_default_ = ImageTexture3D;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -8891,26 +8848,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
 
 Object .defineProperties (ImageTextureAtlas,
 {
-   typeName:
-   {
-      value: "ImageTextureAtlas",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ImageTextureAtlas", "Texturing3D", 1, "texture", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -8983,6 +8921,7 @@ const ImageTextureAtlas_default_ = ImageTextureAtlas;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -9113,26 +9052,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X
 
 Object .defineProperties (PixelTexture3D,
 {
-   typeName:
-   {
-      value: "PixelTexture3D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("PixelTexture3D", "Texturing3D", 1, "texture", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -9205,6 +9125,7 @@ var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(exte
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -9297,26 +9218,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, (externa
 
 Object .defineProperties (TextureCoordinate3D,
 {
-   typeName:
-   {
-      value: "TextureCoordinate3D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texCoord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("TextureCoordinate3D", "Texturing3D", 1, "texCoord", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -9379,6 +9281,7 @@ const TextureCoordinate3D_default_ = TextureCoordinate3D;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -9465,26 +9368,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate4D .prototype, (externa
 
 Object .defineProperties (TextureCoordinate4D,
 {
-   typeName:
-   {
-      value: "TextureCoordinate4D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texCoord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("TextureCoordinate4D", "Texturing3D", 1, "texCoord", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -9566,6 +9450,7 @@ var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(exte
 
 
 
+
 function TextureTransform3D (executionContext)
 {
    external_X_ITE_X3D_X3DSingleTextureTransformNode_default().call (this, executionContext);
@@ -9622,26 +9507,7 @@ Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, (external
 
 Object .defineProperties (TextureTransform3D,
 {
-   typeName:
-   {
-      value: "TextureTransform3D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "textureTransform",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("TextureTransform3D", "Texturing3D", 1, "textureTransform", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -9714,6 +9580,7 @@ const TextureTransform3D_default_ = TextureTransform3D;
 
 
 
+
 function TextureTransformMatrix3D (executionContext)
 {
    external_X_ITE_X3D_X3DSingleTextureTransformNode_default().call (this, executionContext);
@@ -9739,26 +9606,7 @@ Object .assign (Object .setPrototypeOf (TextureTransformMatrix3D .prototype, (ex
 
 Object .defineProperties (TextureTransformMatrix3D,
 {
-   typeName:
-   {
-      value: "TextureTransformMatrix3D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "textureTransform",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("TextureTransformMatrix3D", "Texturing3D", 1, "textureTransform", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

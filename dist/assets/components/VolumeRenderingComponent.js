@@ -190,19 +190,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeRenderStyleNode .prototype, (ex
    },
 });
 
-Object .defineProperties (X3DVolumeRenderStyleNode,
-{
-   typeName:
-   {
-      value: "X3DVolumeRenderStyleNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DVolumeRenderStyleNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DVolumeRenderStyleNode", "VolumeRendering", 1));
 
 const __default__ = X3DVolumeRenderStyleNode;
 ;
@@ -259,6 +247,7 @@ const __default__ = X3DVolumeRenderStyleNode;
 
 
 
+
 function X3DComposableVolumeRenderStyleNode (executionContext)
 {
    VolumeRendering_X3DVolumeRenderStyleNode .call (this, executionContext);
@@ -268,19 +257,7 @@ function X3DComposableVolumeRenderStyleNode (executionContext)
 
 Object .setPrototypeOf (X3DComposableVolumeRenderStyleNode .prototype, VolumeRendering_X3DVolumeRenderStyleNode .prototype);
 
-Object .defineProperties (X3DComposableVolumeRenderStyleNode,
-{
-   typeName:
-   {
-      value: "X3DComposableVolumeRenderStyleNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DComposableVolumeRenderStyleNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DComposableVolumeRenderStyleNode", "VolumeRendering", 1));
 
 const X3DComposableVolumeRenderStyleNode_default_ = X3DComposableVolumeRenderStyleNode;
 ;
@@ -336,6 +313,7 @@ var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(exte
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -437,26 +415,7 @@ Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, Volume
 
 Object .defineProperties (OpacityMapVolumeStyle,
 {
-   typeName:
-   {
-      value: "OpacityMapVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("OpacityMapVolumeStyle", "VolumeRendering", 1, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -654,6 +613,7 @@ const X3DVolumeRenderingContext_default_ = X3DVolumeRenderingContext;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -924,26 +884,7 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRen
 
 Object .defineProperties (BlendedVolumeStyle,
 {
-   typeName:
-   {
-      value: "BlendedVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("BlendedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1020,6 +961,7 @@ const BlendedVolumeStyle_default_ = BlendedVolumeStyle;
 
 
 
+
 function BoundaryEnhancementVolumeStyle (executionContext)
 {
    VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
@@ -1087,26 +1029,7 @@ Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototyp
 
 Object .defineProperties (BoundaryEnhancementVolumeStyle,
 {
-   typeName:
-   {
-      value: "BoundaryEnhancementVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("BoundaryEnhancementVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1171,6 +1094,7 @@ const BoundaryEnhancementVolumeStyle_default_ = BoundaryEnhancementVolumeStyle;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1401,26 +1325,7 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRen
 
 Object .defineProperties (CartoonVolumeStyle,
 {
-   typeName:
-   {
-      value: "CartoonVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("CartoonVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1486,6 +1391,7 @@ const CartoonVolumeStyle_default_ = CartoonVolumeStyle;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1612,26 +1518,7 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, VolumeRe
 
 Object .defineProperties (ComposedVolumeStyle,
 {
-   typeName:
-   {
-      value: "ComposedVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ComposedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1694,6 +1581,7 @@ const ComposedVolumeStyle_default_ = ComposedVolumeStyle;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1794,26 +1682,7 @@ Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, V
 
 Object .defineProperties (EdgeEnhancementVolumeStyle,
 {
-   typeName:
-   {
-      value: "EdgeEnhancementVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("EdgeEnhancementVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2083,6 +1952,7 @@ var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(exte
 
 
 
+
 function X3DVolumeDataNode (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -2261,19 +2131,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
    },
 });
 
-Object .defineProperties (X3DVolumeDataNode,
-{
-   typeName:
-   {
-      value: "X3DVolumeDataNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DVolumeDataNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DVolumeDataNode", "VolumeRendering", 1));
 
 const X3DVolumeDataNode_default_ = X3DVolumeDataNode;
 ;
@@ -2332,6 +2190,7 @@ var external_X_ITE_X3D_ShaderPart_default = /*#__PURE__*/__webpack_require__.n(e
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -2610,26 +2469,7 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
 
 Object .defineProperties (IsoSurfaceVolumeData,
 {
-   typeName:
-   {
-      value: "IsoSurfaceVolumeData",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("IsoSurfaceVolumeData", "VolumeRendering", 2, "children", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2701,6 +2541,7 @@ const IsoSurfaceVolumeData_default_ = IsoSurfaceVolumeData;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -2852,26 +2693,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, Volume
 
 Object .defineProperties (ProjectionVolumeStyle,
 {
-   typeName:
-   {
-      value: "ProjectionVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ProjectionVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2935,6 +2757,7 @@ const ProjectionVolumeStyle_default_ = ProjectionVolumeStyle;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3128,26 +2951,7 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
 
 Object .defineProperties (SegmentedVolumeData,
 {
-   typeName:
-   {
-      value: "SegmentedVolumeData",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("SegmentedVolumeData", "VolumeRendering", 2, "children", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3217,6 +3021,7 @@ const SegmentedVolumeData_default_ = SegmentedVolumeData;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3415,26 +3220,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRend
 
 Object .defineProperties (ShadedVolumeStyle,
 {
-   typeName:
-   {
-      value: "ShadedVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ShadedVolumeStyle", "VolumeRendering", 3, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3501,6 +3287,7 @@ const ShadedVolumeStyle_default_ = ShadedVolumeStyle;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3599,26 +3386,7 @@ Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .protot
 
 Object .defineProperties (SilhouetteEnhancementVolumeStyle,
 {
-   typeName:
-   {
-      value: "SilhouetteEnhancementVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("SilhouetteEnhancementVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3684,6 +3452,7 @@ const SilhouetteEnhancementVolumeStyle_default_ = SilhouetteEnhancementVolumeSty
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3790,26 +3559,7 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, Volume
 
 Object .defineProperties (ToneMappedVolumeStyle,
 {
-   typeName:
-   {
-      value: "ToneMappedVolumeStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "renderStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ToneMappedVolumeStyle", "VolumeRendering", 2, "renderStyle", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3874,6 +3624,7 @@ const ToneMappedVolumeStyle_default_ = ToneMappedVolumeStyle;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -4002,26 +3753,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
 
 Object .defineProperties (VolumeData,
 {
-   typeName:
-   {
-      value: "VolumeData",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("VolumeData", "VolumeRendering", 1, "children", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

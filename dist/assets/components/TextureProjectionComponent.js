@@ -51,6 +51,9 @@ var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_requi
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLightNode"
 const external_X_ITE_X3D_X3DLightNode_namespaceObject = __X_ITE_X3D__ .X3DLightNode;
 var external_X_ITE_X3D_X3DLightNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DLightNode_namespaceObject);
@@ -119,6 +122,7 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -241,19 +245,7 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (ext
    },
 });
 
-Object .defineProperties (X3DTextureProjectorNode,
-{
-   typeName:
-   {
-      value: "X3DTextureProjectorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "TextureProjection", level: 4 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTextureProjectorNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DTextureProjectorNode", "TextureProjection", 4));
 
 const __default__ = X3DTextureProjectorNode;
 ;
@@ -315,6 +307,7 @@ var external_X_ITE_X3D_ObjectCache_default = /*#__PURE__*/__webpack_require__.n(
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -463,26 +456,7 @@ Object .assign (Object .setPrototypeOf (TextureProjector .prototype, TextureProj
 
 Object .defineProperties (TextureProjector,
 {
-   typeName:
-   {
-      value: "TextureProjector",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "TextureProjection", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("TextureProjector", "TextureProjection", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -564,6 +538,7 @@ const TextureProjector_default_ = TextureProjector;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -767,26 +742,7 @@ Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, Tex
 
 Object .defineProperties (TextureProjectorParallel,
 {
-   typeName:
-   {
-      value: "TextureProjectorParallel",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "TextureProjection", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("TextureProjectorParallel", "TextureProjection", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

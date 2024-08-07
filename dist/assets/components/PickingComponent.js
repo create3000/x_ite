@@ -51,6 +51,9 @@ var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_requi
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSensorNode"
 const external_X_ITE_X3D_X3DSensorNode_namespaceObject = __X_ITE_X3D__ .X3DSensorNode;
 var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSensorNode_namespaceObject);
@@ -302,6 +305,7 @@ var external_X_ITE_X3D_ObjectCache_default = /*#__PURE__*/__webpack_require__.n(
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -682,19 +686,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
    },
 });
 
-Object .defineProperties (X3DPickSensorNode,
-{
-   typeName:
-   {
-      value: "X3DPickSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Picking", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DPickSensorNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DPickSensorNode", "Picking", 1));
 
 const X3DPickSensorNode_default_ = X3DPickSensorNode;
 ;
@@ -756,6 +748,7 @@ var external_X_ITE_X3D_Line3_default = /*#__PURE__*/__webpack_require__.n(extern
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1007,26 +1000,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
 
 Object .defineProperties (LinePickSensor,
 {
-   typeName:
-   {
-      value: "LinePickSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Picking", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("LinePickSensor", "Picking", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1106,6 +1080,7 @@ var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require_
 
 
 
+
 function X3DPickableObject (executionContext)
 {
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DPickableObject);
@@ -1137,19 +1112,7 @@ Object .assign (X3DPickableObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DPickableObject,
-{
-   typeName:
-   {
-      value: "X3DPickableObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Picking", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DPickableObject, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DPickableObject", "Picking", 1));
 
 const X3DPickableObject_default_ = X3DPickableObject;
 ;
@@ -1202,6 +1165,7 @@ const X3DPickableObject_default_ = X3DPickableObject;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1339,26 +1303,7 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, (external_X_IT
 
 Object .defineProperties (PickableGroup,
 {
-   typeName:
-   {
-      value: "PickableGroup",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Picking", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("PickableGroup", "Picking", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1633,6 +1578,7 @@ const VolumePicker_default_ = VolumePicker;
 
 
 
+
 function PointPickSensor (executionContext)
 {
    Picking_X3DPickSensorNode .call (this, executionContext);
@@ -1883,26 +1829,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DP
 
 Object .defineProperties (PointPickSensor,
 {
-   typeName:
-   {
-      value: "PointPickSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Picking", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("PointPickSensor", "Picking", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1974,6 +1901,7 @@ const PointPickSensor_default_ = PointPickSensor;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -2159,26 +2087,7 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, Picking_
 
 Object .defineProperties (PrimitivePickSensor,
 {
-   typeName:
-   {
-      value: "PrimitivePickSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Picking", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("PrimitivePickSensor", "Picking", 2, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2249,6 +2158,7 @@ const PrimitivePickSensor_default_ = PrimitivePickSensor;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -2409,26 +2319,7 @@ Object .assign (Object .setPrototypeOf (VolumePickSensor .prototype, Picking_X3D
 
 Object .defineProperties (VolumePickSensor,
 {
-   typeName:
-   {
-      value: "VolumePickSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Picking", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("VolumePickSensor", "Picking", 3, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

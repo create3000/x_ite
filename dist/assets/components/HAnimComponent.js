@@ -51,6 +51,9 @@ var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_requi
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGeometricPropertyNode"
 const external_X_ITE_X3D_X3DGeometricPropertyNode_namespaceObject = __X_ITE_X3D__ .X3DGeometricPropertyNode;
 var external_X_ITE_X3D_X3DGeometricPropertyNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGeometricPropertyNode_namespaceObject);
@@ -114,6 +117,7 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 
+
 function HAnimDisplacer (executionContext)
 {
    external_X_ITE_X3D_X3DGeometricPropertyNode_default().call (this, executionContext);
@@ -127,26 +131,7 @@ Object .setPrototypeOf (HAnimDisplacer .prototype, (external_X_ITE_X3D_X3DGeomet
 
 Object .defineProperties (HAnimDisplacer,
 {
-   typeName:
-   {
-      value: "HAnimDisplacer",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "HAnim", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "displacers",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("HAnimDisplacer", "HAnim", 1, "displacers", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -236,6 +221,7 @@ var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -798,26 +784,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
 
 Object .defineProperties (HAnimHumanoid,
 {
-   typeName:
-   {
-      value: "HAnimHumanoid",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "HAnim", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("HAnimHumanoid", "HAnim", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -944,6 +911,7 @@ var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(exte
 
 
 
+
 function HAnimJoint (executionContext)
 {
    external_X_ITE_X3D_X3DTransformNode_default().call (this, executionContext);
@@ -1034,26 +1002,7 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, (external_X_ITE_X
 
 Object .defineProperties (HAnimJoint,
 {
-   typeName:
-   {
-      value: "HAnimJoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "HAnim", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("HAnimJoint", "HAnim", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1147,6 +1096,7 @@ var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1475,26 +1425,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
 
 Object .defineProperties (HAnimMotion,
 {
-   typeName:
-   {
-      value: "HAnimMotion",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "HAnim", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "motions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("HAnimMotion", "HAnim", 2, "motions", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1584,6 +1515,7 @@ var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require_
 
 
 
+
 function HAnimSegment (executionContext)
 {
    external_X_ITE_X3D_X3DGroupingNode_default().call (this, executionContext);
@@ -1597,26 +1529,7 @@ Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE_X3D_X3DGrouping
 
 Object .defineProperties (HAnimSegment,
 {
-   typeName:
-   {
-      value: "HAnimSegment",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "HAnim", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("HAnimSegment", "HAnim", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1698,6 +1611,7 @@ const HAnimSegment_default_ = HAnimSegment;
 
 
 
+
 function HAnimSite (executionContext)
 {
    external_X_ITE_X3D_X3DTransformNode_default().call (this, executionContext);
@@ -1709,26 +1623,7 @@ Object .setPrototypeOf (HAnimSite .prototype, (external_X_ITE_X3D_X3DTransformNo
 
 Object .defineProperties (HAnimSite,
 {
-   typeName:
-   {
-      value: "HAnimSite",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "HAnim", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("HAnimSite", "HAnim", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

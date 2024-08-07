@@ -169,6 +169,9 @@ var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_requi
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DSingleTextureNode"
 const external_X_ITE_X3D_X3DSingleTextureNode_namespaceObject = __X_ITE_X3D__ .X3DSingleTextureNode;
 var external_X_ITE_X3D_X3DSingleTextureNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSingleTextureNode_namespaceObject);
@@ -222,6 +225,7 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -322,19 +326,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (e
    },
 });
 
-Object .defineProperties (X3DEnvironmentTextureNode,
-{
-   typeName:
-   {
-      value: "X3DEnvironmentTextureNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CubeMapTexturing", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DEnvironmentTextureNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DEnvironmentTextureNode", "CubeMapTexturing", 1));
 
 const X3DEnvironmentTextureNode_default_ = X3DEnvironmentTextureNode;
 ;
@@ -393,6 +385,7 @@ var external_X_ITE_X3D_BitSet_default = /*#__PURE__*/__webpack_require__.n(exter
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -565,26 +558,7 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeM
 
 Object .defineProperties (ComposedCubeMapTexture,
 {
-   typeName:
-   {
-      value: "ComposedCubeMapTexture",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CubeMapTexturing", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ComposedCubeMapTexture", "CubeMapTexturing", 1, "texture", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -852,6 +826,7 @@ var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 
+
 function GeneratedCubeMapTexture (executionContext)
 {
    CubeMapTexturing_X3DEnvironmentTextureNode .call (this, executionContext);
@@ -1057,26 +1032,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
 Object .defineProperties (GeneratedCubeMapTexture,
 {
-   typeName:
-   {
-      value: "GeneratedCubeMapTexture",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CubeMapTexturing", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GeneratedCubeMapTexture", "CubeMapTexturing", 3, "texture", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1151,6 +1107,7 @@ var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1474,26 +1431,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
 Object .defineProperties (ImageCubeMapTexture,
 {
-   typeName:
-   {
-      value: "ImageCubeMapTexture",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CubeMapTexturing", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ImageCubeMapTexture", "CubeMapTexturing", 2, "texture", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

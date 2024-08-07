@@ -235,6 +235,9 @@ var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_requi
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
@@ -292,6 +295,7 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
 
 
 
+
 function X3DLayoutNode (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -301,19 +305,7 @@ function X3DLayoutNode (executionContext)
 
 Object .setPrototypeOf (X3DLayoutNode .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype);
 
-Object .defineProperties (X3DLayoutNode,
-{
-   typeName:
-   {
-      value: "X3DLayoutNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layout", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DLayoutNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DLayoutNode", "Layout", 1));
 
 const X3DLayoutNode_default_ = X3DLayoutNode;
 ;
@@ -372,6 +364,7 @@ var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -931,26 +924,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
 
 Object .defineProperties (Layout,
 {
-   typeName:
-   {
-      value: "Layout",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layout", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "layout",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("Layout", "Layout", 1, "layout", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1026,6 +1000,7 @@ var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1128,26 +1103,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (external_X_ITE_
 
 Object .defineProperties (LayoutGroup,
 {
-   typeName:
-   {
-      value: "LayoutGroup",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layout", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("LayoutGroup", "Layout", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1232,6 +1188,7 @@ var external_X_ITE_X3D_OrthoViewpoint_default = /*#__PURE__*/__webpack_require__
 
 
 
+
 function LayoutLayer (executionContext)
 {
    external_X_ITE_X3D_X3DLayerNode_default().call (this,
@@ -1267,26 +1224,7 @@ Object .assign (Object .setPrototypeOf (LayoutLayer .prototype, (external_X_ITE_
 
 Object .defineProperties (LayoutLayer,
 {
-   typeName:
-   {
-      value: "LayoutLayer",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layout", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "layers",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("LayoutLayer", "Layout", 1, "layers", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1809,6 +1747,7 @@ const ScreenText_default_ = ScreenText;
 
 
 
+
 function ScreenFontStyle (executionContext)
 {
    external_X_ITE_X3D_X3DFontStyleNode_default().call (this, executionContext);
@@ -1836,26 +1775,7 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, (external_X_
 
 Object .defineProperties (ScreenFontStyle,
 {
-   typeName:
-   {
-      value: "ScreenFontStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layout", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "fontStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ScreenFontStyle", "Layout", 2, "fontStyle", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1938,6 +1858,7 @@ var external_X_ITE_X3D_X3DProtoDeclaration_default = /*#__PURE__*/__webpack_requ
 
 
 
+
 function ScreenGroup (executionContext)
 {
    external_X_ITE_X3D_X3DGroupingNode_default().call (this, executionContext);
@@ -1991,26 +1912,7 @@ Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (external_X_ITE_
 
 Object .defineProperties (ScreenGroup,
 {
-   typeName:
-   {
-      value: "ScreenGroup",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layout", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ScreenGroup", "Layout", 2, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

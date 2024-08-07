@@ -1,10 +1,10 @@
 /* X_ITE v10.2.0 */
 var __webpack_modules__ = ({
 
-/***/ 23:
+/***/ 646:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(827);
+/* provided dependency */ var jQuery = __webpack_require__(142);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -200,7 +200,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 451:
+/***/ 860:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -214,7 +214,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(827)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(142)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -425,7 +425,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 827:
+/***/ 142:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11149,7 +11149,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 392:
+/***/ 303:
 /***/ ((module) => {
 
 /**
@@ -15928,7 +15928,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 387:
+/***/ 806:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19173,7 +19173,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 196:
+/***/ 865:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -20292,7 +20292,10 @@ Object .defineProperty (Namespace, "add",
    value (name, module)
    {
       if (Namespace .hasOwnProperty (name))
+      {
          console .error (new Error (`Namespace: "${name}" already exists.`));
+         return module;
+      }
 
       const X3D = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 
@@ -34037,23 +34040,16 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
    },
    isDefaultValue (field)
    {
-      const f = this [_userDefinedFields] .get (field .getName ()) ?? this [_predefinedFields] .get (field .getName ());
+      const
+         name = field .getName (),
+         f    = this [_userDefinedFields] .get (name) ?? this [_predefinedFields] .get (name);
 
       if (f === field)
-         var fieldDefinition = this [_fieldDefinitions] .get (field .getName ());
+         var fieldDefinition = this [_fieldDefinitions] .get (name);
       else if (this .constructor .fieldDefinitions)
-         var fieldDefinition = this .constructor .fieldDefinitions .get (field .getName ());
+         var fieldDefinition = this .constructor .fieldDefinitions .get (name);
 
-      if (fieldDefinition)
-      {
-         // User-defined fields are their own field definition value.
-         if (fieldDefinition .value === field)
-            return false;
-
-         return fieldDefinition .value .equals (field);
-      }
-
-      return !field .getModificationTime ();
+      return fieldDefinition ?.value .equals (field) ?? !field .getModificationTime ();
    },
    getExtendedEventHandling ()
    {
@@ -34208,7 +34204,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /* harmony default export */ const Base_X3DBaseNode = (x_ite_Namespace .add ("X3DBaseNode", X3DBaseNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(827);
+/* provided dependency */ var $ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36127,17 +36123,43 @@ for (const key of Object .keys (X3DNode .prototype))
 
 Object .defineProperties (X3DNode,
 {
-   typeName:
+   getStaticProperties:
    {
-      value: "X3DNode",
-      enumerable: true,
+      value: function (typeName, componentName, componentLevel, containerField, fromVersion, toVersion = "Infinity")
+      {
+         return {
+            typeName:
+            {
+               value: typeName,
+               enumerable: true,
+            },
+            componentInfo:
+            {
+               value: Object .freeze ({ name: componentName, level: componentLevel }),
+               enumerable: true,
+            },
+            ... containerField ?
+            {
+               containerField:
+               {
+                  value: containerField,
+                  enumerable: true,
+               },
+            } : { },
+            ... fromVersion && toVersion ?
+            {
+               specificationRange:
+               {
+                  value: Object .freeze ({ from: fromVersion, to: toVersion }),
+                  enumerable: true,
+               },
+            } : { },
+         };
+      },
    },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-});
+})
+
+Object .defineProperties (X3DNode, X3DNode .getStaticProperties ("X3DNode", "Core", 1));
 
 const X3DNode_default_ = X3DNode;
 ;
@@ -36193,6 +36215,7 @@ const X3DNode_default_ = X3DNode;
 
 
 
+
 function X3DMetadataObject (executionContext)
 {
    this .addType (Base_X3DConstants .X3DMetadataObject);
@@ -36204,19 +36227,7 @@ Object .assign (X3DMetadataObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DMetadataObject,
-{
-   typeName:
-   {
-      value: "X3DMetadataObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DMetadataObject, Core_X3DNode .getStaticProperties ("X3DMetadataObject", "Core", 1));
 
 const X3DMetadataObject_default_ = X3DMetadataObject;
 ;
@@ -36364,26 +36375,7 @@ Object .assign (Object .setPrototypeOf (MetadataBoolean .prototype, Core_X3DNode
 
 Object .defineProperties (MetadataBoolean,
 {
-   typeName:
-   {
-      value: "MetadataBoolean",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "value",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("MetadataBoolean", "Core", 1, "value", "3.3"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -36488,26 +36480,7 @@ Object .assign (Object .setPrototypeOf (MetadataDouble .prototype, Core_X3DNode 
 
 Object .defineProperties (MetadataDouble,
 {
-   typeName:
-   {
-      value: "MetadataDouble",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "value",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("MetadataDouble", "Core", 1, "value", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -36612,26 +36585,7 @@ Object .assign (Object .setPrototypeOf (MetadataFloat .prototype, Core_X3DNode .
 
 Object .defineProperties (MetadataFloat,
 {
-   typeName:
-   {
-      value: "MetadataFloat",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "value",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("MetadataFloat", "Core", 1, "value", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -36736,26 +36690,7 @@ Object .assign (Object .setPrototypeOf (MetadataInteger .prototype, Core_X3DNode
 
 Object .defineProperties (MetadataInteger,
 {
-   typeName:
-   {
-      value: "MetadataInteger",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "value",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("MetadataInteger", "Core", 1, "value", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -36930,26 +36865,7 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, Core_X3DNode .pr
 
 Object .defineProperties (MetadataSet,
 {
-   typeName:
-   {
-      value: "MetadataSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "value",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("MetadataSet", "Core", 1, "value", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -37054,26 +36970,7 @@ Object .assign (Object .setPrototypeOf (MetadataString .prototype, Core_X3DNode 
 
 Object .defineProperties (MetadataString,
 {
-   typeName:
-   {
-      value: "MetadataString",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "value",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("MetadataString", "Core", 1, "value", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -37186,19 +37083,7 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, Core_X3DNode .p
    },
 });
 
-Object .defineProperties (X3DChildNode,
-{
-   typeName:
-   {
-      value: "X3DChildNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DChildNode, Core_X3DNode .getStaticProperties ("X3DChildNode", "Core", 1));
 
 const X3DChildNode_default_ = X3DChildNode;
 ;
@@ -37255,6 +37140,7 @@ const X3DChildNode_default_ = X3DChildNode;
 
 
 
+
 function X3DInfoNode (executionContext)
 {
    Core_X3DChildNode .call (this, executionContext);
@@ -37264,19 +37150,7 @@ function X3DInfoNode (executionContext)
 
 Object .setPrototypeOf (X3DInfoNode .prototype, Core_X3DChildNode .prototype);
 
-Object .defineProperties (X3DInfoNode,
-{
-   typeName:
-   {
-      value: "X3DInfoNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DInfoNode, Core_X3DNode .getStaticProperties ("X3DInfoNode", "Core", 1));
 
 const X3DInfoNode_default_ = X3DInfoNode;
 ;
@@ -37336,6 +37210,7 @@ const X3DInfoNode_default_ = X3DInfoNode;
 
 
 
+
 function WorldInfo (executionContext)
 {
    Core_X3DInfoNode .call (this, executionContext);
@@ -37368,26 +37243,7 @@ Object .assign (Object .setPrototypeOf (WorldInfo .prototype, Core_X3DInfoNode .
 
 Object .defineProperties (WorldInfo,
 {
-   typeName:
-   {
-      value: "WorldInfo",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("WorldInfo", "Core", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -37454,6 +37310,7 @@ const WorldInfo_default_ = WorldInfo;
 
 
 
+
 let modificationCount = 0;
 
 function X3DBindableNode (executionContext)
@@ -37489,18 +37346,10 @@ Object .assign (Object .setPrototypeOf (X3DBindableNode .prototype, Core_X3DChil
    }
 });
 
+Object .defineProperties (X3DBindableNode, Core_X3DNode .getStaticProperties ("X3DBindableNode", "Core", 1));
+
 Object .defineProperties (X3DBindableNode,
 {
-   typeName:
-   {
-      value: "X3DBindableNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
    getModificationCount:
    {
       value: function ()
@@ -37516,7 +37365,7 @@ const X3DBindableNode_default_ = X3DBindableNode;
 
 /* harmony default export */ const Core_X3DBindableNode = (x_ite_Namespace .add ("X3DBindableNode", X3DBindableNode_default_));
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(392);
+/* provided dependency */ var libtess = __webpack_require__(303);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38496,6 +38345,7 @@ const Box3_default_ = Box3;
 
 
 
+
 function X3DBoundedObject (executionContext)
 {
    this .addType (Base_X3DConstants .X3DBoundedObject);
@@ -38607,19 +38457,7 @@ Object .assign (X3DBoundedObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DBoundedObject,
-{
-   typeName:
-   {
-      value: "X3DBoundedObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DBoundedObject, Core_X3DNode .getStaticProperties ("X3DBoundedObject", "Grouping", 1));
 
 const X3DBoundedObject_default_ = X3DBoundedObject;
 ;
@@ -39120,6 +38958,7 @@ const ImportedNodesArray_default_ = ImportedNodesArray;
 
 
 
+
 const
    X3DUrlObject_cache                   = Symbol (),
    _autoRefreshStartTime    = Symbol (),
@@ -39352,19 +39191,7 @@ Object .assign (X3DUrlObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DUrlObject,
-{
-   typeName:
-   {
-      value: "X3DUrlObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Networking", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DUrlObject, Core_X3DNode .getStaticProperties ("X3DUrlObject", "Networking", 1));
 
 const X3DUrlObject_default_ = X3DUrlObject;
 ;
@@ -40076,7 +39903,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (x_ite_Namespace .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(827);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -40332,7 +40159,7 @@ const Expressions_default_ = Expressions;
 
 /* harmony default export */ const Parser_Expressions = (x_ite_Namespace .add ("Expressions", Expressions_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(827);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43031,7 +42858,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (x_ite_Namespace .add ("VRMLParser", VRMLParser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(827);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45204,7 +45031,7 @@ const URLs_default_ = URLs;
 
 /* harmony default export */ const Networking_URLs = (x_ite_Namespace .add ("URLs", URLs_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(827);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48848,7 +48675,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (x_ite_Namespace .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(827);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48999,7 +48826,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (x_ite_Namespace .add ("GLB2Parser", GLB2Parser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(827);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52335,8 +52162,8 @@ const MatrixStack_default_ = MatrixStack;
 
 /* harmony default export */ const Utility_MatrixStack = (x_ite_Namespace .add ("MatrixStack", MatrixStack_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(827);
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(392);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(142);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(303);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55106,7 +54933,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (x_ite_Namespace .add ("SVGParser", SVGParser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(827);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -58556,6 +58383,7 @@ const X3DCast_default_ = X3DCast;
 
 
 
+
 function X3DGroupingNode (executionContext)
 {
    Core_X3DChildNode     .call (this, executionContext);
@@ -59165,19 +58993,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
    },
 });
 
-Object .defineProperties (X3DGroupingNode,
-{
-   typeName:
-   {
-      value: "X3DGroupingNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DGroupingNode, Core_X3DNode .getStaticProperties ("X3DGroupingNode", "Grouping", 1));
 
 const X3DGroupingNode_default_ = X3DGroupingNode;
 ;
@@ -59237,6 +59053,7 @@ const X3DGroupingNode_default_ = X3DGroupingNode;
 
 
 
+
 function Group (executionContext)
 {
    Grouping_X3DGroupingNode .call (this, executionContext);
@@ -59248,26 +59065,7 @@ Object .setPrototypeOf (Group .prototype, Grouping_X3DGroupingNode .prototype);
 
 Object .defineProperties (Group,
 {
-   typeName:
-   {
-      value: "Group",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Group", "Grouping", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -59335,6 +59133,7 @@ const Group_default_ = Group;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -59597,26 +59396,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, Core_X3DBinda
 
 Object .defineProperties (NavigationInfo,
 {
-   typeName:
-   {
-      value: "NavigationInfo",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("NavigationInfo", "Navigation", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -59769,6 +59549,7 @@ const ObjectCache_default_ = ObjectCache;
 
 
 
+
 const Fogs = Utility_ObjectCache (FogContainer);
 
 function FogContainer ()
@@ -59881,19 +59662,7 @@ Object .assign (X3DFogObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DFogObject,
-{
-   typeName:
-   {
-      value: "X3DFogObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DFogObject, Core_X3DNode .getStaticProperties ("X3DFogObject", "EnvironmentalEffects", 1));
 
 const X3DFogObject_default_ = X3DFogObject;
 ;
@@ -59956,6 +59725,7 @@ const X3DFogObject_default_ = X3DFogObject;
 
 
 
+
 function Fog (executionContext)
 {
    Core_X3DBindableNode .call (this, executionContext);
@@ -59996,26 +59766,7 @@ Object .assign (Object .setPrototypeOf (Fog .prototype, Core_X3DBindableNode .pr
 
 Object .defineProperties (Fog,
 {
-   typeName:
-   {
-      value: "Fog",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Fog", "EnvironmentalEffects", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -61711,19 +61462,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    },
 });
 
-Object .defineProperties (X3DGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DGeometryNode, Core_X3DNode .getStaticProperties ("X3DGeometryNode", "Rendering", 1));
 
 const X3DGeometryNode_default_ = X3DGeometryNode;
 ;
@@ -62057,6 +61796,7 @@ const BitSet_default_ = BitSet;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -62627,19 +62367,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, Core_X3DBi
    },
 });
 
-Object .defineProperties (X3DBackgroundNode,
-{
-   typeName:
-   {
-      value: "X3DBackgroundNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DBackgroundNode, Core_X3DNode .getStaticProperties ("X3DBackgroundNode", "EnvironmentalEffects", 1));
 
 for (let index = 0; index < 6; ++ index)
 {
@@ -62713,19 +62441,7 @@ function X3DAppearanceChildNode (executionContext)
 
 Object .setPrototypeOf (X3DAppearanceChildNode .prototype, Core_X3DNode .prototype);
 
-Object .defineProperties (X3DAppearanceChildNode,
-{
-   typeName:
-   {
-      value: "X3DAppearanceChildNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DAppearanceChildNode, Core_X3DNode .getStaticProperties ("X3DAppearanceChildNode", "Shape", 1));
 
 const X3DAppearanceChildNode_default_ = X3DAppearanceChildNode;
 ;
@@ -62783,6 +62499,7 @@ const X3DAppearanceChildNode_default_ = X3DAppearanceChildNode;
 
 
 
+
 function X3DTextureNode (executionContext)
 {
    Shape_X3DAppearanceChildNode .call (this, executionContext);
@@ -62805,19 +62522,7 @@ Object .assign (Object .setPrototypeOf (X3DTextureNode .prototype, Shape_X3DAppe
    },
 });
 
-Object .defineProperties (X3DTextureNode,
-{
-   typeName:
-   {
-      value: "X3DTextureNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTextureNode, Core_X3DNode .getStaticProperties ("X3DTextureNode", "Texturing", 1));
 
 const X3DTextureNode_default_ = X3DTextureNode;
 ;
@@ -62870,6 +62575,7 @@ const X3DTextureNode_default_ = X3DTextureNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -63078,19 +62784,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, Texturi
    },
 });
 
-Object .defineProperties (X3DSingleTextureNode,
-{
-   typeName:
-   {
-      value: "X3DSingleTextureNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSingleTextureNode, Core_X3DNode .getStaticProperties ("X3DSingleTextureNode", "Texturing", 1));
 
 const X3DSingleTextureNode_default_ = X3DSingleTextureNode;
 ;
@@ -63143,6 +62837,7 @@ const X3DSingleTextureNode_default_ = X3DSingleTextureNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -63269,26 +62964,14 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, Texturing_X
    },
 });
 
-Object .defineProperties (X3DTexture2DNode,
-{
-   typeName:
-   {
-      value: "X3DTexture2DNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTexture2DNode, Core_X3DNode .getStaticProperties ("X3DTexture2DNode", "Texturing", 1));
 
 const X3DTexture2DNode_default_ = X3DTexture2DNode;
 ;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (x_ite_Namespace .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(827);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63335,6 +63018,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -63534,26 +63218,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
 
 Object .defineProperties (ImageTexture,
 {
-   typeName:
-   {
-      value: "ImageTexture",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ImageTexture", "Texturing", 1, "texture", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -63632,6 +63297,7 @@ const ImageTexture_default_ = ImageTexture;
 
 
 
+
 function Background (executionContext)
 {
    EnvironmentalEffects_X3DBackgroundNode .call (this, executionContext);
@@ -63693,26 +63359,7 @@ Object .assign (Object .setPrototypeOf (Background .prototype, EnvironmentalEffe
 
 Object .defineProperties (Background,
 {
-   typeName:
-   {
-      value: "Background",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Background", "EnvironmentalEffects", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -64165,19 +63812,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
    },
 });
 
-Object .defineProperties (X3DLayerNode,
-{
-   typeName:
-   {
-      value: "X3DLayerNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DLayerNode, Core_X3DNode .getStaticProperties ("X3DLayerNode", "Layering", 1));
 
 const X3DLayerNode_default_ = X3DLayerNode;
 ;
@@ -64234,6 +63869,7 @@ const X3DLayerNode_default_ = X3DLayerNode;
 
 
 
+
 function X3DSensorNode (executionContext)
 {
    Core_X3DChildNode .call (this, executionContext);
@@ -64243,19 +63879,7 @@ function X3DSensorNode (executionContext)
 
 Object .setPrototypeOf (X3DSensorNode .prototype, Core_X3DChildNode .prototype);
 
-Object .defineProperties (X3DSensorNode,
-{
-   typeName:
-   {
-      value: "X3DSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSensorNode, Core_X3DNode .getStaticProperties ("X3DSensorNode", "Core", 1));
 
 const X3DSensorNode_default_ = X3DSensorNode;
 ;
@@ -64308,6 +63932,7 @@ const X3DSensorNode_default_ = X3DSensorNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -64606,19 +64231,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, Core_X3
    },
 });
 
-Object .defineProperties (X3DTimeDependentNode,
-{
-   typeName:
-   {
-      value: "X3DTimeDependentNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Time", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTimeDependentNode, Core_X3DNode .getStaticProperties ("X3DTimeDependentNode", "Time", 1));
 
 const X3DTimeDependentNode_default_ = X3DTimeDependentNode;
 ;
@@ -64671,6 +64284,7 @@ const X3DTimeDependentNode_default_ = X3DTimeDependentNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -64804,26 +64418,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, Core_X3DSensorNod
 
 Object .defineProperties (TimeSensor,
 {
-   typeName:
-   {
-      value: "TimeSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Time", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TimeSensor", "Time", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -64903,6 +64498,7 @@ const TimeSensor_default_ = TimeSensor;
 
 
 
+
 function X3DInterpolatorNode (executionContext)
 {
    Core_X3DChildNode .call (this, executionContext);
@@ -64974,19 +64570,7 @@ Object .assign (Object .setPrototypeOf (X3DInterpolatorNode .prototype, Core_X3D
    interpolate () { },
 });
 
-Object .defineProperties (X3DInterpolatorNode,
-{
-   typeName:
-   {
-      value: "X3DInterpolatorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DInterpolatorNode, Core_X3DNode .getStaticProperties ("X3DInterpolatorNode", "Interpolation", 1));
 
 const X3DInterpolatorNode_default_ = X3DInterpolatorNode;
 ;
@@ -65039,6 +64623,7 @@ const X3DInterpolatorNode_default_ = X3DInterpolatorNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -65108,26 +64693,7 @@ Object .assign (Object .setPrototypeOf (EaseInEaseOut .prototype, Interpolation_
 
 Object .defineProperties (EaseInEaseOut,
 {
-   typeName:
-   {
-      value: "EaseInEaseOut",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("EaseInEaseOut", "Interpolation", 4, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -65200,6 +64766,7 @@ const EaseInEaseOut_default_ = EaseInEaseOut;
 
 
 
+
 function PositionInterpolator (executionContext)
 {
    Interpolation_X3DInterpolatorNode .call (this, executionContext);
@@ -65237,26 +64804,7 @@ Object .assign (Object .setPrototypeOf (PositionInterpolator .prototype, Interpo
 
 Object .defineProperties (PositionInterpolator,
 {
-   typeName:
-   {
-      value: "PositionInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PositionInterpolator", "Interpolation", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -65329,6 +64877,7 @@ const PositionInterpolator_default_ = PositionInterpolator;
 
 
 
+
 function OrientationInterpolator (executionContext)
 {
    Interpolation_X3DInterpolatorNode .call (this, executionContext);
@@ -65375,26 +64924,7 @@ Object .assign (Object .setPrototypeOf (OrientationInterpolator .prototype, Inte
 
 Object .defineProperties (OrientationInterpolator,
 {
-   typeName:
-   {
-      value: "OrientationInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("OrientationInterpolator", "Interpolation", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -65467,6 +64997,7 @@ const OrientationInterpolator_default_ = OrientationInterpolator;
 
 
 
+
 function ScalarInterpolator (executionContext)
 {
    Interpolation_X3DInterpolatorNode .call (this, executionContext);
@@ -65499,26 +65030,7 @@ Object .assign (Object .setPrototypeOf (ScalarInterpolator .prototype, Interpola
 
 Object .defineProperties (ScalarInterpolator,
 {
-   typeName:
-   {
-      value: "ScalarInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ScalarInterpolator", "Interpolation", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -65583,6 +65095,7 @@ const ScalarInterpolator_default_ = ScalarInterpolator;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -66125,19 +65638,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
    }
 });
 
-Object .defineProperties (X3DViewpointNode,
-{
-   typeName:
-   {
-      value: "X3DViewpointNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DViewpointNode, Core_X3DNode .getStaticProperties ("X3DViewpointNode", "Navigation", 1));
 
 const X3DViewpointNode_default_ = X3DViewpointNode;
 ;
@@ -66190,6 +65691,7 @@ const X3DViewpointNode_default_ = X3DViewpointNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -66310,26 +65812,7 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, Navigation_X3DView
 
 Object .defineProperties (Viewpoint,
 {
-   typeName:
-   {
-      value: "Viewpoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Viewpoint", "Navigation", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -66413,6 +65896,7 @@ const Viewpoint_default_ = Viewpoint;
 
 
 
+
 function Layer (executionContext)
 {
    Layering_X3DLayerNode .call (this,
@@ -66446,26 +65930,7 @@ Object .assign (Object .setPrototypeOf (Layer .prototype, Layering_X3DLayerNode 
 
 Object .defineProperties (Layer,
 {
-   typeName:
-   {
-      value: "Layer",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "layers",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Layer", "Layering", 1, "layers", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -66661,26 +66126,7 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, Core_X3DNode .proto
 
 Object .defineProperties (LayerSet,
 {
-   typeName:
-   {
-      value: "LayerSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("LayerSet", "Layering", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -66862,7 +66308,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (x_ite_Namespace .add ("X3DWorld", X3DWorld_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(827);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67792,7 +67238,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (x_ite_Namespace .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(827);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70388,29 +69834,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
    },
 });
 
-Object .defineProperties (X3DPrototypeInstance,
-{
-   typeName:
-   {
-      value: "X3DPrototypeInstance",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Core", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DPrototypeInstance, Core_X3DNode .getStaticProperties ("X3DPrototypeInstance", "Core", 2, "children", "2.0"));
 
 const X3DPrototypeInstance_default_ = X3DPrototypeInstance;
 ;
@@ -70565,19 +69989,7 @@ function X3DGeometricPropertyNode (executionContext)
 
 Object .setPrototypeOf (X3DGeometricPropertyNode .prototype, Core_X3DNode .prototype);
 
-Object .defineProperties (X3DGeometricPropertyNode,
-{
-   typeName:
-   {
-      value: "X3DGeometricPropertyNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DGeometricPropertyNode, Core_X3DNode .getStaticProperties ("X3DGeometricPropertyNode", "Rendering", 1));
 
 const X3DGeometricPropertyNode_default_ = X3DGeometricPropertyNode;
 ;
@@ -70630,6 +70042,7 @@ const X3DGeometricPropertyNode_default_ = X3DGeometricPropertyNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -70703,26 +70116,7 @@ Object .assign (Object .setPrototypeOf (FogCoordinate .prototype, Rendering_X3DG
 
 Object .defineProperties (FogCoordinate,
 {
-   typeName:
-   {
-      value: "FogCoordinate",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "fogCoord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("FogCoordinate", "EnvironmentalEffects", 4, "fogCoord", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -70792,6 +70186,7 @@ const FogCoordinate_default_ = FogCoordinate;
 
 
 
+
 function LocalFog (executionContext)
 {
    Core_X3DChildNode .call (this, executionContext);
@@ -70833,26 +70228,7 @@ Object .assign (Object .setPrototypeOf (LocalFog .prototype, Core_X3DChildNode .
 
 Object .defineProperties (LocalFog,
 {
-   typeName:
-   {
-      value: "LocalFog",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("LocalFog", "EnvironmentalEffects", 4, "children", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -70926,6 +70302,7 @@ const LocalFog_default_ = LocalFog;
 
 
 
+
 function TextureBackground (executionContext)
 {
    EnvironmentalEffects_X3DBackgroundNode .call (this, executionContext);
@@ -70961,26 +70338,7 @@ Object .assign (Object .setPrototypeOf (TextureBackground .prototype, Environmen
 
 Object .defineProperties (TextureBackground,
 {
-   typeName:
-   {
-      value: "TextureBackground",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TextureBackground", "EnvironmentalEffects", 3, "children", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -71136,6 +70494,7 @@ const EnvironmentalEffectsComponent_default_ = {
 
 
 
+
 function X3DEnvironmentalSensorNode (executionContext)
 {
    Core_X3DSensorNode .call (this, executionContext);
@@ -71212,19 +70571,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentalSensorNode .prototype, C
    update () { },
 });
 
-Object .defineProperties (X3DEnvironmentalSensorNode,
-{
-   typeName:
-   {
-      value: "X3DEnvironmentalSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalSensor", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DEnvironmentalSensorNode, Core_X3DNode .getStaticProperties ("X3DEnvironmentalSensorNode", "EnvironmentalSensor", 1));
 
 const X3DEnvironmentalSensorNode_default_ = X3DEnvironmentalSensorNode;
 ;
@@ -71277,6 +70624,7 @@ const X3DEnvironmentalSensorNode_default_ = X3DEnvironmentalSensorNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -71467,26 +70815,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, Environmenta
 
 Object .defineProperties (ProximitySensor,
 {
-   typeName:
-   {
-      value: "ProximitySensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalSensor", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ProximitySensor", "EnvironmentalSensor", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -71557,6 +70886,7 @@ const ProximitySensor_default_ = ProximitySensor;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -71791,26 +71121,7 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, Environmenta
 
 Object .defineProperties (TransformSensor,
 {
-   typeName:
-   {
-      value: "TransformSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalSensor", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TransformSensor", "EnvironmentalSensor", 3, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -71881,6 +71192,7 @@ const TransformSensor_default_ = TransformSensor;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -71976,26 +71288,7 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, Environment
 
 Object .defineProperties (VisibilitySensor,
 {
-   typeName:
-   {
-      value: "VisibilitySensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EnvironmentalSensor", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("VisibilitySensor", "EnvironmentalSensor", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -72136,6 +71429,7 @@ const EnvironmentalSensorComponent_default_ = {
 
 
 
+
 function X3DFollowerNode (executionContext)
 {
    Core_X3DChildNode .call (this, executionContext);
@@ -72222,19 +71516,7 @@ Object .assign (Object .setPrototypeOf (X3DFollowerNode .prototype, Core_X3DChil
    },
 });
 
-Object .defineProperties (X3DFollowerNode,
-{
-   typeName:
-   {
-      value: "X3DFollowerNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DFollowerNode, Core_X3DNode .getStaticProperties ("X3DFollowerNode", "Followers", 1));
 
 const X3DFollowerNode_default_ = X3DFollowerNode;
 ;
@@ -72287,6 +71569,7 @@ const X3DFollowerNode_default_ = X3DFollowerNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -72467,19 +71750,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, Followers_X3DF
    },
 });
 
-Object .defineProperties (X3DChaserNode,
-{
-   typeName:
-   {
-      value: "X3DChaserNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DChaserNode, Core_X3DNode .getStaticProperties ("X3DChaserNode", "Followers", 1));
 
 const X3DChaserNode_default_ = X3DChaserNode;
 ;
@@ -72532,6 +71803,7 @@ const X3DChaserNode_default_ = X3DChaserNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -72596,26 +71868,7 @@ Object .assign (Object .setPrototypeOf (ColorChaser .prototype, Followers_X3DCha
 
 Object .defineProperties (ColorChaser,
 {
-   typeName:
-   {
-      value: "ColorChaser",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ColorChaser", "Followers", 1, "children", "3.3"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -72683,6 +71936,7 @@ const ColorChaser_default_ = ColorChaser;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -72798,19 +72052,7 @@ Object .assign (Object .setPrototypeOf (X3DDamperNode .prototype, Followers_X3DF
    },
 });
 
-Object .defineProperties (X3DDamperNode,
-{
-   typeName:
-   {
-      value: "X3DDamperNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DDamperNode, Core_X3DNode .getStaticProperties ("X3DDamperNode", "Followers", 1));
 
 const X3DDamperNode_default_ = X3DDamperNode;
 ;
@@ -72872,6 +72114,7 @@ const X3DDamperNode_default_ = X3DDamperNode;
 
 
 
+
 var
    ColorDamper_a                  = new Numbers_Vector3 (),
    ColorDamper_initialValue       = new Numbers_Vector3 (),
@@ -72923,26 +72166,7 @@ Object .assign (Object .setPrototypeOf (ColorDamper .prototype, Followers_X3DDam
 
 Object .defineProperties (ColorDamper,
 {
-   typeName:
-   {
-      value: "ColorDamper",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ColorDamper", "Followers", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -73283,6 +72507,7 @@ const X3DArrayChaserTemplate_default_ = X3DArrayChaserTemplate;
 
 
 
+
 var X3DArrayChaserObject = Followers_X3DArrayChaserTemplate (Followers_X3DChaserNode);
 
 function CoordinateChaser (executionContext)
@@ -73304,26 +72529,7 @@ Object .assign (Object .setPrototypeOf (CoordinateChaser .prototype, Followers_X
 
 Object .defineProperties (CoordinateChaser,
 {
-   typeName:
-   {
-      value: "CoordinateChaser",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("CoordinateChaser", "Followers", 1, "children", "3.3"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -73400,6 +72606,7 @@ const CoordinateChaser_default_ = CoordinateChaser;
 
 
 
+
 var X3DArrayFollowerObject = Followers_X3DArrayFollowerTemplate (Followers_X3DDamperNode);
 
 function CoordinateDamper (executionContext)
@@ -73421,26 +72628,7 @@ Object .assign (Object .setPrototypeOf (CoordinateDamper .prototype, Followers_X
 
 Object .defineProperties (CoordinateDamper,
 {
-   typeName:
-   {
-      value: "CoordinateDamper",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("CoordinateDamper", "Followers", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -73518,6 +72706,7 @@ const CoordinateDamper_default_ = CoordinateDamper;
 
 
 
+
 var
    OrientationChaser_a        = new Numbers_Rotation4 (),
    rotation = new Numbers_Rotation4 ();
@@ -73561,26 +72750,7 @@ Object .assign (Object .setPrototypeOf (OrientationChaser .prototype, Followers_
 
 Object .defineProperties (OrientationChaser,
 {
-   typeName:
-   {
-      value: "OrientationChaser",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("OrientationChaser", "Followers", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -73656,6 +72826,7 @@ const OrientationChaser_default_ = OrientationChaser;
 
 
 
+
 var
    OrientationDamper_a        = new Numbers_Rotation4 (),
    OrientationDamper_rotation = new Numbers_Rotation4 ();
@@ -73693,26 +72864,7 @@ Object .assign (Object .setPrototypeOf (OrientationDamper .prototype, Followers_
 
 Object .defineProperties (OrientationDamper,
 {
-   typeName:
-   {
-      value: "OrientationDamper",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("OrientationDamper", "Followers", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -73790,6 +72942,7 @@ const OrientationDamper_default_ = OrientationDamper;
 
 
 
+
 function PositionChaser (executionContext)
 {
    Followers_X3DChaserNode .call (this, executionContext);
@@ -73807,26 +72960,7 @@ Object .assign (Object .setPrototypeOf (PositionChaser .prototype, Followers_X3D
 
 Object .defineProperties (PositionChaser,
 {
-   typeName:
-   {
-      value: "PositionChaser",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PositionChaser", "Followers", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -73902,6 +73036,7 @@ const PositionChaser_default_ = PositionChaser;
 
 
 
+
 function PositionChaser2D (executionContext)
 {
    Followers_X3DChaserNode .call (this, executionContext);
@@ -73919,26 +73054,7 @@ Object .assign (Object .setPrototypeOf (PositionChaser2D .prototype, Followers_X
 
 Object .defineProperties (PositionChaser2D,
 {
-   typeName:
-   {
-      value: "PositionChaser2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PositionChaser2D", "Followers", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -74014,6 +73130,7 @@ const PositionChaser2D_default_ = PositionChaser2D;
 
 
 
+
 function PositionDamper (executionContext)
 {
    Followers_X3DDamperNode .call (this, executionContext);
@@ -74031,26 +73148,7 @@ Object .assign (Object .setPrototypeOf (PositionDamper .prototype, Followers_X3D
 
 Object .defineProperties (PositionDamper,
 {
-   typeName:
-   {
-      value: "PositionDamper",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PositionDamper", "Followers", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -74128,6 +73226,7 @@ const PositionDamper_default_ = PositionDamper;
 
 
 
+
 function PositionDamper2D (executionContext)
 {
    Followers_X3DDamperNode .call (this, executionContext);
@@ -74145,26 +73244,7 @@ Object .assign (Object .setPrototypeOf (PositionDamper2D .prototype, Followers_X
 
 Object .defineProperties (PositionDamper2D,
 {
-   typeName:
-   {
-      value: "PositionDamper2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PositionDamper2D", "Followers", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -74242,6 +73322,7 @@ const PositionDamper2D_default_ = PositionDamper2D;
 
 
 
+
 function ScalarChaser (executionContext)
 {
    Followers_X3DChaserNode .call (this, executionContext);
@@ -74287,26 +73368,7 @@ Object .assign (Object .setPrototypeOf (ScalarChaser .prototype, Followers_X3DCh
 
 Object .defineProperties (ScalarChaser,
 {
-   typeName:
-   {
-      value: "ScalarChaser",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ScalarChaser", "Followers", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -74382,6 +73444,7 @@ const ScalarChaser_default_ = ScalarChaser;
 
 
 
+
 function ScalarDamper (executionContext)
 {
    Followers_X3DDamperNode .call (this, executionContext);
@@ -74415,26 +73478,7 @@ Object .assign (Object .setPrototypeOf (ScalarDamper .prototype, Followers_X3DDa
 
 Object .defineProperties (ScalarDamper,
 {
-   typeName:
-   {
-      value: "ScalarDamper",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ScalarDamper", "Followers", 1, "children", "3.3"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -74513,6 +73557,7 @@ const ScalarDamper_default_ = ScalarDamper;
 
 
 
+
 var TexCoordChaser2D_X3DArrayChaserObject = Followers_X3DArrayChaserTemplate (Followers_X3DChaserNode);
 
 function TexCoordChaser2D (executionContext)
@@ -74534,26 +73579,7 @@ Object .assign (Object .setPrototypeOf (TexCoordChaser2D .prototype, Followers_X
 
 Object .defineProperties (TexCoordChaser2D,
 {
-   typeName:
-   {
-      value: "TexCoordChaser2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TexCoordChaser2D", "Followers", 1, "children", "3.3"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -74630,6 +73656,7 @@ const TexCoordChaser2D_default_ = TexCoordChaser2D;
 
 
 
+
 var TexCoordDamper2D_X3DArrayFollowerObject = Followers_X3DArrayFollowerTemplate (Followers_X3DDamperNode);
 
 function TexCoordDamper2D (executionContext)
@@ -74651,26 +73678,7 @@ Object .assign (Object .setPrototypeOf (TexCoordDamper2D .prototype, Followers_X
 
 Object .defineProperties (TexCoordDamper2D,
 {
-   typeName:
-   {
-      value: "TexCoordDamper2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Followers", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TexCoordDamper2D", "Followers", 1, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -74843,6 +73851,7 @@ const FollowersComponent_default_ = {
 
 
 
+
 function Box (executionContext)
 {
    Rendering_X3DGeometryNode .call (this, executionContext);
@@ -74904,26 +73913,7 @@ Object .assign (Object .setPrototypeOf (Box .prototype, Rendering_X3DGeometryNod
 
 Object .defineProperties (Box,
 {
-   typeName:
-   {
-      value: "Box",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Box", "Geometry3D", 1, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -74986,6 +73976,7 @@ const Box_default_ = Box;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -75112,26 +74103,7 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, Rendering_X3DGeometryNo
 
 Object .defineProperties (Cone,
 {
-   typeName:
-   {
-      value: "Cone",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Cone", "Geometry3D", 1, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -75197,6 +74169,7 @@ const Cone_default_ = Cone;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -75350,26 +74323,7 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, Rendering_X3DGeomet
 
 Object .defineProperties (Cylinder,
 {
-   typeName:
-   {
-      value: "Cylinder",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Cylinder", "Geometry3D", 1, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -75436,6 +74390,7 @@ const Cylinder_default_ = Cylinder;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -75776,26 +74731,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, Rendering_X3DG
 
 Object .defineProperties (ElevationGrid,
 {
-   typeName:
-   {
-      value: "ElevationGrid",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry3D", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ElevationGrid", "Geometry3D", 3, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -75873,6 +74809,7 @@ const ElevationGrid_default_ = ElevationGrid;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -76512,26 +75449,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
 
 Object .defineProperties (Extrusion,
 {
-   typeName:
-   {
-      value: "Extrusion",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry3D", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Extrusion", "Geometry3D", 4, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -76606,6 +75524,7 @@ const Extrusion_default_ = Extrusion;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -76914,19 +75833,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, Rend
    })(),
 });
 
-Object .defineProperties (X3DComposedGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DComposedGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DComposedGeometryNode, Core_X3DNode .getStaticProperties ("X3DComposedGeometryNode", "Rendering", 1));
 
 const X3DComposedGeometryNode_default_ = X3DComposedGeometryNode;
 ;
@@ -76979,6 +75886,7 @@ const X3DComposedGeometryNode_default_ = X3DComposedGeometryNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -77337,26 +76245,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, Rendering_X3D
 
 Object .defineProperties (IndexedFaceSet,
 {
-   typeName:
-   {
-      value: "IndexedFaceSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry3D", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("IndexedFaceSet", "Geometry3D", 2, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -77445,6 +76334,7 @@ const IndexedFaceSet_default_ = IndexedFaceSet;
 
 
 
+
 function Sphere (executionContext)
 {
    Rendering_X3DGeometryNode .call (this, executionContext);
@@ -77509,26 +76399,7 @@ Object .assign (Object .setPrototypeOf (Sphere .prototype, Rendering_X3DGeometry
 
 Object .defineProperties (Sphere,
 {
-   typeName:
-   {
-      value: "Sphere",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Sphere", "Geometry3D", 1, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -77666,6 +76537,7 @@ const Geometry3DComponent_default_ = {
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -77829,26 +76701,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, Core_X3DChildNod
 
 Object .defineProperties (StaticGroup,
 {
-   typeName:
-   {
-      value: "StaticGroup",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("StaticGroup", "Grouping", 3, "children", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -77914,6 +76767,7 @@ const StaticGroup_default_ = StaticGroup;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -78091,26 +76945,7 @@ Object .assign (Object .setPrototypeOf (Switch .prototype, Grouping_X3DGroupingN
 
 Object .defineProperties (Switch,
 {
-   typeName:
-   {
-      value: "Switch",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Switch", "Grouping", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -78179,6 +77014,7 @@ const Switch_default_ = Switch;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -78256,19 +77092,7 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, Gro
    groupTraverse: Grouping_X3DGroupingNode .prototype .traverse,
 });
 
-Object .defineProperties (X3DTransformMatrix3DNode,
-{
-   typeName:
-   {
-      value: "X3DTransformMatrix3DNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTransformMatrix3DNode, Core_X3DNode .getStaticProperties ("X3DTransformMatrix3DNode", "Grouping", 1));
 
 const X3DTransformMatrix3DNode_default_ = X3DTransformMatrix3DNode;
 ;
@@ -78325,6 +77149,7 @@ const X3DTransformMatrix3DNode_default_ = X3DTransformMatrix3DNode;
 
 
 
+
 function X3DTransformNode (executionContext)
 {
    Grouping_X3DTransformMatrix3DNode .call (this, executionContext);
@@ -78355,19 +77180,7 @@ Object .assign (Object .setPrototypeOf (X3DTransformNode .prototype, Grouping_X3
    },
 });
 
-Object .defineProperties (X3DTransformNode,
-{
-   typeName:
-   {
-      value: "X3DTransformNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTransformNode, Core_X3DNode .getStaticProperties ("X3DTransformNode", "Grouping", 1));
 
 const X3DTransformNode_default_ = X3DTransformNode;
 ;
@@ -78427,6 +77240,7 @@ const X3DTransformNode_default_ = X3DTransformNode;
 
 
 
+
 function Transform (executionContext)
 {
    Grouping_X3DTransformNode .call (this, executionContext);
@@ -78438,26 +77252,7 @@ Object .setPrototypeOf (Transform .prototype, Grouping_X3DTransformNode .prototy
 
 Object .defineProperties (Transform,
 {
-   typeName:
-   {
-      value: "Transform",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Grouping", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Transform", "Grouping", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -78615,6 +77410,7 @@ const GroupingComponent_default_ = {
 
 
 
+
 function ColorInterpolator (executionContext)
 {
    Interpolation_X3DInterpolatorNode .call (this, executionContext);
@@ -78659,26 +77455,7 @@ Object .assign (Object .setPrototypeOf (ColorInterpolator .prototype, Interpolat
 
 Object .defineProperties (ColorInterpolator,
 {
-   typeName:
-   {
-      value: "ColorInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ColorInterpolator", "Interpolation", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -78751,6 +77528,7 @@ const ColorInterpolator_default_ = ColorInterpolator;
 
 
 
+
 function CoordinateInterpolator (executionContext)
 {
    Interpolation_X3DInterpolatorNode .call (this, executionContext);
@@ -78795,26 +77573,7 @@ Object .assign (Object .setPrototypeOf (CoordinateInterpolator .prototype, Inter
 
 Object .defineProperties (CoordinateInterpolator,
 {
-   typeName:
-   {
-      value: "CoordinateInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("CoordinateInterpolator", "Interpolation", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -78887,6 +77646,7 @@ const CoordinateInterpolator_default_ = CoordinateInterpolator;
 
 
 
+
 function CoordinateInterpolator2D (executionContext)
 {
    Interpolation_X3DInterpolatorNode .call (this, executionContext);
@@ -78928,26 +77688,7 @@ Object .assign (Object .setPrototypeOf (CoordinateInterpolator2D .prototype, Int
 
 Object .defineProperties (CoordinateInterpolator2D,
 {
-   typeName:
-   {
-      value: "CoordinateInterpolator2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("CoordinateInterpolator2D", "Interpolation", 3, "children", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -79012,6 +77753,7 @@ const CoordinateInterpolator2D_default_ = CoordinateInterpolator2D;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -79090,26 +77832,7 @@ Object .assign (Object .setPrototypeOf (NormalInterpolator .prototype, Interpola
 
 Object .defineProperties (NormalInterpolator,
 {
-   typeName:
-   {
-      value: "NormalInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("NormalInterpolator", "Interpolation", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -79182,6 +77905,7 @@ const NormalInterpolator_default_ = NormalInterpolator;
 
 
 
+
 function PositionInterpolator2D (executionContext)
 {
    Interpolation_X3DInterpolatorNode .call (this, executionContext);
@@ -79219,26 +77943,7 @@ Object .assign (Object .setPrototypeOf (PositionInterpolator2D .prototype, Inter
 
 Object .defineProperties (PositionInterpolator2D,
 {
-   typeName:
-   {
-      value: "PositionInterpolator2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PositionInterpolator2D", "Interpolation", 3, "children", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -79669,6 +78374,7 @@ const CatmullRomSplineInterpolator3_default_ = CatmullRomSplineInterpolator3;
 
 
 
+
 function SplinePositionInterpolator (executionContext)
 {
    Interpolation_X3DInterpolatorNode .call (this, executionContext);
@@ -79725,26 +78431,7 @@ Object .assign (Object .setPrototypeOf (SplinePositionInterpolator .prototype, I
 
 Object .defineProperties (SplinePositionInterpolator,
 {
-   typeName:
-   {
-      value: "SplinePositionInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("SplinePositionInterpolator", "Interpolation", 4, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -79877,6 +78564,7 @@ const CatmullRomSplineInterpolator2_default_ = CatmullRomSplineInterpolator2;
 
 
 
+
 function SplinePositionInterpolator2D (executionContext)
 {
    Interpolation_X3DInterpolatorNode .call (this, executionContext);
@@ -79933,26 +78621,7 @@ Object .assign (Object .setPrototypeOf (SplinePositionInterpolator2D .prototype,
 
 Object .defineProperties (SplinePositionInterpolator2D,
 {
-   typeName:
-   {
-      value: "SplinePositionInterpolator2D",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("SplinePositionInterpolator2D", "Interpolation", 4, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -80119,6 +78788,7 @@ const CatmullRomSplineInterpolator1_default_ = CatmullRomSplineInterpolator1;
 
 
 
+
 function SplineScalarInterpolator (executionContext)
 {
    Interpolation_X3DInterpolatorNode .call (this, executionContext);
@@ -80175,26 +78845,7 @@ Object .assign (Object .setPrototypeOf (SplineScalarInterpolator .prototype, Int
 
 Object .defineProperties (SplineScalarInterpolator,
 {
-   typeName:
-   {
-      value: "SplineScalarInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("SplineScalarInterpolator", "Interpolation", 4, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -80386,6 +79037,7 @@ const SquatInterpolator_default_ = SquatInterpolator;
 
 
 
+
 function SquadOrientationInterpolator (executionContext)
 {
    Interpolation_X3DInterpolatorNode .call (this, executionContext);
@@ -80434,26 +79086,7 @@ Object .assign (Object .setPrototypeOf (SquadOrientationInterpolator .prototype,
 
 Object .defineProperties (SquadOrientationInterpolator,
 {
-   typeName:
-   {
-      value: "SquadOrientationInterpolator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Interpolation", level: 5 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("SquadOrientationInterpolator", "Interpolation", 5, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -80612,6 +79245,7 @@ const InterpolationComponent_default_ = {
 
 
 
+
 function X3DViewportNode (executionContext)
 {
    Grouping_X3DGroupingNode .call (this, executionContext);
@@ -80621,19 +79255,7 @@ function X3DViewportNode (executionContext)
 
 Object .setPrototypeOf (X3DViewportNode .prototype, Grouping_X3DGroupingNode .prototype);
 
-Object .defineProperties (X3DViewportNode,
-{
-   typeName:
-   {
-      value: "X3DViewportNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DViewportNode, Core_X3DNode .getStaticProperties ("X3DViewportNode", "Layering", 1));
 
 const X3DViewportNode_default_ = X3DViewportNode;
 ;
@@ -80686,6 +79308,7 @@ const X3DViewportNode_default_ = X3DViewportNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -80782,26 +79405,7 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, Layering_X3DViewpor
 
 Object .defineProperties (Viewport,
 {
-   typeName:
-   {
-      value: "Viewport",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Layering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "viewport",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Viewport", "Layering", 1, "viewport", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -80941,6 +79545,7 @@ const LayeringComponent_default_ = {
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -81115,19 +79720,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, Core_X3DChildNo
    },
 });
 
-Object .defineProperties (X3DLightNode,
-{
-   typeName:
-   {
-      value: "X3DLightNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Lighting", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DLightNode, Core_X3DNode .getStaticProperties ("X3DLightNode", "Lighting", 1));
 
 const X3DLightNode_default_ = X3DLightNode;
 ;
@@ -81180,6 +79773,7 @@ const X3DLightNode_default_ = X3DLightNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -81383,26 +79977,7 @@ Object .assign (Object .setPrototypeOf (DirectionalLight .prototype, Lighting_X3
 
 Object .defineProperties (DirectionalLight,
 {
-   typeName:
-   {
-      value: "DirectionalLight",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Lighting", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("DirectionalLight", "Lighting", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -81475,6 +80050,7 @@ const DirectionalLight_default_ = DirectionalLight;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -81644,26 +80220,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, Lighting_X3
 
 Object .defineProperties (EnvironmentLight,
 {
-   typeName:
-   {
-      value: "EnvironmentLight",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Lighting", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("EnvironmentLight", "Lighting", 3, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -81740,6 +80297,7 @@ const EnvironmentLight_default_ = EnvironmentLight;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -81989,26 +80547,7 @@ Object .assign (Object .setPrototypeOf (PointLight .prototype, Lighting_X3DLight
 
 Object .defineProperties (PointLight,
 {
-   typeName:
-   {
-      value: "PointLight",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Lighting", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PointLight", "Lighting", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -82083,6 +80622,7 @@ const PointLight_default_ = PointLight;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -82355,26 +80895,7 @@ Object .assign (Object .setPrototypeOf (SpotLight .prototype, Lighting_X3DLightN
 
 Object .defineProperties (SpotLight,
 {
-   typeName:
-   {
-      value: "SpotLight",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Lighting", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("SpotLight", "Lighting", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -82534,6 +81055,7 @@ const LightingComponent_default_ = {
 
 
 
+
 function Billboard (executionContext)
 {
    Grouping_X3DGroupingNode .call (this, executionContext);
@@ -82627,26 +81149,7 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, Grouping_X3DGroupi
 
 Object .defineProperties (Billboard,
 {
-   typeName:
-   {
-      value: "Billboard",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Billboard", "Navigation", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -82715,6 +81218,7 @@ const Billboard_default_ = Billboard;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -82814,26 +81318,7 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, Grouping_X3DGroupi
 
 Object .defineProperties (Collision,
 {
-   typeName:
-   {
-      value: "Collision",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Collision", "Navigation", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -82906,6 +81391,7 @@ const Collision_default_ = Collision;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -83160,26 +81646,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, Grouping_X3DGroupingNode
 
 Object .defineProperties (LOD,
 {
-   typeName:
-   {
-      value: "LOD",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("LOD", "Navigation", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -83251,6 +81718,7 @@ const LOD_default_ = LOD;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -83539,26 +82007,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
 
 Object .defineProperties (OrthoViewpoint,
 {
-   typeName:
-   {
-      value: "OrthoViewpoint",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("OrthoViewpoint", "Navigation", 3, "children", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -83633,6 +82082,7 @@ const OrthoViewpoint_default_ = OrthoViewpoint;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -83757,26 +82207,7 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, Core_X3DChild
 
 Object .defineProperties (ViewpointGroup,
 {
-   typeName:
-   {
-      value: "ViewpointGroup",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Navigation", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ViewpointGroup", "Navigation", 3, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -84014,6 +82445,7 @@ const PointingDeviceSensorContainer_default_ = PointingDeviceSensorContainer;
 
 
 
+
 function X3DPointingDeviceSensorNode (executionContext)
 {
    Core_X3DSensorNode .call (this, executionContext);
@@ -84080,19 +82512,7 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
    },
 });
 
-Object .defineProperties (X3DPointingDeviceSensorNode,
-{
-   typeName:
-   {
-      value: "X3DPointingDeviceSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DPointingDeviceSensorNode, Core_X3DNode .getStaticProperties ("X3DPointingDeviceSensorNode", "PointingDeviceSensor", 1));
 
 const X3DPointingDeviceSensorNode_default_ = X3DPointingDeviceSensorNode;
 ;
@@ -84151,6 +82571,7 @@ const X3DPointingDeviceSensorNode_default_ = X3DPointingDeviceSensorNode;
 
 
 
+
 function X3DTouchSensorNode (executionContext)
 {
    PointingDeviceSensor_X3DPointingDeviceSensorNode .call (this, executionContext);
@@ -84190,19 +82611,7 @@ Object .assign (Object .setPrototypeOf (X3DTouchSensorNode .prototype, PointingD
    })(),
 });
 
-Object .defineProperties (X3DTouchSensorNode,
-{
-   typeName:
-   {
-      value: "X3DTouchSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTouchSensorNode, Core_X3DNode .getStaticProperties ("X3DTouchSensorNode", "PointingDeviceSensor", 1));
 
 const X3DTouchSensorNode_default_ = X3DTouchSensorNode;
 ;
@@ -84262,6 +82671,7 @@ const X3DTouchSensorNode_default_ = X3DTouchSensorNode;
 
 
 
+
 function TouchSensor (executionContext)
 {
    PointingDeviceSensor_X3DTouchSensorNode .call (this, executionContext);
@@ -84275,26 +82685,7 @@ Object .setPrototypeOf (TouchSensor .prototype, PointingDeviceSensor_X3DTouchSen
 
 Object .defineProperties (TouchSensor,
 {
-   typeName:
-   {
-      value: "TouchSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TouchSensor", "PointingDeviceSensor", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -84363,6 +82754,7 @@ const TouchSensor_default_ = TouchSensor;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -84494,26 +82886,7 @@ Object .assign (Object .setPrototypeOf (Anchor .prototype, Grouping_X3DGroupingN
 
 Object .defineProperties (Anchor,
 {
-   typeName:
-   {
-      value: "Anchor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Networking", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Anchor", "Networking", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -84587,6 +82960,7 @@ const Anchor_default_ = Anchor;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -84822,26 +83196,7 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, Core_X3DChildNode .pr
 
 Object .defineProperties (Inline,
 {
-   typeName:
-   {
-      value: "Inline",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Networking", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Inline", "Networking", 2, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -84916,6 +83271,7 @@ const Inline_default_ = Inline;
 
 
 
+
 function X3DNetworkSensorNode (executionContext)
 {
    Core_X3DSensorNode .call (this, executionContext);
@@ -84925,19 +83281,7 @@ function X3DNetworkSensorNode (executionContext)
 
 Object .setPrototypeOf (X3DNetworkSensorNode .prototype, Core_X3DSensorNode .prototype);
 
-Object .defineProperties (X3DNetworkSensorNode,
-{
-   typeName:
-   {
-      value: "X3DNetworkSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Networking", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DNetworkSensorNode, Core_X3DNode .getStaticProperties ("X3DNetworkSensorNode", "Networking", 1));
 
 const X3DNetworkSensorNode_default_ = X3DNetworkSensorNode;
 ;
@@ -84990,6 +83334,7 @@ const X3DNetworkSensorNode_default_ = X3DNetworkSensorNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -85176,26 +83521,7 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, Networking_X3DNet
 
 Object .defineProperties (LoadSensor,
 {
-   typeName:
-   {
-      value: "LoadSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Networking", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("LoadSensor", "Networking", 3, "children", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -85339,6 +83665,7 @@ const NetworkingComponent_default_ = {
 
 
 
+
 function X3DDragSensorNode (executionContext)
 {
    PointingDeviceSensor_X3DPointingDeviceSensorNode .call (this, executionContext);
@@ -85350,19 +83677,7 @@ function X3DDragSensorNode (executionContext)
 
 Object .setPrototypeOf (X3DDragSensorNode .prototype, PointingDeviceSensor_X3DPointingDeviceSensorNode .prototype);
 
-Object .defineProperties (X3DDragSensorNode,
-{
-   typeName:
-   {
-      value: "X3DDragSensorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DDragSensorNode, Core_X3DNode .getStaticProperties ("X3DDragSensorNode", "PointingDeviceSensor", 1));
 
 const X3DDragSensorNode_default_ = X3DDragSensorNode;
 ;
@@ -85578,6 +83893,7 @@ const Cylinder3_default_ = Cylinder3;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -85812,26 +84128,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
 
 Object .defineProperties (CylinderSensor,
 {
-   typeName:
-   {
-      value: "CylinderSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("CylinderSensor", "PointingDeviceSensor", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -86080,6 +84377,7 @@ const Line2_default_ = Line2;
 
 
 
+
 const
    screenLine     = new Geometry_Line2 (Numbers_Vector2 .Zero, Numbers_Vector2 .Zero),
    trackPoint1    = new Numbers_Vector2 (),
@@ -86297,26 +84595,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, PointingDeviceSe
 
 Object .defineProperties (PlaneSensor,
 {
-   typeName:
-   {
-      value: "PlaneSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PlaneSensor", "PointingDeviceSensor", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -86596,6 +84875,7 @@ const Sphere3_default_ = Sphere3;
 
 
 
+
 function SphereSensor (executionContext)
 {
    PointingDeviceSensor_X3DDragSensorNode .call (this, executionContext);
@@ -86718,26 +84998,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, PointingDeviceS
 
 Object .defineProperties (SphereSensor,
 {
-   typeName:
-   {
-      value: "SphereSensor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("SphereSensor", "PointingDeviceSensor", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -86892,6 +85153,7 @@ const PointingDeviceSensorComponent_default_ = {
 
 
 
+
 const ClipPlanes = Utility_ObjectCache (ClipPlaneContainer);
 
 function ClipPlaneContainer ()
@@ -86985,26 +85247,7 @@ Object .assign (Object .setPrototypeOf (ClipPlane .prototype, Core_X3DChildNode 
 
 Object .defineProperties (ClipPlane,
 {
-   typeName:
-   {
-      value: "ClipPlane",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 5 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ClipPlane", "Rendering", 5, "children", "3.2"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -87072,6 +85315,7 @@ const ClipPlane_default_ = ClipPlane;
 
 
 
+
 function X3DColorNode (executionContext)
 {
    Rendering_X3DGeometricPropertyNode .call (this, executionContext);
@@ -87094,19 +85338,7 @@ Object .assign (Object .setPrototypeOf (X3DColorNode .prototype, Rendering_X3DGe
    },
 });
 
-Object .defineProperties (X3DColorNode,
-{
-   typeName:
-   {
-      value: "X3DColorNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DColorNode, Core_X3DNode .getStaticProperties ("X3DColorNode", "Rendering", 1));
 
 const X3DColorNode_default_ = X3DColorNode;
 ;
@@ -87159,6 +85391,7 @@ const X3DColorNode_default_ = X3DColorNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -87230,26 +85463,7 @@ Object .assign (Object .setPrototypeOf (Color .prototype, Rendering_X3DColorNode
 
 Object .defineProperties (Color,
 {
-   typeName:
-   {
-      value: "Color",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "color",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Color", "Rendering", 1, "color", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -87311,6 +85525,7 @@ const Color_default_ = Color;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -87384,26 +85599,7 @@ Object .assign (Object .setPrototypeOf (ColorRGBA .prototype, Rendering_X3DColor
 
 Object .defineProperties (ColorRGBA,
 {
-   typeName:
-   {
-      value: "ColorRGBA",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "color",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ColorRGBA", "Rendering", 1, "color", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -87465,6 +85661,7 @@ const ColorRGBA_default_ = ColorRGBA;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -87600,19 +85797,7 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, Rendering_
    })(),
 });
 
-Object .defineProperties (X3DCoordinateNode,
-{
-   typeName:
-   {
-      value: "X3DCoordinateNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DCoordinateNode, Core_X3DNode .getStaticProperties ("X3DCoordinateNode", "Rendering", 1));
 
 const X3DCoordinateNode_default_ = X3DCoordinateNode;
 ;
@@ -87672,6 +85857,7 @@ const X3DCoordinateNode_default_ = X3DCoordinateNode;
 
 
 
+
 function Coordinate (executionContext)
 {
    Rendering_X3DCoordinateNode .call (this, executionContext);
@@ -87685,26 +85871,7 @@ Object .setPrototypeOf (Coordinate .prototype, Rendering_X3DCoordinateNode .prot
 
 Object .defineProperties (Coordinate,
 {
-   typeName:
-   {
-      value: "Coordinate",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "coord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Coordinate", "Rendering", 1, "coord", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -87773,6 +85940,7 @@ const Coordinate_default_ = Coordinate;
 
 
 
+
 function CoordinateDouble (executionContext)
 {
    Rendering_X3DCoordinateNode .call (this, executionContext);
@@ -87784,26 +85952,7 @@ Object .setPrototypeOf (CoordinateDouble .prototype, Rendering_X3DCoordinateNode
 
 Object .defineProperties (CoordinateDouble,
 {
-   typeName:
-   {
-      value: "CoordinateDouble",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "coord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("CoordinateDouble", "Rendering", 1, "coord", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -87865,6 +86014,7 @@ const CoordinateDouble_default_ = CoordinateDouble;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -88515,19 +86665,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
    })(),
 });
 
-Object .defineProperties (X3DLineGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DLineGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DLineGeometryNode, Core_X3DNode .getStaticProperties ("X3DLineGeometryNode", "Rendering", 1));
 
 const X3DLineGeometryNode_default_ = X3DLineGeometryNode;
 ;
@@ -88580,6 +86718,7 @@ const X3DLineGeometryNode_default_ = X3DLineGeometryNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -88809,26 +86948,7 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, Rendering_X3D
 
 Object .defineProperties (IndexedLineSet,
 {
-   typeName:
-   {
-      value: "IndexedLineSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("IndexedLineSet", "Rendering", 1, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -88900,6 +87020,7 @@ const IndexedLineSet_default_ = IndexedLineSet;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -88985,26 +87106,7 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleFanSet .prototype, Render
 
 Object .defineProperties (IndexedTriangleFanSet,
 {
-   typeName:
-   {
-      value: "IndexedTriangleFanSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("IndexedTriangleFanSet", "Rendering", 3, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -89085,6 +87187,7 @@ const IndexedTriangleFanSet_default_ = IndexedTriangleFanSet;
 
 
 
+
 function IndexedTriangleSet (executionContext)
 {
    Rendering_X3DComposedGeometryNode .call (this, executionContext);
@@ -89120,26 +87223,7 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleSet .prototype, Rendering
 
 Object .defineProperties (IndexedTriangleSet,
 {
-   typeName:
-   {
-      value: "IndexedTriangleSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("IndexedTriangleSet", "Rendering", 3, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -89213,6 +87297,7 @@ const IndexedTriangleSet_default_ = IndexedTriangleSet;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -89306,26 +87391,7 @@ Object .assign (Object .setPrototypeOf (IndexedTriangleStripSet .prototype, Rend
 
 Object .defineProperties (IndexedTriangleStripSet,
 {
-   typeName:
-   {
-      value: "IndexedTriangleStripSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("IndexedTriangleStripSet", "Rendering", 3, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -89399,6 +87465,7 @@ const IndexedTriangleStripSet_default_ = IndexedTriangleStripSet;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -89570,26 +87637,7 @@ Object .assign (Object .setPrototypeOf (LineSet .prototype, Rendering_X3DLineGeo
 
 Object .defineProperties (LineSet,
 {
-   typeName:
-   {
-      value: "LineSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("LineSet", "Rendering", 1, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -89661,6 +87709,7 @@ const LineSet_default_ = LineSet;
 
 
 
+
 function X3DNormalNode (executionContext)
 {
    Rendering_X3DGeometricPropertyNode .call (this, executionContext);
@@ -89670,19 +87719,7 @@ function X3DNormalNode (executionContext)
 
 Object .setPrototypeOf (X3DNormalNode .prototype, Rendering_X3DGeometricPropertyNode .prototype);
 
-Object .defineProperties (X3DNormalNode,
-{
-   typeName:
-   {
-      value: "X3DNormalNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 2 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DNormalNode, Core_X3DNode .getStaticProperties ("X3DNormalNode", "Rendering", 2));
 
 const X3DNormalNode_default_ = X3DNormalNode;
 ;
@@ -89735,6 +87772,7 @@ const X3DNormalNode_default_ = X3DNormalNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -89806,26 +87844,7 @@ Object .assign (Object .setPrototypeOf (Normal .prototype, Rendering_X3DNormalNo
 
 Object .defineProperties (Normal,
 {
-   typeName:
-   {
-      value: "Normal",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "normal",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Normal", "Rendering", 2, "normal", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -89887,6 +87906,7 @@ const Normal_default_ = Normal;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -90029,19 +88049,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, Renderi
    },
 });
 
-Object .defineProperties (X3DPointGeometryNode,
-{
-   typeName:
-   {
-      value: "X3DPointGeometryNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DPointGeometryNode, Core_X3DNode .getStaticProperties ("X3DPointGeometryNode", "Rendering", 1));
 
 const X3DPointGeometryNode_default_ = X3DPointGeometryNode;
 ;
@@ -90094,6 +88102,7 @@ const X3DPointGeometryNode_default_ = X3DPointGeometryNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -90248,26 +88257,7 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, Rendering_X3DPointG
 
 Object .defineProperties (PointSet,
 {
-   typeName:
-   {
-      value: "PointSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PointSet", "Rendering", 1, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -90334,6 +88324,7 @@ const PointSet_default_ = PointSet;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -90409,26 +88400,7 @@ Object .assign (Object .setPrototypeOf (Tangent .prototype, Rendering_X3DGeometr
 
 Object .defineProperties (Tangent,
 {
-   typeName:
-   {
-      value: "Tangent",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 5 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "tangent",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Tangent", "Rendering", 5, "tangent", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -90497,6 +88469,7 @@ const Tangent_default_ = Tangent;
 
 
 
+
 function TriangleFanSet (executionContext)
 {
    Rendering_X3DComposedGeometryNode .call (this, executionContext);
@@ -90558,26 +88531,7 @@ Object .assign (Object .setPrototypeOf (TriangleFanSet .prototype, Rendering_X3D
 
 Object .defineProperties (TriangleFanSet,
 {
-   typeName:
-   {
-      value: "TriangleFanSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TriangleFanSet", "Rendering", 3, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -90657,6 +88611,7 @@ const TriangleFanSet_default_ = TriangleFanSet;
 
 
 
+
 function TriangleSet (executionContext)
 {
    Rendering_X3DComposedGeometryNode .call (this, executionContext);
@@ -90689,26 +88644,7 @@ Object .assign (Object .setPrototypeOf (TriangleSet .prototype, Rendering_X3DCom
 
 Object .defineProperties (TriangleSet,
 {
-   typeName:
-   {
-      value: "TriangleSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TriangleSet", "Rendering", 3, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -90787,6 +88723,7 @@ const TriangleSet_default_ = TriangleSet;
 
 
 
+
 function TriangleStripSet (executionContext)
 {
    Rendering_X3DComposedGeometryNode .call (this, executionContext);
@@ -90852,26 +88789,7 @@ Object .assign (Object .setPrototypeOf (TriangleStripSet .prototype, Rendering_X
 
 Object .defineProperties (TriangleStripSet,
 {
-   typeName:
-   {
-      value: "TriangleStripSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Rendering", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TriangleStripSet", "Rendering", 3, "geometry", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -91053,6 +88971,7 @@ const RenderingComponent_default_ = {
 
 
 
+
 function X3DShaderNode (executionContext)
 {
    Shape_X3DAppearanceChildNode .call (this, executionContext);
@@ -91092,19 +89011,7 @@ Object .assign (Object .setPrototypeOf (X3DShaderNode .prototype, Shape_X3DAppea
    },
 });
 
-Object .defineProperties (X3DShaderNode,
-{
-   typeName:
-   {
-      value: "X3DShaderNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DShaderNode, Core_X3DNode .getStaticProperties ("X3DShaderNode", "Shaders", 1));
 
 const X3DShaderNode_default_ = X3DShaderNode;
 ;
@@ -91233,7 +89140,7 @@ mediump samplerCube textureCube;
 
 /* harmony default export */ const MaterialTextures = (x_ite_Namespace .add ("MaterialTextures", MaterialTextures_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(827);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -91280,6 +89187,7 @@ mediump samplerCube textureCube;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -92671,19 +90579,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    dispose () { },
 });
 
-Object .defineProperties (X3DProgrammableShaderObject,
-{
-   typeName:
-   {
-      value: "X3DProgrammableShaderObject",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DProgrammableShaderObject, Core_X3DNode .getStaticProperties ("X3DProgrammableShaderObject", "Shaders", 1));
 
 const X3DProgrammableShaderObject_default_ = X3DProgrammableShaderObject;
 ;
@@ -92736,6 +90632,7 @@ const X3DProgrammableShaderObject_default_ = X3DProgrammableShaderObject;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -92884,26 +90781,7 @@ Object .assign (Object .setPrototypeOf (ComposedShader .prototype, Shaders_X3DSh
 
 Object .defineProperties (ComposedShader,
 {
-   typeName:
-   {
-      value: "ComposedShader",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "shaders",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ComposedShader", "Shaders", 1, "shaders", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -92974,6 +90852,7 @@ const ComposedShader_default_ = ComposedShader;
 
 
 
+
 function X3DVertexAttributeNode (executionContext)
 {
    Rendering_X3DGeometricPropertyNode .call (this, executionContext);
@@ -92997,19 +90876,7 @@ Object .assign (Object .setPrototypeOf (X3DVertexAttributeNode .prototype, Rende
    },
 });
 
-Object .defineProperties (X3DVertexAttributeNode,
-{
-   typeName:
-   {
-      value: "X3DVertexAttributeNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DVertexAttributeNode, Core_X3DNode .getStaticProperties ("X3DVertexAttributeNode", "Shaders", 1));
 
 const X3DVertexAttributeNode_default_ = X3DVertexAttributeNode;
 ;
@@ -93062,6 +90929,7 @@ const X3DVertexAttributeNode_default_ = X3DVertexAttributeNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -93134,26 +91002,7 @@ Object .assign (Object .setPrototypeOf (FloatVertexAttribute .prototype, Shaders
 
 Object .defineProperties (FloatVertexAttribute,
 {
-   typeName:
-   {
-      value: "FloatVertexAttribute",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "attrib",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("FloatVertexAttribute", "Shaders", 1, "attrib", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -93225,6 +91074,7 @@ const FloatVertexAttribute_default_ = FloatVertexAttribute;
 
 
 
+
 function Matrix3VertexAttribute (executionContext)
 {
    Shaders_X3DVertexAttributeNode .call (this, executionContext);
@@ -93281,26 +91131,7 @@ Object .assign (Object .setPrototypeOf (Matrix3VertexAttribute .prototype, Shade
 
 Object .defineProperties (Matrix3VertexAttribute,
 {
-   typeName:
-   {
-      value: "Matrix3VertexAttribute",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "attrib",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Matrix3VertexAttribute", "Shaders", 1, "attrib", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -93370,6 +91201,7 @@ const Matrix3VertexAttribute_default_ = Matrix3VertexAttribute;
 
 
 
+
 function Matrix4VertexAttribute (executionContext)
 {
    Shaders_X3DVertexAttributeNode .call (this, executionContext);
@@ -93426,26 +91258,7 @@ Object .assign (Object .setPrototypeOf (Matrix4VertexAttribute .prototype, Shade
 
 Object .defineProperties (Matrix4VertexAttribute,
 {
-   typeName:
-   {
-      value: "Matrix4VertexAttribute",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "attrib",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Matrix4VertexAttribute", "Shaders", 1, "attrib", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -93517,6 +91330,7 @@ const Matrix4VertexAttribute_default_ = Matrix4VertexAttribute;
 
 
 
+
 /**
  * THIS NODE IS NOT SUPPORTED.
  */
@@ -93556,26 +91370,7 @@ Object .assign (Object .setPrototypeOf (PackagedShader .prototype, Shaders_X3DSh
 
 Object .defineProperties (PackagedShader,
 {
-   typeName:
-   {
-      value: "PackagedShader",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "shaders",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PackagedShader", "Shaders", 1, "shaders", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -93652,6 +91447,7 @@ const PackagedShader_default_ = PackagedShader;
 
 
 
+
 /**
  * THIS NODE IS NOT SUPPORTED.
  */
@@ -93667,26 +91463,7 @@ Object .setPrototypeOf (ProgramShader .prototype, Shaders_X3DShaderNode .prototy
 
 Object .defineProperties (ProgramShader,
 {
-   typeName:
-   {
-      value: "ProgramShader",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "shaders",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ProgramShader", "Shaders", 1, "shaders", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -96621,7 +94398,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (x_ite_Namespace .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(827);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96824,26 +94601,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, Core_X3DNode .pro
 
 Object .defineProperties (ShaderPart,
 {
-   typeName:
-   {
-      value: "ShaderPart",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "parts",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ShaderPart", "Shaders", 1, "parts", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -96958,26 +94716,7 @@ Object .assign (Object .setPrototypeOf (ShaderProgram .prototype, Core_X3DNode .
 
 Object .defineProperties (ShaderProgram,
 {
-   typeName:
-   {
-      value: "ShaderProgram",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shaders", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "programs",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ShaderProgram", "Shaders", 1, "programs", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -97134,6 +94873,7 @@ const ShadersComponent_default_ = {
 
 
 
+
 function AcousticProperties (executionContext)
 {
    Shape_X3DAppearanceChildNode .call (this, executionContext);
@@ -97145,26 +94885,7 @@ Object .setPrototypeOf (AcousticProperties .prototype, Shape_X3DAppearanceChildN
 
 Object .defineProperties (AcousticProperties,
 {
-   typeName:
-   {
-      value: "AcousticProperties",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 5 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "acousticProperties",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("AcousticProperties", "Shape", 5, "acousticProperties", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -97268,26 +94989,14 @@ Object .assign (Object .setPrototypeOf (X3DAppearanceNode .prototype, Core_X3DNo
    },
 });
 
-Object .defineProperties (X3DAppearanceNode,
-{
-   typeName:
-   {
-      value: "X3DAppearanceNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DAppearanceNode, Core_X3DNode .getStaticProperties ("X3DAppearanceNode", "Shape", 1));
 
 const X3DAppearanceNode_default_ = X3DAppearanceNode;
 ;
 
 /* harmony default export */ const Shape_X3DAppearanceNode = (x_ite_Namespace .add ("X3DAppearanceNode", X3DAppearanceNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(827);
+/* provided dependency */ var Appearance_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97334,6 +95043,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -97708,26 +95418,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, Shape_X3DAppearan
 
 Object .defineProperties (Appearance,
 {
-   typeName:
-   {
-      value: "Appearance",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "appearance",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Appearance", "Shape", 1, "appearance", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -97801,6 +95492,7 @@ const Appearance_default_ = Appearance;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -97902,26 +95594,7 @@ Object .assign (Object .setPrototypeOf (FillProperties .prototype, Shape_X3DAppe
 
 Object .defineProperties (FillProperties,
 {
-   typeName:
-   {
-      value: "FillProperties",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "fillProperties",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("FillProperties", "Shape", 3, "fillProperties", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -97986,6 +95659,7 @@ const FillProperties_default_ = FillProperties;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -98091,26 +95765,7 @@ Object .assign (Object .setPrototypeOf (LineProperties .prototype, Shape_X3DAppe
 
 Object .defineProperties (LineProperties,
 {
-   typeName:
-   {
-      value: "LineProperties",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "lineProperties",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("LineProperties", "Shape", 2, "lineProperties", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -98174,6 +95829,7 @@ const LineProperties_default_ = LineProperties;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -98506,19 +96162,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DApp
    },
 });
 
-Object .defineProperties (X3DMaterialNode,
-{
-   typeName:
-   {
-      value: "X3DMaterialNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DMaterialNode, Core_X3DNode .getStaticProperties ("X3DMaterialNode", "Shape", 1));
 
 const X3DMaterialNode_default_ = X3DMaterialNode;
 ;
@@ -98571,6 +96215,7 @@ const X3DMaterialNode_default_ = X3DMaterialNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -98699,19 +96344,7 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, Shap
    },
 });
 
-Object .defineProperties (X3DOneSidedMaterialNode,
-{
-   typeName:
-   {
-      value: "X3DOneSidedMaterialNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 4 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DOneSidedMaterialNode, Core_X3DNode .getStaticProperties ("X3DOneSidedMaterialNode", "Shape", 4));
 
 const X3DOneSidedMaterialNode_default_ = X3DOneSidedMaterialNode;
 ;
@@ -98764,6 +96397,7 @@ const X3DOneSidedMaterialNode_default_ = X3DOneSidedMaterialNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -99067,26 +96701,7 @@ function getMaterialKey ()
 
 Object .defineProperties (Material,
 {
-   typeName:
-   {
-      value: "Material",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "material",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Material", "Shape", 1, "material", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -99177,6 +96792,7 @@ const Material_default_ = Material;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -99413,26 +97029,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, Shape_X3DOn
 
 Object .defineProperties (PhysicalMaterial,
 {
-   typeName:
-   {
-      value: "PhysicalMaterial",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "material",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PhysicalMaterial", "Shape", 2, "material", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -99528,6 +97125,7 @@ const PhysicalMaterial_default_ = PhysicalMaterial;
 
 
 
+
 function PointProperties (executionContext)
 {
    Shape_X3DAppearanceChildNode .call (this, executionContext);
@@ -99606,26 +97204,7 @@ Object .assign (Object .setPrototypeOf (PointProperties .prototype, Shape_X3DApp
 
 Object .defineProperties (PointProperties,
 {
-   typeName:
-   {
-      value: "PointProperties",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 5 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "pointProperties",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PointProperties", "Shape", 5, "pointProperties", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -99690,6 +97269,7 @@ const PointProperties_default_ = PointProperties;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -99881,19 +97461,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNo
    },
 });
 
-Object .defineProperties (X3DShapeNode,
-{
-   typeName:
-   {
-      value: "X3DShapeNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DShapeNode, Core_X3DNode .getStaticProperties ("X3DShapeNode", "Shape", 1));
 
 const X3DShapeNode_default_ = X3DShapeNode;
 ;
@@ -99946,6 +97514,7 @@ const X3DShapeNode_default_ = X3DShapeNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -100077,26 +97646,7 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, Shape_X3DShapeNode .pr
 
 Object .defineProperties (Shape,
 {
-   typeName:
-   {
-      value: "Shape",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Shape", "Shape", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -100165,6 +97715,7 @@ const Shape_default_ = Shape;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -100372,26 +97923,7 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, Shape_X3DMa
 
 Object .defineProperties (TwoSidedMaterial,
 {
-   typeName:
-   {
-      value: "TwoSidedMaterial",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 4 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "material",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "4.0" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TwoSidedMaterial", "Shape", 4, "material", "3.2", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -100472,6 +98004,7 @@ const TwoSidedMaterial_default_ = TwoSidedMaterial;
 
 
 
+
 function UnlitMaterial (executionContext)
 {
    Shape_X3DOneSidedMaterialNode .call (this, executionContext);
@@ -100537,26 +98070,7 @@ Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, Shape_X3DOneSi
 
 Object .defineProperties (UnlitMaterial,
 {
-   typeName:
-   {
-      value: "UnlitMaterial",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "material",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("UnlitMaterial", "Shape", 1, "material", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -100727,6 +98241,7 @@ const ShapeComponent_default_ = {
 
 
 
+
 function X3DSoundNode (executionContext)
 {
    Core_X3DChildNode .call (this, executionContext);
@@ -100736,19 +98251,7 @@ function X3DSoundNode (executionContext)
 
 Object .setPrototypeOf (X3DSoundNode .prototype, Core_X3DChildNode .prototype);
 
-Object .defineProperties (X3DSoundNode,
-{
-   typeName:
-   {
-      value: "X3DSoundNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSoundNode, Core_X3DNode .getStaticProperties ("X3DSoundNode", "Sound", 1));
 
 const X3DSoundNode_default_ = X3DSoundNode;
 ;
@@ -100801,6 +98304,7 @@ const X3DSoundNode_default_ = X3DSoundNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -100977,19 +98481,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, Sound
    },
 });
 
-Object .defineProperties (X3DSoundProcessingNode,
-{
-   typeName:
-   {
-      value: "X3DSoundProcessingNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSoundProcessingNode, Core_X3DNode .getStaticProperties ("X3DSoundProcessingNode", "Sound", 2));
 
 const X3DSoundProcessingNode_default_ = X3DSoundProcessingNode;
 ;
@@ -101042,6 +98534,7 @@ const X3DSoundProcessingNode_default_ = X3DSoundProcessingNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -101138,26 +98631,7 @@ Object .assign (Object .setPrototypeOf (Analyser .prototype, Sound_X3DSoundProce
 
 Object .defineProperties (Analyser,
 {
-   typeName:
-   {
-      value: "Analyser",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Analyser", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -101246,6 +98720,7 @@ const Analyser_default_ = Analyser;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -101380,19 +98855,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, Sound_X3D
    },
 });
 
-Object .defineProperties (X3DSoundSourceNode,
-{
-   typeName:
-   {
-      value: "X3DSoundSourceNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSoundSourceNode, Core_X3DNode .getStaticProperties ("X3DSoundSourceNode", "Sound", 1));
 
 const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 ;
@@ -101671,6 +99134,7 @@ const AudioElement_default_ = {
 
 
 
+
 function AudioClip (executionContext)
 {
    Sound_X3DSoundSourceNode .call (this, executionContext);
@@ -101743,26 +99207,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, Sound_X3DSoundSour
 
 Object .defineProperties (AudioClip,
 {
-   typeName:
-   {
-      value: "AudioClip",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "source",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("AudioClip", "Sound", 1, "source", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -101840,6 +99285,7 @@ const AudioClip_default_ = AudioClip;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -101970,19 +99416,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, Soun
    },
 });
 
-Object .defineProperties (X3DSoundDestinationNode,
-{
-   typeName:
-   {
-      value: "X3DSoundDestinationNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSoundDestinationNode, Core_X3DNode .getStaticProperties ("X3DSoundDestinationNode", "Sound", 2));
 
 const X3DSoundDestinationNode_default_ = X3DSoundDestinationNode;
 ;
@@ -102035,6 +99469,7 @@ const X3DSoundDestinationNode_default_ = X3DSoundDestinationNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -102115,26 +99550,7 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, Sound_X3DSo
 
 Object .defineProperties (AudioDestination,
 {
-   typeName:
-   {
-      value: "AudioDestination",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("AudioDestination", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -102216,6 +99632,7 @@ const AudioDestination_default_ = AudioDestination;
 
 
 
+
 function BiquadFilter (executionContext)
 {
    Sound_X3DSoundProcessingNode .call (this, executionContext);
@@ -102281,26 +99698,7 @@ Object .assign (Object .setPrototypeOf (BiquadFilter .prototype, Sound_X3DSoundP
 
 Object .defineProperties (BiquadFilter,
 {
-   typeName:
-   {
-      value: "BiquadFilter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("BiquadFilter", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -102384,6 +99782,7 @@ const BiquadFilter_default_ = BiquadFilter;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -102563,26 +99962,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, Sound_X3DS
 
 Object .defineProperties (BufferAudioSource,
 {
-   typeName:
-   {
-      value: "BufferAudioSource",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("BufferAudioSource", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -102674,6 +100054,7 @@ const BufferAudioSource_default_ = BufferAudioSource;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -102845,19 +100226,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, Sound_X3
    },
 });
 
-Object .defineProperties (X3DSoundChannelNode,
-{
-   typeName:
-   {
-      value: "X3DSoundChannelNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSoundChannelNode, Core_X3DNode .getStaticProperties ("X3DSoundChannelNode", "Sound", 2));
 
 const X3DSoundChannelNode_default_ = X3DSoundChannelNode;
 ;
@@ -102910,6 +100279,7 @@ const X3DSoundChannelNode_default_ = X3DSoundChannelNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -102981,26 +100351,7 @@ Object .assign (Object .setPrototypeOf (ChannelMerger .prototype, Sound_X3DSound
 
 Object .defineProperties (ChannelMerger,
 {
-   typeName:
-   {
-      value: "ChannelMerger",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ChannelMerger", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -103079,6 +100430,7 @@ const ChannelMerger_default_ = ChannelMerger;
 
 
 
+
 function ChannelSelector (executionContext)
 {
    Sound_X3DSoundChannelNode .call (this, executionContext);
@@ -103116,26 +100468,7 @@ Object .assign (Object .setPrototypeOf (ChannelSelector .prototype, Sound_X3DSou
 
 Object .defineProperties (ChannelSelector,
 {
-   typeName:
-   {
-      value: "ChannelSelector",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ChannelSelector", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -103207,6 +100540,7 @@ const ChannelSelector_default_ = ChannelSelector;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -103311,26 +100645,7 @@ Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, Sound_X3DSou
 
 Object .defineProperties (ChannelSplitter,
 {
-   typeName:
-   {
-      value: "ChannelSplitter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ChannelSplitter", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -103410,6 +100725,7 @@ const ChannelSplitter_default_ = ChannelSplitter;
 
 
 
+
 function Convolver (executionContext)
 {
    Sound_X3DSoundProcessingNode .call (this, executionContext);
@@ -103468,26 +100784,7 @@ Object .assign (Object .setPrototypeOf (Convolver .prototype, Sound_X3DSoundProc
 
 Object .defineProperties (Convolver,
 {
-   typeName:
-   {
-      value: "Convolver",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Convolver", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -103579,6 +100876,7 @@ const Convolver_default_ = Convolver;
 
 
 
+
 function Delay (executionContext)
 {
    Sound_X3DSoundProcessingNode .call (this, executionContext);
@@ -103629,26 +100927,7 @@ Object .assign (Object .setPrototypeOf (Delay .prototype, Sound_X3DSoundProcessi
 
 Object .defineProperties (Delay,
 {
-   typeName:
-   {
-      value: "Delay",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Delay", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -103738,6 +101017,7 @@ const Delay_default_ = Delay;
 
 
 
+
 function DynamicsCompressor (executionContext)
 {
    Sound_X3DSoundProcessingNode .call (this, executionContext);
@@ -103801,26 +101081,7 @@ Object .assign (Object .setPrototypeOf (DynamicsCompressor .prototype, Sound_X3D
 
 Object .defineProperties (DynamicsCompressor,
 {
-   typeName:
-   {
-      value: "DynamicsCompressor",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("DynamicsCompressor", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -103913,6 +101174,7 @@ const DynamicsCompressor_default_ = DynamicsCompressor;
 
 
 
+
 function Gain (executionContext)
 {
    Sound_X3DSoundProcessingNode .call (this, executionContext);
@@ -103924,26 +101186,7 @@ Object .setPrototypeOf (Gain .prototype, Sound_X3DSoundProcessingNode .prototype
 
 Object .defineProperties (Gain,
 {
-   typeName:
-   {
-      value: "Gain",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Gain", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -104023,6 +101266,7 @@ const Gain_default_ = Gain;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -104128,26 +101372,7 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, Sound_X3
 
 Object .defineProperties (ListenerPointSource,
 {
-   typeName:
-   {
-      value: "ListenerPointSource",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("ListenerPointSource", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -104217,6 +101442,7 @@ const ListenerPointSource_default_ = ListenerPointSource;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -104340,26 +101566,7 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, Sound_X3DSo
 
 Object .defineProperties (MicrophoneSource,
 {
-   typeName:
-   {
-      value: "MicrophoneSource",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("MicrophoneSource", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -104433,6 +101640,7 @@ const MicrophoneSource_default_ = MicrophoneSource;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -104559,26 +101767,7 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSo
 
 Object .defineProperties (OscillatorSource,
 {
-   typeName:
-   {
-      value: "OscillatorSource",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("OscillatorSource", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -104661,6 +101850,7 @@ const OscillatorSource_default_ = OscillatorSource;
 
 
 
+
 function PeriodicWave (executionContext)
 {
    Sound_X3DSoundNode .call (this, executionContext);
@@ -104696,26 +101886,7 @@ Object .assign (Object .setPrototypeOf (PeriodicWave .prototype, Sound_X3DSoundN
 
 Object .defineProperties (PeriodicWave,
 {
-   typeName:
-   {
-      value: "PeriodicWave",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "periodicWave",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PeriodicWave", "Sound", 2, "periodicWave", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -104781,6 +101952,7 @@ const PeriodicWave_default_ = PeriodicWave;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -105111,26 +102283,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
 
 Object .defineProperties (Sound,
 {
-   typeName:
-   {
-      value: "Sound",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("Sound", "Sound", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -105204,6 +102357,7 @@ const Sound_default_ = Sound;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -105455,26 +102609,7 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, Sound_X3DSoundN
 
 Object .defineProperties (SpatialSound,
 {
-   typeName:
-   {
-      value: "SpatialSound",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("SpatialSound", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -105562,6 +102697,7 @@ const SpatialSound_default_ = SpatialSound;
 
 
 
+
 /**
  * THIS NODE IS NOT SUPPORTED.
  */
@@ -105596,26 +102732,7 @@ Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, Sound
 
 Object .defineProperties (StreamAudioDestination,
 {
-   typeName:
-   {
-      value: "StreamAudioDestination",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("StreamAudioDestination", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -105696,6 +102813,7 @@ const StreamAudioDestination_default_ = StreamAudioDestination;
 
 
 
+
 /**
  * THIS NODE IS NOT SUPPORTED.
  */
@@ -105720,26 +102838,7 @@ Object .assign (Object .setPrototypeOf (StreamAudioSource .prototype, Sound_X3DS
 
 Object .defineProperties (StreamAudioSource,
 {
-   typeName:
-   {
-      value: "StreamAudioSource",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("StreamAudioSource", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -105820,6 +102919,7 @@ const StreamAudioSource_default_ = StreamAudioSource;
 
 
 
+
 function WaveShaper (executionContext)
 {
    Sound_X3DSoundProcessingNode .call (this, executionContext);
@@ -105871,26 +102971,7 @@ Object .assign (Object .setPrototypeOf (WaveShaper .prototype, Sound_X3DSoundPro
 
 Object .defineProperties (WaveShaper,
 {
-   typeName:
-   {
-      value: "WaveShaper",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Sound", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("WaveShaper", "Sound", 2, "children", "4.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -106170,8 +103251,8 @@ const GifMedia_default_ = GifMedia;
 
 /* harmony default export */ const Texturing_GifMedia = (x_ite_Namespace .add ("GifMedia", GifMedia_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(827);
-/* provided dependency */ var SuperGif = __webpack_require__(196);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(142);
+/* provided dependency */ var SuperGif = __webpack_require__(865);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106218,6 +103299,7 @@ const GifMedia_default_ = GifMedia;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -106429,26 +103511,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
 
 Object .defineProperties (MovieTexture,
 {
-   typeName:
-   {
-      value: "MovieTexture",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 3 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("MovieTexture", "Texturing", 3, "texture", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -106530,6 +103593,7 @@ const MovieTexture_default_ = MovieTexture;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -106794,26 +103858,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, Texturing_X3DTe
 
 Object .defineProperties (MultiTexture,
 {
-   typeName:
-   {
-      value: "MultiTexture",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("MultiTexture", "Texturing", 2, "texture", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -106885,6 +103930,7 @@ const MultiTexture_default_ = MultiTexture;
 
 
 
+
 function X3DTextureCoordinateNode (executionContext)
 {
    Rendering_X3DGeometricPropertyNode .call (this, executionContext);
@@ -106894,19 +103940,7 @@ function X3DTextureCoordinateNode (executionContext)
 
 Object .setPrototypeOf (X3DTextureCoordinateNode .prototype, Rendering_X3DGeometricPropertyNode .prototype);
 
-Object .defineProperties (X3DTextureCoordinateNode,
-{
-   typeName:
-   {
-      value: "X3DTextureCoordinateNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTextureCoordinateNode, Core_X3DNode .getStaticProperties ("X3DTextureCoordinateNode", "Texturing", 1));
 
 const X3DTextureCoordinateNode_default_ = X3DTextureCoordinateNode;
 ;
@@ -106959,6 +103993,7 @@ const X3DTextureCoordinateNode_default_ = X3DTextureCoordinateNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -107075,26 +104110,7 @@ Object .assign (Object .setPrototypeOf (MultiTextureCoordinate .prototype, Textu
 
 Object .defineProperties (MultiTextureCoordinate,
 {
-   typeName:
-   {
-      value: "MultiTextureCoordinate",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texCoord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("MultiTextureCoordinate", "Texturing", 2, "texCoord", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -107160,6 +104176,7 @@ const MultiTextureCoordinate_default_ = MultiTextureCoordinate;
 
 
 
+
 function X3DTextureTransformNode (executionContext)
 {
    Shape_X3DAppearanceChildNode .call (this, executionContext);
@@ -107169,19 +104186,7 @@ function X3DTextureTransformNode (executionContext)
 
 Object .setPrototypeOf (X3DTextureTransformNode .prototype, Shape_X3DAppearanceChildNode .prototype);
 
-Object .defineProperties (X3DTextureTransformNode,
-{
-   typeName:
-   {
-      value: "X3DTextureTransformNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTextureTransformNode, Core_X3DNode .getStaticProperties ("X3DTextureTransformNode", "Texturing", 1));
 
 const X3DTextureTransformNode_default_ = X3DTextureTransformNode;
 ;
@@ -107234,6 +104239,7 @@ const X3DTextureTransformNode_default_ = X3DTextureTransformNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -107311,26 +104317,7 @@ Object .assign (Object .setPrototypeOf (MultiTextureTransform .prototype, Textur
 
 Object .defineProperties (MultiTextureTransform,
 {
-   typeName:
-   {
-      value: "MultiTextureTransform",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "textureTransform",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("MultiTextureTransform", "Texturing", 2, "textureTransform", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -107392,6 +104379,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -107597,26 +104585,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, Texturing_X3DTe
 
 Object .defineProperties (PixelTexture,
 {
-   typeName:
-   {
-      value: "PixelTexture",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texture",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("PixelTexture", "Texturing", 1, "texture", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -107687,6 +104656,7 @@ const PixelTexture_default_ = PixelTexture;
 
 
 
+
 function X3DSingleTextureCoordinateNode (executionContext)
 {
    Texturing_X3DTextureCoordinateNode .call (this, executionContext);
@@ -107719,19 +104689,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureCoordinateNode .prototyp
    },
 });
 
-Object .defineProperties (X3DSingleTextureCoordinateNode,
-{
-   typeName:
-   {
-      value: "X3DSingleTextureCoordinateNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSingleTextureCoordinateNode, Core_X3DNode .getStaticProperties ("X3DSingleTextureCoordinateNode", "Texturing", 1));
 
 const X3DSingleTextureCoordinateNode_default_ = X3DSingleTextureCoordinateNode;
 ;
@@ -107784,6 +104742,7 @@ const X3DSingleTextureCoordinateNode_default_ = X3DSingleTextureCoordinateNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -107876,26 +104835,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate .prototype, Texturing_
 
 Object .defineProperties (TextureCoordinate,
 {
-   typeName:
-   {
-      value: "TextureCoordinate",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texCoord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TextureCoordinate", "Texturing", 1, "texCoord", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -107958,6 +104898,7 @@ const TextureCoordinate_default_ = TextureCoordinate;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -108038,26 +104979,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, T
 
 Object .defineProperties (TextureCoordinateGenerator,
 {
-   typeName:
-   {
-      value: "TextureCoordinateGenerator",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "texCoord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TextureCoordinateGenerator", "Texturing", 2, "texCoord", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -108241,26 +105163,7 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, Core_X3DNo
 
 Object .defineProperties (TextureProperties,
 {
-   typeName:
-   {
-      value: "TextureProperties",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "textureProperties",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TextureProperties", "Texturing", 2, "textureProperties", "3.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -108337,6 +105240,7 @@ const TextureProperties_default_ = TextureProperties;
 
 
 
+
 function X3DSingleTextureTransformNode (executionContext)
 {
    Texturing_X3DTextureTransformNode .call (this, executionContext);
@@ -108374,19 +105278,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureTransformNode .prototype
    },
 });
 
-Object .defineProperties (X3DSingleTextureTransformNode,
-{
-   typeName:
-   {
-      value: "X3DSingleTextureTransformNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSingleTextureTransformNode, Core_X3DNode .getStaticProperties ("X3DSingleTextureTransformNode", "Texturing", 1));
 
 const X3DSingleTextureTransformNode_default_ = X3DSingleTextureTransformNode;
 ;
@@ -108439,6 +105331,7 @@ const X3DSingleTextureTransformNode_default_ = X3DSingleTextureTransformNode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -108516,26 +105409,7 @@ Object .assign (Object .setPrototypeOf (TextureTransform .prototype, Texturing_X
 
 Object .defineProperties (TextureTransform,
 {
-   typeName:
-   {
-      value: "TextureTransform",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "textureTransform",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... Core_X3DNode .getStaticProperties ("TextureTransform", "Texturing", 1, "textureTransform", "2.0"),
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
@@ -109484,7 +106358,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (x_ite_Namespace .add ("gettext", gettext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(827);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110114,7 +106988,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (x_ite_Namespace .add ("TextCompression", TextCompression_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(827);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110745,7 +107619,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (x_ite_Namespace .add ("RenderingProperties", RenderingProperties_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(827);
+/* provided dependency */ var Notification_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110867,8 +107741,8 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (x_ite_Namespace .add ("Notification", Notification_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(23);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(827);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(646);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113603,7 +110477,7 @@ const DataStorage_default_ = DataStorage;
 
 /* harmony default export */ const Utility_DataStorage = (x_ite_Namespace .add ("DataStorage", DataStorage_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(827);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116193,8 +113067,8 @@ const X3DViewer_default_ = X3DViewer;
 
 /* harmony default export */ const Navigation_X3DViewer = (x_ite_Namespace .add ("X3DViewer", X3DViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(451);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(827);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(860);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117109,8 +113983,8 @@ const ExamineViewer_default_ = ExamineViewer;
 
 /* harmony default export */ const Navigation_ExamineViewer = (x_ite_Namespace .add ("ExamineViewer", ExamineViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(451);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(827);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(860);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118122,8 +114996,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (x_ite_Namespace .add ("FlyViewer", FlyViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(451);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(827);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(860);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118452,8 +115326,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (x_ite_Namespace .add ("NoneViewer", NoneViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(451);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(827);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(860);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119588,8 +116462,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (x_ite_Namespace .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(451);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(827);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(860);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120886,7 +117760,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (x_ite_Namespace .add ("MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(827);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121887,7 +118761,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 
 /* harmony default export */ const Sound_X3DSoundContext = (x_ite_Namespace .add ("X3DSoundContext", X3DSoundContext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(827);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(142);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -123491,7 +120365,7 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (x_ite_Namespace .add ("Components", Components_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(827);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(142);
 /*******************************************************************************
  * MIT License
  *
@@ -124752,7 +121626,7 @@ const FieldTypes_default_ = new Configuration_FieldTypesArray (Object .values (x
 
 /* harmony default export */ const FieldTypes = (x_ite_Namespace .add ("FieldTypes", FieldTypes_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(827);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -125813,7 +122687,7 @@ const X3DBrowser_default_ = X3DBrowser;
 
 /* harmony default export */ const Browser_X3DBrowser = (x_ite_Namespace .add ("X3DBrowser", X3DBrowser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(827);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -125963,89 +122837,6 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 ;
 
 /* harmony default export */ const x_ite_X3DCanvasElement = (x_ite_Namespace .add ("X3DCanvasElement", X3DCanvasElement_default_));
-;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(827);
-/* provided dependency */ var pako = __webpack_require__(387);
-Object .assign (jquery_$,
-{
-   decodeText (input)
-   {
-      if (typeof input === "string")
-         return input;
-
-      return new TextDecoder () .decode (input);
-   },
-   ungzip (arrayBuffer)
-   {
-      try
-      {
-         return pako .ungzip (arrayBuffer, { to: "raw" }) .buffer;
-      }
-      catch (exception)
-      {
-         return arrayBuffer;
-      }
-   },
-   toLowerCaseFirst (string)
-   {
-      return string [0] .toLowerCase () + string .slice (1);
-   },
-   try (callback, logError = false)
-   {
-      try
-      {
-         return callback ();
-      }
-      catch (error)
-      {
-         if (logError)
-            console .error (error .message);
-      }
-   },
-   enum (object, property, defaultValue)
-   {
-      return object .hasOwnProperty (property) ? object [property] : defaultValue;
-   },
-});
-
-// // decorator: @iffe fn (... args) { return function () { }; }
-// function iife (target, key, descriptor)
-// {
-//    descriptor .value = descriptor .value ();
-//
-//    return descriptor;
-// }
-//
-// class C {
-//   @iffe fn (... args) { return function () { }; }
-// }
-
-Object .assign (jquery_$.fn,
-{
-   isInViewport ()
-   {
-      const
-         $this          = jquery_$(this),
-         $window        = jquery_$(window),
-         elementTop     = $this .offset () .top,
-         elementBottom  = elementTop + $this .outerHeight (),
-         viewportTop    = $window .scrollTop (),
-         viewportBottom = viewportTop + $window .height ();
-
-      return elementBottom > viewportTop && elementTop < viewportBottom;
-   },
-});
-
-const jquery_default_ = jquery_$;
-;
-
-/* harmony default export */ const jquery = (x_ite_Namespace .add ("jquery", jquery_default_));
-;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(392);
-const libtess_default_ = libtess_libtess;
-;
-
-/* harmony default export */ const lib_libtess = (x_ite_Namespace .add ("libtess", libtess_default_));
 ;// CONCATENATED MODULE: ./src/standard/Math/Algorithms/QuickSort.js
 /*******************************************************************************
  *
@@ -126156,8 +122947,91 @@ const QuickSort_default_ = QuickSort;
 ;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
+;// CONCATENATED MODULE: ./src/lib/jquery.js
+/* provided dependency */ var jquery_$ = __webpack_require__(142);
+/* provided dependency */ var pako = __webpack_require__(806);
+Object .assign (jquery_$,
+{
+   decodeText (input)
+   {
+      if (typeof input === "string")
+         return input;
+
+      return new TextDecoder () .decode (input);
+   },
+   ungzip (arrayBuffer)
+   {
+      try
+      {
+         return pako .ungzip (arrayBuffer, { to: "raw" }) .buffer;
+      }
+      catch (exception)
+      {
+         return arrayBuffer;
+      }
+   },
+   toLowerCaseFirst (string)
+   {
+      return string [0] .toLowerCase () + string .slice (1);
+   },
+   try (callback, logError = false)
+   {
+      try
+      {
+         return callback ();
+      }
+      catch (error)
+      {
+         if (logError)
+            console .error (error .message);
+      }
+   },
+   enum (object, property, defaultValue)
+   {
+      return object .hasOwnProperty (property) ? object [property] : defaultValue;
+   },
+});
+
+// // decorator: @iffe fn (... args) { return function () { }; }
+// function iife (target, key, descriptor)
+// {
+//    descriptor .value = descriptor .value ();
+//
+//    return descriptor;
+// }
+//
+// class C {
+//   @iffe fn (... args) { return function () { }; }
+// }
+
+Object .assign (jquery_$.fn,
+{
+   isInViewport ()
+   {
+      const
+         $this          = jquery_$(this),
+         $window        = jquery_$(window),
+         elementTop     = $this .offset () .top,
+         elementBottom  = elementTop + $this .outerHeight (),
+         viewportTop    = $window .scrollTop (),
+         viewportBottom = viewportTop + $window .height ();
+
+      return elementBottom > viewportTop && elementTop < viewportBottom;
+   },
+});
+
+const jquery_default_ = jquery_$;
+;
+
+/* harmony default export */ const jquery = (x_ite_Namespace .add ("jquery", jquery_default_));
+;// CONCATENATED MODULE: ./src/lib/libtess.js
+/* provided dependency */ var libtess_libtess = __webpack_require__(303);
+const libtess_default_ = libtess_libtess;
+;
+
+/* harmony default export */ const lib_libtess = (x_ite_Namespace .add ("libtess", libtess_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(827);
+/* provided dependency */ var X3D_$ = __webpack_require__(142);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

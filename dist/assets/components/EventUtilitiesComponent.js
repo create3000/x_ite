@@ -51,6 +51,9 @@ var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_requi
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
@@ -114,6 +117,7 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 
+
 function BooleanFilter (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -145,26 +149,7 @@ Object .assign (Object .setPrototypeOf (BooleanFilter .prototype, (external_X_IT
 
 Object .defineProperties (BooleanFilter,
 {
-   typeName:
-   {
-      value: "BooleanFilter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("BooleanFilter", "EventUtilities", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -232,6 +217,7 @@ var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -324,19 +310,7 @@ Object .assign (Object .setPrototypeOf (X3DSequencerNode .prototype, (external_X
    },
 });
 
-Object .defineProperties (X3DSequencerNode,
-{
-   typeName:
-   {
-      value: "X3DSequencerNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DSequencerNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DSequencerNode", "EventUtilities", 1));
 
 const X3DSequencerNode_default_ = X3DSequencerNode;
 ;
@@ -396,6 +370,7 @@ const X3DSequencerNode_default_ = X3DSequencerNode;
 
 
 
+
 function BooleanSequencer (executionContext)
 {
    EventUtilities_X3DSequencerNode .call (this, executionContext);
@@ -423,26 +398,7 @@ Object .assign (Object .setPrototypeOf (BooleanSequencer .prototype, EventUtilit
 
 Object .defineProperties (BooleanSequencer,
 {
-   typeName:
-   {
-      value: "BooleanSequencer",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("BooleanSequencer", "EventUtilities", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -516,6 +472,7 @@ const BooleanSequencer_default_ = BooleanSequencer;
 
 
 
+
 function BooleanToggle (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -540,26 +497,7 @@ Object .assign (Object .setPrototypeOf (BooleanToggle .prototype, (external_X_IT
 
 Object .defineProperties (BooleanToggle,
 {
-   typeName:
-   {
-      value: "BooleanToggle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("BooleanToggle", "EventUtilities", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -626,6 +564,7 @@ const BooleanToggle_default_ = BooleanToggle;
 
 
 
+
 function X3DTriggerNode (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -635,19 +574,7 @@ function X3DTriggerNode (executionContext)
 
 Object .setPrototypeOf (X3DTriggerNode .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype);
 
-Object .defineProperties (X3DTriggerNode,
-{
-   typeName:
-   {
-      value: "X3DTriggerNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DTriggerNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DTriggerNode", "EventUtilities", 1));
 
 const X3DTriggerNode_default_ = X3DTriggerNode;
 ;
@@ -707,6 +634,7 @@ const X3DTriggerNode_default_ = X3DTriggerNode;
 
 
 
+
 function BooleanTrigger (executionContext)
 {
    EventUtilities_X3DTriggerNode .call (this, executionContext);
@@ -730,26 +658,7 @@ Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, EventUtilitie
 
 Object .defineProperties (BooleanTrigger,
 {
-   typeName:
-   {
-      value: "BooleanTrigger",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("BooleanTrigger", "EventUtilities", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -819,6 +728,7 @@ const BooleanTrigger_default_ = BooleanTrigger;
 
 
 
+
 function IntegerSequencer (executionContext)
 {
    EventUtilities_X3DSequencerNode .call (this, executionContext);
@@ -846,26 +756,7 @@ Object .assign (Object .setPrototypeOf (IntegerSequencer .prototype, EventUtilit
 
 Object .defineProperties (IntegerSequencer,
 {
-   typeName:
-   {
-      value: "IntegerSequencer",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("IntegerSequencer", "EventUtilities", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -939,6 +830,7 @@ const IntegerSequencer_default_ = IntegerSequencer;
 
 
 
+
 function IntegerTrigger (executionContext)
 {
    EventUtilities_X3DTriggerNode .call (this, executionContext);
@@ -962,26 +854,7 @@ Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, EventUtilitie
 
 Object .defineProperties (IntegerTrigger,
 {
-   typeName:
-   {
-      value: "IntegerTrigger",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("IntegerTrigger", "EventUtilities", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1052,6 +925,7 @@ const IntegerTrigger_default_ = IntegerTrigger;
 
 
 
+
 function TimeTrigger (executionContext)
 {
    EventUtilities_X3DTriggerNode .call (this, executionContext);
@@ -1075,26 +949,7 @@ Object .assign (Object .setPrototypeOf (TimeTrigger .prototype, EventUtilities_X
 
 Object .defineProperties (TimeTrigger,
 {
-   typeName:
-   {
-      value: "TimeTrigger",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("TimeTrigger", "EventUtilities", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

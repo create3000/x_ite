@@ -3,7 +3,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 802:
+/***/ 993:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14902,19 +14902,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
    },
 });
 
-Object .defineProperties (X3DFontStyleNode,
-{
-   typeName:
-   {
-      value: "X3DFontStyleNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Text", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DFontStyleNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DFontStyleNode", "Text", 1));
 
 const X3DFontStyleNode_default_ = X3DFontStyleNode;
 ;
@@ -16046,6 +16034,7 @@ const PolygonText_default_ = PolygonText;
 
 
 
+
 function FontStyle (executionContext)
 {
    Text_X3DFontStyleNode .call (this, executionContext);
@@ -16069,26 +16058,7 @@ Object .assign (Object .setPrototypeOf (FontStyle .prototype, Text_X3DFontStyleN
 
 Object .defineProperties (FontStyle,
 {
-   typeName:
-   {
-      value: "FontStyle",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Text", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "fontStyle",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("FontStyle", "Text", 1, "fontStyle", "2.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -16113,7 +16083,7 @@ const FontStyle_default_ = FontStyle;
 /* harmony default export */ const Text_FontStyle = (external_X_ITE_X3D_Namespace_default().add ("FontStyle", FontStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(254);
-/* provided dependency */ var opentype = __webpack_require__(802);
+/* provided dependency */ var opentype = __webpack_require__(993);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16312,6 +16282,7 @@ var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(exte
 
 
 
+
 function Text (executionContext)
 {
    external_X_ITE_X3D_X3DGeometryNode_default().call (this, executionContext);
@@ -16413,26 +16384,7 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
 
 Object .defineProperties (Text,
 {
-   typeName:
-   {
-      value: "Text",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Text", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("Text", "Text", 1, "geometry", "2.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

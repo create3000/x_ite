@@ -51,6 +51,9 @@ var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_requi
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DGroupingNode"
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
 var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
@@ -114,6 +117,7 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 
+
 function X3DProductStructureChildNode (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -123,19 +127,7 @@ function X3DProductStructureChildNode (executionContext)
 
 Object .setPrototypeOf (X3DProductStructureChildNode .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype);
 
-Object .defineProperties (X3DProductStructureChildNode,
-{
-   typeName:
-   {
-      value: "X3DProductStructureChildNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DProductStructureChildNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DProductStructureChildNode", "CADGeometry", 2));
 
 const __default__ = X3DProductStructureChildNode;
 ;
@@ -196,6 +188,7 @@ const __default__ = X3DProductStructureChildNode;
 
 
 
+
 function CADAssembly (executionContext)
 {
    external_X_ITE_X3D_X3DGroupingNode_default().call (this, executionContext);
@@ -211,26 +204,7 @@ Object .assign (Object .setPrototypeOf (CADAssembly .prototype, (external_X_ITE_
 
 Object .defineProperties (CADAssembly,
 {
-   typeName:
-   {
-      value: "CADAssembly",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("CADAssembly", "CADGeometry", 2, "children", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -308,6 +282,7 @@ var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(exte
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -477,26 +452,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
 
 Object .defineProperties (CADFace,
 {
-   typeName:
-   {
-      value: "CADFace",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("CADFace", "CADGeometry", 2, "children", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -570,6 +526,7 @@ const CADFace_default_ = CADFace;
 
 
 
+
 function CADLayer (executionContext)
 {
    external_X_ITE_X3D_X3DGroupingNode_default().call (this, executionContext);
@@ -581,26 +538,7 @@ Object .setPrototypeOf (CADLayer .prototype, (external_X_ITE_X3D_X3DGroupingNode
 
 Object .defineProperties (CADLayer,
 {
-   typeName:
-   {
-      value: "CADLayer",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("CADLayer", "CADGeometry", 2, "children", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -680,6 +618,7 @@ var external_X_ITE_X3D_X3DTransformNode_default = /*#__PURE__*/__webpack_require
 
 
 
+
 function CADPart (executionContext)
 {
    external_X_ITE_X3D_X3DTransformNode_default().call (this, executionContext);
@@ -695,26 +634,7 @@ Object .assign (Object .setPrototypeOf (CADPart .prototype, (external_X_ITE_X3D_
 
 Object .defineProperties (CADPart,
 {
-   typeName:
-   {
-      value: "CADPart",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("CADPart", "CADGeometry", 2, "children", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -798,6 +718,7 @@ var external_X_ITE_X3D_X3DComposedGeometryNode_default = /*#__PURE__*/__webpack_
 
 
 
+
 function IndexedQuadSet (executionContext)
 {
    external_X_ITE_X3D_X3DComposedGeometryNode_default().call (this, executionContext);
@@ -843,26 +764,7 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, (external_X_I
 
 Object .defineProperties (IndexedQuadSet,
 {
-   typeName:
-   {
-      value: "IndexedQuadSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("IndexedQuadSet", "CADGeometry", 1, "geometry", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -943,6 +845,7 @@ const IndexedQuadSet_default_ = IndexedQuadSet;
 
 
 
+
 function QuadSet (executionContext)
 {
    external_X_ITE_X3D_X3DComposedGeometryNode_default().call (this, executionContext);
@@ -985,26 +888,7 @@ Object .assign (Object .setPrototypeOf (QuadSet .prototype, (external_X_ITE_X3D_
 
 Object .defineProperties (QuadSet,
 {
-   typeName:
-   {
-      value: "QuadSet",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "geometry",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("QuadSet", "CADGeometry", 1, "geometry", "3.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

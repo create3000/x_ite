@@ -139,19 +139,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, (ex
    },
 });
 
-Object .defineProperties (X3DMaterialExtensionNode,
-{
-   typeName:
-   {
-      value: "X3DMaterialExtensionNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DMaterialExtensionNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DMaterialExtensionNode", "X_ITE", 1));
 
 const __default__ = X3DMaterialExtensionNode;
 ;
@@ -286,6 +274,7 @@ const ExtensionKeys_default_ = ExtensionKeys;
 
 
 
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -361,26 +350,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
 
 Object .defineProperties (AnisotropyMaterialExtension,
 {
-   typeName:
-   {
-      value: "AnisotropyMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("AnisotropyMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -448,6 +418,7 @@ var external_X_ITE_X3D_X3DAppearanceChildNode_default = /*#__PURE__*/__webpack_r
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -562,26 +533,7 @@ Object .assign (Object .setPrototypeOf (BlendMode .prototype, (external_X_ITE_X3
 
 Object .defineProperties (BlendMode,
 {
-   typeName:
-   {
-      value: "BlendMode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "blendMode",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("BlendMode", "X_ITE", 1, "blendMode", "3.3"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -652,6 +604,7 @@ var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -770,26 +723,7 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
 
 Object .defineProperties (ClearcoatMaterialExtension,
 {
-   typeName:
-   {
-      value: "ClearcoatMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ClearcoatMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -858,6 +792,7 @@ const ClearcoatMaterialExtension_default_ = ClearcoatMaterialExtension;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -942,26 +877,7 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, (external_X_ITE_X3
 
 Object .defineProperties (DepthMode,
 {
-   typeName:
-   {
-      value: "DepthMode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "depthMode",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("DepthMode", "X_ITE", 1, "depthMode", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1027,6 +943,7 @@ const DepthMode_default_ = DepthMode;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1138,26 +1055,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
 
 Object .defineProperties (DiffuseTransmissionMaterialExtension,
 {
-   typeName:
-   {
-      value: "DiffuseTransmissionMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("DiffuseTransmissionMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1232,6 +1130,7 @@ const DiffuseTransmissionMaterialExtension_default_ = DiffuseTransmissionMateria
 
 
 
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -1273,26 +1172,7 @@ Object .assign (Object .setPrototypeOf (DispersionMaterialExtension .prototype, 
 
 Object .defineProperties (DispersionMaterialExtension,
 {
-   typeName:
-   {
-      value: "DispersionMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("DispersionMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1362,6 +1242,7 @@ const DispersionMaterialExtension_default_ = DispersionMaterialExtension;
 
 
 
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -1403,26 +1284,7 @@ Object .assign (Object .setPrototypeOf (EmissiveStrengthMaterialExtension .proto
 
 Object .defineProperties (EmissiveStrengthMaterialExtension,
 {
-   typeName:
-   {
-      value: "EmissiveStrengthMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("EmissiveStrengthMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1502,6 +1364,7 @@ var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(externa
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1740,26 +1603,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
 
 Object .defineProperties (InstancedShape,
 {
-   typeName:
-   {
-      value: "InstancedShape",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("InstancedShape", "X_ITE", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1839,6 +1683,7 @@ const InstancedShape_default_ = InstancedShape;
 
 
 
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -1880,26 +1725,7 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X_ITE_X
 
 Object .defineProperties (IORMaterialExtension,
 {
-   typeName:
-   {
-      value: "IORMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("IORMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1961,6 +1787,7 @@ const IORMaterialExtension_default_ = IORMaterialExtension;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -2075,26 +1902,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
 
 Object .defineProperties (IridescenceMaterialExtension,
 {
-   typeName:
-   {
-      value: "IridescenceMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("IridescenceMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2163,6 +1971,7 @@ const IridescenceMaterialExtension_default_ = IridescenceMaterialExtension;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -2284,26 +2093,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
 
 Object .defineProperties (SheenMaterialExtension,
 {
-   typeName:
-   {
-      value: "SheenMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("SheenMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2373,6 +2163,7 @@ var external_X_ITE_X3D_X3DOneSidedMaterialNode_default = /*#__PURE__*/__webpack_
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -2625,26 +2416,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
 
 Object .defineProperties (SpecularGlossinessMaterial,
 {
-   typeName:
-   {
-      value: "SpecularGlossinessMaterial",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "material",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("SpecularGlossinessMaterial", "X_ITE", 1, "material", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2731,6 +2503,7 @@ const SpecularGlossinessMaterial_default_ = SpecularGlossinessMaterial;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -2842,26 +2615,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
 
 Object .defineProperties (SpecularMaterialExtension,
 {
-   typeName:
-   {
-      value: "SpecularMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("SpecularMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2928,6 +2682,7 @@ const SpecularMaterialExtension_default_ = SpecularMaterialExtension;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3014,26 +2769,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
 Object .defineProperties (TransmissionMaterialExtension,
 {
-   typeName:
-   {
-      value: "TransmissionMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("TransmissionMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3097,6 +2833,7 @@ const TransmissionMaterialExtension_default_ = TransmissionMaterialExtension;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3198,26 +2935,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X_IT
 
 Object .defineProperties (VolumeMaterialExtension,
 {
-   typeName:
-   {
-      value: "VolumeMaterialExtension",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "X_ITE", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "extensions",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("VolumeMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

@@ -236,6 +236,9 @@ const __default__ = evaluate;
 ;
 
 /* harmony default export */ const Scripting_evaluate = (external_X_ITE_X3D_Namespace_default().add ("evaluate", __default__));
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
@@ -297,6 +300,7 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
 
 
 
+
 function X3DScriptNode (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -320,19 +324,7 @@ Object .assign (Object .setPrototypeOf (X3DScriptNode .prototype, (external_X_IT
    },
 });
 
-Object .defineProperties (X3DScriptNode,
-{
-   typeName:
-   {
-      value: "X3DScriptNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Scripting", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DScriptNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DScriptNode", "Scripting", 1));
 
 const X3DScriptNode_default_ = X3DScriptNode;
 ;
@@ -392,6 +384,7 @@ var external_X_ITE_X3D_SFNodeCache_default = /*#__PURE__*/__webpack_require__.n(
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -813,26 +806,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
 
 Object .defineProperties (Script,
 {
-   typeName:
-   {
-      value: "Script",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Scripting", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("Script", "Scripting", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

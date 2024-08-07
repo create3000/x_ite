@@ -51,6 +51,9 @@ var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_requi
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DLayerNode"
 const external_X_ITE_X3D_X3DLayerNode_namespaceObject = __X_ITE_X3D__ .X3DLayerNode;
 var external_X_ITE_X3D_X3DLayerNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DLayerNode_namespaceObject);
@@ -122,6 +125,7 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 
+
 function AnnotationLayer (executionContext)
 {
    external_X_ITE_X3D_X3DLayerNode_default().call (this,
@@ -142,26 +146,7 @@ Object .assign (Object .setPrototypeOf (AnnotationLayer .prototype, (external_X_
 
 Object .defineProperties (AnnotationLayer,
 {
-   typeName:
-   {
-      value: "AnnotationLayer",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Annotation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "layers",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("AnnotationLayer", "Annotation", 1, "layers", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -236,6 +221,7 @@ var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n
 
 
 
+
 function AnnotationTarget (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -253,26 +239,7 @@ Object .assign (Object .setPrototypeOf (AnnotationTarget .prototype, (external_X
 
 Object .defineProperties (AnnotationTarget,
 {
-   typeName:
-   {
-      value: "AnnotationTarget",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Annotation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("AnnotationTarget", "Annotation", 1, "children", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -344,6 +311,7 @@ var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require_
 
 
 
+
 function X3DAnnotationNode (executionContext)
 {
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
@@ -359,19 +327,7 @@ Object .assign (Object .setPrototypeOf (X3DAnnotationNode .prototype, (external_
    },
 });
 
-Object .defineProperties (X3DAnnotationNode,
-{
-   typeName:
-   {
-      value: "X3DAnnotationNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Annotation", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DAnnotationNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DAnnotationNode", "Annotation", 1));
 
 const X3DAnnotationNode_default_ = X3DAnnotationNode;
 ;
@@ -432,6 +388,7 @@ const X3DAnnotationNode_default_ = X3DAnnotationNode;
 
 
 
+
 function GroupAnnotation (executionContext)
 {
    external_X_ITE_X3D_X3DGroupingNode_default().call (this, executionContext);
@@ -457,26 +414,7 @@ Object .assign (Object .setPrototypeOf (GroupAnnotation .prototype, (external_X_
 
 Object .defineProperties (GroupAnnotation,
 {
-   typeName:
-   {
-      value: "GroupAnnotation",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Annotation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GroupAnnotation", "Annotation", 1, "children", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -558,6 +496,7 @@ var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n
 
 
 
+
 function IconAnnotation (executionContext)
 {
    Annotation_X3DAnnotationNode .call (this, executionContext);
@@ -585,26 +524,7 @@ Object .assign (Object .setPrototypeOf (IconAnnotation .prototype, Annotation_X3
 
 Object .defineProperties (IconAnnotation,
 {
-   typeName:
-   {
-      value: "IconAnnotation",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Annotation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("IconAnnotation", "Annotation", 1, "children", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -678,6 +598,7 @@ const IconAnnotation_default_ = IconAnnotation;
 
 
 
+
 function TextAnnotation (executionContext)
 {
    Annotation_X3DAnnotationNode .call (this, executionContext);
@@ -695,26 +616,7 @@ Object .assign (Object .setPrototypeOf (TextAnnotation .prototype, Annotation_X3
 
 Object .defineProperties (TextAnnotation,
 {
-   typeName:
-   {
-      value: "TextAnnotation",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Annotation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("TextAnnotation", "Annotation", 1, "children", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -787,6 +689,7 @@ const TextAnnotation_default_ = TextAnnotation;
 
 
 
+
 function URLAnnotation (executionContext)
 {
    Annotation_X3DAnnotationNode .call (this, executionContext);
@@ -804,26 +707,7 @@ Object .assign (Object .setPrototypeOf (URLAnnotation .prototype, Annotation_X3D
 
 Object .defineProperties (URLAnnotation,
 {
-   typeName:
-   {
-      value: "URLAnnotation",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "Annotation", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("URLAnnotation", "Annotation", 1, "children", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

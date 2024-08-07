@@ -51,6 +51,9 @@ var external_X_ITE_X3D_X3DFieldDefinition_default = /*#__PURE__*/__webpack_requi
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .FieldDefinitionArray"
 const external_X_ITE_X3D_FieldDefinitionArray_namespaceObject = __X_ITE_X3D__ .FieldDefinitionArray;
 var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FieldDefinitionArray_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DNode"
+const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
+var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .X3DChildNode"
 const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
 var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
@@ -114,6 +117,7 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 
+
 /**
  * THIS NODE IS NOT SUPPORTED.
  */
@@ -134,26 +138,7 @@ Object .setPrototypeOf (DISEntityManager .prototype, (external_X_ITE_X3D_X3DChil
 
 Object .defineProperties (DISEntityManager,
 {
-   typeName:
-   {
-      value: "DISEntityManager",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "DIS", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("DISEntityManager", "DIS", 2, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -235,6 +220,7 @@ var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n
 
 
 
+
 /**
  * THIS NODE IS NOT SUPPORTED.
  */
@@ -264,26 +250,7 @@ Object .assign (Object .setPrototypeOf (DISEntityTypeMapping .prototype, (extern
 
 Object .defineProperties (DISEntityTypeMapping,
 {
-   typeName:
-   {
-      value: "DISEntityTypeMapping",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "DIS", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("DISEntityTypeMapping", "DIS", 2, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -370,6 +337,7 @@ var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.
 
 
 
+
 /**
  * THIS NODE IS NOT SUPPORTED.
  */
@@ -402,26 +370,7 @@ Object .assign (Object .setPrototypeOf (EspduTransform .prototype, (external_X_I
 
 Object .defineProperties (EspduTransform,
 {
-   typeName:
-   {
-      value: "EspduTransform",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "DIS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("EspduTransform", "DIS", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -586,6 +535,7 @@ var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require
 
 
 
+
 /**
  * THIS NODE IS NOT SUPPORTED.
  */
@@ -623,26 +573,7 @@ Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, (external_X_ITE_
 
 Object .defineProperties (ReceiverPdu,
 {
-   typeName:
-   {
-      value: "ReceiverPdu",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "DIS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ReceiverPdu", "DIS", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -744,6 +675,7 @@ const ReceiverPdu_default_ = ReceiverPdu;
 
 
 
+
 /**
  * THIS NODE IS NOT SUPPORTED.
  */
@@ -780,26 +712,7 @@ Object .assign (Object .setPrototypeOf (SignalPdu .prototype, (external_X_ITE_X3
 
 Object .defineProperties (SignalPdu,
 {
-   typeName:
-   {
-      value: "SignalPdu",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "DIS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("SignalPdu", "DIS", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -901,6 +814,7 @@ const SignalPdu_default_ = SignalPdu;
 
 
 
+
 /**
  * THIS NODE IS NOT SUPPORTED.
  */
@@ -937,26 +851,7 @@ Object .assign (Object .setPrototypeOf (TransmitterPdu .prototype, (external_X_I
 
 Object .defineProperties (TransmitterPdu,
 {
-   typeName:
-   {
-      value: "TransmitterPdu",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "DIS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("TransmitterPdu", "DIS", 1, "children", "3.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([

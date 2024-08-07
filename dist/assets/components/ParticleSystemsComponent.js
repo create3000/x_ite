@@ -662,19 +662,7 @@ precision highp float;void main(){}`
    },
 });
 
-Object .defineProperties (X3DParticleEmitterNode,
-{
-   typeName:
-   {
-      value: "X3DParticleEmitterNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DParticleEmitterNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DParticleEmitterNode", "ParticleSystems", 1));
 
 const X3DParticleEmitterNode_default_ = X3DParticleEmitterNode;
 ;
@@ -730,6 +718,7 @@ var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(exte
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -818,26 +807,7 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems
 
 Object .defineProperties (PointEmitter,
 {
-   typeName:
-   {
-      value: "PointEmitter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "emitter",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("PointEmitter", "ParticleSystems", 1, "emitter", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -996,19 +966,7 @@ Object .assign (Object .setPrototypeOf (X3DParticlePhysicsModelNode .prototype, 
    { },
 });
 
-Object .defineProperties (X3DParticlePhysicsModelNode,
-{
-   typeName:
-   {
-      value: "X3DParticlePhysicsModelNode",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
-      enumerable: true,
-   },
-});
+Object .defineProperties (X3DParticlePhysicsModelNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DParticlePhysicsModelNode", "ParticleSystems", 1));
 
 const X3DParticlePhysicsModelNode_default_ = X3DParticlePhysicsModelNode;
 ;
@@ -1072,6 +1030,7 @@ var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(exte
 
 
 
+
 function BoundedPhysicsModel (executionContext)
 {
    ParticleSystems_X3DParticlePhysicsModelNode .call (this, executionContext);
@@ -1124,26 +1083,7 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, Particle
 
 Object .defineProperties (BoundedPhysicsModel,
 {
-   typeName:
-   {
-      value: "BoundedPhysicsModel",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "physics",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("BoundedPhysicsModel", "ParticleSystems", 2, "physics", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1207,6 +1147,7 @@ const BoundedPhysicsModel_default_ = BoundedPhysicsModel;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1304,26 +1245,7 @@ Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, ParticleSystems_
 
 Object .defineProperties (ConeEmitter,
 {
-   typeName:
-   {
-      value: "ConeEmitter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "emitter",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ConeEmitter", "ParticleSystems", 1, "emitter", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1400,6 +1322,7 @@ const ConeEmitter_default_ = ConeEmitter;
 
 
 
+
 function ExplosionEmitter (executionContext)
 {
    ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
@@ -1464,26 +1387,7 @@ Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, ParticleSys
 
 Object .defineProperties (ExplosionEmitter,
 {
-   typeName:
-   {
-      value: "ExplosionEmitter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "emitter",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ExplosionEmitter", "ParticleSystems", 1, "emitter", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -1558,6 +1462,7 @@ const ExplosionEmitter_default_ = ExplosionEmitter;
 
 
 
+
 function ForcePhysicsModel (executionContext)
 {
    ParticleSystems_X3DParticlePhysicsModelNode .call (this, executionContext);
@@ -1592,26 +1497,7 @@ Object .assign (Object .setPrototypeOf (ForcePhysicsModel .prototype, ParticleSy
 
 Object .defineProperties (ForcePhysicsModel,
 {
-   typeName:
-   {
-      value: "ForcePhysicsModel",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "physics",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ForcePhysicsModel", "ParticleSystems", 1, "physics", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2090,6 +1976,7 @@ const BVH_default_ = BVH;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3149,26 +3036,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
 Object .defineProperties (ParticleSystem,
 {
-   typeName:
-   {
-      value: "ParticleSystem",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "children",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("ParticleSystem", "ParticleSystems", 2, "children", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3254,6 +3122,7 @@ var external_X_ITE_X3D_IndexedLineSet_default = /*#__PURE__*/__webpack_require__
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3442,26 +3311,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
 
 Object .defineProperties (PolylineEmitter,
 {
-   typeName:
-   {
-      value: "PolylineEmitter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "emitter",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("PolylineEmitter", "ParticleSystems", 1, "emitter", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3534,6 +3384,7 @@ var external_X_ITE_X3D_Triangle3_default = /*#__PURE__*/__webpack_require__.n(ex
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3741,26 +3592,7 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
 
 Object .defineProperties (SurfaceEmitter,
 {
-   typeName:
-   {
-      value: "SurfaceEmitter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "emitter",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("SurfaceEmitter", "ParticleSystems", 2, "emitter", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -3830,6 +3662,7 @@ var external_X_ITE_X3D_IndexedFaceSet_default = /*#__PURE__*/__webpack_require__
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -4081,26 +3914,7 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
 
 Object .defineProperties (VolumeEmitter,
 {
-   typeName:
-   {
-      value: "VolumeEmitter",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 2 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "emitter",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("VolumeEmitter", "ParticleSystems", 2, "emitter", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -4183,6 +3997,7 @@ var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 
+
 function WindPhysicsModel (executionContext)
 {
    ParticleSystems_X3DParticlePhysicsModelNode .call (this, executionContext);
@@ -4242,26 +4057,7 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, ParticleSys
 
 Object .defineProperties (WindPhysicsModel,
 {
-   typeName:
-   {
-      value: "WindPhysicsModel",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "physics",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
-      enumerable: true,
-   },
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("WindPhysicsModel", "ParticleSystems", 1, "physics", "3.2"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
