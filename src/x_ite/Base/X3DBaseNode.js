@@ -449,23 +449,16 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    },
    isDefaultValue (field)
    {
-      const f = this [_userDefinedFields] .get (field .getName ()) ?? this [_predefinedFields] .get (field .getName ());
+      const
+         name = field .getName (),
+         f    = this [_userDefinedFields] .get (name) ?? this [_predefinedFields] .get (name);
 
       if (f === field)
-         var fieldDefinition = this [_fieldDefinitions] .get (field .getName ());
+         var fieldDefinition = this [_fieldDefinitions] .get (name);
       else if (this .constructor .fieldDefinitions)
-         var fieldDefinition = this .constructor .fieldDefinitions .get (field .getName ());
+         var fieldDefinition = this .constructor .fieldDefinitions .get (name);
 
-      if (fieldDefinition)
-      {
-         // User-defined fields are their own field definition value.
-         if (fieldDefinition .value === field)
-            return false;
-
-         return fieldDefinition .value .equals (field);
-      }
-
-      return !field .getModificationTime ();
+      return fieldDefinition ?.value .equals (field) ?? !field .getModificationTime ();
    },
    getExtendedEventHandling ()
    {
