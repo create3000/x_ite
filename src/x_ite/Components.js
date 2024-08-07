@@ -45,25 +45,25 @@
  *
  ******************************************************************************/
 
-import Core                 from "./Components/Core.js";
-import EnvironmentalEffects from "./Components/EnvironmentalEffects.js";
-import EnvironmentalSensor  from "./Components/EnvironmentalSensor.js";
-import Followers            from "./Components/Followers.js";
-import Geometry3D           from "./Components/Geometry3D.js";
-import Grouping             from "./Components/Grouping.js";
-import Interpolation        from "./Components/Interpolation.js";
-import Layering             from "./Components/Layering.js";
-import Lighting             from "./Components/Lighting.js";
-import Navigation           from "./Components/Navigation.js";
-import Networking           from "./Components/Networking.js";
-import PointingDeviceSensor from "./Components/PointingDeviceSensor.js";
-import Rendering            from "./Components/Rendering.js";
-import Shaders              from "./Components/Shaders.js";
-import Shape                from "./Components/Shape.js";
-import Sound                from "./Components/Sound.js";
-import Texturing            from "./Components/Texturing.js";
-import Time                 from "./Components/Time.js";
-import X3DBrowserContext    from "./Browser/X3DBrowserContext.js";
+import CoreComponent                 from "./Components/CoreComponent.js";
+import EnvironmentalEffectsComponent from "./Components/EnvironmentalEffectsComponent.js";
+import EnvironmentalSensorComponent  from "./Components/EnvironmentalSensorComponent.js";
+import FollowersComponent            from "./Components/FollowersComponent.js";
+import Geometry3DComponent           from "./Components/Geometry3DComponent.js";
+import GroupingComponent             from "./Components/GroupingComponent.js";
+import InterpolationComponent        from "./Components/InterpolationComponent.js";
+import LayeringComponent             from "./Components/LayeringComponent.js";
+import LightingComponent             from "./Components/LightingComponent.js";
+import NavigationComponent           from "./Components/NavigationComponent.js";
+import NetworkingComponent           from "./Components/NetworkingComponent.js";
+import PointingDeviceSensorComponent from "./Components/PointingDeviceSensorComponent.js";
+import RenderingComponent            from "./Components/RenderingComponent.js";
+import ShadersComponent              from "./Components/ShadersComponent.js";
+import ShapeComponent                from "./Components/ShapeComponent.js";
+import SoundComponent                from "./Components/SoundComponent.js";
+import TexturingComponent            from "./Components/TexturingComponent.js";
+import TimeComponent                 from "./Components/TimeComponent.js";
+import X3DBrowserContext             from "./Browser/X3DBrowserContext.js";
 
 let external = false;
 
@@ -75,24 +75,24 @@ const Components =
    },
 };
 
-Components .add (Core);
-Components .add (EnvironmentalEffects);
-Components .add (EnvironmentalSensor);
-Components .add (Followers);
-Components .add (Geometry3D);
-Components .add (Grouping);
-Components .add (Interpolation);
-Components .add (Layering);
-Components .add (Lighting);
-Components .add (Navigation);
-Components .add (Networking);
-Components .add (PointingDeviceSensor);
-Components .add (Rendering);
-Components .add (Shaders);
-Components .add (Shape);
-Components .add (Sound);
-Components .add (Texturing);
-Components .add (Time);
+Components .add (CoreComponent);
+Components .add (EnvironmentalEffectsComponent);
+Components .add (EnvironmentalSensorComponent);
+Components .add (FollowersComponent);
+Components .add (Geometry3DComponent);
+Components .add (GroupingComponent);
+Components .add (InterpolationComponent);
+Components .add (LayeringComponent);
+Components .add (LightingComponent);
+Components .add (NavigationComponent);
+Components .add (NetworkingComponent);
+Components .add (PointingDeviceSensorComponent);
+Components .add (RenderingComponent);
+Components .add (ShadersComponent);
+Components .add (ShapeComponent);
+Components .add (SoundComponent);
+Components .add (TexturingComponent);
+Components .add (TimeComponent);
 
 external = true;
 
