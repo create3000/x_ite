@@ -69,7 +69,11 @@ Returns a reference to the corresponding X3DCanvasElement.
 
 ### Methods
 
-#### Promise\<void\> **replaceWorld** (*X3DScene*)
+#### Promise\<void\> **loadComponents** (*Array <X3DScene \| ProfileInfo \| ComponentInfoArray \| ComponentInfo \| string> ... args*) <small class="blue">non standard</small>
+
+Loads all components, external and internal, specified by `args`. If the argument is a `String`, the name of a component must be given.
+
+#### Promise\<void\> **replaceWorld** (*X3DScene scene*)
 
 Replace the current world with this new scene that has been loaded or constructed from somewhere. A Promise is returned that will be resolved when the scene is completely loaded.
 
