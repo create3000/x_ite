@@ -194,7 +194,7 @@ declare class X3DBrowser
     */
    readonly element: X3DCanvasElement;
    /**
-    * The `getProfile` service returns a ProfileInfo object of the named profile. The parameter is the name of a profile from which to fetch the declaration. The browser only returns an ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
+    * The `getProfile` service returns a ProfileInfo object of the named profile. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
     */
    getProfile (name: string): ProfileInfo;
    /**
