@@ -137,6 +137,10 @@ A reference to the ExportedNodesArray object used by this execution context. Thi
 
 ### Methods
 
+#### void **setProfile** (ProfileInfo profile)
+
+Replaces the profile of this scene by the given profile. A profile of `null` is equivalent to a 'Full' profile.
+
 #### void **addComponent** (*ComponentInfo component*)
 
 Adds the component to the list of components.

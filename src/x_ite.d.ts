@@ -522,7 +522,7 @@ declare class X3DScene extends X3DExecutionContext
    /**
     * Replaces the profile of this scene by the given profile. A profile of `null` is equivalent to a 'Full' profile.
     */
-   setProfile (profile: ProfileInfo | null): void
+   setProfile (profile: ProfileInfo | null): void;
    /**
     * Adds the component to the list of components.
     */
