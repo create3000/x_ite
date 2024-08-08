@@ -520,7 +520,7 @@ declare class X3DScene extends X3DExecutionContext
    readonly exportedNodes: ExportedNodesArray;
 
    /**
-    * Replace the profile of this scene by the given profile. A profile of `null` is equivalent to a 'Full' profile.
+    * Replaces the profile of this scene by the given profile. A profile of `null` is equivalent to a 'Full' profile.
     */
    setProfile (profile: ProfileInfo | null): void
    /**
