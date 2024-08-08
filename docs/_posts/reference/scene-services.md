@@ -153,7 +153,7 @@ Updates the component.
 
 Removes the component with the given name.
 
-#### void **updateUnit** (String category, String name, Number conversionFactor)
+#### void **updateUnit** (*String category, String name, Number conversionFactor*)
 
 Updates the *name* and the *conversion factor* of the unit specified by *category*.
 
