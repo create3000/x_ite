@@ -194,9 +194,17 @@ declare class X3DBrowser
     */
    readonly element: X3DCanvasElement;
    /**
+    * The `getProfile` service returns a ProfileInfo object of the named profile. The parameter is the name of a profile from which to fetch the declaration. The browser only returns an ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
+    */
+   getProfile (name: string): ProfileInfo;
+   /**
+    * The `getComponent` service returns a ComponentInfo object of the named component. The first parameter is the name of a component and the second the level from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component and the requested level. If it does not support the component at the level desired, an error is thrown. If level is omitted, it defaults to the highest supported level of this component.
+    */
+   getComponent (name : string, level : number?): ComponentInfo;
+   /**
     * The `createScene` service creates a new empty scene that conforms to the given profile and component declarations.
     */
-   createScene (profile: ProfileInfo, ... components: ComponentInfo []): X3DScene
+   createScene (profile: ProfileInfo, ... components: ComponentInfo []): X3DScene;
    /**
     * Loads all components, external and internal, specified by `args`. If the argument is a `String`, the name of a component must be given.
     */

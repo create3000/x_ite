@@ -69,6 +69,14 @@ Returns a reference to the corresponding X3DCanvasElement.
 
 ### Methods
 
+#### ProfileInfo **getProfile** (*String name*)
+
+The `getProfile` service returns a ProfileInfo object of the named profile. The parameter is the name of a profile from which to fetch the declaration. The browser only returns an ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
+
+#### ComponentInfo **getComponent** (*String name, Number? level*)
+
+The `getComponent` service returns a ComponentInfo object of the named component. The first parameter is the name of a component and the second the level from which to fetch the declaration. The browser only return a ComponentInfo object if it supports the named component and the requested level. If it does not support the component at the level desired, an error is thrown. If level is omitted, it defaults to the highest supported level of this component.
+
 #### X3DScene **createScene** (*ProfileInfo profile, ComponentInfo [] ... components*)
 
 The `createScene` service creates a new empty scene that conforms to the given profile and component declarations.
