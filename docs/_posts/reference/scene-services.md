@@ -137,6 +137,26 @@ A reference to the ExportedNodesArray object used by this execution context. Thi
 
 ### Methods
 
+#### void **addComponent** (*ComponentInfo component*)
+
+Adds the component to the list of components.
+
+#### void **updateComponent** (*ComponentInfo component*)
+
+Updates the component.
+
+#### void **removeComponent** (*String name*)
+
+Removes the component with the given name.
+
+#### void **updateUnit** (String category, String name, Number conversionFactor)
+
+Updates the *name* and the *conversion factor* of the unit specified by *category*.
+
+#### UnitInfo **getUnit** (*String category*)
+
+Returns the UnitInfo object with the given *category*.
+
 #### Array\<string\> **getMetaData** (*String name*)
 
 Returns the metadata values array associated with *name*.

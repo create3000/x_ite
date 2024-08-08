@@ -520,6 +520,30 @@ declare class X3DScene extends X3DExecutionContext
    readonly exportedNodes: ExportedNodesArray;
 
    /**
+    * Replace the profile of this scene by the given profile. A profile of `null` is equivalent to a 'Full' profile.
+    */
+   setProfile (profile: ProfileInfo | null): void
+   /**
+    * Adds the component to the list of components.
+    */
+   addComponent (component: ComponentInfo): void;
+   /**
+    * Updates the component.
+    */
+   updateComponent (component: ComponentInfo): void;
+   /**
+    * Removes the component with the given name.
+    */
+   removeComponent (name: string): void;
+   /**
+    * Updates the *name* and the *conversion factor* of the unit specified by *category*.
+    */
+   updateUnit (category: string, name: string, conversionFactor: number): void;
+   /**
+    * Returns the UnitInfo object with the given *category*.
+    */
+   getUnit (category: string): UnitInfo;
+   /**
     * Returns the metadata values array associated with *name*.
     */
    getMetaData (name: string): string [];
