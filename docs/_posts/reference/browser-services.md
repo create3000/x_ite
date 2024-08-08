@@ -69,6 +69,14 @@ Returns a reference to the corresponding X3DCanvasElement.
 
 ### Methods
 
+#### ProfileInfo **getSupportedProfile** (*String name*)
+
+The `getSupportedProfile` service returns a ProfileInfo object of the named profile from the `supportedProfiles` array. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
+
+#### ComponentInfo **getSupportedComponent** (*String name*)
+
+The `getSupportedComponent` service returns a ComponentInfo object of the named component from the `supportedComponents` array. The parameter is the name of a component from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component. If it does not support the component, an error is thrown.
+
 #### ProfileInfo **getProfile** (*String name*)
 
 The `getProfile` service returns a ProfileInfo object of the named profile. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.

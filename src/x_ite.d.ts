@@ -194,6 +194,14 @@ declare class X3DBrowser
     */
    readonly element: X3DCanvasElement;
    /**
+    * The `getSupportedProfile` service returns a ProfileInfo object of the named profile from the `supportedProfiles` array. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
+    */
+   getSupportedProfile (name: string): ProfileInfo;
+   /**
+    * The `getSupportedComponent` service returns a ComponentInfo object of the named component from the `supportedComponents` array. The parameter is the name of a component from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component. If it does not support the component, an error is thrown.
+    */
+   getSupportedComponent (name : string): ComponentInfo;
+   /**
     * The `getProfile` service returns a ProfileInfo object of the named profile. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
     */
    getProfile (name: string): ProfileInfo;

@@ -185,9 +185,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    getProfile (name)
    {
-      name = String (name);
-
-      const profile = this [_supportedProfiles] .get (name);
+      const profile = this [_supportedProfiles] .get (String (name));
 
       if (profile)
          return profile;
