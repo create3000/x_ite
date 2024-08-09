@@ -76,7 +76,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          animation: { duration: 500, show: "fadeIn", hide: "fadeOut" },
       };
 
-      this [_options] .element .on ("contextmenu", event => this .show (event));
+      this [_options] .element .on ("contextmenu.ContextMenu", event => this .show (event));
    },
    getUserMenu ()
    {

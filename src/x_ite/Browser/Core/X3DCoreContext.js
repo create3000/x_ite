@@ -99,18 +99,16 @@ function X3DCoreContext (element)
 
    if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
    {
-      const
-         shadow = $(element [0] .attachShadow ({ mode: "open", delegatesFocus: true })),
-         link   = $("<link/>");
+      const shadow = $(element [0] .shadowRoot ?? element [0] .attachShadow ({ mode: "open", delegatesFocus: true }));
 
-      link
+      $("<link/>")
          .on ("load", () => browser .show ())
          .attr ("rel", "stylesheet")
          .attr ("type", "text/css")
-         .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()) .href);
+         .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()) .href)
+         .appendTo (shadow);
 
       this [_shadow] = shadow
-         .append (link)
          .append (browser .hide ());
    }
    else
@@ -128,7 +126,7 @@ function X3DCoreContext (element)
    this [_element]      = element;
    this [_surface]      = surface;
    this [_canvas]       = $("<canvas></canvas>") .attr ("part", "canvas") .addClass ("x_ite-private-canvas") .prependTo (surface);
-   this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true", this [_mobile]);
+   this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true", element .attr ("xrCompatible") === "true", this [_mobile]);
    this [_splashScreen] = splashScreen;
 
    this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
@@ -140,7 +138,7 @@ function X3DCoreContext (element)
 
    if ("xr" in window .navigator)
    {
-      this .xrButton = $("<div></div>")
+      $("<div></div>")
          .addClass ("x_ite-private-xr-button")
          .on ("click", () => this .makeXRCompatible ())
          .appendTo (this .getBrowser () .getSurface ());
@@ -178,6 +176,7 @@ Object .assign (X3DCoreContext .prototype,
          {
             value: this,
             enumerable: true,
+            configurable: true,
          },
          src:
          {
@@ -191,6 +190,7 @@ Object .assign (X3DCoreContext .prototype,
                   .catch (error => console .error (error));
             },
             enumerable: true,
+            configurable: true,
          },
          url:
          {
@@ -204,6 +204,7 @@ Object .assign (X3DCoreContext .prototype,
                   .catch (error => console .error (error));
             },
             enumerable: true,
+            configurable: true,
          },
       });
 
@@ -817,7 +818,10 @@ Object .assign (X3DCoreContext .prototype,
    },
    dispose ()
    {
+      this .getElement () .off (".X3DCoreContext .ContextMenu");
+
       this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ();
+      this [_shadow] .find ("*") .remove ();
    },
 });
 

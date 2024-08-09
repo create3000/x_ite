@@ -90,6 +90,10 @@ Object .assign (X3DKeyDeviceSensorContext .prototype,
       for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
          keyDeviceSensorNode .keyup (event);
    },
+   dispose ()
+   {
+      this .getElement () .off (".X3DKeyDeviceSensorContext");
+   },
 });
 
 export default X3DKeyDeviceSensorContext;

@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import SFTime                         from "../Fields/SFTime.js";
+import Fields                         from "../Fields.js";
 import X3DConstants                   from "../Base/X3DConstants.js";
 import X3DBaseNode                    from "../Base/X3DBaseNode.js";
 import X3DCoreContext                 from "./Core/X3DCoreContext.js";
@@ -120,14 +120,14 @@ function X3DBrowserContext (element)
    for (const browserContext of browserContexts)
       browserContext .call (this, element);
 
-   this .addChildObjects (X3DConstants .outputOnly, "initialized",    new SFTime (),
-                          X3DConstants .outputOnly, "shutdown",       new SFTime (),
-                          X3DConstants .outputOnly, "prepareEvents",  new SFTime (),
-                          X3DConstants .outputOnly, "timeEvents",     new SFTime (),
-                          X3DConstants .outputOnly, "sensorEvents",   new SFTime (),
-                          X3DConstants .outputOnly, "displayEvents",  new SFTime (),
-                          X3DConstants .outputOnly, "finishedEvents", new SFTime (),
-                          X3DConstants .outputOnly, "endEvents",      new SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "initialized",    new Fields .SFTime (),
+                          X3DConstants .outputOnly, "shutdown",       new Fields .SFTime (),
+                          X3DConstants .outputOnly, "prepareEvents",  new Fields .SFTime (),
+                          X3DConstants .outputOnly, "timeEvents",     new Fields .SFTime (),
+                          X3DConstants .outputOnly, "sensorEvents",   new Fields .SFTime (),
+                          X3DConstants .outputOnly, "displayEvents",  new Fields .SFTime (),
+                          X3DConstants .outputOnly, "finishedEvents", new Fields .SFTime (),
+                          X3DConstants .outputOnly, "endEvents",      new Fields .SFTime ());
 
    this [_tainted]        = false;
    this [_previousTime]   = 0;
@@ -324,12 +324,28 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       return this [_displayTime];
    },
-   async makeXRCompatible ()
+   makeXRCompatible ()
    {
       console .log ("makeXRCompatible");
+
+      const worldURL = this .getWorldURL ();
+
+      this .getElement ()
+         .attr ("xrCompatible", true)
+         .prop ("browser", null);
+
+      this .dispose ();
+
+      const browser = new this .constructor (this .getElement ());
+
+      browser .loadURL (new Fields .MFString ("https://create3000.github.io/media/examples/Geometry3D/Cylinder/Cylinder.x3d"));
+
+      return browser;
    },
    dispose ()
    {
+      // DOMIntegration .dispose ()
+
       browsers .delete (this);
 
       for (const browserContext of browserContexts .slice () .reverse ())
@@ -340,8 +356,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this [_tainted] = true;
 
       cancelAnimationFrame (this [_animFrame]);
-
-      this .getContext () .getExtension ("WEBGL_lose_context") ?.loseContext ();
    },
 });
 
