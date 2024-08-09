@@ -14,13 +14,13 @@ table.examples td {
 <table class="examples">
   <tr>
     <td>
-      <a href="x3d-visual-blend-mode-editor/"><img src="/assets/img/laboratory/blend-mode.png" alt="Visual Blend Mode Editor"/></a>
+      <a href="../x3d-visual-blend-mode-editor/"><img src="/assets/img/laboratory/blend-mode.png" alt="Visual Blend Mode Editor"/></a>
     </td>
     <td>
-      <a href="3d-l-system-generator/"><img src="/assets/img/laboratory/l-system.png" alt="3D L-System Generator"/></a>
+      <a href="../3d-l-system-generator/"><img src="/assets/img/laboratory/l-system.png" alt="3D L-System Generator"/></a>
     </td>
     <td>
-      <a href="online-dicom-and-nrrd-file-viewer/"><img src="/assets/img/laboratory/dicom-nrrd.png" alt="DICOM and NRRD File Viewer"/></a>
+      <a href="../online-dicom-and-nrrd-file-viewer/"><img src="/assets/img/laboratory/dicom-nrrd.png" alt="DICOM and NRRD File Viewer"/></a>
     </td>
   </tr>
   <tr>
@@ -30,10 +30,10 @@ table.examples td {
   </tr>
   <tr>
     <td>
-      <a href="real-time-earth-quake-information/"><img src="/assets/img/laboratory/earthquake.png" alt="Real time Earth Quake Information"/></a>
+      <a href="../real-time-earth-quake-information/"><img src="/assets/img/laboratory/earthquake.png" alt="Real time Earth Quake Information"/></a>
     </td>
     <td>
-      <a href="gltf-sample-viewer/"><img src="/assets/img/laboratory/gltf.png" alt="glTF Sample Viewer"/></a>
+      <a href="../gltf-sample-viewer/"><img src="/assets/img/laboratory/gltf.png" alt="glTF Sample Viewer"/></a>
     </td>
   </tr>
   <tr>
@@ -44,7 +44,7 @@ table.examples td {
 
 ## Online X3D File Format Converter
 
-Convert various 3D file formats using our [Online X3D File Format Converter](x3d-file-converter/) powered by X_ITE.
+Convert various 3D file formats using our [Online X3D File Format Converter](../x3d-file-converter/) powered by X_ITE.
 
 Looking for a command line tool to convert 3D file formats? Use [x3d-tidy](https://www.npmjs.com/package/x3d-tidy), a command line X3D file format converter, compressor and beautifier and available on NPM.
 
