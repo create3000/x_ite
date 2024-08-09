@@ -90,34 +90,35 @@ const
 
 const
    browsers        = new Set (),
-   browserContexts = [ ];
+   browserContexts = [
+      X3DRoutingContext,
+      X3DScriptingContext,
+      X3DCoreContext,
+      X3DNetworkingContext,
+      X3DTexturingContext,
+      X3DShadersContext,
+      X3DRenderingContext,
+      X3DShapeContext,
+      X3DGroupingContext,
+      X3DGeometry3DContext,
+      X3DPointingDeviceSensorContext,
+      X3DNavigationContext,
+      X3DLayeringContext,
+      X3DEnvironmentalEffectsContext,
+      X3DLightingContext,
+      X3DPickingContext,
+      X3DSoundContext,
+      X3DTimeContext,
+   ];
 
 function X3DBrowserContext (element)
 {
-   X3DBaseNode                    .call (this, this);
-   X3DRoutingContext              .call (this);
-   X3DScriptingContext            .call (this);
-   X3DCoreContext                 .call (this, element);
-   X3DNetworkingContext           .call (this);
-   X3DTexturingContext            .call (this);
-   X3DShadersContext              .call (this);
-   X3DRenderingContext            .call (this);
-   X3DShapeContext                .call (this);
-   X3DGroupingContext             .call (this);
-   X3DGeometry3DContext           .call (this);
-   X3DPointingDeviceSensorContext .call (this);
-   X3DNavigationContext           .call (this);
-   X3DLayeringContext             .call (this);
-   X3DEnvironmentalEffectsContext .call (this);
-   X3DLightingContext             .call (this);
-   X3DPickingContext              .call (this);
-   X3DSoundContext                .call (this);
-   X3DTimeContext                 .call (this);
-
    browsers .add (this);
 
+   X3DBaseNode .call (this, this);
+
    for (const browserContext of browserContexts)
-      browserContext .call (this);
+      browserContext .call (this, element);
 
    this .addChildObjects (X3DConstants .outputOnly, "initialized",    new SFTime (),
                           X3DConstants .outputOnly, "shutdown",       new SFTime (),
@@ -139,46 +140,11 @@ function X3DBrowserContext (element)
 };
 
 Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNode .prototype),
-   X3DCoreContext .prototype,
-   X3DEnvironmentalEffectsContext .prototype,
-   X3DGeometry3DContext .prototype,
-   X3DGroupingContext .prototype,
-   X3DLayeringContext .prototype,
-   X3DLightingContext .prototype,
-   X3DNavigationContext .prototype,
-   X3DNetworkingContext .prototype,
-   X3DPickingContext .prototype,
-   X3DPointingDeviceSensorContext .prototype,
-   X3DRenderingContext .prototype,
-   X3DRoutingContext .prototype,
-   X3DScriptingContext .prototype,
-   X3DShadersContext .prototype,
-   X3DShapeContext .prototype,
-   X3DSoundContext .prototype,
-   X3DTexturingContext .prototype,
-   X3DTimeContext .prototype,
+   ... browserContexts .map (browserContext => browserContext .prototype),
 {
    initialize ()
    {
-      X3DBaseNode                    .prototype .initialize ?.call (this);
-      X3DRoutingContext              .prototype .initialize ?.call (this);
-      X3DScriptingContext            .prototype .initialize ?.call (this);
-      X3DCoreContext                 .prototype .initialize ?.call (this);
-      X3DNetworkingContext           .prototype .initialize ?.call (this);
-      X3DTexturingContext            .prototype .initialize ?.call (this);
-      X3DShadersContext              .prototype .initialize ?.call (this);
-      X3DRenderingContext            .prototype .initialize ?.call (this);
-      X3DShapeContext                .prototype .initialize ?.call (this);
-      X3DGroupingContext             .prototype .initialize ?.call (this);
-      X3DGeometry3DContext           .prototype .initialize ?.call (this);
-      X3DPointingDeviceSensorContext .prototype .initialize ?.call (this);
-      X3DNavigationContext           .prototype .initialize ?.call (this);
-      X3DLayeringContext             .prototype .initialize ?.call (this);
-      X3DEnvironmentalEffectsContext .prototype .initialize ?.call (this);
-      X3DLightingContext             .prototype .initialize ?.call (this);
-      X3DPickingContext              .prototype .initialize ?.call (this);
-      X3DSoundContext                .prototype .initialize ?.call (this);
-      X3DTimeContext                 .prototype .initialize ?.call (this);
+      X3DBaseNode .prototype .initialize .call (this);
 
       for (const browserContext of browserContexts)
          browserContext .prototype .initialize ?.call (this);
@@ -362,28 +328,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       browsers .delete (this);
 
-      for (const browserContext of browserContexts)
+      for (const browserContext of browserContexts .slice () .reverse ())
          browserContext .prototype .dispose ?.call (this);
 
-      X3DTimeContext                 .prototype .dispose ?.call (this);
-      X3DSoundContext                .prototype .dispose ?.call (this);
-      X3DPickingContext              .prototype .dispose ?.call (this);
-      X3DLightingContext             .prototype .dispose ?.call (this);
-      X3DEnvironmentalEffectsContext .prototype .dispose ?.call (this);
-      X3DLayeringContext             .prototype .dispose ?.call (this);
-      X3DNavigationContext           .prototype .dispose ?.call (this);
-      X3DPointingDeviceSensorContext .prototype .dispose ?.call (this);
-      X3DGeometry3DContext           .prototype .dispose ?.call (this);
-      X3DGroupingContext             .prototype .dispose ?.call (this);
-      X3DShapeContext                .prototype .dispose ?.call (this);
-      X3DRenderingContext            .prototype .dispose ?.call (this);
-      X3DShadersContext              .prototype .dispose ?.call (this);
-      X3DTexturingContext            .prototype .dispose ?.call (this);
-      X3DNetworkingContext           .prototype .dispose ?.call (this);
-      X3DCoreContext                 .prototype .dispose ?.call (this);
-      X3DScriptingContext            .prototype .dispose ?.call (this);
-      X3DRoutingContext              .prototype .dispose ?.call (this);
-      X3DBaseNode                    .prototype .dispose ?.call (this);
+      X3DBaseNode .prototype .dispose .call (this);
 
       this [_tainted] = true;
 
