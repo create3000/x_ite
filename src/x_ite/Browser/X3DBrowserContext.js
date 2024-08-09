@@ -330,9 +330,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       const worldURL = this .getWorldURL ();
 
-      this .getElement ()
-         .attr ("xrCompatible", true)
-         .prop ("browser", null);
+      this .getElement () .attr ("xrCompatible", true);
 
       this .dispose ();
 

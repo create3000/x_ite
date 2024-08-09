@@ -818,7 +818,9 @@ Object .assign (X3DCoreContext .prototype,
    },
    dispose ()
    {
-      this .getElement () .off (".X3DCoreContext .ContextMenu");
+      this .getElement ()
+         .prop ("browser", null)
+         .off (".X3DCoreContext .ContextMenu");
 
       this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ();
       this [_shadow] .find ("*") .remove ();
