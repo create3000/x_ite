@@ -74,19 +74,19 @@ import StopWatch                      from "../../standard/Time/StopWatch.js";
 import DEVELOPMENT                    from "../DEVELOPMENT.js";
 
 const
-   _world           = Symbol (),
-   _tainted         = Symbol (),
-   _limitFrameRate  = Symbol (),
-   _traverse        = Symbol (),
-   _renderCallback  = Symbol (),
-   _animFrame       = Symbol (),
-   _previousTime    = Symbol (),
-   _systemTime      = Symbol (),
-   _browserTime     = Symbol (),
-   _cameraTime      = Symbol (),
-   _collisionTime   = Symbol (),
-   _displayTime     = Symbol (),
-   _processEvents   = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
+   _world          = Symbol (),
+   _tainted        = Symbol (),
+   _limitFrameRate = Symbol (),
+   _traverse       = Symbol (),
+   _renderCallback = Symbol (),
+   _animFrame      = Symbol (),
+   _previousTime   = Symbol (),
+   _systemTime     = Symbol (),
+   _browserTime    = Symbol (),
+   _cameraTime     = Symbol (),
+   _collisionTime  = Symbol (),
+   _displayTime    = Symbol (),
+   _processEvents  = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
 
 const
    browsers        = new Set (),
