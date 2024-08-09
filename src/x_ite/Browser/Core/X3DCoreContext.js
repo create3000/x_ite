@@ -138,6 +138,14 @@ function X3DCoreContext (element)
    this [_notification]        = new Notification        (this .getPrivateScene ());
    this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
+   if ("xr" in window .navigator)
+   {
+      this .xrButton = $("<div></div>")
+         .addClass ("x_ite-private-xr-button")
+         .on ("click", () => this .makeXRCompatible ())
+         .appendTo (this .getBrowser () .getSurface ());
+   }
+
    const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body"));
    this [_pixelsPerPoint] = inches .height () / 720 || 1;
    inches .remove ();
