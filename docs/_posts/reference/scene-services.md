@@ -139,19 +139,19 @@ A reference to the ExportedNodesArray object used by this execution context. Thi
 
 #### void **setProfile** (*ProfileInfo profile*)
 
-Replaces the profile of this scene by the given profile. A profile of `null` is equivalent to a 'Full' profile.
+Replaces the profile of this scene by the given *profile*. A profile of `null` is equivalent to a 'Full' profile.
 
 #### void **addComponent** (*ComponentInfo component*)
 
-Adds the component to the list of components.
+Adds the *component* to the list of components.
 
 #### void **updateComponent** (*ComponentInfo component*)
 
-Updates the component.
+Updates the *component*.
 
 #### void **removeComponent** (*String name*)
 
-Removes the component with the given name.
+Removes the component with the given *name*.
 
 #### void **updateUnit** (*String category, String name, Number conversionFactor*)
 
