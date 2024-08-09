@@ -144,6 +144,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 {
    initialize ()
    {
+      X3DBaseNode .prototype .initialize .call (this);
+
       for (const browserContext of browserContexts)
          browserContext .prototype .initialize ?.call (this);
    },
