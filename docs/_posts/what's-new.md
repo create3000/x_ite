@@ -100,7 +100,7 @@ In the meantime, further improvements have of course been made, but these are no
 * ES module version of X_ITE named »x_ite.mjs«.
 * Typescript types for IntelliSense.
 * PLY 3d format parser.
-* [TextureProjection component](/x_ite/components/#textureprojection) is now working.
+* [TextureProjection component](/x_ite/components/overview/#textureprojection) is now working.
 
 ## X_ITE v8.10.0 Released
 
