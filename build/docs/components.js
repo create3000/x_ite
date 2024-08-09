@@ -10,8 +10,7 @@ const
    components = path .resolve ("./", "src/x_ite/Components"),
    posts      = path .resolve ("./", "docs/_posts/"),
    comp       = path .resolve ("./", "docs/_posts/components"),
-   nav        = path .resolve ("./", "docs/_data/nav"),
-   tabs       = path .resolve ("./", "docs/_tabs");
+   nav        = path .resolve ("./", "docs/_data/nav");
 
 function createIndex ()
 {
@@ -123,7 +122,7 @@ function updateComponents (supported)
 
    const md = supported
       ? path .resolve (posts, `supported-nodes.md`)
-      : path .resolve (tabs, `components.md`);
+      : path .resolve (comp, `overview.md`);
 
    let text = fs .readFileSync (md) .toString ();
 
