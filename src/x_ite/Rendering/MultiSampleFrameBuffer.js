@@ -381,6 +381,8 @@ Object .assign (Fallback .prototype,
    {
       const { context: gl, width, height } = this;
 
+      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+
       gl .viewport (0, 0, width, height);
       gl .scissor  (0, 0, width, height);
       gl .clearColor (0, 0, 0, 1);
