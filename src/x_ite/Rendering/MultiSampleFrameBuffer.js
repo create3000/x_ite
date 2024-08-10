@@ -49,7 +49,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 {
    const gl = browser .getContext ();
 
-   if (gl .getVersion () === 1 || width === 0 || height === 0)
+   if (gl .getVersion () === 1 || width === 0 || height === 0 || browser .getDefaultFrameBuffer ())
       return new Fallback (browser, width, height, samples);
 
    this .browser = browser;
@@ -323,13 +323,13 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    blit ()
    {
-      const { context: gl, width, height, samples } = this;
+      const { context: gl, width, height, samples, frameBuffer } = this;
 
       // Reset viewport before blit, otherwise only last layer size is used.
       gl .viewport (0, 0, width, height);
       gl .scissor  (0, 0, width, height);
 
-      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
+      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, frameBuffer);
       gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
 
       gl .blitFramebuffer (0, 0, width, height,
@@ -358,11 +358,12 @@ function Fallback (browser, width, height, samples)
 {
    const gl = browser .getContext ();
 
-   this .browser = browser;
-   this .context = gl;
-   this .width   = width;
-   this .height  = height;
-   this .samples = samples;
+   this .browser     = browser;
+   this .context     = gl;
+   this .width       = width;
+   this .height      = height;
+   this .samples     = samples;
+   this .frameBuffer = browser .getDefaultFrameBuffer ();
 }
 
 Object .assign (Fallback .prototype,
@@ -373,17 +374,19 @@ Object .assign (Fallback .prototype,
    getOIT () { return false; },
    bind ()
    {
-      const { context: gl } = this;
+      const { context: gl, frameBuffer } = this;
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
    },
    clear ()
    {
-      const { context: gl, width, height } = this;
+      const { context: gl, width, height, frameBuffer } = this;
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
       gl .viewport (0, 0, width, height);
       gl .scissor  (0, 0, width, height);
-      gl .clearColor (0, 0, 0, 1);
+      gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
       gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
    },

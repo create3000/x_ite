@@ -204,7 +204,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
          return;
 
       this [_tainted]   = true;
-      this [_animFrame] = requestAnimationFrame (this [_renderCallback]);
+      this [_animFrame] = this .getSession () .requestAnimationFrame (this [_renderCallback]);
    },
    nextFrame ()
    {
@@ -232,12 +232,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       }
       else
       {
-         requestAnimationFrame (this [_renderCallback]);
+         this .getSession () .requestAnimationFrame (this [_renderCallback]);
 
          return true;
       }
    },
-   [_traverse] (now)
+   [_traverse] (now, frame)
    {
       // Limit frame rate.
 
@@ -324,22 +324,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       return this [_displayTime];
    },
-   makeXRCompatible ()
-   {
-      console .log ("makeXRCompatible");
-
-      const worldURL = this .getWorldURL ();
-
-      this .getElement () .attr ("xrCompatible", true);
-
-      this .dispose ();
-
-      const browser = new this .constructor (this .getElement ());
-
-      browser .loadURL (new Fields .MFString ("https://create3000.github.io/media/examples/Geometry3D/Cylinder/Cylinder.x3d"));
-
-      return browser;
-   },
    dispose ()
    {
       // DOMIntegration .dispose ()
@@ -353,7 +337,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       this [_tainted] = true;
 
-      cancelAnimationFrame (this [_animFrame]);
+      this .getSession () .cancelAnimationFrame (this [_animFrame]);
    },
 });
 

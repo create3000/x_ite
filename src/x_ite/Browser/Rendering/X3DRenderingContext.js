@@ -90,10 +90,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       $(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
 
-      this [_resizer] = new ResizeObserver (this .reshape .bind (this));
-      this [_resizer] .observe (this .getSurface () [0]);
-
-      this .reshape ();
+      this .setResizeTarget (this .getSurface ());
    },
    getRenderer ()
    {
@@ -270,6 +267,17 @@ Object .assign (X3DRenderingContext .prototype,
       this [_depthShaders] .set (key, shaderNode);
 
       return shaderNode;
+   },
+   setResizeTarget (element)
+   {
+      this [_resizer] ?.disconnect ();
+
+      this [_resizer] = new ResizeObserver (() => this .reshape ());
+      this [_resizer] .observe (element [0]);
+
+      console .log (element [0])
+
+      this .reshape ();
    },
    resize (width, height)
    {

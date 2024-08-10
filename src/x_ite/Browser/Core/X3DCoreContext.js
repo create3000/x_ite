@@ -82,12 +82,23 @@ const
    _privateScene        = Symbol (),
    _keydown             = Symbol (),
    _keyup               = Symbol (),
-   _pixelsPerPoint      = Symbol ();
+   _pixelsPerPoint      = Symbol (),
+   _session             = Symbol (),
+   _referenceSpace      = Symbol (),
+   _defaultFrameBuffer  = Symbol ();
 
 let instanceId = 0;
 
 function X3DCoreContext (element)
 {
+   // Events
+
+   this .addChildObjects (X3DConstants .outputOnly, "controlKey", new Fields .SFBool (),
+                          X3DConstants .outputOnly, "shiftKey",   new Fields .SFBool (),
+                          X3DConstants .outputOnly, "altKey",     new Fields .SFBool (),
+                          X3DConstants .outputOnly, "commandKey", new Fields .SFBool (),
+                          X3DConstants .outputOnly, "altGrKey",   new Fields .SFBool ());
+
    // Get canvas & context.
 
    const
@@ -136,7 +147,13 @@ function X3DCoreContext (element)
    this [_notification]        = new Notification        (this .getPrivateScene ());
    this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
-   if ("xr" in window .navigator)
+   const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body"));
+   this [_pixelsPerPoint] = inches .height () / 720 || 1;
+   inches .remove ();
+
+   // XR support
+
+   if ("xr" in navigator)
    {
       $("<div></div>")
          .addClass ("x_ite-private-xr-button")
@@ -144,15 +161,8 @@ function X3DCoreContext (element)
          .appendTo (this .getBrowser () .getSurface ());
    }
 
-   const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body"));
-   this [_pixelsPerPoint] = inches .height () / 720 || 1;
-   inches .remove ();
-
-   this .addChildObjects (X3DConstants .outputOnly, "controlKey", new Fields .SFBool (),
-                          X3DConstants .outputOnly, "shiftKey",   new Fields .SFBool (),
-                          X3DConstants .outputOnly, "altKey",     new Fields .SFBool (),
-                          X3DConstants .outputOnly, "commandKey", new Fields .SFBool (),
-                          X3DConstants .outputOnly, "altGrKey",   new Fields .SFBool ());
+   this [_session]            = window;
+   this [_defaultFrameBuffer] = null;
 }
 
 Object .assign (X3DCoreContext .prototype,
@@ -815,6 +825,44 @@ Object .assign (X3DCoreContext .prototype,
          document .execCommand ("copy");
          tmp .remove ();
       }
+   },
+   async makeXRCompatible ()
+   {
+      await this .getContext () .makeXRCompatible ();
+
+      this .startXRSession ();
+   },
+   async startXRSession ()
+   {
+      // Initialize a WebXR session using "immersive-ar".
+      const
+         session        = await navigator .xr .requestSession ("immersive-vr"),
+         referenceSpace = await session .requestReferenceSpace ("local"),
+         baseLayer      = new XRWebGLLayer (session, this .getContext ());
+
+      session .updateRenderState ({ baseLayer });
+
+      console .log (baseLayer .framebufferWidth, baseLayer .framebufferHeight);
+
+
+      this [_session]            = session;
+      this [_referenceSpace]     = referenceSpace;
+      this [_defaultFrameBuffer] = baseLayer .framebuffer;
+
+      await this .nextFrame ();
+      await this .nextFrame ();
+
+      this .getCanvas () .css ({ width: "100%", height: "100%" });
+
+      this .setResizeTarget (this .getCanvas () .parent ());
+   },
+   getSession ()
+   {
+      return this [_session];
+   },
+   getDefaultFrameBuffer ()
+   {
+      return this [_defaultFrameBuffer];
    },
    dispose ()
    {
