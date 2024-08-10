@@ -264,15 +264,15 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       // Camera
 
       this [_cameraTime] .start ();
-      this [_world] .traverse (TraverseType .CAMERA);
+      // this [_world] .traverse (TraverseType .CAMERA);
       this [_cameraTime] .stop ();
 
       // Collision
 
       this [_collisionTime] .start ();
 
-      if (this .getCollisionCount ())
-         this [_world] .traverse (TraverseType .COLLISION);
+      // if (this .getCollisionCount ())
+      //    this [_world] .traverse (TraverseType .COLLISION);
 
       this [_collisionTime] .stop ();
 
@@ -288,12 +288,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this [_processEvents] ();
 
       this .getFrameBuffer () .clear ();
-      this [_world] .traverse (TraverseType .DISPLAY);
+      // this [_world] .traverse (TraverseType .DISPLAY);
 
       this .addTaintedField (this ._finishedEvents);
       this [_processEvents] ();
 
-      this .getFrameBuffer () .blit ();
+      // this .getFrameBuffer () .blit ();
       this [_displayTime] .stop ();
 
       this .addTaintedField (this ._endEvents);

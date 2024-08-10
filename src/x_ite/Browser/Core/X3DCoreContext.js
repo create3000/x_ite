@@ -834,11 +834,14 @@ Object .assign (X3DCoreContext .prototype,
    },
    async startXRSession ()
    {
-      // Initialize a WebXR session using "immersive-ar".
       const
+         gl             = this .getContext (),
          session        = await navigator .xr .requestSession ("immersive-vr"),
-         referenceSpace = await session .requestReferenceSpace ("local"),
-         baseLayer      = new XRWebGLLayer (session, this .getContext ());
+         referenceSpace = await session .requestReferenceSpace ("local");
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+
+      const baseLayer = new XRWebGLLayer (session, gl);
 
       session .updateRenderState ({ baseLayer });
 
