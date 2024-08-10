@@ -49,7 +49,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 {
    const gl = browser .getContext ();
 
-   if (gl .getVersion () === 1 || width === 0 || height === 0 || true)
+   if (gl .getVersion () === 1 || width === 0 || height === 0)
       return new Fallback (browser, width, height, samples);
 
    this .browser = browser;
@@ -261,7 +261,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
 
       gl .viewport (0, 0, width, height);
       gl .scissor  (0, 0, width, height);
-      gl .clearColor (0, 0, 0, 0);
+      gl .clearColor (Math .random (), Math .random (), Math .random (), 1);
       gl .clear (gl .COLOR_BUFFER_BIT);
    },
    bindTransparency ()

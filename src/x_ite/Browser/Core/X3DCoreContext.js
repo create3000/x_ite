@@ -157,7 +157,8 @@ function X3DCoreContext (element)
    {
       $("<div></div>")
          .addClass ("x_ite-private-xr-button")
-         .on ("click", () => this .makeXRCompatible ())
+         .on ("mousedown", false)
+         .on ("click", event => this .startXRSession (event))
          .appendTo (this .getBrowser () .getSurface ());
    }
 
@@ -826,19 +827,21 @@ Object .assign (X3DCoreContext .prototype,
          tmp .remove ();
       }
    },
-   async makeXRCompatible ()
+   async startXRSession (event)
    {
-      await this .getContext () .makeXRCompatible ();
+      event ?.preventDefault ();
+      event ?.stopImmediatePropagation ();
+      event ?.stopPropagation ();
 
-      this .startXRSession ();
-   },
-   async startXRSession ()
-   {
+      const gl = this .getContext ();
+
+      await gl .makeXRCompatible ();
+
       const
-         gl             = this .getContext (),
          session        = await navigator .xr .requestSession ("immersive-vr"),
          referenceSpace = await session .requestReferenceSpace ("local");
 
+      // Must bind default framebuffer, to get xr emulator working.
       gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
       const baseLayer = new XRWebGLLayer (session, gl);
@@ -847,7 +850,6 @@ Object .assign (X3DCoreContext .prototype,
 
       console .log (baseLayer .framebufferWidth, baseLayer .framebufferHeight);
 
-
       this [_session]            = session;
       this [_referenceSpace]     = referenceSpace;
       this [_defaultFrameBuffer] = baseLayer .framebuffer;
@@ -855,7 +857,7 @@ Object .assign (X3DCoreContext .prototype,
       await this .nextFrame ();
       await this .nextFrame ();
 
-      this .getCanvas () .css ({ width: "100%", height: "100%" });
+      this .getCanvas () .css ({ all: "unset", width: "100vw", height: "100vh" });
 
       this .setResizeTarget (this .getCanvas () .parent ());
    },
