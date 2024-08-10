@@ -385,7 +385,7 @@ Object .assign (Fallback .prototype,
 
       gl .viewport (0, 0, width, height);
       gl .scissor  (0, 0, width, height);
-      gl .clearColor (0, 0, 0, 1);
+      gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
       gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
    },
