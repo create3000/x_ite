@@ -414,6 +414,10 @@ Object .assign (X3DRenderingContext .prototype,
 
       this .getCanvas () .css ({ all: "unset", position: "fixed", width: "100vw", height: "100vh" });
    },
+   stopXRSession ()
+   {
+
+   },
    getSession ()
    {
       return this [_session];
