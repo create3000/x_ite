@@ -1117,7 +1117,7 @@ Object .assign (X3DRenderObject .prototype,
       const
          browser                  = this .getBrowser (),
          gl                       = browser .getContext (),
-         frameBuffer              = browser .getFrameBuffer (),
+         frameBuffers             = browser .getFrameBuffers (),
          independent              = this .isIndependent (),
          viewport                 = this .getViewVolume () .getViewport (),
          lights                   = this .lights,
@@ -1125,8 +1125,7 @@ Object .assign (X3DRenderObject .prototype,
          globalLights             = this .globalLights,
          generatedCubeMapTextures = this .generatedCubeMapTextures,
          globalShadows            = this .globalShadows,
-         headlight                = this .getNavigationInfo () ._headlight .getValue (),
-         oit                      = frameBuffer .getOIT () && independent;
+         headlight                = this .getNavigationInfo () ._headlight .getValue ();
 
       this .renderCount = this .getNextRenderCount ();
 
@@ -1181,13 +1180,19 @@ Object .assign (X3DRenderObject .prototype,
          gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
          gl .generateMipmap (gl .TEXTURE_2D);
 
-         this .drawShapes (gl, browser, true, frameBuffer, 0, oit, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+         for (const frameBuffer of frameBuffers)
+         {
+            this .drawShapes (gl, browser, true, frameBuffer, 0, frameBuffer .getOIT () && independent, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+         }
       }
       else
       {
          // Draw with sorted blend or OIT.
 
-         this .drawShapes (gl, browser, independent, frameBuffer, 0, oit, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+         for (const frameBuffer of frameBuffers)
+         {
+            this .drawShapes (gl, browser, independent, frameBuffer, 0, frameBuffer .getOIT () && independent, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+         }
       }
 
       // POST DRAW
