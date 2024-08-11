@@ -87,16 +87,16 @@ Object .assign (X3DRenderingContext .prototype,
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
 
-      // Configure viewport.
-
-      $(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
-
-      // Observe resize and parent changes of <canvas>.
+      // Observe resize and parent changes of <canvas> and configure viewport.
 
       this [_observer] = new MutationObserver (() => this .setResizeTarget (this .getCanvas () .parent ()));
       this [_resizer]  = new ResizeObserver (() => this .reshape ());
 
       this .setResizeTarget (this .getCanvas () .parent ());
+
+      // Observe fullscreen changes of <x3d-canvas>.
+
+      $(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', () => this .onfullscreen ());
    },
    getRenderer ()
    {
