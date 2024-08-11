@@ -372,6 +372,9 @@ Object .assign (X3DRenderingContext .prototype,
       this [_session]            = window;
       this [_defaultFrameBuffer] = null;
 
+      if (this .getContext () .getVersion () <= 1)
+         return;
+
       if (!("xr" in navigator))
          return;
 
@@ -428,18 +431,18 @@ Object .assign (X3DRenderingContext .prototype,
       if (!frame)
          return;
 
+      if (this .xxx)
+         return;
+
+      this .xxx = 1
+
       const pose = frame .getViewerPose (this [_referenceSpace]);
 
-      if (!this .xxx)
+      for (const view of pose .views)
       {
-         this .xxx = 1
+         const { x, y, width, height } = this [_session] .renderState .baseLayer .getViewport (view);
 
-         for (const view of pose .views)
-         {
-            const { x, y, width, height } = this [_session] .renderState .baseLayer .getViewport (view);
-
-            console .log (x, y, width, height);
-         }
+         console .log (x, y, width, height);
       }
    },
    dispose ()
