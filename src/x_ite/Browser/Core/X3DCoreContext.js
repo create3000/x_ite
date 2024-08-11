@@ -833,11 +833,9 @@ Object .assign (X3DCoreContext .prototype,
       event ?.stopImmediatePropagation ();
       event ?.stopPropagation ();
 
-      const gl = this .getContext ();
-
-      await gl .makeXRCompatible ();
-
       const
+         gl             = this .getContext (),
+         compatible     = await gl .makeXRCompatible (),
          session        = await navigator .xr .requestSession ("immersive-vr"),
          referenceSpace = await session .requestReferenceSpace ("local");
 
@@ -847,8 +845,6 @@ Object .assign (X3DCoreContext .prototype,
       const baseLayer = new XRWebGLLayer (session, gl);
 
       session .updateRenderState ({ baseLayer });
-
-      console .log (baseLayer .framebufferWidth, baseLayer .framebufferHeight);
 
       this [_session]            = session;
       this [_referenceSpace]     = referenceSpace;
