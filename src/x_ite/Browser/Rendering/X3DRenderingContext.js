@@ -72,7 +72,7 @@ function X3DRenderingContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .MFInt32 (0, 0, 300, 150));
 
-   this [_frameBuffers] = [new MultiSampleFrameBuffer (this, 300, 150, 4)];
+   this [_frameBuffers] = [ ];
    this [_depthShaders] = new Map ();
    this [_localObjects] = [ ]; // shader objects dumpster
 
@@ -329,9 +329,7 @@ Object .assign (X3DRenderingContext .prototype,
       const
          canvas       = this .getCanvas (),
          contentScale = this .getRenderingProperty ("ContentScale"),
-         samples      = this .getRenderingProperty ("Multisampling"),
-         oit          = this .getBrowserOption ("OrderIndependentTransparency"),
-         width        = Math .max (canvas .width () * contentScale, 1),
+         width        = Math .max (canvas .width ()  * contentScale, 1),
          height       = Math .max (canvas .height () * contentScale, 1);
 
       this .addBrowserEvent ();
@@ -339,22 +337,46 @@ Object .assign (X3DRenderingContext .prototype,
       canvas .prop ("width",  width);
       canvas .prop ("height", height);
 
-      this ._viewport [2] = width;
-      this ._viewport [3] = height;
+      if (this [_frameBuffers] .length < 2)
+         this .reshapeFrameBuffer (0, 0, 0, width, height);
+   },
+   reshapeFrameBuffer (i, x, y, width, height)
+   {
+      const
+         samples     = this .getRenderingProperty ("Multisampling"),
+         oit         = this .getBrowserOption ("OrderIndependentTransparency"),
+         frameBuffer = this [_frameBuffers] [i];
 
-      if (width   === this [_frameBuffers] [0] .getWidth ()   &&
-          height  === this [_frameBuffers] [0] .getHeight ()  &&
-          samples === this [_frameBuffers] [0] .getSamples () &&
-          oit     === this [_frameBuffers] [0] .getOIT ())
+      if (frameBuffer &&
+          x       === frameBuffer .getX () &&
+          y       === frameBuffer .getY () &&
+          width   === frameBuffer .getWidth () &&
+          height  === frameBuffer .getHeight () &&
+          samples === frameBuffer .getSamples () &&
+          oit     === frameBuffer .getOIT ())
       {
          return;
       }
 
-      this [_frameBuffers] [0] .dispose ();
-      this [_frameBuffers] [0] = new MultiSampleFrameBuffer (this, width, height, samples, oit);
+      this ._viewport [2] = width;
+      this ._viewport [3] = height;
 
+      frameBuffer ?.dispose ();
+
+      this [_frameBuffers] [i] = new MultiSampleFrameBuffer (this, x, y, width, height, samples, oit);
+
+      this .reshapeTransmissionBuffer (width, height);
+   },
+   reshapeTransmissionBuffer (width, height)
+   {
       if (!this [_transmissionBuffer])
          return;
+
+      if (width  === this [_transmissionBuffer] .getWidth () &&
+          height === this [_transmissionBuffer] .getHeight ())
+      {
+         return;
+      }
 
       this [_transmissionBuffer] .dispose ();
       this [_transmissionBuffer] = new TextureBuffer (this, width, height, false, true);
@@ -437,18 +459,13 @@ Object .assign (X3DRenderingContext .prototype,
       if (!frame)
          return;
 
-      // DEBUG
-      if (this .xxx)
-         return;
-      this .xxx = 1
-
       const pose = frame .getViewerPose (this [_referenceSpace]);
 
-      for (const view of pose .views)
+      for (const [i, view] of pose .views .entries ())
       {
          const { x, y, width, height } = this [_baseLayer] .getViewport (view);
 
-         console .log (x, y, width, height);
+         this .reshapeFrameBuffer (i, x, y, width, height);
       }
    },
    dispose ()
