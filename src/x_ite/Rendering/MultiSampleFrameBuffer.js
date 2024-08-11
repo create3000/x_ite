@@ -98,7 +98,7 @@ function MultiSampleFrameBuffer (browser, x, y, width, height, samples, oit)
    if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
       throw new Error ("Couldn't create frame buffer.");
 
-   if (x)
+   if (x || y)
    {
       // Create frame buffer.
 
@@ -354,8 +354,8 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       const { browser, context: gl, x, y, width, height, samples, frameBuffer, auxBuffer } = this;
 
       // Reset viewport before blit, otherwise only last layer size is used.
-      gl .viewport (0, 0, width, height);
-      gl .scissor  (0, 0, width, height);
+      gl .viewport (0, 0, x + width, y + height);
+      gl .scissor  (0, 0, x + width, y + height);
 
       gl .bindFramebuffer (gl .READ_FRAMEBUFFER, frameBuffer);
       gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, auxBuffer ?? browser .getDefaultFrameBuffer ());
@@ -366,9 +366,6 @@ Object .assign (MultiSampleFrameBuffer .prototype,
 
       if (!auxBuffer)
          return;
-
-      gl .viewport (0, 0, x + width, y + height);
-      gl .scissor  (0, 0, x + width, y + height);
 
       gl .bindFramebuffer (gl .READ_FRAMEBUFFER, auxBuffer);
       gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, browser .getDefaultFrameBuffer ());

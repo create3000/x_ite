@@ -440,7 +440,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    stopXRSession ()
    {
-
+      this [_frameBuffers] .length = 0;
    },
    getSession ()
    {
