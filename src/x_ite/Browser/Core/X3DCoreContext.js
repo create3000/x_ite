@@ -854,12 +854,7 @@ Object .assign (X3DCoreContext .prototype,
       this [_referenceSpace]     = referenceSpace;
       this [_defaultFrameBuffer] = baseLayer .framebuffer;
 
-      await this .nextFrame ();
-      await this .nextFrame ();
-
       this .getCanvas () .css ({ all: "unset", width: "100vw", height: "100vh" });
-
-      this .setResizeTarget (this .getCanvas () .parent ());
    },
    getSession ()
    {

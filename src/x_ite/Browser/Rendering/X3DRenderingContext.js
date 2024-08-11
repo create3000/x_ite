@@ -54,6 +54,7 @@ import { maxClipPlanes }      from "./RenderingConfiguration.js";
 const
    _frameBuffer        = Symbol (),
    _transmissionBuffer = Symbol (),
+   _observer           = Symbol (),
    _resizer            = Symbol (),
    _localObjects       = Symbol (),
    _fullscreenArray    = Symbol (),
@@ -90,7 +91,12 @@ Object .assign (X3DRenderingContext .prototype,
 
       $(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
 
-      this .setResizeTarget (this .getSurface ());
+      // Observe resize and parent changes of <canvas>.
+
+      this [_observer] = new MutationObserver (() => this .setResizeTarget (this .getCanvas () .parent ()));
+      this [_resizer]  = new ResizeObserver (() => this .reshape ());
+
+      this .setResizeTarget (this .getCanvas () .parent ());
    },
    getRenderer ()
    {
@@ -270,9 +276,10 @@ Object .assign (X3DRenderingContext .prototype,
    },
    setResizeTarget (element)
    {
-      this [_resizer] ?.disconnect ();
+      this [_observer] .disconnect ();
+      this [_observer] .observe (element [0], { childList: true });
 
-      this [_resizer] = new ResizeObserver (() => this .reshape ());
+      this [_resizer] .disconnect ();
       this [_resizer] .observe (element [0]);
 
       this .reshape ();
