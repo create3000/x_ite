@@ -444,6 +444,8 @@ Object .assign (X3DRenderingContext .prototype,
    },
    dispose ()
    {
+      this [_session] = window;
+
       this [_observer] .disconnect ();
       this [_resizer]  .disconnect ();
    },

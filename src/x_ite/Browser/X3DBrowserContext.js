@@ -330,18 +330,16 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    },
    dispose ()
    {
-      // DOMIntegration .dispose ()
-
       browsers .delete (this);
+
+      this [_tainted] = true;
+
+      this .getSession () .cancelAnimationFrame (this [_animFrame]);
 
       for (const browserContext of browserContexts .slice () .reverse ())
          browserContext .prototype .dispose ?.call (this);
 
       X3DBaseNode .prototype .dispose .call (this);
-
-      this [_tainted] = true;
-
-      this .getSession () .cancelAnimationFrame (this [_animFrame]);
    },
 });
 

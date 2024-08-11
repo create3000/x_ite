@@ -949,6 +949,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       this .currentScene .toJSONStream (generator);
    },
+   dispose ()
+   {
+      this [_DOMIntegration] .dispose ();
+
+      X3DBrowserContext .prototype .dispose .call (this);
+   },
 });
 
 for (const key of Object .keys (X3DBrowser .prototype))
