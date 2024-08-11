@@ -617,9 +617,9 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: absolute;
   right: 10px;
   bottom: 10px;
-  width: 30px;
-  height: 18px;
-  background: url("assets/images/EnterXR.png");
+  width: 32px;
+  height: 19px;
+  background: url("assets/images/XR.svg");
   opacity: 0.5;
   cursor: pointer;
 }
