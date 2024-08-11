@@ -153,17 +153,10 @@ function X3DCoreContext (element)
 
    // XR support
 
-   if ("xr" in navigator)
-   {
-      $("<div></div>")
-         .addClass ("x_ite-private-xr-button")
-         .on ("mousedown", false)
-         .on ("click", event => this .startXRSession (event))
-         .appendTo (this .getBrowser () .getSurface ());
-   }
-
    this [_session]            = window;
    this [_defaultFrameBuffer] = null;
+
+   this .checkForXRSupport ();
 }
 
 Object .assign (X3DCoreContext .prototype,
@@ -826,6 +819,22 @@ Object .assign (X3DCoreContext .prototype,
          document .execCommand ("copy");
          tmp .remove ();
       }
+   },
+   async checkForXRSupport ()
+   {
+      if (!("xr" in navigator))
+         return;
+
+      const supported = await navigator .xr .isSessionSupported ("immersive-vr");
+
+      if (!supported)
+         return;
+
+      $("<div></div>")
+         .addClass ("x_ite-private-xr-button")
+         .on ("mousedown", false)
+         .on ("click", event => this .startXRSession (event))
+         .appendTo (this .getSurface ());
    },
    async startXRSession (event)
    {
