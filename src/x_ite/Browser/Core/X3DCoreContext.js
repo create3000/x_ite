@@ -82,10 +82,7 @@ const
    _privateScene        = Symbol (),
    _keydown             = Symbol (),
    _keyup               = Symbol (),
-   _pixelsPerPoint      = Symbol (),
-   _session             = Symbol (),
-   _referenceSpace      = Symbol (),
-   _defaultFrameBuffer  = Symbol ();
+   _pixelsPerPoint      = Symbol ();
 
 let instanceId = 0;
 
@@ -110,7 +107,7 @@ function X3DCoreContext (element)
 
    if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
    {
-      const shadow = $(element [0] .shadowRoot ?? element [0] .attachShadow ({ mode: "open", delegatesFocus: true }));
+      const shadow = $(element [0] .attachShadow ({ mode: "open", delegatesFocus: true }));
 
       $("<link/>")
          .on ("load", () => browser .show ())
@@ -137,7 +134,7 @@ function X3DCoreContext (element)
    this [_element]      = element;
    this [_surface]      = surface;
    this [_canvas]       = $("<canvas></canvas>") .attr ("part", "canvas") .addClass ("x_ite-private-canvas") .prependTo (surface);
-   this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true", element .attr ("xrCompatible") === "true", this [_mobile]);
+   this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true", this [_mobile]);
    this [_splashScreen] = splashScreen;
 
    this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
@@ -150,13 +147,6 @@ function X3DCoreContext (element)
    const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body"));
    this [_pixelsPerPoint] = inches .height () / 720 || 1;
    inches .remove ();
-
-   // XR support
-
-   this [_session]            = window;
-   this [_defaultFrameBuffer] = null;
-
-   this .checkForXRSupport ();
 }
 
 Object .assign (X3DCoreContext .prototype,
@@ -180,7 +170,6 @@ Object .assign (X3DCoreContext .prototype,
          {
             value: this,
             enumerable: true,
-            configurable: true,
          },
          src:
          {
@@ -194,7 +183,6 @@ Object .assign (X3DCoreContext .prototype,
                   .catch (error => console .error (error));
             },
             enumerable: true,
-            configurable: true,
          },
          url:
          {
@@ -208,7 +196,6 @@ Object .assign (X3DCoreContext .prototype,
                   .catch (error => console .error (error));
             },
             enumerable: true,
-            configurable: true,
          },
       });
 
@@ -819,55 +806,6 @@ Object .assign (X3DCoreContext .prototype,
          document .execCommand ("copy");
          tmp .remove ();
       }
-   },
-   async checkForXRSupport ()
-   {
-      if (!("xr" in navigator))
-         return;
-
-      const supported = await navigator .xr .isSessionSupported ("immersive-vr");
-
-      if (!supported)
-         return;
-
-      $("<div></div>")
-         .addClass ("x_ite-private-xr-button")
-         .on ("mousedown", false)
-         .on ("click", event => this .startXRSession (event))
-         .appendTo (this .getSurface ());
-   },
-   async startXRSession (event)
-   {
-      event ?.preventDefault ();
-      event ?.stopImmediatePropagation ();
-      event ?.stopPropagation ();
-
-      const
-         gl             = this .getContext (),
-         compatible     = await gl .makeXRCompatible (),
-         session        = await navigator .xr .requestSession ("immersive-vr"),
-         referenceSpace = await session .requestReferenceSpace ("local");
-
-      // Must bind default framebuffer, to get xr emulator working.
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
-      const baseLayer = new XRWebGLLayer (session, gl);
-
-      session .updateRenderState ({ baseLayer });
-
-      this [_session]            = session;
-      this [_referenceSpace]     = referenceSpace;
-      this [_defaultFrameBuffer] = baseLayer .framebuffer;
-
-      this .getCanvas () .css ({ all: "unset", position: "fixed", width: "100vw", height: "100vh" });
-   },
-   getSession ()
-   {
-      return this [_session];
-   },
-   getDefaultFrameBuffer ()
-   {
-      return this [_defaultFrameBuffer];
    },
    dispose ()
    {

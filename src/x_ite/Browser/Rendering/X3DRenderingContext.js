@@ -62,6 +62,11 @@ const
    _composeShader      = Symbol (),
    _depthShaders       = Symbol ();
 
+const
+   _session            = Symbol (),
+   _referenceSpace     = Symbol (),
+   _defaultFrameBuffer = Symbol ();
+
 function X3DRenderingContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .MFInt32 (0, 0, 300, 150));
@@ -69,6 +74,10 @@ function X3DRenderingContext ()
    this [_frameBuffer]  = new MultiSampleFrameBuffer (this, 300, 150, 4);
    this [_depthShaders] = new Map ();
    this [_localObjects] = [ ]; // shader objects dumpster
+
+   // XR support
+
+   this .addXRSupport ();
 }
 
 Object .assign (X3DRenderingContext .prototype,
@@ -358,9 +367,85 @@ Object .assign (X3DRenderingContext .prototype,
       else
          element .removeClass ("x_ite-fullscreen");
    },
+   async addXRSupport ()
+   {
+      this [_session]            = window;
+      this [_defaultFrameBuffer] = null;
+
+      if (!("xr" in navigator))
+         return;
+
+      const supported = await navigator .xr .isSessionSupported ("immersive-vr");
+
+      if (!supported)
+         return;
+
+      $("<div></div>")
+         .addClass ("x_ite-private-xr-button")
+         .on ("mousedown", false)
+         .on ("click", event => this .startXRSession (event))
+         .appendTo (this .getSurface ());
+   },
+   async startXRSession (event)
+   {
+      event ?.preventDefault ();
+      event ?.stopImmediatePropagation ();
+      event ?.stopPropagation ();
+
+      const
+         gl             = this .getContext (),
+         compatible     = await gl .makeXRCompatible (),
+         session        = await navigator .xr .requestSession ("immersive-vr"),
+         referenceSpace = await session .requestReferenceSpace ("local");
+
+      // Must bind default framebuffer, to get xr emulator working.
+      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+
+      const baseLayer = new XRWebGLLayer (session, gl);
+
+      session .updateRenderState ({ baseLayer });
+
+      this [_session]            = session;
+      this [_referenceSpace]     = referenceSpace;
+      this [_defaultFrameBuffer] = baseLayer .framebuffer;
+
+      this .getCanvas () .css ({ all: "unset", position: "fixed", width: "100vw", height: "100vh" });
+   },
+   getSession ()
+   {
+      return this [_session];
+   },
+   getReferenceSpace ()
+   {
+      return this [_referenceSpace];
+   },
+   getDefaultFrameBuffer ()
+   {
+      return this [_defaultFrameBuffer];
+   },
+   setFrame (frame)
+   {
+      if (!frame)
+         return;
+
+      const pose = frame .getViewerPose (this [_referenceSpace]);
+
+      if (!this .xxx)
+      {
+         this .xxx = 1
+
+         for (const view of pose .views)
+         {
+            const { x, y, width, height } = this [_session] .renderState .baseLayer .getViewport (view);
+
+            console .log (x, y, width, height);
+         }
+      }
+   },
    dispose ()
    {
-      this [_resizer] .disconnect ();
+      this [_observer] .disconnect ();
+      this [_resizer]  .disconnect ();
    },
 });
 

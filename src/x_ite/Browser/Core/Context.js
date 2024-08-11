@@ -53,9 +53,9 @@ const Context =
       "WEBGL_debug_renderer_info",
       "WEBGL_polygon_mode",
    ]),
-   create (canvas, version, preserveDrawingBuffer, xrCompatible, mobile)
+   create (canvas, version, preserveDrawingBuffer, mobile)
    {
-      const options = { preserveDrawingBuffer, xrCompatible };
+      const options = { preserveDrawingBuffer };
 
       let gl = null;
 
