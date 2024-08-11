@@ -299,6 +299,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this .addTaintedField (this ._endEvents);
       this [_processEvents] ();
 
+      if (frame)
+         this .addBrowserEvent ();
+
       // Finish
 
       this [_browserTime] .stop ();
