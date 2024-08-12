@@ -430,6 +430,7 @@ Object .assign (X3DRenderingContext .prototype,
       const baseLayer = new XRWebGLLayer (session, gl);
 
       session .updateRenderState ({ baseLayer });
+      session .addEventListener ("end", () => this .exitXRSession ());
 
       this [_session]            = session;
       this [_referenceSpace]     = referenceSpace;
@@ -437,10 +438,28 @@ Object .assign (X3DRenderingContext .prototype,
       this [_defaultFrameBuffer] = baseLayer .framebuffer;
 
       this .getCanvas () .css ({ all: "unset", position: "fixed", width: "100vw", height: "100vh" });
+
+      this .addBrowserEvent ();
    },
-   stopXRSession ()
+   exitXRSession ()
    {
+      console .log ("exitXRSession")
+
+      this [_session] .end ();
+
+      this [_session]            = window;
+      this [_referenceSpace]     = null;
+      this [_baseLayer]          = null;
+      this [_defaultFrameBuffer] = null;
+
+      for (const frameBuffer of this [_frameBuffers])
+         frameBuffer .dispose ();
+
       this [_frameBuffers] .length = 0;
+
+      this .getCanvas () .removeAttr ("style");
+
+      this .addBrowserEvent ();
    },
    getSession ()
    {
@@ -466,6 +485,10 @@ Object .assign (X3DRenderingContext .prototype,
          const { x, y, width, height } = this [_baseLayer] .getViewport (view);
 
          this .reshapeFrameBuffer (i, x, y, width, height);
+
+         this [_frameBuffers] [i] .projectionMatrix  = view .projectionMatrix;
+         this [_frameBuffers] [i] .viewMatrix        = view .transform .inverse .matrix;
+         this [_frameBuffers] [i] .cameraSpaceMatrix = view .transform .matrix;
       }
    },
    dispose ()

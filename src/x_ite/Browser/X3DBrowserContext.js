@@ -332,6 +332,14 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       return this [_displayTime];
    },
+   exitXRSession ()
+   {
+      this [_tainted] = false;
+
+      this .getSession () .cancelAnimationFrame (this [_animFrame]);
+
+      X3DRenderingContext .prototype .exitXRSession .call (this);
+   },
    dispose ()
    {
       browsers .delete (this);

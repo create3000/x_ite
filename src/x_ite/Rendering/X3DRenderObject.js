@@ -1127,8 +1127,6 @@ Object .assign (X3DRenderObject .prototype,
          globalShadows            = this .globalShadows,
          headlight                = this .getNavigationInfo () ._headlight .getValue ();
 
-      this .renderCount = this .getNextRenderCount ();
-
       // PREPARATIONS
 
       if (independent)
@@ -1155,42 +1153,43 @@ Object .assign (X3DRenderObject .prototype,
       this .renderAndGlobalLightsKey = `.${this .renderKey}.${globalLightsKeys .sort () .join ("")}.`;
       this .globalShadow             = globalShadows .at (-1);
 
-      // Set global uniforms.
-
-      this .viewportArray          .set (viewport);
-      this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
-      this .viewMatrixArray        .set (this .getViewMatrix () .get ());
-      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-
       // DRAW
 
-      if (independent && this .transmission)
+      for (const frameBuffer of frameBuffers)
       {
-         // Transmission
+         this .renderCount = this .getNextRenderCount ();
 
-         const
-            transmissionBuffer               = browser .getTransmissionBuffer (),
-            transmissionOpaqueShapes         = this .transmissionOpaqueShapes,
-            transmissionTransparentShapes    = this .transmissionTransparentShapes,
-            numTransmissionOpaqueShapes      = transmissionOpaqueShapes .length,
-            numTransmissionTransparentShapes = transmissionTransparentShapes .length;
+         // Set global uniforms.
 
-         this .drawShapes (gl, browser, true, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes, this .transmissionTransparencySorter);
+         this .viewportArray          .set (viewport);
+         this .projectionMatrixArray  .set (frameBuffer .projectionMatrix ?? this .getProjectionMatrix () .get ());
+         this .viewMatrixArray        .set (frameBuffer .viewMatrix ?? this .getViewMatrix () .get ());
+         this .cameraSpaceMatrixArray .set (frameBuffer .cameraSpaceMatrix ?? this .getCameraSpaceMatrix () .get ());
 
-         gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
-         gl .generateMipmap (gl .TEXTURE_2D);
-
-         for (const frameBuffer of frameBuffers)
+         if (independent && this .transmission)
          {
+            // Transmission
+
+            const
+               transmissionBuffer               = browser .getTransmissionBuffer (),
+               transmissionOpaqueShapes         = this .transmissionOpaqueShapes,
+               transmissionTransparentShapes    = this .transmissionTransparentShapes,
+               numTransmissionOpaqueShapes      = transmissionOpaqueShapes .length,
+               numTransmissionTransparentShapes = transmissionTransparentShapes .length;
+
+            this .drawShapes (gl, browser, true, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes, this .transmissionTransparencySorter);
+
+            gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
+            gl .generateMipmap (gl .TEXTURE_2D);
+
+            // Draw with sorted blend or OIT.
+
             this .drawShapes (gl, browser, true, frameBuffer, 0, frameBuffer .getOIT () && independent, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
          }
-      }
-      else
-      {
-         // Draw with sorted blend or OIT.
-
-         for (const frameBuffer of frameBuffers)
+         else
          {
+            // Draw with sorted blend or OIT.
+
             this .drawShapes (gl, browser, independent, frameBuffer, 0, frameBuffer .getOIT () && independent, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
          }
       }
