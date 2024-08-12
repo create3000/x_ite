@@ -430,7 +430,7 @@ Object .assign (X3DRenderingContext .prototype,
       const baseLayer = new XRWebGLLayer (session, gl);
 
       session .updateRenderState ({ baseLayer });
-      session .addEventListener ("end", () => this .exitXRSession ());
+      session .addEventListener ("end", () => this .stopXRSession ());
 
       this [_session]            = session;
       this [_referenceSpace]     = referenceSpace;
@@ -441,7 +441,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       this .addBrowserEvent ();
    },
-   exitXRSession ()
+   stopXRSession ()
    {
       const session = this [_session];
 

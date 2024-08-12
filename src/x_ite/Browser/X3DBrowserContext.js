@@ -332,7 +332,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       return this [_displayTime];
    },
-   exitXRSession ()
+   stopXRSession ()
    {
       this [_tainted] = false;
 
