@@ -456,7 +456,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       this .getCanvas () .removeAttr ("style");
       this .addBrowserEvent ();
-      this .reshape ();
+      this .reshape (); // Maybe not needed, because a setResizeTarget comes later.
    },
    getSession ()
    {
