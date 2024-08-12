@@ -83,6 +83,8 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    groupNodes ._children = [groupNode];
    groupNodes .setPrivate (true);
 
+   this .active       = false;
+   this .layer0       = false;
    this .groupNodes   = groupNodes;
    this .viewportNode = null;
 
@@ -150,6 +152,18 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    getBBox (bbox, shadows)
    {
       return this .groupNodes .getBBox (bbox, shadows);
+   },
+   getActive ()
+   {
+      return this .active;
+   },
+   setActive (value)
+   {
+      this .active = value;
+   },
+   getLayer0 ()
+   {
+      return this .layer0 ;
    },
    setLayer0 (value)
    {
@@ -283,11 +297,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
    traverse (type, renderObject = this)
    {
-      const
-         browser = this .getBrowser (),
-         pose    = browser .getPose ();
+      const pose = this .getBrowser () .getPose ();
 
-      if (pose && this === browser .getActiveLayer ())
+      if (pose && this .active)
       {
          this .getProjectionMatrix ()  .pushMatrix (pose .projectionMatrix);
          this .getCameraSpaceMatrix () .pushMatrix (pose .cameraSpaceMatrix);

@@ -100,6 +100,8 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
    },
    set_activeLayer__ ()
    {
+      this .activeLayerNode ?.setActive (false);
+
       if (this ._activeLayer .getValue () === 0)
       {
          if (this .activeLayerNode !== this .layerNode0)
@@ -120,6 +122,8 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
                this .activeLayerNode = null;
          }
       }
+
+      this .activeLayerNode ?.setActive (true);
    },
    set_layers__ ()
    {
