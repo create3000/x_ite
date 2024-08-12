@@ -50,6 +50,7 @@ import X3DConstants           from "../../Base/X3DConstants.js";
 import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
 import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
+import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
 
 const
    _frameBuffers       = Symbol (),
@@ -66,7 +67,8 @@ const
    _session            = Symbol (),
    _referenceSpace     = Symbol (),
    _baseLayer          = Symbol (),
-   _defaultFrameBuffer = Symbol ();
+   _defaultFrameBuffer = Symbol (),
+   _pose               = Symbol ();
 
 function X3DRenderingContext ()
 {
@@ -437,6 +439,16 @@ Object .assign (X3DRenderingContext .prototype,
       this [_baseLayer]          = baseLayer;
       this [_defaultFrameBuffer] = baseLayer .framebuffer;
 
+      this [_pose] = {
+         projectionMatrix: new Matrix4 (),
+         cameraSpaceMatrix: new Matrix4 (),
+         viewMatrix: new Matrix4 (),
+         views: [
+            new Matrix4 (),
+            new Matrix4 (),
+         ],
+      };
+
       this .getCanvas () .css ({ all: "unset", position: "fixed", width: "100vw", height: "100vh" });
       this .addBrowserEvent ();
    },
@@ -453,6 +465,7 @@ Object .assign (X3DRenderingContext .prototype,
       this [_referenceSpace]     = null;
       this [_baseLayer]          = null;
       this [_defaultFrameBuffer] = null;
+      this [_pose]               = null;
 
       this .getCanvas () .removeAttr ("style");
       this .addBrowserEvent ();
@@ -477,16 +490,29 @@ Object .assign (X3DRenderingContext .prototype,
 
       const pose = frame .getViewerPose (this [_referenceSpace]);
 
+      this [_pose] .cameraSpaceMatrix .assign (pose .transform .matrix);
+      this [_pose] .viewMatrix        .assign (pose .transform .inverse .matrix);
+
+      // console .log (... pose .transform .matrix)
+
       for (const [i, view] of pose .views .entries ())
       {
          const { x, y, width, height } = this [_baseLayer] .getViewport (view);
 
          this .reshapeFrameBuffer (i, x, y, width, height);
 
-         this [_frameBuffers] [i] .projectionMatrix  = view .projectionMatrix;
-         this [_frameBuffers] [i] .viewMatrix        = view .transform .inverse .matrix;
-         this [_frameBuffers] [i] .cameraSpaceMatrix = view .transform .matrix;
+         this [_pose] .projectionMatrix .assign (view .projectionMatrix);
+
+         // this [_frameBuffers] [i] .projectionMatrix  = view .projectionMatrix;
+         // this [_frameBuffers] [i] .viewMatrix        = view .transform .inverse .matrix;
+         // this [_frameBuffers] [i] .cameraSpaceMatrix = view .transform .matrix;
+
+         // console .log (i, ... view .projectionMatrix)
       }
+   },
+   getPose ()
+   {
+      return this [_pose];
    },
    dispose ()
    {

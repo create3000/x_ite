@@ -1162,9 +1162,9 @@ Object .assign (X3DRenderObject .prototype,
          // Set global uniforms.
 
          this .viewportArray          .set (viewport);
-         this .projectionMatrixArray  .set (frameBuffer .projectionMatrix ?? this .getProjectionMatrix () .get ());
-         this .viewMatrixArray        .set (frameBuffer .viewMatrix ?? this .getViewMatrix () .get ());
-         this .cameraSpaceMatrixArray .set (frameBuffer .cameraSpaceMatrix ?? this .getCameraSpaceMatrix () .get ());
+         this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
+         this .viewMatrixArray        .set (this .getViewMatrix () .get ());
+         this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 
          if (independent && this .transmission)
          {
