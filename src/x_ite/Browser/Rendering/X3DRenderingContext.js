@@ -438,28 +438,25 @@ Object .assign (X3DRenderingContext .prototype,
       this [_defaultFrameBuffer] = baseLayer .framebuffer;
 
       this .getCanvas () .css ({ all: "unset", position: "fixed", width: "100vw", height: "100vh" });
-
       this .addBrowserEvent ();
    },
    stopXRSession ()
    {
-      const session = this [_session];
+      for (const frameBuffer of this [_frameBuffers])
+         frameBuffer .dispose ();
+
+      this [_frameBuffers] .length = 0;
+
+      this [_session] .end ();
 
       this [_session]            = window;
       this [_referenceSpace]     = null;
       this [_baseLayer]          = null;
       this [_defaultFrameBuffer] = null;
 
-      for (const frameBuffer of this [_frameBuffers])
-         frameBuffer .dispose ();
-
-      this [_frameBuffers] .length = 0;
-
-      session .end ();
-
       this .getCanvas () .removeAttr ("style");
-
       this .addBrowserEvent ();
+      this .reshape ();
    },
    getSession ()
    {

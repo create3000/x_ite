@@ -338,7 +338,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       this .getSession () .cancelAnimationFrame (this [_animFrame]);
 
-      X3DRenderingContext .prototype .exitXRSession .call (this);
+      X3DRenderingContext .prototype .stopXRSession .call (this);
    },
    dispose ()
    {
