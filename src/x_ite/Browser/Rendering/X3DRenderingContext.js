@@ -443,9 +443,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    exitXRSession ()
    {
-      console .log ("exitXRSession")
-
-      this [_session] .end ();
+      const session = this [_session];
 
       this [_session]            = window;
       this [_referenceSpace]     = null;
@@ -456,6 +454,8 @@ Object .assign (X3DRenderingContext .prototype,
          frameBuffer .dispose ();
 
       this [_frameBuffers] .length = 0;
+
+      session .end ();
 
       this .getCanvas () .removeAttr ("style");
 
