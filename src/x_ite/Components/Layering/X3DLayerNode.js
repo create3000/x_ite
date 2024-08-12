@@ -153,7 +153,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       return this .groupNodes .getBBox (bbox, shadows);
    },
-   getActive ()
+   isActive ()
    {
       return this .active;
    },
@@ -161,9 +161,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       this .active = value;
    },
-   getLayer0 ()
+   isLayer0 ()
    {
-      return this .layer0 ;
+      return this .layer0;
    },
    setLayer0 (value)
    {
