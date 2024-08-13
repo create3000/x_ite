@@ -444,7 +444,7 @@ Object .assign (X3DRenderingContext .prototype,
       this [_session]            = session;
       this [_baseReferenceSpace] = referenceSpace;
       this [_baseLayer]          = baseLayer;
-      this [_defaultFrameBuffer] = baseLayer .framebuffer;
+      this [_defaultFrameBuffer] = null;
 
       this [_pose] = {
          projectionMatrix: new Matrix4 (),
