@@ -3,7 +3,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 993:
+/***/ 176:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -15551,6 +15551,7 @@ Object .assign (X3DTextGeometry .prototype,
          font             = fontStyle .getFont (),
          normal           = fontStyle ._horizontal .getValue () ? fontStyle ._leftToRight .getValue () : fontStyle ._topToBottom .getValue (),
          glyphs           = this .stringToGlyphs (font, line, normal, lineNumber),
+         numGlyphs        = glyphs .length,
          primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
 
       let
@@ -15559,9 +15560,10 @@ Object .assign (X3DTextGeometry .prototype,
          yMin = Number .POSITIVE_INFINITY,
          yMax = Number .NEGATIVE_INFINITY;
 
-      for (const [g, glyph] of glyphs .entries ())
+      for (let g = 0; g < numGlyphs; ++ g)
       {
          const
+            glyph     = glyphs [g],
             nextGlyph = glyphs [g + 1],
             kerning   = nextGlyph ? font .getKerningValue (glyph, nextGlyph) : 0;
 
@@ -16083,7 +16085,7 @@ const FontStyle_default_ = FontStyle;
 /* harmony default export */ const Text_FontStyle = (external_X_ITE_X3D_Namespace_default().add ("FontStyle", FontStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(254);
-/* provided dependency */ var opentype = __webpack_require__(993);
+/* provided dependency */ var opentype = __webpack_require__(176);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

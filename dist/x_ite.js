@@ -12,10 +12,10 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 646:
+/***/ 177:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(142);
+/* provided dependency */ var jQuery = __webpack_require__(409);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -211,7 +211,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 860:
+/***/ 369:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -225,7 +225,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(142)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(409)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -436,7 +436,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 142:
+/***/ 409:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11160,7 +11160,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 303:
+/***/ 234:
 /***/ ((module) => {
 
 /**
@@ -15939,7 +15939,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 806:
+/***/ 765:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19184,7 +19184,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 865:
+/***/ 34:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -34218,7 +34218,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /* harmony default export */ const Base_X3DBaseNode = (x_ite_Namespace .add ("X3DBaseNode", X3DBaseNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(142);
+/* provided dependency */ var $ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -37379,7 +37379,7 @@ const X3DBindableNode_default_ = X3DBindableNode;
 
 /* harmony default export */ const Core_X3DBindableNode = (x_ite_Namespace .add ("X3DBindableNode", X3DBindableNode_default_));
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(303);
+/* provided dependency */ var libtess = __webpack_require__(234);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39917,7 +39917,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (x_ite_Namespace .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(142);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -40173,7 +40173,7 @@ const Expressions_default_ = Expressions;
 
 /* harmony default export */ const Parser_Expressions = (x_ite_Namespace .add ("Expressions", Expressions_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(142);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42872,7 +42872,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (x_ite_Namespace .add ("VRMLParser", VRMLParser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(142);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45045,7 +45045,7 @@ const URLs_default_ = URLs;
 
 /* harmony default export */ const Networking_URLs = (x_ite_Namespace .add ("URLs", URLs_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(142);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48689,7 +48689,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (x_ite_Namespace .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(142);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48840,7 +48840,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (x_ite_Namespace .add ("GLB2Parser", GLB2Parser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(142);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52176,8 +52176,8 @@ const MatrixStack_default_ = MatrixStack;
 
 /* harmony default export */ const Utility_MatrixStack = (x_ite_Namespace .add ("MatrixStack", MatrixStack_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(142);
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(303);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(409);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(234);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54947,7 +54947,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (x_ite_Namespace .add ("SVGParser", SVGParser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(142);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -56669,6 +56669,7 @@ function X3DRenderObject (executionContext)
    this .renderKey                      = "";
    this .renderAndGlobalLightsKey       = "";
    this .renderCount                    = 0;
+   this .view                           = null;
    this .viewVolumes                    = [ ];
    this .projectionMatrix               = new Utility_MatrixStack (Numbers_Matrix4);
    this .modelViewMatrix                = new Utility_MatrixStack (Numbers_Matrix4);
@@ -56815,6 +56816,10 @@ Object .assign (X3DRenderObject .prototype,
          return ++ renderCount;
       }
    })(),
+   getView ()
+   {
+      return this .view;
+   },
    getViewVolumes ()
    {
       return this .viewVolumes;
@@ -57718,7 +57723,8 @@ Object .assign (X3DRenderObject .prototype,
       const
          browser                  = this .getBrowser (),
          gl                       = browser .getContext (),
-         frameBuffer              = browser .getFrameBuffer (),
+         frameBuffers             = browser .getFrameBuffers (),
+         numFrameBuffers          = frameBuffers .length,
          independent              = this .isIndependent (),
          viewport                 = this .getViewVolume () .getViewport (),
          lights                   = this .lights,
@@ -57726,10 +57732,7 @@ Object .assign (X3DRenderObject .prototype,
          globalLights             = this .globalLights,
          generatedCubeMapTextures = this .generatedCubeMapTextures,
          globalShadows            = this .globalShadows,
-         headlight                = this .getNavigationInfo () ._headlight .getValue (),
-         oit                      = frameBuffer .getOIT () && independent;
-
-      this .renderCount = this .getNextRenderCount ();
+         headlight                = this .getNavigationInfo () ._headlight .getValue ();
 
       // PREPARATIONS
 
@@ -57757,38 +57760,51 @@ Object .assign (X3DRenderObject .prototype,
       this .renderAndGlobalLightsKey = `.${this .renderKey}.${globalLightsKeys .sort () .join ("")}.`;
       this .globalShadow             = globalShadows .at (-1);
 
-      // Set global uniforms.
-
-      this .viewportArray          .set (viewport);
-      this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
-      this .viewMatrixArray        .set (this .getViewMatrix () .get ());
-      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-
       // DRAW
 
-      if (independent && this .transmission)
+      for (let i = 0; i < numFrameBuffers; ++ i)
       {
-         // Transmission
+         const frameBuffer = frameBuffers [i];
 
-         const
-            transmissionBuffer               = browser .getTransmissionBuffer (),
-            transmissionOpaqueShapes         = this .transmissionOpaqueShapes,
-            transmissionTransparentShapes    = this .transmissionTransparentShapes,
-            numTransmissionOpaqueShapes      = transmissionOpaqueShapes .length,
-            numTransmissionTransparentShapes = transmissionTransparentShapes .length;
+         this .renderCount = this .getNextRenderCount ();
 
-         this .drawShapes (gl, browser, true, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes, this .transmissionTransparencySorter);
+         // XR support
 
-         gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
-         gl .generateMipmap (gl .TEXTURE_2D);
+         this .view = this .isActive () ? browser .getPose () ?.views [i] : null;
 
-         this .drawShapes (gl, browser, true, frameBuffer, 0, oit, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
-      }
-      else
-      {
-         // Draw with sorted blend or OIT.
+         // Set global uniforms.
 
-         this .drawShapes (gl, browser, independent, frameBuffer, 0, oit, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+         this .viewportArray          .set (viewport);
+         this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
+         this .viewMatrixArray        .set (this .view ?.viewMatrix ?? this .getViewMatrix () .get ());
+         this .cameraSpaceMatrixArray .set (this .view ?.cameraSpaceMatrix ?? this .getCameraSpaceMatrix () .get ());
+
+         if (independent && this .transmission)
+         {
+            // Transmission
+
+            const
+               transmissionBuffer               = browser .getTransmissionBuffer (),
+               transmissionOpaqueShapes         = this .transmissionOpaqueShapes,
+               transmissionTransparentShapes    = this .transmissionTransparentShapes,
+               numTransmissionOpaqueShapes      = transmissionOpaqueShapes .length,
+               numTransmissionTransparentShapes = transmissionTransparentShapes .length;
+
+            this .drawShapes (gl, browser, true, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes, this .transmissionTransparencySorter);
+
+            gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
+            gl .generateMipmap (gl .TEXTURE_2D);
+
+            // Draw with sorted blend or OIT.
+
+            this .drawShapes (gl, browser, true, frameBuffer, 0, frameBuffer .getOIT () && independent, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+         }
+         else
+         {
+            // Draw with sorted blend or OIT.
+
+            this .drawShapes (gl, browser, independent, frameBuffer, 0, frameBuffer .getOIT () && independent, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+         }
       }
 
       // POST DRAW
@@ -62985,7 +63001,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (x_ite_Namespace .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(142);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63487,6 +63503,8 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    groupNodes ._children = [groupNode];
    groupNodes .setPrivate (true);
 
+   this .active       = false;
+   this .layer0       = false;
    this .groupNodes   = groupNodes;
    this .viewportNode = null;
 
@@ -63554,6 +63572,18 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
    getBBox (bbox, shadows)
    {
       return this .groupNodes .getBBox (bbox, shadows);
+   },
+   isActive ()
+   {
+      return this .active;
+   },
+   setActive (value)
+   {
+      this .active = value;
+   },
+   isLayer0 ()
+   {
+      return this .layer0;
    },
    setLayer0 (value)
    {
@@ -63687,11 +63717,22 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
    },
    traverse (type, renderObject = this)
    {
-      const viewpointNode = this .getViewpoint ();
+      const pose = this .getBrowser () .getPose ();
 
-      this .getProjectionMatrix ()  .pushMatrix (viewpointNode .getProjectionMatrix (this));
-      this .getCameraSpaceMatrix () .pushMatrix (viewpointNode .getCameraSpaceMatrix ());
-      this .getViewMatrix ()        .pushMatrix (viewpointNode .getViewMatrix ());
+      if (pose && this .active)
+      {
+         this .getProjectionMatrix ()  .pushMatrix (pose .projectionMatrix);
+         this .getCameraSpaceMatrix () .pushMatrix (pose .cameraSpaceMatrix);
+         this .getViewMatrix ()        .pushMatrix (pose .viewMatrix);
+      }
+      else
+      {
+         const viewpointNode = this .getViewpoint ();
+
+         this .getProjectionMatrix ()  .pushMatrix (viewpointNode .getProjectionMatrix (this));
+         this .getCameraSpaceMatrix () .pushMatrix (viewpointNode .getCameraSpaceMatrix ());
+         this .getViewMatrix ()        .pushMatrix (viewpointNode .getViewMatrix ());
+      }
 
       switch (type)
       {
@@ -66322,7 +66363,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (x_ite_Namespace .add ("X3DWorld", X3DWorld_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(142);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67252,7 +67293,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (x_ite_Namespace .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(142);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70724,6 +70765,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, Environmenta
             if (this .layerNode)
             {
                const
+                  pose           = this .getBrowser () .getPose (),
                   viewpointNode  = this .layerNode .getViewpoint (),
                   invModelMatrix = this .modelMatrix .inverse ()
 
@@ -70733,9 +70775,12 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, Environmenta
                   .multRight (invModelMatrix)
                   .get (centerOfRotation);
 
-               invModelMatrix
-                  .multLeft (viewpointNode .getCameraSpaceMatrix ())
-                  .get (position, orientation);
+               if (pose && this .layerNode .isActive ())
+                  invModelMatrix .multLeft (pose .cameraSpaceMatrix);
+               else
+                  invModelMatrix .multLeft (viewpointNode .getCameraSpaceMatrix ());
+
+               invModelMatrix .get (position, orientation);
 
                if (this ._isActive .getValue ())
                {
@@ -89154,7 +89199,7 @@ mediump samplerCube textureCube;
 
 /* harmony default export */ const MaterialTextures = (x_ite_Namespace .add ("MaterialTextures", MaterialTextures_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(142);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89201,6 +89246,7 @@ mediump samplerCube textureCube;
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -90189,7 +90235,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    },
    setUniforms: (() =>
    {
-      const normalMatrix = new Float32Array (9);
+      const
+         xrModelViewMatrix = new Float32Array (16),
+         normalMatrix      = new Float32Array (9);
 
       return function (gl, geometryContext, renderContext, front = true)
       {
@@ -90247,7 +90295,19 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          // Model view matrix
 
-         gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+         const view = renderObject .getView ();
+
+         if (view)
+         {
+            xrModelViewMatrix .set (modelViewMatrix);
+            Numbers_Matrix4 .prototype .multRight .call (xrModelViewMatrix, view .matrix);
+
+            gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, xrModelViewMatrix);
+         }
+         else
+         {
+            gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+         }
 
          // Normal matrix
 
@@ -94412,7 +94472,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (x_ite_Namespace .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(142);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95010,7 +95070,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 
 /* harmony default export */ const Shape_X3DAppearanceNode = (x_ite_Namespace .add ("X3DAppearanceNode", X3DAppearanceNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(142);
+/* provided dependency */ var Appearance_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103265,8 +103325,8 @@ const GifMedia_default_ = GifMedia;
 
 /* harmony default export */ const Texturing_GifMedia = (x_ite_Namespace .add ("GifMedia", GifMedia_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(142);
-/* provided dependency */ var SuperGif = __webpack_require__(865);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(409);
+/* provided dependency */ var SuperGif = __webpack_require__(34);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106372,7 +106432,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (x_ite_Namespace .add ("gettext", gettext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(142);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106592,7 +106652,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, Base_X3DBaseN
    {
       this .getBrowser () .addBrowserEvent ();
 
-      requestAnimationFrame (() =>
+      this .getBrowser () .getSession () .requestAnimationFrame (() =>
       {
          this .fps .reset ();
          this .build ();
@@ -107002,7 +107062,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (x_ite_Namespace .add ("TextCompression", TextCompression_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(142);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107633,7 +107693,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (x_ite_Namespace .add ("RenderingProperties", RenderingProperties_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(142);
+/* provided dependency */ var Notification_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107755,8 +107815,8 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (x_ite_Namespace .add ("Notification", Notification_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(646);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(142);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(177);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107835,7 +107895,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
          animation: { duration: 500, show: "fadeIn", hide: "fadeOut" },
       };
 
-      this [_options] .element .on ("contextmenu", event => this .show (event));
+      this [_options] .element .on ("contextmenu.ContextMenu", event => this .show (event));
    },
    getUserMenu ()
    {
@@ -110491,7 +110551,7 @@ const DataStorage_default_ = DataStorage;
 
 /* harmony default export */ const Utility_DataStorage = (x_ite_Namespace .add ("DataStorage", DataStorage_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(142);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110582,6 +110642,14 @@ let instanceId = 0;
 
 function X3DCoreContext (element)
 {
+   // Events
+
+   this .addChildObjects (Base_X3DConstants .outputOnly, "controlKey", new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .outputOnly, "shiftKey",   new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .outputOnly, "altKey",     new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .outputOnly, "commandKey", new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .outputOnly, "altGrKey",   new x_ite_Fields .SFBool ());
+
    // Get canvas & context.
 
    const
@@ -110593,18 +110661,16 @@ function X3DCoreContext (element)
 
    if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
    {
-      const
-         shadow = X3DCoreContext_$(element [0] .attachShadow ({ mode: "open", delegatesFocus: true })),
-         link   = X3DCoreContext_$("<link/>");
+      const shadow = X3DCoreContext_$(element [0] .attachShadow ({ mode: "open", delegatesFocus: true }));
 
-      link
+      X3DCoreContext_$("<link/>")
          .on ("load", () => browser .show ())
          .attr ("rel", "stylesheet")
          .attr ("type", "text/css")
-         .attr ("href", new URL ("x_ite.css", Networking_URLs .getScriptURL ()) .href);
+         .attr ("href", new URL ("x_ite.css", Networking_URLs .getScriptURL ()) .href)
+         .appendTo (shadow);
 
       this [_shadow] = shadow
-         .append (link)
          .append (browser .hide ());
    }
    else
@@ -110635,12 +110701,6 @@ function X3DCoreContext (element)
    const inches = X3DCoreContext_$("<div></div>") .hide () .css ("height", "10in") .appendTo (X3DCoreContext_$("body"));
    this [_pixelsPerPoint] = inches .height () / 720 || 1;
    inches .remove ();
-
-   this .addChildObjects (Base_X3DConstants .outputOnly, "controlKey", new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "shiftKey",   new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "altKey",     new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "commandKey", new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "altGrKey",   new x_ite_Fields .SFBool ());
 }
 
 Object .assign (X3DCoreContext .prototype,
@@ -111303,7 +111363,12 @@ Object .assign (X3DCoreContext .prototype,
    },
    dispose ()
    {
+      this .getElement ()
+         .prop ("browser", null)
+         .off (".X3DCoreContext .ContextMenu");
+
       this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ();
+      this [_shadow] .find ("*") .remove ();
    },
 });
 
@@ -113081,8 +113146,8 @@ const X3DViewer_default_ = X3DViewer;
 
 /* harmony default export */ const Navigation_X3DViewer = (x_ite_Namespace .add ("X3DViewer", X3DViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(860);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(142);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(369);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113997,8 +114062,8 @@ const ExamineViewer_default_ = ExamineViewer;
 
 /* harmony default export */ const Navigation_ExamineViewer = (x_ite_Namespace .add ("ExamineViewer", ExamineViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(860);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(142);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(369);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114655,89 +114720,92 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
             height       = viewport [3],
             contentScale = browser .getRenderingProperty ("ContentScale");
 
-         browser .getFrameBuffer () .bind ();
-
-         gl .viewport (... viewport);
-         gl .scissor (... viewport);
-
-         projectionMatrixArray .set (Geometry_Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix));
-
-         // Display Rubberband.
-
-         switch (type)
+         for (const frameBuffer of browser .getFrameBuffers ())
          {
-            case MOVE:
+            frameBuffer .bind ();
+
+            gl .viewport (... viewport);
+            gl .scissor (... viewport);
+
+            projectionMatrixArray .set (Geometry_Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix));
+
+            // Display Rubberband.
+
+            switch (type)
             {
-               fromPoint .set (this .fromVector .x, -this .fromVector .z, 0);
-               toPoint   .set (this .toVector   .x, -this .toVector   .z, 0);
-               break;
+               case MOVE:
+               {
+                  fromPoint .set (this .fromVector .x, -this .fromVector .z, 0);
+                  toPoint   .set (this .toVector   .x, -this .toVector   .z, 0);
+                  break;
+               }
+               case PAN:
+               {
+                  fromPoint .set (this .fromVector .x, this .fromVector .y, 0);
+                  toPoint   .set (this .toVector   .x, this .toVector   .y, 0);
+                  break;
+               }
             }
-            case PAN:
+
+            // Set black line quad vertices.
+
+            normal .assign (toPoint)
+               .subtract (fromPoint)
+               .normalize ()
+               .multiply (contentScale)
+               .set (-normal .y, normal .x, 0);
+
+            this .lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      0);
+            this .lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 4);
+            this .lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 8);
+            this .lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      12);
+
+            // Set white line quad vertices.
+
+            normal .assign (toPoint)
+               .subtract (fromPoint)
+               .normalize ()
+               .multiply (contentScale / 2)
+               .set (-normal .y, normal .x, 0);
+
+            this .lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      16);
+            this .lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 20);
+            this .lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 24);
+            this .lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      28);
+
+            // Transfer line.
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .lineVertexBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, this .lineVertexArray, gl .DYNAMIC_DRAW);
+
+            // Set uniforms and attributes.
+
+            const shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext);
+
+            shaderNode .enable (gl);
+            shaderNode .setClipPlanes (gl, clipPlanes);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+            gl .uniform3f        (shaderNode .x3d_EmissiveColor, 1, 1, 1);
+            gl .uniform1f        (shaderNode .x3d_Transparency,  0);
+
+            if (this .lineVertexArrayObject .enable (shaderNode .getProgram ()))
             {
-               fromPoint .set (this .fromVector .x, this .fromVector .y, 0);
-               toPoint   .set (this .toVector   .x, this .toVector   .y, 0);
-               break;
+               gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
+
+               shaderNode .enableColorAttribute  (gl, this .lineColorBuffer,  0, 0);
+               shaderNode .enableVertexAttribute (gl, this .lineVertexBuffer, 0, 0);
             }
+
+            // Draw a black and a white line.
+
+            gl .disable (gl .DEPTH_TEST);
+            gl .enable (gl .CULL_FACE);
+            gl .frontFace (gl .CCW);
+            gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_BYTE, 0);
+            gl .enable (gl .DEPTH_TEST);
          }
-
-         // Set black line quad vertices.
-
-         normal .assign (toPoint)
-            .subtract (fromPoint)
-            .normalize ()
-            .multiply (contentScale)
-            .set (-normal .y, normal .x, 0);
-
-         this .lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      0);
-         this .lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 4);
-         this .lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 8);
-         this .lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      12);
-
-         // Set white line quad vertices.
-
-         normal .assign (toPoint)
-            .subtract (fromPoint)
-            .normalize ()
-            .multiply (contentScale / 2)
-            .set (-normal .y, normal .x, 0);
-
-         this .lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      16);
-         this .lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 20);
-         this .lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 24);
-         this .lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      28);
-
-         // Transfer line.
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .lineVertexBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .lineVertexArray, gl .DYNAMIC_DRAW);
-
-         // Set uniforms and attributes.
-
-         const shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext);
-
-         shaderNode .enable (gl);
-         shaderNode .setClipPlanes (gl, clipPlanes);
-
-         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
-         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
-         gl .uniform3f        (shaderNode .x3d_EmissiveColor, 1, 1, 1);
-         gl .uniform1f        (shaderNode .x3d_Transparency,  0);
-
-         if (this .lineVertexArrayObject .enable (shaderNode .getProgram ()))
-         {
-            gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
-
-            shaderNode .enableColorAttribute  (gl, this .lineColorBuffer,  0, 0);
-            shaderNode .enableVertexAttribute (gl, this .lineVertexBuffer, 0, 0);
-         }
-
-         // Draw a black and a white line.
-
-         gl .disable (gl .DEPTH_TEST);
-         gl .enable (gl .CULL_FACE);
-         gl .frontFace (gl .CCW);
-         gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_BYTE, 0);
-         gl .enable (gl .DEPTH_TEST);
       };
    })(),
    disconnect ()
@@ -115010,8 +115078,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (x_ite_Namespace .add ("FlyViewer", FlyViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(860);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(142);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(369);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115340,8 +115408,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (x_ite_Namespace .add ("NoneViewer", NoneViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(860);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(142);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(369);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116013,18 +116081,28 @@ Object .assign (X3DNavigationContext .prototype,
    },
    set_activeLayer__ ()
    {
-      if (this ._activeLayer .getValue ())
+      // Remove active layer.
       {
-         this ._activeLayer .getValue () .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
-         this ._activeLayer .getValue () .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
+         const activeLayer = this ._activeLayer .getValue ();
+
+         if (activeLayer)
+         {
+            activeLayer .setActive (false);
+            activeLayer .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
+            activeLayer .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
+         }
       }
 
-      this ._activeLayer = this .getWorld () .getActiveLayer ();
-
-      if (this ._activeLayer .getValue ())
+      // Add active layer.
       {
-         this ._activeLayer .getValue () .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
-         this ._activeLayer .getValue () .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
+         const activeLayer = this ._activeLayer = this .getWorld () .getActiveLayer ();
+
+         if (activeLayer)
+         {
+            activeLayer .setActive (true);
+            activeLayer .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
+            activeLayer .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
+         }
       }
 
       this .set_activeNavigationInfo__ ();
@@ -116476,8 +116554,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (x_ite_Namespace .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(860);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(142);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(369);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116730,7 +116808,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
       // and the new child has a sensor node inside. This sensor node must be updated to
       // reflect the correct isOver state.
 
-      requestAnimationFrame (() => this .onmotion (x, y));
+      this .getBrowser () .getSession () .requestAnimationFrame (() => this .onmotion (x, y));
    },
    showContextMenu (event)
    {
@@ -117422,7 +117500,7 @@ const X3DPointingDeviceSensorContext_default_ = X3DPointingDeviceSensorContext;
  *
  ******************************************************************************/
 
-function MultiSampleFrameBuffer (browser, width, height, samples, oit)
+function MultiSampleFrameBuffer (browser, x, y, width, height, samples, oit)
 {
    const gl = browser .getContext ();
 
@@ -117431,6 +117509,8 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    this .browser = browser;
    this .context = gl;
+   this .x       = x;
+   this .y       = y;
    this .width   = width;
    this .height  = height;
    this .samples = samples;
@@ -117468,12 +117548,32 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
 
-   const status1 = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
-
    // Always check that our frame buffer is ok.
 
-   if (!status1)
+   if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
       throw new Error ("Couldn't create frame buffer.");
+
+   if (x || y)
+   {
+      // Create frame buffer.
+
+      this .auxBuffer = gl .createFramebuffer ();
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .auxBuffer);
+
+      // Create color buffer.
+
+      this .auxColorBuffer = gl .createRenderbuffer ();
+
+      gl .bindRenderbuffer (gl .RENDERBUFFER, this .auxColorBuffer);
+      gl .renderbufferStorage (gl .RENDERBUFFER, gl .RGBA8, width, height);
+      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .auxColorBuffer);
+
+      // Always check that our frame buffer is ok.
+
+      if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
+         throw new Error ("Couldn't create frame buffer.");
+   }
 
    if (!oit)
       return;
@@ -117584,11 +117684,9 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
    }
 
-   const status2 = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
-
    // Always check that our frame buffer is ok.
 
-   if (!status2)
+   if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
       throw new Error ("Couldn't create frame buffer.");
 
    // Get compose shader and texture units.
@@ -117608,6 +117706,14 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
 Object .assign (MultiSampleFrameBuffer .prototype,
 {
+   getX ()
+   {
+      return this .x;
+   },
+   getY ()
+   {
+      return this .y;
+   },
    getWidth ()
    {
       return this .width;
@@ -117700,18 +117806,28 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    blit ()
    {
-      const { context: gl, width, height, samples } = this;
+      const { browser, context: gl, x, y, width, height, samples, frameBuffer, auxBuffer } = this;
 
       // Reset viewport before blit, otherwise only last layer size is used.
-      gl .viewport (0, 0, width, height);
-      gl .scissor  (0, 0, width, height);
+      gl .viewport (0, 0, x + width, y + height);
+      gl .scissor  (0, 0, x + width, y + height);
 
-      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
-      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
+      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, frameBuffer);
+      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, auxBuffer ?? browser .getDefaultFrameBuffer ());
 
       gl .blitFramebuffer (0, 0, width, height,
                            0, 0, width, height,
                            gl .COLOR_BUFFER_BIT, samples ? gl .LINEAR : gl .NEAREST);
+
+      if (!auxBuffer)
+         return;
+
+      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, auxBuffer);
+      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, browser .getDefaultFrameBuffer ());
+
+      gl .blitFramebuffer (0, 0, width, height,
+                           x, y, x + width, y + height,
+                           gl .COLOR_BUFFER_BIT, gl .NEAREST);
    },
    dispose ()
    {
@@ -117720,6 +117836,9 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .deleteFramebuffer (this .frameBuffer);
       gl .deleteRenderbuffer (this .colorBuffer);
       gl .deleteRenderbuffer (this .depthBuffer);
+
+      gl .deleteFramebuffer (this .auxFrameBuffer);
+      gl .deleteRenderbuffer (this .auxColorBuffer);
 
       gl .deleteFramebuffer (this .oitFrameBuffer);
       gl .deleteFramebuffer (this .accumRevealageTextureBuffer);
@@ -117731,36 +117850,43 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
 });
 
-function Fallback (browser, width, height, samples)
+function Fallback (browser, x, y, width, height, samples)
 {
    const gl = browser .getContext ();
 
-   this .browser = browser;
-   this .context = gl;
-   this .width   = width;
-   this .height  = height;
-   this .samples = samples;
+   this .browser     = browser;
+   this .context     = gl;
+   this .x           = x;
+   this .y           = y;
+   this .width       = width;
+   this .height      = height;
+   this .samples     = samples;
+   this .frameBuffer = browser .getDefaultFrameBuffer ();
 }
 
 Object .assign (Fallback .prototype,
 {
+   getX () { return this .x; },
+   getY () { return this .y; },
    getWidth () { return this .width; },
    getHeight () { return this .height; },
    getSamples () { return this .samples; },
    getOIT () { return false; },
    bind ()
    {
-      const { context: gl } = this;
+      const { context: gl, frameBuffer } = this;
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
    },
    clear ()
    {
-      const { context: gl, width, height } = this;
+      const { context: gl, width, height, frameBuffer } = this;
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
       gl .viewport (0, 0, width, height);
       gl .scissor  (0, 0, width, height);
-      gl .clearColor (0, 0, 0, 1);
+      gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
       gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
    },
@@ -117774,7 +117900,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (x_ite_Namespace .add ("MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(142);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117828,9 +117954,13 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 
 
 
+
+
+
 const
-   _frameBuffer        = Symbol (),
+   _frameBuffers       = Symbol (),
    _transmissionBuffer = Symbol (),
+   _observer           = Symbol (),
    _resizer            = Symbol (),
    _localObjects       = Symbol (),
    _fullscreenArray    = Symbol (),
@@ -117838,13 +117968,25 @@ const
    _composeShader      = Symbol (),
    _depthShaders       = Symbol ();
 
+const
+   _session            = Symbol (),
+   _baseReferenceSpace = Symbol (),
+   _referenceSpace     = Symbol (),
+   _baseLayer          = Symbol (),
+   _defaultFrameBuffer = Symbol (),
+   _pose               = Symbol ();
+
 function X3DRenderingContext ()
 {
    this .addChildObjects (Base_X3DConstants .outputOnly, "viewport", new x_ite_Fields .MFInt32 (0, 0, 300, 150));
 
-   this [_frameBuffer]  = new Rendering_MultiSampleFrameBuffer (this, 300, 150, 4);
+   this [_frameBuffers] = [ ];
    this [_depthShaders] = new Map ();
    this [_localObjects] = [ ]; // shader objects dumpster
+
+   // XR support
+
+   this .addXRSupport ();
 }
 
 Object .assign (X3DRenderingContext .prototype,
@@ -117863,14 +118005,20 @@ Object .assign (X3DRenderingContext .prototype,
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
 
-      // Configure viewport.
+      // Events
 
-      X3DRenderingContext_$(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
+      this ._activeViewpoint .addInterest ("setReferenceSpace", this);
 
-      this [_resizer] = new ResizeObserver (this .reshape .bind (this));
-      this [_resizer] .observe (this .getSurface () [0]);
+      // Observe resize and parent changes of <canvas> and configure viewport.
 
-      this .reshape ();
+      this [_observer] = new MutationObserver (() => this .setResizeTarget (this .getCanvas () .parent ()));
+      this [_resizer]  = new ResizeObserver (() => this .reshape ());
+
+      this .setResizeTarget (this .getCanvas () .parent ());
+
+      // Observe fullscreen changes of <x3d-canvas>.
+
+      X3DRenderingContext_$(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', () => this .onfullscreen ());
    },
    getRenderer ()
    {
@@ -117939,15 +118087,15 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return this [_localObjects];
    },
-   getFrameBuffer ()
+   getFrameBuffers ()
    {
-      return this [_frameBuffer];
+      return this [_frameBuffers];
    },
    getTransmissionBuffer ()
    {
       this [_transmissionBuffer] = new Rendering_TextureBuffer (this,
-         this [_frameBuffer] .getWidth (),
-         this [_frameBuffer] .getHeight (),
+         this ._viewport [2],
+         this ._viewport [3],
          false,
          true);
 
@@ -118048,6 +118196,16 @@ Object .assign (X3DRenderingContext .prototype,
 
       return shaderNode;
    },
+   setResizeTarget (element)
+   {
+      this [_observer] .disconnect ();
+      this [_observer] .observe (element [0], { childList: true });
+
+      this [_resizer] .disconnect ();
+      this [_resizer] .observe (element [0]);
+
+      this .reshape ();
+   },
    resize (width, height)
    {
       return new Promise (resolve =>
@@ -118083,32 +118241,54 @@ Object .assign (X3DRenderingContext .prototype,
       const
          canvas       = this .getCanvas (),
          contentScale = this .getRenderingProperty ("ContentScale"),
-         samples      = this .getRenderingProperty ("Multisampling"),
-         oit          = this .getBrowserOption ("OrderIndependentTransparency"),
-         width        = Math .max (canvas .width () * contentScale, 1),
-         height       = Math .max (canvas .height () * contentScale, 1);
+         width        = Math .max (canvas .width ()  * contentScale, 1)|0,
+         height       = Math .max (canvas .height () * contentScale, 1)|0;
 
       this .addBrowserEvent ();
 
       canvas .prop ("width",  width);
       canvas .prop ("height", height);
 
-      this ._viewport [2] = width;
-      this ._viewport [3] = height;
+      if (this [_frameBuffers] .length < 2)
+         this .reshapeFrameBuffer (0, 0, 0, width, height);
+   },
+   reshapeFrameBuffer (i, x, y, width, height)
+   {
+      const
+         samples     = this .getRenderingProperty ("Multisampling"),
+         oit         = this .getBrowserOption ("OrderIndependentTransparency"),
+         frameBuffer = this [_frameBuffers] [i];
 
-      if (width   === this [_frameBuffer] .getWidth ()   &&
-          height  === this [_frameBuffer] .getHeight ()  &&
-          samples === this [_frameBuffer] .getSamples () &&
-          oit     === this [_frameBuffer] .getOIT ())
+      if (frameBuffer &&
+          x       === frameBuffer .getX () &&
+          y       === frameBuffer .getY () &&
+          width   === frameBuffer .getWidth () &&
+          height  === frameBuffer .getHeight () &&
+          samples === frameBuffer .getSamples () &&
+          oit     === frameBuffer .getOIT ())
       {
          return;
       }
 
-      this [_frameBuffer] .dispose ();
-      this [_frameBuffer] = new Rendering_MultiSampleFrameBuffer (this, width, height, samples, oit);
+      this ._viewport [2] = width;
+      this ._viewport [3] = height;
 
+      frameBuffer ?.dispose ();
+
+      this [_frameBuffers] [i] = new Rendering_MultiSampleFrameBuffer (this, x, y, width, height, samples, oit);
+
+      this .reshapeTransmissionBuffer (width, height);
+   },
+   reshapeTransmissionBuffer (width, height)
+   {
       if (!this [_transmissionBuffer])
          return;
+
+      if (width  === this [_transmissionBuffer] .getWidth () &&
+          height === this [_transmissionBuffer] .getHeight ())
+      {
+         return;
+      }
 
       this [_transmissionBuffer] .dispose ();
       this [_transmissionBuffer] = new Rendering_TextureBuffer (this, width, height, false, true);
@@ -118122,9 +118302,160 @@ Object .assign (X3DRenderingContext .prototype,
       else
          element .removeClass ("x_ite-fullscreen");
    },
+   async addXRSupport ()
+   {
+      this [_session]            = window;
+      this [_defaultFrameBuffer] = null;
+
+      if (this .getContext () .getVersion () <= 1)
+         return;
+
+      if (!("xr" in navigator))
+         return;
+
+      const supported = await navigator .xr .isSessionSupported ("immersive-vr");
+
+      if (!supported)
+         return;
+
+      X3DRenderingContext_$("<div></div>")
+         .addClass ("x_ite-private-xr-button")
+         .on ("mousedown", false)
+         .on ("click", event => this .startXRSession (event))
+         .appendTo (this .getSurface ());
+   },
+   async startXRSession (event)
+   {
+      event ?.preventDefault ();
+      event ?.stopImmediatePropagation ();
+      event ?.stopPropagation ();
+
+      const
+         gl             = this .getContext (),
+         compatible     = await gl .makeXRCompatible (),
+         session        = await navigator .xr .requestSession ("immersive-vr"),
+         referenceSpace = await session .requestReferenceSpace ("local");
+
+      // Must bind default framebuffer, to get xr emulator working.
+      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+
+      const baseLayer = new XRWebGLLayer (session, gl);
+
+      session .updateRenderState ({ baseLayer });
+      session .addEventListener ("end", () => this .stopXRSession ());
+
+      this [_session]            = session;
+      this [_baseReferenceSpace] = referenceSpace;
+      this [_baseLayer]          = baseLayer;
+      this [_defaultFrameBuffer] = baseLayer .framebuffer;
+
+      this [_pose] = {
+         projectionMatrix: new Numbers_Matrix4 (),
+         cameraSpaceMatrix: new Numbers_Matrix4 (),
+         viewMatrix: new Numbers_Matrix4 (),
+         views: [
+            { cameraSpaceMatrix: new Numbers_Matrix4 (), viewMatrix: new Numbers_Matrix4 (), matrix: new Numbers_Matrix4 () },
+            { cameraSpaceMatrix: new Numbers_Matrix4 (), viewMatrix: new Numbers_Matrix4 (), matrix: new Numbers_Matrix4 () },
+         ],
+      };
+
+      this .setReferenceSpace ();
+      this .getCanvas () .css ({ all: "unset", position: "fixed", width: "100vw", height: "100vh" });
+      this .addBrowserEvent ();
+   },
+   stopXRSession ()
+   {
+      this [_session] .end ();
+
+      for (const frameBuffer of this [_frameBuffers])
+         frameBuffer .dispose ();
+
+      this [_frameBuffers] .length = 0;
+
+      this [_session]            = window;
+      this [_baseReferenceSpace] = null;
+      this [_referenceSpace]     = null;
+      this [_baseLayer]          = null;
+      this [_defaultFrameBuffer] = null;
+      this [_pose]               = null;
+
+      this .getCanvas () .removeAttr ("style");
+      this .addBrowserEvent ();
+      this .reshape (); // Maybe not needed, because a setResizeTarget comes later.
+   },
+   getSession ()
+   {
+      return this [_session];
+   },
+   getReferenceSpace ()
+   {
+      return this [_referenceSpace];
+   },
+   setReferenceSpace ()
+   {
+      if (!this [_baseReferenceSpace])
+         return;
+
+      const
+         translation = new Numbers_Vector3 (),
+         rotation    = new Numbers_Rotation4 ();
+
+      this .getActiveViewpoint () ?.getViewMatrix () .get (translation, rotation)
+
+      const offsetTransform = new XRRigidTransform (translation, rotation .getQuaternion ());
+
+      this [_referenceSpace] = this [_baseReferenceSpace] .getOffsetReferenceSpace (offsetTransform);
+   },
+   getDefaultFrameBuffer ()
+   {
+      return this [_defaultFrameBuffer];
+   },
+   setFrame (frame)
+   {
+      if (!frame)
+         return;
+
+      const
+         pose     = frame .getViewerPose (this [_referenceSpace]),
+         numViews = pose .views .length;
+
+      this [_pose] .cameraSpaceMatrix .assign (pose .transform .matrix);
+      this [_pose] .viewMatrix        .assign (pose .transform .inverse .matrix);
+
+      let v = 0;
+
+      for (let i = 0; i < numViews; ++ i)
+      {
+         const
+            view                    = pose .views [i],
+            { x, y, width, height } = this [_baseLayer] .getViewport (view);
+
+         // Second emulator view has width zero if in non-stereo mode.
+         if (!width)
+            continue;
+
+         this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
+
+         this [_pose] .projectionMatrix .assign (view .projectionMatrix);
+         this [_pose] .views [v] .cameraSpaceMatrix .assign (view .transform .matrix);
+         this [_pose] .views [v] .viewMatrix .assign (view .transform .inverse .matrix);
+         this [_pose] .views [v] .matrix .assign (pose .transform .matrix) .multRight (view .transform .inverse .matrix);
+
+         ++ v;
+      }
+
+      this [_frameBuffers] .length = v;
+   },
+   getPose ()
+   {
+      return this [_pose];
+   },
    dispose ()
    {
-      this [_resizer] .disconnect ();
+      this [_session] = window;
+
+      this [_observer] .disconnect ();
+      this [_resizer]  .disconnect ();
    },
 });
 
@@ -118775,7 +119106,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 
 /* harmony default export */ const Sound_X3DSoundContext = (x_ite_Namespace .add ("X3DSoundContext", X3DSoundContext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(142);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(409);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -119885,59 +120216,60 @@ const ConcreteNodes_default_ = new Configuration_ConcreteNodesArray ();
 
 
 const
-   _world           = Symbol (),
-   X3DBrowserContext_tainted         = Symbol (),
-   _limitFrameRate  = Symbol (),
-   _traverse        = Symbol (),
-   _renderCallback  = Symbol (),
-   _animFrame       = Symbol (),
-   _previousTime    = Symbol (),
-   _systemTime      = Symbol (),
-   _browserTime     = Symbol (),
-   _cameraTime      = Symbol (),
-   _collisionTime   = Symbol (),
-   _displayTime     = Symbol (),
-   X3DBrowserContext_processEvents   = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
+   _world          = Symbol (),
+   X3DBrowserContext_tainted        = Symbol (),
+   _limitFrameRate = Symbol (),
+   _traverse       = Symbol (),
+   _renderCallback = Symbol (),
+   _animFrame      = Symbol (),
+   _previousTime   = Symbol (),
+   _systemTime     = Symbol (),
+   _browserTime    = Symbol (),
+   _cameraTime     = Symbol (),
+   _collisionTime  = Symbol (),
+   _displayTime    = Symbol (),
+   X3DBrowserContext_processEvents  = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
 
 const
    browsers        = new Set (),
-   browserContexts = [ ];
+   browserContexts = [
+      Routing_X3DRoutingContext,
+      Scripting_X3DScriptingContext,
+      Core_X3DCoreContext,
+      Networking_X3DNetworkingContext,
+      Texturing_X3DTexturingContext,
+      Shaders_X3DShadersContext,
+      Rendering_X3DRenderingContext,
+      Shape_X3DShapeContext,
+      Grouping_X3DGroupingContext,
+      Geometry3D_X3DGeometry3DContext,
+      PointingDeviceSensor_X3DPointingDeviceSensorContext,
+      Navigation_X3DNavigationContext,
+      Layering_X3DLayeringContext,
+      EnvironmentalEffects_X3DEnvironmentalEffectsContext,
+      Lighting_X3DLightingContext,
+      Picking_X3DPickingContext,
+      Sound_X3DSoundContext,
+      Time_X3DTimeContext,
+   ];
 
 function X3DBrowserContext (element)
 {
-   Base_X3DBaseNode                    .call (this, this);
-   Routing_X3DRoutingContext              .call (this);
-   Scripting_X3DScriptingContext            .call (this);
-   Core_X3DCoreContext                 .call (this, element);
-   Networking_X3DNetworkingContext           .call (this);
-   Texturing_X3DTexturingContext            .call (this);
-   Shaders_X3DShadersContext              .call (this);
-   Rendering_X3DRenderingContext            .call (this);
-   Shape_X3DShapeContext                .call (this);
-   Grouping_X3DGroupingContext             .call (this);
-   Geometry3D_X3DGeometry3DContext           .call (this);
-   PointingDeviceSensor_X3DPointingDeviceSensorContext .call (this);
-   Navigation_X3DNavigationContext           .call (this);
-   Layering_X3DLayeringContext             .call (this);
-   EnvironmentalEffects_X3DEnvironmentalEffectsContext .call (this);
-   Lighting_X3DLightingContext             .call (this);
-   Picking_X3DPickingContext              .call (this);
-   Sound_X3DSoundContext                .call (this);
-   Time_X3DTimeContext                 .call (this);
-
    browsers .add (this);
 
-   for (const browserContext of browserContexts)
-      browserContext .call (this);
+   Base_X3DBaseNode .call (this, this);
 
-   this .addChildObjects (Base_X3DConstants .outputOnly, "initialized",    new Fields_SFTime (),
-                          Base_X3DConstants .outputOnly, "shutdown",       new Fields_SFTime (),
-                          Base_X3DConstants .outputOnly, "prepareEvents",  new Fields_SFTime (),
-                          Base_X3DConstants .outputOnly, "timeEvents",     new Fields_SFTime (),
-                          Base_X3DConstants .outputOnly, "sensorEvents",   new Fields_SFTime (),
-                          Base_X3DConstants .outputOnly, "displayEvents",  new Fields_SFTime (),
-                          Base_X3DConstants .outputOnly, "finishedEvents", new Fields_SFTime (),
-                          Base_X3DConstants .outputOnly, "endEvents",      new Fields_SFTime ());
+   for (const browserContext of browserContexts)
+      browserContext .call (this, element);
+
+   this .addChildObjects (Base_X3DConstants .outputOnly, "initialized",    new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "shutdown",       new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "prepareEvents",  new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "timeEvents",     new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "sensorEvents",   new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "displayEvents",  new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "finishedEvents", new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "endEvents",      new x_ite_Fields .SFTime ());
 
    this [X3DBrowserContext_tainted]        = false;
    this [_previousTime]   = 0;
@@ -119950,46 +120282,11 @@ function X3DBrowserContext (element)
 };
 
 Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBaseNode .prototype),
-   Core_X3DCoreContext .prototype,
-   EnvironmentalEffects_X3DEnvironmentalEffectsContext .prototype,
-   Geometry3D_X3DGeometry3DContext .prototype,
-   Grouping_X3DGroupingContext .prototype,
-   Layering_X3DLayeringContext .prototype,
-   Lighting_X3DLightingContext .prototype,
-   Navigation_X3DNavigationContext .prototype,
-   Networking_X3DNetworkingContext .prototype,
-   Picking_X3DPickingContext .prototype,
-   PointingDeviceSensor_X3DPointingDeviceSensorContext .prototype,
-   Rendering_X3DRenderingContext .prototype,
-   Routing_X3DRoutingContext .prototype,
-   Scripting_X3DScriptingContext .prototype,
-   Shaders_X3DShadersContext .prototype,
-   Shape_X3DShapeContext .prototype,
-   Sound_X3DSoundContext .prototype,
-   Texturing_X3DTexturingContext .prototype,
-   Time_X3DTimeContext .prototype,
+   ... browserContexts .map (browserContext => browserContext .prototype),
 {
    initialize ()
    {
-      Base_X3DBaseNode                    .prototype .initialize ?.call (this);
-      Routing_X3DRoutingContext              .prototype .initialize ?.call (this);
-      Scripting_X3DScriptingContext            .prototype .initialize ?.call (this);
-      Core_X3DCoreContext                 .prototype .initialize ?.call (this);
-      Networking_X3DNetworkingContext           .prototype .initialize ?.call (this);
-      Texturing_X3DTexturingContext            .prototype .initialize ?.call (this);
-      Shaders_X3DShadersContext              .prototype .initialize ?.call (this);
-      Rendering_X3DRenderingContext            .prototype .initialize ?.call (this);
-      Shape_X3DShapeContext                .prototype .initialize ?.call (this);
-      Grouping_X3DGroupingContext             .prototype .initialize ?.call (this);
-      Geometry3D_X3DGeometry3DContext           .prototype .initialize ?.call (this);
-      PointingDeviceSensor_X3DPointingDeviceSensorContext .prototype .initialize ?.call (this);
-      Navigation_X3DNavigationContext           .prototype .initialize ?.call (this);
-      Layering_X3DLayeringContext             .prototype .initialize ?.call (this);
-      EnvironmentalEffects_X3DEnvironmentalEffectsContext .prototype .initialize ?.call (this);
-      Lighting_X3DLightingContext             .prototype .initialize ?.call (this);
-      Picking_X3DPickingContext              .prototype .initialize ?.call (this);
-      Sound_X3DSoundContext                .prototype .initialize ?.call (this);
-      Time_X3DTimeContext                 .prototype .initialize ?.call (this);
+      Base_X3DBaseNode .prototype .initialize .call (this);
 
       for (const browserContext of browserContexts)
          browserContext .prototype .initialize ?.call (this);
@@ -120049,7 +120346,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
          return;
 
       this [X3DBrowserContext_tainted]   = true;
-      this [_animFrame] = requestAnimationFrame (this [_renderCallback]);
+      this [_animFrame] = this .getSession () .requestAnimationFrame (this [_renderCallback]);
    },
    nextFrame ()
    {
@@ -120077,12 +120374,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
       }
       else
       {
-         requestAnimationFrame (this [_renderCallback]);
+         this .getSession () .requestAnimationFrame (this [_renderCallback]);
 
          return true;
       }
    },
-   [_traverse] (now)
+   [_traverse] (now, frame)
    {
       // Limit frame rate.
 
@@ -120096,6 +120393,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
 
       // Time
 
+      this .setFrame (frame);
       this .advanceTime ();
 
       // Events
@@ -120132,17 +120430,24 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
       this .addTaintedField (this ._displayEvents);
       this [X3DBrowserContext_processEvents] ();
 
-      this .getFrameBuffer () .clear ();
+      for (const frameBuffer of this .getFrameBuffers ())
+         frameBuffer .clear ();
+
       this [_world] .traverse (Rendering_TraverseType .DISPLAY);
 
       this .addTaintedField (this ._finishedEvents);
       this [X3DBrowserContext_processEvents] ();
 
-      this .getFrameBuffer () .blit ();
+      for (const frameBuffer of this .getFrameBuffers ())
+         frameBuffer .blit ();
+
       this [_displayTime] .stop ();
 
       this .addTaintedField (this ._endEvents);
       this [X3DBrowserContext_processEvents] ();
+
+      if (frame)
+         this .addBrowserEvent ();
 
       // Finish
 
@@ -120169,38 +120474,26 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
    {
       return this [_displayTime];
    },
+   stopXRSession ()
+   {
+      this [X3DBrowserContext_tainted] = false;
+
+      this .getSession () .cancelAnimationFrame (this [_animFrame]);
+
+      Rendering_X3DRenderingContext .prototype .stopXRSession .call (this);
+   },
    dispose ()
    {
       browsers .delete (this);
 
-      for (const browserContext of browserContexts)
-         browserContext .prototype .dispose ?.call (this);
-
-      Time_X3DTimeContext                 .prototype .dispose ?.call (this);
-      Sound_X3DSoundContext                .prototype .dispose ?.call (this);
-      Picking_X3DPickingContext              .prototype .dispose ?.call (this);
-      Lighting_X3DLightingContext             .prototype .dispose ?.call (this);
-      EnvironmentalEffects_X3DEnvironmentalEffectsContext .prototype .dispose ?.call (this);
-      Layering_X3DLayeringContext             .prototype .dispose ?.call (this);
-      Navigation_X3DNavigationContext           .prototype .dispose ?.call (this);
-      PointingDeviceSensor_X3DPointingDeviceSensorContext .prototype .dispose ?.call (this);
-      Geometry3D_X3DGeometry3DContext           .prototype .dispose ?.call (this);
-      Grouping_X3DGroupingContext             .prototype .dispose ?.call (this);
-      Shape_X3DShapeContext                .prototype .dispose ?.call (this);
-      Rendering_X3DRenderingContext            .prototype .dispose ?.call (this);
-      Shaders_X3DShadersContext              .prototype .dispose ?.call (this);
-      Texturing_X3DTexturingContext            .prototype .dispose ?.call (this);
-      Networking_X3DNetworkingContext           .prototype .dispose ?.call (this);
-      Core_X3DCoreContext                 .prototype .dispose ?.call (this);
-      Scripting_X3DScriptingContext            .prototype .dispose ?.call (this);
-      Routing_X3DRoutingContext              .prototype .dispose ?.call (this);
-      Base_X3DBaseNode                    .prototype .dispose ?.call (this);
-
       this [X3DBrowserContext_tainted] = true;
 
-      cancelAnimationFrame (this [_animFrame]);
+      this .getSession () .cancelAnimationFrame (this [_animFrame]);
 
-      this .getContext () .getExtension ("WEBGL_lose_context") ?.loseContext ();
+      for (const browserContext of browserContexts .slice () .reverse ())
+         browserContext .prototype .dispose ?.call (this);
+
+      Base_X3DBaseNode .prototype .dispose .call (this);
    },
 });
 
@@ -120379,7 +120672,7 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (x_ite_Namespace .add ("Components", Components_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(142);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(409);
 /*******************************************************************************
  * MIT License
  *
@@ -120766,6 +121059,11 @@ class DOMIntegration
       });
 
       element .dispatchEvent (event);
+   }
+
+   dispose ()
+   {
+      this .canvasObserver .disconnect ();
    }
 };
 
@@ -121640,7 +121938,7 @@ const FieldTypes_default_ = new Configuration_FieldTypesArray (Object .values (x
 
 /* harmony default export */ const FieldTypes = (x_ite_Namespace .add ("FieldTypes", FieldTypes_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(142);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121804,7 +122102,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
              `      Max vertex uniform vectors: ${this .getMaxVertexUniformVectors ()}\n` +
              `      Max fragment uniform vectors: ${this .getMaxFragmentUniformVectors ()}\n` +
              `      Max vertex attribs: ${this .getMaxVertexAttribs ()}\n` +
-             `      Max varying vectors: ${this .getMaxVaryingVectors ()}\n`;
+             `      Max varying vectors: ${this .getMaxVaryingVectors ()}\n` +
+             `      WebXR: ${"xr" in navigator}\n`;
    },
    getName ()
    {
@@ -121828,9 +122127,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
    },
    getProfile (name)
    {
-      name = String (name);
-
-      const profile = this [_supportedProfiles] .get (name);
+      const profile = this [_supportedProfiles] .get (String (name));
 
       if (profile)
          return profile;
@@ -121964,7 +122261,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
          return Promise .all ([
             MikkTSpace .initialize (), // Required by Rendering component.
             loadComponents .call (this, component, new Set ()),
-         ]);
+         ])
+         .then (Function .prototype);
       };
    })(),
    addConcreteNode (ConcreteNode)
@@ -122593,6 +122891,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
    {
       this .currentScene .toJSONStream (generator);
    },
+   dispose ()
+   {
+      this [_DOMIntegration] .dispose ();
+
+      Browser_X3DBrowserContext .prototype .dispose .call (this);
+   },
 });
 
 for (const key of Object .keys (X3DBrowser .prototype))
@@ -122701,7 +123005,7 @@ const X3DBrowser_default_ = X3DBrowser;
 
 /* harmony default export */ const Browser_X3DBrowser = (x_ite_Namespace .add ("X3DBrowser", X3DBrowser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(142);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122962,8 +123266,8 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(142);
-/* provided dependency */ var pako = __webpack_require__(806);
+/* provided dependency */ var jquery_$ = __webpack_require__(409);
+/* provided dependency */ var pako = __webpack_require__(765);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -123039,13 +123343,13 @@ const jquery_default_ = jquery_$;
 
 /* harmony default export */ const jquery = (x_ite_Namespace .add ("jquery", jquery_default_));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(303);
+/* provided dependency */ var libtess_libtess = __webpack_require__(234);
 const libtess_default_ = libtess_libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (x_ite_Namespace .add ("libtess", libtess_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(142);
+/* provided dependency */ var X3D_$ = __webpack_require__(409);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

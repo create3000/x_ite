@@ -670,6 +670,10 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (external_
    {
       return false;
    },
+   isActive ()
+   {
+      return false;
+   },
    getNode ()
    {
       return this .node;

@@ -194,6 +194,30 @@ declare class X3DBrowser
     */
    readonly element: X3DCanvasElement;
    /**
+    * The `getSupportedProfile` service returns a ProfileInfo object of the named profile from the `supportedProfiles` array. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
+    */
+   getSupportedProfile (name: string): ProfileInfo;
+   /**
+    * The `getSupportedComponent` service returns a ComponentInfo object of the named component from the `supportedComponents` array. The parameter is the name of a component from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component. If it does not support the component, an error is thrown.
+    */
+   getSupportedComponent (name : string): ComponentInfo;
+   /**
+    * The `getProfile` service returns a ProfileInfo object of the named profile. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
+    */
+   getProfile (name: string): ProfileInfo;
+   /**
+    * The `getComponent` service returns a ComponentInfo object of the named component. The first parameter is the name of a component and the second the level from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component and the requested level. If it does not support the component at the level desired, an error is thrown. If level is omitted, it defaults to the highest supported level of this component.
+    */
+   getComponent (name : string, level : number?): ComponentInfo;
+   /**
+    * The `createScene` service creates a new empty scene that conforms to the given profile and component declarations.
+    */
+   createScene (profile: ProfileInfo, ... components: ComponentInfo []): X3DScene;
+   /**
+    * Loads all components, external and internal, specified by `args`. If the argument is a `String`, the name of a component must be given.
+    */
+   loadComponents (... args: Array <X3DScene | ProfileInfo | ComponentInfoArray | ComponentInfo | string>): Promise <void>;
+   /**
     * Replace the current world with this new scene that has been loaded or constructed from somewhere. A Promise is returned that will be resolved when the scene is completely loaded.
     */
    replaceWorld (scene: X3DScene): Promise <void>;
@@ -495,6 +519,30 @@ declare class X3DScene extends X3DExecutionContext
     */
    readonly exportedNodes: ExportedNodesArray;
 
+   /**
+    * Replaces the profile of this scene by the given profile. A profile of `null` is equivalent to a 'Full' profile.
+    */
+   setProfile (profile: ProfileInfo | null): void;
+   /**
+    * Adds the component to the list of components.
+    */
+   addComponent (component: ComponentInfo): void;
+   /**
+    * Updates the component.
+    */
+   updateComponent (component: ComponentInfo): void;
+   /**
+    * Removes the component with the given name.
+    */
+   removeComponent (name: string): void;
+   /**
+    * Updates the *name* and the *conversion factor* of the unit specified by *category*.
+    */
+   updateUnit (category: string, name: string, conversionFactor: number): void;
+   /**
+    * Returns the UnitInfo object with the given *category*.
+    */
+   getUnit (category: string): UnitInfo;
    /**
     * Returns the metadata values array associated with *name*.
     */
