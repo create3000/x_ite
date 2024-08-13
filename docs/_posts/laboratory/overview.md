@@ -2,7 +2,7 @@
 title: Laboratory
 date: 2022-11-28
 nav: laboratory
-categories: [laboratory]
+categories: [Laboratory]
 tags: [Laboratory]
 ---
 <style>
