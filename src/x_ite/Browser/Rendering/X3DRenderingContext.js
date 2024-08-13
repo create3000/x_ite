@@ -113,9 +113,11 @@ Object .assign (X3DRenderingContext .prototype,
 
       this .setResizeTarget (this .getCanvas () .parent ());
 
+      $(window) .on (`orientationchange.X3DBrowser-${this .getInstanceId ()}`, () => this .reshape ());
+
       // Observe fullscreen changes of <x3d-canvas>.
 
-      $(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', () => this .onfullscreen ());
+      $(document) .on (`webkitfullscreenchange.X3DBrowser-${this .getInstanceId ()} mozfullscreenchange.X3DBrowser-${this .getInstanceId ()} fullscreenchange.X3DBrowser-${this .getInstanceId ()} MSFullscreenChange.X3DBrowser-${this .getInstanceId ()}`, () => this .onfullscreen ());
    },
    getRenderer ()
    {
@@ -296,9 +298,19 @@ Object .assign (X3DRenderingContext .prototype,
    setResizeTarget (element)
    {
       if (element .is (this .getSurface ()))
+      {
          this .getCanvas () .removeAttr ("style");
+      }
       else
-         this .getCanvas () .css ({ all: "unset", position: "fixed", width: "100vw", height: "100vh" }); // WebXR Emulator
+      {
+         // WebXR Emulator or polyfill.
+         this .getCanvas () .css ({
+            all: "unset",
+            position: "fixed",
+            width: "100vw",
+            height: "100vh",
+         });
+      }
 
       this [_observer] .disconnect ();
       this [_observer] .observe (element [0], { childList: true });
@@ -343,16 +355,17 @@ Object .assign (X3DRenderingContext .prototype,
       const
          canvas       = this .getCanvas (),
          contentScale = this .getRenderingProperty ("ContentScale"),
-         width        = Math .max (canvas .width ()  * contentScale, 1)|0,
-         height       = Math .max (canvas .height () * contentScale, 1)|0;
+         width        = Math .max (canvas .parent () .width ()  * contentScale, 1)|0,
+         height       = Math .max (canvas .parent () .height () * contentScale, 1)|0;
 
-      this .addBrowserEvent ();
-
-      canvas .prop ("width",  width);
-      canvas .prop ("height", height);
+      canvas
+         .prop ("width",  width)
+         .prop ("height", height);
 
       if (this [_frameBuffers] .length < 2)
          this .reshapeFrameBuffer (0, 0, 0, width, height);
+
+      this .addBrowserEvent ();
    },
    reshapeFrameBuffer (i, x, y, width, height)
    {
@@ -487,7 +500,7 @@ Object .assign (X3DRenderingContext .prototype,
       this [_pose]               = null;
 
       this .addBrowserEvent ();
-      this .reshape (); // Maybe not needed, because a setResizeTarget comes later.
+      this .reshape ();
    },
    getSession ()
    {
@@ -551,6 +564,10 @@ Object .assign (X3DRenderingContext .prototype,
       }
 
       this [_frameBuffers] .length = v;
+
+      // WebXR Emulator or polyfill.
+      if (!this .getCanvas () .parent () .is (this .getSurface ()))
+         this .getCanvas () .css ("position", "fixed");
    },
    getPose ()
    {
@@ -562,6 +579,9 @@ Object .assign (X3DRenderingContext .prototype,
 
       this [_observer] .disconnect ();
       this [_resizer]  .disconnect ();
+
+      $(window) .off (`.X3DBrowser-${this .getInstanceId ()}`);
+      $(document) .off (`.X3DBrowser-${this .getInstanceId ()}`);
    },
 });
 
