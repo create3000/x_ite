@@ -1172,8 +1172,8 @@ Object .assign (X3DRenderObject .prototype,
 
          this .viewportArray          .set (viewport);
          this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
-         this .viewMatrixArray        .set (this .getViewMatrix () .get ());
-         this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+         this .viewMatrixArray        .set (this .view ?.viewMatrix ?? this .getViewMatrix () .get ());
+         this .cameraSpaceMatrixArray .set (this .view ?.cameraSpaceMatrix ?? this .getCameraSpaceMatrix () .get ());
 
          if (independent && this .transmission)
          {
