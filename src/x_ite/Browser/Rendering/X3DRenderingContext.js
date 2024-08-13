@@ -304,6 +304,14 @@ Object .assign (X3DRenderingContext .prototype,
    },
    setResizeTarget (element)
    {
+      if (!element .length)
+      {
+         // WebXR polyfill: parent can be null.
+         this .getCanvas () .prependTo (this .getSurface ());
+         this .setResizeTarget (this .getSurface ());
+         return;
+      }
+
       if (element .is (this .getSurface ()))
       {
          this .getCanvas () .removeAttr ("style");
