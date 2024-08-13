@@ -436,7 +436,13 @@ Object .assign (X3DRenderingContext .prototype,
       // Must bind default framebuffer, to get xr emulator working.
       gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
-      const baseLayer = new XRWebGLLayer (session, gl, { antialias: false, alpha: true, depth: false, ignoreDepthValues: true });
+      const baseLayer = new XRWebGLLayer (session, gl,
+      {
+         antialias: false,
+         alpha: true,
+         depth: false,
+         ignoreDepthValues: true,
+      });
 
       session .updateRenderState ({ baseLayer });
       session .addEventListener ("end", () => this .stopXRSession ());
