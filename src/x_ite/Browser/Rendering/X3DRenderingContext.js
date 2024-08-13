@@ -117,7 +117,14 @@ Object .assign (X3DRenderingContext .prototype,
 
       // Observe fullscreen changes of <x3d-canvas>.
 
-      $(document) .on (`webkitfullscreenchange.X3DBrowser-${this .getInstanceId ()} mozfullscreenchange.X3DBrowser-${this .getInstanceId ()} fullscreenchange.X3DBrowser-${this .getInstanceId ()} MSFullscreenChange.X3DBrowser-${this .getInstanceId ()}`, () => this .onfullscreen ());
+      $(document) .on ([
+         "webkitfullscreenchange",
+         "mozfullscreenchange",
+         "fullscreenchange",
+         "MSFullscreenChange",
+      ]
+      .map (event => `${event}.X3DBrowser-${this .getInstanceId ()}`)
+      .join (" "), () => this .onfullscreen ());
    },
    getRenderer ()
    {
