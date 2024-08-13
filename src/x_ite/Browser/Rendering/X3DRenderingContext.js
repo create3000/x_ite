@@ -417,8 +417,8 @@ Object .assign (X3DRenderingContext .prototype,
 
       $("<div></div>")
          .addClass ("x_ite-private-xr-button")
-         .on ("mousedown", false)
-         .on ("click", event => this .startXRSession (event))
+         .on ("mousedown touchstart", false)
+         .on ("mouseup touchend", event => this .startXRSession (event))
          .appendTo (this .getSurface ());
    },
    async startXRSession (event)
