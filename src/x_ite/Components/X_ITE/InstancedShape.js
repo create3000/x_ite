@@ -96,8 +96,8 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
 
       this .instances = Object .assign (gl .createBuffer (),
       {
-         vertexArrayObject: new VertexArray (gl),
-         thickLinesVertexArrayObject: new VertexArray (gl),
+         vertexArrayObject: new VertexArray (browser),
+         thickLinesVertexArrayObject: new VertexArray (browser),
          lineTrianglesBuffer: gl .createBuffer (),
          numLines: 0,
       });

@@ -177,16 +177,16 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       this .inputParticles = Object .assign (gl .createBuffer (),
       {
-         vertexArrayObject: new VertexArray (gl),
-         thickLinesVertexArrayObject: new VertexArray (gl),
+         vertexArrayObject: new VertexArray (browser),
+         thickLinesVertexArrayObject: new VertexArray (browser),
          lineTrianglesBuffer: gl .createBuffer (),
          numLines: 0,
       });
 
       this .outputParticles = Object .assign (gl .createBuffer (),
       {
-         vertexArrayObject: new VertexArray (gl),
-         thickLinesVertexArrayObject: new VertexArray (gl),
+         vertexArrayObject: new VertexArray (browser),
+         thickLinesVertexArrayObject: new VertexArray (browser),
          lineTrianglesBuffer: gl .createBuffer (),
          numLines: 0,
       });

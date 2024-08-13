@@ -65,7 +65,7 @@ function X3DLineGeometryNode (executionContext)
    this .lineStipples                = new Float32Array ();
    this .lineStippleBuffer           = gl .createBuffer ();
    this .lineTrianglesBuffer         = gl .createBuffer ();
-   this .thickLinesVertexArrayObject = new VertexArray (gl);
+   this .thickLinesVertexArrayObject = new VertexArray (browser);
 
    this .setGeometryType (1);
    this .setPrimitiveMode (gl .LINES);

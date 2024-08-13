@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
-function VertexArray (gl)
+function VertexArray (browser)
 {
-   this .gl           = gl;
+   this .browser      = browser;
+   this .gl           = browser .getContext ();
    this .vertexArrays = new Map ();
 }
 
@@ -62,25 +63,30 @@ Object .assign (VertexArray .prototype,
    },
    enable (program)
    {
-      const vertexArray = this .vertexArrays .get (program);
+      const { browser, gl, vertexArrays } = this;
+
+      if (browser .getPose ())
+         return true; // Rebuild
+
+      const vertexArray = vertexArrays .get (program);
 
       if (vertexArray)
       {
-         this .gl .bindVertexArray (vertexArray);
+         gl .bindVertexArray (vertexArray);
 
          return false;
       }
       else
       {
          // Memory leak prevention when shaders are reloaded. There should normally be no more than maybe 10 VAOs, except when shaders are often reloaded.
-         if (this .vertexArrays .size > 100)
+         if (vertexArrays .size > 100)
             this .dispose ();
 
-         const vertexArray = this .gl .createVertexArray ();
+         const vertexArray = gl .createVertexArray ();
 
-         this .vertexArrays .set (program, vertexArray)
+         vertexArrays .set (program, vertexArray)
 
-         this .gl .bindVertexArray (vertexArray);
+         gl .bindVertexArray (vertexArray);
 
          // console .log ("rebuild vao");
 
@@ -89,10 +95,12 @@ Object .assign (VertexArray .prototype,
    },
    dispose ()
    {
-      for (const vertexArray of this .vertexArrays .values ())
-         this .gl .deleteVertexArray (vertexArray);
+      const { gl, vertexArrays } = this;
 
-      this .vertexArrays .clear ();
+      for (const vertexArray of vertexArrays .values ())
+         gl .deleteVertexArray (vertexArray);
+
+      vertexArrays .clear ();
    },
 });
 

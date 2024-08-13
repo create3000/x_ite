@@ -92,7 +92,7 @@ function X3DFlyViewer (executionContext, navigationInfo)
    this .lineIndexBuffer       = gl .createBuffer ();
    this .lineColorBuffer       = gl .createBuffer ();
    this .lineVertexBuffer      = gl .createBuffer ();
-   this .lineVertexArrayObject = new VertexArray (gl);
+   this .lineVertexArrayObject = new VertexArray (browser);
    this .lineVertexArray       = new Float32Array (8 * 4) .fill (1);
 
    this .geometryContext = new GeometryContext ({

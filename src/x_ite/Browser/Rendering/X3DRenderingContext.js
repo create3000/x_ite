@@ -497,6 +497,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       this .setReferenceSpace ();
       this .addBrowserEvent ();
+      this .reshape ();
    },
    stopXRSession ()
    {
@@ -583,6 +584,8 @@ Object .assign (X3DRenderingContext .prototype,
       // WebXR Emulator or polyfill.
       if (!this .getCanvas () .parent () .is (this .getSurface ()))
          this .getCanvas () .css ("position", "fixed");
+
+      this .addBrowserEvent ();
    },
    getPose ()
    {
