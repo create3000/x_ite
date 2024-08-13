@@ -295,6 +295,11 @@ Object .assign (X3DRenderingContext .prototype,
    },
    setResizeTarget (element)
    {
+      if (element .is (this .getSurface ()))
+         this .getCanvas () .removeAttr ("style");
+      else
+         this .getCanvas () .css ({ all: "unset", position: "fixed", width: "100vw", height: "100vh" });
+
       this [_observer] .disconnect ();
       this [_observer] .observe (element [0], { childList: true });
 
@@ -463,7 +468,6 @@ Object .assign (X3DRenderingContext .prototype,
       };
 
       this .setReferenceSpace ();
-      this .getCanvas () .css ({ all: "unset", position: "fixed", width: "100vw", height: "100vh" });
       this .addBrowserEvent ();
    },
    stopXRSession ()
@@ -482,7 +486,6 @@ Object .assign (X3DRenderingContext .prototype,
       this [_defaultFrameBuffer] = null;
       this [_pose]               = null;
 
-      this .getCanvas () .removeAttr ("style");
       this .addBrowserEvent ();
       this .reshape (); // Maybe not needed, because a setResizeTarget comes later.
    },
@@ -532,6 +535,14 @@ Object .assign (X3DRenderingContext .prototype,
          const
             view                    = pose .views [i],
             { x, y, width, height } = this [_baseLayer] .getViewport (view);
+
+         // this .xxx ??= [ ];
+         // if (!this .xxx [i])
+         // {
+         //    this .xxx [i] = 1;
+
+         //    console .log (i, x, y, width, height)
+         // }
 
          // Second emulator view has width zero if in non-stereo mode.
          if (!width)
