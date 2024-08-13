@@ -68,6 +68,7 @@ function X3DRenderObject (executionContext)
    this .renderKey                      = "";
    this .renderAndGlobalLightsKey       = "";
    this .renderCount                    = 0;
+   this .view                           = null;
    this .viewVolumes                    = [ ];
    this .projectionMatrix               = new MatrixStack (Matrix4);
    this .modelViewMatrix                = new MatrixStack (Matrix4);
@@ -214,6 +215,10 @@ Object .assign (X3DRenderObject .prototype,
          return ++ renderCount;
       }
    })(),
+   getView ()
+   {
+      return this .view;
+   },
    getViewVolumes ()
    {
       return this .viewVolumes;
@@ -1155,9 +1160,13 @@ Object .assign (X3DRenderObject .prototype,
 
       // DRAW
 
-      for (const frameBuffer of frameBuffers)
+      for (const [i, frameBuffer] of frameBuffers .entries ())
       {
          this .renderCount = this .getNextRenderCount ();
+
+         // XR support
+
+         this .view = this .isActive () ? browser .getPose () ?.views [i] : null;
 
          // Set global uniforms.
 

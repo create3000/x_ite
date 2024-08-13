@@ -338,8 +338,8 @@ Object .assign (X3DRenderingContext .prototype,
       const
          canvas       = this .getCanvas (),
          contentScale = this .getRenderingProperty ("ContentScale"),
-         width        = Math .max (canvas .width ()  * contentScale, 1),
-         height       = Math .max (canvas .height () * contentScale, 1);
+         width        = Math .max (canvas .width ()  * contentScale, 1)|0,
+         height       = Math .max (canvas .height () * contentScale, 1)|0;
 
       this .addBrowserEvent ();
 
@@ -451,8 +451,8 @@ Object .assign (X3DRenderingContext .prototype,
          cameraSpaceMatrix: new Matrix4 (),
          viewMatrix: new Matrix4 (),
          views: [
-            new Matrix4 (),
-            new Matrix4 (),
+            { matrix: new Matrix4 (), cameraSpaceMatrix: new Matrix4 () },
+            { matrix: new Matrix4 (), cameraSpaceMatrix: new Matrix4 () },
          ],
       };
 
@@ -462,12 +462,12 @@ Object .assign (X3DRenderingContext .prototype,
    },
    stopXRSession ()
    {
+      this [_session] .end ();
+
       for (const frameBuffer of this [_frameBuffers])
          frameBuffer .dispose ();
 
       this [_frameBuffers] .length = 0;
-
-      this [_session] .end ();
 
       this [_session]            = window;
       this [_baseReferenceSpace] = null;
@@ -523,9 +523,11 @@ Object .assign (X3DRenderingContext .prototype,
       {
          const { x, y, width, height } = this [_baseLayer] .getViewport (view);
 
-         this .reshapeFrameBuffer (i, x, y, width, height);
+         this .reshapeFrameBuffer (i, x|0, y|0, width|0, height|0);
 
          this [_pose] .projectionMatrix .assign (view .projectionMatrix);
+         this [_pose] .views [i] .cameraSpaceMatrix .assign (view .transform .matrix);
+         this [_pose] .views [i] .matrix .assign (pose .transform .matrix) .multRight (view .transform .inverse .matrix);
 
          // this [_frameBuffers] [i] .projectionMatrix  = view .projectionMatrix;
          // this [_frameBuffers] [i] .viewMatrix        = view .transform .inverse .matrix;

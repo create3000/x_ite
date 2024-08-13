@@ -70,6 +70,10 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    {
       return false;
    },
+   isActive ()
+   {
+      return false;
+   },
    getNode ()
    {
       return this .node;

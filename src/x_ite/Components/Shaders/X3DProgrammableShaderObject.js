@@ -49,6 +49,7 @@ import X3DNode          from "../Core/X3DNode.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
 import X3DCast          from "../../Base/X3DCast.js";
 import Matrix3          from "../../../standard/Math/Numbers/Matrix3.js";
+import Matrix4          from "../../../standard/Math/Numbers/Matrix4.js";
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
 
 const _uniformLocation = Symbol .for ("X_ITE.X3DField.uniformLocation");
@@ -1032,7 +1033,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    },
    setUniforms: (() =>
    {
-      const normalMatrix = new Float32Array (9);
+      const
+         xrModelViewMatrix = new Float32Array (16),
+         normalMatrix      = new Float32Array (9);
 
       return function (gl, geometryContext, renderContext, front = true)
       {
@@ -1090,7 +1093,19 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          // Model view matrix
 
-         gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+         const view = renderObject .getView ();
+
+         if (view)
+         {
+            xrModelViewMatrix .set (modelViewMatrix);
+            Matrix4 .prototype .multRight .call (xrModelViewMatrix, view .matrix);
+
+            gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, xrModelViewMatrix);
+         }
+         else
+         {
+            gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+         }
 
          // Normal matrix
 
