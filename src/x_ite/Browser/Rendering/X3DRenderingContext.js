@@ -536,14 +536,6 @@ Object .assign (X3DRenderingContext .prototype,
             view                    = pose .views [i],
             { x, y, width, height } = this [_baseLayer] .getViewport (view);
 
-         // this .xxx ??= [ ];
-         // if (!this .xxx [i])
-         // {
-         //    this .xxx [i] = 1;
-
-         //    console .log (i, x, y, width, height)
-         // }
-
          // Second emulator view has width zero if in non-stereo mode.
          if (!width)
             continue;
