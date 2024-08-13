@@ -436,7 +436,7 @@ Object .assign (X3DRenderingContext .prototype,
       // Must bind default framebuffer, to get xr emulator working.
       gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
-      const baseLayer = new XRWebGLLayer (session, gl);
+      const baseLayer = new XRWebGLLayer (session, gl, { antialias: false, alpha: true, depth: false, ignoreDepthValues: true });
 
       session .updateRenderState ({ baseLayer });
       session .addEventListener ("end", () => this .stopXRSession ());
@@ -444,7 +444,7 @@ Object .assign (X3DRenderingContext .prototype,
       this [_session]            = session;
       this [_baseReferenceSpace] = referenceSpace;
       this [_baseLayer]          = baseLayer;
-      this [_defaultFrameBuffer] = null;
+      this [_defaultFrameBuffer] = baseLayer .framebuffer;
 
       this [_pose] = {
          projectionMatrix: new Matrix4 (),
@@ -462,7 +462,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    stopXRSession ()
    {
-      this [_session] .end ();
+      this [_session] .end () .catch (Function .prototype);
 
       for (const frameBuffer of this [_frameBuffers])
          frameBuffer .dispose ();
