@@ -205,14 +205,14 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .renderCount;
    },
-   getNextRenderCount: (function ()
+   advanceRenderCount: (function ()
    {
       let renderCount = 0;
 
       return function ()
       {
          renderCount >>>= 0; // uintesize
-         return ++ renderCount;
+         this .renderCount = ++ renderCount;
       }
    })(),
    getView ()
@@ -1120,11 +1120,11 @@ Object .assign (X3DRenderObject .prototype,
    draw ()
    {
       const
+         independent              = this .isIndependent (),
          browser                  = this .getBrowser (),
          gl                       = browser .getContext (),
          frameBuffers             = browser .getFrameBuffers (),
-         numFrameBuffers          = frameBuffers .length,
-         independent              = this .isIndependent (),
+         numFrameBuffers          = independent ? frameBuffers .length : 1,
          viewport                 = this .getViewVolume () .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
@@ -1164,8 +1164,6 @@ Object .assign (X3DRenderObject .prototype,
       for (let i = 0; i < numFrameBuffers; ++ i)
       {
          const frameBuffer = frameBuffers [i];
-
-         this .renderCount = this .getNextRenderCount ();
 
          // XR support
 
@@ -1245,6 +1243,8 @@ Object .assign (X3DRenderObject .prototype,
 
       // Draw background.
 
+      this .advanceRenderCount ();
+
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .DEPTH_BUFFER_BIT | clear);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
@@ -1252,6 +1252,8 @@ Object .assign (X3DRenderObject .prototype,
       this .getBackground () .display (gl, this, viewport);
 
       // Sorted blend or order independent transparency
+
+      this .advanceRenderCount ();
 
       // Render opaque objects first
 
