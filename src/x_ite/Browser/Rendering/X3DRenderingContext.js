@@ -517,17 +517,29 @@ Object .assign (X3DRenderingContext .prototype,
       this [_pose] .cameraSpaceMatrix .assign (pose .transform .matrix);
       this [_pose] .viewMatrix        .assign (pose .transform .inverse .matrix);
 
-      for (const [i, view] of pose .views .entries ())
-      {
-         const { x, y, width, height } = this [_baseLayer] .getViewport (view);
+      let v = 0;
 
-         this .reshapeFrameBuffer (i, x|0, y|0, width|0, height|0);
+      for (let i = 0, length = pose .views .length; i < length; ++ i)
+      {
+         const
+            view                    = pose .views [i],
+            { x, y, width, height } = this [_baseLayer] .getViewport (view);
+
+         // Second emulator view has width zero if in non-stereo mode.
+         if (!width)
+            continue;
+
+         this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
 
          this [_pose] .projectionMatrix .assign (view .projectionMatrix);
-         this [_pose] .views [i] .cameraSpaceMatrix .assign (view .transform .matrix);
-         this [_pose] .views [i] .viewMatrix .assign (view .transform .inverse .matrix);
-         this [_pose] .views [i] .matrix .assign (pose .transform .matrix) .multRight (view .transform .inverse .matrix);
+         this [_pose] .views [v] .cameraSpaceMatrix .assign (view .transform .matrix);
+         this [_pose] .views [v] .viewMatrix .assign (view .transform .inverse .matrix);
+         this [_pose] .views [v] .matrix .assign (pose .transform .matrix) .multRight (view .transform .inverse .matrix);
+
+         ++ v;
       }
+
+      this [_frameBuffers] .length = v;
    },
    getPose ()
    {

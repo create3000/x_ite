@@ -619,6 +619,7 @@ Object .assign (X3DTextGeometry .prototype,
          font             = fontStyle .getFont (),
          normal           = fontStyle ._horizontal .getValue () ? fontStyle ._leftToRight .getValue () : fontStyle ._topToBottom .getValue (),
          glyphs           = this .stringToGlyphs (font, line, normal, lineNumber),
+         numGlyphs        = glyphs .length,
          primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
 
       let
@@ -627,9 +628,10 @@ Object .assign (X3DTextGeometry .prototype,
          yMin = Number .POSITIVE_INFINITY,
          yMax = Number .NEGATIVE_INFINITY;
 
-      for (const [g, glyph] of glyphs .entries ())
+      for (let g = 0; g < numGlyphs; ++ g)
       {
          const
+            glyph     = glyphs [g],
             nextGlyph = glyphs [g + 1],
             kerning   = nextGlyph ? font .getKerningValue (glyph, nextGlyph) : 0;
 

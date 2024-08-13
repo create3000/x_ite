@@ -1123,6 +1123,7 @@ Object .assign (X3DRenderObject .prototype,
          browser                  = this .getBrowser (),
          gl                       = browser .getContext (),
          frameBuffers             = browser .getFrameBuffers (),
+         numFrameBuffers          = frameBuffers .length,
          independent              = this .isIndependent (),
          viewport                 = this .getViewVolume () .getViewport (),
          lights                   = this .lights,
@@ -1160,8 +1161,10 @@ Object .assign (X3DRenderObject .prototype,
 
       // DRAW
 
-      for (const [i, frameBuffer] of frameBuffers .entries ())
+      for (let i = 0; i < numFrameBuffers; ++ i)
       {
+         const frameBuffer = frameBuffers [i];
+
          this .renderCount = this .getNextRenderCount ();
 
          // XR support
