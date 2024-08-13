@@ -512,14 +512,16 @@ Object .assign (X3DRenderingContext .prototype,
       if (!frame)
          return;
 
-      const pose = frame .getViewerPose (this [_referenceSpace]);
+      const
+         pose     = frame .getViewerPose (this [_referenceSpace]),
+         numViews = pose .views .length;
 
       this [_pose] .cameraSpaceMatrix .assign (pose .transform .matrix);
       this [_pose] .viewMatrix        .assign (pose .transform .inverse .matrix);
 
       let v = 0;
 
-      for (let i = 0, length = pose .views .length; i < length; ++ i)
+      for (let i = 0; i < numViews; ++ i)
       {
          const
             view                    = pose .views [i],
