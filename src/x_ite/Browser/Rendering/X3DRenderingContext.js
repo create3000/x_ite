@@ -536,7 +536,7 @@ Object .assign (X3DRenderingContext .prototype,
             view                    = pose .views [i],
             { x, y, width, height } = this [_baseLayer] .getViewport (view);
 
-         // Second emulator view has width zero if in non-stereo mode.
+         // WebXR Emulator: second view has width zero if in non-stereo mode.
          if (!width)
             continue;
 
