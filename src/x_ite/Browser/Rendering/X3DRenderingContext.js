@@ -298,7 +298,7 @@ Object .assign (X3DRenderingContext .prototype,
       if (element .is (this .getSurface ()))
          this .getCanvas () .removeAttr ("style");
       else
-         this .getCanvas () .css ({ all: "unset", position: "fixed", width: "100vw", height: "100vh" });
+         this .getCanvas () .css ({ all: "unset", position: "fixed", width: "100vw", height: "100vh" }); // WebXR Emulator
 
       this [_observer] .disconnect ();
       this [_observer] .observe (element [0], { childList: true });
@@ -438,7 +438,7 @@ Object .assign (X3DRenderingContext .prototype,
          session        = await navigator .xr .requestSession ("immersive-vr"),
          referenceSpace = await session .requestReferenceSpace ("local");
 
-      // Must bind default framebuffer, to get xr emulator working.
+      // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
       gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
       const baseLayer = new XRWebGLLayer (session, gl,
