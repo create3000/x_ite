@@ -161,7 +161,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
              `      Max vertex uniform vectors: ${this .getMaxVertexUniformVectors ()}\n` +
              `      Max fragment uniform vectors: ${this .getMaxFragmentUniformVectors ()}\n` +
              `      Max vertex attribs: ${this .getMaxVertexAttribs ()}\n` +
-             `      Max varying vectors: ${this .getMaxVaryingVectors ()}\n`;
+             `      Max varying vectors: ${this .getMaxVaryingVectors ()}\n` +
+             `      WebXR: ${"xr" in navigator}\n`;
    },
    getName ()
    {
