@@ -50,6 +50,8 @@ import X3DConstants           from "../../Base/X3DConstants.js";
 import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
 import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
+import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4              from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
 
 const
@@ -65,6 +67,7 @@ const
 
 const
    _session            = Symbol (),
+   _baseReferenceSpace = Symbol (),
    _referenceSpace     = Symbol (),
    _baseLayer          = Symbol (),
    _defaultFrameBuffer = Symbol (),
@@ -98,6 +101,10 @@ Object .assign (X3DRenderingContext .prototype,
 
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
+
+      // Events
+
+      this ._activeViewpoint .addInterest ("setReferenceSpace", this);
 
       // Observe resize and parent changes of <canvas> and configure viewport.
 
@@ -435,7 +442,7 @@ Object .assign (X3DRenderingContext .prototype,
       session .addEventListener ("end", () => this .stopXRSession ());
 
       this [_session]            = session;
-      this [_referenceSpace]     = referenceSpace;
+      this [_baseReferenceSpace] = referenceSpace;
       this [_baseLayer]          = baseLayer;
       this [_defaultFrameBuffer] = baseLayer .framebuffer;
 
@@ -449,6 +456,7 @@ Object .assign (X3DRenderingContext .prototype,
          ],
       };
 
+      this .setReferenceSpace ();
       this .getCanvas () .css ({ all: "unset", position: "fixed", width: "100vw", height: "100vh" });
       this .addBrowserEvent ();
    },
@@ -462,6 +470,7 @@ Object .assign (X3DRenderingContext .prototype,
       this [_session] .end ();
 
       this [_session]            = window;
+      this [_baseReferenceSpace] = null;
       this [_referenceSpace]     = null;
       this [_baseLayer]          = null;
       this [_defaultFrameBuffer] = null;
@@ -478,6 +487,21 @@ Object .assign (X3DRenderingContext .prototype,
    getReferenceSpace ()
    {
       return this [_referenceSpace];
+   },
+   setReferenceSpace ()
+   {
+      if (!this [_baseReferenceSpace])
+         return;
+
+      const
+         translation = new Vector3 (),
+         rotation    = new Rotation4 ();
+
+      this .getActiveViewpoint () ?.getViewMatrix () .get (translation, rotation)
+
+      const offsetTransform = new XRRigidTransform (translation, rotation .getQuaternion ());
+
+      this [_referenceSpace] = this [_baseReferenceSpace] .getOffsetReferenceSpace (offsetTransform);
    },
    getDefaultFrameBuffer ()
    {
