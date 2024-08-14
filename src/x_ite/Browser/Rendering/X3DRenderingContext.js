@@ -461,6 +461,9 @@ Object .assign (X3DRenderingContext .prototype,
       event ?.stopImmediatePropagation ();
       event ?.stopPropagation ();
 
+      if (this [_session] !== window)
+         return;
+
       const
          gl             = this .getContext (),
          compatible     = await gl .makeXRCompatible (),
@@ -502,8 +505,10 @@ Object .assign (X3DRenderingContext .prototype,
    },
    stopXRSession ()
    {
-      if (this [_session] !== window)
-         this [_session] .end () .catch (Function .prototype);
+      if (this [_session] === window)
+         return;
+
+      this [_session] .end () .catch (Function .prototype);
 
       for (const frameBuffer of this [_frameBuffers])
          frameBuffer .dispose ();
