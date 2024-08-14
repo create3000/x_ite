@@ -1204,9 +1204,6 @@ Object .assign (X3DRenderObject .prototype,
          }
       }
 
-      // WebXR Emulator and polyfill: bind to null, to prevent changes.
-      gl .bindVertexArray (null);
-
       // POST DRAW
 
       if (independent)

@@ -740,8 +740,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_BYTE, 0);
             gl .enable (gl .DEPTH_TEST);
          }
-
-         gl .bindVertexArray (null);
       };
    })(),
    disconnect ()

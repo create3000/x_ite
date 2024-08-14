@@ -480,6 +480,8 @@ Object .assign (X3DRenderingContext .prototype,
          ignoreDepthValues: true,
       });
 
+      this .endEvents () .addInterest ("endFrame", this);
+
       session .updateRenderState ({ baseLayer });
       session .addEventListener ("end", () => this .stopXRSession ());
 
@@ -506,6 +508,8 @@ Object .assign (X3DRenderingContext .prototype,
    {
       if (this [_session] === window)
          return;
+
+      this .endEvents () .removeInterest ("endFrame", this);
 
       this [_session] .end () .catch (Function .prototype);
 
@@ -596,6 +600,13 @@ Object .assign (X3DRenderingContext .prototype,
    getPose ()
    {
       return this [_pose];
+   },
+   endFrame ()
+   {
+      const gl = this .getContext ();
+
+      // WebXR Emulator and polyfill: bind to null, to prevent changes.
+      gl .bindVertexArray (null);
    },
    dispose ()
    {
