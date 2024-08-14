@@ -184,7 +184,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .tangentBuffer         = gl .createBuffer ();
       this .normalBuffer          = gl .createBuffer ();
       this .vertexBuffer          = gl .createBuffer ();
-      this .vertexArrayObject     = new VertexArray (browser);
+      this .vertexArrayObject     = new VertexArray (gl);
 
       this .set_live__ ();
    },

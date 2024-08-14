@@ -101,8 +101,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       this .sphereBuffer        = gl .createBuffer ();
       this .texCoordBuffers     = [gl .createBuffer ()];
       this .textureBuffers      = Array .from ({length: 6}, () => gl .createBuffer ());
-      this .sphereArrayObject   = new VertexArray (browser);
-      this .textureArrayObjects = Array .from ({length: 6}, () => new VertexArray (browser));
+      this .sphereArrayObject   = new VertexArray (gl);
+      this .textureArrayObjects = Array .from ({length: 6}, () => new VertexArray (gl));
 
       this ._groundAngle .addInterest ("build", this);
       this ._groundColor .addInterest ("build", this);

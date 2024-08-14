@@ -45,10 +45,9 @@
  *
  ******************************************************************************/
 
-function VertexArray (browser)
+function VertexArray (gl)
 {
-   this .browser      = browser;
-   this .gl           = browser .getContext ();
+   this .gl           = gl;
    this .vertexArrays = new Map ();
 }
 
