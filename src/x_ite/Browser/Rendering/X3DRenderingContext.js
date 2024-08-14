@@ -71,7 +71,8 @@ const
    _referenceSpace     = Symbol (),
    _baseLayer          = Symbol (),
    _defaultFrameBuffer = Symbol (),
-   _pose               = Symbol ();
+   _pose               = Symbol (),
+   _movement           = Symbol ();
 
 // WebXR Emulator and polyfill:
 const canvasCSS = {
@@ -89,6 +90,7 @@ function X3DRenderingContext ()
    this [_frameBuffers] = [ ];
    this [_depthShaders] = new Map ();
    this [_localObjects] = [ ]; // shader objects dumpster
+   this [_movement]     = "VIEWER_POSE";
 
    // XR support
 
@@ -527,6 +529,17 @@ Object .assign (X3DRenderingContext .prototype,
 
       this .addBrowserEvent ();
       this .reshape ();
+   },
+   getXRMovementControl ()
+   {
+      return this [_movement];
+   },
+   /**
+    * @param {"VIEWER_POSE" | "VIEWPOINT"} value
+    */
+   setXRMovementControl (value)
+   {
+      this [_movement] = value;
    },
    getSession ()
    {
