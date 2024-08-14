@@ -307,6 +307,7 @@ Object .assign (X3DRenderingContext .prototype,
       if (!element .length)
       {
          // WebXR polyfill: parent can be null.
+         this .stopXRSession ();
          this .getCanvas () .prependTo (this .getSurface ());
          this .setResizeTarget (this .getSurface ());
          return;
@@ -501,7 +502,8 @@ Object .assign (X3DRenderingContext .prototype,
    },
    stopXRSession ()
    {
-      this [_session] .end () .catch (Function .prototype);
+      if (this [_session] !== window)
+         this [_session] .end () .catch (Function .prototype);
 
       for (const frameBuffer of this [_frameBuffers])
          frameBuffer .dispose ();
