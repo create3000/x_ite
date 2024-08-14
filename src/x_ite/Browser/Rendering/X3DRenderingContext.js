@@ -73,6 +73,13 @@ const
    _defaultFrameBuffer = Symbol (),
    _pose               = Symbol ();
 
+// WebXR Emulator and polyfill:
+const canvasCSS = {
+   position: "fixed",
+   width: "100vw",
+   height: "100vh",
+};
+
 function X3DRenderingContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .MFInt32 (0, 0, 300, 150));
@@ -113,7 +120,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       this .setResizeTarget (this .getCanvas () .parent ());
 
-      $(window) .on (`orientationchange.X3DBrowser-${this .getInstanceId ()}`, () => this .reshape ());
+      $(window) .on (`orientationchange.X3DRenderingContext-${this .getInstanceId ()}`, () => this .reshape ());
 
       // Observe fullscreen changes of <x3d-canvas>.
 
@@ -123,7 +130,7 @@ Object .assign (X3DRenderingContext .prototype,
          "fullscreenchange",
          "MSFullscreenChange",
       ]
-      .map (event => `${event}.X3DBrowser-${this .getInstanceId ()}`)
+      .map (event => `${event}.X3DRenderingContext-${this .getInstanceId ()}`)
       .join (" "), () => this .onfullscreen ());
    },
    getRenderer ()
@@ -320,12 +327,7 @@ Object .assign (X3DRenderingContext .prototype,
       else
       {
          // WebXR Emulator or polyfill.
-         this .getCanvas () .css ({
-            all: "unset",
-            position: "fixed",
-            width: "100vw",
-            height: "100vh",
-         });
+         this .getCanvas () .css (canvasCSS);
       }
 
       this [_observer] .disconnect ();
@@ -590,7 +592,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       // WebXR Emulator or polyfill.
       if (!this .getCanvas () .parent () .is (this .getSurface ()))
-         this .getCanvas () .css ("position", "fixed");
+         this .getCanvas () .css (canvasCSS);
 
       this .addBrowserEvent ();
    },
@@ -605,8 +607,8 @@ Object .assign (X3DRenderingContext .prototype,
       this [_observer] .disconnect ();
       this [_resizer]  .disconnect ();
 
-      $(window) .off (`.X3DBrowser-${this .getInstanceId ()}`);
-      $(document) .off (`.X3DBrowser-${this .getInstanceId ()}`);
+      $(window) .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
+      $(document) .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
    },
 });
 
