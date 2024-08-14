@@ -323,14 +323,9 @@ Object .assign (X3DRenderingContext .prototype,
       }
 
       if (element .is (this .getSurface ()))
-      {
          this .getCanvas () .removeAttr ("style");
-      }
-      else
-      {
-         // WebXR Emulator or polyfill.
+      else // WebXR Emulator or polyfill.
          this .getCanvas () .css (canvasCSS);
-      }
 
       this [_observer] .disconnect ();
       this [_observer] .observe (element [0], { childList: true });
