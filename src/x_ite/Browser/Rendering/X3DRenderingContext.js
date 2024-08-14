@@ -597,16 +597,16 @@ Object .assign (X3DRenderingContext .prototype,
 
       this .addBrowserEvent ();
    },
-   getPose ()
-   {
-      return this [_pose];
-   },
    endFrame ()
    {
       const gl = this .getContext ();
 
       // WebXR Emulator and polyfill: bind to null, to prevent changes.
       gl .bindVertexArray (null);
+   },
+   getPose ()
+   {
+      return this [_pose];
    },
    dispose ()
    {
