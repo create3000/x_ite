@@ -348,6 +348,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          }
       }
 
+      gl .bindVertexArray (null);
       gl .enable (gl .DEPTH_TEST);
       gl .deleteFramebuffer (framebuffer);
       gl .deleteTexture (panoramaTexture);

@@ -1204,6 +1204,8 @@ Object .assign (X3DRenderObject .prototype,
          }
       }
 
+      gl .bindVertexArray (null);
+
       // POST DRAW
 
       if (independent)

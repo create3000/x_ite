@@ -63,10 +63,7 @@ Object .assign (VertexArray .prototype,
    },
    enable (program)
    {
-      const { browser, gl, vertexArrays } = this;
-
-      if (browser .getPose ())
-         return true; // Rebuild
+      const { gl, vertexArrays } = this;
 
       const vertexArray = vertexArrays .get (program);
 
