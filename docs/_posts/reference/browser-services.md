@@ -304,10 +304,22 @@ Returns a browser option with the corresponding *name*.
          <td>9.80665</td>
       </tr>
       <tr>
+         <td>LoadUrlObjects</td>
+         <td>Wether X3DUrlObject should be loaded. <small class="blue">non standard</small></td>
+         <td>Boolean</td>
+         <td>true</td>
+      </tr>
+      <tr>
          <td>LogarithmicDepthBuffer</td>
          <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint is bound. <small class="blue">non standard</small></td>
          <td>Boolean</td>
          <td>false</td>
+      </tr>
+      <tr>
+         <td>MovementControl</td>
+         <td>When an XR session is active, you can control motion either by using the viewer pose of the VR device or by using the position and orientation of the currently bound viewpoint. <small class="blue">non standard</small></td>
+         <td>VIEWER_POSE, VIEWPOINT</td>
+         <td>VIEWER_POSE</td>
       </tr>
       <tr>
          <td>Multisampling</td>
