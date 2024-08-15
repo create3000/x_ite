@@ -92,6 +92,9 @@ function X3DRenderingContext ()
 
    // XR support
 
+   this [_session]            = window;
+   this [_defaultFrameBuffer] = null;
+
    this .addXRSupport ();
 }
 
@@ -434,8 +437,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    async addXRSupport ()
    {
-      this [_session]            = window;
-      this [_defaultFrameBuffer] = null;
+      this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 
       if (this .getContext () .getVersion () <= 1)
          return;
@@ -443,7 +445,9 @@ Object .assign (X3DRenderingContext .prototype,
       if (!("xr" in navigator))
          return;
 
-      const supported = await navigator .xr .isSessionSupported ("immersive-vr");
+      const
+         mode      = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
+         supported = await navigator .xr .isSessionSupported (mode);
 
       if (!supported)
          return;
@@ -465,8 +469,9 @@ Object .assign (X3DRenderingContext .prototype,
 
       const
          gl             = this .getContext (),
+         mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
          compatible     = await gl .makeXRCompatible (),
-         session        = await navigator .xr .requestSession ("immersive-vr"),
+         session        = await navigator .xr .requestSession (mode),
          referenceSpace = await session .requestReferenceSpace ("local");
 
       // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
