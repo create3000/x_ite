@@ -453,6 +453,7 @@ type RenderingProperty = {
    ColorDepth:             number,
    TextureMemory:          number,
    ContentScale:           number,
+   MaxAnisotropicDegree:   number,
    MaxSamples:             number,
    Multisampling:          number,
    LogarithmicDepthBuffer: boolean,
