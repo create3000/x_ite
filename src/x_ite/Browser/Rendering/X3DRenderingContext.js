@@ -460,6 +460,7 @@ Object .assign (X3DRenderingContext .prototype,
          return;
 
       $("<div></div>")
+         .attr ("part", "xr-button")
          .addClass ("x_ite-private-xr-button")
          .on ("mousedown touchstart", false)
          .on ("mouseup touchend", event => this .startXRSession (event))
