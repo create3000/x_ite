@@ -381,7 +381,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_XRButton__ (mode)
    {
-      this .getBrowser () .addXRButton ();
+      this .getBrowser () .updateXRButton ();
    },
 });
 

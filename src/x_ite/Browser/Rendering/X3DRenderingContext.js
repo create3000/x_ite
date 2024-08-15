@@ -95,7 +95,7 @@ function X3DRenderingContext ()
    this [_session]            = window;
    this [_defaultFrameBuffer] = null;
 
-   this .addXRButton ();
+   this .updateXRButton ();
 }
 
 Object .assign (X3DRenderingContext .prototype,
@@ -449,7 +449,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       return supported;
    },
-   async addXRButton ()
+   async updateXRButton ()
    {
       this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 
