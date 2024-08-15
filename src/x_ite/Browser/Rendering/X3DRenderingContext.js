@@ -435,21 +435,25 @@ Object .assign (X3DRenderingContext .prototype,
       else
          element .removeClass ("x_ite-fullscreen");
    },
-   async addXRSupport ()
+   async checkXRSupport ()
    {
-      this .getSurface () .children (".x_ite-private-xr-button") .remove ();
-
       if (this .getContext () .getVersion () <= 1)
-         return;
+         return false;
 
       if (!("xr" in navigator))
-         return;
+         return false;
 
       const
          mode      = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
          supported = await navigator .xr .isSessionSupported (mode);
 
-      if (!supported)
+      return supported;
+   },
+   async addXRSupport ()
+   {
+      this .getSurface () .children (".x_ite-private-xr-button") .remove ();
+
+      if (!await this .checkXRSupport ())
          return;
 
       $("<div></div>")
@@ -463,6 +467,9 @@ Object .assign (X3DRenderingContext .prototype,
       event ?.preventDefault ();
       event ?.stopImmediatePropagation ();
       event ?.stopPropagation ();
+
+      if (!await this .checkXRSupport ())
+         return;
 
       if (this [_session] !== window)
          return;
