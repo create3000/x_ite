@@ -380,7 +380,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_XRSessionMode__ (mode)
    {
-      this .getBrowser () .addXRSupport ();
+      this .getBrowser () .addXRButton ();
    },
 });
 
