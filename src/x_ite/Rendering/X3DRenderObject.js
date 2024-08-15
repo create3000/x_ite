@@ -235,6 +235,10 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .projectionMatrix;
    },
+   getProjectionMatrixWithLimits (nearValue, farValue, viewport)
+   {
+      return this .getViewpoint () .getProjectionMatrixWithLimits (nearValue, farValue, viewport);
+   },
    getModelViewMatrix ()
    {
       return this .modelViewMatrix;
