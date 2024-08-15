@@ -429,7 +429,6 @@ type BrowserOption = {
    LoadUrlObjects:               boolean,
    LogarithmicDepthBuffer:       boolean,
    MetadataReference:            string,
-   MovementControl:              "VIEWER_POSE" | "VIEWPOINT",
    Multisampling:                number,
    Notifications:                boolean,
    OrderIndependentTransparency: boolean,
@@ -437,6 +436,7 @@ type BrowserOption = {
    TextCompression:              "CHAR_SPACING" | "SCALING",
    Timings:                      boolean,
    ToneMapping:                  ToneMappingTypes,
+   XRMovementControl:            "VIEWER_POSE" | "VIEWPOINT",
 };
 
 type ColorSpaceTypes   = "SRGB" | "LINEAR_WHEN_PHYSICAL_MATERIAL" | "LINEAR";

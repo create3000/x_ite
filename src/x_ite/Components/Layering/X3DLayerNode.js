@@ -305,7 +305,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       {
          this .getProjectionMatrix () .pushMatrix (pose .projectionMatrix);
 
-         if (browser .getBrowserOption ("MovementControl") === "VIEWPOINT")
+         if (browser .getBrowserOption ("XRMovementControl") === "VIEWPOINT")
          {
             const viewpointNode = this .getViewpoint ();
 

@@ -316,12 +316,6 @@ Returns a browser option with the corresponding *name*.
          <td>false</td>
       </tr>
       <tr>
-         <td>MovementControl</td>
-         <td>When an XR session is active, you can control motion either by using the viewer pose of the VR device or by using the position and orientation of the currently bound viewpoint of the active layer. <small class="blue">non standard</small></td>
-         <td>VIEWER_POSE, VIEWPOINT</td>
-         <td>VIEWER_POSE</td>
-      </tr>
-      <tr>
          <td>Multisampling</td>
          <td>Number of samples used for multisampling. <small class="blue">non standard</small></td>
          <td>Integer</td>
@@ -362,6 +356,12 @@ Returns a browser option with the corresponding *name*.
          <td>Whether tone mapping should be applied. <small class="blue">non standard</small></td>
          <td>NONE, ACES_NARKOWICZ, ACES_HILL, ACES_HILL_EXPOSURE_BOOST, KHR_PBR_NEUTRAL</td>
          <td>KHR_PBR_NEUTRAL</td>
+      </tr>
+      <tr>
+         <td>XRMovementControl</td>
+         <td>When an XR session is active, you can control motion either by using the viewer pose of the VR device or by using the position and orientation of the currently bound viewpoint of the active layer. <small class="blue">non standard</small></td>
+         <td>VIEWER_POSE, VIEWPOINT</td>
+         <td>VIEWER_POSE</td>
       </tr>
    </tbody>
 </table>
