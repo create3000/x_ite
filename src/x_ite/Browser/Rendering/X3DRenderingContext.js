@@ -453,6 +453,9 @@ Object .assign (X3DRenderingContext .prototype,
    {
       this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 
+      if (!this .getBrowserOption ("XRButton"))
+         return;
+
       if (!await this .checkXRSupport ())
          return;
 

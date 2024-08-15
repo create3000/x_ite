@@ -99,7 +99,8 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this ._Multisampling                .addInterest ("set_Multisampling__",                this);
       this ._OrderIndependentTransparency .addInterest ("set_OrderIndependentTransparency__", this);
       this ._Timings                      .addInterest ("set_Timings__",                      this);
-      this ._XRSessionMode                .addInterest ("set_XRSessionMode__",                this);
+      this ._XRButton                     .addInterest ("set_XRButton__",                     this);
+      this ._XRSessionMode                .addInterest ("set_XRButton__",                     this);
 
       this .set_Antialiased__                  (this ._Antialiased);
       this .set_Shading__                      (this ._Shading);
@@ -108,7 +109,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this .set_LogarithmicDepthBuffer__       (this ._LogarithmicDepthBuffer);
       this .set_Multisampling__                (this ._Multisampling);
       this .set_OrderIndependentTransparency__ (this ._OrderIndependentTransparency);
-      this .set_XRSessionMode__                (this ._XRSessionMode);
+      this .set_XRButton__                     ();
 
       this .reset ();
    },
@@ -378,7 +379,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       this .localStorage .Timings = timings .getValue ();
    },
-   set_XRSessionMode__ (mode)
+   set_XRButton__ (mode)
    {
       this .getBrowser () .addXRButton ();
    },
@@ -426,6 +427,7 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "TextCompression",              new Fields .SFString ("CHAR_SPACING")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                      new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ToneMapping",                  new Fields .SFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "XRButton",                     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "XRMovementControl",            new Fields .SFString ("VIEWER_POSE")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "XRSessionMode",                new Fields .SFString ("IMMERSIVE_VR")),
       ]),

@@ -436,6 +436,7 @@ type BrowserOption = {
    TextCompression:              "CHAR_SPACING" | "SCALING",
    Timings:                      boolean,
    ToneMapping:                  ToneMappingTypes,
+   XRButton:                     boolean,
    XRMovementControl:            "VIEWER_POSE" | "VIEWPOINT",
    XRSessionMode:                "NONE" | "IMMERSIVE_VR",
 };

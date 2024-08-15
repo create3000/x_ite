@@ -358,6 +358,12 @@ Returns a browser option with the corresponding *name*.
          <td>KHR_PBR_NEUTRAL</td>
       </tr>
       <tr>
+         <td>XRButton</td>
+         <td>Whether to display an XR button in the lower right corner of the canvas. <small class="blue">non standard</small></td>
+         <td>Boolean</td>
+         <td>true</td>
+      </tr>
+      <tr>
          <td>XRMovementControl</td>
          <td>When an XR session is active, you can control motion either by using the viewer pose of the VR device or by using the position and orientation of the currently bound viewpoint of the active layer. <small class="blue">non standard</small></td>
          <td>VIEWER_POSE, VIEWPOINT</td>
