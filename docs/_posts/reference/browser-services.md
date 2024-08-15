@@ -317,7 +317,7 @@ Returns a browser option with the corresponding *name*.
       </tr>
       <tr>
          <td>MovementControl</td>
-         <td>When an XR session is active, you can control motion either by using the viewer pose of the VR device or by using the position and orientation of the currently bound viewpoint. <small class="blue">non standard</small></td>
+         <td>When an XR session is active, you can control motion either by using the viewer pose of the VR device or by using the position and orientation of the currently bound viewpoint of the active layer. <small class="blue">non standard</small></td>
          <td>VIEWER_POSE, VIEWPOINT</td>
          <td>VIEWER_POSE</td>
       </tr>
