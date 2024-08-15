@@ -215,6 +215,10 @@ Object .assign (X3DRenderObject .prototype,
          this .renderCount = ++ renderCount;
       }
    })(),
+   getFrameBuffers ()
+   {
+      return this .getBrowser () .getFrameBuffers ();
+   },
    getView ()
    {
       return this .view;
@@ -1123,8 +1127,8 @@ Object .assign (X3DRenderObject .prototype,
          independent              = this .isIndependent (),
          browser                  = this .getBrowser (),
          gl                       = browser .getContext (),
-         frameBuffers             = browser .getFrameBuffers (),
-         numFrameBuffers          = independent ? frameBuffers .length : 1,
+         frameBuffers             = this .getFrameBuffers (),
+         numFrameBuffers          = frameBuffers .length,
          viewport                 = this .getViewVolume () .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
@@ -1203,13 +1207,13 @@ Object .assign (X3DRenderObject .prototype,
 
             // Draw with sorted blend or OIT.
 
-            this .drawShapes (gl, browser, true, frameBuffer, 0, frameBuffer .getOIT () && independent, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+            this .drawShapes (gl, browser, frameBuffer, 0, frameBuffer .getOIT (), viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
          }
          else
          {
             // Draw with sorted blend or OIT.
 
-            this .drawShapes (gl, browser, independent, frameBuffer, 0, frameBuffer .getOIT () && independent, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+            this .drawShapes (gl, browser, frameBuffer, 0, frameBuffer .getOIT (), viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
          }
       }
 
@@ -1240,10 +1244,9 @@ Object .assign (X3DRenderObject .prototype,
       globalShadows            .length = 1;
       generatedCubeMapTextures .length = 0;
    },
-   drawShapes (gl, browser, independent, frameBuffer, clear, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
+   drawShapes (gl, browser, frameBuffer, clear, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
    {
-      if (independent)
-         frameBuffer .bind ();
+      frameBuffer .bind ();
 
       // Configure viewport and background
 

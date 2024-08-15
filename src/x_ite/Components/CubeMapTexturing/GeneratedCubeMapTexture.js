@@ -195,8 +195,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
          this .setTransparent (background .isTransparent ());
 
-         this .frameBuffer .bind ();
-
+         dependentRenderer .setFrameBuffer (this .frameBuffer);
          dependentRenderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
          dependentRenderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
 

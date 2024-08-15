@@ -54,8 +54,9 @@ function DependentRenderer (executionContext, renderObject, node)
    X3DBaseNode     .call (this, executionContext);
    X3DRenderObject .call (this, executionContext);
 
-   this .node         = node;
    this .renderObject = renderObject;
+   this .node         = node;
+   this .frameBuffers = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNode .prototype),
@@ -105,6 +106,14 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    getLightContainer ()
    {
       return this .renderObject .getLights () [this .lightIndex ++];
+   },
+   getFrameBuffers ()
+   {
+      return this .frameBuffers;
+   },
+   setFrameBuffer (frameBuffer)
+   {
+      this .frameBuffers [0] = frameBuffer;
    },
    render (type, callback, group)
    {
