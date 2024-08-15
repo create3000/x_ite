@@ -363,6 +363,12 @@ Returns a browser option with the corresponding *name*.
          <td>VIEWER_POSE, VIEWPOINT</td>
          <td>VIEWER_POSE</td>
       </tr>
+      <tr>
+         <td>XRSessionMode</td>
+         <td>A String defining the XR session mode. If the value is NONE, no XR button is displayed and all attempts to start a session are ignored. See also <a href="https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession#parameters" target="blank">XRSystem.requestSession</a> <small class="blue">non standard</small></td>
+         <td>NONE, IMMERSIVE_VR</td>
+         <td>IMMERSIVE_VR</td>
+      </tr>
    </tbody>
 </table>
 

@@ -437,6 +437,7 @@ type BrowserOption = {
    Timings:                      boolean,
    ToneMapping:                  ToneMappingTypes,
    XRMovementControl:            "VIEWER_POSE" | "VIEWPOINT",
+   XRSessionMode:                "NONE" | "IMMERSIVE_VR",
 };
 
 type ColorSpaceTypes   = "SRGB" | "LINEAR_WHEN_PHYSICAL_MATERIAL" | "LINEAR";
