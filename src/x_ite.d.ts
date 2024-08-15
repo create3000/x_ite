@@ -406,16 +406,18 @@ type BrowserProperty = "ABSTRACT_NODES"
    | "BINARY_ENCODING";
 
 type BrowserOption = {
-   Antialiased:                  boolean,
+   SplashScreen:                 boolean,
    Dashboard:                    boolean,
    Rubberband:                   boolean,
    EnableInlineViewpoints:       boolean,
-   MotionBlur:                   boolean,
+   Antialiased:                  boolean,
+   TextureQuality:               QualityLevels,
    PrimitiveQuality:             QualityLevels,
    QualityWhenMoving:            QualityLevels | "SAME",
    Shading:	                     ShadingTypes,
-   SplashScreen:                 boolean,
-   TextureQuality:               QualityLevels,
+   MotionBlur:                   boolean,
+   // Additional options:
+   AlwaysUpdateGeometries:       boolean,
    AutoUpdate:                   boolean,
    Cache:                        boolean,
    ColorSpace:                   ColorSpaceTypes,
@@ -424,14 +426,18 @@ type BrowserOption = {
    Debug:                        boolean,
    Exposure:                     number,
    Gravity:                      number,
+   LoadUrlObjects:               boolean,
    LogarithmicDepthBuffer:       boolean,
+   MetadataReference:            string,
+   MovementControl:              "VIEWER_POSE" | "VIEWPOINT",
    Multisampling:                number,
    Notifications:                boolean,
    OrderIndependentTransparency: boolean,
    StraightenHorizon:            boolean,
+   TextCompression:              "CHAR_SPACING" | "SCALING",
    Timings:                      boolean,
    ToneMapping:                  ToneMappingTypes,
-}
+};
 
 type ColorSpaceTypes = "SRGB" | "LINEAR_WHEN_PHYSICAL_MATERIAL" | "LINEAR";
 type QualityLevels = "LOW" | "MEDIUM" | "HIGH";
