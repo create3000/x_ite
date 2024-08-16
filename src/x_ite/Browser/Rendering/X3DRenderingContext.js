@@ -453,18 +453,21 @@ Object .assign (X3DRenderingContext .prototype,
    {
       this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 
-      if (!this .getBrowserOption ("XRButton"))
-         return;
+      await Lock .acquire ("updateXRButton", async () =>
+      {
+         if (!this .getBrowserOption ("XRButton"))
+            return;
 
-      if (!await this .checkXRSupport ())
-         return;
+         if (!await this .checkXRSupport ())
+            return;
 
-      $("<div></div>")
-         .attr ("part", "xr-button")
-         .addClass ("x_ite-private-xr-button")
-         .on ("mousedown touchstart", false)
-         .on ("mouseup touchend", event => this .startXRSession (event))
-         .appendTo (this .getSurface ());
+         $("<div></div>")
+            .attr ("part", "xr-button")
+            .addClass ("x_ite-private-xr-button")
+            .on ("mousedown touchstart", false)
+            .on ("mouseup touchend", event => this .startXRSession (event))
+            .appendTo (this .getSurface ());
+      });
    },
    async startXRSession (event)
    {
@@ -635,5 +638,21 @@ Object .assign (X3DRenderingContext .prototype,
       $(document) .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
    },
 });
+
+class Lock
+{
+   static #promises = new Map ();
+
+   static async acquire (key, callback)
+   {
+      await this .#promises .get (key);
+
+      const promise = callback ();
+
+      this .#promises .set (key, promise);
+
+      return promise;
+   }
+};
 
 export default X3DRenderingContext;

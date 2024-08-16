@@ -131,10 +131,14 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          "SplashScreen",
          "TextCompression",
          "ToneMapping",
+         "XRButton",
+         "XRSessionMode",
       ]);
 
       const mappings = new Map ([
-         ["AutoUpdate", "Update"],
+         ["AutoUpdate",    "update"],
+         ["XRButton",      "xr-button"],
+         ["XRSessionMode", "xr-session-mode"],
       ]);
 
       const restorable = new Set ([
@@ -156,7 +160,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
             if (attributes .has (name))
             {
                const
-                  attribute = $.toLowerCaseFirst (mappings .get (name) ?? name),
+                  attribute = mappings .get (name) ?? $.toLowerCaseFirst (name),
                   value     = browser .getElement () .attr (attribute);
 
                if (value !== undefined)

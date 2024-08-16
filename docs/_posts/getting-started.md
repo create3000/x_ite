@@ -20,7 +20,8 @@ permalink: /
   contextMenu="false"
   notifications="false"
   timings="false"
-  contentScale="auto">
+  contentScale="auto"
+  xr-session-mode="NONE">
 </x3d-canvas>
 
 ## Overview

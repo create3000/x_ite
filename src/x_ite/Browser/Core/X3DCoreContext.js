@@ -397,7 +397,7 @@ Object .assign (X3DCoreContext .prototype,
          case "textCompression":
          case "textcompression":
          {
-            this .setBrowserOption ("TextCompression", newValue);
+            this .setBrowserOption ("TextCompression", newValue || "CHAR_SPACINGS");
             break;
          }
          case "timings":
@@ -408,7 +408,7 @@ Object .assign (X3DCoreContext .prototype,
          case "toneMapping":
          case "tonemapping":
          {
-            this .setBrowserOption ("ToneMapping", newValue);
+            this .setBrowserOption ("ToneMapping", newValue || "NONE");
             break;
          }
          case "update":
@@ -437,6 +437,16 @@ Object .assign (X3DCoreContext .prototype,
                   .catch (error => console .error (error));
             }
 
+            break;
+         }
+         case "xr-button":
+         {
+            this .setBrowserOption ("XRButton", this .parseBooleanAttribute (newValue, true));
+            break;
+         }
+         case "xr-session-mode":
+         {
+            this .setBrowserOption ("XRSessionMode", newValue || "IMMERSIVE_VR");
             break;
          }
       }
