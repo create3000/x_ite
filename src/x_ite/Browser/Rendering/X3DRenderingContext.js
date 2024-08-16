@@ -652,6 +652,8 @@ class Lock
          if (promise)
             await promise;
       }
+      catch
+      { }
       finally
       {
          return this .#promises .set (key, callback ()) .get (key)
