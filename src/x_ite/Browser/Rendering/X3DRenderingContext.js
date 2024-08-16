@@ -67,7 +67,6 @@ const
    _depthShaders       = Symbol ();
 
 const
-   _updateXRButton     = Symbol (),
    _session            = Symbol (),
    _baseReferenceSpace = Symbol (),
    _referenceSpace     = Symbol (),
@@ -453,7 +452,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    updateXRButton ()
    {
-      return Lock .acquire (_updateXRButton, async () =>
+      return Lock .acquire (`X3DRenderingContext.updateXRButton-${this .getId ()}`, async () =>
       {
          this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 
@@ -477,7 +476,7 @@ Object .assign (X3DRenderingContext .prototype,
       event ?.stopImmediatePropagation ();
       event ?.stopPropagation ();
 
-      return Lock .acquire (_session, async () =>
+      return Lock .acquire (`X3DRenderingContext.session-${this .getId ()}`, async () =>
       {
          if (!await this .checkXRSupport ())
             return;
@@ -530,7 +529,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    stopXRSession ()
    {
-      return Lock .acquire (_session, async () =>
+      return Lock .acquire (`X3DRenderingContext.session-${this .getId ()}`, async () =>
       {
          if (this [_session] === window)
             return;
