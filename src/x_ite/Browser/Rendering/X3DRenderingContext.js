@@ -67,6 +67,7 @@ const
    _depthShaders       = Symbol ();
 
 const
+   _updateXRButton     = Symbol (),
    _session            = Symbol (),
    _baseReferenceSpace = Symbol (),
    _referenceSpace     = Symbol (),
@@ -452,7 +453,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    async updateXRButton ()
    {
-      return await Lock .acquire (this .updateXRButton, async () =>
+      return await Lock .acquire (_updateXRButton, async () =>
       {
          this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 
