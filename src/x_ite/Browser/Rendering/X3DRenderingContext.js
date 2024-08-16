@@ -646,12 +646,7 @@ class Lock
    static async acquire (key, callback)
    {
       await this .#promises .get (key);
-
-      const promise = callback ();
-
-      this .#promises .set (key, promise);
-
-      return promise;
+      await this .#promises .set (key, callback ()) .get (key);
    }
 };
 
