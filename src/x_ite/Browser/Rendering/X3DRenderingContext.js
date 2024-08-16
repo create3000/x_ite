@@ -645,9 +645,15 @@ class Lock
 
    static async acquire (key, callback)
    {
-      await this .#promises .get (key);
-      await this .#promises .set (key, callback ()) .get (key);
-      this .#promises .delete (key);
+      try
+      {
+         await this .#promises .get (key);
+         await this .#promises .set (key, callback ()) .get (key);
+      }
+      finally
+      {
+         this .#promises .delete (key);
+      }
    }
 };
 
