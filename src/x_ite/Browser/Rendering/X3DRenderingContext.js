@@ -647,6 +647,7 @@ class Lock
    {
       await this .#promises .get (key);
       await this .#promises .set (key, callback ()) .get (key);
+      this .#promises .delete (key);
    }
 };
 
