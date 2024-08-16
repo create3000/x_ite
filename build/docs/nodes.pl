@@ -126,7 +126,7 @@ sub update_node {
    $componentLevel = $3;
    $containerField = $4;
    $from           = $5;
-   $to             = $6 ? $6 : "Infinity";
+   $to             = $6 // "Infinity";
 
    1 while $node =~ s/^\s*(?:\[.*?\]|\(.*?\))\s*//so;
    1 while $node =~ s/^(?:\s*or)?\s*(?:[\[\()].*?[\]\)]|-1\.)\s*//so;
