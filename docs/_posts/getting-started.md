@@ -144,10 +144,10 @@ X_ITE needs your support, with a small contribution you can make a big differenc
   </tr>
   <tr>
     <td>
-      <a href="https://create3000.github.io/media/examples/Core/OBJ/OBJ.x3d" title="Core » OBJ" componentName="Core" typeName="OBJ" doc="false" xr-button="br"><img src="https://create3000.github.io/media/examples/Core/OBJ/screenshot-small.png" alt="OBJ"/></a>
+      <a href="https://create3000.github.io/media/examples/Core/OBJ/OBJ.x3d" title="Core » OBJ" componentName="Core" typeName="OBJ" doc="false" xr-button="tr"><img src="https://create3000.github.io/media/examples/Core/OBJ/screenshot-small.png" alt="OBJ"/></a>
     </td>
     <td>
-      <a href="https://create3000.github.io/media/examples/Core/STL/STL.x3d" title="Core » STL" componentName="Core" typeName="STL" doc="false" xr-button="br"><img src="https://create3000.github.io/media/examples/Core/STL/screenshot-small.png" alt="STL"/></a>
+      <a href="https://create3000.github.io/media/examples/Core/STL/STL.x3d" title="Core » STL" componentName="Core" typeName="STL" doc="false" xr-button="tr"><img src="https://create3000.github.io/media/examples/Core/STL/screenshot-small.png" alt="STL"/></a>
     </td>
     <td>
       <a href="https://create3000.github.io/media/examples/Core/glTF/glTF.x3d" title="Core » glTF" componentName="Core" typeName="glTF" doc="false" xr-button="br"><img src="https://create3000.github.io/media/examples/Core/glTF/screenshot-small.png" alt="glTF"/></a>
