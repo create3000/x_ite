@@ -340,7 +340,8 @@ sub update_example {
 
    return $file unless -d "../media/docs/examples/$componentName/$typeName";
 
-   $pos = $config -> {$typeName} -> {"xr-button"} // "br";
+   $pos  = "xr-button-";
+   $pos .= $config -> {$typeName} -> {"xr-button"} // "br";
 
    $string = "## Example\n";
    $string .= "\n";

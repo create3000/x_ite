@@ -451,10 +451,10 @@ Object .assign (X3DRenderingContext .prototype,
    },
    async updateXRButton ()
    {
-      this .getSurface () .children (".x_ite-private-xr-button") .remove ();
-
       await Lock .acquire ("X3DRenderingContext.updateXRButton", async () =>
       {
+         this .getSurface () .children (".x_ite-private-xr-button") .remove ();
+
          if (!this .getBrowserOption ("XRButton"))
             return;
 
