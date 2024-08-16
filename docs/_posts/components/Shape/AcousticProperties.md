@@ -33,7 +33,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
 
@@ -73,7 +73,7 @@ Specifies the sound *absorption* coefficient of a surface, meaning the ratio of 
 
 - AcousticProperties must have a parent [Appearance](/x_ite/components/shape/appearance/) node, and only affects geometry within the same [Shape](/x_ite/components/shape/shape/).
 - Proxy geometry for acoustic response can be far simpler than geometry needed for visual rendering.
-- [X3D Architecture Figure 16.2 Sound Propagation Phenomena](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/sound.html#f-SoundPropagationPhenomena
+- [X3D Architecture Figure 16.2 Sound Propagation Phenomena](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#f-SoundPropagationPhenomena)
 
 ## See Also
 

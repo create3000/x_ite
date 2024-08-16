@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **mapping** ""
 
@@ -51,7 +51,7 @@ Parameter field defines the algorithm used to compute texture coordinates.
 
 #### Hint
 
-- [X3D Architecture Table 18.6 Texture coordinate generation modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#t-Texturecoordgeneration for further details.
+- [X3D Architecture Table 18.6 Texture coordinate generation modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#t-Texturecoordgeneration) for further details.
 
 #### Warning
 
@@ -67,7 +67,7 @@ Parameter field defines the algorithm used to compute texture coordinates.
 
 - Add [Shape](/x_ite/components/shape/shape/) and then polygonal/planar geometry before adding TextureCoordinateGenerator.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
-- [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/texturing.html#f-TextureMapCoordSystem
+- [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#f-TextureMapCoordSystem)
 
 ## See Also
 

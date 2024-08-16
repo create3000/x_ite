@@ -36,7 +36,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
 
@@ -176,13 +176,13 @@ Time continuously sends the absolute *time* (value 0.0 matches 1 January 1970) i
 ### Hints
 
 - TimeSensor may be ignored if cycleInterval \< 0.01 second.
-- [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/concepts.html#ExecutionModel
-- [X3D Architecture 8 Time component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/time.html
+- [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/concepts.html#ExecutionModel)
+- [X3D Architecture 8 Time component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/time.html)
 - [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter07EventAnimationInterpolation)
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="br" src="https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.x3d" update="auto"></x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.x3d)

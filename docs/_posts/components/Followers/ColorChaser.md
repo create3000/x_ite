@@ -35,7 +35,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFColor [in] **set_value** <small>[0,1]</small>
 
@@ -94,7 +94,7 @@ Computed output value that approaches within tolerance of destination value, as 
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="br" src="https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.x3d" update="auto"></x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.x3d)

@@ -6,6 +6,7 @@ use open qw/:std :utf8/;
 use Cwd;
 use List::MoreUtils qw(first_index);
 use HTML::Entities;
+use JSON::Parse qw(parse_json);
 
 $cwd = getcwd ();
 
@@ -121,15 +122,11 @@ sub update_node {
    $source        = shift;
    $node          = $node -> [1];
 
-   $source =~ /Object\s*\.freeze\s*\(\{ name: "(.*?)", level: (\d+) \}\)/;
-   $componentLevel = $2;
-
-   $source =~ /Object\s*\.freeze\s*\(\{ from: "(.*?)", to: "(.*?)" \}\)/;
-   $from = $1;
-   $to   = $2;
-
-   $source =~ /containerField:.*?value:\s*"(.*?)"/s;
-   $containerField = $1;
+   $source =~ /getStaticProperties\s*\("(.*?)",\s*"(.*?)",\s*(\d+),\s*"(.*?)",\s*"(.*?)"(?:,\s*"(.*?)")?\)/;
+   $componentLevel = $3;
+   $containerField = $4;
+   $from           = $5;
+   $to             = $6 ? $6 : "Infinity";
 
    1 while $node =~ s/^\s*(?:\[.*?\]|\(.*?\))\s*//so;
    1 while $node =~ s/^(?:\s*or)?\s*(?:[\[\()].*?[\]\)]|-1\.)\s*//so;
@@ -331,6 +328,11 @@ sub reorder_fields {
    return $file;
 }
 
+$json   = `cat ../media/docs/examples/config.json`;
+$config = parse_json ($json);
+
+use Data::Dumper;
+
 sub update_example {
    $typeName      = shift;
    $componentName = shift;
@@ -338,9 +340,11 @@ sub update_example {
 
    return $file unless -d "../media/docs/examples/$componentName/$typeName";
 
+   $pos = $config -> {$typeName} -> {"xr-button"} // "br";
+
    $string = "## Example\n";
    $string .= "\n";
-   $string .= "<x3d-canvas src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" update=\"auto\"></x3d-canvas>\n";
+   $string .= "<x3d-canvas class=\"$pos\" src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" update=\"auto\"></x3d-canvas>\n";
    $string .= "\n";
    $string .= "- [Download ZIP Archive](https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.zip)\n";
    $string .= "- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d)\n";

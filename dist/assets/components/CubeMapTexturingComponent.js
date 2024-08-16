@@ -597,6 +597,15 @@ var external_X_ITE_X3D_X3DRenderObject_default = /*#__PURE__*/__webpack_require_
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TraverseType"
 const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
 var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Camera"
+const external_X_ITE_X3D_Camera_namespaceObject = __X_ITE_X3D__ .Camera;
+var external_X_ITE_X3D_Camera_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Camera_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
+const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
+var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
+;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
+const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
+var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Rendering/DependentRenderer.js
 /*******************************************************************************
  *
@@ -649,13 +658,18 @@ var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n
 
 
 
+
+
+
 function DependentRenderer (executionContext, renderObject, node)
 {
    external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
    external_X_ITE_X3D_X3DRenderObject_default().call (this, executionContext);
 
-   this .node         = node;
-   this .renderObject = renderObject;
+   this .renderObject               = renderObject;
+   this .node                       = node;
+   this .projectionMatrixWithLimits = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .frameBuffers               = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype),
@@ -706,6 +720,18 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (external_
    {
       return this .renderObject .getLights () [this .lightIndex ++];
    },
+   getFrameBuffers ()
+   {
+      return this .frameBuffers;
+   },
+   setFrameBuffer (frameBuffer)
+   {
+      this .frameBuffers [0] = frameBuffer;
+   },
+   getProjectionMatrixWithLimits (nearValue, farValue, viewport)
+   {
+      return external_X_ITE_X3D_Camera_default().perspective (external_X_ITE_X3D_Algorithm_default().radians (90), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrixWithLimits);
+   },
    render (type, callback, group)
    {
       switch (type)
@@ -745,9 +771,6 @@ const DependentRenderer_default_ = DependentRenderer;
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .TextureBuffer"
 const external_X_ITE_X3D_TextureBuffer_namespaceObject = __X_ITE_X3D__ .TextureBuffer;
 var external_X_ITE_X3D_TextureBuffer_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TextureBuffer_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Camera"
-const external_X_ITE_X3D_Camera_namespaceObject = __X_ITE_X3D__ .Camera;
-var external_X_ITE_X3D_Camera_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Camera_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .ViewVolume"
 const external_X_ITE_X3D_ViewVolume_namespaceObject = __X_ITE_X3D__ .ViewVolume;
 var external_X_ITE_X3D_ViewVolume_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ViewVolume_namespaceObject);
@@ -760,12 +783,6 @@ var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(exte
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector4"
 const external_X_ITE_X3D_Vector4_namespaceObject = __X_ITE_X3D__ .Vector4;
 var external_X_ITE_X3D_Vector4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
-const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
-var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
-;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Algorithm"
-const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
-var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture.js
 /*******************************************************************************
  *
@@ -830,7 +847,6 @@ var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 
-
 function GeneratedCubeMapTexture (executionContext)
 {
    CubeMapTexturing_X3DEnvironmentTextureNode .call (this, executionContext);
@@ -838,7 +854,6 @@ function GeneratedCubeMapTexture (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).GeneratedCubeMapTexture);
 
    this .dependentRenderers = new WeakMap ();
-   this .projectionMatrix   = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .modelMatrix        = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .viewVolume         = new (external_X_ITE_X3D_ViewVolume_default()) ();
 }
@@ -958,14 +973,13 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
             headlight          = navigationInfo ._headlight .getValue (),
             nearValue          = navigationInfo .getNearValue (),
             farValue           = navigationInfo .getFarValue (viewpoint),
-            projectionMatrix   = external_X_ITE_X3D_Camera_default().perspective (external_X_ITE_X3D_Algorithm_default().radians (90.0), nearValue, farValue, 1, 1, this .projectionMatrix),
+            projectionMatrix   = dependentRenderer .getProjectionMatrixWithLimits (nearValue, farValue, this .viewport),
             width              = this .frameBuffer .getWidth (),
             height             = this .frameBuffer .getHeight ();
 
          this .setTransparent (background .isTransparent ());
 
-         this .frameBuffer .bind ();
-
+         dependentRenderer .setFrameBuffer (this .frameBuffer);
          dependentRenderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
          dependentRenderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
 

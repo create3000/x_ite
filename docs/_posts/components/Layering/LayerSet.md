@@ -32,7 +32,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFInt32 [in, out] **activeLayer** 0 <small>(0,∞)</small>
 
@@ -69,7 +69,7 @@ The *layers* list defines a list of [Layer](/x_ite/components/layering/layer/) n
 ### Hints
 
 - The layer first specified in the order field is the first layer rendered and appears below any other layers. The layer last specified in the order field is the last layer rendered and correspondingly appears on top of all other layers.
-- [X3D Architecture 35.2.1 Overview of layering](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/layering.html#OverviewOfLayering
+- [X3D Architecture 35.2.1 Overview of layering](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/layering.html#OverviewOfLayering)
 
 ### Warning
 
@@ -77,7 +77,7 @@ The *layers* list defines a list of [Layer](/x_ite/components/layering/layer/) n
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/Layering/LayerSet/LayerSet.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="br" src="https://create3000.github.io/media/examples/Layering/LayerSet/LayerSet.x3d" update="auto"></x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Layering/LayerSet/LayerSet.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Layering/LayerSet/LayerSet.x3d)

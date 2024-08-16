@@ -45,6 +45,7 @@ $("table.examples a") .on ("click", function ()
    }
 
    canvas .prop ("browser") .getBrowserOptions () .reset ();
+   canvas .removeClass (["tr", "br", "bl", "tl"]) .addClass ($(this) .attr ("xr-button"));
 
    header .text ($(this) .attr ("title"));
    canvas .attr ("src", $(this) .attr ("href"));
