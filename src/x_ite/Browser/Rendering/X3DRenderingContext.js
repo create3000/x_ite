@@ -471,83 +471,89 @@ Object .assign (X3DRenderingContext .prototype,
             .appendTo (this .getSurface ());
       });
    },
-   async startXRSession (event)
+   startXRSession (event)
    {
       event ?.preventDefault ();
       event ?.stopImmediatePropagation ();
       event ?.stopPropagation ();
 
-      if (!await this .checkXRSupport ())
-         return;
-
-      if (this [_session] !== window)
-         return;
-
-      const
-         gl             = this .getContext (),
-         mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
-         compatible     = await gl .makeXRCompatible (),
-         session        = await navigator .xr .requestSession (mode),
-         referenceSpace = await session .requestReferenceSpace ("local");
-
-      // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
-      const baseLayer = new XRWebGLLayer (session, gl,
+      return Lock .acquire (_session, async () =>
       {
-         antialias: false,
-         alpha: true,
-         depth: false,
-         ignoreDepthValues: true,
+         if (!await this .checkXRSupport ())
+            return;
+
+         if (this [_session] !== window)
+            return;
+
+         const
+            gl             = this .getContext (),
+            mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
+            compatible     = await gl .makeXRCompatible (),
+            session        = await navigator .xr .requestSession (mode),
+            referenceSpace = await session .requestReferenceSpace ("local");
+
+         // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
+         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+
+         const baseLayer = new XRWebGLLayer (session, gl,
+         {
+            antialias: false,
+            alpha: true,
+            depth: false,
+            ignoreDepthValues: true,
+         });
+
+         this .endEvents () .addInterest ("endFrame", this);
+
+         session .updateRenderState ({ baseLayer });
+         session .addEventListener ("end", () => this .stopXRSession ());
+
+         this [_session]            = session;
+         this [_baseReferenceSpace] = referenceSpace;
+         this [_baseLayer]          = baseLayer;
+         this [_defaultFrameBuffer] = baseLayer .framebuffer;
+
+         this [_pose] = {
+            projectionMatrix: new Matrix4 (),
+            cameraSpaceMatrix: new Matrix4 (),
+            viewMatrix: new Matrix4 (),
+            views: [
+               { cameraSpaceMatrix: new Matrix4 (), viewMatrix: new Matrix4 (), matrix: new Matrix4 () },
+               { cameraSpaceMatrix: new Matrix4 (), viewMatrix: new Matrix4 (), matrix: new Matrix4 () },
+            ],
+         };
+
+         this .setReferenceSpace ();
+         this .addBrowserEvent ();
+         this .reshape ();
       });
-
-      this .endEvents () .addInterest ("endFrame", this);
-
-      session .updateRenderState ({ baseLayer });
-      session .addEventListener ("end", () => this .stopXRSession ());
-
-      this [_session]            = session;
-      this [_baseReferenceSpace] = referenceSpace;
-      this [_baseLayer]          = baseLayer;
-      this [_defaultFrameBuffer] = baseLayer .framebuffer;
-
-      this [_pose] = {
-         projectionMatrix: new Matrix4 (),
-         cameraSpaceMatrix: new Matrix4 (),
-         viewMatrix: new Matrix4 (),
-         views: [
-            { cameraSpaceMatrix: new Matrix4 (), viewMatrix: new Matrix4 (), matrix: new Matrix4 () },
-            { cameraSpaceMatrix: new Matrix4 (), viewMatrix: new Matrix4 (), matrix: new Matrix4 () },
-         ],
-      };
-
-      this .setReferenceSpace ();
-      this .addBrowserEvent ();
-      this .reshape ();
    },
    stopXRSession ()
    {
-      if (this [_session] === window)
-         return;
+      return Lock .acquire (_session, async () =>
+      {
+         if (this [_session] === window)
+            return;
 
-      this .endEvents () .removeInterest ("endFrame", this);
+         this .endEvents () .removeInterest ("endFrame", this);
 
-      this [_session] .end () .catch (Function .prototype);
+         this [_session] .end () .catch (Function .prototype);
 
-      for (const frameBuffer of this [_frameBuffers])
-         frameBuffer .dispose ();
+         for (const frameBuffer of this [_frameBuffers])
+            frameBuffer .dispose ();
 
-      this [_frameBuffers] .length = 0;
+         this [_frameBuffers] .length = 0;
 
-      this [_session]            = window;
-      this [_baseReferenceSpace] = null;
-      this [_referenceSpace]     = null;
-      this [_baseLayer]          = null;
-      this [_defaultFrameBuffer] = null;
-      this [_pose]               = null;
+         this [_session]            = window;
+         this [_baseReferenceSpace] = null;
+         this [_referenceSpace]     = null;
+         this [_baseLayer]          = null;
+         this [_defaultFrameBuffer] = null;
+         this [_pose]               = null;
 
-      this .addBrowserEvent ();
-      this .reshape ();
+         this .addBrowserEvent ();
+         this .reshape ();
+      });
    },
    getSession ()
    {
