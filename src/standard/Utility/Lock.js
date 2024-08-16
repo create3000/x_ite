@@ -49,7 +49,7 @@ class Lock
 {
    static #promises = new Map ();
 
-   static async acquire (key, callback)
+   static acquire (key, callback)
    {
       if (!this .#promises .has (key))
          this .#promises .set (key, [ ]);
