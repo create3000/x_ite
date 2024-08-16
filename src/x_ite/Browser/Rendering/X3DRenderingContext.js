@@ -452,14 +452,8 @@ Object .assign (X3DRenderingContext .prototype,
    },
    async updateXRButton ()
    {
-      // this .xxx ??= 0;
-      // this .xxx ++;
-      // const x = this .xxx;
-
-      return await Lock .acquire ("X3DRenderingContext.updateXRButton", async () =>
+      return await Lock .acquire (this .updateXRButton, async () =>
       {
-         // console .log (x);
-
          this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 
          if (!this .getBrowserOption ("XRButton"))
@@ -467,8 +461,6 @@ Object .assign (X3DRenderingContext .prototype,
 
          if (!await this .checkXRSupport ())
             return;
-
-         // console .log (x);
 
          $("<div></div>")
             .attr ("part", "xr-button")
