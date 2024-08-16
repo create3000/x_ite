@@ -650,8 +650,12 @@ class Lock
       if (promise)
       {
          return promise
-            .finally (() => this .#promises .set (key, callback ()))
-            .finally (() => this .#promises .delete (key));
+            .catch (Function .prototype)
+            .finally (() =>
+            {
+               this .#promises .set (key, callback ()) .get (key)
+                  .finally (() => this .#promises .delete (key));
+            });
       }
       else
       {
