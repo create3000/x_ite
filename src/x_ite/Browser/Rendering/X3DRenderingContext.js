@@ -451,7 +451,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    async updateXRButton ()
    {
-      await Lock .acquire ("X3DRenderingContext.updateXRButton", async () =>
+      return await Lock .acquire ("X3DRenderingContext.updateXRButton", async () =>
       {
          this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 
