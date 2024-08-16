@@ -651,9 +651,8 @@ class Lock
             .finally (() => this .#promises .delete (key));
       };
 
-      const promise = this .#promises .get (key);
-
-      return promise ?.then (executor) .catch (executor) ?? executor ();
+      return this .#promises .get (key) ?.then (executor) .catch (executor)
+         ?? executor ();
    }
 };
 
