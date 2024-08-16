@@ -53,6 +53,7 @@ import { maxClipPlanes }      from "./RenderingConfiguration.js";
 import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4              from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
+import Lock                   from "../../../standard/Utility/Lock.js";
 
 const
    _frameBuffers       = Symbol (),
@@ -451,8 +452,14 @@ Object .assign (X3DRenderingContext .prototype,
    },
    async updateXRButton ()
    {
+      // this .xxx ??= 0;
+      // this .xxx ++;
+      // const x = this .xxx;
+
       return await Lock .acquire ("X3DRenderingContext.updateXRButton", async () =>
       {
+         // console .log (x);
+
          this .getSurface () .children (".x_ite-private-xr-button") .remove ();
 
          if (!this .getBrowserOption ("XRButton"))
@@ -460,6 +467,8 @@ Object .assign (X3DRenderingContext .prototype,
 
          if (!await this .checkXRSupport ())
             return;
+
+         // console .log (x);
 
          $("<div></div>")
             .attr ("part", "xr-button")
@@ -638,28 +647,5 @@ Object .assign (X3DRenderingContext .prototype,
       $(document) .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
    },
 });
-
-class Lock
-{
-   static #promises = new Map ();
-
-   static async acquire (key, callback)
-   {
-      try
-      {
-         const promise = this .#promises .get (key);
-
-         if (promise)
-            await promise;
-      }
-      catch
-      { }
-      finally
-      {
-         return this .#promises .set (key, callback ()) .get (key)
-            .finally (() => this .#promises .delete (key));
-      }
-   }
-};
 
 export default X3DRenderingContext;
