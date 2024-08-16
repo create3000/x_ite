@@ -643,16 +643,20 @@ class Lock
 {
    static #promises = new Map ();
 
-   static acquire (key, callback)
+   static async acquire (key, callback)
    {
-      const executor = () =>
+      try
+      {
+         const promise = this .#promises .get (key);
+
+         if (promise)
+            await promise;
+      }
+      finally
       {
          return this .#promises .set (key, callback ()) .get (key)
             .finally (() => this .#promises .delete (key));
-      };
-
-      return this .#promises .get (key) ?.then (executor) .catch (executor)
-         ?? executor ();
+      }
    }
 };
 
