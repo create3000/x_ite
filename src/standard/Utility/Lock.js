@@ -58,12 +58,12 @@ class Lock
          promises = this .#promises .get (key),
          current  = promises .slice ();
 
-      const p = new Promise (async resolve =>
+      const p = new Promise (async (resolve, reject) =>
       {
          if (current .length)
             await Promise .allSettled (current);
 
-         callback () .then (resolve);
+         callback () .then (resolve) .catch (reject);
       })
       .finally (() =>
       {
