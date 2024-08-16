@@ -645,23 +645,15 @@ class Lock
 
    static acquire (key, callback)
    {
-      const promise = this .#promises .get (key);
-
-      if (promise)
-      {
-         return promise
-            .catch (Function .prototype)
-            .finally (() =>
-            {
-               this .#promises .set (key, callback ()) .get (key)
-                  .finally (() => this .#promises .delete (key));
-            });
-      }
-      else
+      const executor = () =>
       {
          return this .#promises .set (key, callback ()) .get (key)
             .finally (() => this .#promises .delete (key));
-      }
+      };
+
+      const promise = this .#promises .get (key);
+
+      return promise ?.then (executor) .catch (executor) ?? executor ();
    }
 };
 
