@@ -648,11 +648,17 @@ class Lock
       try
       {
          await this .#promises .get (key);
-         await this .#promises .set (key, callback ()) .get (key);
       }
       finally
       {
-         this .#promises .delete (key);
+         try
+         {
+            await this .#promises .set (key, callback ()) .get (key);
+         }
+         finally
+         {
+            this .#promises .delete (key);
+         }
       }
    }
 };
