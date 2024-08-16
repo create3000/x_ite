@@ -132,13 +132,15 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          "TextCompression",
          "ToneMapping",
          "XRButton",
+         "XRMovementControl",
          "XRSessionMode",
       ]);
 
       const mappings = new Map ([
-         ["AutoUpdate",    "update"],
-         ["XRButton",      "xr-button"],
-         ["XRSessionMode", "xr-session-mode"],
+         ["AutoUpdate",        "update"],
+         ["XRButton",          "xr-button"],
+         ["XRMovementControl", "xr-movement-control"],
+         ["XRSessionMode",     "xr-session-mode"],
       ]);
 
       const restorable = new Set ([
