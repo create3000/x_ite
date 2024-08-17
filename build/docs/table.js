@@ -39,7 +39,7 @@ for (const row of table)
 			component = path .basename (path .dirname (folder)),
 			doc       = fs .existsSync (`${docs}/${component}/${basename}.md`);
 
-		folder = folder .replace (/^.*?\/docs\//, "");
+		folder = folder .replace (/^.*\/media\/docs\//, "");
 
 		output += `    <td>\n`;
 		output += `      <a href="https://create3000.github.io/media/${folder}/${basename}.x3d" title="${component} » ${basename}" componentName="${component}" typeName="${basename}" doc="${doc}" xr-button="${config [basename] ?.["xr-button"] ?? "br"}">`;
