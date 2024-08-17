@@ -136,7 +136,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
       <a href="https://create3000.github.io/media/examples/X3D/Vattenfall/Vattenfall.x3d" title="X3D » Vattenfall" componentName="X3D" typeName="Vattenfall" doc="false" xr-button="br"><img src="https://create3000.github.io/media/examples/X3D/Vattenfall/screenshot-small.png" alt="Vattenfall"/></a>
     </td>
     <td>
-      <a href="https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.x3d" title="X3D » WaterQuality" componentName="X3D" typeName="WaterQuality" doc="false" xr-button="br"><img src="https://create3000.github.io/media/examples/X3D/WaterQuality/screenshot-small.png" alt="WaterQuality"/></a>
+      <a href="https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.x3d" title="X3D » WaterQuality" componentName="X3D" typeName="WaterQuality" doc="false" xr-button="cr"><img src="https://create3000.github.io/media/examples/X3D/WaterQuality/screenshot-small.png" alt="WaterQuality"/></a>
     </td>
     <td>
       <a href="https://create3000.github.io/media/examples/CADGeometry/QuadSet/QuadSet.x3d" title="CADGeometry » QuadSet" componentName="CADGeometry" typeName="QuadSet" doc="true" xr-button="br"><img src="https://create3000.github.io/media/examples/CADGeometry/QuadSet/screenshot-small.png" alt="QuadSet"/></a>
