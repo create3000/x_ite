@@ -26,7 +26,7 @@ permalink: /
 
 ## Overview
 
-X_ITE is a comprehensive 3D library entirely written in JavaScript and uses WebGL for 3D rendering. Authors can publish X3D, VRML and other sources online within an HTML5 page with X_ITE that works with web browsers **without** prior plug-in installation. This gives X3D authors the ability to displays content in 3D, using WebGL 3D graphics technology to display X3D content in several different browsers across several different operating systems. Since X3D is backwardly compatible, X_ITE can also be used as a VRML viewer[.](https://rawgit.com/create3000/x_ite/xr/x_ite.min.html){: style="border: none" }
+X_ITE is a comprehensive 3D library entirely written in JavaScript and uses WebGL for 3D rendering. Authors can publish X3D, VRML and other sources online within an HTML5 page with X_ITE that works with web browsers **without** prior plug-in installation. This gives X3D authors the ability to displays content in 3D, using WebGL 3D graphics technology to display X3D content in several different browsers across several different operating systems. Since X3D is backwardly compatible, X_ITE can also be used as a VRML viewer.
 
 X3D is an ISO-ratified, royalty-free open standards file format and run-time architecture to represent and communicate 3D scenes and objects specified by the [Web 3D Consortium](https://www.web3d.org). X3D has evolved from its beginnings as the Virtual Reality Modeling Language (VRML) to the considerably more mature and refined ISO X3D standard. X3D provides a system for the storage, retrieval and playback of real time 3D scene in multiple applications, all within an open architecture to support a wide array of domains and user scenarios.
 
