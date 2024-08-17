@@ -60,7 +60,7 @@ const ClipPlanes = ObjectCache (ClipPlaneContainer);
 
 function ClipPlaneContainer ()
 {
-   this .plane = new Plane3 (Vector3 .Zero, Vector3 .Zero);
+   this .plane = new Plane3 ();
 }
 
 Object .assign (ClipPlaneContainer .prototype,

@@ -110,7 +110,7 @@ function X3DGeometryNode (executionContext)
    this .planes                   = [ ];
 
    for (let i = 0; i < 5; ++ i)
-      this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
+      this .planes [i] = new Plane3 ();
 }
 
 Object .defineProperty (X3DGeometryNode, "createArray",
@@ -587,7 +587,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          planes = [ ];
 
       for (let i = 0; i < 5; ++ i)
-         planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
+         planes [i] = new Plane3 ();
 
       return function (minX, minY, minZ, maxX, maxY, maxZ)
       {

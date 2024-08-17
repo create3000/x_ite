@@ -175,7 +175,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
             this .trackStart (this .startPoint);
          }
 
-         // new Plane3 (new Vector3 (), this .plane .normal) .intersectsLine (hitRay, trackPoint);
+         // new Plane3 (Vector3 .Zero, this .plane .normal) .intersectsLine (hitRay, trackPoint);
       }
       else
       {

@@ -53,7 +53,7 @@ const
    point     = new Vector3 (),
    invMatrix = new Matrix4 ();
 
-function Plane3 (point, normal)
+function Plane3 (point = Vector3 .Zero, normal = Vector3 .zAxis)
 {
    this .normal             = normal .copy ();
    this .distanceFromOrigin = normal .dot (point);
