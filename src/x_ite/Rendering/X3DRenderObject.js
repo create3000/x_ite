@@ -1175,7 +1175,7 @@ Object .assign (X3DRenderObject .prototype,
 
          // XR support
 
-         this .view = this .isActive () ? browser .getPose () ?.views [i] : null;
+         this .view = browser .getPose () ?.views [i];
 
          // Set global uniforms.
 
