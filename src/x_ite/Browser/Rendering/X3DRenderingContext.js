@@ -444,11 +444,12 @@ Object .assign (X3DRenderingContext .prototype,
       if (!("xr" in navigator))
          return false;
 
-      const
-         mode      = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
-         supported = await navigator .xr .isSessionSupported (mode);
+      const mode = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-");
 
-      return supported;
+      if (mode === "none")
+         return false;
+
+      return await navigator .xr .isSessionSupported (mode);
    },
    updateXRButton ()
    {
