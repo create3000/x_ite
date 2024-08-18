@@ -112,8 +112,11 @@ class X3DCanvasElement extends HTMLElement
          "update",
          "url",
          "xrButton",
+         "xrbutton",
          "xrMovementControl",
+         "xrmovementcontrol",
          "xrSessionMode",
+         "xrsessionmode",
       ];
    }
 
