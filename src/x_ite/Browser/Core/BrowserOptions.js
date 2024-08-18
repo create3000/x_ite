@@ -138,9 +138,9 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       const mappings = new Map ([
          ["AutoUpdate",        "update"],
-         ["XRButton",          "xr-button"],
-         ["XRMovementControl", "xr-movement-control"],
-         ["XRSessionMode",     "xr-session-mode"],
+         ["XRButton",          "xrButton"],
+         ["XRMovementControl", "xrMovementControl"],
+         ["XRSessionMode",     "xrSessionMode"],
       ]);
 
       const restorable = new Set ([

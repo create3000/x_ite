@@ -21,7 +21,7 @@ permalink: /
   notifications="false"
   timings="false"
   contentScale="auto"
-  xr-session-mode="NONE">
+  xrSessionMode="NONE">
 </x3d-canvas>
 
 ## Overview
