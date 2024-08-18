@@ -37,13 +37,14 @@ for (const row of table)
 			folder    = path .dirname (example),
 			basename  = path .basename (folder),
 			component = path .basename (path .dirname (folder)),
-			doc       = fs .existsSync (`${docs}/${component}/${basename}.md`);
+			doc       = fs .existsSync (`${docs}/${component}/${basename}.md`),
+			size      = sh (`identify -format "%w %h" "${examples}/${component}/${basename}/screenshot-small.png"`) .trim () .split (" ");
 
 		folder = folder .replace (/^.*\/media\/docs\//, "");
 
 		output += `    <td>\n`;
 		output += `      <a href="https://create3000.github.io/media/${folder}/${basename}.x3d" title="${component} » ${basename}" componentName="${component}" typeName="${basename}" doc="${doc}" xr-button="${config [basename] ?.["xr-button"] ?? "br"}">`;
-		output += `<img src="https://create3000.github.io/media/${folder}/screenshot-small.png" alt="${basename}"/>`;
+		output += `<img src="https://create3000.github.io/media/${folder}/screenshot-small.png" alt="${basename}" width="${size [0]}" height="${size [1]}"/>`;
 		output += `</a>\n`;
 		output += `    </td>\n`;
 	}
