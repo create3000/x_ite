@@ -345,8 +345,8 @@ Object .assign (X3DRenderingContext .prototype,
       {
          const
             contentScale   = this .getRenderingProperty ("ContentScale"),
-            viewportWidth  = Math .max (width * contentScale, 1),
-            viewportHeight = Math .max (height * contentScale, 1),
+            viewportWidth  = Math .max (width * contentScale, 1)|0,
+            viewportHeight = Math .max (height * contentScale, 1)|0,
             key            = Symbol ();
 
          const test = () =>
