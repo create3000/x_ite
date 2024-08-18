@@ -11,7 +11,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 *Leipzig, 18th August 2024:* With this release there is now basic WebXR support built directly into X_ITE. If WebXR is possible then a new button (Cardboard Glasses) appears in the lower right corner of the \<x3d-canvas\>. In addition, there are now three new [attributes](/x_ite/#attributes-of-the-x3d-canvas-element) (*xrButton, xrMovementControl, xrSessionMode*) and the corresponding [browser options](/x_ite/reference/browser-services/#browser-options) (*XRButton, XRMovementControl, XRSessionMode*).
 
-There is a browser extension available for both Chrome and Firefox that allows you to emulate a WebXR device:
+If you don't have a VR headset, there is a browser extension for Chrome and Firefox that emulates a WebXR device:
 
 * [WebXR Emulator for Chrome](https://chromewebstore.google.com/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje)
 * [WebXR Emulator for Firefox](https://addons.mozilla.org/de/firefox/addon/webxr-api-emulator/)
