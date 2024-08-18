@@ -111,6 +111,12 @@ class X3DCanvasElement extends HTMLElement
          "tonemapping",
          "update",
          "url",
+         "xrButton",
+         "xrbutton",
+         "xrMovementControl",
+         "xrmovementcontrol",
+         "xrSessionMode",
+         "xrsessionmode",
       ];
    }
 

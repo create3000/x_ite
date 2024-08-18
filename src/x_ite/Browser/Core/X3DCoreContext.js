@@ -88,6 +88,14 @@ let instanceId = 0;
 
 function X3DCoreContext (element)
 {
+   // Events
+
+   this .addChildObjects (X3DConstants .outputOnly, "controlKey", new Fields .SFBool (),
+                          X3DConstants .outputOnly, "shiftKey",   new Fields .SFBool (),
+                          X3DConstants .outputOnly, "altKey",     new Fields .SFBool (),
+                          X3DConstants .outputOnly, "commandKey", new Fields .SFBool (),
+                          X3DConstants .outputOnly, "altGrKey",   new Fields .SFBool ());
+
    // Get canvas & context.
 
    const
@@ -99,18 +107,16 @@ function X3DCoreContext (element)
 
    if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
    {
-      const
-         shadow = $(element [0] .attachShadow ({ mode: "open", delegatesFocus: true })),
-         link   = $("<link/>");
+      const shadow = $(element [0] .attachShadow ({ mode: "open", delegatesFocus: true }));
 
-      link
+      $("<link/>")
          .on ("load", () => browser .show ())
          .attr ("rel", "stylesheet")
          .attr ("type", "text/css")
-         .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()) .href);
+         .attr ("href", new URL ("x_ite.css", URLs .getScriptURL ()) .href)
+         .appendTo (shadow);
 
       this [_shadow] = shadow
-         .append (link)
          .append (browser .hide ());
    }
    else
@@ -141,12 +147,6 @@ function X3DCoreContext (element)
    const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body"));
    this [_pixelsPerPoint] = inches .height () / 720 || 1;
    inches .remove ();
-
-   this .addChildObjects (X3DConstants .outputOnly, "controlKey", new Fields .SFBool (),
-                          X3DConstants .outputOnly, "shiftKey",   new Fields .SFBool (),
-                          X3DConstants .outputOnly, "altKey",     new Fields .SFBool (),
-                          X3DConstants .outputOnly, "commandKey", new Fields .SFBool (),
-                          X3DConstants .outputOnly, "altGrKey",   new Fields .SFBool ());
 }
 
 Object .assign (X3DCoreContext .prototype,
@@ -397,7 +397,7 @@ Object .assign (X3DCoreContext .prototype,
          case "textCompression":
          case "textcompression":
          {
-            this .setBrowserOption ("TextCompression", newValue);
+            this .setBrowserOption ("TextCompression", newValue || "CHAR_SPACINGS");
             break;
          }
          case "timings":
@@ -408,7 +408,7 @@ Object .assign (X3DCoreContext .prototype,
          case "toneMapping":
          case "tonemapping":
          {
-            this .setBrowserOption ("ToneMapping", newValue);
+            this .setBrowserOption ("ToneMapping", newValue || "NONE");
             break;
          }
          case "update":
@@ -437,6 +437,24 @@ Object .assign (X3DCoreContext .prototype,
                   .catch (error => console .error (error));
             }
 
+            break;
+         }
+         case "xrButton":
+         case "xrbutton":
+         {
+            this .setBrowserOption ("XRButton", this .parseBooleanAttribute (newValue, true));
+            break;
+         }
+         case "xrMovementControl":
+         case "xrmovementcontrol":
+         {
+            this .setBrowserOption ("XRMovementControl", newValue || "VIEWER_POSE");
+            break;
+         }
+         case "xrSessionMode":
+         case "xrsessionmode":
+         {
+            this .setBrowserOption ("XRSessionMode", newValue || "IMMERSIVE_VR");
             break;
          }
       }
@@ -809,7 +827,12 @@ Object .assign (X3DCoreContext .prototype,
    },
    dispose ()
    {
+      this .getElement ()
+         .prop ("browser", null)
+         .off (".X3DCoreContext .ContextMenu");
+
       this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ();
+      this [_shadow] .find ("*") .remove ();
    },
 });
 

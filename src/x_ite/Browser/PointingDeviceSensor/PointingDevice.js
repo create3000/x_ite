@@ -250,7 +250,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       // and the new child has a sensor node inside. This sensor node must be updated to
       // reflect the correct isOver state.
 
-      requestAnimationFrame (() => this .onmotion (x, y));
+      this .getBrowser () .getSession () .requestAnimationFrame (() => this .onmotion (x, y));
    },
    showContextMenu (event)
    {

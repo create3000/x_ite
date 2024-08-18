@@ -46,6 +46,10 @@ $("table.examples a") .on ("click", function ()
 
    canvas .prop ("browser") .getBrowserOptions () .reset ();
 
+   canvas
+      .removeClass (["tr", "br", "bl", "tl"] .map (s => `xr-button-${s}`))
+      .addClass (`xr-button-${$(this) .attr ("xr-button")}`);
+
    header .text ($(this) .attr ("title"));
    canvas .attr ("src", $(this) .attr ("href"));
    zip    .attr ("href", $(this) .attr ("href") .replace (/\.x3d$/, ".zip"));

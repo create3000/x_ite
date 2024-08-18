@@ -406,16 +406,18 @@ type BrowserProperty = "ABSTRACT_NODES"
    | "BINARY_ENCODING";
 
 type BrowserOption = {
-   Antialiased:                  boolean,
+   SplashScreen:                 boolean,
    Dashboard:                    boolean,
    Rubberband:                   boolean,
    EnableInlineViewpoints:       boolean,
-   MotionBlur:                   boolean,
-   PrimitiveQuality:             QualityLevels,
-   QualityWhenMoving:            QualityLevels | "SAME",
+   Antialiased:                  boolean,
+   TextureQuality:               QualityLevelTypes,
+   PrimitiveQuality:             QualityLevelTypes,
+   QualityWhenMoving:            QualityLevelTypes | "SAME",
    Shading:	                     ShadingTypes,
-   SplashScreen:                 boolean,
-   TextureQuality:               QualityLevels,
+   MotionBlur:                   boolean,
+   // Additional options:
+   AlwaysUpdateGeometries:       boolean,
    AutoUpdate:                   boolean,
    Cache:                        boolean,
    ColorSpace:                   ColorSpaceTypes,
@@ -424,19 +426,25 @@ type BrowserOption = {
    Debug:                        boolean,
    Exposure:                     number,
    Gravity:                      number,
+   LoadUrlObjects:               boolean,
    LogarithmicDepthBuffer:       boolean,
+   MetadataReference:            string,
    Multisampling:                number,
    Notifications:                boolean,
    OrderIndependentTransparency: boolean,
    StraightenHorizon:            boolean,
+   TextCompression:              "CHAR_SPACING" | "SCALING",
    Timings:                      boolean,
    ToneMapping:                  ToneMappingTypes,
-}
+   XRButton:                     boolean,
+   XRMovementControl:            "VIEWER_POSE" | "VIEWPOINT",
+   XRSessionMode:                "NONE" | "IMMERSIVE_VR",
+};
 
-type ColorSpaceTypes = "SRGB" | "LINEAR_WHEN_PHYSICAL_MATERIAL" | "LINEAR";
-type QualityLevels = "LOW" | "MEDIUM" | "HIGH";
-type ShadingTypes = "POINT" | "WIREFRAME" | "FLAT" | "GOURAUD" | "PHONG";
-type ToneMappingTypes = "NONE" | "ACES_NARKOWICZ" | "ACES_HILL" | "ACES_HILL_EXPOSURE_BOOST" | "KHR_PBR_NEUTRAL";
+type ColorSpaceTypes   = "SRGB" | "LINEAR_WHEN_PHYSICAL_MATERIAL" | "LINEAR";
+type QualityLevelTypes = "LOW" | "MEDIUM" | "HIGH";
+type ShadingTypes      = "POINT" | "WIREFRAME" | "FLAT" | "GOURAUD" | "PHONG";
+type ToneMappingTypes  = "NONE" | "ACES_NARKOWICZ" | "ACES_HILL" | "ACES_HILL_EXPOSURE_BOOST" | "KHR_PBR_NEUTRAL";
 
 type RenderingProperty = {
    Shading:	               ShadingTypes,
@@ -447,6 +455,7 @@ type RenderingProperty = {
    ColorDepth:             number,
    TextureMemory:          number,
    ContentScale:           number,
+   MaxAnisotropicDegree:   number,
    MaxSamples:             number,
    Multisampling:          number,
    LogarithmicDepthBuffer: boolean,

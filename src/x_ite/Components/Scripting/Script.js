@@ -141,7 +141,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       // Disconnect shutdown.
 
-      $(window) .off (`.Script${this .getId ()}`);
+      $(window) .off (`.Script-${this .getId ()}`);
 
       // Disconnect prepareEvents.
 
@@ -367,7 +367,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       const shutdown = this .context .get ("shutdown");
 
       if (typeof shutdown === "function")
-         $(window) .on (`unload.Script${this .getId ()}`, () => this .call__ (shutdown, "shutdown"));
+         $(window) .on (`unload.Script-${this .getId ()}`, () => this .call__ (shutdown, "shutdown"));
 
       // Connect prepareEvents.
 

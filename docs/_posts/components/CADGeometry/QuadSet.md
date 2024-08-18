@@ -34,7 +34,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/core.html#Metadata
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [ ] **solid** TRUE
 
@@ -90,7 +90,7 @@ Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexatt
 
 #### Hint
 
-- [X3D Architecture 32.2.2.4 Per-vertex attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS) /Part01/components/shaders.html#Pervertexattributes
+- [X3D Architecture 32.2.2.4 Per-vertex attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shaders.html#Pervertexattributes)
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
 
@@ -142,7 +142,7 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## Example
 
-<x3d-canvas src="https://create3000.github.io/media/examples/CADGeometry/QuadSet/QuadSet.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/CADGeometry/QuadSet/QuadSet.x3d" update="auto"></x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/CADGeometry/QuadSet/QuadSet.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/CADGeometry/QuadSet/QuadSet.x3d)

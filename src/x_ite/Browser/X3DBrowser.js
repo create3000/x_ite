@@ -147,6 +147,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
              `      Name: ${this .getVendor ()} ${this .getRenderer ()}\n` +
              `      WebGL version: ${this .getWebGLVersion ()}\n` +
              `      Shading language: ${this .getShadingLanguageVersion ()}\n` +
+             `      WebXR: ${"xr" in navigator}\n` +
              `   Rendering Properties\n` +
              `      Antialiased: ${this .getRenderingProperty ("Antialiased")}\n` +
              `      Max samples: ${this .getMaxSamples ()}\n` +
@@ -948,6 +949,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    toJSONStream (generator)
    {
       this .currentScene .toJSONStream (generator);
+   },
+   dispose ()
+   {
+      this [_DOMIntegration] .dispose ();
+
+      X3DBrowserContext .prototype .dispose .call (this);
    },
 });
 

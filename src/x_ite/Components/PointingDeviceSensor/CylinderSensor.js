@@ -185,7 +185,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
          billboardToViewer = this .invModelViewMatrix .origin,
          sxNormal          = yAxis .copy () .cross (billboardToViewer) .normalize ();
 
-      this .sxPlane  = new Plane3 (new Vector3 (), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
+      this .sxPlane  = new Plane3 (Vector3 .Zero, sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
       this .szNormal = sxNormal .copy () .cross (yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
 
       const trackPoint = new Vector3 ();

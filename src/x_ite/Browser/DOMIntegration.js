@@ -385,6 +385,11 @@ class DOMIntegration
 
       element .dispatchEvent (event);
    }
+
+   dispose ()
+   {
+      this .canvasObserver .disconnect ();
+   }
 };
 
 export default DOMIntegration;

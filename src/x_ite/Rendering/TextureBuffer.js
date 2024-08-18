@@ -139,6 +139,10 @@ function TextureBuffer (browser, width, height, float = false, mipMaps = false)
 
 Object .assign (TextureBuffer .prototype,
 {
+   getOIT ()
+   {
+      return false;
+   },
    getWidth ()
    {
       return this .width;

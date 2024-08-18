@@ -12,6 +12,11 @@
    <script src="src/tests/menu.js"></script>
 
    <script type="module">
+import WebXRPolyfill from "https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.module.js";
+const polyfill = new WebXRPolyfill ();
+   </script>
+
+   <script type="module">
 import X3D from "./dist/x_ite.min.mjs";
 
 window .X3D = X3D; // Make X3D global for debugging.
@@ -396,6 +401,7 @@ main.color-management #browser {
    font-family: monospace;
    white-space: pre;
 }
+
    </style>
 </head>
 <body>
@@ -411,7 +417,7 @@ main.color-management #browser {
          <div>
             <form action="javascript:alert('form submitted')">
                <div id="transforms" style="transform-origin: 50% 50%;">
-                  <x3d-canvas id="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" oninitialized="$('#file') .addClass ('loaded')" x-baseURL="src/tests/" x-src="lines.x3d" update="auto">
+                  <x3d-canvas id="browser" class="tr" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" oninitialized="$('#file') .addClass ('loaded')" x-baseURL="src/tests/" x-src="lines.x3d" update="auto">
                      <p class="fallback">
                         Sorry,<br/>
                         it wasn't me!<br/>
@@ -431,7 +437,7 @@ main.color-management #browser {
                <a id="print-xml" href="#">XML</a><a id="print-vrml" href="#">VRML</a><a id="print-json" href="#">JSON</a><a href="dist/example.html">example page</a><a href="src/tests/html/">html</a><a id="blob" href="#">blob</a>
             </div>
             <div id="links" class="min-links">
-               <a href="src/x_ite.html">src/x_ite.html</a><a href="https://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a>
+               <a href="src/x_ite.html">src/x_ite.html</a><a href="https://rawgit.com/create3000/x_ite/xr/x_ite.min.html">github</a>
             </div>
             <div id="examples-box"></div>
          </div>

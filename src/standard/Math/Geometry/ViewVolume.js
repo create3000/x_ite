@@ -104,12 +104,12 @@ function ViewVolume (projectionMatrix, viewport, scissor)
    ];
 
    this .planes = [
-      new Plane3 (Vector3 .Zero, Vector3 .Zero), // front
-      new Plane3 (Vector3 .Zero, Vector3 .Zero), // left
-      new Plane3 (Vector3 .Zero, Vector3 .Zero), // right
-      new Plane3 (Vector3 .Zero, Vector3 .Zero), // top
-      new Plane3 (Vector3 .Zero, Vector3 .Zero), // bottom
-      new Plane3 (Vector3 .Zero, Vector3 .Zero), // back
+      new Plane3 (), // front
+      new Plane3 (), // left
+      new Plane3 (), // right
+      new Plane3 (), // top
+      new Plane3 (), // bottom
+      new Plane3 (), // back
    ];
 
    if (arguments .length)

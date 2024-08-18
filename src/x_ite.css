@@ -610,3 +610,16 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   height: 6px;
   background: rgba(255, 255, 255, 0.5);
 }
+
+/* WebXR */
+
+.x_ite-private-xr-button {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 32px;
+  height: 18px;
+  background: url("assets/images/XR.svg");
+  opacity: 0.6;
+  cursor: pointer;
+}

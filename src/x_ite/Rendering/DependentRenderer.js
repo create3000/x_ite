@@ -48,14 +48,19 @@
 import X3DBaseNode     from "../Base/X3DBaseNode.js";
 import X3DRenderObject from "./X3DRenderObject.js";
 import TraverseType    from "./TraverseType.js";
+import Camera          from "../../standard/Math/Geometry/Camera.js";
+import Algorithm       from "../../standard/Math/Algorithm.js";
+import Matrix4         from "../../standard/Math/Numbers/Matrix4.js";
 
 function DependentRenderer (executionContext, renderObject, node)
 {
    X3DBaseNode     .call (this, executionContext);
    X3DRenderObject .call (this, executionContext);
 
-   this .node         = node;
-   this .renderObject = renderObject;
+   this .renderObject               = renderObject;
+   this .node                       = node;
+   this .projectionMatrixWithLimits = new Matrix4 ();
+   this .frameBuffers               = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNode .prototype),
@@ -67,6 +72,10 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
       X3DRenderObject .prototype .initialize .call (this);
    },
    isIndependent ()
+   {
+      return false;
+   },
+   isActive ()
    {
       return false;
    },
@@ -101,6 +110,18 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    getLightContainer ()
    {
       return this .renderObject .getLights () [this .lightIndex ++];
+   },
+   getFrameBuffers ()
+   {
+      return this .frameBuffers;
+   },
+   setFrameBuffer (frameBuffer)
+   {
+      this .frameBuffers [0] = frameBuffer;
+   },
+   getProjectionMatrixWithLimits (nearValue, farValue, viewport)
+   {
+      return Camera .perspective (Algorithm .radians (90), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrixWithLimits);
    },
    render (type, callback, group)
    {

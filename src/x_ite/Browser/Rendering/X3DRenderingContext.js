@@ -50,10 +50,15 @@ import X3DConstants           from "../../Base/X3DConstants.js";
 import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
 import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
+import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4              from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
+import Lock                   from "../../../standard/Utility/Lock.js";
 
 const
-   _frameBuffer        = Symbol (),
+   _frameBuffers       = Symbol (),
    _transmissionBuffer = Symbol (),
+   _observer           = Symbol (),
    _resizer            = Symbol (),
    _localObjects       = Symbol (),
    _fullscreenArray    = Symbol (),
@@ -61,13 +66,37 @@ const
    _composeShader      = Symbol (),
    _depthShaders       = Symbol ();
 
+const
+   _session            = Symbol (),
+   _baseReferenceSpace = Symbol (),
+   _referenceSpace     = Symbol (),
+   _baseLayer          = Symbol (),
+   _defaultFrameBuffer = Symbol (),
+   _pose               = Symbol ();
+
+// WebXR Emulator and polyfill:
+const canvasCSS = {
+   position: "fixed",
+   top: "0px",
+   left: "0px",
+   width: "100vw",
+   height: "100vh",
+};
+
 function X3DRenderingContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .MFInt32 (0, 0, 300, 150));
 
-   this [_frameBuffer]  = new MultiSampleFrameBuffer (this, 300, 150, 4);
+   this [_frameBuffers] = [ ];
    this [_depthShaders] = new Map ();
    this [_localObjects] = [ ]; // shader objects dumpster
+
+   // XR support
+
+   this [_session]            = window;
+   this [_defaultFrameBuffer] = null;
+
+   this .updateXRButton ();
 }
 
 Object .assign (X3DRenderingContext .prototype,
@@ -86,14 +115,29 @@ Object .assign (X3DRenderingContext .prototype,
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
 
-      // Configure viewport.
+      // Events
 
-      $(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
+      this ._activeViewpoint .addInterest ("setReferenceSpace", this);
 
-      this [_resizer] = new ResizeObserver (this .reshape .bind (this));
-      this [_resizer] .observe (this .getSurface () [0]);
+      // Observe resize and parent changes of <canvas> and configure viewport.
 
-      this .reshape ();
+      this [_observer] = new MutationObserver (() => this .setResizeTarget (this .getCanvas () .parent ()));
+      this [_resizer]  = new ResizeObserver (() => this .reshape ());
+
+      this .setResizeTarget (this .getCanvas () .parent ());
+
+      $(window) .on (`orientationchange.X3DRenderingContext-${this .getInstanceId ()}`, () => this .reshape ());
+
+      // Observe fullscreen changes of <x3d-canvas>.
+
+      $(document) .on ([
+         "webkitfullscreenchange",
+         "mozfullscreenchange",
+         "fullscreenchange",
+         "MSFullscreenChange",
+      ]
+      .map (event => `${event}.X3DRenderingContext-${this .getInstanceId ()}`)
+      .join (" "), () => this .onfullscreen ());
    },
    getRenderer ()
    {
@@ -162,15 +206,15 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return this [_localObjects];
    },
-   getFrameBuffer ()
+   getFrameBuffers ()
    {
-      return this [_frameBuffer];
+      return this [_frameBuffers];
    },
    getTransmissionBuffer ()
    {
       this [_transmissionBuffer] = new TextureBuffer (this,
-         this [_frameBuffer] .getWidth (),
-         this [_frameBuffer] .getHeight (),
+         this ._viewport [2],
+         this ._viewport [3],
          false,
          true);
 
@@ -271,14 +315,38 @@ Object .assign (X3DRenderingContext .prototype,
 
       return shaderNode;
    },
+   setResizeTarget (element)
+   {
+      if (!element .length)
+      {
+         // WebXR polyfill: parent can be null.
+         this .stopXRSession ();
+         this .getCanvas () .prependTo (this .getSurface ());
+         this .setResizeTarget (this .getSurface ());
+         return;
+      }
+
+      if (element .is (this .getSurface ()))
+         this .getCanvas () .removeAttr ("style");
+      else // WebXR Emulator or polyfill.
+         this .getCanvas () .css (canvasCSS);
+
+      this [_observer] .disconnect ();
+      this [_observer] .observe (element [0], { childList: true });
+
+      this [_resizer] .disconnect ();
+      this [_resizer] .observe (element [0]);
+
+      this .reshape ();
+   },
    resize (width, height)
    {
       return new Promise (resolve =>
       {
          const
             contentScale   = this .getRenderingProperty ("ContentScale"),
-            viewportWidth  = Math .max (width * contentScale, 1),
-            viewportHeight = Math .max (height * contentScale, 1),
+            viewportWidth  = Math .max (width * contentScale, 1)|0,
+            viewportHeight = Math .max (height * contentScale, 1)|0,
             key            = Symbol ();
 
          const test = () =>
@@ -306,32 +374,55 @@ Object .assign (X3DRenderingContext .prototype,
       const
          canvas       = this .getCanvas (),
          contentScale = this .getRenderingProperty ("ContentScale"),
-         samples      = this .getRenderingProperty ("Multisampling"),
-         oit          = this .getBrowserOption ("OrderIndependentTransparency"),
-         width        = Math .max (canvas .width () * contentScale, 1),
-         height       = Math .max (canvas .height () * contentScale, 1);
+         width        = Math .max (canvas .parent () .width ()  * contentScale, 1)|0,
+         height       = Math .max (canvas .parent () .height () * contentScale, 1)|0;
+
+      canvas
+         .prop ("width",  width)
+         .prop ("height", height);
+
+      if (this [_frameBuffers] .length < 2)
+         this .reshapeFrameBuffer (0, 0, 0, width, height);
 
       this .addBrowserEvent ();
+   },
+   reshapeFrameBuffer (i, x, y, width, height)
+   {
+      const
+         samples     = this .getRenderingProperty ("Multisampling"),
+         oit         = this .getBrowserOption ("OrderIndependentTransparency"),
+         frameBuffer = this [_frameBuffers] [i];
 
-      canvas .prop ("width",  width);
-      canvas .prop ("height", height);
-
-      this ._viewport [2] = width;
-      this ._viewport [3] = height;
-
-      if (width   === this [_frameBuffer] .getWidth ()   &&
-          height  === this [_frameBuffer] .getHeight ()  &&
-          samples === this [_frameBuffer] .getSamples () &&
-          oit     === this [_frameBuffer] .getOIT ())
+      if (frameBuffer &&
+          x       === frameBuffer .getX () &&
+          y       === frameBuffer .getY () &&
+          width   === frameBuffer .getWidth () &&
+          height  === frameBuffer .getHeight () &&
+          samples === frameBuffer .getSamples () &&
+          oit     === frameBuffer .getOIT ())
       {
          return;
       }
 
-      this [_frameBuffer] .dispose ();
-      this [_frameBuffer] = new MultiSampleFrameBuffer (this, width, height, samples, oit);
+      this ._viewport [2] = width;
+      this ._viewport [3] = height;
 
+      frameBuffer ?.dispose ();
+
+      this [_frameBuffers] [i] = new MultiSampleFrameBuffer (this, x, y, width, height, samples, oit);
+
+      this .reshapeTransmissionBuffer (width, height);
+   },
+   reshapeTransmissionBuffer (width, height)
+   {
       if (!this [_transmissionBuffer])
          return;
+
+      if (width  === this [_transmissionBuffer] .getWidth () &&
+          height === this [_transmissionBuffer] .getHeight ())
+      {
+         return;
+      }
 
       this [_transmissionBuffer] .dispose ();
       this [_transmissionBuffer] = new TextureBuffer (this, width, height, false, true);
@@ -345,9 +436,214 @@ Object .assign (X3DRenderingContext .prototype,
       else
          element .removeClass ("x_ite-fullscreen");
    },
+   async checkXRSupport ()
+   {
+      if (this .getContext () .getVersion () <= 1)
+         return false;
+
+      if (!("xr" in navigator))
+         return false;
+
+      const mode = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-");
+
+      if (!mode .match (/^(?:immersive-vr|immersive-ar)$/))
+         return false;
+
+      return await navigator .xr .isSessionSupported (mode);
+   },
+   updateXRButton ()
+   {
+      return Lock .acquire (`X3DRenderingContext.updateXRButton-${this .getId ()}`, async () =>
+      {
+         this .getSurface () .children (".x_ite-private-xr-button") .remove ();
+
+         if (!this .getBrowserOption ("XRButton"))
+            return;
+
+         if (!await this .checkXRSupport ())
+            return;
+
+         $("<div></div>")
+            .attr ("part", "xr-button")
+            .addClass ("x_ite-private-xr-button")
+            .on ("mousedown touchstart", false)
+            .on ("mouseup touchend", event => this .startXRSession (event))
+            .appendTo (this .getSurface ());
+      });
+   },
+   startXRSession (event)
+   {
+      event ?.preventDefault ();
+      event ?.stopImmediatePropagation ();
+      event ?.stopPropagation ();
+
+      return Lock .acquire (`X3DRenderingContext.session-${this .getId ()}`, async () =>
+      {
+         if (!await this .checkXRSupport ())
+            return;
+
+         if (this [_session] !== window)
+            return;
+
+         const
+            gl             = this .getContext (),
+            mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
+            compatible     = await gl .makeXRCompatible (),
+            session        = await navigator .xr .requestSession (mode),
+            referenceSpace = await session .requestReferenceSpace ("local");
+
+         // WebXR Emulator: must bind default framebuffer, to get xr emulator working.
+         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+
+         const baseLayer = new XRWebGLLayer (session, gl,
+         {
+            antialias: false,
+            alpha: true,
+            depth: false,
+            ignoreDepthValues: true,
+         });
+
+         this .endEvents () .addInterest ("endFrame", this);
+
+         session .updateRenderState ({ baseLayer });
+         session .addEventListener ("end", () => this .stopXRSession ());
+
+         this [_session]            = session;
+         this [_baseReferenceSpace] = referenceSpace;
+         this [_baseLayer]          = baseLayer;
+         this [_defaultFrameBuffer] = baseLayer .framebuffer;
+
+         this [_pose] = {
+            projectionMatrix: new Matrix4 (),
+            cameraSpaceMatrix: new Matrix4 (),
+            viewMatrix: new Matrix4 (),
+            views: [
+               { cameraSpaceMatrix: new Matrix4 (), viewMatrix: new Matrix4 (), matrix: new Matrix4 () },
+               { cameraSpaceMatrix: new Matrix4 (), viewMatrix: new Matrix4 (), matrix: new Matrix4 () },
+            ],
+         };
+
+         this .setReferenceSpace ();
+         this .addBrowserEvent ();
+         this .reshape ();
+      });
+   },
+   stopXRSession ()
+   {
+      return Lock .acquire (`X3DRenderingContext.session-${this .getId ()}`, async () =>
+      {
+         if (this [_session] === window)
+            return;
+
+         this .endEvents () .removeInterest ("endFrame", this);
+
+         this [_session] .end () .catch (Function .prototype);
+
+         for (const frameBuffer of this [_frameBuffers])
+            frameBuffer .dispose ();
+
+         this [_frameBuffers] .length = 0;
+
+         this [_session]            = window;
+         this [_baseReferenceSpace] = null;
+         this [_referenceSpace]     = null;
+         this [_baseLayer]          = null;
+         this [_defaultFrameBuffer] = null;
+         this [_pose]               = null;
+
+         this .addBrowserEvent ();
+         this .reshape ();
+      });
+   },
+   getSession ()
+   {
+      return this [_session];
+   },
+   getReferenceSpace ()
+   {
+      return this [_referenceSpace];
+   },
+   setReferenceSpace ()
+   {
+      if (!this [_baseReferenceSpace])
+         return;
+
+      const
+         translation = new Vector3 (),
+         rotation    = new Rotation4 ();
+
+      this .getActiveViewpoint () ?.getViewMatrix () .get (translation, rotation)
+
+      const offsetTransform = new XRRigidTransform (translation, rotation .getQuaternion ());
+
+      this [_referenceSpace] = this [_baseReferenceSpace] .getOffsetReferenceSpace (offsetTransform);
+   },
+   getDefaultFrameBuffer ()
+   {
+      return this [_defaultFrameBuffer];
+   },
+   setFrame (frame)
+   {
+      if (!frame)
+         return;
+
+      const
+         pose     = frame .getViewerPose (this [_referenceSpace]),
+         numViews = pose .views .length;
+
+      this [_pose] .cameraSpaceMatrix .assign (pose .transform .matrix);
+      this [_pose] .viewMatrix        .assign (pose .transform .inverse .matrix);
+
+      let v = 0;
+
+      for (let i = 0; i < numViews; ++ i)
+      {
+         const
+            view                    = pose .views [i],
+            { x, y, width, height } = this [_baseLayer] .getViewport (view);
+
+         // WebXR Emulator: second view has width zero if in non-stereo mode.
+         if (!width)
+            continue;
+
+         this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
+
+         this [_pose] .projectionMatrix .assign (view .projectionMatrix);
+         this [_pose] .views [v] .cameraSpaceMatrix .assign (view .transform .matrix);
+         this [_pose] .views [v] .viewMatrix .assign (view .transform .inverse .matrix);
+         this [_pose] .views [v] .matrix .assign (pose .transform .matrix) .multRight (view .transform .inverse .matrix);
+
+         ++ v;
+      }
+
+      this [_frameBuffers] .length = v;
+
+      // WebXR Emulator or polyfill.
+      if (!this .getCanvas () .parent () .is (this .getSurface ()))
+         this .getCanvas () .css (canvasCSS);
+
+      this .addBrowserEvent ();
+   },
+   endFrame ()
+   {
+      const gl = this .getContext ();
+
+      // WebXR Emulator and polyfill: bind to null, to prevent changes.
+      gl .bindVertexArray (null);
+   },
+   getPose ()
+   {
+      return this [_pose];
+   },
    dispose ()
    {
-      this [_resizer] .disconnect ();
+      this [_session] = window;
+
+      this [_observer] .disconnect ();
+      this [_resizer]  .disconnect ();
+
+      $(window) .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
+      $(document) .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
    },
 });
 

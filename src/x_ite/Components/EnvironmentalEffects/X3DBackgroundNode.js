@@ -475,7 +475,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
          // Get projection matrix.
 
-         this .projectionMatrixArray .set (renderObject .getViewpoint () .getProjectionMatrixWithLimits (0.125, 200_000, viewport));
+         this .projectionMatrixArray .set (renderObject .getProjectionMatrixWithLimits (0.125, 200_000, viewport));
 
          // Rotate and scale background.
 

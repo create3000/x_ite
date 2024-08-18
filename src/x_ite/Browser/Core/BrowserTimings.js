@@ -217,7 +217,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
    {
       this .getBrowser () .addBrowserEvent ();
 
-      requestAnimationFrame (() =>
+      this .getBrowser () .getSession () .requestAnimationFrame (() =>
       {
          this .fps .reset ();
          this .build ();

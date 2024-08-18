@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import SFTime                         from "../Fields/SFTime.js";
+import Fields                         from "../Fields.js";
 import X3DConstants                   from "../Base/X3DConstants.js";
 import X3DBaseNode                    from "../Base/X3DBaseNode.js";
 import X3DCoreContext                 from "./Core/X3DCoreContext.js";
@@ -120,14 +120,14 @@ function X3DBrowserContext (element)
    for (const browserContext of browserContexts)
       browserContext .call (this, element);
 
-   this .addChildObjects (X3DConstants .outputOnly, "initialized",    new SFTime (),
-                          X3DConstants .outputOnly, "shutdown",       new SFTime (),
-                          X3DConstants .outputOnly, "prepareEvents",  new SFTime (),
-                          X3DConstants .outputOnly, "timeEvents",     new SFTime (),
-                          X3DConstants .outputOnly, "sensorEvents",   new SFTime (),
-                          X3DConstants .outputOnly, "displayEvents",  new SFTime (),
-                          X3DConstants .outputOnly, "finishedEvents", new SFTime (),
-                          X3DConstants .outputOnly, "endEvents",      new SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "initialized",    new Fields .SFTime (),
+                          X3DConstants .outputOnly, "shutdown",       new Fields .SFTime (),
+                          X3DConstants .outputOnly, "prepareEvents",  new Fields .SFTime (),
+                          X3DConstants .outputOnly, "timeEvents",     new Fields .SFTime (),
+                          X3DConstants .outputOnly, "sensorEvents",   new Fields .SFTime (),
+                          X3DConstants .outputOnly, "displayEvents",  new Fields .SFTime (),
+                          X3DConstants .outputOnly, "finishedEvents", new Fields .SFTime (),
+                          X3DConstants .outputOnly, "endEvents",      new Fields .SFTime ());
 
    this [_tainted]        = false;
    this [_previousTime]   = 0;
@@ -204,7 +204,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
          return;
 
       this [_tainted]   = true;
-      this [_animFrame] = requestAnimationFrame (this [_renderCallback]);
+      this [_animFrame] = this .getSession () .requestAnimationFrame (this [_renderCallback]);
    },
    nextFrame ()
    {
@@ -232,12 +232,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       }
       else
       {
-         requestAnimationFrame (this [_renderCallback]);
+         this .getSession () .requestAnimationFrame (this [_renderCallback]);
 
          return true;
       }
    },
-   [_traverse] (now)
+   [_traverse] (now, frame)
    {
       // Limit frame rate.
 
@@ -251,6 +251,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       // Time
 
+      this .setFrame (frame);
       this .advanceTime ();
 
       // Events
@@ -287,13 +288,17 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this .addTaintedField (this ._displayEvents);
       this [_processEvents] ();
 
-      this .getFrameBuffer () .clear ();
+      for (const frameBuffer of this .getFrameBuffers ())
+         frameBuffer .clear ();
+
       this [_world] .traverse (TraverseType .DISPLAY);
 
       this .addTaintedField (this ._finishedEvents);
       this [_processEvents] ();
 
-      this .getFrameBuffer () .blit ();
+      for (const frameBuffer of this .getFrameBuffers ())
+         frameBuffer .blit ();
+
       this [_displayTime] .stop ();
 
       this .addTaintedField (this ._endEvents);
@@ -324,20 +329,26 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       return this [_displayTime];
    },
+   stopXRSession ()
+   {
+      this [_tainted] = false;
+
+      this .getSession () .cancelAnimationFrame (this [_animFrame]);
+
+      X3DRenderingContext .prototype .stopXRSession .call (this);
+   },
    dispose ()
    {
       browsers .delete (this);
+
+      this [_tainted] = true;
+
+      this .getSession () .cancelAnimationFrame (this [_animFrame]);
 
       for (const browserContext of browserContexts .slice () .reverse ())
          browserContext .prototype .dispose ?.call (this);
 
       X3DBaseNode .prototype .dispose .call (this);
-
-      this [_tainted] = true;
-
-      cancelAnimationFrame (this [_animFrame]);
-
-      this .getContext () .getExtension ("WEBGL_lose_context") ?.loseContext ();
    },
 });
 

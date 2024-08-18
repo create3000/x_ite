@@ -304,6 +304,12 @@ Returns a browser option with the corresponding *name*.
          <td>9.80665</td>
       </tr>
       <tr>
+         <td>LoadUrlObjects</td>
+         <td>Wether X3DUrlObject should be loaded. <small class="blue">non standard</small></td>
+         <td>Boolean</td>
+         <td>true</td>
+      </tr>
+      <tr>
          <td>LogarithmicDepthBuffer</td>
          <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint is bound. <small class="blue">non standard</small></td>
          <td>Boolean</td>
@@ -350,6 +356,24 @@ Returns a browser option with the corresponding *name*.
          <td>Whether tone mapping should be applied. <small class="blue">non standard</small></td>
          <td>NONE, ACES_NARKOWICZ, ACES_HILL, ACES_HILL_EXPOSURE_BOOST, KHR_PBR_NEUTRAL</td>
          <td>KHR_PBR_NEUTRAL</td>
+      </tr>
+      <tr>
+         <td>XRButton</td>
+         <td>Whether to display an XR button in the lower right corner of the canvas. <small class="blue">non standard</small></td>
+         <td>Boolean</td>
+         <td>true</td>
+      </tr>
+      <tr>
+         <td>XRMovementControl</td>
+         <td>When an XR session is active, you can control motion either by using the viewer pose of the VR device or by using the position and orientation of the currently bound viewpoint of the active layer. <small class="blue">non standard</small></td>
+         <td>VIEWER_POSE, VIEWPOINT</td>
+         <td>VIEWER_POSE</td>
+      </tr>
+      <tr>
+         <td>XRSessionMode</td>
+         <td>A String defining the XR session mode. If the value is NONE, no XR button is displayed and all attempts to start a session are ignored. See also <a href="https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession#parameters" target="blank">XRSystem.requestSession</a> <small class="blue">non standard</small></td>
+         <td>NONE, IMMERSIVE_AR, IMMERSIVE_VR</td>
+         <td>IMMERSIVE_VR</td>
       </tr>
    </tbody>
 </table>

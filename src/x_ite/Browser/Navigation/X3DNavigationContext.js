@@ -146,18 +146,28 @@ Object .assign (X3DNavigationContext .prototype,
    },
    set_activeLayer__ ()
    {
-      if (this ._activeLayer .getValue ())
+      // Remove active layer.
       {
-         this ._activeLayer .getValue () .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
-         this ._activeLayer .getValue () .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
+         const activeLayer = this ._activeLayer .getValue ();
+
+         if (activeLayer)
+         {
+            activeLayer .setActive (false);
+            activeLayer .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
+            activeLayer .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
+         }
       }
 
-      this ._activeLayer = this .getWorld () .getActiveLayer ();
-
-      if (this ._activeLayer .getValue ())
+      // Add active layer.
       {
-         this ._activeLayer .getValue () .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
-         this ._activeLayer .getValue () .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
+         const activeLayer = this ._activeLayer = this .getWorld () .getActiveLayer ();
+
+         if (activeLayer)
+         {
+            activeLayer .setActive (true);
+            activeLayer .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
+            activeLayer .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
+         }
       }
 
       this .set_activeNavigationInfo__ ();

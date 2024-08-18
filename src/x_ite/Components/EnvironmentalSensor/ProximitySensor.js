@@ -130,6 +130,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
             if (this .layerNode)
             {
                const
+                  pose           = this .getBrowser () .getPose (),
                   viewpointNode  = this .layerNode .getViewpoint (),
                   invModelMatrix = this .modelMatrix .inverse ()
 
@@ -139,9 +140,12 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                   .multRight (invModelMatrix)
                   .get (centerOfRotation);
 
-               invModelMatrix
-                  .multLeft (viewpointNode .getCameraSpaceMatrix ())
-                  .get (position, orientation);
+               if (pose && this .layerNode .isActive ())
+                  invModelMatrix .multLeft (pose .cameraSpaceMatrix);
+               else
+                  invModelMatrix .multLeft (viewpointNode .getCameraSpaceMatrix ());
+
+               invModelMatrix .get (position, orientation);
 
                if (this ._isActive .getValue ())
                {

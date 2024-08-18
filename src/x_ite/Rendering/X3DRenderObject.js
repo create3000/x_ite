@@ -68,6 +68,7 @@ function X3DRenderObject (executionContext)
    this .renderKey                      = "";
    this .renderAndGlobalLightsKey       = "";
    this .renderCount                    = 0;
+   this .view                           = null;
    this .viewVolumes                    = [ ];
    this .projectionMatrix               = new MatrixStack (Matrix4);
    this .modelViewMatrix                = new MatrixStack (Matrix4);
@@ -204,16 +205,24 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .renderCount;
    },
-   getNextRenderCount: (function ()
+   advanceRenderCount: (function ()
    {
       let renderCount = 0;
 
       return function ()
       {
          renderCount >>>= 0; // uintesize
-         return ++ renderCount;
+         this .renderCount = ++ renderCount;
       }
    })(),
+   getFrameBuffers ()
+   {
+      return this .getBrowser () .getFrameBuffers ();
+   },
+   getView ()
+   {
+      return this .view;
+   },
    getViewVolumes ()
    {
       return this .viewVolumes;
@@ -225,6 +234,10 @@ Object .assign (X3DRenderObject .prototype,
    getProjectionMatrix ()
    {
       return this .projectionMatrix;
+   },
+   getProjectionMatrixWithLimits (nearValue, farValue, viewport)
+   {
+      return this .getViewpoint () .getProjectionMatrixWithLimits (nearValue, farValue, viewport);
    },
    getModelViewMatrix ()
    {
@@ -1115,20 +1128,18 @@ Object .assign (X3DRenderObject .prototype,
    draw ()
    {
       const
+         independent              = this .isIndependent (),
          browser                  = this .getBrowser (),
          gl                       = browser .getContext (),
-         frameBuffer              = browser .getFrameBuffer (),
-         independent              = this .isIndependent (),
+         frameBuffers             = this .getFrameBuffers (),
+         numFrameBuffers          = frameBuffers .length,
          viewport                 = this .getViewVolume () .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
          globalLights             = this .globalLights,
          generatedCubeMapTextures = this .generatedCubeMapTextures,
          globalShadows            = this .globalShadows,
-         headlight                = this .getNavigationInfo () ._headlight .getValue (),
-         oit                      = frameBuffer .getOIT () && independent;
-
-      this .renderCount = this .getNextRenderCount ();
+         headlight                = this .getNavigationInfo () ._headlight .getValue ();
 
       // PREPARATIONS
 
@@ -1156,38 +1167,58 @@ Object .assign (X3DRenderObject .prototype,
       this .renderAndGlobalLightsKey = `.${this .renderKey}.${globalLightsKeys .sort () .join ("")}.`;
       this .globalShadow             = globalShadows .at (-1);
 
-      // Set global uniforms.
-
-      this .viewportArray          .set (viewport);
-      this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
-      this .viewMatrixArray        .set (this .getViewMatrix () .get ());
-      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-
       // DRAW
 
-      if (independent && this .transmission)
+      for (let i = 0; i < numFrameBuffers; ++ i)
       {
-         // Transmission
+         const frameBuffer = frameBuffers [i];
 
-         const
-            transmissionBuffer               = browser .getTransmissionBuffer (),
-            transmissionOpaqueShapes         = this .transmissionOpaqueShapes,
-            transmissionTransparentShapes    = this .transmissionTransparentShapes,
-            numTransmissionOpaqueShapes      = transmissionOpaqueShapes .length,
-            numTransmissionTransparentShapes = transmissionTransparentShapes .length;
+         // XR support
 
-         this .drawShapes (gl, browser, true, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes, this .transmissionTransparencySorter);
+         this .view = browser .getPose () ?.views [i];
 
-         gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
-         gl .generateMipmap (gl .TEXTURE_2D);
+         // Set global uniforms.
 
-         this .drawShapes (gl, browser, true, frameBuffer, 0, oit, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
-      }
-      else
-      {
-         // Draw with sorted blend or OIT.
+         this .viewportArray         .set (viewport);
+         this .projectionMatrixArray .set (this .getProjectionMatrix () .get ());
 
-         this .drawShapes (gl, browser, independent, frameBuffer, 0, oit, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+         if (this .view && browser .getBrowserOption ("XRMovementControl") === "VIEWER_POSE")
+         {
+            this .viewMatrixArray        .set (this .view .viewMatrix);
+            this .cameraSpaceMatrixArray .set (this .view .cameraSpaceMatrix);
+         }
+         else
+         {
+            this .viewMatrixArray        .set (this .getViewMatrix () .get ());
+            this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+         }
+
+         if (independent && this .transmission)
+         {
+            // Transmission
+
+            const
+               transmissionBuffer               = browser .getTransmissionBuffer (),
+               transmissionOpaqueShapes         = this .transmissionOpaqueShapes,
+               transmissionTransparentShapes    = this .transmissionTransparentShapes,
+               numTransmissionOpaqueShapes      = transmissionOpaqueShapes .length,
+               numTransmissionTransparentShapes = transmissionTransparentShapes .length;
+
+            this .drawShapes (gl, browser, true, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes, this .transmissionTransparencySorter);
+
+            gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
+            gl .generateMipmap (gl .TEXTURE_2D);
+
+            // Draw with sorted blend or OIT.
+
+            this .drawShapes (gl, browser, frameBuffer, 0, frameBuffer .getOIT (), viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+         }
+         else
+         {
+            // Draw with sorted blend or OIT.
+
+            this .drawShapes (gl, browser, frameBuffer, 0, frameBuffer .getOIT (), viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+         }
       }
 
       // POST DRAW
@@ -1217,10 +1248,9 @@ Object .assign (X3DRenderObject .prototype,
       globalShadows            .length = 1;
       generatedCubeMapTextures .length = 0;
    },
-   drawShapes (gl, browser, independent, frameBuffer, clear, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
+   drawShapes (gl, browser, frameBuffer, clear, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
    {
-      if (independent)
-         frameBuffer .bind ();
+      frameBuffer .bind ();
 
       // Configure viewport and background
 
@@ -1229,6 +1259,8 @@ Object .assign (X3DRenderObject .prototype,
 
       // Draw background.
 
+      this .advanceRenderCount ();
+
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .DEPTH_BUFFER_BIT | clear);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
@@ -1236,6 +1268,8 @@ Object .assign (X3DRenderObject .prototype,
       this .getBackground () .display (gl, this, viewport);
 
       // Sorted blend or order independent transparency
+
+      this .advanceRenderCount ();
 
       // Render opaque objects first
 

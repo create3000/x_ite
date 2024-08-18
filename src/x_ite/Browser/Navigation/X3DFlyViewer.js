@@ -654,89 +654,92 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             height       = viewport [3],
             contentScale = browser .getRenderingProperty ("ContentScale");
 
-         browser .getFrameBuffer () .bind ();
-
-         gl .viewport (... viewport);
-         gl .scissor (... viewport);
-
-         projectionMatrixArray .set (Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix));
-
-         // Display Rubberband.
-
-         switch (type)
+         for (const frameBuffer of browser .getFrameBuffers ())
          {
-            case MOVE:
+            frameBuffer .bind ();
+
+            gl .viewport (... viewport);
+            gl .scissor (... viewport);
+
+            projectionMatrixArray .set (Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix));
+
+            // Display Rubberband.
+
+            switch (type)
             {
-               fromPoint .set (this .fromVector .x, -this .fromVector .z, 0);
-               toPoint   .set (this .toVector   .x, -this .toVector   .z, 0);
-               break;
+               case MOVE:
+               {
+                  fromPoint .set (this .fromVector .x, -this .fromVector .z, 0);
+                  toPoint   .set (this .toVector   .x, -this .toVector   .z, 0);
+                  break;
+               }
+               case PAN:
+               {
+                  fromPoint .set (this .fromVector .x, this .fromVector .y, 0);
+                  toPoint   .set (this .toVector   .x, this .toVector   .y, 0);
+                  break;
+               }
             }
-            case PAN:
+
+            // Set black line quad vertices.
+
+            normal .assign (toPoint)
+               .subtract (fromPoint)
+               .normalize ()
+               .multiply (contentScale)
+               .set (-normal .y, normal .x, 0);
+
+            this .lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      0);
+            this .lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 4);
+            this .lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 8);
+            this .lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      12);
+
+            // Set white line quad vertices.
+
+            normal .assign (toPoint)
+               .subtract (fromPoint)
+               .normalize ()
+               .multiply (contentScale / 2)
+               .set (-normal .y, normal .x, 0);
+
+            this .lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      16);
+            this .lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 20);
+            this .lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 24);
+            this .lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      28);
+
+            // Transfer line.
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .lineVertexBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, this .lineVertexArray, gl .DYNAMIC_DRAW);
+
+            // Set uniforms and attributes.
+
+            const shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext);
+
+            shaderNode .enable (gl);
+            shaderNode .setClipPlanes (gl, clipPlanes);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+            gl .uniform3f        (shaderNode .x3d_EmissiveColor, 1, 1, 1);
+            gl .uniform1f        (shaderNode .x3d_Transparency,  0);
+
+            if (this .lineVertexArrayObject .enable (shaderNode .getProgram ()))
             {
-               fromPoint .set (this .fromVector .x, this .fromVector .y, 0);
-               toPoint   .set (this .toVector   .x, this .toVector   .y, 0);
-               break;
+               gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
+
+               shaderNode .enableColorAttribute  (gl, this .lineColorBuffer,  0, 0);
+               shaderNode .enableVertexAttribute (gl, this .lineVertexBuffer, 0, 0);
             }
+
+            // Draw a black and a white line.
+
+            gl .disable (gl .DEPTH_TEST);
+            gl .enable (gl .CULL_FACE);
+            gl .frontFace (gl .CCW);
+            gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_BYTE, 0);
+            gl .enable (gl .DEPTH_TEST);
          }
-
-         // Set black line quad vertices.
-
-         normal .assign (toPoint)
-            .subtract (fromPoint)
-            .normalize ()
-            .multiply (contentScale)
-            .set (-normal .y, normal .x, 0);
-
-         this .lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      0);
-         this .lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 4);
-         this .lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 8);
-         this .lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      12);
-
-         // Set white line quad vertices.
-
-         normal .assign (toPoint)
-            .subtract (fromPoint)
-            .normalize ()
-            .multiply (contentScale / 2)
-            .set (-normal .y, normal .x, 0);
-
-         this .lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      16);
-         this .lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 20);
-         this .lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 24);
-         this .lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      28);
-
-         // Transfer line.
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .lineVertexBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .lineVertexArray, gl .DYNAMIC_DRAW);
-
-         // Set uniforms and attributes.
-
-         const shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext);
-
-         shaderNode .enable (gl);
-         shaderNode .setClipPlanes (gl, clipPlanes);
-
-         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
-         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
-         gl .uniform3f        (shaderNode .x3d_EmissiveColor, 1, 1, 1);
-         gl .uniform1f        (shaderNode .x3d_Transparency,  0);
-
-         if (this .lineVertexArrayObject .enable (shaderNode .getProgram ()))
-         {
-            gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
-
-            shaderNode .enableColorAttribute  (gl, this .lineColorBuffer,  0, 0);
-            shaderNode .enableVertexAttribute (gl, this .lineVertexBuffer, 0, 0);
-         }
-
-         // Draw a black and a white line.
-
-         gl .disable (gl .DEPTH_TEST);
-         gl .enable (gl .CULL_FACE);
-         gl .frontFace (gl .CCW);
-         gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_BYTE, 0);
-         gl .enable (gl .DEPTH_TEST);
       };
    })(),
    disconnect ()
