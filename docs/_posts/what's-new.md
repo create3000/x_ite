@@ -9,7 +9,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v10.3.0 Released
 
-*Leipzig, 18th August 2024:* With this release there is now basic WebXR support built directly into X_ITE. If WebXR is possible then a new button (Cardboard Glasses) appears in the lower right corner of the \<x3d-canvas\>. In addition, there are now three new attributes (*xrButton, xrMovementControl, xrSessionMode*) and the corresponding [browser options](/x_ite/reference/browser-services/#browser-options) (*XRButton, XRMovementControl, XRSessionMode*).
+*Leipzig, 18th August 2024:* With this release there is now basic WebXR support built directly into X_ITE. If WebXR is possible then a new button (Cardboard Glasses) appears in the lower right corner of the \<x3d-canvas\>. In addition, there are now three new [attributes](/x_ite/#attributes-of-the-x3d-canvas-element) (*xrButton, xrMovementControl, xrSessionMode*) and the corresponding [browser options](/x_ite/reference/browser-services/#browser-options) (*XRButton, XRMovementControl, XRSessionMode*).
 
 There is a browser extension available for both Chrome and Firefox that allows you to emulate a WebXR device:
 
