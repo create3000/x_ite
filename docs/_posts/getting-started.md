@@ -769,7 +769,7 @@ url
 xrButton
 : A Boolean value (`true` or `false`) indicating whether a WebXR icon should be displayed in the lower right corner of the \<x3d-canvas\> element. The default value for the *xrButton* attribute is `true`.
 
->**Tip:** If you want to change the position of the WebXR button, use the `x3d-canvas::part(xr-button)` selector.
+>**Tip:** If you want to change the position of the WebXR button, use the CSS `x3d-canvas::part(xr-button)` selector.
 {: .prompt-tip }
 
 xrMovementControl
