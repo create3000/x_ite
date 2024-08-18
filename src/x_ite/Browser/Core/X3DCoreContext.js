@@ -291,7 +291,7 @@ Object .assign (X3DCoreContext .prototype,
       {
          case "antialiased":
          {
-            this .setBrowserOption ("Antialiased", this .parseBooleanAttribute (newValue, true));
+            this .setBrowserOption ("Antialiased", this .parseBooleanAttribute (newValue) ?? true);
             break;
          }
          case "baseURL":
@@ -302,7 +302,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "cache":
          {
-            this .setBrowserOption ("Cache", this .parseBooleanAttribute (newValue, true));
+            this .setBrowserOption ("Cache", this .parseBooleanAttribute (newValue) ?? true);
             break;
          }
          case "colorSpace":
@@ -320,12 +320,12 @@ Object .assign (X3DCoreContext .prototype,
          case "contextMenu":
          case "contextmenu":
          {
-            this .setBrowserOption ("ContextMenu", this .parseBooleanAttribute (newValue, true));
+            this .setBrowserOption ("ContextMenu", this .parseBooleanAttribute (newValue) ?? true);
             break;
          }
          case "debug":
          {
-            this .setBrowserOption ("Debug", this .parseBooleanAttribute (newValue, false));
+            this .setBrowserOption ("Debug", this .parseBooleanAttribute (newValue) ?? false);
             break;
          }
          case "exposure":
@@ -336,7 +336,7 @@ Object .assign (X3DCoreContext .prototype,
          case "logarithmicDepthBuffer":
          case "logarithmicdepthbuffer":
          {
-            this .setBrowserOption ("LogarithmicDepthBuffer", this .parseBooleanAttribute (newValue, false));
+            this .setBrowserOption ("LogarithmicDepthBuffer", this .parseBooleanAttribute (newValue) ?? false);
             break;
          }
          case "multisampling":
@@ -348,7 +348,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "notifications":
          {
-            this .setBrowserOption ("Notifications", this .parseBooleanAttribute (newValue, true));
+            this .setBrowserOption ("Notifications", this .parseBooleanAttribute (newValue) ?? true);
             break;
          }
          case "oninitialized":
@@ -368,13 +368,13 @@ Object .assign (X3DCoreContext .prototype,
          case "orderIndependentTransparency":
          case "orderindependenttransparency":
          {
-            this .setBrowserOption ("OrderIndependentTransparency", this .parseBooleanAttribute (newValue, false));
+            this .setBrowserOption ("OrderIndependentTransparency", this .parseBooleanAttribute (newValue) ?? false);
             break;
          }
          case "splashScreen":
          case "splashscreen":
          {
-            this .setBrowserOption ("SplashScreen", this .parseBooleanAttribute (newValue, true));
+            this .setBrowserOption ("SplashScreen", this .parseBooleanAttribute (newValue) ?? true);
 
             if (! this .getBrowserOption ("SplashScreen"))
             {
@@ -402,7 +402,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "timings":
          {
-            this .setBrowserOption ("Timings", this .parseBooleanAttribute (newValue, false));
+            this .setBrowserOption ("Timings", this .parseBooleanAttribute (newValue) ?? false);
             break;
          }
          case "toneMapping":
@@ -421,7 +421,7 @@ Object .assign (X3DCoreContext .prototype,
             {
                this .setBrowserOption ("AutoUpdate", false);
 
-               if (this .parseBooleanAttribute (newValue, true))
+               if (this .parseBooleanAttribute (newValue) ?? true)
                   this .beginUpdate ();
                else
                   this .endUpdate ();
@@ -442,7 +442,7 @@ Object .assign (X3DCoreContext .prototype,
          case "xrButton":
          case "xrbutton":
          {
-            this .setBrowserOption ("XRButton", this .parseBooleanAttribute (newValue, true));
+            this .setBrowserOption ("XRButton", this .parseBooleanAttribute (newValue) ?? true);
             break;
          }
          case "xrMovementControl":
@@ -459,15 +459,13 @@ Object .assign (X3DCoreContext .prototype,
          }
       }
    },
-   parseBooleanAttribute  (value, defaultValue)
+   parseBooleanAttribute (value)
    {
       if (value === "true")
          return true;
 
       if (value === "false")
          return false;
-
-      return defaultValue;
    },
    parseUrlAttribute (urlCharacters)
    {
