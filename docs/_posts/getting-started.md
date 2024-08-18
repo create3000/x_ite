@@ -766,6 +766,15 @@ update
 url
 : An MFString value of URLs to load on page load. If no *url* attribute is specified or the attribute is empty, an empty scene will be displayed. If both *src* and *url* attributes are given, the last given attribute takes precedence.
 
+xrButton
+: A Boolean value (`true` or `false`) indicating whether a WebXR icon should be displayed. The default value for the *xrButton* attribute is `true`.
+
+xrMovementControl
+: A String value that specifies which movement control is to be used. The default value for the *xrMovementControl* attribute is `VIEWER_POSE`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
+
+xrSessionMode
+: A String value that specifies what kind of WebXR session should be created. The default value for the *xrSessionMode* attribute is `IMMERSIVE_VR`. A value of `NONE` completely disables the possibility to use WebXR. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
+
 ### Example of Use
 
 ```html
