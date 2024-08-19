@@ -119,63 +119,62 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this [_shadowShapes]    = null;
       this [_displayShapes]   = null;
    },
-   traverse: (function ()
+   traverse (type, renderObject)
    {
-      const
-         PointingStatics  = ["Pointing"],
-         CollisionStatics = ["Collision"],
-         ShadowStatics    = ["Shadow"],
-         DisplayStatics   = ["Opaque", "Transparent", "TransmissionOpaque", "TransmissionTransparent"];
-
-      return function (type, renderObject)
+      switch (type)
       {
-         switch (type)
+         case TraverseType .CAMERA:
          {
-            case TraverseType .CAMERA:
-            {
-               return;
-            }
-            case TraverseType .POINTER:
-            {
-               this .traverseObjects (_pointingShapes, PointingStatics, type, renderObject);
-               return;
-            }
-            case TraverseType .COLLISION:
-            {
-               this .traverseObjects (_collisionShapes, CollisionStatics, type, renderObject);
-               return;
-            }
-            case TraverseType .SHADOW:
-            {
-               this .traverseObjects (_shadowShapes, ShadowStatics, type, renderObject);
-               return;
-            }
-            case TraverseType .DISPLAY:
-            {
-               this .traverseObjects (_displayShapes, DisplayStatics, type, renderObject);
-               return;
-            }
+            return;
          }
-      };
-   })(),
+         case TraverseType .POINTER:
+         {
+            this .traverseObjects (_pointingShapes, type, renderObject);
+            return;
+         }
+         case TraverseType .COLLISION:
+         {
+            this .traverseObjects (_collisionShapes, type, renderObject);
+            return;
+         }
+         case TraverseType .SHADOW:
+         {
+            this .traverseObjects (_shadowShapes, type, renderObject);
+            return;
+         }
+         case TraverseType .DISPLAY:
+         {
+            this .traverseObjects (_displayShapes, type, renderObject);
+            return;
+         }
+      }
+   },
    traverseObjects: (() =>
    {
+      const StaticsIndex = new Map ([
+         [_pointingShapes,  ["Pointing"]],
+         [_collisionShapes, ["Collision"]],
+         [_shadowShapes,    ["Shadow"]],
+         [_displayShapes,   ["Opaque", "Transparent", "TransmissionOpaque", "TransmissionTransparent"]],
+      ]);
+
       const viewVolume = new ViewVolume ();
 
       viewVolume .intersectsSphere = function () { return true; };
 
-      return function (staticShapes, Statics, type, renderObject)
+      return function (staticShapes, type, renderObject)
       {
          if (!this [staticShapes])
          {
-            //console .log (`Rebuilding StaticGroup ${Static}.`);
-
             const
+               Statics          = StaticsIndex .get (staticShapes),
                viewVolumes      = renderObject .getViewVolumes (),
                viewport         = renderObject .getViewport (),
                projectionMatrix = renderObject .getProjectionMatrix (),
                modelViewMatrix  = renderObject .getModelViewMatrix (),
                firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ());
+
+            //Statics .forEach (Static => console .log (`Rebuilding StaticGroup ${Static}.`));
 
             viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
 
