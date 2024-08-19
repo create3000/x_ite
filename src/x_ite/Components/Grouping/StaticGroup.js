@@ -160,7 +160,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
       const viewVolume = new ViewVolume ();
 
-      viewVolume .intersectsSphere = function () { return true; };
+      viewVolume .intersectsSphere = () => true;
 
       return function (staticShapes, type, renderObject)
       {
