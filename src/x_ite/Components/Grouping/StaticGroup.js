@@ -60,11 +60,10 @@ import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js"
 // No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
 
 const
-   _pointingShapes    = Symbol (),
-   _collisionShapes   = Symbol (),
-   _shadowShapes      = Symbol (),
-   _opaqueShapes      = Symbol (),
-   _transparentShapes = Symbol ();
+   _pointingShapes  = Symbol (),
+   _collisionShapes = Symbol (),
+   _shadowShapes    = Symbol (),
+   _displayShapes   = Symbol ();
 
 function StaticGroup (executionContext)
 {
@@ -115,50 +114,57 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this .groupNode .getBBox (this .bbox);
       this .groupNode .getBBox (this .shadowBBox, true);
 
-      this [_pointingShapes]    = null;
-      this [_collisionShapes]   = null;
-      this [_shadowShapes]      = null;
-      this [_opaqueShapes]      = null;
-      this [_transparentShapes] = null;
+      this [_pointingShapes]  = null;
+      this [_collisionShapes] = null;
+      this [_shadowShapes]    = null;
+      this [_displayShapes]   = null;
    },
-   traverse (type, renderObject)
+   traverse: (function ()
    {
-      switch (type)
+      const
+         PointingStatics  = ["Pointing"],
+         CollisionStatics = ["Collision"],
+         ShadowStatics    = ["Shadow"],
+         DisplayStatics   = ["Opaque", "Transparent", "TransmissionOpaque", "TransmissionTransparent"];
+
+      return function (type, renderObject)
       {
-         case TraverseType .CAMERA:
+         switch (type)
          {
-            return;
+            case TraverseType .CAMERA:
+            {
+               return;
+            }
+            case TraverseType .POINTER:
+            {
+               this .traverseObjects (_pointingShapes, PointingStatics, type, renderObject);
+               return;
+            }
+            case TraverseType .COLLISION:
+            {
+               this .traverseObjects (_collisionShapes, CollisionStatics, type, renderObject);
+               return;
+            }
+            case TraverseType .SHADOW:
+            {
+               this .traverseObjects (_shadowShapes, ShadowStatics, type, renderObject);
+               return;
+            }
+            case TraverseType .DISPLAY:
+            {
+               this .traverseObjects (_displayShapes, DisplayStatics, type, renderObject);
+               return;
+            }
          }
-         case TraverseType .POINTER:
-         {
-            this .traverseObjects (_pointingShapes, "Pointing", type, renderObject);
-            return;
-         }
-         case TraverseType .COLLISION:
-         {
-            this .traverseObjects (_collisionShapes, "Collision", type, renderObject);
-            return;
-         }
-         case TraverseType .SHADOW:
-         {
-            this .traverseObjects (_shadowShapes, "Shadow", type, renderObject);
-            return;
-         }
-         case TraverseType .DISPLAY:
-         {
-            this .traverseObjects (_opaqueShapes,      "Opaque",      type, renderObject);
-            this .traverseObjects (_transparentShapes, "Transparent", type, renderObject);
-            return;
-         }
-      }
-   },
+      };
+   })(),
    traverseObjects: (() =>
    {
       const viewVolume = new ViewVolume ();
 
       viewVolume .intersectsSphere = function () { return true; };
 
-      return function (staticShapes, Static, type, renderObject)
+      return function (staticShapes, Statics, type, renderObject)
       {
          if (!this [staticShapes])
          {
@@ -169,7 +175,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                viewport         = renderObject .getViewport (),
                projectionMatrix = renderObject .getProjectionMatrix (),
                modelViewMatrix  = renderObject .getModelViewMatrix (),
-               firstShape       = renderObject [`getNum${Static}Shapes`] ();
+               firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ());
 
             viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
 
@@ -181,11 +187,23 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             modelViewMatrix .pop ();
             viewVolumes     .pop ();
 
-            const lastShape = renderObject [`getNum${Static}Shapes`] ();
+            this [staticShapes] = [ ];
 
-            this [staticShapes] = renderObject [`get${Static}Shapes`] () .splice (firstShape, lastShape - firstShape);
+            for (const [i, Static] of Statics .entries ())
+            {
+               const
+                  firstShape = firstShapes [i],
+                  lastShape  = renderObject [`getNum${Static}Shapes`] (),
+                  shapes     = renderObject [`get${Static}Shapes`] () .splice (firstShape, lastShape - firstShape);
 
-            renderObject [`setNum${Static}Shapes`] (firstShape);
+               renderObject [`setNum${Static}Shapes`] (firstShape);
+
+               if (Static .includes ("Transmission"))
+                  continue;
+
+               for (const shape of shapes)
+                  this [staticShapes] .push (shape);
+            }
          }
 
          const modelViewMatrix = renderObject .getModelViewMatrix ();

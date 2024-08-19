@@ -106,7 +106,6 @@ function X3DRenderObject (executionContext)
    this .shadowShapes                   = [ ];
    this .opaqueShapes                   = [ ];
    this .transparentShapes              = [ ];
-   this .transmissionShapes             = [ ];
    this .transmissionOpaqueShapes       = [ ];
    this .transmissionTransparentShapes  = [ ];
    this .transparencySorter             = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
@@ -429,6 +428,32 @@ Object .assign (X3DRenderObject .prototype,
    getTransparentShapes ()
    {
       return this .transparentShapes;
+   },
+   getNumTransmissionOpaqueShapes ()
+   {
+      return this .transmissionOpaqueShapes .length;
+   },
+   setNumTransmissionOpaqueShapes (value)
+   {
+      // Needed for StaticGroup.
+      this .transmissionOpaqueShapes .length = value;
+   },
+   getTransmissionOpaqueShapes ()
+   {
+      return this .transmissionOpaqueShapes;
+   },
+   getNumTransmissionTransparentShapes ()
+   {
+      return this .transmissionTransparentShapes .length;
+   },
+   setNumTransmissionTransparentShapes (value)
+   {
+      // Needed for StaticGroup.
+      this .transmissionTransparentShapes .length = value;
+   },
+   getTransmissionTransparentShapes ()
+   {
+      return this .transmissionTransparentShapes;
    },
    constrainTranslation (translation, stepBack)
    {
