@@ -180,11 +180,11 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       return function (staticShapes, type, renderObject)
       {
          const
-            Statics          = StaticsIndex .get (staticShapes),
             viewVolumes      = renderObject .getViewVolumes (),
             viewport         = renderObject .getViewport (),
             projectionMatrix = renderObject .getProjectionMatrix (),
             modelViewMatrix  = renderObject .getModelViewMatrix (),
+            Statics          = StaticsIndex .get (staticShapes),
             firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ());
 
          //Statics .forEach (Static => console .log (`Rebuilding StaticGroup ${Static}.`));
