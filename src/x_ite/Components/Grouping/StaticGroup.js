@@ -129,27 +129,42 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          }
          case TraverseType .POINTER:
          {
-            this .traverseObjects (_pointingShapes, type, renderObject);
+            this .traverseStatics (_pointingShapes, type, renderObject);
             return;
          }
          case TraverseType .COLLISION:
          {
-            this .traverseObjects (_collisionShapes, type, renderObject);
+            this .traverseStatics (_collisionShapes, type, renderObject);
             return;
          }
          case TraverseType .SHADOW:
          {
-            this .traverseObjects (_shadowShapes, type, renderObject);
+            this .traverseStatics (_shadowShapes, type, renderObject);
             return;
          }
          case TraverseType .DISPLAY:
          {
-            this .traverseObjects (_displayShapes, type, renderObject);
+            this .traverseStatics (_displayShapes, type, renderObject);
             return;
          }
       }
    },
-   traverseObjects: (() =>
+   traverseStatics (staticShapes, type, renderObject)
+   {
+      if (!this [staticShapes])
+         this .buildStatics (staticShapes, type, renderObject);
+
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+      for (const { modelViewMatrix: modelMatrix, shapeNode } of this [staticShapes])
+      {
+         modelViewMatrix .push ();
+         modelViewMatrix .multLeft (modelMatrix);
+         shapeNode .traverse (type, renderObject);
+         modelViewMatrix .pop ();
+      }
+   },
+   buildStatics: (() =>
    {
       const StaticsIndex = new Map ([
          [_pointingShapes,  ["Pointing"]],
@@ -164,55 +179,42 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
       return function (staticShapes, type, renderObject)
       {
-         if (!this [staticShapes])
+         const
+            Statics          = StaticsIndex .get (staticShapes),
+            viewVolumes      = renderObject .getViewVolumes (),
+            viewport         = renderObject .getViewport (),
+            projectionMatrix = renderObject .getProjectionMatrix (),
+            modelViewMatrix  = renderObject .getModelViewMatrix (),
+            firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ());
+
+         //Statics .forEach (Static => console .log (`Rebuilding StaticGroup ${Static}.`));
+
+         viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+
+         modelViewMatrix .push ();
+         modelViewMatrix .identity ();
+
+         this .groupNode .traverse (type, renderObject);
+
+         modelViewMatrix .pop ();
+         viewVolumes     .pop ();
+
+         this [staticShapes] = [ ];
+
+         for (const [i, Static] of Statics .entries ())
          {
             const
-               Statics          = StaticsIndex .get (staticShapes),
-               viewVolumes      = renderObject .getViewVolumes (),
-               viewport         = renderObject .getViewport (),
-               projectionMatrix = renderObject .getProjectionMatrix (),
-               modelViewMatrix  = renderObject .getModelViewMatrix (),
-               firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ());
+               firstShape = firstShapes [i],
+               lastShape  = renderObject [`getNum${Static}Shapes`] (),
+               shapes     = renderObject [`get${Static}Shapes`] () .splice (firstShape, lastShape - firstShape);
 
-            //Statics .forEach (Static => console .log (`Rebuilding StaticGroup ${Static}.`));
+            renderObject [`setNum${Static}Shapes`] (firstShape);
 
-            viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+            if (Static .includes ("Transmission"))
+               continue;
 
-            modelViewMatrix .push ();
-            modelViewMatrix .identity ();
-
-            this .groupNode .traverse (type, renderObject);
-
-            modelViewMatrix .pop ();
-            viewVolumes     .pop ();
-
-            this [staticShapes] = [ ];
-
-            for (const [i, Static] of Statics .entries ())
-            {
-               const
-                  firstShape = firstShapes [i],
-                  lastShape  = renderObject [`getNum${Static}Shapes`] (),
-                  shapes     = renderObject [`get${Static}Shapes`] () .splice (firstShape, lastShape - firstShape);
-
-               renderObject [`setNum${Static}Shapes`] (firstShape);
-
-               if (Static .includes ("Transmission"))
-                  continue;
-
-               for (const shape of shapes)
-                  this [staticShapes] .push (shape);
-            }
-         }
-
-         const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-         for (const { modelViewMatrix: modelMatrix, shapeNode } of this [staticShapes])
-         {
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (modelMatrix);
-            shapeNode .traverse (type, renderObject);
-            modelViewMatrix .pop ();
+            for (const shape of shapes)
+               this [staticShapes] .push (shape);
          }
       };
    })(),
