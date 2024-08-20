@@ -132,6 +132,10 @@ Object .assign (Object .setPrototypeOf (MultiTextureCoordinate .prototype, X3DTe
 
       return array;
    },
+   getTextureCoordinates ()
+   {
+      return this .textureCoordinateNodes;
+   },
    getTextureCoordinateMapping (textureCoordinateMapping)
    {
       const

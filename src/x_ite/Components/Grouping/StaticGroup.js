@@ -237,14 +237,15 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // TextureCoordinate
 
          const
-            textureCoordNode = geometryNode .getTextureCoordinate (),
-            multiTexCoords   = geometryNode .getMultiTexCoords ();
+            textureCoordinateNode = geometryNode .getTextureCoordinate (),
+            multiTexCoords        = geometryNode .getMultiTexCoords ();
 
          const newTexCoordNodes = multiTexCoords .map ((texCoords, i) =>
          {
-            const texCoordNode = textureCoordNode instanceof MultiTextureCoordinate
-               ? textureCoordNode ._texCoord [i] .getValue () .getInnerNode ()
-               : textureCoordNode;
+            const texCoordNode = textureCoordinateNode instanceof MultiTextureCoordinate
+               ? textureCoordinateNode .getTextureCoordinates () [i]
+                  ?? this .getBrowser () .getDefaultTextureCoordinate ()
+               : textureCoordinateNode;
 
             const
                newTexCoordNode = texCoordNode .create (executionContext),
@@ -314,6 +315,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             newCoordNode ._point .push (vertex);
          }
 
+         newGeometryNode ._attrib   = geometryNode ._attrib ?? [ ];
          newGeometryNode ._texCoord = newTexCoordNode;
          newGeometryNode ._normal   = newNormalNode;
          newGeometryNode ._coord    = newCoordNode;
