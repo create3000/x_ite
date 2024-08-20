@@ -53,6 +53,7 @@ import X3DChildNode           from "../Core/X3DChildNode.js";
 import X3DBoundedObject       from "./X3DBoundedObject.js";
 import Group                  from "./Group.js";
 import TriangleSet            from "../Rendering/TriangleSet.js";
+import Tangent                from "../Rendering/Tangent.js";
 import Normal                 from "../Rendering/Normal.js";
 import CoordinateDouble       from "../Rendering/CoordinateDouble.js";
 import MultiTextureCoordinate from "../Texturing/MultiTextureCoordinate.js";
@@ -221,8 +222,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    transformShape: (function ()
    {
       const
-         normal = new Vector3 (),
-         vertex = new Vector4 ();
+         tangent = new Vector4 (),
+         normal  = new Vector3 (),
+         vertex  = new Vector4 ();
 
       return function (modelMatrix, shapeNode)
       {
@@ -231,6 +233,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             geometryNode     = shapeNode .getGeometry (),
             newShapeNode     = shapeNode .copy (executionContext),
             newGeometryNode  = new TriangleSet (executionContext),
+            newTangentNode   = new Tangent (executionContext),
             newNormalNode    = new Normal (executionContext),
             newCoordNode     = new CoordinateDouble (executionContext);
 
@@ -309,10 +312,23 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             var newTexCoordNode = newTexCoordNodes [0];
          }
 
-         // Normals
+         // Tangents
 
          const
             normalMatrix = modelMatrix .submatrix .inverse () .transpose (),
+            tangentArray = geometryNode .getTangents () .getValue (),
+            numTangents  = tangentArray .length;
+
+         for (let i = 0; i < numTangents; i += 3)
+         {
+            normal .set (tangentArray [i], tangentArray [i + 1], tangentArray [i + 2]);
+            normalMatrix .multVecMatrix (normal);
+            newTangentNode ._vector .push (tangent .set (... normal, tangentArray [i + 3]));
+         }
+
+         // Normals
+
+         const
             normalArray  = geometryNode .getNormals () .getValue (),
             numNormals   = normalArray .length;
 
@@ -338,11 +354,13 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          newGeometryNode ._attrib   = newAttribNodes;
          newGeometryNode ._texCoord = newTexCoordNode;
+         newGeometryNode ._tangent  = newTangentNode;
          newGeometryNode ._normal   = newNormalNode;
          newGeometryNode ._coord    = newCoordNode;
          newShapeNode    ._geometry = newGeometryNode;
 
          newTexCoordNode .setup ();
+         newTangentNode  .setup ();
          newNormalNode   .setup ();
          newCoordNode    .setup ();
          newGeometryNode .setup ();
