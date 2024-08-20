@@ -45,20 +45,24 @@
  *
  ******************************************************************************/
 
-import Fields               from "../../Fields.js";
-import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DNode              from "../Core/X3DNode.js";
-import X3DChildNode         from "../Core/X3DChildNode.js";
-import X3DBoundedObject     from "./X3DBoundedObject.js";
-import Group                from "./Group.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
-import TraverseType         from "../../Rendering/TraverseType.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
-import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
-import Box3                 from "../../../standard/Math/Geometry/Box3.js";
-import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
-import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js";
+import Fields                 from "../../Fields.js";
+import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
+import X3DNode                from "../Core/X3DNode.js";
+import X3DChildNode           from "../Core/X3DChildNode.js";
+import X3DBoundedObject       from "./X3DBoundedObject.js";
+import Group                  from "./Group.js";
+import TriangleSet            from "../Rendering/TriangleSet.js";
+import Normal                 from "../Rendering/Normal.js";
+import CoordinateDouble       from "../Rendering/CoordinateDouble.js";
+import MultiTextureCoordinate from "../Texturing/MultiTextureCoordinate.js";
+import X3DConstants           from "../../Base/X3DConstants.js";
+import TraverseType           from "../../Rendering/TraverseType.js";
+import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4                from "../../../standard/Math/Numbers/Vector4.js";
+import Box3                   from "../../../standard/Math/Geometry/Box3.js";
+import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
+import ViewVolume             from "../../../standard/Math/Geometry/ViewVolume.js";
 
 // No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
 
@@ -75,10 +79,9 @@ function StaticGroup (executionContext)
 
    this .addType (X3DConstants .StaticGroup);
 
-   this .groupNode     = new Group (this .getExecutionContext ());
-   this .bbox          = new Box3 ();
-   this .shadowBBox    = new Box3 ();
-   this .geometryNodes = new Set ();
+   this .groupNode  = new Group (this .getExecutionContext ());
+   this .bbox       = new Box3 ();
+   this .shadowBBox = new Box3 ();
 }
 
 Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .prototype),
@@ -122,8 +125,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this [_collisionShapes] = null;
       this [_shadowShapes]    = null;
       this [_displayShapes]   = null;
-
-      this .geometryNodes .clear ()
    },
    traverse (type, renderObject)
    {
@@ -212,15 +213,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             if (Static .includes ("Transmission"))
                continue;
 
-            for (const { modelViewMatrix: modelMatrix, shapeNode } of shapes)
-               this .applyModelMatrix (new Matrix4 (... modelMatrix), shapeNode);
-
-            for (const { shapeNode } of shapes)
-               this [staticShapes] .push (shapeNode);
+            this [staticShapes] = this [staticShapes] .concat (shapes
+               .map (({ modelViewMatrix, shapeNode }) => this .transformShape (new Matrix4 (... modelViewMatrix), shapeNode)));
          }
       };
    })(),
-   applyModelMatrix: (function ()
+   transformShape: (function ()
    {
       const
          normal = new Vector3 (),
@@ -228,42 +226,106 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
       return function (modelMatrix, shapeNode)
       {
-         const geometryNode = shapeNode .getGeometry ();
+         const
+            executionContext = this .getExecutionContext (),
+            geometryNode     = shapeNode .getGeometry (),
+            newShapeNode     = shapeNode .copy (executionContext),
+            newGeometryNode  = new TriangleSet (executionContext),
+            newNormalNode    = new Normal (executionContext),
+            newCoordNode     = new CoordinateDouble (executionContext);
 
-         if (this .geometryNodes .has (geometryNode))
-            return;
+         // TextureCoordinate
 
-         this .geometryNodes .add (geometryNode);
+         const
+            textureCoordNode = geometryNode .getTextureCoordinate (),
+            multiTexCoords   = geometryNode .getMultiTexCoords ();
 
-         geometryNode .getNormals ()  .shrinkToFit ();
-         geometryNode .getVertices () .shrinkToFit ();
+         const newTexCoordNodes = multiTexCoords .map ((texCoords, i) =>
+         {
+            const texCoordNode = textureCoordNode instanceof MultiTextureCoordinate
+               ? textureCoordNode ._texCoord [i] .getValue () .getInnerNode ()
+               : textureCoordNode;
+
+            const
+               newTexCoordNode = texCoordNode .create (executionContext),
+               texCoordArray   = texCoords .getValue ();
+
+            newTexCoordNode ._mapping = texCoordNode ._mapping;
+
+            switch (newTexCoordNode .getTypeName ())
+            {
+               case "TextureCoordinate":
+               {
+                  newTexCoordNode ._point = texCoordArray .filter ((p, i) => i % 4 < 2);
+                  break;
+               }
+               case "TextureCoordinate3D":
+               {
+                  newTexCoordNode ._point = texCoordArray .filter ((p, i) => i % 4 < 3);
+                  break;
+               }
+               case "TextureCoordinate4D":
+               {
+                  newTexCoordNode ._point = texCoordArray;
+                  break;
+               }
+            }
+
+            return newTexCoordNode;
+         });
+
+         if (newTexCoordNodes .length > 1)
+         {
+            var newTexCoordNode = new MultiTextureCoordinate (executionContext);
+
+            newTexCoordNodes .forEach (node => node .setup ());
+
+            newTexCoordNode ._texCoord = newTexCoordNodes;
+         }
+         else
+         {
+            var newTexCoordNode = newTexCoordNodes [0];
+         }
+
+         // Normals
 
          const
             normalMatrix = modelMatrix .submatrix .inverse () .transpose (),
-            normalArray  = geometryNode .getNormals ()  .getValue (),
-            vertexArray  = geometryNode .getVertices () .getValue (),
-            numNormals   = normalArray .length,
-            numVertices  = vertexArray .length;
+            normalArray  = geometryNode .getNormals () .getValue (),
+            numNormals   = normalArray .length;
 
          for (let i = 0; i < numNormals; i += 3)
          {
             normal .set (normalArray [i], normalArray [i + 1], normalArray [i + 2]);
             normalMatrix .multVecMatrix (normal);
-            normalArray .set (normal, i);
+            newNormalNode ._vector .push (normal);
          }
+
+         // Coordinate
+
+         const
+            vertexArray  = geometryNode .getVertices () .getValue (),
+            numVertices  = vertexArray .length;
 
          for (let i = 0; i < numVertices; i += 4)
          {
             vertex .set (vertexArray [i], vertexArray [i + 1], vertexArray [i + 2], vertexArray [i + 3]);
             modelMatrix .multVecMatrix (vertex);
-            vertexArray .set (vertex, i);
+            newCoordNode ._point .push (vertex);
          }
 
-         geometryNode .getMin () .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
-         geometryNode .getMax () .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+         newGeometryNode ._texCoord = newTexCoordNode;
+         newGeometryNode ._normal   = newNormalNode;
+         newGeometryNode ._coord    = newCoordNode;
+         newShapeNode    ._geometry = newGeometryNode;
 
-         geometryNode .updateBBox ();
-         geometryNode .transfer ();
+         newTexCoordNode .setup ();
+         newNormalNode   .setup ();
+         newCoordNode    .setup ();
+         newGeometryNode .setup ();
+         newShapeNode    .setup ();
+
+         return newShapeNode;
       };
    })(),
    dispose ()
