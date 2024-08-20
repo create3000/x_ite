@@ -405,6 +405,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          newGeometryNode ._coord    = newCoordNode;
          newShapeNode    ._geometry = newGeometryNode;
 
+         newShapeNode .setPrivate (true);
+
          newFogCoordNode ?.setup ();
          newColor        ?.setup ();
          newTexCoordNode  .setup ();
