@@ -52,6 +52,8 @@ import X3DNode                from "../Core/X3DNode.js";
 import X3DChildNode           from "../Core/X3DChildNode.js";
 import X3DBoundedObject       from "./X3DBoundedObject.js";
 import Group                  from "./Group.js";
+import PointSet               from "../Rendering/PointSet.js";
+import LineSet                from "../Rendering/LineSet.js";
 import TriangleSet            from "../Rendering/TriangleSet.js";
 import FogCoordinate          from "../EnvironmentalEffects/FogCoordinate.js";
 import Tangent                from "../Rendering/Tangent.js";
@@ -229,13 +231,20 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          normal  = new Vector3 (),
          vertex  = new Vector4 ();
 
+      const GeometryTypes = [
+         PointSet,
+         LineSet,
+         TriangleSet,
+         TriangleSet,
+      ];
+
       return function (modelMatrix, shapeNode)
       {
          const
             executionContext = this .getExecutionContext (),
             geometryNode     = shapeNode .getGeometry (),
             newShapeNode     = shapeNode .copy (executionContext),
-            newGeometryNode  = new TriangleSet (executionContext),
+            newGeometryNode  = new GeometryTypes [geometryNode .getGeometryType ()] (executionContext),
             newTangentNode   = new Tangent (executionContext),
             newNormalNode    = new Normal (executionContext),
             newCoordNode     = new CoordinateDouble (executionContext);
@@ -261,19 +270,21 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             return newAttribNode;
          });
 
+         newGeometryNode ._attrib = newAttribNodes;
+
          // FogCoordinate
 
          const fogDepths = geometryNode .getFogDepths ();
 
          if (fogDepths .length)
          {
-            var newFogCoordNode = new FogCoordinate (executionContext);
+            const newFogCoordNode = new FogCoordinate (executionContext);
 
             newFogCoordNode ._depth = fogDepths .getValue ();
-         }
-         else
-         {
-            var newFogCoordNode = null;
+
+            newFogCoordNode .setup ();
+
+            newGeometryNode ._fogCoord = newFogCoordNode;
          }
 
          // Color
@@ -294,91 +305,117 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
                newColor ._color = colors .getValue () .filter ((c, i) => i % 4 < 3);
             }
-         }
-         else
-         {
-            var newColor = null;
+
+            newColor .setup ();
+
+            newGeometryNode ._color = newColor;
          }
 
          // TextureCoordinate
 
-         const
-            textureCoordinateNode = geometryNode .getTextureCoordinate (),
-            multiTexCoords        = geometryNode .getMultiTexCoords ();
-
-         const newTexCoordNodes = multiTexCoords .map ((texCoords, i) =>
+         if (newGeometryNode ._texCoord)
          {
-            const texCoordNode = textureCoordinateNode instanceof MultiTextureCoordinate
-               ? textureCoordinateNode .getTextureCoordinates () [i]
-                  ?? this .getBrowser () .getDefaultTextureCoordinate ()
-               : textureCoordinateNode;
-
             const
-               newTexCoordNode = texCoordNode .create (executionContext),
-               texCoordArray   = texCoords .getValue ();
+               textureCoordinateNode = geometryNode .getTextureCoordinate (),
+               multiTexCoords        = geometryNode .getMultiTexCoords ();
 
-            newTexCoordNode ._mapping = texCoordNode ._mapping;
-
-            switch (newTexCoordNode .getTypeName ())
+            const newTexCoordNodes = multiTexCoords .map ((texCoords, i) =>
             {
-               case "TextureCoordinate":
+               const texCoordNode = textureCoordinateNode instanceof MultiTextureCoordinate
+                  ? textureCoordinateNode .getTextureCoordinates () [i]
+                     ?? this .getBrowser () .getDefaultTextureCoordinate ()
+                  : textureCoordinateNode;
+
+               const
+                  newTexCoordNode = texCoordNode .create (executionContext),
+                  texCoordArray   = texCoords .getValue ();
+
+               newTexCoordNode ._mapping = texCoordNode ._mapping;
+
+               switch (newTexCoordNode .getTypeName ())
                {
-                  newTexCoordNode ._point = texCoordArray .filter ((p, i) => i % 4 < 2);
-                  break;
+                  case "TextureCoordinate":
+                  {
+                     newTexCoordNode ._point = texCoordArray .filter ((p, i) => i % 4 < 2);
+                     break;
+                  }
+                  case "TextureCoordinate3D":
+                  {
+                     newTexCoordNode ._point = texCoordArray .filter ((p, i) => i % 4 < 3);
+                     break;
+                  }
+                  case "TextureCoordinate4D":
+                  {
+                     newTexCoordNode ._point = texCoordArray;
+                     break;
+                  }
                }
-               case "TextureCoordinate3D":
-               {
-                  newTexCoordNode ._point = texCoordArray .filter ((p, i) => i % 4 < 3);
-                  break;
-               }
-               case "TextureCoordinate4D":
-               {
-                  newTexCoordNode ._point = texCoordArray;
-                  break;
-               }
+
+               return newTexCoordNode;
+            });
+
+            if (newTexCoordNodes .length > 1)
+            {
+               var newTexCoordNode = new MultiTextureCoordinate (executionContext);
+
+               newTexCoordNodes .forEach (node => node .setup ());
+
+               newTexCoordNode ._texCoord = newTexCoordNodes;
+            }
+            else
+            {
+               var newTexCoordNode = newTexCoordNodes [0];
             }
 
-            return newTexCoordNode;
-         });
+            newTexCoordNode  .setup ();
 
-         if (newTexCoordNodes .length > 1)
-         {
-            var newTexCoordNode = new MultiTextureCoordinate (executionContext);
-
-            newTexCoordNodes .forEach (node => node .setup ());
-
-            newTexCoordNode ._texCoord = newTexCoordNodes;
-         }
-         else
-         {
-            var newTexCoordNode = newTexCoordNodes [0];
+            newGeometryNode ._texCoord = newTexCoordNode;
          }
 
          // Tangents
 
          const
             normalMatrix = modelMatrix .submatrix .inverse () .transpose (),
-            tangentArray = geometryNode .getTangents () .getValue (),
-            numTangents  = tangentArray .length;
+            tangents     = geometryNode .getTangents ();
 
-         for (let i = 0; i < numTangents; i += 3)
+         if (tangents .length)
          {
-            normal .set (tangentArray [i], tangentArray [i + 1], tangentArray [i + 2]);
-            normalMatrix .multVecMatrix (normal);
-            newTangentNode ._vector .push (tangent .set (... normal, tangentArray [i + 3]));
+            const
+               tangentArray = tangents .getValue (),
+               numTangents  = tangentArray .length;
+
+            for (let i = 0; i < numTangents; i += 3)
+            {
+               normal .set (tangentArray [i], tangentArray [i + 1], tangentArray [i + 2]);
+               normalMatrix .multVecMatrix (normal);
+               newTangentNode ._vector .push (tangent .set (... normal, tangentArray [i + 3]));
+            }
+
+            newTangentNode .setup ();
+
+            newGeometryNode ._tangent = newTangentNode;
          }
 
          // Normals
 
-         const
-            normalArray = geometryNode .getNormals () .getValue (),
-            numNormals  = normalArray .length;
+         const normals = geometryNode .getNormals ();
 
-         for (let i = 0; i < numNormals; i += 3)
+         if (normals .length)
          {
-            normal .set (normalArray [i], normalArray [i + 1], normalArray [i + 2]);
-            normalMatrix .multVecMatrix (normal);
-            newNormalNode ._vector .push (normal);
+            const
+               normalArray = normals .getValue (),
+               numNormals  = normalArray .length;
+
+            for (let i = 0; i < numNormals; i += 3)
+            {
+               normal .set (normalArray [i], normalArray [i + 1], normalArray [i + 2]);
+               normalMatrix .multVecMatrix (normal);
+               newNormalNode ._vector .push (normal);
+            }
+
+            newNormalNode .setup ();
+
+            newGeometryNode ._normal = newNormalNode;
          }
 
          // Coordinate
@@ -394,28 +431,25 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             newCoordNode ._point .push (vertex);
          }
 
-         newGeometryNode ._solid    = geometryNode ._solid ?? true;
-         newGeometryNode ._ccw      = geometryNode ._ccw ?? true;
-         newGeometryNode ._attrib   = newAttribNodes;
-         newGeometryNode ._fogCoord = newFogCoordNode;
-         newGeometryNode ._color    = newColor;
-         newGeometryNode ._texCoord = newTexCoordNode;
-         newGeometryNode ._tangent  = newTangentNode;
-         newGeometryNode ._normal   = newNormalNode;
-         newGeometryNode ._coord    = newCoordNode;
-         newShapeNode    ._geometry = newGeometryNode;
+         newCoordNode .setup ();
+
+         newGeometryNode ._coord = newCoordNode;
+
+         // Common fields
+
+         if (geometryNode .getGeometryType () >= 2)
+         {
+            newGeometryNode ._solid = geometryNode ._solid ?? true;
+            newGeometryNode ._ccw   = geometryNode ._ccw ?? true;
+         }
+
+         newShapeNode ._geometry = newGeometryNode;
 
          newGeometryNode .setGeometryType (geometryNode .getGeometryType ());
          newShapeNode .setPrivate (true);
 
-         newFogCoordNode ?.setup ();
-         newColor        ?.setup ();
-         newTexCoordNode  .setup ();
-         newTangentNode   .setup ();
-         newNormalNode    .setup ();
-         newCoordNode     .setup ();
-         newGeometryNode  .setup ();
-         newShapeNode     .setup ();
+         newGeometryNode .setup ();
+         newShapeNode    .setup ();
 
          return newShapeNode;
       };
