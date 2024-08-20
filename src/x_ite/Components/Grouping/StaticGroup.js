@@ -53,7 +53,10 @@ import X3DChildNode           from "../Core/X3DChildNode.js";
 import X3DBoundedObject       from "./X3DBoundedObject.js";
 import Group                  from "./Group.js";
 import TriangleSet            from "../Rendering/TriangleSet.js";
+import FogCoordinate          from "../EnvironmentalEffects/FogCoordinate.js";
 import Tangent                from "../Rendering/Tangent.js";
+import Color                  from "../Rendering/Color.js";
+import ColorRGBA              from "../Rendering/ColorRGBA.js";
 import Normal                 from "../Rendering/Normal.js";
 import CoordinateDouble       from "../Rendering/CoordinateDouble.js";
 import MultiTextureCoordinate from "../Texturing/MultiTextureCoordinate.js";
@@ -258,6 +261,45 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             return newAttribNode;
          });
 
+         // FogCoordinate
+
+         const fogDepths = geometryNode .getFogDepths ();
+
+         if (fogDepths .length)
+         {
+            var newFogCoordNode = new FogCoordinate (executionContext);
+
+            newFogCoordNode ._depth = fogDepths .getValue ();
+         }
+         else
+         {
+            var newFogCoordNode = null;
+         }
+
+         // Color
+
+         const colors = geometryNode .getColors ();
+
+         if (colors .length)
+         {
+            if (geometryNode .isTransparent ())
+            {
+               var newColor = new ColorRGBA (executionContext);
+
+               newColor ._color = colors .getValue ();
+            }
+            else
+            {
+               var newColor = new Color (executionContext);
+
+               newColor ._color = colors .getValue () .filter ((c, i) => i % 4 < 3);
+            }
+         }
+         else
+         {
+            var newColor = null;
+         }
+         
          // TextureCoordinate
 
          const
@@ -353,18 +395,22 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          }
 
          newGeometryNode ._attrib   = newAttribNodes;
+         newGeometryNode ._fogCoord = newFogCoordNode;
+         newGeometryNode ._color    = newColor;
          newGeometryNode ._texCoord = newTexCoordNode;
          newGeometryNode ._tangent  = newTangentNode;
          newGeometryNode ._normal   = newNormalNode;
          newGeometryNode ._coord    = newCoordNode;
          newShapeNode    ._geometry = newGeometryNode;
 
-         newTexCoordNode .setup ();
-         newTangentNode  .setup ();
-         newNormalNode   .setup ();
-         newCoordNode    .setup ();
-         newGeometryNode .setup ();
-         newShapeNode    .setup ();
+         newFogCoordNode ?.setup ();
+         newColor        ?.setup ();
+         newTexCoordNode  .setup ();
+         newTangentNode   .setup ();
+         newNormalNode    .setup ();
+         newCoordNode     .setup ();
+         newGeometryNode  .setup ();
+         newShapeNode     .setup ();
 
          return newShapeNode;
       };
