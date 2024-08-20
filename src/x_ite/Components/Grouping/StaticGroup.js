@@ -54,7 +54,10 @@ import X3DBoundedObject     from "./X3DBoundedObject.js";
 import Group                from "./Group.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 import Box3                 from "../../../standard/Math/Geometry/Box3.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js";
 
 // No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
@@ -72,9 +75,10 @@ function StaticGroup (executionContext)
 
    this .addType (X3DConstants .StaticGroup);
 
-   this .groupNode  = new Group (this .getExecutionContext ());
-   this .bbox       = new Box3 ();
-   this .shadowBBox = new Box3 ();
+   this .groupNode     = new Group (this .getExecutionContext ());
+   this .bbox          = new Box3 ();
+   this .shadowBBox    = new Box3 ();
+   this .geometryNodes = new Set ();
 }
 
 Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .prototype),
@@ -118,6 +122,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this [_collisionShapes] = null;
       this [_shadowShapes]    = null;
       this [_displayShapes]   = null;
+
+      this .geometryNodes .clear ()
    },
    traverse (type, renderObject)
    {
@@ -154,15 +160,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       if (!this [staticShapes])
          this .buildStatics (staticShapes, type, renderObject);
 
-      const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-      for (const { modelViewMatrix: modelMatrix, shapeNode } of this [staticShapes])
-      {
-         modelViewMatrix .push ();
-         modelViewMatrix .multLeft (modelMatrix);
+      for (const shapeNode of this [staticShapes])
          shapeNode .traverse (type, renderObject);
-         modelViewMatrix .pop ();
-      }
    },
    buildStatics: (() =>
    {
@@ -213,9 +212,58 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             if (Static .includes ("Transmission"))
                continue;
 
-            for (const shape of shapes)
-               this [staticShapes] .push (shape);
+            for (const { modelViewMatrix: modelMatrix, shapeNode } of shapes)
+               this .applyModelMatrix (new Matrix4 (... modelMatrix), shapeNode);
+
+            for (const { shapeNode } of shapes)
+               this [staticShapes] .push (shapeNode);
          }
+      };
+   })(),
+   applyModelMatrix: (function ()
+   {
+      const
+         normal = new Vector3 (),
+         vertex = new Vector4 ();
+
+      return function (modelMatrix, shapeNode)
+      {
+         const geometryNode = shapeNode .getGeometry ();
+
+         if (this .geometryNodes .has (geometryNode))
+            return;
+
+         this .geometryNodes .add (geometryNode);
+
+         geometryNode .getNormals ()  .shrinkToFit ();
+         geometryNode .getVertices () .shrinkToFit ();
+
+         const
+            normalMatrix = modelMatrix .submatrix .inverse () .transpose (),
+            normalArray  = geometryNode .getNormals ()  .getValue (),
+            vertexArray  = geometryNode .getVertices () .getValue (),
+            numNormals   = normalArray .length,
+            numVertices  = vertexArray .length;
+
+         for (let i = 0; i < numNormals; i += 3)
+         {
+            normal .set (normalArray [i], normalArray [i + 1], normalArray [i + 2]);
+            normalMatrix .multVecMatrix (normal);
+            normalArray .set (normal, i);
+         }
+
+         for (let i = 0; i < numVertices; i += 4)
+         {
+            vertex .set (vertexArray [i], vertexArray [i + 1], vertexArray [i + 2], vertexArray [i + 3]);
+            modelMatrix .multVecMatrix (vertex);
+            vertexArray .set (vertex, i);
+         }
+
+         geometryNode .getMin () .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
+         geometryNode .getMax () .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+
+         geometryNode .updateBBox ();
+         geometryNode .transfer ();
       };
    })(),
    dispose ()

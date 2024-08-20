@@ -803,78 +803,44 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       this ._rebuild .addEvent ();
    },
-   rebuild: (() =>
+   rebuild ()
    {
-      const point = new Vector3 ();
+      this .clear ();
+      this .build ();
 
-      return async function ()
-      {
-         this .clear ();
-         this .build ();
+      // Shrink arrays before transferring them to graphics card.
 
-         // Shrink arrays before transferring them to graphics card.
+      for (const attribArray of this .attribArrays)
+         attribArray .shrinkToFit ();
 
-         for (const attribArray of this .attribArrays)
-            attribArray .shrinkToFit ();
+      for (const multiTexCoord of this .multiTexCoords)
+         multiTexCoord .shrinkToFit ();
 
-         for (const multiTexCoord of this .multiTexCoords)
-            multiTexCoord .shrinkToFit ();
+      this .coordIndices .shrinkToFit ();
+      this .fogDepths    .shrinkToFit ();
+      this .colors       .shrinkToFit ();
+      this .tangents     .shrinkToFit ();
+      this .normals      .shrinkToFit ();
+      this .vertices     .shrinkToFit ();
 
-         this .coordIndices .shrinkToFit ();
-         this .fogDepths    .shrinkToFit ();
-         this .colors       .shrinkToFit ();
-         this .tangents     .shrinkToFit ();
-         this .normals      .shrinkToFit ();
-         this .vertices     .shrinkToFit ();
+      this .updateBBox ();
 
-         // Determine bbox.
+      // Generate texCoord if needed.
 
-         const
-            vertices = this .vertices .getValue (),
-            min      = this .min,
-            max      = this .max;
+      if (!this .multiTexCoords .length)
+         this .generateTexCoords ();
 
-         if (vertices .length)
-         {
-            if (min .x === Number .POSITIVE_INFINITY)
-            {
-               for (let i = 0, length = vertices .length; i < length; i += 4)
-               {
-                  point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
+      // Generate tangents if needed.
 
-                  min .min (point);
-                  max .max (point);
-               }
-            }
+      if (!this .tangents .length)
+         this .generateTangents ();
 
-            this .bbox .setExtents (min, max);
-         }
-         else
-         {
-            this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
-         }
+      // Transfer arrays and update.
 
-         this ._bbox_changed .addEvent ();
-
-         for (let i = 0; i < 5; ++ i)
-            this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
-
-         // Generate texCoord if needed.
-
-         if (!this .multiTexCoords .length)
-            this .generateTexCoords ();
-
-         // Generate tangents if needed.
-         if (!this .tangents .length)
-            this .generateTangents ();
-
-         // Transfer arrays and update.
-
-         this .transfer ();
-         this .updateGeometryKey ();
-         this .updateRenderFunctions ();
-      };
-   })(),
+      this .transfer ();
+      this .updateGeometryKey ();
+      this .updateRenderFunctions ();
+   },
    clear ()
    {
       // BBox
@@ -911,6 +877,45 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .flatNormals    .length = 0;
       this .vertices       .length = 0;
    },
+   updateBBox: (() =>
+   {
+      const point = new Vector3 ();
+
+      return function ()
+      {
+         // Determine bbox.
+
+         const
+            vertices = this .vertices .getValue (),
+            min      = this .min,
+            max      = this .max;
+
+         if (vertices .length)
+         {
+            if (min .x === Number .POSITIVE_INFINITY)
+            {
+               for (let i = 0, length = vertices .length; i < length; i += 4)
+               {
+                  point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
+
+                  min .min (point);
+                  max .max (point);
+               }
+            }
+
+            this .bbox .setExtents (min, max);
+         }
+         else
+         {
+            this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
+         }
+
+         for (let i = 0; i < 5; ++ i)
+            this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+
+         this ._bbox_changed .addEvent ();
+      };
+   })(),
    transfer ()
    {
       const gl = this .getBrowser () .getContext ();
