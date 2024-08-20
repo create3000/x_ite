@@ -394,8 +394,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             newCoordNode ._point .push (vertex);
          }
 
-         newGeometryNode ._solid    = geometryNode ._solid;
-         newGeometryNode ._ccw      = geometryNode ._ccw;
+         newGeometryNode ._solid    = geometryNode ._solid ?? true;
+         newGeometryNode ._ccw      = geometryNode ._ccw ?? true;
          newGeometryNode ._attrib   = newAttribNodes;
          newGeometryNode ._fogCoord = newFogCoordNode;
          newGeometryNode ._color    = newColor;
