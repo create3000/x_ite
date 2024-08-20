@@ -367,7 +367,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                var newTexCoordNode = newTexCoordNodes [0];
             }
 
-            newTexCoordNode  .setup ();
+            newTexCoordNode .setup ();
 
             newGeometryNode ._texCoord = newTexCoordNode;
          }
