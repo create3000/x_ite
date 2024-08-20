@@ -234,7 +234,7 @@ function DirectionalLight (executionContext)
 
    // Legacy
 
-   if (executionContext .getSpecificationVersion () == 2.0)
+   if (executionContext .getSpecificationVersion () <= 3.0)
       this ._global = true;
 }
 
