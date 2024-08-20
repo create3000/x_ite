@@ -437,10 +437,20 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          // Common fields
 
-         if (geometryNode .getGeometryType () >= 2)
+         switch (geometryNode .getGeometryType ())
          {
-            newGeometryNode ._solid = geometryNode ._solid ?? true;
-            newGeometryNode ._ccw   = geometryNode ._ccw ?? true;
+            case 1:
+            {
+               newGeometryNode ._vertexCount = new Array (numVertices / 2) .fill (2);
+               break;
+            }
+            case 2:
+            case 3:
+            {
+               newGeometryNode ._solid = geometryNode ._solid ?? true;
+               newGeometryNode ._ccw   = geometryNode ._ccw ?? true;
+               break;
+            }
          }
 
          newShapeNode ._geometry = newGeometryNode;
