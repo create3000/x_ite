@@ -135,7 +135,7 @@ const Bookmarks = (() =>
       {
          const
             base  = this .browser .getWorldURL () .replace (/(?:\.O)?\.[^\.]+$/, ""),
-            local = base .replace (/https:\/\/create3000.github.io\/(.*?)\//, `http://${location.hostname}/$1/docs/`);
+            local = base .replace (/https:\/\/create3000.github.io\/(.*?)\//, `https://${location.hostname}/$1/docs/`);
 
          $("#file") .text (this .browser .getWorldURL ())
             .append ($("<a/>")

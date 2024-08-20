@@ -234,6 +234,27 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             newNormalNode    = new Normal (executionContext),
             newCoordNode     = new CoordinateDouble (executionContext);
 
+         // Attribute Nodes
+
+         const
+            attribs     = geometryNode .getAttribs (),
+            attribNodes = geometryNode .getAttrib ();
+
+         const newAttribNodes = attribs .map ((attrib, i) =>
+         {
+            const
+               attribNode    = attribNodes [i],
+               newAttribNode = attribNode .create (executionContext);
+
+            newAttribNode ._name          = attribNode. _name;
+            newAttribNode ._numComponents = attribNode ._numComponents;
+            newAttribNode ._value         = attrib .getValue ();
+
+            newAttribNode .setup ();
+
+            return newAttribNode;
+         });
+
          // TextureCoordinate
 
          const
@@ -315,7 +336,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             newCoordNode ._point .push (vertex);
          }
 
-         newGeometryNode ._attrib   = geometryNode ._attrib ?? [ ];
+         newGeometryNode ._attrib   = newAttribNodes;
          newGeometryNode ._texCoord = newTexCoordNode;
          newGeometryNode ._normal   = newNormalNode;
          newGeometryNode ._coord    = newCoordNode;

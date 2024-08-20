@@ -858,7 +858,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          const length = this .attribNodes .length;
 
          for (let a = attribArrays .length; a < length; ++ a)
-            attribArrays [a] = new Fields .MFFloat ();
+            attribArrays [a] = X3DGeometryNode .createArray ();
 
          attribArrays .length = length;
       }
