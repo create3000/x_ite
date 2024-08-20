@@ -299,7 +299,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          {
             var newColor = null;
          }
-         
+
          // TextureCoordinate
 
          const
@@ -371,8 +371,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // Normals
 
          const
-            normalArray  = geometryNode .getNormals () .getValue (),
-            numNormals   = normalArray .length;
+            normalArray = geometryNode .getNormals () .getValue (),
+            numNormals  = normalArray .length;
 
          for (let i = 0; i < numNormals; i += 3)
          {
@@ -384,8 +384,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // Coordinate
 
          const
-            vertexArray  = geometryNode .getVertices () .getValue (),
-            numVertices  = vertexArray .length;
+            vertexArray = geometryNode .getVertices () .getValue (),
+            numVertices = vertexArray .length;
 
          for (let i = 0; i < numVertices; i += 4)
          {
@@ -394,6 +394,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             newCoordNode ._point .push (vertex);
          }
 
+         newGeometryNode ._solid    = geometryNode ._solid;
+         newGeometryNode ._ccw      = geometryNode ._ccw;
          newGeometryNode ._attrib   = newAttribNodes;
          newGeometryNode ._fogCoord = newFogCoordNode;
          newGeometryNode ._color    = newColor;
