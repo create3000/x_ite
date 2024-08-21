@@ -292,7 +292,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          if (colors .length)
          {
-            if (geometryNode .isTransparent ())
+            if (shapeNode .isTransparent ())
             {
                var newColor = new ColorRGBA (executionContext);
 
