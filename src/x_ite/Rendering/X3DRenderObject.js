@@ -1212,7 +1212,7 @@ Object .assign (X3DRenderObject .prototype,
                this .projectionMatrixArray .set (this .view .projectionMatrix);
             else
                this .projectionMatrixArray .set (this .getProjectionMatrix () .get ());
-            
+
             this .cameraSpaceMatrixArray .set (this .view .cameraSpaceMatrix);
             this .viewMatrixArray        .set (this .view .viewMatrix);
          }
