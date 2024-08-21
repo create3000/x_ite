@@ -605,7 +605,7 @@ Object .assign (X3DRenderingContext .prototype,
 
          this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
 
-         const pv = this [_pose] .views [v] ??= {
+         const pv = this [_pose] .views [v] = this [_pose] .views [v] ?? {
             projectionMatrix: new Matrix4 (),
             cameraSpaceMatrix: new Matrix4 (),
             viewMatrix: new Matrix4 (),
