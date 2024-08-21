@@ -193,7 +193,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             modelViewMatrix  = renderObject .getModelViewMatrix (),
             Statics          = StaticsIndex .get (staticShapes),
             firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ()),
-            containers       = [ ];
+            renderContexts   = [ ];
 
          //Statics .forEach (Static => console .log (`Rebuilding StaticGroup ${Static}.`));
 
@@ -219,11 +219,11 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             if (Static .includes ("Transmission"))
                continue;
 
-            for (const shape of shapes)
-               containers .push (shape);
+            for (const renderContext of shapes)
+               renderContexts .push (renderContext);
          }
 
-         this [staticShapes] = containers
+         this [staticShapes] = renderContexts
             .map (({ modelViewMatrix, shapeNode }) => this .transformShape (new Matrix4 (... modelViewMatrix), shapeNode));
       };
    })(),
