@@ -51,7 +51,6 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 import Plane3               from "../../../standard/Math/Geometry/Plane3.js";
 import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
