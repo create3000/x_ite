@@ -454,6 +454,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
                if (!(geometryNode ._ccw ?.getValue () ?? true))
                {
+                  // TODO: handle numComponents.
                   for (const attrib of newGeometryNode ._attrib)
                      attrib .value .reverse ();
 
