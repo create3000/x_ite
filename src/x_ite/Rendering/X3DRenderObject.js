@@ -1206,9 +1206,13 @@ Object .assign (X3DRenderObject .prototype,
 
          this .viewportArray .set (viewport);
 
-         if (this .view && browser .getBrowserOption ("XRMovementControl") === "VIEWER_POSE")
+         if (this .view && browser .getBrowserOption ("XRMovementControl") !== "VIEWPOINT")
          {
-            this .projectionMatrixArray  .set (this .view .projectionMatrix);
+            if (this .isActive ())
+               this .projectionMatrixArray .set (this .view .projectionMatrix);
+            else
+               this .projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+            
             this .cameraSpaceMatrixArray .set (this .view .cameraSpaceMatrix);
             this .viewMatrixArray        .set (this .view .viewMatrix);
          }

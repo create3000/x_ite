@@ -514,7 +514,6 @@ Object .assign (X3DRenderingContext .prototype,
          this [_defaultFrameBuffer] = baseLayer .framebuffer;
 
          this [_pose] = {
-            projectionMatrix: new Matrix4 (),
             cameraSpaceMatrix: new Matrix4 (),
             viewMatrix: new Matrix4 (),
             views: [ ],
