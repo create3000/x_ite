@@ -450,15 +450,26 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             case 3:
             {
                newGeometryNode .setGeometryType (geometryNode .getGeometryType ());
-
                newGeometryNode ._solid = geometryNode ._solid ?? true;
-               newGeometryNode ._ccw   = geometryNode ._ccw ?? true;
+
+               if (!(geometryNode ._ccw ?.getValue () ?? true))
+               {
+                  for (const attrib of newGeometryNode ._attrib)
+                     attrib .value .reverse ();
+
+                  newGeometryNode ._fogCoord .getValue () ?._depth  .reverse ();
+                  newGeometryNode ._color    .getValue () ?._color  .reverse ();
+                  newGeometryNode ._texCoord .getValue () ?._point  .reverse ();
+                  newGeometryNode ._tangent  .getValue () ?._vector .reverse ();
+                  newGeometryNode ._normal   .getValue () ?._vector .reverse ();
+                  newGeometryNode ._coord    .getValue () ?._point  .reverse ();
+               }
+
                break;
             }
          }
 
          newShapeNode .setPrivate (true);
-
          newShapeNode ._geometry = newGeometryNode;
 
          newGeometryNode .setup ();
