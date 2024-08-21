@@ -64,6 +64,7 @@ import CoordinateDouble       from "../Rendering/CoordinateDouble.js";
 import MultiTextureCoordinate from "../Texturing/MultiTextureCoordinate.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 import TraverseType           from "../../Rendering/TraverseType.js";
+import Algorithm              from "../../../standard/Math/Algorithm.js";
 import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4                from "../../../standard/Math/Numbers/Vector4.js";
 import Box3                   from "../../../standard/Math/Geometry/Box3.js";
@@ -239,6 +240,13 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          TriangleSet,
          TriangleSet,
       ];
+
+      const FieldTypes = [
+         Fields .MFFloat,
+         Fields .MFVec2f,
+         Fields .MFVec3f,
+         Fields .MFVec4f,
+      ]
 
       return function (modelMatrix, shapeNode)
       {
@@ -454,9 +462,24 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
                if (!(geometryNode ._ccw ?.getValue () ?? true))
                {
-                  // TODO: handle numComponents.
                   for (const attrib of newGeometryNode ._attrib)
-                     attrib .value .reverse ();
+                  {
+                     const numComponents = Algorithm .clamp (attrib .numComponents, 1, 4);
+
+                     if (numComponents === 1)
+                     {
+                        attrib .value .reverse ();
+                     }
+                     else
+                     {
+                        const value = new (FieldTypes [numComponents - 1]) ();
+
+                        value .setValue (attrib .value .shrinkToFit ());
+                        value .reverse ();
+
+                        attrib .value = value .shrinkToFit ();
+                     }
+                  }
 
                   newGeometryNode ._fogCoord .getValue () ?._depth  .reverse ();
                   newGeometryNode ._color    .getValue () ?._color  .reverse ();
