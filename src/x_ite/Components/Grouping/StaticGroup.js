@@ -165,8 +165,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    },
    traverseStatics (staticShapes, type, renderObject)
    {
-      if (!this [staticShapes])
-         this .buildStatics (staticShapes, type, renderObject);
+      this [staticShapes] ??= this .buildStatics (staticShapes, type, renderObject);
 
       for (const shapeNode of this [staticShapes])
          shapeNode .traverse (type, renderObject);
@@ -223,7 +222,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                renderContexts .push (renderContext);
          }
 
-         this [staticShapes] = renderContexts
+         return renderContexts
             .map (({ modelViewMatrix, shapeNode }) => this .transformShape (new Matrix4 (... modelViewMatrix), shapeNode));
       };
    })(),
