@@ -441,7 +441,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          {
             case 1:
             {
-               newGeometryNode ._vertexCount = new Array (numVertices / 2) .fill (2);
+               newGeometryNode ._vertexCount = new Array (numVertices / 8) .fill (2);
                break;
             }
             case 2:
