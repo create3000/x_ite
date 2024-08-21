@@ -1204,18 +1204,19 @@ Object .assign (X3DRenderObject .prototype,
 
          // Set global uniforms.
 
-         this .viewportArray         .set (viewport);
-         this .projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+         this .viewportArray .set (viewport);
 
          if (this .view && browser .getBrowserOption ("XRMovementControl") === "VIEWER_POSE")
          {
-            this .viewMatrixArray        .set (this .view .viewMatrix);
+            this .projectionMatrixArray  .set (this .view .projectionMatrix);
             this .cameraSpaceMatrixArray .set (this .view .cameraSpaceMatrix);
+            this .viewMatrixArray        .set (this .view .viewMatrix);
          }
          else
          {
-            this .viewMatrixArray        .set (this .getViewMatrix () .get ());
+            this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
             this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+            this .viewMatrixArray        .set (this .getViewMatrix () .get ());
          }
 
          if (independent && this .transmission)

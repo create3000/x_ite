@@ -517,10 +517,7 @@ Object .assign (X3DRenderingContext .prototype,
             projectionMatrix: new Matrix4 (),
             cameraSpaceMatrix: new Matrix4 (),
             viewMatrix: new Matrix4 (),
-            views: [
-               { cameraSpaceMatrix: new Matrix4 (), viewMatrix: new Matrix4 (), matrix: new Matrix4 () },
-               { cameraSpaceMatrix: new Matrix4 (), viewMatrix: new Matrix4 (), matrix: new Matrix4 () },
-            ],
+            views: [ ],
          };
 
          this .setReferenceSpace ();
@@ -608,10 +605,17 @@ Object .assign (X3DRenderingContext .prototype,
 
          this .reshapeFrameBuffer (v, x|0, y|0, width|0, height|0);
 
-         this [_pose] .projectionMatrix .assign (view .projectionMatrix);
-         this [_pose] .views [v] .cameraSpaceMatrix .assign (view .transform .matrix);
-         this [_pose] .views [v] .viewMatrix .assign (view .transform .inverse .matrix);
-         this [_pose] .views [v] .matrix .assign (pose .transform .matrix) .multRight (view .transform .inverse .matrix);
+         const pv = this [_pose] .views [v] ??= {
+            projectionMatrix: new Matrix4 (),
+            cameraSpaceMatrix: new Matrix4 (),
+            viewMatrix: new Matrix4 (),
+            matrix: new Matrix4 (),
+         };
+
+         pv .projectionMatrix .assign (view .projectionMatrix);
+         pv .cameraSpaceMatrix .assign (view .transform .matrix);
+         pv .viewMatrix .assign (view .transform .inverse .matrix);
+         pv .matrix .assign (pose .transform .matrix) .multRight (view .transform .inverse .matrix);
 
          ++ v;
       }
