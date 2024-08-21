@@ -244,10 +244,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             executionContext = this .getExecutionContext (),
             geometryNode     = shapeNode .getGeometry (),
             newShapeNode     = shapeNode .copy (executionContext),
-            newGeometryNode  = new GeometryTypes [geometryNode .getGeometryType ()] (executionContext),
-            newTangentNode   = new Tangent (executionContext),
-            newNormalNode    = new Normal (executionContext),
-            newCoordNode     = new CoordinateDouble (executionContext);
+            newGeometryNode  = new GeometryTypes [geometryNode .getGeometryType ()] (executionContext);
 
          // Attribute Nodes
 
@@ -381,8 +378,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          if (tangents .length)
          {
             const
-               tangentArray = tangents .getValue (),
-               numTangents  = tangentArray .length;
+               tangentArray   = tangents .getValue (),
+               numTangents    = tangentArray .length,
+               newTangentNode = new Tangent (executionContext);
 
             for (let i = 0; i < numTangents; i += 3)
             {
@@ -403,8 +401,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          if (normals .length)
          {
             const
-               normalArray = normals .getValue (),
-               numNormals  = normalArray .length;
+               normalArray   = normals .getValue (),
+               numNormals    = normalArray .length,
+               newNormalNode = new Normal (executionContext);
 
             for (let i = 0; i < numNormals; i += 3)
             {
@@ -421,8 +420,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // Coordinate
 
          const
-            vertexArray = geometryNode .getVertices () .getValue (),
-            numVertices = vertexArray .length;
+            vertexArray  = geometryNode .getVertices () .getValue (),
+            numVertices  = vertexArray .length,
+            newCoordNode = new CoordinateDouble (executionContext);
 
          for (let i = 0; i < numVertices; i += 4)
          {
@@ -447,16 +447,17 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             case 2:
             case 3:
             {
+               newGeometryNode .setGeometryType (geometryNode .getGeometryType ());
+
                newGeometryNode ._solid = geometryNode ._solid ?? true;
                newGeometryNode ._ccw   = geometryNode ._ccw ?? true;
                break;
             }
          }
 
-         newShapeNode ._geometry = newGeometryNode;
-
-         newGeometryNode .setGeometryType (geometryNode .getGeometryType ());
          newShapeNode .setPrivate (true);
+
+         newShapeNode ._geometry = newGeometryNode;
 
          newGeometryNode .setup ();
          newShapeNode    .setup ();
