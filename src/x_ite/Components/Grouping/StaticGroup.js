@@ -65,6 +65,7 @@ import MultiTextureCoordinate from "../Texturing/MultiTextureCoordinate.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 import TraverseType           from "../../Rendering/TraverseType.js";
 import Algorithm              from "../../../standard/Math/Algorithm.js";
+import Color4                 from "../../../standard/Math/Numbers/Color4.js";
 import Vector2                from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4                from "../../../standard/Math/Numbers/Vector4.js";
@@ -285,6 +286,32 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                modelMatrix        = new Matrix4 (... modelViewMatrix),
                normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode, GeometryType);
 
+            // vertexCount
+
+            if (geometryNode .getGeometryType () === 1)
+            {
+               const vertexCount = newGeometryNode ._vertexCount;
+
+               vertexCount .assign (vertexCount .concat (normalizedGeometry ._vertexCount));
+            }
+
+            // Color
+
+            const normalizedColor = normalizedGeometry ._color .getValue ();
+
+            if (normalizedColor ?._color .length)
+            {
+               if (!newGeometryNode ._color .getValue ())
+                  newGeometryNode ._color = normalizedColor .create (executionContext);
+
+               const color = newGeometryNode ._color .color;
+
+               if (color .length < numPoints)
+                  color .resize (numPoints, Color4 .White);
+
+               color .assign (color .concat (normalizedColor ._color));
+            }
+
             // Tangent
 
             const normalizedTangent = normalizedGeometry ._tangent .getValue ();
@@ -292,7 +319,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             if (normalizedTangent ?._vector .length)
             {
                if (!newGeometryNode ._tangent .getValue ())
-                  newGeometryNode ._tangent = new Tangent (executionContext);
+                  newGeometryNode ._tangent = normalizedTangent .create (executionContext);
 
                const vector = newGeometryNode ._tangent .vector;
 
@@ -309,7 +336,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             if (normalizedNormal ?._vector .length)
             {
                if (!newGeometryNode ._normal .getValue ())
-                  newGeometryNode ._normal = new Normal (executionContext);
+                  newGeometryNode ._normal = normalizedNormal .create (executionContext);
 
                const vector = newGeometryNode ._normal .vector;
 
@@ -326,7 +353,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             if (normalizedCoord ?._point .length)
             {
                if (!newGeometryNode ._coord .getValue ())
-                  newGeometryNode ._coord = new Coordinate (executionContext);
+                  newGeometryNode ._coord = normalizedCoord .create (executionContext);
 
                const point = newGeometryNode ._coord .point;
 
@@ -337,9 +364,10 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          }
 
          newGeometryNode ._solid = geometryNode .isSolid ();
+         newGeometryNode ._color   .getValue () ?.setup ();
          newGeometryNode ._tangent .getValue () ?.setup ();
-         newGeometryNode ._normal .getValue () ?.setup ();
-         newGeometryNode ._coord .getValue () ?.setup ();
+         newGeometryNode ._normal  .getValue () ?.setup ();
+         newGeometryNode ._coord   .getValue () ?.setup ();
          newGeometryNode .setup ();
 
          newShapeNode ._geometry = newGeometryNode;
