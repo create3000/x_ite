@@ -194,7 +194,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ()),
             renderContexts   = [ ];
 
-         //Statics .forEach (Static => console .log (`Rebuilding StaticGroup ${Static}.`));
+         //console .log (`Rebuilding StaticGroup ${this .getName ()}.`);
 
          viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
 
