@@ -60,11 +60,12 @@ import Tangent                from "../Rendering/Tangent.js";
 import Color                  from "../Rendering/Color.js";
 import ColorRGBA              from "../Rendering/ColorRGBA.js";
 import Normal                 from "../Rendering/Normal.js";
-import CoordinateDouble       from "../Rendering/CoordinateDouble.js";
+import Coordinate             from "../Rendering/Coordinate.js";
 import MultiTextureCoordinate from "../Texturing/MultiTextureCoordinate.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 import TraverseType           from "../../Rendering/TraverseType.js";
 import Algorithm              from "../../../standard/Math/Algorithm.js";
+import Vector2                from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4                from "../../../standard/Math/Numbers/Vector4.js";
 import Box3                   from "../../../standard/Math/Geometry/Box3.js";
@@ -248,28 +249,115 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             group .push (renderContext);
          }
 
-         for (const [key, group] of Object .entries (groups))
-            console .log (key, group .length);
-
          // Create static shapes.
+
+         return Object .values (groups) .map (group => this .combineShapes (group));
+
 
          return renderContexts
             .map (({ modelViewMatrix, shapeNode }) => this .transformShape (new Matrix4 (... modelViewMatrix), shapeNode));
       };
    })(),
-   transformShape: (function ()
+   combineShapes: (function ()
    {
-      const
-         tangent = new Vector4 (),
-         normal  = new Vector3 (),
-         vertex  = new Vector4 ();
-
       const GeometryTypes = [
          PointSet,
          LineSet,
          TriangleSet,
          TriangleSet,
       ];
+
+      return function (group)
+      {
+         const
+            executionContext = this .getExecutionContext (),
+            shapeNode        = group [0] .shapeNode,
+            geometryNode     = shapeNode .getGeometry (),
+            newShapeNode     = shapeNode .copy (executionContext),
+            GeometryType     = GeometryTypes [geometryNode .getGeometryType ()],
+            newGeometryNode  = new GeometryType (executionContext);
+
+         let numPoints = 0;
+
+         for (const { modelViewMatrix, shapeNode } of group)
+         {
+            const
+               modelMatrix        = new Matrix4 (... modelViewMatrix),
+               normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode, GeometryType);
+
+            // Tangent
+
+            const normalizedTangent = normalizedGeometry ._tangent .getValue ();
+
+            if (normalizedTangent ?._vector .length)
+            {
+               if (!newGeometryNode ._tangent .getValue ())
+                  newGeometryNode ._tangent = new Tangent (executionContext);
+
+               const vector = newGeometryNode ._tangent .vector;
+
+               if (vector .length < numPoints)
+                  vector .resize (numPoints);
+
+               for (const value of normalizedTangent ._vector)
+                  vector .push (value);
+            }
+
+            // Normal
+
+            const normalizedNormal = normalizedGeometry ._normal .getValue ();
+
+            if (normalizedNormal ?._vector .length)
+            {
+               if (!newGeometryNode ._normal .getValue ())
+                  newGeometryNode ._normal = new Normal (executionContext);
+
+               const vector = newGeometryNode ._normal .vector;
+
+               if (vector .length < numPoints)
+                  vector .resize (numPoints);
+
+               for (const value of normalizedNormal ._vector)
+                  vector .push (value);
+            }
+
+            // Coordinate
+
+            const normalizedCoord = normalizedGeometry ._coord .getValue ();
+
+            if (normalizedCoord ?._point .length)
+            {
+               if (!newGeometryNode ._coord .getValue ())
+                  newGeometryNode ._coord = new Coordinate (executionContext);
+
+               const point = newGeometryNode ._coord .point;
+
+               for (const value of normalizedCoord ._point)
+                  point .push (value);
+
+               numPoints = point .length;
+            }
+         }
+
+         newGeometryNode ._solid = geometryNode .isSolid ();
+         newGeometryNode ._tangent .getValue () ?.setup ();
+         newGeometryNode ._normal .getValue () ?.setup ();
+         newGeometryNode ._coord .getValue () ?.setup ();
+         newGeometryNode .setup ();
+
+         newShapeNode ._geometry = newGeometryNode;
+         newShapeNode .setPrivate (true);
+         newShapeNode .setup ();
+
+         return newShapeNode;
+      };
+   })(),
+   normalizeGeometry: (function ()
+   {
+      const
+         tangent = new Vector4 (),
+         normal  = new Vector3 (),
+         vertex  = new Vector4 ();
 
       const FieldTypes = [
          Fields .MFFloat,
@@ -278,13 +366,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          Fields .MFVec4f,
       ]
 
-      return function (modelMatrix, shapeNode)
+      return function (modelMatrix, shapeNode, GeometryType)
       {
          const
             executionContext = this .getExecutionContext (),
             geometryNode     = shapeNode .getGeometry (),
-            newShapeNode     = shapeNode .copy (executionContext),
-            newGeometryNode  = new GeometryTypes [geometryNode .getGeometryType ()] (executionContext);
+            newGeometryNode  = new GeometryType (executionContext);
 
          // Attribute Nodes
 
@@ -302,8 +389,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             newAttribNode ._numComponents = attribNode ._numComponents;
             newAttribNode ._value         = attrib .getValue ();
 
-            newAttribNode .setup ();
-
             return newAttribNode;
          });
 
@@ -317,10 +402,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          {
             const newFogCoordNode = new FogCoordinate (executionContext);
 
-            newFogCoordNode ._depth = fogDepths .getValue ();
-
-            newFogCoordNode .setup ();
-
+            newFogCoordNode ._depth    = fogDepths .getValue ();
             newGeometryNode ._fogCoord = newFogCoordNode;
          }
 
@@ -342,8 +424,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
                newColor ._color = colors .getValue () .filter ((c, i) => i % 4 < 3);
             }
-
-            newColor .setup ();
 
             newGeometryNode ._color = newColor;
          }
@@ -395,16 +475,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             {
                var newTexCoordNode = new MultiTextureCoordinate (executionContext);
 
-               newTexCoordNodes .forEach (node => node .setup ());
-
                newTexCoordNode ._texCoord = newTexCoordNodes;
             }
             else
             {
                var newTexCoordNode = newTexCoordNodes [0];
             }
-
-            newTexCoordNode .setup ();
 
             newGeometryNode ._texCoord = newTexCoordNode;
          }
@@ -429,8 +505,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                newTangentNode ._vector .push (tangent .set (... normal, tangentArray [i + 3]));
             }
 
-            newTangentNode .setup ();
-
             newGeometryNode ._tangent = newTangentNode;
          }
 
@@ -452,8 +526,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                newNormalNode ._vector .push (normal);
             }
 
-            newNormalNode .setup ();
-
             newGeometryNode ._normal = newNormalNode;
          }
 
@@ -462,7 +534,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          const
             vertexArray  = geometryNode .getVertices () .getValue (),
             numVertices  = vertexArray .length,
-            newCoordNode = new CoordinateDouble (executionContext);
+            newCoordNode = new Coordinate (executionContext);
 
          for (let i = 0; i < numVertices; i += 4)
          {
@@ -470,8 +542,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             modelMatrix .multVecMatrix (vertex);
             newCoordNode ._point .push (vertex);
          }
-
-         newCoordNode .setup ();
 
          newGeometryNode ._coord = newCoordNode;
 
@@ -523,13 +593,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             }
          }
 
-         newShapeNode .setPrivate (true);
-         newShapeNode ._geometry = newGeometryNode;
-
-         newGeometryNode .setup ();
-         newShapeNode    .setup ();
-
-         return newShapeNode;
+         return newGeometryNode;
       };
    })(),
    dispose ()
