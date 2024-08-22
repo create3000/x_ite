@@ -385,6 +385,10 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
    {
       value .dispose ();
    },
+   shrinkToFit ()
+   {
+      return this .getValue ();
+   },
    reverse ()
    {
       const target = this [_target];
