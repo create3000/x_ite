@@ -246,6 +246,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       return this .primitiveMode;
    },
+   isSolid ()
+   {
+      return this .solid;
+   },
    setSolid (value)
    {
       this .solid = value;

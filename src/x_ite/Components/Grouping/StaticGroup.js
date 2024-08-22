@@ -165,12 +165,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    },
    traverseStatics (staticShapes, type, renderObject)
    {
-      this [staticShapes] ??= this .buildStatics (staticShapes, type, renderObject);
+      this [staticShapes] ??= this .createStaticShapes (staticShapes, type, renderObject);
 
       for (const shapeNode of this [staticShapes])
          shapeNode .traverse (type, renderObject);
    },
-   buildStatics: (() =>
+   createStaticShapes: (() =>
    {
       const StaticsIndex = new Map ([
          [_pointingShapes,  ["Pointing"]],
@@ -185,6 +185,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
       return function (staticShapes, type, renderObject)
       {
+         // Traverse Group node to get render contexts.
+
          const
             viewVolumes      = renderObject .getViewVolumes (),
             viewport         = renderObject .getViewport (),
@@ -221,6 +223,35 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             for (const renderContext of shapes)
                renderContexts .push (renderContext);
          }
+
+         // Determine groups that can be combined.
+
+         const groups = { };
+
+         for (const renderContext of renderContexts)
+         {
+            const
+               shapeNode      = renderContext .shapeNode,
+               appearanceNode = shapeNode .getAppearance (),
+               geometryNode   = shapeNode .getGeometry ();
+
+            let key = "";
+
+            key += appearanceNode .getId ();
+            key += ".";
+            key += geometryNode .getGeometryType ();
+            key += geometryNode .isSolid () ? 1 : 0;
+            key += shapeNode .isTransparent () ? 1 : 0;
+
+            const group = groups [key] ??= [ ];
+
+            group .push (renderContext);
+         }
+
+         for (const [key, group] of Object .entries (groups))
+            console .log (key, group .length);
+
+         // Create static shapes.
 
          return renderContexts
             .map (({ modelViewMatrix, shapeNode }) => this .transformShape (new Matrix4 (... modelViewMatrix), shapeNode));
@@ -457,7 +488,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             case 3:
             {
                newGeometryNode .setGeometryType (geometryNode .getGeometryType ());
-               newGeometryNode ._solid = geometryNode ._solid ?? true;
+               newGeometryNode ._solid = geometryNode .isSolid ();
 
                if (!(geometryNode ._ccw ?.getValue () ?? true))
                {
