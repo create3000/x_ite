@@ -319,7 +319,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             if (normalizedTangent ?._vector .length)
             {
                if (!newGeometryNode ._tangent .getValue ())
-                  newGeometryNode ._tangent = normalizedTangent .create (executionContext);
+                  newGeometryNode ._tangent = new Tangent (executionContext);
 
                const vector = newGeometryNode ._tangent .vector;
 
@@ -336,7 +336,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             if (normalizedNormal ?._vector .length)
             {
                if (!newGeometryNode ._normal .getValue ())
-                  newGeometryNode ._normal = normalizedNormal .create (executionContext);
+                  newGeometryNode ._normal = new Normal (executionContext);
 
                const vector = newGeometryNode ._normal .vector;
 
@@ -353,7 +353,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             if (normalizedCoord ?._point .length)
             {
                if (!newGeometryNode ._coord .getValue ())
-                  newGeometryNode ._coord = normalizedCoord .create (executionContext);
+                  newGeometryNode ._coord = new Coordinate (executionContext);
 
                const point = newGeometryNode ._coord .point;
 
