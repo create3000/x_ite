@@ -57,7 +57,7 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
 {
    // Implement all function also in TypedArray, if possible.
    at: Array .prototype .at,
-   // concat: Array .prototype .concat,
+   concat: Array .prototype .concat,
    // copyWithin: Array.prototype.copyWithin,
    entries: Array .prototype .entries,
    every: Array .prototype .every,

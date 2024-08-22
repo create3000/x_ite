@@ -299,8 +299,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                if (vector .length < numPoints)
                   vector .resize (numPoints);
 
-               for (const value of normalizedTangent ._vector)
-                  vector .push (value);
+               vector .assign (vector .concat (normalizedTangent ._vector));
             }
 
             // Normal
@@ -317,8 +316,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                if (vector .length < numPoints)
                   vector .resize (numPoints);
 
-               for (const value of normalizedNormal ._vector)
-                  vector .push (value);
+               vector .assign (vector .concat (normalizedNormal ._vector));
             }
 
             // Coordinate
@@ -332,8 +330,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
                const point = newGeometryNode ._coord .point;
 
-               for (const value of normalizedCoord ._point)
-                  point .push (value);
+               point .assign (point .concat (normalizedCoord ._point));
 
                numPoints = point .length;
             }
