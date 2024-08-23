@@ -496,7 +496,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       const
          tangent = new Vector4 (),
          normal  = new Vector3 (),
-         vertex  = new Vector4 ();
+         vertex  = new Vector4 (),
+         point   = new Vector3 ();
 
       return function (modelMatrix, shapeNode, GeometryType)
       {
@@ -611,15 +612,17 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             const
                tangentArray   = tangents .getValue (),
                numTangents    = tangentArray .length,
-               newTangentNode = new Tangent (executionContext);
+               newTangentNode = new Tangent (executionContext),
+               newVectors     = new Float32Array (numTangents);
 
-            for (let i = 0; i < numTangents; i += 3)
+            for (let i = 0; i < numTangents; i += 4)
             {
                normal .set (tangentArray [i], tangentArray [i + 1], tangentArray [i + 2]);
                normalMatrix .multVecMatrix (normal);
-               newTangentNode ._vector .push (tangent .set (normal .x, normal .y, normal .z, tangentArray [i + 3]));
+               newVectors .set (tangent .set (normal .x, normal .y, normal .z, tangentArray [i + 3]), i);
             }
 
+            newTangentNode  ._vector  = newVectors;
             newGeometryNode ._tangent = newTangentNode;
          }
 
@@ -632,15 +635,17 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             const
                normalArray   = normals .getValue (),
                numNormals    = normalArray .length,
-               newNormalNode = new Normal (executionContext);
+               newNormalNode = new Normal (executionContext),
+               newVectors    = new Float32Array (numNormals);
 
             for (let i = 0; i < numNormals; i += 3)
             {
                normal .set (normalArray [i], normalArray [i + 1], normalArray [i + 2]);
                normalMatrix .multVecMatrix (normal);
-               newNormalNode ._vector .push (normal);
+               newVectors .set (normal, i);
             }
 
+            newNormalNode   ._vector = newVectors;
             newGeometryNode ._normal = newNormalNode;
          }
 
@@ -649,15 +654,17 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          const
             vertexArray  = geometryNode .getVertices () .getValue (),
             numVertices  = vertexArray .length,
-            newCoordNode = new Coordinate (executionContext);
+            newCoordNode = new Coordinate (executionContext),
+            newPoints    = new Float32Array (numVertices / 4 * 3);
 
-         for (let i = 0; i < numVertices; i += 4)
+         for (let i = 0, o = 0; i < numVertices; i += 4, o += 3)
          {
             vertex .set (vertexArray [i], vertexArray [i + 1], vertexArray [i + 2], vertexArray [i + 3]);
             modelMatrix .multVecMatrix (vertex);
-            newCoordNode ._point .push (vertex);
+            newPoints .set (point .assign (vertex) .divide (vertex .w), o);
          }
 
+         newCoordNode    ._point = newPoints;
          newGeometryNode ._coord = newCoordNode;
 
          // Common fields
