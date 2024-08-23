@@ -45,34 +45,35 @@
  *
  ******************************************************************************/
 
-import Fields                 from "../../Fields.js";
-import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
-import X3DNode                from "../Core/X3DNode.js";
-import X3DChildNode           from "../Core/X3DChildNode.js";
-import X3DBoundedObject       from "./X3DBoundedObject.js";
-import Group                  from "./Group.js";
-import PointSet               from "../Rendering/PointSet.js";
-import LineSet                from "../Rendering/LineSet.js";
-import TriangleSet            from "../Rendering/TriangleSet.js";
-import FogCoordinate          from "../EnvironmentalEffects/FogCoordinate.js";
-import Tangent                from "../Rendering/Tangent.js";
-import Color                  from "../Rendering/Color.js";
-import ColorRGBA              from "../Rendering/ColorRGBA.js";
-import Normal                 from "../Rendering/Normal.js";
-import Coordinate             from "../Rendering/Coordinate.js";
-import MultiTextureCoordinate from "../Texturing/MultiTextureCoordinate.js";
-import TextureCoordinate      from "../Texturing/TextureCoordinate.js";
-import X3DConstants           from "../../Base/X3DConstants.js";
-import TraverseType           from "../../Rendering/TraverseType.js";
-import Algorithm              from "../../../standard/Math/Algorithm.js";
-import Color4                 from "../../../standard/Math/Numbers/Color4.js";
-import Vector2                from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
-import Vector4                from "../../../standard/Math/Numbers/Vector4.js";
-import Box3                   from "../../../standard/Math/Geometry/Box3.js";
-import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
-import ViewVolume             from "../../../standard/Math/Geometry/ViewVolume.js";
+import Fields                     from "../../Fields.js";
+import X3DFieldDefinition         from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray       from "../../Base/FieldDefinitionArray.js";
+import X3DNode                    from "../Core/X3DNode.js";
+import X3DChildNode               from "../Core/X3DChildNode.js";
+import X3DBoundedObject           from "./X3DBoundedObject.js";
+import Group                      from "./Group.js";
+import PointSet                   from "../Rendering/PointSet.js";
+import LineSet                    from "../Rendering/LineSet.js";
+import TriangleSet                from "../Rendering/TriangleSet.js";
+import FogCoordinate              from "../EnvironmentalEffects/FogCoordinate.js";
+import Tangent                    from "../Rendering/Tangent.js";
+import Color                      from "../Rendering/Color.js";
+import ColorRGBA                  from "../Rendering/ColorRGBA.js";
+import Normal                     from "../Rendering/Normal.js";
+import Coordinate                 from "../Rendering/Coordinate.js";
+import MultiTextureCoordinate     from "../Texturing/MultiTextureCoordinate.js";
+import TextureCoordinate          from "../Texturing/TextureCoordinate.js";
+import TextureCoordinateGenerator from "../Texturing/TextureCoordinateGenerator.js";
+import X3DConstants               from "../../Base/X3DConstants.js";
+import TraverseType               from "../../Rendering/TraverseType.js";
+import Algorithm                  from "../../../standard/Math/Algorithm.js";
+import Color4                     from "../../../standard/Math/Numbers/Color4.js";
+import Vector2                    from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3                    from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4                    from "../../../standard/Math/Numbers/Vector4.js";
+import Box3                       from "../../../standard/Math/Geometry/Box3.js";
+import Matrix4                    from "../../../standard/Math/Numbers/Matrix4.js";
+import ViewVolume                 from "../../../standard/Math/Geometry/ViewVolume.js";
 
 // No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
 
@@ -347,6 +348,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                      mapping         = normalizedTexCoord .mapping,
                      newTexCoordNode = texCoords .find (tc => tc .mapping === mapping) ?.getValue ()
                         ?? normalizedTexCoord .getValue () .create (executionContext);
+
+
                }
             }
 
@@ -509,6 +512,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                   ? textureCoordinateNode .getTextureCoordinates () [i]
                      ?? this .getBrowser () .getDefaultTextureCoordinate ()
                   : textureCoordinateNode;
+
+               if (texCoordNode instanceof TextureCoordinateGenerator)
+                  return texCoordNode .copy (executionContext);
 
                const
                   TextureCoordinate4D = browser .getConcreteNodes () .get ("TextureCoordinate4D"),
