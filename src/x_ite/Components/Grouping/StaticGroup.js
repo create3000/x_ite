@@ -297,6 +297,14 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
             // Attribute Nodes
 
+            for (const node of normalizedGeometry ._attrib)
+            {
+               const
+                  attribNode = node .getValue ();
+
+               
+            }
+
             // FogCoordinate
 
             const normalizedFogCoord = normalizedGeometry ._fogCoord .getValue ();
@@ -466,15 +474,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          const newAttribNodes = attribs .map ((attrib, i) =>
          {
-            const
-               attribNode    = attribNodes [i],
-               newAttribNode = attribNode .create (executionContext);
-
-            newAttribNode ._name          = attribNode. _name;
-            newAttribNode ._numComponents = attribNode ._numComponents;
-            newAttribNode ._value         = attrib .getValue ();
-
-            return newAttribNode;
+            return attribNodes [i] .copy (executionContext);
          });
 
          newGeometryNode ._attrib = newAttribNodes;
