@@ -277,7 +277,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          }
 
          if (browser .getBrowserOption ("Debug"))
-            console .info (`StaticGroup will create ${Object .values (groups) .length} static nodes from ${renderContexts .length} nodes.`);
+            console .info (`StaticGroup will create ${Object .values (groups) .length + singleShapes .length} static nodes from ${renderContexts .length} nodes.`);
 
          // Create static shapes.
 
