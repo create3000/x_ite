@@ -285,6 +285,21 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             .concat (singleShapes .map (renderContext => this .normalizeSingleShapes (renderContext)));
       };
    })(),
+   hasTextureCoordinateGenerator (geometryNode)
+   {
+      const texCoord = geometryNode ._texCoord ?.getValue ();
+
+      if (texCoord instanceof TextureCoordinateGenerator)
+         return true;
+
+      if (texCoord instanceof MultiTextureCoordinate)
+      {
+         if (texCoord ._texCoord .some (tc => tc .getValue () instanceof TextureCoordinateGenerator))
+            return true;
+      }
+
+      return false;
+   },
    combineShapes: (function ()
    {
       const GeometryTypes = [
@@ -761,21 +776,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       newTransformNode .setup ();
 
       return newTransformNode;
-   },
-   hasTextureCoordinateGenerator (geometryNode)
-   {
-      const texCoord = geometryNode ._texCoord ?.getValue ();
-
-      if (texCoord instanceof TextureCoordinateGenerator)
-         return true;
-
-      if (texCoord instanceof MultiTextureCoordinate)
-      {
-         if (texCoord ._texCoord .some (tc => tc .getValue () instanceof TextureCoordinateGenerator))
-            return true;
-      }
-
-      return false;
    },
    dispose ()
    {
