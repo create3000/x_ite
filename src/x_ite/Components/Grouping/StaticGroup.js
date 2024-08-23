@@ -237,7 +237,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          const
             groups          = { },
-            particleSystems = [ ];
+            instancedShapes = [ ];
 
          for (const renderContext of renderContexts)
          {
@@ -246,10 +246,15 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                appearanceNode = shapeNode .getAppearance (),
                geometryNode   = shapeNode .getGeometry ();
 
-            if (shapeNode .getShapeKey () === 1 || shapeNode .getShapeKey () === 2)
+            switch (shapeNode .getShapeKey ())
             {
-               particleSystems .push (renderContext);
-               continue;
+               case 1:
+               case 2:
+               case 3:
+               {
+                  instancedShapes .push (renderContext);
+                  continue;
+               }
             }
 
             let key = "";
@@ -271,7 +276,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // Create static shapes.
 
          return Object .values (groups) .map (group => this .combineShapes (group))
-            .concat (particleSystems .map (renderContext => this .normalizeParticleSystem (renderContext)));
+            .concat (instancedShapes .map (renderContext => this .normalizeInstancesShapes (renderContext)));
       };
    })(),
    combineShapes: (function ()
@@ -717,7 +722,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          return newGeometryNode;
       };
    })(),
-   normalizeParticleSystem ({ modelViewMatrix, shapeNode })
+   normalizeInstancesShapes ({ modelViewMatrix, shapeNode })
    {
       const
          executionContext = this .getExecutionContext (),
