@@ -344,12 +344,25 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
                for (const normalizedTexCoord of normalizedTexCoords ._texCoord)
                {
-                  const
-                     mapping         = normalizedTexCoord .mapping,
-                     newTexCoordNode = texCoords .find (tc => tc .mapping === mapping) ?.getValue ()
-                        ?? normalizedTexCoord .getValue () .create (executionContext);
+                  const mapping = normalizedTexCoord .mapping;
 
+                  let newTexCoordNode = texCoords .find (tc => tc .mapping === mapping) ?.getValue ();
 
+                  if (!newTexCoordNode)
+                  {
+                     newTexCoordNode = normalizedTexCoord .getValue () .create (executionContext);
+
+                     newGeometryNode ._texCoord .texCoord .push (newTexCoordNode);
+                  }
+
+                  newTexCoordNode ._mapping = normalizedTexCoord .mapping;
+
+                  const point = newTexCoordNode ._point;
+
+                  if (point .length < numPoints)
+                     point .resize (numPoints);
+
+                  point .assign (point .concat (normalizedTexCoord .point));
                }
             }
 
