@@ -253,8 +253,16 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          // Create static shapes.
 
-         return groups .map (group => this .combineShapes (group))
+         if (browser .getBrowserOption ("Debug"))
+            console .time ("StaticGroup");
+
+         const visibleNodes = groups .map (group => this .combineShapes (group))
             .concat (singleShapes .map (renderContext => this .normalizeSingleShapes (renderContext)));
+
+         if (browser .getBrowserOption ("Debug"))
+            console .timeEnd ("StaticGroup");
+
+         return visibleNodes;
       };
    })(),
    hasTextureCoordinateGenerator (geometryNode)
