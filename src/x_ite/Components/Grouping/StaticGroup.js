@@ -232,8 +232,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          }
 
          // Determine groups that can be combined.
-         // TODO: Sort out ParticleSystem nodes.
-         // TODO: Sort out TextureCoordinateGenerator nodes.
+         // Sort out ParticleSystem nodes.
+         // Sort out TextureCoordinateGenerator nodes.
 
          const
             groupsIndex  = { },
@@ -317,10 +317,10 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       {
          const
             executionContext = this .getExecutionContext (),
-            shapeNode        = group [0] .shapeNode,
-            geometryNode     = shapeNode .getGeometry (),
-            newShapeNode     = shapeNode .copy (executionContext),
-            GeometryType     = GeometryTypes [geometryNode .getGeometryType ()],
+            shapeNode0       = group [0] .shapeNode,
+            geometryNode0    = shapeNode0 .getGeometry (),
+            newShapeNode     = shapeNode0 .copy (executionContext),
+            GeometryType     = GeometryTypes [geometryNode0 .getGeometryType ()],
             newGeometryNode  = new GeometryType (executionContext);
 
          let numPoints = 0;
@@ -329,11 +329,11 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          {
             const
                modelMatrix        = new Matrix4 (... modelViewMatrix),
-               normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode);
+               normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode, GeometryType);
 
             // vertexCount
 
-            if (geometryNode .getGeometryType () === 1)
+            if (geometryNode0 .getGeometryType () === 1)
             {
                const vertexCount = newGeometryNode ._vertexCount;
 
@@ -494,9 +494,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             }
          }
 
-         newGeometryNode .setGeometryType (geometryNode .getGeometryType ());
+         newGeometryNode .setGeometryType (geometryNode0 .getGeometryType ());
 
-         newGeometryNode ._solid    = geometryNode .isSolid ();
+         newGeometryNode ._solid    = geometryNode0 .isSolid ();
          newShapeNode    ._geometry = newGeometryNode;
 
          return this .setupStaticShape (newShapeNode);
@@ -524,13 +524,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    },
    normalizeGeometry: (function ()
    {
-      const GeometryTypes = [
-         PointSet,
-         LineSet,
-         TriangleSet,
-         TriangleSet,
-      ];
-
       const FieldTypes = [
          Fields .MFFloat,
          Fields .MFVec2f,
@@ -543,13 +536,13 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          normal  = new Vector3 (),
          vertex  = new Vector4 ();
 
-      return function (modelMatrix, shapeNode)
+      return function (modelMatrix, shapeNode, GeometryType)
       {
          const
             browser          = this .getBrowser (),
             executionContext = this .getExecutionContext (),
             geometryNode     = shapeNode .getGeometry (),
-            newGeometryNode  = new GeometryTypes [geometryNode .getGeometryType ()] (executionContext);
+            newGeometryNode  = new GeometryType (executionContext);
 
          // Attribute Nodes
 
