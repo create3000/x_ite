@@ -454,7 +454,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             }
          }
 
-         newShapeNode ._geometry = newGeometryNode;
+         newGeometryNode ._solid = geometryNode .isSolid ();
+         newShapeNode    ._geometry = newGeometryNode;
 
          return this .setupStaticShape (newShapeNode);
       };
@@ -463,7 +464,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    {
       const geometryNode = shapeNode ._geometry .getValue ();
 
-      geometryNode ._solid = geometryNode .isSolid ();
       geometryNode ._attrib    .forEach (a => a .getValue () .setup ());
       geometryNode ._fogCoord  .getValue () ?.setup ();
       geometryNode ._color     .getValue () ?.setup ();
@@ -472,6 +472,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       geometryNode ._tangent   .getValue () ?.setup ();
       geometryNode ._normal    .getValue () ?.setup ();
       geometryNode ._coord     .getValue () ?.setup ();
+
       geometryNode .setup ();
 
       shapeNode .setPrivate (true);
