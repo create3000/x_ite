@@ -502,7 +502,15 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          const newAttribNodes = attribs .map ((attrib, i) =>
          {
-            return attribNodes [i] .copy (executionContext);
+            const
+               attribNode    = attribNodes [i],
+               newAttribNode = attribNode .create (executionContext);
+
+            newAttribNode ._name          = attribNode. _name;
+            newAttribNode ._numComponents = attribNode ._numComponents;
+            newAttribNode ._value         = attrib .getValue ();
+
+            return newAttribNode;
          });
 
          newGeometryNode ._attrib = newAttribNodes;
