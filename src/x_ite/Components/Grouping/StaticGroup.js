@@ -276,8 +276,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             group .push (renderContext);
          }
 
-         console .log (renderContexts .some (({shapeNode}) => shapeNode .getTypeName () === "ParticleSystem"))
-
          const groups = Object .values (groupsIndex);
 
          if (browser .getBrowserOption ("Debug"))
@@ -495,6 +493,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                numPoints = point .length;
             }
          }
+
+         newGeometryNode .setGeometryType (geometryNode .getGeometryType ());
 
          newGeometryNode ._solid    = geometryNode .isSolid ();
          newShapeNode    ._geometry = newGeometryNode;
