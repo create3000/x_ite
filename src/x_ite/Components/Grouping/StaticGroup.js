@@ -454,7 +454,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             }
          }
 
-         newGeometryNode ._solid = geometryNode .isSolid ();
+         newGeometryNode ._solid    = geometryNode .isSolid ();
          newShapeNode    ._geometry = newGeometryNode;
 
          return this .setupStaticShape (newShapeNode);
