@@ -617,7 +617,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             {
                normal .set (tangentArray [i], tangentArray [i + 1], tangentArray [i + 2]);
                normalMatrix .multVecMatrix (normal);
-               newTangentNode ._vector .push (tangent .set (... normal, tangentArray [i + 3]));
+               newTangentNode ._vector .push (tangent .set (normal .x, normal .y, normal .z, tangentArray [i + 3]));
             }
 
             newGeometryNode ._tangent = newTangentNode;
