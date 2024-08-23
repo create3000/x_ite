@@ -312,8 +312,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
                let newAttribNode = attrib .find (a => a .name === name) ?.getValue ();
 
-               console .log (newAttribNode)
-
                if (!newAttribNode)
                {
                   newAttribNode = normalizedAttrib .create (executionContext);
