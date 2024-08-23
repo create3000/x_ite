@@ -236,7 +236,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // TODO: Sort out TextureCoordinateGenerator nodes.
 
          const
-            groups       = { },
+            groupsIndex  = { },
             singleShapes = [ ];
 
          for (const renderContext of renderContexts)
@@ -271,17 +271,21 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             key += geometryNode .isSolid () ? 1 : 0;
             key += shapeNode .isTransparent () ? 1 : 0;
 
-            const group = groups [key] ??= [ ];
+            const group = groupsIndex [key] ??= [ ];
 
             group .push (renderContext);
          }
 
+         const groups = Object .values (groupsIndex);
+
          if (browser .getBrowserOption ("Debug"))
-            console .info (`StaticGroup will create ${Object .values (groups) .length + singleShapes .length} static nodes from ${renderContexts .length} nodes.`);
+         {
+            console .info (`StaticGroup will create ${groups .length + singleShapes .length} static nodes from ${renderContexts .length} nodes.`);
+         }
 
          // Create static shapes.
 
-         return Object .values (groups) .map (group => this .combineShapes (group))
+         return groups .map (group => this .combineShapes (group))
             .concat (singleShapes .map (renderContext => this .normalizeSingleShapes (renderContext)));
       };
    })(),
