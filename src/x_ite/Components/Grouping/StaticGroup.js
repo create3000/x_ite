@@ -458,7 +458,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          newGeometryNode ._attrib    .forEach (a => a .getValue () .setup ());
          newGeometryNode ._fogCoord  .getValue () ?.setup ();
          newGeometryNode ._color     .getValue () ?.setup ();
-         newGeometryNode ._texCoord ?.getValue () ?._texCoord .forEach (tc => tc .getValue () .setup ());
+         newGeometryNode ._texCoord ?.texCoord .forEach (tc => tc .getValue () .setup ());
          newGeometryNode ._texCoord ?.getValue () ?.setup ();
          newGeometryNode ._tangent   .getValue () ?.setup ();
          newGeometryNode ._normal    .getValue () ?.setup ();
