@@ -140,6 +140,25 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
       return function (renderObject)
       {
+         // Check if scene is currently loading something.
+
+         const scene = this .getScene ();
+
+         if (scene ._loadCount .getValue ())
+         {
+            scene ._loadCount .addFieldCallback (this, () =>
+            {
+               if (scene ._loadCount .getValue ())
+                  return;
+
+               scene ._loadCount .removeFieldCallback (this);
+
+               this .visibleNodes = null;
+            });
+
+            return [ ];
+         }
+
          // Traverse Group node to get render contexts.
 
          const
