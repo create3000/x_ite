@@ -340,8 +340,16 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                if (!newGeometryNode ._texCoord .getValue ())
                   newGeometryNode ._texCoord = new MultiTextureCoordinate (executionContext);
 
+               const texCoords = newGeometryNode ._texCoord .texCoord;
+
                for (const normalizedTexCoord of normalizedTexCoords ._texCoord)
                {
+                  const
+                     mapping         = normalizedTexCoord .mapping,
+                     newTexCoordNode = texCoords .find (tc => tc .mapping === mapping) ?.getValue ()
+                        ?? normalizedTexCoord .getValue () .create (executionContext);
+
+
                }
             }
 
@@ -397,11 +405,13 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          }
 
          newGeometryNode ._solid = geometryNode .isSolid ();
-         newGeometryNode ._fogCoord .getValue () ?.setup ();
-         newGeometryNode ._color    .getValue () ?.setup ();
-         newGeometryNode ._tangent  .getValue () ?.setup ();
-         newGeometryNode ._normal   .getValue () ?.setup ();
-         newGeometryNode ._coord    .getValue () ?.setup ();
+         newGeometryNode ._fogCoord  .getValue () ?.setup ();
+         newGeometryNode ._color     .getValue () ?.setup ();
+         newGeometryNode ._texCoord ?.getValue () ?._texCoord .forEach (tc => tc .getValue () .setup ());
+         newGeometryNode ._texCoord ?.getValue () ?.setup ();
+         newGeometryNode ._tangent   .getValue () ?.setup ();
+         newGeometryNode ._normal    .getValue () ?.setup ();
+         newGeometryNode ._coord     .getValue () ?.setup ();
          newGeometryNode .setup ();
 
          newShapeNode ._geometry = newGeometryNode;
