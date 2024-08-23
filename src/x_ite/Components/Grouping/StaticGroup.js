@@ -454,24 +454,31 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             }
          }
 
-         newGeometryNode ._solid = geometryNode .isSolid ();
-         newGeometryNode ._attrib    .forEach (a => a .getValue () .setup ());
-         newGeometryNode ._fogCoord  .getValue () ?.setup ();
-         newGeometryNode ._color     .getValue () ?.setup ();
-         newGeometryNode ._texCoord ?.texCoord .forEach (tc => tc .getValue () .setup ());
-         newGeometryNode ._texCoord ?.getValue () ?.setup ();
-         newGeometryNode ._tangent   .getValue () ?.setup ();
-         newGeometryNode ._normal    .getValue () ?.setup ();
-         newGeometryNode ._coord     .getValue () ?.setup ();
-         newGeometryNode .setup ();
-
          newShapeNode ._geometry = newGeometryNode;
-         newShapeNode .setPrivate (true);
-         newShapeNode .setup ();
 
-         return newShapeNode;
+         return this .setupStaticShape (newShapeNode);
       };
    })(),
+   setupStaticShape (shapeNode)
+   {
+      const geometryNode = shapeNode ._geometry .getValue ();
+
+      geometryNode ._solid = geometryNode .isSolid ();
+      geometryNode ._attrib    .forEach (a => a .getValue () .setup ());
+      geometryNode ._fogCoord  .getValue () ?.setup ();
+      geometryNode ._color     .getValue () ?.setup ();
+      geometryNode ._texCoord ?.texCoord .forEach (tc => tc .getValue () .setup ());
+      geometryNode ._texCoord ?.getValue () ?.setup ();
+      geometryNode ._tangent   .getValue () ?.setup ();
+      geometryNode ._normal    .getValue () ?.setup ();
+      geometryNode ._coord     .getValue () ?.setup ();
+      geometryNode .setup ();
+
+      shapeNode .setPrivate (true);
+      shapeNode .setup ();
+
+      return shapeNode;
+   },
    normalizeGeometry: (function ()
    {
       const
