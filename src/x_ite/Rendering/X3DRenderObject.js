@@ -1229,7 +1229,7 @@ Object .assign (X3DRenderObject .prototype,
                numTransmissionOpaqueShapes      = transmissionOpaqueShapes .length,
                numTransmissionTransparentShapes = transmissionTransparentShapes .length;
 
-            this .drawShapes (gl, browser, true, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes, this .transmissionTransparencySorter);
+            this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes, this .transmissionTransparencySorter);
 
             gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
             gl .generateMipmap (gl .TEXTURE_2D);
