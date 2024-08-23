@@ -78,12 +78,6 @@ import ViewVolume                 from "../../../standard/Math/Geometry/ViewVolu
 
 // No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
 
-const
-   _pointingNodes  = Symbol (),
-   _collisionNodes = Symbol (),
-   _shadowNodes    = Symbol (),
-   _displayNodes   = Symbol ();
-
 function StaticGroup (executionContext)
 {
    X3DChildNode     .call (this, executionContext);
@@ -114,13 +108,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this .groupNode .setPrivate (true);
       this .groupNode .setup ();
 
-      // Connect after Group setup.
-      this .groupNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-      this .groupNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
-      this .groupNode ._children         .addInterest ("set_children__", this);
-
-      this .setCameraObject   (this .groupNode .isCameraObject ());
-      this .setPickableObject (this .groupNode .isPickableObject ());
+      this .groupNode ._children .addInterest ("set_children__", this);
 
       this .set_children__ ();
    },
@@ -133,62 +121,24 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this .groupNode .getBBox (this .bbox);
       this .groupNode .getBBox (this .shadowBBox, true);
 
-      this [_pointingNodes]  = null;
-      this [_collisionNodes] = null;
-      this [_shadowNodes]    = null;
-      this [_displayNodes]   = null;
+      this .visibleNodes = null;
    },
    traverse (type, renderObject)
    {
-      switch (type)
-      {
-         case TraverseType .CAMERA:
-         {
-            return;
-         }
-         case TraverseType .POINTER:
-         {
-            this .traverseStaticNodes (_pointingNodes, type, renderObject);
-            return;
-         }
-         case TraverseType .COLLISION:
-         {
-            this .traverseStaticNodes (_collisionNodes, type, renderObject);
-            return;
-         }
-         case TraverseType .SHADOW:
-         {
-            this .traverseStaticNodes (_shadowNodes, type, renderObject);
-            return;
-         }
-         case TraverseType .DISPLAY:
-         {
-            this .traverseStaticNodes (_displayNodes, type, renderObject);
-            return;
-         }
-      }
-   },
-   traverseStaticNodes (staticNodes, type, renderObject)
-   {
-      this [staticNodes] ??= this .createStaticShapes (staticNodes, type, renderObject);
+      this .visibleNodes ??= this .createStaticShapes (renderObject);
 
-      for (const shapeNode of this [staticNodes])
-         shapeNode .traverse (type, renderObject);
+      for (const visibleNode of this .visibleNodes)
+         visibleNode .traverse (type, renderObject);
    },
    createStaticShapes: (() =>
    {
-      const StaticsIndex = new Map ([
-         [_pointingNodes,  ["Pointing"]],
-         [_collisionNodes, ["Collision"]],
-         [_shadowNodes,    ["Shadow"]],
-         [_displayNodes,   ["Opaque", "Transparent", "TransmissionOpaque", "TransmissionTransparent"]],
-      ]);
+      const Statics = ["Opaque", "Transparent", "TransmissionOpaque", "TransmissionTransparent"];
 
       const viewVolume = new ViewVolume ();
 
       viewVolume .intersectsSphere = () => true;
 
-      return function (staticNodes, type, renderObject)
+      return function (renderObject)
       {
          // Traverse Group node to get render contexts.
 
@@ -198,7 +148,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             viewport         = renderObject .getViewport (),
             projectionMatrix = renderObject .getProjectionMatrix (),
             modelViewMatrix  = renderObject .getModelViewMatrix (),
-            Statics          = StaticsIndex .get (staticNodes),
             firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ()),
             renderContexts   = [ ];
 
@@ -210,7 +159,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          modelViewMatrix .push ();
          modelViewMatrix .identity ();
 
-         this .groupNode .traverse (type, renderObject);
+         this .groupNode .traverse (TraverseType .DISPLAY, renderObject);
 
          modelViewMatrix .pop ();
          viewVolumes     .pop ();
