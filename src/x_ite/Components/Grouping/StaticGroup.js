@@ -192,6 +192,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // Traverse Group node to get render contexts.
 
          const
+            browser          = this .getBrowser (),
             viewVolumes      = renderObject .getViewVolumes (),
             viewport         = renderObject .getViewport (),
             projectionMatrix = renderObject .getProjectionMatrix (),
@@ -200,7 +201,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ()),
             renderContexts   = [ ];
 
-         //console .log (`Rebuilding StaticGroup ${this .getName ()}.`);
+         if (browser .getBrowserOption ("Debug"))
+            console .info (`Rebuilding StaticGroup "${this .getName () || "unnamed"}".`);
 
          viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
 
@@ -254,6 +256,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             group .push (renderContext);
          }
 
+         if (browser .getBrowserOption ("Debug"))
+            console .info (`StaticGroup will create ${Object .values (groups) .length} static nodes from ${renderContexts .length} nodes.`);
+
          // Create static shapes.
 
          return Object .values (groups) .map (group => this .combineShapes (group));
@@ -297,12 +302,34 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
             // Attribute Nodes
 
+            const attrib = newGeometryNode ._attrib;
+
             for (const node of normalizedGeometry ._attrib)
             {
                const
-                  attribNode = node .getValue ();
+                  normalizedAttrib = node .getValue (),
+                  name            = normalizedAttrib ._name .getValue ();
 
-               
+               let newAttribNode = attrib .find (a => a .name === name) ?.getValue ();
+
+               console .log (newAttribNode)
+
+               if (!newAttribNode)
+               {
+                  newAttribNode = normalizedAttrib .create (executionContext);
+
+                  attrib .push (newAttribNode);
+               }
+
+               newAttribNode ._name          = normalizedAttrib ._name;
+               newAttribNode ._numComponents = normalizedAttrib ._numComponents;
+
+               const value = newAttribNode ._value;
+
+               if (value .length < numPoints)
+                  value .resize (numPoints * (normalizedAttrib ._numComponents ?.getValue () ?? 1));
+
+               value .assign (value .concat (normalizedAttrib ._value));
             }
 
             // FogCoordinate
@@ -362,7 +389,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                   {
                      newTexCoordNode = normalizedTexCoord .create (executionContext);
 
-                     newGeometryNode ._texCoord .texCoord .push (newTexCoordNode);
+                     texCoords .push (newTexCoordNode);
                   }
 
                   newTexCoordNode ._mapping = normalizedTexCoord ._mapping;
@@ -428,6 +455,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          }
 
          newGeometryNode ._solid = geometryNode .isSolid ();
+         newGeometryNode ._attrib    .forEach (a => a .getValue () .setup ());
          newGeometryNode ._fogCoord  .getValue () ?.setup ();
          newGeometryNode ._color     .getValue () ?.setup ();
          newGeometryNode ._texCoord ?.getValue () ?._texCoord .forEach (tc => tc .getValue () .setup ());
