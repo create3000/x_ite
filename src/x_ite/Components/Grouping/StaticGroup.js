@@ -299,6 +299,21 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
             // FogCoordinate
 
+            const normalizedFogCoord = normalizedGeometry ._fogCoord .getValue ();
+
+            if (normalizedFogCoord ?._depth .length)
+            {
+               if (!newGeometryNode ._fogCoord .getValue ())
+                  newGeometryNode ._fogCoord = new FogCoordinate (executionContext);
+
+               const depth = newGeometryNode ._fogCoord .depth;
+
+               if (depth .length < numPoints)
+                  depth .resize (numPoints);
+
+               depth .assign (depth .concat (normalizedFogCoord ._depth));
+            }
+
             // Color
 
             const normalizedColor = normalizedGeometry ._color .getValue ();
