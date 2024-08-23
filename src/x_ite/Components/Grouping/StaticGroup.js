@@ -519,19 +519,10 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
                newTexCoordNode ._mapping = texCoordNode ._mapping;
 
-               switch (newTexCoordNode .getTypeName ())
-               {
-                  case "TextureCoordinate":
-                  {
-                     newTexCoordNode ._point = texCoordArray .filter ((p, i) => i % 4 < 2);
-                     break;
-                  }
-                  case "TextureCoordinate4D":
-                  {
-                     newTexCoordNode ._point = texCoordArray;
-                     break;
-                  }
-               }
+               if (has4D)
+                  newTexCoordNode ._point = texCoordArray;
+               else
+                  newTexCoordNode ._point = texCoordArray .filter ((p, i) => i % 4 < 2);
 
                return newTexCoordNode;
             });
