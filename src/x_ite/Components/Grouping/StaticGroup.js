@@ -333,6 +333,18 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
             // TextureCoordinate
 
+            if (newGeometryNode ._texCoord)
+            {
+               const normalizedTexCoords = normalizedGeometry ._texCoord .getValue ();
+
+               if (!newGeometryNode ._texCoord .getValue ())
+                  newGeometryNode ._texCoord = new MultiTextureCoordinate (executionContext);
+
+               for (const normalizedTexCoord of normalizedTexCoords ._texCoord)
+               {
+               }
+            }
+
             // Tangent
 
             const normalizedTangent = normalizedGeometry ._tangent .getValue ();
