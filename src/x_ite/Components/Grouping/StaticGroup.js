@@ -342,27 +342,29 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
                const texCoords = newGeometryNode ._texCoord .texCoord;
 
-               for (const normalizedTexCoord of normalizedTexCoords ._texCoord)
+               for (const node of normalizedTexCoords ._texCoord)
                {
-                  const mapping = normalizedTexCoord .mapping;
+                  const
+                     normalizedTexCoord = node .getValue (),
+                     mapping            = normalizedTexCoord ._mapping .getValue ();
 
                   let newTexCoordNode = texCoords .find (tc => tc .mapping === mapping) ?.getValue ();
 
                   if (!newTexCoordNode)
                   {
-                     newTexCoordNode = normalizedTexCoord .getValue () .create (executionContext);
+                     newTexCoordNode = normalizedTexCoord .create (executionContext);
 
                      newGeometryNode ._texCoord .texCoord .push (newTexCoordNode);
                   }
 
-                  newTexCoordNode ._mapping = normalizedTexCoord .mapping;
+                  newTexCoordNode ._mapping = normalizedTexCoord ._mapping;
 
                   const point = newTexCoordNode ._point;
 
                   if (point .length < numPoints)
                      point .resize (numPoints);
 
-                  point .assign (point .concat (normalizedTexCoord .point));
+                  point .assign (point .concat (normalizedTexCoord ._point));
                }
             }
 
