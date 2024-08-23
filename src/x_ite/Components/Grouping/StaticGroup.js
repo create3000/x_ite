@@ -62,6 +62,7 @@ import ColorRGBA              from "../Rendering/ColorRGBA.js";
 import Normal                 from "../Rendering/Normal.js";
 import Coordinate             from "../Rendering/Coordinate.js";
 import MultiTextureCoordinate from "../Texturing/MultiTextureCoordinate.js";
+import TextureCoordinate      from "../Texturing/TextureCoordinate.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 import TraverseType           from "../../Rendering/TraverseType.js";
 import Algorithm              from "../../../standard/Math/Algorithm.js";
@@ -510,14 +511,13 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                   : textureCoordinateNode;
 
                const
-                  has4D           = browser .getConcreteNodes () .has ("TextureCoordinate4D"),
-                  typeName        = has4D ? "TextureCoordinate4D" : "TextureCoordinate",
-                  newTexCoordNode = executionContext .createNode (typeName, false),
-                  texCoordArray   = texCoords .getValue ();
+                  TextureCoordinate4D = browser .getConcreteNodes () .get ("TextureCoordinate4D"),
+                  newTexCoordNode     = new (TextureCoordinate4D ?? TextureCoordinate) (executionContext),
+                  texCoordArray       = texCoords .getValue ();
 
                newTexCoordNode ._mapping = texCoordNode ._mapping;
 
-               if (has4D)
+               if (TextureCoordinate4D)
                   newTexCoordNode ._point = texCoordArray;
                else
                   newTexCoordNode ._point = texCoordArray .filter ((p, i) => i % 4 < 2);
