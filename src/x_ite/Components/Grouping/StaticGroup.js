@@ -348,8 +348,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                      mapping         = normalizedTexCoord .mapping,
                      newTexCoordNode = texCoords .find (tc => tc .mapping === mapping) ?.getValue ()
                         ?? normalizedTexCoord .getValue () .create (executionContext);
-
-
                }
             }
 
@@ -438,6 +436,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       return function (modelMatrix, shapeNode, GeometryType)
       {
          const
+            browser          = this .getBrowser (),
             executionContext = this .getExecutionContext (),
             geometryNode     = shapeNode .getGeometry (),
             newGeometryNode  = new GeometryType (executionContext);
@@ -513,7 +512,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                   : textureCoordinateNode;
 
                const
-                  newTexCoordNode = texCoordNode .create (executionContext),
+                  has4D           = browser .getConcreteNodes () .has ("TextureCoordinate4D"),
+                  typeName        = has4D ? "TextureCoordinate4D" : "TextureCoordinate",
+                  newTexCoordNode = executionContext .createNode (typeName),
                   texCoordArray   = texCoords .getValue ();
 
                newTexCoordNode ._mapping = texCoordNode ._mapping;
@@ -523,11 +524,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                   case "TextureCoordinate":
                   {
                      newTexCoordNode ._point = texCoordArray .filter ((p, i) => i % 4 < 2);
-                     break;
-                  }
-                  case "TextureCoordinate3D":
-                  {
-                     newTexCoordNode ._point = texCoordArray .filter ((p, i) => i % 4 < 3);
                      break;
                   }
                   case "TextureCoordinate4D":
