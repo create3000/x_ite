@@ -52,6 +52,7 @@ import X3DNode                    from "../Core/X3DNode.js";
 import X3DChildNode               from "../Core/X3DChildNode.js";
 import X3DBoundedObject           from "./X3DBoundedObject.js";
 import Group                      from "./Group.js";
+import Transform                  from "./Transform.js";
 import PointSet                   from "../Rendering/PointSet.js";
 import LineSet                    from "../Rendering/LineSet.js";
 import TriangleSet                from "../Rendering/TriangleSet.js";
@@ -68,9 +69,9 @@ import X3DConstants               from "../../Base/X3DConstants.js";
 import TraverseType               from "../../Rendering/TraverseType.js";
 import Algorithm                  from "../../../standard/Math/Algorithm.js";
 import Color4                     from "../../../standard/Math/Numbers/Color4.js";
-import Vector2                    from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3                    from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4                    from "../../../standard/Math/Numbers/Vector4.js";
+import Rotation4                  from "../../../standard/Math/Numbers/Rotation4.js";
 import Box3                       from "../../../standard/Math/Geometry/Box3.js";
 import Matrix4                    from "../../../standard/Math/Numbers/Matrix4.js";
 import ViewVolume                 from "../../../standard/Math/Geometry/ViewVolume.js";
@@ -167,11 +168,11 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          }
       }
    },
-   traverseStatics (staticShapes, type, renderObject)
+   traverseStatics (staticNodes, type, renderObject)
    {
-      this [staticShapes] ??= this .createStaticShapes (staticShapes, type, renderObject);
+      this [staticNodes] ??= this .createStaticShapes (staticNodes, type, renderObject);
 
-      for (const shapeNode of this [staticShapes])
+      for (const shapeNode of this [staticNodes])
          shapeNode .traverse (type, renderObject);
    },
    createStaticShapes: (() =>
@@ -187,7 +188,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
       viewVolume .intersectsSphere = () => true;
 
-      return function (staticShapes, type, renderObject)
+      return function (staticNodes, type, renderObject)
       {
          // Traverse Group node to get render contexts.
 
@@ -197,7 +198,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             viewport         = renderObject .getViewport (),
             projectionMatrix = renderObject .getProjectionMatrix (),
             modelViewMatrix  = renderObject .getModelViewMatrix (),
-            Statics          = StaticsIndex .get (staticShapes),
+            Statics          = StaticsIndex .get (staticNodes),
             firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ()),
             renderContexts   = [ ];
 
@@ -234,7 +235,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // TODO: Sort out ParticleSystem nodes.
          // TODO: Sort out TextureCoordinateGenerator nodes.
 
-         const groups = { };
+         const
+            groups          = { },
+            particleSystems = [ ];
 
          for (const renderContext of renderContexts)
          {
@@ -242,6 +245,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                shapeNode      = renderContext .shapeNode,
                appearanceNode = shapeNode .getAppearance (),
                geometryNode   = shapeNode .getGeometry ();
+
+            if (shapeNode .getShapeKey () === 1 || shapeNode .getShapeKey () === 2)
+            {
+               particleSystems .push (renderContext);
+               continue;
+            }
 
             let key = "";
 
@@ -261,7 +270,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          // Create static shapes.
 
-         return Object .values (groups) .map (group => this .combineShapes (group));
+         return Object .values (groups) .map (group => this .combineShapes (group))
+            .concat (particleSystems .map (renderContext => this .normalizeParticleSystem (renderContext)));
       };
    })(),
    combineShapes: (function ()
@@ -707,6 +717,33 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          return newGeometryNode;
       };
    })(),
+   normalizeParticleSystem ({ modelViewMatrix, shapeNode })
+   {
+      const
+         executionContext = this .getExecutionContext (),
+         newTransformNode = new Transform (executionContext),
+         modelMatrix      = new Matrix4 (... modelViewMatrix);
+
+      const
+         t  = new Vector3 (),
+         r  = new Rotation4 (),
+         s  = new Vector3 (),
+         so = new Rotation4 ();
+
+      modelMatrix .get (t, r, s, so);
+
+      newTransformNode ._translation      = t;
+      newTransformNode ._rotation         = r;
+      newTransformNode ._scale            = s;
+      newTransformNode ._scaleOrientation = so;
+
+      newTransformNode ._children .push (shapeNode);
+
+      newTransformNode .setPrivate (true);
+      newTransformNode .setup ();
+
+      return newTransformNode;
+   },
    dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
