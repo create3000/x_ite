@@ -237,6 +237,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          const
             groups          = { },
+            generatorShapes = [ ],
             instancedShapes = [ ];
 
          for (const renderContext of renderContexts)
@@ -255,6 +256,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                   instancedShapes .push (renderContext);
                   continue;
                }
+            }
+
+            if (this .hasTextureCoordinateGenerator (geometryNode))
+            {
+               generatorShapes .push (renderContext);
+               continue;
             }
 
             let key = "";
@@ -276,7 +283,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // Create static shapes.
 
          return Object .values (groups) .map (group => this .combineShapes (group))
-            .concat (instancedShapes .map (renderContext => this .normalizeInstancesShapes (renderContext)));
+            .concat (instancedShapes .map (renderContext => this .normalizeInstancesShapes (renderContext)))
+            .concat (generatorShapes .map (renderContext => this .normalizeGeneratorShapes (renderContext)));
       };
    })(),
    combineShapes: (function ()
@@ -304,7 +312,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          {
             const
                modelMatrix        = new Matrix4 (... modelViewMatrix),
-               normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode, GeometryType);
+               normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode);
 
             // vertexCount
 
@@ -497,10 +505,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    },
    normalizeGeometry: (function ()
    {
-      const
-         tangent = new Vector4 (),
-         normal  = new Vector3 (),
-         vertex  = new Vector4 ();
+      const GeometryTypes = [
+         PointSet,
+         LineSet,
+         TriangleSet,
+         TriangleSet,
+      ];
 
       const FieldTypes = [
          Fields .MFFloat,
@@ -509,13 +519,18 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          Fields .MFVec4f,
       ]
 
-      return function (modelMatrix, shapeNode, GeometryType)
+      const
+         tangent = new Vector4 (),
+         normal  = new Vector3 (),
+         vertex  = new Vector4 ();
+
+      return function (modelMatrix, shapeNode)
       {
          const
             browser          = this .getBrowser (),
             executionContext = this .getExecutionContext (),
             geometryNode     = shapeNode .getGeometry (),
-            newGeometryNode  = new GeometryType (executionContext);
+            newGeometryNode  = new GeometryTypes [geometryNode .getGeometryType ()] (executionContext);
 
          // Attribute Nodes
 
@@ -748,6 +763,25 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       newTransformNode .setup ();
 
       return newTransformNode;
+   },
+   hasTextureCoordinateGenerator (geometryNode)
+   {
+      const texCoord = geometryNode ._texCoord ?.getValue ();
+
+      if (texCoord instanceof TextureCoordinateGenerator)
+         return true;
+
+      if (texCoord instanceof MultiTextureCoordinate)
+      {
+         if (texCoord ._texCoord .some (tc => tc .getValue () instanceof TextureCoordinateGenerator))
+            return true;
+      }
+
+      return false;
+   },
+   normalizeGeneratorShapes (renderContext)
+   {
+      return this .normalizeInstancesShapes (renderContext);
    },
    dispose ()
    {
