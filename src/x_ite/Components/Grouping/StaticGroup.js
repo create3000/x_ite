@@ -236,9 +236,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // TODO: Sort out TextureCoordinateGenerator nodes.
 
          const
-            groups          = { },
-            generatorShapes = [ ],
-            instancedShapes = [ ];
+            groups       = { },
+            singleShapes = [ ];
 
          for (const renderContext of renderContexts)
          {
@@ -253,14 +252,14 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                case 2:
                case 3:
                {
-                  instancedShapes .push (renderContext);
+                  singleShapes .push (renderContext);
                   continue;
                }
             }
 
             if (this .hasTextureCoordinateGenerator (geometryNode))
             {
-               generatorShapes .push (renderContext);
+               singleShapes .push (renderContext);
                continue;
             }
 
@@ -283,8 +282,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // Create static shapes.
 
          return Object .values (groups) .map (group => this .combineShapes (group))
-            .concat (instancedShapes .map (renderContext => this .normalizeInstancesShapes (renderContext)))
-            .concat (generatorShapes .map (renderContext => this .normalizeGeneratorShapes (renderContext)));
+            .concat (singleShapes .map (renderContext => this .normalizeSingleShapes (renderContext)));
       };
    })(),
    combineShapes: (function ()
@@ -737,7 +735,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          return newGeometryNode;
       };
    })(),
-   normalizeInstancesShapes ({ modelViewMatrix, shapeNode })
+   normalizeSingleShapes ({ modelViewMatrix, shapeNode })
    {
       const
          executionContext = this .getExecutionContext (),
@@ -778,10 +776,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       }
 
       return false;
-   },
-   normalizeGeneratorShapes (renderContext)
-   {
-      return this .normalizeInstancesShapes (renderContext);
    },
    dispose ()
    {
