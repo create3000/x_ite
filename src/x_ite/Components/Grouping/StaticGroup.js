@@ -79,10 +79,10 @@ import ViewVolume                 from "../../../standard/Math/Geometry/ViewVolu
 // No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
 
 const
-   _pointingShapes  = Symbol (),
-   _collisionShapes = Symbol (),
-   _shadowShapes    = Symbol (),
-   _displayShapes   = Symbol ();
+   _pointingNodes  = Symbol (),
+   _collisionNodes = Symbol (),
+   _shadowNodes    = Symbol (),
+   _displayNodes   = Symbol ();
 
 function StaticGroup (executionContext)
 {
@@ -133,10 +133,10 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       this .groupNode .getBBox (this .bbox);
       this .groupNode .getBBox (this .shadowBBox, true);
 
-      this [_pointingShapes]  = null;
-      this [_collisionShapes] = null;
-      this [_shadowShapes]    = null;
-      this [_displayShapes]   = null;
+      this [_pointingNodes]  = null;
+      this [_collisionNodes] = null;
+      this [_shadowNodes]    = null;
+      this [_displayNodes]   = null;
    },
    traverse (type, renderObject)
    {
@@ -148,27 +148,27 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          }
          case TraverseType .POINTER:
          {
-            this .traverseStatics (_pointingShapes, type, renderObject);
+            this .traverseStaticNodes (_pointingNodes, type, renderObject);
             return;
          }
          case TraverseType .COLLISION:
          {
-            this .traverseStatics (_collisionShapes, type, renderObject);
+            this .traverseStaticNodes (_collisionNodes, type, renderObject);
             return;
          }
          case TraverseType .SHADOW:
          {
-            this .traverseStatics (_shadowShapes, type, renderObject);
+            this .traverseStaticNodes (_shadowNodes, type, renderObject);
             return;
          }
          case TraverseType .DISPLAY:
          {
-            this .traverseStatics (_displayShapes, type, renderObject);
+            this .traverseStaticNodes (_displayNodes, type, renderObject);
             return;
          }
       }
    },
-   traverseStatics (staticNodes, type, renderObject)
+   traverseStaticNodes (staticNodes, type, renderObject)
    {
       this [staticNodes] ??= this .createStaticShapes (staticNodes, type, renderObject);
 
@@ -178,10 +178,10 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    createStaticShapes: (() =>
    {
       const StaticsIndex = new Map ([
-         [_pointingShapes,  ["Pointing"]],
-         [_collisionShapes, ["Collision"]],
-         [_shadowShapes,    ["Shadow"]],
-         [_displayShapes,   ["Opaque", "Transparent", "TransmissionOpaque", "TransmissionTransparent"]],
+         [_pointingNodes,  ["Pointing"]],
+         [_collisionNodes, ["Collision"]],
+         [_shadowNodes,    ["Shadow"]],
+         [_displayNodes,   ["Opaque", "Transparent", "TransmissionOpaque", "TransmissionTransparent"]],
       ]);
 
       const viewVolume = new ViewVolume ();
@@ -276,11 +276,13 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             group .push (renderContext);
          }
 
+         console .log (renderContexts .some (({shapeNode}) => shapeNode .getTypeName () === "ParticleSystem"))
+
          const groups = Object .values (groupsIndex);
 
          if (browser .getBrowserOption ("Debug"))
          {
-            console .info (`StaticGroup will create ${groups .length + singleShapes .length} static nodes from ${renderContexts .length} nodes.`);
+            console .info (`StaticGroup will create ${groups .length + singleShapes .length} static nodes from the previous ${renderContexts .length} nodes.`);
          }
 
          // Create static shapes.
