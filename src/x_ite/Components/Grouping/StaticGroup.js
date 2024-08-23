@@ -227,6 +227,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          }
 
          // Determine groups that can be combined.
+         // TODO: Sort out ParticleSystem nodes.
+         // TODO: Sort out TextureCoordinateGenerator nodes.
 
          const groups = { };
 
@@ -253,10 +255,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // Create static shapes.
 
          return Object .values (groups) .map (group => this .combineShapes (group));
-
-
-         return renderContexts
-            .map (({ modelViewMatrix, shapeNode }) => this .transformShape (new Matrix4 (... modelViewMatrix), shapeNode));
       };
    })(),
    combineShapes: (function ()
