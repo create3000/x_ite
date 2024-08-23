@@ -518,17 +518,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                return newTexCoordNode;
             });
 
-            if (newTexCoordNodes .length > 1)
-            {
-               var newTexCoordNode = new MultiTextureCoordinate (executionContext);
+            const newTexCoordNode = new MultiTextureCoordinate (executionContext);
 
-               newTexCoordNode ._texCoord = newTexCoordNodes;
-            }
-            else
-            {
-               var newTexCoordNode = newTexCoordNodes [0];
-            }
-
+            newTexCoordNode ._texCoord = newTexCoordNodes;
             newGeometryNode ._texCoord = newTexCoordNode;
          }
 
@@ -628,12 +620,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                      }
                   }
 
-                  newGeometryNode ._fogCoord .getValue () ?._depth  .reverse ();
-                  newGeometryNode ._color    .getValue () ?._color  .reverse ();
-                  newGeometryNode ._texCoord .getValue () ?._point  .reverse ();
-                  newGeometryNode ._tangent  .getValue () ?._vector .reverse ();
-                  newGeometryNode ._normal   .getValue () ?._vector .reverse ();
-                  newGeometryNode ._coord    .getValue () ?._point  .reverse ();
+                  newGeometryNode ._fogCoord .getValue () ?._depth    .reverse ();
+                  newGeometryNode ._color    .getValue () ?._color    .reverse ();
+                  newGeometryNode ._texCoord .getValue () ?._texCoord .forEach (tc => tc .point .reverse ());
+                  newGeometryNode ._tangent  .getValue () ?._vector   .reverse ();
+                  newGeometryNode ._normal   .getValue () ?._vector   .reverse ();
+                  newGeometryNode ._coord    .getValue () ?._point    .reverse ();
                }
 
                break;
