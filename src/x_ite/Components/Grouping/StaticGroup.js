@@ -295,6 +295,10 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                vertexCount .assign (vertexCount .concat (normalizedGeometry ._vertexCount));
             }
 
+            // Attribute Nodes
+
+            // FogCoordinate
+
             // Color
 
             const normalizedColor = normalizedGeometry ._color .getValue ();
@@ -311,6 +315,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
                color .assign (color .concat (normalizedColor ._color));
             }
+
+            // TextureCoordinate
 
             // Tangent
 
@@ -364,10 +370,11 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          }
 
          newGeometryNode ._solid = geometryNode .isSolid ();
-         newGeometryNode ._color   .getValue () ?.setup ();
-         newGeometryNode ._tangent .getValue () ?.setup ();
-         newGeometryNode ._normal  .getValue () ?.setup ();
-         newGeometryNode ._coord   .getValue () ?.setup ();
+         newGeometryNode ._fogCoord .getValue () ?.setup ();
+         newGeometryNode ._color    .getValue () ?.setup ();
+         newGeometryNode ._tangent  .getValue () ?.setup ();
+         newGeometryNode ._normal   .getValue () ?.setup ();
+         newGeometryNode ._coord    .getValue () ?.setup ();
          newGeometryNode .setup ();
 
          newShapeNode ._geometry = newGeometryNode;
