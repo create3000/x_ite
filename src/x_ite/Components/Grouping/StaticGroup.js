@@ -514,7 +514,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                const
                   has4D           = browser .getConcreteNodes () .has ("TextureCoordinate4D"),
                   typeName        = has4D ? "TextureCoordinate4D" : "TextureCoordinate",
-                  newTexCoordNode = executionContext .createNode (typeName),
+                  newTexCoordNode = executionContext .createNode (typeName, false),
                   texCoordArray   = texCoords .getValue ();
 
                newTexCoordNode ._mapping = texCoordNode ._mapping;
