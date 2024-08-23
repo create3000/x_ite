@@ -322,10 +322,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                newAttribNode ._name          = normalizedAttrib ._name;
                newAttribNode ._numComponents = normalizedAttrib ._numComponents;
 
-               const value = newAttribNode ._value;
+               const
+                  value         = newAttribNode ._value,
+                  numComponents = normalizedAttrib ._numComponents ?.getValue () ?? 1;
 
-               if (value .length < numPoints)
-                  value .resize (numPoints * (normalizedAttrib ._numComponents ?.getValue () ?? 1));
+               if (value .length < numPoints * numComponents)
+                  value .resize (numPoints * numComponents);
 
                value .assign (value .concat (normalizedAttrib ._value));
             }
