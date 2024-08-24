@@ -1,5 +1,5 @@
-/* X_ITE v10.3.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.3.1")];
+/* X_ITE v10.4.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -2823,9 +2823,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    { },
    traverse (type, renderObject)
    {
-      if (!this .numParticles)
-         return;
-
       switch (type)
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
@@ -2867,6 +2864,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    },
    displaySimple (gl, renderContext, shaderNode)
    {
+      if (!this .numParticles)
+         return;
+
       // Display geometry.
 
       switch (this .geometryType)
@@ -2906,6 +2906,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    },
    display (gl, renderContext)
    {
+      if (!this .numParticles)
+         return;
+
       // Display geometry.
 
       switch (this .geometryType)

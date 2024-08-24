@@ -1,10 +1,10 @@
-/* X_ITE v10.3.1 */
+/* X_ITE v10.4.0 */
 var __webpack_modules__ = ({
 
-/***/ 384:
+/***/ 969:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(388);
+/* provided dependency */ var jQuery = __webpack_require__(809);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -200,7 +200,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 26:
+/***/ 953:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -214,7 +214,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(388)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(809)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -425,7 +425,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 388:
+/***/ 809:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11149,7 +11149,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 665:
+/***/ 522:
 /***/ ((module) => {
 
 /**
@@ -15928,7 +15928,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 336:
+/***/ 677:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19173,7 +19173,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 839:
+/***/ 234:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -20297,7 +20297,7 @@ Object .defineProperty (Namespace, "add",
          return module;
       }
 
-      const X3D = window [Symbol .for ("X_ITE.X3D-10.3.1")];
+      const X3D = window [Symbol .for ("X_ITE.X3D-10.4.0")];
 
       if (X3D)
          X3D [name] = module;
@@ -30908,7 +30908,7 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, Base_X3DField 
 {
    // Implement all function also in TypedArray, if possible.
    at: Array .prototype .at,
-   // concat: Array .prototype .concat,
+   concat: Array .prototype .concat,
    // copyWithin: Array.prototype.copyWithin,
    entries: Array .prototype .entries,
    every: Array .prototype .every,
@@ -31378,6 +31378,24 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, Base_X3D
    removeChildObject (value)
    {
       value .dispose ();
+   },
+   shrinkToFit ()
+   {
+      return this .getValue ();
+   },
+   concat (... args)
+   {
+      const
+         result = this .copy (),
+         target = result [X3DObjectArrayField_target];
+
+      for (const arg of args)
+      {
+         for (const value of arg)
+            target .push (value);
+      }
+
+      return result;
    },
    reverse ()
    {
@@ -32175,6 +32193,28 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, Base_X3DA
       Base_X3DArrayField .prototype .set .call (target, newArray);
 
       return newArray;
+   },
+   concat (... args)
+   {
+      const
+         result     = this .copy (),
+         target     = result [X3DTypedArrayField_target],
+         components = target .getComponents (),
+         length     = target [_length] + args .reduce ((p, c) => p + c .length, 0),
+         value      = target [_grow] (length * components);
+
+      let offset = target [_length] * components;
+
+      for (const arg of args)
+      {
+         value .set (arg .shrinkToFit (), offset);
+
+         offset += arg .length * components;
+      }
+
+      target [_length] = length;
+
+      return result;
    },
    reverse ()
    {
@@ -34204,7 +34244,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /* harmony default export */ const Base_X3DBaseNode = (x_ite_Namespace .add ("X3DBaseNode", X3DBaseNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(388);
+/* provided dependency */ var $ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34340,7 +34380,7 @@ const Legacy_default_ = Legacy;
  *
  ******************************************************************************/
 
-const BROWSER_VERSION_default_ = "10.3.1";
+const BROWSER_VERSION_default_ = "10.4.0";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -37365,7 +37405,7 @@ const X3DBindableNode_default_ = X3DBindableNode;
 
 /* harmony default export */ const Core_X3DBindableNode = (x_ite_Namespace .add ("X3DBindableNode", X3DBindableNode_default_));
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(665);
+/* provided dependency */ var libtess = __webpack_require__(522);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39903,7 +39943,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (x_ite_Namespace .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(388);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -40159,7 +40199,7 @@ const Expressions_default_ = Expressions;
 
 /* harmony default export */ const Parser_Expressions = (x_ite_Namespace .add ("Expressions", Expressions_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(388);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42858,7 +42898,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (x_ite_Namespace .add ("VRMLParser", VRMLParser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(388);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45031,7 +45071,7 @@ const URLs_default_ = URLs;
 
 /* harmony default export */ const Networking_URLs = (x_ite_Namespace .add ("URLs", URLs_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(388);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48675,7 +48715,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (x_ite_Namespace .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(388);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48826,7 +48866,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (x_ite_Namespace .add ("GLB2Parser", GLB2Parser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(388);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52162,8 +52202,8 @@ const MatrixStack_default_ = MatrixStack;
 
 /* harmony default export */ const Utility_MatrixStack = (x_ite_Namespace .add ("MatrixStack", MatrixStack_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(388);
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(665);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(809);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(522);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54933,7 +54973,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (x_ite_Namespace .add ("SVGParser", SVGParser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(388);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -60479,6 +60519,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    {
       return this .primitiveMode;
    },
+   isSolid ()
+   {
+      return this .solid;
+   },
    setSolid (value)
    {
       this .solid = value;
@@ -61091,7 +61135,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
          const length = this .attribNodes .length;
 
          for (let a = attribArrays .length; a < length; ++ a)
-            attribArrays [a] = new x_ite_Fields .MFFloat ();
+            attribArrays [a] = X3DGeometryNode .createArray ();
 
          attribArrays .length = length;
       }
@@ -63048,7 +63092,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (x_ite_Namespace .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(388);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -66412,7 +66456,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (x_ite_Namespace .add ("X3DWorld", X3DWorld_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(388);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67342,7 +67386,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (x_ite_Namespace .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(388);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -76598,502 +76642,6 @@ const Geometry3DComponent_default_ = {
 ;
 
 /* harmony default export */ const Geometry3DComponent = (x_ite_Namespace .add ("Geometry3DComponent", Geometry3DComponent_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/StaticGroup.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-// No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
-
-const
-   _pointingShapes  = Symbol (),
-   _collisionShapes = Symbol (),
-   _shadowShapes    = Symbol (),
-   _displayShapes   = Symbol ();
-
-function StaticGroup (executionContext)
-{
-   Core_X3DChildNode     .call (this, executionContext);
-   Grouping_X3DBoundedObject .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .StaticGroup);
-
-   this .groupNode  = new Grouping_Group (this .getExecutionContext ());
-   this .bbox       = new Geometry_Box3 ();
-   this .shadowBBox = new Geometry_Box3 ();
-}
-
-Object .assign (Object .setPrototypeOf (StaticGroup .prototype, Core_X3DChildNode .prototype),
-   Grouping_X3DBoundedObject .prototype,
-{
-   initialize ()
-   {
-      Core_X3DChildNode     .prototype .initialize .call (this);
-      Grouping_X3DBoundedObject .prototype .initialize .call (this);
-
-      this ._bboxSize   .addFieldInterest (this .groupNode ._bboxSize);
-      this ._bboxCenter .addFieldInterest (this .groupNode ._bboxCenter);
-      this ._children   .addFieldInterest (this .groupNode ._children);
-
-      this .groupNode ._bboxSize   = this ._bboxSize;
-      this .groupNode ._bboxCenter = this ._bboxCenter;
-      this .groupNode ._children   = this ._children;
-      this .groupNode .setPrivate (true);
-      this .groupNode .setup ();
-
-      // Connect after Group setup.
-      this .groupNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-      this .groupNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
-      this .groupNode ._children         .addInterest ("set_children__", this);
-
-      this .setCameraObject   (this .groupNode .isCameraObject ());
-      this .setPickableObject (this .groupNode .isPickableObject ());
-
-      this .set_children__ ();
-   },
-   getBBox (bbox, shadows)
-   {
-      return bbox .assign (shadows ? this .shadowBBox : this .bbox);
-   },
-   set_children__ ()
-   {
-      this .groupNode .getBBox (this .bbox);
-      this .groupNode .getBBox (this .shadowBBox, true);
-
-      this [_pointingShapes]  = null;
-      this [_collisionShapes] = null;
-      this [_shadowShapes]    = null;
-      this [_displayShapes]   = null;
-   },
-   traverse (type, renderObject)
-   {
-      switch (type)
-      {
-         case Rendering_TraverseType .CAMERA:
-         {
-            return;
-         }
-         case Rendering_TraverseType .POINTER:
-         {
-            this .traverseStatics (_pointingShapes, type, renderObject);
-            return;
-         }
-         case Rendering_TraverseType .COLLISION:
-         {
-            this .traverseStatics (_collisionShapes, type, renderObject);
-            return;
-         }
-         case Rendering_TraverseType .SHADOW:
-         {
-            this .traverseStatics (_shadowShapes, type, renderObject);
-            return;
-         }
-         case Rendering_TraverseType .DISPLAY:
-         {
-            this .traverseStatics (_displayShapes, type, renderObject);
-            return;
-         }
-      }
-   },
-   traverseStatics (staticShapes, type, renderObject)
-   {
-      if (!this [staticShapes])
-         this .buildStatics (staticShapes, type, renderObject);
-
-      const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-      for (const { modelViewMatrix: modelMatrix, shapeNode } of this [staticShapes])
-      {
-         modelViewMatrix .push ();
-         modelViewMatrix .multLeft (modelMatrix);
-         shapeNode .traverse (type, renderObject);
-         modelViewMatrix .pop ();
-      }
-   },
-   buildStatics: (() =>
-   {
-      const StaticsIndex = new Map ([
-         [_pointingShapes,  ["Pointing"]],
-         [_collisionShapes, ["Collision"]],
-         [_shadowShapes,    ["Shadow"]],
-         [_displayShapes,   ["Opaque", "Transparent", "TransmissionOpaque", "TransmissionTransparent"]],
-      ]);
-
-      const viewVolume = new Geometry_ViewVolume ();
-
-      viewVolume .intersectsSphere = () => true;
-
-      return function (staticShapes, type, renderObject)
-      {
-         const
-            viewVolumes      = renderObject .getViewVolumes (),
-            viewport         = renderObject .getViewport (),
-            projectionMatrix = renderObject .getProjectionMatrix (),
-            modelViewMatrix  = renderObject .getModelViewMatrix (),
-            Statics          = StaticsIndex .get (staticShapes),
-            firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ());
-
-         //Statics .forEach (Static => console .log (`Rebuilding StaticGroup ${Static}.`));
-
-         viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
-
-         modelViewMatrix .push ();
-         modelViewMatrix .identity ();
-
-         this .groupNode .traverse (type, renderObject);
-
-         modelViewMatrix .pop ();
-         viewVolumes     .pop ();
-
-         this [staticShapes] = [ ];
-
-         for (const [i, Static] of Statics .entries ())
-         {
-            const
-               firstShape = firstShapes [i],
-               lastShape  = renderObject [`getNum${Static}Shapes`] (),
-               shapes     = renderObject [`get${Static}Shapes`] () .splice (firstShape, lastShape - firstShape);
-
-            renderObject [`setNum${Static}Shapes`] (firstShape);
-
-            if (Static .includes ("Transmission"))
-               continue;
-
-            for (const shape of shapes)
-               this [staticShapes] .push (shape);
-         }
-      };
-   })(),
-   dispose ()
-   {
-      Grouping_X3DBoundedObject .prototype .dispose .call (this);
-      Core_X3DChildNode     .prototype .dispose .call (this);
-   },
-});
-
-Object .defineProperties (StaticGroup,
-{
-   ... Core_X3DNode .getStaticProperties ("StaticGroup", "Grouping", 3, "children", "3.0"),
-   fieldDefinitions:
-   {
-      value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "metadata",    new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "visible",     new x_ite_Fields .SFBool (true)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "bboxDisplay", new x_ite_Fields .SFBool ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "bboxSize",    new x_ite_Fields .SFVec3f (-1, -1, -1)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "bboxCenter",  new x_ite_Fields .SFVec3f ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "children",    new x_ite_Fields .MFNode ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const StaticGroup_default_ = StaticGroup;
-;
-
-/* harmony default export */ const Grouping_StaticGroup = (x_ite_Namespace .add ("StaticGroup", StaticGroup_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/Switch.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-
-
-function Switch (executionContext)
-{
-   Grouping_X3DGroupingNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .Switch);
-
-   // Legacy
-
-   if (executionContext .getSpecificationVersion () == 2.0)
-      this .addAlias ("choice", this ._children);
-
-   // Private properties
-
-   this .childNode     = null;
-   this .visibleNode   = null;
-   this .boundedObject = null;
-}
-
-Object .assign (Object .setPrototypeOf (Switch .prototype, Grouping_X3DGroupingNode .prototype),
-{
-   initialize ()
-   {
-      Grouping_X3DGroupingNode .prototype .initialize .call (this);
-
-      this ._whichChoice .addInterest ("set_child__", this);
-      this ._children    .addInterest ("set_child__", this);
-
-      this .set_child__ ();
-   },
-   getSubBBox (bbox, shadows)
-   {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-      {
-         const boundedObject = Base_X3DCast (Base_X3DConstants .X3DBoundedObject, this .visibleNode);
-
-         return boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
-      }
-
-      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-   },
-   clear () { },
-   add () { },
-   remove () { },
-   set_child__ ()
-   {
-      if (this .childNode)
-      {
-         this .childNode ._isCameraObject   .removeInterest ("set_cameraObject__",     this);
-         this .childNode ._isPickableObject .removeInterest ("set_transformSensors__", this);
-      }
-
-      if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, this .childNode))
-      {
-         this .childNode ._display     .removeInterest ("set_display__",     this);
-         this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
-      }
-
-      const whichChoice = this ._whichChoice .getValue ();
-
-      if (whichChoice >= 0 && whichChoice < this ._children .length)
-      {
-         this .childNode = Base_X3DCast (Base_X3DConstants .X3DChildNode, this ._children [whichChoice]);
-
-         if (this .childNode)
-         {
-            this .childNode ._isCameraObject   .addInterest ("set_cameraObject__",     this);
-            this .childNode ._isPickableObject .addInterest ("set_transformSensors__", this);
-
-            if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, this .childNode))
-            {
-               this .childNode ._display     .addInterest ("set_display__",     this);
-               this .childNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
-            }
-
-            delete this .traverse;
-         }
-      }
-      else
-      {
-         this .childNode = null;
-
-         this .traverse = Function .prototype;
-      }
-
-      this .set_display__ ();
-      this .set_bboxDisplay__ ();
-   },
-   set_cameraObject__ ()
-   {
-      this .setCameraObject (this .visibleNode ?.isCameraObject ());
-   },
-   set_transformSensors__ ()
-   {
-      this .setPickableObject (this .getTransformSensors () .size || this .visibleNode ?.isPickableObject ());
-   },
-   set_display__ ()
-   {
-      if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, this .childNode))
-         this .visibleNode = this .childNode ._display .getValue () ? this .childNode : null;
-      else
-         this .visibleNode = this .childNode;
-
-      this .set_cameraObject__ ();
-      this .set_transformSensors__ ();
-   },
-   set_bboxDisplay__ ()
-   {
-      if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, this .childNode))
-         this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
-      else
-         this .boundedObject = null;
-   },
-   traverse (type, renderObject)
-   {
-      switch (type)
-      {
-         case Rendering_TraverseType .POINTER:
-         case Rendering_TraverseType .CAMERA:
-         case Rendering_TraverseType .SHADOW:
-         {
-            this .visibleNode ?.traverse (type, renderObject);
-            return;
-         }
-         case Rendering_TraverseType .PICKING:
-         {
-            if (this .getTransformSensors () .size)
-            {
-               const modelMatrix = renderObject .getModelViewMatrix () .get ();
-
-               for (const transformSensorNode of this .getTransformSensors ())
-                  transformSensorNode .collect (modelMatrix);
-            }
-
-            const visibleNode = this .visibleNode;
-
-            if (visibleNode)
-            {
-               const
-                  browser          = this .getBrowser (),
-                  pickingHierarchy = browser .getPickingHierarchy ();
-
-               pickingHierarchy .push (this);
-
-               visibleNode .traverse (type, renderObject);
-
-               pickingHierarchy .pop ();
-            }
-
-            return;
-         }
-         case Rendering_TraverseType .COLLISION:
-         {
-            this .visibleNode ?.traverse (type, renderObject);
-            return;
-         }
-         case Rendering_TraverseType .DISPLAY:
-         {
-            this .visibleNode ?.traverse (type, renderObject);
-
-            this .boundedObject ?.displayBBox (type, renderObject);
-            return;
-         }
-      }
-   },
-});
-
-Object .defineProperties (Switch,
-{
-   ... Core_X3DNode .getStaticProperties ("Switch", "Grouping", 2, "children", "2.0"),
-   fieldDefinitions:
-   {
-      value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "metadata",       new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "whichChoice",    new x_ite_Fields .SFInt32 (-1)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "visible",        new x_ite_Fields .SFBool (true)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "bboxDisplay",    new x_ite_Fields .SFBool ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "bboxSize",       new x_ite_Fields .SFVec3f (-1, -1, -1)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "bboxCenter",     new x_ite_Fields .SFVec3f ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOnly,      "addChildren",    new x_ite_Fields .MFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOnly,      "removeChildren", new x_ite_Fields .MFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "children",       new x_ite_Fields .MFNode ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const Switch_default_ = Switch;
-;
-
-/* harmony default export */ const Grouping_Switch = (x_ite_Namespace .add ("Switch", Switch_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/X3DTransformMatrix3DNode.js
 /*******************************************************************************
  *
@@ -77405,6 +76953,4191 @@ const Transform_default_ = Transform;
 ;
 
 /* harmony default export */ const Grouping_Transform = (x_ite_Namespace .add ("Transform", Transform_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DPointGeometryNode.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+function X3DPointGeometryNode (executionContext)
+{
+   Rendering_X3DGeometryNode .call (this, executionContext);
+
+   const browser = this .getBrowser ();
+
+   this .setGeometryType (0);
+   this .setPrimitiveMode (browser .getContext () .POINTS);
+   this .setSolid (false);
+   this .setTransparent (true);
+}
+
+Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, Rendering_X3DGeometryNode .prototype),
+{
+   intersectsLine ()
+   {
+      return false;
+   },
+   intersectsBox ()
+   {
+      return false;
+   },
+   generateTexCoords ()
+   { },
+   display (gl, renderContext)
+   {
+      const
+         appearanceNode  = renderContext .appearanceNode,
+         shaderNode      = appearanceNode .getShader (this, renderContext),
+         renderModeNodes = appearanceNode .getRenderModes (),
+         attribNodes     = this .getAttrib (),
+         attribBuffers   = this .getAttribBuffers ();
+
+      for (const node of renderModeNodes)
+         node .enable (gl);
+
+      // Setup shader.
+
+      shaderNode .enable (gl);
+      shaderNode .setUniforms (gl, this, renderContext);
+
+      // Setup vertex attributes.
+
+      if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
+      {
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
+         for (let i = 0, length = attribNodes .length; i < length; ++ i)
+            attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+         if (this .hasFogCoords)
+            shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+
+         if (this .colorMaterial)
+            shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+         if (this .hasTangents)
+            shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
+
+         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+      }
+
+      gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+
+      for (const node of renderModeNodes)
+         node .disable (gl);
+   },
+   displayInstanced (gl, renderContext, shapeNode)
+   {
+      const
+         appearanceNode  = renderContext .appearanceNode,
+         shaderNode      = appearanceNode .getShader (this, renderContext),
+         renderModeNodes = appearanceNode .getRenderModes (),
+         attribNodes     = this .getAttrib (),
+         attribBuffers   = this .getAttribBuffers ();
+
+      for (const node of renderModeNodes)
+         node .enable (gl);
+
+      // Setup shader.
+
+      shaderNode .enable (gl);
+      shaderNode .setUniforms (gl, this, renderContext);
+
+      // Setup vertex attributes.
+
+      const instances = shapeNode .getInstances ();
+
+      if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
+      {
+         const { instancesStride, particleOffset, velocityOffset, matrixOffset, normalMatrixOffset } = shapeNode;
+
+         if (particleOffset !== undefined)
+            shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
+
+         if (velocityOffset !== undefined)
+            shaderNode .enableParticleVelocityAttribute (gl, instances, instancesStride, velocityOffset, 1);
+
+         shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
+
+         if (normalMatrixOffset !== undefined)
+            shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
+
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
+         for (let i = 0, length = attribNodes .length; i < length; ++ i)
+            attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+         if (this .hasFogCoords)
+            shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+
+         if (this .colorMaterial)
+            shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+         if (this .hasTangents)
+            shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
+
+         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+
+         this .updateInstances = false;
+      }
+
+      // Wireframes are always solid so only one drawing call is needed.
+
+      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
+
+      for (const node of renderModeNodes)
+         node .disable (gl);
+   },
+});
+
+Object .defineProperties (X3DPointGeometryNode, Core_X3DNode .getStaticProperties ("X3DPointGeometryNode", "Rendering", 1));
+
+const X3DPointGeometryNode_default_ = X3DPointGeometryNode;
+;
+
+/* harmony default export */ const Rendering_X3DPointGeometryNode = (x_ite_Namespace .add ("X3DPointGeometryNode", X3DPointGeometryNode_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/PointSet.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+function PointSet (executionContext)
+{
+   Rendering_X3DPointGeometryNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .PointSet);
+
+   this .fogCoordNode = null;
+   this .colorNode    = null;
+   this .normalNode   = null;
+   this .coordNode    = null;
+}
+
+Object .assign (Object .setPrototypeOf (PointSet .prototype, Rendering_X3DPointGeometryNode .prototype),
+{
+   initialize ()
+   {
+      Rendering_X3DPointGeometryNode .prototype .initialize .call (this);
+
+      this ._attrib   .addInterest ("set_attrib__",   this);
+      this ._fogCoord .addInterest ("set_fogCoord__", this);
+      this ._color    .addInterest ("set_color__",    this);
+      this ._normal   .addInterest ("set_normal__",   this);
+      this ._tangent  .addInterest ("set_tangent__",  this);
+      this ._coord    .addInterest ("set_coord__",    this);
+
+      this .set_attrib__ ();
+      this .set_fogCoord__ ();
+      this .set_color__ ();
+      this .set_normal__ ();
+      this .set_tangent__ ();
+      this .set_coord__ ();
+   },
+   getCoord ()
+   {
+      return this .coordNode;
+   },
+   set_attrib__ ()
+   {
+      const attribNodes = this .getAttrib ();
+
+      for (const attribNode of attribNodes)
+      {
+         attribNode .removeInterest ("requestRebuild", this);
+         attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
+      }
+
+      attribNodes .length = 0;
+
+      for (const node of this ._attrib)
+      {
+         const attribNode = Base_X3DCast (Base_X3DConstants .X3DVertexAttributeNode, node);
+
+         if (attribNode)
+            attribNodes .push (attribNode);
+      }
+
+      for (const attribNode of attribNodes)
+      {
+         attribNode .addInterest ("requestRebuild", this);
+         attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
+      }
+
+      this .updateVertexArrays ();
+   },
+   set_fogCoord__ ()
+   {
+      this .fogCoordNode ?.removeInterest ("requestRebuild", this);
+
+      this .fogCoordNode = Base_X3DCast (Base_X3DConstants .FogCoordinate, this ._fogCoord);
+
+      this .fogCoordNode ?.addInterest ("requestRebuild", this);
+   },
+   set_color__ ()
+   {
+      this .colorNode ?.removeInterest ("requestRebuild", this);
+
+      this .colorNode = Base_X3DCast (Base_X3DConstants .X3DColorNode, this ._color);
+
+      this .colorNode ?.addInterest ("requestRebuild", this);
+   },
+   set_normal__ ()
+   {
+      this .normalNode ?.removeInterest ("requestRebuild", this);
+
+      this .normalNode = Base_X3DCast (Base_X3DConstants .X3DNormalNode, this ._normal);
+
+      this .normalNode ?.addInterest ("requestRebuild", this);
+   },
+   set_tangent__ ()
+   {
+      this .tangentNode ?.removeInterest ("requestRebuild", this);
+
+      this .tangentNode = Base_X3DCast (Base_X3DConstants .Tangent, this ._tangent);
+
+      this .tangentNode ?.addInterest ("requestRebuild", this);
+   },
+   set_coord__ ()
+   {
+      this .coordNode ?.removeInterest ("requestRebuild", this);
+
+      this .coordNode = Base_X3DCast (Base_X3DConstants .X3DCoordinateNode, this ._coord);
+
+      this .coordNode ?.addInterest ("requestRebuild", this);
+   },
+   build ()
+   {
+      if (! this .coordNode || this .coordNode .isEmpty ())
+         return;
+
+      const
+         coordIndicesArray = this .getCoordIndices (),
+         attribNodes       = this .getAttrib (),
+         numAttribNodes    = attribNodes .length,
+         attribArrays      = this .getAttribs (),
+         fogCoordNode      = this .fogCoordNode,
+         fogDepthArray     = this .getFogDepths (),
+         colorNode         = this .colorNode,
+         colorArray        = this .getColors (),
+         coordNode         = this .coordNode,
+         normalArray       = this .getNormals (),
+         normalNode        = this .normalNode,
+         tangentArray      = this .getTangents (),
+         tangentNode       = this .tangentNode,
+         vertexArray       = this .getVertices (),
+         numPoints         = coordNode ._point .length;
+
+      for (let i = 0; i < numPoints; ++ i)
+         coordIndicesArray .push (i);
+
+      for (let a = 0; a < numAttribNodes; ++ a)
+      {
+         for (let i = 0; i < numPoints; ++ i)
+            attribNodes [a] .addValue (i, attribArrays [a]);
+      }
+
+      fogCoordNode ?.addDepths  (fogDepthArray, numPoints);
+      colorNode    ?.addColors  (colorArray,    numPoints);
+      normalNode   ?.addVectors (normalArray,   numPoints);
+      tangentNode  ?.addVectors (tangentArray,  numPoints);
+
+      coordNode .addPoints (vertexArray);
+   },
+});
+
+Object .defineProperties (PointSet,
+{
+   ... Core_X3DNode .getStaticProperties ("PointSet", "Rendering", 1, "geometry", "2.0"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "attrib",   new x_ite_Fields .MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "fogCoord", new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "color",    new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "tangent",  new x_ite_Fields .SFNode ()), // experimental
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "normal",   new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "coord",    new x_ite_Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const PointSet_default_ = PointSet;
+;
+
+/* harmony default export */ const Rendering_PointSet = (x_ite_Namespace .add ("PointSet", PointSet_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DLineGeometryNode.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+function X3DLineGeometryNode (executionContext)
+{
+   if (!this .getExecutionContext ())
+      Rendering_X3DGeometryNode .call (this, executionContext);
+
+   const
+      browser = this .getBrowser (),
+      gl      = browser .getContext ();
+
+   this .lineStipples                = new Float32Array ();
+   this .lineStippleBuffer           = gl .createBuffer ();
+   this .lineTrianglesBuffer         = gl .createBuffer ();
+   this .thickLinesVertexArrayObject = new Rendering_VertexArray (gl);
+
+   this .setGeometryType (1);
+   this .setPrimitiveMode (gl .LINES);
+   this .setSolid (false);
+}
+
+Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Rendering_X3DGeometryNode .prototype),
+{
+   intersectsLine ()
+   {
+      return false;
+   },
+   intersectsBox ()
+   {
+      return false;
+   },
+   updateVertexArrays ()
+   {
+      Rendering_X3DGeometryNode .prototype .updateVertexArrays .call (this);
+
+      this .thickLinesVertexArrayObject .update ();
+   },
+   generateTexCoords ()
+   {
+      // Line stipple support.
+
+      const numLines = this .getVertices () .length / 8;
+
+      if (this .lineStipples .length / 6 === numLines)
+         return;
+
+      const gl = this .getBrowser () .getContext ();
+
+      this .lineStipples = new Float32Array (numLines * 6);
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, this .lineStipples, gl .DYNAMIC_DRAW);
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
+   },
+   updateLengthSoFar: (() =>
+   {
+      const
+         modelViewProjectionMatrix = new Numbers_Matrix4 (),
+         point0                    = new Numbers_Vector4 (),
+         point1                    = new Numbers_Vector4 (),
+         projectedPoint0           = new Numbers_Vector2 (),
+         projectedPoint1           = new Numbers_Vector2 ();
+
+      return function (gl, renderContext)
+      {
+         const
+            viewport         = renderContext .renderObject .getViewVolume () .getViewport (),
+            projectionMatrix = renderContext .renderObject .getProjectionMatrix () .get (),
+            lineStipples     = this .lineStipples,
+            vertices         = this .getVertices () .getValue (),
+            numVertices      = vertices .length;
+
+         modelViewProjectionMatrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix);
+
+         let lengthSoFar = 0;
+
+         for (let i = 0, l = 0; i < numVertices; i += 8, l += 6)
+         {
+            point0 .set (vertices [i],     vertices [i + 1], vertices [i + 2], vertices [i + 3]);
+            point1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6], vertices [i + 7]);
+
+            Geometry_ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
+            Geometry_ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
+
+            lineStipples [l]     = projectedPoint1 .x;
+            lineStipples [l + 1] = projectedPoint1 .y;
+
+            lineStipples [l + 3] = projectedPoint0 .x;
+            lineStipples [l + 4] = projectedPoint0 .y;
+            lineStipples [l + 5] = lengthSoFar;
+
+            lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .magnitude ();
+         }
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, lineStipples, gl .DYNAMIC_DRAW);
+      };
+   })(),
+   displaySimple (gl, renderContext, shaderNode)
+   {
+      const linePropertiesNode = renderContext .shapeNode .getAppearance () .getStyleProperties (1);
+
+      if (linePropertiesNode)
+      {
+         if (linePropertiesNode .getTransformLines ())
+         {
+            // Setup vertex attributes.
+
+            if (this .thickLinesVertexArrayObject .enable (shaderNode .getProgram ()))
+            {
+               const
+                  stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
+                  coordIndexOffset  = 0,
+                  lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
+                  normalOffset      = 9 * Float32Array .BYTES_PER_ELEMENT,
+                  vertexOffset      = 12 * Float32Array .BYTES_PER_ELEMENT;
+
+               shaderNode .enableCoordIndexAttribute  (gl, this .lineTrianglesBuffer, stride, coordIndexOffset);
+               shaderNode .enableLineStippleAttribute (gl, this .lineTrianglesBuffer, stride, lineStippleOffset);
+
+               if (this .hasNormals)
+                  shaderNode .enableNormalAttribute (gl, this .lineTrianglesBuffer, stride, normalOffset);
+
+               shaderNode .enableVertexAttribute (gl, this .lineTrianglesBuffer, stride, vertexOffset);
+            }
+
+            gl .frontFace (gl .CCW);
+            gl .enable (gl .CULL_FACE);
+            gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount * 3);
+
+            return;
+         }
+      }
+
+      if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
+      {
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
+         shaderNode .enableLineStippleAttribute (gl, this .lineStippleBuffer, 0, 0);
+
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+         if (this .hasTangents)
+            shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
+
+         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+      }
+
+      gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+      gl .lineWidth (1);
+   },
+   display: (() =>
+   {
+      const
+         matrix                            = new Numbers_Matrix4 (),
+         modelViewProjectionMatrixArray    = new Float32Array (16),
+         invModelViewProjectionMatrixArray = new Float32Array (16);
+
+      return function (gl, renderContext)
+      {
+         const
+            browser            = this .getBrowser (),
+            appearanceNode     = renderContext .appearanceNode,
+            linePropertiesNode = appearanceNode .getLineProperties (),
+            shaderNode         = appearanceNode .getShader (this, renderContext),
+            renderModeNodes    = appearanceNode .getRenderModes (),
+            attribNodes        = this .getAttrib (),
+            attribBuffers      = this .getAttribBuffers ();
+
+         if (linePropertiesNode)
+         {
+            if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
+               this .updateLengthSoFar (gl, renderContext);
+
+            if (linePropertiesNode .getTransformLines ())
+            {
+               const
+                  renderObject        = renderContext .renderObject,
+                  viewport            = renderObject .getViewVolume () .getViewport (),
+                  projectionMatrix    = renderObject .getProjectionMatrix () .get (),
+                  primitiveMode       = browser .getWireframe () ? gl .TRIANGLES : browser .getPrimitiveMode (gl .TRIANGLES),
+                  transformShaderNode = browser .getLineTransformShader ();
+
+               modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));
+               invModelViewProjectionMatrixArray .set (matrix .inverse ());
+
+               // Start
+
+               transformShaderNode .enable (gl);
+
+               gl .uniform4f (transformShaderNode .viewport, viewport .x, viewport .y, viewport .z, viewport .w);
+               gl .uniformMatrix4fv (transformShaderNode .modelViewProjectionMatrix,    false, modelViewProjectionMatrixArray);
+               gl .uniformMatrix4fv (transformShaderNode .invModelViewProjectionMatrix, false, invModelViewProjectionMatrixArray);
+               gl .uniform1f (transformShaderNode .linewidthScaleFactor1_2, linePropertiesNode .getLinewidthScaleFactor () / 2);
+
+               // Setup vertex attributes.
+
+               if (this .thickLinesVertexArrayObject .enable (transformShaderNode .getProgram ()))
+               {
+                  const
+                     coordIndexStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
+                     coordIndexOffset0 = 0,
+                     coordIndexOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     lengthSoFarStride = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     lengthSoFarOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
+                     fogDepthStride    = 2 * Float32Array .BYTES_PER_ELEMENT,
+                     fogDepthOffset0   = 0,
+                     fogDepthOffset1   = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     colorStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     colorOffset0      = 0,
+                     colorOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT,
+                     normalStride      = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     normalOffset0     = 0,
+                     normalOffset1     = 3 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexStride      = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexOffset0     = 0,
+                     vertexOffset1     = 4 * Float32Array .BYTES_PER_ELEMENT;
+
+                  // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                  if (this .coordIndices .length)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex0", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
+                  }
+
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_LengthSoFar", this .lineStippleBuffer, 1, lengthSoFarStride, lengthSoFarOffset);
+
+                  if (this .hasFogCoords)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth0", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset1);
+                  }
+
+                  if (this .colorMaterial)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
+                  }
+
+                  if (this .hasNormals)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
+                  }
+
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
+
+               }
+
+               // Transform lines.
+
+               gl .bindBuffer (gl .ARRAY_BUFFER, null);
+               gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
+               gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .lineTrianglesBuffer);
+               gl .enable (gl .RASTERIZER_DISCARD);
+               gl .beginTransformFeedback (gl .POINTS);
+               gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2);
+               gl .endTransformFeedback ();
+               gl .disable (gl .RASTERIZER_DISCARD);
+               gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
+
+               // DEBUG
+
+               // const data = new Float32Array (16 * 6 * this .vertexCount / 2);
+               // gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer);
+               // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
+               // console .log (data);
+
+               // Render triangles.
+
+               for (const node of renderModeNodes)
+                  node .enable (gl);
+
+               // Setup shader.
+
+               shaderNode .enable (gl);
+               shaderNode .setUniforms (gl, this, renderContext);
+
+               // Setup vertex attributes.
+
+               if (this .thickLinesVertexArrayObject .enable (shaderNode .getProgram ()))
+               {
+                  const
+                     stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
+                     coordIndexOffset  = 0,
+                     lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     fogCoordOffset    = 4 * Float32Array .BYTES_PER_ELEMENT,
+                     colorOffset       = 5 * Float32Array .BYTES_PER_ELEMENT,
+                     normalOffset      = 9 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexOffset      = 12 * Float32Array .BYTES_PER_ELEMENT;
+
+                  // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                  shaderNode .enableCoordIndexAttribute  (gl, this .lineTrianglesBuffer, stride, coordIndexOffset);
+                  shaderNode .enableLineStippleAttribute (gl, this .lineTrianglesBuffer, stride, lineStippleOffset);
+
+                  if (this .hasFogCoords)
+                     shaderNode .enableFogDepthAttribute (gl, this .lineTrianglesBuffer, stride, fogCoordOffset);
+
+                  if (this .colorMaterial)
+                     shaderNode .enableColorAttribute (gl, this .lineTrianglesBuffer, stride, colorOffset);
+
+                   if (this .hasNormals)
+                     shaderNode .enableNormalAttribute (gl, this .lineTrianglesBuffer, stride, normalOffset);
+
+                  shaderNode .enableVertexAttribute (gl, this .lineTrianglesBuffer, stride, vertexOffset);
+               }
+
+               gl .frontFace (gl .CCW);
+               gl .enable (gl .CULL_FACE);
+               gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
+
+               for (const node of renderModeNodes)
+                  node .disable (gl);
+
+               return;
+            }
+         }
+
+         const primitiveMode = browser .getPrimitiveMode (this .getPrimitiveMode ());
+
+         for (const node of renderModeNodes)
+            node .enable (gl);
+
+         // Setup shader.
+
+         shaderNode .enable (gl);
+         shaderNode .setUniforms (gl, this, renderContext);
+
+         // Setup vertex attributes.
+
+         if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
+         {
+            if (this .coordIndices .length)
+               shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
+            for (let i = 0, length = attribNodes .length; i < length; ++ i)
+               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+            shaderNode .enableLineStippleAttribute (gl, this .lineStippleBuffer, 0, 0);
+
+            if (this .hasFogCoords)
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+
+            if (this .colorMaterial)
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+            if (this .hasNormals)
+               shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+            if (this .hasTangents)
+               shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
+
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+         }
+
+         gl .drawArrays (primitiveMode, 0, this .vertexCount);
+
+         for (const node of renderModeNodes)
+            node .disable (gl);
+
+         gl .lineWidth (1);
+      };
+   })(),
+   displayInstanced: (() =>
+   {
+      const
+         matrix                            = new Numbers_Matrix4 (),
+         modelViewProjectionMatrixArray    = new Float32Array (16),
+         invModelViewProjectionMatrixArray = new Float32Array (16);
+
+      return function (gl, renderContext, shapeNode)
+      {
+         const
+            browser            = this .getBrowser (),
+            geometryContext    = shapeNode .getGeometryContext (),
+            appearanceNode     = renderContext .appearanceNode,
+            linePropertiesNode = appearanceNode .getLineProperties (),
+            shaderNode         = appearanceNode .getShader (geometryContext, renderContext),
+            renderModeNodes    = appearanceNode .getRenderModes (),
+            attribNodes        = this .getAttrib (),
+            attribBuffers      = this .getAttribBuffers ();
+
+         if (linePropertiesNode)
+         {
+            if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
+               this .updateLengthSoFar (gl, renderContext);
+
+            if (linePropertiesNode .getTransformLines ())
+            {
+               const
+                  renderObject        = renderContext .renderObject,
+                  viewport            = renderObject .getViewVolume () .getViewport (),
+                  projectionMatrix    = renderObject .getProjectionMatrix () .get (),
+                  primitiveMode       = browser .getWireframe () ? gl .TRIANGLES : browser .getPrimitiveMode (gl .TRIANGLES),
+                  transformShaderNode = browser .getLineTransformInstancedShader ();
+
+               modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));
+               invModelViewProjectionMatrixArray .set (matrix .inverse ());
+
+               // Start
+
+               transformShaderNode .enable (gl);
+
+               gl .uniform4f (transformShaderNode .viewport, viewport .x, viewport .y, viewport .z, viewport .w);
+               gl .uniformMatrix4fv (transformShaderNode .modelViewProjectionMatrix,    false, modelViewProjectionMatrixArray);
+               gl .uniformMatrix4fv (transformShaderNode .invModelViewProjectionMatrix, false, invModelViewProjectionMatrixArray);
+               gl .uniform1f (transformShaderNode .linewidthScaleFactor1_2, linePropertiesNode .getLinewidthScaleFactor () / 2);
+
+               // Setup vertex attributes.
+
+               const instances = shapeNode .getInstances ();
+
+               if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (transformShaderNode .getProgram ()))
+               {
+                  const { instancesStride, matrixOffset, normalMatrixOffset, colorOffset } = shapeNode;
+
+                  transformShaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 2);
+
+                  if (normalMatrixOffset !== undefined)
+                     transformShaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 2);
+
+                  const
+                     coordIndexStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
+                     coordIndexOffset0 = 0,
+                     coordIndexOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     lengthSoFarStride = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     lengthSoFarOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
+                     fogDepthStride    = 2 * Float32Array .BYTES_PER_ELEMENT,
+                     fogDepthOffset0   = 0,
+                     fogDepthOffset1   = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     colorStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     colorOffset0      = 0,
+                     colorOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT,
+                     normalStride      = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     normalOffset0     = 0,
+                     normalOffset1     = 3 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexStride      = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexOffset0     = 0,
+                     vertexOffset1     = 4 * Float32Array .BYTES_PER_ELEMENT;
+
+                  // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                  if (this .coordIndices .length)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex0", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
+                  }
+
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_LengthSoFar", this .lineStippleBuffer, 1, lengthSoFarStride, lengthSoFarOffset);
+
+                  if (this .hasFogCoords)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth0", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset1);
+                  }
+
+                  if (geometryContext .colorMaterial)
+                  {
+                     if (geometryContext === this)
+                     {
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
+                     }
+                     else
+                     {
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", instances, 4, instancesStride, colorOffset, 2);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", instances, 4, instancesStride, colorOffset, 2);
+                     }
+                  }
+
+                  if (this .hasNormals)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
+                  }
+
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
+               }
+
+               // Create lineTrianglesBuffer
+
+               const numLines = this .getVertices () .length / 8 * shapeNode .getNumInstances ();
+
+               if (instances .numLines !== numLines)
+               {
+                  instances .numLines = numLines;
+
+                  gl .bindBuffer (gl .ARRAY_BUFFER, instances .lineTrianglesBuffer);
+                  gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
+               }
+
+               // Transform lines.
+
+               gl .bindBuffer (gl .ARRAY_BUFFER, null);
+               gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
+               gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, instances .lineTrianglesBuffer);
+               gl .enable (gl .RASTERIZER_DISCARD);
+               gl .beginTransformFeedback (gl .POINTS);
+               gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2 * shapeNode .getNumInstances ());
+               gl .endTransformFeedback ();
+               gl .disable (gl .RASTERIZER_DISCARD);
+               gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
+
+               // DEBUG
+
+               // const data = new Float32Array (16 * 6 * this .vertexCount / 2);
+               // gl .bindBuffer (gl .ARRAY_BUFFER, instances .lineTrianglesBuffer);
+               // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
+               // console .log (data);
+
+               // Render triangles.
+
+               for (const node of renderModeNodes)
+                  node .enable (gl);
+
+               // Setup shader.
+
+               shaderNode .enable (gl);
+               shaderNode .setUniforms (gl, geometryContext, renderContext);
+
+               // Setup vertex attributes.
+
+               if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
+               {
+                  shaderNode .enableInstanceMatrixAttribute       (gl, browser .getDefaultInstanceMatrices (), 100,  0, 1);
+                  shaderNode .enableInstanceNormalMatrixAttribute (gl, browser .getDefaultInstanceMatrices (), 100, 64, 1);
+
+                  const
+                     stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
+                     coordIndexOffset  = 0,
+                     lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     fogCoordOffset    = 4 * Float32Array .BYTES_PER_ELEMENT,
+                     colorOffset       = 5 * Float32Array .BYTES_PER_ELEMENT,
+                     normalOffset      = 9 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexOffset      = 12 * Float32Array .BYTES_PER_ELEMENT;
+
+                  // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                  shaderNode .enableCoordIndexAttribute  (gl, instances .lineTrianglesBuffer, stride, coordIndexOffset);
+                  shaderNode .enableLineStippleAttribute (gl, instances .lineTrianglesBuffer, stride, lineStippleOffset);
+
+                  if (this .hasFogCoords)
+                     shaderNode .enableFogDepthAttribute (gl, instances .lineTrianglesBuffer, stride, fogCoordOffset);
+
+                  if (geometryContext .colorMaterial)
+                     shaderNode .enableColorAttribute (gl, instances .lineTrianglesBuffer, stride, colorOffset);
+
+                   if (this .hasNormals)
+                     shaderNode .enableNormalAttribute (gl, instances .lineTrianglesBuffer, stride, normalOffset);
+
+                  shaderNode .enableVertexAttribute (gl, instances .lineTrianglesBuffer, stride, vertexOffset);
+
+                  this .updateInstances = false;
+               }
+
+               gl .frontFace (gl .CCW);
+               gl .enable (gl .CULL_FACE);
+               gl .drawArrays (primitiveMode, 0, this .vertexCount * 3 * shapeNode .getNumInstances ());
+
+               for (const node of renderModeNodes)
+                  node .disable (gl);
+
+               return;
+            }
+         }
+
+         const primitiveMode = browser .getPrimitiveMode (this .getPrimitiveMode ());
+
+         for (const node of renderModeNodes)
+            node .enable (gl);
+
+         // Setup shader.
+
+         shaderNode .enable (gl);
+         shaderNode .setUniforms (gl, this, renderContext);
+
+         // Setup vertex attributes.
+
+         const instances = shapeNode .getInstances ();
+
+         if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
+         {
+            const { instancesStride, particleOffset, velocityOffset, matrixOffset, normalMatrixOffset, colorOffset } = shapeNode;
+
+            if (particleOffset !== undefined)
+               shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
+
+            if (velocityOffset !== undefined)
+               shaderNode .enableParticleVelocityAttribute (gl, instances, instancesStride, velocityOffset, 1);
+
+            shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
+
+            if (normalMatrixOffset !== undefined)
+               shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
+
+            if (this .coordIndices .length)
+               shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
+            for (let i = 0, length = attribNodes .length; i < length; ++ i)
+               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+            if (this .hasFogCoords)
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+
+            if (geometryContext .colorMaterial)
+            {
+               if (geometryContext === this)
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+               else
+                  shaderNode .enableColorAttribute (gl, instances, instancesStride, colorOffset, 1);
+            }
+
+            if (this .hasNormals)
+               shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+
+            this .updateInstances = false;
+         }
+
+         // Wireframes are always solid so only one drawing call is needed.
+
+         gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
+
+         for (const node of renderModeNodes)
+            node .disable (gl);
+
+         gl .lineWidth (1);
+      };
+   })(),
+});
+
+Object .defineProperties (X3DLineGeometryNode, Core_X3DNode .getStaticProperties ("X3DLineGeometryNode", "Rendering", 1));
+
+const X3DLineGeometryNode_default_ = X3DLineGeometryNode;
+;
+
+/* harmony default export */ const Rendering_X3DLineGeometryNode = (x_ite_Namespace .add ("X3DLineGeometryNode", X3DLineGeometryNode_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/LineSet.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+function LineSet (executionContext)
+{
+   Rendering_X3DLineGeometryNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .LineSet);
+
+   this .fogCoordNode = null;
+   this .colorNode    = null;
+   this .normalNode   = null;
+   this .coordNode    = null;
+}
+
+Object .assign (Object .setPrototypeOf (LineSet .prototype, Rendering_X3DLineGeometryNode .prototype),
+{
+   initialize ()
+   {
+      Rendering_X3DLineGeometryNode .prototype .initialize .call (this);
+
+      this ._attrib   .addInterest ("set_attrib__",   this);
+      this ._fogCoord .addInterest ("set_fogCoord__", this);
+      this ._color    .addInterest ("set_color__",    this);
+      this ._normal   .addInterest ("set_normal__",   this);
+      this ._tangent  .addInterest ("set_tangent__",  this);
+      this ._coord    .addInterest ("set_coord__",    this);
+
+      this .set_attrib__ ();
+      this .set_fogCoord__ ();
+      this .set_color__ ();
+      this .set_normal__ ();
+      this .set_tangent__ ();
+      this .set_coord__ ();
+   },
+   set_attrib__ ()
+   {
+      const attribNodes = this .getAttrib ();
+
+      for (const attribNode of attribNodes)
+      {
+         attribNode .removeInterest ("requestRebuild", this);
+         attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
+      }
+
+      attribNodes .length = 0;
+
+      for (const node of this ._attrib)
+      {
+         const attribNode = Base_X3DCast (Base_X3DConstants .X3DVertexAttributeNode, node);
+
+         if (attribNode)
+            attribNodes .push (attribNode);
+      }
+
+      for (const attribNode of attribNodes)
+      {
+         attribNode .addInterest ("requestRebuild", this);
+         attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
+      }
+
+      this .updateVertexArrays ();
+   },
+   set_fogCoord__ ()
+   {
+      this .fogCoordNode ?.removeInterest ("requestRebuild", this);
+
+      this .fogCoordNode = Base_X3DCast (Base_X3DConstants .FogCoordinate, this ._fogCoord);
+
+      this .fogCoordNode ?.addInterest ("requestRebuild", this);
+   },
+   set_color__ ()
+   {
+      this .colorNode ?.removeInterest ("requestRebuild", this);
+
+      this .colorNode = Base_X3DCast (Base_X3DConstants .X3DColorNode, this ._color);
+
+      this .colorNode ?.addInterest ("requestRebuild", this);
+
+      this .setTransparent (this .colorNode ?.isTransparent ());
+   },
+   set_normal__ ()
+   {
+      this .normalNode ?.removeInterest ("requestRebuild", this);
+
+      this .normalNode = Base_X3DCast (Base_X3DConstants .X3DNormalNode, this ._normal);
+
+      this .normalNode ?.addInterest ("requestRebuild", this);
+   },
+   set_tangent__ ()
+   {
+      this .tangentNode ?.removeInterest ("requestRebuild", this);
+
+      this .tangentNode = Base_X3DCast (Base_X3DConstants .Tangent, this ._tangent);
+
+      this .tangentNode ?.addInterest ("requestRebuild", this);
+   },
+   set_coord__ ()
+   {
+      this .coordNode ?.removeInterest ("requestRebuild", this);
+
+      this .coordNode = Base_X3DCast (Base_X3DConstants .X3DCoordinateNode, this ._coord);
+
+      this .coordNode ?.addInterest ("requestRebuild", this);
+   },
+   build ()
+   {
+      if (! this .coordNode || this .coordNode .isEmpty ())
+         return;
+
+      // Fill GeometryNode
+
+      const
+         vertexCount       = this ._vertexCount,
+         coordIndicesArray = this .getCoordIndices (),
+         attribNodes       = this .getAttrib (),
+         numAttribNodes    = attribNodes .length,
+         attribArrays      = this .getAttribs (),
+         fogCoordNode      = this .fogCoordNode,
+         colorNode         = this .colorNode,
+         normalNode        = this .normalNode,
+         tangentNode       = this .tangentNode,
+         coordNode         = this .coordNode,
+         fogDepthArray     = this .getFogDepths (),
+         colorArray        = this .getColors (),
+         normalArray       = this .getNormals (),
+         tangentArray      = this .getTangents (),
+         vertexArray       = this .getVertices (),
+         size              = coordNode .getSize ();
+
+      let index = 0;
+
+      for (let count of vertexCount)
+      {
+         if (index + count > size)
+            break;
+
+         if (count > 1)
+         {
+            count = 2 * count - 2; // numVertices for line lines trip
+
+            for (let i = 0; i < count; ++ i, index += i & 1)
+            {
+               coordIndicesArray .push (index);
+
+               for (let a = 0; a < numAttribNodes; ++ a)
+                  attribNodes [a] .addValue (index, attribArrays [a]);
+
+               fogCoordNode ?.addDepth  (index, fogDepthArray);
+               colorNode    ?.addColor  (index, colorArray);
+               normalNode   ?.addVector (index, normalArray);
+               tangentNode  ?.addVector (index, tangentArray);
+
+               coordNode .addPoint (index, vertexArray);
+            }
+
+            ++ index;
+         }
+         else
+            index += count;
+      }
+   },
+});
+
+Object .defineProperties (LineSet,
+{
+   ... Core_X3DNode .getStaticProperties ("LineSet", "Rendering", 1, "geometry", "3.0"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",    new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "vertexCount", new x_ite_Fields .MFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "attrib",      new x_ite_Fields .MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "fogCoord",    new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "color",       new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "tangent",     new x_ite_Fields .SFNode ()), // experimental
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "normal",      new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "coord",       new x_ite_Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const LineSet_default_ = LineSet;
+;
+
+/* harmony default export */ const Rendering_LineSet = (x_ite_Namespace .add ("LineSet", LineSet_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/TriangleSet.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+function TriangleSet (executionContext)
+{
+   Rendering_X3DComposedGeometryNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .TriangleSet);
+}
+
+Object .assign (Object .setPrototypeOf (TriangleSet .prototype, Rendering_X3DComposedGeometryNode .prototype),
+{
+   getVerticesPerPolygon ()
+   {
+      return 3;
+   },
+   getNumVertices ()
+   {
+      return this .getCoord () ?.getSize ();
+   },
+   build ()
+   {
+      if (!this .getCoord ())
+         return;
+
+      Rendering_X3DComposedGeometryNode .prototype .build .call (this, 3, this .getCoord () .getSize (), 3, this .getCoord () .getSize ());
+   },
+   createNormals (verticesPerPolygon, polygonsSize)
+   {
+      return this .createFaceNormals (verticesPerPolygon, polygonsSize);
+   },
+});
+
+Object .defineProperties (TriangleSet,
+{
+   ... Core_X3DNode .getStaticProperties ("TriangleSet", "Rendering", 3, "geometry", "3.0"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "metadata",        new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "solid",           new x_ite_Fields .SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "ccw",             new x_ite_Fields .SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "colorPerVertex",  new x_ite_Fields .SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "normalPerVertex", new x_ite_Fields .SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "attrib",          new x_ite_Fields .MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "fogCoord",        new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "color",           new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "texCoord",        new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()), // experimental
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const TriangleSet_default_ = TriangleSet;
+;
+
+/* harmony default export */ const Rendering_TriangleSet = (x_ite_Namespace .add ("TriangleSet", TriangleSet_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Tangent.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function Tangent (executionContext)
+{
+   Rendering_X3DGeometricPropertyNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .Tangent);
+}
+
+Object .assign (Object .setPrototypeOf (Tangent .prototype, Rendering_X3DGeometricPropertyNode .prototype),
+{
+   initialize ()
+   {
+      Rendering_X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+      this ._vector .addInterest ("set_vector__", this);
+
+      this .set_vector__ ();
+   },
+   set_vector__ ()
+   {
+      this .vector = this ._vector .getValue ();
+      this .length = this ._vector .length;
+   },
+   addVector (index, array)
+   {
+      if (index >= 0 && this .length)
+      {
+         const
+            vector = this .vector,
+            i      = (index % this .length) * 4;
+
+         array .push (vector [i], vector [i + 1], vector [i + 2], vector [i + 3]);
+      }
+      else
+      {
+         return array .push (1, 0, 0, 1);
+      }
+   },
+   addVectors (array, min = this .length)
+   {
+      const length = this .length;
+
+      if (length)
+      {
+         const vector = this .vector;
+
+         for (let index = 0; index < min; ++ index)
+         {
+            const i = (index % length) * 4;
+
+            array .push (vector [i], vector [i + 1], vector [i + 2], vector [i + 3]);
+         }
+      }
+      else
+      {
+         for (let index = 0; index < min; ++ index)
+            array .push (1, 0, 0, 1);
+      }
+
+      return array;
+   },
+});
+
+Object .defineProperties (Tangent,
+{
+   ... Core_X3DNode .getStaticProperties ("Tangent", "Rendering", 5, "tangent", "4.0"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "vector",   new x_ite_Fields .MFVec4f ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const Tangent_default_ = Tangent;
+;
+
+/* harmony default export */ const Rendering_Tangent = (x_ite_Namespace .add ("Tangent", Tangent_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DColorNode.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+function X3DColorNode (executionContext)
+{
+   Rendering_X3DGeometricPropertyNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .X3DColorNode);
+
+   this .addChildObjects (Base_X3DConstants .outputOnly, "transparent", new x_ite_Fields .SFBool ());
+}
+
+Object .assign (Object .setPrototypeOf (X3DColorNode .prototype, Rendering_X3DGeometricPropertyNode .prototype),
+{
+   setTransparent (value)
+   {
+      if (!!value !== this ._transparent .getValue ())
+         this ._transparent = value;
+   },
+   isTransparent ()
+   {
+      return this ._transparent .getValue ();
+   },
+});
+
+Object .defineProperties (X3DColorNode, Core_X3DNode .getStaticProperties ("X3DColorNode", "Rendering", 1));
+
+const X3DColorNode_default_ = X3DColorNode;
+;
+
+/* harmony default export */ const Rendering_X3DColorNode = (x_ite_Namespace .add ("X3DColorNode", X3DColorNode_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Color.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+function Color (executionContext)
+{
+   Rendering_X3DColorNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .Color);
+}
+
+Object .assign (Object .setPrototypeOf (Color .prototype, Rendering_X3DColorNode .prototype),
+{
+   initialize ()
+   {
+      Rendering_X3DColorNode .prototype .initialize .call (this);
+
+      this ._color .addInterest ("set_color__", this);
+
+      this .set_color__ ();
+   },
+   set_color__ ()
+   {
+      this .color  = this ._color .getValue ();
+      this .length = this ._color .length;
+   },
+   addColor (index, array)
+   {
+      if (index >= 0 && this .length)
+      {
+         const
+            color = this .color,
+            i     = (index % this .length) * 3;
+
+         return array .push (color [i], color [i + 1], color [i + 2], 1);
+      }
+      else
+      {
+         array .push (1, 1, 1, 1);
+      }
+   },
+   addColors (array, min = this .length)
+   {
+      const length = this .length;
+
+      if (length)
+      {
+         const color = this .color;
+
+         for (let index = 0; index < min; ++ index)
+         {
+            const i = (index % length) * 3;
+
+            array .push (color [i], color [i + 1], color [i + 2], 1);
+         }
+      }
+      else
+      {
+         for (let index = 0; index < min; ++ index)
+            array .push (1, 1, 1, 1);
+      }
+
+      return array;
+   },
+});
+
+Object .defineProperties (Color,
+{
+   ... Core_X3DNode .getStaticProperties ("Color", "Rendering", 1, "color", "2.0"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "color",    new x_ite_Fields .MFColor ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const Color_default_ = Color;
+;
+
+/* harmony default export */ const Rendering_Color = (x_ite_Namespace .add ("Color", Color_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/ColorRGBA.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+function ColorRGBA (executionContext)
+{
+   Rendering_X3DColorNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .ColorRGBA);
+
+   this .setTransparent (true);
+}
+
+Object .assign (Object .setPrototypeOf (ColorRGBA .prototype, Rendering_X3DColorNode .prototype),
+{
+   initialize ()
+   {
+      Rendering_X3DColorNode .prototype .initialize .call (this);
+
+      this ._color .addInterest ("set_color__", this);
+
+      this .set_color__ ();
+   },
+   set_color__ ()
+   {
+      this .color  = this ._color .getValue ();
+      this .length = this ._color .length;
+   },
+   addColor (index, array)
+   {
+      if (index >= 0 && this .length)
+      {
+         const
+            color = this .color,
+            i     = (index % this .length) * 4;
+
+         return array .push (color [i], color [i + 1], color [i + 2], color [i + 3]);
+      }
+      else
+      {
+         array .push (1, 1, 1, 1);
+      }
+   },
+   addColors (array, min = this .length)
+   {
+      const length = this .length;
+
+      if (length)
+      {
+         const color = this .color;
+
+         for (let index = 0; index < min; ++ index)
+         {
+            const i = (index % length) * 4;
+
+            array .push (color [i], color [i + 1], color [i + 2], color [i + 3]);
+         }
+      }
+      else
+      {
+         for (let index = 0; index < min; ++ index)
+            array .push (1, 1, 1, 1);
+      }
+
+      return array;
+   },
+});
+
+Object .defineProperties (ColorRGBA,
+{
+   ... Core_X3DNode .getStaticProperties ("ColorRGBA", "Rendering", 1, "color", "3.0"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "color",    new x_ite_Fields .MFColorRGBA ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const ColorRGBA_default_ = ColorRGBA;
+;
+
+/* harmony default export */ const Rendering_ColorRGBA = (x_ite_Namespace .add ("ColorRGBA", ColorRGBA_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DNormalNode.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+function X3DNormalNode (executionContext)
+{
+   Rendering_X3DGeometricPropertyNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .X3DNormalNode);
+}
+
+Object .setPrototypeOf (X3DNormalNode .prototype, Rendering_X3DGeometricPropertyNode .prototype);
+
+Object .defineProperties (X3DNormalNode, Core_X3DNode .getStaticProperties ("X3DNormalNode", "Rendering", 2));
+
+const X3DNormalNode_default_ = X3DNormalNode;
+;
+
+/* harmony default export */ const Rendering_X3DNormalNode = (x_ite_Namespace .add ("X3DNormalNode", X3DNormalNode_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Normal.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+function Normal (executionContext)
+{
+   Rendering_X3DNormalNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .Normal);
+}
+
+Object .assign (Object .setPrototypeOf (Normal .prototype, Rendering_X3DNormalNode .prototype),
+{
+   initialize ()
+   {
+      Rendering_X3DNormalNode .prototype .initialize .call (this);
+
+      this ._vector .addInterest ("set_vector__", this);
+
+      this .set_vector__ ();
+   },
+   set_vector__ ()
+   {
+      this .vector = this ._vector .getValue ();
+      this .length = this ._vector .length;
+   },
+   addVector (index, array)
+   {
+      if (index >= 0 && this .length)
+      {
+         const
+            vector = this .vector,
+            i      = (index % this .length) * 3;
+
+         array .push (vector [i], vector [i + 1], vector [i + 2]);
+      }
+      else
+      {
+         return array .push (0, 0, 0);
+      }
+   },
+   addVectors (array, min = this .length)
+   {
+      const length = this .length;
+
+      if (length)
+      {
+         const vector = this .vector;
+
+         for (let index = 0; index < min; ++ index)
+         {
+            const i = (index % length) * 3;
+
+            array .push (vector [i], vector [i + 1], vector [i + 2]);
+         }
+      }
+      else
+      {
+         for (let index = 0; index < min; ++ index)
+            array .push (0, 0, 0);
+      }
+
+      return array;
+   },
+});
+
+Object .defineProperties (Normal,
+{
+   ... Core_X3DNode .getStaticProperties ("Normal", "Rendering", 2, "normal", "2.0"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "vector",   new x_ite_Fields .MFVec3f ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const Normal_default_ = Normal;
+;
+
+/* harmony default export */ const Rendering_Normal = (x_ite_Namespace .add ("Normal", Normal_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DCoordinateNode.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+function X3DCoordinateNode (executionContext)
+{
+   Rendering_X3DGeometricPropertyNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .X3DCoordinateNode);
+
+   this .length = 0;
+}
+
+Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, Rendering_X3DGeometricPropertyNode .prototype),
+{
+   initialize ()
+   {
+      Rendering_X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+      this ._point .addInterest ("set_point__", this);
+
+      this .set_point__ ();
+   },
+   set_point__ ()
+   {
+      this .point  = this ._point .getValue ();
+      this .length = this ._point .length;
+   },
+   isEmpty ()
+   {
+      return this .length === 0;
+   },
+   getSize ()
+   {
+      return this .length;
+   },
+   set1Point (index, point)
+   {
+      this ._point [index] = point;
+   },
+   get1Point (index, result)
+   {
+      if (index < this .length)
+      {
+         const point = this .point;
+
+         index *= 3;
+
+         return result .set (point [index], point [index + 1], point [index + 2]);
+      }
+      else
+      {
+         return result .set (0, 0, 0);
+      }
+   },
+   addPoint (index, array)
+   {
+      if (index < this .length)
+      {
+         const point = this .point;
+
+         index *= 3;
+
+         array .push (point [index], point [index + 1], point [index + 2], 1);
+      }
+      else
+      {
+         array .push (0, 0, 0, 1);
+      }
+   },
+   addPoints (array)
+   {
+      const
+         point  = this .point,
+         length = this .length * 3;
+
+      for (let index = 0; index < length; index += 3)
+         array .push (point [index], point [index + 1], point [index + 2], 1);
+
+      return array;
+   },
+   getNormal: (() =>
+   {
+      const
+         point1 = new Numbers_Vector3 (),
+         point2 = new Numbers_Vector3 (),
+         point3 = new Numbers_Vector3 ();
+
+      return function (index1, index2, index3)
+      {
+         // The index[1,2,3] cannot be less than 0.
+
+         const length = this .length;
+
+         if (index1 < length && index2 < length && index3 < length)
+         {
+            return Geometry_Triangle3 .normal (this .get1Point (index1, point1),
+                                      this .get1Point (index2, point2),
+                                      this .get1Point (index3, point3),
+                                      new Numbers_Vector3 ());
+         }
+
+         return new Numbers_Vector3 ();
+      };
+   })(),
+   getQuadNormal: (() =>
+   {
+      const
+         point1 = new Numbers_Vector3 (),
+         point2 = new Numbers_Vector3 (),
+         point3 = new Numbers_Vector3 (),
+         point4 = new Numbers_Vector3 ();
+
+      return function (index1, index2, index3, index4)
+      {
+         // The index[1,2,3,4] cannot be less than 0.
+
+         const length = this .length;
+
+         if (index1 < length && index2 < length && index3 < length && index4 < length)
+         {
+            return Geometry_Triangle3 .quadNormal (this .get1Point (index1, point1),
+                                          this .get1Point (index2, point2),
+                                          this .get1Point (index3, point3),
+                                          this .get1Point (index4, point4),
+                                          new Numbers_Vector3 ());
+         }
+
+         return new Numbers_Vector3 ();
+      };
+   })(),
+});
+
+Object .defineProperties (X3DCoordinateNode, Core_X3DNode .getStaticProperties ("X3DCoordinateNode", "Rendering", 1));
+
+const X3DCoordinateNode_default_ = X3DCoordinateNode;
+;
+
+/* harmony default export */ const Rendering_X3DCoordinateNode = (x_ite_Namespace .add ("X3DCoordinateNode", X3DCoordinateNode_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Coordinate.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+function Coordinate (executionContext)
+{
+   Rendering_X3DCoordinateNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .Coordinate);
+
+   this ._point .setUnit ("length");
+}
+
+Object .setPrototypeOf (Coordinate .prototype, Rendering_X3DCoordinateNode .prototype);
+
+Object .defineProperties (Coordinate,
+{
+   ... Core_X3DNode .getStaticProperties ("Coordinate", "Rendering", 1, "coord", "2.0"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "point",    new x_ite_Fields .MFVec3f ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const Coordinate_default_ = Coordinate;
+;
+
+/* harmony default export */ const Rendering_Coordinate = (x_ite_Namespace .add ("Coordinate", Coordinate_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/X3DTextureCoordinateNode.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+function X3DTextureCoordinateNode (executionContext)
+{
+   Rendering_X3DGeometricPropertyNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .X3DTextureCoordinateNode);
+}
+
+Object .setPrototypeOf (X3DTextureCoordinateNode .prototype, Rendering_X3DGeometricPropertyNode .prototype);
+
+Object .defineProperties (X3DTextureCoordinateNode, Core_X3DNode .getStaticProperties ("X3DTextureCoordinateNode", "Texturing", 1));
+
+const X3DTextureCoordinateNode_default_ = X3DTextureCoordinateNode;
+;
+
+/* harmony default export */ const Texturing_X3DTextureCoordinateNode = (x_ite_Namespace .add ("X3DTextureCoordinateNode", X3DTextureCoordinateNode_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MultiTextureCoordinate.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+function MultiTextureCoordinate (executionContext)
+{
+   Texturing_X3DTextureCoordinateNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .MultiTextureCoordinate);
+
+   const browser = this .getBrowser ();
+
+   this .maxTexCoords           = browser .getMaxTexCoords ();
+   this .textureCoordinateNodes = [ ];
+}
+
+Object .assign (Object .setPrototypeOf (MultiTextureCoordinate .prototype, Texturing_X3DTextureCoordinateNode .prototype),
+{
+   initialize ()
+   {
+      Texturing_X3DTextureCoordinateNode .prototype .initialize .call (this);
+
+      this ._texCoord .addInterest ("set_texCoord__", this);
+
+      this .set_texCoord__ ();
+   },
+   set_texCoord__ ()
+   {
+      const textureCoordinateNodes = this .textureCoordinateNodes;
+
+      for (const textureCoordinateNode of textureCoordinateNodes)
+         textureCoordinateNode .removeInterest ("addNodeEvent", this);
+
+      textureCoordinateNodes .length = 0;
+
+      for (const node of this ._texCoord)
+      {
+         const textureCoordinateNode = Base_X3DCast (Base_X3DConstants .X3DSingleTextureCoordinateNode, node);
+
+         if (textureCoordinateNode)
+            textureCoordinateNodes .push (textureCoordinateNode);
+      }
+
+      for (const textureCoordinateNode of textureCoordinateNodes)
+         textureCoordinateNode .addInterest ("addNodeEvent", this);
+   },
+   getCount ()
+   {
+      return Math .min (this .maxTexCoords, this .textureCoordinateNodes .length);
+   },
+   isEmpty ()
+   {
+      return true;
+   },
+   getSize ()
+   {
+      return 0;
+   },
+   init (multiArray)
+   {
+      const
+         textureCoordinateNodes = this .textureCoordinateNodes,
+         length                 = Math .min (this .maxTexCoords, textureCoordinateNodes .length);
+
+      for (let i = 0; i < length; ++ i)
+         textureCoordinateNodes [i] .init (multiArray);
+   },
+   addPoint (index, multiArray)
+   {
+      const
+         textureCoordinateNodes = this .textureCoordinateNodes,
+         length                 = Math .min (this .maxTexCoords, textureCoordinateNodes .length);
+
+      for (let i = 0; i < length; ++ i)
+         textureCoordinateNodes [i] .addPointToChannel (index, multiArray [i]);
+   },
+   addPoints (array)
+   {
+      for (const textureCoordinateNode of this .textureCoordinateNodes)
+         return textureCoordinateNode .addPoints (array);
+
+      return array;
+   },
+   getTextureCoordinates ()
+   {
+      return this .textureCoordinateNodes;
+   },
+   getTextureCoordinateMapping (textureCoordinateMapping)
+   {
+      const
+         textureCoordinateNodes = this .textureCoordinateNodes,
+         length                 = Math .min (this .maxTexCoords, textureCoordinateNodes .length);
+
+      for (let i = 0; i < length; ++ i)
+         textureCoordinateNodes [i] .getTextureCoordinateMapping (textureCoordinateMapping, i);
+   },
+   setShaderUniforms (gl, shaderObject)
+   {
+      const
+         textureCoordinateNodes = this .textureCoordinateNodes,
+         length                 = Math .min (this .maxTexCoords, textureCoordinateNodes .length);
+
+      if (length)
+      {
+         for (let i = 0; i < length; ++ i)
+            textureCoordinateNodes [i] .setShaderUniforms (gl, shaderObject, i);
+      }
+      else
+      {
+         this .getBrowser () .getDefaultTextureCoordinate () .setShaderUniforms (gl, shaderObject, 0);
+      }
+   },
+});
+
+Object .defineProperties (MultiTextureCoordinate,
+{
+   ... Core_X3DNode .getStaticProperties ("MultiTextureCoordinate", "Texturing", 2, "texCoord", "3.0"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "texCoord", new x_ite_Fields .MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const MultiTextureCoordinate_default_ = MultiTextureCoordinate;
+;
+
+/* harmony default export */ const Texturing_MultiTextureCoordinate = (x_ite_Namespace .add ("MultiTextureCoordinate", MultiTextureCoordinate_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/X3DSingleTextureCoordinateNode.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+function X3DSingleTextureCoordinateNode (executionContext)
+{
+   Texturing_X3DTextureCoordinateNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .X3DSingleTextureCoordinateNode);
+}
+
+Object .assign (Object .setPrototypeOf (X3DSingleTextureCoordinateNode .prototype, Texturing_X3DTextureCoordinateNode .prototype),
+{
+   getCount ()
+   {
+      return 1;
+   },
+   init (multiArray)
+   {
+      // Must use new array, because there can be cloned texture coordinate nodes.
+      multiArray .push (Rendering_X3DGeometryNode .createArray ());
+   },
+   addPoint (index, multiArray)
+   {
+      this .addPointToChannel (index, multiArray [0]);
+   },
+   getTextureCoordinateMapping (textureCoordinateMapping, channel = 0)
+   {
+      textureCoordinateMapping .set (this ._mapping .getValue () || channel, channel);
+   },
+   setShaderUniforms (gl, shaderObject, channel = 0)
+   {
+      gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [channel], 0);
+   },
+});
+
+Object .defineProperties (X3DSingleTextureCoordinateNode, Core_X3DNode .getStaticProperties ("X3DSingleTextureCoordinateNode", "Texturing", 1));
+
+const X3DSingleTextureCoordinateNode_default_ = X3DSingleTextureCoordinateNode;
+;
+
+/* harmony default export */ const Texturing_X3DSingleTextureCoordinateNode = (x_ite_Namespace .add ("X3DSingleTextureCoordinateNode", X3DSingleTextureCoordinateNode_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/TextureCoordinate.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+function TextureCoordinate (executionContext)
+{
+   Texturing_X3DSingleTextureCoordinateNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .TextureCoordinate);
+}
+
+Object .assign (Object .setPrototypeOf (TextureCoordinate .prototype, Texturing_X3DSingleTextureCoordinateNode .prototype),
+{
+   initialize ()
+   {
+      Texturing_X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
+
+      this ._point .addInterest ("set_point__", this);
+
+      this .set_point__ ();
+   },
+   set_point__ ()
+   {
+      this .point  = this ._point .getValue ();
+      this .length = this ._point .length;
+   },
+   isEmpty ()
+   {
+      return this .length === 0;
+   },
+   getSize ()
+   {
+      return this .length;
+   },
+   get1Point (index, result)
+   {
+      if (index < this .length)
+      {
+         const point = this .point;
+
+         index *= 2;
+
+         return result .set (point [index], point [index + 1], 0, 1);
+      }
+      else
+      {
+         return result .set (0, 0, 0, 1);
+      }
+   },
+   set1Point: (function ()
+   {
+      const point = new Numbers_Vector2 ();
+
+      return function (index, { x, y, w })
+      {
+         this ._point [index] = point .set (x, y) .divide (w);
+      };
+   })(),
+   addPointToChannel (index, array)
+   {
+      if (index >= 0 && this .length)
+      {
+         const
+            point = this .point,
+            i      = (index % this .length) * 2;
+
+         array .push (point [i], point [i + 1], 0, 1);
+      }
+      else
+      {
+         array .push (0, 0, 0, 1);
+      }
+   },
+   addPoints (array)
+   {
+      const
+         point  = this .point,
+         length = this .length;
+
+      for (let i = 0, p = 0; i < length; ++ i, p += 2)
+         array .push (point [p], point [p + 1], 0, 1);
+
+      return array;
+   },
+});
+
+Object .defineProperties (TextureCoordinate,
+{
+   ... Core_X3DNode .getStaticProperties ("TextureCoordinate", "Texturing", 1, "texCoord", "2.0"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "mapping",  new x_ite_Fields .SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "point",    new x_ite_Fields .MFVec2f ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const TextureCoordinate_default_ = TextureCoordinate;
+;
+
+/* harmony default export */ const Texturing_TextureCoordinate = (x_ite_Namespace .add ("TextureCoordinate", TextureCoordinate_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+let TextureCoordinateGeneratorModeType_i = 0;
+
+const ModeType =
+{
+   NONE:                        TextureCoordinateGeneratorModeType_i ++,
+   SPHERE:                      TextureCoordinateGeneratorModeType_i ++,
+   CAMERASPACENORMAL:           TextureCoordinateGeneratorModeType_i ++,
+   CAMERASPACEPOSITION:         TextureCoordinateGeneratorModeType_i ++,
+   CAMERASPACEREFLECTIONVECTOR: TextureCoordinateGeneratorModeType_i ++,
+   SPHERE_LOCAL:                TextureCoordinateGeneratorModeType_i ++,
+   COORD:                       TextureCoordinateGeneratorModeType_i ++,
+   COORD_EYE:                   TextureCoordinateGeneratorModeType_i ++,
+   NOISE:                       TextureCoordinateGeneratorModeType_i ++,
+   NOISE_EYE:                   TextureCoordinateGeneratorModeType_i ++,
+   SPHERE_REFLECT:              TextureCoordinateGeneratorModeType_i ++,
+   SPHERE_REFLECT_LOCAL:        TextureCoordinateGeneratorModeType_i ++,
+};
+
+const TextureCoordinateGeneratorModeType_default_ = ModeType;
+;
+
+/* harmony default export */ const TextureCoordinateGeneratorModeType = (x_ite_Namespace .add ("TextureCoordinateGeneratorModeType", TextureCoordinateGeneratorModeType_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/TextureCoordinateGenerator.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+function TextureCoordinateGenerator (executionContext)
+{
+   Texturing_X3DSingleTextureCoordinateNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .TextureCoordinateGenerator);
+
+   this .mode      = TextureCoordinateGeneratorModeType .SPHERE;
+   this .parameter = new Float32Array (6);
+}
+
+Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, Texturing_X3DSingleTextureCoordinateNode .prototype),
+{
+   initialize ()
+   {
+      Texturing_X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
+
+      this ._mode      .addInterest ("set_mode__",      this);
+      this ._parameter .addInterest ("set_parameter__", this);
+
+      this .set_mode__ ();
+      this .set_parameter__ ();
+   },
+   set_mode__: (() =>
+   {
+      const modes = new Map ([
+         ["SPHERE",                      TextureCoordinateGeneratorModeType .SPHERE],
+         ["CAMERASPACENORMAL",           TextureCoordinateGeneratorModeType .CAMERASPACENORMAL],
+         ["CAMERASPACEPOSITION",         TextureCoordinateGeneratorModeType .CAMERASPACEPOSITION],
+         ["CAMERASPACEREFLECTIONVECTOR", TextureCoordinateGeneratorModeType .CAMERASPACEREFLECTIONVECTOR],
+         ["SPHERE-LOCAL",                TextureCoordinateGeneratorModeType .SPHERE_LOCAL],
+         ["COORD",                       TextureCoordinateGeneratorModeType .COORD],
+         ["COORD-EYE",                   TextureCoordinateGeneratorModeType .COORD_EYE],
+         ["NOISE",                       TextureCoordinateGeneratorModeType .NOISE],
+         ["NOISE-EYE",                   TextureCoordinateGeneratorModeType .NOISE_EYE],
+         ["SPHERE-REFLECT",              TextureCoordinateGeneratorModeType .SPHERE_REFLECT],
+         ["SPHERE-REFLECT-LOCAL",        TextureCoordinateGeneratorModeType .SPHERE_REFLECT_LOCAL],
+      ]);
+
+      return function ()
+      {
+         this .mode = modes .get (this ._mode .getValue ());
+
+         if (this .mode === undefined)
+            this .mode = TextureCoordinateGeneratorModeType .SPHERE;
+      };
+   })(),
+   set_parameter__ ()
+   {
+      const length = Math .min (this .parameter .length, this ._parameter .length)
+
+      for (let i = 0; i < length; ++ i)
+         this .parameter [i] = this ._parameter [i];
+
+      this .parameter .fill (0, length);
+   },
+   addPointToChannel (index, array)
+   {
+      array .push (0, 0, 0, 1);
+   },
+   addPoints (array)
+   {
+      return array;
+   },
+   setShaderUniforms (gl, shaderObject, channel = 0)
+   {
+      gl .uniform1i  (shaderObject .x3d_TextureCoordinateGeneratorMode [channel],      this .mode);
+      gl .uniform1fv (shaderObject .x3d_TextureCoordinateGeneratorParameter [channel], this .parameter);
+   },
+});
+
+Object .defineProperties (TextureCoordinateGenerator,
+{
+   ... Core_X3DNode .getStaticProperties ("TextureCoordinateGenerator", "Texturing", 2, "texCoord", "3.0"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",  new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "mapping",   new x_ite_Fields .SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "mode",      new x_ite_Fields .SFString ("SPHERE")),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "parameter", new x_ite_Fields .MFFloat ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const TextureCoordinateGenerator_default_ = TextureCoordinateGenerator;
+;
+
+/* harmony default export */ const Texturing_TextureCoordinateGenerator = (x_ite_Namespace .add ("TextureCoordinateGenerator", TextureCoordinateGenerator_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/StaticGroup.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
+
+function StaticGroup (executionContext)
+{
+   Core_X3DChildNode     .call (this, executionContext);
+   Grouping_X3DBoundedObject .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .StaticGroup);
+
+   this .groupNode  = new Grouping_Group (this .getExecutionContext ());
+   this .bbox       = new Geometry_Box3 ();
+   this .shadowBBox = new Geometry_Box3 ();
+}
+
+Object .assign (Object .setPrototypeOf (StaticGroup .prototype, Core_X3DChildNode .prototype),
+   Grouping_X3DBoundedObject .prototype,
+{
+   initialize ()
+   {
+      Core_X3DChildNode     .prototype .initialize .call (this);
+      Grouping_X3DBoundedObject .prototype .initialize .call (this);
+
+      this ._bboxSize   .addFieldInterest (this .groupNode ._bboxSize);
+      this ._bboxCenter .addFieldInterest (this .groupNode ._bboxCenter);
+      this ._children   .addFieldInterest (this .groupNode ._children);
+
+      this .groupNode ._bboxSize   = this ._bboxSize;
+      this .groupNode ._bboxCenter = this ._bboxCenter;
+      this .groupNode ._children   = this ._children;
+      this .groupNode .setPrivate (true);
+      this .groupNode .setup ();
+
+      this .groupNode ._children .addInterest ("set_children__", this);
+
+      this .set_children__ ();
+   },
+   getBBox (bbox, shadows)
+   {
+      return bbox .assign (shadows ? this .shadowBBox : this .bbox);
+   },
+   set_children__ ()
+   {
+      this .groupNode .getBBox (this .bbox);
+      this .groupNode .getBBox (this .shadowBBox, true);
+
+      this .visibleNodes = null;
+   },
+   traverse (type, renderObject)
+   {
+      this .visibleNodes ??= this .createStaticShapes (renderObject);
+
+      for (const visibleNode of this .visibleNodes)
+         visibleNode .traverse (type, renderObject);
+   },
+   createStaticShapes: (() =>
+   {
+      const Statics = ["Opaque", "Transparent", "TransmissionOpaque", "TransmissionTransparent"];
+
+      const viewVolume = new Geometry_ViewVolume ();
+
+      viewVolume .intersectsSphere = () => true;
+
+      return function (renderObject)
+      {
+         // Check if scene is currently loading something.
+
+         const scene = this .getScene ();
+
+         if (scene ._loadCount .getValue ())
+         {
+            scene ._loadCount .addFieldCallback (this, () =>
+            {
+               if (scene ._loadCount .getValue ())
+                  return;
+
+               scene ._loadCount .removeFieldCallback (this);
+
+               this .visibleNodes = null;
+            });
+
+            return [ ];
+         }
+
+         // Traverse Group node to get render contexts.
+
+         const
+            browser          = this .getBrowser (),
+            viewVolumes      = renderObject .getViewVolumes (),
+            viewport         = renderObject .getViewport (),
+            projectionMatrix = renderObject .getProjectionMatrix (),
+            modelViewMatrix  = renderObject .getModelViewMatrix (),
+            firstShapes      = Statics .map (Static => renderObject [`getNum${Static}Shapes`] ()),
+            renderContexts   = [ ];
+
+         if (browser .getBrowserOption ("Debug"))
+            console .info (`Rebuilding StaticGroup "${this .getName () || "unnamed"}".`);
+
+         viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
+
+         modelViewMatrix .push ();
+         modelViewMatrix .identity ();
+
+         this .groupNode .traverse (Rendering_TraverseType .DISPLAY, renderObject);
+
+         modelViewMatrix .pop ();
+         viewVolumes     .pop ();
+
+         for (const [i, Static] of Statics .entries ())
+         {
+            const
+               firstShape = firstShapes [i],
+               lastShape  = renderObject [`getNum${Static}Shapes`] (),
+               shapes     = renderObject [`get${Static}Shapes`] () .splice (firstShape, lastShape - firstShape);
+
+            renderObject [`setNum${Static}Shapes`] (firstShape);
+
+            if (Static .includes ("Transmission"))
+               continue;
+
+            for (const renderContext of shapes)
+               renderContexts .push (renderContext);
+         }
+
+         // Determine groups that can be combined.
+         // Sort out ParticleSystem nodes.
+         // Sort out TextureCoordinateGenerator nodes.
+
+         const
+            groupsIndex  = { },
+            singleShapes = [ ];
+
+         for (const renderContext of renderContexts)
+         {
+            const
+               shapeNode      = renderContext .shapeNode,
+               appearanceNode = shapeNode .getAppearance (),
+               geometryNode   = shapeNode .getGeometry ();
+
+            switch (shapeNode .getShapeKey ())
+            {
+               case 1:
+               case 2:
+               case 3:
+               {
+                  singleShapes .push (renderContext);
+                  continue;
+               }
+            }
+
+            if (this .hasTextureCoordinateGenerator (geometryNode))
+            {
+               singleShapes .push (renderContext);
+               continue;
+            }
+
+            let key = "";
+
+            key += appearanceNode .getId ();
+            key += ".";
+            key += geometryNode .getGeometryType ();
+            key += geometryNode .isSolid () ? 1 : 0;
+            key += shapeNode .isTransparent () ? 1 : 0;
+            key += shapeNode ._pointerEvents .getValue () ? 1 : 0;
+            key += shapeNode ._castShadow .getValue () ? 1 : 0;
+            key += shapeNode ._bboxDisplay .getValue () ? 1 : 0;
+
+            const group = groupsIndex [key] ??= [ ];
+
+            group .push (renderContext);
+         }
+
+         const groups = Object .values (groupsIndex);
+
+         if (browser .getBrowserOption ("Debug"))
+         {
+            console .info (`StaticGroup will create ${groups .length + singleShapes .length} static nodes from the previous ${renderContexts .length} nodes.`);
+         }
+
+         // Create static shapes.
+
+         if (browser .getBrowserOption ("Debug"))
+            console .time ("StaticGroup");
+
+         const visibleNodes = groups .map (group => this .combineShapes (group))
+            .concat (singleShapes .map (renderContext => this .normalizeSingleShapes (renderContext)));
+
+         if (browser .getBrowserOption ("Debug"))
+            console .timeEnd ("StaticGroup");
+
+         return visibleNodes;
+      };
+   })(),
+   hasTextureCoordinateGenerator (geometryNode)
+   {
+      const texCoord = geometryNode ._texCoord ?.getValue ();
+
+      if (texCoord instanceof Texturing_TextureCoordinateGenerator)
+         return true;
+
+      if (texCoord instanceof Texturing_MultiTextureCoordinate)
+      {
+         if (texCoord ._texCoord .some (tc => tc .getValue () instanceof Texturing_TextureCoordinateGenerator))
+            return true;
+      }
+
+      return false;
+   },
+   combineShapes (group)
+   {
+      const
+         executionContext = this .getExecutionContext (),
+         shapeNode0       = group [0] .shapeNode,
+         newShapeNode     = shapeNode0 .copy (executionContext);
+
+      let
+         newGeometryNode = null,
+         numPoints       = 0;
+
+      for (const { modelViewMatrix, shapeNode } of group)
+      {
+         const
+            modelMatrix        = new Numbers_Matrix4 (... modelViewMatrix),
+            normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode);
+
+         if (!newGeometryNode)
+         {
+            newGeometryNode = normalizedGeometry;
+            numPoints       = normalizedGeometry ._coord .point .length;
+            continue;
+         }
+
+         // vertexCount
+
+         if (newGeometryNode .getGeometryType () === 1)
+         {
+            const vertexCount = newGeometryNode ._vertexCount;
+
+            vertexCount .assign (vertexCount .concat (normalizedGeometry ._vertexCount));
+         }
+
+         // Attribute Nodes
+
+         const attrib = newGeometryNode ._attrib;
+
+         for (const node of normalizedGeometry ._attrib)
+         {
+            const
+               normalizedAttrib = node .getValue (),
+               name            = normalizedAttrib ._name .getValue ();
+
+            let newAttribNode = attrib .find (a => a .name === name) ?.getValue ();
+
+            if (!newAttribNode)
+            {
+               newAttribNode = normalizedAttrib .create (executionContext);
+
+               attrib .push (newAttribNode);
+            }
+
+            newAttribNode ._name          = normalizedAttrib ._name;
+            newAttribNode ._numComponents = normalizedAttrib ._numComponents;
+
+            const
+               value         = newAttribNode ._value,
+               numComponents = normalizedAttrib ._numComponents ?.getValue () ?? 1;
+
+            if (value .length < numPoints * numComponents)
+               value .resize (numPoints * numComponents);
+
+            value .assign (value .concat (normalizedAttrib ._value));
+         }
+
+         // FogCoordinate
+
+         const normalizedFogCoord = normalizedGeometry ._fogCoord .getValue ();
+
+         if (normalizedFogCoord ?._depth .length)
+         {
+            if (!newGeometryNode ._fogCoord .getValue ())
+               newGeometryNode ._fogCoord = new EnvironmentalEffects_FogCoordinate (executionContext);
+
+            const depth = newGeometryNode ._fogCoord .depth;
+
+            if (depth .length < numPoints)
+               depth .resize (numPoints);
+
+            depth .assign (depth .concat (normalizedFogCoord ._depth));
+         }
+
+         // Color
+
+         const normalizedColor = normalizedGeometry ._color .getValue ();
+
+         if (normalizedColor ?._color .length)
+         {
+            if (!newGeometryNode ._color .getValue ())
+               newGeometryNode ._color = normalizedColor .create (executionContext);
+
+            const color = newGeometryNode ._color .color;
+
+            if (color .length < numPoints)
+               color .resize (numPoints, Numbers_Color4 .White);
+
+            color .assign (color .concat (normalizedColor ._color));
+         }
+
+         // TextureCoordinate
+
+         if (newGeometryNode ._texCoord)
+         {
+            const normalizedTexCoords = normalizedGeometry ._texCoord .getValue ();
+
+            if (!newGeometryNode ._texCoord .getValue ())
+               newGeometryNode ._texCoord = new Texturing_MultiTextureCoordinate (executionContext);
+
+            const texCoords = newGeometryNode ._texCoord .texCoord;
+
+            for (const node of normalizedTexCoords ._texCoord)
+            {
+               const
+                  normalizedTexCoord = node .getValue (),
+                  mapping            = normalizedTexCoord ._mapping .getValue ();
+
+               let newTexCoordNode = texCoords .find (tc => tc .mapping === mapping) ?.getValue ();
+
+               if (!newTexCoordNode)
+               {
+                  newTexCoordNode = normalizedTexCoord .create (executionContext);
+
+                  texCoords .push (newTexCoordNode);
+               }
+
+               newTexCoordNode ._mapping = normalizedTexCoord ._mapping;
+
+               const point = newTexCoordNode ._point;
+
+               if (point .length < numPoints)
+                  point .resize (numPoints);
+
+               point .assign (point .concat (normalizedTexCoord ._point));
+            }
+         }
+
+         // Tangent
+
+         const normalizedTangent = normalizedGeometry ._tangent .getValue ();
+
+         if (normalizedTangent ?._vector .length)
+         {
+            if (!newGeometryNode ._tangent .getValue ())
+               newGeometryNode ._tangent = new Rendering_Tangent (executionContext);
+
+            const vector = newGeometryNode ._tangent .vector;
+
+            if (vector .length < numPoints)
+               vector .resize (numPoints);
+
+            vector .assign (vector .concat (normalizedTangent ._vector));
+         }
+
+         // Normal
+
+         const normalizedNormal = normalizedGeometry ._normal .getValue ();
+
+         if (normalizedNormal ?._vector .length)
+         {
+            if (!newGeometryNode ._normal .getValue ())
+               newGeometryNode ._normal = new Rendering_Normal (executionContext);
+
+            const vector = newGeometryNode ._normal .vector;
+
+            if (vector .length < numPoints)
+               vector .resize (numPoints);
+
+            vector .assign (vector .concat (normalizedNormal ._vector));
+         }
+
+         // Coordinate
+
+         const normalizedCoord = normalizedGeometry ._coord .getValue ();
+
+         if (normalizedCoord ?._point .length)
+         {
+            if (!newGeometryNode ._coord .getValue ())
+               newGeometryNode ._coord = new Rendering_Coordinate (executionContext);
+
+            const point = newGeometryNode ._coord .point;
+
+            point .assign (point .concat (normalizedCoord ._point));
+
+            numPoints = point .length;
+         }
+      }
+
+      // Setup X3DGeometryNode node.
+
+      newGeometryNode ._attrib    .forEach (a => a .getValue () .setup ());
+      newGeometryNode ._fogCoord  .getValue () ?.setup ();
+      newGeometryNode ._color     .getValue () ?.setup ();
+      newGeometryNode ._texCoord ?.texCoord .forEach (tc => tc .getValue () .setup ());
+      newGeometryNode ._texCoord ?.getValue () ?.setup ();
+      newGeometryNode ._tangent   .getValue () ?.setup ();
+      newGeometryNode ._normal    .getValue () ?.setup ();
+      newGeometryNode ._coord     .getValue () ?.setup ();
+
+      newGeometryNode .setup ();
+
+      // Setup Shape node.
+
+      newShapeNode ._geometry = newGeometryNode;
+
+      newShapeNode .setPrivate (true);
+      newShapeNode .setup ();
+
+      return newShapeNode;
+   },
+   normalizeGeometry: (function ()
+   {
+      const GeometryTypes = [
+         Rendering_PointSet,
+         Rendering_LineSet,
+         Rendering_TriangleSet,
+         Rendering_TriangleSet,
+      ];
+
+      const FieldTypes = [
+         x_ite_Fields .MFFloat,
+         x_ite_Fields .MFVec2f,
+         x_ite_Fields .MFVec3f,
+         x_ite_Fields .MFVec4f,
+      ];
+
+      const
+         tangent = new Numbers_Vector4 (),
+         normal  = new Numbers_Vector3 (),
+         vertex  = new Numbers_Vector4 (),
+         point   = new Numbers_Vector3 ();
+
+      return function (modelMatrix, shapeNode)
+      {
+         const
+            browser          = this .getBrowser (),
+            executionContext = this .getExecutionContext (),
+            geometryNode     = shapeNode .getGeometry (),
+            GeometryType     = GeometryTypes [geometryNode .getGeometryType ()],
+            newGeometryNode  = new GeometryType (executionContext);
+
+         // Attribute Nodes
+
+         const
+            attribs     = geometryNode .getAttribs (),
+            attribNodes = geometryNode .getAttrib ();
+
+         const newAttribNodes = attribs .map ((attrib, i) =>
+         {
+            const
+               attribNode    = attribNodes [i],
+               newAttribNode = attribNode .create (executionContext);
+
+            newAttribNode ._name          = attribNode. _name;
+            newAttribNode ._numComponents = attribNode ._numComponents;
+            newAttribNode ._value         = attrib .getValue ();
+
+            return newAttribNode;
+         });
+
+         newGeometryNode ._attrib = newAttribNodes;
+
+         // FogCoordinate
+
+         const fogDepthArray = geometryNode .getFogDepths () .getValue ();
+
+         if (fogDepthArray .length)
+         {
+            const newFogCoordNode = new EnvironmentalEffects_FogCoordinate (executionContext);
+
+            newFogCoordNode ._depth    = fogDepthArray;
+            newGeometryNode ._fogCoord = newFogCoordNode;
+         }
+
+         // Color
+
+         const colorArray = geometryNode .getColors () .getValue ();
+
+         if (colorArray .length)
+         {
+            if (shapeNode .isTransparent ())
+            {
+               var newColor = new Rendering_ColorRGBA (executionContext);
+
+               newColor ._color = colorArray;
+            }
+            else
+            {
+               var newColor = new Rendering_Color (executionContext);
+
+               newColor ._color = colorArray .filter ((c, i) => i % 4 < 3);
+            }
+
+            newGeometryNode ._color = newColor;
+         }
+
+         // TextureCoordinate
+
+         if (newGeometryNode ._texCoord)
+         {
+            const
+               textureCoordinateNode = geometryNode .getTextureCoordinate (),
+               multiTexCoords        = geometryNode .getMultiTexCoords ();
+
+            const newTexCoordNodes = multiTexCoords .map ((texCoords, i) =>
+            {
+               const texCoordNode = textureCoordinateNode instanceof Texturing_MultiTextureCoordinate
+                  ? textureCoordinateNode .getTextureCoordinates () [i]
+                     ?? this .getBrowser () .getDefaultTextureCoordinate ()
+                  : textureCoordinateNode;
+
+               if (texCoordNode instanceof Texturing_TextureCoordinateGenerator)
+                  return texCoordNode .copy (executionContext);
+
+               const
+                  texCoordArray       = texCoords .getValue (),
+                  TextureCoordinate4D = browser .getConcreteNodes () .get ("TextureCoordinate4D"),
+                  newTexCoordNode     = new (TextureCoordinate4D ?? Texturing_TextureCoordinate) (executionContext);
+
+               newTexCoordNode ._mapping = texCoordNode ._mapping;
+
+               if (TextureCoordinate4D)
+                  newTexCoordNode ._point = texCoordArray;
+               else
+                  newTexCoordNode ._point = texCoordArray .filter ((p, i) => i % 4 < 2);
+
+               return newTexCoordNode;
+            });
+
+            const newTexCoordNode = new Texturing_MultiTextureCoordinate (executionContext);
+
+            newTexCoordNode ._texCoord = newTexCoordNodes;
+            newGeometryNode ._texCoord = newTexCoordNode;
+         }
+
+         // Tangents
+
+         const
+            normalMatrix = modelMatrix .submatrix .inverse () .transpose (),
+            tangentArray = geometryNode .getTangents () .getValue ();
+
+         if (tangentArray .length)
+         {
+            const
+               numTangents    = tangentArray .length,
+               newTangentNode = new Rendering_Tangent (executionContext),
+               newVectors     = new Float32Array (numTangents);
+
+            for (let i = 0; i < numTangents; i += 4)
+            {
+               normal .set (tangentArray [i], tangentArray [i + 1], tangentArray [i + 2]);
+               normalMatrix .multVecMatrix (normal);
+               newVectors .set (tangent .set (normal .x, normal .y, normal .z, tangentArray [i + 3]), i);
+            }
+
+            newTangentNode  ._vector  = newVectors;
+            newGeometryNode ._tangent = newTangentNode;
+         }
+
+         // Normals
+
+         const normalArray = geometryNode .getNormals () .getValue ();
+
+         if (normalArray .length)
+         {
+            const
+               numNormals    = normalArray .length,
+               newNormalNode = new Rendering_Normal (executionContext),
+               newVectors    = new Float32Array (numNormals);
+
+            for (let i = 0; i < numNormals; i += 3)
+            {
+               normal .set (normalArray [i], normalArray [i + 1], normalArray [i + 2]);
+               normalMatrix .multVecMatrix (normal);
+               newVectors .set (normal, i);
+            }
+
+            newNormalNode   ._vector = newVectors;
+            newGeometryNode ._normal = newNormalNode;
+         }
+
+         // Coordinate
+
+         const
+            vertexArray  = geometryNode .getVertices () .getValue (),
+            numVertices  = vertexArray .length,
+            newCoordNode = new Rendering_Coordinate (executionContext),
+            newPoints    = new Float32Array (numVertices / 4 * 3);
+
+         for (let i = 0, o = 0; i < numVertices; i += 4, o += 3)
+         {
+            vertex .set (vertexArray [i], vertexArray [i + 1], vertexArray [i + 2], vertexArray [i + 3]);
+            modelMatrix .multVecMatrix (vertex);
+            newPoints .set (point .assign (vertex) .divide (vertex .w), o);
+         }
+
+         newCoordNode    ._point = newPoints;
+         newGeometryNode ._coord = newCoordNode;
+
+         // Common fields
+
+         switch (geometryNode .getGeometryType ())
+         {
+            case 1:
+            {
+               newGeometryNode ._vertexCount = new Array (numVertices / 8) .fill (2);
+               break;
+            }
+            case 2:
+            case 3:
+            {
+               newGeometryNode .setGeometryType (geometryNode .getGeometryType ());
+               newGeometryNode ._solid = geometryNode .isSolid ();
+
+               if (!(geometryNode ._ccw ?.getValue () ?? true))
+               {
+                  for (const attrib of newGeometryNode ._attrib)
+                  {
+                     const numComponents = Math_Algorithm .clamp (attrib .numComponents, 1, 4);
+
+                     if (numComponents === 1)
+                     {
+                        attrib .value .reverse ();
+                     }
+                     else
+                     {
+                        const value = new (FieldTypes [numComponents - 1]) ();
+
+                        value .setValue (attrib .value .shrinkToFit ());
+                        value .reverse ();
+
+                        attrib .value = value .shrinkToFit ();
+                     }
+                  }
+
+                  newGeometryNode ._fogCoord .getValue () ?._depth    .reverse ();
+                  newGeometryNode ._color    .getValue () ?._color    .reverse ();
+                  newGeometryNode ._texCoord .getValue () ?._texCoord .forEach (tc => tc .point .reverse ());
+                  newGeometryNode ._tangent  .getValue () ?._vector   .reverse ();
+                  newGeometryNode ._normal   .getValue () ?._vector   .reverse ();
+                  newGeometryNode ._coord    .getValue () ?._point    .reverse ();
+               }
+
+               break;
+            }
+         }
+
+         return newGeometryNode;
+      };
+   })(),
+   normalizeSingleShapes ({ modelViewMatrix, shapeNode })
+   {
+      const
+         executionContext = this .getExecutionContext (),
+         newTransformNode = new Grouping_Transform (executionContext),
+         modelMatrix      = new Numbers_Matrix4 (... modelViewMatrix);
+
+      const
+         t  = new Numbers_Vector3 (),
+         r  = new Numbers_Rotation4 (),
+         s  = new Numbers_Vector3 (),
+         so = new Numbers_Rotation4 ();
+
+      modelMatrix .get (t, r, s, so);
+
+      newTransformNode ._translation      = t;
+      newTransformNode ._rotation         = r;
+      newTransformNode ._scale            = s;
+      newTransformNode ._scaleOrientation = so;
+
+      newTransformNode ._children .push (shapeNode);
+
+      newTransformNode .setPrivate (true);
+      newTransformNode .setup ();
+
+      return newTransformNode;
+   },
+   dispose ()
+   {
+      Grouping_X3DBoundedObject .prototype .dispose .call (this);
+      Core_X3DChildNode     .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (StaticGroup,
+{
+   ... Core_X3DNode .getStaticProperties ("StaticGroup", "Grouping", 3, "children", "3.0"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "metadata",    new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "visible",     new x_ite_Fields .SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "bboxDisplay", new x_ite_Fields .SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "bboxSize",    new x_ite_Fields .SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "bboxCenter",  new x_ite_Fields .SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "children",    new x_ite_Fields .MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const StaticGroup_default_ = StaticGroup;
+;
+
+/* harmony default export */ const Grouping_StaticGroup = (x_ite_Namespace .add ("StaticGroup", StaticGroup_default_));
+;// CONCATENATED MODULE: ./src/x_ite/Components/Grouping/Switch.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+
+
+function Switch (executionContext)
+{
+   Grouping_X3DGroupingNode .call (this, executionContext);
+
+   this .addType (Base_X3DConstants .Switch);
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () == 2.0)
+      this .addAlias ("choice", this ._children);
+
+   // Private properties
+
+   this .childNode     = null;
+   this .visibleNode   = null;
+   this .boundedObject = null;
+}
+
+Object .assign (Object .setPrototypeOf (Switch .prototype, Grouping_X3DGroupingNode .prototype),
+{
+   initialize ()
+   {
+      Grouping_X3DGroupingNode .prototype .initialize .call (this);
+
+      this ._whichChoice .addInterest ("set_child__", this);
+      this ._children    .addInterest ("set_child__", this);
+
+      this .set_child__ ();
+   },
+   getSubBBox (bbox, shadows)
+   {
+      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      {
+         const boundedObject = Base_X3DCast (Base_X3DConstants .X3DBoundedObject, this .visibleNode);
+
+         return boundedObject ?.getBBox (bbox, shadows) ?? bbox .set ();
+      }
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
+   clear () { },
+   add () { },
+   remove () { },
+   set_child__ ()
+   {
+      if (this .childNode)
+      {
+         this .childNode ._isCameraObject   .removeInterest ("set_cameraObject__",     this);
+         this .childNode ._isPickableObject .removeInterest ("set_transformSensors__", this);
+      }
+
+      if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, this .childNode))
+      {
+         this .childNode ._display     .removeInterest ("set_display__",     this);
+         this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
+      }
+
+      const whichChoice = this ._whichChoice .getValue ();
+
+      if (whichChoice >= 0 && whichChoice < this ._children .length)
+      {
+         this .childNode = Base_X3DCast (Base_X3DConstants .X3DChildNode, this ._children [whichChoice]);
+
+         if (this .childNode)
+         {
+            this .childNode ._isCameraObject   .addInterest ("set_cameraObject__",     this);
+            this .childNode ._isPickableObject .addInterest ("set_transformSensors__", this);
+
+            if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, this .childNode))
+            {
+               this .childNode ._display     .addInterest ("set_display__",     this);
+               this .childNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
+            }
+
+            delete this .traverse;
+         }
+      }
+      else
+      {
+         this .childNode = null;
+
+         this .traverse = Function .prototype;
+      }
+
+      this .set_display__ ();
+      this .set_bboxDisplay__ ();
+   },
+   set_cameraObject__ ()
+   {
+      this .setCameraObject (this .visibleNode ?.isCameraObject ());
+   },
+   set_transformSensors__ ()
+   {
+      this .setPickableObject (this .getTransformSensors () .size || this .visibleNode ?.isPickableObject ());
+   },
+   set_display__ ()
+   {
+      if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, this .childNode))
+         this .visibleNode = this .childNode ._display .getValue () ? this .childNode : null;
+      else
+         this .visibleNode = this .childNode;
+
+      this .set_cameraObject__ ();
+      this .set_transformSensors__ ();
+   },
+   set_bboxDisplay__ ()
+   {
+      if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, this .childNode))
+         this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
+      else
+         this .boundedObject = null;
+   },
+   traverse (type, renderObject)
+   {
+      switch (type)
+      {
+         case Rendering_TraverseType .POINTER:
+         case Rendering_TraverseType .CAMERA:
+         case Rendering_TraverseType .SHADOW:
+         {
+            this .visibleNode ?.traverse (type, renderObject);
+            return;
+         }
+         case Rendering_TraverseType .PICKING:
+         {
+            if (this .getTransformSensors () .size)
+            {
+               const modelMatrix = renderObject .getModelViewMatrix () .get ();
+
+               for (const transformSensorNode of this .getTransformSensors ())
+                  transformSensorNode .collect (modelMatrix);
+            }
+
+            const visibleNode = this .visibleNode;
+
+            if (visibleNode)
+            {
+               const
+                  browser          = this .getBrowser (),
+                  pickingHierarchy = browser .getPickingHierarchy ();
+
+               pickingHierarchy .push (this);
+
+               visibleNode .traverse (type, renderObject);
+
+               pickingHierarchy .pop ();
+            }
+
+            return;
+         }
+         case Rendering_TraverseType .COLLISION:
+         {
+            this .visibleNode ?.traverse (type, renderObject);
+            return;
+         }
+         case Rendering_TraverseType .DISPLAY:
+         {
+            this .visibleNode ?.traverse (type, renderObject);
+
+            this .boundedObject ?.displayBBox (type, renderObject);
+            return;
+         }
+      }
+   },
+});
+
+Object .defineProperties (Switch,
+{
+   ... Core_X3DNode .getStaticProperties ("Switch", "Grouping", 2, "children", "2.0"),
+   fieldDefinitions:
+   {
+      value: new Base_FieldDefinitionArray ([
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "metadata",       new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "whichChoice",    new x_ite_Fields .SFInt32 (-1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "visible",        new x_ite_Fields .SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "bboxDisplay",    new x_ite_Fields .SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "bboxSize",       new x_ite_Fields .SFVec3f (-1, -1, -1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "bboxCenter",     new x_ite_Fields .SFVec3f ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOnly,      "addChildren",    new x_ite_Fields .MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOnly,      "removeChildren", new x_ite_Fields .MFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "children",       new x_ite_Fields .MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const Switch_default_ = Switch;
+;
+
+/* harmony default export */ const Grouping_Switch = (x_ite_Namespace .add ("Switch", Switch_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/GroupingComponent.js
 /*******************************************************************************
  *
@@ -85280,7 +89013,6 @@ const PointingDeviceSensorComponent_default_ = {
 
 
 
-
 const ClipPlanes = Utility_ObjectCache (ClipPlaneContainer);
 
 function ClipPlaneContainer ()
@@ -85390,629 +89122,6 @@ const ClipPlane_default_ = ClipPlane;
 ;
 
 /* harmony default export */ const Rendering_ClipPlane = (x_ite_Namespace .add ("ClipPlane", ClipPlane_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DColorNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-function X3DColorNode (executionContext)
-{
-   Rendering_X3DGeometricPropertyNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .X3DColorNode);
-
-   this .addChildObjects (Base_X3DConstants .outputOnly, "transparent", new x_ite_Fields .SFBool ());
-}
-
-Object .assign (Object .setPrototypeOf (X3DColorNode .prototype, Rendering_X3DGeometricPropertyNode .prototype),
-{
-   setTransparent (value)
-   {
-      if (!!value !== this ._transparent .getValue ())
-         this ._transparent = value;
-   },
-   isTransparent ()
-   {
-      return this ._transparent .getValue ();
-   },
-});
-
-Object .defineProperties (X3DColorNode, Core_X3DNode .getStaticProperties ("X3DColorNode", "Rendering", 1));
-
-const X3DColorNode_default_ = X3DColorNode;
-;
-
-/* harmony default export */ const Rendering_X3DColorNode = (x_ite_Namespace .add ("X3DColorNode", X3DColorNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Color.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-function Color (executionContext)
-{
-   Rendering_X3DColorNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .Color);
-}
-
-Object .assign (Object .setPrototypeOf (Color .prototype, Rendering_X3DColorNode .prototype),
-{
-   initialize ()
-   {
-      Rendering_X3DColorNode .prototype .initialize .call (this);
-
-      this ._color .addInterest ("set_color__", this);
-
-      this .set_color__ ();
-   },
-   set_color__ ()
-   {
-      this .color  = this ._color .getValue ();
-      this .length = this ._color .length;
-   },
-   addColor (index, array)
-   {
-      if (index >= 0 && this .length)
-      {
-         const
-            color = this .color,
-            i     = (index % this .length) * 3;
-
-         return array .push (color [i], color [i + 1], color [i + 2], 1);
-      }
-      else
-      {
-         array .push (1, 1, 1, 1);
-      }
-   },
-   addColors (array, min = this .length)
-   {
-      const length = this .length;
-
-      if (length)
-      {
-         const color = this .color;
-
-         for (let index = 0; index < min; ++ index)
-         {
-            const i = (index % length) * 3;
-
-            array .push (color [i], color [i + 1], color [i + 2], 1);
-         }
-      }
-      else
-      {
-         for (let index = 0; index < min; ++ index)
-            array .push (1, 1, 1, 1);
-      }
-
-      return array;
-   },
-});
-
-Object .defineProperties (Color,
-{
-   ... Core_X3DNode .getStaticProperties ("Color", "Rendering", 1, "color", "2.0"),
-   fieldDefinitions:
-   {
-      value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "color",    new x_ite_Fields .MFColor ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const Color_default_ = Color;
-;
-
-/* harmony default export */ const Rendering_Color = (x_ite_Namespace .add ("Color", Color_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/ColorRGBA.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-function ColorRGBA (executionContext)
-{
-   Rendering_X3DColorNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .ColorRGBA);
-
-   this .setTransparent (true);
-}
-
-Object .assign (Object .setPrototypeOf (ColorRGBA .prototype, Rendering_X3DColorNode .prototype),
-{
-   initialize ()
-   {
-      Rendering_X3DColorNode .prototype .initialize .call (this);
-
-      this ._color .addInterest ("set_color__", this);
-
-      this .set_color__ ();
-   },
-   set_color__ ()
-   {
-      this .color  = this ._color .getValue ();
-      this .length = this ._color .length;
-   },
-   addColor (index, array)
-   {
-      if (index >= 0 && this .length)
-      {
-         const
-            color = this .color,
-            i     = (index % this .length) * 4;
-
-         return array .push (color [i], color [i + 1], color [i + 2], color [i + 3]);
-      }
-      else
-      {
-         array .push (1, 1, 1, 1);
-      }
-   },
-   addColors (array, min = this .length)
-   {
-      const length = this .length;
-
-      if (length)
-      {
-         const color = this .color;
-
-         for (let index = 0; index < min; ++ index)
-         {
-            const i = (index % length) * 4;
-
-            array .push (color [i], color [i + 1], color [i + 2], color [i + 3]);
-         }
-      }
-      else
-      {
-         for (let index = 0; index < min; ++ index)
-            array .push (1, 1, 1, 1);
-      }
-
-      return array;
-   },
-});
-
-Object .defineProperties (ColorRGBA,
-{
-   ... Core_X3DNode .getStaticProperties ("ColorRGBA", "Rendering", 1, "color", "3.0"),
-   fieldDefinitions:
-   {
-      value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "color",    new x_ite_Fields .MFColorRGBA ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const ColorRGBA_default_ = ColorRGBA;
-;
-
-/* harmony default export */ const Rendering_ColorRGBA = (x_ite_Namespace .add ("ColorRGBA", ColorRGBA_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DCoordinateNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-function X3DCoordinateNode (executionContext)
-{
-   Rendering_X3DGeometricPropertyNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .X3DCoordinateNode);
-
-   this .length = 0;
-}
-
-Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, Rendering_X3DGeometricPropertyNode .prototype),
-{
-   initialize ()
-   {
-      Rendering_X3DGeometricPropertyNode .prototype .initialize .call (this);
-
-      this ._point .addInterest ("set_point__", this);
-
-      this .set_point__ ();
-   },
-   set_point__ ()
-   {
-      this .point  = this ._point .getValue ();
-      this .length = this ._point .length;
-   },
-   isEmpty ()
-   {
-      return this .length === 0;
-   },
-   getSize ()
-   {
-      return this .length;
-   },
-   set1Point (index, point)
-   {
-      this ._point [index] = point;
-   },
-   get1Point (index, result)
-   {
-      if (index < this .length)
-      {
-         const point = this .point;
-
-         index *= 3;
-
-         return result .set (point [index], point [index + 1], point [index + 2]);
-      }
-      else
-      {
-         return result .set (0, 0, 0);
-      }
-   },
-   addPoint (index, array)
-   {
-      if (index < this .length)
-      {
-         const point = this .point;
-
-         index *= 3;
-
-         array .push (point [index], point [index + 1], point [index + 2], 1);
-      }
-      else
-      {
-         array .push (0, 0, 0, 1);
-      }
-   },
-   addPoints (array)
-   {
-      const
-         point  = this .point,
-         length = this .length * 3;
-
-      for (let index = 0; index < length; index += 3)
-         array .push (point [index], point [index + 1], point [index + 2], 1);
-
-      return array;
-   },
-   getNormal: (() =>
-   {
-      const
-         point1 = new Numbers_Vector3 (),
-         point2 = new Numbers_Vector3 (),
-         point3 = new Numbers_Vector3 ();
-
-      return function (index1, index2, index3)
-      {
-         // The index[1,2,3] cannot be less than 0.
-
-         const length = this .length;
-
-         if (index1 < length && index2 < length && index3 < length)
-         {
-            return Geometry_Triangle3 .normal (this .get1Point (index1, point1),
-                                      this .get1Point (index2, point2),
-                                      this .get1Point (index3, point3),
-                                      new Numbers_Vector3 ());
-         }
-
-         return new Numbers_Vector3 ();
-      };
-   })(),
-   getQuadNormal: (() =>
-   {
-      const
-         point1 = new Numbers_Vector3 (),
-         point2 = new Numbers_Vector3 (),
-         point3 = new Numbers_Vector3 (),
-         point4 = new Numbers_Vector3 ();
-
-      return function (index1, index2, index3, index4)
-      {
-         // The index[1,2,3,4] cannot be less than 0.
-
-         const length = this .length;
-
-         if (index1 < length && index2 < length && index3 < length && index4 < length)
-         {
-            return Geometry_Triangle3 .quadNormal (this .get1Point (index1, point1),
-                                          this .get1Point (index2, point2),
-                                          this .get1Point (index3, point3),
-                                          this .get1Point (index4, point4),
-                                          new Numbers_Vector3 ());
-         }
-
-         return new Numbers_Vector3 ();
-      };
-   })(),
-});
-
-Object .defineProperties (X3DCoordinateNode, Core_X3DNode .getStaticProperties ("X3DCoordinateNode", "Rendering", 1));
-
-const X3DCoordinateNode_default_ = X3DCoordinateNode;
-;
-
-/* harmony default export */ const Rendering_X3DCoordinateNode = (x_ite_Namespace .add ("X3DCoordinateNode", X3DCoordinateNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Coordinate.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-function Coordinate (executionContext)
-{
-   Rendering_X3DCoordinateNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .Coordinate);
-
-   this ._point .setUnit ("length");
-}
-
-Object .setPrototypeOf (Coordinate .prototype, Rendering_X3DCoordinateNode .prototype);
-
-Object .defineProperties (Coordinate,
-{
-   ... Core_X3DNode .getStaticProperties ("Coordinate", "Rendering", 1, "coord", "2.0"),
-   fieldDefinitions:
-   {
-      value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "point",    new x_ite_Fields .MFVec3f ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const Coordinate_default_ = Coordinate;
-;
-
-/* harmony default export */ const Rendering_Coordinate = (x_ite_Namespace .add ("Coordinate", Coordinate_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/CoordinateDouble.js
 /*******************************************************************************
  *
@@ -86094,710 +89203,6 @@ const CoordinateDouble_default_ = CoordinateDouble;
 ;
 
 /* harmony default export */ const Rendering_CoordinateDouble = (x_ite_Namespace .add ("CoordinateDouble", CoordinateDouble_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DLineGeometryNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-
-function X3DLineGeometryNode (executionContext)
-{
-   if (!this .getExecutionContext ())
-      Rendering_X3DGeometryNode .call (this, executionContext);
-
-   const
-      browser = this .getBrowser (),
-      gl      = browser .getContext ();
-
-   this .lineStipples                = new Float32Array ();
-   this .lineStippleBuffer           = gl .createBuffer ();
-   this .lineTrianglesBuffer         = gl .createBuffer ();
-   this .thickLinesVertexArrayObject = new Rendering_VertexArray (gl);
-
-   this .setGeometryType (1);
-   this .setPrimitiveMode (gl .LINES);
-   this .setSolid (false);
-}
-
-Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Rendering_X3DGeometryNode .prototype),
-{
-   intersectsLine ()
-   {
-      return false;
-   },
-   intersectsBox ()
-   {
-      return false;
-   },
-   updateVertexArrays ()
-   {
-      Rendering_X3DGeometryNode .prototype .updateVertexArrays .call (this);
-
-      this .thickLinesVertexArrayObject .update ();
-   },
-   generateTexCoords ()
-   {
-      // Line stipple support.
-
-      const numLines = this .getVertices () .length / 8;
-
-      if (this .lineStipples .length / 6 === numLines)
-         return;
-
-      const gl = this .getBrowser () .getContext ();
-
-      this .lineStipples = new Float32Array (numLines * 6);
-
-      gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
-      gl .bufferData (gl .ARRAY_BUFFER, this .lineStipples, gl .DYNAMIC_DRAW);
-
-      gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer);
-      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
-   },
-   updateLengthSoFar: (() =>
-   {
-      const
-         modelViewProjectionMatrix = new Numbers_Matrix4 (),
-         point0                    = new Numbers_Vector4 (),
-         point1                    = new Numbers_Vector4 (),
-         projectedPoint0           = new Numbers_Vector2 (),
-         projectedPoint1           = new Numbers_Vector2 ();
-
-      return function (gl, renderContext)
-      {
-         const
-            viewport         = renderContext .renderObject .getViewVolume () .getViewport (),
-            projectionMatrix = renderContext .renderObject .getProjectionMatrix () .get (),
-            lineStipples     = this .lineStipples,
-            vertices         = this .getVertices () .getValue (),
-            numVertices      = vertices .length;
-
-         modelViewProjectionMatrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix);
-
-         let lengthSoFar = 0;
-
-         for (let i = 0, l = 0; i < numVertices; i += 8, l += 6)
-         {
-            point0 .set (vertices [i],     vertices [i + 1], vertices [i + 2], vertices [i + 3]);
-            point1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6], vertices [i + 7]);
-
-            Geometry_ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
-            Geometry_ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
-
-            lineStipples [l]     = projectedPoint1 .x;
-            lineStipples [l + 1] = projectedPoint1 .y;
-
-            lineStipples [l + 3] = projectedPoint0 .x;
-            lineStipples [l + 4] = projectedPoint0 .y;
-            lineStipples [l + 5] = lengthSoFar;
-
-            lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .magnitude ();
-         }
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, lineStipples, gl .DYNAMIC_DRAW);
-      };
-   })(),
-   displaySimple (gl, renderContext, shaderNode)
-   {
-      const linePropertiesNode = renderContext .shapeNode .getAppearance () .getStyleProperties (1);
-
-      if (linePropertiesNode)
-      {
-         if (linePropertiesNode .getTransformLines ())
-         {
-            // Setup vertex attributes.
-
-            if (this .thickLinesVertexArrayObject .enable (shaderNode .getProgram ()))
-            {
-               const
-                  stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
-                  coordIndexOffset  = 0,
-                  lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
-                  normalOffset      = 9 * Float32Array .BYTES_PER_ELEMENT,
-                  vertexOffset      = 12 * Float32Array .BYTES_PER_ELEMENT;
-
-               shaderNode .enableCoordIndexAttribute  (gl, this .lineTrianglesBuffer, stride, coordIndexOffset);
-               shaderNode .enableLineStippleAttribute (gl, this .lineTrianglesBuffer, stride, lineStippleOffset);
-
-               if (this .hasNormals)
-                  shaderNode .enableNormalAttribute (gl, this .lineTrianglesBuffer, stride, normalOffset);
-
-               shaderNode .enableVertexAttribute (gl, this .lineTrianglesBuffer, stride, vertexOffset);
-            }
-
-            gl .frontFace (gl .CCW);
-            gl .enable (gl .CULL_FACE);
-            gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount * 3);
-
-            return;
-         }
-      }
-
-      if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
-      {
-         if (this .coordIndices .length)
-            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
-
-         shaderNode .enableLineStippleAttribute (gl, this .lineStippleBuffer, 0, 0);
-
-         if (this .hasNormals)
-            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
-
-         if (this .hasTangents)
-            shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
-
-         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-      }
-
-      gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
-      gl .lineWidth (1);
-   },
-   display: (() =>
-   {
-      const
-         matrix                            = new Numbers_Matrix4 (),
-         modelViewProjectionMatrixArray    = new Float32Array (16),
-         invModelViewProjectionMatrixArray = new Float32Array (16);
-
-      return function (gl, renderContext)
-      {
-         const
-            browser            = this .getBrowser (),
-            appearanceNode     = renderContext .appearanceNode,
-            linePropertiesNode = appearanceNode .getLineProperties (),
-            shaderNode         = appearanceNode .getShader (this, renderContext),
-            renderModeNodes    = appearanceNode .getRenderModes (),
-            attribNodes        = this .getAttrib (),
-            attribBuffers      = this .getAttribBuffers ();
-
-         if (linePropertiesNode)
-         {
-            if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
-               this .updateLengthSoFar (gl, renderContext);
-
-            if (linePropertiesNode .getTransformLines ())
-            {
-               const
-                  renderObject        = renderContext .renderObject,
-                  viewport            = renderObject .getViewVolume () .getViewport (),
-                  projectionMatrix    = renderObject .getProjectionMatrix () .get (),
-                  primitiveMode       = browser .getWireframe () ? gl .TRIANGLES : browser .getPrimitiveMode (gl .TRIANGLES),
-                  transformShaderNode = browser .getLineTransformShader ();
-
-               modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));
-               invModelViewProjectionMatrixArray .set (matrix .inverse ());
-
-               // Start
-
-               transformShaderNode .enable (gl);
-
-               gl .uniform4f (transformShaderNode .viewport, viewport .x, viewport .y, viewport .z, viewport .w);
-               gl .uniformMatrix4fv (transformShaderNode .modelViewProjectionMatrix,    false, modelViewProjectionMatrixArray);
-               gl .uniformMatrix4fv (transformShaderNode .invModelViewProjectionMatrix, false, invModelViewProjectionMatrixArray);
-               gl .uniform1f (transformShaderNode .linewidthScaleFactor1_2, linePropertiesNode .getLinewidthScaleFactor () / 2);
-
-               // Setup vertex attributes.
-
-               if (this .thickLinesVertexArrayObject .enable (transformShaderNode .getProgram ()))
-               {
-                  const
-                     coordIndexStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
-                     coordIndexOffset0 = 0,
-                     coordIndexOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
-                     lengthSoFarStride = 6 * Float32Array .BYTES_PER_ELEMENT,
-                     lengthSoFarOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
-                     fogDepthStride    = 2 * Float32Array .BYTES_PER_ELEMENT,
-                     fogDepthOffset0   = 0,
-                     fogDepthOffset1   = 1 * Float32Array .BYTES_PER_ELEMENT,
-                     colorStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
-                     colorOffset0      = 0,
-                     colorOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT,
-                     normalStride      = 6 * Float32Array .BYTES_PER_ELEMENT,
-                     normalOffset0     = 0,
-                     normalOffset1     = 3 * Float32Array .BYTES_PER_ELEMENT,
-                     vertexStride      = 8 * Float32Array .BYTES_PER_ELEMENT,
-                     vertexOffset0     = 0,
-                     vertexOffset1     = 4 * Float32Array .BYTES_PER_ELEMENT;
-
-                  // for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-                  if (this .coordIndices .length)
-                  {
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex0", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
-                  }
-
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_LengthSoFar", this .lineStippleBuffer, 1, lengthSoFarStride, lengthSoFarOffset);
-
-                  if (this .hasFogCoords)
-                  {
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth0", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset1);
-                  }
-
-                  if (this .colorMaterial)
-                  {
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
-                  }
-
-                  if (this .hasNormals)
-                  {
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
-                  }
-
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
-
-               }
-
-               // Transform lines.
-
-               gl .bindBuffer (gl .ARRAY_BUFFER, null);
-               gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
-               gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .lineTrianglesBuffer);
-               gl .enable (gl .RASTERIZER_DISCARD);
-               gl .beginTransformFeedback (gl .POINTS);
-               gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2);
-               gl .endTransformFeedback ();
-               gl .disable (gl .RASTERIZER_DISCARD);
-               gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
-
-               // DEBUG
-
-               // const data = new Float32Array (16 * 6 * this .vertexCount / 2);
-               // gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer);
-               // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-               // console .log (data);
-
-               // Render triangles.
-
-               for (const node of renderModeNodes)
-                  node .enable (gl);
-
-               // Setup shader.
-
-               shaderNode .enable (gl);
-               shaderNode .setUniforms (gl, this, renderContext);
-
-               // Setup vertex attributes.
-
-               if (this .thickLinesVertexArrayObject .enable (shaderNode .getProgram ()))
-               {
-                  const
-                     stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
-                     coordIndexOffset  = 0,
-                     lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
-                     fogCoordOffset    = 4 * Float32Array .BYTES_PER_ELEMENT,
-                     colorOffset       = 5 * Float32Array .BYTES_PER_ELEMENT,
-                     normalOffset      = 9 * Float32Array .BYTES_PER_ELEMENT,
-                     vertexOffset      = 12 * Float32Array .BYTES_PER_ELEMENT;
-
-                  // for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-                  shaderNode .enableCoordIndexAttribute  (gl, this .lineTrianglesBuffer, stride, coordIndexOffset);
-                  shaderNode .enableLineStippleAttribute (gl, this .lineTrianglesBuffer, stride, lineStippleOffset);
-
-                  if (this .hasFogCoords)
-                     shaderNode .enableFogDepthAttribute (gl, this .lineTrianglesBuffer, stride, fogCoordOffset);
-
-                  if (this .colorMaterial)
-                     shaderNode .enableColorAttribute (gl, this .lineTrianglesBuffer, stride, colorOffset);
-
-                   if (this .hasNormals)
-                     shaderNode .enableNormalAttribute (gl, this .lineTrianglesBuffer, stride, normalOffset);
-
-                  shaderNode .enableVertexAttribute (gl, this .lineTrianglesBuffer, stride, vertexOffset);
-               }
-
-               gl .frontFace (gl .CCW);
-               gl .enable (gl .CULL_FACE);
-               gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
-
-               for (const node of renderModeNodes)
-                  node .disable (gl);
-
-               return;
-            }
-         }
-
-         const primitiveMode = browser .getPrimitiveMode (this .getPrimitiveMode ());
-
-         for (const node of renderModeNodes)
-            node .enable (gl);
-
-         // Setup shader.
-
-         shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, this, renderContext);
-
-         // Setup vertex attributes.
-
-         if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
-         {
-            if (this .coordIndices .length)
-               shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
-
-            for (let i = 0, length = attribNodes .length; i < length; ++ i)
-               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-            shaderNode .enableLineStippleAttribute (gl, this .lineStippleBuffer, 0, 0);
-
-            if (this .hasFogCoords)
-               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-            if (this .colorMaterial)
-               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-
-            if (this .hasNormals)
-               shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
-
-            if (this .hasTangents)
-               shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
-
-            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-         }
-
-         gl .drawArrays (primitiveMode, 0, this .vertexCount);
-
-         for (const node of renderModeNodes)
-            node .disable (gl);
-
-         gl .lineWidth (1);
-      };
-   })(),
-   displayInstanced: (() =>
-   {
-      const
-         matrix                            = new Numbers_Matrix4 (),
-         modelViewProjectionMatrixArray    = new Float32Array (16),
-         invModelViewProjectionMatrixArray = new Float32Array (16);
-
-      return function (gl, renderContext, shapeNode)
-      {
-         const
-            browser            = this .getBrowser (),
-            geometryContext    = shapeNode .getGeometryContext (),
-            appearanceNode     = renderContext .appearanceNode,
-            linePropertiesNode = appearanceNode .getLineProperties (),
-            shaderNode         = appearanceNode .getShader (geometryContext, renderContext),
-            renderModeNodes    = appearanceNode .getRenderModes (),
-            attribNodes        = this .getAttrib (),
-            attribBuffers      = this .getAttribBuffers ();
-
-         if (linePropertiesNode)
-         {
-            if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
-               this .updateLengthSoFar (gl, renderContext);
-
-            if (linePropertiesNode .getTransformLines ())
-            {
-               const
-                  renderObject        = renderContext .renderObject,
-                  viewport            = renderObject .getViewVolume () .getViewport (),
-                  projectionMatrix    = renderObject .getProjectionMatrix () .get (),
-                  primitiveMode       = browser .getWireframe () ? gl .TRIANGLES : browser .getPrimitiveMode (gl .TRIANGLES),
-                  transformShaderNode = browser .getLineTransformInstancedShader ();
-
-               modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));
-               invModelViewProjectionMatrixArray .set (matrix .inverse ());
-
-               // Start
-
-               transformShaderNode .enable (gl);
-
-               gl .uniform4f (transformShaderNode .viewport, viewport .x, viewport .y, viewport .z, viewport .w);
-               gl .uniformMatrix4fv (transformShaderNode .modelViewProjectionMatrix,    false, modelViewProjectionMatrixArray);
-               gl .uniformMatrix4fv (transformShaderNode .invModelViewProjectionMatrix, false, invModelViewProjectionMatrixArray);
-               gl .uniform1f (transformShaderNode .linewidthScaleFactor1_2, linePropertiesNode .getLinewidthScaleFactor () / 2);
-
-               // Setup vertex attributes.
-
-               const instances = shapeNode .getInstances ();
-
-               if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (transformShaderNode .getProgram ()))
-               {
-                  const { instancesStride, matrixOffset, normalMatrixOffset, colorOffset } = shapeNode;
-
-                  transformShaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 2);
-
-                  if (normalMatrixOffset !== undefined)
-                     transformShaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 2);
-
-                  const
-                     coordIndexStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
-                     coordIndexOffset0 = 0,
-                     coordIndexOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
-                     lengthSoFarStride = 6 * Float32Array .BYTES_PER_ELEMENT,
-                     lengthSoFarOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
-                     fogDepthStride    = 2 * Float32Array .BYTES_PER_ELEMENT,
-                     fogDepthOffset0   = 0,
-                     fogDepthOffset1   = 1 * Float32Array .BYTES_PER_ELEMENT,
-                     colorStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
-                     colorOffset0      = 0,
-                     colorOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT,
-                     normalStride      = 6 * Float32Array .BYTES_PER_ELEMENT,
-                     normalOffset0     = 0,
-                     normalOffset1     = 3 * Float32Array .BYTES_PER_ELEMENT,
-                     vertexStride      = 8 * Float32Array .BYTES_PER_ELEMENT,
-                     vertexOffset0     = 0,
-                     vertexOffset1     = 4 * Float32Array .BYTES_PER_ELEMENT;
-
-                  // for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-                  if (this .coordIndices .length)
-                  {
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex0", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
-                  }
-
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_LengthSoFar", this .lineStippleBuffer, 1, lengthSoFarStride, lengthSoFarOffset);
-
-                  if (this .hasFogCoords)
-                  {
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth0", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset1);
-                  }
-
-                  if (geometryContext .colorMaterial)
-                  {
-                     if (geometryContext === this)
-                     {
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
-                     }
-                     else
-                     {
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", instances, 4, instancesStride, colorOffset, 2);
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", instances, 4, instancesStride, colorOffset, 2);
-                     }
-                  }
-
-                  if (this .hasNormals)
-                  {
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
-                  }
-
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
-               }
-
-               // Create lineTrianglesBuffer
-
-               const numLines = this .getVertices () .length / 8 * shapeNode .getNumInstances ();
-
-               if (instances .numLines !== numLines)
-               {
-                  instances .numLines = numLines;
-
-                  gl .bindBuffer (gl .ARRAY_BUFFER, instances .lineTrianglesBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
-               }
-
-               // Transform lines.
-
-               gl .bindBuffer (gl .ARRAY_BUFFER, null);
-               gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
-               gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, instances .lineTrianglesBuffer);
-               gl .enable (gl .RASTERIZER_DISCARD);
-               gl .beginTransformFeedback (gl .POINTS);
-               gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2 * shapeNode .getNumInstances ());
-               gl .endTransformFeedback ();
-               gl .disable (gl .RASTERIZER_DISCARD);
-               gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
-
-               // DEBUG
-
-               // const data = new Float32Array (16 * 6 * this .vertexCount / 2);
-               // gl .bindBuffer (gl .ARRAY_BUFFER, instances .lineTrianglesBuffer);
-               // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-               // console .log (data);
-
-               // Render triangles.
-
-               for (const node of renderModeNodes)
-                  node .enable (gl);
-
-               // Setup shader.
-
-               shaderNode .enable (gl);
-               shaderNode .setUniforms (gl, geometryContext, renderContext);
-
-               // Setup vertex attributes.
-
-               if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
-               {
-                  shaderNode .enableInstanceMatrixAttribute       (gl, browser .getDefaultInstanceMatrices (), 100,  0, 1);
-                  shaderNode .enableInstanceNormalMatrixAttribute (gl, browser .getDefaultInstanceMatrices (), 100, 64, 1);
-
-                  const
-                     stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
-                     coordIndexOffset  = 0,
-                     lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
-                     fogCoordOffset    = 4 * Float32Array .BYTES_PER_ELEMENT,
-                     colorOffset       = 5 * Float32Array .BYTES_PER_ELEMENT,
-                     normalOffset      = 9 * Float32Array .BYTES_PER_ELEMENT,
-                     vertexOffset      = 12 * Float32Array .BYTES_PER_ELEMENT;
-
-                  // for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-                  shaderNode .enableCoordIndexAttribute  (gl, instances .lineTrianglesBuffer, stride, coordIndexOffset);
-                  shaderNode .enableLineStippleAttribute (gl, instances .lineTrianglesBuffer, stride, lineStippleOffset);
-
-                  if (this .hasFogCoords)
-                     shaderNode .enableFogDepthAttribute (gl, instances .lineTrianglesBuffer, stride, fogCoordOffset);
-
-                  if (geometryContext .colorMaterial)
-                     shaderNode .enableColorAttribute (gl, instances .lineTrianglesBuffer, stride, colorOffset);
-
-                   if (this .hasNormals)
-                     shaderNode .enableNormalAttribute (gl, instances .lineTrianglesBuffer, stride, normalOffset);
-
-                  shaderNode .enableVertexAttribute (gl, instances .lineTrianglesBuffer, stride, vertexOffset);
-
-                  this .updateInstances = false;
-               }
-
-               gl .frontFace (gl .CCW);
-               gl .enable (gl .CULL_FACE);
-               gl .drawArrays (primitiveMode, 0, this .vertexCount * 3 * shapeNode .getNumInstances ());
-
-               for (const node of renderModeNodes)
-                  node .disable (gl);
-
-               return;
-            }
-         }
-
-         const primitiveMode = browser .getPrimitiveMode (this .getPrimitiveMode ());
-
-         for (const node of renderModeNodes)
-            node .enable (gl);
-
-         // Setup shader.
-
-         shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, this, renderContext);
-
-         // Setup vertex attributes.
-
-         const instances = shapeNode .getInstances ();
-
-         if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
-         {
-            const { instancesStride, particleOffset, velocityOffset, matrixOffset, normalMatrixOffset, colorOffset } = shapeNode;
-
-            if (particleOffset !== undefined)
-               shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
-
-            if (velocityOffset !== undefined)
-               shaderNode .enableParticleVelocityAttribute (gl, instances, instancesStride, velocityOffset, 1);
-
-            shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
-
-            if (normalMatrixOffset !== undefined)
-               shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
-
-            if (this .coordIndices .length)
-               shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
-
-            for (let i = 0, length = attribNodes .length; i < length; ++ i)
-               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-            if (this .hasFogCoords)
-               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-            if (geometryContext .colorMaterial)
-            {
-               if (geometryContext === this)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-               else
-                  shaderNode .enableColorAttribute (gl, instances, instancesStride, colorOffset, 1);
-            }
-
-            if (this .hasNormals)
-               shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
-
-            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-
-            this .updateInstances = false;
-         }
-
-         // Wireframes are always solid so only one drawing call is needed.
-
-         gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
-
-         for (const node of renderModeNodes)
-            node .disable (gl);
-
-         gl .lineWidth (1);
-      };
-   })(),
-});
-
-Object .defineProperties (X3DLineGeometryNode, Core_X3DNode .getStaticProperties ("X3DLineGeometryNode", "Rendering", 1));
-
-const X3DLineGeometryNode_default_ = X3DLineGeometryNode;
-;
-
-/* harmony default export */ const Rendering_X3DLineGeometryNode = (x_ite_Namespace .add ("X3DLineGeometryNode", X3DLineGeometryNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/IndexedLineSet.js
 /*******************************************************************************
  *
@@ -87545,1003 +89950,6 @@ const IndexedTriangleStripSet_default_ = IndexedTriangleStripSet;
 ;
 
 /* harmony default export */ const Rendering_IndexedTriangleStripSet = (x_ite_Namespace .add ("IndexedTriangleStripSet", IndexedTriangleStripSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/LineSet.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-
-function LineSet (executionContext)
-{
-   Rendering_X3DLineGeometryNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .LineSet);
-
-   this .fogCoordNode = null;
-   this .colorNode    = null;
-   this .normalNode   = null;
-   this .coordNode    = null;
-}
-
-Object .assign (Object .setPrototypeOf (LineSet .prototype, Rendering_X3DLineGeometryNode .prototype),
-{
-   initialize ()
-   {
-      Rendering_X3DLineGeometryNode .prototype .initialize .call (this);
-
-      this ._attrib   .addInterest ("set_attrib__",   this);
-      this ._fogCoord .addInterest ("set_fogCoord__", this);
-      this ._color    .addInterest ("set_color__",    this);
-      this ._normal   .addInterest ("set_normal__",   this);
-      this ._tangent  .addInterest ("set_tangent__",  this);
-      this ._coord    .addInterest ("set_coord__",    this);
-
-      this .set_attrib__ ();
-      this .set_fogCoord__ ();
-      this .set_color__ ();
-      this .set_normal__ ();
-      this .set_tangent__ ();
-      this .set_coord__ ();
-   },
-   set_attrib__ ()
-   {
-      const attribNodes = this .getAttrib ();
-
-      for (const attribNode of attribNodes)
-      {
-         attribNode .removeInterest ("requestRebuild", this);
-         attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
-      }
-
-      attribNodes .length = 0;
-
-      for (const node of this ._attrib)
-      {
-         const attribNode = Base_X3DCast (Base_X3DConstants .X3DVertexAttributeNode, node);
-
-         if (attribNode)
-            attribNodes .push (attribNode);
-      }
-
-      for (const attribNode of attribNodes)
-      {
-         attribNode .addInterest ("requestRebuild", this);
-         attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
-      }
-
-      this .updateVertexArrays ();
-   },
-   set_fogCoord__ ()
-   {
-      this .fogCoordNode ?.removeInterest ("requestRebuild", this);
-
-      this .fogCoordNode = Base_X3DCast (Base_X3DConstants .FogCoordinate, this ._fogCoord);
-
-      this .fogCoordNode ?.addInterest ("requestRebuild", this);
-   },
-   set_color__ ()
-   {
-      this .colorNode ?.removeInterest ("requestRebuild", this);
-
-      this .colorNode = Base_X3DCast (Base_X3DConstants .X3DColorNode, this ._color);
-
-      this .colorNode ?.addInterest ("requestRebuild", this);
-
-      this .setTransparent (this .colorNode ?.isTransparent ());
-   },
-   set_normal__ ()
-   {
-      this .normalNode ?.removeInterest ("requestRebuild", this);
-
-      this .normalNode = Base_X3DCast (Base_X3DConstants .X3DNormalNode, this ._normal);
-
-      this .normalNode ?.addInterest ("requestRebuild", this);
-   },
-   set_tangent__ ()
-   {
-      this .tangentNode ?.removeInterest ("requestRebuild", this);
-
-      this .tangentNode = Base_X3DCast (Base_X3DConstants .Tangent, this ._tangent);
-
-      this .tangentNode ?.addInterest ("requestRebuild", this);
-   },
-   set_coord__ ()
-   {
-      this .coordNode ?.removeInterest ("requestRebuild", this);
-
-      this .coordNode = Base_X3DCast (Base_X3DConstants .X3DCoordinateNode, this ._coord);
-
-      this .coordNode ?.addInterest ("requestRebuild", this);
-   },
-   build ()
-   {
-      if (! this .coordNode || this .coordNode .isEmpty ())
-         return;
-
-      // Fill GeometryNode
-
-      const
-         vertexCount       = this ._vertexCount,
-         coordIndicesArray = this .getCoordIndices (),
-         attribNodes       = this .getAttrib (),
-         numAttribNodes    = attribNodes .length,
-         attribArrays      = this .getAttribs (),
-         fogCoordNode      = this .fogCoordNode,
-         colorNode         = this .colorNode,
-         normalNode        = this .normalNode,
-         tangentNode       = this .tangentNode,
-         coordNode         = this .coordNode,
-         fogDepthArray     = this .getFogDepths (),
-         colorArray        = this .getColors (),
-         normalArray       = this .getNormals (),
-         tangentArray      = this .getTangents (),
-         vertexArray       = this .getVertices (),
-         size              = coordNode .getSize ();
-
-      let index = 0;
-
-      for (let count of vertexCount)
-      {
-         if (index + count > size)
-            break;
-
-         if (count > 1)
-         {
-            count = 2 * count - 2; // numVertices for line lines trip
-
-            for (let i = 0; i < count; ++ i, index += i & 1)
-            {
-               coordIndicesArray .push (index);
-
-               for (let a = 0; a < numAttribNodes; ++ a)
-                  attribNodes [a] .addValue (index, attribArrays [a]);
-
-               fogCoordNode ?.addDepth  (index, fogDepthArray);
-               colorNode    ?.addColor  (index, colorArray);
-               normalNode   ?.addVector (index, normalArray);
-               tangentNode  ?.addVector (index, tangentArray);
-
-               coordNode .addPoint (index, vertexArray);
-            }
-
-            ++ index;
-         }
-         else
-            index += count;
-      }
-   },
-});
-
-Object .defineProperties (LineSet,
-{
-   ... Core_X3DNode .getStaticProperties ("LineSet", "Rendering", 1, "geometry", "3.0"),
-   fieldDefinitions:
-   {
-      value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",    new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "vertexCount", new x_ite_Fields .MFInt32 ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "attrib",      new x_ite_Fields .MFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "fogCoord",    new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "color",       new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "tangent",     new x_ite_Fields .SFNode ()), // experimental
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "normal",      new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "coord",       new x_ite_Fields .SFNode ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const LineSet_default_ = LineSet;
-;
-
-/* harmony default export */ const Rendering_LineSet = (x_ite_Namespace .add ("LineSet", LineSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DNormalNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-function X3DNormalNode (executionContext)
-{
-   Rendering_X3DGeometricPropertyNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .X3DNormalNode);
-}
-
-Object .setPrototypeOf (X3DNormalNode .prototype, Rendering_X3DGeometricPropertyNode .prototype);
-
-Object .defineProperties (X3DNormalNode, Core_X3DNode .getStaticProperties ("X3DNormalNode", "Rendering", 2));
-
-const X3DNormalNode_default_ = X3DNormalNode;
-;
-
-/* harmony default export */ const Rendering_X3DNormalNode = (x_ite_Namespace .add ("X3DNormalNode", X3DNormalNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Normal.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-function Normal (executionContext)
-{
-   Rendering_X3DNormalNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .Normal);
-}
-
-Object .assign (Object .setPrototypeOf (Normal .prototype, Rendering_X3DNormalNode .prototype),
-{
-   initialize ()
-   {
-      Rendering_X3DNormalNode .prototype .initialize .call (this);
-
-      this ._vector .addInterest ("set_vector__", this);
-
-      this .set_vector__ ();
-   },
-   set_vector__ ()
-   {
-      this .vector = this ._vector .getValue ();
-      this .length = this ._vector .length;
-   },
-   addVector (index, array)
-   {
-      if (index >= 0 && this .length)
-      {
-         const
-            vector = this .vector,
-            i      = (index % this .length) * 3;
-
-         array .push (vector [i], vector [i + 1], vector [i + 2]);
-      }
-      else
-      {
-         return array .push (0, 0, 0);
-      }
-   },
-   addVectors (array, min = this .length)
-   {
-      const length = this .length;
-
-      if (length)
-      {
-         const vector = this .vector;
-
-         for (let index = 0; index < min; ++ index)
-         {
-            const i = (index % length) * 3;
-
-            array .push (vector [i], vector [i + 1], vector [i + 2]);
-         }
-      }
-      else
-      {
-         for (let index = 0; index < min; ++ index)
-            array .push (0, 0, 0);
-      }
-
-      return array;
-   },
-});
-
-Object .defineProperties (Normal,
-{
-   ... Core_X3DNode .getStaticProperties ("Normal", "Rendering", 2, "normal", "2.0"),
-   fieldDefinitions:
-   {
-      value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "vector",   new x_ite_Fields .MFVec3f ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const Normal_default_ = Normal;
-;
-
-/* harmony default export */ const Rendering_Normal = (x_ite_Namespace .add ("Normal", Normal_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/X3DPointGeometryNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-function X3DPointGeometryNode (executionContext)
-{
-   Rendering_X3DGeometryNode .call (this, executionContext);
-
-   const browser = this .getBrowser ();
-
-   this .setGeometryType (0);
-   this .setPrimitiveMode (browser .getContext () .POINTS);
-   this .setSolid (false);
-   this .setTransparent (true);
-}
-
-Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, Rendering_X3DGeometryNode .prototype),
-{
-   intersectsLine ()
-   {
-      return false;
-   },
-   intersectsBox ()
-   {
-      return false;
-   },
-   generateTexCoords ()
-   { },
-   display (gl, renderContext)
-   {
-      const
-         appearanceNode  = renderContext .appearanceNode,
-         shaderNode      = appearanceNode .getShader (this, renderContext),
-         renderModeNodes = appearanceNode .getRenderModes (),
-         attribNodes     = this .getAttrib (),
-         attribBuffers   = this .getAttribBuffers ();
-
-      for (const node of renderModeNodes)
-         node .enable (gl);
-
-      // Setup shader.
-
-      shaderNode .enable (gl);
-      shaderNode .setUniforms (gl, this, renderContext);
-
-      // Setup vertex attributes.
-
-      if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
-      {
-         if (this .coordIndices .length)
-            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
-
-         for (let i = 0, length = attribNodes .length; i < length; ++ i)
-            attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-         if (this .hasFogCoords)
-            shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-         if (this .colorMaterial)
-            shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-
-         if (this .hasNormals)
-            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
-
-         if (this .hasTangents)
-            shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
-
-         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-      }
-
-      gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
-
-      for (const node of renderModeNodes)
-         node .disable (gl);
-   },
-   displayInstanced (gl, renderContext, shapeNode)
-   {
-      const
-         appearanceNode  = renderContext .appearanceNode,
-         shaderNode      = appearanceNode .getShader (this, renderContext),
-         renderModeNodes = appearanceNode .getRenderModes (),
-         attribNodes     = this .getAttrib (),
-         attribBuffers   = this .getAttribBuffers ();
-
-      for (const node of renderModeNodes)
-         node .enable (gl);
-
-      // Setup shader.
-
-      shaderNode .enable (gl);
-      shaderNode .setUniforms (gl, this, renderContext);
-
-      // Setup vertex attributes.
-
-      const instances = shapeNode .getInstances ();
-
-      if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
-      {
-         const { instancesStride, particleOffset, velocityOffset, matrixOffset, normalMatrixOffset } = shapeNode;
-
-         if (particleOffset !== undefined)
-            shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
-
-         if (velocityOffset !== undefined)
-            shaderNode .enableParticleVelocityAttribute (gl, instances, instancesStride, velocityOffset, 1);
-
-         shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
-
-         if (normalMatrixOffset !== undefined)
-            shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
-
-         if (this .coordIndices .length)
-            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
-
-         for (let i = 0, length = attribNodes .length; i < length; ++ i)
-            attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-         if (this .hasFogCoords)
-            shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-         if (this .colorMaterial)
-            shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-
-         if (this .hasNormals)
-            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
-
-         if (this .hasTangents)
-            shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
-
-         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-
-         this .updateInstances = false;
-      }
-
-      // Wireframes are always solid so only one drawing call is needed.
-
-      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
-
-      for (const node of renderModeNodes)
-         node .disable (gl);
-   },
-});
-
-Object .defineProperties (X3DPointGeometryNode, Core_X3DNode .getStaticProperties ("X3DPointGeometryNode", "Rendering", 1));
-
-const X3DPointGeometryNode_default_ = X3DPointGeometryNode;
-;
-
-/* harmony default export */ const Rendering_X3DPointGeometryNode = (x_ite_Namespace .add ("X3DPointGeometryNode", X3DPointGeometryNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/PointSet.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-
-function PointSet (executionContext)
-{
-   Rendering_X3DPointGeometryNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .PointSet);
-
-   this .fogCoordNode = null;
-   this .colorNode    = null;
-   this .normalNode   = null;
-   this .coordNode    = null;
-}
-
-Object .assign (Object .setPrototypeOf (PointSet .prototype, Rendering_X3DPointGeometryNode .prototype),
-{
-   initialize ()
-   {
-      Rendering_X3DPointGeometryNode .prototype .initialize .call (this);
-
-      this ._attrib   .addInterest ("set_attrib__",   this);
-      this ._fogCoord .addInterest ("set_fogCoord__", this);
-      this ._color    .addInterest ("set_color__",    this);
-      this ._normal   .addInterest ("set_normal__",   this);
-      this ._tangent  .addInterest ("set_tangent__",  this);
-      this ._coord    .addInterest ("set_coord__",    this);
-
-      this .set_attrib__ ();
-      this .set_fogCoord__ ();
-      this .set_color__ ();
-      this .set_normal__ ();
-      this .set_tangent__ ();
-      this .set_coord__ ();
-   },
-   getCoord ()
-   {
-      return this .coordNode;
-   },
-   set_attrib__ ()
-   {
-      const attribNodes = this .getAttrib ();
-
-      for (const attribNode of attribNodes)
-      {
-         attribNode .removeInterest ("requestRebuild", this);
-         attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
-      }
-
-      attribNodes .length = 0;
-
-      for (const node of this ._attrib)
-      {
-         const attribNode = Base_X3DCast (Base_X3DConstants .X3DVertexAttributeNode, node);
-
-         if (attribNode)
-            attribNodes .push (attribNode);
-      }
-
-      for (const attribNode of attribNodes)
-      {
-         attribNode .addInterest ("requestRebuild", this);
-         attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
-      }
-
-      this .updateVertexArrays ();
-   },
-   set_fogCoord__ ()
-   {
-      this .fogCoordNode ?.removeInterest ("requestRebuild", this);
-
-      this .fogCoordNode = Base_X3DCast (Base_X3DConstants .FogCoordinate, this ._fogCoord);
-
-      this .fogCoordNode ?.addInterest ("requestRebuild", this);
-   },
-   set_color__ ()
-   {
-      this .colorNode ?.removeInterest ("requestRebuild", this);
-
-      this .colorNode = Base_X3DCast (Base_X3DConstants .X3DColorNode, this ._color);
-
-      this .colorNode ?.addInterest ("requestRebuild", this);
-   },
-   set_normal__ ()
-   {
-      this .normalNode ?.removeInterest ("requestRebuild", this);
-
-      this .normalNode = Base_X3DCast (Base_X3DConstants .X3DNormalNode, this ._normal);
-
-      this .normalNode ?.addInterest ("requestRebuild", this);
-   },
-   set_tangent__ ()
-   {
-      this .tangentNode ?.removeInterest ("requestRebuild", this);
-
-      this .tangentNode = Base_X3DCast (Base_X3DConstants .Tangent, this ._tangent);
-
-      this .tangentNode ?.addInterest ("requestRebuild", this);
-   },
-   set_coord__ ()
-   {
-      this .coordNode ?.removeInterest ("requestRebuild", this);
-
-      this .coordNode = Base_X3DCast (Base_X3DConstants .X3DCoordinateNode, this ._coord);
-
-      this .coordNode ?.addInterest ("requestRebuild", this);
-   },
-   build ()
-   {
-      if (! this .coordNode || this .coordNode .isEmpty ())
-         return;
-
-      const
-         coordIndicesArray = this .getCoordIndices (),
-         attribNodes       = this .getAttrib (),
-         numAttribNodes    = attribNodes .length,
-         attribArrays      = this .getAttribs (),
-         fogCoordNode      = this .fogCoordNode,
-         fogDepthArray     = this .getFogDepths (),
-         colorNode         = this .colorNode,
-         colorArray        = this .getColors (),
-         coordNode         = this .coordNode,
-         normalArray       = this .getNormals (),
-         normalNode        = this .normalNode,
-         tangentArray      = this .getTangents (),
-         tangentNode       = this .tangentNode,
-         vertexArray       = this .getVertices (),
-         numPoints         = coordNode ._point .length;
-
-      for (let i = 0; i < numPoints; ++ i)
-         coordIndicesArray .push (i);
-
-      for (let a = 0; a < numAttribNodes; ++ a)
-      {
-         for (let i = 0; i < numPoints; ++ i)
-            attribNodes [a] .addValue (i, attribArrays [a]);
-      }
-
-      fogCoordNode ?.addDepths  (fogDepthArray, numPoints);
-      colorNode    ?.addColors  (colorArray,    numPoints);
-      normalNode   ?.addVectors (normalArray,   numPoints);
-      tangentNode  ?.addVectors (tangentArray,  numPoints);
-
-      coordNode .addPoints (vertexArray);
-   },
-});
-
-Object .defineProperties (PointSet,
-{
-   ... Core_X3DNode .getStaticProperties ("PointSet", "Rendering", 1, "geometry", "2.0"),
-   fieldDefinitions:
-   {
-      value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "attrib",   new x_ite_Fields .MFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "fogCoord", new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "color",    new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "tangent",  new x_ite_Fields .SFNode ()), // experimental
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "normal",   new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "coord",    new x_ite_Fields .SFNode ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const PointSet_default_ = PointSet;
-;
-
-/* harmony default export */ const Rendering_PointSet = (x_ite_Namespace .add ("PointSet", PointSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/Tangent.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-/**
- * THIS NODE IS STILL EXPERIMENTAL.
- */
-
-function Tangent (executionContext)
-{
-   Rendering_X3DGeometricPropertyNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .Tangent);
-}
-
-Object .assign (Object .setPrototypeOf (Tangent .prototype, Rendering_X3DGeometricPropertyNode .prototype),
-{
-   initialize ()
-   {
-      Rendering_X3DGeometricPropertyNode .prototype .initialize .call (this);
-
-      this ._vector .addInterest ("set_vector__", this);
-
-      this .set_vector__ ();
-   },
-   set_vector__ ()
-   {
-      this .vector = this ._vector .getValue ();
-      this .length = this ._vector .length;
-   },
-   addVector (index, array)
-   {
-      if (index >= 0 && this .length)
-      {
-         const
-            vector = this .vector,
-            i      = (index % this .length) * 4;
-
-         array .push (vector [i], vector [i + 1], vector [i + 2], vector [i + 3]);
-      }
-      else
-      {
-         return array .push (1, 0, 0, 1);
-      }
-   },
-   addVectors (array, min = this .length)
-   {
-      const length = this .length;
-
-      if (length)
-      {
-         const vector = this .vector;
-
-         for (let index = 0; index < min; ++ index)
-         {
-            const i = (index % length) * 4;
-
-            array .push (vector [i], vector [i + 1], vector [i + 2], vector [i + 3]);
-         }
-      }
-      else
-      {
-         for (let index = 0; index < min; ++ index)
-            array .push (1, 0, 0, 1);
-      }
-
-      return array;
-   },
-});
-
-Object .defineProperties (Tangent,
-{
-   ... Core_X3DNode .getStaticProperties ("Tangent", "Rendering", 5, "tangent", "4.0"),
-   fieldDefinitions:
-   {
-      value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "vector",   new x_ite_Fields .MFVec4f ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const Tangent_default_ = Tangent;
-;
-
-/* harmony default export */ const Rendering_Tangent = (x_ite_Namespace .add ("Tangent", Tangent_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/TriangleFanSet.js
 /*******************************************************************************
  *
@@ -88684,118 +90092,6 @@ const TriangleFanSet_default_ = TriangleFanSet;
 ;
 
 /* harmony default export */ const Rendering_TriangleFanSet = (x_ite_Namespace .add ("TriangleFanSet", TriangleFanSet_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/TriangleSet.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-function TriangleSet (executionContext)
-{
-   Rendering_X3DComposedGeometryNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .TriangleSet);
-}
-
-Object .assign (Object .setPrototypeOf (TriangleSet .prototype, Rendering_X3DComposedGeometryNode .prototype),
-{
-   getVerticesPerPolygon ()
-   {
-      return 3;
-   },
-   getNumVertices ()
-   {
-      return this .getCoord () ?.getSize ();
-   },
-   build ()
-   {
-      if (!this .getCoord ())
-         return;
-
-      Rendering_X3DComposedGeometryNode .prototype .build .call (this, 3, this .getCoord () .getSize (), 3, this .getCoord () .getSize ());
-   },
-   createNormals (verticesPerPolygon, polygonsSize)
-   {
-      return this .createFaceNormals (verticesPerPolygon, polygonsSize);
-   },
-});
-
-Object .defineProperties (TriangleSet,
-{
-   ... Core_X3DNode .getStaticProperties ("TriangleSet", "Rendering", 3, "geometry", "3.0"),
-   fieldDefinitions:
-   {
-      value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "metadata",        new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "solid",           new x_ite_Fields .SFBool (true)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "ccw",             new x_ite_Fields .SFBool (true)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "colorPerVertex",  new x_ite_Fields .SFBool (true)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "normalPerVertex", new x_ite_Fields .SFBool (true)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "attrib",          new x_ite_Fields .MFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "fogCoord",        new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "color",           new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "texCoord",        new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "tangent",         new x_ite_Fields .SFNode ()), // experimental
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "normal",          new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "coord",           new x_ite_Fields .SFNode ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const TriangleSet_default_ = TriangleSet;
-;
-
-/* harmony default export */ const Rendering_TriangleSet = (x_ite_Namespace .add ("TriangleSet", TriangleSet_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Rendering/TriangleStripSet.js
 /*******************************************************************************
  *
@@ -89267,7 +90563,7 @@ mediump samplerCube textureCube;
 
 /* harmony default export */ const MaterialTextures = (x_ite_Namespace .add ("MaterialTextures", MaterialTextures_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(388);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -91674,7 +92970,7 @@ const ProgramShader_default_ = ProgramShader;
 
 let ModeType_i = 0;
 
-const ModeType =
+const ModeType_ModeType =
 {
    REPLACE:                   ModeType_i ++,
    MODULATE:                  ModeType_i ++,
@@ -91698,7 +92994,7 @@ const ModeType =
    OFF:                       ModeType_i ++,
 };
 
-const ModeType_default_ = ModeType;
+const ModeType_default_ = ModeType_ModeType;
 ;
 
 /* harmony default export */ const Texturing_ModeType = (x_ite_Namespace .add ("ModeType", ModeType_default_));
@@ -91825,76 +93121,6 @@ const FunctionType_default_ = FunctionType;
 ;
 
 /* harmony default export */ const Texturing_FunctionType = (x_ite_Namespace .add ("FunctionType", FunctionType_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-let TextureCoordinateGeneratorModeType_i = 0;
-
-const TextureCoordinateGeneratorModeType_ModeType =
-{
-   NONE:                        TextureCoordinateGeneratorModeType_i ++,
-   SPHERE:                      TextureCoordinateGeneratorModeType_i ++,
-   CAMERASPACENORMAL:           TextureCoordinateGeneratorModeType_i ++,
-   CAMERASPACEPOSITION:         TextureCoordinateGeneratorModeType_i ++,
-   CAMERASPACEREFLECTIONVECTOR: TextureCoordinateGeneratorModeType_i ++,
-   SPHERE_LOCAL:                TextureCoordinateGeneratorModeType_i ++,
-   COORD:                       TextureCoordinateGeneratorModeType_i ++,
-   COORD_EYE:                   TextureCoordinateGeneratorModeType_i ++,
-   NOISE:                       TextureCoordinateGeneratorModeType_i ++,
-   NOISE_EYE:                   TextureCoordinateGeneratorModeType_i ++,
-   SPHERE_REFLECT:              TextureCoordinateGeneratorModeType_i ++,
-   SPHERE_REFLECT_LOCAL:        TextureCoordinateGeneratorModeType_i ++,
-};
-
-const TextureCoordinateGeneratorModeType_default_ = TextureCoordinateGeneratorModeType_ModeType;
-;
-
-/* harmony default export */ const TextureCoordinateGeneratorModeType = (x_ite_Namespace .add ("TextureCoordinateGeneratorModeType", TextureCoordinateGeneratorModeType_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/RenderingConfiguration.js
 // The numbers must remain in single digits, otherwise the number base must
 // be increased in the number output for the material shader key.
@@ -94540,7 +95766,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (x_ite_Namespace .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(388);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95138,7 +96364,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 
 /* harmony default export */ const Shape_X3DAppearanceNode = (x_ite_Namespace .add ("X3DAppearanceNode", X3DAppearanceNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(388);
+/* provided dependency */ var Appearance_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103393,8 +104619,8 @@ const GifMedia_default_ = GifMedia;
 
 /* harmony default export */ const Texturing_GifMedia = (x_ite_Namespace .add ("GifMedia", GifMedia_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(388);
-/* provided dependency */ var SuperGif = __webpack_require__(839);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(809);
+/* provided dependency */ var SuperGif = __webpack_require__(234);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104021,252 +105247,6 @@ const MultiTexture_default_ = MultiTexture;
 ;
 
 /* harmony default export */ const Texturing_MultiTexture = (x_ite_Namespace .add ("MultiTexture", MultiTexture_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/X3DTextureCoordinateNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-function X3DTextureCoordinateNode (executionContext)
-{
-   Rendering_X3DGeometricPropertyNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .X3DTextureCoordinateNode);
-}
-
-Object .setPrototypeOf (X3DTextureCoordinateNode .prototype, Rendering_X3DGeometricPropertyNode .prototype);
-
-Object .defineProperties (X3DTextureCoordinateNode, Core_X3DNode .getStaticProperties ("X3DTextureCoordinateNode", "Texturing", 1));
-
-const X3DTextureCoordinateNode_default_ = X3DTextureCoordinateNode;
-;
-
-/* harmony default export */ const Texturing_X3DTextureCoordinateNode = (x_ite_Namespace .add ("X3DTextureCoordinateNode", X3DTextureCoordinateNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MultiTextureCoordinate.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-
-function MultiTextureCoordinate (executionContext)
-{
-   Texturing_X3DTextureCoordinateNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .MultiTextureCoordinate);
-
-   const browser = this .getBrowser ();
-
-   this .maxTexCoords           = browser .getMaxTexCoords ();
-   this .textureCoordinateNodes = [ ];
-}
-
-Object .assign (Object .setPrototypeOf (MultiTextureCoordinate .prototype, Texturing_X3DTextureCoordinateNode .prototype),
-{
-   initialize ()
-   {
-      Texturing_X3DTextureCoordinateNode .prototype .initialize .call (this);
-
-      this ._texCoord .addInterest ("set_texCoord__", this);
-
-      this .set_texCoord__ ();
-   },
-   set_texCoord__ ()
-   {
-      const textureCoordinateNodes = this .textureCoordinateNodes;
-
-      for (const textureCoordinateNode of textureCoordinateNodes)
-         textureCoordinateNode .removeInterest ("addNodeEvent", this);
-
-      textureCoordinateNodes .length = 0;
-
-      for (const node of this ._texCoord)
-      {
-         const textureCoordinateNode = Base_X3DCast (Base_X3DConstants .X3DSingleTextureCoordinateNode, node);
-
-         if (textureCoordinateNode)
-            textureCoordinateNodes .push (textureCoordinateNode);
-      }
-
-      for (const textureCoordinateNode of textureCoordinateNodes)
-         textureCoordinateNode .addInterest ("addNodeEvent", this);
-   },
-   getCount ()
-   {
-      return Math .min (this .maxTexCoords, this .textureCoordinateNodes .length);
-   },
-   isEmpty ()
-   {
-      return true;
-   },
-   getSize ()
-   {
-      return 0;
-   },
-   init (multiArray)
-   {
-      const
-         textureCoordinateNodes = this .textureCoordinateNodes,
-         length                 = Math .min (this .maxTexCoords, textureCoordinateNodes .length);
-
-      for (let i = 0; i < length; ++ i)
-         textureCoordinateNodes [i] .init (multiArray);
-   },
-   addPoint (index, multiArray)
-   {
-      const
-         textureCoordinateNodes = this .textureCoordinateNodes,
-         length                 = Math .min (this .maxTexCoords, textureCoordinateNodes .length);
-
-      for (let i = 0; i < length; ++ i)
-         textureCoordinateNodes [i] .addPointToChannel (index, multiArray [i]);
-   },
-   addPoints (array)
-   {
-      for (const textureCoordinateNode of this .textureCoordinateNodes)
-         return textureCoordinateNode .addPoints (array);
-
-      return array;
-   },
-   getTextureCoordinateMapping (textureCoordinateMapping)
-   {
-      const
-         textureCoordinateNodes = this .textureCoordinateNodes,
-         length                 = Math .min (this .maxTexCoords, textureCoordinateNodes .length);
-
-      for (let i = 0; i < length; ++ i)
-         textureCoordinateNodes [i] .getTextureCoordinateMapping (textureCoordinateMapping, i);
-   },
-   setShaderUniforms (gl, shaderObject)
-   {
-      const
-         textureCoordinateNodes = this .textureCoordinateNodes,
-         length                 = Math .min (this .maxTexCoords, textureCoordinateNodes .length);
-
-      if (length)
-      {
-         for (let i = 0; i < length; ++ i)
-            textureCoordinateNodes [i] .setShaderUniforms (gl, shaderObject, i);
-      }
-      else
-      {
-         this .getBrowser () .getDefaultTextureCoordinate () .setShaderUniforms (gl, shaderObject, 0);
-      }
-   },
-});
-
-Object .defineProperties (MultiTextureCoordinate,
-{
-   ... Core_X3DNode .getStaticProperties ("MultiTextureCoordinate", "Texturing", 2, "texCoord", "3.0"),
-   fieldDefinitions:
-   {
-      value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "texCoord", new x_ite_Fields .MFNode ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const MultiTextureCoordinate_default_ = MultiTextureCoordinate;
-;
-
-/* harmony default export */ const Texturing_MultiTextureCoordinate = (x_ite_Namespace .add ("MultiTextureCoordinate", MultiTextureCoordinate_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/X3DTextureTransformNode.js
 /*******************************************************************************
  *
@@ -104746,398 +105726,6 @@ const PixelTexture_default_ = PixelTexture;
 ;
 
 /* harmony default export */ const Texturing_PixelTexture = (x_ite_Namespace .add ("PixelTexture", PixelTexture_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/X3DSingleTextureCoordinateNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-function X3DSingleTextureCoordinateNode (executionContext)
-{
-   Texturing_X3DTextureCoordinateNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .X3DSingleTextureCoordinateNode);
-}
-
-Object .assign (Object .setPrototypeOf (X3DSingleTextureCoordinateNode .prototype, Texturing_X3DTextureCoordinateNode .prototype),
-{
-   getCount ()
-   {
-      return 1;
-   },
-   init (multiArray)
-   {
-      // Must use new array, because there can be cloned texture coordinate nodes.
-      multiArray .push (Rendering_X3DGeometryNode .createArray ());
-   },
-   addPoint (index, multiArray)
-   {
-      this .addPointToChannel (index, multiArray [0]);
-   },
-   getTextureCoordinateMapping (textureCoordinateMapping, channel = 0)
-   {
-      textureCoordinateMapping .set (this ._mapping .getValue () || channel, channel);
-   },
-   setShaderUniforms (gl, shaderObject, channel = 0)
-   {
-      gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [channel], 0);
-   },
-});
-
-Object .defineProperties (X3DSingleTextureCoordinateNode, Core_X3DNode .getStaticProperties ("X3DSingleTextureCoordinateNode", "Texturing", 1));
-
-const X3DSingleTextureCoordinateNode_default_ = X3DSingleTextureCoordinateNode;
-;
-
-/* harmony default export */ const Texturing_X3DSingleTextureCoordinateNode = (x_ite_Namespace .add ("X3DSingleTextureCoordinateNode", X3DSingleTextureCoordinateNode_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/TextureCoordinate.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-
-function TextureCoordinate (executionContext)
-{
-   Texturing_X3DSingleTextureCoordinateNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .TextureCoordinate);
-}
-
-Object .assign (Object .setPrototypeOf (TextureCoordinate .prototype, Texturing_X3DSingleTextureCoordinateNode .prototype),
-{
-   initialize ()
-   {
-      Texturing_X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
-
-      this ._point .addInterest ("set_point__", this);
-
-      this .set_point__ ();
-   },
-   set_point__ ()
-   {
-      this .point  = this ._point .getValue ();
-      this .length = this ._point .length;
-   },
-   isEmpty ()
-   {
-      return this .length === 0;
-   },
-   getSize ()
-   {
-      return this .length;
-   },
-   get1Point (index, result)
-   {
-      if (index < this .length)
-      {
-         const point = this .point;
-
-         index *= 2;
-
-         return result .set (point [index], point [index + 1], 0, 1);
-      }
-      else
-      {
-         return result .set (0, 0, 0, 1);
-      }
-   },
-   set1Point: (function ()
-   {
-      const point = new Numbers_Vector2 ();
-
-      return function (index, { x, y, w })
-      {
-         this ._point [index] = point .set (x, y) .divide (w);
-      };
-   })(),
-   addPointToChannel (index, array)
-   {
-      if (index >= 0 && this .length)
-      {
-         const
-            point = this .point,
-            i      = (index % this .length) * 2;
-
-         array .push (point [i], point [i + 1], 0, 1);
-      }
-      else
-      {
-         array .push (0, 0, 0, 1);
-      }
-   },
-   addPoints (array)
-   {
-      const
-         point  = this .point,
-         length = this .length;
-
-      for (let i = 0, p = 0; i < length; ++ i, p += 2)
-         array .push (point [p], point [p + 1], 0, 1);
-
-      return array;
-   },
-});
-
-Object .defineProperties (TextureCoordinate,
-{
-   ... Core_X3DNode .getStaticProperties ("TextureCoordinate", "Texturing", 1, "texCoord", "2.0"),
-   fieldDefinitions:
-   {
-      value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata", new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "mapping",  new x_ite_Fields .SFString ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "point",    new x_ite_Fields .MFVec2f ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const TextureCoordinate_default_ = TextureCoordinate;
-;
-
-/* harmony default export */ const Texturing_TextureCoordinate = (x_ite_Namespace .add ("TextureCoordinate", TextureCoordinate_default_));
-;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/TextureCoordinateGenerator.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-
-
-function TextureCoordinateGenerator (executionContext)
-{
-   Texturing_X3DSingleTextureCoordinateNode .call (this, executionContext);
-
-   this .addType (Base_X3DConstants .TextureCoordinateGenerator);
-
-   this .mode      = TextureCoordinateGeneratorModeType .SPHERE;
-   this .parameter = new Float32Array (6);
-}
-
-Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, Texturing_X3DSingleTextureCoordinateNode .prototype),
-{
-   initialize ()
-   {
-      Texturing_X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
-
-      this ._mode      .addInterest ("set_mode__",      this);
-      this ._parameter .addInterest ("set_parameter__", this);
-
-      this .set_mode__ ();
-      this .set_parameter__ ();
-   },
-   set_mode__: (() =>
-   {
-      const modes = new Map ([
-         ["SPHERE",                      TextureCoordinateGeneratorModeType .SPHERE],
-         ["CAMERASPACENORMAL",           TextureCoordinateGeneratorModeType .CAMERASPACENORMAL],
-         ["CAMERASPACEPOSITION",         TextureCoordinateGeneratorModeType .CAMERASPACEPOSITION],
-         ["CAMERASPACEREFLECTIONVECTOR", TextureCoordinateGeneratorModeType .CAMERASPACEREFLECTIONVECTOR],
-         ["SPHERE-LOCAL",                TextureCoordinateGeneratorModeType .SPHERE_LOCAL],
-         ["COORD",                       TextureCoordinateGeneratorModeType .COORD],
-         ["COORD-EYE",                   TextureCoordinateGeneratorModeType .COORD_EYE],
-         ["NOISE",                       TextureCoordinateGeneratorModeType .NOISE],
-         ["NOISE-EYE",                   TextureCoordinateGeneratorModeType .NOISE_EYE],
-         ["SPHERE-REFLECT",              TextureCoordinateGeneratorModeType .SPHERE_REFLECT],
-         ["SPHERE-REFLECT-LOCAL",        TextureCoordinateGeneratorModeType .SPHERE_REFLECT_LOCAL],
-      ]);
-
-      return function ()
-      {
-         this .mode = modes .get (this ._mode .getValue ());
-
-         if (this .mode === undefined)
-            this .mode = TextureCoordinateGeneratorModeType .SPHERE;
-      };
-   })(),
-   set_parameter__ ()
-   {
-      const length = Math .min (this .parameter .length, this ._parameter .length)
-
-      for (let i = 0; i < length; ++ i)
-         this .parameter [i] = this ._parameter [i];
-
-      this .parameter .fill (0, length);
-   },
-   addPointToChannel (index, array)
-   {
-      array .push (0, 0, 0, 1);
-   },
-   addPoints (array)
-   {
-      return array;
-   },
-   setShaderUniforms (gl, shaderObject, channel = 0)
-   {
-      gl .uniform1i  (shaderObject .x3d_TextureCoordinateGeneratorMode [channel],      this .mode);
-      gl .uniform1fv (shaderObject .x3d_TextureCoordinateGeneratorParameter [channel], this .parameter);
-   },
-});
-
-Object .defineProperties (TextureCoordinateGenerator,
-{
-   ... Core_X3DNode .getStaticProperties ("TextureCoordinateGenerator", "Texturing", 2, "texCoord", "3.0"),
-   fieldDefinitions:
-   {
-      value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",  new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "mapping",   new x_ite_Fields .SFString ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "mode",      new x_ite_Fields .SFString ("SPHERE")),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "parameter", new x_ite_Fields .MFFloat ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const TextureCoordinateGenerator_default_ = TextureCoordinateGenerator;
-;
-
-/* harmony default export */ const Texturing_TextureCoordinateGenerator = (x_ite_Namespace .add ("TextureCoordinateGenerator", TextureCoordinateGenerator_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/TextureProperties.js
 /*******************************************************************************
  *
@@ -106500,7 +107088,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (x_ite_Namespace .add ("gettext", gettext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(388);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107130,7 +107718,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (x_ite_Namespace .add ("TextCompression", TextCompression_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(388);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107777,7 +108365,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (x_ite_Namespace .add ("RenderingProperties", RenderingProperties_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(388);
+/* provided dependency */ var Notification_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107899,8 +108487,8 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (x_ite_Namespace .add ("Notification", Notification_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(384);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(388);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(969);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110635,7 +111223,7 @@ const DataStorage_default_ = DataStorage;
 
 /* harmony default export */ const Utility_DataStorage = (x_ite_Namespace .add ("DataStorage", DataStorage_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(388);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113246,8 +113834,8 @@ const X3DViewer_default_ = X3DViewer;
 
 /* harmony default export */ const Navigation_X3DViewer = (x_ite_Namespace .add ("X3DViewer", X3DViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(26);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(388);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(953);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114162,8 +114750,8 @@ const ExamineViewer_default_ = ExamineViewer;
 
 /* harmony default export */ const Navigation_ExamineViewer = (x_ite_Namespace .add ("ExamineViewer", ExamineViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(26);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(388);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(953);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115178,8 +115766,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (x_ite_Namespace .add ("FlyViewer", FlyViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(26);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(388);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(953);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115508,8 +116096,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (x_ite_Namespace .add ("NoneViewer", NoneViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(26);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(388);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(953);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116654,8 +117242,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (x_ite_Namespace .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(26);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(388);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(953);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118088,7 +118676,7 @@ const Lock_default_ = Lock;
 
 /* harmony default export */ const Utility_Lock = (x_ite_Namespace .add ("Lock", Lock_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(388);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119388,7 +119976,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 
 /* harmony default export */ const Sound_X3DSoundContext = (x_ite_Namespace .add ("X3DSoundContext", X3DSoundContext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(388);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(809);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -120951,7 +121539,7 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (x_ite_Namespace .add ("Components", Components_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(388);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(809);
 /*******************************************************************************
  * MIT License
  *
@@ -122217,7 +122805,7 @@ const FieldTypes_default_ = new Configuration_FieldTypesArray (Object .values (x
 
 /* harmony default export */ const FieldTypes = (x_ite_Namespace .add ("FieldTypes", FieldTypes_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(388);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -123284,7 +123872,7 @@ const X3DBrowser_default_ = X3DBrowser;
 
 /* harmony default export */ const Browser_X3DBrowser = (x_ite_Namespace .add ("X3DBrowser", X3DBrowser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(388);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -123551,8 +124139,8 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(388);
-/* provided dependency */ var pako = __webpack_require__(336);
+/* provided dependency */ var jquery_$ = __webpack_require__(809);
+/* provided dependency */ var pako = __webpack_require__(677);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -123628,13 +124216,13 @@ const jquery_default_ = jquery_$;
 
 /* harmony default export */ const jquery = (x_ite_Namespace .add ("jquery", jquery_default_));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(665);
+/* provided dependency */ var libtess_libtess = __webpack_require__(522);
 const libtess_default_ = libtess_libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (x_ite_Namespace .add ("libtess", libtess_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(388);
+/* provided dependency */ var X3D_$ = __webpack_require__(809);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -123938,7 +124526,7 @@ x_ite_Namespace, x_ite_Namespace .Fields,
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-10.3.1")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-10.4.0")] = x_ite_X3D;
 
 customElements .define ("x3d-canvas", x_ite_X3DCanvasElement);
 

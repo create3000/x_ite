@@ -1,5 +1,5 @@
-/* X_ITE v10.3.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.3.1")];
+/* X_ITE v10.4.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1362,6 +1362,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
             this .setGeometryType (0);
             this .setPrimitiveMode (gl .POINTS);
             this .setTransparent (true);
+            this .setSolid (false);
             this .setBase ((external_X_ITE_X3D_X3DPointGeometryNode_default()));
             return;
          }
@@ -1386,6 +1387,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
          this .setGeometryType (1);
          this .setPrimitiveMode (gl .LINES);
          this .setTransparent (false);
+         this .setSolid (false);
          this .setBase ((external_X_ITE_X3D_X3DLineGeometryNode_default()));
          return;
       }
@@ -1470,7 +1472,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
    {
       this .intersectsLine         = base .prototype .intersectsLine;
       this .intersectsBox          = base .prototype .intersectsBox;
-      this .generateTexCoords         = base .prototype .generateTexCoords;
+      this .generateTexCoords      = base .prototype .generateTexCoords;
       this .displaySimple          = base .prototype .displaySimple;
       this .display                = base .prototype .display;
       this .displaySimpleInstanced = base .prototype .displaySimpleInstanced;
