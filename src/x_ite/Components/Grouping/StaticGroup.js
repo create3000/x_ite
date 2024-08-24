@@ -303,6 +303,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          if (!newGeometryNode)
          {
             newGeometryNode = normalizedGeometry;
+            numPoints       = normalizedGeometry ._coord .point .length;
             continue;
          }
 
@@ -469,6 +470,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          }
       }
 
+      // Setup X3DGeometryNode node.
+
       newGeometryNode ._attrib    .forEach (a => a .getValue () .setup ());
       newGeometryNode ._fogCoord  .getValue () ?.setup ();
       newGeometryNode ._color     .getValue () ?.setup ();
@@ -479,6 +482,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       newGeometryNode ._coord     .getValue () ?.setup ();
 
       newGeometryNode .setup ();
+
+      // Setup Shape node.
 
       newShapeNode ._geometry = newGeometryNode;
 
@@ -541,33 +546,33 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          // FogCoordinate
 
-         const fogDepths = geometryNode .getFogDepths ();
+         const fogDepthArray = geometryNode .getFogDepths () .getValue ();
 
-         if (fogDepths .length)
+         if (fogDepthArray .length)
          {
             const newFogCoordNode = new FogCoordinate (executionContext);
 
-            newFogCoordNode ._depth    = fogDepths .getValue ();
+            newFogCoordNode ._depth    = fogDepthArray;
             newGeometryNode ._fogCoord = newFogCoordNode;
          }
 
          // Color
 
-         const colors = geometryNode .getColors ();
+         const colorArray = geometryNode .getColors () .getValue ();
 
-         if (colors .length)
+         if (colorArray .length)
          {
             if (shapeNode .isTransparent ())
             {
                var newColor = new ColorRGBA (executionContext);
 
-               newColor ._color = colors .getValue ();
+               newColor ._color = colorArray;
             }
             else
             {
                var newColor = new Color (executionContext);
 
-               newColor ._color = colors .getValue () .filter ((c, i) => i % 4 < 3);
+               newColor ._color = colorArray .filter ((c, i) => i % 4 < 3);
             }
 
             newGeometryNode ._color = newColor;
@@ -592,9 +597,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                   return texCoordNode .copy (executionContext);
 
                const
+                  texCoordArray       = texCoords .getValue (),
                   TextureCoordinate4D = browser .getConcreteNodes () .get ("TextureCoordinate4D"),
-                  newTexCoordNode     = new (TextureCoordinate4D ?? TextureCoordinate) (executionContext),
-                  texCoordArray       = texCoords .getValue ();
+                  newTexCoordNode     = new (TextureCoordinate4D ?? TextureCoordinate) (executionContext);
 
                newTexCoordNode ._mapping = texCoordNode ._mapping;
 
@@ -616,12 +621,11 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          const
             normalMatrix = modelMatrix .submatrix .inverse () .transpose (),
-            tangents     = geometryNode .getTangents ();
+            tangentArray = geometryNode .getTangents () .getValue ();
 
-         if (tangents .length)
+         if (tangentArray .length)
          {
             const
-               tangentArray   = tangents .getValue (),
                numTangents    = tangentArray .length,
                newTangentNode = new Tangent (executionContext),
                newVectors     = new Float32Array (numTangents);
@@ -639,12 +643,11 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          // Normals
 
-         const normals = geometryNode .getNormals ();
+         const normalArray = geometryNode .getNormals () .getValue ();
 
-         if (normals .length)
+         if (normalArray .length)
          {
             const
-               normalArray   = normals .getValue (),
                numNormals    = normalArray .length,
                newNormalNode = new Normal (executionContext),
                newVectors    = new Float32Array (numNormals);
