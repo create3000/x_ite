@@ -75,6 +75,7 @@ import Rotation4                  from "../../../standard/Math/Numbers/Rotation4
 import Box3                       from "../../../standard/Math/Geometry/Box3.js";
 import Matrix4                    from "../../../standard/Math/Numbers/Matrix4.js";
 import ViewVolume                 from "../../../standard/Math/Geometry/ViewVolume.js";
+import DEVELOPMENT                from "../../DEVELOPMENT.js";
 
 // No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
 
@@ -256,13 +257,13 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          // Create static shapes.
 
-         if (browser .getBrowserOption ("Debug"))
+         if (DEVELOPMENT)
             console .time ("StaticGroup");
 
          const visibleNodes = groups .map (group => this .combineShapes (group))
             .concat (singleShapes .map (renderContext => this .normalizeSingleShapes (renderContext)));
 
-         if (browser .getBrowserOption ("Debug"))
+         if (DEVELOPMENT)
             console .timeEnd ("StaticGroup");
 
          return visibleNodes;
