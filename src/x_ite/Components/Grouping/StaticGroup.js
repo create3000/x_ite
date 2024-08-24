@@ -229,6 +229,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             key += ".";
             key += geometryNode .getGeometryType ();
             key += geometryNode .isSolid () ? 1 : 0;
+            key += geometryNode .getFogDepths () .length ? 1 : 0;
             key += shapeNode .isTransparent () ? 1 : 0;
             key += shapeNode ._pointerEvents .getValue () ? 1 : 0;
             key += shapeNode ._castShadow .getValue () ? 1 : 0;
