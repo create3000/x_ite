@@ -280,7 +280,211 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
       return false;
    },
-   combineShapes: (function ()
+   combineShapes (group)
+   {
+      const
+         executionContext = this .getExecutionContext (),
+         shapeNode0       = group [0] .shapeNode,
+         newShapeNode     = shapeNode0 .copy (executionContext);
+
+      let
+         newGeometryNode = null,
+         numPoints       = 0;
+
+      for (const { modelViewMatrix, shapeNode } of group)
+      {
+         const
+            modelMatrix        = new Matrix4 (... modelViewMatrix),
+            normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode);
+
+         if (!newGeometryNode)
+         {
+            newGeometryNode = normalizedGeometry;
+            continue;
+         }
+
+         // vertexCount
+
+         if (newGeometryNode .getGeometryType () === 1)
+         {
+            const vertexCount = newGeometryNode ._vertexCount;
+
+            vertexCount .assign (vertexCount .concat (normalizedGeometry ._vertexCount));
+         }
+
+         // Attribute Nodes
+
+         const attrib = newGeometryNode ._attrib;
+
+         for (const node of normalizedGeometry ._attrib)
+         {
+            const
+               normalizedAttrib = node .getValue (),
+               name            = normalizedAttrib ._name .getValue ();
+
+            let newAttribNode = attrib .find (a => a .name === name) ?.getValue ();
+
+            if (!newAttribNode)
+            {
+               newAttribNode = normalizedAttrib .create (executionContext);
+
+               attrib .push (newAttribNode);
+            }
+
+            newAttribNode ._name          = normalizedAttrib ._name;
+            newAttribNode ._numComponents = normalizedAttrib ._numComponents;
+
+            const
+               value         = newAttribNode ._value,
+               numComponents = normalizedAttrib ._numComponents ?.getValue () ?? 1;
+
+            if (value .length < numPoints * numComponents)
+               value .resize (numPoints * numComponents);
+
+            value .assign (value .concat (normalizedAttrib ._value));
+         }
+
+         // FogCoordinate
+
+         const normalizedFogCoord = normalizedGeometry ._fogCoord .getValue ();
+
+         if (normalizedFogCoord ?._depth .length)
+         {
+            if (!newGeometryNode ._fogCoord .getValue ())
+               newGeometryNode ._fogCoord = new FogCoordinate (executionContext);
+
+            const depth = newGeometryNode ._fogCoord .depth;
+
+            if (depth .length < numPoints)
+               depth .resize (numPoints);
+
+            depth .assign (depth .concat (normalizedFogCoord ._depth));
+         }
+
+         // Color
+
+         const normalizedColor = normalizedGeometry ._color .getValue ();
+
+         if (normalizedColor ?._color .length)
+         {
+            if (!newGeometryNode ._color .getValue ())
+               newGeometryNode ._color = normalizedColor .create (executionContext);
+
+            const color = newGeometryNode ._color .color;
+
+            if (color .length < numPoints)
+               color .resize (numPoints, Color4 .White);
+
+            color .assign (color .concat (normalizedColor ._color));
+         }
+
+         // TextureCoordinate
+
+         if (newGeometryNode ._texCoord)
+         {
+            const normalizedTexCoords = normalizedGeometry ._texCoord .getValue ();
+
+            if (!newGeometryNode ._texCoord .getValue ())
+               newGeometryNode ._texCoord = new MultiTextureCoordinate (executionContext);
+
+            const texCoords = newGeometryNode ._texCoord .texCoord;
+
+            for (const node of normalizedTexCoords ._texCoord)
+            {
+               const
+                  normalizedTexCoord = node .getValue (),
+                  mapping            = normalizedTexCoord ._mapping .getValue ();
+
+               let newTexCoordNode = texCoords .find (tc => tc .mapping === mapping) ?.getValue ();
+
+               if (!newTexCoordNode)
+               {
+                  newTexCoordNode = normalizedTexCoord .create (executionContext);
+
+                  texCoords .push (newTexCoordNode);
+               }
+
+               newTexCoordNode ._mapping = normalizedTexCoord ._mapping;
+
+               const point = newTexCoordNode ._point;
+
+               if (point .length < numPoints)
+                  point .resize (numPoints);
+
+               point .assign (point .concat (normalizedTexCoord ._point));
+            }
+         }
+
+         // Tangent
+
+         const normalizedTangent = normalizedGeometry ._tangent .getValue ();
+
+         if (normalizedTangent ?._vector .length)
+         {
+            if (!newGeometryNode ._tangent .getValue ())
+               newGeometryNode ._tangent = new Tangent (executionContext);
+
+            const vector = newGeometryNode ._tangent .vector;
+
+            if (vector .length < numPoints)
+               vector .resize (numPoints);
+
+            vector .assign (vector .concat (normalizedTangent ._vector));
+         }
+
+         // Normal
+
+         const normalizedNormal = normalizedGeometry ._normal .getValue ();
+
+         if (normalizedNormal ?._vector .length)
+         {
+            if (!newGeometryNode ._normal .getValue ())
+               newGeometryNode ._normal = new Normal (executionContext);
+
+            const vector = newGeometryNode ._normal .vector;
+
+            if (vector .length < numPoints)
+               vector .resize (numPoints);
+
+            vector .assign (vector .concat (normalizedNormal ._vector));
+         }
+
+         // Coordinate
+
+         const normalizedCoord = normalizedGeometry ._coord .getValue ();
+
+         if (normalizedCoord ?._point .length)
+         {
+            if (!newGeometryNode ._coord .getValue ())
+               newGeometryNode ._coord = new Coordinate (executionContext);
+
+            const point = newGeometryNode ._coord .point;
+
+            point .assign (point .concat (normalizedCoord ._point));
+
+            numPoints = point .length;
+         }
+      }
+
+      newGeometryNode ._attrib    .forEach (a => a .getValue () .setup ());
+      newGeometryNode ._fogCoord  .getValue () ?.setup ();
+      newGeometryNode ._color     .getValue () ?.setup ();
+      newGeometryNode ._texCoord ?.texCoord .forEach (tc => tc .getValue () .setup ());
+      newGeometryNode ._texCoord ?.getValue () ?.setup ();
+      newGeometryNode ._tangent   .getValue () ?.setup ();
+      newGeometryNode ._normal    .getValue () ?.setup ();
+      newGeometryNode ._coord     .getValue () ?.setup ();
+
+      newGeometryNode .setup ();
+
+      newShapeNode ._geometry = newGeometryNode;
+
+      newShapeNode .setPrivate (true);
+      newShapeNode .setup ();
+
+      return newShapeNode;
+   },
+   normalizeGeometry: (function ()
    {
       const GeometryTypes = [
          PointSet,
@@ -289,221 +493,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          TriangleSet,
       ];
 
-      return function (group)
-      {
-         const
-            executionContext = this .getExecutionContext (),
-            shapeNode0       = group [0] .shapeNode,
-            geometryNode0    = shapeNode0 .getGeometry (),
-            newShapeNode     = shapeNode0 .copy (executionContext),
-            GeometryType     = GeometryTypes [geometryNode0 .getGeometryType ()];
-
-         let
-            newGeometryNode = null,
-            numPoints       = 0;
-
-         for (const { modelViewMatrix, shapeNode } of group)
-         {
-            const
-               modelMatrix        = new Matrix4 (... modelViewMatrix),
-               normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode, GeometryType);
-
-            if (!newGeometryNode)
-            {
-               newGeometryNode = normalizedGeometry;
-               continue;
-            }
-
-            // vertexCount
-
-            if (geometryNode0 .getGeometryType () === 1)
-            {
-               const vertexCount = newGeometryNode ._vertexCount;
-
-               vertexCount .assign (vertexCount .concat (normalizedGeometry ._vertexCount));
-            }
-
-            // Attribute Nodes
-
-            const attrib = newGeometryNode ._attrib;
-
-            for (const node of normalizedGeometry ._attrib)
-            {
-               const
-                  normalizedAttrib = node .getValue (),
-                  name            = normalizedAttrib ._name .getValue ();
-
-               let newAttribNode = attrib .find (a => a .name === name) ?.getValue ();
-
-               if (!newAttribNode)
-               {
-                  newAttribNode = normalizedAttrib .create (executionContext);
-
-                  attrib .push (newAttribNode);
-               }
-
-               newAttribNode ._name          = normalizedAttrib ._name;
-               newAttribNode ._numComponents = normalizedAttrib ._numComponents;
-
-               const
-                  value         = newAttribNode ._value,
-                  numComponents = normalizedAttrib ._numComponents ?.getValue () ?? 1;
-
-               if (value .length < numPoints * numComponents)
-                  value .resize (numPoints * numComponents);
-
-               value .assign (value .concat (normalizedAttrib ._value));
-            }
-
-            // FogCoordinate
-
-            const normalizedFogCoord = normalizedGeometry ._fogCoord .getValue ();
-
-            if (normalizedFogCoord ?._depth .length)
-            {
-               if (!newGeometryNode ._fogCoord .getValue ())
-                  newGeometryNode ._fogCoord = new FogCoordinate (executionContext);
-
-               const depth = newGeometryNode ._fogCoord .depth;
-
-               if (depth .length < numPoints)
-                  depth .resize (numPoints);
-
-               depth .assign (depth .concat (normalizedFogCoord ._depth));
-            }
-
-            // Color
-
-            const normalizedColor = normalizedGeometry ._color .getValue ();
-
-            if (normalizedColor ?._color .length)
-            {
-               if (!newGeometryNode ._color .getValue ())
-                  newGeometryNode ._color = normalizedColor .create (executionContext);
-
-               const color = newGeometryNode ._color .color;
-
-               if (color .length < numPoints)
-                  color .resize (numPoints, Color4 .White);
-
-               color .assign (color .concat (normalizedColor ._color));
-            }
-
-            // TextureCoordinate
-
-            if (newGeometryNode ._texCoord)
-            {
-               const normalizedTexCoords = normalizedGeometry ._texCoord .getValue ();
-
-               if (!newGeometryNode ._texCoord .getValue ())
-                  newGeometryNode ._texCoord = new MultiTextureCoordinate (executionContext);
-
-               const texCoords = newGeometryNode ._texCoord .texCoord;
-
-               for (const node of normalizedTexCoords ._texCoord)
-               {
-                  const
-                     normalizedTexCoord = node .getValue (),
-                     mapping            = normalizedTexCoord ._mapping .getValue ();
-
-                  let newTexCoordNode = texCoords .find (tc => tc .mapping === mapping) ?.getValue ();
-
-                  if (!newTexCoordNode)
-                  {
-                     newTexCoordNode = normalizedTexCoord .create (executionContext);
-
-                     texCoords .push (newTexCoordNode);
-                  }
-
-                  newTexCoordNode ._mapping = normalizedTexCoord ._mapping;
-
-                  const point = newTexCoordNode ._point;
-
-                  if (point .length < numPoints)
-                     point .resize (numPoints);
-
-                  point .assign (point .concat (normalizedTexCoord ._point));
-               }
-            }
-
-            // Tangent
-
-            const normalizedTangent = normalizedGeometry ._tangent .getValue ();
-
-            if (normalizedTangent ?._vector .length)
-            {
-               if (!newGeometryNode ._tangent .getValue ())
-                  newGeometryNode ._tangent = new Tangent (executionContext);
-
-               const vector = newGeometryNode ._tangent .vector;
-
-               if (vector .length < numPoints)
-                  vector .resize (numPoints);
-
-               vector .assign (vector .concat (normalizedTangent ._vector));
-            }
-
-            // Normal
-
-            const normalizedNormal = normalizedGeometry ._normal .getValue ();
-
-            if (normalizedNormal ?._vector .length)
-            {
-               if (!newGeometryNode ._normal .getValue ())
-                  newGeometryNode ._normal = new Normal (executionContext);
-
-               const vector = newGeometryNode ._normal .vector;
-
-               if (vector .length < numPoints)
-                  vector .resize (numPoints);
-
-               vector .assign (vector .concat (normalizedNormal ._vector));
-            }
-
-            // Coordinate
-
-            const normalizedCoord = normalizedGeometry ._coord .getValue ();
-
-            if (normalizedCoord ?._point .length)
-            {
-               if (!newGeometryNode ._coord .getValue ())
-                  newGeometryNode ._coord = new Coordinate (executionContext);
-
-               const point = newGeometryNode ._coord .point;
-
-               point .assign (point .concat (normalizedCoord ._point));
-
-               numPoints = point .length;
-            }
-         }
-
-         newGeometryNode ._attrib    .forEach (a => a .getValue () .setup ());
-         newGeometryNode ._fogCoord  .getValue () ?.setup ();
-         newGeometryNode ._color     .getValue () ?.setup ();
-         newGeometryNode ._texCoord ?.texCoord .forEach (tc => tc .getValue () .setup ());
-         newGeometryNode ._texCoord ?.getValue () ?.setup ();
-         newGeometryNode ._tangent   .getValue () ?.setup ();
-         newGeometryNode ._normal    .getValue () ?.setup ();
-         newGeometryNode ._coord     .getValue () ?.setup ();
-
-         newGeometryNode .setup ();
-
-         newShapeNode ._geometry = newGeometryNode;
-
-         newShapeNode .setPrivate (true);
-         newShapeNode .setup ();
-
-         return newShapeNode;
-      };
-   })(),
-   normalizeGeometry: (function ()
-   {
       const FieldTypes = [
          Fields .MFFloat,
          Fields .MFVec2f,
          Fields .MFVec3f,
          Fields .MFVec4f,
-      ]
+      ];
 
       const
          tangent = new Vector4 (),
@@ -511,12 +506,13 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          vertex  = new Vector4 (),
          point   = new Vector3 ();
 
-      return function (modelMatrix, shapeNode, GeometryType)
+      return function (modelMatrix, shapeNode)
       {
          const
             browser          = this .getBrowser (),
             executionContext = this .getExecutionContext (),
             geometryNode     = shapeNode .getGeometry (),
+            GeometryType     = GeometryTypes [geometryNode .getGeometryType ()],
             newGeometryNode  = new GeometryType (executionContext);
 
          // Attribute Nodes
