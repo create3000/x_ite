@@ -206,7 +206,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          const
             groupsIndex  = { },
-            singleShapes = [ ];
+            singlesIndex = { };
 
          for (const renderContext of renderContexts)
          {
@@ -221,14 +221,18 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                case 2:
                case 3:
                {
-                  singleShapes .push (renderContext);
+                  const group = singlesIndex [renderContext .modelViewMatrix] ??= [ ];
+
+                  group .push (renderContext);
                   continue;
                }
             }
 
             if (this .hasTextureCoordinateGenerator (geometryNode))
             {
-               singleShapes .push (renderContext);
+               const group = singlesIndex [renderContext .modelViewMatrix] ??= [ ];
+
+               group .push (renderContext);
                continue;
             }
 
@@ -248,11 +252,13 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             group .push (renderContext);
          }
 
-         const groups = Object .values (groupsIndex);
+         const
+            combineGroups = Object .values (groupsIndex),
+            singlesGroups = Object .values (singlesIndex);
 
          if (browser .getBrowserOption ("Debug"))
          {
-            console .info (`StaticGroup will create ${groups .length + singleShapes .length} static nodes from the previous ${renderContexts .length} nodes.`);
+            console .info (`StaticGroup will create ${combineGroups .length + singlesGroups .length} static nodes from the previous ${renderContexts .length} nodes.`);
          }
 
          // Create static shapes.
@@ -260,8 +266,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          if (DEVELOPMENT)
             console .time ("StaticGroup");
 
-         const visibleNodes = groups .map (group => this .combineShapes (group))
-            .concat (singleShapes .map (renderContext => this .normalizeSingleShapes (renderContext)));
+         const visibleNodes = combineGroups .map (group => this .combineShapes (group))
+            .concat (singlesGroups .map (group => this .normalizeSingleShapes (group)));
 
          if (DEVELOPMENT)
             console .timeEnd ("StaticGroup");
@@ -733,12 +739,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          return newGeometryNode;
       };
    })(),
-   normalizeSingleShapes ({ modelViewMatrix, shapeNode })
+   normalizeSingleShapes (group)
    {
       const
          executionContext = this .getExecutionContext (),
          newTransformNode = new Transform (executionContext),
-         modelMatrix      = new Matrix4 (... modelViewMatrix);
+         modelMatrix      = new Matrix4 (... group [0] .modelViewMatrix);
 
       const
          t  = new Vector3 (),
@@ -753,7 +759,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       newTransformNode ._scale            = s;
       newTransformNode ._scaleOrientation = so;
 
-      newTransformNode ._children .push (shapeNode);
+      for (const { shapeNode } of group)
+         newTransformNode ._children .push (shapeNode);
 
       newTransformNode .setPrivate (true);
       newTransformNode .setup ();
