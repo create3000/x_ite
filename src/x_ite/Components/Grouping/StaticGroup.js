@@ -296,16 +296,23 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             shapeNode0       = group [0] .shapeNode,
             geometryNode0    = shapeNode0 .getGeometry (),
             newShapeNode     = shapeNode0 .copy (executionContext),
-            GeometryType     = GeometryTypes [geometryNode0 .getGeometryType ()],
-            newGeometryNode  = new GeometryType (executionContext);
+            GeometryType     = GeometryTypes [geometryNode0 .getGeometryType ()];
 
-         let numPoints = 0;
+         let
+            newGeometryNode = null,
+            numPoints       = 0;
 
          for (const { modelViewMatrix, shapeNode } of group)
          {
             const
                modelMatrix        = new Matrix4 (... modelViewMatrix),
                normalizedGeometry = this .normalizeGeometry (modelMatrix, shapeNode, GeometryType);
+
+            if (!newGeometryNode)
+            {
+               newGeometryNode = normalizedGeometry;
+               continue;
+            }
 
             // vertexCount
 
@@ -470,8 +477,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             }
          }
 
-         newGeometryNode ._solid = geometryNode0 .isSolid ();
-
          newGeometryNode ._attrib    .forEach (a => a .getValue () .setup ());
          newGeometryNode ._fogCoord  .getValue () ?.setup ();
          newGeometryNode ._color     .getValue () ?.setup ();
@@ -481,7 +486,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          newGeometryNode ._normal    .getValue () ?.setup ();
          newGeometryNode ._coord     .getValue () ?.setup ();
 
-         newGeometryNode .setGeometryType (geometryNode0 .getGeometryType ());
          newGeometryNode .setup ();
 
          newShapeNode ._geometry = newGeometryNode;
