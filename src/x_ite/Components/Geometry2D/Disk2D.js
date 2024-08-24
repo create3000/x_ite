@@ -106,6 +106,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
             this .setGeometryType (0);
             this .setPrimitiveMode (gl .POINTS);
             this .setTransparent (true);
+            this .setSolid (false);
             this .setBase (X3DPointGeometryNode);
             return;
          }
@@ -130,6 +131,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
          this .setGeometryType (1);
          this .setPrimitiveMode (gl .LINES);
          this .setTransparent (false);
+         this .setSolid (false);
          this .setBase (X3DLineGeometryNode);
          return;
       }
@@ -214,7 +216,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
    {
       this .intersectsLine         = base .prototype .intersectsLine;
       this .intersectsBox          = base .prototype .intersectsBox;
-      this .generateTexCoords         = base .prototype .generateTexCoords;
+      this .generateTexCoords      = base .prototype .generateTexCoords;
       this .displaySimple          = base .prototype .displaySimple;
       this .display                = base .prototype .display;
       this .displaySimpleInstanced = base .prototype .displaySimpleInstanced;

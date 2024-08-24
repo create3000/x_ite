@@ -648,6 +648,28 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
       return newArray;
    },
+   concat (... args)
+   {
+      const
+         result     = this .copy (),
+         target     = result [_target],
+         components = target .getComponents (),
+         length     = target [_length] + args .reduce ((p, c) => p + c .length, 0),
+         value      = target [_grow] (length * components);
+
+      let offset = target [_length] * components;
+
+      for (const arg of args)
+      {
+         value .set (arg .shrinkToFit (), offset);
+
+         offset += arg .length * components;
+      }
+
+      target [_length] = length;
+
+      return result;
+   },
    reverse ()
    {
       const

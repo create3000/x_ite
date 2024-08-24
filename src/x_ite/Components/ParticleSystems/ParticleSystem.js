@@ -891,9 +891,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    { },
    traverse (type, renderObject)
    {
-      if (!this .numParticles)
-         return;
-
       switch (type)
       {
          case TraverseType .POINTER:
@@ -935,6 +932,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    displaySimple (gl, renderContext, shaderNode)
    {
+      if (!this .numParticles)
+         return;
+
       // Display geometry.
 
       switch (this .geometryType)
@@ -974,6 +974,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    display (gl, renderContext)
    {
+      if (!this .numParticles)
+         return;
+
       // Display geometry.
 
       switch (this .geometryType)
