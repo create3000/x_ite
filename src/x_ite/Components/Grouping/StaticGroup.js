@@ -215,20 +215,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                appearanceNode = shapeNode .getAppearance (),
                geometryNode   = shapeNode .getGeometry ();
 
-            switch (shapeNode .getShapeKey ())
-            {
-               case 1:
-               case 2:
-               case 3:
-               {
-                  const group = singlesIndex [renderContext .modelViewMatrix] ??= [ ];
-
-                  group .push (renderContext);
-                  continue;
-               }
-            }
-
-            if (this .hasTextureCoordinateGenerator (geometryNode))
+            if (shapeNode .getShapeKey () > 0 || this .hasTextureCoordinateGenerator (geometryNode))
             {
                const group = singlesIndex [renderContext .modelViewMatrix] ??= [ ];
 
