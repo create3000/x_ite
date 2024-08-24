@@ -156,7 +156,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
                this .visibleNodes = null;
             });
 
-            return [ ];
+            return [this .groupNode];
          }
 
          // Traverse Group node to get render contexts.
