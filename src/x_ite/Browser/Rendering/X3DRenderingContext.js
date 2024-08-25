@@ -520,7 +520,6 @@ Object .assign (X3DRenderingContext .prototype,
          };
 
          this .setReferenceSpace ();
-         this .addBrowserEvent ();
          this .reshape ();
       });
    },
@@ -547,7 +546,6 @@ Object .assign (X3DRenderingContext .prototype,
          this [_defaultFrameBuffer] = null;
          this [_pose]               = null;
 
-         this .addBrowserEvent ();
          this .reshape ();
       });
    },

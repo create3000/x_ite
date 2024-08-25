@@ -329,13 +329,25 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       return this [_displayTime];
    },
-   stopXRSession ()
+   async startXRSession (event)
    {
+      await X3DRenderingContext .prototype .startXRSession .call (this, event);
+
       this [_tainted] = false;
 
-      this .getSession () .cancelAnimationFrame (this [_animFrame]);
+      window .cancelAnimationFrame (this [_animFrame]);
+      this .addBrowserEvent ();
+   },
+   async stopXRSession ()
+   {
+      const session = this .getSession ();
 
-      X3DRenderingContext .prototype .stopXRSession .call (this);
+      await X3DRenderingContext .prototype .stopXRSession .call (this);
+
+      this [_tainted] = false;
+
+      session .cancelAnimationFrame (this [_animFrame]);
+      this .addBrowserEvent ();
    },
    dispose ()
    {
