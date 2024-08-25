@@ -75,7 +75,6 @@ function X3DBackgroundNode (executionContext)
    this ._skyAngle    .setUnit ("angle");
    this ._groundAngle .setUnit ("angle");
 
-   this .projectionMatrixArray = new Float32Array (16);
    this .modelMatrix           = new Matrix4 ();
    this .modelViewMatrixArray  = new Float32Array (16);
    this .clipPlanes            = [ ];
@@ -461,7 +460,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          rotation        = new Rotation4 (),
          scale           = new Vector3 ();
 
-      return function (gl, renderObject, viewport)
+      return function (gl, renderObject, projectionMatrixArray, viewport)
       {
          if (this ._hidden .getValue ())
             return;
@@ -475,7 +474,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
          // Get projection matrix.
 
-         this .projectionMatrixArray .set (renderObject .getProjectionMatrixWithLimits (0.125, 200_000, viewport));
+         this .projectionMatrixArray = projectionMatrixArray;
 
          // Rotate and scale background.
 
@@ -529,6 +528,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
       gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
       gl .uniform1f (shaderNode .x3d_Exposure,                           1);
+      gl .uniform1f (shaderNode .x3d_DepthFactor,                        0);
 
       // Enable vertex attribute arrays.
 
@@ -547,7 +547,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
 
-      gl .uniform1f (shaderNode .x3d_Exposure, browser .getBrowserOption ("Exposure"));
+      gl .uniform1f (shaderNode .x3d_Exposure,    browser .getBrowserOption ("Exposure"));
+      gl .uniform1f (shaderNode .x3d_DepthFactor, 1);
    },
    drawCube: (() =>
    {
@@ -585,10 +586,12 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             gl .uniform1f (shaderNode .x3d_Transparency,                       0);
             gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
             gl .uniform1f (shaderNode .x3d_Exposure,                           1);
+            gl .uniform1f (shaderNode .x3d_DepthFactor,                        0);
 
             this .drawRectangle (gl, browser, shaderNode, renderObject, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
 
-            gl .uniform1f (shaderNode .x3d_Exposure, browser .getBrowserOption ("Exposure"));
+            gl .uniform1f (shaderNode .x3d_Exposure,    browser .getBrowserOption ("Exposure"));
+            gl .uniform1f (shaderNode .x3d_DepthFactor, 1);
          }
       };
    })(),
