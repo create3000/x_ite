@@ -666,10 +666,9 @@ function DependentRenderer (executionContext, renderObject, node)
    external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
    external_X_ITE_X3D_X3DRenderObject_default().call (this, executionContext);
 
-   this .renderObject               = renderObject;
-   this .node                       = node;
-   this .projectionMatrixWithLimits = new (external_X_ITE_X3D_Matrix4_default()) ();
-   this .frameBuffers               = [ ];
+   this .renderObject = renderObject;
+   this .node         = node;
+   this .frameBuffers = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype),
@@ -727,10 +726,6 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (external_
    setFrameBuffer (frameBuffer)
    {
       this .frameBuffers [0] = frameBuffer;
-   },
-   getProjectionMatrixWithLimits (nearValue, farValue, viewport)
-   {
-      return external_X_ITE_X3D_Camera_default().perspective (external_X_ITE_X3D_Algorithm_default().radians (90), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrixWithLimits);
    },
    render (type, callback, group)
    {
@@ -847,6 +842,7 @@ var external_X_ITE_X3D_Vector4_default = /*#__PURE__*/__webpack_require__.n(exte
 
 
 
+
 function GeneratedCubeMapTexture (executionContext)
 {
    CubeMapTexturing_X3DEnvironmentTextureNode .call (this, executionContext);
@@ -854,6 +850,7 @@ function GeneratedCubeMapTexture (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).GeneratedCubeMapTexture);
 
    this .dependentRenderers = new WeakMap ();
+   this .projectionMatrix   = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .modelMatrix        = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .viewVolume         = new (external_X_ITE_X3D_ViewVolume_default()) ();
 }
@@ -973,7 +970,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
             headlight          = navigationInfo ._headlight .getValue (),
             nearValue          = navigationInfo .getNearValue (),
             farValue           = navigationInfo .getFarValue (viewpoint),
-            projectionMatrix   = dependentRenderer .getProjectionMatrixWithLimits (nearValue, farValue, this .viewport),
+            projectionMatrix   = external_X_ITE_X3D_Camera_default().perspective (external_X_ITE_X3D_Algorithm_default().radians (90), nearValue, farValue, 1, 1, this .projectionMatrix),
             width              = this .frameBuffer .getWidth (),
             height             = this .frameBuffer .getHeight ();
 
