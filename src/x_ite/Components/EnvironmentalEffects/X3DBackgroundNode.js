@@ -489,7 +489,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          modelViewMatrix .get (null, rotation);
          modelViewMatrix .identity ();
          modelViewMatrix .rotate (rotation);
-         modelViewMatrix .scale (scale .set (100_000, 100_000, 100_000));
+         modelViewMatrix .scale (scale .set (100_000, 100_000, 100_000)); // TODO: use max(farPlane, 100_000)
 
          modelViewMatrixArray .set (modelViewMatrix);
 
