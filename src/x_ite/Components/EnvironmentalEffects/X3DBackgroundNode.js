@@ -75,16 +75,14 @@ function X3DBackgroundNode (executionContext)
    this ._skyAngle    .setUnit ("angle");
    this ._groundAngle .setUnit ("angle");
 
-   this .modelMatrix           = new Matrix4 ();
-   this .modelViewMatrixArray  = new Float32Array (16);
-   this .projectionMatrixArray = new Float32Array (16);
-   this .clipPlanes            = [ ];
-   this .colors                = [ ];
-   this .sphere                = [ ];
-   this .textureNodes          = new Array (6);
-   this .textureBits           = new BitSet ();
-   this .sphereContext         = new GeometryContext ({ colorMaterial: true });
-   this .texturesContext       = new GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys});
+   this .modelMatrix     = new Matrix4 ();
+   this .clipPlanes      = [ ];
+   this .colors          = [ ];
+   this .sphere          = [ ];
+   this .textureNodes    = new Array (6);
+   this .textureBits     = new BitSet ();
+   this .sphereContext   = new GeometryContext ({ colorMaterial: true });
+   this .texturesContext = new GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys});
 }
 
 Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindableNode .prototype),
@@ -457,11 +455,13 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    display: (() =>
    {
       const
-         projectionMatrix = new Matrix4 (),
-         projectionScale  = new Matrix4 (1,0,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,1),
-         modelViewMatrix  = new Matrix4 (),
-         rotation         = new Rotation4 (),
-         scale            = new Vector3 ();
+         projectionMatrixArray = new Float32Array (16),
+         projectionMatrix      = new Matrix4 (),
+         projectionScale       = new Matrix4 (1,0,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,1),
+         modelViewMatrixArray  = new Float32Array (16),
+         modelViewMatrix       = new Matrix4 (),
+         rotation              = new Rotation4 (),
+         scale                 = new Vector3 ();
 
       return function (gl, renderObject)
       {
@@ -478,7 +478,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          // Create projection matrix.
          // The projectionScale will set gl_Position.z to 0.
 
-         this .projectionMatrixArray .set (projectionMatrix
+         projectionMatrixArray .set (projectionMatrix
             .assign (renderObject .getProjectionMatrixArray ())
             .multRight (projectionScale));
 
@@ -491,21 +491,21 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          modelViewMatrix .rotate (rotation);
          modelViewMatrix .scale (scale .set (100_000, 100_000, 100_000));
 
-         this .modelViewMatrixArray .set (modelViewMatrix);
+         modelViewMatrixArray .set (modelViewMatrix);
 
          // Draw background sphere and texture cube.
 
-         this .drawSphere (renderObject);
+         this .drawSphere (renderObject, modelViewMatrixArray, projectionMatrixArray);
 
          if (+this .textureBits)
-            this .drawCube (renderObject);
+            this .drawCube (renderObject, modelViewMatrixArray, projectionMatrixArray);
 
          gl .depthMask (true);
          gl .enable (gl .DEPTH_TEST);
          gl .disable (gl .BLEND);
       };
    })(),
-   drawSphere (renderObject)
+   drawSphere (renderObject, modelViewMatrixArray, projectionMatrixArray)
    {
       const transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
 
@@ -527,8 +527,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       // Uniforms
 
-      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
 
       gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1)
       gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
@@ -558,7 +558,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    {
       const textureMatrixArray = new Float32Array (Matrix4 .Identity);
 
-      return function (renderObject)
+      return function (renderObject, modelViewMatrixArray, projectionMatrixArray)
       {
          const
             browser         = this .getBrowser (),
@@ -582,8 +582,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
             // Set uniforms.
 
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, modelViewMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
 
             gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1);
