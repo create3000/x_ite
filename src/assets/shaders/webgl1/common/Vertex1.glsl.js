@@ -3,9 +3,8 @@ import { maxTexCoords } from "../../../../x_ite/Browser/Texturing/TexturingConfi
 export default /* glsl */ `
 // Uniforms
 
-uniform mat4  x3d_ProjectionMatrix;
-uniform mat4  x3d_ModelViewMatrix;
-uniform float x3d_DepthScale;
+uniform mat4 x3d_ProjectionMatrix;
+uniform mat4 x3d_ModelViewMatrix;
 
 // Attributes
 
@@ -135,8 +134,7 @@ vertex_main ()
       localVertex = x3d_Vertex .xyz;
    #endif
 
-   gl_Position     = x3d_ProjectionMatrix * position;
-   gl_Position .z *= x3d_DepthScale;
+   gl_Position = x3d_ProjectionMatrix * position;
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
       depth = 1.0 + gl_Position .w;

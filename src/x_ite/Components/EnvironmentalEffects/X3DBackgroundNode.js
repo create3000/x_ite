@@ -77,6 +77,7 @@ function X3DBackgroundNode (executionContext)
 
    this .modelMatrix           = new Matrix4 ();
    this .modelViewMatrixArray  = new Float32Array (16);
+   this .projectionMatrixArray = new Float32Array (16);
    this .clipPlanes            = [ ];
    this .colors                = [ ];
    this .sphere                = [ ];
@@ -456,9 +457,11 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    display: (() =>
    {
       const
-         modelViewMatrix = new Matrix4 (),
-         rotation        = new Rotation4 (),
-         scale           = new Vector3 ();
+         projectionMatrix = new Matrix4 (),
+         projectionScale  = new Matrix4 (1,0,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,1),
+         modelViewMatrix  = new Matrix4 (),
+         rotation         = new Rotation4 (),
+         scale            = new Vector3 ();
 
       return function (gl, renderObject)
       {
@@ -471,6 +474,12 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          gl .depthMask (false);
          gl .enable (gl .CULL_FACE);
          gl .frontFace (gl .CCW);
+
+         // Create projection matrix.
+
+         this .projectionMatrixArray .set (projectionMatrix
+            .assign (renderObject .getProjectionMatrixArray ())
+            .multRight (projectionScale));
 
          // Rotate and scale background.
 
@@ -517,14 +526,13 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       // Uniforms
 
-      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, renderObject .getProjectionMatrixArray ());
+      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
 
       gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1)
       gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
       gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
       gl .uniform1f (shaderNode .x3d_Exposure,                           1);
-      gl .uniform1f (shaderNode .x3d_DepthScale,                         0);
 
       // Enable vertex attribute arrays.
 
@@ -543,8 +551,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
 
-      gl .uniform1f (shaderNode .x3d_Exposure,   browser .getBrowserOption ("Exposure"));
-      gl .uniform1f (shaderNode .x3d_DepthScale, 1);
+      gl .uniform1f (shaderNode .x3d_Exposure, browser .getBrowserOption ("Exposure"));
    },
    drawCube: (() =>
    {
@@ -574,7 +581,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
             // Set uniforms.
 
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
 
@@ -582,12 +589,10 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             gl .uniform1f (shaderNode .x3d_Transparency,                       0);
             gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
             gl .uniform1f (shaderNode .x3d_Exposure,                           1);
-            gl .uniform1f (shaderNode .x3d_DepthScale,                         0);
 
             this .drawRectangle (gl, browser, shaderNode, renderObject, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
 
-            gl .uniform1f (shaderNode .x3d_Exposure,   browser .getBrowserOption ("Exposure"));
-            gl .uniform1f (shaderNode .x3d_DepthScale, 1);
+            gl .uniform1f (shaderNode .x3d_Exposure, browser .getBrowserOption ("Exposure"));
          }
       };
    })(),
