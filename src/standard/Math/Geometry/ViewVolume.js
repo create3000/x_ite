@@ -319,7 +319,7 @@ Object .assign (ViewVolume,
          // Transformation of normalized coordinates between -1 and 1
          vin .set ((winx - viewport [0]) / viewport [2] * 2 - 1,
                    (winy - viewport [1]) / viewport [3] * 2 - 1,
-                   2 * winz - 1,
+                   winz * 2 - 1,
                    1);
 
          //Objects coordinates
