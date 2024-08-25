@@ -60,10 +60,6 @@ import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import Algorithm       from "../../../standard/Math/Algorithm.js";
 import BitSet          from "../../../standard/Utility/BitSet.js";
 
-const
-   RADIUS = 1,
-   SIZE   = Math .SQRT2 / 2;
-
 function X3DBackgroundNode (executionContext)
 {
    X3DBindableNode .call (this, executionContext);
@@ -166,8 +162,6 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
    build ()
    {
-      const s = SIZE;
-
       this .colors .length = 0;
       this .sphere .length = 0;
 
@@ -177,18 +171,18 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
          this .sphere .vertices = 36;
 
-         this .sphere .push ( s,  s, -s, 1, -s,  s, -s, 1, -s, -s, -s, 1, // Back
-                              s,  s, -s, 1, -s, -s, -s, 1,  s, -s, -s, 1,
-                             -s,  s,  s, 1,  s,  s,  s, 1, -s, -s,  s, 1, // Front
-                             -s, -s,  s, 1,  s,  s,  s, 1,  s, -s,  s, 1,
-                             -s,  s, -s, 1, -s,  s,  s, 1, -s, -s,  s, 1, // Left
-                             -s,  s, -s, 1, -s, -s,  s, 1, -s, -s, -s, 1,
-                              s,  s,  s, 1,  s,  s, -s, 1,  s, -s,  s, 1, // Right
-                              s, -s,  s, 1,  s,  s, -s, 1,  s, -s, -s, 1,
-                              s,  s,  s, 1, -s,  s,  s, 1, -s,  s, -s, 1, // Top
-                              s,  s,  s, 1, -s,  s, -s, 1,  s,  s, -s, 1,
-                             -s, -s,  s, 1,  s, -s,  s, 1, -s, -s, -s, 1, // Bottom
-                             -s, -s, -s, 1,  s, -s,  s, 1,  s, -s, -s, 1);
+         this .sphere .push ( 1,  1, -1, 1, -1,  1, -1, 1, -1, -1, -1, 1, // Back
+                              1,  1, -1, 1, -1, -1, -1, 1,  1, -1, -1, 1,
+                             -1,  1,  1, 1,  1,  1,  1, 1, -1, -1,  1, 1, // Front
+                             -1, -1,  1, 1,  1,  1,  1, 1,  1, -1,  1, 1,
+                             -1,  1, -1, 1, -1,  1,  1, 1, -1, -1,  1, 1, // Left
+                             -1,  1, -1, 1, -1, -1,  1, 1, -1, -1, -1, 1,
+                              1,  1,  1, 1,  1,  1, -1, 1,  1, -1,  1, 1, // Right
+                              1, -1,  1, 1,  1,  1, -1, 1,  1, -1, -1, 1,
+                              1,  1,  1, 1, -1,  1,  1, 1, -1,  1, -1, 1, // Top
+                              1,  1,  1, 1, -1,  1, -1, 1,  1,  1, -1, 1,
+                             -1, -1,  1, 1,  1, -1,  1, 1, -1, -1, -1, 1, // Bottom
+                             -1, -1, -1, 1,  1, -1,  1, 1,  1, -1, -1, 1);
 
          const color = this ._skyColor [0];
 
@@ -212,7 +206,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             if (vAngle .length === 2)
                vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2)
 
-            this .buildSphere (RADIUS, vAngle, this ._skyAngle, this ._skyColor, false);
+            this .buildSphere (vAngle, this ._skyAngle, this ._skyColor, false);
          }
 
          if (this ._groundColor .length > this ._groundAngle .length)
@@ -225,7 +219,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             if (vAngle .at (-1) > 0)
                vAngle .push (0);
 
-            this .buildSphere (RADIUS, vAngle, this ._groundAngle, this ._groundColor, true);
+            this .buildSphere (vAngle, this ._groundAngle, this ._groundColor, true);
          }
       }
 
@@ -243,7 +237,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          y3 = new Complex (),
          y4 = new Complex ();
 
-      return function (radius, vAngle, angle, color, bottom)
+      return function (vAngle, angle, color, bottom)
       {
          const
             vAngleMax   = bottom ? Math .PI / 2 : Math .PI,
@@ -261,8 +255,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
                theta2 = Math .PI - theta2;
             }
 
-            z1 .setPolar (radius, theta1);
-            z2 .setPolar (radius, theta2);
+            z1 .setPolar (1, theta1);
+            z2 .setPolar (1, theta2);
 
             const
                c1 = this .getColor (vAngle [v],     color, angle),
@@ -327,8 +321,6 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
    transferRectangle: (() =>
    {
-      const s = SIZE;
-
       const texCoords = new Float32Array ([
          1, 1, 0, 1,
          0, 1, 0, 1,
@@ -339,57 +331,57 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       ]);
 
       const frontVertices = new Float32Array ([
-         s,  s, -s, 1,
-        -s,  s, -s, 1,
-        -s, -s, -s, 1,
-         s,  s, -s, 1,
-        -s, -s, -s, 1,
-         s, -s, -s, 1,
+         1,  1, -1, 1,
+        -1,  1, -1, 1,
+        -1, -1, -1, 1,
+         1,  1, -1, 1,
+        -1, -1, -1, 1,
+         1, -1, -1, 1,
       ]);
 
       const backVertices = new Float32Array ([
-         -s,  s,  s, 1,
-          s,  s,  s, 1,
-          s, -s,  s, 1,
-         -s,  s,  s, 1,
-          s, -s,  s, 1,
-         -s, -s,  s, 1,
+         -1,  1,  1, 1,
+          1,  1,  1, 1,
+          1, -1,  1, 1,
+         -1,  1,  1, 1,
+          1, -1,  1, 1,
+         -1, -1,  1, 1,
       ]);
 
       const leftVertices = new Float32Array ([
-         -s,  s, -s, 1,
-         -s,  s,  s, 1,
-         -s, -s,  s, 1,
-         -s,  s, -s, 1,
-         -s, -s,  s, 1,
-         -s, -s, -s, 1,
+         -1,  1, -1, 1,
+         -1,  1,  1, 1,
+         -1, -1,  1, 1,
+         -1,  1, -1, 1,
+         -1, -1,  1, 1,
+         -1, -1, -1, 1,
       ]);
 
       const rightVertices = new Float32Array ([
-         s,  s,  s, 1,
-         s,  s, -s, 1,
-         s, -s, -s, 1,
-         s,  s,  s, 1,
-         s, -s, -s, 1,
-         s, -s,  s, 1,
+         1,  1,  1, 1,
+         1,  1, -1, 1,
+         1, -1, -1, 1,
+         1,  1,  1, 1,
+         1, -1, -1, 1,
+         1, -1,  1, 1,
       ]);
 
       const topVertices = new Float32Array ([
-          s, s,  s, 1,
-         -s, s,  s, 1,
-         -s, s, -s, 1,
-          s, s,  s, 1,
-         -s, s, -s, 1,
-          s, s, -s, 1,
+          1, 1,  1, 1,
+         -1, 1,  1, 1,
+         -1, 1, -1, 1,
+          1, 1,  1, 1,
+         -1, 1, -1, 1,
+          1, 1, -1, 1,
       ]);
 
       const bottomVertices = new Float32Array ([
-          s, -s, -s, 1,
-         -s, -s, -s, 1,
-         -s, -s,  s, 1,
-          s, -s, -s, 1,
-         -s, -s,  s, 1,
-          s, -s,  s, 1,
+          1, -1, -1, 1,
+         -1, -1, -1, 1,
+         -1, -1,  1, 1,
+          1, -1, -1, 1,
+         -1, -1,  1, 1,
+          1, -1,  1, 1,
       ]);
 
       const vertices = [
@@ -476,7 +468,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          gl .frontFace (gl .CCW);
 
          // Create projection matrix.
-         // The projectionScale will set gl_Position.z to 0.
+         // The projectionScale will set gl_Position.z to 0,
+         // so it is in the middle of near and far plane.
 
          projectionMatrixArray .set (projectionMatrix
             .assign (renderObject .getProjectionMatrixArray ())
