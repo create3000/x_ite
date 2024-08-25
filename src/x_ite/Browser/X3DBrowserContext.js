@@ -331,11 +331,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    },
    async startXRSession (event)
    {
+      const session = this .getSession ();
+
       await X3DRenderingContext .prototype .startXRSession .call (this, event);
 
       this [_tainted] = false;
 
-      window .cancelAnimationFrame (this [_animFrame]);
+      session .cancelAnimationFrame (this [_animFrame]);
       this .addBrowserEvent ();
    },
    async stopXRSession ()
