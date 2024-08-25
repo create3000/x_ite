@@ -476,6 +476,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          gl .frontFace (gl .CCW);
 
          // Create projection matrix.
+         // The projectionScale will set gl_Position.z to 0.
 
          this .projectionMatrixArray .set (projectionMatrix
             .assign (renderObject .getProjectionMatrixArray ())
