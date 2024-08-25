@@ -54,6 +54,7 @@ import DependentRenderer         from "../../Rendering/DependentRenderer.js";
 import TextureBuffer             from "../../Rendering/TextureBuffer.js";
 import X3DConstants              from "../../Base/X3DConstants.js";
 import TraverseType              from "../../Rendering/TraverseType.js";
+import Camera                    from "../../../standard/Math/Geometry/Camera.js";
 import ViewVolume                from "../../../standard/Math/Geometry/ViewVolume.js";
 import Rotation4                 from "../../../standard/Math/Numbers/Rotation4.js";
 import Vector3                   from "../../../standard/Math/Numbers/Vector3.js";
@@ -68,6 +69,7 @@ function GeneratedCubeMapTexture (executionContext)
    this .addType (X3DConstants .GeneratedCubeMapTexture);
 
    this .dependentRenderers = new WeakMap ();
+   this .projectionMatrix   = new Matrix4 ();
    this .modelMatrix        = new Matrix4 ();
    this .viewVolume         = new ViewVolume ();
 }
@@ -187,7 +189,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
             headlight          = navigationInfo ._headlight .getValue (),
             nearValue          = navigationInfo .getNearValue (),
             farValue           = navigationInfo .getFarValue (viewpoint),
-            projectionMatrix   = dependentRenderer .getProjectionMatrixWithLimits (nearValue, farValue, this .viewport),
+            projectionMatrix   = Camera .perspective (Algorithm .radians (90), nearValue, farValue, 1, 1, this .projectionMatrix),
             width              = this .frameBuffer .getWidth (),
             height             = this .frameBuffer .getHeight ();
 
