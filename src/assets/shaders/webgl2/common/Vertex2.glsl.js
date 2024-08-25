@@ -5,7 +5,7 @@ export default /* glsl */ `
 
 uniform mat4  x3d_ProjectionMatrix;
 uniform mat4  x3d_ModelViewMatrix;
-uniform float x3d_DepthFactor;
+uniform float x3d_DepthScale;
 
 // Attributes
 
@@ -168,7 +168,7 @@ vertex_main ()
    #endif
 
    gl_Position     = x3d_ProjectionMatrix * position;
-   gl_Position .z *= x3d_DepthFactor;
+   gl_Position .z *= x3d_DepthScale;
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
       depth = 1.0 + gl_Position .w;

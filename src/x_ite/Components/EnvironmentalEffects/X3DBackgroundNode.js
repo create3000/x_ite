@@ -524,7 +524,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
       gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
       gl .uniform1f (shaderNode .x3d_Exposure,                           1);
-      gl .uniform1f (shaderNode .x3d_DepthFactor,                        0);
+      gl .uniform1f (shaderNode .x3d_DepthScale,                         0);
 
       // Enable vertex attribute arrays.
 
@@ -543,8 +543,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
 
-      gl .uniform1f (shaderNode .x3d_Exposure,    browser .getBrowserOption ("Exposure"));
-      gl .uniform1f (shaderNode .x3d_DepthFactor, 1);
+      gl .uniform1f (shaderNode .x3d_Exposure,   browser .getBrowserOption ("Exposure"));
+      gl .uniform1f (shaderNode .x3d_DepthScale, 1);
    },
    drawCube: (() =>
    {
@@ -582,12 +582,12 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             gl .uniform1f (shaderNode .x3d_Transparency,                       0);
             gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
             gl .uniform1f (shaderNode .x3d_Exposure,                           1);
-            gl .uniform1f (shaderNode .x3d_DepthFactor,                        0);
+            gl .uniform1f (shaderNode .x3d_DepthScale,                         0);
 
             this .drawRectangle (gl, browser, shaderNode, renderObject, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
 
-            gl .uniform1f (shaderNode .x3d_Exposure,    browser .getBrowserOption ("Exposure"));
-            gl .uniform1f (shaderNode .x3d_DepthFactor, 1);
+            gl .uniform1f (shaderNode .x3d_Exposure,   browser .getBrowserOption ("Exposure"));
+            gl .uniform1f (shaderNode .x3d_DepthScale, 1);
          }
       };
    })(),

@@ -223,7 +223,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_NormalMatrix",
          "x3d_ViewMatrix",
          "x3d_CameraSpaceMatrix",
-         "x3d_DepthFactor",
+         "x3d_DepthScale",
          // ParticleSystem and Skinning
          "x3d_TexCoordRamp",
          "x3d_JointsTexture",
@@ -386,7 +386,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       // Fill browser options.
 
       gl .uniform1f (this .x3d_Exposure,    Math .max (browser .getBrowserOption ("Exposure"), 0));
-      gl .uniform1f (this .x3d_DepthFactor, 1);
+      gl .uniform1f (this .x3d_DepthScale, 1);
 
       // Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
