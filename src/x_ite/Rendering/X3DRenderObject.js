@@ -1295,7 +1295,7 @@ Object .assign (X3DRenderObject .prototype,
       gl .clear (gl .DEPTH_BUFFER_BIT | clear);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
-      this .getBackground () .display (gl, this, this .projectionMatrixArray, viewport);
+      this .getBackground () .display (gl, this);
 
       // Sorted blend or order independent transparency
 

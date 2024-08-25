@@ -460,7 +460,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          rotation        = new Rotation4 (),
          scale           = new Vector3 ();
 
-      return function (gl, renderObject, projectionMatrixArray, viewport)
+      return function (gl, renderObject)
       {
          if (this ._hidden .getValue ())
             return;
@@ -471,10 +471,6 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          gl .depthMask (false);
          gl .enable (gl .CULL_FACE);
          gl .frontFace (gl .CCW);
-
-         // Get projection matrix.
-
-         this .projectionMatrixArray = projectionMatrixArray;
 
          // Rotate and scale background.
 
@@ -521,7 +517,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       // Uniforms
 
-      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
+      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, renderObject .getProjectionMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
 
       gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1)
@@ -578,7 +574,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
             // Set uniforms.
 
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
 
