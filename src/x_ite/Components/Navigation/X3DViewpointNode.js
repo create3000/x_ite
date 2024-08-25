@@ -551,8 +551,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       if (type !== TraverseType .CAMERA)
          return;
 
-      if (this .navigationInfoNode)
-         this .navigationInfoNode .traverse (type, renderObject);
+      this .navigationInfoNode ?.traverse (type, renderObject);
 
       this .descriptions .length = 0;
 
