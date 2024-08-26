@@ -363,12 +363,14 @@ Returns a browser option with the corresponding *name*.
          <td>Boolean</td>
          <td>true</td>
       </tr>
+      <!--
       <tr>
          <td>XRMovementControl</td>
          <td>When an XR session is active, you can control motion either by using the viewer pose of the VR device or by using the position and orientation of the currently bound viewpoint of the active layer. <small class="blue">non standard</small></td>
          <td>VIEWER_POSE, VIEWPOINT</td>
          <td>VIEWER_POSE</td>
       </tr>
+      -->
       <tr>
          <td>XRSessionMode</td>
          <td>A String defining the XR session mode. If the value is NONE, no XR button is displayed and all attempts to start a session are ignored. See also <a href="https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession#parameters" target="blank">XRSystem.requestSession</a>. <small class="blue">non standard</small></td>

@@ -297,11 +297,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
    traverse (type, renderObject = this)
    {
-      const
-         browser = this .getBrowser (),
-         pose    = browser .getPose ();
+      const pose = this .getBrowser () .getPose ();
 
-      if (pose && this .active && browser .getBrowserOption ("XRMovementControl") !== "VIEWPOINT")
+      if (pose && this .active)
       {
          this .getProjectionMatrix ()  .pushMatrix (pose .views [0] .projectionMatrix);
          this .getCameraSpaceMatrix () .pushMatrix (pose .cameraSpaceMatrix);
