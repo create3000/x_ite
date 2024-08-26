@@ -14,10 +14,12 @@ With this version of X_ITE we have now implemented render optimizations for Stat
 This works very well with all geometry types (point, line, 2D, 3D).
 
 A test file is also available. This test file will create 10 static nodes from the previous 22 nodes:
-[StaticGroup](https://create3000.github.io/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroup.x3d)
 
-Another test file using an Inline node with a glTF sample. This test file will create 16 static nodes from the previous 49 nodes:
-[StaticGroupWithInline](https://create3000.github.io/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroupWithInline.x3d)
+* [StaticGroup](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroup.x3d)
+
+Another test file using an Inline node with a glTF sample. This test file will create 15 static nodes from the previous 49 nodes:
+
+* [StaticGroup with Inline](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroupWithInline.x3d)
 
 ## X_ITE v10.3.0 Released
 
