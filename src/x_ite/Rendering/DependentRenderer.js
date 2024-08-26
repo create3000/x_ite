@@ -48,9 +48,6 @@
 import X3DBaseNode     from "../Base/X3DBaseNode.js";
 import X3DRenderObject from "./X3DRenderObject.js";
 import TraverseType    from "./TraverseType.js";
-import Camera          from "../../standard/Math/Geometry/Camera.js";
-import Algorithm       from "../../standard/Math/Algorithm.js";
-import Matrix4         from "../../standard/Math/Numbers/Matrix4.js";
 
 function DependentRenderer (executionContext, renderObject, node)
 {

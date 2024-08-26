@@ -5,6 +5,7 @@ export default /* glsl */ `
 
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
+
 // Attributes
 
 #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
