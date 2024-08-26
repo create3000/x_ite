@@ -7,6 +7,18 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v10.4.0 Released
+
+With this version of X_ITE we have now implemented render optimizations for StaticGroup nodes. A StaticGroup node will now remove all transformations and bake them into the geometry. Furthermore, assuming the Appearance node is exactly the same (cloned) and the geometry nodes are compatible, the geometry nodes will be merged into one.
+
+This works very well with all geometry types (point, line, 2D, 3D).
+
+A test file is also available. This test file will create 10 static nodes from the previous 22 nodes:
+[StaticGroup](https://create3000.github.io/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroup.x3d)
+
+Another test file using an Inline node with a glTF sample. This test file will create 16 static nodes from the previous 49 nodes:
+[StaticGroupWithInline](https://create3000.github.io/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroupWithInline.x3d)
+
 ## X_ITE v10.3.0 Released
 
 *Leipzig, 18th August 2024:* With this release there is now basic WebXR support built directly into X_ITE. If WebXR is possible then a new button (Cardboard Glasses) appears in the lower right corner of the \<x3d-canvas\>. In addition, there are now three new [attributes](/x_ite/#attributes-of-the-x3d-canvas-element) (*xrButton, xrMovementControl, xrSessionMode*) and the corresponding [browser options](/x_ite/reference/browser-services/#browser-options) (*XRButton, XRMovementControl, XRSessionMode*).
