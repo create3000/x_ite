@@ -295,14 +295,12 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       if (DEVELOPMENT)
          console .time ("StaticGroup");
 
-      const visibleNodes = clonesGroups .map (group => this .combineClones (group))
+      this .visibleNodes = clonesGroups .map (group => this .combineClones (group))
          .concat (combineGroups .map (group => this .combineShapes (group)))
          .concat (singlesGroups .map (group => this .normalizeSingleShapes (group)));
 
       if (DEVELOPMENT)
          console .timeEnd ("StaticGroup");
-
-      this .visibleNodes = visibleNodes;
    },
    combineClones: (function ()
    {
