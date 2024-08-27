@@ -13,7 +13,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 This works very well with all geometry types (point, line, 2D, 3D).
 
-A test file is also available. This test file will create 10 static nodes from the previous 22 nodes:
+A basic test file is also available. This test file will create 10 static nodes from the previous 22 nodes:
 
 * [StaticGroup](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroup.x3d)
 
