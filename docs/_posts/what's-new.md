@@ -9,7 +9,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v10.4.0 Released
 
-*Leipzig, 37th August 2024:* With this version of X_ITE we have now implemented render optimizations for StaticGroup nodes. A StaticGroup node will now remove all transformations and bake them into the geometry. Furthermore, assuming the Appearance node is exactly the same (cloned) and the geometry nodes are compatible, the geometry nodes will be merged into one.
+*Leipzig, 27th August 2024:* With this version of X_ITE we have now implemented render optimizations for StaticGroup nodes. A StaticGroup node will now remove all transformations and bake them into the geometry. Furthermore, assuming the Appearance node is exactly the same (cloned) and the geometry nodes are compatible, the geometry nodes will be merged into one.
 
 This works very well with all geometry types (point, line, 2D, 3D).
 
