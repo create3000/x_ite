@@ -17,7 +17,7 @@ A test file is also available. This test file will create 10 static nodes from t
 
 * [StaticGroup](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroup.x3d)
 
-Another test file using an Inline node with a glTF sample. This test file will create 15 static nodes from the previous 49 nodes:
+Another test file using an Inline node with a glTF sample (1.5 million triangles). This test file will create 15 static nodes from the previous 49 nodes:
 
 * [StaticGroup with Inline](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroupWithInline.x3d)
 
