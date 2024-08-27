@@ -131,7 +131,34 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       for (const visibleNode of this .visibleNodes)
          visibleNode .traverse (type, renderObject);
    },
-   createStaticShapes: (() =>
+   createStaticShapes(renderObject)
+   {
+      // Check if scene is currently loading something.
+
+      const scene = this .getScene ();
+
+      if (scene ._loadCount .getValue ())
+      {
+         scene ._loadCount .addFieldCallback (this, () =>
+         {
+            if (scene ._loadCount .getValue ())
+               return;
+
+            scene ._loadCount .removeFieldCallback (this);
+
+            this .set_children__ ();
+         });
+      }
+      else
+      {
+         // Create static shapes.
+
+         this .optimizeGroups (this .createGroups (renderObject));
+      }
+
+      return [this .groupNode];
+   },
+   createGroups: (() =>
    {
       const Statics = ["Opaque", "Transparent", "TransmissionOpaque", "TransmissionTransparent"];
 
@@ -141,25 +168,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
       return function (renderObject)
       {
-         // Check if scene is currently loading something.
-
-         const scene = this .getScene ();
-
-         if (scene ._loadCount .getValue ())
-         {
-            scene ._loadCount .addFieldCallback (this, () =>
-            {
-               if (scene ._loadCount .getValue ())
-                  return;
-
-               scene ._loadCount .removeFieldCallback (this);
-
-               this .set_children__ ();
-            });
-
-            return [this .groupNode];
-         }
-
          // Traverse Group node to get render contexts.
 
          const
@@ -265,9 +273,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          // Create static shapes.
 
-         this .optimizeGroups (clonesGroups, combineGroups, singlesGroups);
-
-         return [this .groupNode];
+         return { clonesGroups, combineGroups, singlesGroups };
       };
    })(),
    hasTextureCoordinateGenerator (geometryNode)
@@ -285,7 +291,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
       return false;
    },
-   async optimizeGroups (clonesGroups, combineGroups, singlesGroups)
+   async optimizeGroups ({ clonesGroups, combineGroups, singlesGroups })
    {
       if (clonesGroups .length)
          await this .getBrowser () .loadComponents ("X_ITE");
