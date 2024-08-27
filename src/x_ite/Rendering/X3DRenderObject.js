@@ -1206,12 +1206,9 @@ Object .assign (X3DRenderObject .prototype,
 
          this .viewportArray .set (viewport);
 
-         if (this .view)
+         if (this .view && this .isActive ())
          {
-            this .projectionMatrixArray .set (this .isActive ()
-               ? this .view .projectionMatrix
-               : this .getProjectionMatrix () .get ());
-
+            this .projectionMatrixArray  .set (this .view .projectionMatrix);
             this .cameraSpaceMatrixArray .set (this .view .cameraSpaceMatrix);
             this .viewMatrixArray        .set (this .view .viewMatrix);
          }
