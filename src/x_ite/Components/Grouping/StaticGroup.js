@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
                scene ._loadCount .removeFieldCallback (this);
 
-               this .visibleNodes = null;
+               this .set_children__ ();
             });
 
             return [this .groupNode];
