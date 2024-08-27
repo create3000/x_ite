@@ -3,7 +3,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 834:
+/***/ 470:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 756:
+/***/ 560:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -74,7 +74,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 304:
+/***/ 364:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4030,7 +4030,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 500:
+/***/ 272:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5185,7 +5185,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 873:
+/***/ 254:
 /***/ ((module) => {
 
 "use strict";
@@ -5693,7 +5693,7 @@ var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n
 const external_X_ITE_X3D_Expressions_namespaceObject = __X_ITE_X3D__ .Expressions;
 var external_X_ITE_X3D_Expressions_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Expressions_namespaceObject);
 // EXTERNAL MODULE: external "__X_ITE_X3D__ .jquery"
-var external_X_ITE_X3D_jquery_ = __webpack_require__(873);
+var external_X_ITE_X3D_jquery_ = __webpack_require__(254);
 var external_X_ITE_X3D_jquery_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_jquery_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/NRRDParser.js
 /*******************************************************************************
@@ -7314,10 +7314,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(304);
-/* provided dependency */ var JpegImage = __webpack_require__(500);
-/* provided dependency */ var CharLS = __webpack_require__(834);
-/* provided dependency */ var OpenJPEG = __webpack_require__(756);
+/* provided dependency */ var dicomParser = __webpack_require__(364);
+/* provided dependency */ var JpegImage = __webpack_require__(272);
+/* provided dependency */ var CharLS = __webpack_require__(470);
+/* provided dependency */ var OpenJPEG = __webpack_require__(560);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8631,7 +8631,7 @@ const ImageTexture3D_default_ = ImageTexture3D;
 
 /* harmony default export */ const Texturing3D_ImageTexture3D = (external_X_ITE_X3D_Namespace_default().add ("ImageTexture3D", ImageTexture3D_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ImageTextureAtlas.js
-/* provided dependency */ var $ = __webpack_require__(873);
+/* provided dependency */ var $ = __webpack_require__(254);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
