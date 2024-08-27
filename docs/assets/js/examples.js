@@ -18,7 +18,7 @@ $("table.examples a") .on ("click", function ()
       div     = $("<div></div>") .addClass ("example") .appendTo ("body");
       header  = $("<p></p>") .addClass ("header") .appendTo (div);
       toolbar = $("<p></p>") .addClass ("toolbar") .appendTo (div);
-      canvas  = $("<x3d-canvas></x3d-canvas>") .appendTo (div);
+      canvas  = $("<x3d-canvas></x3d-canvas>") .attr ("debug", true) .appendTo (div);
 
       canvas .on ("initialized", () => updateToolbar (toolbar, canvas));
 
