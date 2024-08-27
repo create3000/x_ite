@@ -51,6 +51,10 @@ Input/Output field *rotations*.
 
 Input/Output field *scales*.
 
+### MFRotation [in, out] **scaleOrientations** [ ] <small>(-∞,∞) or [-1,1]</small>
+
+Input/Output field *scaleOrientations*.
+
 ### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non standard</small>
 
 *pointerEvents* defines whether this Shape becomes target for pointer events.

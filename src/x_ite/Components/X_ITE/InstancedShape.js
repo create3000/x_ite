@@ -102,10 +102,11 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          numLines: 0,
       });
 
-      this ._translations .addInterest ("set_transform__", this);
-      this ._rotations    .addInterest ("set_transform__", this);
-      this ._scales       .addInterest ("set_transform__", this);
-      this ._matrices     .addInterest ("set_matrices__",  this);
+      this ._translations      .addInterest ("set_transform__", this);
+      this ._rotations         .addInterest ("set_transform__", this);
+      this ._scales            .addInterest ("set_transform__", this);
+      this ._scaleOrientations .addInterest ("set_transform__", this);
+      this ._matrices          .addInterest ("set_matrices__",  this);
 
       this .set_transform__ ();
    },
@@ -169,19 +170,21 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    set_matrices__ ()
    {
       const
-         browser         = this .getBrowser (),
-         gl              = browser .getContext (),
-         translations    = this ._translations,
-         rotations       = this ._rotations,
-         scales          = this ._scales,
-         numTranslations = translations .length,
-         numRotations    = rotations .length,
-         numScales       = scales .length,
-         numInstances    = Math .max (numTranslations, numRotations, numScales),
-         stride          = this .instancesStride / Float32Array .BYTES_PER_ELEMENT,
-         length          = this .instancesStride * numInstances,
-         data            = new Float32Array (length),
-         matrix          = new Matrix4 ();
+         browser              = this .getBrowser (),
+         gl                   = browser .getContext (),
+         translations         = this ._translations,
+         rotations            = this ._rotations,
+         scales               = this ._scales,
+         scaleOrientations    = this ._scaleOrientations,
+         numTranslations      = translations .length,
+         numRotations         = rotations .length,
+         numScales            = scales .length,
+         numScaleOrientations = scaleOrientations .length,
+         numInstances         = Math .max (numTranslations, numRotations, numScales, numScaleOrientations),
+         stride               = this .instancesStride / Float32Array .BYTES_PER_ELEMENT,
+         length               = this .instancesStride * numInstances,
+         data                 = new Float32Array (length),
+         matrix               = new Matrix4 ();
 
       this .numInstances = numInstances;
 
@@ -192,9 +195,10 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
 
       for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
       {
-         matrix .set (numTranslations ? translations [Math .min (i, numTranslations - 1)] .getValue () : null,
-                      numRotations    ? rotations    [Math .min (i, numRotations    - 1)] .getValue () : null,
-                      numScales       ? scales       [Math .min (i, numScales       - 1)] .getValue () : null);
+         matrix .set (numTranslations      ? translations      [Math .min (i, numTranslations      - 1)] .getValue () : null,
+                      numRotations         ? rotations         [Math .min (i, numRotations         - 1)] .getValue () : null,
+                      numScales            ? scales            [Math .min (i, numScales            - 1)] .getValue () : null,
+                      numScaleOrientations ? scaleOrientations [Math .min (i, numScaleOrientations - 1)] .getValue () : null);
 
          if (numScales)
             scale .max (scales [Math .min (i, numScales - 1)] .getValue ());
@@ -287,18 +291,19 @@ Object .defineProperties (InstancedShape,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "translations",  new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotations",     new Fields .MFRotation ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",        new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",    new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",       new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",   new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",      new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",    new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "translations",      new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotations",         new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",            new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientations", new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",          new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",        new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",          new Fields .SFNode ()),
       ]),
       enumerable: true,
    },

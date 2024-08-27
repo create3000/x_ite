@@ -205,6 +205,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // Sort out TextureCoordinateGenerator nodes.
 
          const
+            clonesIndex  = new Map (),
             groupsIndex  = { },
             singlesIndex = { };
 
@@ -235,32 +236,38 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             key += shapeNode ._castShadow .getValue () ? 1 : 0;
             key += shapeNode ._bboxDisplay .getValue () ? 1 : 0;
 
-            const group = groupsIndex [key] ??= [ ];
+            if (!clonesIndex .has (shapeNode))
+               clonesIndex .set (shapeNode, [ ]);
 
-            group .push (renderContext);
+            const
+               clones = clonesIndex .get (shapeNode),
+               group  = groupsIndex [key] ??= [ ];
+
+            clones .push (renderContext);
+            group  .push (renderContext);
+         }
+
+         for (const [id, group] of clonesIndex .entries ())
+         {
+            if (group .length < 2)
+               clonesIndex .delete (id);
          }
 
          const
-            combineGroups = Object .values (groupsIndex),
+            clonesGroups  = Array .from (clonesIndex .values ()),
+            combineGroups = Object .values (groupsIndex) .map (group => group .filter (({shapeNode}) => !clonesIndex .has (shapeNode))) .filter (group => group .length),
             singlesGroups = Object .values (singlesIndex);
 
          if (browser .getBrowserOption ("Debug"))
          {
-            console .info (`StaticGroup will create ${combineGroups .length + singlesGroups .length} static nodes from the previous ${renderContexts .length} nodes.`);
+            console .info (`StaticGroup will create ${clonesGroups .length + combineGroups .length + singlesGroups .length} static nodes from the previous ${renderContexts .length} nodes.`);
          }
 
          // Create static shapes.
 
-         if (DEVELOPMENT)
-            console .time ("StaticGroup");
+         this .optimizeGroups (clonesGroups, combineGroups, singlesGroups);
 
-         const visibleNodes = combineGroups .map (group => this .combineShapes (group))
-            .concat (singlesGroups .map (group => this .normalizeSingleShapes (group)));
-
-         if (DEVELOPMENT)
-            console .timeEnd ("StaticGroup");
-
-         return visibleNodes;
+         return [this .groupNode];
       };
    })(),
    hasTextureCoordinateGenerator (geometryNode)
@@ -278,6 +285,65 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
       return false;
    },
+   async optimizeGroups (clonesGroups, combineGroups, singlesGroups)
+   {
+      if (clonesGroups .length)
+         await this .getBrowser () .loadComponents ("X_ITE");
+
+      // Create static shapes.
+
+      if (DEVELOPMENT)
+         console .time ("StaticGroup");
+
+      const visibleNodes = clonesGroups .map (group => this .combineClones (group))
+         .concat (combineGroups .map (group => this .combineShapes (group)))
+         .concat (singlesGroups .map (group => this .normalizeSingleShapes (group)));
+
+      if (DEVELOPMENT)
+         console .timeEnd ("StaticGroup");
+
+      this .visibleNodes = visibleNodes;
+   },
+   combineClones: (function ()
+   {
+      const
+         modelMatrix = new Matrix4 (),
+         t           = new Vector3 (),
+         r           = new Rotation4 (),
+         s           = new Vector3 (),
+         so          = new Rotation4 ();
+
+      return function (group)
+      {
+         const
+            browser          = this .getBrowser (),
+            executionContext = this .getExecutionContext (),
+            InstancedShape   = browser .getConcreteNodes () .get ("InstancedShape"),
+            instancedShape   = new InstancedShape (executionContext),
+            shapeNode0       = group [0] .shapeNode;
+
+         for (const { modelViewMatrix } of group)
+         {
+            modelMatrix .assign (modelViewMatrix) .get (t, r, s, so);
+
+            instancedShape ._translations      .push (t);
+            instancedShape ._rotations         .push (r);
+            instancedShape ._scales            .push (s);
+            instancedShape ._scaleOrientations .push (so);
+         }
+
+         instancedShape ._pointerEvents = shapeNode0 ._pointerEvents;
+         instancedShape ._castShadow    = shapeNode0 ._castShadow;
+         instancedShape ._bboxDisplay   = shapeNode0 ._bboxDisplay;
+         instancedShape ._appearance    = shapeNode0 ._appearance;
+         instancedShape ._geometry      = shapeNode0 ._geometry;
+
+         instancedShape .setPrivate (true);
+         instancedShape .setup ();
+
+         return instancedShape;
+      };
+   })(),
    combineShapes (group)
    {
       const
@@ -727,34 +793,37 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          return newGeometryNode;
       };
    })(),
-   normalizeSingleShapes (group)
+   normalizeSingleShapes: (function ()
    {
-      const
-         executionContext = this .getExecutionContext (),
-         newTransformNode = new Transform (executionContext),
-         modelMatrix      = new Matrix4 (... group [0] .modelViewMatrix);
-
       const
          t  = new Vector3 (),
          r  = new Rotation4 (),
          s  = new Vector3 (),
          so = new Rotation4 ();
 
-      modelMatrix .get (t, r, s, so);
+      return function (group)
+      {
+         const
+            executionContext = this .getExecutionContext (),
+            newTransformNode = new Transform (executionContext),
+            modelMatrix      = new Matrix4 (... group [0] .modelViewMatrix);
 
-      newTransformNode ._translation      = t;
-      newTransformNode ._rotation         = r;
-      newTransformNode ._scale            = s;
-      newTransformNode ._scaleOrientation = so;
+         modelMatrix .get (t, r, s, so);
 
-      for (const { shapeNode } of group)
-         newTransformNode ._children .push (shapeNode);
+         newTransformNode ._translation      = t;
+         newTransformNode ._rotation         = r;
+         newTransformNode ._scale            = s;
+         newTransformNode ._scaleOrientation = so;
 
-      newTransformNode .setPrivate (true);
-      newTransformNode .setup ();
+         for (const { shapeNode } of group)
+            newTransformNode ._children .push (shapeNode);
 
-      return newTransformNode;
-   },
+         newTransformNode .setPrivate (true);
+         newTransformNode .setup ();
+
+         return newTransformNode;
+      };
+   })(),
    dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);

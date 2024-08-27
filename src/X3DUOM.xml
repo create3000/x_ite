@@ -624,6 +624,11 @@
 					accessType="inputOutput"
 					description="Input/Output field *scales*."
 				/>
+				<field name="scaleOrientations"
+					type="MFRotation"
+					accessType="inputOutput"
+					description="Input/Output field *scaleOrientations*."
+				/>
 				<field name="pointerEvents"
 					type="SFBool"
 					accessType="inputOutput"

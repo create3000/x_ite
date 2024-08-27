@@ -10746,6 +10746,12 @@ interface InstancedShapeProxy extends X3DShapeNodeProxy
    */
    rotations: MFRotation;
    /**
+   * Input/Output field *scaleOrientations*.
+   *
+   * This field is of access type 'inputOutput' and type MFRotation.
+   */
+   scaleOrientations: MFRotation;
+   /**
    * Input/Output field *scales*.
    *
    * This field is of access type 'inputOutput' and type MFVec3f.
