@@ -219,12 +219,8 @@ Object .assign (ViewVolume .prototype,
       const
          points1  = Array .from ({ length: 8 }, () => new Vector3 ()),
          normals1 = Array .from ({ length: 3 }, () => new Vector3 ()),
-         axes1    = Array .from ({ length: 3 }, () => new Vector3 ());
-
-      const axes = [ ];
-
-      for (let i = 0; i < 3 * 8; ++ i)
-         axes .push (new Vector3 ());
+         axes1    = Array .from ({ length: 3 }, () => new Vector3 ()),
+         axes     = Array .from ({ length: 3 * 8 }, () => new Vector3 ());
 
       return function (box)
       {
