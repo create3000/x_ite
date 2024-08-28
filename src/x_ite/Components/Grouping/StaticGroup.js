@@ -77,7 +77,7 @@ import Matrix4                    from "../../../standard/Math/Numbers/Matrix4.j
 import ViewVolume                 from "../../../standard/Math/Geometry/ViewVolume.js";
 import DEVELOPMENT                from "../../DEVELOPMENT.js";
 
-const CLONE_COUNT = 2; // Number of shapes that must be cloned to become an InstancedShape.
+const CLONE_COUNT = 2; // Minimum number of shapes that must be cloned to become an InstancedShape.
 
 // No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
 
