@@ -48,7 +48,8 @@ $("table.examples a") .on ("click", function ()
 
    canvas
       .removeClass (["tr", "br", "bl", "tl"] .map (s => `xr-button-${s}`))
-      .addClass (`xr-button-${$(this) .attr ("xr-button")}`);
+      .addClass (`xr-button-${$(this) .attr ("xr-button")}`)
+      .attr ("xrMovementControl", $(this) .attr ("xrMovementControl"));
 
    header .text ($(this) .attr ("title"));
    canvas .attr ("src", $(this) .attr ("href"));
