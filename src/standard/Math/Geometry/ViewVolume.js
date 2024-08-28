@@ -216,29 +216,10 @@ Object .assign (ViewVolume .prototype,
    },
    intersectsBox: (() =>
    {
-      const points1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const normals1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
+      const
+         points1  = Array .from ({ length: 8 }, () => new Vector3 ()),
+         normals1 = Array .from ({ length: 3 }, () => new Vector3 ()),
+         axes1    = Array .from ({ length: 3 }, () => new Vector3 ());
 
       const axes = [ ];
 
