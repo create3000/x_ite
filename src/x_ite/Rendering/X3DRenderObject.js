@@ -1288,7 +1288,7 @@ Object .assign (X3DRenderObject .prototype,
       globalShadows            .length = 1;
       generatedCubeMapTextures .length = 0;
    },
-   drawShapes (gl, browser, frameBuffer, clear, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
+   drawShapes (gl, browser, frameBuffer, clearBits, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
    {
       frameBuffer .bind ();
 
@@ -1302,7 +1302,7 @@ Object .assign (X3DRenderObject .prototype,
       this .advanceRenderCount ();
 
       gl .clearColor (0, 0, 0, 0);
-      gl .clear (gl .DEPTH_BUFFER_BIT | clear);
+      gl .clear (gl .DEPTH_BUFFER_BIT | clearBits);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
       this .getBackground () .display (gl, this);
