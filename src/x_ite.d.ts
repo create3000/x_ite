@@ -10722,6 +10722,12 @@ interface InstancedShapeProxy extends X3DShapeNodeProxy
    */
    castShadow: boolean;
    /**
+   * Input/Output field *centers*.
+   *
+   * This field is of access type 'inputOutput' and type MFVec3f.
+   */
+   centers: MFVec3f;
+   /**
    * Input/Output field *geometry*.
    *
    * This field is of access type 'inputOutput' and type SFNode.
