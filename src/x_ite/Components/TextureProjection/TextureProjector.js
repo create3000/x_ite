@@ -116,7 +116,10 @@ Object .assign (TextureProjectorContainer .prototype,
       if (!this .global)
          invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
 
-      this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (lightNode .getBiasMatrix ());
+      this .invTextureSpaceProjectionMatrix
+         .assign (invTextureSpaceMatrix)
+         .multRight (this .projectionMatrix)
+         .multRight (lightNode .getBiasMatrix ());
 
       this .matrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix) .multRight (this .textureMatrix);
       this .matrixArray .set (this .matrix);
