@@ -93,7 +93,7 @@ Object .assign (TextureProjectorContainer .prototype,
    {
       const
          lightNode             = this .lightNode,
-         cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
+         cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
          invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .Identity);
 

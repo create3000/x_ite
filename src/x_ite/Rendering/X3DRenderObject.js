@@ -1181,14 +1181,6 @@ Object .assign (X3DRenderObject .prototype,
             generatedCubeMapTexture .renderTexture (this);
       }
 
-      // Set up shadow matrix for all lights, and matrix for all projective textures.
-
-      if (headlight)
-         browser .getHeadlight () .setGlobalVariables (this);
-
-      for (const light of lights)
-         light .setGlobalVariables (this);
-
       this .renderAndGlobalLightsKey = `.${this .renderKey}.${globalLightsKeys .sort () .join ("")}.`;
       this .globalShadow             = globalShadows .at (-1);
 
@@ -1230,6 +1222,16 @@ Object .assign (X3DRenderObject .prototype,
             this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
             this .viewMatrixArray        .set (this .getViewMatrix () .get ());
          }
+
+         // Set up shadow matrix for all lights, and matrix for all projective textures.
+
+         if (headlight)
+            browser .getHeadlight () .setGlobalVariables (this);
+
+         for (const light of lights)
+            light .setGlobalVariables (this);
+
+         // Draw shapes.
 
          if (independent && this .transmission)
          {
