@@ -607,12 +607,14 @@ Object .assign (X3DRenderingContext .prototype,
             cameraSpaceMatrix: new Matrix4 (),
             viewMatrix: new Matrix4 (),
             matrix: new Matrix4 (),
+            camera: new Matrix4 (),
          };
 
          pv .projectionMatrix .assign (view .projectionMatrix);
          pv .cameraSpaceMatrix .assign (view .transform .matrix);
          pv .viewMatrix .assign (view .transform .inverse .matrix);
          pv .matrix .assign (pose .transform .matrix) .multRight (view .transform .inverse .matrix);
+         pv .camera .assign (pv .matrix) .inverse ();
 
          ++ v;
       }
