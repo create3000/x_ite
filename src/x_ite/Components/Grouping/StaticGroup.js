@@ -213,7 +213,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // Sort out TextureCoordinateGenerator nodes.
 
          const
-            clonesIndex  = new Map (),
+            clonesIndex  = new Map (renderContexts .map (({shapeNode}) => [shapeNode, [ ]])),
             groupsIndex  = { },
             singlesIndex = { };
 
@@ -243,9 +243,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             key += shapeNode ._pointerEvents .getValue () ? 1 : 0;
             key += shapeNode ._castShadow .getValue () ? 1 : 0;
             key += shapeNode ._bboxDisplay .getValue () ? 1 : 0;
-
-            if (!clonesIndex .has (shapeNode))
-               clonesIndex .set (shapeNode, [ ]);
 
             const
                clones = clonesIndex .get (shapeNode),
@@ -301,9 +298,13 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       if (DEVELOPMENT)
          console .time ("StaticGroup");
 
-      this .visibleNodes = clonesGroups .map (group => this .combineClones (group))
-         .concat (combineGroups .map (group => this .combineShapes (group)))
-         .concat (singlesGroups .map (group => this .normalizeSingleShapes (group)));
+      const visibleNodes = [ ];
+
+      clonesGroups  .forEach (group => this .combineClones (group, visibleNodes));
+      combineGroups .forEach (group => this .combineShapes (group, visibleNodes));
+      singlesGroups .forEach (group => this .normalizeSingleShapes (group, visibleNodes));
+
+      this .visibleNodes = visibleNodes;
 
       if (DEVELOPMENT)
          console .timeEnd ("StaticGroup");
@@ -317,7 +318,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          s           = new Vector3 (),
          so          = new Rotation4 ();
 
-      return function (group)
+      return function (group, visibleNodes)
       {
          const
             browser          = this .getBrowser (),
@@ -345,10 +346,10 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          instancedShape .setPrivate (true);
          instancedShape .setup ();
 
-         return instancedShape;
+         visibleNodes .push (instancedShape);
       };
    })(),
-   combineShapes (group)
+   combineShapes (group, visibleNodes)
    {
       const
          executionContext = this .getExecutionContext (),
@@ -555,7 +556,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       newShapeNode .setPrivate (true);
       newShapeNode .setup ();
 
-      return newShapeNode;
+      visibleNodes .push (newShapeNode);
    },
    normalizeGeometry: (function ()
    {
@@ -805,7 +806,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          s  = new Vector3 (),
          so = new Rotation4 ();
 
-      return function (group)
+      return function (group, visibleNodes)
       {
          const
             executionContext = this .getExecutionContext (),
@@ -825,7 +826,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          newTransformNode .setPrivate (true);
          newTransformNode .setup ();
 
-         return newTransformNode;
+         visibleNodes .push (newTransformNode);
       };
    })(),
    dispose ()
