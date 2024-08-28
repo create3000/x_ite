@@ -252,11 +252,15 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             group  .push (renderContext);
          }
 
+         // Sort out shapes that are not cloned.
+
          for (const [id, group] of clonesIndex .entries ())
          {
             if (group .length < 2)
                clonesIndex .delete (id);
          }
+
+         // Create arrays.
 
          const
             clonesGroups  = Array .from (clonesIndex .values ()),
