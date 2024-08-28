@@ -264,7 +264,9 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          const
             clonesGroups  = Array .from (clonesIndex .values ()),
-            combineGroups = Object .values (groupsIndex) .map (group => group .filter (({shapeNode}) => !clonesIndex .has (shapeNode))) .filter (group => group .length),
+            combineGroups = Object .values (groupsIndex)
+               .map (group => group .filter (({shapeNode}) => !clonesIndex .has (shapeNode)))
+               .filter (group => group .length),
             singlesGroups = Object .values (singlesIndex);
 
          if (browser .getBrowserOption ("Debug"))
