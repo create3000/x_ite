@@ -210,7 +210,7 @@ Object .assign (X3DRenderObject .prototype,
 
       return function ()
       {
-         renderCount >>>= 0; // uintesize
+         renderCount >>>= 0; // convert to uint
          this .renderCount = ++ renderCount;
       }
    })(),
@@ -587,12 +587,12 @@ Object .assign (X3DRenderObject .prototype,
          }
          case TraverseType .COLLISION:
          {
-            // Collect for collide and gravite
+            // Collect for collide and gravitate
             this .numCollisionShapes = 0;
 
             callback .call (group, type, this);
             this .collide ();
-            this .gravite ();
+            this .gravitate ();
             break;
          }
          case TraverseType .SHADOW:
@@ -976,7 +976,7 @@ Object .assign (X3DRenderObject .prototype,
             collision .set_active (true);
       };
    })(),
-   gravite: (() =>
+   gravitate: (() =>
    {
       const
          projectionMatrix            = new Matrix4 (),
@@ -1010,7 +1010,7 @@ Object .assign (X3DRenderObject .prototype,
             avatarHeight    = navigationInfo .getAvatarHeight (),
             stepHeight      = navigationInfo .getStepHeight ();
 
-         // Reshape viewpoint for gravite.
+         // Reshape viewpoint for gravitate.
 
          Camera .ortho (-collisionRadius,
                         collisionRadius,
@@ -1040,7 +1040,7 @@ Object .assign (X3DRenderObject .prototype,
 
          this .getProjectionMatrix () .pop ();
 
-         // Gravite or step up.
+         // gravitate or step up.
 
          distance -= avatarHeight;
 
@@ -1048,7 +1048,7 @@ Object .assign (X3DRenderObject .prototype,
 
          if (distance > 0)
          {
-            // Gravite and fall down the to the floor.
+            // gravitate and fall down the to the floor.
 
             const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
 

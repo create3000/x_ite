@@ -233,21 +233,21 @@ Object .assign (ViewVolume,
    {
       const invModelViewProjectionMatrix = new Matrix4 ();
 
-      return function (winx, winy, winz, modelViewMatrix, projectionMatrix, viewport, point)
+      return function (winX, winY, winZ, modelViewMatrix, projectionMatrix, viewport, point)
       {
-         return this .unProjectPointMatrix (winx, winy, winz, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, point);
+         return this .unProjectPointMatrix (winX, winY, winZ, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, point);
       };
    })(),
    unProjectPointMatrix: (() =>
    {
       const vin = new Vector4 ();
 
-      return function (winx, winy, winz, invModelViewProjectionMatrix, viewport, point)
+      return function (winX, winY, winZ, invModelViewProjectionMatrix, viewport, point)
       {
          // Transformation of normalized coordinates between -1 and 1
-         vin .set ((winx - viewport [0]) / viewport [2] * 2 - 1,
-                   (winy - viewport [1]) / viewport [3] * 2 - 1,
-                   winz * 2 - 1,
+         vin .set ((winX - viewport [0]) / viewport [2] * 2 - 1,
+                   (winY - viewport [1]) / viewport [3] * 2 - 1,
+                   winZ * 2 - 1,
                    1);
 
          //Objects coordinates
@@ -262,9 +262,9 @@ Object .assign (ViewVolume,
    {
       const invModelViewProjectionMatrix = new Matrix4 ();
 
-      return function (winx, winy, modelViewMatrix, projectionMatrix, viewport, result)
+      return function (winX, winY, modelViewMatrix, projectionMatrix, viewport, result)
       {
-         return this .unProjectRayMatrix (winx, winy, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, result);
+         return this .unProjectRayMatrix (winX, winY, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, result);
       };
    })(),
    unProjectRayMatrix: (() =>
@@ -273,10 +273,10 @@ Object .assign (ViewVolume,
          near = new Vector3 (),
          far  = new Vector3 ();
 
-      return function (winx, winy, invModelViewProjectionMatrix, viewport, result)
+      return function (winX, winY, invModelViewProjectionMatrix, viewport, result)
       {
-         ViewVolume .unProjectPointMatrix (winx, winy, 0.0, invModelViewProjectionMatrix, viewport, near);
-         ViewVolume .unProjectPointMatrix (winx, winy, 0.9, invModelViewProjectionMatrix, viewport, far);
+         ViewVolume .unProjectPointMatrix (winX, winY, 0.0, invModelViewProjectionMatrix, viewport, near);
+         ViewVolume .unProjectPointMatrix (winX, winY, 0.9, invModelViewProjectionMatrix, viewport, far);
 
          return result .setPoints (near, far);
       };
@@ -285,7 +285,7 @@ Object .assign (ViewVolume,
    {
       const vin = new Vector4 ();
 
-      return function (point, modelViewMatrix, projectionMatrix, viewport, vout)
+      return function (point, modelViewMatrix, projectionMatrix, viewport, vOut)
       {
          if (point .length === 4)
             vin .assign (point);
@@ -296,7 +296,7 @@ Object .assign (ViewVolume,
 
          const d = 1 / (2 * vin .w);
 
-         return vout .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
+         return vOut .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
                            (vin .y * d + 0.5) * viewport [3] + viewport [1],
                            (vin .z * d + 0.5));
       };
@@ -305,7 +305,7 @@ Object .assign (ViewVolume,
    {
       const vin = new Vector4 ();
 
-      return function (point, modelViewProjectionMatrix, viewport, vout)
+      return function (point, modelViewProjectionMatrix, viewport, vOut)
       {
          if (point .length === 4)
             vin .assign (point);
@@ -316,7 +316,7 @@ Object .assign (ViewVolume,
 
          const d = 1 / (2 * vin .w);
 
-         return vout .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
+         return vOut .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
                            (vin .y * d + 0.5) * viewport [3] + viewport [1],
                            (vin .z * d + 0.5));
       };
