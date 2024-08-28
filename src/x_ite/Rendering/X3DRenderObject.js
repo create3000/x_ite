@@ -1215,7 +1215,7 @@ Object .assign (X3DRenderObject .prototype,
                this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
                this .viewMatrixArray        .set (this .getViewMatrix () .get ());
 
-               Matrix4 .prototype .multLeft  (this .cameraSpaceMatrixArray, this .view .camera);
+               Matrix4 .prototype .multLeft  (this .cameraSpaceMatrixArray, this .view .inverse);
                Matrix4 .prototype .multRight (this .viewMatrixArray,        this .view .matrix);
             }
             else
