@@ -106,6 +106,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       this ._rotations         .addInterest ("set_transform__", this);
       this ._scales            .addInterest ("set_transform__", this);
       this ._scaleOrientations .addInterest ("set_transform__", this);
+      this ._centers           .addInterest ("set_transform__", this);
       this ._matrices          .addInterest ("set_matrices__",  this);
 
       this .set_transform__ ();
@@ -176,11 +177,13 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          rotations            = this ._rotations,
          scales               = this ._scales,
          scaleOrientations    = this ._scaleOrientations,
+         centers              = this ._centers,
          numTranslations      = translations .length,
          numRotations         = rotations .length,
          numScales            = scales .length,
          numScaleOrientations = scaleOrientations .length,
-         numInstances         = Math .max (numTranslations, numRotations, numScales, numScaleOrientations),
+         numCenters           = centers .length,
+         numInstances         = Math .max (numTranslations, numRotations, numScales, numScaleOrientations, numCenters),
          stride               = this .instancesStride / Float32Array .BYTES_PER_ELEMENT,
          length               = this .instancesStride * numInstances,
          data                 = new Float32Array (length),
@@ -198,7 +201,8 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          matrix .set (numTranslations      ? translations      [Math .min (i, numTranslations      - 1)] .getValue () : null,
                       numRotations         ? rotations         [Math .min (i, numRotations         - 1)] .getValue () : null,
                       numScales            ? scales            [Math .min (i, numScales            - 1)] .getValue () : null,
-                      numScaleOrientations ? scaleOrientations [Math .min (i, numScaleOrientations - 1)] .getValue () : null);
+                      numScaleOrientations ? scaleOrientations [Math .min (i, numScaleOrientations - 1)] .getValue () : null,
+                      numCenters           ? centers           [Math .min (i, numCenters           - 1)] .getValue () : null);
 
          if (numScales)
             scale .max (scales [Math .min (i, numScales - 1)] .getValue ());
@@ -296,6 +300,7 @@ Object .defineProperties (InstancedShape,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "rotations",         new Fields .MFRotation ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",            new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientations", new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "centers",           new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",        new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),

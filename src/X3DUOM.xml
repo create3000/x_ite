@@ -629,6 +629,11 @@
 					accessType="inputOutput"
 					description="Input/Output field *scaleOrientations*."
 				/>
+				<field name="centers"
+					type="MFVec3f"
+					accessType="inputOutput"
+					description="Input/Output field *centers*."
+				/>
 				<field name="pointerEvents"
 					type="SFBool"
 					accessType="inputOutput"

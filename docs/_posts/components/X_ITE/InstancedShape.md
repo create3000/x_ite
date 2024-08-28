@@ -55,6 +55,10 @@ Input/Output field *scales*.
 
 Input/Output field *scaleOrientations*.
 
+### MFVec3f [in, out] **centers** [ ] <small>(-∞,∞)</small>
+
+Input/Output field *centers*.
+
 ### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non standard</small>
 
 *pointerEvents* defines whether this Shape becomes target for pointer events.
