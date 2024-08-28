@@ -27,7 +27,7 @@
     "release": "node build/bin/release.js",
     "ts": "node build/bin/ts.js",
     "predocs": "rm -f -r docs/_site/",
-    "docs": "cd docs && bundle exec jekyll serve --incremental --host=`ipconfig getifaddr en0`",
+    "docs": "cd docs && bundle exec jekyll serve --ssl-key ssl/server.key --ssl-cert ssl/server.crt --incremental --host=`ipconfig getifaddr en0`",
     "docs-install": "cd docs && bundle install",
     "docs-update": "cd docs && bundle update",
     "docs-components": "node build/docs/components.js",

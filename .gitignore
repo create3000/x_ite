@@ -1,6 +1,7 @@
 /node_modules/
 /src/tests/
 /package-lock.json
+/docs/ssl/
 
 **/.DS_Store
 
