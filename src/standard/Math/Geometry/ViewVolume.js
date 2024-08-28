@@ -65,55 +65,20 @@ import SAT       from "../Algorithms/SAT.js";
  *    p0 -------- p1  near plane
  */
 
-function ViewVolume (projectionMatrix, viewport, scissor)
+function ViewVolume (... args)
 {
    this .viewport = new Vector4 ();
    this .scissor  = new Vector4 ();
 
-   this .points = [
-      new Vector3 (),
-      new Vector3 (),
-      new Vector3 (),
-      new Vector3 (),
+   this .points  = Array .from ({ length: 8 }, () => new Vector3 ());
+   // front, left, right, top, bottom, back
+   this .normals = Array .from ({ length: 6 }, () => new Vector3 ());
+   this .edges   = Array .from ({ length: 8 }, () => new Vector3 ());
+   // front, left, right, top, bottom, back
+   this .planes  = Array .from ({ length: 6 }, () => new Plane3 ());
 
-      new Vector3 (),
-      new Vector3 (),
-      new Vector3 (),
-      new Vector3 (),
-   ];
-
-   this .normals = [
-      new Vector3 (), // front
-      new Vector3 (), // left
-      new Vector3 (), // right
-      new Vector3 (), // top
-      new Vector3 (), // bottom
-      new Vector3 (), // back
-   ];
-
-   this .edges = [
-      new Vector3 (),
-      new Vector3 (),
-      new Vector3 (),
-      new Vector3 (),
-
-      new Vector3 (),
-      new Vector3 (),
-      new Vector3 (),
-      new Vector3 (),
-   ];
-
-   this .planes = [
-      new Plane3 (), // front
-      new Plane3 (), // left
-      new Plane3 (), // right
-      new Plane3 (), // top
-      new Plane3 (), // bottom
-      new Plane3 (), // back
-   ];
-
-   if (arguments .length)
-      this .set (projectionMatrix, viewport, scissor);
+   if (args .length)
+      this .set (... args);
 }
 
 Object .assign (ViewVolume .prototype,
