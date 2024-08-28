@@ -79,7 +79,7 @@ import DEVELOPMENT                from "../../DEVELOPMENT.js";
 
 const CLONE_COUNT = 2; // Minimum number of shapes that must be cloned to become an InstancedShape.
 
-// No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
+// No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard node.
 
 function StaticGroup (executionContext)
 {
@@ -133,7 +133,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
       for (const visibleNode of this .visibleNodes)
          visibleNode .traverse (type, renderObject);
    },
-   createStaticShapes(renderObject)
+   createStaticShapes (renderObject)
    {
       // Check if scene is currently loading something.
 
