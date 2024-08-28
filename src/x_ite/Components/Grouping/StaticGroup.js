@@ -77,6 +77,8 @@ import Matrix4                    from "../../../standard/Math/Numbers/Matrix4.j
 import ViewVolume                 from "../../../standard/Math/Geometry/ViewVolume.js";
 import DEVELOPMENT                from "../../DEVELOPMENT.js";
 
+const CLONE_COUNT = 2; // Number of shapes that must be cloned to become an InstancedShape.
+
 // No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
 
 function StaticGroup (executionContext)
@@ -256,7 +258,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          for (const [id, group] of clonesIndex .entries ())
          {
-            if (group .length < 2)
+            if (group .length < CLONE_COUNT)
                clonesIndex .delete (id);
          }
 
