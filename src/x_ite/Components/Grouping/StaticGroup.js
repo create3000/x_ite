@@ -276,8 +276,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             console .info (`StaticGroup will create ${clonesGroups .length + combineGroups .length + singlesGroups .length} static nodes from the previous ${renderContexts .length} nodes.`);
          }
 
-         // Create static shapes.
-
          return { clonesGroups, combineGroups, singlesGroups };
       };
    })(),
