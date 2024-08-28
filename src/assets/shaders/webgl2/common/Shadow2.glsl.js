@@ -1,3 +1,5 @@
+const maxLights = 8;
+
 export default /* glsl */ `
 #if defined (X3D_FRAGMENT_SHADER) && defined (X3D_SHADOWS)
 
@@ -7,45 +9,14 @@ uniform sampler2D x3d_ShadowMap [X3D_NUM_LIGHTS];
 float
 getShadowDepth (const in int index, const in vec2 shadowCoord)
 {
-   #if X3D_NUM_LIGHTS > 0
-   if (index == 0)
-      return texture2D (x3d_ShadowMap [0], shadowCoord) .r;
+   ${Array .from ({ length: maxLights }, (_, i) => /* glsl */ `
+
+   #if X3D_NUM_LIGHTS > ${i}
+   if (index == ${i})
+      return texture2D (x3d_ShadowMap [${i}], shadowCoord) .r;
    #endif
 
-   #if X3D_NUM_LIGHTS > 1
-   if (index == 1)
-      return texture2D (x3d_ShadowMap [1], shadowCoord) .r;
-   #endif
-
-   #if X3D_NUM_LIGHTS > 2
-   if (index == 2)
-      return texture2D (x3d_ShadowMap [2], shadowCoord) .r;
-   #endif
-
-   #if X3D_NUM_LIGHTS > 3
-   if (index == 3)
-      return texture2D (x3d_ShadowMap [3], shadowCoord) .r;
-   #endif
-
-   #if X3D_NUM_LIGHTS > 4
-   if (index == 4)
-      return texture2D (x3d_ShadowMap [4], shadowCoord) .r;
-   #endif
-
-   #if X3D_NUM_LIGHTS > 5
-   if (index == 5)
-      return texture2D (x3d_ShadowMap [5], shadowCoord) .r;
-   #endif
-
-   #if X3D_NUM_LIGHTS > 6
-   if (index == 6)
-      return texture2D (x3d_ShadowMap [6], shadowCoord) .r;
-   #endif
-
-   #if X3D_NUM_LIGHTS > 7
-   if (index == 7)
-      return texture2D (x3d_ShadowMap [7], shadowCoord) .r;
-   #endif
+   `) .join ("\n")}
 
    return 0.0;
 }
@@ -55,59 +26,17 @@ getShadowDepth (const in int index, const in vec2 shadowCoord)
 {
    switch (index)
    {
-      #if X3D_NUM_LIGHTS > 0
-      case 0:
-      {
-         return texture (x3d_ShadowMap [0], shadowCoord) .r;
-      }
+      ${Array .from ({ length: maxLights }, (_, i) => /* glsl */ `
+
+      #if X3D_NUM_LIGHTS > ${i}
+      case ${i}:
+         return texture (x3d_ShadowMap [${i}], shadowCoord) .r;
       #endif
-      #if X3D_NUM_LIGHTS > 1
-      case 1:
-      {
-         return texture (x3d_ShadowMap [1], shadowCoord) .r;
-      }
-      #endif
-      #if X3D_NUM_LIGHTS > 2
-      case 2:
-      {
-         return texture (x3d_ShadowMap [2], shadowCoord) .r;
-      }
-      #endif
-      #if X3D_NUM_LIGHTS > 3
-      case 3:
-      {
-         return texture (x3d_ShadowMap [3], shadowCoord) .r;
-      }
-      #endif
-      #if X3D_NUM_LIGHTS > 4
-      case 4:
-      {
-         return texture (x3d_ShadowMap [4], shadowCoord) .r;
-      }
-      #endif
-      #if X3D_NUM_LIGHTS > 5
-      case 5:
-      {
-         return texture (x3d_ShadowMap [5], shadowCoord) .r;
-      }
-      #endif
-      #if X3D_NUM_LIGHTS > 6
-      case 6:
-      {
-         return texture (x3d_ShadowMap [6], shadowCoord) .r;
-      }
-      #endif
-      #if X3D_NUM_LIGHTS > 7
-      case 7:
-      {
-         return texture (x3d_ShadowMap [7], shadowCoord) .r;
-      }
-      #endif
-      default:
-      {
-         return 0.0;
-      }
+
+      `) .join ("\n")}
    }
+
+   return 0.0;
 }
 #endif
 
