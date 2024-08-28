@@ -169,7 +169,10 @@ Object .assign (SpotLightContainer .prototype,
       if (!this .shadowBuffer)
          return;
 
-      this .shadowMatrix .assign (renderObject .getCameraSpaceMatrixArray ()) .multRight (this .invLightSpaceProjectionMatrix);
+      this .shadowMatrix
+         .assign (renderObject .getCameraSpaceMatrixArray ())
+         .multRight (this .invLightSpaceProjectionMatrix);
+         
       this .shadowMatrixArray .set (this .shadowMatrix);
    },
    setShaderUniforms (gl, shaderObject)
