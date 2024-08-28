@@ -1017,7 +1017,7 @@ Object .assign (X3DRenderObject .prototype,
                         -collisionRadius,
                         collisionRadius,
                         nearValue,
-                        Math .max (collisionRadius * 2, avatarHeight * 2),
+                        Math .max (collisionRadius, avatarHeight) * 2,
                         projectionMatrix);
 
          // Transform viewpoint to look down the up vector.
