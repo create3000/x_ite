@@ -206,25 +206,11 @@ Object .assign (ViewVolume .prototype,
    },
    intersectsSphere (radius, center)
    {
-      const [p0, p1 ,p2, p3, p4, p5, p6, p7] = this .planes;
-
-      if (p0 .getDistanceToPoint (center) > radius)
-         return false;
-
-      if (p1 .getDistanceToPoint (center) > radius)
-         return false;
-
-      if (p2 .getDistanceToPoint (center) > radius)
-         return false;
-
-      if (p3 .getDistanceToPoint (center) > radius)
-         return false;
-
-      if (p4 .getDistanceToPoint (center) > radius)
-         return false;
-
-      if (p5 .getDistanceToPoint (center) > radius)
-         return false;
+      for (const plane of this .planes)
+      {
+         if (plane .getDistanceToPoint (center) > radius)
+            return false;
+      }
 
       return true;
    },
