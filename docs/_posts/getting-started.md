@@ -127,13 +127,13 @@ X_ITE needs your support, with a small contribution you can make a big differenc
       <a href="https://create3000.github.io/media/examples/X3D/SugarSmack/SugarSmack.x3d" title="X3D » SugarSmack" componentName="X3D" typeName="SugarSmack" doc="false" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/X3D/SugarSmack/screenshot-small.png" alt="SugarSmack" width="110" height="62"/></a>
     </td>
     <td>
-      <a href="https://create3000.github.io/media/examples/X3D/TikiWorld/TikiWorld.x3d" title="X3D » TikiWorld" componentName="X3D" typeName="TikiWorld" doc="false" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/X3D/TikiWorld/screenshot-small.png" alt="TikiWorld" width="110" height="62"/></a>
+      <a href="https://create3000.github.io/media/examples/X3D/TikiWorld/TikiWorld.x3d" title="X3D » TikiWorld" componentName="X3D" typeName="TikiWorld" doc="false" xr-button="br" xrMovementControl="VIEWPOINT"><img src="https://create3000.github.io/media/examples/X3D/TikiWorld/screenshot-small.png" alt="TikiWorld" width="110" height="62"/></a>
     </td>
     <td>
       <a href="https://create3000.github.io/media/examples/X3D/TreasureIsland/TreasureIsland.x3d" title="X3D » TreasureIsland" componentName="X3D" typeName="TreasureIsland" doc="false" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/X3D/TreasureIsland/screenshot-small.png" alt="TreasureIsland" width="110" height="62"/></a>
     </td>
     <td>
-      <a href="https://create3000.github.io/media/examples/X3D/Vattenfall/Vattenfall.x3d" title="X3D » Vattenfall" componentName="X3D" typeName="Vattenfall" doc="false" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/X3D/Vattenfall/screenshot-small.png" alt="Vattenfall" width="110" height="62"/></a>
+      <a href="https://create3000.github.io/media/examples/X3D/Vattenfall/Vattenfall.x3d" title="X3D » Vattenfall" componentName="X3D" typeName="Vattenfall" doc="false" xr-button="br" xrMovementControl="VIEWPOINT"><img src="https://create3000.github.io/media/examples/X3D/Vattenfall/screenshot-small.png" alt="Vattenfall" width="110" height="62"/></a>
     </td>
     <td>
       <a href="https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.x3d" title="X3D » WaterQuality" componentName="X3D" typeName="WaterQuality" doc="false" xr-button="cr" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/X3D/WaterQuality/screenshot-small.png" alt="WaterQuality" width="110" height="62"/></a>
@@ -156,7 +156,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
       <a href="https://create3000.github.io/media/examples/CubeMapTexturing/ComposedCubeMapTexture/ComposedCubeMapTexture.x3d" title="CubeMapTexturing » ComposedCubeMapTexture" componentName="CubeMapTexturing" typeName="ComposedCubeMapTexture" doc="true" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/CubeMapTexturing/ComposedCubeMapTexture/screenshot-small.png" alt="ComposedCubeMapTexture" width="110" height="62"/></a>
     </td>
     <td>
-      <a href="https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/GeneratedCubeMapTexture.x3d" title="CubeMapTexturing » GeneratedCubeMapTexture" componentName="CubeMapTexturing" typeName="GeneratedCubeMapTexture" doc="true" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/screenshot-small.png" alt="GeneratedCubeMapTexture" width="110" height="62"/></a>
+      <a href="https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/GeneratedCubeMapTexture.x3d" title="CubeMapTexturing » GeneratedCubeMapTexture" componentName="CubeMapTexturing" typeName="GeneratedCubeMapTexture" doc="true" xr-button="br" xrMovementControl="VIEWPOINT"><img src="https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/screenshot-small.png" alt="GeneratedCubeMapTexture" width="110" height="62"/></a>
     </td>
     <td>
       <a href="https://create3000.github.io/media/examples/EnvironmentalEffects/Background/Background.x3d" title="EnvironmentalEffects » Background" componentName="EnvironmentalEffects" typeName="Background" doc="true" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/EnvironmentalEffects/Background/screenshot-small.png" alt="Background" width="110" height="62"/></a>
@@ -346,7 +346,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
       <a href="https://create3000.github.io/media/examples/Navigation/Collision/Collision.x3d" title="Navigation » Collision" componentName="Navigation" typeName="Collision" doc="true" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Navigation/Collision/screenshot-small.png" alt="Collision" width="110" height="62"/></a>
     </td>
     <td>
-      <a href="https://create3000.github.io/media/examples/Navigation/LogarithmicDepthBuffer/LogarithmicDepthBuffer.x3d" title="Navigation » LogarithmicDepthBuffer" componentName="Navigation" typeName="LogarithmicDepthBuffer" doc="false" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Navigation/LogarithmicDepthBuffer/screenshot-small.png" alt="LogarithmicDepthBuffer" width="110" height="62"/></a>
+      <a href="https://create3000.github.io/media/examples/Navigation/LogarithmicDepthBuffer/LogarithmicDepthBuffer.x3d" title="Navigation » LogarithmicDepthBuffer" componentName="Navigation" typeName="LogarithmicDepthBuffer" doc="false" xr-button="br" xrMovementControl="VIEWPOINT"><img src="https://create3000.github.io/media/examples/Navigation/LogarithmicDepthBuffer/screenshot-small.png" alt="LogarithmicDepthBuffer" width="110" height="62"/></a>
     </td>
   </tr>
   <tr>
@@ -357,7 +357,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
       <a href="https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/OrthoViewpoint.x3d" title="Navigation » OrthoViewpoint" componentName="Navigation" typeName="OrthoViewpoint" doc="true" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/screenshot-small.png" alt="OrthoViewpoint" width="110" height="62"/></a>
     </td>
     <td>
-      <a href="https://create3000.github.io/media/examples/Navigation/Viewpoint/Viewpoint.x3d" title="Navigation » Viewpoint" componentName="Navigation" typeName="Viewpoint" doc="true" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Navigation/Viewpoint/screenshot-small.png" alt="Viewpoint" width="110" height="62"/></a>
+      <a href="https://create3000.github.io/media/examples/Navigation/Viewpoint/Viewpoint.x3d" title="Navigation » Viewpoint" componentName="Navigation" typeName="Viewpoint" doc="true" xr-button="br" xrMovementControl="VIEWPOINT"><img src="https://create3000.github.io/media/examples/Navigation/Viewpoint/screenshot-small.png" alt="Viewpoint" width="110" height="62"/></a>
     </td>
     <td>
       <a href="https://create3000.github.io/media/examples/Networking/Anchor/Anchor.x3d" title="Networking » Anchor" componentName="Networking" typeName="Anchor" doc="true" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Networking/Anchor/screenshot-small.png" alt="Anchor" width="110" height="62"/></a>
@@ -383,7 +383,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
       <a href="https://create3000.github.io/media/examples/ParticleSystems/ForcePhysicsModel/ForcePhysicsModel.x3d" title="ParticleSystems » ForcePhysicsModel" componentName="ParticleSystems" typeName="ForcePhysicsModel" doc="true" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/ParticleSystems/ForcePhysicsModel/screenshot-small.png" alt="ForcePhysicsModel" width="110" height="62"/></a>
     </td>
     <td>
-      <a href="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d" title="ParticleSystems » ParticleSystem" componentName="ParticleSystems" typeName="ParticleSystem" doc="true" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/screenshot-small.png" alt="ParticleSystem" width="110" height="62"/></a>
+      <a href="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d" title="ParticleSystems » ParticleSystem" componentName="ParticleSystems" typeName="ParticleSystem" doc="true" xr-button="br" xrMovementControl="VIEWPOINT"><img src="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/screenshot-small.png" alt="ParticleSystem" width="110" height="62"/></a>
     </td>
     <td>
       <a href="https://create3000.github.io/media/examples/ParticleSystems/PointEmitter/PointEmitter.x3d" title="ParticleSystems » PointEmitter" componentName="ParticleSystems" typeName="PointEmitter" doc="true" xr-button="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/ParticleSystems/PointEmitter/screenshot-small.png" alt="PointEmitter" width="110" height="62"/></a>
