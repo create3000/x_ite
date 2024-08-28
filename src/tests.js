@@ -106,6 +106,8 @@ const X_ITE_TESTS = [
    { path: "Grouping/AddRemoveChildren.x3dv" },
    { path: "Grouping/NegativeScale.x3d" },
    { path: "Grouping/StaticGroup.x3d" },
+   { path: "Grouping/StaticGroupClones.x3d" },
+   { path: "Grouping/StaticGroupInlineClones.x3d" },
    { path: "Grouping/StaticGroupWithInline.x3d" },
    { component: "HAnim" },
    { path: "HAnim/BoxManC.x3d" },
