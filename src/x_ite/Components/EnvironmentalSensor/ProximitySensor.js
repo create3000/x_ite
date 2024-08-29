@@ -127,10 +127,12 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
       {
          if (this .inside && this .getTraversed ())
          {
+            const browser = this .getBrowser ();
+
             if (this .layerNode)
             {
                const
-                  pose           = this .getBrowser () .getPose (),
+                  pose           = browser .getPose (),
                   viewpointNode  = this .layerNode .getViewpoint (),
                   invModelMatrix = this .modelMatrix .inverse ()
 
@@ -140,7 +142,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                   .multRight (invModelMatrix)
                   .get (centerOfRotation);
 
-               if (pose && this .layerNode .isActive ())
+               if (pose && this .layerNode .isActive () && browser .getBrowserOption ("XRMovementControl") !== "VIEWPOINT")
                   invModelMatrix .multLeft (pose .cameraSpaceMatrix);
                else
                   invModelMatrix .multLeft (viewpointNode .getCameraSpaceMatrix ());
@@ -161,7 +163,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                else
                {
                   this ._isActive                 = true;
-                  this ._enterTime                = this .getBrowser () .getCurrentTime ();
+                  this ._enterTime                = browser .getCurrentTime ();
                   this ._position_changed         = position;
                   this ._orientation_changed      = orientation;
                   this ._centerOfRotation_changed = centerOfRotation;
@@ -173,7 +175,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
             if (this ._isActive .getValue ())
             {
                this ._isActive = false;
-               this ._exitTime = this .getBrowser () .getCurrentTime ();
+               this ._exitTime = browser .getCurrentTime ();
             }
          }
 
