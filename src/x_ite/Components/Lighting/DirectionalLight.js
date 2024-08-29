@@ -94,7 +94,7 @@ Object .assign (DirectionalLightContainer .prototype,
       this .groupNode = groupNode;
       this .global    = lightNode .getGlobal ();
 
-      this .modelViewMatrix .pushMatrix (modelViewMatrix);
+      this .modelViewMatrix .push (modelViewMatrix);
 
       // Get shadow buffer from browser.
 
@@ -130,8 +130,8 @@ Object .assign (DirectionalLightContainer .prototype,
       this .shadowBuffer .bind ();
 
       renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
-      renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
-      renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
+      renderObject .getProjectionMatrix () .push (projectionMatrix);
+      renderObject .getModelViewMatrix  () .push (invLightSpaceMatrix);
 
       renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
 
@@ -154,7 +154,7 @@ Object .assign (DirectionalLightContainer .prototype,
       this .shadowMatrix
          .assign (renderObject .getCameraSpaceMatrixArray ())
          .multRight (this .invLightSpaceProjectionMatrix);
-         
+
       this .shadowMatrixArray .set (this .shadowMatrix);
    },
    setShaderUniforms (gl, shaderObject)

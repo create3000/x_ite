@@ -84,7 +84,7 @@ Object .assign (TextureProjectorContainer .prototype,
       this .lightNode = lightNode;
       this .global    = lightNode .getGlobal ();
 
-      this .modelViewMatrix .pushMatrix (modelViewMatrix);
+      this .modelViewMatrix .push (modelViewMatrix);
       this .textureMatrix .set (... lightNode .getTexture () .getMatrix ());
    },
    renderShadowMap (renderObject)

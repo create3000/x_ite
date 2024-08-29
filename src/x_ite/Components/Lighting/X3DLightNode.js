@@ -184,7 +184,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
       {
          const lightContainer = renderObject .getLightContainer ();
 
-         lightContainer .modelViewMatrix .pushMatrix (renderObject .getModelViewMatrix () .get ());
+         lightContainer .modelViewMatrix .push (renderObject .getModelViewMatrix () .get ());
 
          if (this ._global .getValue ())
          {

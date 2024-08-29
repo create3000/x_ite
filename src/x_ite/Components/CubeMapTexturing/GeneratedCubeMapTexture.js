@@ -197,7 +197,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
          dependentRenderer .setFrameBuffer (this .frameBuffer);
          dependentRenderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
-         dependentRenderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
+         dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
 
@@ -207,18 +207,18 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
             // Setup inverse texture space matrix.
 
-            dependentRenderer .getCameraSpaceMatrix () .pushMatrix (this .modelMatrix);
+            dependentRenderer .getCameraSpaceMatrix () .push (this .modelMatrix);
             dependentRenderer .getCameraSpaceMatrix () .rotate (rotations [i]);
             dependentRenderer .getCameraSpaceMatrix () .scale (scales [i]);
 
-            dependentRenderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (dependentRenderer .getCameraSpaceMatrix () .get ()) .inverse ());
-            dependentRenderer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
+            dependentRenderer .getViewMatrix () .push (invCameraSpaceMatrix .assign (dependentRenderer .getCameraSpaceMatrix () .get ()) .inverse ());
+            dependentRenderer .getModelViewMatrix () .push (invCameraSpaceMatrix);
 
             // Setup headlight if enabled.
 
             if (headlight)
             {
-               headlightContainer .modelViewMatrix .pushMatrix (invCameraSpaceMatrix);
+               headlightContainer .modelViewMatrix .push (invCameraSpaceMatrix);
                headlightContainer .modelViewMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
             }
 

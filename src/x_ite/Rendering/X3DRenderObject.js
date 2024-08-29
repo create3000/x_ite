@@ -515,7 +515,7 @@ Object .assign (X3DRenderObject .prototype,
          cameraSpaceProjectionMatrix .multRight (projectionMatrix);
          cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
 
-         this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
+         this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
          const depth = this .getDepth (projectionMatrix);
 
@@ -998,7 +998,7 @@ Object .assign (X3DRenderObject .prototype,
          cameraSpaceProjectionMatrix .multRight (projectionMatrix);
          cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
 
-         this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
+         this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
          let distance = -this .getDepth (projectionMatrix);
 

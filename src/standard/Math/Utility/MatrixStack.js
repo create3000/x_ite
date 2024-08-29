@@ -58,16 +58,7 @@ function MatrixStack (Type)
       {
          return this [this .top];
       },
-      push ()
-      {
-         const top = ++ this .top;
-
-         if (top < this .length)
-            this [top] .assign (this [top - 1]);
-         else
-            this [top] = this [top - 1] .copy ();
-      },
-      pushMatrix (matrix)
+      push (matrix = this [this .top])
       {
          const top = ++ this .top;
 

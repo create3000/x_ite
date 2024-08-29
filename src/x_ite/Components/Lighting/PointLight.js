@@ -122,7 +122,7 @@ Object .assign (PointLightContainer .prototype,
 
       this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
 
-      this .modelViewMatrix .pushMatrix (modelViewMatrix);
+      this .modelViewMatrix .push (modelViewMatrix);
 
       // Get shadow buffer from browser.
 
@@ -160,8 +160,8 @@ Object .assign (PointLightContainer .prototype,
             projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
 
          renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
-         renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
-         renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
+         renderObject .getProjectionMatrix () .push (this .projectionMatrix);
+         renderObject .getModelViewMatrix  () .push (orientationMatrices [i]);
          renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
 
          renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
@@ -186,7 +186,7 @@ Object .assign (PointLightContainer .prototype,
       this .shadowMatrix
          .assign (renderObject .getCameraSpaceMatrixArray ())
          .multRight (this .invLightSpaceProjectionMatrix);
-         
+
       this .shadowMatrixArray .set (this .shadowMatrix);
    },
    setShaderUniforms (gl, shaderObject)

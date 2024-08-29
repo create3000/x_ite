@@ -78,7 +78,7 @@ Object .assign (EnvironmentLightContainer .prototype,
       this .lightNode = lightNode;
       this .global    = lightNode .getGlobal ();
 
-      this .modelViewMatrix .pushMatrix (modelViewMatrix);
+      this .modelViewMatrix .push (modelViewMatrix);
    },
    renderShadowMap (renderObject)
    { },

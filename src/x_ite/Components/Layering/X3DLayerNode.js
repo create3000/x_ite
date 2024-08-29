@@ -302,24 +302,24 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
 
       if (pose && this .active)
       {
-         this .getProjectionMatrix () .pushMatrix (pose .views [0] .projectionMatrix);
+         this .getProjectionMatrix () .push (pose .views [0] .projectionMatrix);
 
          if (browser .getBrowserOption ("XRMovementControl") === "VIEWPOINT")
          {
-            this .getCameraSpaceMatrix () .pushMatrix (viewpointNode .getCameraSpaceMatrix ());
-            this .getViewMatrix ()        .pushMatrix (viewpointNode .getViewMatrix ());
+            this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
+            this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
          }
          else
          {
-            this .getCameraSpaceMatrix () .pushMatrix (pose .cameraSpaceMatrix);
-            this .getViewMatrix ()        .pushMatrix (pose .viewMatrix);
+            this .getCameraSpaceMatrix () .push (pose .cameraSpaceMatrix);
+            this .getViewMatrix ()        .push (pose .viewMatrix);
          }
       }
       else
       {
-         this .getProjectionMatrix ()  .pushMatrix (viewpointNode .getProjectionMatrix (this));
-         this .getCameraSpaceMatrix () .pushMatrix (viewpointNode .getCameraSpaceMatrix ());
-         this .getViewMatrix ()        .pushMatrix (viewpointNode .getViewMatrix ());
+         this .getProjectionMatrix ()  .push (viewpointNode .getProjectionMatrix (this));
+         this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
+         this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
       }
 
       switch (type)
@@ -365,7 +365,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
 
       this .setHitRay (this .getProjectionMatrix () .get (), viewport, browser .getPointer ());
       this .getNavigationInfo () .enable (type, renderObject);
-      this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
+      this .getModelViewMatrix () .push (this .getViewMatrix () .get ());
 
       this .viewportNode .push (this);
       renderObject .render (type, this .groupNodes .traverse, this .groupNodes);
@@ -377,7 +377,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       if (this ._display .getValue ())
       {
-         this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
+         this .getModelViewMatrix () .push (Matrix4 .Identity);
 
          this .viewportNode .push (this);
          this .groupNodes .traverse (type, renderObject);
@@ -397,7 +397,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       if (this ._pickable .getValue ())
       {
-         this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
+         this .getModelViewMatrix () .push (Matrix4 .Identity);
 
          this .viewportNode .push (this);
          this .groupNodes .traverse (type, renderObject);
@@ -426,8 +426,8 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
 
             Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
 
-            this .getProjectionMatrix () .pushMatrix (projectionMatrix);
-            this .getModelViewMatrix  () .pushMatrix (this .getViewMatrix () .get ());
+            this .getProjectionMatrix () .push (projectionMatrix);
+            this .getModelViewMatrix  () .push (this .getViewMatrix () .get ());
 
             // Render
             this .viewportNode .push (this);
@@ -444,7 +444,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       if (this ._display .getValue ())
       {
          this .getNavigationInfo () .enable (type, renderObject);
-         this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
+         this .getModelViewMatrix () .push (this .getViewMatrix () .get ());
 
          this .viewportNode .push (this);
          renderObject .render (type, this .groupNodes .traverse, this .groupNodes);

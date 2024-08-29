@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
                this .modelViewMatrix .assign (modelViewMatrix .get ());
                this .screenMatrix .assign (this .layoutNode .transform (type, renderObject));
 
-               modelViewMatrix .pushMatrix (this .screenMatrix);
+               modelViewMatrix .push (this .screenMatrix);
                renderObject .getLayouts () .push (this .layoutNode);
 
                X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
