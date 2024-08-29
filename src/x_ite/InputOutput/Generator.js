@@ -59,37 +59,10 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .html            = html;
    this .closingTags     = html || closingTags;
 
-   this .floatFormat = new Intl .NumberFormat ("en",
-   {
-      notation: "standard",
-      maximumSignificantDigits: this .precision,
-      useGrouping: false,
-   })
-   .format;
-
-   this .floatExponentialFormat = new Intl .NumberFormat ("en",
-   {
-      notation: "scientific",
-      maximumSignificantDigits: this .precision,
-      useGrouping: false,
-   })
-   .format;
-
-   this .doubleFormat = new Intl .NumberFormat ("en",
-   {
-      notation: "standard",
-      maximumSignificantDigits: this .doublePrecision,
-      useGrouping: false,
-   })
-   .format;
-
-   this .doubleExponentialFormat = new Intl .NumberFormat ("en",
-   {
-      notation: "scientific",
-      maximumSignificantDigits: this .doublePrecision,
-      useGrouping: false,
-   })
-   .format;
+   this .floatFormat             = this .createFloatFormat (this .precision);
+   this .floatExponentialFormat  = this .createFloatExponentialFormat (this .precision);
+   this .doubleFormat            = this .createFloatFormat (this .doublePrecision);
+   this .doubleExponentialFormat = this .createFloatExponentialFormat (this .doublePrecision);
 
    this .Style (style);
 
@@ -235,6 +208,26 @@ Object .assign (Generator .prototype,
       this .listIndent = this .listIndent .slice (0, this .listIndent .length - this .listIndentChar .length);
 
       return "";
+   },
+   createFloatFormat (precision)
+   {
+      return new Intl .NumberFormat ("en",
+      {
+         notation: "standard",
+         maximumSignificantDigits: precision,
+         useGrouping: false,
+      })
+      .format;
+   },
+   createFloatExponentialFormat (precision)
+   {
+      return new Intl .NumberFormat ("en",
+      {
+         notation: "scientific",
+         maximumSignificantDigits: precision,
+         useGrouping: false,
+      })
+      .format;
    },
    FloatFormat  (value)
    {
