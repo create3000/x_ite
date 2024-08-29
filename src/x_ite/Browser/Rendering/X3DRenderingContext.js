@@ -530,23 +530,23 @@ Object .assign (X3DRenderingContext .prototype,
          if (this [_session] === window)
             return;
 
-         this .endEvents () .removeInterest ("endFrame", this);
+         return this [_session] .end () .catch (Function .prototype) .finally (() =>
+         {
+            this .endEvents () .removeInterest ("endFrame", this);
 
-         this [_session] .end () .catch (Function .prototype);
+            for (const frameBuffer of this [_frameBuffers])
+               frameBuffer .dispose ();
 
-         for (const frameBuffer of this [_frameBuffers])
-            frameBuffer .dispose ();
+            this [_frameBuffers]       = [ ];
+            this [_session]            = window;
+            this [_baseReferenceSpace] = null;
+            this [_referenceSpace]     = null;
+            this [_baseLayer]          = null;
+            this [_defaultFrameBuffer] = null;
+            this [_pose]               = null;
 
-         this [_frameBuffers] .length = 0;
-
-         this [_session]            = window;
-         this [_baseReferenceSpace] = null;
-         this [_referenceSpace]     = null;
-         this [_baseLayer]          = null;
-         this [_defaultFrameBuffer] = null;
-         this [_pose]               = null;
-
-         this .reshape ();
+            this .reshape ();
+         });
       });
    },
    getSession ()
