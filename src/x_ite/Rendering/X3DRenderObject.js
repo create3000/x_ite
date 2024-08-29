@@ -659,9 +659,9 @@ Object .assign (X3DRenderObject .prototype,
             const pointingContext = this .pointingShapes [num];
 
             pointingContext .modelViewMatrix .set (modelViewMatrix);
-            pointingContext .shapeNode    = shapeNode;
             pointingContext .scissor      = viewVolume .getScissor ();
             pointingContext .humanoidNode = this .humanoids .at (-1);
+            pointingContext .shapeNode    = shapeNode;
 
             // Clip planes & sensors
 
@@ -758,9 +758,9 @@ Object .assign (X3DRenderObject .prototype,
             const depthContext = this .shadowShapes [num];
 
             depthContext .modelViewMatrix .set (modelViewMatrix);
-            depthContext .shapeNode    = shapeNode;
             depthContext .scissor      = viewVolume .getScissor ();
             depthContext .humanoidNode = this .humanoids .at (-1);
+            depthContext .shapeNode    = shapeNode;
 
             // Clip planes
 
@@ -824,11 +824,11 @@ Object .assign (X3DRenderObject .prototype,
 
             renderContext .modelViewMatrix .set (modelViewMatrix);
             renderContext .scissor .assign (viewVolume .getScissor ());
-            renderContext .shadows         = this .localShadows .at (-1);
-            renderContext .fogNode         = this .localFogs .at (-1);
-            renderContext .shapeNode       = shapeNode;
-            renderContext .appearanceNode  = shapeNode .getAppearance ();
-            renderContext .humanoidNode    = this .humanoids .at (-1);
+            renderContext .shadows        = this .localShadows .at (-1);
+            renderContext .fogNode        = this .localFogs .at (-1);
+            renderContext .humanoidNode   = this .humanoids .at (-1);
+            renderContext .shapeNode      = shapeNode;
+            renderContext .appearanceNode = shapeNode .getAppearance ();
 
             // Clip planes and local lights
 
