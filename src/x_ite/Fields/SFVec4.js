@@ -72,72 +72,7 @@ function SFVec4Template (TypeName, double)
       }
    }
 
-   SFVecPrototypeTemplate (SFVec4, TypeName, Vector4, double);
-
-   for (const key of Object .keys (SFVec4 .prototype))
-      Object .defineProperty (SFVec4 .prototype, key, { enumerable: false });
-
-   const x = {
-      get ()
-      {
-         return this .getValue () .x;
-      },
-      set (value)
-      {
-         this .getValue () .x = +value;
-         this .addEvent ();
-      },
-   };
-
-   const y = {
-      get ()
-      {
-         return this .getValue () .y;
-      },
-      set (value)
-      {
-         this .getValue () .y = +value;
-         this .addEvent ();
-      },
-   };
-
-   const z = {
-      get ()
-      {
-         return this .getValue () .z;
-      },
-      set (value)
-      {
-         this .getValue () .z = +value;
-         this .addEvent ();
-      },
-   };
-
-   const w = {
-      get ()
-      {
-         return this .getValue () .w;
-      },
-      set (value)
-      {
-         this .getValue () .w = +value;
-         this .addEvent ();
-      },
-   };
-
-   Object .defineProperties (SFVec4 .prototype,
-   {
-      0: x,
-      1: y,
-      2: z,
-      3: w,
-      x: Object .assign ({ enumerable: true }, x),
-      y: Object .assign ({ enumerable: true }, y),
-      z: Object .assign ({ enumerable: true }, z),
-      w: Object .assign ({ enumerable: true }, w),
-   });
-
-   return SFVec4;
+   return SFVecPrototypeTemplate (SFVec4, TypeName, Vector4, double);
 }
 
 const SFVec4 = {

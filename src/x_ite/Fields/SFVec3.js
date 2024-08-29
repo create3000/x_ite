@@ -72,64 +72,13 @@ function SFVec3Template (TypeName, double)
       }
    }
 
-   Object .assign (SFVecPrototypeTemplate (SFVec3, TypeName, Vector3, double),
+   return SFVecPrototypeTemplate (SFVec3, TypeName, Vector3, double,
    {
       cross (vector)
       {
          return new (this .constructor) (this .getValue () .copy () .cross (vector .getValue ()));
       },
    });
-
-   for (const key of Object .keys (SFVec3 .prototype))
-      Object .defineProperty (SFVec3 .prototype, key, { enumerable: false });
-
-   const x = {
-      get ()
-      {
-         return this .getValue () .x;
-      },
-      set (value)
-      {
-         this .getValue () .x = +value;
-         this .addEvent ();
-      },
-   };
-
-   const y = {
-      get ()
-      {
-         return this .getValue () .y;
-      },
-      set (value)
-      {
-         this .getValue () .y = +value;
-         this .addEvent ();
-      },
-   };
-
-   const z = {
-      get ()
-      {
-         return this .getValue () .z;
-      },
-      set (value)
-      {
-         this .getValue () .z = +value;
-         this .addEvent ();
-      },
-   };
-
-   Object .defineProperties (SFVec3 .prototype,
-   {
-      0: x,
-      1: y,
-      2: z,
-      x: Object .assign ({ enumerable: true }, x),
-      y: Object .assign ({ enumerable: true }, y),
-      z: Object .assign ({ enumerable: true }, z),
-   });
-
-   return SFVec3;
 }
 
 const SFVec3 = {

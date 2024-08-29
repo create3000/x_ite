@@ -72,44 +72,7 @@ function SFVec2Template (TypeName, double)
       }
    }
 
-   SFVecPrototypeTemplate (SFVec2, TypeName, Vector2, double);
-
-   for (const key of Object .keys (SFVec2 .prototype))
-      Object .defineProperty (SFVec2 .prototype, key, { enumerable: false });
-
-   const x = {
-      get ()
-      {
-         return this .getValue () .x;
-      },
-      set (value)
-      {
-         this .getValue () .x = +value;
-         this .addEvent ();
-      },
-   };
-
-   const y = {
-      get ()
-      {
-         return this .getValue () .y;
-      },
-      set (value)
-      {
-         this .getValue () .y = +value;
-         this .addEvent ();
-      },
-   };
-
-   Object .defineProperties (SFVec2 .prototype,
-   {
-      0: x,
-      1: y,
-      x: Object .assign ({ enumerable: true }, x),
-      y: Object .assign ({ enumerable: true }, y),
-   });
-
-   return SFVec2;
+   return SFVecPrototypeTemplate (SFVec2, TypeName, Vector2, double);
 }
 
 const SFVec2 = {

@@ -91,7 +91,7 @@ function SFMatrix3Template (TypeName, double)
       }
    }
 
-   Object .assign (SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Matrix3, double),
+   return SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Matrix3, double,
    {
       setTransform: (function ()
       {
@@ -115,31 +115,6 @@ function SFMatrix3Template (TypeName, double)
          };
       })(),
    });
-
-   for (const key of Object .keys (SFMatrix3 .prototype))
-      Object .defineProperty (SFMatrix3 .prototype, key, { enumerable: false });
-
-   function defineProperty (i)
-   {
-      Object .defineProperty (SFMatrix3 .prototype, i,
-      {
-         get ()
-         {
-            return this .getValue () [i];
-         },
-         set (value)
-         {
-            this .getValue () [i] = +value;
-            this .addEvent ();
-         },
-         enumerable: true,
-      });
-   }
-
-   for (let i = 0, length = Matrix3 .prototype .length; i < length; ++ i)
-      defineProperty (i);
-
-   return SFMatrix3;
 }
 
 const SFMatrix3 = {

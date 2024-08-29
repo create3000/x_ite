@@ -95,32 +95,7 @@ function SFMatrix4Template (TypeName, double)
       }
    }
 
-   SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Matrix4, double);
-
-   for (const key of Object .keys (SFMatrix4 .prototype))
-      Object .defineProperty (SFMatrix4 .prototype, key, { enumerable: false });
-
-   function defineProperty (i)
-   {
-      Object .defineProperty (SFMatrix4 .prototype, i,
-      {
-         get ()
-         {
-            return this .getValue () [i];
-         },
-         set (value)
-         {
-            this .getValue () [i] = value;
-            this .addEvent ();
-         },
-         enumerable: true,
-      });
-   }
-
-   for (let i = 0, length = Matrix4 .prototype .length; i < length; ++ i)
-      defineProperty (i);
-
-   return SFMatrix4;
+   return SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Matrix4, double);
 }
 
 const SFMatrix4 = {

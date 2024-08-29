@@ -47,7 +47,7 @@
 
 import X3DField from "../Base/X3DField.js";
 
-function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double)
+function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, properties = { })
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
@@ -60,7 +60,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double)
       },
    });
 
-   return Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),
+   Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),
    {
       *[Symbol .iterator] ()
       {
@@ -220,7 +220,33 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double)
 
          generator .string += generator .JSONNumber (generator [_formatter] (value [last]));
       },
-   });
+   },
+   properties);
+
+   for (const key of Object .keys (Constructor .prototype))
+      Object .defineProperty (Constructor .prototype, key, { enumerable: false });
+
+   function defineProperty (i)
+   {
+      Object .defineProperty (Constructor .prototype, i,
+      {
+         get ()
+         {
+            return this .getValue () [i];
+         },
+         set (value)
+         {
+            this .getValue () [i] = value;
+            this .addEvent ();
+         },
+         enumerable: true,
+      });
+   }
+
+   for (let i = 0; i < Matrix .prototype .length; ++ i)
+      defineProperty (i);
+
+   return Constructor;
 }
 
 export default SFMatrixPrototypeTemplate;

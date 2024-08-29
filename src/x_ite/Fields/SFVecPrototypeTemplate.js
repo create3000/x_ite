@@ -47,7 +47,7 @@
 
 import X3DField from "../Base/X3DField.js";
 
-function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
+function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properties = { })
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
@@ -60,7 +60,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
       },
    });
 
-   return Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),
+   Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),
    {
       *[Symbol .iterator] ()
       {
@@ -195,7 +195,80 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
 
          generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, value [last])));
       },
-   });
+   },
+   properties);
+
+   for (const key of Object .keys (Constructor .prototype))
+      Object .defineProperty (Constructor .prototype, key, { enumerable: false });
+
+   const x = {
+      get ()
+      {
+         return this .getValue () .x;
+      },
+      set (value)
+      {
+         this .getValue () .x = +value;
+         this .addEvent ();
+      },
+   };
+
+   const y = {
+      get ()
+      {
+         return this .getValue () .y;
+      },
+      set (value)
+      {
+         this .getValue () .y = +value;
+         this .addEvent ();
+      },
+   };
+
+   const z = {
+      get ()
+      {
+         return this .getValue () .z;
+      },
+      set (value)
+      {
+         this .getValue () .z = +value;
+         this .addEvent ();
+      },
+   };
+
+   const w = {
+      get ()
+      {
+         return this .getValue () .w;
+      },
+      set (value)
+      {
+         this .getValue () .w = +value;
+         this .addEvent ();
+      },
+   };
+
+   const indices = [
+      [0, x],
+      [1, y],
+      [2, z],
+      [3, w],
+   ];
+
+   const props = [
+      ["x", Object .assign ({ enumerable: true }, x)],
+      ["y", Object .assign ({ enumerable: true }, y)],
+      ["z", Object .assign ({ enumerable: true }, z)],
+      ["w", Object .assign ({ enumerable: true }, w)],
+   ];
+
+   indices .length = Vector .prototype .length;
+   props   .length = Vector .prototype .length;
+
+   Object .defineProperties (Constructor .prototype, Object .fromEntries (indices .concat (props)));
+
+   return Constructor;
 }
 
 export default SFVecPrototypeTemplate;
