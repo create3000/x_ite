@@ -112,26 +112,31 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
          gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
 
+         // Transmission framebuffer texture
+
          if (renderObject .isTransmission ())
          {
-            // Hide object.
+            var
+               transmissionBufferTexture = browser .getDefaultTexture2D (),
+               transmissionUnit          = browser .getDefaultTexture2DUnit ();
+
+            // Hide object by using a model view matrix with zeros.
             gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
-            gl .activeTexture (gl .TEXTURE0 + browser .getDefaultTexture2DUnit ());
-            gl .bindTexture (gl .TEXTURE_2D, browser .getDefaultTexture2D ());
-            gl .uniform1i (shaderObject .x3d_TransmissionFramebufferSamplerEXT, browser .getDefaultTexture2DUnit ());
             gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, 1, 1);
          }
          else
          {
-            const
-               transmissionBuffer = browser .getTransmissionBuffer (),
-               transmissionUnit   = browser .getTexture2DUnit ();
+            var
+               transmissionBuffer        = browser .getTransmissionBuffer (),
+               transmissionBufferTexture = transmissionBuffer .getColorTexture (),
+               transmissionUnit          = browser .getTexture2DUnit ();
 
-            gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
-            gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
-            gl .uniform1i (shaderObject .x3d_TransmissionFramebufferSamplerEXT, transmissionUnit);
             gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, transmissionBuffer .getWidth (), transmissionBuffer .getHeight ());
          }
+
+         gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
+         gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
+         gl .uniform1i (shaderObject .x3d_TransmissionFramebufferSamplerEXT, transmissionUnit);
 
          if (!+this .getTextureBits ())
             return;
