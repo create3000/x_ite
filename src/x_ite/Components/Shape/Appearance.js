@@ -197,29 +197,27 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    {
       this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this ._pointProperties);
 
-      if (!this .stylePropertiesNode [0])
-      {
-         const browser = this .getBrowser ();
+      if (this .stylePropertiesNode [0])
+         return;
 
-         if (browser .getRenderingProperty ("ContentScale") !== 1)
-            this .stylePropertiesNode [0] = browser .getDefaultPointProperties ();
-      }
+      const browser = this .getBrowser ();
+
+      if (browser .getRenderingProperty ("ContentScale") !== 1)
+         this .stylePropertiesNode [0] = browser .getDefaultPointProperties ();
    },
    set_lineProperties__ ()
    {
-      if (this .linePropertiesNode)
-         this .linePropertiesNode ._applied .removeInterest ("set_applied__", this);
+      this .linePropertiesNode ?._applied .removeInterest ("set_applied__", this);
 
       this .linePropertiesNode = X3DCast (X3DConstants .LineProperties, this ._lineProperties);
 
-      if (this .linePropertiesNode)
-         this .linePropertiesNode ._applied .addInterest ("set_applied__", this);
+      this .linePropertiesNode ?._applied .addInterest ("set_applied__", this);
 
       this .set_applied__ ();
    },
    set_applied__ ()
    {
-      if (this .linePropertiesNode && this .linePropertiesNode ._applied .getValue ())
+      if (this .linePropertiesNode ?._applied .getValue ())
       {
          this .stylePropertiesNode [1] = this .linePropertiesNode;
       }
@@ -235,13 +233,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    set_fillProperties__ ()
    {
-      if (this .stylePropertiesNode [2])
-         this .stylePropertiesNode [2] ._transparent .removeInterest ("set_transparent__", this);
+      this .stylePropertiesNode [2] ?._transparent .removeInterest ("set_transparent__", this);
 
       this .stylePropertiesNode [2] = X3DCast (X3DConstants .FillProperties, this ._fillProperties);
 
-      if (this .stylePropertiesNode [2])
-         this .stylePropertiesNode [2] ._transparent .addInterest ("set_transparent__", this);
+      this .stylePropertiesNode [2] ?._transparent .addInterest ("set_transparent__", this);
 
       this .stylePropertiesNode [3] = this .stylePropertiesNode [2];
    },
@@ -253,16 +249,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
          this .materialNode ._transmission .removeInterest ("set_transmission__", this);
       }
 
-      this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this ._material);
+      this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this ._material)
+         ?? this .getBrowser () .getDefaultMaterial ();
 
-      if (!this .materialNode)
-         this .materialNode = this .getBrowser () .getDefaultMaterial ();
-
-      if (this .materialNode)
-      {
-         this .materialNode ._transparent  .addInterest ("set_transparent__",  this);
-         this .materialNode ._transmission .addInterest ("set_transmission__", this);
-      }
+      this .materialNode ._transparent  .addInterest ("set_transparent__",  this);
+      this .materialNode ._transmission .addInterest ("set_transmission__", this);
 
       // Depreciated TwoSidedMaterial handling.
 
@@ -271,13 +262,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    set_backMaterial__ ()
    {
-      if (this .backMaterialNode)
-         this .backMaterialNode ._transparent .removeInterest ("set_transparent__", this);
+      this .backMaterialNode ?._transparent .removeInterest ("set_transparent__", this);
 
       this .backMaterialNode = X3DCast (X3DConstants .X3DOneSidedMaterialNode, this ._backMaterial);
 
-      if (this .backMaterialNode)
-         this .backMaterialNode ._transparent .addInterest ("set_transparent__", this);
+      this .backMaterialNode ?._transparent .addInterest ("set_transparent__", this);
 
       // Depreciated TwoSidedMaterial handling.
 
@@ -308,13 +297,10 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    set_textureTransform__ ()
    {
-      if (this .textureTransformNode)
-         this .textureTransformNode .removeInterest ("updateTextureTransformMapping", this);
+      this .textureTransformNode ?.removeInterest ("updateTextureTransformMapping", this);
 
-      this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this ._textureTransform);
-
-      if (!this .textureTransformNode)
-         this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
+      this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this ._textureTransform)
+         ?? this .getBrowser () .getDefaultTextureTransform ();
 
       this .textureTransformNode .addInterest ("updateTextureTransformMapping", this);
 

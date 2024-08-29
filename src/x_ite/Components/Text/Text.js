@@ -108,10 +108,8 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
    {
       this .fontStyleNode ?.removeInterest ("requestRebuild", this);
 
-      this .fontStyleNode = X3DCast (X3DConstants .X3DFontStyleNode, this ._fontStyle);
-
-      if (!this .fontStyleNode)
-         this .fontStyleNode = this .getBrowser () .getDefaultFontStyle ();
+      this .fontStyleNode = X3DCast (X3DConstants .X3DFontStyleNode, this ._fontStyle)
+         ?? this .getBrowser () .getDefaultFontStyle ();
 
       this .fontStyleNode .addInterest ("requestRebuild", this);
 
