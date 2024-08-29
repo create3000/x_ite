@@ -159,6 +159,7 @@ function release ()
 
 	console .log (`Publishing X_ITE X3D v${version} now.`);
 
+	systemSync (`npm run docs-table`);
 	systemSync (`npm run docs-components`);
 	systemSync (`npm run docs-nodes`);
 	systemSync (`npm run docs-reference`);
