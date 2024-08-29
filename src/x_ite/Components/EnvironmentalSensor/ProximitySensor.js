@@ -128,8 +128,6 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
       {
          if (this .inside && this .getTraversed ())
          {
-            const browser = this .getBrowser ();
-
             if (this .viewpointNode)
             {
                const
@@ -160,7 +158,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                else
                {
                   this ._isActive                 = true;
-                  this ._enterTime                = browser .getCurrentTime ();
+                  this ._enterTime                = this .getBrowser () .getCurrentTime ();
                   this ._position_changed         = position;
                   this ._orientation_changed      = orientation;
                   this ._centerOfRotation_changed = centerOfRotation;
@@ -172,7 +170,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
             if (this ._isActive .getValue ())
             {
                this ._isActive = false;
-               this ._exitTime = browser .getCurrentTime ();
+               this ._exitTime = this .getBrowser () .getCurrentTime ();
             }
          }
 
