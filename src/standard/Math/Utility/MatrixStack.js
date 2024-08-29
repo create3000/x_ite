@@ -47,57 +47,58 @@
 
 function MatrixStack (Type)
 {
+   let top = 0;
+
    return Object .assign ([ new Type () ],
    {
-      top: 0,
       set (matrix)
       {
-         this [this .top] .assign (matrix);
+         this [top] .assign (matrix);
       },
       get ()
       {
-         return this [this .top];
+         return this [top];
       },
-      push (matrix = this [this .top])
+      push (matrix = this [top])
       {
-         const top = ++ this .top;
+         const t = ++ top;
 
-         if (top < this .length)
-            this [top] .assign (matrix);
+         if (t < this .length)
+            this [t] .assign (matrix);
          else
-            this [top] = matrix .copy ();
+            this [t] = matrix .copy ();
       },
       pop ()
       {
-         -- this .top;
+         -- top;
       },
       clear ()
       {
-         this .top = 0;
+         top = 0;
       },
       size ()
       {
-         return this .top + 1;
+         return top + 1;
       },
       identity ()
       {
-         this [this .top] .identity ();
+         this [top] .identity ();
       },
       multLeft (matrix)
       {
-         this [this .top] .multLeft (matrix);
+         this [top] .multLeft (matrix);
       },
       translate (vector)
       {
-         this [this .top] .translate (vector);
+         this [top] .translate (vector);
       },
       rotate (rotation)
       {
-         this [this .top] .rotate (rotation);
+         this [top] .rotate (rotation);
       },
       scale (vector)
       {
-         this [this .top] .scale (vector);
+         this [top] .scale (vector);
       },
    });
 }
