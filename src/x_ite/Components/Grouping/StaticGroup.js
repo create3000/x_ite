@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    },
    createGroups: (() =>
    {
-      const Statics = ["Opaque", "Transparent", "TransmissionOpaque", "TransmissionTransparent"];
+      const Statics = ["Opaque", "Transparent"];
 
       const viewVolume = new ViewVolume ();
 

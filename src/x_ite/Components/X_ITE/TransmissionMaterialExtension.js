@@ -102,31 +102,49 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
       this .transmissionTextureNode ?.getShaderOptions (options, "TRANSMISSION", true);
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms: (function ()
    {
-      const
-         browser            = this .getBrowser (),
-         transmissionBuffer = browser .getTransmissionBuffer (),
-         transmissionUnit   = browser .getTexture2DUnit ();
+      const zeros = new Float32Array (16);
 
-      gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
+      return function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+      {
+         const browser = this .getBrowser ();
 
-      gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
-      gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
-      gl .uniform1i (shaderObject .x3d_TransmissionFramebufferSamplerEXT, transmissionUnit);
-      gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, transmissionBuffer .getWidth (), transmissionBuffer .getHeight ());
+         gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
 
-      if (!+this .getTextureBits ())
-         return;
+         if (renderObject .isTransmission ())
+         {
+            // Hide object.
+            gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
+            gl .activeTexture (gl .TEXTURE0 + browser .getDefaultTexture2DUnit ());
+            gl .bindTexture (gl .TEXTURE_2D, browser .getDefaultTexture2D ());
+            gl .uniform1i (shaderObject .x3d_TransmissionFramebufferSamplerEXT, browser .getDefaultTexture2DUnit ());
+            gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, 1, 1);
+         }
+         else
+         {
+            const
+               transmissionBuffer = browser .getTransmissionBuffer (),
+               transmissionUnit   = browser .getTexture2DUnit ();
 
-      this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
-         shaderObject .x3d_TransmissionTextureEXT,
-         this ._transmissionTextureMapping .getValue (),
-         textureTransformMapping,
-         textureCoordinateMapping);
-   },
+            gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
+            gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
+            gl .uniform1i (shaderObject .x3d_TransmissionFramebufferSamplerEXT, transmissionUnit);
+            gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, transmissionBuffer .getWidth (), transmissionBuffer .getHeight ());
+         }
+
+         if (!+this .getTextureBits ())
+            return;
+
+         this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_TransmissionTextureEXT,
+            this ._transmissionTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
+      };
+   })(),
 });
 
 Object .defineProperties (TransmissionMaterialExtension,
