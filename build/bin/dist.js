@@ -30,10 +30,10 @@ function html ()
 	systemSync (`perl -p0i -e 's|id="links"|id="links" class="min-links"|sg'   x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|\\>x_ite.min.html|>src/x_ite.html|sg'         x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|\\.\\./dist/|dist/|sg'                        x_ite.min.html`);
-	systemSync (`perl -p0i -e 's|"bookmarks.js"|"src/bookmarks.js"|sg'         x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|"examples.js"|"src/examples.js"|sg'           x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|"tests.js"|"src/tests.js"|sg'                 x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|"tests/|"src/tests/|sg'                       x_ite.min.html`);
+	systemSync (`perl -p0i -e 's|"./Bookmarks.js"|"./src/Bookmarks.js"|sg'     x_ite.min.html`);
 }
 
 function main ()
