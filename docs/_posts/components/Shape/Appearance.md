@@ -69,7 +69,7 @@ Single contained [FillProperties](/x_ite/components/shape/fillproperties/) node 
 
 ### SFNode [in, out] **material** NULL <small>[X3DMaterialNode]</small>
 
-Single contained [Material](/x_ite/components/shape/material/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to corresponding geometry.
+Single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/), [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/) (deprecated), or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to corresponding geometry.
 
 #### Warning
 
@@ -77,7 +77,13 @@ Single contained [Material](/x_ite/components/shape/material/) node that can spe
 
 ### SFNode [in, out] **backMaterial** NULL <small>[X3DOneSidedMaterialNode]</small>
 
-Input/Output field *backMaterial*.
+Single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to back faces of corresponding geometry.
+
+#### Warnings
+
+- It is only allowed to define a *backMaterial* field if the material field is also defined (not NULL).
+- The node type for *backMaterial* field (if any) must match node type for material field.
+- If material is NULL or unspecified, lighting is off (all lights ignored) for this [Shape](/x_ite/components/shape/shape/) and unlit object color is (1, 1, 1).
 
 ### SFNode [in, out] **texture** NULL <small>[X3DTextureNode]</small>
 
@@ -128,7 +134,7 @@ Single contained [DepthMode](../../x-ite/depthmode) node that defines depth mode
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d" update="auto" xrMovementControl=”VIEWER_POSE”></x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Shape/Appearance/Appearance.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d)

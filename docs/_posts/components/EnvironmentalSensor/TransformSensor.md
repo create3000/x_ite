@@ -116,7 +116,7 @@ Sends rotation event relative to center whenever the target object is contained 
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalSensor/TransformSensor/TransformSensor.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalSensor/TransformSensor/TransformSensor.x3d" update="auto" xrMovementControl=”VIEWER_POSE”></x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/EnvironmentalSensor/TransformSensor/TransformSensor.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EnvironmentalSensor/TransformSensor/TransformSensor.x3d)

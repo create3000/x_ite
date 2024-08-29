@@ -6,6 +6,10 @@ use utf8;
 use open qw/:std :utf8/;
 
 use File::Basename;
+use JSON::Parse qw(parse_json);
+
+my $json   = `cat ../media/docs/examples/config.json`;
+my $config = parse_json ($json);
 
 sub examples
 {
@@ -16,8 +20,6 @@ sub examples
    open FILE, ">", "src/examples.js";
    say FILE "const X_ITE_EXAMPLES = [";
 
-   my $component = "";
-
    for my $folder (@folders)
    {
       my $basename = basename $folder;
@@ -27,7 +29,17 @@ sub examples
       $folder =~ s|../media/docs/examples/||;
       $folder =~ m|^([^/]+)/([^/]+)|;
 
-      say FILE "   { component: \"$1\", test: \"$2\" },",
+      my $component = $1;
+      my $typeName  = $2;
+      my $extra     = "";
+
+      $extra .= ", xrButtonPosition: \"$config->{$typeName}->{xrButtonPosition}\""
+         if $config -> {$typeName} -> {"xrButtonPosition"};
+
+      $extra .= ", xrMovementControl: \"$config->{$typeName}->{xrMovementControl}\""
+         if $config -> {$typeName} -> {"xrMovementControl"};
+
+      say FILE "   { component: \"$component\", test: \"$typeName\"$extra },",
    }
 
    say FILE  <<EOT;

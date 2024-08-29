@@ -341,11 +341,12 @@ sub update_example {
    return $file unless -d "../media/docs/examples/$componentName/$typeName";
 
    $pos  = "xr-button-";
-   $pos .= $config -> {$typeName} -> {"xr-button"} // "br";
+   $pos .= $config -> {$typeName} -> {"xrButtonPosition"} // "br";
+   $ctrl = $config -> {$typeName} -> {"xrMovementControl"} // "VIEWER_POSE";
 
    $string = "## Example\n";
    $string .= "\n";
-   $string .= "<x3d-canvas class=\"$pos\" src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" update=\"auto\"></x3d-canvas>\n";
+   $string .= "<x3d-canvas class=\"$pos\" src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" update=\"auto\" xrMovementControl=\”$ctrl\”></x3d-canvas>\n";
    $string .= "\n";
    $string .= "- [Download ZIP Archive](https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.zip)\n";
    $string .= "- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d)\n";

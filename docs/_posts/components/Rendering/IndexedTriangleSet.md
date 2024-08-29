@@ -154,7 +154,7 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/IndexedTriangleSet/IndexedTriangleSet.x3d" update="auto"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/IndexedTriangleSet/IndexedTriangleSet.x3d" update="auto" xrMovementControl=”VIEWER_POSE”></x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Rendering/IndexedTriangleSet/IndexedTriangleSet.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Rendering/IndexedTriangleSet/IndexedTriangleSet.x3d)
