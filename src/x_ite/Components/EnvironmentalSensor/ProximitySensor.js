@@ -69,12 +69,11 @@ function ProximitySensor (executionContext)
 
    this .setZeroTest (true);
 
-   this .layerNode         = null;
-   this .cameraSpaceMatrix = new Matrix4 ();
-   this .modelMatrix       = new Matrix4 ();
-   this .inside            = false;
-   this .min               = new Vector3 ();
-   this .max               = new Vector3 ();
+   this .min           = new Vector3 ();
+   this .max           = new Vector3 ();
+   this .layerNode     = null;
+   this .modelMatrix   = new Matrix4 ();
+   this .inside        = false;
 }
 
 Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironmentalSensorNode .prototype),
@@ -131,6 +130,8 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
             if (this .layerNode)
             {
                const
+                  browser        = this .getBrowser (),
+                  pose           = browser .getPose (),
                   viewpointNode  = this .layerNode .getViewpoint (),
                   invModelMatrix = this .modelMatrix .inverse ()
 
@@ -140,9 +141,12 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                   .multRight (invModelMatrix)
                   .get (centerOfRotation);
 
-               invModelMatrix
-                  .multLeft (this .cameraSpaceMatrix)
-                  .get (position, orientation);
+               if (pose && this .layerNode .isActive () && browser .getBrowserOption ("XRMovementControl") !== "VIEWPOINT")
+                  invModelMatrix .multLeft (pose .cameraSpaceMatrix);
+               else
+                  invModelMatrix .multLeft (viewpointNode .getCameraSpaceMatrix ());
+
+               invModelMatrix .get (position, orientation);
 
                if (this ._isActive .getValue ())
                {
@@ -158,7 +162,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                else
                {
                   this ._isActive                 = true;
-                  this ._enterTime                = this .getBrowser () .getCurrentTime ();
+                  this ._enterTime                = browser .getCurrentTime ();
                   this ._position_changed         = position;
                   this ._orientation_changed      = orientation;
                   this ._centerOfRotation_changed = centerOfRotation;
@@ -193,7 +197,6 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
             case TraverseType .CAMERA:
             {
                this .layerNode = renderObject .getLayer ();
-               this .cameraSpaceMatrix .assign (renderObject .getCameraSpaceMatrix () .get ());
                this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
                return;
             }
