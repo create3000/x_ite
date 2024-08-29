@@ -60,10 +60,16 @@ class Lock
 
       const p = new Promise (async (resolve, reject) =>
       {
-         if (current .length)
+         try
+         {
             await Promise .allSettled (current);
 
-         callback () .then (resolve) .catch (reject);
+            resolve (await callback ());
+         }
+         catch (error)
+         {
+            reject (error);
+         }
       })
       .finally (() =>
       {
