@@ -45,39 +45,38 @@
  *
  ******************************************************************************/
 
-function parse (parser)
+const functions =
 {
-   this .lastIndex = parser .lastIndex;
-
-   parser .result = this .exec (parser .input);
-
-   if (parser .result)
+   parse (parser)
    {
-      parser .lastIndex = this .lastIndex;
-      return true;
-   }
+      this .lastIndex = parser .lastIndex;
 
-   return false;
-}
+      parser .result = this .exec (parser .input);
 
-function lookahead (parser)
-{
-   const
-      lastIndex = parser .lastIndex,
-      result    = this .parse (parser);
+      if (parser .result)
+      {
+         parser .lastIndex = this .lastIndex;
+         return true;
+      }
 
-   parser .lastIndex = lastIndex;
+      return false;
+   },
+   lookahead (parser)
+   {
+      const
+         lastIndex = parser .lastIndex,
+         result    = this .parse (parser);
 
-   return result;
-}
+      parser .lastIndex = lastIndex;
+
+      return result;
+   },
+};
 
 function Expressions (Grammar)
 {
    for (const value of Object .values (Grammar))
-   {
-      value .parse     = parse;
-      value .lookahead = lookahead;
-   }
+      Object .assign (value, functions);
 
    return Grammar;
 }
