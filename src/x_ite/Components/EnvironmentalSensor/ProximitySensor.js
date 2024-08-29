@@ -69,7 +69,7 @@ function ProximitySensor (executionContext)
 
    this .setZeroTest (true);
 
-   this .viewpointNode     = null;
+   this .layerNode         = null;
    this .cameraSpaceMatrix = new Matrix4 ();
    this .modelMatrix       = new Matrix4 ();
    this .inside            = false;
@@ -128,10 +128,10 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
       {
          if (this .inside && this .getTraversed ())
          {
-            if (this .viewpointNode)
+            if (this .layerNode)
             {
                const
-                  viewpointNode  = this .viewpointNode,
+                  viewpointNode  = this .layerNode .getViewpoint (),
                   invModelMatrix = this .modelMatrix .inverse ()
 
                centerOfRotationMatrix
@@ -174,8 +174,8 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
             }
          }
 
-         this .inside        = false;
-         this .viewpointNode = null;
+         this .inside    = false;
+         this .layerNode = null;
 
          this .setTraversed (false);
       };
@@ -192,7 +192,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
          {
             case TraverseType .CAMERA:
             {
-               this .viewpointNode = renderObject .getViewpoint ();
+               this .layerNode = renderObject .getLayer ();
                this .cameraSpaceMatrix .assign (renderObject .getCameraSpaceMatrix () .get ());
                this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
                return;
