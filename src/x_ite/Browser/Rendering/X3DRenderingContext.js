@@ -530,7 +530,13 @@ Object .assign (X3DRenderingContext .prototype,
          if (this [_session] === window)
             return;
 
-         return this [_session] .end () .catch (Function .prototype) .finally (() =>
+         try
+         {
+            await this [_session] .end ();
+         }
+         catch
+         { }
+         finally
          {
             this .endEvents () .removeInterest ("endFrame", this);
 
@@ -546,7 +552,7 @@ Object .assign (X3DRenderingContext .prototype,
             this [_pose]               = null;
 
             this .reshape ();
-         });
+         }
       });
    },
    getSession ()
