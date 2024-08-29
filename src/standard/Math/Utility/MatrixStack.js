@@ -45,62 +45,76 @@
  *
  ******************************************************************************/
 
-function MatrixStack (Type)
+class MatrixStack extends Array
 {
-   let top = 0;
+   #top = 0;
 
-   return Object .assign ([ new Type () ],
+   constructor (Type)
    {
-      set (matrix)
-      {
-         this [top] .assign (matrix);
-      },
-      get ()
-      {
-         return this [top];
-      },
-      push (matrix = this [top])
-      {
-         const t = ++ top;
+      super ();
 
-         if (t < this .length)
-            this [t] .assign (matrix);
-         else
-            this [t] = matrix .copy ();
-      },
-      pop ()
-      {
-         -- top;
-      },
-      clear ()
-      {
-         top = 0;
-      },
-      size ()
-      {
-         return top + 1;
-      },
-      identity ()
-      {
-         this [top] .identity ();
-      },
-      multLeft (matrix)
-      {
-         this [top] .multLeft (matrix);
-      },
-      translate (vector)
-      {
-         this [top] .translate (vector);
-      },
-      rotate (rotation)
-      {
-         this [top] .rotate (rotation);
-      },
-      scale (vector)
-      {
-         this [top] .scale (vector);
-      },
-   });
+      this .push (new Type ());
+   }
+
+   set (matrix)
+   {
+      this [this .#top] .assign (matrix);
+   }
+
+   get ()
+   {
+      return this [this .#top];
+   }
+
+   push (matrix = this [this .#top])
+   {
+      const top = ++ this .#top;
+
+      if (top < this .length)
+         this [top] .assign (matrix);
+      else
+         this [top] = matrix .copy ();
+   }
+
+   pop ()
+   {
+      -- this .#top;
+   }
+
+   clear ()
+   {
+      this .#top = 0;
+   }
+
+   size ()
+   {
+      return this .#top + 1;
+   }
+
+   identity ()
+   {
+      this [this .#top] .identity ();
+   }
+
+   multLeft (matrix)
+   {
+      this [this .#top] .multLeft (matrix);
+   }
+
+   translate (vector)
+   {
+      this [this .#top] .translate (vector);
+   }
+
+   rotate (rotation)
+   {
+      this [this .#top] .rotate (rotation);
+   }
+
+   scale (vector)
+   {
+      this [this .#top] .scale (vector);
+   }
 }
 
 export default MatrixStack;
