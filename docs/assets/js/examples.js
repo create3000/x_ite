@@ -47,7 +47,7 @@ $("table.examples a") .on ("click", function ()
    canvas .prop ("browser") .getBrowserOptions () .reset ();
 
    canvas
-      .removeClass (["tr", "br", "bl", "tl"] .map (s => `xr-button-${s}`))
+      .removeClass (["tr", "br", "bl", "tl"] .map (p => `xr-button-${p}`))
       .addClass (`xr-button-${$(this) .attr ("xrButtonPosition")}`)
       .attr ("xrMovementControl", $(this) .attr ("xrMovementControl"));
 
