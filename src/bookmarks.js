@@ -64,11 +64,9 @@ Object .assign (Bookmarks .prototype,
          for (const bookmark of bookmarks)
          {
             const
-               component         = bookmark .component,
-               test              = bookmark .test,
-               path              = bookmark .path,
-               xrButtonPosition  = bookmark .xrButtonPosition,
-               xrMovementControl = bookmark .xrMovementControl;
+               component = bookmark .component,
+               test      = bookmark .test,
+               path      = bookmark .path;
 
             if (test)
             {
@@ -79,7 +77,7 @@ Object .assign (Bookmarks .prototype,
                      .addClass ('display-example')
                      .attr ('href', `${server}/${component}/${test}/${test}.x3d`)
                      .attr ('style', `background-image:url(${server}/${component}/${test}/screenshot-small.png)`)
-                     .on ("click", () => prevent (this .loadURL (`${server}/${component}/${test}/${test}.x3d`, xrButtonPosition, xrMovementControl))));
+                     .on ("click", () => prevent (this .loadURL (`${server}/${component}/${test}/${test}.x3d`, bookmark))));
             }
             else if (path)
             {
@@ -96,7 +94,7 @@ Object .assign (Bookmarks .prototype,
                   .append ($("<a/>")
                      .addClass ('display-example')
                      .attr ('href', server + '/' + path)
-                     .on ("click", () => prevent (this .loadURL (`${server}/${path}`, xrButtonPosition, xrMovementControl)))
+                     .on ("click", () => prevent (this .loadURL (`${server}/${path}`, bookmark)))
                      .text (name));
             }
             else if (component)
@@ -119,14 +117,14 @@ Object .assign (Bookmarks .prototype,
          this .browser .getLocalStorage () ["Bookmarks.scrollLeft"] = this .element .scrollLeft ();
       });
    },
-   async loadURL (url, xrButtonPosition = "br", xrMovementControl = "VIEWER_POSE")
+   async loadURL (url, options = { })
    {
       console .time ("Scene loaded in");
 
       this .browser .getBrowserOptions () .reset ();
       $(this .browser .element) .removeClass (["tr", "br", "bl", "tl"] .map (p => `xr-button-${p}`));
-      $(this .browser .element) .addClass (`xr-button-${xrButtonPosition}`);
-      this .browser .setBrowserOption ("XRMovementControl", xrMovementControl);
+      $(this .browser .element) .addClass (`xr-button-${options .xrButtonPosition ?? "br"}`);
+      this .browser .setBrowserOption ("XRMovementControl", options .xrMovementControl ?? "VIEWER_POSE");
 
       await this .browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
