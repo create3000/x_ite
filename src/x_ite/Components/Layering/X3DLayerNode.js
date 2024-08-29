@@ -268,10 +268,8 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
    set_viewport__ ()
    {
-      this .viewportNode = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);
-
-      if (!this .viewportNode)
-         this .viewportNode = this .getBrowser () .getDefaultViewport ();
+      this .viewportNode = X3DCast (X3DConstants .X3DViewportNode, this ._viewport)
+         ?? this .getBrowser () .getDefaultViewport ();
    },
    bindBindables (viewpointName)
    {
