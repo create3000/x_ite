@@ -83,7 +83,7 @@ The body1 and *body2* fields indicate the two [RigidBody](/x_ite/components/rigi
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/BallJoint/BallJoint.x3d" update="auto" xrMovementControl=”VIEWER_POSE”></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/BallJoint/BallJoint.x3d" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/RigidBodyPhysics/BallJoint/BallJoint.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/RigidBodyPhysics/BallJoint/BallJoint.x3d)
