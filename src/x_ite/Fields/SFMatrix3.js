@@ -73,8 +73,8 @@ function SFMatrix3Template (TypeName, double)
                r2 = arguments [2];
 
             X3DField .call (this, new Matrix3 (r0 .x, r0 .y, r0 .z,
-                                                      r1 .x, r1 .y, r1 .z,
-                                                      r2 .x, r2 .y, r2 .z));
+                                               r1 .x, r1 .y, r1 .z,
+                                               r2 .x, r2 .y, r2 .z));
 
             break;
          }
