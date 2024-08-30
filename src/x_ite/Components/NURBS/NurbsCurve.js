@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
    },
    getClosed (order, knot, weight, controlPointNode)
    {
-      if (! this ._closed .getValue ())
+      if (!this ._closed .getValue ())
          return false;
 
       return NURBS .getClosed (order, knot, weight, controlPointNode);
@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
       if (this ._order .getValue () < 2)
          return [ ];
 
-      if (! this .controlPointNode)
+      if (!this .controlPointNode)
          return [ ];
 
       if (this .controlPointNode .getSize () < this ._order .getValue ())
@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
       if (this ._order .getValue () < 2)
          return;
 
-      if (! this .controlPointNode)
+      if (!this .controlPointNode)
          return;
 
       if (this .controlPointNode .getSize () < this ._order .getValue ())

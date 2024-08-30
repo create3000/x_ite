@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
    },
    getClosed (order, knot, weight, controlPoint)
    {
-      if (! this ._closed .getValue ())
+      if (!this ._closed .getValue ())
          return false;
 
       return NURBS .getClosed2D (order, knot, weight, controlPoint);

@@ -109,10 +109,10 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, X3DParamet
    },
    build ()
    {
-      if (! this .crossSectionCurveNode)
+      if (!this .crossSectionCurveNode)
          return;
 
-      if (! this .trajectoryCurveNode)
+      if (!this .trajectoryCurveNode)
          return;
 
       const extrusion = this .extrusion;
@@ -129,7 +129,7 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, X3DParamet
 
       this .getMultiTexCoords () .push (this .getTexCoords ());
 
-      if (! this ._ccw .getValue ())
+      if (!this ._ccw .getValue ())
       {
          const normals = this .getNormals ();
 

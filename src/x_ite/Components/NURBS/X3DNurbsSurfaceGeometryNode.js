@@ -169,7 +169,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       if (!this .controlPointNode)
          return;
 
-      if (this .controlPointNode .getSize () !== this ._uDimension .getValue () * this ._vDimension .getValue ())
+      if (this .controlPointNode .getSize () < this ._uDimension .getValue () * this ._vDimension .getValue ())
          return;
 
       // Order and dimension are now positive numbers.

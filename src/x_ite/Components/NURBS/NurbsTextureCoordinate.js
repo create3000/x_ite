@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, X3DNo
       {
          let cp = controlPoints [u];
 
-         if (! cp)
+         if (!cp)
             cp = controlPoints [u] = [ ];
 
          for (let v = 0, vDimension = this ._vDimension .getValue (); v < vDimension; ++ v)
@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, X3DNo
       if (this ._vDimension .getValue () < this ._vOrder .getValue ())
          return false;
 
-      if (this ._controlPoint .length !== this ._uDimension .getValue () * this ._vDimension .getValue ())
+      if (this ._controlPoint .length < this ._uDimension .getValue () * this ._vDimension .getValue ())
          return false;
 
       return true;
