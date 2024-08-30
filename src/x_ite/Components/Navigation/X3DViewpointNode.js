@@ -456,6 +456,9 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    lookAtBBox (layerNode, bbox, transitionTime = 1, factor, straighten)
    {
+      if (bbox .size .equals (Vector3 .Zero))
+         return;
+
       bbox = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ());
 
       this .lookAt (layerNode, bbox .center, this .getLookAtDistance (bbox), transitionTime, factor, straighten);
