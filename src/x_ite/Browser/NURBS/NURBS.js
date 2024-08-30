@@ -293,6 +293,8 @@ const NURBS = {
 
       if (closed)
       {
+         // Make knots periodic.
+         
          for (let i = 1, l = order - 1; i < l; ++ i)
             knots .push (knots .at (-1) + (knots [i] - knots [i - 1]));
       }
