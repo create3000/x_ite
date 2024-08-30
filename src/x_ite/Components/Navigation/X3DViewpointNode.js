@@ -454,7 +454,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       this .lookAt (layerNode, point, minDistance, transitionTime, factor, straighten);
    },
-   lookAtBBox (layerNode, bbox, transitionTime = 1, factor, straighten)
+   lookAtBBox (layerNode, bbox, transitionTime = 1, factor = 1, straighten = false)
    {
       if (bbox .size .equals (Vector3 .Zero))
          return;
