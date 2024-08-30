@@ -172,14 +172,18 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
       interpolator ._key      .length = 0;
       interpolator ._keyValue .length = 0;
 
+      const
+         direction = new Vector3 (),
+         rotation  = new Rotation4 ();
+
       for (let i = 0, length = points .length - 3; i < length; i += 3)
       {
-         const direction = new Vector3 (points [i + 3] - points [i + 0],
-                                        points [i + 4] - points [i + 1],
-                                        points [i + 5] - points [i + 2]);
+         direction .set (points [i + 3] - points [i + 0],
+                         points [i + 4] - points [i + 1],
+                         points [i + 5] - points [i + 2]);
 
          interpolator ._key      .push ((i / 3) / (length / 3 - 1));
-         interpolator ._keyValue. push (new Rotation4 (Vector3 .zAxis, direction));
+         interpolator ._keyValue. push (rotation .setFromToVec (Vector3 .zAxis, direction));
       }
    },
 });
