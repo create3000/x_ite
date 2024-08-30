@@ -63,10 +63,6 @@ function NurbsTextureCoordinate (executionContext)
 
 Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, X3DNode .prototype),
 {
-   initialize ()
-   {
-      X3DNode .prototype .initialize .call (this);
-   },
    getControlPoints (texWeights)
    {
       const
