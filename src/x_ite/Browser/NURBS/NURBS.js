@@ -76,12 +76,12 @@ const NURBS = {
 
       // Check if first and last point are coincident.
 
-      if (! controlPoint [0] .equals (controlPoint [dimension - 1]))
+      if (!controlPoint [0] .equals (controlPoint [dimension - 1]))
          return false;
 
       // Check if knots are periodic.
 
-      if (! this .isPeriodic (order, dimension, knot))
+      if (!this .isPeriodic (order, dimension, knot))
          return false;
 
       return true;
@@ -108,12 +108,12 @@ const NURBS = {
 
          // Check if first and last point are coincident.
 
-         if (! controlPointNode .get1Point (0, firstPoint) .equals (controlPointNode .get1Point (dimension - 1, lastPoint)))
+         if (!controlPointNode .get1Point (0, firstPoint) .equals (controlPointNode .get1Point (dimension - 1, lastPoint)))
             return false;
 
          // Check if knots are periodic.
 
-         if (! this .isPeriodic (order, dimension, knot))
+         if (!this .isPeriodic (order, dimension, knot))
             return false;
 
          return true;
@@ -145,13 +145,13 @@ const NURBS = {
 
             // Check if first and last point are coincident.
 
-            if (! controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
+            if (!controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
                return false;
          }
 
          // Check if knots are periodic.
 
-         if (! this .isPeriodic (uOrder, uDimension, uKnot))
+         if (!this .isPeriodic (uOrder, uDimension, uKnot))
             return false;
 
          return true;
@@ -183,13 +183,13 @@ const NURBS = {
 
             // Check if first and last point are coincident.
 
-            if (! controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
+            if (!controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
                return false;
          }
 
          // Check if knots are periodic.
 
-         if (! this .isPeriodic (vOrder, vDimension, vKnot))
+         if (!this .isPeriodic (vOrder, vDimension, vKnot))
             return false;
 
          return true;
@@ -419,7 +419,7 @@ const NURBS = {
       {
          let cp = controlPoints [u];
 
-         if (! cp)
+         if (!cp)
             cp = controlPoints [u] = [ ];
 
          for (let v = 0; v < vDimension; ++ v)
@@ -459,7 +459,7 @@ const NURBS = {
       {
          let cp = controlPoints [u];
 
-         if (! cp)
+         if (!cp)
             cp = controlPoints [u] = [ ];
 
          for (let v = 0; v < vDimension; ++ v)

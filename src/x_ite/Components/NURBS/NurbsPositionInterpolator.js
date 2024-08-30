@@ -110,7 +110,7 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3
    },
    getClosed (order, knot, weight, controlPointNode)
    {
-      return false && NURBS .getClosed (order, knot, weight, controlPointNode);
+      return NURBS .getClosed (order, knot, weight, controlPointNode);
    },
    getKnots (result, closed, order, dimension, knot)
    {
