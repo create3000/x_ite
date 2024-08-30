@@ -6,7 +6,7 @@ class Playground
    constructor ()
    {
       // Also change version in playground.html!
-      require .config ({ paths: { "vs": "https://cdn.jsdelivr.net/npm/monaco-editor@0.50.0/min/vs" }});
+      require .config ({ paths: { "vs": "https://cdn.jsdelivr.net/npm/monaco-editor@0.51.0/min/vs" }});
       require (["vs/editor/editor.main"], () => this .setup ());
    }
 
