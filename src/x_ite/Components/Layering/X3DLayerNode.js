@@ -58,8 +58,9 @@ import X3DCast         from "../../Base/X3DCast.js";
 import TraverseType    from "../../Rendering/TraverseType.js";
 import X3DConstants    from "../../Base/X3DConstants.js";
 import Camera          from "../../../standard/Math/Geometry/Camera.js";
-import Box3            from "../../../standard/Math/Geometry/Box3.js";
+import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
+import Box3            from "../../../standard/Math/Geometry/Box3.js";
 
 function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 {
@@ -250,6 +251,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       const
          viewpointNode = this .getViewpoint (),
          bbox          = this .getBBox (new Box3 ()) .multRight (viewpointNode .getModelMatrix () .copy () .inverse ());
+
+      if (bbox .size .equals (Vector3 .Zero))
+         return;
 
       viewpointNode .lookAt (this, bbox .center, viewpointNode .getLookAtDistance (bbox), transitionTime, factor, straighten);
    },
