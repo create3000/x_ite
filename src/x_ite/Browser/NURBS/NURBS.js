@@ -230,9 +230,11 @@ const NURBS = {
    },
    getKnots (result, closed, order, dimension, knot)
    {
-      const knots = result || [ ];
+      const
+         length = dimension + order,
+         knots  = result || [ ];
 
-      for (let i = 0, length = knot .length; i < length; ++ i)
+      for (let i = 0, l = knot .length; i < l; ++ i)
          knots [i] = knot [i];
 
       knots .length = knot .length;
@@ -242,15 +244,15 @@ const NURBS = {
 
       let generateUniform = true;
 
-      if (knots .length === dimension + order)
+      if (knots .length === length)
       {
          generateUniform = false;
 
          let consecutiveKnots = 0;
 
-         for (let i = 1, length = knots .length; i < length; ++ i)
+         for (let i = 1; i < length; ++ i)
          {
-            if (knots [i] == knots [i - 1])
+            if (knots [i] === knots [i - 1])
                ++ consecutiveKnots;
             else
                consecutiveKnots = 0;
@@ -265,8 +267,6 @@ const NURBS = {
 
       if (generateUniform)
       {
-         const length = dimension + order;
-
          if (closed)
          {
             for (let i = 0; i < length; ++ i)
@@ -293,7 +293,7 @@ const NURBS = {
 
       if (closed)
       {
-         for (let i = 1, length = order - 1; i < length; ++ i)
+         for (let i = 1, l = order - 1; i < l; ++ i)
             knots .push (knots .at (-1) + (knots [i] - knots [i - 1]));
       }
 
