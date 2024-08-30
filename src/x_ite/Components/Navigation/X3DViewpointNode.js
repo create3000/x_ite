@@ -533,18 +533,26 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       bbox .copy () .multRight (this .modelMatrix .copy () .inverse ());
 
-      const
-         direction       = this .getUserPosition () .copy () .subtract (bbox .center) .normalize (),
-         distance        = this .getLookAtDistance (bbox),
-         userPosition    = bbox .center .copy () .add (direction .multiply (distance)),
-         userOrientation = this .getLookAtRotation (userPosition, bbox .center);
+      if (bbox .size .equals (Vector3 .Zero))
+      {
+         this .set_nearDistance__ ();
+         this .set_farDistance__ ();
+      }
+      else
+      {
+         const
+            direction       = this .getUserPosition () .copy () .subtract (bbox .center) .normalize (),
+            distance        = this .getLookAtDistance (bbox),
+            userPosition    = bbox .center .copy () .add (direction .multiply (distance)),
+            userOrientation = this .getLookAtRotation (userPosition, bbox .center);
 
-      this ._positionOffset         = userPosition .subtract (this .getPosition ());
-      this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
-      this ._centerOfRotationOffset = bbox .center .copy () .subtract (this .getCenterOfRotation ());
-      this ._fieldOfViewScale       = 1;
-      this .nearDistance            = distance * (0.125 / 10);
-      this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
+         this ._positionOffset         = userPosition .subtract (this .getPosition ());
+         this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
+         this ._centerOfRotationOffset = bbox .center .copy () .subtract (this .getCenterOfRotation ());
+         this ._fieldOfViewScale       = 1;
+         this .nearDistance            = distance * (0.125 / 10);
+         this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
+      }
    },
    traverse (type, renderObject)
    {

@@ -52,6 +52,8 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DBindableNode      from "../Core/X3DBindableNode.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Box3                 from "../../../standard/Math/Geometry/Box3.js";
 
 const TransitionType =
 {
@@ -123,17 +125,13 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    {
       const nearValue = this .getCollisionRadius ();
 
-      if (nearValue === 0)
-         return 1e-5;
-
-      else
-         return nearValue / 2;
+      return this .nearDistance ?? (nearValue === 0 ? 1e-5 : nearValue / 2);
    },
    getFarValue (viewpoint)
    {
-      return this ._visibilityLimit .getValue ()
-             ? this ._visibilityLimit .getValue ()
-             : viewpoint .getMaxFarValue ();
+      return this .farDistance ?? (this ._visibilityLimit .getValue ()
+         ? this ._visibilityLimit .getValue ()
+         : viewpoint .getMaxFarValue ());
    },
    getTransitionType ()
    {
@@ -282,6 +280,31 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
 
       if (this ._transitionActive .getValue ())
          this ._transitionActive = false;
+   },
+   transitionStart (layerNode)
+   {
+      // If this is the default NavigationInfo node, then calculate near and far clip plane,
+      // as the viewpoint would do when viewAll is called.
+
+      if (layerNode .getNavigationInfoStack () .get () [0] !== this)
+         return;
+
+      const
+         viewpointNode  = layerNode .getViewpoint (),
+         invModelMatrix = viewpointNode .getModelMatrix () .copy () .inverse (),
+         bbox           = layerNode .getBBox (new Box3 ()) .multRight (invModelMatrix),
+         distance       = viewpointNode .getLookAtDistance (bbox);
+
+      if (bbox .size .equals (Vector3 .Zero))
+      {
+         this .nearDistance = undefined;
+         this .farDistance  = undefined;
+      }
+      else
+      {
+         this .nearDistance = distance * (0.125 / 10);
+         this .farDistance  = this .nearDistance * viewpointNode .getMaxFarValue () / 0.125;
+      }
    },
    enable (type, renderObject)
    {
