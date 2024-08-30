@@ -1314,10 +1314,7 @@ Object .assign (X3DRenderObject .prototype,
 
 function assign (lhs, rhs)
 {
-   for (var i = 0, length = rhs .length; i < length; ++ i)
-      lhs [i] = rhs [i];
-
-   lhs .length = length;
+   Object .assign (lhs, rhs) .length = rhs .length;
 }
 
 export default X3DRenderObject;
