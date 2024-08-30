@@ -104,6 +104,10 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3
 
       this .requestRebuild ();
    },
+   getTessellation (numKnots)
+   {
+      return NURBS .getTessellation (30, numKnots - this ._order .getValue ());
+   },
    getClosed (order, knot, weight, controlPointNode)
    {
       return false && NURBS .getClosed (order, knot, weight, controlPointNode);
@@ -160,7 +164,8 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3
          debug: false,
       });
 
-      this .sampleOptions .haveWeights = !! weights;
+      this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
+      this .sampleOptions .haveWeights    = !! weights;
 
       const
          mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
@@ -172,8 +177,8 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3
 
       for (let i = 0, length = points .length; i < length; i += 3)
       {
-         interpolator ._key      .push (knots [0] + i / (length - 3) * scale);
-         interpolator ._keyValue. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
+         interpolator ._key      .push ((i / 3) / (length / 3 - 1));
+         interpolator ._keyValue .push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
       }
    },
 });

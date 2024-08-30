@@ -265,8 +265,30 @@ const NURBS = {
 
       if (generateUniform)
       {
-         for (let i = 0, length = dimension + order; i < length; ++ i)
-            knots [i] = i / (length - 1);
+         const length = dimension + order;
+
+         if (closed)
+         {
+            for (let i = 0; i < length; ++ i)
+               knots [i] = i;
+         }
+         else
+         {
+            let
+               i = 0,
+               k = 1;
+
+            for (; i < order; ++ i)
+               knots [i] = 0;
+
+            for (const l = length - order; i < l; ++ i, ++ k)
+               knots [i] = k;
+
+            for (; i < length; ++ i)
+               knots [i] = k;
+         }
+
+         knots .length = length;
       }
 
       if (closed)

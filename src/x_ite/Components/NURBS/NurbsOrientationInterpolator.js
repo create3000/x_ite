@@ -178,14 +178,8 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
                                         points [i + 4] - points [i + 1],
                                         points [i + 5] - points [i + 2]);
 
-         interpolator ._key      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
+         interpolator ._key      .push ((i / 3) / (length / 3 - 1));
          interpolator ._keyValue. push (new Rotation4 (Vector3 .zAxis, direction));
-      }
-
-      if (closed)
-      {
-         interpolator ._key      .push (knots [0] + scale);
-         interpolator ._keyValue. push (interpolator ._keyValue [0]);
       }
    },
 });
