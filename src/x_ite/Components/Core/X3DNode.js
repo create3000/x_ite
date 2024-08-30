@@ -780,7 +780,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          for (const reference of field .getReferences ())
          {
-            initializableReference = initializableReference || reference .isInitializable ();
+            initializableReference ||= reference .isInitializable ();
 
             // Output user defined reference field
 
@@ -843,7 +843,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          for (const reference of field .getReferences ())
          {
-            initializableReference = initializableReference || reference .isInitializable ();
+            initializableReference ||= reference .isInitializable ();
 
             // Output build in reference field
 

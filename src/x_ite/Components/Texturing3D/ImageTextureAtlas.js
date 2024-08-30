@@ -180,7 +180,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
                gl .readPixels (sx, sy, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
                gl .texSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, width, height, 1, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
-               transparent = transparent || this .isImageTransparent (data);
+               transparent ||= this .isImageTransparent (data);
             }
          }
 

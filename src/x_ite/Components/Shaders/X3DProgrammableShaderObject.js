@@ -1197,7 +1197,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       if (location0 === -1)
          return;
 
-      stride = stride || 36;
+      stride ||= 36;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
@@ -1216,7 +1216,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       if (location0 === -1)
          return;
 
-      stride = stride || 64;
+      stride ||= 64;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
@@ -1339,7 +1339,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    {
       const location0 = this .x3d_InstanceMatrix;
 
-      stride = stride || 64; // 4 Bytes * 16
+      stride ||= 64; // 4 Bytes * 16
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
@@ -1356,7 +1356,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    {
       const location0 = this .x3d_InstanceNormalMatrix;
 
-      stride = stride || 36; // 4 Bytes * 9
+      stride ||= 36; // 4 Bytes * 9
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
