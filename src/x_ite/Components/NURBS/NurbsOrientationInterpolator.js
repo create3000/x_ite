@@ -131,7 +131,7 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
       if (this ._order .getValue () < 2)
          return;
 
-      if (! this .controlPointNode)
+      if (!this .controlPointNode)
          return;
 
       if (this .controlPointNode .getSize () < this ._order .getValue ())
@@ -182,7 +182,7 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
                          points [i + 4] - points [i + 1],
                          points [i + 5] - points [i + 2]);
 
-         interpolator ._key      .push ((i / 3) / (length / 3 - 1));
+         interpolator ._key      .push (i / (length - 3));
          interpolator ._keyValue. push (rotation .setFromToVec (Vector3 .zAxis, direction));
       }
    },
