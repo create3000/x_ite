@@ -825,7 +825,7 @@ Object .assign (X3DRenderObject .prototype,
          const
             browser  = this .getBrowser (),
             gl       = browser .getContext (),
-            viewport = this .getViewVolume () .getViewport (),
+            viewport = this .viewVolumes .at (-1) .getViewport (),
             [x, y]   = browser .getPointer ();
 
          // Configure depth shaders.
@@ -1068,7 +1068,7 @@ Object .assign (X3DRenderObject .prototype,
          const
             browser  = this .getBrowser (),
             gl       = browser .getContext (),
-            viewport = this .getViewVolume () .getViewport ();
+            viewport = this .viewVolumes .at (-1) .getViewport ();
 
          // Configure depth shaders.
 
@@ -1122,7 +1122,7 @@ Object .assign (X3DRenderObject .prototype,
          gl                       = browser .getContext (),
          frameBuffers             = this .getFrameBuffers (),
          numFrameBuffers          = frameBuffers .length,
-         viewport                 = this .getViewVolume () .getViewport (),
+         viewport                 = this .viewVolumes .at (-1) .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
          globalLights             = this .globalLights,
