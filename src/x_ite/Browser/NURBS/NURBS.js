@@ -49,16 +49,17 @@ import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
 
-const NURBS = {
+const NURBS =
+{
    getTessellation (tessellation, dimension)
    {
       if (tessellation > 0)
-         return tessellation + 1;
+         return tessellation;
 
       if (tessellation < 0)
-         return -tessellation * dimension + 1;
+         return -tessellation * dimension;
 
-      return 2 * dimension + 1;
+      return 2 * dimension;
    },
    getClosed2D (order, knot, weight, controlPoint)
    {
