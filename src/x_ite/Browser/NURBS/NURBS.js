@@ -269,11 +269,15 @@ const NURBS = {
       {
          if (closed)
          {
+            // Generate periodic uniform knots.
+
             for (let i = 0; i < length; ++ i)
                knots [i] = i;
          }
          else
          {
+            // Generate pinned uniform knots.
+
             let
                i = 0,
                k = 1;
