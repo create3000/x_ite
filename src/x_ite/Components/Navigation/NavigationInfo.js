@@ -284,8 +284,8 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    transitionStart (layerNode)
    {
       // If this is the default NavigationInfo node,
-      // then automatically determine near and far clip plane,
-      // as the viewpoint would do when viewAll is called.
+      // automatically determine the near and far clip planes,
+      // as the viewpoint would do if viewAll were called.
 
       if (this !== layerNode .getNavigationInfoStack () .get () [0])
          return;
