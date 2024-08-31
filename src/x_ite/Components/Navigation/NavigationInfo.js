@@ -55,13 +55,6 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Box3                 from "../../../standard/Math/Geometry/Box3.js";
 
-const TransitionType =
-{
-   TELEPORT: true,
-   LINEAR:   true,
-   ANIMATE:  true,
-};
-
 function NavigationInfo (executionContext)
 {
    X3DBindableNode .call (this, executionContext);
@@ -133,18 +126,25 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
          ? this ._visibilityLimit .getValue ()
          : viewpoint .getMaxFarValue ());
    },
-   getTransitionType ()
+   getTransitionType: (function ()
    {
-      for (const value of this ._transitionType)
+      const TransitionTypes = new Set ([
+         "TELEPORT",
+         "LINEAR",
+         "ANIMATE",
+      ]);
+
+      return function ()
       {
-         const transitionType = TransitionType [value];
+         for (const value of this ._transitionType)
+         {
+            if (TransitionTypes .has (value))
+               return value;
+         }
 
-         if (transitionType)
-            return value;
-      }
-
-      return "LINEAR";
-   },
+         return "LINEAR";
+      };
+   })(),
    set_type__ ()
    {
       // Determine active viewer.
@@ -185,7 +185,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
          noneViewer    = false,
          lookAt        = false;
 
-      if (! this ._type .length)
+      if (!this ._type .length)
       {
          examineViewer = true;
          walkViewer    = true;
@@ -265,7 +265,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    },
    set_transitionStart__ ()
    {
-      if (! this ._transitionActive .getValue ())
+      if (!this ._transitionActive .getValue ())
          this ._transitionActive = true;
    },
    set_transitionComplete__ ()
@@ -316,7 +316,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
 
       const headlight = this .getBrowser () .getHeadlight ();
 
-      renderObject .getGlobalLights () .push (headlight);
+      renderObject .getGlobalLights ()     .push (headlight);
       renderObject .getGlobalLightsKeys () .push (headlight .lightNode .getLightKey ());
    },
    traverse (type, renderObject)
