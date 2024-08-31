@@ -227,7 +227,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
                   lookAt        = true;
                   break;
                default:
-                  // Some string defaults to EXAMINE.
+                  // Some strings lead to:
                   examineViewer = true;
                   continue;
             }
