@@ -89,19 +89,19 @@ Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, X3DSingle
 
          matrix4 .identity ();
 
-         if (! center .equals (Vector3 .Zero))
+         if (!center .equals (Vector3 .Zero))
             matrix4 .translate (vector .assign (center) .negate ());
 
-         if (! scale .equals (Vector3 .One))
+         if (!scale .equals (Vector3 .One))
             matrix4 .scale (scale);
 
-         if (! rotation .equals (Rotation4 .Identity))
+         if (!rotation .equals (Rotation4 .Identity))
             matrix4 .rotate (rotation);
 
-         if (! center .equals (Vector3 .Zero))
+         if (!center .equals (Vector3 .Zero))
             matrix4 .translate (center);
 
-         if (! translation .equals (Vector3 .Zero))
+         if (!translation .equals (Vector3 .Zero))
             matrix4 .translate (translation);
 
          this .setMatrix (matrix4);
