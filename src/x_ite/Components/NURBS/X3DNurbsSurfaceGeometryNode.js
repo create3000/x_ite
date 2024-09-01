@@ -227,7 +227,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
          vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
       }
 
-      this .buildNurbsTexCoords (uClosed, vClosed, this ._uOrder .getValue (), this ._vOrder .getValue (), uKnots, vKnots, this ._uDimension .getValue (), this ._vDimension .getValue (), surface .domain);
+      this .buildNurbsTexCoords (uClosed, vClosed, this ._uOrder .getValue (), this ._vOrder .getValue (), uKnots, vKnots, this ._uDimension .getValue (), this ._vDimension .getValue ());
       this .generateNormals (faces, points);
       this .setSolid (this ._solid .getValue ());
       this .setCCW (true);
@@ -235,18 +235,10 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    buildNurbsTexCoords: (() =>
    {
       const
-         defaultTexUKnots        = [ ],
-         defaultTexVKnots        = [ ],
+         defaultTexKnots         = [0, 0, 5, 5],
          defaultTexControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
 
-      function getDefaultTexKnots (result, knots)
-      {
-         result [0] = result [1] = knots [0];
-         result [2] = result [3] = knots .at (-1);
-         return result;
-      }
-
-      return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, domain)
+      return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension)
       {
          const sampleOptions = this .sampleOptions;
 
@@ -275,11 +267,9 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
             var
                texUDegree       = 1,
                texVDegree       = 1,
-               texUKnots        = getDefaultTexKnots (defaultTexUKnots, uKnots),
-               texVKnots        = getDefaultTexKnots (defaultTexVKnots, vKnots),
+               texUKnots        = defaultTexKnots,
+               texVKnots        = defaultTexKnots,
                texControlPoints = defaultTexControlPoints;
-
-            sampleOptions .domain = domain;
          }
 
          const texSurface = this .texSurface = (this .texSurface || nurbs) ({
@@ -299,14 +289,14 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
             points        = texMesh .points,
             texCoordArray = this .getTexCoords ();
 
+         this .getMultiTexCoords () .push (texCoordArray);
+
          for (let i = 0, length = faces .length; i < length; ++ i)
          {
             const index = faces [i] * 4;
 
             texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
          }
-
-         this .getMultiTexCoords () .push (this .getTexCoords ());
       };
    })(),
    generateNormals (faces, points)
