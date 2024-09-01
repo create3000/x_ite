@@ -210,7 +210,6 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       sampleOptions .resolution [1]   = this .getVTessellation (vKnots .length);
       sampleOptions .closed [0]       = uClosed;
       sampleOptions .closed [1]       = vClosed;
-      sampleOptions .domain           = undefined;
       sampleOptions .haveWeights      = !! weights;
       sampleOptions .trimmingContours = this .getTrimmingContours ();
 
