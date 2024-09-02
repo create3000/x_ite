@@ -3,6 +3,7 @@ import { maxTexCoords } from "../../../../x_ite/Browser/Texturing/TexturingConfi
 export default /* glsl */ `
 #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+#if !defined (X3D_DEPTH_SHADER)
 void
 setPointTexCoords ()
 {
@@ -20,18 +21,18 @@ setPointTexCoords ()
 
    `) .join ("\n")}
 }
-
+#endif
 #define getPointColor(color) (color)
 
 #else
-
-#define setPointTexCoords()
 
 #if __VERSION__ == 100
    varying float pointSize;
 #else
    in float pointSize;
 #endif
+
+#define setPointTexCoords()
 
 vec4
 getPointColor (in vec4 color)

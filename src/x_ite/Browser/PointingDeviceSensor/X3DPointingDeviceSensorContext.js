@@ -394,6 +394,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          geometryContext = shapeNode .getGeometryContext (),
          options         = [ ];
 
+      options .push ("X3D_DEPTH_SHADER");
+
       if (geometryContext .hasNormals)
          options .push ("X3D_NORMALS");
 
@@ -418,6 +420,12 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       if (appearanceNode .getStyleProperties (geometryContext .geometryType))
          options .push ("X3D_STYLE_PROPERTIES");
+
+      if (+appearanceNode .getMaterial () .getTextureBits ())
+         options .push ("X3D_MATERIAL_TEXTURES");
+
+      if (+appearanceNode .getTextureBits ())
+         options .push ("X3D_TEXTURE");
 
       if (humanoidNode)
       {
