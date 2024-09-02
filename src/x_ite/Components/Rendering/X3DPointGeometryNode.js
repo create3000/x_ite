@@ -81,10 +81,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          attribBuffers   = this .getAttribBuffers ();
 
       if (!renderContext .transparent)
-      {
-         gl .sampleCoverage (1.0, false);
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-      }
 
       for (const node of renderModeNodes)
          node .enable (gl);
