@@ -79,7 +79,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
 
       this ._type               .addInterest ("set_type__",               this);
       this ._headlight          .addInterest ("set_headlight__",          this);
-      this ._visibilityLimit    .addInterest ("set_visibilityLimit__",          this);
+      this ._visibilityLimit    .addInterest ("set_visibilityLimit__",    this);
       this ._transitionStart    .addInterest ("set_transitionStart__",    this);
       this ._transitionComplete .addInterest ("set_transitionComplete__", this);
       this ._isBound            .addInterest ("set_isBound__",            this);
