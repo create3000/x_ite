@@ -301,8 +301,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       {
          const uniform = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
 
-         if (uniform !== null)
-            this .x3d_TextureMatrix [i] = uniform;
+         if (uniform === null)
+            break;
+
+         this .x3d_TextureMatrix [i] = uniform;
       }
 
       for (let i = 0; i < maxTexCoords; ++ i)
