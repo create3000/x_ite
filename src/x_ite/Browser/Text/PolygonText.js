@@ -61,10 +61,6 @@ function PolygonText (text, fontStyle)
 
 Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry .prototype),
 {
-   isTransparent ()
-   {
-      return false;
-   },
    getMatrix ()
    {
       return Matrix4 .Identity;
