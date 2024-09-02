@@ -283,29 +283,31 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    },
    transitionStart (layerNode)
    {
-      // If this is the default NavigationInfo node,
-      // automatically determine the near and far clip planes,
-      // as the viewpoint would do if viewAll were called.
+      // // If this is the default NavigationInfo node,
+      // // automatically determine the near and far clip planes,
+      // // as the viewpoint would do if viewAll were called.
 
-      if (this !== layerNode .getNavigationInfoStack () .get () [0])
-         return;
+      // if (this !== layerNode .getNavigationInfoStack () .get () [0])
+      //    return;
 
-      const
-         viewpointNode  = layerNode .getViewpoint (),
-         invModelMatrix = viewpointNode .getModelMatrix () .copy () .inverse (),
-         bbox           = layerNode .getBBox (new Box3 ()) .multRight (invModelMatrix),
-         distance       = viewpointNode .getLookAtDistance (bbox);
+      // const
+      //    viewpointNode  = layerNode .getViewpoint (),
+      //    invModelMatrix = viewpointNode .getModelMatrix () .copy () .inverse (),
+      //    bbox           = layerNode .getBBox (new Box3 ()) .multRight (invModelMatrix),
+      //    distance       = viewpointNode .getLookAtDistance (bbox);
 
-      if (bbox .size .equals (Vector3 .Zero))
-      {
-         this .nearDistance = undefined;
-         this .farDistance  = undefined;
-      }
-      else
-      {
-         this .nearDistance = distance * (0.125 / 10);
-         this .farDistance  = this .nearDistance * viewpointNode .getMaxFarValue () / 0.125;
-      }
+      // if (bbox .size .equals (Vector3 .Zero))
+      // {
+      //    this .nearDistance = undefined;
+      //    this .farDistance  = undefined;
+      // }
+      // else
+      // {
+      //    this .nearDistance = distance * (0.125 / 10);
+      //    this .farDistance  = this .nearDistance * viewpointNode .getMaxFarValue () / 0.125;
+
+      //    console .log (this .nearDistance, this .farDistance);
+      // }
    },
    enable (type, renderObject)
    {

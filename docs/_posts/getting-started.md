@@ -720,7 +720,7 @@ exposure
 : A Float value that describes the amount of light that is captured. This option only works with PhysicalMaterial node and SpecularGlossinessMaterial node. The default value for the *exposure* attribute is `1`.
 
 logarithmicDepthBuffer
-: A Boolean value (`true` or `false`) to indicate whether order logarithmic depth buffer rendering technique should be used. The default value for the *logarithmicDepthBuffer* attribute is `false`.
+: A Boolean value (`true` or `false`) to indicate whether logarithmic depth buffer rendering technique should be used. The default value for the *logarithmicDepthBuffer* attribute is `false`.
 
 multisampling
 : An Integer value that specifies the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of anti-aliasing. Check the [rendering property](/x_ite/reference/browser-services/#rendering-properties) »MaxSamples«, which is browser dependent.
