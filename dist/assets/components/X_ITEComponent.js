@@ -1,5 +1,5 @@
-/* X_ITE v10.4.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.1")];
+/* X_ITE v10.4.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1422,10 +1422,12 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
          numLines: 0,
       });
 
-      this ._translations .addInterest ("set_transform__", this);
-      this ._rotations    .addInterest ("set_transform__", this);
-      this ._scales       .addInterest ("set_transform__", this);
-      this ._matrices     .addInterest ("set_matrices__",  this);
+      this ._translations      .addInterest ("set_transform__", this);
+      this ._rotations         .addInterest ("set_transform__", this);
+      this ._scales            .addInterest ("set_transform__", this);
+      this ._scaleOrientations .addInterest ("set_transform__", this);
+      this ._centers           .addInterest ("set_transform__", this);
+      this ._matrices          .addInterest ("set_matrices__",  this);
 
       this .set_transform__ ();
    },
@@ -1489,19 +1491,23 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
    set_matrices__ ()
    {
       const
-         browser         = this .getBrowser (),
-         gl              = browser .getContext (),
-         translations    = this ._translations,
-         rotations       = this ._rotations,
-         scales          = this ._scales,
-         numTranslations = translations .length,
-         numRotations    = rotations .length,
-         numScales       = scales .length,
-         numInstances    = Math .max (numTranslations, numRotations, numScales),
-         stride          = this .instancesStride / Float32Array .BYTES_PER_ELEMENT,
-         length          = this .instancesStride * numInstances,
-         data            = new Float32Array (length),
-         matrix          = new (external_X_ITE_X3D_Matrix4_default()) ();
+         browser              = this .getBrowser (),
+         gl                   = browser .getContext (),
+         translations         = this ._translations,
+         rotations            = this ._rotations,
+         scales               = this ._scales,
+         scaleOrientations    = this ._scaleOrientations,
+         centers              = this ._centers,
+         numTranslations      = translations .length,
+         numRotations         = rotations .length,
+         numScales            = scales .length,
+         numScaleOrientations = scaleOrientations .length,
+         numCenters           = centers .length,
+         numInstances         = Math .max (numTranslations, numRotations, numScales, numScaleOrientations, numCenters),
+         stride               = this .instancesStride / Float32Array .BYTES_PER_ELEMENT,
+         length               = this .instancesStride * numInstances,
+         data                 = new Float32Array (length),
+         matrix               = new (external_X_ITE_X3D_Matrix4_default()) ();
 
       this .numInstances = numInstances;
 
@@ -1512,9 +1518,11 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
 
       for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
       {
-         matrix .set (numTranslations ? translations [Math .min (i, numTranslations - 1)] .getValue () : null,
-                      numRotations    ? rotations    [Math .min (i, numRotations    - 1)] .getValue () : null,
-                      numScales       ? scales       [Math .min (i, numScales       - 1)] .getValue () : null);
+         matrix .set (numTranslations      ? translations      [Math .min (i, numTranslations      - 1)] .getValue () : null,
+                      numRotations         ? rotations         [Math .min (i, numRotations         - 1)] .getValue () : null,
+                      numScales            ? scales            [Math .min (i, numScales            - 1)] .getValue () : null,
+                      numScaleOrientations ? scaleOrientations [Math .min (i, numScaleOrientations - 1)] .getValue () : null,
+                      numCenters           ? centers           [Math .min (i, numCenters           - 1)] .getValue () : null);
 
          if (numScales)
             scale .max (scales [Math .min (i, numScales - 1)] .getValue ());
@@ -1607,18 +1615,20 @@ Object .defineProperties (InstancedShape,
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "translations",  new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "rotations",     new (external_X_ITE_X3D_Fields_default()).MFRotation ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scales",        new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pointerEvents", new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "castShadow",    new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",       new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",   new (external_X_ITE_X3D_Fields_default()).SFBool ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",      new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",    new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "appearance",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "geometry",      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "translations",      new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "rotations",         new (external_X_ITE_X3D_Fields_default()).MFRotation ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scales",            new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scaleOrientations", new (external_X_ITE_X3D_Fields_default()).MFRotation ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "centers",           new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pointerEvents",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "castShadow",        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",          new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",        new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "appearance",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "geometry",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
       enumerable: true,
    },
@@ -2740,31 +2750,54 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
 
       this .transmissionTextureNode ?.getShaderOptions (options, "TRANSMISSION", true);
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms: (function ()
    {
-      const
-         browser            = this .getBrowser (),
-         transmissionBuffer = browser .getTransmissionBuffer (),
-         transmissionUnit   = browser .getTexture2DUnit ();
+      const zeros = new Float32Array (16);
 
-      gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
+      return function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+      {
+         const browser = this .getBrowser ();
 
-      gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
-      gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
-      gl .uniform1i (shaderObject .x3d_TransmissionFramebufferSamplerEXT, transmissionUnit);
-      gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, transmissionBuffer .getWidth (), transmissionBuffer .getHeight ());
+         gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
 
-      if (!+this .getTextureBits ())
-         return;
+         // Transmission framebuffer texture
 
-      this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
-         shaderObject .x3d_TransmissionTextureEXT,
-         this ._transmissionTextureMapping .getValue (),
-         textureTransformMapping,
-         textureCoordinateMapping);
-   },
+         if (renderObject .isTransmission ())
+         {
+            var
+               transmissionBufferTexture = browser .getDefaultTexture2D (),
+               transmissionUnit          = browser .getDefaultTexture2DUnit ();
+
+            // Hide object by using a model view matrix with zeros.
+            gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
+            gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, 1, 1);
+         }
+         else
+         {
+            var
+               transmissionBuffer        = browser .getTransmissionBuffer (),
+               transmissionBufferTexture = transmissionBuffer .getColorTexture (),
+               transmissionUnit          = browser .getTexture2DUnit ();
+
+            gl .uniform2i (shaderObject .x3d_TransmissionFramebufferSizeEXT, transmissionBuffer .getWidth (), transmissionBuffer .getHeight ());
+         }
+
+         gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
+         gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
+         gl .uniform1i (shaderObject .x3d_TransmissionFramebufferSamplerEXT, transmissionUnit);
+
+         if (!+this .getTextureBits ())
+            return;
+
+         this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject,
+            renderObject,
+            shaderObject .x3d_TransmissionTextureEXT,
+            this ._transmissionTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
+      };
+   })(),
 });
 
 Object .defineProperties (TransmissionMaterialExtension,

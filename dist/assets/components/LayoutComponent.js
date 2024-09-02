@@ -1,5 +1,5 @@
-/* X_ITE v10.4.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.1")];
+/* X_ITE v10.4.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -1079,7 +1079,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (external_X_ITE_
                this .modelViewMatrix .assign (modelViewMatrix .get ());
                this .screenMatrix .assign (this .layoutNode .transform (type, renderObject));
 
-               modelViewMatrix .pushMatrix (this .screenMatrix);
+               modelViewMatrix .push (this .screenMatrix);
                renderObject .getLayouts () .push (this .layoutNode);
 
                external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);

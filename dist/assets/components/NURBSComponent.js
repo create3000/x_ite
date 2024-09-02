@@ -1,5 +1,5 @@
-/* X_ITE v10.4.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.1")];
+/* X_ITE v10.4.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -499,16 +499,17 @@ var external_X_ITE_X3D_Vector4_default = /*#__PURE__*/__webpack_require__.n(exte
 
 
 
-const NURBS = {
+const NURBS =
+{
    getTessellation (tessellation, dimension)
    {
       if (tessellation > 0)
-         return tessellation + 1;
+         return tessellation;
 
       if (tessellation < 0)
-         return -tessellation * dimension + 1;
+         return -tessellation * dimension;
 
-      return 2 * dimension + 1;
+      return 2 * dimension;
    },
    getClosed2D (order, knot, weight, controlPoint)
    {
@@ -526,12 +527,12 @@ const NURBS = {
 
       // Check if first and last point are coincident.
 
-      if (! controlPoint [0] .equals (controlPoint [dimension - 1]))
+      if (!controlPoint [0] .equals (controlPoint [dimension - 1]))
          return false;
 
       // Check if knots are periodic.
 
-      if (! this .isPeriodic (order, dimension, knot))
+      if (!this .isPeriodic (order, dimension, knot))
          return false;
 
       return true;
@@ -558,12 +559,12 @@ const NURBS = {
 
          // Check if first and last point are coincident.
 
-         if (! controlPointNode .get1Point (0, firstPoint) .equals (controlPointNode .get1Point (dimension - 1, lastPoint)))
+         if (!controlPointNode .get1Point (0, firstPoint) .equals (controlPointNode .get1Point (dimension - 1, lastPoint)))
             return false;
 
          // Check if knots are periodic.
 
-         if (! this .isPeriodic (order, dimension, knot))
+         if (!this .isPeriodic (order, dimension, knot))
             return false;
 
          return true;
@@ -595,13 +596,13 @@ const NURBS = {
 
             // Check if first and last point are coincident.
 
-            if (! controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
+            if (!controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
                return false;
          }
 
          // Check if knots are periodic.
 
-         if (! this .isPeriodic (uOrder, uDimension, uKnot))
+         if (!this .isPeriodic (uOrder, uDimension, uKnot))
             return false;
 
          return true;
@@ -633,13 +634,13 @@ const NURBS = {
 
             // Check if first and last point are coincident.
 
-            if (! controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
+            if (!controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
                return false;
          }
 
          // Check if knots are periodic.
 
-         if (! this .isPeriodic (vOrder, vDimension, vKnot))
+         if (!this .isPeriodic (vOrder, vDimension, vKnot))
             return false;
 
          return true;
@@ -680,9 +681,11 @@ const NURBS = {
    },
    getKnots (result, closed, order, dimension, knot)
    {
-      const knots = result || [ ];
+      const
+         length = dimension + order,
+         knots  = result || [ ];
 
-      for (let i = 0, length = knot .length; i < length; ++ i)
+      for (let i = 0, l = knot .length; i < l; ++ i)
          knots [i] = knot [i];
 
       knots .length = knot .length;
@@ -692,15 +695,15 @@ const NURBS = {
 
       let generateUniform = true;
 
-      if (knots .length === dimension + order)
+      if (knots .length === length)
       {
          generateUniform = false;
 
          let consecutiveKnots = 0;
 
-         for (let i = 1, length = knots .length; i < length; ++ i)
+         for (let i = 1; i < length; ++ i)
          {
-            if (knots [i] == knots [i - 1])
+            if (knots [i] === knots [i - 1])
                ++ consecutiveKnots;
             else
                consecutiveKnots = 0;
@@ -715,13 +718,39 @@ const NURBS = {
 
       if (generateUniform)
       {
-         for (let i = 0, length = dimension + order; i < length; ++ i)
-            knots [i] = i / (length - 1);
+         if (closed)
+         {
+            // Generate periodic uniform knots.
+
+            for (let i = 0; i < length; ++ i)
+               knots [i] = i;
+         }
+         else
+         {
+            // Generate pinned uniform knots.
+
+            let
+               i = 0,
+               k = 1;
+
+            for (; i < order; ++ i)
+               knots [i] = 0;
+
+            for (const l = length - order; i < l; ++ i, ++ k)
+               knots [i] = k;
+
+            for (; i < length; ++ i)
+               knots [i] = k;
+         }
+
+         knots .length = length;
       }
 
       if (closed)
       {
-         for (let i = 1, length = order - 1; i < length; ++ i)
+         // Make knots periodic.
+
+         for (let i = 1, l = order - 1; i < l; ++ i)
             knots .push (knots .at (-1) + (knots [i] - knots [i - 1]));
       }
 
@@ -847,7 +876,7 @@ const NURBS = {
       {
          let cp = controlPoints [u];
 
-         if (! cp)
+         if (!cp)
             cp = controlPoints [u] = [ ];
 
          for (let v = 0; v < vDimension; ++ v)
@@ -887,7 +916,7 @@ const NURBS = {
       {
          let cp = controlPoints [u];
 
-         if (! cp)
+         if (!cp)
             cp = controlPoints [u] = [ ];
 
          for (let v = 0; v < vDimension; ++ v)
@@ -2696,7 +2725,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, NURBS_X3DParametr
    },
    getClosed (order, knot, weight, controlPointNode)
    {
-      if (! this ._closed .getValue ())
+      if (!this ._closed .getValue ())
          return false;
 
       return NURBS_NURBS .getClosed (order, knot, weight, controlPointNode);
@@ -2714,7 +2743,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, NURBS_X3DParametr
       if (this ._order .getValue () < 2)
          return [ ];
 
-      if (! this .controlPointNode)
+      if (!this .controlPointNode)
          return [ ];
 
       if (this .controlPointNode .getSize () < this ._order .getValue ())
@@ -2741,7 +2770,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, NURBS_X3DParametr
       if (this ._order .getValue () < 2)
          return;
 
-      if (! this .controlPointNode)
+      if (!this .controlPointNode)
          return;
 
       if (this .controlPointNode .getSize () < this ._order .getValue ())
@@ -2896,7 +2925,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, NURBS_X3DNurbsC
    },
    getClosed (order, knot, weight, controlPoint)
    {
-      if (! this ._closed .getValue ())
+      if (!this ._closed .getValue ())
          return false;
 
       return NURBS_NURBS .getClosed2D (order, knot, weight, controlPoint);
@@ -3134,7 +3163,7 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
    },
    getClosed (order, knot, weight, controlPointNode)
    {
-      return  false && 0;
+      return NURBS_NURBS .getClosed (order, knot, weight, controlPointNode);
    },
    getKnots (result, closed, order, dimension, knot)
    {
@@ -3157,7 +3186,7 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
       if (this ._order .getValue () < 2)
          return;
 
-      if (! this .controlPointNode)
+      if (!this .controlPointNode)
          return;
 
       if (this .controlPointNode .getSize () < this ._order .getValue ())
@@ -3198,20 +3227,18 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
       interpolator ._key      .length = 0;
       interpolator ._keyValue .length = 0;
 
+      const
+         direction = new (external_X_ITE_X3D_Vector3_default()) (),
+         rotation  = new (external_X_ITE_X3D_Rotation4_default()) ();
+
       for (let i = 0, length = points .length - 3; i < length; i += 3)
       {
-         const direction = new (external_X_ITE_X3D_Vector3_default()) (points [i + 3] - points [i + 0],
-                                        points [i + 4] - points [i + 1],
-                                        points [i + 5] - points [i + 2]);
+         direction .set (points [i + 3] - points [i + 0],
+                         points [i + 4] - points [i + 1],
+                         points [i + 5] - points [i + 2]);
 
-         interpolator ._key      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
-         interpolator ._keyValue. push (new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).zAxis, direction));
-      }
-
-      if (closed)
-      {
-         interpolator ._key      .push (knots [0] + scale);
-         interpolator ._keyValue. push (interpolator ._keyValue [0]);
+         interpolator ._key      .push (i / (length - 3));
+         interpolator ._keyValue. push (rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).zAxis, direction));
       }
    },
 });
@@ -3416,7 +3443,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       if (!this .controlPointNode)
          return;
 
-      if (this .controlPointNode .getSize () !== this ._uDimension .getValue () * this ._vDimension .getValue ())
+      if (this .controlPointNode .getSize () < this ._uDimension .getValue () * this ._vDimension .getValue ())
          return;
 
       // Order and dimension are now positive numbers.
@@ -3457,7 +3484,6 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       sampleOptions .resolution [1]   = this .getVTessellation (vKnots .length);
       sampleOptions .closed [0]       = uClosed;
       sampleOptions .closed [1]       = vClosed;
-      sampleOptions .domain           = undefined;
       sampleOptions .haveWeights      = !! weights;
       sampleOptions .trimmingContours = this .getTrimmingContours ();
 
@@ -3474,7 +3500,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
          vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
       }
 
-      this .buildNurbsTexCoords (uClosed, vClosed, this ._uOrder .getValue (), this ._vOrder .getValue (), uKnots, vKnots, this ._uDimension .getValue (), this ._vDimension .getValue (), surface .domain);
+      this .buildNurbsTexCoords (uClosed, vClosed, this ._uOrder .getValue (), this ._vOrder .getValue (), uKnots, vKnots, this ._uDimension .getValue (), this ._vDimension .getValue ());
       this .generateNormals (faces, points);
       this .setSolid (this ._solid .getValue ());
       this .setCCW (true);
@@ -3482,18 +3508,10 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    buildNurbsTexCoords: (() =>
    {
       const
-         defaultTexUKnots        = [ ],
-         defaultTexVKnots        = [ ],
+         defaultTexKnots         = [0, 0, 5, 5],
          defaultTexControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
 
-      function getDefaultTexKnots (result, knots)
-      {
-         result [0] = result [1] = knots [0];
-         result [2] = result [3] = knots .at (-1);
-         return result;
-      }
-
-      return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, domain)
+      return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension)
       {
          const sampleOptions = this .sampleOptions;
 
@@ -3522,11 +3540,9 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
             var
                texUDegree       = 1,
                texVDegree       = 1,
-               texUKnots        = getDefaultTexKnots (defaultTexUKnots, uKnots),
-               texVKnots        = getDefaultTexKnots (defaultTexVKnots, vKnots),
+               texUKnots        = defaultTexKnots,
+               texVKnots        = defaultTexKnots,
                texControlPoints = defaultTexControlPoints;
-
-            sampleOptions .domain = domain;
          }
 
          const texSurface = this .texSurface = (this .texSurface || nurbs_nurbs) ({
@@ -3546,14 +3562,14 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
             points        = texMesh .points,
             texCoordArray = this .getTexCoords ();
 
+         this .getMultiTexCoords () .push (texCoordArray);
+
          for (let i = 0, length = faces .length; i < length; ++ i)
          {
             const index = faces [i] * 4;
 
             texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
          }
-
-         this .getMultiTexCoords () .push (this .getTexCoords ());
       };
    })(),
    generateNormals (faces, points)
@@ -3836,7 +3852,7 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, (e
    },
    getClosed (order, knot, weight, controlPointNode)
    {
-      return  false && 0;
+      return NURBS_NURBS .getClosed (order, knot, weight, controlPointNode);
    },
    getKnots (result, closed, order, dimension, knot)
    {
@@ -3859,7 +3875,7 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, (e
       if (this ._order .getValue () < 2)
          return;
 
-      if (! this .controlPointNode)
+      if (!this .controlPointNode)
          return;
 
       if (this .controlPointNode .getSize () < this ._order .getValue ())
@@ -3902,8 +3918,8 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, (e
 
       for (let i = 0, length = points .length; i < length; i += 3)
       {
-         interpolator ._key      .push (knots [0] + i / (length - 3) * scale);
-         interpolator ._keyValue. push (new (external_X_ITE_X3D_Fields_default()).SFVec3f (points [i], points [i + 1], points [i + 2]));
+         interpolator ._key      .push (i / (length - 3));
+         interpolator ._keyValue .push (new (external_X_ITE_X3D_Fields_default()).SFVec3f (points [i], points [i + 1], points [i + 2]));
       }
    },
 });
@@ -4480,10 +4496,10 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, NURBS_X3DP
    },
    build ()
    {
-      if (! this .crossSectionCurveNode)
+      if (!this .crossSectionCurveNode)
          return;
 
-      if (! this .trajectoryCurveNode)
+      if (!this .trajectoryCurveNode)
          return;
 
       const extrusion = this .extrusion;
@@ -4500,7 +4516,7 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, NURBS_X3DP
 
       this .getMultiTexCoords () .push (this .getTexCoords ());
 
-      if (! this ._ccw .getValue ())
+      if (!this ._ccw .getValue ())
       {
          const normals = this .getNormals ();
 
@@ -4647,10 +4663,10 @@ Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, NURBS_X3DP
    },
    build ()
    {
-      if (! this .profileCurveNode)
+      if (!this .profileCurveNode)
          return;
 
-      if (! this .trajectoryCurveNode)
+      if (!this .trajectoryCurveNode)
          return;
 
       const extrusion = this .extrusion;
@@ -4667,7 +4683,7 @@ Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, NURBS_X3DP
 
       this .getMultiTexCoords () .push (this .getTexCoords ());
 
-      if (! this ._ccw .getValue ())
+      if (!this ._ccw .getValue ())
       {
          const normals = this .getNormals ();
 
@@ -4766,10 +4782,6 @@ function NurbsTextureCoordinate (executionContext)
 
 Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
 {
-   initialize ()
-   {
-      external_X_ITE_X3D_X3DNode_default().prototype .initialize .call (this);
-   },
    getControlPoints (texWeights)
    {
       const
@@ -4780,7 +4792,7 @@ Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, (exte
       {
          let cp = controlPoints [u];
 
-         if (! cp)
+         if (!cp)
             cp = controlPoints [u] = [ ];
 
          for (let v = 0, vDimension = this ._vDimension .getValue (); v < vDimension; ++ v)
@@ -4810,7 +4822,7 @@ Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, (exte
       if (this ._vDimension .getValue () < this ._vOrder .getValue ())
          return false;
 
-      if (this ._controlPoint .length !== this ._uDimension .getValue () * this ._vDimension .getValue ())
+      if (this ._controlPoint .length < this ._uDimension .getValue () * this ._vDimension .getValue ())
          return false;
 
       return true;

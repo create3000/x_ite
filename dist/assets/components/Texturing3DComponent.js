@@ -1,9 +1,9 @@
-/* X_ITE v10.4.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.1")];
+/* X_ITE v10.4.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 305:
+/***/ 172:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 331:
+/***/ 894:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -74,7 +74,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 643:
+/***/ 638:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4030,7 +4030,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 315:
+/***/ 446:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -7314,10 +7314,10 @@ var Decoder = class _Decoder {
 
 //# 
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(643);
-/* provided dependency */ var JpegImage = __webpack_require__(315);
-/* provided dependency */ var CharLS = __webpack_require__(305);
-/* provided dependency */ var OpenJPEG = __webpack_require__(331);
+/* provided dependency */ var dicomParser = __webpack_require__(638);
+/* provided dependency */ var JpegImage = __webpack_require__(446);
+/* provided dependency */ var CharLS = __webpack_require__(172);
+/* provided dependency */ var OpenJPEG = __webpack_require__(894);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8814,7 +8814,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
                gl .readPixels (sx, sy, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
                gl .texSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, width, height, 1, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
-               transparent = transparent || this .isImageTransparent (data);
+               transparent ||= this .isImageTransparent (data);
             }
          }
 
@@ -9485,19 +9485,19 @@ Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, (external
 
          matrix4 .identity ();
 
-         if (! center .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
+         if (!center .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
             matrix4 .translate (vector .assign (center) .negate ());
 
-         if (! scale .equals ((external_X_ITE_X3D_Vector3_default()).One))
+         if (!scale .equals ((external_X_ITE_X3D_Vector3_default()).One))
             matrix4 .scale (scale);
 
-         if (! rotation .equals ((external_X_ITE_X3D_Rotation4_default()).Identity))
+         if (!rotation .equals ((external_X_ITE_X3D_Rotation4_default()).Identity))
             matrix4 .rotate (rotation);
 
-         if (! center .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
+         if (!center .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
             matrix4 .translate (center);
 
-         if (! translation .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
+         if (!translation .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
             matrix4 .translate (translation);
 
          this .setMatrix (matrix4);

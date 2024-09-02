@@ -1,5 +1,5 @@
-/* X_ITE v10.4.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.1")];
+/* X_ITE v10.4.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -975,7 +975,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
          dependentRenderer .setFrameBuffer (this .frameBuffer);
          dependentRenderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
-         dependentRenderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
+         dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
 
@@ -985,18 +985,18 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
             // Setup inverse texture space matrix.
 
-            dependentRenderer .getCameraSpaceMatrix () .pushMatrix (this .modelMatrix);
+            dependentRenderer .getCameraSpaceMatrix () .push (this .modelMatrix);
             dependentRenderer .getCameraSpaceMatrix () .rotate (rotations [i]);
             dependentRenderer .getCameraSpaceMatrix () .scale (scales [i]);
 
-            dependentRenderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (dependentRenderer .getCameraSpaceMatrix () .get ()) .inverse ());
-            dependentRenderer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
+            dependentRenderer .getViewMatrix () .push (invCameraSpaceMatrix .assign (dependentRenderer .getCameraSpaceMatrix () .get ()) .inverse ());
+            dependentRenderer .getModelViewMatrix () .push (invCameraSpaceMatrix);
 
             // Setup headlight if enabled.
 
             if (headlight)
             {
-               headlightContainer .modelViewMatrix .pushMatrix (invCameraSpaceMatrix);
+               headlightContainer .modelViewMatrix .push (invCameraSpaceMatrix);
                headlightContainer .modelViewMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
             }
 

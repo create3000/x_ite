@@ -1,9 +1,9 @@
-/* X_ITE v10.4.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.1")];
+/* X_ITE v10.4.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 285:
+/***/ 984:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -16085,7 +16085,7 @@ const FontStyle_default_ = FontStyle;
 /* harmony default export */ const Text_FontStyle = (external_X_ITE_X3D_Namespace_default().add ("FontStyle", FontStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(254);
-/* provided dependency */ var opentype = __webpack_require__(285);
+/* provided dependency */ var opentype = __webpack_require__(984);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16340,10 +16340,8 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
    {
       this .fontStyleNode ?.removeInterest ("requestRebuild", this);
 
-      this .fontStyleNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DFontStyleNode, this ._fontStyle);
-
-      if (!this .fontStyleNode)
-         this .fontStyleNode = this .getBrowser () .getDefaultFontStyle ();
+      this .fontStyleNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DFontStyleNode, this ._fontStyle)
+         ?? this .getBrowser () .getDefaultFontStyle ();
 
       this .fontStyleNode .addInterest ("requestRebuild", this);
 

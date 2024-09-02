@@ -1,4 +1,4 @@
-/* X_ITE v10.4.1 */
+/* X_ITE v10.4.2 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,10 +12,10 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 74:
+/***/ 225:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(362);
+/* provided dependency */ var jQuery = __webpack_require__(321);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -211,7 +211,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 48:
+/***/ 657:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -225,7 +225,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(362)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(321)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -436,7 +436,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 362:
+/***/ 321:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11160,7 +11160,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 555:
+/***/ 458:
 /***/ ((module) => {
 
 /**
@@ -15939,7 +15939,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 82:
+/***/ 157:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19184,7 +19184,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 229:
+/***/ 370:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -20311,7 +20311,7 @@ Object .defineProperty (Namespace, "add",
          return module;
       }
 
-      const X3D = window [Symbol .for ("X_ITE.X3D-10.4.1")];
+      const X3D = window [Symbol .for ("X_ITE.X3D-10.4.2")];
 
       if (X3D)
          X3D [name] = module;
@@ -20871,37 +20871,10 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .html            = html;
    this .closingTags     = html || closingTags;
 
-   this .floatFormat = new Intl .NumberFormat ("en",
-   {
-      notation: "standard",
-      maximumSignificantDigits: this .precision,
-      useGrouping: false,
-   })
-   .format;
-
-   this .floatExponentialFormat = new Intl .NumberFormat ("en",
-   {
-      notation: "scientific",
-      maximumSignificantDigits: this .precision,
-      useGrouping: false,
-   })
-   .format;
-
-   this .doubleFormat = new Intl .NumberFormat ("en",
-   {
-      notation: "standard",
-      maximumSignificantDigits: this .doublePrecision,
-      useGrouping: false,
-   })
-   .format;
-
-   this .doubleExponentialFormat = new Intl .NumberFormat ("en",
-   {
-      notation: "scientific",
-      maximumSignificantDigits: this .doublePrecision,
-      useGrouping: false,
-   })
-   .format;
+   this .floatFormat             = this .createFloatFormat (this .precision);
+   this .floatExponentialFormat  = this .createFloatExponentialFormat (this .precision);
+   this .doubleFormat            = this .createFloatFormat (this .doublePrecision);
+   this .doubleExponentialFormat = this .createFloatExponentialFormat (this .doublePrecision);
 
    this .Style (style);
 
@@ -21047,6 +21020,26 @@ Object .assign (Generator .prototype,
       this .listIndent = this .listIndent .slice (0, this .listIndent .length - this .listIndentChar .length);
 
       return "";
+   },
+   createFloatFormat (precision)
+   {
+      return new Intl .NumberFormat ("en",
+      {
+         notation: "standard",
+         maximumSignificantDigits: precision,
+         useGrouping: false,
+      })
+      .format;
+   },
+   createFloatExponentialFormat (precision)
+   {
+      return new Intl .NumberFormat ("en",
+      {
+         notation: "scientific",
+         maximumSignificantDigits: precision,
+         useGrouping: false,
+      })
+      .format;
    },
    FloatFormat  (value)
    {
@@ -24699,7 +24692,7 @@ const SFInt32_default_ = SFInt32;
 
 
 
-function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double)
+function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, properties = { })
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
@@ -24712,7 +24705,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double)
       },
    });
 
-   return Object .assign (Object .setPrototypeOf (Constructor .prototype, Base_X3DField .prototype),
+   Object .assign (Object .setPrototypeOf (Constructor .prototype, Base_X3DField .prototype),
    {
       *[Symbol .iterator] ()
       {
@@ -24872,7 +24865,33 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double)
 
          generator .string += generator .JSONNumber (generator [_formatter] (value [last]));
       },
-   });
+   },
+   properties);
+
+   for (const key of Object .keys (Constructor .prototype))
+      Object .defineProperty (Constructor .prototype, key, { enumerable: false });
+
+   function defineProperty (i)
+   {
+      Object .defineProperty (Constructor .prototype, i,
+      {
+         get ()
+         {
+            return this .getValue () [i];
+         },
+         set (value)
+         {
+            this .getValue () [i] = value;
+            this .addEvent ();
+         },
+         enumerable: true,
+      });
+   }
+
+   for (let i = 0; i < Matrix .prototype .length; ++ i)
+      defineProperty (i);
+
+   return Constructor;
 }
 
 const SFMatrixPrototypeTemplate_default_ = SFMatrixPrototypeTemplate;
@@ -26623,8 +26642,8 @@ function SFMatrix3Template (TypeName, double)
                r2 = arguments [2];
 
             Base_X3DField .call (this, new Numbers_Matrix3 (r0 .x, r0 .y, r0 .z,
-                                                      r1 .x, r1 .y, r1 .z,
-                                                      r2 .x, r2 .y, r2 .z));
+                                               r1 .x, r1 .y, r1 .z,
+                                               r2 .x, r2 .y, r2 .z));
 
             break;
          }
@@ -26641,7 +26660,7 @@ function SFMatrix3Template (TypeName, double)
       }
    }
 
-   Object .assign (Fields_SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Numbers_Matrix3, double),
+   return Fields_SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Numbers_Matrix3, double,
    {
       setTransform: (function ()
       {
@@ -26665,31 +26684,6 @@ function SFMatrix3Template (TypeName, double)
          };
       })(),
    });
-
-   for (const key of Object .keys (SFMatrix3 .prototype))
-      Object .defineProperty (SFMatrix3 .prototype, key, { enumerable: false });
-
-   function defineProperty (i)
-   {
-      Object .defineProperty (SFMatrix3 .prototype, i,
-      {
-         get ()
-         {
-            return this .getValue () [i];
-         },
-         set (value)
-         {
-            this .getValue () [i] = +value;
-            this .addEvent ();
-         },
-         enumerable: true,
-      });
-   }
-
-   for (let i = 0, length = Numbers_Matrix3 .prototype .length; i < length; ++ i)
-      defineProperty (i);
-
-   return SFMatrix3;
 }
 
 const SFMatrix3 = {
@@ -29058,9 +29052,9 @@ function SFMatrix4Template (TypeName, double)
                r3 = arguments [3];
 
             Base_X3DField .call (this, new Numbers_Matrix4 (r0 .x, r0 .y, r0 .z, r0 .w,
-                                                      r1 .x, r1 .y, r1 .z, r1 .w,
-                                                      r2 .x, r2 .y, r2 .z, r2 .w,
-                                                      r3 .x, r3 .y, r3 .z, r3 .w));
+                                               r1 .x, r1 .y, r1 .z, r1 .w,
+                                               r2 .x, r2 .y, r2 .z, r2 .w,
+                                               r3 .x, r3 .y, r3 .z, r3 .w));
 
             break;
          }
@@ -29078,32 +29072,7 @@ function SFMatrix4Template (TypeName, double)
       }
    }
 
-   Fields_SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Numbers_Matrix4, double);
-
-   for (const key of Object .keys (SFMatrix4 .prototype))
-      Object .defineProperty (SFMatrix4 .prototype, key, { enumerable: false });
-
-   function defineProperty (i)
-   {
-      Object .defineProperty (SFMatrix4 .prototype, i,
-      {
-         get ()
-         {
-            return this .getValue () [i];
-         },
-         set (value)
-         {
-            this .getValue () [i] = value;
-            this .addEvent ();
-         },
-         enumerable: true,
-      });
-   }
-
-   for (let i = 0, length = Numbers_Matrix4 .prototype .length; i < length; ++ i)
-      defineProperty (i);
-
-   return SFMatrix4;
+   return Fields_SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Numbers_Matrix4, double);
 }
 
 const SFMatrix4 = {
@@ -29738,7 +29707,7 @@ const SFNode_default_ = SFNode;
 
 
 
-function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
+function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properties = { })
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
@@ -29751,7 +29720,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
       },
    });
 
-   return Object .assign (Object .setPrototypeOf (Constructor .prototype, Base_X3DField .prototype),
+   Object .assign (Object .setPrototypeOf (Constructor .prototype, Base_X3DField .prototype),
    {
       *[Symbol .iterator] ()
       {
@@ -29886,7 +29855,80 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
 
          generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, value [last])));
       },
-   });
+   },
+   properties);
+
+   for (const key of Object .keys (Constructor .prototype))
+      Object .defineProperty (Constructor .prototype, key, { enumerable: false });
+
+   const x = {
+      get ()
+      {
+         return this .getValue () .x;
+      },
+      set (value)
+      {
+         this .getValue () .x = +value;
+         this .addEvent ();
+      },
+   };
+
+   const y = {
+      get ()
+      {
+         return this .getValue () .y;
+      },
+      set (value)
+      {
+         this .getValue () .y = +value;
+         this .addEvent ();
+      },
+   };
+
+   const z = {
+      get ()
+      {
+         return this .getValue () .z;
+      },
+      set (value)
+      {
+         this .getValue () .z = +value;
+         this .addEvent ();
+      },
+   };
+
+   const w = {
+      get ()
+      {
+         return this .getValue () .w;
+      },
+      set (value)
+      {
+         this .getValue () .w = +value;
+         this .addEvent ();
+      },
+   };
+
+   const indices = [
+      [0, x],
+      [1, y],
+      [2, z],
+      [3, w],
+   ];
+
+   const props = [
+      ["x", Object .assign ({ enumerable: true }, x)],
+      ["y", Object .assign ({ enumerable: true }, y)],
+      ["z", Object .assign ({ enumerable: true }, z)],
+      ["w", Object .assign ({ enumerable: true }, w)],
+   ];
+
+   indices .length = Vector .prototype .length;
+   props   .length = Vector .prototype .length;
+
+   Object .defineProperties (Constructor .prototype, Object .fromEntries (indices .concat (props)));
+
+   return Constructor;
 }
 
 const SFVecPrototypeTemplate_default_ = SFVecPrototypeTemplate;
@@ -29968,64 +30010,13 @@ function SFVec3Template (TypeName, double)
       }
    }
 
-   Object .assign (Fields_SFVecPrototypeTemplate (SFVec3, TypeName, Numbers_Vector3, double),
+   return Fields_SFVecPrototypeTemplate (SFVec3, TypeName, Numbers_Vector3, double,
    {
       cross (vector)
       {
          return new (this .constructor) (this .getValue () .copy () .cross (vector .getValue ()));
       },
    });
-
-   for (const key of Object .keys (SFVec3 .prototype))
-      Object .defineProperty (SFVec3 .prototype, key, { enumerable: false });
-
-   const x = {
-      get ()
-      {
-         return this .getValue () .x;
-      },
-      set (value)
-      {
-         this .getValue () .x = +value;
-         this .addEvent ();
-      },
-   };
-
-   const y = {
-      get ()
-      {
-         return this .getValue () .y;
-      },
-      set (value)
-      {
-         this .getValue () .y = +value;
-         this .addEvent ();
-      },
-   };
-
-   const z = {
-      get ()
-      {
-         return this .getValue () .z;
-      },
-      set (value)
-      {
-         this .getValue () .z = +value;
-         this .addEvent ();
-      },
-   };
-
-   Object .defineProperties (SFVec3 .prototype,
-   {
-      0: x,
-      1: y,
-      2: z,
-      x: Object .assign ({ enumerable: true }, x),
-      y: Object .assign ({ enumerable: true }, y),
-      z: Object .assign ({ enumerable: true }, z),
-   });
-
-   return SFVec3;
 }
 
 const SFVec3 = {
@@ -30661,44 +30652,7 @@ function SFVec2Template (TypeName, double)
       }
    }
 
-   Fields_SFVecPrototypeTemplate (SFVec2, TypeName, Numbers_Vector2, double);
-
-   for (const key of Object .keys (SFVec2 .prototype))
-      Object .defineProperty (SFVec2 .prototype, key, { enumerable: false });
-
-   const x = {
-      get ()
-      {
-         return this .getValue () .x;
-      },
-      set (value)
-      {
-         this .getValue () .x = +value;
-         this .addEvent ();
-      },
-   };
-
-   const y = {
-      get ()
-      {
-         return this .getValue () .y;
-      },
-      set (value)
-      {
-         this .getValue () .y = +value;
-         this .addEvent ();
-      },
-   };
-
-   Object .defineProperties (SFVec2 .prototype,
-   {
-      0: x,
-      1: y,
-      x: Object .assign ({ enumerable: true }, x),
-      y: Object .assign ({ enumerable: true }, y),
-   });
-
-   return SFVec2;
+   return Fields_SFVecPrototypeTemplate (SFVec2, TypeName, Numbers_Vector2, double);
 }
 
 const SFVec2 = {
@@ -30785,72 +30739,7 @@ function SFVec4Template (TypeName, double)
       }
    }
 
-   Fields_SFVecPrototypeTemplate (SFVec4, TypeName, Numbers_Vector4, double);
-
-   for (const key of Object .keys (SFVec4 .prototype))
-      Object .defineProperty (SFVec4 .prototype, key, { enumerable: false });
-
-   const x = {
-      get ()
-      {
-         return this .getValue () .x;
-      },
-      set (value)
-      {
-         this .getValue () .x = +value;
-         this .addEvent ();
-      },
-   };
-
-   const y = {
-      get ()
-      {
-         return this .getValue () .y;
-      },
-      set (value)
-      {
-         this .getValue () .y = +value;
-         this .addEvent ();
-      },
-   };
-
-   const z = {
-      get ()
-      {
-         return this .getValue () .z;
-      },
-      set (value)
-      {
-         this .getValue () .z = +value;
-         this .addEvent ();
-      },
-   };
-
-   const w = {
-      get ()
-      {
-         return this .getValue () .w;
-      },
-      set (value)
-      {
-         this .getValue () .w = +value;
-         this .addEvent ();
-      },
-   };
-
-   Object .defineProperties (SFVec4 .prototype,
-   {
-      0: x,
-      1: y,
-      2: z,
-      3: w,
-      x: Object .assign ({ enumerable: true }, x),
-      y: Object .assign ({ enumerable: true }, y),
-      z: Object .assign ({ enumerable: true }, z),
-      w: Object .assign ({ enumerable: true }, w),
-   });
-
-   return SFVec4;
+   return Fields_SFVecPrototypeTemplate (SFVec4, TypeName, Numbers_Vector4, double);
 }
 
 const SFVec4 = {
@@ -34258,7 +34147,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /* harmony default export */ const Base_X3DBaseNode = (x_ite_Namespace .add ("X3DBaseNode", X3DBaseNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(362);
+/* provided dependency */ var $ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34394,7 +34283,7 @@ const Legacy_default_ = Legacy;
  *
  ******************************************************************************/
 
-const BROWSER_VERSION_default_ = "10.4.1";
+const BROWSER_VERSION_default_ = "10.4.2";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -35181,7 +35070,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
 
          for (const reference of field .getReferences ())
          {
-            initializableReference = initializableReference || reference .isInitializable ();
+            initializableReference ||= reference .isInitializable ();
 
             // Output user defined reference field
 
@@ -35244,7 +35133,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
 
          for (const reference of field .getReferences ())
          {
-            initializableReference = initializableReference || reference .isInitializable ();
+            initializableReference ||= reference .isInitializable ();
 
             // Output build in reference field
 
@@ -37419,7 +37308,7 @@ const X3DBindableNode_default_ = X3DBindableNode;
 
 /* harmony default export */ const Core_X3DBindableNode = (x_ite_Namespace .add ("X3DBindableNode", X3DBindableNode_default_));
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(555);
+/* provided dependency */ var libtess = __webpack_require__(458);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39957,7 +39846,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (x_ite_Namespace .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(362);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -40171,39 +40060,38 @@ const X3DParser_default_ = X3DParser;
  *
  ******************************************************************************/
 
-function parse (parser)
+const functions =
 {
-   this .lastIndex = parser .lastIndex;
-
-   parser .result = this .exec (parser .input);
-
-   if (parser .result)
+   parse (parser)
    {
-      parser .lastIndex = this .lastIndex;
-      return true;
-   }
+      this .lastIndex = parser .lastIndex;
 
-   return false;
-}
+      parser .result = this .exec (parser .input);
 
-function lookahead (parser)
-{
-   const
-      lastIndex = parser .lastIndex,
-      result    = this .parse (parser);
+      if (parser .result)
+      {
+         parser .lastIndex = this .lastIndex;
+         return true;
+      }
 
-   parser .lastIndex = lastIndex;
+      return false;
+   },
+   lookahead (parser)
+   {
+      const
+         lastIndex = parser .lastIndex,
+         result    = this .parse (parser);
 
-   return result;
-}
+      parser .lastIndex = lastIndex;
+
+      return result;
+   },
+};
 
 function Expressions (Grammar)
 {
    for (const value of Object .values (Grammar))
-   {
-      value .parse     = parse;
-      value .lookahead = lookahead;
-   }
+      Object .assign (value, functions);
 
    return Grammar;
 }
@@ -40213,7 +40101,7 @@ const Expressions_default_ = Expressions;
 
 /* harmony default export */ const Parser_Expressions = (x_ite_Namespace .add ("Expressions", Expressions_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(362);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42912,7 +42800,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (x_ite_Namespace .add ("VRMLParser", VRMLParser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(362);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45085,7 +44973,7 @@ const URLs_default_ = URLs;
 
 /* harmony default export */ const Networking_URLs = (x_ite_Namespace .add ("URLs", URLs_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(362);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48729,7 +48617,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (x_ite_Namespace .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(362);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48880,7 +48768,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (x_ite_Namespace .add ("GLB2Parser", GLB2Parser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(362);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52145,70 +52033,76 @@ const Bezier_default_ = Bezier;
  *
  ******************************************************************************/
 
-function MatrixStack (Type)
+class MatrixStack extends Array
 {
-   return Object .assign ([ new Type () ],
+   #top = 0;
+
+   constructor (Type)
    {
-      top: 0,
-      set (matrix)
-      {
-         this [this .top] .assign (matrix);
-      },
-      get ()
-      {
-         return this [this .top];
-      },
-      push ()
-      {
-         const top = ++ this .top;
+      super ();
 
-         if (top < this .length)
-            this [top] .assign (this [top - 1]);
-         else
-            this [top] = this [top - 1] .copy ();
-      },
-      pushMatrix (matrix)
-      {
-         const top = ++ this .top;
+      this .push (new Type ());
+   }
 
-         if (top < this .length)
-            this [top] .assign (matrix);
-         else
-            this [top] = matrix .copy ();
-      },
-      pop ()
-      {
-         -- this .top;
-      },
-      clear ()
-      {
-         this .top = 0;
-      },
-      size ()
-      {
-         return this .top + 1;
-      },
-      identity ()
-      {
-         this [this .top] .identity ();
-      },
-      multLeft (matrix)
-      {
-         this [this .top] .multLeft (matrix);
-      },
-      translate (vector)
-      {
-         this [this .top] .translate (vector);
-      },
-      rotate (rotation)
-      {
-         this [this .top] .rotate (rotation);
-      },
-      scale (vector)
-      {
-         this [this .top] .scale (vector);
-      },
-   });
+   set (matrix)
+   {
+      this [this .#top] .assign (matrix);
+   }
+
+   get ()
+   {
+      return this [this .#top];
+   }
+
+   push (matrix = this [this .#top])
+   {
+      const top = ++ this .#top;
+
+      if (top < this .length)
+         this [top] .assign (matrix);
+      else
+         this [top] = matrix .copy ();
+   }
+
+   pop ()
+   {
+      -- this .#top;
+   }
+
+   clear ()
+   {
+      this .#top = 0;
+   }
+
+   size ()
+   {
+      return this .#top + 1;
+   }
+
+   identity ()
+   {
+      this [this .#top] .identity ();
+   }
+
+   multLeft (matrix)
+   {
+      this [this .#top] .multLeft (matrix);
+   }
+
+   translate (vector)
+   {
+      this [this .#top] .translate (vector);
+   }
+
+   rotate (rotation)
+   {
+      this [this .#top] .rotate (rotation);
+   }
+
+   scale (vector)
+   {
+      this [this .#top] .scale (vector);
+   }
 }
 
 const MatrixStack_default_ = MatrixStack;
@@ -52216,8 +52110,8 @@ const MatrixStack_default_ = MatrixStack;
 
 /* harmony default export */ const Utility_MatrixStack = (x_ite_Namespace .add ("MatrixStack", MatrixStack_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(362);
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(555);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(321);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(458);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54987,7 +54881,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (x_ite_Namespace .add ("SVGParser", SVGParser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(362);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -55419,55 +55313,20 @@ const Plane3_default_ = Plane3;
  *    p0 -------- p1  near plane
  */
 
-function ViewVolume (projectionMatrix, viewport, scissor)
+function ViewVolume (... args)
 {
    this .viewport = new Numbers_Vector4 ();
    this .scissor  = new Numbers_Vector4 ();
 
-   this .points = [
-      new Numbers_Vector3 (),
-      new Numbers_Vector3 (),
-      new Numbers_Vector3 (),
-      new Numbers_Vector3 (),
+   this .points  = Array .from ({ length: 8 }, () => new Numbers_Vector3 ());
+   // front, left, right, top, bottom, back
+   this .normals = Array .from ({ length: 6 }, () => new Numbers_Vector3 ());
+   this .edges   = Array .from ({ length: 8 }, () => new Numbers_Vector3 ());
+   // front, left, right, top, bottom, back
+   this .planes  = Array .from ({ length: 6 }, () => new Geometry_Plane3 ());
 
-      new Numbers_Vector3 (),
-      new Numbers_Vector3 (),
-      new Numbers_Vector3 (),
-      new Numbers_Vector3 (),
-   ];
-
-   this .normals = [
-      new Numbers_Vector3 (), // front
-      new Numbers_Vector3 (), // left
-      new Numbers_Vector3 (), // right
-      new Numbers_Vector3 (), // top
-      new Numbers_Vector3 (), // bottom
-      new Numbers_Vector3 (), // back
-   ];
-
-   this .edges = [
-      new Numbers_Vector3 (),
-      new Numbers_Vector3 (),
-      new Numbers_Vector3 (),
-      new Numbers_Vector3 (),
-
-      new Numbers_Vector3 (),
-      new Numbers_Vector3 (),
-      new Numbers_Vector3 (),
-      new Numbers_Vector3 (),
-   ];
-
-   this .planes = [
-      new Geometry_Plane3 (), // front
-      new Geometry_Plane3 (), // left
-      new Geometry_Plane3 (), // right
-      new Geometry_Plane3 (), // top
-      new Geometry_Plane3 (), // bottom
-      new Geometry_Plane3 (), // back
-   ];
-
-   if (arguments .length)
-      this .set (projectionMatrix, viewport, scissor);
+   if (args .length)
+      this .set (... args);
 }
 
 Object .assign (ViewVolume .prototype,
@@ -55560,58 +55419,21 @@ Object .assign (ViewVolume .prototype,
    },
    intersectsSphere (radius, center)
    {
-      const [p0, p1 ,p2, p3, p4, p5, p6, p7] = this .planes;
-
-      if (p0 .getDistanceToPoint (center) > radius)
-         return false;
-
-      if (p1 .getDistanceToPoint (center) > radius)
-         return false;
-
-      if (p2 .getDistanceToPoint (center) > radius)
-         return false;
-
-      if (p3 .getDistanceToPoint (center) > radius)
-         return false;
-
-      if (p4 .getDistanceToPoint (center) > radius)
-         return false;
-
-      if (p5 .getDistanceToPoint (center) > radius)
-         return false;
+      for (const plane of this .planes)
+      {
+         if (plane .getDistanceToPoint (center) > radius)
+            return false;
+      }
 
       return true;
    },
    intersectsBox: (() =>
    {
-      const points1 = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-      ];
-
-      const normals1 = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-      ];
-
-      const axes1 = [
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-         new Numbers_Vector3 (),
-      ];
-
-      const axes = [ ];
-
-      for (let i = 0; i < 3 * 8; ++ i)
-         axes .push (new Numbers_Vector3 ());
+      const
+         points1  = Array .from ({ length: 8 }, () => new Numbers_Vector3 ()),
+         normals1 = Array .from ({ length: 3 }, () => new Numbers_Vector3 ()),
+         axes1    = Array .from ({ length: 3 }, () => new Numbers_Vector3 ()),
+         axes     = Array .from ({ length: 3 * 8 }, () => new Numbers_Vector3 ());
 
       return function (box)
       {
@@ -55659,21 +55481,21 @@ Object .assign (ViewVolume,
    {
       const invModelViewProjectionMatrix = new Numbers_Matrix4 ();
 
-      return function (winx, winy, winz, modelViewMatrix, projectionMatrix, viewport, point)
+      return function (winX, winY, winZ, modelViewMatrix, projectionMatrix, viewport, point)
       {
-         return this .unProjectPointMatrix (winx, winy, winz, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, point);
+         return this .unProjectPointMatrix (winX, winY, winZ, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, point);
       };
    })(),
    unProjectPointMatrix: (() =>
    {
       const vin = new Numbers_Vector4 ();
 
-      return function (winx, winy, winz, invModelViewProjectionMatrix, viewport, point)
+      return function (winX, winY, winZ, invModelViewProjectionMatrix, viewport, point)
       {
          // Transformation of normalized coordinates between -1 and 1
-         vin .set ((winx - viewport [0]) / viewport [2] * 2 - 1,
-                   (winy - viewport [1]) / viewport [3] * 2 - 1,
-                   winz * 2 - 1,
+         vin .set ((winX - viewport [0]) / viewport [2] * 2 - 1,
+                   (winY - viewport [1]) / viewport [3] * 2 - 1,
+                   winZ * 2 - 1,
                    1);
 
          //Objects coordinates
@@ -55688,9 +55510,9 @@ Object .assign (ViewVolume,
    {
       const invModelViewProjectionMatrix = new Numbers_Matrix4 ();
 
-      return function (winx, winy, modelViewMatrix, projectionMatrix, viewport, result)
+      return function (winX, winY, modelViewMatrix, projectionMatrix, viewport, result)
       {
-         return this .unProjectRayMatrix (winx, winy, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, result);
+         return this .unProjectRayMatrix (winX, winY, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, result);
       };
    })(),
    unProjectRayMatrix: (() =>
@@ -55699,10 +55521,10 @@ Object .assign (ViewVolume,
          near = new Numbers_Vector3 (),
          far  = new Numbers_Vector3 ();
 
-      return function (winx, winy, invModelViewProjectionMatrix, viewport, result)
+      return function (winX, winY, invModelViewProjectionMatrix, viewport, result)
       {
-         ViewVolume .unProjectPointMatrix (winx, winy, 0.0, invModelViewProjectionMatrix, viewport, near);
-         ViewVolume .unProjectPointMatrix (winx, winy, 0.9, invModelViewProjectionMatrix, viewport, far);
+         ViewVolume .unProjectPointMatrix (winX, winY, 0.0, invModelViewProjectionMatrix, viewport, near);
+         ViewVolume .unProjectPointMatrix (winX, winY, 0.9, invModelViewProjectionMatrix, viewport, far);
 
          return result .setPoints (near, far);
       };
@@ -55711,7 +55533,7 @@ Object .assign (ViewVolume,
    {
       const vin = new Numbers_Vector4 ();
 
-      return function (point, modelViewMatrix, projectionMatrix, viewport, vout)
+      return function (point, modelViewMatrix, projectionMatrix, viewport, vOut)
       {
          if (point .length === 4)
             vin .assign (point);
@@ -55722,7 +55544,7 @@ Object .assign (ViewVolume,
 
          const d = 1 / (2 * vin .w);
 
-         return vout .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
+         return vOut .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
                            (vin .y * d + 0.5) * viewport [3] + viewport [1],
                            (vin .z * d + 0.5));
       };
@@ -55731,7 +55553,7 @@ Object .assign (ViewVolume,
    {
       const vin = new Numbers_Vector4 ();
 
-      return function (point, modelViewProjectionMatrix, viewport, vout)
+      return function (point, modelViewProjectionMatrix, viewport, vOut)
       {
          if (point .length === 4)
             vin .assign (point);
@@ -55742,7 +55564,7 @@ Object .assign (ViewVolume,
 
          const d = 1 / (2 * vin .w);
 
-         return vout .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
+         return vOut .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
                            (vin .y * d + 0.5) * viewport [3] + viewport [1],
                            (vin .z * d + 0.5));
       };
@@ -56710,53 +56532,51 @@ function X3DRenderObject (executionContext)
 {
    const browser = executionContext .getBrowser ();
 
-   this .renderKey                      = "";
-   this .renderAndGlobalLightsKey       = "";
-   this .renderCount                    = 0;
-   this .view                           = null;
-   this .viewVolumes                    = [ ];
-   this .projectionMatrix               = new Utility_MatrixStack (Numbers_Matrix4);
-   this .modelViewMatrix                = new Utility_MatrixStack (Numbers_Matrix4);
-   this .viewMatrix                     = new Utility_MatrixStack (Numbers_Matrix4);
-   this .cameraSpaceMatrix              = new Utility_MatrixStack (Numbers_Matrix4);
-   this .viewportArray                  = new Int32Array (4);
-   this .projectionMatrixArray          = new Float32Array (16);
-   this .viewMatrixArray                = new Float32Array (16);
-   this .cameraSpaceMatrixArray         = new Float32Array (16);
-   this .hitRay                         = new Geometry_Line3 (Numbers_Vector3 .Zero, Numbers_Vector3 .Zero);
-   this .sensors                        = [[ ]];
-   this .viewpointGroups                = [ ];
-   this .lights                         = [ ];
-   this .globalLightsKeys               = [ ];
-   this .globalLights                   = [ ];
-   this .localObjectsKeys               = [ ];
-   this .localObjects                   = [ ];
-   this .globalShadows                  = [ false ];
-   this .globalShadow                   = false;
-   this .localShadows                   = [ false ];
-   this .localFogs                      = [ null ];
-   this .layouts                        = [ ];
-   this .humanoids                      = [ null ];
-   this .generatedCubeMapTextures       = [ ];
-   this .collisions                     = [ ];
-   this .collisionTime                  = new Time_StopWatch ();
-   this .numPointingShapes              = 0;
-   this .numCollisionShapes             = 0;
-   this .numShadowShapes                = 0;
-   this .numOpaqueShapes                = 0;
-   this .numTransparentShapes           = 0;
-   this .pointingShapes                 = [ ];
-   this .collisionShapes                = [ ];
-   this .activeCollisions               = [ ];
-   this .shadowShapes                   = [ ];
-   this .opaqueShapes                   = [ ];
-   this .transparentShapes              = [ ];
-   this .transmissionOpaqueShapes       = [ ];
-   this .transmissionTransparentShapes  = [ ];
-   this .transparencySorter             = new Algorithms_MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
-   this .transmissionTransparencySorter = new Algorithms_MergeSort (this .transmissionTransparentShapes, (a, b) => a .distance < b .distance);
-   this .speed                          = 0;
-   this .depthBuffer                    = new Rendering_TextureBuffer (browser, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE, true);
+   this .renderKey                = "";
+   this .renderAndGlobalLightsKey = "";
+   this .renderCount              = 0;
+   this .view                     = null;
+   this .viewVolumes              = [ ];
+   this .projectionMatrix         = new Utility_MatrixStack (Numbers_Matrix4);
+   this .modelViewMatrix          = new Utility_MatrixStack (Numbers_Matrix4);
+   this .viewMatrix               = new Utility_MatrixStack (Numbers_Matrix4);
+   this .cameraSpaceMatrix        = new Utility_MatrixStack (Numbers_Matrix4);
+   this .viewportArray            = new Int32Array (4);
+   this .projectionMatrixArray    = new Float32Array (16);
+   this .viewMatrixArray          = new Float32Array (16);
+   this .cameraSpaceMatrixArray   = new Float32Array (16);
+   this .hitRay                   = new Geometry_Line3 (Numbers_Vector3 .Zero, Numbers_Vector3 .Zero);
+   this .sensors                  = [[ ]];
+   this .viewpointGroups          = [ ];
+   this .lights                   = [ ];
+   this .globalLightsKeys         = [ ];
+   this .globalLights             = [ ];
+   this .localObjectsKeys         = [ ];
+   this .localObjects             = [ ];
+   this .globalShadows            = [ false ];
+   this .globalShadow             = false;
+   this .localShadows             = [ false ];
+   this .localFogs                = [ null ];
+   this .layouts                  = [ ];
+   this .humanoids                = [ null ];
+   this .generatedCubeMapTextures = [ ];
+   this .collisions               = [ ];
+   this .collisionTime            = new Time_StopWatch ();
+   this .numPointingShapes        = 0;
+   this .numCollisionShapes       = 0;
+   this .numShadowShapes          = 0;
+   this .numOpaqueShapes          = 0;
+   this .numTransparentShapes     = 0;
+   this .pointingShapes           = [ ];
+   this .collisionShapes          = [ ];
+   this .activeCollisions         = [ ];
+   this .shadowShapes             = [ ];
+   this .opaqueShapes             = [ ];
+   this .transparentShapes        = [ ];
+   this .transparencySorter       = new Algorithms_MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
+   this .transmission             = false;
+   this .speed                    = 0;
+   this .depthBuffer              = new Rendering_TextureBuffer (browser, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE, true);
 }
 
 Object .assign (X3DRenderObject .prototype,
@@ -56855,7 +56675,7 @@ Object .assign (X3DRenderObject .prototype,
 
       return function ()
       {
-         renderCount >>>= 0; // uintesize
+         renderCount >>>= 0; // convert to uint
          this .renderCount = ++ renderCount;
       }
    })(),
@@ -57074,31 +56894,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .transparentShapes;
    },
-   getNumTransmissionOpaqueShapes ()
+   isTransmission ()
    {
-      return this .transmissionOpaqueShapes .length;
-   },
-   setNumTransmissionOpaqueShapes (value)
-   {
-      // Needed for StaticGroup.
-      this .transmissionOpaqueShapes .length = value;
-   },
-   getTransmissionOpaqueShapes ()
-   {
-      return this .transmissionOpaqueShapes;
-   },
-   getNumTransmissionTransparentShapes ()
-   {
-      return this .transmissionTransparentShapes .length;
-   },
-   setNumTransmissionTransparentShapes (value)
-   {
-      // Needed for StaticGroup.
-      this .transmissionTransparentShapes .length = value;
-   },
-   getTransmissionTransparentShapes ()
-   {
-      return this .transmissionTransparentShapes;
+      return this .transmission;
    },
    constrainTranslation (translation, stepBack)
    {
@@ -57184,7 +56982,7 @@ Object .assign (X3DRenderObject .prototype,
          cameraSpaceProjectionMatrix .multRight (projectionMatrix);
          cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
 
-         this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
+         this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
          const depth = this .getDepth (projectionMatrix);
 
@@ -57232,12 +57030,12 @@ Object .assign (X3DRenderObject .prototype,
          }
          case Rendering_TraverseType .COLLISION:
          {
-            // Collect for collide and gravite
+            // Collect for collide and gravitate
             this .numCollisionShapes = 0;
 
             callback .call (group, type, this);
             this .collide ();
-            this .gravite ();
+            this .gravitate ();
             break;
          }
          case Rendering_TraverseType .SHADOW:
@@ -57253,10 +57051,6 @@ Object .assign (X3DRenderObject .prototype,
             this .lightIndex           = 0;
             this .numOpaqueShapes      = 0;
             this .numTransparentShapes = 0;
-
-            this .transmission                          = false;
-            this .transmissionOpaqueShapes      .length = 0;
-            this .transmissionTransparentShapes .length = 0;
 
             this .setGlobalFog (this .getFog ());
 
@@ -57304,9 +57098,9 @@ Object .assign (X3DRenderObject .prototype,
             const pointingContext = this .pointingShapes [num];
 
             pointingContext .modelViewMatrix .set (modelViewMatrix);
-            pointingContext .shapeNode    = shapeNode;
             pointingContext .scissor      = viewVolume .getScissor ();
             pointingContext .humanoidNode = this .humanoids .at (-1);
+            pointingContext .shapeNode    = shapeNode;
 
             // Clip planes & sensors
 
@@ -57403,9 +57197,9 @@ Object .assign (X3DRenderObject .prototype,
             const depthContext = this .shadowShapes [num];
 
             depthContext .modelViewMatrix .set (modelViewMatrix);
-            depthContext .shapeNode    = shapeNode;
             depthContext .scissor      = viewVolume .getScissor ();
             depthContext .humanoidNode = this .humanoids .at (-1);
+            depthContext .shapeNode    = shapeNode;
 
             // Clip planes
 
@@ -57446,11 +57240,6 @@ Object .assign (X3DRenderObject .prototype,
                var renderContext = this .transparentShapes [num];
 
                renderContext .distance = bboxCenter .z;
-
-               if (shapeNode .isTransmission ())
-                  this .transmission = true;
-               else
-                  this .transmissionTransparentShapes .push (renderContext);
             }
             else
             {
@@ -57460,20 +57249,17 @@ Object .assign (X3DRenderObject .prototype,
                   this .opaqueShapes .push (this .createRenderContext (false));
 
                var renderContext = this .opaqueShapes [num];
-
-               if (shapeNode .isTransmission ())
-                  this .transmission = true;
-               else
-                  this .transmissionOpaqueShapes .push (renderContext);
             }
+
+            this .transmission ||= shapeNode .isTransmission ();
 
             renderContext .modelViewMatrix .set (modelViewMatrix);
             renderContext .scissor .assign (viewVolume .getScissor ());
-            renderContext .shadows         = this .localShadows .at (-1);
-            renderContext .fogNode         = this .localFogs .at (-1);
-            renderContext .shapeNode       = shapeNode;
-            renderContext .appearanceNode  = shapeNode .getAppearance ();
-            renderContext .humanoidNode    = this .humanoids .at (-1);
+            renderContext .shadows        = this .localShadows .at (-1);
+            renderContext .fogNode        = this .localFogs .at (-1);
+            renderContext .humanoidNode   = this .humanoids .at (-1);
+            renderContext .shapeNode      = shapeNode;
+            renderContext .appearanceNode = shapeNode .getAppearance ();
 
             // Clip planes and local lights
 
@@ -57506,7 +57292,7 @@ Object .assign (X3DRenderObject .prototype,
          const
             browser  = this .getBrowser (),
             gl       = browser .getContext (),
-            viewport = this .getViewVolume () .getViewport (),
+            viewport = this .viewVolumes .at (-1) .getViewport (),
             [x, y]   = browser .getPointer ();
 
          // Configure depth shaders.
@@ -57621,7 +57407,7 @@ Object .assign (X3DRenderObject .prototype,
             collision .set_active (true);
       };
    })(),
-   gravite: (() =>
+   gravitate: (() =>
    {
       const
          projectionMatrix            = new Numbers_Matrix4 (),
@@ -57655,14 +57441,14 @@ Object .assign (X3DRenderObject .prototype,
             avatarHeight    = navigationInfo .getAvatarHeight (),
             stepHeight      = navigationInfo .getStepHeight ();
 
-         // Reshape viewpoint for gravite.
+         // Reshape viewpoint for gravitate.
 
          Geometry_Camera .ortho (-collisionRadius,
                         collisionRadius,
                         -collisionRadius,
                         collisionRadius,
                         nearValue,
-                        Math .max (collisionRadius * 2, avatarHeight * 2),
+                        Math .max (collisionRadius, avatarHeight) * 2,
                         projectionMatrix);
 
          // Transform viewpoint to look down the up vector.
@@ -57679,13 +57465,13 @@ Object .assign (X3DRenderObject .prototype,
          cameraSpaceProjectionMatrix .multRight (projectionMatrix);
          cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
 
-         this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
+         this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
          let distance = -this .getDepth (projectionMatrix);
 
          this .getProjectionMatrix () .pop ();
 
-         // Gravite or step up.
+         // gravitate or step up.
 
          distance -= avatarHeight;
 
@@ -57693,7 +57479,7 @@ Object .assign (X3DRenderObject .prototype,
 
          if (distance > 0)
          {
-            // Gravite and fall down the to the floor.
+            // gravitate and fall down the to the floor.
 
             const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
 
@@ -57749,7 +57535,7 @@ Object .assign (X3DRenderObject .prototype,
          const
             browser  = this .getBrowser (),
             gl       = browser .getContext (),
-            viewport = this .getViewVolume () .getViewport ();
+            viewport = this .viewVolumes .at (-1) .getViewport ();
 
          // Configure depth shaders.
 
@@ -57803,7 +57589,7 @@ Object .assign (X3DRenderObject .prototype,
          gl                       = browser .getContext (),
          frameBuffers             = this .getFrameBuffers (),
          numFrameBuffers          = frameBuffers .length,
-         viewport                 = this .getViewVolume () .getViewport (),
+         viewport                 = this .viewVolumes .at (-1) .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
          globalLights             = this .globalLights,
@@ -57826,14 +57612,6 @@ Object .assign (X3DRenderObject .prototype,
             generatedCubeMapTexture .renderTexture (this);
       }
 
-      // Set up shadow matrix for all lights, and matrix for all projective textures.
-
-      if (headlight)
-         browser .getHeadlight () .setGlobalVariables (this);
-
-      for (const light of lights)
-         light .setGlobalVariables (this);
-
       this .renderAndGlobalLightsKey = `.${this .renderKey}.${globalLightsKeys .sort () .join ("")}.`;
       this .globalShadow             = globalShadows .at (-1);
 
@@ -57851,14 +57629,23 @@ Object .assign (X3DRenderObject .prototype,
 
          this .viewportArray .set (viewport);
 
-         if (this .view)
+         if (this .view && this .isActive ())
          {
-            this .projectionMatrixArray .set (this .isActive ()
-               ? this .view .projectionMatrix
-               : this .getProjectionMatrix () .get ());
+            this .projectionMatrixArray  .set (this .view .projectionMatrix);
 
-            this .cameraSpaceMatrixArray .set (this .view .cameraSpaceMatrix);
-            this .viewMatrixArray        .set (this .view .viewMatrix);
+            if (browser .getBrowserOption ("XRMovementControl") === "VIEWPOINT")
+            {
+               this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+               this .viewMatrixArray        .set (this .getViewMatrix () .get ());
+
+               Numbers_Matrix4 .prototype .multLeft  (this .cameraSpaceMatrixArray, this .view .inverse);
+               Numbers_Matrix4 .prototype .multRight (this .viewMatrixArray,        this .view .matrix);
+            }
+            else
+            {
+               this .cameraSpaceMatrixArray .set (this .view .cameraSpaceMatrix);
+               this .viewMatrixArray        .set (this .view .viewMatrix);
+            }
          }
          else
          {
@@ -57867,21 +57654,28 @@ Object .assign (X3DRenderObject .prototype,
             this .viewMatrixArray        .set (this .getViewMatrix () .get ());
          }
 
+         // Set up shadow matrix for all lights, and matrix for all projective textures.
+
+         if (headlight)
+            browser .getHeadlight () .setGlobalVariables (this);
+
+         for (const light of lights)
+            light .setGlobalVariables (this);
+
+         // Draw shapes.
+
          if (independent && this .transmission)
          {
             // Transmission
 
-            const
-               transmissionBuffer               = browser .getTransmissionBuffer (),
-               transmissionOpaqueShapes         = this .transmissionOpaqueShapes,
-               transmissionTransparentShapes    = this .transmissionTransparentShapes,
-               numTransmissionOpaqueShapes      = transmissionOpaqueShapes .length,
-               numTransmissionTransparentShapes = transmissionTransparentShapes .length;
+            const transmissionBuffer = browser .getTransmissionBuffer ();
 
-            this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, transmissionOpaqueShapes, numTransmissionOpaqueShapes, transmissionTransparentShapes, numTransmissionTransparentShapes, this .transmissionTransparencySorter);
+            this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
 
             gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
             gl .generateMipmap (gl .TEXTURE_2D);
+
+            this .transmission = false;
 
             // Draw with sorted blend or OIT.
 
@@ -57922,7 +57716,7 @@ Object .assign (X3DRenderObject .prototype,
       globalShadows            .length = 1;
       generatedCubeMapTextures .length = 0;
    },
-   drawShapes (gl, browser, frameBuffer, clear, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
+   drawShapes (gl, browser, frameBuffer, clearBits, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
    {
       frameBuffer .bind ();
 
@@ -57936,7 +57730,7 @@ Object .assign (X3DRenderObject .prototype,
       this .advanceRenderCount ();
 
       gl .clearColor (0, 0, 0, 0);
-      gl .clear (gl .DEPTH_BUFFER_BIT | clear);
+      gl .clear (gl .DEPTH_BUFFER_BIT | clearBits);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
       this .getBackground () .display (gl, this);
@@ -57987,10 +57781,7 @@ Object .assign (X3DRenderObject .prototype,
 
 function X3DRenderObject_assign (lhs, rhs)
 {
-   for (var i = 0, length = rhs .length; i < length; ++ i)
-      lhs [i] = rhs [i];
-
-   lhs .length = length;
+   Object .assign (lhs, rhs) .length = rhs .length;
 }
 
 const X3DRenderObject_default_ = X3DRenderObject;
@@ -59263,12 +59054,7 @@ const Group_default_ = Group;
 
 
 
-const TransitionType =
-{
-   TELEPORT: true,
-   LINEAR:   true,
-   ANIMATE:  true,
-};
+
 
 function NavigationInfo (executionContext)
 {
@@ -59283,7 +59069,7 @@ function NavigationInfo (executionContext)
 
    this ._avatarSize      .setUnit ("length");
    this ._speed           .setUnit ("speed");
-   this ._visibilityLimit .setUnit ("speed");
+   this ._visibilityLimit .setUnit ("length");
 }
 
 Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, Core_X3DBindableNode .prototype),
@@ -59294,12 +59080,14 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, Core_X3DBinda
 
       this ._type               .addInterest ("set_type__",               this);
       this ._headlight          .addInterest ("set_headlight__",          this);
+      this ._visibilityLimit    .addInterest ("set_visibilityLimit__",    this);
       this ._transitionStart    .addInterest ("set_transitionStart__",    this);
       this ._transitionComplete .addInterest ("set_transitionComplete__", this);
       this ._isBound            .addInterest ("set_isBound__",            this);
 
       this .set_type__ ();
       this .set_headlight__ ();
+      this .set_visibilityLimit__ ();
    },
    getViewer ()
    {
@@ -59333,30 +59121,31 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, Core_X3DBinda
    {
       const nearValue = this .getCollisionRadius ();
 
-      if (nearValue === 0)
-         return 1e-5;
-
-      else
-         return nearValue / 2;
+      return nearValue === 0 ? 1e-5 : nearValue / 2;
    },
    getFarValue (viewpoint)
    {
-      return this ._visibilityLimit .getValue ()
-             ? this ._visibilityLimit .getValue ()
-             : viewpoint .getMaxFarValue ();
+      return this .visibilityLimit || viewpoint .getMaxFarValue ();
    },
-   getTransitionType ()
+   getTransitionType: (function ()
    {
-      for (const value of this ._transitionType)
+      const TransitionTypes = new Set ([
+         "TELEPORT",
+         "LINEAR",
+         "ANIMATE",
+      ]);
+
+      return function ()
       {
-         const transitionType = TransitionType [value];
+         for (const value of this ._transitionType)
+         {
+            if (TransitionTypes .has (value))
+               return value;
+         }
 
-         if (transitionType)
-            return value;
-      }
-
-      return "LINEAR";
-   },
+         return "LINEAR";
+      };
+   })(),
    set_type__ ()
    {
       // Determine active viewer.
@@ -59397,7 +59186,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, Core_X3DBinda
          noneViewer    = false,
          lookAt        = false;
 
-      if (! this ._type .length)
+      if (!this ._type .length)
       {
          examineViewer = true;
          walkViewer    = true;
@@ -59439,7 +59228,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, Core_X3DBinda
                   lookAt        = true;
                   break;
                default:
-                  // Some string defaults to EXAMINE.
+                  // Some strings lead to:
                   examineViewer = true;
                   continue;
             }
@@ -59475,9 +59264,13 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, Core_X3DBinda
       else
          this .enable = Function .prototype;
    },
+   set_visibilityLimit__ ()
+   {
+      this .visibilityLimit = Math .max (this ._visibilityLimit .getValue (), 0);
+   },
    set_transitionStart__ ()
    {
-      if (! this ._transitionActive .getValue ())
+      if (!this ._transitionActive .getValue ())
          this ._transitionActive = true;
    },
    set_transitionComplete__ ()
@@ -59503,7 +59296,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, Core_X3DBinda
 
       const headlight = this .getBrowser () .getHeadlight ();
 
-      renderObject .getGlobalLights () .push (headlight);
+      renderObject .getGlobalLights ()     .push (headlight);
       renderObject .getGlobalLightsKeys () .push (headlight .lightNode .getLightKey ());
    },
    traverse (type, renderObject)
@@ -63103,7 +62896,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (x_ite_Namespace .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(362);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63583,6 +63376,7 @@ const Background_default_ = Background;
 
 
 
+
 function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 {
    Core_X3DNode         .call (this, executionContext);
@@ -63773,6 +63567,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
          viewpointNode = this .getViewpoint (),
          bbox          = this .getBBox (new Geometry_Box3 ()) .multRight (viewpointNode .getModelMatrix () .copy () .inverse ());
 
+      if (bbox .size .equals (Numbers_Vector3 .Zero))
+         return;
+
       viewpointNode .lookAt (this, bbox .center, viewpointNode .getLookAtDistance (bbox), transitionTime, factor, straighten);
    },
    straightenView ()
@@ -63790,10 +63587,8 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
    },
    set_viewport__ ()
    {
-      this .viewportNode = Base_X3DCast (Base_X3DConstants .X3DViewportNode, this ._viewport);
-
-      if (!this .viewportNode)
-         this .viewportNode = this .getBrowser () .getDefaultViewport ();
+      this .viewportNode = Base_X3DCast (Base_X3DConstants .X3DViewportNode, this ._viewport)
+         ?? this .getBrowser () .getDefaultViewport ();
    },
    bindBindables (viewpointName)
    {
@@ -63819,21 +63614,31 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
    },
    traverse (type, renderObject = this)
    {
-      const pose = this .getBrowser () .getPose ();
+      const
+         browser       = this .getBrowser (),
+         viewpointNode = this .getViewpoint (),
+         pose          = browser .getPose ();
 
       if (pose && this .active)
       {
-         this .getProjectionMatrix ()  .pushMatrix (pose .views [0] .projectionMatrix);
-         this .getCameraSpaceMatrix () .pushMatrix (pose .cameraSpaceMatrix);
-         this .getViewMatrix ()        .pushMatrix (pose .viewMatrix);
+         this .getProjectionMatrix () .push (pose .views [0] .projectionMatrix);
+
+         if (browser .getBrowserOption ("XRMovementControl") === "VIEWPOINT")
+         {
+            this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
+            this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
+         }
+         else
+         {
+            this .getCameraSpaceMatrix () .push (pose .cameraSpaceMatrix);
+            this .getViewMatrix ()        .push (pose .viewMatrix);
+         }
       }
       else
       {
-         const viewpointNode = this .getViewpoint ();
-
-         this .getProjectionMatrix ()  .pushMatrix (viewpointNode .getProjectionMatrix (this));
-         this .getCameraSpaceMatrix () .pushMatrix (viewpointNode .getCameraSpaceMatrix ());
-         this .getViewMatrix ()        .pushMatrix (viewpointNode .getViewMatrix ());
+         this .getProjectionMatrix ()  .push (viewpointNode .getProjectionMatrix (this));
+         this .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
+         this .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
       }
 
       switch (type)
@@ -63879,7 +63684,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
 
       this .setHitRay (this .getProjectionMatrix () .get (), viewport, browser .getPointer ());
       this .getNavigationInfo () .enable (type, renderObject);
-      this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
+      this .getModelViewMatrix () .push (this .getViewMatrix () .get ());
 
       this .viewportNode .push (this);
       renderObject .render (type, this .groupNodes .traverse, this .groupNodes);
@@ -63891,7 +63696,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
    {
       if (this ._display .getValue ())
       {
-         this .getModelViewMatrix () .pushMatrix (Numbers_Matrix4 .Identity);
+         this .getModelViewMatrix () .push (Numbers_Matrix4 .Identity);
 
          this .viewportNode .push (this);
          this .groupNodes .traverse (type, renderObject);
@@ -63911,7 +63716,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
    {
       if (this ._pickable .getValue ())
       {
-         this .getModelViewMatrix () .pushMatrix (Numbers_Matrix4 .Identity);
+         this .getModelViewMatrix () .push (Numbers_Matrix4 .Identity);
 
          this .viewportNode .push (this);
          this .groupNodes .traverse (type, renderObject);
@@ -63940,8 +63745,8 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
 
             Geometry_Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
 
-            this .getProjectionMatrix () .pushMatrix (projectionMatrix);
-            this .getModelViewMatrix  () .pushMatrix (this .getViewMatrix () .get ());
+            this .getProjectionMatrix () .push (projectionMatrix);
+            this .getModelViewMatrix  () .push (this .getViewMatrix () .get ());
 
             // Render
             this .viewportNode .push (this);
@@ -63958,7 +63763,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
       if (this ._display .getValue ())
       {
          this .getNavigationInfo () .enable (type, renderObject);
-         this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
+         this .getModelViewMatrix () .push (this .getViewMatrix () .get ());
 
          this .viewportNode .push (this);
          renderObject .render (type, this .groupNodes .traverse, this .groupNodes);
@@ -65662,8 +65467,11 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
 
       this .lookAt (layerNode, point, minDistance, transitionTime, factor, straighten);
    },
-   lookAtBBox (layerNode, bbox, transitionTime = 1, factor, straighten)
+   lookAtBBox (layerNode, bbox, transitionTime = 1, factor = 1, straighten = false)
    {
+      if (bbox .size .equals (Numbers_Vector3 .Zero))
+         return;
+
       bbox = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ());
 
       this .lookAt (layerNode, bbox .center, this .getLookAtDistance (bbox), transitionTime, factor, straighten);
@@ -65741,18 +65549,26 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
    {
       bbox .copy () .multRight (this .modelMatrix .copy () .inverse ());
 
-      const
-         direction       = this .getUserPosition () .copy () .subtract (bbox .center) .normalize (),
-         distance        = this .getLookAtDistance (bbox),
-         userPosition    = bbox .center .copy () .add (direction .multiply (distance)),
-         userOrientation = this .getLookAtRotation (userPosition, bbox .center);
+      if (bbox .size .equals (Numbers_Vector3 .Zero))
+      {
+         this .set_nearDistance__ ();
+         this .set_farDistance__ ();
+      }
+      else
+      {
+         const
+            direction       = this .getUserPosition () .copy () .subtract (bbox .center) .normalize (),
+            distance        = this .getLookAtDistance (bbox),
+            userPosition    = bbox .center .copy () .add (direction .multiply (distance)),
+            userOrientation = this .getLookAtRotation (userPosition, bbox .center);
 
-      this ._positionOffset         = userPosition .subtract (this .getPosition ());
-      this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
-      this ._centerOfRotationOffset = bbox .center .copy () .subtract (this .getCenterOfRotation ());
-      this ._fieldOfViewScale       = 1;
-      this .nearDistance            = distance * (0.125 / 10);
-      this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
+         this ._positionOffset         = userPosition .subtract (this .getPosition ());
+         this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
+         this ._centerOfRotationOffset = bbox .center .copy () .subtract (this .getCenterOfRotation ());
+         this ._fieldOfViewScale       = 1;
+         this .nearDistance            = distance * (0.125 / 10);
+         this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
+      }
    },
    traverse (type, renderObject)
    {
@@ -66464,7 +66280,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (x_ite_Namespace .add ("X3DWorld", X3DWorld_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(362);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67394,7 +67210,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (x_ite_Namespace .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(362);
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -70866,7 +70682,8 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, Environmenta
             if (this .layerNode)
             {
                const
-                  pose           = this .getBrowser () .getPose (),
+                  browser        = this .getBrowser (),
+                  pose           = browser .getPose (),
                   viewpointNode  = this .layerNode .getViewpoint (),
                   invModelMatrix = this .modelMatrix .inverse ()
 
@@ -70876,7 +70693,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, Environmenta
                   .multRight (invModelMatrix)
                   .get (centerOfRotation);
 
-               if (pose && this .layerNode .isActive ())
+               if (pose && this .layerNode .isActive () && browser .getBrowserOption ("XRMovementControl") !== "VIEWPOINT")
                   invModelMatrix .multLeft (pose .cameraSpaceMatrix);
                else
                   invModelMatrix .multLeft (viewpointNode .getCameraSpaceMatrix ());
@@ -70897,7 +70714,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, Environmenta
                else
                {
                   this ._isActive                 = true;
-                  this ._enterTime                = this .getBrowser () .getCurrentTime ();
+                  this ._enterTime                = browser .getCurrentTime ();
                   this ._position_changed         = position;
                   this ._orientation_changed      = orientation;
                   this ._centerOfRotation_changed = centerOfRotation;
@@ -75112,7 +74929,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
                   .subtract (vector3 .assign (spine [length] .getValue ()) .subtract (s) .normalize ())
                   .normalize ();
 
-               if (! SCPyAxis .equals (Numbers_Vector3 .Zero))
+               if (!SCPyAxis .equals (Numbers_Vector3 .Zero))
                   break;
             }
 
@@ -75123,7 +74940,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
                           .cross (vector3 .assign (spine [length] .getValue ()) .subtract (spine [i] .getValue ()))
                           .normalize ();
 
-               if (! SCPzAxis .equals (Numbers_Vector3 .Zero))
+               if (!SCPzAxis .equals (Numbers_Vector3 .Zero))
                   break;
             }
          }
@@ -75134,7 +74951,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
             {
                SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ()) .normalize ();
 
-               if (! SCPyAxis .equals (Numbers_Vector3 .Zero))
+               if (!SCPyAxis .equals (Numbers_Vector3 .Zero))
                   break;
             }
 
@@ -75145,7 +74962,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
                         .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
                         .normalize ();
 
-               if (! SCPzAxis .equals (Numbers_Vector3 .Zero))
+               if (!SCPzAxis .equals (Numbers_Vector3 .Zero))
                   break;
             }
          }
@@ -75263,7 +75080,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
       return function ()
       {
          const
-            cw                = ! this ._ccw .getValue (),
+            cw                = !this ._ccw .getValue (),
             crossSection      = this ._crossSection,
             spine             = this ._spine,
             numSpines         = spine .length,
@@ -80189,7 +80006,9 @@ const TextureCoordinateGenerator_default_ = TextureCoordinateGenerator;
 
 
 
-// No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
+const CLONE_COUNT = 2; // Minimum number of shapes that must be cloned to become an InstancedShape.
+
+// No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard node.
 
 function StaticGroup (executionContext)
 {
@@ -80243,9 +80062,36 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, Core_X3DChildNod
       for (const visibleNode of this .visibleNodes)
          visibleNode .traverse (type, renderObject);
    },
-   createStaticShapes: (() =>
+   createStaticShapes (renderObject)
    {
-      const Statics = ["Opaque", "Transparent", "TransmissionOpaque", "TransmissionTransparent"];
+      // Check if scene is currently loading something.
+
+      const scene = this .getScene ();
+
+      if (scene ._loadCount .getValue ())
+      {
+         scene ._loadCount .addFieldCallback (this, () =>
+         {
+            if (scene ._loadCount .getValue ())
+               return;
+
+            scene ._loadCount .removeFieldCallback (this);
+
+            this .set_children__ ();
+         });
+      }
+      else
+      {
+         // Create static shapes.
+
+         this .optimizeGroups (this .createGroups (renderObject));
+      }
+
+      return [this .groupNode];
+   },
+   createGroups: (() =>
+   {
+      const Statics = ["Opaque", "Transparent"];
 
       const viewVolume = new Geometry_ViewVolume ();
 
@@ -80253,25 +80099,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, Core_X3DChildNod
 
       return function (renderObject)
       {
-         // Check if scene is currently loading something.
-
-         const scene = this .getScene ();
-
-         if (scene ._loadCount .getValue ())
-         {
-            scene ._loadCount .addFieldCallback (this, () =>
-            {
-               if (scene ._loadCount .getValue ())
-                  return;
-
-               scene ._loadCount .removeFieldCallback (this);
-
-               this .set_children__ ();
-            });
-
-            return [this .groupNode];
-         }
-
          // Traverse Group node to get render contexts.
 
          const
@@ -80317,6 +80144,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, Core_X3DChildNod
          // Sort out TextureCoordinateGenerator nodes.
 
          const
+            clonesIndex  = new Map (renderContexts .map (({shapeNode}) => [shapeNode, [ ]])),
             groupsIndex  = { },
             singlesIndex = { };
 
@@ -80347,32 +80175,37 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, Core_X3DChildNod
             key += shapeNode ._castShadow .getValue () ? 1 : 0;
             key += shapeNode ._bboxDisplay .getValue () ? 1 : 0;
 
-            const group = groupsIndex [key] ??= [ ];
+            const
+               clones = clonesIndex .get (shapeNode),
+               group  = groupsIndex [key] ??= [ ];
 
-            group .push (renderContext);
+            clones .push (renderContext);
+            group  .push (renderContext);
          }
 
+         // Sort out shapes that are not cloned.
+
+         for (const [id, group] of clonesIndex .entries ())
+         {
+            if (group .length < CLONE_COUNT)
+               clonesIndex .delete (id);
+         }
+
+         // Create arrays.
+
          const
-            combineGroups = Object .values (groupsIndex),
+            clonesGroups  = Array .from (clonesIndex .values ()),
+            combineGroups = Object .values (groupsIndex)
+               .map (group => group .filter (({shapeNode}) => !clonesIndex .has (shapeNode)))
+               .filter (group => group .length),
             singlesGroups = Object .values (singlesIndex);
 
          if (browser .getBrowserOption ("Debug"))
          {
-            console .info (`StaticGroup will create ${combineGroups .length + singlesGroups .length} static nodes from the previous ${renderContexts .length} nodes.`);
+            console .info (`StaticGroup will create ${clonesGroups .length + combineGroups .length + singlesGroups .length} static nodes from the previous ${renderContexts .length} nodes.`);
          }
 
-         // Create static shapes.
-
-         if (DEVELOPMENT)
-            console .time ("StaticGroup");
-
-         const visibleNodes = combineGroups .map (group => this .combineShapes (group))
-            .concat (singlesGroups .map (group => this .normalizeSingleShapes (group)));
-
-         if (DEVELOPMENT)
-            console .timeEnd ("StaticGroup");
-
-         return visibleNodes;
+         return { clonesGroups, combineGroups, singlesGroups };
       };
    })(),
    hasTextureCoordinateGenerator (geometryNode)
@@ -80390,7 +80223,68 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, Core_X3DChildNod
 
       return false;
    },
-   combineShapes (group)
+   async optimizeGroups ({ clonesGroups, combineGroups, singlesGroups })
+   {
+      if (clonesGroups .length)
+         await this .getBrowser () .loadComponents ("X_ITE");
+
+      // Create static shapes.
+
+      if (DEVELOPMENT)
+         console .time ("StaticGroup");
+
+      const visibleNodes = [ ];
+
+      clonesGroups  .forEach (group => this .combineClones (group, visibleNodes));
+      combineGroups .forEach (group => this .combineShapes (group, visibleNodes));
+      singlesGroups .forEach (group => this .normalizeSingleShapes (group, visibleNodes));
+
+      this .visibleNodes = visibleNodes;
+
+      if (DEVELOPMENT)
+         console .timeEnd ("StaticGroup");
+   },
+   combineClones: (function ()
+   {
+      const
+         modelMatrix = new Numbers_Matrix4 (),
+         t           = new Numbers_Vector3 (),
+         r           = new Numbers_Rotation4 (),
+         s           = new Numbers_Vector3 (),
+         so          = new Numbers_Rotation4 ();
+
+      return function (group, visibleNodes)
+      {
+         const
+            browser          = this .getBrowser (),
+            executionContext = this .getExecutionContext (),
+            InstancedShape   = browser .getConcreteNodes () .get ("InstancedShape"),
+            instancedShape   = new InstancedShape (executionContext),
+            shapeNode0       = group [0] .shapeNode;
+
+         for (const { modelViewMatrix } of group)
+         {
+            modelMatrix .assign (modelViewMatrix) .get (t, r, s, so);
+
+            instancedShape ._translations      .push (t);
+            instancedShape ._rotations         .push (r);
+            instancedShape ._scales            .push (s);
+            instancedShape ._scaleOrientations .push (so);
+         }
+
+         instancedShape ._pointerEvents = shapeNode0 ._pointerEvents;
+         instancedShape ._castShadow    = shapeNode0 ._castShadow;
+         instancedShape ._bboxDisplay   = shapeNode0 ._bboxDisplay;
+         instancedShape ._appearance    = shapeNode0 ._appearance;
+         instancedShape ._geometry      = shapeNode0 ._geometry;
+
+         instancedShape .setPrivate (true);
+         instancedShape .setup ();
+
+         visibleNodes .push (instancedShape);
+      };
+   })(),
+   combineShapes (group, visibleNodes)
    {
       const
          executionContext = this .getExecutionContext (),
@@ -80597,7 +80491,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, Core_X3DChildNod
       newShapeNode .setPrivate (true);
       newShapeNode .setup ();
 
-      return newShapeNode;
+      visibleNodes .push (newShapeNode);
    },
    normalizeGeometry: (function ()
    {
@@ -80839,34 +80733,37 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, Core_X3DChildNod
          return newGeometryNode;
       };
    })(),
-   normalizeSingleShapes (group)
+   normalizeSingleShapes: (function ()
    {
-      const
-         executionContext = this .getExecutionContext (),
-         newTransformNode = new Grouping_Transform (executionContext),
-         modelMatrix      = new Numbers_Matrix4 (... group [0] .modelViewMatrix);
-
       const
          t  = new Numbers_Vector3 (),
          r  = new Numbers_Rotation4 (),
          s  = new Numbers_Vector3 (),
          so = new Numbers_Rotation4 ();
 
-      modelMatrix .get (t, r, s, so);
+      return function (group, visibleNodes)
+      {
+         const
+            executionContext = this .getExecutionContext (),
+            newTransformNode = new Grouping_Transform (executionContext),
+            modelMatrix      = new Numbers_Matrix4 (... group [0] .modelViewMatrix);
 
-      newTransformNode ._translation      = t;
-      newTransformNode ._rotation         = r;
-      newTransformNode ._scale            = s;
-      newTransformNode ._scaleOrientation = so;
+         modelMatrix .get (t, r, s, so);
 
-      for (const { shapeNode } of group)
-         newTransformNode ._children .push (shapeNode);
+         newTransformNode ._translation      = t;
+         newTransformNode ._rotation         = r;
+         newTransformNode ._scale            = s;
+         newTransformNode ._scaleOrientation = so;
 
-      newTransformNode .setPrivate (true);
-      newTransformNode .setup ();
+         for (const { shapeNode } of group)
+            newTransformNode ._children .push (shapeNode);
 
-      return newTransformNode;
-   },
+         newTransformNode .setPrivate (true);
+         newTransformNode .setup ();
+
+         visibleNodes .push (newTransformNode);
+      };
+   })(),
    dispose ()
    {
       Grouping_X3DBoundedObject .prototype .dispose .call (this);
@@ -83549,7 +83446,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, Core_X3DChildNo
       {
          const lightContainer = renderObject .getLightContainer ();
 
-         lightContainer .modelViewMatrix .pushMatrix (renderObject .getModelViewMatrix () .get ());
+         lightContainer .modelViewMatrix .push (renderObject .getModelViewMatrix () .get ());
 
          if (this ._global .getValue ())
          {
@@ -83687,7 +83584,7 @@ Object .assign (DirectionalLightContainer .prototype,
       this .groupNode = groupNode;
       this .global    = lightNode .getGlobal ();
 
-      this .modelViewMatrix .pushMatrix (modelViewMatrix);
+      this .modelViewMatrix .push (modelViewMatrix);
 
       // Get shadow buffer from browser.
 
@@ -83723,8 +83620,8 @@ Object .assign (DirectionalLightContainer .prototype,
       this .shadowBuffer .bind ();
 
       renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
-      renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
-      renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
+      renderObject .getProjectionMatrix () .push (projectionMatrix);
+      renderObject .getModelViewMatrix  () .push (invLightSpaceMatrix);
 
       renderObject .render (Rendering_TraverseType .SHADOW, Grouping_X3DGroupingNode .prototype .traverse, this .groupNode);
 
@@ -83744,7 +83641,10 @@ Object .assign (DirectionalLightContainer .prototype,
       if (!this .shadowBuffer)
          return;
 
-      this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
+      this .shadowMatrix
+         .assign (renderObject .getCameraSpaceMatrixArray ())
+         .multRight (this .invLightSpaceProjectionMatrix);
+
       this .shadowMatrixArray .set (this .shadowMatrix);
    },
    setShaderUniforms (gl, shaderObject)
@@ -83948,7 +83848,7 @@ Object .assign (EnvironmentLightContainer .prototype,
       this .lightNode = lightNode;
       this .global    = lightNode .getGlobal ();
 
-      this .modelViewMatrix .pushMatrix (modelViewMatrix);
+      this .modelViewMatrix .push (modelViewMatrix);
    },
    renderShadowMap (renderObject)
    { },
@@ -84239,7 +84139,7 @@ Object .assign (PointLightContainer .prototype,
 
       this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
 
-      this .modelViewMatrix .pushMatrix (modelViewMatrix);
+      this .modelViewMatrix .push (modelViewMatrix);
 
       // Get shadow buffer from browser.
 
@@ -84277,8 +84177,8 @@ Object .assign (PointLightContainer .prototype,
             projectionMatrix = Geometry_Camera .perspective2 (Math_Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
 
          renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
-         renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
-         renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
+         renderObject .getProjectionMatrix () .push (this .projectionMatrix);
+         renderObject .getModelViewMatrix  () .push (orientationMatrices [i]);
          renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
 
          renderObject .render (Rendering_TraverseType .SHADOW, Grouping_X3DGroupingNode .prototype .traverse, this .groupNode);
@@ -84300,7 +84200,10 @@ Object .assign (PointLightContainer .prototype,
       if (!this .shadowBuffer)
          return;
 
-      this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
+      this .shadowMatrix
+         .assign (renderObject .getCameraSpaceMatrixArray ())
+         .multRight (this .invLightSpaceProjectionMatrix);
+
       this .shadowMatrixArray .set (this .shadowMatrix);
    },
    setShaderUniforms (gl, shaderObject)
@@ -84544,7 +84447,7 @@ Object .assign (SpotLightContainer .prototype,
 
       this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
 
-      this .modelViewMatrix .pushMatrix (modelViewMatrix);
+      this .modelViewMatrix .push (modelViewMatrix);
 
       // Get shadow buffer from browser.
 
@@ -84585,8 +84488,8 @@ Object .assign (SpotLightContainer .prototype,
       this .shadowBuffer .bind ();
 
       renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
-      renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
-      renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
+      renderObject .getProjectionMatrix () .push (projectionMatrix);
+      renderObject .getModelViewMatrix  () .push (invLightSpaceMatrix);
 
       renderObject .render (Rendering_TraverseType .SHADOW, Grouping_X3DGroupingNode .prototype .traverse, this .groupNode);
 
@@ -84611,7 +84514,10 @@ Object .assign (SpotLightContainer .prototype,
       if (!this .shadowBuffer)
          return;
 
-      this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
+      this .shadowMatrix
+         .assign (renderObject .getCameraSpaceMatrixArray ())
+         .multRight (this .invLightSpaceProjectionMatrix);
+
       this .shadowMatrixArray .set (this .shadowMatrix);
    },
    setShaderUniforms (gl, shaderObject)
@@ -90567,7 +90473,7 @@ mediump samplerCube textureCube;
 
 /* harmony default export */ const MaterialTextures = (x_ite_Namespace .add ("MaterialTextures", MaterialTextures_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(362);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -91767,7 +91673,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       if (location0 === -1)
          return;
 
-      stride = stride || 36;
+      stride ||= 36;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
@@ -91786,7 +91692,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       if (location0 === -1)
          return;
 
-      stride = stride || 64;
+      stride ||= 64;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
@@ -91909,7 +91815,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    {
       const location0 = this .x3d_InstanceMatrix;
 
-      stride = stride || 64; // 4 Bytes * 16
+      stride ||= 64; // 4 Bytes * 16
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
@@ -91926,7 +91832,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    {
       const location0 = this .x3d_InstanceNormalMatrix;
 
-      stride = stride || 36; // 4 Bytes * 9
+      stride ||= 36; // 4 Bytes * 9
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
@@ -94011,63 +93917,29 @@ return pointSize+1.0-step(pointSize,1.0);
 
 /* harmony default export */ const PointSize2_glsl = (x_ite_Namespace .add ("PointSize2.glsl", PointSize2_glsl_default_));
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/common/Shadow2.glsl.js
+const maxLights = 8;
+
 const Shadow2_glsl_default_ = /* glsl */ `
 #if defined(X3D_FRAGMENT_SHADER)&&defined(X3D_SHADOWS)
 uniform sampler2D x3d_ShadowMap[X3D_NUM_LIGHTS];
 #if __VERSION__==100
 float getShadowDepth(const in int index,const in vec2 shadowCoord){
-#if X3D_NUM_LIGHTS>0
-if(index==0)return texture2D(x3d_ShadowMap[0],shadowCoord).r;
+${Array .from ({ length: maxLights }, (_, i) => /* glsl */ `
+#if X3D_NUM_LIGHTS > ${i}
+if (index == ${i})
+return texture2D (x3d_ShadowMap [${i}], shadowCoord) .r;
 #endif
-#if X3D_NUM_LIGHTS>1
-if(index==1)return texture2D(x3d_ShadowMap[1],shadowCoord).r;
-#endif
-#if X3D_NUM_LIGHTS>2
-if(index==2)return texture2D(x3d_ShadowMap[2],shadowCoord).r;
-#endif
-#if X3D_NUM_LIGHTS>3
-if(index==3)return texture2D(x3d_ShadowMap[3],shadowCoord).r;
-#endif
-#if X3D_NUM_LIGHTS>4
-if(index==4)return texture2D(x3d_ShadowMap[4],shadowCoord).r;
-#endif
-#if X3D_NUM_LIGHTS>5
-if(index==5)return texture2D(x3d_ShadowMap[5],shadowCoord).r;
-#endif
-#if X3D_NUM_LIGHTS>6
-if(index==6)return texture2D(x3d_ShadowMap[6],shadowCoord).r;
-#endif
-#if X3D_NUM_LIGHTS>7
-if(index==7)return texture2D(x3d_ShadowMap[7],shadowCoord).r;
-#endif
+`) .join ("\n")}
 return 0.0;}
 #else
 float getShadowDepth(const in int index,const in vec2 shadowCoord){switch(index){
-#if X3D_NUM_LIGHTS>0
-case 0:{return texture(x3d_ShadowMap[0],shadowCoord).r;}
+${Array .from ({ length: maxLights }, (_, i) => /* glsl */ `
+#if X3D_NUM_LIGHTS > ${i}
+case ${i}:
+return texture (x3d_ShadowMap [${i}], shadowCoord) .r;
 #endif
-#if X3D_NUM_LIGHTS>1
-case 1:{return texture(x3d_ShadowMap[1],shadowCoord).r;}
-#endif
-#if X3D_NUM_LIGHTS>2
-case 2:{return texture(x3d_ShadowMap[2],shadowCoord).r;}
-#endif
-#if X3D_NUM_LIGHTS>3
-case 3:{return texture(x3d_ShadowMap[3],shadowCoord).r;}
-#endif
-#if X3D_NUM_LIGHTS>4
-case 4:{return texture(x3d_ShadowMap[4],shadowCoord).r;}
-#endif
-#if X3D_NUM_LIGHTS>5
-case 5:{return texture(x3d_ShadowMap[5],shadowCoord).r;}
-#endif
-#if X3D_NUM_LIGHTS>6
-case 6:{return texture(x3d_ShadowMap[6],shadowCoord).r;}
-#endif
-#if X3D_NUM_LIGHTS>7
-case 7:{return texture(x3d_ShadowMap[7],shadowCoord).r;}
-#endif
-default:{return 0.0;}}}
+`) .join ("\n")}
+}return 0.0;}
 #endif
 float texture2DCompare(const in int index,const in vec2 texCoord,const in float compare){float shadowDepth=getShadowDepth(index,texCoord);return(1.0-step(1.0,shadowDepth))*step(shadowDepth,compare);}float texture2DShadowLerp(const in int index,const in vec2 texelSize,const in float shadowMapSize,const in vec2 texCoord,const in float compare){const vec2 offset=vec2(0.0,1.0);vec2 centroidTexCoord=floor(texCoord*shadowMapSize+0.5)/shadowMapSize;float lb=texture2DCompare(index,centroidTexCoord+texelSize*offset.xx,compare);float lt=texture2DCompare(index,centroidTexCoord+texelSize*offset.xy,compare);float rb=texture2DCompare(index,centroidTexCoord+texelSize*offset.yx,compare);float rt=texture2DCompare(index,centroidTexCoord+texelSize*offset.yy,compare);vec2 f=fract(texCoord*shadowMapSize+0.5);float a=mix(lb,lt,f.y);float b=mix(rb,rt,f.y);float c=mix(a,b,f.x);return c;}vec2 cubeToUVCompact(in vec3 v,const float texelSizeY){vec3 absV=abs(v);float scaleToCube=1.0/max(absV.x,max(absV.y,absV.z));absV*=scaleToCube;v*=scaleToCube*(1.0-2.0*texelSizeY);vec2 planar=v.xy;float almostATexel=1.5*texelSizeY;float almostOne=1.0-almostATexel;if(absV.z>=almostOne){if(v.z>0.0)planar.x=4.0-v.x;}else if(absV.x>=almostOne){float signX=sign(v.x);planar.x=v.z*signX+2.0*signX;}else if(absV.y>=almostOne){float signY=sign(v.y);planar.x=(v.x+0.5+signY)*2.0;planar.y=v.z*signY-2.0;}return vec2(0.125,0.25)*planar+vec2(0.375,0.75);}mat4 getPointLightRotations(const in vec3 vector){mat4 rotations[6];rotations[0]=mat4(0,0,1,0,0,1,0,0,-1,0,0,0,0,0,0,1);rotations[1]=mat4(0,0,-1,0,0,1,0,0,1,0,0,0,0,0,0,1);rotations[2]=mat4(-1,0,0,0,0,1,0,0,0,0,-1,0,0,0,0,1);rotations[3]=mat4(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);rotations[4]=mat4(1,0,0,0,0,0,1,0,0,-1,0,0,0,0,0,1);rotations[5]=mat4(1,0,0,0,0,0,-1,0,0,1,0,0,0,0,0,1);vec3 a=abs(vector.xyz);if(a.x>a.y){if(a.x>a.z)return vector.x>0.0?rotations[1]:rotations[0];else return vector.z>0.0?rotations[2]:rotations[3];}else{if(a.y>a.z)return vector.y>0.0?rotations[5]:rotations[4];else return vector.z>0.0?rotations[2]:rotations[3];}return rotations[3];}float getShadowIntensity(const in int index,const in x3d_LightSourceParameters light){if(light.type==x3d_PointLight){const mat4 biasMatrix=mat4(0.5,0.0,0.0,0.0,0.0,0.5,0.0,0.0,0.0,0.0,0.5,0.0,0.5,0.5,0.5,1.0);const mat4 projectionMatrix=mat4(1.0,0.0,0.0,0.0,0.0,0.5,0.0,0.0,0.0,0.0,-1.000025000312504,-1.0,0,0.0,-0.25000312503906297,0.0);vec2 texelSize=vec2(1.0)/(float(light.shadowMapSize)*vec2(4.0,2.0));vec4 shadowCoord=light.shadowMatrix*vec4(vertex,1.0);vec3 lightToPosition=shadowCoord.xyz;shadowCoord=biasMatrix*(projectionMatrix*(getPointLightRotations(lightToPosition)*shadowCoord));shadowCoord.z-=light.shadowBias;shadowCoord.xyz/=shadowCoord.w;
 #if defined(X3D_PCF_FILTERING)||defined(X3D_PCF_SOFT_FILTERING)
@@ -95770,7 +95642,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (x_ite_Namespace .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(362);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96368,7 +96240,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 
 /* harmony default export */ const Shape_X3DAppearanceNode = (x_ite_Namespace .add ("X3DAppearanceNode", X3DAppearanceNode_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(362);
+/* provided dependency */ var Appearance_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96568,29 +96440,27 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, Shape_X3DAppearan
    {
       this .stylePropertiesNode [0] = Base_X3DCast (Base_X3DConstants .PointProperties, this ._pointProperties);
 
-      if (!this .stylePropertiesNode [0])
-      {
-         const browser = this .getBrowser ();
+      if (this .stylePropertiesNode [0])
+         return;
 
-         if (browser .getRenderingProperty ("ContentScale") !== 1)
-            this .stylePropertiesNode [0] = browser .getDefaultPointProperties ();
-      }
+      const browser = this .getBrowser ();
+
+      if (browser .getRenderingProperty ("ContentScale") !== 1)
+         this .stylePropertiesNode [0] = browser .getDefaultPointProperties ();
    },
    set_lineProperties__ ()
    {
-      if (this .linePropertiesNode)
-         this .linePropertiesNode ._applied .removeInterest ("set_applied__", this);
+      this .linePropertiesNode ?._applied .removeInterest ("set_applied__", this);
 
       this .linePropertiesNode = Base_X3DCast (Base_X3DConstants .LineProperties, this ._lineProperties);
 
-      if (this .linePropertiesNode)
-         this .linePropertiesNode ._applied .addInterest ("set_applied__", this);
+      this .linePropertiesNode ?._applied .addInterest ("set_applied__", this);
 
       this .set_applied__ ();
    },
    set_applied__ ()
    {
-      if (this .linePropertiesNode && this .linePropertiesNode ._applied .getValue ())
+      if (this .linePropertiesNode ?._applied .getValue ())
       {
          this .stylePropertiesNode [1] = this .linePropertiesNode;
       }
@@ -96606,13 +96476,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, Shape_X3DAppearan
    },
    set_fillProperties__ ()
    {
-      if (this .stylePropertiesNode [2])
-         this .stylePropertiesNode [2] ._transparent .removeInterest ("set_transparent__", this);
+      this .stylePropertiesNode [2] ?._transparent .removeInterest ("set_transparent__", this);
 
       this .stylePropertiesNode [2] = Base_X3DCast (Base_X3DConstants .FillProperties, this ._fillProperties);
 
-      if (this .stylePropertiesNode [2])
-         this .stylePropertiesNode [2] ._transparent .addInterest ("set_transparent__", this);
+      this .stylePropertiesNode [2] ?._transparent .addInterest ("set_transparent__", this);
 
       this .stylePropertiesNode [3] = this .stylePropertiesNode [2];
    },
@@ -96624,16 +96492,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, Shape_X3DAppearan
          this .materialNode ._transmission .removeInterest ("set_transmission__", this);
       }
 
-      this .materialNode = Base_X3DCast (Base_X3DConstants .X3DMaterialNode, this ._material);
+      this .materialNode = Base_X3DCast (Base_X3DConstants .X3DMaterialNode, this ._material)
+         ?? this .getBrowser () .getDefaultMaterial ();
 
-      if (!this .materialNode)
-         this .materialNode = this .getBrowser () .getDefaultMaterial ();
-
-      if (this .materialNode)
-      {
-         this .materialNode ._transparent  .addInterest ("set_transparent__",  this);
-         this .materialNode ._transmission .addInterest ("set_transmission__", this);
-      }
+      this .materialNode ._transparent  .addInterest ("set_transparent__",  this);
+      this .materialNode ._transmission .addInterest ("set_transmission__", this);
 
       // Depreciated TwoSidedMaterial handling.
 
@@ -96642,13 +96505,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, Shape_X3DAppearan
    },
    set_backMaterial__ ()
    {
-      if (this .backMaterialNode)
-         this .backMaterialNode ._transparent .removeInterest ("set_transparent__", this);
+      this .backMaterialNode ?._transparent .removeInterest ("set_transparent__", this);
 
       this .backMaterialNode = Base_X3DCast (Base_X3DConstants .X3DOneSidedMaterialNode, this ._backMaterial);
 
-      if (this .backMaterialNode)
-         this .backMaterialNode ._transparent .addInterest ("set_transparent__", this);
+      this .backMaterialNode ?._transparent .addInterest ("set_transparent__", this);
 
       // Depreciated TwoSidedMaterial handling.
 
@@ -96679,13 +96540,10 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, Shape_X3DAppearan
    },
    set_textureTransform__ ()
    {
-      if (this .textureTransformNode)
-         this .textureTransformNode .removeInterest ("updateTextureTransformMapping", this);
+      this .textureTransformNode ?.removeInterest ("updateTextureTransformMapping", this);
 
-      this .textureTransformNode = Base_X3DCast (Base_X3DConstants .X3DTextureTransformNode, this ._textureTransform);
-
-      if (!this .textureTransformNode)
-         this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
+      this .textureTransformNode = Base_X3DCast (Base_X3DConstants .X3DTextureTransformNode, this ._textureTransform)
+         ?? this .getBrowser () .getDefaultTextureTransform ();
 
       this .textureTransformNode .addInterest ("updateTextureTransformMapping", this);
 
@@ -98753,18 +98611,12 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNo
          this .appearanceNode ._transmission .removeInterest ("set_transmission__", this);
       }
 
-      this .appearanceNode = Base_X3DCast (Base_X3DConstants .X3DAppearanceNode, this ._appearance);
+      this .appearanceNode = Base_X3DCast (Base_X3DConstants .X3DAppearanceNode, this ._appearance)
+         ?? this .getBrowser () .getDefaultAppearance ();
 
-      if (this .appearanceNode)
-      {
-         this .appearanceNode ._alphaMode    .addInterest ("set_transparent__", this);
-         this .appearanceNode ._transparent  .addInterest ("set_transparent__",  this);
-         this .appearanceNode ._transmission .addInterest ("set_transmission__", this);
-      }
-      else
-      {
-         this .appearanceNode = this .getBrowser () .getDefaultAppearance ();
-      }
+      this .appearanceNode ._alphaMode    .addInterest ("set_transparent__",  this);
+      this .appearanceNode ._transparent  .addInterest ("set_transparent__",  this);
+      this .appearanceNode ._transmission .addInterest ("set_transmission__", this);
 
       this .set_transparent__ ();
       this .set_transmission__ ();
@@ -104623,8 +104475,8 @@ const GifMedia_default_ = GifMedia;
 
 /* harmony default export */ const Texturing_GifMedia = (x_ite_Namespace .add ("GifMedia", GifMedia_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(362);
-/* provided dependency */ var SuperGif = __webpack_require__(229);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(321);
+/* provided dependency */ var SuperGif = __webpack_require__(370);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107092,7 +106944,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (x_ite_Namespace .add ("gettext", gettext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(362);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107722,7 +107574,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (x_ite_Namespace .add ("TextCompression", TextCompression_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(362);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108369,7 +108221,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (x_ite_Namespace .add ("RenderingProperties", RenderingProperties_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(362);
+/* provided dependency */ var Notification_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108491,8 +108343,8 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (x_ite_Namespace .add ("Notification", Notification_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(74);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(362);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(225);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111227,7 +111079,7 @@ const DataStorage_default_ = DataStorage;
 
 /* harmony default export */ const Utility_DataStorage = (x_ite_Namespace .add ("DataStorage", DataStorage_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(362);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113838,8 +113690,8 @@ const X3DViewer_default_ = X3DViewer;
 
 /* harmony default export */ const Navigation_X3DViewer = (x_ite_Namespace .add ("X3DViewer", X3DViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(48);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(362);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(657);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114754,8 +114606,8 @@ const ExamineViewer_default_ = ExamineViewer;
 
 /* harmony default export */ const Navigation_ExamineViewer = (x_ite_Namespace .add ("ExamineViewer", ExamineViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(48);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(362);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(657);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115770,8 +115622,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (x_ite_Namespace .add ("FlyViewer", FlyViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(48);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(362);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(657);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116100,8 +115952,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (x_ite_Namespace .add ("NoneViewer", NoneViewer_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(48);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(362);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(657);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117246,8 +117098,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (x_ite_Namespace .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(48);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(362);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(657);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118656,10 +118508,16 @@ class Lock
 
       const p = new Promise (async (resolve, reject) =>
       {
-         if (current .length)
+         try
+         {
             await Promise .allSettled (current);
 
-         callback () .then (resolve) .catch (reject);
+            resolve (await callback ());
+         }
+         catch (error)
+         {
+            reject (error);
+         }
       })
       .finally (() =>
       {
@@ -118680,7 +118538,7 @@ const Lock_default_ = Lock;
 
 /* harmony default export */ const Utility_Lock = (x_ite_Namespace .add ("Lock", Lock_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(362);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119213,23 +119071,29 @@ Object .assign (X3DRenderingContext .prototype,
          if (this [_session] === window)
             return;
 
-         this .endEvents () .removeInterest ("endFrame", this);
+         try
+         {
+            await this [_session] .end ();
+         }
+         catch
+         { }
+         finally
+         {
+            this .endEvents () .removeInterest ("endFrame", this);
 
-         this [_session] .end () .catch (Function .prototype);
+            for (const frameBuffer of this [_frameBuffers])
+               frameBuffer .dispose ();
 
-         for (const frameBuffer of this [_frameBuffers])
-            frameBuffer .dispose ();
+            this [_frameBuffers]       = [ ];
+            this [_session]            = window;
+            this [_baseReferenceSpace] = null;
+            this [_referenceSpace]     = null;
+            this [_baseLayer]          = null;
+            this [_defaultFrameBuffer] = null;
+            this [_pose]               = null;
 
-         this [_frameBuffers] .length = 0;
-
-         this [_session]            = window;
-         this [_baseReferenceSpace] = null;
-         this [_referenceSpace]     = null;
-         this [_baseLayer]          = null;
-         this [_defaultFrameBuffer] = null;
-         this [_pose]               = null;
-
-         this .reshape ();
+            this .reshape ();
+         }
       });
    },
    getSession ()
@@ -119290,12 +119154,14 @@ Object .assign (X3DRenderingContext .prototype,
             cameraSpaceMatrix: new Numbers_Matrix4 (),
             viewMatrix: new Numbers_Matrix4 (),
             matrix: new Numbers_Matrix4 (),
+            inverse: new Numbers_Matrix4 (),
          };
 
          pv .projectionMatrix .assign (view .projectionMatrix);
          pv .cameraSpaceMatrix .assign (view .transform .matrix);
          pv .viewMatrix .assign (view .transform .inverse .matrix);
          pv .matrix .assign (pose .transform .matrix) .multRight (view .transform .inverse .matrix);
+         pv .inverse .assign (pv .matrix) .inverse ();
 
          ++ v;
       }
@@ -119978,7 +119844,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 
 /* harmony default export */ const Sound_X3DSoundContext = (x_ite_Namespace .add ("X3DSoundContext", X3DSoundContext_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(362);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(321);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -121555,7 +121421,7 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (x_ite_Namespace .add ("Components", Components_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(362);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(321);
 /*******************************************************************************
  * MIT License
  *
@@ -122821,7 +122687,7 @@ const FieldTypes_default_ = new Configuration_FieldTypesArray (Object .values (x
 
 /* harmony default export */ const FieldTypes = (x_ite_Namespace .add ("FieldTypes", FieldTypes_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(362);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -123888,7 +123754,7 @@ const X3DBrowser_default_ = X3DBrowser;
 
 /* harmony default export */ const Browser_X3DBrowser = (x_ite_Namespace .add ("X3DBrowser", X3DBrowser_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(362);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -124155,8 +124021,8 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(362);
-/* provided dependency */ var pako = __webpack_require__(82);
+/* provided dependency */ var jquery_$ = __webpack_require__(321);
+/* provided dependency */ var pako = __webpack_require__(157);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -124232,13 +124098,13 @@ const jquery_default_ = jquery_$;
 
 /* harmony default export */ const jquery = (x_ite_Namespace .add ("jquery", jquery_default_));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(555);
+/* provided dependency */ var libtess_libtess = __webpack_require__(458);
 const libtess_default_ = libtess_libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (x_ite_Namespace .add ("libtess", libtess_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(362);
+/* provided dependency */ var X3D_$ = __webpack_require__(321);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -124542,7 +124408,7 @@ x_ite_Namespace, x_ite_Namespace .Fields,
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-10.4.1")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-10.4.2")] = x_ite_X3D;
 
 customElements .define ("x3d-canvas", x_ite_X3DCanvasElement);
 
