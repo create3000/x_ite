@@ -138,12 +138,12 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
    },
    transformLine (line)
    {
-      // Apply sceen nodes transformation in place here.
+      // Apply screen nodes transformation in place here.
       return this .textGeometry .transformLine (line);
    },
    transformMatrix (matrix)
    {
-      // Apply sceen nodes transformation in place here.
+      // Apply screen nodes transformation in place here.
       return this .textGeometry .transformMatrix (matrix);
    },
 });
