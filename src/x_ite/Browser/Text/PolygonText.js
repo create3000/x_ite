@@ -56,7 +56,7 @@ function PolygonText (text, fontStyle)
 {
    X3DTextGeometry .call (this, text, fontStyle);
 
-   text ._transparent = false;
+   text .setTransparent (false);
 }
 
 Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry .prototype),

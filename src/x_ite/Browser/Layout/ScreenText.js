@@ -398,9 +398,6 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
       Matrix4 .prototype .multLeft .call (renderContext .modelViewMatrix, this .matrix);
 
       renderContext .textureNode = this .textureNode;
-
-      if (!renderContext .transparent)
-         gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
    },
    transformLine: (() =>
    {

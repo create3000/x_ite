@@ -134,11 +134,7 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
 
       X3DGeometryNode .prototype .display .call (this, gl, renderContext);
 
-      // Clean up ScreenText.
-
       renderContext .textureNode = null;
-
-      gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
    },
    transformLine (line)
    {
