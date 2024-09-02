@@ -68,7 +68,7 @@ function NavigationInfo (executionContext)
 
    this ._avatarSize      .setUnit ("length");
    this ._speed           .setUnit ("speed");
-   this ._visibilityLimit .setUnit ("speed");
+   this ._visibilityLimit .setUnit ("length");
 }
 
 Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNode .prototype),
@@ -79,12 +79,14 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
 
       this ._type               .addInterest ("set_type__",               this);
       this ._headlight          .addInterest ("set_headlight__",          this);
+      this ._visibilityLimit    .addInterest ("set_visibilityLimit__",          this);
       this ._transitionStart    .addInterest ("set_transitionStart__",    this);
       this ._transitionComplete .addInterest ("set_transitionComplete__", this);
       this ._isBound            .addInterest ("set_isBound__",            this);
 
       this .set_type__ ();
       this .set_headlight__ ();
+      this .set_visibilityLimit__ ();
    },
    getViewer ()
    {
@@ -118,13 +120,11 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    {
       const nearValue = this .getCollisionRadius ();
 
-      return this .nearDistance ?? (nearValue === 0 ? 1e-5 : nearValue / 2);
+      return nearValue === 0 ? 1e-5 : nearValue / 2;
    },
    getFarValue (viewpoint)
    {
-      return this .farDistance ?? (this ._visibilityLimit .getValue ()
-         ? this ._visibilityLimit .getValue ()
-         : viewpoint .getMaxFarValue ());
+      return this .visibilityLimit || viewpoint .getMaxFarValue ();
    },
    getTransitionType: (function ()
    {
@@ -263,6 +263,10 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
       else
          this .enable = Function .prototype;
    },
+   set_visibilityLimit__ ()
+   {
+      this .visibilityLimit = Math .max (this ._visibilityLimit .getValue (), 0);
+   },
    set_transitionStart__ ()
    {
       if (!this ._transitionActive .getValue ())
@@ -280,34 +284,6 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
 
       if (this ._transitionActive .getValue ())
          this ._transitionActive = false;
-   },
-   transitionStart (layerNode)
-   {
-      // // If this is the default NavigationInfo node,
-      // // automatically determine the near and far clip planes,
-      // // as the viewpoint would do if viewAll were called.
-
-      // if (this !== layerNode .getNavigationInfoStack () .get () [0])
-      //    return;
-
-      // const
-      //    viewpointNode  = layerNode .getViewpoint (),
-      //    invModelMatrix = viewpointNode .getModelMatrix () .copy () .inverse (),
-      //    bbox           = layerNode .getBBox (new Box3 ()) .multRight (invModelMatrix),
-      //    distance       = viewpointNode .getLookAtDistance (bbox);
-
-      // if (bbox .size .equals (Vector3 .Zero))
-      // {
-      //    this .nearDistance = undefined;
-      //    this .farDistance  = undefined;
-      // }
-      // else
-      // {
-      //    this .nearDistance = distance * (0.125 / 10);
-      //    this .farDistance  = this .nearDistance * viewpointNode .getMaxFarValue () / 0.125;
-
-      //    console .log (this .nearDistance, this .farDistance);
-      // }
    },
    enable (type, renderObject)
    {

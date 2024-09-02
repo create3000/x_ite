@@ -292,7 +292,6 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       this .backgroundStack     .pushOnTop (backgroundNode);
       this .fogStack            .pushOnTop (fogNode);
 
-      navigationInfoNode .transitionStart (this);
       viewpointNode .resetUserOffsets ();
 
       if (viewpointNode ._viewAll .getValue ())
