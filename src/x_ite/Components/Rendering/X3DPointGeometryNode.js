@@ -57,7 +57,6 @@ function X3DPointGeometryNode (executionContext)
    this .setGeometryType (0);
    this .setPrimitiveMode (browser .getContext () .POINTS);
    this .setSolid (false);
-   this .setTransparent (true);
 }
 
 Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeometryNode .prototype),
@@ -80,6 +79,12 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          renderModeNodes = appearanceNode .getRenderModes (),
          attribNodes     = this .getAttrib (),
          attribBuffers   = this .getAttribBuffers ();
+
+      if (!renderContext .transparent)
+      {
+         gl .sampleCoverage (1.0, false);
+         gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+      }
 
       for (const node of renderModeNodes)
          node .enable (gl);
@@ -118,6 +123,8 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       for (const node of renderModeNodes)
          node .disable (gl);
+
+      gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
    },
    displayInstanced (gl, renderContext, shapeNode)
    {
@@ -127,6 +134,12 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          renderModeNodes = appearanceNode .getRenderModes (),
          attribNodes     = this .getAttrib (),
          attribBuffers   = this .getAttribBuffers ();
+
+      if (!renderContext .transparent)
+      {
+         gl .sampleCoverage (1.0, false);
+         gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+      }
 
       for (const node of renderModeNodes)
          node .enable (gl);
@@ -184,6 +197,8 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       for (const node of renderModeNodes)
          node .disable (gl);
+
+      gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
    },
 });
 

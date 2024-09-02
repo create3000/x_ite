@@ -1,14 +1,6 @@
 import { maxTexCoords } from "../../../../x_ite/Browser/Texturing/TexturingConfiguration.js";
 
 export default /* glsl */ `
-#if defined (X3D_NORMAL_TEXTURE)
-   #extension GL_OES_standard_derivatives : enable
-#endif
-
-#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   #extension GL_EXT_frag_depth : enable
-#endif
-
 #if defined (X3D_ALPHA_MODE_MASK)
    uniform float x3d_AlphaCutoff;
 #endif
@@ -95,6 +87,17 @@ fragment_main ()
 
    vec4 finalColor = getMaterialColor ();
 
+   #if defined (X3D_ALPHA_MODE_OPAQUE)
+      finalColor .a = 1.0;
+   #endif
+
+   #if defined (X3D_ALPHA_MODE_MASK)
+      if (finalColor .a < x3d_AlphaCutoff)
+         discard;
+
+      finalColor .a = 1.0;
+   #endif
+
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
       finalColor = getPointColor (finalColor);
    #endif
@@ -105,17 +108,6 @@ fragment_main ()
 
    #if defined (X3D_FOG)
       finalColor .rgb = getFogColor (finalColor .rgb);
-   #endif
-
-   #if defined (X3D_ALPHA_MODE_OPAQUE)
-      finalColor .a = 1.0;
-   #endif
-
-   #if defined (X3D_ALPHA_MODE_MASK)
-      if (finalColor .a < x3d_AlphaCutoff)
-         discard;
-
-      finalColor .a = 1.0;
    #endif
 
    finalColor .rgb = toneMap (finalColor .rgb);
