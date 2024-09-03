@@ -116,6 +116,12 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
       return trimmingContours;
    },
+   trimSurface (vertices)
+   {
+      const trimmingContours = this .getTrimmingContours ();
+
+      console .log (trimmingContours)
+   },
 });
 
 function filter (array, remove)
