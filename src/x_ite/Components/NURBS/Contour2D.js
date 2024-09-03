@@ -121,8 +121,12 @@ Object .assign (Object .setPrototypeOf (Contour2D .prototype, X3DNode .prototype
    },
    addTrimmingContour (trimmingContours)
    {
+      const trimmingContour = [ ];
+
       for (const childNode of this .childNodes)
-         trimmingContours .push (childNode .tessellate (2));
+         childNode .tessellate (2, trimmingContour);
+
+      trimmingContours .push (trimmingContour);
    }
 });
 

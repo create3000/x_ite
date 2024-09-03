@@ -52,7 +52,7 @@ import X3DNode                  from "../Core/X3DNode.js";
 import X3DNurbsControlCurveNode from "./X3DNurbsControlCurveNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import NURBS                    from "../../Browser/NURBS/NURBS.js";
-import Vector3                  from "../../../standard/Math/Numbers/Vector3.js";
+import Vector2                  from "../../../standard/Math/Numbers/Vector2.js";
 import nurbs                    from "../../../lib/nurbs/nurbs.js";
 
 function NurbsCurve2D (executionContext)
@@ -94,12 +94,8 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
    {
       return NURBS .getControlPoints2D (result, closed, order, weights, controlPoint);
    },
-   tessellate (type)
+   tessellate (type, array = this .array)
    {
-      const array = this .array;
-
-      array .length = 0;
-
       if (this ._order .getValue () < 2)
          return array;
 
@@ -142,6 +138,8 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
       {
          case 0:
          {
+            array .length = 0;
+
             for (let i = 0, length = points .length; i < length; i += 2)
             {
                array .push (points [i], points [i + 1]);
@@ -151,6 +149,8 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
          }
          case 1:
          {
+            array .length = 0;
+
             for (let i = 0, length = points .length; i < length; i += 2)
             {
                array .push (points [i], 0, points [i + 1]);
@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
          {
             for (let i = 0, length = points .length; i < length; i += 2)
             {
-               array .push (new Vector3 (points [i], points [i + 1], 0));
+               array .push (new Vector2 (points [i], points [i + 1]));
             }
 
             break;

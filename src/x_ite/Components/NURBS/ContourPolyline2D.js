@@ -51,7 +51,7 @@ import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DNode                  from "../Core/X3DNode.js";
 import X3DNurbsControlCurveNode from "./X3DNurbsControlCurveNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
-import Vector3                  from "../../../standard/Math/Numbers/Vector3.js";
+import Vector2                  from "../../../standard/Math/Numbers/Vector2.js";
 
 function ContourPolyline2D (executionContext)
 {
@@ -64,7 +64,7 @@ function ContourPolyline2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, X3DNurbsControlCurveNode .prototype),
 {
-   tessellate (type)
+   tessellate (type, controlPoints = this .controlPoints)
    {
       switch (type)
       {
@@ -72,7 +72,6 @@ Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, X3DNurbsCo
          {
             const
                controlPointArray = this ._controlPoint .getValue (),
-               controlPoints     = this .controlPoints,
                length            = this ._controlPoint .length;
 
             for (let i = 0; i < length; ++ i)
@@ -91,7 +90,6 @@ Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, X3DNurbsCo
          {
             const
                controlPointArray = this ._controlPoint .getValue (),
-               controlPoints     = this .controlPoints,
                length            = this ._controlPoint .length;
 
             for (let i = 0; i < length; ++ i)
@@ -109,21 +107,18 @@ Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, X3DNurbsCo
 
             return controlPoints;
          }
-         case 3:
+         case 2:
          {
             const
                controlPointArray = this ._controlPoint .getValue (),
-               controlPoints     = this .controlPoints,
                length            = this ._controlPoint .length;
 
             for (let i = 0; i < length; ++ i)
             {
                const i2 = i * 2;
 
-               controlPoints [i] = new Vector3 (controlPointArray [i2 + 0], controlPointArray [i2 + 1], 0);
+               controlPoints .push (new Vector2 (controlPointArray [i2 + 0], controlPointArray [i2 + 1]));
             }
-
-            controlPoints .length = length;
 
             return controlPoints;
          }
