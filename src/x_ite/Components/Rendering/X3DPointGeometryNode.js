@@ -80,8 +80,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          attribNodes     = this .getAttrib (),
          attribBuffers   = this .getAttribBuffers ();
 
-      // If we have x3d_TextureMatrix uniforms, then we have textures.
-      if (!(renderContext .transparent || shaderNode .x3d_TextureMatrix .length))
+      if (!renderContext .transparent)
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
 
       for (const node of renderModeNodes)
@@ -133,8 +132,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          attribNodes     = this .getAttrib (),
          attribBuffers   = this .getAttribBuffers ();
 
-      // If we have x3d_TextureMatrix uniforms, then we have textures.
-      if (!(renderContext .transparent || shaderNode .x3d_TextureMatrix .length))
+      if (!renderContext .transparent)
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
 
       for (const node of renderModeNodes)
