@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, X3DNurbsCo
 
             return controlPoints;
          }
-         case 2:
+         case 2: // Contour2D
          {
             const
                controlPointArray = this ._controlPoint .getValue (),

@@ -158,7 +158,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
 
             break;
          }
-         case 2:
+         case 2: // Contour2D
          {
             for (let i = 0, length = points .length; i < length; i += 2)
             {
