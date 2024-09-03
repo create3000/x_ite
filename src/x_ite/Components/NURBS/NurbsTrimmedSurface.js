@@ -52,6 +52,8 @@ import X3DNode                     from "../Core/X3DNode.js";
 import X3DNurbsSurfaceGeometryNode from "./X3DNurbsSurfaceGeometryNode.js";
 import X3DConstants                from "../../Base/X3DConstants.js";
 import X3DCast                     from "../../Base/X3DCast.js";
+import Vector3                     from "../../../standard/Math/Numbers/Vector3.js";
+import libtess                     from "../../../lib/libtess.js";
 
 function NurbsTrimmedSurface (executionContext)
 {
@@ -108,26 +110,71 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             trimmingContourNodes .push (trimmingContourNode);
       }
    },
-   getTrimmingContours ()
+   getTrimmingContours (trimmingContours)
    {
-      this .trimmingContours .length = 0;
-
       for (const trimmingContourNode of this .trimmingContourNodes)
-         trimmingContourNode .addTrimmingContour (this .trimmingContours);
-
-      return this .trimmingContours;
+         trimmingContourNode .addTrimmingContour (trimmingContours);
    },
    build ()
    {
       X3DNurbsSurfaceGeometryNode .prototype .build .call (this);
 
       const
-         texCoordArray    = this .getTexCoords (),
-         vertexArray      = this .getVertices (),
-         trimmingContours = this .getTrimmingContours ();
+         texCoordArray        = this .getTexCoords (),
+         normalArray          = this .getNormals (),
+         vertexArray          = this .getVertices (),
+         numTriangles         = vertexArray .length / 12,
+         defaultTexCoordArray = [ ],
+         contours             = [ ],
+         triangles            = [ ];
 
-      console .log (trimmingContours);
+      this .createDefaultNurbsTexCoords (defaultTexCoordArray);
+
+      this .getTrimmingContours (contours),
+      this .triangulatePolygon (contours, triangles);
+
+      console .log (triangles .toString ())
    },
+   triangulatePolygon: (() =>
+   {
+      // Function called for each vertex of tessellator output.
+
+      function vertexCallback (point, triangles)
+      {
+         triangles .push (point);
+      }
+
+      function combineCallback (coords, data, weight)
+      {
+         return new Vector3 (... coords);
+      }
+
+      const tessy = new libtess .GluTesselator ();
+
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
+      tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
+      tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
+      tessy .gluTessNormal (0, 0, 1);
+
+      return function (contours, triangles)
+      {
+         tessy .gluTessBeginPolygon (triangles);
+
+         for (const points of contours)
+         {
+            tessy .gluTessBeginContour ();
+
+            for (const point of points)
+               tessy .gluTessVertex (point, point);
+
+            tessy .gluTessEndContour ();
+         }
+
+         tessy .gluTessEndPolygon ();
+
+         return triangles;
+      };
+   })(),
 });
 
 function filter (array, remove)

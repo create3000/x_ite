@@ -52,7 +52,7 @@ import X3DNode                  from "../Core/X3DNode.js";
 import X3DNurbsControlCurveNode from "./X3DNurbsControlCurveNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import NURBS                    from "../../Browser/NURBS/NURBS.js";
-import Vector2                  from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3                  from "../../../standard/Math/Numbers/Vector3.js";
 import nurbs                    from "../../../lib/nurbs/nurbs.js";
 
 function NurbsCurve2D (executionContext)
@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
          {
             for (let i = 0, length = points .length; i < length; i += 2)
             {
-               array .push (new Vector2 (points [i], points [i + 1]));
+               array .push (new Vector3 (points [i], points [i + 1], 0));
             }
 
             break;

@@ -51,7 +51,7 @@ import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DNode                  from "../Core/X3DNode.js";
 import X3DNurbsControlCurveNode from "./X3DNurbsControlCurveNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
-import Vector2                  from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3                  from "../../../standard/Math/Numbers/Vector3.js";
 
 function ContourPolyline2D (executionContext)
 {
@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, X3DNurbsCo
             {
                const i2 = i * 2;
 
-               controlPoints .push (new Vector2 (controlPointArray [i2 + 0], controlPointArray [i2 + 1]));
+               controlPoints .push (new Vector3 (controlPointArray [i2 + 0], controlPointArray [i2 + 1], 0));
             }
 
             return controlPoints;

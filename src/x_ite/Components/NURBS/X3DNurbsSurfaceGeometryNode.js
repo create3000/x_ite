@@ -227,73 +227,86 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       this .setSolid (this ._solid .getValue ());
       this .setCCW (true);
    },
-   buildNurbsTexCoords: (() =>
+   buildNurbsTexCoords (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension)
+   {
+      const texCoordArray = this .getTexCoords ();
+
+      this .getMultiTexCoords () .push (texCoordArray);
+
+      if (this .texCoordNode && this .texCoordNode .getSize () <= uDimension * vDimension)
+      {
+         const
+            texUDegree       = uOrder - 1,
+            texVDegree       = vOrder - 1,
+            texUKnots        = uKnots,
+            texVKnots        = vKnots,
+            texControlPoints = this .getTexControlPoints (this .texControlPoints, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, this .texCoordNode);
+
+         this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
+      }
+      else if (this .nurbsTexCoordNode && this .nurbsTexCoordNode .isValid ())
+      {
+         const
+            node             = this .nurbsTexCoordNode,
+            texUDegree       = node ._uOrder .getValue () - 1,
+            texVDegree       = node ._vOrder .getValue () - 1,
+            texUKnots        = this .getKnots (this .texUKnots, false, node ._uOrder .getValue (), node ._uDimension .getValue (), node ._uKnot),
+            texVKnots        = this .getKnots (this .texVKnots, false, node ._vOrder .getValue (), node ._vDimension .getValue (), node ._vKnot),
+            texWeights       = this .getUVWeights (this .texWeights, node ._uDimension .getValue (), node ._vDimension .getValue (), node ._weight),
+            texControlPoints = node .getControlPoints (texWeights);
+
+         this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
+      }
+      else
+      {
+         this .createDefaultNurbsTexCoords (texCoordArray);
+      }
+   },
+   createDefaultNurbsTexCoords: (() =>
    {
       const
          defaultTexKnots         = [0, 0, 5, 5],
          defaultTexControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
 
-      return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension)
+      return function (texCoordArray)
       {
-         const sampleOptions = this .sampleOptions;
-
-         if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
-         {
-            var
-               texUDegree       = uOrder - 1,
-               texVDegree       = vOrder - 1,
-               texUKnots        = uKnots,
-               texVKnots        = vKnots,
-               texControlPoints = this .getTexControlPoints (this .texControlPoints, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, this .texCoordNode);
-         }
-         else if (this .nurbsTexCoordNode && this .nurbsTexCoordNode .isValid ())
-         {
-            var
-               node             = this .nurbsTexCoordNode,
-               texUDegree       = node ._uOrder .getValue () - 1,
-               texVDegree       = node ._vOrder .getValue () - 1,
-               texUKnots        = this .getKnots (this .texUKnots, false, node ._uOrder .getValue (), node ._uDimension .getValue (), node ._uKnot),
-               texVKnots        = this .getKnots (this .texVKnots, false, node ._vOrder .getValue (), node ._vDimension .getValue (), node ._vKnot),
-               texWeights       = this .getUVWeights (this .texWeights, node ._uDimension .getValue (), node ._vDimension .getValue (), node ._weight);
-               texControlPoints = node .getControlPoints (texWeights);
-         }
-         else
-         {
-            var
-               texUDegree       = 1,
-               texVDegree       = 1,
-               texUKnots        = defaultTexKnots,
-               texVKnots        = defaultTexKnots,
-               texControlPoints = defaultTexControlPoints;
-         }
-
-         const texSurface = this .texSurface = (this .texSurface || nurbs) ({
-            boundary: ["open", "open"],
-            degree: [texUDegree, texVDegree],
-            knots: [texUKnots, texVKnots],
-            points: texControlPoints,
-         });
-
-         sampleOptions .closed [0]  = false;
-         sampleOptions .closed [1]  = false;
-         sampleOptions .haveWeights = false;
-
          const
-            texMesh       = nurbs .sample (this .texMesh, texSurface, sampleOptions),
-            faces         = texMesh .faces,
-            points        = texMesh .points,
-            texCoordArray = this .getTexCoords ();
+            texUDegree       = 1,
+            texVDegree       = 1,
+            texUKnots        = defaultTexKnots,
+            texVKnots        = defaultTexKnots,
+            texControlPoints = defaultTexControlPoints;
 
-         this .getMultiTexCoords () .push (texCoordArray);
-
-         for (const face of faces)
-         {
-            const index = face * 4;
-
-            texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
-         }
+         this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
       };
    })(),
+   createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray)
+   {
+      const texSurface = this .texSurface = (this .texSurface || nurbs) ({
+         boundary: ["open", "open"],
+         degree: [texUDegree, texVDegree],
+         knots: [texUKnots, texVKnots],
+         points: texControlPoints,
+      });
+
+      const sampleOptions = this .sampleOptions;
+
+      sampleOptions .closed [0]  = false;
+      sampleOptions .closed [1]  = false;
+      sampleOptions .haveWeights = false;
+
+      const
+         texMesh = nurbs .sample (this .texMesh, texSurface, sampleOptions),
+         faces   = texMesh .faces,
+         points  = texMesh .points;
+
+      for (const face of faces)
+      {
+         const index = face * 4;
+
+         texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
+      }
+   },
    generateNormals (faces, points)
    {
       const
