@@ -213,7 +213,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       sampleOptions .haveWeights      = !! weights;
       sampleOptions .trimmingContours = this .getTrimmingContours ();
 
-      console .log (sampleOptions .trimmingContours)
+      // console .log (sampleOptions .trimmingContours)
 
       const
          mesh        = nurbs .sample (this .mesh, surface, sampleOptions),

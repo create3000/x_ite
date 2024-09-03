@@ -109,11 +109,9 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
    },
    getTrimmingContours ()
    {
-      const
-         trimmingContourNodes = this .trimmingContourNodes,
-         trimmingContours     = [ ];
+      const trimmingContours = [ ];
 
-      for (const trimmingContourNode of trimmingContourNodes)
+      for (const trimmingContourNode of this .trimmingContourNodes)
          trimmingContourNode .addTrimmingContour (trimmingContours);
 
       return trimmingContours;
