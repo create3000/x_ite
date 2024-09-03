@@ -60,6 +60,7 @@ function NurbsTrimmedSurface (executionContext)
    this .addType (X3DConstants .NurbsTrimmedSurface);
 
    this .trimmingContourNodes = [ ];
+   this .trimmingContours     = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbsSurfaceGeometryNode .prototype),
@@ -109,18 +110,18 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
    },
    getTrimmingContours ()
    {
-      const trimmingContours = [ ];
+      this .trimmingContours .length = 0;
 
       for (const trimmingContourNode of this .trimmingContourNodes)
-         trimmingContourNode .addTrimmingContour (trimmingContours);
+         trimmingContourNode .addTrimmingContour (this .trimmingContours);
 
-      return trimmingContours;
+      return this .trimmingContours;
    },
-   trimSurface (vertices)
+   trimSurface (verticesArray)
    {
       const trimmingContours = this .getTrimmingContours ();
 
-      console .log (trimmingContours)
+      console .log (trimmingContours);
    },
 });
 
