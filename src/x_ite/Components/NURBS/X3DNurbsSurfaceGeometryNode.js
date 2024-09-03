@@ -221,9 +221,9 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
          points      = mesh .points,
          vertexArray = this .getVertices ();
 
-      for (let i = 0, length = faces .length; i < length; ++ i)
+      for (const face of faces)
       {
-         const index = faces [i] * 3;
+         const index = face * 3;
 
          vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
       }
@@ -292,9 +292,9 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
          this .getMultiTexCoords () .push (texCoordArray);
 
-         for (let i = 0, length = faces .length; i < length; ++ i)
+         for (const face of faces)
          {
-            const index = faces [i] * 4;
+            const index = face * 4;
 
             texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
          }
