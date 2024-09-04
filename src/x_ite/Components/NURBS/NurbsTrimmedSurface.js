@@ -53,7 +53,6 @@ import X3DNurbsSurfaceGeometryNode from "./X3DNurbsSurfaceGeometryNode.js";
 import X3DConstants                from "../../Base/X3DConstants.js";
 import X3DCast                     from "../../Base/X3DCast.js";
 import Vector3                     from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix3                     from "../../../standard/Math/Numbers/Matrix3.js";
 import Triangle2                   from "../../../standard/Math/Geometry/Triangle2.js";
 import Triangle3                   from "../../../standard/Math/Geometry/Triangle3.js";
 import libtess                     from "../../../lib/libtess.js";
@@ -124,24 +123,41 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
    {
       X3DNurbsSurfaceGeometryNode .prototype .build .call (this);
 
+      const square = [
+         new Vector3 (0, 0, 0),
+         new Vector3 (1, 0, 0),
+         new Vector3 (1, 1, 0),
+         new Vector3 (0, 1, 0),
+      ];
+
       const
-         texCoordArray       = this .getTexCoords (),
-         normalArray         = this .getNormals (),
-         vertexArray         = this .getVertices (),
          defaultTriangles    = this .createDefaultNurbsTriangles ([ ]),
          numDefaultTriangles = defaultTriangles .length,
-         contours            = this .getTrimmingContours ([ ]),
-         triangles           = this .triangulatePolygon (contours, [ ]),
+         trimmingContours    = this .getTrimmingContours ([square]),
+         triangles           = this .triangulatePolygon (trimmingContours, [ ]),
          numTriangles        = triangles .length,
-         trimmedTexCoords    = [ ],
-         trimmedNormals      = [ ],
-         trimmedVertices     = [ ],
-         uvt                 = { };
+         contours            = [ ];
 
-      for (let t = 0; t < numTriangles; ++ t)
+      console .log (triangles .toString ())
+
+      for (let i = 0; i < numDefaultTriangles; i += 3)
+         contours .push ([defaultTriangles [i], defaultTriangles [i + 1], defaultTriangles [i + 2]])
+
+      for (let i = 0; i < numTriangles; i += 3)
+         contours .push ([triangles [i], triangles [i + 1], triangles [i + 2]]);
+
+      const
+         trimmedTriangles = this .triangulatePolygon (contours, [ ]),
+         trimmedTexCoords = [ ],
+         trimmedNormals   = [ ],
+         trimmedVertices  = [ ],
+         texCoordArray    = this .getTexCoords (),
+         normalArray      = this .getNormals (),
+         vertexArray      = this .getVertices (),
+         uvt              = { };
+
+      for (const p of trimmedTriangles)
       {
-         const p = triangles [t];
-
          for (let d = 0; d < numDefaultTriangles; d += 3)
          {
             const
@@ -149,37 +165,37 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
                b = defaultTriangles [d + 1],
                c = defaultTriangles [d + 2];
 
-            if (Triangle2 .isPointInTriangle (p, a, b, c))
-            {
-               const { u, v, t } = Triangle2 .toBarycentric (p, a, b, c, uvt);
+            if (!Triangle2 .isPointInTriangle (p, a, b, c))
+               continue;
 
-               trimmedTexCoords .push (
-                  u * texCoordArray [d * 4 + 0] + v * texCoordArray [d * 4 + 4] + t * texCoordArray [d * 4 + 8],
-                  u * texCoordArray [d * 4 + 1] + v * texCoordArray [d * 4 + 5] + t * texCoordArray [d * 4 + 9],
-                  u * texCoordArray [d * 4 + 2] + v * texCoordArray [d * 4 + 6] + t * texCoordArray [d * 4 + 10],
-                  1);
+            const { u, v, t } = Triangle2 .toBarycentric (p, a, b, c, uvt);
 
-               trimmedNormals .push (
-                  u * normalArray [d * 3 + 0] + v * normalArray [d * 3 + 3] + t * normalArray [d * 3 + 6],
-                  u * normalArray [d * 3 + 1] + v * normalArray [d * 3 + 4] + t * normalArray [d * 3 + 7],
-                  u * normalArray [d * 3 + 2] + v * normalArray [d * 3 + 5] + t * normalArray [d * 3 + 8]);
+            trimmedTexCoords .push (
+               u * texCoordArray [d * 4 + 0] + v * texCoordArray [d * 4 + 4] + t * texCoordArray [d * 4 + 8],
+               u * texCoordArray [d * 4 + 1] + v * texCoordArray [d * 4 + 5] + t * texCoordArray [d * 4 + 9],
+               u * texCoordArray [d * 4 + 2] + v * texCoordArray [d * 4 + 6] + t * texCoordArray [d * 4 + 10],
+               1);
 
-               trimmedVertices .push (
-                  u * vertexArray [d * 4 + 0] + v * vertexArray [d * 4 + 4] + t * vertexArray [d * 4 + 8],
-                  u * vertexArray [d * 4 + 1] + v * vertexArray [d * 4 + 5] + t * vertexArray [d * 4 + 9],
-                  u * vertexArray [d * 4 + 2] + v * vertexArray [d * 4 + 6] + t * vertexArray [d * 4 + 10],
-                  1);
+            trimmedNormals .push (
+               u * normalArray [d * 3 + 0] + v * normalArray [d * 3 + 3] + t * normalArray [d * 3 + 6],
+               u * normalArray [d * 3 + 1] + v * normalArray [d * 3 + 4] + t * normalArray [d * 3 + 7],
+               u * normalArray [d * 3 + 2] + v * normalArray [d * 3 + 5] + t * normalArray [d * 3 + 8]);
 
-               break;
-            }
+            trimmedVertices .push (
+               u * vertexArray [d * 4 + 0] + v * vertexArray [d * 4 + 4] + t * vertexArray [d * 4 + 8],
+               u * vertexArray [d * 4 + 1] + v * vertexArray [d * 4 + 5] + t * vertexArray [d * 4 + 9],
+               u * vertexArray [d * 4 + 2] + v * vertexArray [d * 4 + 6] + t * vertexArray [d * 4 + 10],
+               1);
+
+            break;
          }
       }
+
+      console .log (trimmedVertices .length)
 
       texCoordArray .assign (trimmedTexCoords);
       normalArray   .assign (trimmedNormals);
       vertexArray   .assign (trimmedVertices);
-
-      console .log (vertexArray .filter ((_,i) => i % 4 < 3) .toString ())
    },
    createDefaultNurbsTriangles (triangles)
    {
