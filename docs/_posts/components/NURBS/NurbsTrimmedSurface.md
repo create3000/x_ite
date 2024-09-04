@@ -119,6 +119,14 @@ A set of [Contour2D](/x_ite/components/nurbs/contour2d/) nodes are used as trimm
 
 - If no trimming contours are defined, NurbsTrimmedSurface has same semantics as [NurbsPatchSurface](/x_ite/components/nurbs/nurbspatchsurface/) node.
 
+## Example
+
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/NURBS/NurbsTrimmedSurface/NurbsTrimmedSurface.x3d" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/examples/NURBS/NurbsTrimmedSurface/NurbsTrimmedSurface.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/NURBS/NurbsTrimmedSurface/NurbsTrimmedSurface.x3d)
+{: .example-links }
+
 ## See Also
 
 - [X3D Specification of NurbsTrimmedSurface Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsTrimmedSurface)
