@@ -247,7 +247,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
          this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
       }
-      else if (this .nurbsTexCoordNode && this .nurbsTexCoordNode .isValid ())
+      else if (this .nurbsTexCoordNode ?.isValid ())
       {
          const
             node             = this .nurbsTexCoordNode,
