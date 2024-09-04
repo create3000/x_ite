@@ -7,6 +7,13 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v10.4.3 Released
+
+*Leipzig, 8th September 2024:* This release fixed some old issues.
+
+* Improved rendering of opaque points, especially with [PointSet](/x_ite/components/rendering/pointset/).
+* Implemented [NurbsTrimmedSurface](/x_ite/components/nurbs/nurbstrimmedsurface/).
+
 ## X_ITE v10.4.0 Released
 
 *Leipzig, 27th August 2024:* With this version of X_ITE we have now implemented render optimizations for StaticGroup nodes. A StaticGroup node will now completely remove all transformations and bake them into the geometry. Furthermore, assuming the Appearance node is exactly the same (cloned) and the geometry nodes are compatible, the geometry nodes will be merged into a single one.
