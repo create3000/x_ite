@@ -49,6 +49,10 @@ import Vector2 from "../Numbers/Vector2.js";
 
 const Triangle2 =
 {
+   area ({ x: ax, y: ay }, { x: bx, y: by }, { x: cx, y: cy })
+   {
+      return Math .abs (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by)) / 2;
+   },
    isPointInTriangle ({ x: px, y: py }, { x: ax, y: ay }, { x: bx, y: by }, { x: cx, y: cy })
    {
       // https://en.wikipedia.org/wiki/Barycentric_coordinate_system

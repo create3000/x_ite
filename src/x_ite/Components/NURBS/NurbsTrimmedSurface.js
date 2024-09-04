@@ -145,6 +145,8 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          new Vector3 (0, 1, 0),
       ];
 
+      // Triangulate holes on unit square.
+
       const
          defaultTriangles     = this .createDefaultNurbsTriangles ([ ]),
          numDefaultTriangles  = defaultTriangles .length,
@@ -163,18 +165,44 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          contours .push ([trimmingTriangles [i], trimmingTriangles [i + 1], trimmingTriangles [i + 2]]);
 
       const
-         trimmedTriangles = this .triangulatePolygon (contours, [ ]),
-         trimmedTexCoords = [ ],
-         trimmedNormals   = [ ],
-         trimmedVertices  = [ ],
-         texCoordArray    = this .getTexCoords (),
-         normalArray      = this .getNormals (),
-         vertexArray      = this .getVertices (),
-         uvt              = { };
+         trimmedTriangles    = this .triangulatePolygon (contours, [ ]),
+         numTrimmedTriangles = trimmedTriangles .length,
+         trimmedTexCoords    = [ ],
+         trimmedNormals      = [ ],
+         trimmedVertices     = [ ],
+         texCoordArray       = this .getTexCoords (),
+         normalArray         = this .getNormals (),
+         vertexArray         = this .getVertices (),
+         uvt                 = { };
 
-      console .log (trimmedTriangles .toString ());
+      // console .log (trimmedTriangles .toString ());
 
-      const EPSILON = 1e-3;
+      // Filter triangle with very small area.
+
+      const MIN_AREA = 1e-5;
+
+      let f = 0;
+
+      for (let t = 0; t < numTrimmedTriangles; t += 3)
+      {
+         const
+            a = trimmedTriangles [t],
+            b = trimmedTriangles [t + 1],
+            c = trimmedTriangles [t + 2];
+
+         if (Triangle2 .area (a, b, c) < MIN_AREA)
+            continue;
+
+         trimmedTriangles [f ++] = a,
+         trimmedTriangles [f ++] = b,
+         trimmedTriangles [f ++] = c;
+      }
+
+      trimmedTriangles .length = f;
+
+      // Find points in defaultTriangles and interpolate new points.
+
+      const MIN_BARYCENTRIC_DISTANCE = 1e-3;
 
       for (const p of trimmedTriangles)
       {
@@ -187,13 +215,13 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
             const { u, v, t } = Triangle2 .toBarycentric (p, a, b, c, uvt);
 
-            if (Math .abs (u - 0.5) > 0.5 + EPSILON)
+            if (Math .abs (u - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
                continue;
 
-            if (Math .abs (v - 0.5) > 0.5 + EPSILON)
+            if (Math .abs (v - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
                continue;
 
-            if (Math .abs (t - 0.5) > 0.5 + EPSILON)
+            if (Math .abs (t - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
                continue;
 
             trimmedTexCoords .push (
