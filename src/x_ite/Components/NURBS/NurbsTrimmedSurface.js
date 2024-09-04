@@ -113,10 +113,10 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             trimmingContourNodes .push (trimmingContourNode);
       }
    },
-   getTrimmingContours (trimmingContours)
+   getTrimmingContours (offset, scale, trimmingContours)
    {
       for (const trimmingContourNode of this .trimmingContourNodes)
-         trimmingContourNode .addTrimmingContour (trimmingContours);
+         trimmingContourNode .addTrimmingContour (offset, scale, trimmingContours);
 
       return trimmingContours;
    },
@@ -128,23 +128,23 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          uMax   = uKnots .at (-1),
          vMax   = vKnots .at (-1),
          uScale = uMax - uMin,
-         vScale = uMax - vMin;
+         vScale = vMax - vMin;
 
       const
          offset = new Vector3 (uMin, vMin, 0),
          scale  = new Vector3 (uScale, vScale, 1)
 
       const square = [
-         new Vector3 (uMin, vMin, 0),
-         new Vector3 (uMax, vMin, 0),
-         new Vector3 (uMax, vMax, 0),
-         new Vector3 (uMin, vMax, 0),
+         new Vector3 (0, 0, 0),
+         new Vector3 (1, 0, 0),
+         new Vector3 (1, 1, 0),
+         new Vector3 (0, 1, 0),
       ];
 
       const
-         defaultTriangles     = this .createDefaultNurbsTriangles ([ ]) .map (p => p .multVec (scale) .add (offset)),
+         defaultTriangles     = this .createDefaultNurbsTriangles ([ ]),
          numDefaultTriangles  = defaultTriangles .length,
-         trimmingContours     = this .getTrimmingContours ([square]),
+         trimmingContours     = this .getTrimmingContours (offset, scale, [square]),
          trimmingTriangles    = this .triangulatePolygon (trimmingContours, [ ]),
          numTrimmingTriangles = trimmingTriangles .length,
          contours             = [ ];
@@ -165,13 +165,9 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          vertexArray      = this .getVertices (),
          uvt              = { };
 
-      const
-         dMin = defaultTriangles .reduce ((p, c) => p .min (c), new Vector3 (+Infinity, +Infinity, +Infinity)),
-         dMax = defaultTriangles .reduce ((p, c) => p .max (c), new Vector3 (-Infinity, -Infinity, -Infinity));
+      console .log (trimmedTriangles .toString ())
 
-      trimmedTriangles .forEach (p => p .min (dMax) .max (dMin));
-
-      const EPSILON = 1e-5;
+      const EPSILON = 1e-3;
 
       for (const p of trimmedTriangles)
       {

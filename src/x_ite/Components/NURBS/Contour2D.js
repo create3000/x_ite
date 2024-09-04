@@ -119,12 +119,14 @@ Object .assign (Object .setPrototypeOf (Contour2D .prototype, X3DNode .prototype
          }
       }
    },
-   addTrimmingContour (trimmingContours)
+   addTrimmingContour (offset, scale, trimmingContours)
    {
       const trimmingContour = [ ];
 
       for (const childNode of this .childNodes)
          childNode .tessellate (2, trimmingContour);
+
+      trimmingContour .forEach (point => point .subtract (offset) .divVec (scale));
 
       trimmingContours .push (trimmingContour);
    }

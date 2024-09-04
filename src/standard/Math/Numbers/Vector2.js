@@ -45,6 +45,8 @@
  *
  ******************************************************************************/
 
+import Algorithm from "../Algorithm.js";
+
 function Vector2 (x = 0, y = 0)
 {
    this .x = x;
@@ -204,6 +206,11 @@ Object .assign (Vector2 .prototype,
       this .x = x;
       this .y = y;
       return this;
+   },
+   clamp (min, max)
+   {
+      this .x = Algorithm .clamp (this .x, min .x, max .x);
+      this .y = Algorithm .clamp (this .y, min .y, max .y);
    },
    toString ()
    {

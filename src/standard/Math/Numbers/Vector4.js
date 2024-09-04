@@ -45,6 +45,8 @@
  *
  ******************************************************************************/
 
+import Algorithm from "../Algorithm.js";
+
 function Vector4 (x = 0, y = 0, z = 0, w = 0)
 {
    this .x = x;
@@ -259,6 +261,13 @@ Object .assign (Vector4 .prototype,
       this .z = z;
       this .w = w;
       return this;
+   },
+   clamp (min, max)
+   {
+      this .x = Algorithm .clamp (this .x, min .x, max .x);
+      this .y = Algorithm .clamp (this .y, min .y, max .y);
+      this .z = Algorithm .clamp (this .z, min .z, max .z);
+      this .w = Algorithm .clamp (this .w, min .w, max .w);
    },
    toString ()
    {

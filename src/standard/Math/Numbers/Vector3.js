@@ -252,6 +252,12 @@ Object .assign (Vector3 .prototype,
       this .z = z;
       return this;
    },
+   clamp (min, max)
+   {
+      this .x = Algorithm .clamp (this .x, min .x, max .x);
+      this .y = Algorithm .clamp (this .y, min .y, max .y);
+      this .z = Algorithm .clamp (this .z, min .z, max .z);
+   },
    toString ()
    {
       return this .x + " " +
