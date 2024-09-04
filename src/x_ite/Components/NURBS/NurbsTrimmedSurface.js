@@ -178,7 +178,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
       // console .log (trimmedTriangles .toString ());
 
-      // Clamp triangles to prevent errors.
+      // Clamp triangles to make sure every point can be found.
 
       for (const p of trimmedTriangles)
       {
