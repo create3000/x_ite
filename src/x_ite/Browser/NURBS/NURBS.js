@@ -294,13 +294,6 @@ const NURBS =
          }
 
          knots .length = length;
-
-         // Scale knots.
-
-         const max = knots .at (-1);
-
-         for (let i = 0; i < length; ++ i)
-            knots [i] /= max;
       }
 
       if (closed)
@@ -309,6 +302,16 @@ const NURBS =
 
          for (let i = 1, l = order - 1; i < l; ++ i)
             knots .push (knots .at (-1) + (knots [i] - knots [i - 1]));
+      }
+
+      if (generateUniform)
+      {
+         // Scale knots.
+
+         const max = knots .at (-1);
+
+         for (let i = 0; i < knots .length; ++ i)
+            knots [i] /= max;
       }
 
       return knots;
