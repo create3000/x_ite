@@ -300,7 +300,9 @@ const NURBS =
       {
          // Make knots periodic.
 
-         for (let i = 1, l = order - 1; i < l; ++ i)
+         const l = order - 1;
+
+         for (let i = 1; i < l; ++ i)
             knots .push (knots .at (-1) + (knots [i] - knots [i - 1]));
       }
 
