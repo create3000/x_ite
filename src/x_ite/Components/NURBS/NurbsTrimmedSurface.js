@@ -125,20 +125,8 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
       return trimmingContours;
    },
-   trimSurface (uKnots, vKnots)
+   trimSurface: (function ()
    {
-      const
-         uMin   = uKnots .at (0),
-         vMin   = vKnots .at (0),
-         uMax   = uKnots .at (-1),
-         vMax   = vKnots .at (-1),
-         uScale = uMax - uMin,
-         vScale = vMax - vMin;
-
-      const
-         offset = new Vector3 (uMin, vMin, 0),
-         scale  = new Vector3 (uScale, vScale, 1)
-
       const unitSquare = [
          new Vector3 (0, 0, 0),
          new Vector3 (1, 0, 0),
@@ -146,121 +134,134 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          new Vector3 (0, 1, 0),
       ];
 
-      // Triangulate holes on unit square.
-
-      const
-         defaultTriangles     = this .createDefaultNurbsTriangles ([ ]),
-         numDefaultTriangles  = defaultTriangles .length,
-         trimmingContours     = this .getTrimmingContours (offset, scale, [unitSquare]),
-         trimmingTriangles    = this .triangulatePolygon (trimmingContours, [ ]),
-         numTrimmingTriangles = trimmingTriangles .length,
-         contours             = [ ];
-
-      if (trimmingContours .length === 1)
-         return;
-
-      for (let i = 0; i < numDefaultTriangles; i += 3)
-         contours .push ([defaultTriangles [i], defaultTriangles [i + 1], defaultTriangles [i + 2]])
-
-      for (let i = 0; i < numTrimmingTriangles; i += 3)
-         contours .push ([trimmingTriangles [i], trimmingTriangles [i + 1], trimmingTriangles [i + 2]]);
-
-      const
-         trimmedTriangles    = this .triangulatePolygon (contours, [ ]),
-         numTrimmedTriangles = trimmedTriangles .length,
-         trimmedTexCoords    = [ ],
-         trimmedNormals      = [ ],
-         trimmedVertices     = [ ],
-         texCoordArray       = this .getTexCoords (),
-         normalArray         = this .getNormals (),
-         vertexArray         = this .getVertices (),
-         uvt                 = { };
-
-      // console .log (trimmedTriangles .toString ());
-
-      // Clamp triangles to make sure every point can be found.
-
-      for (const p of trimmedTriangles)
-      {
-         p .x = Algorithm .clamp (p .x , 0, 1);
-         p .y = Algorithm .clamp (p .y , 0, 1);
-      }
-
-      // Filter triangles with very small area.
-
-      const MIN_AREA = 1e-5;
-
-      let f = 0;
-
-      for (let t = 0; t < numTrimmedTriangles; t += 3)
+      return function (uKnots, vKnots)
       {
          const
-            a = trimmedTriangles [t],
-            b = trimmedTriangles [t + 1],
-            c = trimmedTriangles [t + 2];
+            uMin   = uKnots .at (0),
+            vMin   = vKnots .at (0),
+            uMax   = uKnots .at (-1),
+            vMax   = vKnots .at (-1),
+            uScale = uMax - uMin,
+            vScale = vMax - vMin,
+            offset = new Vector3 (uMin, vMin, 0),
+            scale  = new Vector3 (uScale, vScale, 1)
 
-         if (Triangle2 .area (a, b, c) < MIN_AREA)
-            continue;
+         // Triangulate holes on unit square.
 
-         trimmedTriangles [f ++] = a,
-         trimmedTriangles [f ++] = b,
-         trimmedTriangles [f ++] = c;
-      }
+         const
+            defaultTriangles     = this .createDefaultNurbsTriangles ([ ]),
+            numDefaultTriangles  = defaultTriangles .length,
+            trimmingContours     = this .getTrimmingContours (offset, scale, [unitSquare]),
+            trimmingTriangles    = this .triangulatePolygon (trimmingContours, [ ]),
+            numTrimmingTriangles = trimmingTriangles .length,
+            contours             = [ ];
 
-      trimmedTriangles .length = f;
+         if (trimmingContours .length === 1)
+            return;
 
-      // Find points in defaultTriangles and interpolate new points.
+         for (let i = 0; i < numDefaultTriangles; i += 3)
+            contours .push ([defaultTriangles [i], defaultTriangles [i + 1], defaultTriangles [i + 2]])
 
-      const MIN_BARYCENTRIC_DISTANCE = 1e-3;
+         for (let i = 0; i < numTrimmingTriangles; i += 3)
+            contours .push ([trimmingTriangles [i], trimmingTriangles [i + 1], trimmingTriangles [i + 2]]);
 
-      for (const p of trimmedTriangles)
-      {
-         for (let d = 0; d < numDefaultTriangles; d += 3)
+         const
+            trimmedTriangles    = this .triangulatePolygon (contours, [ ]),
+            numTrimmedTriangles = trimmedTriangles .length,
+            trimmedTexCoords    = [ ],
+            trimmedNormals      = [ ],
+            trimmedVertices     = [ ],
+            texCoordArray       = this .getTexCoords (),
+            normalArray         = this .getNormals (),
+            vertexArray         = this .getVertices (),
+            uvt                 = { };
+
+         // console .log (trimmedTriangles .toString ());
+
+         // Clamp triangles to make sure every point can be found.
+
+         for (const p of trimmedTriangles)
+         {
+            p .x = Algorithm .clamp (p .x , 0, 1);
+            p .y = Algorithm .clamp (p .y , 0, 1);
+         }
+
+         // Filter triangles with very small area.
+
+         const MIN_AREA = 1e-5;
+
+         let f = 0;
+
+         for (let t = 0; t < numTrimmedTriangles; t += 3)
          {
             const
-               a = defaultTriangles [d],
-               b = defaultTriangles [d + 1],
-               c = defaultTriangles [d + 2];
+               a = trimmedTriangles [t],
+               b = trimmedTriangles [t + 1],
+               c = trimmedTriangles [t + 2];
 
-            const { u, v, t } = Triangle2 .toBarycentric (p, a, b, c, uvt);
-
-            if (Math .abs (u - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
+            if (Triangle2 .area (a, b, c) < MIN_AREA)
                continue;
 
-            if (Math .abs (v - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
-               continue;
-
-            if (Math .abs (t - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
-               continue;
-
-            trimmedTexCoords .push (
-               u * texCoordArray [d * 4 + 0] + v * texCoordArray [d * 4 + 4] + t * texCoordArray [d * 4 + 8],
-               u * texCoordArray [d * 4 + 1] + v * texCoordArray [d * 4 + 5] + t * texCoordArray [d * 4 + 9],
-               u * texCoordArray [d * 4 + 2] + v * texCoordArray [d * 4 + 6] + t * texCoordArray [d * 4 + 10],
-               1
-            );
-
-            trimmedNormals .push (
-               u * normalArray [d * 3 + 0] + v * normalArray [d * 3 + 3] + t * normalArray [d * 3 + 6],
-               u * normalArray [d * 3 + 1] + v * normalArray [d * 3 + 4] + t * normalArray [d * 3 + 7],
-               u * normalArray [d * 3 + 2] + v * normalArray [d * 3 + 5] + t * normalArray [d * 3 + 8]
-            );
-
-            trimmedVertices .push (
-               u * vertexArray [d * 4 + 0] + v * vertexArray [d * 4 + 4] + t * vertexArray [d * 4 + 8],
-               u * vertexArray [d * 4 + 1] + v * vertexArray [d * 4 + 5] + t * vertexArray [d * 4 + 9],
-               u * vertexArray [d * 4 + 2] + v * vertexArray [d * 4 + 6] + t * vertexArray [d * 4 + 10],
-               1
-            );
-
-            break;
+            trimmedTriangles [f ++] = a,
+            trimmedTriangles [f ++] = b,
+            trimmedTriangles [f ++] = c;
          }
-      }
 
-      texCoordArray .assign (trimmedTexCoords);
-      normalArray   .assign (trimmedNormals);
-      vertexArray   .assign (trimmedVertices);
-   },
+         trimmedTriangles .length = f;
+
+         // Find points in defaultTriangles and interpolate new points.
+
+         const MIN_BARYCENTRIC_DISTANCE = 1e-3;
+
+         for (const p of trimmedTriangles)
+         {
+            for (let d = 0; d < numDefaultTriangles; d += 3)
+            {
+               const
+                  a = defaultTriangles [d],
+                  b = defaultTriangles [d + 1],
+                  c = defaultTriangles [d + 2];
+
+               const { u, v, t } = Triangle2 .toBarycentric (p, a, b, c, uvt);
+
+               if (Math .abs (u - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
+                  continue;
+
+               if (Math .abs (v - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
+                  continue;
+
+               if (Math .abs (t - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
+                  continue;
+
+               trimmedTexCoords .push (
+                  u * texCoordArray [d * 4 + 0] + v * texCoordArray [d * 4 + 4] + t * texCoordArray [d * 4 + 8],
+                  u * texCoordArray [d * 4 + 1] + v * texCoordArray [d * 4 + 5] + t * texCoordArray [d * 4 + 9],
+                  u * texCoordArray [d * 4 + 2] + v * texCoordArray [d * 4 + 6] + t * texCoordArray [d * 4 + 10],
+                  1
+               );
+
+               trimmedNormals .push (
+                  u * normalArray [d * 3 + 0] + v * normalArray [d * 3 + 3] + t * normalArray [d * 3 + 6],
+                  u * normalArray [d * 3 + 1] + v * normalArray [d * 3 + 4] + t * normalArray [d * 3 + 7],
+                  u * normalArray [d * 3 + 2] + v * normalArray [d * 3 + 5] + t * normalArray [d * 3 + 8]
+               );
+
+               trimmedVertices .push (
+                  u * vertexArray [d * 4 + 0] + v * vertexArray [d * 4 + 4] + t * vertexArray [d * 4 + 8],
+                  u * vertexArray [d * 4 + 1] + v * vertexArray [d * 4 + 5] + t * vertexArray [d * 4 + 9],
+                  u * vertexArray [d * 4 + 2] + v * vertexArray [d * 4 + 6] + t * vertexArray [d * 4 + 10],
+                  1
+               );
+
+               break;
+            }
+         }
+
+         texCoordArray .assign (trimmedTexCoords);
+         normalArray   .assign (trimmedNormals);
+         vertexArray   .assign (trimmedVertices);
+      };
+   })(),
    createDefaultNurbsTriangles (triangles)
    {
       const
