@@ -114,13 +114,13 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
       this .requestRebuild ();
    },
-   getUTessellation (numKnots)
+   getUTessellation ()
    {
-      return Math .floor (NURBS .getTessellation (this ._uTessellation .getValue (), numKnots - this ._uOrder .getValue ()) * this .tessellationScale);
+      return Math .floor (NURBS .getTessellation (this ._uTessellation .getValue (), this ._uDimension .getValue ()) * this .tessellationScale);
    },
-   getVTessellation (numKnots)
+   getVTessellation (numWeights)
    {
-      return Math .floor (NURBS .getTessellation (this ._vTessellation .getValue (), numKnots - this ._vOrder .getValue ()) * this .tessellationScale);
+      return Math .floor (NURBS .getTessellation (this ._vTessellation .getValue (), this ._vDimension .getValue ()) * this .tessellationScale);
    },
    getUClosed (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
    {
@@ -204,8 +204,8 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
       const sampleOptions = this .sampleOptions;
 
-      sampleOptions .resolution [0] = this .getUTessellation (uKnots .length);
-      sampleOptions .resolution [1] = this .getVTessellation (vKnots .length);
+      sampleOptions .resolution [0] = this .getUTessellation ();
+      sampleOptions .resolution [1] = this .getVTessellation ();
       sampleOptions .closed [0]     = uClosed;
       sampleOptions .closed [1]     = vClosed;
       sampleOptions .haveWeights    = !! weights;

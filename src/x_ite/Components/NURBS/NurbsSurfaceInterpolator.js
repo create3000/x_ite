@@ -125,13 +125,17 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
                {
                   const { u, v, t } = uvt;
 
-                  const normal = new Vector3 (u * normalArray [i3 + 0] + v * normalArray [i3 + 3] + t * normalArray [i3 + 6],
-                                              u * normalArray [i3 + 1] + v * normalArray [i3 + 4] + t * normalArray [i3 + 7],
-                                              u * normalArray [i3 + 2] + v * normalArray [i3 + 5] + t * normalArray [i3 + 8]);
+                  const normal = new Vector3 (
+                     u * normalArray [i3 + 0] + v * normalArray [i3 + 3] + t * normalArray [i3 + 6],
+                     u * normalArray [i3 + 1] + v * normalArray [i3 + 4] + t * normalArray [i3 + 7],
+                     u * normalArray [i3 + 2] + v * normalArray [i3 + 5] + t * normalArray [i3 + 8]
+                  );
 
-                  const position = new Vector3 (u * verticesArray [i4 + 0] + v * verticesArray [i4 + 4] + t * verticesArray [i4 +  8],
-                                                u * verticesArray [i4 + 1] + v * verticesArray [i4 + 5] + t * verticesArray [i4 +  9],
-                                                u * verticesArray [i4 + 2] + v * verticesArray [i4 + 6] + t * verticesArray [i4 + 10]);
+                  const position = new Vector3 (
+                     u * verticesArray [i4 + 0] + v * verticesArray [i4 + 4] + t * verticesArray [i4 +  8],
+                     u * verticesArray [i4 + 1] + v * verticesArray [i4 + 5] + t * verticesArray [i4 +  9],
+                     u * verticesArray [i4 + 2] + v * verticesArray [i4 + 6] + t * verticesArray [i4 + 10]
+                  );
 
                   this ._normal_changed   = normal;
                   this ._position_changed = position;

@@ -228,18 +228,21 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
                u * texCoordArray [d * 4 + 0] + v * texCoordArray [d * 4 + 4] + t * texCoordArray [d * 4 + 8],
                u * texCoordArray [d * 4 + 1] + v * texCoordArray [d * 4 + 5] + t * texCoordArray [d * 4 + 9],
                u * texCoordArray [d * 4 + 2] + v * texCoordArray [d * 4 + 6] + t * texCoordArray [d * 4 + 10],
-               1);
+               1
+            );
 
             trimmedNormals .push (
                u * normalArray [d * 3 + 0] + v * normalArray [d * 3 + 3] + t * normalArray [d * 3 + 6],
                u * normalArray [d * 3 + 1] + v * normalArray [d * 3 + 4] + t * normalArray [d * 3 + 7],
-               u * normalArray [d * 3 + 2] + v * normalArray [d * 3 + 5] + t * normalArray [d * 3 + 8]);
+               u * normalArray [d * 3 + 2] + v * normalArray [d * 3 + 5] + t * normalArray [d * 3 + 8]
+            );
 
             trimmedVertices .push (
                u * vertexArray [d * 4 + 0] + v * vertexArray [d * 4 + 4] + t * vertexArray [d * 4 + 8],
                u * vertexArray [d * 4 + 1] + v * vertexArray [d * 4 + 5] + t * vertexArray [d * 4 + 9],
                u * vertexArray [d * 4 + 2] + v * vertexArray [d * 4 + 6] + t * vertexArray [d * 4 + 10],
-               1);
+               1
+            );
 
             break;
          }
