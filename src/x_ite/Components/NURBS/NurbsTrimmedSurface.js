@@ -103,6 +103,9 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
    {
       const trimmingContourNodes = this .trimmingContourNodes;
 
+      for (const trimmingContourNode of trimmingContourNodes)
+         trimmingContourNode .removeInterest ("addNodeEvent", this);
+
       trimmingContourNodes .length = 0;
 
       for (const node of this ._trimmingContour)
@@ -112,6 +115,9 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          if (trimmingContourNode)
             trimmingContourNodes .push (trimmingContourNode);
       }
+
+      for (const trimmingContourNode of trimmingContourNodes)
+         trimmingContourNode .addInterest ("addNodeEvent", this);
    },
    getTrimmingContours (offset, scale, trimmingContours)
    {

@@ -96,28 +96,22 @@ Object .assign (Object .setPrototypeOf (Contour2D .prototype, X3DNode .prototype
    {
       const childNodes = this .childNodes;
 
+      for (const childNode of childNodes)
+         childNode .removeInterest ("addNodeEvent", this);
+
       childNodes .length = 0;
 
       for (const node of this ._children)
       {
-         const childNode = X3DCast (X3DConstants .NurbsCurve2D, node);
+         const childNode = X3DCast (X3DConstants .NurbsCurve2D, node)
+            ?? X3DCast (X3DConstants .ContourPolyline2D, node);
 
          if (childNode)
-         {
             childNodes .push (childNode);
-            continue;
-         }
-         else
-         {
-            const childNode = X3DCast (X3DConstants .ContourPolyline2D, node);
-
-            if (childNode)
-            {
-               childNodes .push (childNode);
-               continue;
-            }
-         }
       }
+
+      for (const childNode of childNodes)
+         childNode .addInterest ("addNodeEvent", this);
    },
    addTrimmingContour (offset, scale, trimmingContours)
    {
