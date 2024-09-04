@@ -54,6 +54,7 @@ import X3DConstants                from "../../Base/X3DConstants.js";
 import X3DCast                     from "../../Base/X3DCast.js";
 import Vector3                     from "../../../standard/Math/Numbers/Vector3.js";
 import Triangle2                   from "../../../standard/Math/Geometry/Triangle2.js";
+import Algorithm                   from "../../../standard/Math/Algorithm.js";
 import libtess                     from "../../../lib/libtess.js";
 
 function NurbsTrimmedSurface (executionContext)
@@ -176,6 +177,14 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          uvt                 = { };
 
       // console .log (trimmedTriangles .toString ());
+
+      // Clamp triangles to prevent errors.
+
+      for (const p of trimmedTriangles)
+      {
+         p .x = Algorithm .clamp (p .x , 0, 1);
+         p .y = Algorithm .clamp (p .y , 0, 1);
+      }
 
       // Filter triangles with very small area.
 
