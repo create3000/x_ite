@@ -267,7 +267,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    getUpVector ()
    {
       // Local y-axis,
-      // see https://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
+      // see https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo.
       return Vector3 .yAxis;
    },
    getSpeedFactor ()
