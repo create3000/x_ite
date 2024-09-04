@@ -34,13 +34,21 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
       }
       case x3d_Sphere:
       {
-         vec2 N = normalize (gl_FrontFacing ? normal : -normal) .xy;
+         #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
+            vec2 N = normalize (normal) .xy;
+         #else
+            vec2 N = normalize (gl_FrontFacing ? normal : -normal) .xy;
+         #endif
 
          return vec4 (N * 0.5 + 0.5, 0.0, 1.0);
       }
       case x3d_CameraSpaceNormal:
       {
-         vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+         #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
+            vec3 N = normalize (normal);
+         #else
+            vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+         #endif
 
          return vec4 (N, 1.0);
       }
@@ -50,13 +58,21 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
       }
       case x3d_CameraSpaceReflectionVector:
       {
-         vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+         #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
+            vec3 N = normalize (normal);
+         #else
+            vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+         #endif
 
          return vec4 (reflect (normalize (vertex), -N), 1.0);
       }
       case x3d_SphereLocal:
-      {
-         vec2 N = normalize (gl_FrontFacing ? localNormal : -localNormal) .xy;
+         {
+         #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
+            vec2 N = normalize (localNormal) .xy;
+         #else
+            vec2 N = normalize (gl_FrontFacing ? localNormal : -localNormal) .xy;
+         #endif
 
          return vec4 (N * 0.5 + 0.5, 0.0, 1.0);
       }
@@ -84,14 +100,24 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
       }
       case x3d_SphereReflect:
       {
-         vec3  N   = normalize (gl_FrontFacing ? normal : -normal);
+         #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
+            vec3 N = normalize (normal);
+         #else
+            vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+         #endif
+
          float eta = textureCoordinateGenerator .parameter [0];
 
          return vec4 (refract (normalize (vertex), -N, eta), 1.0);
       }
       case x3d_SphereReflectLocal:
       {
-         vec3  N   = normalize (gl_FrontFacing ? localNormal : -localNormal);
+         #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
+            vec3 N = normalize (localNormal);
+         #else
+            vec3 N = normalize (gl_FrontFacing ? localNormal : -localNormal);
+         #endif
+
          float eta = textureCoordinateGenerator .parameter [0];
          vec3  eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);
 
@@ -509,7 +535,11 @@ getTextureProjectorColor ()
 {
    vec3 currentColor = vec3 (1.0);
 
-   vec3 N = gl_FrontFacing ? normal : -normal;
+   #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
+      vec3 N = normal;
+   #else
+      vec3 N = gl_FrontFacing ? normal : -normal;
+   #endif
 
    for (int i = 0; i < X3D_NUM_TEXTURE_PROJECTORS; ++ i)
    {

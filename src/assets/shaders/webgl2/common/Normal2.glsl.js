@@ -54,6 +54,7 @@ getNormalInfo (const in float normalScale)
       b  = cross (ng, t);
    #endif
 
+   #if defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)
    // For a back-facing surface, the tangential basis vectors are negated.
    if (gl_FrontFacing == false)
    {
@@ -61,6 +62,7 @@ getNormalInfo (const in float normalScale)
       b  = -b;
       ng = -ng;
    }
+   #endif
 
    // Compute normals:
    NormalInfo info;
