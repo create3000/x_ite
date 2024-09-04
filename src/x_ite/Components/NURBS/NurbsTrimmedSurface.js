@@ -153,6 +153,9 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          numTrimmingTriangles = trimmingTriangles .length,
          contours             = [ ];
 
+      if (trimmingContours .length === 1)
+         return;
+
       for (let i = 0; i < numDefaultTriangles; i += 3)
          contours .push ([defaultTriangles [i], defaultTriangles [i + 1], defaultTriangles [i + 2]])
 
