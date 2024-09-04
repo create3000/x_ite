@@ -134,7 +134,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          offset = new Vector3 (uMin, vMin, 0),
          scale  = new Vector3 (uScale, vScale, 1)
 
-      const square = [
+      const unitSquare = [
          new Vector3 (0, 0, 0),
          new Vector3 (1, 0, 0),
          new Vector3 (1, 1, 0),
@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
       const
          defaultTriangles     = this .createDefaultNurbsTriangles ([ ]),
          numDefaultTriangles  = defaultTriangles .length,
-         trimmingContours     = this .getTrimmingContours (offset, scale, [square]),
+         trimmingContours     = this .getTrimmingContours (offset, scale, [unitSquare]),
          trimmingTriangles    = this .triangulatePolygon (trimmingContours, [ ]),
          numTrimmingTriangles = trimmingTriangles .length,
          contours             = [ ];
@@ -165,7 +165,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          vertexArray      = this .getVertices (),
          uvt              = { };
 
-      console .log (trimmedTriangles .toString ())
+      console .log (trimmedTriangles .toString ());
 
       const EPSILON = 1e-3;
 
