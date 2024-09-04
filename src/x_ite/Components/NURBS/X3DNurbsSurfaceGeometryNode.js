@@ -273,6 +273,8 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
       return function (texCoordArray)
       {
+         // Create texture coordinates in the unit square.
+
          const
             texUDegree       = 1,
             texVDegree       = 1,
