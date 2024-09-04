@@ -277,7 +277,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
             texVKnots        = defaultTexKnots,
             texControlPoints = defaultTexControlPoints;
 
-         this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
+         return this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
       };
    })(),
    createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray)
@@ -306,6 +306,8 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
          texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
       }
+
+      return texCoordArray;
    },
    generateNormals (faces, points)
    {

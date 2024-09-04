@@ -45,9 +45,11 @@
  *
  ******************************************************************************/
 
+import Vector2 from "../Numbers/Vector2.js";
+
 const Triangle2 =
 {
-   isPointInTriangle (a, b, c, point)
+   isPointInTriangle (point, a, b, c)
    {
       // https://en.wikipedia.org/wiki/Barycentric_coordinate_system
 
@@ -73,6 +75,34 @@ const Triangle2 =
 
       return true;
    },
+   toBarycentric: (function ()
+   {
+      const
+         v0 = new Vector2 (),
+         v1 = new Vector2 (),
+         v2 = new Vector2 ();
+
+      return function (point, a, b, c, result)
+      {
+         v0 .assign (b) .subtract (a);
+         v1 .assign (c) .subtract (a);
+         v2 .assign (point) .subtract (a);
+
+         const
+            d00   = v0 .dot (v0),
+            d01   = v0 .dot (v1),
+            d11   = v1 .dot (v1),
+            d20   = v2 .dot (v0),
+            d21   = v2 .dot (v1),
+            denom = d00 * d11 - d01 * d01;
+
+         result .v = (d11 * d20 - d01 * d21) / denom;
+         result .t = (d00 * d21 - d01 * d20) / denom;
+         result .u = 1 - result .v - result .t;
+
+         return result;
+      };
+   })(),
 };
 
 export default Triangle2;

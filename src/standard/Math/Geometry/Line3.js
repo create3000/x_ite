@@ -206,11 +206,11 @@ Object .assign (Line3 .prototype,
          if (v < 0 || u + v > 1)
             return false;
 
-         //let t = edge2 .dot (qvec) * inv_det;
+         //let u = edge2 .dot (qvec) * inv_det;
 
-         uvt .u = u;
-         uvt .v = v;
-         uvt .t = 1 - u - v;
+         uvt .u = 1 - u - v;
+         uvt .v = u;
+         uvt .t = v;
 
          return true;
       };

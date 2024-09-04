@@ -448,28 +448,35 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    })(),
    generateTangents ()
    {
-      if (this .geometryType < 2)
-         return;
+      try
+      {
+         if (this .geometryType < 2)
+            return;
 
-      if (!this .vertices .length)
-         return;
+         if (!this .vertices .length)
+            return;
 
-      if (!MikkTSpace .isInitialized ())
-         return void (MikkTSpace .initialize () .then (() => this .requestRebuild ()));
+         if (!MikkTSpace .isInitialized ())
+            return void (MikkTSpace .initialize () .then (() => this .requestRebuild ()));
 
-      const
-         vertices  = this .vertices .getValue () .filter ((v, i) => i % 4 < 3),
-         normals   = this .normals .getValue (),
-         texCoords = this .multiTexCoords [0] .getValue () .filter ((v, i) => i % 4 < 2),
-         tangents  = MikkTSpace .generateTangents (vertices, normals, texCoords),
-         length    = tangents .length;
+         const
+            vertices  = this .vertices .getValue () .filter ((v, i) => i % 4 < 3),
+            normals   = this .normals .getValue (),
+            texCoords = this .multiTexCoords [0] .getValue () .filter ((v, i) => i % 4 < 2),
+            tangents  = MikkTSpace .generateTangents (vertices, normals, texCoords),
+            length    = tangents .length;
 
-      // Convert coordinate system handedness to respect output format of MikkTSpace.
-      for (let i = 3; i < length; i += 4)
-         tangents [i] = -tangents [i]; // Flip w-channel.
+         // Convert coordinate system handedness to respect output format of MikkTSpace.
+         for (let i = 3; i < length; i += 4)
+            tangents [i] = -tangents [i]; // Flip w-channel.
 
-      this .tangents .assign (tangents);
-      this .tangents .shrinkToFit ();
+         this .tangents .assign (tangents);
+         this .tangents .shrinkToFit ();
+      }
+      catch (error)
+      {
+         console .error (error);
+      }
    },
    refineNormals (normalIndex, normals, creaseAngle)
    {
@@ -549,16 +556,13 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
                {
                   // Get barycentric coordinates.
 
-                  const
-                     u = uvt .u,
-                     v = uvt .v,
-                     t = uvt .t;
+                  const { u, v, t } = uvt;
 
                   // Determine vectors for X3DPointingDeviceSensors.
 
-                  const point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
-                                             t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
-                                             t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
+                  const point = new Vector3 (u * vertices [i4]     + v * vertices [i4 + 4] + t * vertices [i4 +  8],
+                                             u * vertices [i4 + 1] + v * vertices [i4 + 5] + t * vertices [i4 +  9],
+                                             u * vertices [i4 + 2] + v * vertices [i4 + 6] + t * vertices [i4 + 10]);
 
                   if (clipPlanes .length)
                   {
@@ -566,16 +570,16 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
                         continue;
                   }
 
-                  const texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
-                                                t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
+                  const texCoord = new Vector2 (u * texCoords [i4]     + v * texCoords [i4 + 4] + t * texCoords [i4 + 8],
+                                                u * texCoords [i4 + 1] + v * texCoords [i4 + 5] + t * texCoords [i4 + 9]);
 
                   const i3 = i * 3;
 
-                  const normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
-                                              t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-                                              t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+                  const normal = new Vector3 (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
+                                              u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
+                                              u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
 
-                  intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
+                  intersections .push ({ texCoord, normal, point: this .getMatrix () .multVecMatrix (point) });
                }
             }
          }
