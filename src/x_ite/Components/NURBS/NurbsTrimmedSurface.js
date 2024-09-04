@@ -56,6 +56,7 @@ import Vector3                     from "../../../standard/Math/Numbers/Vector3.
 import Triangle2                   from "../../../standard/Math/Geometry/Triangle2.js";
 import Triangle3                   from "../../../standard/Math/Geometry/Triangle3.js";
 import libtess                     from "../../../lib/libtess.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
 
 function NurbsTrimmedSurface (executionContext)
 {
@@ -119,26 +120,34 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
       return trimmingContours;
    },
-   build ()
+   trimSurface (uKnots, vKnots)
    {
-      X3DNurbsSurfaceGeometryNode .prototype .build .call (this);
+      const
+         uMin   = uKnots .at (0),
+         vMin   = vKnots .at (0),
+         uMax   = uKnots .at (-1),
+         vMax   = vKnots .at (-1),
+         uScale = uMax - uMin,
+         vScale = uMax - vMin;
+
+      const
+         offset = new Vector3 (uMin, vMin, 0),
+         scale  = new Vector3 (uScale, vScale, 1)
 
       const square = [
-         new Vector3 (0, 0, 0),
-         new Vector3 (1, 0, 0),
-         new Vector3 (1, 1, 0),
-         new Vector3 (0, 1, 0),
+         new Vector3 (uMin, vMin, 0),
+         new Vector3 (uMax, vMin, 0),
+         new Vector3 (uMax, vMax, 0),
+         new Vector3 (uMin, vMax, 0),
       ];
 
       const
-         defaultTriangles     = this .createDefaultNurbsTriangles ([ ]),
+         defaultTriangles     = this .createDefaultNurbsTriangles ([ ]) .map (p => p .multVec (scale) .add (offset)),
          numDefaultTriangles  = defaultTriangles .length,
          trimmingContours     = this .getTrimmingContours ([square]),
          trimmingTriangles    = this .triangulatePolygon (trimmingContours, [ ]),
          numTrimmingTriangles = trimmingTriangles .length,
          contours             = [ ];
-
-      console .log (trimmingTriangles .toString ())
 
       for (let i = 0; i < numDefaultTriangles; i += 3)
          contours .push ([defaultTriangles [i], defaultTriangles [i + 1], defaultTriangles [i + 2]])
@@ -155,6 +164,8 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          normalArray      = this .getNormals (),
          vertexArray      = this .getVertices (),
          uvt              = { };
+
+      console .log (trimmedTriangles .toString ())
 
       for (const p of trimmedTriangles)
       {

@@ -148,6 +148,8 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    {
       return NURBS .getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode);
    },
+   trimSurface ()
+   { },
    build ()
    {
       if (this ._uOrder .getValue () < 2)
@@ -224,6 +226,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       this .buildNurbsTexCoords (uClosed, vClosed, this ._uOrder .getValue (), this ._vOrder .getValue (), uKnots, vKnots, this ._uDimension .getValue (), this ._vDimension .getValue ());
 
       this .generateNormals (faces, points);
+      this .trimSurface (uKnots, vKnots);
       this .setSolid (this ._solid .getValue ());
       this .setCCW (true);
    },
