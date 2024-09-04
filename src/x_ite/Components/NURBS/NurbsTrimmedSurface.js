@@ -264,6 +264,8 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
    })(),
    createDefaultNurbsTriangles (triangles)
    {
+      // Create triangles in the unit square.
+      
       const
          texCoordArray = this .createDefaultNurbsTexCoords ([ ]),
          numTexCoords  = texCoordArray .length;
