@@ -293,12 +293,14 @@ const NURBS =
                knots [i] = k;
          }
 
+         knots .length = length;
+
+         // Scale knots.
+
          const max = knots [length - 1];
 
          for (let i = 0; i < length; ++ i)
             knots [i] /= max;
-
-         knots .length = length;
       }
 
       if (closed)
