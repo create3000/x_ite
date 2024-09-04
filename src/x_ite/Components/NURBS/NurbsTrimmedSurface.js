@@ -54,9 +54,7 @@ import X3DConstants                from "../../Base/X3DConstants.js";
 import X3DCast                     from "../../Base/X3DCast.js";
 import Vector3                     from "../../../standard/Math/Numbers/Vector3.js";
 import Triangle2                   from "../../../standard/Math/Geometry/Triangle2.js";
-import Triangle3                   from "../../../standard/Math/Geometry/Triangle3.js";
 import libtess                     from "../../../lib/libtess.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
 
 function NurbsTrimmedSurface (executionContext)
 {
@@ -104,7 +102,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
       const trimmingContourNodes = this .trimmingContourNodes;
 
       for (const trimmingContourNode of trimmingContourNodes)
-         trimmingContourNode .removeInterest ("addNodeEvent", this);
+         trimmingContourNode .removeInterest ("requestRebuild", this);
 
       trimmingContourNodes .length = 0;
 
@@ -117,7 +115,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
       }
 
       for (const trimmingContourNode of trimmingContourNodes)
-         trimmingContourNode .addInterest ("addNodeEvent", this);
+         trimmingContourNode .addInterest ("requestRebuild", this);
    },
    getTrimmingContours (offset, scale, trimmingContours)
    {
