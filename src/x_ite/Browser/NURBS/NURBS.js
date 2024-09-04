@@ -297,7 +297,7 @@ const NURBS =
 
          // Scale knots.
 
-         const max = knots [length - 1];
+         const max = knots .at (-1);
 
          for (let i = 0; i < length; ++ i)
             knots [i] /= max;
