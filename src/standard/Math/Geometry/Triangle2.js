@@ -49,10 +49,25 @@ import Vector2 from "../Numbers/Vector2.js";
 
 const Triangle2 =
 {
+   /**
+    *
+    * @param {Vector2} a first point of triangle
+    * @param {Vector2} b second point of triangle
+    * @param {Vector2} c third point of triangle
+    * @returns
+    */
    area ({ x: ax, y: ay }, { x: bx, y: by }, { x: cx, y: cy })
    {
       return Math .abs (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by)) / 2;
    },
+   /**
+    *
+    * @param {Vector2} p point to test
+    * @param {Vector2} a first point of triangle
+    * @param {Vector2} b second point of triagle
+    * @param {Vector2} c third point of triangle
+    * @returns
+    */
    isPointInTriangle ({ x: px, y: py }, { x: ax, y: ay }, { x: bx, y: by }, { x: cx, y: cy })
    {
       // https://en.wikipedia.org/wiki/Barycentric_coordinate_system
@@ -79,6 +94,14 @@ const Triangle2 =
 
       return true;
    },
+   /**
+    *
+    * @param {Vector2} p point to convert
+    * @param {Vector2} a first point of triangle
+    * @param {Vector2} b second point of triagle
+    * @param {Vector2} c third point of triangle
+    * @returns
+    */
    toBarycentric: (function ()
    {
       const

@@ -39,7 +39,7 @@
  *
  * You should have received a copy of the GNU General Public License version 3
  * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
+ * copy of the GPLc License.
  *
  * For Silvio, Joy and Adi.
  *
@@ -49,6 +49,13 @@ import Vector3 from "../Numbers/Vector3.js";
 
 const Triangle3 =
 {
+   /**
+    *
+    * @param {Vector3} a first point of triangle
+    * @param {Vector3} b second point of triangle
+    * @param {Vector3} c third point of triangle
+    * @returns
+    */
    area: (() =>
    {
       const
@@ -60,15 +67,23 @@ const Triangle3 =
          return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .magnitude () / 2;
       };
    })(),
-   normal (v1, v2, v3, normal)
+   /**
+    *
+    * @param {Vector3} a first point of triangle
+    * @param {Vector3} b second point of triangle
+    * @param {Vector3} c third point of triangle
+    * @param {Vector3} normal resulting normal
+    * @returns
+    */
+   normal (a, b, c, normal)
    {
       const
-         x1 = v3 .x - v2 .x,
-         y1 = v3 .y - v2 .y,
-         z1 = v3 .z - v2 .z,
-         x2 = v1 .x - v2 .x,
-         y2 = v1 .y - v2 .y,
-         z2 = v1 .z - v2 .z;
+         x1 = c .x - b .x,
+         y1 = c .y - b .y,
+         z1 = c .z - b .z,
+         x2 = a .x - b .x,
+         y2 = a .y - b .y,
+         z2 = a .z - b .z;
 
       normal .set (y1 * z2 - z1 * y2,
                    z1 * x2 - x1 * z2,
@@ -76,15 +91,24 @@ const Triangle3 =
 
       return normal .normalize ();
    },
-   quadNormal (v1, v2, v3, v4, normal)
+   /**
+    *
+    * @param {Vector3} a first point of quad
+    * @param {Vector3} b second point of quad
+    * @param {Vector3} c third point of quad
+    * @param {Vector3} d third point of quad
+    * @param {Vector3} normal resulting normal
+    * @returns
+    */
+   quadNormal (a, b, c, d, normal)
    {
       const
-         x1 = v3 .x - v1 .x,
-         y1 = v3 .y - v1 .y,
-         z1 = v3 .z - v1 .z,
-         x2 = v4 .x - v2 .x,
-         y2 = v4 .y - v2 .y,
-         z2 = v4 .z - v2 .z;
+         x1 = c .x - a .x,
+         y1 = c .y - a .y,
+         z1 = c .z - a .z,
+         x2 = d .x - b .x,
+         y2 = d .y - b .y,
+         z2 = d .z - b .z;
 
       normal .set (y1 * z2 - z1 * y2,
                    z1 * x2 - x1 * z2,
