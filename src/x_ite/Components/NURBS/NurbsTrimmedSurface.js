@@ -131,20 +131,20 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
       ];
 
       const
-         defaultTriangles    = this .createDefaultNurbsTriangles ([ ]),
-         numDefaultTriangles = defaultTriangles .length,
-         trimmingContours    = this .getTrimmingContours ([square]),
-         triangles           = this .triangulatePolygon (trimmingContours, [ ]),
-         numTriangles        = triangles .length,
-         contours            = [ ];
+         defaultTriangles     = this .createDefaultNurbsTriangles ([ ]),
+         numDefaultTriangles  = defaultTriangles .length,
+         trimmingContours     = this .getTrimmingContours ([square]),
+         trimmingTriangles    = this .triangulatePolygon (trimmingContours, [ ]),
+         numTrimmingTriangles = trimmingTriangles .length,
+         contours             = [ ];
 
-      console .log (triangles .toString ())
+      console .log (trimmingTriangles .toString ())
 
       for (let i = 0; i < numDefaultTriangles; i += 3)
          contours .push ([defaultTriangles [i], defaultTriangles [i + 1], defaultTriangles [i + 2]])
 
-      for (let i = 0; i < numTriangles; i += 3)
-         contours .push ([triangles [i], triangles [i + 1], triangles [i + 2]]);
+      for (let i = 0; i < numTrimmingTriangles; i += 3)
+         contours .push ([trimmingTriangles [i], trimmingTriangles [i + 1], trimmingTriangles [i + 2]]);
 
       const
          trimmedTriangles = this .triangulatePolygon (contours, [ ]),
