@@ -73,9 +73,16 @@ function X3DRoute (executionContext, sourceNode, sourceFieldName, destinationNod
 
    if (sourceNode instanceof X3DImportedNode)
       sourceNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
+   else
+      var sourceField = sourceNode .getField (sourceFieldName);
 
    if (destinationNode instanceof X3DImportedNode)
       destinationNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
+   else
+      var destinationField = destinationNode .getField (destinationFieldName);
+
+   if (sourceField && destinationField && sourceField .getType () !== destinationField .getType ())
+      throw new Error ("Source field type must match destination field type.");
 
    this .reconnect ();
 }
