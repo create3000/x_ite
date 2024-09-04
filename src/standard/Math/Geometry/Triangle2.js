@@ -49,21 +49,21 @@ import Vector2 from "../Numbers/Vector2.js";
 
 const Triangle2 =
 {
-   isPointInTriangle (point, a, b, c)
+   isPointInTriangle ({ x: px, y: py }, { x: ax, y: ay }, { x: bx, y: by }, { x: cx, y: cy })
    {
       // https://en.wikipedia.org/wiki/Barycentric_coordinate_system
 
-      const det = (b.y - c.y) * (a.x - c.x) + (c.x - b.x) * (a.y - c.y);
+      const det = (by - cy) * (ax - cx) + (cx - bx) * (ay - cy);
 
-      if (det == 0)
+      if (det === 0)
          return false;
 
-      const u = ((b.y - c.y) * (point .x - c.x) + (c.x - b.x) * (point .y - c.y)) / det;
+      const u = ((by - cy) * (px - cx) + (cx - bx) * (py - cy)) / det;
 
       if (u < 0 || u > 1)
          return false;
 
-      const v = ((c.y - a.y) * (point .x - c.x) + (a.x - c.x) * (point .y - c.y)) / det;
+      const v = ((cy - ay) * (px - cx) + (ax - cx) * (py - cy)) / det;
 
       if (v < 0 || v > 1)
          return false;

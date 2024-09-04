@@ -165,7 +165,13 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          vertexArray      = this .getVertices (),
          uvt              = { };
 
-      console .log (trimmedTriangles .toString ())
+      const
+         dMin = defaultTriangles .reduce ((p, c) => p .min (c), new Vector3 (+Infinity, +Infinity, +Infinity)),
+         dMax = defaultTriangles .reduce ((p, c) => p .max (c), new Vector3 (-Infinity, -Infinity, -Infinity));
+
+      trimmedTriangles .forEach (p => p .min (dMax) .max (dMin));
+
+      const EPSILON = 1e-5;
 
       for (const p of trimmedTriangles)
       {
@@ -176,10 +182,16 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
                b = defaultTriangles [d + 1],
                c = defaultTriangles [d + 2];
 
-            if (!Triangle2 .isPointInTriangle (p, a, b, c))
+            const { u, v, t } = Triangle2 .toBarycentric (p, a, b, c, uvt);
+
+            if (Math .abs (u - 0.5) > 0.5 + EPSILON)
                continue;
 
-            const { u, v, t } = Triangle2 .toBarycentric (p, a, b, c, uvt);
+            if (Math .abs (v - 0.5) > 0.5 + EPSILON)
+               continue;
+
+            if (Math .abs (t - 0.5) > 0.5 + EPSILON)
+               continue;
 
             trimmedTexCoords .push (
                u * texCoordArray [d * 4 + 0] + v * texCoordArray [d * 4 + 4] + t * texCoordArray [d * 4 + 8],
@@ -201,8 +213,6 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             break;
          }
       }
-
-      console .log (trimmedVertices .length)
 
       texCoordArray .assign (trimmedTexCoords);
       normalArray   .assign (trimmedNormals);
