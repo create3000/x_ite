@@ -166,15 +166,16 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             contours .push ([trimmingTriangles [i], trimmingTriangles [i + 1], trimmingTriangles [i + 2]]);
 
          const
-            trimmedTriangles    = this .triangulatePolygon (contours, [ ]),
-            numTrimmedTriangles = trimmedTriangles .length,
-            trimmedTexCoords    = [ ],
-            trimmedNormals      = [ ],
-            trimmedVertices     = [ ],
-            texCoordArray       = this .getTexCoords (),
-            normalArray         = this .getNormals (),
-            vertexArray         = this .getVertices (),
-            uvt                 = { };
+            multiTexCoordArray    = this .getMultiTexCoords (),
+            normalArray           = this .getNormals (),
+            vertexArray           = this .getVertices (),
+            trimmedTriangles      = this .triangulatePolygon (contours, [ ]),
+            numTrimmedTriangles   = trimmedTriangles .length,
+            numTexCoordChannels   = multiTexCoordArray .length,
+            trimmedMultiTexCoords = multiTexCoordArray .map (() => [ ]),
+            trimmedNormals        = [ ],
+            trimmedVertices       = [ ],
+            uvt                   = { };
 
          // console .log (trimmedTriangles .toString ());
 
@@ -218,7 +219,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             for (let d = 0; d < numDefaultTriangles; d += 3)
             {
                // At least one triangle should match.
-               
+
                const
                   a = defaultTriangles [d],
                   b = defaultTriangles [d + 1],
@@ -235,12 +236,19 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
                if (Math .abs (t - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
                   continue;
 
-               trimmedTexCoords .push (
-                  u * texCoordArray [d * 4 + 0] + v * texCoordArray [d * 4 + 4] + t * texCoordArray [d * 4 + 8],
-                  u * texCoordArray [d * 4 + 1] + v * texCoordArray [d * 4 + 5] + t * texCoordArray [d * 4 + 9],
-                  u * texCoordArray [d * 4 + 2] + v * texCoordArray [d * 4 + 6] + t * texCoordArray [d * 4 + 10],
-                  1
-               );
+               for (let tc = 0; tc < numTexCoordChannels; ++ tc)
+               {
+                  const
+                     texCoordArray    = multiTexCoordArray [tc],
+                     trimmedTexCoords = trimmedMultiTexCoords [tc];
+
+                  trimmedTexCoords .push (
+                     u * texCoordArray [d * 4 + 0] + v * texCoordArray [d * 4 + 4] + t * texCoordArray [d * 4 + 8],
+                     u * texCoordArray [d * 4 + 1] + v * texCoordArray [d * 4 + 5] + t * texCoordArray [d * 4 + 9],
+                     u * texCoordArray [d * 4 + 2] + v * texCoordArray [d * 4 + 6] + t * texCoordArray [d * 4 + 10],
+                     1
+                  );
+               }
 
                trimmedNormals .push (
                   u * normalArray [d * 3 + 0] + v * normalArray [d * 3 + 3] + t * normalArray [d * 3 + 6],
@@ -259,9 +267,11 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             }
          }
 
-         texCoordArray .assign (trimmedTexCoords);
-         normalArray   .assign (trimmedNormals);
-         vertexArray   .assign (trimmedVertices);
+         for (let tc = 0; tc < numTexCoordChannels; ++ tc)
+            multiTexCoordArray [tc] .assign (trimmedMultiTexCoords [tc]);
+
+         normalArray .assign (trimmedNormals);
+         vertexArray .assign (trimmedVertices);
       };
    })(),
    createDefaultNurbsTriangles (triangles)
