@@ -177,7 +177,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
       // console .log (trimmedTriangles .toString ());
 
-      // Filter triangle with very small area.
+      // Filter triangles with very small area.
 
       const MIN_AREA = 1e-5;
 
