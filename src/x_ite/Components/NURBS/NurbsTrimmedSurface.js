@@ -211,7 +211,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
          // Find points in defaultTriangles and interpolate new points.
 
-         const MIN_BARYCENTRIC_DISTANCE = 1e-4;
+         const MIN_BARYCENTRIC_DISTANCE = 1e-5;
 
          for (const p of trimmedTriangles)
          {
