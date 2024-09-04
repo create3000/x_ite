@@ -217,6 +217,8 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          {
             for (let d = 0; d < numDefaultTriangles; d += 3)
             {
+               // At least one triangle should match.
+               
                const
                   a = defaultTriangles [d],
                   b = defaultTriangles [d + 1],
