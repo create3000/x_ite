@@ -136,7 +136,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
       return function (uKnots, vKnots)
       {
-         // console .time (this .getTypeName ());
+         console .time (this .getTypeName ());
 
          const
             uMin   = uKnots .at (0),
@@ -163,7 +163,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             return;
 
          for (let i = 0; i < numDefaultTriangles; ++ i)
-            defaultTriangles [i] .index = i - i % 3;
+            defaultTriangles [i] .index = i;
 
          for (let i = 0; i < numDefaultTriangles; i += 3)
             contours .push (defaultTriangles .slice (i, i + 3));
@@ -219,6 +219,31 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
          for (const p of trimmedTriangles)
          {
+            if (p .hasOwnProperty ("index"))
+            {
+               const d = p .index;
+
+               // Copy point on surface.
+
+               for (let tc = 0; tc < numTexCoordChannels; ++ tc)
+               {
+                  const
+                     texCoordArray    = multiTexCoordArray [tc],
+                     trimmedTexCoords = trimmedMultiTexCoords [tc];
+
+                  const { [d * 4]: t1, [d * 4 + 1]: t2, [d * 4 + 2]: t3 } = texCoordArray;
+
+                  trimmedTexCoords .push (t1, t2, t3, 1);
+               }
+
+               const { [d * 3]: n1, [d * 3 + 1]: n2, [d * 3 + 2]: n3 } = normalArray;
+               const { [d * 4]: v1, [d * 4 + 1]: v2, [d * 4 + 2]: v3 } = vertexArray;
+
+               trimmedNormals  .push (n1, n2, n3);
+               trimmedVertices .push (v1, v2, v3, 1);
+               continue;
+            }
+
             for (let d = p .index ?? 0; d < numDefaultTriangles; d += 3)
             {
                // At least one triangle should match.
@@ -277,7 +302,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          normalArray .assign (trimmedNormals);
          vertexArray .assign (trimmedVertices);
 
-         // console .timeEnd (this .getTypeName ());
+         console .timeEnd (this .getTypeName ());
       };
    })(),
    createDefaultNurbsTriangles (triangles)
