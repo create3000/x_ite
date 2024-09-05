@@ -109,7 +109,7 @@ fragment_main ()
 
    vec4 finalColor = getMaterialColor ();
 
-   #if defined (X3D_ALPHA_MODE_OPAQUE)
+   #if defined (X3D_ALPHA_MODE_OPAQUE) && !defined (X3D_GEOMETRY_0D)
       finalColor .a = 1.0;
    #endif
 
