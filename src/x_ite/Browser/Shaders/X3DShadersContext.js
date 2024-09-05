@@ -108,7 +108,9 @@ Object .assign (X3DShadersContext .prototype,
    },
    setShading (type)
    {
-      const gl = this .getContext ();
+      const
+         gl             = this .getContext (),
+         primitiveModes = this [_primitiveModes];
 
       if (this [_wireframe])
       {
@@ -123,9 +125,11 @@ Object .assign (X3DShadersContext .prototype,
       {
          case Shading .POINT:
          {
-            this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
-            this [_primitiveModes] .set (gl .LINES,     gl .POINTS);
-            this [_primitiveModes] .set (gl .TRIANGLES, gl .POINTS);
+            primitiveModes
+               .set (gl .POINTS,    gl .POINTS)
+               .set (gl .LINES,     gl .POINTS)
+               .set (gl .TRIANGLES, gl .POINTS);
+
             break;
          }
          case Shading .WIREFRAME:
@@ -136,9 +140,11 @@ Object .assign (X3DShadersContext .prototype,
 
             ext ?.polygonModeWEBGL (gl .FRONT_AND_BACK, ext .LINE_WEBGL);
 
-            this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
-            this [_primitiveModes] .set (gl .LINES,     gl .LINES);
-            this [_primitiveModes] .set (gl .TRIANGLES, gl .TRIANGLES);
+            primitiveModes
+               .set (gl .POINTS,    gl .POINTS)
+               .set (gl .LINES,     gl .LINES)
+               .set (gl .TRIANGLES, gl .TRIANGLES);
+
             break;
          }
          default:
@@ -147,9 +153,11 @@ Object .assign (X3DShadersContext .prototype,
             // case Shading .GOURAUD:
             // case Shading .PHONG:
 
-            this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
-            this [_primitiveModes] .set (gl .LINES,     gl .LINES);
-            this [_primitiveModes] .set (gl .TRIANGLES, gl .TRIANGLES);
+            primitiveModes
+               .set (gl .POINTS,    gl .POINTS)
+               .set (gl .LINES,     gl .LINES)
+               .set (gl .TRIANGLES, gl .TRIANGLES);
+               
             break;
          }
       }
