@@ -158,6 +158,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             numTrimmingTriangles = trimmingTriangles .length,
             contours             = [ ];
 
+         // Do nothing if there are no trimming contours.
          if (trimmingContours .length === 1)
             return;
 
