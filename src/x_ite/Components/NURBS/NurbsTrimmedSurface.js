@@ -227,6 +227,8 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
                const { u, v, t } = Triangle2 .toBarycentric (p, a, b, c, uvt);
 
+               // Check if p lies in triangle.
+
                if (Math .abs (u - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
                   continue;
 
@@ -235,6 +237,8 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
                if (Math .abs (t - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
                   continue;
+
+               // Interpolate point on surface.
 
                for (let tc = 0; tc < numTexCoordChannels; ++ tc)
                {
