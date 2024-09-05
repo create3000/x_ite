@@ -34,9 +34,10 @@ Object .assign ($,
             console .error (error .message);
       }
    },
-   enum (object, property, defaultValue)
+   enum (object, property)
    {
-      return object .hasOwnProperty (property) ? object [property] : defaultValue;
+      if (object .hasOwnProperty (property))
+         return object [property];
    },
 });
 

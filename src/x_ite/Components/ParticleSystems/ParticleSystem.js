@@ -388,7 +388,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       // Get geometryType.
 
-      this .geometryType = $.enum (GeometryTypes, this ._geometryType .getValue (), GeometryTypes .QUAD);
+      this .geometryType = $.enum (GeometryTypes, this ._geometryType .getValue ()) ?? GeometryTypes .QUAD;
 
       // Create buffers.
 
