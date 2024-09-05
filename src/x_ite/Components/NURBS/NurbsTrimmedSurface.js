@@ -245,7 +245,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
                continue;
             }
 
-            for (let d = p .index ?? 0; d < numDefaultTriangles; d += 3)
+            for (let d = 0; d < numDefaultTriangles; d += 3)
             {
                // At least one triangle should match.
 
