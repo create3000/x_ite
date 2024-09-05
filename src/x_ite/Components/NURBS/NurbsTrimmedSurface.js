@@ -200,10 +200,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
          for (let t = 0; t < numTrimmedTriangles; t += 3)
          {
-            const
-               a = trimmedTriangles [t],
-               b = trimmedTriangles [t + 1],
-               c = trimmedTriangles [t + 2];
+            const { [t]: a, [t + 1]: b, [t + 2]: c } = trimmedTriangles;
 
             if (Triangle2 .area (a, b, c) < MIN_AREA)
                continue;
@@ -225,10 +222,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             {
                // At least one triangle should match.
 
-               const
-                  a = defaultTriangles [d],
-                  b = defaultTriangles [d + 1],
-                  c = defaultTriangles [d + 2];
+               const { [d]: a, [d + 1]: b, [d + 2]: c } = defaultTriangles;
 
                const { u, v, t } = Triangle2 .toBarycentric (p, a, b, c, uvt);
 
