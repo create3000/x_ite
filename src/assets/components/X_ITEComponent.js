@@ -62,6 +62,7 @@ import SpecularMaterialExtension            from "../../x_ite/Components/X_ITE/S
 import TransmissionMaterialExtension        from "../../x_ite/Components/X_ITE/TransmissionMaterialExtension.js";
 import VolumeMaterialExtension              from "../../x_ite/Components/X_ITE/VolumeMaterialExtension.js";
 import X3DMaterialExtensionNode             from "../../x_ite/Components/X_ITE/X3DMaterialExtensionNode.js";
+import X3DRenderModeNode                    from "../../x_ite/Components/X_ITE/X3DRenderModeNode.js";
 
 Components .add ({
    name: "X_ITE",
@@ -86,6 +87,7 @@ Components .add ({
    abstractNodes:
    [
       X3DMaterialExtensionNode,
+      X3DRenderModeNode,
    ],
 });
 

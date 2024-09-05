@@ -66,6 +66,12 @@ function Appearance (executionContext)
    this .textureBits             = new BitSet ();
    this .shaderNodes             = [ ];
    this .renderModeNodes         = [ ];
+
+   this .addChildObjects (X3DConstants .inputOutput, "blendMode", new Fields .SFNode (),
+                          X3DConstants .inputOutput, "depthMode", new Fields .SFNode ());
+
+   this .addAlias ("blendMode", this ._blendMode);
+   this .addAlias ("depthMode", this ._depthMode);
 }
 
 Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode .prototype),
@@ -88,14 +94,15 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       this ._texture          .addInterest ("set_texture__",          this);
       this ._textureTransform .addInterest ("set_textureTransform__", this);
       this ._shaders          .addInterest ("set_shaders__",          this);
-      this ._blendMode        .addInterest ("set_renderModes__",      this);
-      this ._depthMode        .addInterest ("set_renderModes__",      this);
+      this ._blendMode        .addInterest ("set_renderMode__",       this);
+      this ._depthMode        .addInterest ("set_renderMode__",       this);
+      this ._renderModes      .addInterest ("set_renderModes__",      this);
 
       this ._alphaMode      .addInterest ("set_transparent__", this);
       this ._fillProperties .addInterest ("set_transparent__", this);
       this ._material       .addInterest ("set_transparent__", this);
       this ._texture        .addInterest ("set_transparent__", this);
-      this ._blendMode      .addInterest ("set_transparent__", this);
+      this ._renderModes    .addInterest ("set_transparent__", this);
 
       this .set_alphaMode__ ();
       this .set_pointProperties__ ();
@@ -106,6 +113,8 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       this .set_texture__ ();
       this .set_textureTransform__ ();
       this .set_shaders__ ();
+      this .set_renderMode__ (this ._blendMode);
+      this .set_renderMode__ (this ._depthMode);
       this .set_renderModes__ ();
       this .set_transparent__ ();
    },
@@ -373,15 +382,31 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
          }
       };
    })(),
+   set_renderMode__ (field)
+   {
+      if (!field .valueOf ())
+         return;
+
+      if (this ._renderModes .includes (field .valueOf ()))
+         return;
+
+      this ._renderModes .push (field);
+   },
    set_renderModes__ ()
    {
-      this .renderModeNodes .length = 0;
+      const renderModeNodes = this .renderModeNodes;
 
-      this .blendModeNode = X3DCast (X3DConstants .BlendMode, this ._blendMode),
-      this .depthModeNode = X3DCast (X3DConstants .DepthMode, this ._depthMode);
+      renderModeNodes .length = 0;
 
-      if (this .blendModeNode) this .renderModeNodes .push (this .blendModeNode);
-      if (this .depthModeNode) this .renderModeNodes .push (this .depthModeNode);
+      for (const node of this ._renderModes)
+      {
+         const renderModeNode = X3DCast (X3DConstants .X3DRenderModeNode, node);
+
+         if (renderModeNode)
+            renderModeNodes .push (renderModeNode);
+      }
+
+      this .blendMode = renderModeNodes .some (node => node .getType () .includes (X3DConstants .BlendMode));
    },
    set_transparent__ ()
    {
@@ -389,7 +414,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
                             this .materialNode ?.isTransparent () ||
                             this .backMaterialNode ?.isTransparent () ||
                             this .textureNode ?.isTransparent () ||
-                            this .blendModeNode);
+                            this .blendMode);
    },
    set_transmission__ ()
    {
@@ -421,8 +446,7 @@ Object .defineProperties (Appearance,
          new X3DFieldDefinition (X3DConstants .inputOutput, "texture",            new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "shaders",            new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "blendMode",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "depthMode",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "renderModes",        new Fields .MFNode ()),
       ]),
       enumerable: true,
    },

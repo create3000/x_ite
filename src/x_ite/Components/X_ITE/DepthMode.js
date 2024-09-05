@@ -49,7 +49,7 @@ import Fields                 from "../../Fields.js";
 import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
 import X3DNode                from "../Core/X3DNode.js";
-import X3DAppearanceChildNode from "../Shape/X3DAppearanceChildNode.js";
+import X3DRenderModeNode      from "./X3DRenderModeNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 
 /**
@@ -58,18 +58,18 @@ import X3DConstants           from "../../Base/X3DConstants.js";
 
 function DepthMode (executionContext)
 {
-   X3DAppearanceChildNode .call (this, executionContext);
+   X3DRenderModeNode .call (this, executionContext);
 
    this .addType (X3DConstants .DepthMode);
 
    this .addAlias ("depthFunc", this ._depthFunction);
 }
 
-Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DRenderModeNode .prototype),
 {
    initialize ()
    {
-      X3DAppearanceChildNode .prototype .initialize .call (this);
+      X3DRenderModeNode .prototype .initialize .call (this);
 
       this ._depthFunction .addInterest ("set_depthFunction__", this);
 
@@ -129,7 +129,7 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
 
 Object .defineProperties (DepthMode,
 {
-   ... X3DNode .getStaticProperties ("DepthMode", "X_ITE", 1, "depthMode", "4.0"),
+   ... X3DNode .getStaticProperties ("DepthMode", "X_ITE", 1, "renderModes", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

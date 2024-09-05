@@ -45,12 +45,12 @@
  *
  ******************************************************************************/
 
-import Fields                 from "../../Fields.js";
-import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
-import X3DNode                from "../Core/X3DNode.js";
-import X3DAppearanceChildNode from "../Shape/X3DAppearanceChildNode.js";
-import X3DConstants           from "../../Base/X3DConstants.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
+import X3DRenderModeNode    from "./X3DRenderModeNode.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -58,7 +58,7 @@ import X3DConstants           from "../../Base/X3DConstants.js";
 
 function BlendMode (executionContext)
 {
-   X3DAppearanceChildNode .call (this, executionContext);
+   X3DRenderModeNode .call (this, executionContext);
 
    this .addType (X3DConstants .BlendMode);
 
@@ -66,11 +66,11 @@ function BlendMode (executionContext)
    this .equationTypes = new Map ();
 }
 
-Object .assign (Object .setPrototypeOf (BlendMode .prototype, X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (BlendMode .prototype, X3DRenderModeNode .prototype),
 {
    initialize ()
    {
-      X3DAppearanceChildNode .prototype .initialize .call (this);
+      X3DRenderModeNode .prototype .initialize .call (this);
 
       const
          gl  = this .getBrowser () .getContext (),
@@ -159,7 +159,7 @@ Object .assign (Object .setPrototypeOf (BlendMode .prototype, X3DAppearanceChild
 
 Object .defineProperties (BlendMode,
 {
-   ... X3DNode .getStaticProperties ("BlendMode", "X_ITE", 1, "blendMode", "3.3"),
+   ... X3DNode .getStaticProperties ("BlendMode", "X_ITE", 1, "renderModes", "3.3"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
