@@ -136,7 +136,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
       return function (uKnots, vKnots)
       {
-         console .time (this .getTypeName ());
+         // console .time (this .getTypeName ());
 
          const
             uMin   = uKnots .at (0),
@@ -303,7 +303,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          normalArray .assign (trimmedNormals);
          vertexArray .assign (trimmedVertices);
 
-         console .timeEnd (this .getTypeName ());
+         // console .timeEnd (this .getTypeName ());
       };
    })(),
    createDefaultNurbsTriangles (triangles)
