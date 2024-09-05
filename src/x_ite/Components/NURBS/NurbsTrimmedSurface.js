@@ -231,13 +231,14 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
                      texCoordArray    = multiTexCoordArray [tc],
                      trimmedTexCoords = trimmedMultiTexCoords [tc];
 
-                  const { [d * 4]: t1, [d * 4 + 1]: t2, [d * 4 + 2]: t3 } = texCoordArray;
+                  const { [d * 4]: t1, [d * 4 + 1]: t2, [d * 4 + 2]: t3, [d * 4 + 3]: t4 } = texCoordArray;
 
-                  trimmedTexCoords .push (t1, t2, t3, 1);
+                  trimmedTexCoords .push (t1, t2, t3, t4);
                }
 
-               const { [d * 3]: n1, [d * 3 + 1]: n2, [d * 3 + 2]: n3 } = normalArray;
-               const { [d * 4]: v1, [d * 4 + 1]: v2, [d * 4 + 2]: v3 } = vertexArray;
+               const
+                  { [d * 3]: n1, [d * 3 + 1]: n2, [d * 3 + 2]: n3 } = normalArray,
+                  { [d * 4]: v1, [d * 4 + 1]: v2, [d * 4 + 2]: v3 } = vertexArray;
 
                trimmedNormals  .push (n1, n2, n3);
                trimmedVertices .push (v1, v2, v3, 1);
@@ -275,7 +276,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
                      u * texCoordArray [d * 4 + 0] + v * texCoordArray [d * 4 + 4] + t * texCoordArray [d * 4 + 8],
                      u * texCoordArray [d * 4 + 1] + v * texCoordArray [d * 4 + 5] + t * texCoordArray [d * 4 + 9],
                      u * texCoordArray [d * 4 + 2] + v * texCoordArray [d * 4 + 6] + t * texCoordArray [d * 4 + 10],
-                     1
+                     u * texCoordArray [d * 4 + 3] + v * texCoordArray [d * 4 + 7] + t * texCoordArray [d * 4 + 11],
                   );
                }
 
