@@ -1063,7 +1063,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          appearanceNode = renderContext .appearanceNode,
          shaderNode     = appearanceNode .getShader (this, renderContext);
 
-      if (this .solid || !appearanceNode .getBackMaterial () || browser .getWireframe ())
+      if (this .solid || !appearanceNode .getBackMaterial ())
       {
          this .displayGeometry (gl, renderContext, appearanceNode, shaderNode, true, true);
       }
@@ -1116,50 +1116,42 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Draw depending on wireframe, solid and transparent.
 
-      if (browser .getWireframe ())
+      const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
+
+      gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
+
+      if (renderContext .transparent || back !== front)
       {
-         for (let i = 0, length = this .vertexCount; i < length; i += 3)
-            gl .drawArrays (primitiveMode, i, 3);
+         // Render transparent or back or front.
+
+         gl .enable (gl .CULL_FACE);
+
+         // Render back.
+
+         if (back && !this .solid)
+         {
+            gl .cullFace (gl .FRONT);
+            gl .drawArrays (primitiveMode, 0, this .vertexCount);
+         }
+
+         // Render front.
+
+         if (front)
+         {
+            gl .cullFace (gl .BACK);
+            gl .drawArrays (primitiveMode, 0, this .vertexCount);
+         }
       }
       else
       {
-         const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
+         // Render solid or both sides.
 
-         gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
-
-         if (renderContext .transparent || back !== front)
-         {
-            // Render transparent or back or front.
-
+         if (this .solid)
             gl .enable (gl .CULL_FACE);
-
-            // Render back.
-
-            if (back && !this .solid)
-            {
-               gl .cullFace (gl .FRONT);
-               gl .drawArrays (primitiveMode, 0, this .vertexCount);
-            }
-
-            // Render front.
-
-            if (front)
-            {
-               gl .cullFace (gl .BACK);
-               gl .drawArrays (primitiveMode, 0, this .vertexCount);
-            }
-         }
          else
-         {
-            // Render solid or both sides.
+            gl .disable (gl .CULL_FACE);
 
-            if (this .solid)
-               gl .enable (gl .CULL_FACE);
-            else
-               gl .disable (gl .CULL_FACE);
-
-            gl .drawArrays (primitiveMode, 0, this .vertexCount);
-         }
+         gl .drawArrays (primitiveMode, 0, this .vertexCount);
       }
 
       for (const node of renderModeNodes)
@@ -1203,7 +1195,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          appearanceNode = renderContext .appearanceNode,
          shaderNode     = appearanceNode .getShader (this, renderContext);
 
-      if (this .solid || !appearanceNode .getBackMaterial () || browser .getWireframe ())
+      if (this .solid || !appearanceNode .getBackMaterial ())
       {
          this .displayInstancedGeometry (gl, renderContext, appearanceNode, shaderNode, true, true, shapeNode);
       }

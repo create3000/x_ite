@@ -52,13 +52,11 @@ import ShaderPart     from "../../Components/Shaders/ShaderPart.js";
 import DEVELOPMENT    from "../../DEVELOPMENT.js";
 
 const
-   _wireframe      = Symbol (),
    _primitiveModes = Symbol (),
    _shaderNodes    = Symbol ();
 
 function X3DShadersContext ()
 {
-   this [_wireframe]      = false;
    this [_primitiveModes] = new Map ();
    this [_shaderNodes]    = new Map ();
 }
@@ -99,10 +97,6 @@ Object .assign (X3DShadersContext .prototype,
 
       return gl .getParameter (gl .MAX_VARYING_VECTORS);
    },
-   getWireframe ()
-   {
-      return this [_wireframe];
-   },
    getPrimitiveMode (primitiveMode)
    {
       return this [_primitiveModes] .get (primitiveMode);
@@ -119,8 +113,6 @@ Object .assign (X3DShadersContext .prototype,
       {
          case Shading .POINT:
          {
-            this [_wireframe] = false;
-
             this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
             this [_primitiveModes] .set (gl .LINES,     gl .POINTS);
             this [_primitiveModes] .set (gl .TRIANGLES, gl .POINTS);
@@ -128,11 +120,13 @@ Object .assign (X3DShadersContext .prototype,
          }
          case Shading .WIREFRAME:
          {
-            this [_wireframe] = true;
+            const ext = gl .getExtension ("WEBGL_polygon_mode");
+
+            ext ?.polygonModeWEBGL (gl .FRONT_AND_BACK, ext .LINE_WEBGL);
 
             this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
             this [_primitiveModes] .set (gl .LINES,     gl .LINES);
-            this [_primitiveModes] .set (gl .TRIANGLES, gl .LINE_LOOP);
+            this [_primitiveModes] .set (gl .TRIANGLES, gl .TRIANGLES);
             break;
          }
          default:
@@ -141,7 +135,9 @@ Object .assign (X3DShadersContext .prototype,
             // case Shading .GOURAUD:
             // case Shading .PHONG:
 
-            this [_wireframe] = false;
+            const ext = gl .getExtension ("WEBGL_polygon_mode");
+
+            ext ?.polygonModeWEBGL (gl .FRONT_AND_BACK, ext .FILL_WEBGL);
 
             this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
             this [_primitiveModes] .set (gl .LINES,     gl .LINES);

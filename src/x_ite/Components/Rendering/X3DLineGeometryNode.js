@@ -235,7 +235,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                   renderObject        = renderContext .renderObject,
                   viewport            = renderObject .getViewVolume () .getViewport (),
                   projectionMatrix    = renderObject .getProjectionMatrix () .get (),
-                  primitiveMode       = browser .getWireframe () ? gl .TRIANGLES : browser .getPrimitiveMode (gl .TRIANGLES),
+                  primitiveMode       = browser .getPrimitiveMode (gl .TRIANGLES),
                   transformShaderNode = browser .getLineTransformShader ();
 
                modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));
@@ -453,7 +453,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                   renderObject        = renderContext .renderObject,
                   viewport            = renderObject .getViewVolume () .getViewport (),
                   projectionMatrix    = renderObject .getProjectionMatrix () .get (),
-                  primitiveMode       = browser .getWireframe () ? gl .TRIANGLES : browser .getPrimitiveMode (gl .TRIANGLES),
+                  primitiveMode       = browser .getPrimitiveMode (gl .TRIANGLES),
                   transformShaderNode = browser .getLineTransformInstancedShader ();
 
                modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));
