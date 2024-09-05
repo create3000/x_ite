@@ -308,8 +308,8 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
       function combineCallbackIndex (coords, [a, b, c, d], weight)
       {
-         if (!c && a .equals (b))
-            return a .hasOwnProperty ("index") ? a : b;
+         if (!c && a .x === b .x && a .y === b .y)
+            return a;
 
          return new Vector3 (... coords);
       }
