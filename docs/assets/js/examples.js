@@ -18,7 +18,10 @@ $("table.examples a") .on ("click", function ()
       div     = $("<div></div>") .addClass ("example") .appendTo ("body");
       header  = $("<p></p>") .addClass ("header") .appendTo (div);
       toolbar = $("<p></p>") .addClass ("toolbar") .appendTo (div);
-      canvas  = $("<x3d-canvas></x3d-canvas>") .attr ("debug", true) .appendTo (div);
+
+      canvas  = $("<x3d-canvas></x3d-canvas>")
+         .attr ("contentScale", "auto")
+         .attr ("debug", true) .appendTo (div);
 
       canvas .on ("initialized", () => updateToolbar (toolbar, canvas));
 
@@ -91,9 +94,11 @@ function updateToolbar (toolbar, canvas)
 
    $("<span></span>") .addClass ("dot") .appendTo (toolbar);
 
+   const cs = browser .getBrowserOption ("ContentScale");
+
    const contentScale = $("<span></span>")
-      .text ("content scale 1.0")
-      .attr ("index", { "0.1": 0, "1": 1, "2": 2, "-1": 3 } [browser .getBrowserOption ("ContentScale")])
+      .text (`content scale ${cs === -1 ? "auto" : cs .toFixed (1)}`)
+      .attr ("index", { "0.1": 0, "1": 1, "2": 2, "-1": 3 } [cs])
       .attr ("title", "Toggle content scale between 0.1, 1.0, 2.0, auto.")
       .on ("click", () =>
       {

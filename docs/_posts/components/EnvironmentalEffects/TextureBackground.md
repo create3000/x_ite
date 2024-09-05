@@ -191,7 +191,7 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/TextureBackground.x3d" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/TextureBackground.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/TextureBackground.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/TextureBackground.x3d)
