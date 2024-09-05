@@ -136,6 +136,8 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
       return function (uKnots, vKnots)
       {
+         // console .time (this .getTypeName ());
+
          const
             uMin   = uKnots .at (0),
             vMin   = vKnots .at (0),
@@ -159,8 +161,11 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          if (trimmingContours .length === 1)
             return;
 
+         for (let i = 0; i < numDefaultTriangles; ++ i)
+            defaultTriangles [i] .index = i - i % 3;
+
          for (let i = 0; i < numDefaultTriangles; i += 3)
-            contours .push ([defaultTriangles [i], defaultTriangles [i + 1], defaultTriangles [i + 2]])
+            contours .push ([defaultTriangles [i], defaultTriangles [i + 1], defaultTriangles [i + 2]]);
 
          for (let i = 0; i < numTrimmingTriangles; i += 3)
             contours .push ([trimmingTriangles [i], trimmingTriangles [i + 1], trimmingTriangles [i + 2]]);
@@ -216,7 +221,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
          for (const p of trimmedTriangles)
          {
-            for (let d = 0; d < numDefaultTriangles; d += 3)
+            for (let d = p .index ?? 0; d < numDefaultTriangles; d += 3)
             {
                // At least one triangle should match.
 
@@ -276,6 +281,8 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
          normalArray .assign (trimmedNormals);
          vertexArray .assign (trimmedVertices);
+
+         // console .timeEnd (this .getTypeName ());
       };
    })(),
    createDefaultNurbsTriangles (triangles)
@@ -300,8 +307,11 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          triangles .push (point);
       }
 
-      function combineCallback (coords, data, weight)
+      function combineCallback (coords, [a, b, c, d], weight)
       {
+         if (!c && a .equals (b))
+            return a .hasOwnProperty ("index") ? a : b;
+
          return new Vector3 (... coords);
       }
 
