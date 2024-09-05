@@ -7,7 +7,7 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
-## X_ITE v10.4.3 Released
+## X_ITE v10.5.0 Released
 
 *Leipzig, 8th September 2024:* This release fixed some old issues.
 
