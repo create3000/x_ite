@@ -165,10 +165,10 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             defaultTriangles [i] .index = i - i % 3;
 
          for (let i = 0; i < numDefaultTriangles; i += 3)
-            contours .push ([defaultTriangles [i], defaultTriangles [i + 1], defaultTriangles [i + 2]]);
+            contours .push (defaultTriangles .slice (i, i + 3));
 
          for (let i = 0; i < numTrimmingTriangles; i += 3)
-            contours .push ([trimmingTriangles [i], trimmingTriangles [i + 1], trimmingTriangles [i + 2]]);
+            contours .push (trimmingTriangles .slice (i, i + 3));
 
          const
             multiTexCoordArray    = this .getMultiTexCoords (),
