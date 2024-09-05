@@ -460,6 +460,17 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          if (this ._hidden .getValue ())
             return;
 
+         const browser = this .getBrowser ();
+
+         // Always fill background.
+
+         if (browser .getWireframe ())
+         {
+            const ext = gl .getExtension ("WEBGL_polygon_mode");
+
+            ext ?.polygonModeWEBGL (gl .FRONT_AND_BACK, ext .FILL_WEBGL);
+         }
+
          // Setup context.
 
          gl .disable (gl .DEPTH_TEST);
@@ -496,6 +507,15 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          gl .depthMask (true);
          gl .enable (gl .DEPTH_TEST);
          gl .disable (gl .BLEND);
+
+         // Restore polygon mode.
+
+         if (browser .getWireframe ())
+         {
+            const ext = gl .getExtension ("WEBGL_polygon_mode");
+
+            ext ?.polygonModeWEBGL (gl .FRONT_AND_BACK, ext .LINE_WEBGL);
+         }
       };
    })(),
    drawSphere (renderObject, modelViewMatrixArray, projectionMatrixArray)

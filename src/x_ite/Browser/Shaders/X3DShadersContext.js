@@ -110,6 +110,15 @@ Object .assign (X3DShadersContext .prototype,
    {
       const gl = this .getContext ();
 
+      if (this [_wireframe])
+      {
+         this [_wireframe] = false;
+
+         const ext = gl .getExtension ("WEBGL_polygon_mode");
+
+         ext ?.polygonModeWEBGL (gl .FRONT_AND_BACK, ext .FILL_WEBGL);
+      }
+
       switch (type)
       {
          case Shading .POINT:
@@ -138,21 +147,16 @@ Object .assign (X3DShadersContext .prototype,
             // case Shading .GOURAUD:
             // case Shading .PHONG:
 
-            if (this [_wireframe])
-            {
-               this [_wireframe] = false;
-
-               const ext = gl .getExtension ("WEBGL_polygon_mode");
-
-               ext ?.polygonModeWEBGL (gl .FRONT_AND_BACK, ext .FILL_WEBGL);
-            }
-
             this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
             this [_primitiveModes] .set (gl .LINES,     gl .LINES);
             this [_primitiveModes] .set (gl .TRIANGLES, gl .TRIANGLES);
             break;
          }
       }
+   },
+   getWireframe ()
+   {
+      return this [_wireframe];
    },
    createShader (name, vs, fs = vs, options = [ ], uniformNames = [ ], transformFeedbackVaryings = [ ])
    {
