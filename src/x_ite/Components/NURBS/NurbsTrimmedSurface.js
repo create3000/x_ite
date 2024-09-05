@@ -136,7 +136,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
       return function (uKnots, vKnots)
       {
-         // console .time (this .getTypeName ());
+         console .time (this .getTypeName ());
 
          const
             uMin   = uKnots .at (0),
@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             defaultTriangles     = this .createDefaultNurbsTriangles ([ ]),
             numDefaultTriangles  = defaultTriangles .length,
             trimmingContours     = this .getTrimmingContours (offset, scale, [unitSquare]),
-            trimmingTriangles    = this .triangulatePolygon (trimmingContours, [ ]),
+            trimmingTriangles    = this .triangulatePolygon (trimmingContours, [ ], false),
             numTrimmingTriangles = trimmingTriangles .length,
             contours             = [ ];
 
@@ -174,7 +174,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             multiTexCoordArray    = this .getMultiTexCoords (),
             normalArray           = this .getNormals (),
             vertexArray           = this .getVertices (),
-            trimmedTriangles      = this .triangulatePolygon (contours, [ ]),
+            trimmedTriangles      = this .triangulatePolygon (contours, [ ], true),
             numTrimmedTriangles   = trimmedTriangles .length,
             numTexCoordChannels   = multiTexCoordArray .length,
             trimmedMultiTexCoords = multiTexCoordArray .map (() => [ ]),
@@ -282,7 +282,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          normalArray .assign (trimmedNormals);
          vertexArray .assign (trimmedVertices);
 
-         // console .timeEnd (this .getTypeName ());
+         console .timeEnd (this .getTypeName ());
       };
    })(),
    createDefaultNurbsTriangles (triangles)
@@ -307,7 +307,12 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          triangles .push (point);
       }
 
-      function combineCallback (coords, [a, b, c, d], weight)
+      function combineCallback (coords, data, weight)
+      {
+         return new Vector3 (... coords);
+      }
+
+      function combineCallbackIndex (coords, [a, b, c, d], weight)
       {
          if (!c && a .equals (b))
             return a .hasOwnProperty ("index") ? a : b;
@@ -322,8 +327,10 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
       tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
       tessy .gluTessNormal (0, 0, 1);
 
-      return function (contours, triangles)
+      return function (contours, triangles, index)
       {
+         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE, index ? combineCallbackIndex : combineCallback);
+
          tessy .gluTessBeginPolygon (triangles);
 
          for (const points of contours)
