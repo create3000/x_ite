@@ -53,7 +53,8 @@ import DEVELOPMENT    from "../../DEVELOPMENT.js";
 
 const
    _primitiveModes = Symbol (),
-   _shaderNodes    = Symbol ();
+   _shaderNodes    = Symbol (),
+   _wireframe      = Symbol ();
 
 function X3DShadersContext ()
 {
@@ -120,6 +121,8 @@ Object .assign (X3DShadersContext .prototype,
          }
          case Shading .WIREFRAME:
          {
+            this [_wireframe] = true;
+
             const ext = gl .getExtension ("WEBGL_polygon_mode");
 
             ext ?.polygonModeWEBGL (gl .FRONT_AND_BACK, ext .LINE_WEBGL);
@@ -135,9 +138,14 @@ Object .assign (X3DShadersContext .prototype,
             // case Shading .GOURAUD:
             // case Shading .PHONG:
 
-            const ext = gl .getExtension ("WEBGL_polygon_mode");
+            if (this [_wireframe])
+            {
+               this [_wireframe] = false;
 
-            ext ?.polygonModeWEBGL (gl .FRONT_AND_BACK, ext .FILL_WEBGL);
+               const ext = gl .getExtension ("WEBGL_polygon_mode");
+
+               ext ?.polygonModeWEBGL (gl .FRONT_AND_BACK, ext .FILL_WEBGL);
+            }
 
             this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
             this [_primitiveModes] .set (gl .LINES,     gl .LINES);
