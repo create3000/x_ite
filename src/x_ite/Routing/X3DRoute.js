@@ -73,16 +73,9 @@ function X3DRoute (executionContext, sourceNode, sourceFieldName, destinationNod
 
    if (sourceNode instanceof X3DImportedNode)
       sourceNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
-   else
-      var sourceField = sourceNode .getField (sourceFieldName);
 
    if (destinationNode instanceof X3DImportedNode)
       destinationNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
-   else
-      var destinationField = destinationNode .getField (destinationFieldName);
-
-   if (sourceField && destinationField && sourceField .getType () !== destinationField .getType ())
-      throw new Error ("Source field type must match destination field type.");
 
    this .reconnect ();
 }
@@ -168,8 +161,6 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
             : this [_sourceNode] .getExportedNode ();
 
          this [_sourceField] = sourceNode .getField (this [_sourceFieldName]);
-
-         this [_sourceField] .addOutputRoute (this);
       }
       catch (error)
       {
@@ -184,7 +175,6 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
 
          this [_destinationField] = destinationNode .getField (this [_destinationFieldName]);
 
-         this [_destinationField] .addInputRoute (this);
       }
       catch (error)
       {
@@ -193,7 +183,18 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
 
       if (this [_sourceField] && this [_destinationField])
       {
-         this [_sourceField] .addFieldInterest (this [_destinationField]);
+         if (this [_sourceField] .getType () !== this [_destinationField] .getType ())
+            throw new Error (`Bad ROUTE statement: Source field type must match destination field type of fields named "${this [_sourceField] .getName ()}" and "${this [_destinationField] .getName ()}".`);
+
+         if (!this [_sourceField] .isOutput ())
+            throw new Error (`Bad ROUTE statement: Source field "${this [_sourceField] .getName ()}" must be an output.`);
+
+         if (!this [_destinationField] .isInput ())
+            throw new Error (`Bad ROUTE statement: Destination field "${this [_destinationField] .getName ()}" must be an input.`);
+
+         this [_sourceField]      .addOutputRoute (this);
+         this [_destinationField] .addInputRoute (this);
+         this [_sourceField]      .addFieldInterest (this [_destinationField]);
       }
       else
       {
