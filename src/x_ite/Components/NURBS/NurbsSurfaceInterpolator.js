@@ -103,19 +103,21 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
          normal   = new Vector3 (),
          position = new Vector3 ();
 
+      const SAMPLE_RADIUS = 1e-5;
+
       return function ()
       {
          const
             fraction = this ._set_fraction .getValue (),
             surface  = this .geometry .getSurface ();
 
-         offset .setPolar (1e-5, 0);
+         offset .setPolar (SAMPLE_RADIUS, 0);
          surface .evaluate (a, fraction .x + offset .real, fraction .y + offset .imag);
 
-         offset .setPolar (1e-5, Math .PI * 2 / 3);
+         offset .setPolar (SAMPLE_RADIUS, Math .PI * 2 / 3);
          surface .evaluate (b, fraction .x + offset .real, fraction .y + offset .imag);
 
-         offset .setPolar (1e-5, Math .PI * 4 / 3);
+         offset .setPolar (SAMPLE_RADIUS, Math .PI * 4 / 3);
          surface .evaluate (c, fraction .x + offset .real, fraction .y + offset .imag);
 
          Triangle3 .normal (a, b, c, normal);
