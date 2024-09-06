@@ -71,17 +71,18 @@ Object .assign (Object .setPrototypeOf (Box .prototype, X3DGeometryNode .prototy
       return function ()
       {
          const
-            options  = this .getBrowser () .getBoxOptions (),
-            geometry = options .getGeometry (),
-            size     = this ._size .getValue ();
+            options     = this .getBrowser () .getBoxOptions (),
+            geometry    = options .getGeometry (),
+            size        = this ._size .getValue (),
+            vertexArray = this .getVertices ();
 
-         this .setMultiTexCoords (geometry .getMultiTexCoords ());
-         this .setTangents       (geometry .getTangents ());
-         this .setNormals        (geometry .getNormals ());
+         this .getMultiTexCoords () .push (... geometry .getMultiTexCoords ());
+         this .getTangents () .assign (geometry .getTangents ());
+         this .getNormals ()  .assign (geometry .getNormals ());
 
          if (size .equals (defaultSize))
          {
-            this .setVertices (geometry .getVertices ());
+            vertexArray .assign (geometry .getVertices ());
 
             this .getMin () .assign (geometry .getMin ());
             this .getMax () .assign (geometry .getMax ());
@@ -92,8 +93,7 @@ Object .assign (Object .setPrototypeOf (Box .prototype, X3DGeometryNode .prototy
                x               = Math .abs (size .x / 2),
                y               = Math .abs (size .y / 2),
                z               = Math .abs (size .z / 2),
-               defaultVertices = geometry .getVertices () .getValue (),
-               vertexArray     = this .getVertices ();
+               defaultVertices = geometry .getVertices () .getValue ();
 
             for (let i = 0, length = defaultVertices .length; i < length; i += 4)
             {

@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, X3DLineGeometryNode
 
       if (radius === 1)
       {
-         this .setVertices (options .getVertices ());
+         vertexArray .assign (options .getVertices ());
       }
       else
       {

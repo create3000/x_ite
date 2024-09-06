@@ -88,12 +88,11 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
          gl          = browser .getContext (),
          options     = browser .getDisk2DOptions (),
          innerRadius = Math .min (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
-         outerRadius = Math .max (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ()));
+         outerRadius = Math .max (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
+         vertexArray = this .getVertices ();
 
       if (innerRadius === outerRadius)
       {
-         const vertexArray = this .getVertices ();
-
          // Point
 
          if (outerRadius === 0)
@@ -115,7 +114,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
 
          if (outerRadius === 1)
          {
-            this .setVertices (options .getCircleVertices ());
+            vertexArray .assign (options .getCircleVertices ());
          }
          else
          {
@@ -141,17 +140,15 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
          // Disk
 
          this .getMultiTexCoords () .push (options .getDiskTexCoords ());
-         this .setNormals (options .getDiskNormals ());
+         this .getNormals () .assign (options .getDiskNormals ());
 
          if (outerRadius === 1)
          {
-            this .setVertices (options .getDiskVertices ());
+            vertexArray .assign (options .getDiskVertices ());
          }
          else
          {
-            const
-               defaultVertices = options .getDiskVertices () .getValue (),
-               vertexArray     = this .getVertices ();
+            const defaultVertices = options .getDiskVertices () .getValue ();
 
             for (let i = 0, length = defaultVertices .length; i < length; i += 4)
                vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
@@ -176,8 +173,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
          defaultTexCoords = options .getDiskTexCoords () .getValue (),
          defaultVertices  = options .getDiskVertices () .getValue (),
          texCoordArray    = this .getTexCoords (),
-         normalArray      = this .getNormals (),
-         vertexArray      = this .getVertices ();
+         normalArray      = this .getNormals ();
 
       this .getMultiTexCoords () .push (texCoordArray);
 

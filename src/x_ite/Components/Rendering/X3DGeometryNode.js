@@ -276,32 +276,13 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       return this .attribBuffers;
    },
-   setFogDepths (value)
-   {
-      this .fogDepths .assign (value);
-   },
    getFogDepths ()
    {
       return this .fogDepths;
    },
-   setColors (value)
-   {
-      this .colors .assign (value);
-   },
    getColors ()
    {
       return this .colors;
-   },
-   setMultiTexCoords (value)
-   {
-      const
-         multiTexCoords = this .multiTexCoords,
-         length         = value .length;
-
-      for (let i = 0; i < length; ++ i)
-         multiTexCoords [i] = value [i];
-
-      multiTexCoords .length = length;
    },
    getMultiTexCoords ()
    {
@@ -335,25 +316,13 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       this .textureCoordinateNode .getTextureCoordinateMapping (this .textureCoordinateMapping);
    },
-   setTangents (value)
-   {
-      this .tangents .assign (value);
-   },
    getTangents ()
    {
       return this .tangents;
    },
-   setNormals (value)
-   {
-      this .normals .assign (value);
-   },
    getNormals ()
    {
       return this .normals;
-   },
-   setVertices (value)
-   {
-      this .vertices .assign (value);
    },
    getVertices ()
    {

@@ -73,17 +73,18 @@ Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, X3DGeometryNode 
       return function ()
       {
          const
-            options  = this .getBrowser () .getRectangle2DOptions (),
-            geometry = options .getGeometry (),
-            size     = this ._size .getValue ();
+            options     = this .getBrowser () .getRectangle2DOptions (),
+            geometry    = options .getGeometry (),
+            size        = this ._size .getValue (),
+            vertexArray = this .getVertices ();
 
-         this .setMultiTexCoords (geometry .getMultiTexCoords ());
-         this .setTangents       (geometry .getTangents ());
-         this .setNormals        (geometry .getNormals ());
+         this .getMultiTexCoords () .push (... geometry .getMultiTexCoords ());
+         this .getTangents () .assign (geometry .getTangents ());
+         this .getNormals ()  .assign (geometry .getNormals ());
 
          if (size .equals (defaultSize))
          {
-            this .setVertices (geometry .getVertices ());
+            vertexArray .assign (geometry .getVertices ());
 
             this .getMin () .assign (geometry .getMin ());
             this .getMax () .assign (geometry .getMax ());
@@ -93,8 +94,7 @@ Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, X3DGeometryNode 
             const
                x               = Math .abs (size .x / 2),
                y               = Math .abs (size .y / 2),
-               defaultVertices = geometry .getVertices () .getValue (),
-               vertexArray     = this .getVertices ();
+               defaultVertices = geometry .getVertices () .getValue ();
 
             for (let i = 0; i < defaultVertices .length; i += 4)
             {

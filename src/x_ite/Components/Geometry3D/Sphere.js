@@ -77,26 +77,25 @@ Object .assign (Object .setPrototypeOf (Sphere .prototype, X3DGeometryNode .prot
    build ()
    {
       const
-         options  = this .getBrowser () .getSphereOptions (),
-         geometry = options .getGeometry (),
-         radius   = Math .abs (this ._radius .getValue ());
+         options     = this .getBrowser () .getSphereOptions (),
+         geometry    = options .getGeometry (),
+         radius      = Math .abs (this ._radius .getValue ()),
+         vertexArray = this .getVertices ();
 
-      this .setMultiTexCoords (geometry .getMultiTexCoords ());
-      this .setTangents       (geometry .getTangents ());
-      this .setNormals        (geometry .getNormals ());
+      this .getMultiTexCoords () .push (... geometry .getMultiTexCoords ());
+      this .getTangents () .assign (geometry .getTangents ());
+      this .getNormals ()  .assign (geometry .getNormals ());
 
       if (radius === 1)
       {
-         this .setVertices (geometry .getVertices ());
+         vertexArray .assign (geometry .getVertices ());
 
          this .getMin () .assign (geometry .getMin ());
          this .getMax () .assign (geometry .getMax ());
       }
       else
       {
-         const
-            defaultVertices = geometry .getVertices () .getValue (),
-            vertexArray     = this .getVertices ();
+         const defaultVertices = geometry .getVertices () .getValue ();
 
          for (let i = 0, length = defaultVertices .length; i < length; i += 4)
          {
