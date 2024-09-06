@@ -85,27 +85,28 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
       this .geometry ._weight       = this ._weight;
       this .geometry ._controlPoint = this ._controlPoint;
 
+      this .geometry ._rebuild .addInterest ("set_geometry__", this);
       this .geometry .setup ();
+
+      this .set_geometry__ ();
+   },
+   set_geometry__ ()
+   {
+      const surface = this .geometry .getSurface ();
+
+      this .derivative = surface .evaluator (1);
    },
    set_fraction__: (() =>
    {
       const
-         fromVector = new Vector3 (),
-         toVector   = new Vector3 (),
-         rotation   = new Rotation4 ();
-
-      const SAMPLE_DISTANCE = 1e-5;
+         direction = new Vector3 (),
+         rotation  = new Rotation4 ();
 
       return function ()
       {
-         const
-            fraction = this ._set_fraction .getValue (),
-            surface  = this .geometry .getSurface ();
+         const fraction = this ._set_fraction .getValue ();
 
-         surface .evaluate (fromVector, fraction - SAMPLE_DISTANCE);
-         surface .evaluate (toVector,   fraction + SAMPLE_DISTANCE);
-
-         const direction = toVector .subtract (fromVector);
+         this .derivative (direction, fraction);
 
          this ._value_changed = rotation .setFromToVec (Vector3 .zAxis, direction);
       };
