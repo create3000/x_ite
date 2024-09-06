@@ -53,6 +53,7 @@ import X3DChildNode         from "../Core/X3DChildNode.js";
 import NurbsCurve           from "./NurbsCurve.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function NurbsPositionInterpolator (executionContext)
 {
@@ -90,20 +91,13 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3
 
       return function ()
       {
-         try
-         {
-            const
-               fraction = this ._set_fraction .getValue (),
-               surface  = this .geometry .getSurface ();
+         const
+            fraction = Algorithm .clamp (this ._set_fraction .getValue (), 0, 1),
+            surface  = this .geometry .getSurface ();
 
-            surface .evaluate (value, fraction);
+         surface .evaluate (value, fraction);
 
-            this ._value_changed = value;
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         this ._value_changed = value;
       };
    })(),
 });

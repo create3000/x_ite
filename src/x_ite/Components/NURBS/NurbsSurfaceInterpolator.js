@@ -52,9 +52,8 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import NurbsPatchSurface    from "./NurbsPatchSurface.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Complex              from "../../../standard/Math/Numbers/Complex.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
-import Triangle3            from "../../../standard/Math/Geometry/Triangle3.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function NurbsSurfaceInterpolator (executionContext)
 {
@@ -114,23 +113,18 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
 
       return function ()
       {
-         try
-         {
-            const
-               fraction = this ._set_fraction .getValue (),
-               surface  = this .geometry .getSurface ();
+         const
+            fraction  = this ._set_fraction .getValue (),
+            fractionU = Algorithm .clamp (fraction .x, 0, 1),
+            fractionV = Algorithm .clamp (fraction .y, 0, 1),
+            surface   = this .geometry .getSurface ();
 
-            this .derivativeU (u, ... fraction);
-            this .derivativeV (v, ... fraction);
-            surface .evaluate (position, ... fraction);
+         this .derivativeU (u, fractionU, fractionV);
+         this .derivativeV (v, fractionU, fractionV);
+         surface .evaluate (position, fractionU, fractionV);
 
-            this ._normal_changed   = u .cross (v);
-            this ._position_changed = position;
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         this ._normal_changed   = u .cross (v);
+         this ._position_changed = position;
       };
    })(),
 });

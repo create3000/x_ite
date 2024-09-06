@@ -54,6 +54,7 @@ import NurbsCurve           from "./NurbsCurve.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function NurbsOrientationInterpolator (executionContext)
 {
@@ -104,18 +105,11 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
 
       return function ()
       {
-         try
-         {
-            const fraction = this ._set_fraction .getValue ();
+         const fraction = Algorithm .clamp (this ._set_fraction .getValue (), 0, 1);
 
-            this .derivative (direction, fraction);
+         this .derivative (direction, fraction);
 
-            this ._value_changed = rotation .setFromToVec (Vector3 .zAxis, direction);
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         this ._value_changed = rotation .setFromToVec (Vector3 .zAxis, direction);
       };
    })(),
 });
