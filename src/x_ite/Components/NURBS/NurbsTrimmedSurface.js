@@ -221,7 +221,10 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          {
             if (p .hasOwnProperty ("index"))
             {
-               const d = p .index;
+               const
+                  d  = p .index,
+                  d3 = d * 3,
+                  d4 = d * 4;
 
                // Copy point on surface.
 
@@ -231,14 +234,14 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
                      texCoordArray    = multiTexCoordArray [tc],
                      trimmedTexCoords = trimmedMultiTexCoords [tc];
 
-                  const { [d * 4]: t1, [d * 4 + 1]: t2, [d * 4 + 2]: t3, [d * 4 + 3]: t4 } = texCoordArray;
+                  const { [d4]: t1, [d4 + 1]: t2, [d4 + 2]: t3, [d4 + 3]: t4 } = texCoordArray;
 
                   trimmedTexCoords .push (t1, t2, t3, t4);
                }
 
                const
-                  { [d * 3]: n1, [d * 3 + 1]: n2, [d * 3 + 2]: n3 } = normalArray,
-                  { [d * 4]: v1, [d * 4 + 1]: v2, [d * 4 + 2]: v3 } = vertexArray;
+                  { [d3]: n1, [d3 + 1]: n2, [d3 + 2]: n3 } = normalArray,
+                  { [d4]: v1, [d4 + 1]: v2, [d4 + 2]: v3 } = vertexArray;
 
                trimmedNormals  .push (n1, n2, n3);
                trimmedVertices .push (v1, v2, v3, 1);
@@ -266,6 +269,10 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
                // Interpolate point on surface.
 
+               const
+                  d3 = d * 3,
+                  d4 = d * 4;
+
                for (let tc = 0; tc < numTexCoordChannels; ++ tc)
                {
                   const
@@ -273,24 +280,24 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
                      trimmedTexCoords = trimmedMultiTexCoords [tc];
 
                   trimmedTexCoords .push (
-                     u * texCoordArray [d * 4 + 0] + v * texCoordArray [d * 4 + 4] + t * texCoordArray [d * 4 + 8],
-                     u * texCoordArray [d * 4 + 1] + v * texCoordArray [d * 4 + 5] + t * texCoordArray [d * 4 + 9],
-                     u * texCoordArray [d * 4 + 2] + v * texCoordArray [d * 4 + 6] + t * texCoordArray [d * 4 + 10],
-                     u * texCoordArray [d * 4 + 3] + v * texCoordArray [d * 4 + 7] + t * texCoordArray [d * 4 + 11],
+                     u * texCoordArray [d4 + 0] + v * texCoordArray [d4 + 4] + t * texCoordArray [d4 + 8],
+                     u * texCoordArray [d4 + 1] + v * texCoordArray [d4 + 5] + t * texCoordArray [d4 + 9],
+                     u * texCoordArray [d4 + 2] + v * texCoordArray [d4 + 6] + t * texCoordArray [d4 + 10],
+                     u * texCoordArray [d4 + 3] + v * texCoordArray [d4 + 7] + t * texCoordArray [d4 + 11],
                   );
                }
 
                trimmedNormals .push (
-                  u * normalArray [d * 3 + 0] + v * normalArray [d * 3 + 3] + t * normalArray [d * 3 + 6],
-                  u * normalArray [d * 3 + 1] + v * normalArray [d * 3 + 4] + t * normalArray [d * 3 + 7],
-                  u * normalArray [d * 3 + 2] + v * normalArray [d * 3 + 5] + t * normalArray [d * 3 + 8]
+                  u * normalArray [d3 + 0] + v * normalArray [d3 + 3] + t * normalArray [d3 + 6],
+                  u * normalArray [d3 + 1] + v * normalArray [d3 + 4] + t * normalArray [d3 + 7],
+                  u * normalArray [d3 + 2] + v * normalArray [d3 + 5] + t * normalArray [d3 + 8],
                );
 
                trimmedVertices .push (
-                  u * vertexArray [d * 4 + 0] + v * vertexArray [d * 4 + 4] + t * vertexArray [d * 4 + 8],
-                  u * vertexArray [d * 4 + 1] + v * vertexArray [d * 4 + 5] + t * vertexArray [d * 4 + 9],
-                  u * vertexArray [d * 4 + 2] + v * vertexArray [d * 4 + 6] + t * vertexArray [d * 4 + 10],
-                  1
+                  u * vertexArray [d4 + 0] + v * vertexArray [d4 + 4] + t * vertexArray [d4 + 8],
+                  u * vertexArray [d4 + 1] + v * vertexArray [d4 + 5] + t * vertexArray [d4 + 9],
+                  u * vertexArray [d4 + 2] + v * vertexArray [d4 + 6] + t * vertexArray [d4 + 10],
+                  1,
                );
 
                break;
