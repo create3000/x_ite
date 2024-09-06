@@ -69,6 +69,8 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
 {
    initialize ()
    {
+      X3DChildNode .prototype .initialize .call (this);
+
       this ._set_fraction .addInterest ("set_fraction__", this);
 
       this ._uOrder       .addFieldInterest (this .geometry ._uOrder);

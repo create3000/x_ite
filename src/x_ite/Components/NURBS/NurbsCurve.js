@@ -110,6 +110,10 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
    {
       return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
    },
+   getSurface ()
+   {
+      return this .surface;
+   },
    tessellate ()
    {
       if (this ._order .getValue () < 2)
