@@ -329,6 +329,8 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    },
    createNormals (faces, points)
    {
+      // TODO: handle uClosed, vClosed.
+
       const
          normalIndex = new Map (),
          normals     = this .createFaceNormals (faces, points),
@@ -358,7 +360,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       return function (faces, points)
       {
          const
-            normals = this .faceNormals || [ ],
+            normals = this .faceNormals ?? [ ],
             length  = faces .length;
 
          for (let i = 0; i < length; i += 3)
@@ -372,7 +374,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
             v2 .set (points [index2], points [index2 + 1], points [index2 + 2]);
             v3 .set (points [index3], points [index3 + 1], points [index3 + 2]);
 
-            const normal = Triangle3 .normal (v1, v2 ,v3, normals [i] || new Vector3 ());
+            const normal = Triangle3 .normal (v1, v2 ,v3, normals [i] ?? new Vector3 ());
 
             normals [i]     = normal;
             normals [i + 1] = normal;

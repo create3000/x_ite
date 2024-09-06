@@ -233,7 +233,7 @@ const NURBS =
    {
       const
          length = dimension + order,
-         knots  = result || [ ];
+         knots  = result ?? [ ];
 
       for (let i = 0, l = knot .length; i < l; ++ i)
          knots [i] = knot [i];
@@ -320,7 +320,7 @@ const NURBS =
       if (weight .length !== dimension)
          return undefined;
 
-      const weights = result || [ ];
+      const weights = result ?? [ ];
 
       for (let i = 0; i < dimension; ++ i)
       {
@@ -338,7 +338,7 @@ const NURBS =
       if (weight .length !== dimension)
          return undefined;
 
-      const weights = result || [ ];
+      const weights = result ?? [ ];
 
       for (let u = 0, i = 0; u < uDimension; ++ u)
       {
@@ -355,7 +355,7 @@ const NURBS =
    getControlPoints2D (result, closed, order, weights, controlPoint)
    {
       const
-         controlPoints     = result || [ ],
+         controlPoints     = result ?? [ ],
          controlPointArray = controlPoint .getValue (),
          dimension         = controlPoint .length,
          haveWeights       = !! weights,
@@ -371,7 +371,7 @@ const NURBS =
       {
          const
             i2 = i * 2,
-            p  = controlPoints [i] || new Vector (0, 0, 0);
+            p  = controlPoints [i] ?? new Vector (0, 0, 0);
 
          controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], haveWeights ? weights [i] : 0);
       }
@@ -389,7 +389,7 @@ const NURBS =
    getControlPoints (result, closed, order, weights, controlPointNode)
    {
       const
-         controlPoints = result || [ ],
+         controlPoints = result ?? [ ],
          dimension     = controlPointNode .getSize (),
          haveWeights   = !! weights,
          Vector        = haveWeights ? Vector4 : Vector3;
@@ -402,7 +402,7 @@ const NURBS =
 
       for (let i = 0; i < dimension; ++ i)
       {
-         const cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector (0, 0, 0, 0));
+         const cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] ?? new Vector (0, 0, 0, 0));
 
          if (haveWeights)
             cp .w = weights [i];
@@ -421,7 +421,7 @@ const NURBS =
    getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
    {
       const
-         controlPoints = result || [ ],
+         controlPoints = result ?? [ ],
          haveWeights   = !! weights,
          Vector        = haveWeights ? Vector4 : Vector3;
 
@@ -442,7 +442,7 @@ const NURBS =
          {
             const index = v * uDimension + u;
 
-            cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector (0, 0, 0, 0));
+            cp [v] = controlPointNode .get1Point (index, cp [v] ?? new Vector (0, 0, 0, 0));
 
             if (haveWeights)
                cp [v] .w = weights [index];
@@ -469,7 +469,7 @@ const NURBS =
    },
    getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
    {
-      const controlPoints = result || [ ];
+      const controlPoints = result ?? [ ];
 
       for (let u = 0; u < uDimension; ++ u)
       {
@@ -482,7 +482,7 @@ const NURBS =
          {
             const index = v * uDimension + u;
 
-            cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 ());
+            cp [v] = controlPointNode .get1Point (index, cp [v] ?? new Vector4 ());
          }
 
          cp .length = vDimension;

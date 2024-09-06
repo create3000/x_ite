@@ -80,7 +80,7 @@ Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, X3DNo
          {
             const
                index = v * uDimension + u,
-               p     = cp [v] || new Vector4 (),
+               p     = cp [v] ?? new Vector4 (),
                i     = index * 2;
 
             cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights ? texWeights [index] : 1);
