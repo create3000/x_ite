@@ -98,14 +98,9 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
    set_fraction__: (() =>
    {
       const
-         offset   = new Complex (),
-         a        = new Vector3 (),
-         b        = new Vector3 (),
-         c        = new Vector3 (),
-         normal   = new Vector3 (),
+         u        = new Vector3 (),
+         v        = new Vector3 (),
          position = new Vector3 ();
-
-      const SAMPLE_RADIUS = 1e-5;
 
       return function ()
       {
@@ -113,19 +108,11 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
             fraction = this ._set_fraction .getValue (),
             surface  = this .geometry .getSurface ();
 
-         offset .setPolar (SAMPLE_RADIUS, 0);
-         surface .evaluate (a, fraction .x + offset .real, fraction .y + offset .imag);
-
-         offset .setPolar (SAMPLE_RADIUS, Math .PI * 2 / 3);
-         surface .evaluate (b, fraction .x + offset .real, fraction .y + offset .imag);
-
-         offset .setPolar (SAMPLE_RADIUS, Math .PI * 4 / 3);
-         surface .evaluate (c, fraction .x + offset .real, fraction .y + offset .imag);
-
-         Triangle3 .normal (a, b, c, normal);
+         surface .derivativeU (u, ... fraction);
+         surface .derivativeV (v, ... fraction);
          surface .evaluate (position, ... fraction);
 
-         this ._normal_changed   = normal;
+         this ._normal_changed   = u .cross (v);
          this ._position_changed = position;
       };
    })(),
