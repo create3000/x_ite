@@ -93,7 +93,17 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
       this .geometry ._weight        = this ._weight;
       this .geometry ._controlPoint  = this ._controlPoint;
 
+      this .geometry ._rebuild .addInterest ("set_geometry__", this);
       this .geometry .setup ();
+
+      this .set_geometry__ ();
+   },
+   set_geometry__ ()
+   {
+      const surface = this .geometry .getSurface ();
+
+      this .derivativeU = surface .evaluator (1);
+      this .derivativeV = surface .evaluator ([0, 1]);
    },
    set_fraction__: (() =>
    {
@@ -108,8 +118,8 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
             fraction = this ._set_fraction .getValue (),
             surface  = this .geometry .getSurface ();
 
-         surface .derivativeU (u, ... fraction);
-         surface .derivativeV (v, ... fraction);
+         this .derivativeU (u, ... fraction);
+         this .derivativeV (v, ... fraction);
          surface .evaluate (position, ... fraction);
 
          this ._normal_changed   = u .cross (v);

@@ -206,9 +206,6 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
          debug: false,
       });
 
-      this .surface .derivativeU = this .surface .evaluator (1);
-      this .surface .derivativeV = this .surface .evaluator ([0, 1]);
-
       const sampleOptions = this .sampleOptions;
 
       sampleOptions .resolution [0] = this .getUTessellation ();
