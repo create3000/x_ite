@@ -178,6 +178,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
       });
 
       this .sampleOptions .resolution [0] = this .getTessellation (controlPoints .length);
+      this .sampleOptions .closed         = closed;
       this .sampleOptions .haveWeights    = !! weights;
 
       const

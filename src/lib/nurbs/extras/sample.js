@@ -1,26 +1,13 @@
-const tmp1 = [ ];
+const tmp1 = [ ] ;
 
 export default function (mesh, surface, opts)
 {
-   mesh = mesh || { };
-   opts = opts || { };
-
    const
       points      = mesh .points ??= [ ],
       faces       = mesh .faces  ??= [ ],
       haveWeights = opts .haveWeights,
-      dimension   = surface .dimension - haveWeights;
-
-   if (Array .isArray (opts .resolution))
-   {
-      var resolution = opts .resolution;
-   }
-   else
-   {
-      var
-         res        = opts .resolution === undefined ? 31 : opts .resolution,
-         resolution = new Array (surface .splineDimension) .fill (res);
-   }
+      dimension   = surface .dimension - haveWeights,
+      resolution  = opts .resolution;
 
    switch (surface .splineDimension)
    {
@@ -28,8 +15,8 @@ export default function (mesh, surface, opts)
       {
          const
             nu         = resolution [0],
-            uClosed    = surface .boundary [0] === "closed",
-            nuBound    = nu + ! uClosed,
+            uBClosed   = surface .boundary [0] === "closed",
+            nuBound    = nu + !uBClosed,
             nbVertices = nuBound * dimension,
             domain     = opts .domain || surface .domain,
             uDomain    = domain [0],
@@ -65,10 +52,12 @@ export default function (mesh, surface, opts)
          const
             nu         = resolution [0],
             nv         = resolution [1],
-            uClosed    = surface .boundary [0] === "closed",
-            vClosed    = surface .boundary [1] === "closed",
-            nuBound    = nu + ! uClosed,
-            nvBound    = nv + ! vClosed,
+            uClosed    = opts .closed [0],
+            vClosed    = opts .closed [1],
+            uBClosed   = surface .boundary [0] === "closed",
+            vBClosed   = surface .boundary [1] === "closed",
+            nuBound    = nu + !uBClosed,
+            nvBound    = nv + !vBClosed,
             nbVertices = nuBound * nvBound * dimension,
             domain     = opts .domain || surface .domain,
             uDomain    = domain [0],
@@ -146,7 +135,7 @@ export default function (mesh, surface, opts)
          break;
       }
       default:
-         throw new Error("Can only sample contours and surfaces");
+         throw new Error ("Can only sample contours and surfaces.");
    }
 
    return mesh;

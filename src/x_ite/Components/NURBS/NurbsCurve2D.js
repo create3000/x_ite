@@ -128,6 +128,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
       });
 
       this .sampleOptions .resolution [0] = this .getTessellation (controlPoints .length);
+      this .sampleOptions .closed         = closed;
       this .sampleOptions .haveWeights    = !! weights;
 
       const

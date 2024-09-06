@@ -91,13 +91,11 @@ Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, X3DParamet
    },
    set_crossSectionCurve__ ()
    {
-      if (this .crossSectionCurveNode)
-         this .crossSectionCurveNode .removeInterest ("requestRebuild", this);
+      this .crossSectionCurveNode ?.removeInterest ("requestRebuild", this);
 
       this .crossSectionCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this ._crossSectionCurve);
 
-      if (this .crossSectionCurveNode)
-         this .crossSectionCurveNode .addInterest ("requestRebuild", this);
+      this .crossSectionCurveNode ?.addInterest ("requestRebuild", this);
    },
    set_trajectoryCurve__ ()
    {

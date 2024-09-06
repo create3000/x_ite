@@ -91,23 +91,19 @@ Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, X3DParamet
    },
    set_profileCurve__ ()
    {
-      if (this .profileCurveNode)
-         this .profileCurveNode .removeInterest ("requestRebuild", this);
+      this .profileCurveNode ?.removeInterest ("requestRebuild", this);
 
       this .profileCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this ._profileCurve);
 
-      if (this .profileCurveNode)
-         this .profileCurveNode .addInterest ("requestRebuild", this);
+      this .profileCurveNode ?.addInterest ("requestRebuild", this);
    },
    set_trajectoryCurve__ ()
    {
-      if (this .trajectoryCurveNode)
-         this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
+      this .trajectoryCurveNode ?.removeInterest ("requestRebuild", this);
 
       this .trajectoryCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this ._trajectoryCurve);
 
-      if (this .trajectoryCurveNode)
-         this .trajectoryCurveNode .addInterest ("requestRebuild", this);
+      this .trajectoryCurveNode ?.addInterest ("requestRebuild", this);
    },
    build ()
    {
