@@ -104,11 +104,18 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
 
       return function ()
       {
-         const fraction = this ._set_fraction .getValue ();
+         try
+         {
+            const fraction = this ._set_fraction .getValue ();
 
-         this .derivative (direction, fraction);
+            this .derivative (direction, fraction);
 
-         this ._value_changed = rotation .setFromToVec (Vector3 .zAxis, direction);
+            this ._value_changed = rotation .setFromToVec (Vector3 .zAxis, direction);
+         }
+         catch (error)
+         {
+            console .error (error);
+         }
       };
    })(),
 });

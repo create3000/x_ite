@@ -114,16 +114,23 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
 
       return function ()
       {
-         const
-            fraction = this ._set_fraction .getValue (),
-            surface  = this .geometry .getSurface ();
+         try
+         {
+            const
+               fraction = this ._set_fraction .getValue (),
+               surface  = this .geometry .getSurface ();
 
-         this .derivativeU (u, ... fraction);
-         this .derivativeV (v, ... fraction);
-         surface .evaluate (position, ... fraction);
+            this .derivativeU (u, ... fraction);
+            this .derivativeV (v, ... fraction);
+            surface .evaluate (position, ... fraction);
 
-         this ._normal_changed   = u .cross (v);
-         this ._position_changed = position;
+            this ._normal_changed   = u .cross (v);
+            this ._position_changed = position;
+         }
+         catch (error)
+         {
+            console .error (error);
+         }
       };
    })(),
 });

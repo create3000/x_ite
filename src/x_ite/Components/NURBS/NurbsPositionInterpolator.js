@@ -90,13 +90,20 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3
 
       return function ()
       {
-         const
-            fraction = this ._set_fraction .getValue (),
-            surface  = this .geometry .getSurface ();
+         try
+         {
+            const
+               fraction = this ._set_fraction .getValue (),
+               surface  = this .geometry .getSurface ();
 
-         surface .evaluate (value, fraction);
+            surface .evaluate (value, fraction);
 
-         this ._value_changed = value;
+            this ._value_changed = value;
+         }
+         catch (error)
+         {
+            console .error (error);
+         }
       };
    })(),
 });
