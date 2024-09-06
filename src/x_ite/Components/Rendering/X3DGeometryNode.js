@@ -113,6 +113,34 @@ function X3DGeometryNode (executionContext)
       this .planes [i] = new Plane3 ();
 }
 
+class GeometryArray extends Array
+{
+   #typedArray = new Float32Array ();
+
+   assign (value)
+   {
+      const length = value .length;
+
+      for (let i = 0; i < length; ++ i)
+         this [i] = value [i];
+
+      this .length = length;
+   }
+
+   getValue ()
+   {
+      return this .#typedArray;
+   }
+
+   shrinkToFit ()
+   {
+      if (this .length === this .#typedArray .length)
+         this .#typedArray .set (this);
+      else
+         this .#typedArray = new Float32Array (this);
+   }
+}
+
 Object .defineProperty (X3DGeometryNode, "createArray",
 {
    // Function to select ether Array or MFFloat for color/normal/vertex arrays.
@@ -121,34 +149,7 @@ Object .defineProperty (X3DGeometryNode, "createArray",
    {
       // return new Fields .MFFloat ();
 
-      const array = [ ];
-
-      array .typedArray = new Float32Array ();
-
-      array .assign = function (value)
-      {
-         const length = value .length;
-
-         for (let i = 0; i < length; ++ i)
-            this [i] = value [i];
-
-         this .length = length;
-      };
-
-      array .getValue = function ()
-      {
-         return this .typedArray;
-      };
-
-      array .shrinkToFit = function ()
-      {
-         if (this .length === this .typedArray .length)
-            this .typedArray .set (this);
-         else
-            this .typedArray = new Float32Array (this);
-      };
-
-      return array;
+      return new GeometryArray ();
    },
 })
 
