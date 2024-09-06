@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3
       this ._weight       .addFieldInterest (this .geometry ._weight);
       this ._controlPoint .addFieldInterest (this .geometry ._controlPoint);
 
-      this .geometry ._tessellation = 2;
+      this .geometry ._tessellation = 1;
       this .geometry ._order        = this ._order;
       this .geometry ._knot         = this ._knot;
       this .geometry ._weight       = this ._weight;

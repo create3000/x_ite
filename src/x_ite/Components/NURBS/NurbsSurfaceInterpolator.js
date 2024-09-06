@@ -81,8 +81,8 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
       this ._weight       .addFieldInterest (this .geometry ._weight);
       this ._controlPoint .addFieldInterest (this .geometry ._controlPoint);
 
-      this .geometry ._uTessellation = 2;
-      this .geometry ._vTessellation = 2;
+      this .geometry ._uTessellation = 1;
+      this .geometry ._vTessellation = 1;
       this .geometry ._uOrder        = this ._uOrder;
       this .geometry ._vOrder        = this ._vOrder;
       this .geometry ._uDimension    = this ._uDimension;
