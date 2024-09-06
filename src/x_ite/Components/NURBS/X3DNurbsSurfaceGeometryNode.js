@@ -148,6 +148,10 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    {
       return NURBS .getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode);
    },
+   getSurface ()
+   {
+      return this .surface;
+   },
    trimSurface ()
    { },
    build ()
@@ -194,7 +198,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
          uDegree = this ._uOrder .getValue () - 1,
          vDegree = this ._vOrder .getValue () - 1;
 
-      const surface = this .surface = (this .surface || nurbs) ({
+      this .surface = (this .surface ?? nurbs) ({
          boundary: ["open", "open"],
          degree: [uDegree, vDegree],
          knots: [uKnots, vKnots],
@@ -211,7 +215,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       sampleOptions .haveWeights    = !! weights;
 
       const
-         mesh        = nurbs .sample (this .mesh, surface, sampleOptions),
+         mesh        = nurbs .sample (this .mesh, this .surface, sampleOptions),
          faces       = mesh .faces,
          points      = mesh .points,
          vertexArray = this .getVertices ();
@@ -287,7 +291,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    })(),
    createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray)
    {
-      const texSurface = this .texSurface = (this .texSurface || nurbs) ({
+      this .texSurface = (this .texSurface ?? nurbs) ({
          boundary: ["open", "open"],
          degree: [texUDegree, texVDegree],
          knots: [texUKnots, texVKnots],
@@ -301,7 +305,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       sampleOptions .haveWeights = false;
 
       const
-         texMesh = nurbs .sample (this .texMesh, texSurface, sampleOptions),
+         texMesh = nurbs .sample (this .texMesh, this .texSurface, sampleOptions),
          faces   = texMesh .faces,
          points  = texMesh .points;
 

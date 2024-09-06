@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3
 
       const degree = this ._order .getValue () - 1;
 
-      const surface = this .surface = (this .surface || nurbs) ({
+      this .surface = (this .surface ?? nurbs) ({
          boundary: ["open"],
          degree: [degree],
          knots: [knots],
@@ -163,7 +163,7 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3
       this .sampleOptions .haveWeights = !! weights;
 
       const
-         mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
+         mesh         = nurbs .sample (this .mesh, this .surface, this .sampleOptions),
          points       = mesh .points,
          interpolator = this .interpolator;
 

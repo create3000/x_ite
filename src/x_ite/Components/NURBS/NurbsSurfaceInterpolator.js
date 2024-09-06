@@ -52,9 +52,9 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import NurbsPatchSurface    from "./NurbsPatchSurface.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Triangle2            from "../../../standard/Math/Geometry/Triangle2.js";
-import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
+import Complex              from "../../../standard/Math/Numbers/Complex.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Triangle3            from "../../../standard/Math/Geometry/Triangle3.js";
 
 function NurbsSurfaceInterpolator (executionContext)
 {
@@ -80,8 +80,8 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
       this ._weight       .addFieldInterest (this .geometry ._weight);
       this ._controlPoint .addFieldInterest (this .geometry ._controlPoint);
 
-      this .geometry ._uTessellation = -16;
-      this .geometry ._vTessellation = -16;
+      this .geometry ._uTessellation = 2;
+      this .geometry ._vTessellation = 2;
       this .geometry ._uOrder        = this ._uOrder;
       this .geometry ._vOrder        = this ._vOrder;
       this .geometry ._uDimension    = this ._uDimension;
@@ -96,62 +96,33 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
    set_fraction__: (() =>
    {
       const
-         a        = new Vector2 (),
-         b        = new Vector2 (),
-         c        = new Vector2 (),
-         uvt      = { },
+         offset   = new Complex (),
+         a        = new Vector3 (),
+         b        = new Vector3 (),
+         c        = new Vector3 (),
          normal   = new Vector3 (),
          position = new Vector3 ();
 
       return function ()
       {
          const
-            fraction       = this ._set_fraction .getValue (),
-            texCoordsArray = this .geometry .getTexCoords (),
-            normalArray    = this .geometry .getNormals (),
-            verticesArray  = this .geometry .getVertices (),
-            numTexCoords   = texCoordsArray .length;
+            fraction = this ._set_fraction .getValue (),
+            surface  = this .geometry .getSurface ();
 
-         const MIN_BARYCENTRIC_DISTANCE = 1e-5;
+         offset .setPolar (1e-5, 0);
+         surface .evaluate (a, fraction .x + offset .real, fraction .y + offset .imag);
 
-         for (let i4 = 0, i3 = 0; i4 < numTexCoords; i4 += 12, i3 += 9)
-         {
-            a .set (texCoordsArray [i4 + 0], texCoordsArray [i4 + 1]);
-            b .set (texCoordsArray [i4 + 4], texCoordsArray [i4 + 5]);
-            c .set (texCoordsArray [i4 + 8], texCoordsArray [i4 + 9]);
+         offset .setPolar (1e-5, Math .PI * 2 / 3);
+         surface .evaluate (b, fraction .x + offset .real, fraction .y + offset .imag);
 
-            const { u, v, t } = Triangle2 .toBarycentric (fraction, a, b, c, uvt);
+         offset .setPolar (1e-5, Math .PI * 4 / 3);
+         surface .evaluate (c, fraction .x + offset .real, fraction .y + offset .imag);
 
-            // Check if fraction lies in triangle.
+         Triangle3 .normal (a, b, c, normal);
+         surface .evaluate (position, ... fraction);
 
-            if (Math .abs (u - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
-               continue;
-
-            if (Math .abs (v - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
-               continue;
-
-            if (Math .abs (t - 0.5) > 0.5 + MIN_BARYCENTRIC_DISTANCE)
-               continue;
-
-            // Interpolate point on surface.
-
-            normal .set (
-               u * normalArray [i3 + 0] + v * normalArray [i3 + 3] + t * normalArray [i3 + 6],
-               u * normalArray [i3 + 1] + v * normalArray [i3 + 4] + t * normalArray [i3 + 7],
-               u * normalArray [i3 + 2] + v * normalArray [i3 + 5] + t * normalArray [i3 + 8],
-            );
-
-            position .set (
-               u * verticesArray [i4 + 0] + v * verticesArray [i4 + 4] + t * verticesArray [i4 + 8],
-               u * verticesArray [i4 + 1] + v * verticesArray [i4 + 5] + t * verticesArray [i4 + 9],
-               u * verticesArray [i4 + 2] + v * verticesArray [i4 + 6] + t * verticesArray [i4 + 10],
-            );
-
-            this ._normal_changed   = normal;
-            this ._position_changed = position;
-
-            break;
-         }
+         this ._normal_changed   = normal;
+         this ._position_changed = position;
       };
    })(),
 });

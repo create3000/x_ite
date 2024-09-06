@@ -6,8 +6,8 @@ export default function (mesh, surface, opts)
    opts = opts || { };
 
    const
-      points      = mesh .points = mesh .points || [ ],
-      faces       = mesh .faces  = mesh .faces  || [ ],
+      points      = mesh .points ??= [ ],
+      faces       = mesh .faces  ??= [ ],
       haveWeights = opts .haveWeights,
       dimension   = surface .dimension - haveWeights;
 
