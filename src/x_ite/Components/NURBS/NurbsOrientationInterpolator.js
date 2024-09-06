@@ -45,18 +45,15 @@
  *
  ******************************************************************************/
 
-import Fields                  from "../../Fields.js";
-import X3DFieldDefinition      from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray    from "../../Base/FieldDefinitionArray.js";
-import X3DNode                 from "../Core/X3DNode.js";
-import X3DChildNode            from "../Core/X3DChildNode.js";
-import OrientationInterpolator from "../Interpolation/OrientationInterpolator.js";
-import X3DConstants            from "../../Base/X3DConstants.js";
-import X3DCast                 from "../../Base/X3DCast.js";
-import NURBS                   from "../../Browser/NURBS/NURBS.js";
-import Vector3                 from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4               from "../../../standard/Math/Numbers/Rotation4.js";
-import nurbs                   from "../../../lib/nurbs/nurbs.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
+import X3DChildNode         from "../Core/X3DChildNode.js";
+import NurbsCurve           from "./NurbsCurve.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 
 function NurbsOrientationInterpolator (executionContext)
 {
@@ -66,12 +63,7 @@ function NurbsOrientationInterpolator (executionContext)
 
    this .addChildObjects (X3DConstants .inputOutput, "rebuild", new Fields .SFTime ());
 
-   this .interpolator  = new OrientationInterpolator (executionContext);
-   this .knots         = [ ];
-   this .weights       = [ ];
-   this .controlPoints = [ ];
-   this .mesh          = { };
-   this .sampleOptions = { resolution: [ 128 ] };
+   this .geometry = new NurbsCurve (executionContext);
 }
 
 Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype, X3DChildNode .prototype),
@@ -80,112 +72,44 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      this ._order        .addInterest ("requestRebuild",     this);
-      this ._knot         .addInterest ("requestRebuild",     this);
-      this ._weight       .addInterest ("requestRebuild",     this);
-      this ._controlPoint .addInterest ("set_controlPoint__", this);
+      this ._set_fraction .addInterest ("set_fraction__", this);
 
-      this ._rebuild .addInterest ("build", this);
+      this ._order        .addFieldInterest (this .geometry ._order);
+      this ._knot         .addFieldInterest (this .geometry ._knot);
+      this ._weight       .addFieldInterest (this .geometry ._weight);
+      this ._controlPoint .addFieldInterest (this .geometry ._controlPoint);
 
-      this ._set_fraction .addFieldInterest (this .interpolator ._set_fraction);
-      this .interpolator ._value_changed .addFieldInterest (this ._value_changed);
+      this .geometry ._tessellation = 2;
+      this .geometry ._order        = this ._order;
+      this .geometry ._knot         = this ._knot;
+      this .geometry ._weight       = this ._weight;
+      this .geometry ._controlPoint = this ._controlPoint;
 
-      this .interpolator .setup ();
-
-      this .set_controlPoint__ ();
+      this .geometry .setup ();
    },
-   set_controlPoint__ ()
+   set_fraction__: (() =>
    {
-      if (this .controlPointNode)
-         this .controlPointNode .removeInterest ("requestRebuild", this);
-
-      this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._controlPoint);
-
-      if (this .controlPointNode)
-         this .controlPointNode .addInterest ("requestRebuild", this);
-
-      this .requestRebuild ();
-   },
-   getClosed (order, knot, weight, controlPointNode)
-   {
-      return NURBS .getClosed (order, knot, weight, controlPointNode);
-   },
-   getKnots (result, closed, order, dimension, knot)
-   {
-      return NURBS .getKnots (result, closed, order, dimension, knot);
-   },
-   getWeights (result, dimension, weight)
-   {
-      return NURBS .getWeights (result, dimension, weight);
-   },
-   getControlPoints (result, closed, order, weights, controlPointNode)
-   {
-      return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
-   },
-   requestRebuild ()
-   {
-      this ._rebuild .addEvent ();
-   },
-   build ()
-   {
-      if (this ._order .getValue () < 2)
-         return;
-
-      if (!this .controlPointNode)
-         return;
-
-      if (this .controlPointNode .getSize () < this ._order .getValue ())
-         return;
-
-      // Order and dimension are now positive numbers.
-
       const
-         closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this .controlPointNode),
-         weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this ._weight),
-         controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this .controlPointNode);
+         fromVector = new Vector3 (),
+         toVector   = new Vector3 (),
+         rotation   = new Rotation4 ();
 
-      // Knots
+      const SAMPLE_DISTANCE = 1e-5;
 
-      const
-         knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot),
-         scale = knots .at (-1) - knots [0];
-
-      // Initialize NURBS tessellator
-
-      const degree = this ._order .getValue () - 1;
-
-      this .surface = (this .surface ?? nurbs) ({
-         boundary: ["open"],
-         degree: [degree],
-         knots: [knots],
-         points: controlPoints,
-         debug: false,
-      });
-
-      this .sampleOptions .haveWeights = !! weights;
-
-      const
-         mesh         = nurbs .sample (this .mesh, this .surface, this .sampleOptions),
-         points       = mesh .points,
-         interpolator = this .interpolator;
-
-      interpolator ._key      .length = 0;
-      interpolator ._keyValue .length = 0;
-
-      const
-         direction = new Vector3 (),
-         rotation  = new Rotation4 ();
-
-      for (let i = 0, length = points .length - 3; i < length; i += 3)
+      return function ()
       {
-         direction .set (points [i + 3] - points [i + 0],
-                         points [i + 4] - points [i + 1],
-                         points [i + 5] - points [i + 2]);
+         const
+            fraction = this ._set_fraction .getValue (),
+            surface  = this .geometry .getSurface ();
 
-         interpolator ._key      .push (i / (length - 3));
-         interpolator ._keyValue. push (rotation .setFromToVec (Vector3 .zAxis, direction));
-      }
-   },
+         surface .evaluate (fromVector, fraction - SAMPLE_DISTANCE);
+         surface .evaluate (toVector,   fraction + SAMPLE_DISTANCE);
+
+         const direction = toVector .subtract (fromVector);
+
+         this ._value_changed = rotation .setFromToVec (Vector3 .zAxis, direction);
+      };
+   })(),
 });
 
 Object .defineProperties (NurbsOrientationInterpolator,
