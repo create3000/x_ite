@@ -188,13 +188,13 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       this .set_live__ ();
    },
-   setGeometryType (value)
-   {
-      this .geometryType = value;
-   },
    getGeometryType ()
    {
       return this .geometryType;
+   },
+   setGeometryType (value)
+   {
+      this .geometryType = value;
    },
    setTransparent (value)
    {
@@ -238,21 +238,21 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       return Matrix4 .Identity;
    },
-   setPrimitiveMode (value)
-   {
-      this .primitiveMode = value;
-   },
    getPrimitiveMode ()
    {
       return this .primitiveMode;
    },
-   isSolid ()
+   setPrimitiveMode (value)
    {
-      return this .solid;
+      this .primitiveMode = value;
    },
    setSolid (value)
    {
       this .solid = value;
+   },
+   isSolid ()
+   {
+      return this .solid;
    },
    setCCW (value)
    {
