@@ -101,8 +101,8 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
    {
       const surface = this .geometry .getSurface ();
 
-      this .derivativeU = surface .evaluator ([1, 0]);
-      this .derivativeV = surface .evaluator ([0, 1]);
+      this .uDerivative = surface .evaluator ([1, 0]);
+      this .vDerivative = surface .evaluator ([0, 1]);
    },
    set_fraction__: (() =>
    {
@@ -119,8 +119,8 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
             fractionV = Algorithm .clamp (fraction .y, 0, 1),
             surface   = this .geometry .getSurface ();
 
-         this .derivativeU (u, fractionU, fractionV);
-         this .derivativeV (v, fractionU, fractionV);
+         this .uDerivative (u, fractionU, fractionV);
+         this .vDerivative (v, fractionU, fractionV);
          surface .evaluate (position, fractionU, fractionV);
 
          this ._normal_changed   = u .cross (v);
