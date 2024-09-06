@@ -863,17 +863,20 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          // Determine bbox.
 
          const
-            vertices = this .vertices .getValue (),
-            min      = this .min,
-            max      = this .max;
+            vertices    = this .vertices .getValue (),
+            numVertices = vertices .length,
+            min         = this .min,
+            max         = this .max;
 
-         if (vertices .length)
+         if (numVertices)
          {
             if (min .x === Number .POSITIVE_INFINITY)
             {
-               for (let i = 0, length = vertices .length; i < length; i += 4)
+               for (let i = 0; i < numVertices; i += 4)
                {
-                  point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
+                  const { [i]: v1, [i + 1]: v2, [i + 2]: v3 } = vertices;
+
+                  point .set (v1, v2, v3);
 
                   min .min (point);
                   max .max (point);
