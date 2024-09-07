@@ -120,7 +120,7 @@ const NURBS =
       {
          const haveWeights = weight .length === controlPointNode .getSize ();
 
-         for (let v = 0, length = vDimension; v < length; ++ v)
+         for (let v = 0; v < vDimension; ++ v)
          {
             const
                first = v * uDimension,
@@ -153,7 +153,7 @@ const NURBS =
       {
          const haveWeights = weight .length === controlPointNode .getSize ();
 
-         for (let u = 0, size = uDimension; u < size; ++ u)
+         for (let u = 0; u < uDimension; ++ u)
          {
             const
                first = u,
@@ -327,7 +327,9 @@ const NURBS =
 
       if (closed)
       {
-         for (let i = 1, size = order - 1; i < size; ++ i)
+         const length = order - 1;
+
+         for (let i = 1; i < length; ++ i)
             controlPoints .push (controlPoints [i]);
       }
 
@@ -359,7 +361,9 @@ const NURBS =
 
       if (closed)
       {
-         for (let i = 1, size = order - 1; i < size; ++ i)
+         const length = order - 1;
+
+         for (let i = 1; i < length; ++ i)
             controlPoints .push (controlPoints [i]);
       }
 
@@ -380,16 +384,13 @@ const NURBS =
 
       for (let u = 0; u < uDimension; ++ u)
       {
-         let cp = controlPoints [u];
-
-         if (!cp)
-            cp = controlPoints [u] = [ ];
+         const cp = controlPoints [u] ??= [ ];
 
          for (let v = 0; v < vDimension; ++ v)
          {
             const index = v * uDimension + u;
 
-            cp [v] = controlPointNode .get1Point (index, cp [v] ?? new Vector (0, 0, 0, 0));
+            controlPointNode .get1Point (index, cp [v] ??= new Vector (0, 0, 0, 0));
 
             if (haveWeights)
                cp [v] .w = weights [index];
@@ -399,7 +400,9 @@ const NURBS =
 
          if (vClosed)
          {
-            for (let i = 1, length = vOrder - 1; i < length; ++ i)
+            const length = vOrder - 1;
+
+            for (let i = 1; i < length; ++ i)
                cp .push (cp [i]);
          }
       }
@@ -408,7 +411,9 @@ const NURBS =
 
       if (uClosed)
       {
-         for (let i = 1, length = uOrder - 1; i < length; ++ i)
+         const length = uOrder - 1;
+
+         for (let i = 1; i < length; ++ i)
             controlPoints .push (controlPoints [i]);
       }
 
@@ -420,23 +425,22 @@ const NURBS =
 
       for (let u = 0; u < uDimension; ++ u)
       {
-         let cp = controlPoints [u];
-
-         if (!cp)
-            cp = controlPoints [u] = [ ];
+         const cp = controlPoints [u] ??= [ ];
 
          for (let v = 0; v < vDimension; ++ v)
          {
             const index = v * uDimension + u;
 
-            cp [v] = controlPointNode .get1Point (index, cp [v] ?? new Vector4 ());
+            controlPointNode .get1Point (index, cp [v] ??= new Vector4 ());
          }
 
          cp .length = vDimension;
 
          if (vClosed)
          {
-            for (let i = 1, length = vOrder - 1; i < length; ++ i)
+            const length = vOrder - 1;
+
+            for (let i = 1; i < length; ++ i)
                cp .push (cp [i]);
          }
       }
@@ -445,7 +449,9 @@ const NURBS =
 
       if (uClosed)
       {
-         for (let i = 1, length = uOrder - 1; i < length; ++ i)
+         const length = uOrder - 1;
+
+         for (let i = 1; i < length; ++ i)
             controlPoints .push (controlPoints [i]);
       }
 
