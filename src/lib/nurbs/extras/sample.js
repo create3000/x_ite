@@ -15,8 +15,7 @@ function sample (mesh, surface, opts)
       {
          const
             nu         = resolution [0],
-            uBClosed   = surface .boundary [0] === "closed",
-            nuBound    = nu + !uBClosed,
+            nuBound    = nu + 1,
             nbVertices = nuBound * dimension,
             domain     = surface .domain,
             uDomain    = domain [0],
@@ -52,18 +51,16 @@ function sample (mesh, surface, opts)
          const
             nu         = resolution [0],
             nv         = resolution [1],
-            uClosed    = opts .closed [0],
-            vClosed    = opts .closed [1],
-            uBClosed   = surface .boundary [0] === "closed",
-            vBClosed   = surface .boundary [1] === "closed",
-            nuBound    = nu + !uBClosed,
-            nvBound    = nv + !vBClosed,
+            nuBound    = nu + 1,
+            nvBound    = nv + 1,
             nbVertices = nuBound * nvBound * dimension,
             domain     = surface .domain,
             uDomain    = domain [0],
             vDomain    = domain [1],
             uDistance  = uDomain [1] - uDomain [0],
-            vDistance  = vDomain [1] - vDomain [0];
+            vDistance  = vDomain [1] - vDomain [0],
+            uClosed    = opts .closed [0],
+            vClosed    = opts .closed [1];
 
          // Generate points.
 
@@ -141,34 +138,28 @@ function sample (mesh, surface, opts)
    return mesh;
 }
 
-sample .uDomain = function (result, surface, resolution)
+sample .uDomain = function (result, surface)
 {
    const
-      nu        = resolution,
-      uBClosed  = surface .boundary [0] === "closed",
-      nuBound   = nu + !uBClosed,
       domain    = surface .domain,
       uDomain   = domain [0],
       uDistance = uDomain [1] - uDomain [0];
 
-   result [0] = uDomain [0] + uDistance * 0 / nu,
-   result [1] = uDomain [0] + uDistance * (nuBound - 1) / nu;
+   result [0] = uDomain [0],
+   result [1] = uDomain [0] + uDistance;
 
    return result;
 };
 
-sample .vDomain = function (result, surface, resolution)
+sample .vDomain = function (result, surface)
 {
    const
-      nv        = resolution,
-      vBClosed  = surface .boundary [0] === "closed",
-      nvBound   = nv + !vBClosed,
       domain    = surface .domain,
-      vDomain   = domain [0],
+      vDomain   = domain [1],
       vDistance = vDomain [1] - vDomain [0];
 
-   result [0] = vDomain [0] + vDistance * 0 / nv,
-   result [1] = vDomain [0] + vDistance * (nvBound - 1) / nv;
+   result [0] = vDomain [0];
+   result [1] = vDomain [0] + vDistance;
 
    return result;
 };

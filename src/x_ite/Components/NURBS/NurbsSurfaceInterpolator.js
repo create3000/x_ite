@@ -121,8 +121,8 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
             uFraction = Algorithm .clamp (fraction .x, 0, 1),
             vFraction = Algorithm .clamp (fraction .y, 0, 1),
             surface   = this .geometry .getSurface (),
-            uDomain   = nurbs .sample .uDomain (uArray, surface, 1),
-            vDomain   = nurbs .sample .vDomain (vArray, surface, 1),
+            uDomain   = nurbs .sample .uDomain (uArray, surface),
+            vDomain   = nurbs .sample .vDomain (vArray, surface),
             u         = Algorithm .project (uFraction, 0, 1, ... uDomain),
             v         = Algorithm .project (vFraction, 0, 1, ... vDomain);
 
