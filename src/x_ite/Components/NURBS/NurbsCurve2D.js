@@ -132,8 +132,9 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
       this .sampleOptions .haveWeights    = !! weights;
 
       const
-         mesh   = nurbs .sample (this .mesh, this .surface, this .sampleOptions),
-         points = mesh .points;
+         mesh      = nurbs .sample (this .mesh, this .surface, this .sampleOptions),
+         points    = mesh .points,
+         numPoints = points .length;
 
       switch (type)
       {
@@ -141,10 +142,8 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
          {
             array .length = 0;
 
-            for (let i = 0, length = points .length; i < length; i += 2)
-            {
+            for (let i = 0; i < numPoints; i += 2)
                array .push (points [i], points [i + 1]);
-            }
 
             break;
          }
@@ -152,19 +151,15 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
          {
             array .length = 0;
 
-            for (let i = 0, length = points .length; i < length; i += 2)
-            {
+            for (let i = 0; i < numPoints; i += 2)
                array .push (points [i], 0, points [i + 1]);
-            }
 
             break;
          }
          case 2: // Contour2D
          {
-            for (let i = 0, length = points .length; i < length; i += 2)
-            {
+            for (let i = 0; i < numPoints; i += 2)
                array .push (new Vector3 (points [i], points [i + 1], 0));
-            }
 
             break;
          }

@@ -127,16 +127,15 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
 
       const
          vertexArray = this .getVertices (),
+         numVertices = vertexArray .length,
          array       = [ ];
 
-      if (vertexArray .length)
+      if (numVertices)
       {
-         const length = vertexArray .length;
-
-         for (let i = 0; i < length; i += 8)
+         for (let i = 0; i < numVertices; i += 8)
             array .push (vertexArray [i], vertexArray [i + 1], vertexArray [i + 2]);
 
-         array .push (vertexArray [length - 4], vertexArray [length - 3], vertexArray [length - 2]);
+         array .push (vertexArray [numVertices - 4], vertexArray [numVertices - 3], vertexArray [numVertices - 2]);
       }
 
       return array;
