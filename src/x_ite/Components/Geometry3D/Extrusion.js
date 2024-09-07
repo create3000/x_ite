@@ -145,11 +145,11 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          SCPyAxis = new Vector3 (),
          SCPzAxis = new Vector3 ();
 
-         const
+      const
          SCPyAxisPrevious = new Vector3 (),
          SCPzAxisPrevious = new Vector3 ();
 
-         const
+      const
          vector3  = new Vector3 (),
          rotation = new Rotation4 ();
 
@@ -195,8 +195,8 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             for (let i = 0, length = numSpines - 2; i < length; ++ i)
             {
                SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
-                          .cross (vector3 .assign (spine [length] .getValue ()) .subtract (spine [i] .getValue ()))
-                          .normalize ();
+                  .cross (vector3 .assign (spine [length] .getValue ()) .subtract (spine [i] .getValue ()))
+                  .normalize ();
 
                if (!SCPzAxis .equals (Vector3 .Zero))
                   break;
@@ -217,8 +217,8 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             for (let i = 1, length = numSpines - 1; i < length; ++ i)
             {
                SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
-                        .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
-                        .normalize ();
+                  .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
+                  .normalize ();
 
                if (!SCPzAxis .equals (Vector3 .Zero))
                   break;
@@ -254,11 +254,11 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             const s = spine [i] .getValue ();
 
             SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (s) .normalize ()
-                     .subtract (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s) .normalize ())
-                     .normalize ();
+               .subtract (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s) .normalize ())
+               .normalize ();
             SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (s)
-                     .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s))
-                     .normalize ();
+               .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s))
+               .normalize ();
 
             // g.
             if (SCPzAxisPrevious .dot (SCPzAxis) < 0)
@@ -300,8 +300,8 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             if (numSpines > 2)
             {
                SCPzAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ())
-                        .cross (vector3 .assign (spine [numSpines - 3] .getValue ()) .subtract (spine [numSpines - 2] .getValue ()))
-                        .normalize ();
+                  .cross (vector3 .assign (spine [numSpines - 3] .getValue ()) .subtract (spine [numSpines - 2] .getValue ()))
+                  .normalize ();
             }
 
             // g.
