@@ -110,9 +110,7 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
       const
          uVector  = new Vector3 (),
          vVector  = new Vector3 (),
-         position = new Vector3 (),
-         uArray   = [ ],
-         vArray   = [ ];
+         position = new Vector3 ();
 
       return function ()
       {

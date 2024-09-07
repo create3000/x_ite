@@ -102,8 +102,7 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
    {
       const
          direction = new Vector3 (),
-         rotation  = new Rotation4 (),
-         uArray    = [ ];
+         rotation  = new Rotation4 ();
 
       return function ()
       {

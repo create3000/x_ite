@@ -88,9 +88,7 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3
    },
    set_fraction__: (() =>
    {
-      const
-         value  = new Vector3 (),
-         uArray = [ ];
+      const value = new Vector3 ();
 
       return function ()
       {
