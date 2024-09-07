@@ -80,11 +80,6 @@ const NURBS =
       if (!controlPoint [0] .equals (controlPoint [dimension - 1]))
          return false;
 
-      // Check if knots are periodic.
-
-      if (!this .isPeriodic (order, dimension, knot))
-         return false;
-
       return true;
    },
    getClosed: (() =>
@@ -110,11 +105,6 @@ const NURBS =
          // Check if first and last point are coincident.
 
          if (!controlPointNode .get1Point (0, firstPoint) .equals (controlPointNode .get1Point (dimension - 1, lastPoint)))
-            return false;
-
-         // Check if knots are periodic.
-
-         if (!this .isPeriodic (order, dimension, knot))
             return false;
 
          return true;
@@ -150,11 +140,6 @@ const NURBS =
                return false;
          }
 
-         // Check if knots are periodic.
-
-         if (!this .isPeriodic (uOrder, uDimension, uKnot))
-            return false;
-
          return true;
       };
    })(),
@@ -188,47 +173,9 @@ const NURBS =
                return false;
          }
 
-         // Check if knots are periodic.
-
-         if (!this .isPeriodic (vOrder, vDimension, vKnot))
-            return false;
-
          return true;
       };
    })(),
-   isPeriodic (order, dimension, knot)
-   {
-      // Check if knots are periodic.
-
-      if (knot .length === dimension + order)
-      {
-         {
-            let count = 1;
-
-            for (let i = 1, size = order; i < size; ++ i)
-            {
-               count += knot [i] === knot [0];
-            }
-
-            if (count === order)
-               return false;
-         }
-
-         {
-            let count = 1;
-
-            for (let i = knot .length - order, size = knot .length - 1; i < size; ++ i)
-            {
-               count += knot [i] === knot [size];
-            }
-
-            if (count === order)
-               return false;
-         }
-      }
-
-      return true;
-   },
    getKnots (result, closed, order, dimension, knot)
    {
       const
