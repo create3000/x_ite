@@ -65,7 +65,7 @@ function ContourPolyline2D (executionContext)
 Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, X3DNurbsControlCurveNode .prototype),
 {
    tessellate (type, array = this .array)
-{
+   {
       const
          controlPoints    = this ._controlPoint .getValue (),
          numControlPoints = this ._controlPoint .length * 2;
