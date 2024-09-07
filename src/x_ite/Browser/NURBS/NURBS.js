@@ -318,9 +318,9 @@ const NURBS =
       {
          const
             i2 = i * 2,
-            p  = controlPoints [i] ?? new Vector (0, 0, 0);
+            cp = controlPoints [i] ??= new Vector (0, 0, 0);
 
-         controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], haveWeights ? weights [i] : 0);
+         cp .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], haveWeights ? weights [i] : 0);
       }
 
       controlPoints .length = dimension;
@@ -351,7 +351,7 @@ const NURBS =
 
       for (let i = 0; i < dimension; ++ i)
       {
-         const cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] ?? new Vector (0, 0, 0, 0));
+         const cp = controlPointNode .get1Point (i, controlPoints [i] ??= new Vector (0, 0, 0, 0));
 
          if (haveWeights)
             cp .w = weights [i];
