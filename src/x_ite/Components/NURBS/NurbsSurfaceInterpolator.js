@@ -54,6 +54,7 @@ import NurbsPatchSurface    from "./NurbsPatchSurface.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
+import nurbs                from "../../../lib/nurbs/nurbs.js";
 
 function NurbsSurfaceInterpolator (executionContext)
 {
@@ -109,7 +110,9 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
       const
          uVector  = new Vector3 (),
          vVector  = new Vector3 (),
-         position = new Vector3 ();
+         position = new Vector3 (),
+         uArray   = [ ],
+         vArray   = [ ];
 
       return function ()
       {
@@ -117,28 +120,11 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
             fraction  = this ._set_fraction .getValue (),
             uFraction = Algorithm .clamp (fraction .x, 0, 1),
             vFraction = Algorithm .clamp (fraction .y, 0, 1),
-            surface   = this .geometry .getSurface ();
-
-         const
-            nu        = 1,
-            nv        = 1,
-            uBClosed  = surface .boundary [0] === "closed",
-            vBClosed  = surface .boundary [1] === "closed",
-            nuBound   = nu + !uBClosed,
-            nvBound   = nv + !vBClosed,
-            domain    = surface .domain,
-            uDomain   = domain [0],
-            vDomain   = domain [1],
-            uDistance = uDomain [1] - uDomain [0],
-            vDistance = vDomain [1] - vDomain [0];
-
-         const
-            uMin = uDomain [0] + uDistance * 0 / nu,
-            uMax = uDomain [0] + uDistance * (nuBound - 1) / nu,
-            vMin = vDomain [0] + vDistance * 0 / nv,
-            vMax = vDomain [0] + vDistance * (nvBound - 1) / nv,
-            u    = Algorithm .project (uFraction, 0, 1, uMin, uMax),
-            v    = Algorithm .project (vFraction, 0, 1, vMin, vMax);
+            surface   = this .geometry .getSurface (),
+            uDomain   = nurbs .sample .uDomain (uArray, surface, 1),
+            vDomain   = nurbs .sample .vDomain (vArray, surface, 1),
+            u         = Algorithm .project (uFraction, 0, 1, ... uDomain),
+            v         = Algorithm .project (vFraction, 0, 1, ... vDomain);
 
          this .uDerivative (uVector, u, v);
          this .vDerivative (vVector, u, v);

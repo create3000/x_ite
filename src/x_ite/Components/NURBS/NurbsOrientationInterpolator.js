@@ -55,6 +55,7 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
+import nurbs                from "../../../lib/nurbs/nurbs.js";
 
 function NurbsOrientationInterpolator (executionContext)
 {
@@ -101,26 +102,16 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
    {
       const
          direction = new Vector3 (),
-         rotation  = new Rotation4 ();
+         rotation  = new Rotation4 (),
+         uArray    = [ ];
 
       return function ()
       {
          const
             fraction = Algorithm .clamp (this ._set_fraction .getValue (), 0, 1),
-            surface  = this .geometry .getSurface ();
-
-         const
-            nu        = 1,
-            uBClosed  = surface .boundary [0] === "closed",
-            nuBound   = nu + !uBClosed,
-            domain    = surface .domain,
-            uDomain   = domain [0],
-            uDistance = uDomain [1] - uDomain [0];
-
-         const
-            uMin = uDomain [0] + uDistance * 0 / nu,
-            uMax = uDomain [0] + uDistance * (nuBound - 1) / nu,
-            u    = Algorithm .project (fraction, 0, 1, uMin, uMax);
+            surface  = this .geometry .getSurface (),
+            uDomain  = nurbs .sample .uDomain (uArray, surface, 1),
+            u        = Algorithm .project (fraction, 0, 1, ... uDomain);
 
          this .derivative (direction, u);
 

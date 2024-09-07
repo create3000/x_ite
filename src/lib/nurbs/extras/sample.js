@@ -1,6 +1,6 @@
 const tmp1 = [ ] ;
 
-export default function (mesh, surface, opts)
+function sample (mesh, surface, opts)
 {
    const
       points      = mesh .points ??= [ ],
@@ -139,4 +139,38 @@ export default function (mesh, surface, opts)
    }
 
    return mesh;
+}
+
+sample .uDomain = function (result, surface, resolution)
+{
+   const
+      nu        = resolution,
+      uBClosed  = surface .boundary [0] === "closed",
+      nuBound   = nu + !uBClosed,
+      domain    = surface .domain,
+      uDomain   = domain [0],
+      uDistance = uDomain [1] - uDomain [0];
+
+   result [0] = uDomain [0] + uDistance * 0 / nu,
+   result [1] = uDomain [0] + uDistance * (nuBound - 1) / nu;
+
+   return result;
 };
+
+sample .vDomain = function (result, surface, resolution)
+{
+   const
+      nv        = resolution,
+      vBClosed  = surface .boundary [0] === "closed",
+      nvBound   = nv + !vBClosed,
+      domain    = surface .domain,
+      vDomain   = domain [0],
+      vDistance = vDomain [1] - vDomain [0];
+
+   result [0] = vDomain [0] + vDistance * 0 / nv,
+   result [1] = vDomain [0] + vDistance * (nvBound - 1) / nv;
+
+   return result;
+};
+
+export default sample;
