@@ -183,14 +183,13 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
       const
          mesh        = nurbs .sample (this .mesh, this .surface, this .sampleOptions),
          points      = mesh .points,
+         numPoints   = points .length - 3,
          vertexArray = this .getVertices ();
 
-      for (let i2 = 3, length = points .length; i2 < length; i2 += 3)
+      for (let i = 0; i < numPoints; i += 3)
       {
-         const i1 = i2 - 3;
-
-         vertexArray .push (points [i1], points [i1 + 1], points [i1 + 2], 1);
-         vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
+         vertexArray .push (points [i + 0], points [i + 1], points [i + 2], 1,
+                            points [i + 3], points [i + 4], points [i + 5], 1);
       }
    },
    dispose ()
