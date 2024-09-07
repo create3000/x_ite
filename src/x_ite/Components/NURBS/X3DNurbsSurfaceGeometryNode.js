@@ -100,13 +100,11 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    },
    set_controlPoint__ ()
    {
-      if (this .controlPointNode)
-         this .controlPointNode .removeInterest ("requestRebuild", this);
+      this .controlPointNode ?.removeInterest ("requestRebuild", this);
 
       this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._controlPoint);
 
-      if (this .controlPointNode)
-         this .controlPointNode .addInterest ("requestRebuild", this);
+      this .controlPointNode ?.addInterest ("requestRebuild", this);
    },
    setTessellationScale (value)
    {
@@ -311,9 +309,9 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
       for (const face of faces)
       {
-         const index = face * 4;
+         const i = face * 4;
 
-         texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
+         texCoordArray .push (points [i], points [i + 1], points [i + 2], points [i + 3]);
       }
 
       return texCoordArray;
@@ -324,8 +322,8 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
          normals     = this .createNormals (faces, points),
          normalArray = this .getNormals ();
 
-      for (const normal of normals)
-         normalArray .push (normal .x, normal .y, normal .z);
+      for (const { x, y, z } of normals)
+         normalArray .push (x, y, z);
    },
    createNormals (faces, points)
    {
@@ -334,9 +332,9 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       const
          normalIndex = new Map (),
          normals     = this .createFaceNormals (faces, points),
-         length      = faces .length;
+         numFaces    = faces .length;
 
-      for (let i = 0; i < length; ++ i)
+      for (let i = 0; i < numFaces; ++ i)
       {
          const index = faces [i];
 
@@ -360,10 +358,10 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       return function (faces, points)
       {
          const
-            normals = this .faceNormals ?? [ ],
-            length  = faces .length;
+            normals  = this .faceNormals ?? [ ],
+            numFaces = faces .length;
 
-         for (let i = 0; i < length; i += 3)
+         for (let i = 0; i < numFaces; i += 3)
          {
             const
                index1 = faces [i]     * 3,
@@ -381,7 +379,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
             normals [i + 2] = normal;
          }
 
-         normals .length = length;
+         normals .length = numFaces;
 
          return normals;
       };
