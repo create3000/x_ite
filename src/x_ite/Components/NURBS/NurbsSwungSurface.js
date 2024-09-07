@@ -122,6 +122,7 @@ Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, X3DParamet
 
       this .getColors ()    .assign (extrusion .getColors ());
       this .getTexCoords () .assign (extrusion .getTexCoords ());
+      this .getTangents ()  .assign (extrusion .getTangents ());
       this .getNormals ()   .assign (extrusion .getNormals ());
       this .getVertices ()  .assign (extrusion .getVertices ());
 
@@ -129,10 +130,12 @@ Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, X3DParamet
 
       if (!this ._ccw .getValue ())
       {
-         const normals = this .getNormals ();
+         const
+            normalsArray = this .getNormals (),
+            numNormals   = normalsArray .length;
 
-         for (let i = 0, length = normals .length; i < length; ++ i)
-            normals [i] = -normals [i];
+         for (let i = 0; i < numNormals; ++ i)
+            normalsArray [i] *= -1;
       }
 
       this .setSolid (this ._solid .getValue ());
