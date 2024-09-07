@@ -58,7 +58,7 @@ function NurbsTextureCoordinate (executionContext)
 
    this .addType (X3DConstants .NurbsTextureCoordinate);
 
-   this .controlPoints = [ ];
+   this .array = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, X3DNode .prototype),
@@ -66,28 +66,31 @@ Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, X3DNo
    getControlPoints (texWeights)
    {
       const
-         controlPointArray = this ._controlPoint .getValue (),
-         controlPoints     = this .controlPoints;
+         uDimension    = this ._uDimension .getValue (),
+         vDimension    = this ._vDimension .getValue (),
+         controlPoints = this ._controlPoint .getValue (),
+         array         = this .array;
 
-      for (let u = 0, uDimension = this ._uDimension .getValue (); u < uDimension; ++ u)
+      for (let u = 0; u < uDimension; ++ u)
       {
-         let cp = controlPoints [u];
+         const cp = array [u] ??= [ ];
 
-         if (!cp)
-            cp = controlPoints [u] = [ ];
-
-         for (let v = 0, vDimension = this ._vDimension .getValue (); v < vDimension; ++ v)
+         for (let v = 0; v < vDimension; ++ v)
          {
             const
                index = v * uDimension + u,
                p     = cp [v] ?? new Vector4 (),
                i     = index * 2;
 
-            cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights ? texWeights [index] : 1);
+            cp [v] = p .set (controlPoints [i], controlPoints [i + 1], 0, texWeights ? texWeights [index] : 1);
          }
+
+         cp .length = vDimension;
       }
 
-      return controlPoints;
+      array .length = uDimension;
+
+      return array;
    },
    isValid ()
    {
