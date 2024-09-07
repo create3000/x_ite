@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3
          const
             fraction = Algorithm .clamp (this ._set_fraction .getValue (), 0, 1),
             surface  = this .geometry .getSurface (),
-            uDomain  = nurbs .sample .uDomain (uArray, surface),
+            uDomain  = surface .domain [0],
             u        = Algorithm .project (fraction, 0, 1, ... uDomain);
 
          surface .evaluate (value, u);

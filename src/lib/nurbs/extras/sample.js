@@ -138,30 +138,4 @@ function sample (mesh, surface, opts)
    return mesh;
 }
 
-sample .uDomain = function (result, surface)
-{
-   const
-      domain    = surface .domain,
-      uDomain   = domain [0],
-      uDistance = uDomain [1] - uDomain [0];
-
-   result [0] = uDomain [0],
-   result [1] = uDomain [0] + uDistance;
-
-   return result;
-};
-
-sample .vDomain = function (result, surface)
-{
-   const
-      domain    = surface .domain,
-      vDomain   = domain [1],
-      vDistance = vDomain [1] - vDomain [0];
-
-   result [0] = vDomain [0];
-   result [1] = vDomain [0] + vDistance;
-
-   return result;
-};
-
 export default sample;
