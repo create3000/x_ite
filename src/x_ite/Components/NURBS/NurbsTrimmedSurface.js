@@ -185,17 +185,17 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
          // console .log (trimmedTriangles .toString ());
 
-         // Clamp triangles to make sure every point can be found.
+         // // Clamp triangles to make sure every point can be found.
 
-         for (const p of trimmedTriangles)
-         {
-            p .x = Algorithm .clamp (p .x , 0, 1);
-            p .y = Algorithm .clamp (p .y , 0, 1);
-         }
+         // for (const p of trimmedTriangles)
+         // {
+         //    p .x = Algorithm .clamp (p .x , 0, 1);
+         //    p .y = Algorithm .clamp (p .y , 0, 1);
+         // }
 
          // Filter triangles with very small area.
 
-         const MIN_AREA = 1e-8;
+         const MIN_AREA = 1e-7;
 
          let f = 0;
 
@@ -308,7 +308,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
             // Point not found, discard triangle.
 
-            const n = t % 3 + 1;
+            const n = t % 3;
 
             for (const trimmedTexCoords of trimmedMultiTexCoords)
                trimmedTexCoords .length -= n * 4;
@@ -316,7 +316,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             trimmedNormals  .length -= n * 3;
             trimmedVertices .length -= n * 4;
 
-            t += 1 - n;
+            t += 2 - n;
          }
 
          for (let tc = 0; tc < numTexCoordChannels; ++ tc)
