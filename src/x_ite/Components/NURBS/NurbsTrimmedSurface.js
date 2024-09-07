@@ -185,14 +185,6 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
          // console .log (trimmedTriangles .toString ());
 
-         // // Clamp triangles to make sure every point can be found.
-
-         // for (const p of trimmedTriangles)
-         // {
-         //    p .x = Algorithm .clamp (p .x , 0, 1);
-         //    p .y = Algorithm .clamp (p .y , 0, 1);
-         // }
-
          // Filter triangles with very small area.
 
          const MIN_AREA = 1e-7;
