@@ -98,7 +98,7 @@ const Triangle2 =
     *
     * @param {Vector2} p point to convert
     * @param {Vector2} a first point of triangle
-    * @param {Vector2} b second point of triagle
+    * @param {Vector2} b second point of triangle
     * @param {Vector2} c third point of triangle
     * @returns
     */

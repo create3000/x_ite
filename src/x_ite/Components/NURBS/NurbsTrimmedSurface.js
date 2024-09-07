@@ -217,8 +217,10 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
          const MIN_BARYCENTRIC_DISTANCE = 1e-5;
 
-         for (const p of trimmedTriangles)
+         FIND_POINTS: for (let t = 0; t < f; ++ t)
          {
+            const p = trimmedTriangles [t];
+
             if (p .hasOwnProperty ("index"))
             {
                const
@@ -245,7 +247,8 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
 
                trimmedNormals  .push (n1, n2, n3);
                trimmedVertices .push (v1, v2, v3, 1);
-               continue;
+
+               continue FIND_POINTS;
             }
 
             for (let d = 0; d < numDefaultTriangles; d += 3)
@@ -300,8 +303,20 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
                   1,
                );
 
-               break;
+               continue FIND_POINTS;
             }
+
+            // Point not found, discard triangle.
+
+            const n = t % 3 + 1;
+
+            for (const trimmedTexCoords of trimmedMultiTexCoords)
+               trimmedTexCoords .length -= n * 4;
+
+            trimmedNormals  .length -= n * 3;
+            trimmedVertices .length -= n * 4;
+
+            t += 1 - n;
          }
 
          for (let tc = 0; tc < numTexCoordChannels; ++ tc)
