@@ -80,6 +80,10 @@ const Algorithm =
 
       return value;
    },
+   project (value, fromLow, fromHigh, toLow, toHigh)
+   {
+      return toLow + ((value - fromLow) / (fromHigh - fromLow)) * (toHigh - toLow);
+   },
    roundToMultiple (value, multiple)
    {
       return Math .ceil (value / multiple) * multiple;

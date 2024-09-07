@@ -18,7 +18,7 @@ export default function (mesh, surface, opts)
             uBClosed   = surface .boundary [0] === "closed",
             nuBound    = nu + !uBClosed,
             nbVertices = nuBound * dimension,
-            domain     = opts .domain || surface .domain,
+            domain     = surface .domain,
             uDomain    = domain [0],
             uDistance  = uDomain [1] - uDomain [0];
 
@@ -59,7 +59,7 @@ export default function (mesh, surface, opts)
             nuBound    = nu + !uBClosed,
             nvBound    = nv + !vBClosed,
             nbVertices = nuBound * nvBound * dimension,
-            domain     = opts .domain || surface .domain,
+            domain     = surface .domain,
             uDomain    = domain [0],
             vDomain    = domain [1],
             uDistance  = uDomain [1] - uDomain [0],

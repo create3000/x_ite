@@ -105,9 +105,24 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
 
       return function ()
       {
-         const fraction = Algorithm .clamp (this ._set_fraction .getValue (), 0, 1);
+         const
+            fraction = Algorithm .clamp (this ._set_fraction .getValue (), 0, 1),
+            surface  = this .geometry .getSurface ();
 
-         this .derivative (direction, fraction);
+         const
+            nu        = 1,
+            uBClosed  = surface .boundary [0] === "closed",
+            nuBound   = nu + !uBClosed,
+            domain    = surface .domain,
+            uDomain   = domain [0],
+            uDistance = uDomain [1] - uDomain [0];
+
+         const
+            uMin = uDomain [0] + uDistance * 0 / nu,
+            uMax = uDomain [0] + uDistance * (nuBound - 1) / nu,
+            u    = Algorithm .project (fraction, 0, 1, uMin, uMax);
+
+         this .derivative (direction, u);
 
          this ._value_changed = rotation .setFromToVec (Vector3 .zAxis, direction);
       };
