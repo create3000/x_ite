@@ -178,11 +178,13 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          // SCP for the first point:
          if (closedSpine)
          {
+            const s = firstSpine;
+
             // Find first defined Y-axis.
             for (let i = 1, length = numSpines - 2; i < length; ++ i)
             {
-               SCPyAxis .assign (spine [i + 1] .getValue ())
-                  .subtract (firstSpine)
+               SCPyAxis .assign (spine [i] .getValue ()) .subtract (s) .normalize ()
+                  .subtract (vector3 .assign (spine [length] .getValue ()) .subtract (s) .normalize ())
                   .normalize ();
 
                if (!SCPyAxis .equals (Vector3 .Zero))
@@ -205,8 +207,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
             // Find first defined Y-axis.
             for (let i = 0, length = numSpines - 1; i < length; ++ i)
             {
-               SCPyAxis .assign (spine [i + 1] .getValue ())
-                  .subtract (firstSpine) .normalize ();
+               SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ()) .normalize ();
 
                if (!SCPyAxis .equals (Vector3 .Zero))
                   break;
@@ -252,8 +253,8 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          {
             const s = spine [i] .getValue ();
 
-            SCPyAxis .assign (spine [i + 1] .getValue ())
-               .subtract (spine [i - 1] .getValue ())
+            SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (s) .normalize ()
+               .subtract (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s) .normalize ())
                .normalize ();
             SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (s)
                .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s))
@@ -294,9 +295,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          {
             const s = lastSpine;
 
-            SCPyAxis .assign (s)
-               .subtract (spine [numSpines - 2] .getValue ())
-               .normalize ();
+            SCPyAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ()) .normalize ();
 
             if (numSpines > 2)
             {
