@@ -59,70 +59,47 @@ function ContourPolyline2D (executionContext)
 
    this .addType (X3DConstants .ContourPolyline2D);
 
-   this .controlPoints = [ ];
+   this .array = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, X3DNurbsControlCurveNode .prototype),
 {
-   tessellate (type, controlPoints = this .controlPoints)
-   {
+   tessellate (type, array = this .array)
+{
+      const
+         controlPoints    = this ._controlPoint .getValue (),
+         numControlPoints = this ._controlPoint .length * 2;
+
       switch (type)
       {
          case 0:
          {
-            const
-               controlPointArray = this ._controlPoint .getValue (),
-               length            = this ._controlPoint .length;
+            array .length = 0;
 
-            for (let i = 0; i < length; ++ i)
-            {
-               const i2 = i * 2;
+            for (let i = 0; i < numControlPoints; i += 2)
+               array .push (controlPoints [i], controlPoints [i + 1]);
 
-               controlPoints [i2 + 0] = controlPointArray [i2 + 0];
-               controlPoints [i2 + 1] = controlPointArray [i2 + 1];
-            }
-
-            controlPoints .length = length * 2;
-
-            return controlPoints;
+            break;
          }
          case 1:
          {
-            const
-               controlPointArray = this ._controlPoint .getValue (),
-               length            = this ._controlPoint .length;
+            array .length = 0;
 
-            for (let i = 0; i < length; ++ i)
-            {
-               const
-                  i2 = i * 2,
-                  i3 = i * 3;
+            for (let i = 0; i < numControlPoints; i += 2)
+               array .push (controlPoints [i], 0, controlPoints [i + 1]);
 
-               controlPoints [i3 + 0] = controlPointArray [i2 + 0];
-               controlPoints [i3 + 1] = 0;
-               controlPoints [i3 + 2] = controlPointArray [i2 + 1];
-            }
-
-            controlPoints .length = length * 3;
-
-            return controlPoints;
+            break;
          }
          case 2: // Contour2D
          {
-            const
-               controlPointArray = this ._controlPoint .getValue (),
-               length            = this ._controlPoint .length;
+            for (let i = 0; i < numControlPoints; i += 2)
+               array .push (new Vector3 (controlPoints [i], controlPoints [i + 1], 0));
 
-            for (let i = 0; i < length; ++ i)
-            {
-               const i2 = i * 2;
-
-               controlPoints .push (new Vector3 (controlPointArray [i2 + 0], controlPointArray [i2 + 1], 0));
-            }
-
-            return controlPoints;
+            break;
          }
       }
+
+      return array;
    },
 });
 
