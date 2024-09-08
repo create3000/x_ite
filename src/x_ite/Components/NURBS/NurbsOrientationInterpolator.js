@@ -96,7 +96,16 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
    {
       const surface = this .geometry .getSurface ();
 
-      this .derivative = surface .evaluator (1);
+      if (surface)
+      {
+         delete this .set_fraction__;
+
+         this .derivative = surface .evaluator (1);
+      }
+      else
+      {
+         this .set_fraction__ = Function .prototype;
+      }
    },
    set_fraction__: (() =>
    {

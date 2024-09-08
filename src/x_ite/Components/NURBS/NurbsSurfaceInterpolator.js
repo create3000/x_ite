@@ -102,8 +102,17 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
    {
       const surface = this .geometry .getSurface ();
 
-      this .uDerivative = surface .evaluator ([1, 0]);
-      this .vDerivative = surface .evaluator ([0, 1]);
+      if (surface)
+      {
+         delete this .set_fraction__;
+
+         this .uDerivative = surface .evaluator ([1, 0]);
+         this .vDerivative = surface .evaluator ([0, 1]);
+      }
+      else
+      {
+         this .set_fraction__ = Function .prototype;
+      }
    },
    set_fraction__: (() =>
    {
