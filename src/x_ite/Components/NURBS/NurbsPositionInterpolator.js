@@ -86,6 +86,8 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3
 
       this .geometry ._rebuild .addInterest ("set_geometry__", this);
       this .geometry .setup ();
+
+      this .set_geometry__ ();
    },
    set_geometry__ ()
    {
