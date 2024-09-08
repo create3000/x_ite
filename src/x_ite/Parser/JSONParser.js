@@ -137,14 +137,13 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
 
       for (const key in object)
       {
-         if (typeof object [key] === "object")
-         {
-            if (isNaN (parseInt (key)))
-               this .convertObject (key, object, element, parentkey .substring (1));
+         if (typeof object [key] !== "object")
+            continue;
 
-            else
-               this .convertToDOM (object[ key], key, element, parentkey .substring (1));
-         }
+         if (isNaN (parseInt (key)))
+            this .convertObject (key, object, element, parentkey .substring (1));
+         else
+            this .convertToDOM (object [key], key, element, parentkey .substring (1));
       }
    },
    createElement (key, containerField)
@@ -266,7 +265,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
 
       return str;
    },
-   convertToDOM(object, parentkey, element, containerField)
+   convertToDOM (object, parentkey, element, containerField)
    {
       /**
        * main routine for converting a JavaScript object to DOM.
@@ -275,6 +274,12 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
        * element is the parent element.
        * containerField is a possible containerField.
        */
+
+      if (object === null)
+      {
+         this .elementSetAttribute (element, "value", null);
+         return element;
+      }
 
       let
          isArray        = false,
