@@ -348,7 +348,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       const protoNode = this [_protoNode];
 
       if (protoNode .isExternProto && protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
-         return !! field .getModificationTime ();
+         return field .getModificationTime () === 0;
 
       return X3DNode .prototype .isDefaultValue .call (this, field);
    },
