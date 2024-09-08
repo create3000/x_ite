@@ -343,6 +343,15 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       throw new Error ("Root node not available.");
    },
+   isDefaultValue (field)
+   {
+      const protoNode = this [_protoNode];
+
+      if (protoNode .isExternProto && protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+         return !! field .getModificationTime ();
+
+      return X3DNode .prototype .isDefaultValue .call (this, field);
+   },
    importExternProtos (externprotos1)
    {
       const externprotos2 = this [_body] .externprotos;
