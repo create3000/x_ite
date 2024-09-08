@@ -565,16 +565,28 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   }
                   case X3DConstants .SFNode:
                   {
-                     if (field .getValue () !== null)
-                     {
-                        generator .PushContainerField (null);
+                     generator .PushContainerField (null);
 
-                        generator .string += generator .Indent ();
-                        generator .string += "<fieldValue";
+                     generator .string += generator .Indent ();
+                     generator .string += "<fieldValue";
+                     generator .string += generator .Space ();
+                     generator .string += "name='";
+                     generator .string += generator .XMLEncode (field .getName ());
+                     generator .string += "'";
+
+                     if (field .getValue () === null)
+                     {
                         generator .string += generator .Space ();
-                        generator .string += "name='";
-                        generator .string += generator .XMLEncode (field .getName ());
+                        generator .string += "value='";
+
+                        field .toXMLStream (generator);
+
                         generator .string += "'";
+                        generator .string += generator .closingTags ? "></fieldValue>" : "/>";
+                        generator .string += generator .TidyBreak ();
+                     }
+                     else
+                     {
                         generator .string += ">";
                         generator .string += generator .TidyBreak ();
 
@@ -589,12 +601,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                         generator .string += generator .Indent ();
                         generator .string += "</fieldValue>";
                         generator .string += generator .TidyBreak ();
-
-                        generator .PopContainerField ();
-                        break;
                      }
 
-                     // Proceed with next case.
+                     generator .PopContainerField ();
+                     break;
                   }
                   default:
                   {
