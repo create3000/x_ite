@@ -416,7 +416,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
       if (value)
          value .toXMLStream (generator);
       else
-         generator .string += "<!-- NULL -->";
+         generator .string += "null";
    },
    toJSONStream (generator)
    {
