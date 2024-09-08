@@ -84,7 +84,17 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3
       this .geometry ._weight       = this ._weight;
       this .geometry ._controlPoint = this ._controlPoint;
 
+      this .geometry ._rebuild .addInterest ("set_geometry__", this);
       this .geometry .setup ();
+   },
+   set_geometry__ ()
+   {
+      const surface = this .geometry .getSurface ();
+
+      if (surface)
+         delete this .set_fraction__;
+      else
+         this .set_fraction__ = Function .prototype;
    },
    set_fraction__: (() =>
    {
