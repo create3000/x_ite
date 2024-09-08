@@ -577,11 +577,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                      if (field .getValue () === null)
                      {
                         generator .string += generator .Space ();
-                        generator .string += "value='";
-
-                        field .toXMLStream (generator);
-
-                        generator .string += "'";
+                        generator .string += "value='null'";
                         generator .string += generator .closingTags ? "></fieldValue>" : "/>";
                         generator .string += generator .TidyBreak ();
                      }
