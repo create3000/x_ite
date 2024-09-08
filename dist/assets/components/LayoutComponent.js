@@ -1,5 +1,5 @@
-/* X_ITE v10.4.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.2")];
+/* X_ITE v10.5.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -1339,10 +1339,6 @@ function ScreenText (text, fontStyle)
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X3D_X3DTextGeometry_default()).prototype),
 {
    modelViewMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
-   isTransparent ()
-   {
-      return true;
-   },
    getMatrix ()
    {
       return this .matrix;

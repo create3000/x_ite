@@ -1,9 +1,9 @@
-/* X_ITE v10.4.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.2")];
+/* X_ITE v10.5.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 710:
+/***/ 67:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -15675,15 +15675,11 @@ function PolygonText (text, fontStyle)
 {
    Text_X3DTextGeometry .call (this, text, fontStyle);
 
-   text ._transparent = false;
+   text .setTransparent (false);
 }
 
 Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeometry .prototype),
 {
-   isTransparent ()
-   {
-      return false;
-   },
    getMatrix ()
    {
       return (external_X_ITE_X3D_Matrix4_default()).Identity;
@@ -16085,7 +16081,7 @@ const FontStyle_default_ = FontStyle;
 /* harmony default export */ const Text_FontStyle = (external_X_ITE_X3D_Namespace_default().add ("FontStyle", FontStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(254);
-/* provided dependency */ var opentype = __webpack_require__(710);
+/* provided dependency */ var opentype = __webpack_require__(67);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16346,8 +16342,6 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
       this .fontStyleNode .addInterest ("requestRebuild", this);
 
       this .textGeometry = this .fontStyleNode .getTextGeometry (this);
-
-      this .setTransparent (this .textGeometry .isTransparent ());
    },
    build ()
    {
@@ -16372,12 +16366,12 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
    },
    transformLine (line)
    {
-      // Apply sceen nodes transformation in place here.
+      // Apply screen nodes transformation in place here.
       return this .textGeometry .transformLine (line);
    },
    transformMatrix (matrix)
    {
-      // Apply sceen nodes transformation in place here.
+      // Apply screen nodes transformation in place here.
       return this .textGeometry .transformMatrix (matrix);
    },
 });

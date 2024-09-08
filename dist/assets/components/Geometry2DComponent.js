@@ -1,5 +1,5 @@
-/* X_ITE v10.4.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.2")];
+/* X_ITE v10.5.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1218,7 +1218,7 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, (external_X_ITE_X3D
 
       if (radius === 1)
       {
-         this .setVertices (options .getVertices ());
+         vertexArray .assign (options .getVertices ());
       }
       else
       {
@@ -1344,12 +1344,11 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
          gl          = browser .getContext (),
          options     = browser .getDisk2DOptions (),
          innerRadius = Math .min (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
-         outerRadius = Math .max (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ()));
+         outerRadius = Math .max (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
+         vertexArray = this .getVertices ();
 
       if (innerRadius === outerRadius)
       {
-         const vertexArray = this .getVertices ();
-
          // Point
 
          if (outerRadius === 0)
@@ -1371,7 +1370,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
 
          if (outerRadius === 1)
          {
-            this .setVertices (options .getCircleVertices ());
+            vertexArray .assign (options .getCircleVertices ());
          }
          else
          {
@@ -1397,17 +1396,15 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
          // Disk
 
          this .getMultiTexCoords () .push (options .getDiskTexCoords ());
-         this .setNormals (options .getDiskNormals ());
+         this .getNormals () .assign (options .getDiskNormals ());
 
          if (outerRadius === 1)
          {
-            this .setVertices (options .getDiskVertices ());
+            vertexArray .assign (options .getDiskVertices ());
          }
          else
          {
-            const
-               defaultVertices = options .getDiskVertices () .getValue (),
-               vertexArray     = this .getVertices ();
+            const defaultVertices = options .getDiskVertices () .getValue ();
 
             for (let i = 0, length = defaultVertices .length; i < length; i += 4)
                vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
@@ -1432,8 +1429,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
          defaultTexCoords = options .getDiskTexCoords () .getValue (),
          defaultVertices  = options .getDiskVertices () .getValue (),
          texCoordArray    = this .getTexCoords (),
-         normalArray      = this .getNormals (),
-         vertexArray      = this .getVertices ();
+         normalArray      = this .getNormals ();
 
       this .getMultiTexCoords () .push (texCoordArray);
 
@@ -1773,17 +1769,18 @@ Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, (external_X_ITE_
       return function ()
       {
          const
-            options  = this .getBrowser () .getRectangle2DOptions (),
-            geometry = options .getGeometry (),
-            size     = this ._size .getValue ();
+            options     = this .getBrowser () .getRectangle2DOptions (),
+            geometry    = options .getGeometry (),
+            size        = this ._size .getValue (),
+            vertexArray = this .getVertices ();
 
-         this .setMultiTexCoords (geometry .getMultiTexCoords ());
-         this .setTangents       (geometry .getTangents ());
-         this .setNormals        (geometry .getNormals ());
+         this .getMultiTexCoords () .push (... geometry .getMultiTexCoords ());
+         this .getTangents () .assign (geometry .getTangents ());
+         this .getNormals ()  .assign (geometry .getNormals ());
 
          if (size .equals (defaultSize))
          {
-            this .setVertices (geometry .getVertices ());
+            vertexArray .assign (geometry .getVertices ());
 
             this .getMin () .assign (geometry .getMin ());
             this .getMax () .assign (geometry .getMax ());
@@ -1793,8 +1790,7 @@ Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, (external_X_ITE_
             const
                x               = Math .abs (size .x / 2),
                y               = Math .abs (size .y / 2),
-               defaultVertices = geometry .getVertices () .getValue (),
-               vertexArray     = this .getVertices ();
+               defaultVertices = geometry .getVertices () .getValue ();
 
             for (let i = 0; i < defaultVertices .length; i += 4)
             {

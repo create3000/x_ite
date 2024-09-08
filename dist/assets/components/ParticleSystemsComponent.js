@@ -1,5 +1,5 @@
-/* X_ITE v10.4.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.4.2")];
+/* X_ITE v10.5.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -1654,10 +1654,7 @@ Object .assign (Triangle .prototype,
       {
          // Get barycentric coordinates.
 
-         const
-            u = uvt .u,
-            v = uvt .v,
-            t = 1 - u - v;
+         const { u, v, t } = uvt;
 
          // Determine vectors for X3DPointingDeviceSensors.
 
@@ -1666,18 +1663,18 @@ Object .assign (Triangle .prototype,
          if (i >= intersections .length)
             intersections .push (new (external_X_ITE_X3D_Vector3_default()) ());
 
-         intersections [i] .set (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
-                                 t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
-                                 t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
+         intersections [i] .set (u * vertices [i4]     + v * vertices [i4 + 4] + t * vertices [i4 +  8],
+                                 u * vertices [i4 + 1] + v * vertices [i4 + 5] + t * vertices [i4 +  9],
+                                 u * vertices [i4 + 2] + v * vertices [i4 + 6] + t * vertices [i4 + 10]);
 
          if (intersectionNormals)
          {
             if (i >= intersectionNormals .length)
                intersectionNormals .push (new (external_X_ITE_X3D_Vector3_default()) ());
 
-            intersectionNormals [i] .set (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
-                                          t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-                                          t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+            intersectionNormals [i] .set (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
+                                          u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
+                                          u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
          }
       }
    },
@@ -2320,7 +2317,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
       // Get geometryType.
 
-      this .geometryType = $.enum ((external_X_ITE_X3D_GeometryTypes_default()), this ._geometryType .getValue (), (external_X_ITE_X3D_GeometryTypes_default()).QUAD);
+      this .geometryType = $.enum ((external_X_ITE_X3D_GeometryTypes_default()), this ._geometryType .getValue ()) ?? (external_X_ITE_X3D_GeometryTypes_default()).QUAD;
 
       // Create buffers.
 
