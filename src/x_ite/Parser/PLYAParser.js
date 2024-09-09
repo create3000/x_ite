@@ -235,9 +235,10 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       const
          scene     = this .getScene (),
-         worldInfo = scene .createNode ("WorldInfo");
+         worldInfo = scene .createNode ("WorldInfo"),
+         url       = new URL (scene .worldURL);
 
-      worldInfo .title = new URL (scene .worldURL) .pathname .split ('/') .at (-1);
+      worldInfo .title = url .protocol === "data:" ? "PLY Model" : url .pathname .split ('/') .at (-1);
       worldInfo .info  = this .comments;
 
       scene .rootNodes .push (worldInfo);
