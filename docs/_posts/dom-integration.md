@@ -39,7 +39,7 @@ const
   touchSensor = document .querySelector ("TouchSensor"),
   hitPoint    = document .querySelector ("#hitPoint");
 
-touchSensor .addEventListener ("hitPoint_changed", function (event)
+touchSensor .addEventListener ("hitPoint_changed", event =>
 {
   hitPoint .textContent = event .detail .value;
 });
