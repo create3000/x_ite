@@ -310,8 +310,8 @@ function init ()
   $("#change-background") .on ("change", changeBackground);
   $("#spin")              .on ("click",  spin);
 
-  // Add field callback to get informed when cycleTime is fired. "time" is an arbitrary
-  // string to identify the callback, for instance if you later want to remove the callback.
+  // Add a field callback to be notified when cycleTime is fired. "time" is an arbitrary
+  // string to identify the callback, for example if you want to remove the callback later.
   timer .getField ("cycleTime") .addFieldCallback ("time", value =>
   {
     console .log ("cycleTime: " + value);
@@ -342,8 +342,8 @@ function changeStyle ()
 function changeBackground ()
 {
   const
-    scene          = Browser .currentScene,                   // Get the scene.
-    backgroundNode = scene .getNamedNode ("Background");      // Get Background node.
+    scene          = Browser .currentScene,              // Get the scene.
+    backgroundNode = scene .getNamedNode ("Background"); // Get Background node.
 
   switch (parseInt ($("#change-background") .val ()))
   {
