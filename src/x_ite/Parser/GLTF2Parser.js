@@ -257,7 +257,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       worldInfoNode ._info .sort ();
 
       if (!worldInfoNode ._title .getValue ())
-         worldInfoNode ._title = decodeURI (new URL (worldURL) .pathname .split ("/") .at (-1) || worldURL);
+      {
+         const url = new URL (worldURL);
+
+         if (url .protocol === "data:")
+            worldInfoNode ._title = "glTF Model";
+         else
+            worldInfoNode ._title = decodeURIComponent (url .pathname .split ("/") .at (-1) || worldURL);
+      }
 
       worldInfoNode .setup ();
 
