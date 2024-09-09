@@ -474,7 +474,7 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 
 #### void **removeBrowserCallback** (*Any key [, event]*)
 
-Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callback associated whit key are removed.
+Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callbacks associated with key will be removed.
 
 #### void **viewAll** (*[SFNode layerNode], [Number transitionTime = 1]*) <small><span class="blue">non standard</span></small>
 
