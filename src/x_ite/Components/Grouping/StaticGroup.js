@@ -239,8 +239,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
             let key = "";
 
-            key += btoa (appearanceNode .toVRMLString ({ style: "CLEAN" }));
-            key += ".";
             key += geometryNode .getGeometryType ();
             key += geometryNode .isSolid () ? 1 : 0;
             key += geometryNode .getFogDepths () .length ? 1 : 0;
@@ -248,6 +246,8 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             key += shapeNode ._pointerEvents .getValue () ? 1 : 0;
             key += shapeNode ._castShadow .getValue () ? 1 : 0;
             key += shapeNode ._bboxDisplay .getValue () ? 1 : 0;
+            key += ".";
+            key += appearanceNode .toVRMLString ({ style: "CLEAN" });
 
             const
                clones = clonesIndex .get (shapeNode),
