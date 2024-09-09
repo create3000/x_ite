@@ -162,9 +162,10 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    },
    createGroups: (() =>
    {
-      const Statics = ["Opaque", "Transparent"];
-
-      const viewVolume = new ViewVolume ();
+      const
+         Statics    = ["Opaque", "Transparent"],
+         viewVolume = new ViewVolume (),
+         style      = { style: "CLEAN" };
 
       viewVolume .intersectsSphere = () => true;
 
@@ -247,7 +248,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             key += shapeNode ._castShadow .getValue () ? 1 : 0;
             key += shapeNode ._bboxDisplay .getValue () ? 1 : 0;
             key += ".";
-            key += appearanceNode .toVRMLString ({ style: "CLEAN" });
+            key += appearanceNode .toVRMLString (style);
 
             const
                clones = clonesIndex .get (shapeNode),
