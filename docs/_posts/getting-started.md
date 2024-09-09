@@ -262,6 +262,9 @@ X_ITE needs your support, with a small contribution you can make a big differenc
       <a href="https://create3000.github.io/media/examples/Grouping/Group/Group.x3d" title="Grouping » Group" componentName="Grouping" typeName="Group" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Grouping/Group/screenshot-small.png" alt="Group" width="110" height="62"/></a>
     </td>
     <td>
+      <a href="https://create3000.github.io/media/examples/Grouping/StaticGroup/StaticGroup.x3d" title="Grouping » StaticGroup" componentName="Grouping" typeName="StaticGroup" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Grouping/StaticGroup/screenshot-small.png" alt="StaticGroup" width="110" height="62"/></a>
+    </td>
+    <td>
       <a href="https://create3000.github.io/media/examples/Grouping/Switch/Switch.x3d" title="Grouping » Switch" componentName="Grouping" typeName="Switch" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Grouping/Switch/screenshot-small.png" alt="Switch" width="110" height="62"/></a>
     </td>
     <td>
@@ -276,11 +279,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/HAnim/HAnimParticleSystem/HAnimParticleSystem.x3d" title="HAnim » HAnimParticleSystem" componentName="HAnim" typeName="HAnimParticleSystem" doc="false" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/HAnim/HAnimParticleSystem/screenshot-small.png" alt="HAnimParticleSystem" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Interpolation/ColorInterpolator/ColorInterpolator.x3d" title="Interpolation » ColorInterpolator" componentName="Interpolation" typeName="ColorInterpolator" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Interpolation/ColorInterpolator/screenshot-small.png" alt="ColorInterpolator" width="110" height="62"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Interpolation/CoordinateInterpolator/CoordinateInterpolator.x3d" title="Interpolation » CoordinateInterpolator" componentName="Interpolation" typeName="CoordinateInterpolator" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Interpolation/CoordinateInterpolator/screenshot-small.png" alt="CoordinateInterpolator" width="110" height="62"/></a>
     </td>
@@ -299,11 +302,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/Interpolation/SplineScalarInterpolator/SplineScalarInterpolator.x3d" title="Interpolation » SplineScalarInterpolator" componentName="Interpolation" typeName="SplineScalarInterpolator" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Interpolation/SplineScalarInterpolator/screenshot-small.png" alt="SplineScalarInterpolator" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Interpolation/SquadOrientationInterpolator/SquadOrientationInterpolator.x3d" title="Interpolation » SquadOrientationInterpolator" componentName="Interpolation" typeName="SquadOrientationInterpolator" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Interpolation/SquadOrientationInterpolator/screenshot-small.png" alt="SquadOrientationInterpolator" width="110" height="62"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/KeyDeviceSensor/KeySensor/KeySensor.x3d" title="KeyDeviceSensor » KeySensor" componentName="KeyDeviceSensor" typeName="KeySensor" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/KeyDeviceSensor/KeySensor/screenshot-small.png" alt="KeySensor" width="110" height="62"/></a>
     </td>
@@ -322,11 +325,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/Lighting/PointLight/PointLight.x3d" title="Lighting » PointLight" componentName="Lighting" typeName="PointLight" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Lighting/PointLight/screenshot-small.png" alt="PointLight" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Lighting/Shadows/Shadows.x3d" title="Lighting » Shadows" componentName="Lighting" typeName="Shadows" doc="false" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Lighting/Shadows/screenshot-small.png" alt="Shadows" width="110" height="62"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Lighting/SpotLight/SpotLight.x3d" title="Lighting » SpotLight" componentName="Lighting" typeName="SpotLight" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Lighting/SpotLight/screenshot-small.png" alt="SpotLight" width="110" height="62"/></a>
     </td>
@@ -345,11 +348,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/Navigation/Billboard/Billboard.x3d" title="Navigation » Billboard" componentName="Navigation" typeName="Billboard" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Navigation/Billboard/screenshot-small.png" alt="Billboard" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Navigation/Collision/Collision.x3d" title="Navigation » Collision" componentName="Navigation" typeName="Collision" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Navigation/Collision/screenshot-small.png" alt="Collision" width="110" height="62"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Navigation/LogarithmicDepthBuffer/LogarithmicDepthBuffer.x3d" title="Navigation » LogarithmicDepthBuffer" componentName="Navigation" typeName="LogarithmicDepthBuffer" doc="false" xrButtonPosition="br" xrMovementControl="VIEWPOINT"><img src="https://create3000.github.io/media/examples/Navigation/LogarithmicDepthBuffer/screenshot-small.png" alt="LogarithmicDepthBuffer" width="110" height="62"/></a>
     </td>
@@ -368,11 +371,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" title="Networking » Inline" componentName="Networking" typeName="Inline" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Networking/Inline/screenshot-small.png" alt="Inline" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Networking/LoadSensor/LoadSensor.x3d" title="Networking » LoadSensor" componentName="Networking" typeName="LoadSensor" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Networking/LoadSensor/screenshot-small.png" alt="LoadSensor" width="110" height="62"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/ParticleSystems/BoundedPhysicsModel/BoundedPhysicsModel.x3d" title="ParticleSystems » BoundedPhysicsModel" componentName="ParticleSystems" typeName="BoundedPhysicsModel" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/ParticleSystems/BoundedPhysicsModel/screenshot-small.png" alt="BoundedPhysicsModel" width="110" height="62"/></a>
     </td>
@@ -391,11 +394,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/ParticleSystems/PointEmitter/PointEmitter.x3d" title="ParticleSystems » PointEmitter" componentName="ParticleSystems" typeName="PointEmitter" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/ParticleSystems/PointEmitter/screenshot-small.png" alt="PointEmitter" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/ParticleSystems/PolylineEmitter/PolylineEmitter.x3d" title="ParticleSystems » PolylineEmitter" componentName="ParticleSystems" typeName="PolylineEmitter" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/ParticleSystems/PolylineEmitter/screenshot-small.png" alt="PolylineEmitter" width="110" height="62"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/ParticleSystems/SurfaceEmitter/SurfaceEmitter.x3d" title="ParticleSystems » SurfaceEmitter" componentName="ParticleSystems" typeName="SurfaceEmitter" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/ParticleSystems/SurfaceEmitter/screenshot-small.png" alt="SurfaceEmitter" width="110" height="62"/></a>
     </td>
@@ -414,11 +417,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/Picking/PrimitivePickSensor/PrimitivePickSensor.x3d" title="Picking » PrimitivePickSensor" componentName="Picking" typeName="PrimitivePickSensor" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Picking/PrimitivePickSensor/screenshot-small.png" alt="PrimitivePickSensor" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/PointingDeviceSensor/CylinderSensor/CylinderSensor.x3d" title="PointingDeviceSensor » CylinderSensor" componentName="PointingDeviceSensor" typeName="CylinderSensor" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/PointingDeviceSensor/CylinderSensor/screenshot-small.png" alt="CylinderSensor" width="110" height="62"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/PointingDeviceSensor/PlaneSensor/PlaneSensor.x3d" title="PointingDeviceSensor » PlaneSensor" componentName="PointingDeviceSensor" typeName="PlaneSensor" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/PointingDeviceSensor/PlaneSensor/screenshot-small.png" alt="PlaneSensor" width="110" height="62"/></a>
     </td>
@@ -437,11 +440,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/Rendering/Coordinate/Coordinate.x3d" title="Rendering » Coordinate" componentName="Rendering" typeName="Coordinate" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Rendering/Coordinate/screenshot-small.png" alt="Coordinate" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Rendering/IndexedLineSet/IndexedLineSet.x3d" title="Rendering » IndexedLineSet" componentName="Rendering" typeName="IndexedLineSet" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Rendering/IndexedLineSet/screenshot-small.png" alt="IndexedLineSet" width="110" height="62"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Rendering/IndexedTriangleFanSet/IndexedTriangleFanSet.x3d" title="Rendering » IndexedTriangleFanSet" componentName="Rendering" typeName="IndexedTriangleFanSet" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Rendering/IndexedTriangleFanSet/screenshot-small.png" alt="IndexedTriangleFanSet" width="110" height="62"/></a>
     </td>
@@ -460,11 +463,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/RigidBodyPhysics/BallJoint/BallJoint.x3d" title="RigidBodyPhysics » BallJoint" componentName="RigidBodyPhysics" typeName="BallJoint" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/RigidBodyPhysics/BallJoint/screenshot-small.png" alt="BallJoint" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/RigidBodyPhysics/CollidableShape/CollidableShape.x3d" title="RigidBodyPhysics » CollidableShape" componentName="RigidBodyPhysics" typeName="CollidableShape" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollidableShape/screenshot-small.png" alt="CollidableShape" width="110" height="62"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/RigidBodyPhysics/CollisionCollection/CollisionCollection.x3d" title="RigidBodyPhysics » CollisionCollection" componentName="RigidBodyPhysics" typeName="CollisionCollection" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/RigidBodyPhysics/CollisionCollection/screenshot-small.png" alt="CollisionCollection" width="110" height="62"/></a>
     </td>
@@ -483,11 +486,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/Shaders/ComposedShader/ComposedShader.x3d" title="Shaders » ComposedShader" componentName="Shaders" typeName="ComposedShader" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Shaders/ComposedShader/screenshot-small.png" alt="ComposedShader" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Shaders/FloatVertexAttribute/FloatVertexAttribute.x3d" title="Shaders » FloatVertexAttribute" componentName="Shaders" typeName="FloatVertexAttribute" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Shaders/FloatVertexAttribute/screenshot-small.png" alt="FloatVertexAttribute" width="110" height="62"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Shaders/ShaderPart/ShaderPart.x3d" title="Shaders » ShaderPart" componentName="Shaders" typeName="ShaderPart" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Shaders/ShaderPart/screenshot-small.png" alt="ShaderPart" width="110" height="62"/></a>
     </td>
@@ -506,11 +509,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/TwoSidedMaterial.x3d" title="Shape » TwoSidedMaterial" componentName="Shape" typeName="TwoSidedMaterial" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/screenshot-small.png" alt="TwoSidedMaterial" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Sound/AudioClip/AudioClip.x3d" title="Sound » AudioClip" componentName="Sound" typeName="AudioClip" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Sound/AudioClip/screenshot-small.png" alt="AudioClip" width="110" height="62"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d" title="Sound » MicrophoneSource" componentName="Sound" typeName="MicrophoneSource" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Sound/MicrophoneSource/screenshot-small.png" alt="MicrophoneSource" width="110" height="62"/></a>
     </td>
@@ -529,11 +532,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/Texturing/MovieTexture/MovieTexture.x3d" title="Texturing » MovieTexture" componentName="Texturing" typeName="MovieTexture" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Texturing/MovieTexture/screenshot-small.png" alt="MovieTexture" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Texturing/MultiTexture/MultiTexture.x3d" title="Texturing » MultiTexture" componentName="Texturing" typeName="MultiTexture" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Texturing/MultiTexture/screenshot-small.png" alt="MultiTexture" width="110" height="62"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Texturing/PixelTexture/PixelTexture.x3d" title="Texturing » PixelTexture" componentName="Texturing" typeName="PixelTexture" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/Texturing/PixelTexture/screenshot-small.png" alt="PixelTexture" width="110" height="62"/></a>
     </td>
@@ -552,11 +555,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/VolumeRendering/IsoSurfaceVolumeData/IsoSurfaceVolumeData.x3d" title="VolumeRendering » IsoSurfaceVolumeData" componentName="VolumeRendering" typeName="IsoSurfaceVolumeData" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/VolumeRendering/IsoSurfaceVolumeData/screenshot-small.png" alt="IsoSurfaceVolumeData" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/SegmentedVolumeData.x3d" title="VolumeRendering » SegmentedVolumeData" componentName="VolumeRendering" typeName="SegmentedVolumeData" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/screenshot-small.png" alt="SegmentedVolumeData" width="110" height="62"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/VolumeRendering/ShadedVolumeStyle/ShadedVolumeStyle.x3d" title="VolumeRendering » ShadedVolumeStyle" componentName="VolumeRendering" typeName="ShadedVolumeStyle" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/VolumeRendering/ShadedVolumeStyle/screenshot-small.png" alt="ShadedVolumeStyle" width="110" height="62"/></a>
     </td>

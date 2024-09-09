@@ -36,6 +36,7 @@ const X_ITE_EXAMPLES = [
    { component: "Geospatial", test: "GeoLOD" },
    { component: "Geospatial", test: "GeoViewpoint" },
    { component: "Grouping", test: "Group" },
+   { component: "Grouping", test: "StaticGroup" },
    { component: "Grouping", test: "Switch" },
    { component: "Grouping", test: "Transform" },
    { component: "HAnim", test: "HAnimHumanoid" },

@@ -98,6 +98,14 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - Requires X3D `profile='Full'` or else include `<component name='Grouping' level='3'/>`
 
+## Example
+
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Grouping/StaticGroup/StaticGroup.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/examples/Grouping/StaticGroup/StaticGroup.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Grouping/StaticGroup/StaticGroup.x3d)
+{: .example-links }
+
 ## See Also
 
 - [X3D Specification of StaticGroup Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#StaticGroup)
