@@ -323,8 +323,6 @@ function init ()
 
 function center ()
 {
-  const Browser = X3D .getBrowser (".browser"); // Get the browser instance.
-
   Browser .changeViewpoint ("Viewpoint");
 }
 
