@@ -19,7 +19,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 ### Declarative Syntax
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
 <x3d-canvas>
   <X3D profile='Interchange' version='4.0'>
     <head>
@@ -291,13 +291,24 @@ Adding HTML controls to your scene is no rocket science. We have added some HTML
 ### The JavaScript
 
 ```html
-<script>
+<script defer src="https://code.jquery.com/jquery-latest.js"></script>
+<script type="module">
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
+
+const Browser = X3D .getBrowser (".browser");
+
+Browser .addBrowserCallback ("init", X3D .X3DConstants .INITIALIZED_EVENT, init);
+
 function init ()
 {
   const
-    Browser = X3D .getBrowser (".browser"),               // Get the browser instance.
-    scene   = Browser .currentScene,                      // Get the scene.
-    timer   = scene .getNamedNode ("SpinAnimationTimer"); // Get box TouchSensor node.
+    scene = Browser .currentScene,                      // Get the scene.
+    timer = scene .getNamedNode ("SpinAnimationTimer"); // Get box TouchSensor node.
+
+  $("#center")            .on ("click",  center);
+  $("#change-style")      .on ("change", changeStyle);
+  $("#change-background") .on ("change", changeBackground);
+  $("#spin")              .on ("click",  spin);
 
   // Add field callback to get informed when cycleTime is fired. "time" is an arbitrary
   // string to identify the callback, for instance if you later want to remove the callback.
@@ -308,7 +319,7 @@ function init ()
 
   changeStyle ();
   changeBackground ();
-}
+};
 
 function center ()
 {
@@ -320,7 +331,6 @@ function center ()
 function changeStyle ()
 {
   const
-    Browser    = X3D .getBrowser (".browser"),            // Get the browser instance.
     scene      = Browser .currentScene,                   // Get the scene.
     switchNode = scene .getNamedNode ("Adrenaline");      // Get Switch node.
 
@@ -332,7 +342,6 @@ function changeStyle ()
 function changeBackground ()
 {
   const
-    Browser        = X3D .getBrowser (".browser"),            // Get the browser instance.
     scene          = Browser .currentScene,                   // Get the scene.
     backgroundNode = scene .getNamedNode ("Background");      // Get Background node.
 
@@ -343,16 +352,15 @@ function changeBackground ()
       break;
     case 1:
       backgroundNode .skyColor [0] = new X3D .SFColor (0, 0, 0);
-     break;
+      break;
   }
 }
 
 function spin ()
 {
   const
-    Browser = X3D .getBrowser (".browser"),               // Get the browser instance.
-    scene   = Browser .currentScene,                      // Get the scene.
-    timer   = scene .getNamedNode ("SpinAnimationTimer"); // Get TimeSensor node.
+    scene = Browser .currentScene,                      // Get the scene.
+    timer = scene .getNamedNode ("SpinAnimationTimer"); // Get TimeSensor node.
 
   if (timer .isPaused)
     timer .resumeTime = Date .now () / 1000;
@@ -365,21 +373,21 @@ function spin ()
 ### The HTML
 
 ```html
-<x3d-canvas src="external-browser.x3d" onload="init ()"></x3d-canvas>
+<x3d-canvas src="external-browser.x3d"></x3d-canvas>
 
 <div class="buttons">
-  <button id="center" class="button" onclick="center ()">Center</button>
-  <select id="change-style" class="button" onchange="changeStyle ()">
+  <button id="center" class="button">Center</button>
+  <select id="change-style" class="button">
     <option value="0">Balls</option>
     <option value="1">Sticks And Balls</option>
     <option value="2">Sticks</option>
     <option value="3">Line</option>
   </select>
-  <select id="change-background" class="button" onchange="changeBackground ()">
+  <select id="change-background" class="button">
     <option value="0">White Background</option>
     <option value="1">Black Background</option>
   </select>
-  <button id="spin" class="button" onclick="spin ()">Spin</button>
+  <button id="spin" class="button">Spin</button>
 </div>
 ```
 
