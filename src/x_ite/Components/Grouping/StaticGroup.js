@@ -239,7 +239,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
             let key = "";
 
-            key += btoa (appearanceNode .toVRMLString ());
+            key += btoa (appearanceNode .toVRMLString ({ style: "CLEAN" }));
             key += ".";
             key += geometryNode .getGeometryType ();
             key += geometryNode .isSolid () ? 1 : 0;
