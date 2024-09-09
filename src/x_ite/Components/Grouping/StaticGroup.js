@@ -128,13 +128,16 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
    },
    traverse (type, renderObject)
    {
-      this .visibleNodes ??= this .createStaticShapes (renderObject);
+      if (!this .visibleNodes)
+         this .createStaticShapes (renderObject);
 
       for (const visibleNode of this .visibleNodes)
          visibleNode .traverse (type, renderObject);
    },
    createStaticShapes (renderObject)
    {
+      this .visibleNodes = [this .groupNode];
+
       // Check if scene is currently loading something.
 
       const scene = this .getScene ();
@@ -157,8 +160,6 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          this .optimizeGroups (this .createGroups (renderObject));
       }
-
-      return [this .groupNode];
    },
    createGroups: (() =>
    {
