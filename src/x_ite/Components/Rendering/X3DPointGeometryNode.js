@@ -81,7 +81,10 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          attribBuffers   = this .getAttribBuffers ();
 
       if (!renderContext .transparent)
+      {
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+         gl .enable (gl .BLEND);
+      }
 
       for (const node of renderModeNodes)
          node .enable (gl);
@@ -121,7 +124,11 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       for (const node of renderModeNodes)
          node .disable (gl);
 
-      gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+      if (!renderContext .transparent)
+      {
+         gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+         gl .disable (gl .BLEND);
+      }
    },
    displayInstanced (gl, renderContext, shapeNode)
    {
@@ -133,7 +140,10 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          attribBuffers   = this .getAttribBuffers ();
 
       if (!renderContext .transparent)
+      {
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+         gl .enable (gl .BLEND);
+      }
 
       for (const node of renderModeNodes)
          node .enable (gl);
@@ -192,7 +202,11 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       for (const node of renderModeNodes)
          node .disable (gl);
 
-      gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+      if (!renderContext .transparent)
+      {
+         gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+         gl .disable (gl .BLEND);
+      }
    },
 });
 
