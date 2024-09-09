@@ -73,6 +73,9 @@ let index = localStorage ["Bookmarks.history"] .length - 1;
 
 async function loadURL (url)
 {
+   if (url .endsWith (".html"))
+      return;
+
    const history = localStorage ["Bookmarks.history"];
 
    localStorage ["Bookmarks.url"] = url;
