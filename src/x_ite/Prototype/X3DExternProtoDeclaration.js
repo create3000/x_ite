@@ -55,7 +55,8 @@ import FileLoader              from "../InputOutput/FileLoader.js";
 
 const
    _proto = Symbol (),
-   _scene = Symbol ();
+   _scene = Symbol (),
+   _cache = Symbol ();
 
 function X3DExternProtoDeclaration (executionContext, url)
 {
@@ -104,22 +105,37 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    {
       return this [_proto];
    },
-   loadData ()
+   async loadData ()
    {
       // 7.73 — ExternProtoDeclaration function
 
       this .getScene () .addInitLoadCount (this);
 
-      new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
-   },
-   setInternalSceneAsync (value)
-   {
-      if (value)
-         this .setInternalScene (value);
+      for (const relativeURL of this ._url)
+      {
+         try
+         {
+            const url = new URL (relativeURL, this .getExecutionContext () .getWorldURL ());
 
-      else
-         this .setError (new Error ("File could not be loaded."));
+            const scene = await new Promise (resolve =>
+            {
+               new FileLoader (this) .createX3DFromURL (new Fields .MFString (url), null, resolve);
+            });
 
+            if (!scene)
+               continue;
+
+            this .setInternalScene (scene);
+            this .getScene () .removeInitLoadCount (this);
+            return;
+         }
+         catch (error)
+         {
+            console .warn (error .message);
+         }
+      }
+
+      this .setError (new Error ("File could not be loaded."));
       this .getScene () .removeInitLoadCount (this);
    },
    setInternalScene (value)
