@@ -153,6 +153,12 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       this .setError (new Error ("File could not be loaded."));
       this .getScene () .removeInitLoadCount (this);
    },
+   getInternalScene ()
+   {
+      ///  Returns the internal X3DScene of this extern proto, that is loaded from the url given.
+
+      return this [_scene];
+   },
    setInternalScene (scene, url)
    {
       if (this [_scene] !== this .getBrowser () .getPrivateScene ())
@@ -172,12 +178,6 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
       this .setProtoDeclaration (proto);
-   },
-   getInternalScene ()
-   {
-      ///  Returns the internal X3DScene of this extern proto, that is loaded from the url given.
-
-      return this [_scene];
    },
    setError (error)
    {
