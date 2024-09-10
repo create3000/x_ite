@@ -111,6 +111,12 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    {
       const browser = this .getBrowser ();
 
+      if (!this ._url .length)
+      {
+         this .setError (new Error ("No URL given."));
+         return;
+      }
+
       for (const url of this ._url)
       {
          try
