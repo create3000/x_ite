@@ -1858,10 +1858,19 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             {
                const
                   comp  = this .value,
+                  size  = width * height,
                   array = [ ];
 
-               while (this .int32 ())
-                  array .push (this .value);
+               for (let i = 0; i < size; ++ i)
+               {
+                  if (this .int32 ())
+                  {
+                     array .push (this .value);
+                     continue;
+                  }
+
+                  return false;
+               }
 
                field .width  = width;
                field .height = height;
