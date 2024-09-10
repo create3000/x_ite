@@ -160,7 +160,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    {
       const browser = this .getBrowser ();
 
-      if (this [_scene] !== browser .getPrivateScene () && !this [_cache])
+      if (this [_scene] !== browser .getDefaultScene () && !this [_cache])
          this [_scene] ?.dispose ();
 
       this [_scene] = scene;
@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       if (!proto)
          throw new Error ("PROTO not found");
 
-      this [_scene] .setExecutionContext (this [_cache] ? browser .getPrivateScene () : this .getExecutionContext ());
+      this [_scene] .setExecutionContext (this [_cache] ? browser .getDefaultScene () : this .getExecutionContext ());
       this [_scene] .setLive (true);
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
@@ -183,7 +183,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    {
       console .error (`Error loading extern prototype '${this .getName ()}':`, error);
 
-      this [_scene] = this .getBrowser () .getPrivateScene ();
+      this [_scene] = this .getBrowser () .getDefaultScene ();
 
       this .setLoadState (X3DConstants .FAILED_STATE);
       this .setProtoDeclaration (null);
