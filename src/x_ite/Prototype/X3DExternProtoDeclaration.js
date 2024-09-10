@@ -69,6 +69,8 @@ function X3DExternProtoDeclaration (executionContext, url)
                           X3DConstants .inputOutput, "url",                  url .copy (), // Must be of type MFString.
                           X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (),
                           X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600));
+
+   this .getBrowser () [_cache] ??= new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3DProtoDeclarationNode .prototype),
@@ -107,7 +109,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    async loadData ()
    {
-      // 7.73 — ExternProtoDeclaration function
+      const browser = this .getBrowser ();
 
       this .getScene () .addInitLoadCount (this);
 
@@ -115,17 +117,30 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       {
          try
          {
-            const url = new URL (relativeURL, this .getExecutionContext () .getWorldURL ());
+            const
+               url       = new URL (relativeURL, this .getExecutionContext () .getWorldURL ()),
+               cachedURL = new URL (url);
 
-            const scene = await new Promise (resolve =>
+            cachedURL .hash = "";
+
+            const cachePromise = browser .getBrowserOption ("Cache")
+               ? browser [_cache] .get (cachedURL .href)
+               : null;
+
+            const promise = cachePromise ?? new Promise (resolve =>
             {
-               new FileLoader (this) .createX3DFromURL ([url], null, resolve);
+               new FileLoader (this) .createX3DFromURL ([cachedURL], null, resolve);
             });
+
+            if (browser .getBrowserOption ("Cache"))
+               browser [_cache] .set (cachedURL .href, promise);
+
+            const scene = await promise;
 
             if (!scene)
                continue;
 
-            this .setInternalScene (scene);
+            this .setInternalScene (scene, url);
             this .getScene () .removeInitLoadCount (this);
             return;
          }
@@ -138,15 +153,15 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       this .setError (new Error ("File could not be loaded."));
       this .getScene () .removeInitLoadCount (this);
    },
-   setInternalScene (value)
+   setInternalScene (scene, url)
    {
       if (this [_scene] !== this .getBrowser () .getPrivateScene ())
          this [_scene] ?.dispose ();
 
-      this [_scene] = value;
+      this [_scene] = scene;
 
       const
-         protoName = decodeURIComponent (new URL (this [_scene] .getWorldURL ()) .hash .substring (1)),
+         protoName = decodeURIComponent (url .hash .substring (1)),
          proto     = protoName ? this [_scene] .protos .get (protoName) : this [_scene] .protos [0];
 
       if (!proto)
