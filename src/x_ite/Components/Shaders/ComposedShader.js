@@ -175,7 +175,7 @@ Object .assign (Object .setPrototypeOf (ComposedShader .prototype, X3DShaderNode
 
             if (this ._parts .length)
             {
-               console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
+               console .warn (`Couldn't initialize ${this .getTypeName ()} '${this .getName ()}': ${gl .getProgramInfoLog (program)}`);
             }
          }
       }

@@ -943,7 +943,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       if (!gl .getProgramParameter (program, gl .LINK_STATUS))
       {
-         console .error ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
+         console .error (`Couldn't initialize particle shader: ${gl .getProgramInfoLog (program)}`);
          // console .error (vertexShaderSource);
       }
 
