@@ -78,7 +78,6 @@ function X3DScene (browser)
 
    this .addChildObjects (X3DConstants .outputOnly, "profile_changed",  new Fields .SFTime (),
                           X3DConstants .outputOnly, "metadata_changed", new Fields .SFTime (),
-                          X3DConstants .outputOnly, "initLoadCount",    new Fields .SFInt32 (),
                           X3DConstants .outputOnly, "loadCount",        new Fields .SFInt32 ())
 
    this [_specificationVersion] = LATEST_VERSION;
@@ -1005,14 +1004,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          for (const object of this [_loadingObjects])
             scene .addLoadingObject (object);
       }
-   },
-   addInitLoadCount (node)
-   {
-      this ._initLoadCount = this ._initLoadCount .getValue () + 1;
-   },
-   removeInitLoadCount (node)
-   {
-      this ._initLoadCount = this ._initLoadCount .getValue () - 1;
    },
    getLoadingObjects ()
    {

@@ -85,6 +85,31 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       this .realize ();
    },
+   realize ()
+   {
+      const
+         protoNode = this [_protoNode],
+         proto     = protoNode .getProtoDeclaration ();
+
+      if (protoNode .isExternProto && protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+         return;
+
+      // Create execution context.
+
+      this [_body] = new X3DExecutionContext (proto .getExecutionContext (), this);
+
+      // Copy proto.
+
+      this .importExternProtos  (proto .getBody () .externprotos);
+      this .importProtos        (proto .getBody () .protos);
+      this .copyRootNodes       (proto .getBody () .rootNodes);
+      this .importImportedNodes (proto .getBody () .importedNodes);
+      this .copyRoutes          (proto .getBody () .routes);
+
+      this [_body] .setup ();
+
+      X3DChildObject .prototype .addEvent .call (this);
+   },
    construct ()
    {
       const
@@ -158,31 +183,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       protoNode ._updateInstances .removeInterest ("construct", this);
       protoNode ._updateInstances .addInterest ("update", this);
-   },
-   realize ()
-   {
-      const
-         protoNode = this [_protoNode],
-         proto     = protoNode .getProtoDeclaration ();
-
-      if (protoNode .isExternProto && protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
-         return;
-
-      // Create execution context.
-
-      this [_body] = new X3DExecutionContext (proto .getExecutionContext (), this);
-
-      // Copy proto.
-
-      this .importExternProtos  (proto .getBody () .externprotos);
-      this .importProtos        (proto .getBody () .protos);
-      this .copyRootNodes       (proto .getBody () .rootNodes);
-      this .importImportedNodes (proto .getBody () .importedNodes);
-      this .copyRoutes          (proto .getBody () .routes);
-
-      this [_body] .setup ();
-
-      X3DChildObject .prototype .addEvent .call (this);
    },
    update ()
    {

@@ -50,6 +50,7 @@ import Fields      from "../Fields.js";
 import GoldenGate  from "../Parser/GoldenGate.js";
 import X3DWorld    from "../Execution/X3DWorld.js";
 import DEVELOPMENT from "../DEVELOPMENT.js";
+import X3DConstants from "../Base/X3DConstants.js";
 
 const foreignMimeType = new Set ([
    "text/html",
@@ -132,34 +133,36 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    setScene (scene, resolve, reject)
    {
-      scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, resolve, reject);
-      scene ._initLoadCount .addEvent ();
+      scene ._loadCount .addInterest ("set_loadCount__", this, scene, resolve, reject);
+      scene ._loadCount .addEvent ();
    },
-   set_initLoadCount__ (scene, resolve, reject, field)
+   async set_loadCount__ (scene, resolve, reject, field)
    {
       // Wait for extern protos to be loaded.
 
-      if (field .getValue ())
-         return;
+      for (const externproto of scene .externprotos)
+      {
+         if (externproto .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
+            return;
+      }
 
-      scene ._initLoadCount .removeInterest ("set_initLoadCount__", this);
+      scene ._loadCount .removeInterest ("set_loadCount__", this);
 
       // Wait for instances to be created.
 
-      setTimeout (() =>
+      await this .browser .nextFrame ();
+
+      try
       {
-         try
-         {
-            resolve (scene);
-         }
-         catch (error)
-         {
-            if (reject)
-               reject (error);
-            else
-               throw error;
-         }
-      });
+         resolve (scene);
+      }
+      catch (error)
+      {
+         if (reject)
+            reject (error);
+         else
+            throw error;
+      }
 
       if (DEVELOPMENT)
       {

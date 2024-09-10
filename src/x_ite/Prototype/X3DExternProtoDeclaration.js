@@ -111,14 +111,12 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    {
       const browser = this .getBrowser ();
 
-      this .getScene () .addInitLoadCount (this);
-
       for (const relativeURL of this ._url)
       {
          try
          {
             const
-               url      = new URL (relativeURL, this .getExecutionContext () .getWorldURL ()),
+               url      = new URL (relativeURL, this .getExecutionContext () .getBaseURL ()),
                cacheURL = new URL (url);
 
             cacheURL .hash = "";
@@ -141,7 +139,6 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
                continue;
 
             this .setInternalScene (scene, url);
-            this .getScene () .removeInitLoadCount (this);
             return;
          }
          catch (error)
@@ -151,7 +148,6 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       }
 
       this .setError (new Error ("File could not be loaded."));
-      this .getScene () .removeInitLoadCount (this);
    },
    getInternalScene ()
    {
