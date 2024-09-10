@@ -1644,12 +1644,12 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    },
    sfboolValues (field)
    {
-      field .length = 0;
-
-      const target = field .getTarget ();
+      const array = [ ];
 
       while (this .bool ())
-         target .push (this .value);
+         array .push (this .value);
+
+      field .setValue (array);
 
       return field .length !== 0;
    },
@@ -1719,14 +1719,12 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    },
    sfcolorValues (field)
    {
-      field .length = 0;
+      const array = [ ];
 
-      const
-         target = field .getTarget (),
-         value  = this .Color3;
+      while (this .double ())
+         array .push (this .value);
 
-      while (this .sfcolorValue (value))
-         target .push (value);
+      field .setValue (array);
 
       return field .length !== 0;
    },
@@ -1791,7 +1789,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .OpenBracket .parse (this))
       {
-         this .sfcolorrgbaValues (field);
+         this .sfcolorValues (field);
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -1800,19 +1798,6 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       }
 
       return false;
-   },
-   sfcolorrgbaValues (field)
-   {
-      field .length = 0;
-
-      const
-         target = field .getTarget (),
-         value  = this .Color4;
-
-      while (this .sfcolorrgbaValue (value))
-         target .push (value);
-
-      return field .length !== 0;
    },
    sfdoubleValue (field)
    {
@@ -1848,14 +1833,14 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    },
    sfdoubleValues (field)
    {
-      field .length = 0;
-
       const
-         target = field .getTarget (),
-         unit   = target .getUnit ();
+         unit  = field .getUnit (),
+         array = [ ];
 
       while (this .double ())
-         target .push (this .fromUnit (unit, this .value));
+         array .push (this .fromUnit (unit, this .value));
+
+      field .setValue (array);
 
       return field .length !== 0;
    },
@@ -1968,12 +1953,12 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    },
    sfint32Values (field)
    {
-      field .length = 0;
-
-      const target = field .getTarget ();
+      const array = [ ];
 
       while (this .int32 ())
-         target .push (this .value);
+         array .push (this .value);
+
+      field .setValue (array);
 
       return field .length !== 0;
    },
@@ -2050,7 +2035,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .OpenBracket .parse (this))
       {
-         this .sfmatrix3Values (field);
+         this .sfmatrixValues (field);
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -2060,16 +2045,14 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       return false;
    },
-   sfmatrix3Values (field)
+   sfmatrixValues (field)
    {
-      field .length = 0;
+      const array = [ ];
 
-      const
-         target = field .getTarget (),
-         value  = this .Matrix3;
+      while (this .double ())
+         array .push (this .value);
 
-      while (this .sfmatrix3Value (value))
-         target .push (value);
+      field .setValue (array);
 
       return field .length !== 0;
    },
@@ -2188,7 +2171,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .OpenBracket .parse (this))
       {
-         this .sfmatrix4Values (field);
+         this .sfmatrixValues (field);
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -2197,19 +2180,6 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       }
 
       return false;
-   },
-   sfmatrix4Values (field)
-   {
-      field .length = 0;
-
-      const
-         target = field .getTarget (),
-         value  = this .Matrix4;
-
-      while (this .sfmatrix4Value (value))
-         target .push (value);
-
-      return field .length !== 0;
    },
    sfnodeValue (field)
    {
@@ -2360,12 +2330,12 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    },
    sfstringValues (field)
    {
-      field .length = 0;
-
-      const target = field .getTarget ();
+      const array = [ ];
 
       while (this .string ())
-         target .push (this .value);
+         array .push (this .value);
+
+      field .setValue (array);
 
       return field .length !== 0;
    },
@@ -2400,7 +2370,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .OpenBracket .parse (this))
       {
-         this .sfvec2Values (field);
+         this .sfvecValues (field);
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -2410,17 +2380,16 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       return false;
    },
-   sfvec2Values (field)
+   sfvecValues (field)
    {
-      field .length = 0;
-
       const
-         target = field .getTarget (),
-         value  = this .Vector2,
-         unit   = target .getUnit ();
+         unit  = field .getUnit (),
+         array = [ ];
 
-      while (this .sfvec2Value (value, unit))
-         target .push (value);
+      while (this .double ())
+         array .push (this .fromUnit (unit, this .value));
+
+      field .setValue (array);
 
       return field .length !== 0;
    },
@@ -2461,7 +2430,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .OpenBracket .parse (this))
       {
-         this .sfvec3Values (field);
+         this .sfvecValues (field);
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -2470,20 +2439,6 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       }
 
       return false;
-   },
-   sfvec3Values (field)
-   {
-      field .length = 0;
-
-      const
-         target = field .getTarget (),
-         value  = this .Vector3,
-         unit   = target .getUnit ();
-
-      while (this .sfvec3Value (value, unit))
-         target .push (value);
-
-      return field .length !== 0;
    },
    sfvec4Value (field, unit)
    {
@@ -2528,7 +2483,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .OpenBracket .parse (this))
       {
-         this .sfvec4Values (field);
+         this .sfvecValues (field);
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -2537,20 +2492,6 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       }
 
       return false;
-   },
-   sfvec4Values (field)
-   {
-      field .length = 0;
-
-      const
-         target = field .getTarget (),
-         value  = this .Vector4,
-         unit   = target .getUnit ();
-
-      while (this .sfvec4Value (value, unit))
-         target .push (value);
-
-      return field .length !== 0;
    },
    unknownValue ()
    {
