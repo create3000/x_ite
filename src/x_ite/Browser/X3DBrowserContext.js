@@ -195,6 +195,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    },
    setExecutionContext (executionContext)
    {
+      this .getPrivateScene () .setExecutionContext (executionContext);
+
       this [_world] = new X3DWorld (executionContext);
       this [_world] .setup ();
    },
