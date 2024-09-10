@@ -164,7 +164,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          this [_scene] ?.dispose ();
 
       this [_scene] = scene;
-      this [_cache] = cache
+      this [_cache] = cache;
 
       const
          protoName = decodeURIComponent (url .hash .substring (1)),
@@ -173,16 +173,8 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       if (!proto)
          throw new Error ("PROTO not found");
 
-      if (this [_cache])
-      {
-         this [_scene] .setExecutionContext (browser .getPrivateScene ());
-         this [_scene] .setLive (browser .isLive ());
-      }
-      else
-      {
-         this [_scene] .setExecutionContext (this .getExecutionContext ());
-         this [_scene] .setLive (this .getLive () .getValue ());
-      }
+      this [_scene] .setExecutionContext (this [_cache] ? browser .getPrivateScene () : this .getExecutionContext ());
+      this [_scene] .setLive (true);
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
       this .setProtoDeclaration (proto);
