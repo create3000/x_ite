@@ -118,22 +118,22 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          try
          {
             const
-               url       = new URL (relativeURL, this .getExecutionContext () .getWorldURL ()),
-               cachedURL = new URL (url);
+               url      = new URL (relativeURL, this .getExecutionContext () .getWorldURL ()),
+               cacheURL = new URL (url);
 
-            cachedURL .hash = "";
+            cacheURL .hash = "";
 
             const cachePromise = browser .getBrowserOption ("Cache")
-               ? browser [_cache] .get (cachedURL .href)
+               ? browser [_cache] .get (cacheURL .href)
                : null;
 
             const promise = cachePromise ?? new Promise (resolve =>
             {
-               new FileLoader (this) .createX3DFromURL ([cachedURL], null, resolve);
+               new FileLoader (this) .createX3DFromURL ([cacheURL], null, resolve);
             });
 
             if (browser .getBrowserOption ("Cache"))
-               browser [_cache] .set (cachedURL .href, promise);
+               browser [_cache] .set (cacheURL .href, promise);
 
             const scene = await promise;
 
