@@ -132,7 +132,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
                new FileLoader (this) .createX3DFromURL ([cacheURL], null, resolve);
             });
 
-            if (browser .getBrowserOption ("Cache"))
+            if (browser .getBrowserOption ("Cache") && !cachePromise)
                browser [_cache] .set (cacheURL .href, promise);
 
             const scene = await promise;
