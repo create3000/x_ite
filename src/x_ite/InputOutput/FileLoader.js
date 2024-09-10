@@ -184,13 +184,13 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    loadDocument (url, callback)
    {
-      this .url      = url .copy ();
+      this .url      = url .slice ();
       this .callback = callback;
 
       if (url .length === 0)
          return this .loadDocumentError (new Error ("No URL given."));
 
-      this .loadDocumentAsync (this .url .shift ())
+      this .loadDocumentAsync (String (this .url .shift ()))
          .catch (this .loadDocumentError .bind (this));
    },
    async loadDocumentAsync (url)
@@ -294,7 +294,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       if (this .url .length)
       {
-         this .loadDocumentAsync (this .url .shift ())
+         this .loadDocumentAsync (String (this .url .shift ()))
             .catch (this .loadDocumentError .bind (this));
       }
       else

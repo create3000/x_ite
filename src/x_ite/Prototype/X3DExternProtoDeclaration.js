@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
             const scene = await new Promise (resolve =>
             {
-               new FileLoader (this) .createX3DFromURL (new Fields .MFString (url), null, resolve);
+               new FileLoader (this) .createX3DFromURL ([url], null, resolve);
             });
 
             if (!scene)
