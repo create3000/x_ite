@@ -111,13 +111,13 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    {
       const browser = this .getBrowser ();
 
-      for (const relativeURL of this ._url)
+      for (const url of this ._url)
       {
          try
          {
             const
-               url      = new URL (relativeURL, this .getExecutionContext () .getBaseURL ()),
-               cacheURL = new URL (url);
+               resolvedURL = new URL (url, this .getExecutionContext () .getBaseURL ()),
+               cacheURL    = new URL (resolvedURL);
 
             cacheURL .hash = "";
 
@@ -138,7 +138,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             if (!scene)
                continue;
 
-            this .setInternalScene (scene, url);
+            this .setInternalScene (scene, resolvedURL);
             return;
          }
          catch (error)
