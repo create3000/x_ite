@@ -76,6 +76,26 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
       let string = "";
 
       string += "\n";
+      string += "struct Plane3_" + this .getId () + "\n";
+      string += "{\n";
+      string += "   vec3  normal;\n";
+      string += "   float distanceFromOrigin;\n";
+      string += "};\n";
+      string += "\n";
+      string += "Plane3_" + this .getId () + "\n";
+      string += "plane3_" + this .getId () + " (const in vec3 point, const in vec3 normal)\n";
+      string += "{\n";
+      string += "   return Plane3_" + this .getId () + " (normal, dot (normal, point));\n";
+      string += "}\n";
+
+      string += "\n";
+      string += "vec3\n";
+      string += "plane3_perpendicular_vector_" + this .getId () + " (const in Plane3_" + this .getId () + " plane, const in vec3 point)\n";
+      string += "{\n";
+      string += "   return plane .normal * (dot (point, plane .normal) - plane .distanceFromOrigin);\n";
+      string += "}\n";
+
+      string += "\n";
       string += "// ProjectionVolumeStyle\n";
       string += "\n";
       string += "uniform float intensityThreshold_" + this .getId () + ";\n";
@@ -89,25 +109,28 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
          default:
          case "MAX":
          {
-            string += "   float projectionColor = 0.0;\n";
+            string += "   float  projectionColor = 0.0;\n";
             break;
          }
          case "MIN":
          {
-            string += "   float projectionColor = 1.0;\n";
+            string += "   float  projectionColor = 1.0;\n";
             break;
          }
          case "AVERAGE":
          {
-            string += "   float projectionColor = 0.0;\n";
+            string += "   float  projectionColor = 0.0;\n";
             break;
          }
       }
 
-      string += "   const int samples     = 32;\n";
-      string += "   vec3  step            = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0)) / float (samples);\n";
-      string += "   vec3  ray             = texCoord - step * float (samples) * 0.5;\n";
-      string += "   bool  first           = false;\n";
+      string += "   const  int samples    = 32;\n";
+      string += "   vec3   normal         = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0));\n";
+      string += "   Plane3_" + this .getId () + " plane      = plane3_" + this .getId () + " (vec3 (0.5), normal);\n";
+      string += "   vec3   point          = texCoord + plane3_perpendicular_vector_" + this .getId () + " (plane, texCoord);\n";
+      string += "   vec3   step           = normal / float (samples);\n";
+      string += "   vec3   ray            = point - normal * 0.5;\n";
+      string += "   bool   first          = false;\n";
       string += "\n";
       string += "   for (int i = 0; i < samples; ++ i, ray += step)\n";
       string += "   {\n";
