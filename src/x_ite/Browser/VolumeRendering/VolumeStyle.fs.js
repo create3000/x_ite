@@ -139,7 +139,7 @@ mix_hsv (in vec3 a, in vec3 b, in float t)
    float v = va + t * (vb - va);
    return vec3 (h, s, v);
 }
-#endif
+#endif // X3D_HSV
 
 #if defined (X3D_PLANE)
 struct Plane3
@@ -159,7 +159,7 @@ plane3_perpendicular_vector (const in Plane3 plane, const in vec3 point)
 {
    return plane .normal * (dot (point, plane .normal) - plane .distanceFromOrigin);
 }
-#endif
+#endif // X3D_PLANE
 
 #if defined (X3D_SHADING)
 float
@@ -174,7 +174,7 @@ getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in ve
 
    return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
 }
-#endif
+#endif // X3D_SHADING
 
 __VOLUME_STYLES_UNIFORMS__
 
