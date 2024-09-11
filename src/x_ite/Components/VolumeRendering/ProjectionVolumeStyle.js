@@ -71,6 +71,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
    getDefines (defines)
    {
       defines .add ("#define X3D_PLANE");
+      defines .add ("#define X3D_RANDOM");
    },
    getUniformsText ()
    {
@@ -108,16 +109,18 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
          }
       }
 
-      string += "   const  int samples    = 32;\n";
+      string += "   const  int samples    = 16;\n";
       string += "   vec3   normal         = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0));\n";
       string += "   Plane3 plane          = plane3 (vec3 (0.5), normal);\n";
       string += "   vec3   point          = texCoord + plane3_perpendicular_vector (plane, texCoord);\n";
-      string += "   vec3   step           = normal / float (samples);\n";
-      string += "   vec3   ray            = point - normal * 0.5;\n";
       string += "   bool   first          = false;\n";
       string += "\n";
-      string += "   for (int i = 0; i < samples; ++ i, ray += step)\n";
+      string += "   srand (int (dot (texCoord, vertex)));\n";
+      string += "\n";
+      string += "   for (int i = 0; i < samples; ++ i)\n";
       string += "   {\n";
+      string += "      vec3 ray = point - normal * random ();\n";
+      string += "\n";
       string += "      if (any (greaterThan (abs (ray - 0.5), vec3 (0.5))))\n";
       string += "         continue;\n";
       string += "\n";

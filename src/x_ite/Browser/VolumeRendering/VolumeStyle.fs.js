@@ -176,6 +176,27 @@ getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in ve
 }
 #endif // X3D_SHADING
 
+#if defined (X3D_RANDOM)
+/* Random number generation */
+
+uint seed = 1u;
+
+void
+srand (const in int value)
+{
+   seed = uint (value);
+}
+
+// Return a uniform distributed random floating point number in the interval [0, 1].
+float
+random ()
+{
+   seed = seed * 1103515245u + 12345u;
+
+   return float (seed) / 4294967295.0;
+}
+#endif
+
 __VOLUME_STYLES_UNIFORMS__
 
 vec4
