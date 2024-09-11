@@ -137,7 +137,9 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, X3DVolum
       // if (DEVELOPMENT)
       //    console .log ("Creating SegmentedVolumeData Shader ...");
 
-      const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
+      const
+         opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
+         styleDefines          = new Set ();
 
       let
          styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
@@ -165,6 +167,8 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, X3DVolum
 
          for (const [i, renderStyleNode] of this .renderStyleNodes .entries ())
          {
+            renderStyleNode .getDefines (styleDefines);
+
             styleFunctions += "      case " + i + ":\n";
             styleFunctions += "      {\n";
 
@@ -186,6 +190,7 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, X3DVolum
       }
 
       fs = fs
+         .replace (/__VOLUME_STYLES_DEFINES__/,   Array .from (styleDefines) .join ("\n"))
          .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
          .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
 

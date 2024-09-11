@@ -133,7 +133,11 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, X3DVolu
       // if (DEVELOPMENT)
       //    console .log ("Creating VolumeData Shader ...");
 
-      const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
+      const
+         opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
+         styleDefines          = new Set ();
+
+      opacityMapVolumeStyle .getDefines (styleDefines);
 
       let
          styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
@@ -144,7 +148,10 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, X3DVolu
       styleUniforms  += "uniform float surfaceTolerance;\n";
 
       for (const renderStyleNode of this .renderStyleNodes)
+      {
+         renderStyleNode .getDefines (styleDefines);
          styleUniforms  += renderStyleNode .getUniformsText ();
+      }
 
       styleFunctions += "\n";
       styleFunctions += "   // IsoSurfaceVolumeData\n";
@@ -271,6 +278,7 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, X3DVolu
       }
 
       fs = fs
+         .replace (/__VOLUME_STYLES_DEFINES__/,   Array .from (styleDefines) .join ("\n"))
          .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
          .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
 

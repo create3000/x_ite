@@ -112,7 +112,11 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode
       // if (DEVELOPMENT)
       //    console .log ("Creating VolumeData Shader ...");
 
-      const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
+      const
+         opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
+         styleDefines          = new Set ();
+
+      opacityMapVolumeStyle .getDefines (styleDefines);
 
       let
          styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
@@ -120,11 +124,14 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode
 
       if (this .renderStyleNode)
       {
+         this .renderStyleNode .getDefines (styleDefines);
+
          styleUniforms  += this .renderStyleNode .getUniformsText (),
          styleFunctions += this .renderStyleNode .getFunctionsText ();
       }
 
       fs = fs
+         .replace (/__VOLUME_STYLES_DEFINES__/,   Array .from (styleDefines) .join ("\n"))
          .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
          .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
 

@@ -19,6 +19,28 @@ out vec4 x3d_FragColor;
 #pragma X3D include "includes/ClipPlanes.glsl"
 #pragma X3D include "includes/Fog.glsl"
 
+__VOLUME_STYLES_DEFINES__
+
+#if defined (X3D_PLANE)
+struct Plane3
+{
+   vec3  normal;
+   float distanceFromOrigin;
+};
+
+Plane3
+plane3 (const in vec3 point, const in vec3 normal)
+{
+   return Plane3 (normal, dot (normal, point));
+}
+
+vec3
+plane3_perpendicular_vector (const in Plane3 plane, const in vec3 point)
+{
+   return plane .normal * (dot (point, plane .normal) - plane .distanceFromOrigin);
+}
+#endif
+
 __VOLUME_STYLES_UNIFORMS__
 
 vec4

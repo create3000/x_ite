@@ -61,6 +61,8 @@ Object .assign (Object .setPrototypeOf (X3DVolumeRenderStyleNode .prototype, X3D
 {
    addShaderFields (shaderNode)
    { },
+   getDefines ()
+   { },
    getUniformsText ()
    {
       return "";
