@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, X3DCompos
    },
    getDefines (defines)
    {
-      defines .add ("#define X3D_HSV")
+      defines .add ("#define X3D_HSV");
    },
    getUniformsText ()
    {

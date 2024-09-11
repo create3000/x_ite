@@ -129,6 +129,11 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, X3DCompo
       for (const renderStyleNode of this .renderStyleNodes)
          renderStyleNode .addShaderFields (shaderNode);
    },
+   getDefines (defines)
+   {
+      for (const renderStyleNode of this .renderStyleNodes)
+         renderStyleNode .getDefines (defines);
+   },
    getUniformsText ()
    {
       if (! this ._enabled .getValue ())

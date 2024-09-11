@@ -109,6 +109,10 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
       if (this .surfaceNormalsNode)
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
    },
+   getDefines (defines)
+   {
+      defines .add ("#define X3D_SHADING");
+   },
    getUniformsText ()
    {
       if (! this ._enabled .getValue ())
@@ -127,20 +131,6 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
       string += "uniform float transparency_" + this .getId () + ";\n";
 
       string += this .getNormalText (this .surfaceNormalsNode);
-
-      string += "\n";
-      string += "float\n";
-      string += "getSpotFactor_" + this .getId () + " (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n";
-      string += "{\n";
-      string += "   float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n";
-      string += "\n";
-      string += "   if (spotAngle >= cutOffAngle)\n";
-      string += "      return 0.0;\n";
-      string += "   else if (spotAngle <= beamWidth)\n";
-      string += "      return 1.0;\n";
-      string += "\n";
-      string += "   return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n";
-      string += "}\n";
 
       string += "\n";
       string += "vec4\n";
@@ -195,7 +185,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
          string += "         vec3  specularTerm   = light .intensity * specularColor_" + this .getId () + " * specularFactor;\n";
          string += "\n";
          string += "         float attenuationFactor     = di ? 1.0 : 1.0 / max (dot (c, vec3 (1.0, dL, dL * dL)), 1.0);\n";
-         string += "         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor_" + this .getId () + " (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n";
+         string += "         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n";
          string += "         float attenuationSpotFactor = attenuationFactor * spotFactor;\n";
          string += "         vec3  ambientColor          = light .ambientIntensity * ambientTerm;\n";
          string += "         vec3  diffuseSpecularColor  = light .intensity * (diffuseTerm + specularTerm);\n";
