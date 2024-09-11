@@ -14,12 +14,12 @@ uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 
 const float M_PI = 3.14159265359;
 
+out vec4 x3d_FragColor;
+
 #pragma X3D include "includes/ClipPlanes.glsl"
 #pragma X3D include "includes/Fog.glsl"
 
 __VOLUME_STYLES_UNIFORMS__
-
-out vec4 x3d_FragColor;
 
 vec4
 getTextureColor (in vec3 texCoord)

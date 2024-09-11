@@ -111,13 +111,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
       string += "\n";
       string += "   for (int i = 0; i < samples; ++ i, ray += step)\n";
       string += "   {\n";
-      string += "      if (ray .s < 0.0 || ray .s > 1.0)\n";
-      string += "         continue;\n";
-      string += "\n";
-      string += "      if (ray .t < 0.0 || ray .t > 1.0)\n";
-      string += "         continue;\n";
-      string += "\n";
-      string += "      if (ray .p < 0.0 || ray .p > 1.0)\n";
+      string += "      if (any (greaterThan (abs (ray - 0.5), vec3 (0.5))))\n";
       string += "         continue;\n";
       string += "\n";
       string += "      float intensity = texture (x3d_Texture3D [0], ray) .r;\n";

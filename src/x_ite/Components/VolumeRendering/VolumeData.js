@@ -60,9 +60,7 @@ function VolumeData (executionContext)
    X3DVolumeDataNode .call (this, executionContext);
 
    this .addType (X3DConstants .VolumeData);
-
-   this .renderStyleNode = null;
-  }
+}
 
 Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode .prototype),
 {
@@ -157,8 +155,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode
 
       opacityMapVolumeStyle .addShaderFields (shaderNode);
 
-      if (this .renderStyleNode)
-         this .renderStyleNode .addShaderFields (shaderNode);
+      this .renderStyleNode ?.addShaderFields (shaderNode);
 
       const uniformNames = [ ];
 
