@@ -128,7 +128,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode
          .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
          .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
 
-      this .getBrowser () .print (fs);
+      // this .getBrowser () .print (fs);
 
       const vertexShader = new ShaderPart (this .getExecutionContext ());
       vertexShader ._url .push (encodeURI ("data:x-shader/x-vertex," + vs));
