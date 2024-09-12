@@ -135,7 +135,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
             string += "      if (intensity < intensityThreshold_" + this .getId () + ")\n";
             string += "         continue;\n";
             string += "\n";
-            string += "      if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
+            string += "      if (first && intensityThreshold_" + this .getId () + " > 0.0)\n";
             string += "         break;\n";
             string += "\n";
             string += "      if (intensity <= projectionColor)\n";
@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
             string += "      if (intensity < intensityThreshold_" + this .getId () + ")\n";
             string += "         continue;\n";
             string += "\n";
-            string += "      if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
+            string += "      if (first && intensityThreshold_" + this .getId () + " > 0.0)\n";
             string += "         break;\n";
             string += "\n";
             string += "      if (intensity >= projectionColor)\n";
