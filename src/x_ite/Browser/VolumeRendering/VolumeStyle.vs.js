@@ -7,8 +7,8 @@ uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 uniform mat4 x3d_TextureMatrix [1];
 
-in vec4  x3d_TexCoord0;
-in vec4  x3d_Vertex;
+in vec4 x3d_TexCoord0;
+in vec4 x3d_Vertex;
 
 out vec3 vertex;
 out vec4 texCoord;
