@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
       string += "\n";
       string += "   for (int i = 0; i < samples; ++ i)\n";
       string += "   {\n";
-      string += "      vec3 ray = point - normal * (random () * M_SQRT2 - M_SQRT1_2);\n";
+      string += "      vec3 ray = point + normal * (random () * M_SQRT2 - M_SQRT1_2);\n";
       string += "\n";
       string += "      if (any (greaterThan (abs (ray - 0.5), vec3 (0.5))))\n";
       string += "         continue;\n";
