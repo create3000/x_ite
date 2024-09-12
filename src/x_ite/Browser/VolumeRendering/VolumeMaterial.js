@@ -74,7 +74,8 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
       key += ".";
       key += localObjectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
 
-      return this .volumeShaderNodes .get (key) ?? this .createShader (key, geometryContext, renderContext);
+      return this .volumeShaderNodes .get (key)
+         ?? this .createShader (key, geometryContext, renderContext);
    },
    createShader (key, geometryContext, renderContext)
    {
