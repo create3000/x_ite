@@ -109,11 +109,11 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
          }
       }
 
-      string += "   const  int samples    = 16;\n";
-      string += "   vec3   normal         = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0));\n";
-      string += "   Plane3 plane          = plane3 (vec3 (0.5), normal);\n";
-      string += "   vec3   point          = texCoord + plane3_perpendicular_vector (plane, texCoord);\n";
-      string += "   bool   first          = false;\n";
+      string += "   const  int samples     = 16;\n";
+      string += "   vec3   normal          = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0));\n";
+      string += "   Plane3 plane           = plane3 (vec3 (0.5), normal);\n";
+      string += "   vec3   point           = texCoord + plane3_perpendicular_vector (plane, texCoord);\n";
+      string += "   bool   first           = false;\n";
       string += "\n";
       string += "   srand (int (dot (texCoord, vertex)));\n";
       string += "\n";
