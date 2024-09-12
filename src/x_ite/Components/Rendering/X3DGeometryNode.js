@@ -58,6 +58,7 @@ import Box3         from "../../../standard/Math/Geometry/Box3.js";
 import Plane3       from "../../../standard/Math/Geometry/Plane3.js";
 import Triangle3    from "../../../standard/Math/Geometry/Triangle3.js";
 import Algorithm    from "../../../standard/Math/Algorithm.js";
+import DEVELOPMENT  from "../../DEVELOPMENT.js";
 
 // Box normals for bbox / line intersection.
 const boxNormals = [
@@ -445,7 +446,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       }
       catch (error)
       {
-         console .error (error);
+         if (DEVELOPMENT)
+            console .error (error);
       }
    },
    refineNormals (normalIndex, normals, creaseAngle)
