@@ -12,8 +12,9 @@ uniform mat3 x3d_TextureNormalMatrix;
 
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 
-const float M_PI    = 3.141592653589793;
-const float M_SQRT2 = 1.4142135623730951;
+const float M_PI      = 3.141592653589793;
+const float M_SQRT2   = 1.4142135623730951;
+const float M_SQRT1_2 = 0.7071067811865476;
 
 out vec4 x3d_FragColor;
 
