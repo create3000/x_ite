@@ -131,9 +131,9 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode
       }
 
       fs = fs
-         .replace (/__VOLUME_STYLES_DEFINES__/,   Array .from (styleDefines) .join ("\n"))
-         .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
-         .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
+         .replace ("__VOLUME_STYLES_DEFINES__",   Array .from (styleDefines) .join ("\n"))
+         .replace ("__VOLUME_STYLES_UNIFORMS__",  styleUniforms)
+         .replace ("__VOLUME_STYLES_FUNCTIONS__", styleFunctions);
 
       // this .getBrowser () .print (fs);
 

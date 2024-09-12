@@ -278,9 +278,9 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, X3DVolu
       }
 
       fs = fs
-         .replace (/__VOLUME_STYLES_DEFINES__/,   Array .from (styleDefines) .join ("\n"))
-         .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
-         .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
+         .replace ("__VOLUME_STYLES_DEFINES__",   Array .from (styleDefines) .join ("\n"))
+         .replace ("__VOLUME_STYLES_UNIFORMS__",  styleUniforms)
+         .replace ("__VOLUME_STYLES_FUNCTIONS__", styleFunctions);
 
       // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
