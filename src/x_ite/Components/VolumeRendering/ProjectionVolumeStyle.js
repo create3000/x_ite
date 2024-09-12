@@ -113,8 +113,8 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
       string += "   vec3   normal          = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0));\n";
       string += "   Plane3 plane           = plane3 (vec3 (0.5), normal);\n";
       string += "   vec3   point           = texCoord + plane3_perpendicular_vector (plane, texCoord);\n";
-      string += "   vec3   step            = normal * (M_SQRT2 / float (samples));\n";
       string += "   vec3   ray             = point - normal * M_SQRT1_2;\n";
+      string += "   vec3   step            = normal * (M_SQRT2 / float (samples));\n";
       string += "   bool   first           = false;\n";
       string += "\n";
       string += "   for (int i = 0; i < samples; ++ i, ray += step)\n";
