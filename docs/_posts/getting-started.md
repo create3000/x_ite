@@ -558,6 +558,9 @@ X_ITE needs your support, with a small contribution you can make a big differenc
   </tr>
   <tr>
     <td>
+      <a href="https://create3000.github.io/media/examples/VolumeRendering/ProjectionVolumeStyle/ProjectionVolumeStyle.x3d" title="VolumeRendering » ProjectionVolumeStyle" componentName="VolumeRendering" typeName="ProjectionVolumeStyle" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/VolumeRendering/ProjectionVolumeStyle/screenshot-small.png" alt="ProjectionVolumeStyle" width="110" height="62"/></a>
+    </td>
+    <td>
       <a href="https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/SegmentedVolumeData.x3d" title="VolumeRendering » SegmentedVolumeData" componentName="VolumeRendering" typeName="SegmentedVolumeData" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/screenshot-small.png" alt="SegmentedVolumeData" width="110" height="62"/></a>
     </td>
     <td>
@@ -575,6 +578,8 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/X_ITE/DepthMode/DepthMode.x3d" title="X_ITE » DepthMode" componentName="X_ITE" typeName="DepthMode" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/X_ITE/DepthMode/screenshot-small.png" alt="DepthMode" width="110" height="62"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.x3d" title="X_ITE » InstancedShape" componentName="X_ITE" typeName="InstancedShape" doc="true" xrButtonPosition="br" xrMovementControl="VIEWER_POSE"><img src="https://create3000.github.io/media/examples/X_ITE/InstancedShape/screenshot-small.png" alt="InstancedShape" width="110" height="62"/></a>
     </td>

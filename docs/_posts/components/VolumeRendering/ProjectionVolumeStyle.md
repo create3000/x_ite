@@ -65,6 +65,14 @@ Threshold value used when type=MIN (LMIP) or type=MAX (MIP).
 
 - Requires X3D `profile='Full'` or else include `<component name='VolumeRendering' level='2'/>`
 
+## Example
+
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/ProjectionVolumeStyle/ProjectionVolumeStyle.x3d" contentScale="auto" update="auto" xrMovementControl="VIEWER_POSE"></x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/examples/VolumeRendering/ProjectionVolumeStyle/ProjectionVolumeStyle.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/VolumeRendering/ProjectionVolumeStyle/ProjectionVolumeStyle.x3d)
+{: .example-links }
+
 ## See Also
 
 - [X3D Specification of ProjectionVolumeStyle Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#ProjectionVolumeStyle)

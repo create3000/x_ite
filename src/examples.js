@@ -126,6 +126,7 @@ const X_ITE_EXAMPLES = [
    { component: "Time", test: "TimeSensor" },
    { component: "VolumeRendering", test: "EdgeEnhancementVolumeStyle" },
    { component: "VolumeRendering", test: "IsoSurfaceVolumeData" },
+   { component: "VolumeRendering", test: "ProjectionVolumeStyle" },
    { component: "VolumeRendering", test: "SegmentedVolumeData" },
    { component: "VolumeRendering", test: "ShadedVolumeStyle" },
    { component: "VolumeRendering", test: "ToneMappedVolumeStyle" },
