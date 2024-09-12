@@ -87,6 +87,12 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
 
       const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
 
+      if (renderObject .getLogarithmicDepthBuffer ())
+         options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
+
+      if (renderObject .getOrderIndependentTransparency ())
+         options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
+
       switch (fogNode ?.getFogType ())
       {
          case 1:
