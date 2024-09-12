@@ -71,7 +71,6 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
    getDefines (defines)
    {
       defines .add ("#define X3D_PLANE");
-      defines .add ("#define X3D_RANDOM");
    },
    getUniformsText ()
    {
