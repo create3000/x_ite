@@ -91,11 +91,8 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
       if (this .controlPointNode)
          this .controlPointNode .addInterest ("requestRebuild", this);
    },
-   getTessellation (dimension, closed)
+   getTessellation (dimension)
    {
-      if (closed)
-         dimension -= this ._order .getValue () - 2;
-
       return NURBS .getTessellation (this ._tessellation .getValue (), dimension);
    },
    getClosed (order, knot, weight, controlPointNode)
@@ -179,7 +176,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
          debug: false,
       });
 
-      this .sampleOptions .resolution [0] = this .getTessellation (controlPoints .length, closed);
+      this .sampleOptions .resolution [0] = this .getTessellation (this .controlPointNode .getSize ());
       this .sampleOptions .closed         = closed;
       this .sampleOptions .haveWeights    = !! weights;
 
