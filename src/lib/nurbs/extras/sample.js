@@ -19,12 +19,13 @@ function sample (mesh, surface, opts)
             nbVertices = nuBound * dimension,
             domain     = surface .domain,
             uDomain    = domain [0],
-            uDistance  = uDomain [1] - uDomain [0];
+            uDistance  = uDomain [1] - uDomain [0],
+            uClosed    = opts .closed;
 
          for (let i = 0; i < nuBound; ++ i)
          {
             const
-               u   = uDomain [0] + uDistance * i / nu,
+               u   = uDomain [0] + uDistance * (uClosed ? i % nu : i) / nu,
                ptr = i * dimension;
 
             surface .evaluate (tmp1, u);
