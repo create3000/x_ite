@@ -183,8 +183,6 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeom
       this .sampleOptions .closed         = closed;
       this .sampleOptions .haveWeights    = !! weights;
 
-      console .log (this .sampleOptions .resolution [0])
-
       const
          mesh        = nurbs .sample (this .mesh, this .surface, this .sampleOptions),
          points      = mesh .points,
