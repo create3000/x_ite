@@ -71,8 +71,11 @@ function NurbsCurve2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControlCurveNode .prototype),
 {
-   getTessellation (dimension)
+   getTessellation (dimension, closed)
    {
+      if (closed)
+         dimension -= this ._order .getValue () - 2;
+
       return NURBS .getTessellation (this ._tessellation .getValue (), dimension);
    },
    getClosed (order, knot, weight, controlPoint)
@@ -127,7 +130,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControl
          debug: false,
       });
 
-      this .sampleOptions .resolution [0] = this .getTessellation (controlPoints .length);
+      this .sampleOptions .resolution [0] = this .getTessellation (controlPoints .length, closed);
       this .sampleOptions .closed         = closed;
       this .sampleOptions .haveWeights    = !! weights;
 
