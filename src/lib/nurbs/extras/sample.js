@@ -190,18 +190,18 @@ function vBorder (v0, nuBound, nvBound, dimension, points, pointIndex, borderInd
 
 function uvBorder (i, dimension, points, pointIndex, borderIndex)
 {
-   let s = "";
+   let key = "";
 
    for (let d = 0; d < dimension; ++ d)
    {
-      s += points [i * dimension + d];
-      s += ";";
+      key += points [i * dimension + d];
+      key += ";";
    }
 
-   if (pointIndex .has (s))
-      borderIndex .set (i, pointIndex .get (s))
+   if (pointIndex .has (key))
+      borderIndex .set (i, pointIndex .get (key))
    else
-      pointIndex .set (s, i);
+      pointIndex .set (key, i);
 }
 
 export default sample;
