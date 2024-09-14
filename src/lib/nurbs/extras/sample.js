@@ -97,7 +97,7 @@ function sample (mesh, surface, opts)
 
          points .length = nbVertices;
 
-         // Combine points on border.
+         // Combine border points if equal.
 
          uBorder (0,  nuBound, nvBound, dimension, points, pointIndex, borderIndex);
          uBorder (nu, nuBound, nvBound, dimension, points, pointIndex, borderIndex);
