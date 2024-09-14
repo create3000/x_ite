@@ -237,6 +237,7 @@ const X_ITE_TESTS = [
    { path: "NURBS/NurbsPositionInterpolator.x3d" },
    { path: "NURBS/NurbsPositionInterpolatorExample.x3dv" },
    { path: "NURBS/NurbsPositionOrientationInterpolator.x3d" },
+   { path: "NURBS/NurbsPrimitives.x3d" },
    { path: "NURBS/NurbsRectangle2D.x3dv" },
    { path: "NURBS/NurbsSphere.x3d" },
    { path: "NURBS/NurbsSurfaceInterpolator.x3d" },
