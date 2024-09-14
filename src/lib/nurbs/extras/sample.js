@@ -94,6 +94,18 @@ function sample (mesh, surface, opts)
 
          points .length = nbVertices;
 
+         // Combine points on border.
+
+         const
+            map    = new Map (),
+            border = new Map ();
+
+         uBorder (0,  nuBound, nvBound, dimension, points, map, border)
+         uBorder (nu, nuBound, nvBound, dimension, points, map, border)
+
+         vBorder (0,  nuBound, nvBound, dimension, points, map, border)
+         vBorder (nv, nuBound, nvBound, dimension, points, map, border)
+
          // Generate faces.
 
          let f = 0;
@@ -113,9 +125,14 @@ function sample (mesh, surface, opts)
                //  /__|
                // 0   1
 
-               faces [f ++] = u0 + nuBound * v0; // 1
-               faces [f ++] = u1 + nuBound * v0; // 2
-               faces [f ++] = u1 + nuBound * v1; // 3
+               const
+                  a0 = u0 + nuBound * v0, // 1
+                  a1 = u1 + nuBound * v0, // 2
+                  a2 = u1 + nuBound * v1; // 3
+
+               faces [f ++] = border .get (a0) ?? a0; // 1
+               faces [f ++] = border .get (a1) ?? a1; // 2
+               faces [f ++] = border .get (a2) ?? a2; // 3
 
                // Triangle 2
                // 2   1
@@ -124,9 +141,14 @@ function sample (mesh, surface, opts)
                // |/
                // 0
 
-               faces [f ++] = u0 + nuBound * v0; // 1
-               faces [f ++] = u1 + nuBound * v1; // 3
-               faces [f ++] = u0 + nuBound * v1; // 4
+               const
+                  b0 = u0 + nuBound * v0, // 1
+                  b1 = u1 + nuBound * v1, // 3
+                  b2 = u0 + nuBound * v1; // 4
+
+               faces [f ++] = border .get (b0) ?? b0; // 1
+               faces [f ++] = border .get (b1) ?? b1; // 3
+               faces [f ++] = border .get (b2) ?? b2; // 4
             }
          }
 
@@ -139,6 +161,48 @@ function sample (mesh, surface, opts)
    }
 
    return mesh;
+}
+
+function uBorder (u0, nuBound, nvBound, dimension, points, map, border)
+{
+   for (let v0 = 0; v0 < nvBound; ++ v0)
+   {
+      const i = u0 + nuBound * v0;
+
+      let s = "";
+
+      for (let d = 0; d < dimension; ++ d)
+      {
+         s += points [i * dimension + d];
+         s += ";";
+      }
+
+      if (map .has (s))
+         border .set (i, map .get (s))
+      else
+         map .set (s, i);
+   }
+}
+
+function vBorder (v0, nuBound, nvBound, dimension, points, map, border)
+{
+   for (let u0 = 0; u0 < nuBound; ++ u0)
+   {
+      const i = u0 + nuBound * v0;
+
+      let s = "";
+
+      for (let d = 0; d < dimension; ++ d)
+      {
+         s += points [i * dimension + d];
+         s += ";";
+      }
+
+      if (map .has (s))
+         border .set (i, map .get (s))
+      else
+         map .set (s, i);
+   }
 }
 
 export default sample;
