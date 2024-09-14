@@ -222,6 +222,7 @@ const X_ITE_TESTS = [
    { path: "NURBS/HurricaneLantern.x3dv" },
    { path: "NURBS/MobiusNurbs.x3dv" },
    { path: "NURBS/NurbsCircle2D.x3d" },
+   { path: "NURBS/NurbsCone.x3d" },
    { path: "NURBS/NurbsCurve.x3d" },
    { path: "NURBS/NurbsCurveClosed.x3d" },
    { path: "NURBS/NurbsCurveExample.x3dv" },
