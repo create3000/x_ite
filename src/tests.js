@@ -217,6 +217,7 @@ const X_ITE_TESTS = [
    { path: "NURBS/Circle2D.x3d" },
    { path: "NURBS/Cylinder.x3d" },
    { path: "NURBS/DefaultTextureCoordClosed.x3dv" },
+   { path: "NURBS/Disk2D.x3d" },
    { path: "NURBS/Door.x3d" },
    { path: "NURBS/FourDucks.x3dv" },
    { path: "NURBS/FredTheBunny.x3dv" },
