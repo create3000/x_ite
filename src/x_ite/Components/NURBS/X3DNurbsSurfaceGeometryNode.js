@@ -218,6 +218,10 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
          points      = mesh .points,
          vertexArray = this .getVertices ();
 
+
+      console .log (points)
+
+
       for (const face of faces)
       {
          const index = face * 3;
