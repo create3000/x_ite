@@ -107,12 +107,22 @@ function sample (mesh, surface, opts)
                const u1 = uClosed ? (u0 + 1) % nu : u0 + 1;
 
                // Triangle 1
+               //     2
+               //    /|
+               //   / |
+               //  /__|
+               // 0   1
 
                faces [f ++] = u0 + nuBound * v0; // 1
                faces [f ++] = u1 + nuBound * v0; // 2
                faces [f ++] = u1 + nuBound * v1; // 3
 
                // Triangle 2
+               // 2   1
+               // |--/
+               // | /
+               // |/
+               // 0
 
                faces [f ++] = u0 + nuBound * v0; // 1
                faces [f ++] = u1 + nuBound * v1; // 3
