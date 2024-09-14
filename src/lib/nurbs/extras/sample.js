@@ -100,19 +100,15 @@ function sample (mesh, surface, opts)
 
          for (let iv = 0; iv < nv; ++ iv)
          {
-            const v0 = iv;
-            let v1 = iv + 1;
-
-            if (vClosed)
-               v1 = v1 % nv;
+            const
+               v0 = iv,
+               v1 = vClosed ? (iv + 1) % nv : iv + 1;
 
             for (let iu = 0; iu < nu; ++ iu)
             {
-               const u0 = iu;
-               let u1 = iu + 1;
-
-               if (uClosed)
-                  u1 = u1 % nu;
+               const
+                  u0 = iu,
+                  u1 = uClosed ? (iu + 1) % nu : iu + 1;
 
                // Triangle 1
 
