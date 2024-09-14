@@ -99,11 +99,15 @@ function sample (mesh, surface, opts)
 
          // Combine border points if equal.
 
-         uBorder (0,  nuBound, nvBound, dimension, points, pointIndex, borderIndex);
-         uBorder (nu, nuBound, nvBound, dimension, points, pointIndex, borderIndex);
+         uBorder (0, nuBound, nvBound, dimension, points, pointIndex, borderIndex);
 
-         vBorder (0,  nuBound, nvBound, dimension, points, pointIndex, borderIndex);
-         vBorder (nv, nuBound, nvBound, dimension, points, pointIndex, borderIndex);
+         if (!uClosed)
+            uBorder (nu, nuBound, nvBound, dimension, points, pointIndex, borderIndex);
+
+         vBorder (0, nuBound, nvBound, dimension, points, pointIndex, borderIndex);
+
+         if (!vClosed)
+            vBorder (nv, nuBound, nvBound, dimension, points, pointIndex, borderIndex);
 
          // Generate faces.
 
