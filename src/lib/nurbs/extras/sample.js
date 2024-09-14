@@ -22,11 +22,11 @@ function sample (mesh, surface, opts)
             uDistance  = uDomain [1] - uDomain [0],
             uClosed    = opts .closed;
 
-         for (let i = 0; i < nuBound; ++ i)
+         for (let iu = 0; iu < nuBound; ++ iu)
          {
             const
-               u   = uDomain [0] + uDistance * (uClosed ? i % nu : i) / nu,
-               ptr = i * dimension;
+               u   = uDomain [0] + uDistance * (uClosed ? iu % nu : iu) / nu,
+               ptr = iu * dimension;
 
             surface .evaluate (tmp1, u);
 
@@ -65,15 +65,15 @@ function sample (mesh, surface, opts)
 
          // Generate points.
 
-         for (let i = 0; i < nuBound; ++ i)
+         for (let iv = 0; iv < nvBound; ++ iv)
          {
-            const u = uDomain [0] + uDistance * i / nu;
+            const v = vDomain [0] + vDistance * iv / nv;
 
-            for (let j = 0; j < nvBound; ++ j)
+            for (let iu = 0; iu < nuBound; ++ iu)
             {
                const
-                  v   = vDomain [0] + vDistance * j / nv,
-                  ptr = (i + nuBound * j) * dimension;
+                  u   = uDomain [0] + uDistance * iu / nu,
+                  ptr = (iu + nuBound * iv) * dimension;
 
                surface .evaluate (tmp1, u, v);
 
@@ -96,39 +96,39 @@ function sample (mesh, surface, opts)
 
          // Generate faces.
 
-         let c = 0;
+         let f = 0;
 
-         for (let i = 0; i < nu; ++ i)
+         for (let iv = 0; iv < nv; ++ iv)
          {
-            const i0 = i;
-            let i1 = i + 1;
+            const v0 = iv;
+            let v1 = iv + 1;
 
-            if (uClosed)
-               i1 = i1 % nu;
+            if (vClosed)
+               v1 = v1 % nv;
 
-            for (let j = 0; j < nv; ++ j)
+            for (let iu = 0; iu < nu; ++ iu)
             {
-               const j0 = j;
-               let j1 = j + 1;
+               const u0 = iu;
+               let u1 = iu + 1;
 
-               if (vClosed)
-                  j1 = j1 % nv;
+               if (uClosed)
+                  u1 = u1 % nu;
 
                // Triangle 1
 
-               faces [c ++] = i0 + nuBound * j0; // 1
-               faces [c ++] = i1 + nuBound * j0; // 2
-               faces [c ++] = i1 + nuBound * j1; // 3
+               faces [f ++] = u0 + nuBound * v0; // 1
+               faces [f ++] = u1 + nuBound * v0; // 2
+               faces [f ++] = u1 + nuBound * v1; // 3
 
                // Triangle 2
 
-               faces [c ++] = i0 + nuBound * j0; // 1
-               faces [c ++] = i1 + nuBound * j1; // 3
-               faces [c ++] = i0 + nuBound * j1; // 4
+               faces [f ++] = u0 + nuBound * v0; // 1
+               faces [f ++] = u1 + nuBound * v1; // 3
+               faces [f ++] = u0 + nuBound * v1; // 4
             }
          }
 
-         faces .length = c;
+         faces .length = f;
 
          break;
       }
