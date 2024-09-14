@@ -171,18 +171,7 @@ function uBorder (u0, nuBound, nvBound, dimension, points, pointIndex, borderInd
    {
       const i = u0 + nuBound * v0;
 
-      let s = "";
-
-      for (let d = 0; d < dimension; ++ d)
-      {
-         s += points [i * dimension + d];
-         s += ";";
-      }
-
-      if (pointIndex .has (s))
-         borderIndex .set (i, pointIndex .get (s))
-      else
-         pointIndex .set (s, i);
+      uvBorder (i, dimension, points, pointIndex, borderIndex);
    }
 }
 
@@ -192,19 +181,24 @@ function vBorder (v0, nuBound, nvBound, dimension, points, pointIndex, borderInd
    {
       const i = u0 + nuBound * v0;
 
-      let s = "";
-
-      for (let d = 0; d < dimension; ++ d)
-      {
-         s += points [i * dimension + d];
-         s += ";";
-      }
-
-      if (pointIndex .has (s))
-         borderIndex .set (i, pointIndex .get (s))
-      else
-         pointIndex .set (s, i);
+      uvBorder (i, dimension, points, pointIndex, borderIndex);
    }
+}
+
+function uvBorder (i, dimension, points, pointIndex, borderIndex)
+{
+   let s = "";
+
+   for (let d = 0; d < dimension; ++ d)
+   {
+      s += points [i * dimension + d];
+      s += ";";
+   }
+
+   if (pointIndex .has (s))
+      borderIndex .set (i, pointIndex .get (s))
+   else
+      pointIndex .set (s, i);
 }
 
 export default sample;
