@@ -84,6 +84,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       {
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
          gl .enable (gl .BLEND);
+         gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
       }
 
       for (const node of renderModeNodes)
@@ -128,6 +129,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       {
          gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
          gl .disable (gl .BLEND);
+         gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       }
    },
    displayInstanced (gl, renderContext, shapeNode)
@@ -143,6 +145,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       {
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
          gl .enable (gl .BLEND);
+         gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
       }
 
       for (const node of renderModeNodes)
@@ -206,6 +209,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       {
          gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
          gl .disable (gl .BLEND);
+         gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       }
    },
 });
