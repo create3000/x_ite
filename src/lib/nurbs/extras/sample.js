@@ -1,7 +1,7 @@
 const
-   tmp1        = [ ],
-   pointIndex  = new Map (),
-   borderIndex = new Map ();
+   tmp1       = [ ],
+   pointIndex = new Map (),
+   seamIndex  = new Map ();
 
 function sample (mesh, surface, opts)
 {
@@ -97,16 +97,16 @@ function sample (mesh, surface, opts)
 
          points .length = nbVertices;
 
-         // Combine border points if equal.
+         // Combine seam points if equal.
 
-         uBorder (0, nuBound, nvBound, dimension, points, pointIndex, borderIndex);
-         vBorder (0, nuBound, nvBound, dimension, points, pointIndex, borderIndex);
+         uSeam (0, nuBound, nvBound, dimension, points, pointIndex, seamIndex);
+         vSeam (0, nuBound, nvBound, dimension, points, pointIndex, seamIndex);
 
          if (!uClosed)
-            uBorder (nu, nuBound, nvBound, dimension, points, pointIndex, borderIndex);
+            uSeam (nu, nuBound, nvBound, dimension, points, pointIndex, seamIndex);
 
          if (!vClosed)
-            vBorder (nv, nuBound, nvBound, dimension, points, pointIndex, borderIndex);
+            vSeam (nv, nuBound, nvBound, dimension, points, pointIndex, seamIndex);
 
          // Generate faces.
 
@@ -120,6 +120,17 @@ function sample (mesh, surface, opts)
             {
                const u1 = uClosed ? (u0 + 1) % nu : u0 + 1;
 
+               let
+                  p0 = u0 + nuBound * v0, // 0
+                  p1 = u1 + nuBound * v0, // 1
+                  p2 = u1 + nuBound * v1, // 2
+                  p3 = u0 + nuBound * v1; // 3
+
+               p0 = seamIndex .get (p0) ?? p0;
+               p1 = seamIndex .get (p1) ?? p1;
+               p2 = seamIndex .get (p2) ?? p2;
+               p3 = seamIndex .get (p3) ?? p3;
+
                // Triangle 1
                //     2
                //    /|
@@ -127,37 +138,27 @@ function sample (mesh, surface, opts)
                //  /__|
                // 0   1
 
-               const
-                  a0 = u0 + nuBound * v0, // 1
-                  a1 = u1 + nuBound * v0, // 2
-                  a2 = u1 + nuBound * v1; // 3
-
-               faces [f ++] = borderIndex .get (a0) ?? a0; // 1
-               faces [f ++] = borderIndex .get (a1) ?? a1; // 2
-               faces [f ++] = borderIndex .get (a2) ?? a2; // 3
+               faces [f ++] = p0;
+               faces [f ++] = p1;
+               faces [f ++] = p2;
 
                // Triangle 2
-               // 2   1
+               // 3   2
                // |--/
                // | /
                // |/
                // 0
 
-               const
-                  b0 = u0 + nuBound * v0, // 1
-                  b1 = u1 + nuBound * v1, // 3
-                  b2 = u0 + nuBound * v1; // 4
-
-               faces [f ++] = borderIndex .get (b0) ?? b0; // 1
-               faces [f ++] = borderIndex .get (b1) ?? b1; // 3
-               faces [f ++] = borderIndex .get (b2) ?? b2; // 4
+               faces [f ++] = p0;
+               faces [f ++] = p2;
+               faces [f ++] = p3;
             }
          }
 
          faces .length = f;
 
          pointIndex  .clear ();
-         borderIndex .clear ();
+         seamIndex .clear ();
 
          break;
       }
@@ -168,27 +169,27 @@ function sample (mesh, surface, opts)
    return mesh;
 }
 
-function uBorder (u0, nuBound, nvBound, dimension, points, pointIndex, borderIndex)
+function uSeam (u0, nuBound, nvBound, dimension, points, pointIndex, seamIndex)
 {
    for (let v0 = 0; v0 < nvBound; ++ v0)
    {
       const i = u0 + nuBound * v0;
 
-      uvBorder (i, dimension, points, pointIndex, borderIndex);
+      uvSeam (i, dimension, points, pointIndex, seamIndex);
    }
 }
 
-function vBorder (v0, nuBound, nvBound, dimension, points, pointIndex, borderIndex)
+function vSeam (v0, nuBound, nvBound, dimension, points, pointIndex, seamIndex)
 {
    for (let u0 = 0; u0 < nuBound; ++ u0)
    {
       const i = u0 + nuBound * v0;
 
-      uvBorder (i, dimension, points, pointIndex, borderIndex);
+      uvSeam (i, dimension, points, pointIndex, seamIndex);
    }
 }
 
-function uvBorder (i, dimension, points, pointIndex, borderIndex)
+function uvSeam (i, dimension, points, pointIndex, seamIndex)
 {
    let key = "";
 
@@ -199,7 +200,7 @@ function uvBorder (i, dimension, points, pointIndex, borderIndex)
    }
 
    if (pointIndex .has (key))
-      borderIndex .set (i, pointIndex .get (key))
+      seamIndex .set (i, pointIndex .get (key))
    else
       pointIndex .set (key, i);
 }
