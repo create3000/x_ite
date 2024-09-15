@@ -1,5 +1,5 @@
-/* X_ITE v10.5.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.1")];
+/* X_ITE v10.5.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2002,7 +2002,10 @@ const support_default_ = function (cacheKey, nurbs, accessors, debug, checkBound
 
 /* harmony default export */ const support = (external_X_ITE_X3D_Namespace_default().add ("support", support_default_));
 ;// CONCATENATED MODULE: ./src/lib/nurbs/extras/sample.js
-const tmp1 = [ ] ;
+const
+   tmp1       = [ ],
+   pointIndex = new Map (),
+   seamIndex  = new Map ();
 
 function sample (mesh, surface, opts)
 {
@@ -2023,13 +2026,14 @@ function sample (mesh, surface, opts)
             nbVertices = nuBound * dimension,
             domain     = surface .domain,
             uDomain    = domain [0],
-            uDistance  = uDomain [1] - uDomain [0];
+            uDistance  = uDomain [1] - uDomain [0],
+            uClosed    = opts .closed;
 
-         for (let i = 0; i < nuBound; ++ i)
+         for (let iu = 0; iu < nuBound; ++ iu)
          {
             const
-               u   = uDomain [0] + uDistance * i / nu,
-               ptr = i * dimension;
+               u   = uDomain [0] + uDistance * (uClosed ? iu % nu : iu) / nu,
+               ptr = iu * dimension;
 
             surface .evaluate (tmp1, u);
 
@@ -2068,15 +2072,15 @@ function sample (mesh, surface, opts)
 
          // Generate points.
 
-         for (let i = 0; i < nuBound; ++ i)
+         for (let iv = 0; iv < nvBound; ++ iv)
          {
-            const u = uDomain [0] + uDistance * i / nu;
+            const v = vDomain [0] + vDistance * iv / nv;
 
-            for (let j = 0; j < nvBound; ++ j)
+            for (let iu = 0; iu < nuBound; ++ iu)
             {
                const
-                  v   = vDomain [0] + vDistance * j / nv,
-                  ptr = (i + nuBound * j) * dimension;
+                  u   = uDomain [0] + uDistance * iu / nu,
+                  ptr = (iu + nuBound * iv) * dimension;
 
                surface .evaluate (tmp1, u, v);
 
@@ -2097,41 +2101,68 @@ function sample (mesh, surface, opts)
 
          points .length = nbVertices;
 
+         // Combine seam points if equal.
+
+         uSeam (0, nuBound, nvBound, dimension, points, pointIndex, seamIndex);
+         vSeam (0, nuBound, nvBound, dimension, points, pointIndex, seamIndex);
+
+         if (!uClosed)
+            uSeam (nu, nuBound, nvBound, dimension, points, pointIndex, seamIndex);
+
+         if (!vClosed)
+            vSeam (nv, nuBound, nvBound, dimension, points, pointIndex, seamIndex);
+
          // Generate faces.
 
-         let c = 0;
+         let f = 0;
 
-         for (let i = 0; i < nu; ++ i)
+         for (let v0 = 0; v0 < nv; ++ v0)
          {
-            const i0 = i;
-            let i1 = i + 1;
+            const v1 = vClosed ? (v0 + 1) % nv : v0 + 1;
 
-            if (uClosed)
-               i1 = i1 % nu;
-
-            for (let j = 0; j < nv; ++ j)
+            for (let u0 = 0; u0 < nu; ++ u0)
             {
-               const j0 = j;
-               let j1 = j + 1;
+               const u1 = uClosed ? (u0 + 1) % nu : u0 + 1;
 
-               if (vClosed)
-                  j1 = j1 % nv;
+               let
+                  p0 = u0 + nuBound * v0, // 0
+                  p1 = u1 + nuBound * v0, // 1
+                  p2 = u1 + nuBound * v1, // 2
+                  p3 = u0 + nuBound * v1; // 3
+
+               p0 = seamIndex .get (p0) ?? p0;
+               p1 = seamIndex .get (p1) ?? p1;
+               p2 = seamIndex .get (p2) ?? p2;
+               p3 = seamIndex .get (p3) ?? p3;
 
                // Triangle 1
+               //     2
+               //    /|
+               //   / |
+               //  /__|
+               // 0   1
 
-               faces [c ++] = i0 + nuBound * j0; // 1
-               faces [c ++] = i1 + nuBound * j0; // 2
-               faces [c ++] = i1 + nuBound * j1; // 3
+               faces [f ++] = p0;
+               faces [f ++] = p1;
+               faces [f ++] = p2;
 
                // Triangle 2
+               // 3   2
+               // |--/
+               // | /
+               // |/
+               // 0
 
-               faces [c ++] = i0 + nuBound * j0; // 1
-               faces [c ++] = i1 + nuBound * j1; // 3
-               faces [c ++] = i0 + nuBound * j1; // 4
+               faces [f ++] = p0;
+               faces [f ++] = p2;
+               faces [f ++] = p3;
             }
          }
 
-         faces .length = c;
+         faces .length = f;
+
+         pointIndex .clear ();
+         seamIndex  .clear ();
 
          break;
       }
@@ -2140,6 +2171,42 @@ function sample (mesh, surface, opts)
    }
 
    return mesh;
+}
+
+function uSeam (u0, nuBound, nvBound, dimension, points, pointIndex, seamIndex)
+{
+   for (let v0 = 0; v0 < nvBound; ++ v0)
+   {
+      const i = u0 + nuBound * v0;
+
+      uvSeam (i, dimension, points, pointIndex, seamIndex);
+   }
+}
+
+function vSeam (v0, nuBound, nvBound, dimension, points, pointIndex, seamIndex)
+{
+   for (let u0 = 0; u0 < nuBound; ++ u0)
+   {
+      const i = u0 + nuBound * v0;
+
+      uvSeam (i, dimension, points, pointIndex, seamIndex);
+   }
+}
+
+function uvSeam (i, dimension, points, pointIndex, seamIndex)
+{
+   let key = "";
+
+   for (let d = 0; d < dimension; ++ d)
+   {
+      key += points [i * dimension + d];
+      key += ";";
+   }
+
+   if (pointIndex .has (key))
+      seamIndex .set (i, pointIndex .get (key))
+   else
+      pointIndex .set (key, i);
 }
 
 const sample_default_ = sample;
@@ -2654,7 +2721,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, NURBS_X3DParametr
          debug: false,
       });
 
-      this .sampleOptions .resolution [0] = this .getTessellation (controlPoints .length);
+      this .sampleOptions .resolution [0] = this .getTessellation (this .controlPointNode .getSize ());
       this .sampleOptions .closed         = closed;
       this .sampleOptions .haveWeights    = !! weights;
 
@@ -2828,7 +2895,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, NURBS_X3DNurbsC
          debug: false,
       });
 
-      this .sampleOptions .resolution [0] = this .getTessellation (controlPoints .length);
+      this .sampleOptions .resolution [0] = this .getTessellation (this ._controlPoint .length);
       this .sampleOptions .closed         = closed;
       this .sampleOptions .haveWeights    = !! weights;
 
@@ -3000,7 +3067,16 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
    {
       const surface = this .geometry .getSurface ();
 
-      this .derivative = surface .evaluator (1);
+      if (surface)
+      {
+         delete this .set_fraction__;
+
+         this .derivative = surface .evaluator (1);
+      }
+      else
+      {
+         this .set_fraction__ = Function .prototype;
+      }
    },
    set_fraction__: (() =>
    {
@@ -3624,7 +3700,19 @@ Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, (e
       this .geometry ._weight       = this ._weight;
       this .geometry ._controlPoint = this ._controlPoint;
 
+      this .geometry ._rebuild .addInterest ("set_geometry__", this);
       this .geometry .setup ();
+
+      this .set_geometry__ ();
+   },
+   set_geometry__ ()
+   {
+      const surface = this .geometry .getSurface ();
+
+      if (surface)
+         delete this .set_fraction__;
+      else
+         this .set_fraction__ = Function .prototype;
    },
    set_fraction__: (() =>
    {
@@ -3947,8 +4035,17 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, (ex
    {
       const surface = this .geometry .getSurface ();
 
-      this .uDerivative = surface .evaluator ([1, 0]);
-      this .vDerivative = surface .evaluator ([0, 1]);
+      if (surface)
+      {
+         delete this .set_fraction__;
+
+         this .uDerivative = surface .evaluator ([1, 0]);
+         this .vDerivative = surface .evaluator ([0, 1]);
+      }
+      else
+      {
+         this .set_fraction__ = Function .prototype;
+      }
    },
    set_fraction__: (() =>
    {

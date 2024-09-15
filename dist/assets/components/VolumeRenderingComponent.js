@@ -1,5 +1,5 @@
-/* X_ITE v10.5.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.1")];
+/* X_ITE v10.5.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -129,6 +129,8 @@ function X3DVolumeRenderStyleNode (executionContext)
 Object .assign (Object .setPrototypeOf (X3DVolumeRenderStyleNode .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
 {
    addShaderFields (shaderNode)
+   { },
+   getDefines ()
    { },
    getUniformsText ()
    {
@@ -1141,6 +1143,10 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRen
       if (this .surfaceNormalsNode)
          shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (external_X_ITE_X3D_Fields_default()).SFNode (this .surfaceNormalsNode));
    },
+   getDefines (defines)
+   {
+      defines .add ("#define X3D_HSV");
+   },
    getUniformsText ()
    {
       if (! this ._enabled .getValue ())
@@ -1156,127 +1162,6 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRen
       string += "uniform vec4 parallelColor_" + this .getId () + ";\n";
 
       string += this .getNormalText (this .surfaceNormalsNode);
-
-      string += "\n";
-      string += "vec3\n";
-      string += "rgb2hsv_" + this .getId () + " (in vec3 color)\n";
-      string += "{\n";
-      string += "   float h = 0.0;\n";
-      string += "   float s = 0.0;\n";
-      string += "   float v = 0.0;\n";
-      string += "\n";
-      string += "   float min = min (min (color .r, color .g), color .b);\n";
-      string += "   float max = max (max (color .r, color .g), color .b);\n";
-      string += "   v = max; // value\n";
-      string += "\n";
-      string += "   float delta = max - min;\n";
-      string += "\n";
-      string += "   if (max != 0.0 && delta != 0.0)\n";
-      string += "   {\n";
-      string += "      s = delta / max; // s\n";
-      string += "\n";
-      string += "      if (color .r == max)\n";
-      string += "         h =     (color .g - color .b) / delta;  // between yellow & magenta\n";
-      string += "      else if (color .g == max)\n";
-      string += "         h = 2.0 + (color .b - color .r) / delta;  // between cyan & yellow\n";
-      string += "      else\n";
-      string += "         h = 4.0 + (color .r - color .g) / delta;  // between magenta & cyan\n";
-      string += "\n";
-      string += "      h *= M_PI / 3.0;  // radiants\n";
-      string += "      if (h < 0.0)\n";
-      string += "         h += M_PI * 2.0;\n";
-      string += "   }\n";
-      string += "   else\n";
-      string += "      s = h = 0.0;         // s = 0, h is undefined\n";
-      string += "\n";
-      string += "   return vec3 (h, s, v);\n";
-      string += "}\n";
-
-      string += "\n";
-      string += "vec3\n";
-      string += "hsv2rgb_" + this .getId () + " (in vec3 hsv)\n";
-      string += "{\n";
-      string += "   float h = hsv [0];\n";
-      string += "   float s = clamp (hsv [1], 0.0, 1.0);\n";
-      string += "   float v = clamp (hsv [2], 0.0, 1.0);\n";
-      string += "\n";
-      string += "   // H is given on [0, 2 * Pi]. S and V are given on [0, 1].\n";
-      string += "   // RGB are each returned on [0, 1].\n";
-      string += "\n";
-      string += "   if (s == 0.0)\n";
-      string += "   {\n";
-      string += "      // achromatic (grey)\n";
-      string += "      return vec3 (v, v, v);\n";
-      string += "   }\n";
-      string += "   else\n";
-      string += "   {\n";
-      string += "      float w = (h * (180.0 / M_PI)) / 60.0;     // sector 0 to 5\n";
-      string += "\n";
-      string += "      float i = floor (w);\n";
-      string += "      float f = w - i;                      // factorial part of h\n";
-      string += "      float p = v * ( 1.0 - s );\n";
-      string += "      float q = v * ( 1.0 - s * f );\n";
-      string += "      float t = v * ( 1.0 - s * ( 1.0 - f ) );\n";
-      string += "\n";
-      string += "      switch (int (i) % 6)\n";
-      string += "      {\n";
-      string += "         case 0:  return vec3 (v, t, p);\n";
-      string += "         case 1:  return vec3 (q, v, p);\n";
-      string += "         case 2:  return vec3 (p, v, t);\n";
-      string += "         case 3:  return vec3 (p, q, v);\n";
-      string += "         case 4:  return vec3 (t, p, v);\n";
-      string += "         default: return vec3 (v, p, q);\n";
-      string += "      }\n";
-      string += "   }\n";
-      string += "\n";
-      string += "   return vec3 (0.0);\n";
-      string += "}\n";
-
-      string += "\n";
-      string += "vec3\n";
-      string += "mix_hsv_" + this .getId () + " (in vec3 a, in vec3 b, in float t)\n";
-      string += "{\n";
-      string += "   // Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.\n";
-      string += "   // Source and destination color must be in HSV space.\n";
-      string += "\n";
-      string += "   float ha = a [0];\n";
-      string += "   float sa = a [1];\n";
-      string += "   float va = a [2];\n";
-      string += "\n";
-      string += "   float hb = b [0];\n";
-      string += "   float sb = b [1];\n";
-      string += "   float vb = b [2];\n";
-      string += "\n";
-      string += "   if (sa == 0.0)\n";
-      string += "      ha = hb;\n";
-      string += "\n";
-      string += "   if (sb == 0.0)\n";
-      string += "      hb = ha;\n";
-      string += "\n";
-      string += "   float range = abs (hb - ha);\n";
-      string += "\n";
-      string += "   if (range <= M_PI)\n";
-      string += "   {\n";
-      string += "      float h = ha + t * (hb - ha);\n";
-      string += "      float s = sa + t * (sb - sa);\n";
-      string += "      float v = va + t * (vb - va);\n";
-      string += "      return vec3 (h, s, v);\n";
-      string += "   }\n";
-      string += "\n";
-      string += "   float PI2  = M_PI * 2.0;\n";
-      string += "   float step = (PI2 - range) * t;\n";
-      string += "   float h    = ha < hb ? ha - step : ha + step;\n";
-      string += "\n";
-      string += "   if (h < 0.0)\n";
-      string += "      h += PI2;\n";
-      string += "\n";
-      string += "   else if (h > PI2)\n";
-      string += "      h -= PI2;\n";
-      string += "\n";
-      string += "   float s = sa + t * (sb - sa);\n";
-      string += "   float v = va + t * (vb - va);\n";
-      string += "   return vec3 (h, s, v);\n";
-      string += "}\n";
 
       string += "\n";
       string += "vec4\n";
@@ -1299,10 +1184,10 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRen
       string += "      return vec4 (0.0);\n";
       string += "\n";
       string += "   float t             = cos (min (floor (acos (cosTheta) / step) * (steps > 1.0 ? steps / (steps - 1.0) : 1.0), steps) * step);\n";
-      string += "   vec3  orthogonalHSV = rgb2hsv_" + this .getId () + " (orthogonalColor .rgb);\n";
-      string += "   vec3  parallelHSV   = rgb2hsv_" + this .getId () + " (parallelColor .rgb);\n";
+      string += "   vec3  orthogonalHSV = rgb2hsv (orthogonalColor .rgb);\n";
+      string += "   vec3  parallelHSV   = rgb2hsv (parallelColor .rgb);\n";
       string += "\n";
-      string += "   return vec4 (hsv2rgb_" + this .getId () + " (mix_hsv_" + this .getId () + " (orthogonalHSV, parallelHSV, t)), originalColor .a);\n";
+      string += "   return vec4 (hsv2rgb (mix_hsv (orthogonalHSV, parallelHSV, t)), originalColor .a);\n";
       string += "}\n";
 
       return string;
@@ -1475,6 +1360,11 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, VolumeRe
 
       for (const renderStyleNode of this .renderStyleNodes)
          renderStyleNode .addShaderFields (shaderNode);
+   },
+   getDefines (defines)
+   {
+      for (const renderStyleNode of this .renderStyleNodes)
+         renderStyleNode .getDefines (defines);
    },
    getUniformsText ()
    {
@@ -1714,16 +1604,47 @@ const external_X_ITE_X3D_UnlitMaterial_namespaceObject = __X_ITE_X3D__ .UnlitMat
 var external_X_ITE_X3D_UnlitMaterial_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_UnlitMaterial_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/VolumeStyle.vs.js
 const VolumeStyle_vs_default_ = /* glsl */ `#version 300 es
-precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;uniform mat4 x3d_TextureMatrix[1];in vec4 x3d_TexCoord0;in vec4 x3d_Vertex;out vec3 vertex;out vec4 texCoord;void main(){vec4 position=x3d_ModelViewMatrix*x3d_Vertex;vertex=position.xyz;texCoord=x3d_TextureMatrix[0]*x3d_TexCoord0;gl_Position=x3d_ProjectionMatrix*position;}`
+precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;uniform mat4 x3d_TextureMatrix[1];in vec4 x3d_TexCoord0;in vec4 x3d_Vertex;out vec3 vertex;out vec4 texCoord;
+#if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
+out float depth;
+#endif
+void main(){vec4 position=x3d_ModelViewMatrix*x3d_Vertex;vertex=position.xyz;texCoord=x3d_TextureMatrix[0]*x3d_TexCoord0;gl_Position=x3d_ProjectionMatrix*position;
+#if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
+depth=1.0+gl_Position.w;
+#endif
+}`
 ;
 
 /* harmony default export */ const VolumeStyle_vs = (external_X_ITE_X3D_Namespace_default().add ("VolumeStyle.vs", VolumeStyle_vs_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/VolumeStyle.fs.js
 const VolumeStyle_fs_default_ = /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler3D;in vec3 vertex;in vec4 texCoord;uniform sampler3D x3d_Texture3D[1];uniform mat3 x3d_TextureNormalMatrix;uniform x3d_LightSourceParameters x3d_LightSource[x3d_MaxLights];const float M_PI=3.14159265359;
+precision highp float;precision highp int;precision highp sampler3D;in vec3 vertex;in vec4 texCoord;
+#if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
+uniform float x3d_LogarithmicFarFactor1_2;in float depth;
+#endif
+uniform sampler3D x3d_Texture3D[1];uniform mat3 x3d_TextureNormalMatrix;uniform x3d_LightSourceParameters x3d_LightSource[x3d_MaxLights];const float M_PI=3.141592653589793;const float M_SQRT2=1.4142135623730951;const float M_SQRT1_2=0.7071067811865476;
+#if defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+layout(location=0)out vec4 x3d_FragData0;layout(location=1)out vec4 x3d_FragData1;
+#else
+out vec4 x3d_FragColor;
+#endif
 #pragma X3D include "includes/ClipPlanes.glsl"
 #pragma X3D include "includes/Fog.glsl"
-__VOLUME_STYLES_UNIFORMS__ out vec4 x3d_FragColor;vec4 getTextureColor(in vec3 texCoord){if(any(greaterThan(abs(texCoord-0.5),vec3(0.5))))discard;vec4 textureColor=texture(x3d_Texture3D[0],texCoord);__VOLUME_STYLES_FUNCTIONS__ return textureColor;}void main(){
+__VOLUME_STYLES_DEFINES__
+#if defined(X3D_HSV)
+vec3 rgb2hsv(in vec3 color){float h=0.0;float s=0.0;float v=0.0;float min=min(min(color.r,color.g),color.b);float max=max(max(color.r,color.g),color.b);v=max;float delta=max-min;if(max!=0.0&&delta!=0.0){s=delta/max;if(color.r==max)h=(color.g-color.b)/delta;else if(color.g==max)h=2.0+(color.b-color.r)/delta;else h=4.0+(color.r-color.g)/delta;h*=M_PI/3.0;if(h<0.0)h+=M_PI*2.0;}else s=h=0.0;return vec3(h,s,v);}vec3 hsv2rgb(in vec3 hsv){float h=hsv[0];float s=clamp(hsv[1],0.0,1.0);float v=clamp(hsv[2],0.0,1.0);if(s==0.0){return vec3(v,v,v);}else{float w=(h*(180.0/M_PI))/60.0;float i=floor(w);float f=w-i;float p=v*(1.0-s);float q=v*(1.0-s*f);float t=v*(1.0-s*(1.0-f));switch(int(i)% 6){case 0:return vec3(v,t,p);case 1:return vec3(q,v,p);case 2:return vec3(p,v,t);case 3:return vec3(p,q,v);case 4:return vec3(t,p,v);default:return vec3(v,p,q);}}return vec3(0.0);}vec3 mix_hsv(in vec3 a,in vec3 b,in float t){float ha=a[0];float sa=a[1];float va=a[2];float hb=b[0];float sb=b[1];float vb=b[2];if(sa==0.0)ha=hb;if(sb==0.0)hb=ha;float range=abs(hb-ha);if(range<=M_PI){float h=ha+t*(hb-ha);float s=sa+t*(sb-sa);float v=va+t*(vb-va);return vec3(h,s,v);}float PI2=M_PI*2.0;float step=(PI2-range)*t;float h=ha<hb?ha-step:ha+step;if(h<0.0)h+=PI2;else if(h>PI2)h-=PI2;float s=sa+t*(sb-sa);float v=va+t*(vb-va);return vec3(h,s,v);}
+#endif
+#if defined(X3D_PLANE)
+struct Plane3{vec3 normal;float distanceFromOrigin;};Plane3 plane3(const in vec3 point,const in vec3 normal){return Plane3(normal,dot(normal,point));}vec3 plane3_perpendicular_vector(const in Plane3 plane,const in vec3 point){return plane.normal*(dot(point,plane.normal)-plane.distanceFromOrigin);}
+#endif
+#if defined(X3D_SHADING)
+float getSpotFactor(const in float cutOffAngle,const in float beamWidth,const in vec3 L,const in vec3 d){float spotAngle=acos(clamp(dot(-L,d),-1.0,1.0));if(spotAngle>=cutOffAngle)return 0.0;else if(spotAngle<=beamWidth)return 1.0;return(spotAngle-cutOffAngle)/(beamWidth-cutOffAngle);}
+#endif
+__VOLUME_STYLES_UNIFORMS__ vec4 getTextureColor(in vec3 texCoord){if(any(greaterThan(abs(texCoord-0.5),vec3(0.5))))discard;vec4 textureColor=texture(x3d_Texture3D[0],texCoord);__VOLUME_STYLES_FUNCTIONS__ return textureColor;}
+#if defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+float weight(const in float z,const in float a){return clamp(pow(min(1.0,a*10.0)+0.01,3.0)*1e8*pow(1.0-z*0.9,3.0),1e-2,3e3);}
+#endif
+void main(){
 #if defined(X3D_CLIP_PLANES)
 clip();
 #endif
@@ -1731,7 +1652,15 @@ vec4 finalColor=getTextureColor(texCoord.stp/texCoord.q);
 #if defined(X3D_FOG)
 finalColor.rgb=getFogColor(finalColor.rgb);
 #endif
-x3d_FragColor=finalColor;}`
+#if defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+float a=finalColor.a;float w=weight(gl_FragCoord.z,a);finalColor.rgb*=a;finalColor*=w;x3d_FragData0=vec4(finalColor.rgb,a);x3d_FragData1=vec4(finalColor.a);
+#else
+x3d_FragColor=finalColor;
+#endif
+#if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
+gl_FragDepth=log2(depth)*x3d_LogarithmicFarFactor1_2;
+#endif
+}`
 ;
 
 /* harmony default export */ const VolumeStyle_fs = (external_X_ITE_X3D_Namespace_default().add ("VolumeStyle.fs", VolumeStyle_fs_default_));
@@ -1812,7 +1741,8 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (external_X_I
       key += ".";
       key += localObjectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
 
-      return this .volumeShaderNodes .get (key) ?? this .createShader (key, geometryContext, renderContext);
+      return this .volumeShaderNodes .get (key)
+         ?? this .createShader (key, geometryContext, renderContext);
    },
    createShader (key, geometryContext, renderContext)
    {
@@ -1823,6 +1753,12 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (external_X_I
       const { renderObject, fogNode, localObjectsKeys } = renderContext;
 
       const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
+
+      if (renderObject .getLogarithmicDepthBuffer ())
+         options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
+
+      if (renderObject .getOrderIndependentTransparency ())
+         options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
 
       switch (fogNode ?.getFogType ())
       {
@@ -2279,7 +2215,11 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
       // if (DEVELOPMENT)
       //    console .log ("Creating VolumeData Shader ...");
 
-      const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
+      const
+         opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
+         styleDefines          = new Set ();
+
+      opacityMapVolumeStyle .getDefines (styleDefines);
 
       let
          styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
@@ -2290,7 +2230,10 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
       styleUniforms  += "uniform float surfaceTolerance;\n";
 
       for (const renderStyleNode of this .renderStyleNodes)
+      {
+         renderStyleNode .getDefines (styleDefines);
          styleUniforms  += renderStyleNode .getUniformsText ();
+      }
 
       styleFunctions += "\n";
       styleFunctions += "   // IsoSurfaceVolumeData\n";
@@ -2417,8 +2360,9 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
       }
 
       fs = fs
-         .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
-         .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
+         .replace ("__VOLUME_STYLES_DEFINES__",   Array .from (styleDefines) .join ("\n"))
+         .replace ("__VOLUME_STYLES_UNIFORMS__",  styleUniforms)
+         .replace ("__VOLUME_STYLES_FUNCTIONS__", styleFunctions);
 
       // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
@@ -2565,6 +2509,10 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, Volume
 
       shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "intensityThreshold_" + this .getId (), this ._intensityThreshold .copy ());
    },
+   getDefines (defines)
+   {
+      defines .add ("#define X3D_PLANE");
+   },
    getUniformsText ()
    {
       if (! this ._enabled .getValue ())
@@ -2586,35 +2534,32 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, Volume
          default:
          case "MAX":
          {
-            string += "   float projectionColor = 0.0;\n";
+            string += "   float  projectionColor = 0.0;\n";
             break;
          }
          case "MIN":
          {
-            string += "   float projectionColor = 1.0;\n";
+            string += "   float  projectionColor = 1.0;\n";
             break;
          }
          case "AVERAGE":
          {
-            string += "   float projectionColor = 0.0;\n";
+            string += "   float  projectionColor = 0.0;\n";
             break;
          }
       }
 
-      string += "   const int samples     = 32;\n";
-      string += "   vec3  step            = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0)) / float (samples);\n";
-      string += "   vec3  ray             = texCoord - step * float (samples) * 0.5;\n";
-      string += "   bool  first           = false;\n";
+      string += "   const  int samples     = 16;\n";
+      string += "   vec3   normal          = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0));\n";
+      string += "   Plane3 plane           = plane3 (vec3 (0.5), normal);\n";
+      string += "   vec3   point           = texCoord + plane3_perpendicular_vector (plane, texCoord);\n";
+      string += "   vec3   ray             = point - normal * M_SQRT1_2;\n";
+      string += "   vec3   step            = normal * (M_SQRT2 / float (samples));\n";
+      string += "   bool   first           = false;\n";
       string += "\n";
       string += "   for (int i = 0; i < samples; ++ i, ray += step)\n";
       string += "   {\n";
-      string += "      if (ray .s < 0.0 || ray .s > 1.0)\n";
-      string += "         continue;\n";
-      string += "\n";
-      string += "      if (ray .t < 0.0 || ray .t > 1.0)\n";
-      string += "         continue;\n";
-      string += "\n";
-      string += "      if (ray .p < 0.0 || ray .p > 1.0)\n";
+      string += "      if (any (greaterThan (abs (ray - 0.5), vec3 (0.5))))\n";
       string += "         continue;\n";
       string += "\n";
       string += "      float intensity = texture (x3d_Texture3D [0], ray) .r;\n";
@@ -2628,7 +2573,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, Volume
             string += "      if (intensity < intensityThreshold_" + this .getId () + ")\n";
             string += "         continue;\n";
             string += "\n";
-            string += "      if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
+            string += "      if (first && intensityThreshold_" + this .getId () + " > 0.0)\n";
             string += "         break;\n";
             string += "\n";
             string += "      if (intensity <= projectionColor)\n";
@@ -2645,7 +2590,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, Volume
             string += "      if (intensity < intensityThreshold_" + this .getId () + ")\n";
             string += "         continue;\n";
             string += "\n";
-            string += "      if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
+            string += "      if (first && intensityThreshold_" + this .getId () + " > 0.0)\n";
             string += "         break;\n";
             string += "\n";
             string += "      if (intensity >= projectionColor)\n";
@@ -2850,7 +2795,9 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
       // if (DEVELOPMENT)
       //    console .log ("Creating SegmentedVolumeData Shader ...");
 
-      const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
+      const
+         opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
+         styleDefines          = new Set ();
 
       let
          styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
@@ -2878,6 +2825,8 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
 
          for (const [i, renderStyleNode] of this .renderStyleNodes .entries ())
          {
+            renderStyleNode .getDefines (styleDefines);
+
             styleFunctions += "      case " + i + ":\n";
             styleFunctions += "      {\n";
 
@@ -2899,8 +2848,9 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
       }
 
       fs = fs
-         .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
-         .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
+         .replace ("__VOLUME_STYLES_DEFINES__",   Array .from (styleDefines) .join ("\n"))
+         .replace ("__VOLUME_STYLES_UNIFORMS__",  styleUniforms)
+         .replace ("__VOLUME_STYLES_FUNCTIONS__", styleFunctions);
 
       // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
@@ -3086,6 +3036,10 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRend
       if (this .surfaceNormalsNode)
          shaderNode .addUserDefinedField ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (external_X_ITE_X3D_Fields_default()).SFNode (this .surfaceNormalsNode));
    },
+   getDefines (defines)
+   {
+      defines .add ("#define X3D_SHADING");
+   },
    getUniformsText ()
    {
       if (! this ._enabled .getValue ())
@@ -3104,20 +3058,6 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRend
       string += "uniform float transparency_" + this .getId () + ";\n";
 
       string += this .getNormalText (this .surfaceNormalsNode);
-
-      string += "\n";
-      string += "float\n";
-      string += "getSpotFactor_" + this .getId () + " (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n";
-      string += "{\n";
-      string += "   float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n";
-      string += "\n";
-      string += "   if (spotAngle >= cutOffAngle)\n";
-      string += "      return 0.0;\n";
-      string += "   else if (spotAngle <= beamWidth)\n";
-      string += "      return 1.0;\n";
-      string += "\n";
-      string += "   return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n";
-      string += "}\n";
 
       string += "\n";
       string += "vec4\n";
@@ -3172,7 +3112,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRend
          string += "         vec3  specularTerm   = light .intensity * specularColor_" + this .getId () + " * specularFactor;\n";
          string += "\n";
          string += "         float attenuationFactor     = di ? 1.0 : 1.0 / max (dot (c, vec3 (1.0, dL, dL * dL)), 1.0);\n";
-         string += "         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor_" + this .getId () + " (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n";
+         string += "         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n";
          string += "         float attenuationSpotFactor = attenuationFactor * spotFactor;\n";
          string += "         vec3  ambientColor          = light .ambientIntensity * ambientTerm;\n";
          string += "         vec3  diffuseSpecularColor  = light .intensity * (diffuseTerm + specularTerm);\n";
@@ -3640,9 +3580,7 @@ function VolumeData (executionContext)
    VolumeRendering_X3DVolumeDataNode .call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).VolumeData);
-
-   this .renderStyleNode = null;
-  }
+}
 
 Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X3DVolumeDataNode .prototype),
 {
@@ -3694,7 +3632,11 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
       // if (DEVELOPMENT)
       //    console .log ("Creating VolumeData Shader ...");
 
-      const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
+      const
+         opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
+         styleDefines          = new Set ();
+
+      opacityMapVolumeStyle .getDefines (styleDefines);
 
       let
          styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
@@ -3702,16 +3644,18 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
 
       if (this .renderStyleNode)
       {
+         this .renderStyleNode .getDefines (styleDefines);
+
          styleUniforms  += this .renderStyleNode .getUniformsText (),
          styleFunctions += this .renderStyleNode .getFunctionsText ();
       }
 
       fs = fs
-         .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
-         .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
+         .replace ("__VOLUME_STYLES_DEFINES__",   Array .from (styleDefines) .join ("\n"))
+         .replace ("__VOLUME_STYLES_UNIFORMS__",  styleUniforms)
+         .replace ("__VOLUME_STYLES_FUNCTIONS__", styleFunctions);
 
-      // if (DEVELOPMENT)
-      //    this .getBrowser () .print (fs);
+      // this .getBrowser () .print (fs);
 
       const vertexShader = new (external_X_ITE_X3D_ShaderPart_default()) (this .getExecutionContext ());
       vertexShader ._url .push (encodeURI ("data:x-shader/x-vertex," + vs));
@@ -3737,8 +3681,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
 
       opacityMapVolumeStyle .addShaderFields (shaderNode);
 
-      if (this .renderStyleNode)
-         this .renderStyleNode .addShaderFields (shaderNode);
+      this .renderStyleNode ?.addShaderFields (shaderNode);
 
       const uniformNames = [ ];
 

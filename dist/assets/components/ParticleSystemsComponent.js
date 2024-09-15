@@ -1,5 +1,5 @@
-/* X_ITE v10.5.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.1")];
+/* X_ITE v10.5.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -570,7 +570,7 @@ precision highp float;void main(){}`
 
       if (!gl .getProgramParameter (program, gl .LINK_STATUS))
       {
-         console .error ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
+         console .error (`Couldn't initialize particle shader: ${gl .getProgramInfoLog (program)}`);
          // console .error (vertexShaderSource);
       }
 
