@@ -157,8 +157,8 @@ function sample (mesh, surface, opts)
 
          faces .length = f;
 
-         pointIndex  .clear ();
-         seamIndex .clear ();
+         pointIndex .clear ();
+         seamIndex  .clear ();
 
          break;
       }
