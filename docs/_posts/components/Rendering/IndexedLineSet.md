@@ -37,7 +37,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### MFInt32 [in] **set_colorIndex** <small>[0,∞) or -1</small>
 
-*colorIndex* values define the order in which [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to polygons (or vertices).
+*colorIndex* values define the order in which [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
 
 #### Hints
 
@@ -73,7 +73,7 @@ Whether [Color](/x_ite/components/rendering/color/) node color values are applie
 
 ### MFInt32 [ ] **colorIndex** [ ] <small>[0,∞) or -1</small>
 
-*colorIndex* values define the order in which [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to polygons (or vertices).
+*colorIndex* values define the order in which [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
 
 #### Hints
 

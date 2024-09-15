@@ -38,7 +38,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### MFInt32 [in] **set_colorIndex** <small>[0,∞) or -1</small>
 
-*colorIndex* values define the order in which [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to polygons (or vertices).
+*colorIndex* values define the order in which [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
 
 #### Hints
 
@@ -67,7 +67,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 ### MFInt32 [in] **set_normalIndex** <small>[0,∞) or -1</small>
 
-*normalIndex* values define the order in which normal vectors are applied to polygons (or vertices). Interchange profile
+*normalIndex* values define the order in which normal vectors are applied to polygons (or vertices), interspersed by -1 if normalPerVertex=true.
 
 #### Hints
 
@@ -167,7 +167,7 @@ Whether [Normal](/x_ite/components/rendering/normal/) node vector values are app
 
 ### MFInt32 [ ] **colorIndex** [ ] <small>[0,∞) or -1</small>
 
-*colorIndex* values define the order in which [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to polygons (or vertices).
+*colorIndex* values define the order in which [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) values are applied to polygons (or vertices), interspersed by -1 if colorlPerVertex=true.
 
 #### Hints
 
@@ -190,7 +190,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 ### MFInt32 [ ] **normalIndex** [ ] <small>[0,∞) or -1</small>
 
-*normalIndex* values define the order in which normal vectors are applied to polygons (or vertices).
+*normalIndex* values define the order in which normal vectors are applied to polygons (or vertices), interspersed by -1 if normalPerVertex=true.
 
 #### Hints
 
