@@ -47,7 +47,6 @@
 
 import X3DNode                   from "../Core/X3DNode.js";
 import X3DParametricGeometryNode from "./X3DParametricGeometryNode.js";
-import MultiTextureCoordinate    from "../Texturing/MultiTextureCoordinate.js";
 import X3DConstants              from "../../Base/X3DConstants.js";
 import X3DCast                   from "../../Base/X3DCast.js";
 import NURBS                     from "../../Browser/NURBS/NURBS.js";
