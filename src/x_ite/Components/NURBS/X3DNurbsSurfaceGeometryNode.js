@@ -47,6 +47,7 @@
 
 import X3DNode                   from "../Core/X3DNode.js";
 import X3DParametricGeometryNode from "./X3DParametricGeometryNode.js";
+import MultiTextureCoordinate    from "../Texturing/MultiTextureCoordinate.js";
 import X3DConstants              from "../../Base/X3DConstants.js";
 import X3DCast                   from "../../Base/X3DCast.js";
 import NURBS                     from "../../Browser/NURBS/NURBS.js";
@@ -234,20 +235,27 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    },
    buildNurbsTexCoords (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension)
    {
-      const texCoordArray = this .getTexCoords ();
-
-      this .getMultiTexCoords () .push (texCoordArray);
-
-      if (this .texCoordNode && this .texCoordNode .getSize () <= uDimension * vDimension)
+      if (this .texCoordNode)
       {
-         const
-            texUDegree       = uOrder - 1,
-            texVDegree       = vOrder - 1,
-            texUKnots        = uKnots,
-            texVKnots        = vKnots,
-            texControlPoints = this .getTexControlPoints (this .texControlPoints, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, this .texCoordNode);
+         this .texCoordNode .init (this .getMultiTexCoords ());
 
-         this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
+         const
+            textureCoordinates = this .texCoordNode .getTextureCoordinates ?.(),
+            numMultiTexCoords  = this .getMultiTexCoords () .length;
+
+         for (let i = 0; i < numMultiTexCoords; ++ i)
+         {
+            const
+               texCoordArray    = this .getMultiTexCoords () [i],
+               texCoordNode     = textureCoordinates ?.[i] ?? this .texCoordNode,
+               texUDegree       = uOrder - 1,
+               texVDegree       = vOrder - 1,
+               texUKnots        = uKnots,
+               texVKnots        = vKnots,
+               texControlPoints = this .getTexControlPoints (this .texControlPoints, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
+
+            this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
+         }
       }
       else if (this .nurbsTexCoordNode ?.isValid ())
       {
@@ -258,12 +266,17 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
             texUKnots        = this .getKnots (this .texUKnots, false, node ._uOrder .getValue (), node ._uDimension .getValue (), node ._uKnot),
             texVKnots        = this .getKnots (this .texVKnots, false, node ._vOrder .getValue (), node ._vDimension .getValue (), node ._vKnot),
             texWeights       = this .getUVWeights (this .texWeights, node ._uDimension .getValue (), node ._vDimension .getValue (), node ._weight),
-            texControlPoints = node .getControlPoints (texWeights);
+            texControlPoints = node .getControlPoints (texWeights),
+            texCoordArray    = this .getTexCoords ();
 
+         this .getMultiTexCoords () .push (texCoordArray);
          this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
       }
       else
       {
+         const texCoordArray = this .getTexCoords ();
+
+         this .getMultiTexCoords () .push (texCoordArray);
          this .createDefaultNurbsTexCoords (texCoordArray);
       }
    },
