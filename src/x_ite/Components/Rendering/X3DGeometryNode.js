@@ -1061,7 +1061,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          node .enable (gl);
 
       shaderNode .enable (gl);
-      shaderNode .setUniforms (gl, this, renderContext, front);
+      shaderNode .setUniforms (gl, renderContext, this, front);
 
       // Setup vertex attributes.
 
@@ -1197,7 +1197,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       // Setup shader.
 
       shaderNode .enable (gl);
-      shaderNode .setUniforms (gl, this, renderContext, front);
+      shaderNode .setUniforms (gl, renderContext, this, front);
 
       // Setup vertex attributes.
 

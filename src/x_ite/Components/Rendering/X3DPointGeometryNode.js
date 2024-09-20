@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       // Setup shader.
 
       shaderNode .enable (gl);
-      shaderNode .setUniforms (gl, this, renderContext);
+      shaderNode .setUniforms (gl, renderContext, this);
 
       // Setup vertex attributes.
 
@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       // Setup shader.
 
       shaderNode .enable (gl);
-      shaderNode .setUniforms (gl, this, renderContext);
+      shaderNode .setUniforms (gl, renderContext, this);
 
       // Setup vertex attributes.
 

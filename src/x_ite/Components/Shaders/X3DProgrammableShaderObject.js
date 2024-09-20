@@ -1039,7 +1039,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          xrModelViewMatrix = new Float32Array (16),
          normalMatrix      = new Float32Array (9);
 
-      return function (gl, geometryContext, renderContext, front = true)
+      return function (gl, renderContext, geometryContext, front = true)
       {
          const { renderObject, fogNode, appearanceNode, humanoidNode, modelViewMatrix } = renderContext;
 

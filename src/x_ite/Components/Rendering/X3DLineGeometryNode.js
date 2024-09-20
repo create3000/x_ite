@@ -332,7 +332,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                // Setup shader.
 
                shaderNode .enable (gl);
-               shaderNode .setUniforms (gl, this, renderContext);
+               shaderNode .setUniforms (gl, renderContext, this);
 
                // Setup vertex attributes.
 
@@ -384,7 +384,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          // Setup shader.
 
          shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, this, renderContext);
+         shaderNode .setUniforms (gl, renderContext, this);
 
          // Setup vertex attributes.
 
@@ -580,7 +580,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                // Setup shader.
 
                shaderNode .enable (gl);
-               shaderNode .setUniforms (gl, geometryContext, renderContext);
+               shaderNode .setUniforms (gl, renderContext, geometryContext);
 
                // Setup vertex attributes.
 
@@ -637,7 +637,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          // Setup shader.
 
          shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, this, renderContext);
+         shaderNode .setUniforms (gl, renderContext, this);
 
          // Setup vertex attributes.
 

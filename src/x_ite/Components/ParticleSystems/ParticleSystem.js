@@ -1021,7 +1021,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             // Setup shader.
 
             shaderNode .enable (gl);
-            shaderNode .setUniforms (gl, this .geometryContext, renderContext);
+            shaderNode .setUniforms (gl, renderContext, this .geometryContext);
 
             if (this .numTexCoords)
             {
