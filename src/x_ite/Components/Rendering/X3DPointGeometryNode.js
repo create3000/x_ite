@@ -76,9 +76,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       const
          appearanceNode  = renderContext .appearanceNode,
          shaderNode      = appearanceNode .getShader (this, renderContext),
-         renderModeNodes = appearanceNode .getRenderModes (),
-         attribNodes     = this .getAttrib (),
-         attribBuffers   = this .getAttribBuffers ();
+         renderModeNodes = appearanceNode .getRenderModes ();
 
       if (!renderContext .transparent)
       {
@@ -99,6 +97,10 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
       {
+         const
+            attribNodes   = this .getAttrib (),
+            attribBuffers = this .getAttribBuffers ();
+
          if (this .coordIndices .length)
             shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
 
@@ -137,9 +139,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       const
          appearanceNode  = renderContext .appearanceNode,
          shaderNode      = appearanceNode .getShader (this, renderContext),
-         renderModeNodes = appearanceNode .getRenderModes (),
-         attribNodes     = this .getAttrib (),
-         attribBuffers   = this .getAttribBuffers ();
+         renderModeNodes = appearanceNode .getRenderModes ();
 
       if (!renderContext .transparent)
       {
@@ -163,6 +163,10 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
       {
          const { instancesStride, particleOffset, velocityOffset, matrixOffset, normalMatrixOffset } = shapeNode;
+
+         const
+            attribNodes   = this .getAttrib (),
+            attribBuffers = this .getAttribBuffers ();
 
          if (particleOffset !== undefined)
             shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);

@@ -220,9 +220,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             appearanceNode     = renderContext .appearanceNode,
             linePropertiesNode = appearanceNode .getLineProperties (),
             shaderNode         = appearanceNode .getShader (this, renderContext),
-            renderModeNodes    = appearanceNode .getRenderModes (),
-            attribNodes        = this .getAttrib (),
-            attribBuffers      = this .getAttribBuffers ();
+            renderModeNodes    = appearanceNode .getRenderModes ();
 
          if (linePropertiesNode)
          {
@@ -392,6 +390,10 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
          {
+            const
+               attribNodes   = this .getAttrib (),
+               attribBuffers = this .getAttribBuffers ();
+
             if (this .coordIndices .length)
                shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
 
@@ -438,9 +440,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             appearanceNode     = renderContext .appearanceNode,
             linePropertiesNode = appearanceNode .getLineProperties (),
             shaderNode         = appearanceNode .getShader (geometryContext, renderContext),
-            renderModeNodes    = appearanceNode .getRenderModes (),
-            attribNodes        = this .getAttrib (),
-            attribBuffers      = this .getAttribBuffers ();
+            renderModeNodes    = appearanceNode .getRenderModes ();
 
          if (linePropertiesNode)
          {
@@ -646,6 +646,10 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
          {
             const { instancesStride, particleOffset, velocityOffset, matrixOffset, normalMatrixOffset, colorOffset } = shapeNode;
+
+            const
+               attribNodes   = this .getAttrib (),
+               attribBuffers = this .getAttribBuffers ();
 
             if (particleOffset !== undefined)
                shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);

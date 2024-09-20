@@ -1055,8 +1055,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       const
          browser         = this .getBrowser (),
          renderModeNodes = appearanceNode .getRenderModes (),
-         attribNodes     = this .attribNodes,
-         attribBuffers   = this .attribBuffers,
          primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
 
       for (const node of renderModeNodes)
@@ -1069,6 +1067,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
       {
+         const
+            attribNodes   = this .getAttrib (),
+            attribBuffers = this .getAttribBuffers ();
+
          if (this .coordIndices .length)
             shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
 
@@ -1187,8 +1189,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       const
          browser         = this .getBrowser (),
          renderModeNodes = appearanceNode .getRenderModes (),
-         attribNodes     = this .attribNodes,
-         attribBuffers   = this .attribBuffers,
          primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
 
       for (const node of renderModeNodes)
@@ -1206,6 +1206,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
       {
          const { instancesStride, particleOffset, velocityOffset, matrixOffset, normalMatrixOffset } = shapeNode;
+
+         const
+            attribNodes   = this .getAttrib (),
+            attribBuffers = this .getAttribBuffers ();
 
          if (particleOffset !== undefined)
             shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
