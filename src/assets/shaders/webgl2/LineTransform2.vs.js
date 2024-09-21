@@ -60,7 +60,9 @@ projectPoint (const in vec4 point, const in mat4 modelViewProjectionMatrix, cons
 vec4
 unProjectPoint (const in vec3 win, const in mat4 invModelViewProjection, const in vec4 viewport)
 {
-   vec4 vin = vec4 ((win .xy - viewport .xy) / viewport .zw * 2.0 - 1.0, 2.0 * win .z - 1.0, 1.0);
+   vec4 vin = vec4 ((win .xy - viewport .xy) / viewport .zw, win .z, 1.0);
+
+   vin .xyz = vin .xyz * 2.0 - 1.0;
 
    vin = invModelViewProjection * vin;
 
