@@ -121,18 +121,6 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    {
       return this .stylePropertiesNode [geometryType];
    },
-   getPointProperties ()
-   {
-      return this .stylePropertiesNode [0];
-   },
-   getLineProperties ()
-   {
-      return this .stylePropertiesNode [1];
-   },
-   getFillProperties ()
-   {
-      return this .stylePropertiesNode [2];
-   },
    getMaterial ()
    {
       return this .materialNode;

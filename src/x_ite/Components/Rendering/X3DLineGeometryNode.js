@@ -218,7 +218,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          const
             browser            = this .getBrowser (),
             appearanceNode     = renderContext .appearanceNode,
-            linePropertiesNode = appearanceNode .getLineProperties (),
+            linePropertiesNode = appearanceNode .getStyleProperties (1),
             shaderNode         = appearanceNode .getShader (this, renderContext),
             renderModeNodes    = appearanceNode .getRenderModes ();
 
@@ -438,7 +438,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             browser            = this .getBrowser (),
             geometryContext    = shapeNode .getGeometryContext (),
             appearanceNode     = renderContext .appearanceNode,
-            linePropertiesNode = appearanceNode .getLineProperties (),
+            linePropertiesNode = appearanceNode .getStyleProperties (1),
             shaderNode         = appearanceNode .getShader (geometryContext, renderContext),
             renderModeNodes    = appearanceNode .getRenderModes ();
 
@@ -586,8 +586,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
                {
-                  shaderNode .enableInstanceMatrixAttribute       (gl, browser .getDefaultInstanceMatrices (), 100,  0, 1);
-                  shaderNode .enableInstanceNormalMatrixAttribute (gl, browser .getDefaultInstanceMatrices (), 100, 64, 1);
+                  shaderNode .enableInstanceMatrixAttribute       (gl, browser .getDefaultInstanceMatrices (), 0,  0, 1);
+                  shaderNode .enableInstanceNormalMatrixAttribute (gl, browser .getDefaultInstanceMatrices (), 0, 64, 1);
 
                   const
                      stride            = 16 * Float32Array .BYTES_PER_ELEMENT,

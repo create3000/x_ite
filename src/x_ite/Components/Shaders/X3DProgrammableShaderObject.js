@@ -1315,10 +1315,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
    },
-   vertexAttributeDivisor (gl, divisor)
-   {
-      gl .vertexAttribDivisor (this .x3d_Vertex, divisor);
-   },
    enableParticleAttribute (gl, buffer, stride, offset, divisor)
    {
       const location = this .x3d_Particle;
