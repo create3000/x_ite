@@ -18,10 +18,7 @@ $("table.examples a") .on ("click", function ()
       div     = $("<div></div>") .addClass ("example") .appendTo ("body");
       header  = $("<p></p>") .addClass ("header") .appendTo (div);
       toolbar = $("<p></p>") .addClass ("toolbar") .appendTo (div);
-
-      canvas  = $("<x3d-canvas></x3d-canvas>")
-         .attr ("contentScale", "auto")
-         .attr ("debug", true) .appendTo (div);
+      canvas  = $("<x3d-canvas></x3d-canvas>") .attr ("debug", true) .appendTo (div);
 
       canvas .on ("initialized", () => updateToolbar (toolbar, canvas));
 
@@ -50,6 +47,7 @@ $("table.examples a") .on ("click", function ()
    canvas .prop ("browser") .getBrowserOptions () .reset ();
 
    canvas
+      .attr ("contentScale", $(this) .attr ("contentScale"))
       .removeClass (["tr", "br", "bl", "tl"] .map (p => `xr-button-${p}`))
       .addClass (`xr-button-${$(this) .attr ("xrButtonPosition")}`)
       .attr ("xrMovementControl", $(this) .attr ("xrMovementControl"));

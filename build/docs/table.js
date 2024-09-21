@@ -41,13 +41,14 @@ for (const row of table)
 			size      = sh (`identify -format "%w %h" "${examples}/${component}/${basename}/screenshot-small.png"`) .trim () .split (" ");
 
 		const
+			contentScale      = config [basename] ?.["contentScale"] ?? "auto",
 			xrButtonPosition  = config [basename] ?.["xrButtonPosition"] ?? "br",
 			xrMovementControl = config [basename] ?.["xrMovementControl"] ?? "VIEWER_POSE";
 
 		folder = folder .replace (/^.*\/media\/docs\//, "");
 
 		output += `    <td>\n`;
-		output += `      <a href="https://create3000.github.io/media/${folder}/${basename}.x3d" title="${component} » ${basename}" componentName="${component}" typeName="${basename}" doc="${doc}" xrButtonPosition="${xrButtonPosition}" xrMovementControl="${xrMovementControl}">`;
+		output += `      <a href="https://create3000.github.io/media/${folder}/${basename}.x3d" title="${component} » ${basename}" componentName="${component}" typeName="${basename}" doc="${doc}" contentScale="${contentScale}" xrButtonPosition="${xrButtonPosition}" xrMovementControl="${xrMovementControl}">`;
 		output += `<img src="https://create3000.github.io/media/${folder}/screenshot-small.png" alt="${basename}" width="${size [0]}" height="${size [1]}"/>`;
 		output += `</a>\n`;
 		output += `    </td>\n`;

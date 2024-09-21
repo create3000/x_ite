@@ -340,12 +340,13 @@ sub update_example {
 
    return $file unless -d "../media/docs/examples/$componentName/$typeName";
 
-   $pos  = "xr-button-" . ($config -> {$typeName} -> {"xrButtonPosition"} // "br");
-   $ctrl = $config -> {$typeName} -> {"xrMovementControl"} // "VIEWER_POSE";
+   $contentScale      = $config -> {$typeName} -> {"contentScale"} // "auto";
+   $xrButtonPosition  = "xr-button-" . ($config -> {$typeName} -> {"xrButtonPosition"} // "br");
+   $xrMovementControl = $config -> {$typeName} -> {"xrMovementControl"} // "VIEWER_POSE";
 
    $string = "## Example\n";
    $string .= "\n";
-   $string .= "<x3d-canvas class=\"$pos\" src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" contentScale=\"auto\" update=\"auto\" xrMovementControl=\"$ctrl\"></x3d-canvas>\n";
+   $string .= "<x3d-canvas class=\"$xrButtonPosition\" src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" contentScale=\"$contentScale\" update=\"auto\" xrMovementControl=\"$xrMovementControl\"></x3d-canvas>\n";
    $string .= "\n";
    $string .= "- [Download ZIP Archive](https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.zip)\n";
    $string .= "- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d)\n";
