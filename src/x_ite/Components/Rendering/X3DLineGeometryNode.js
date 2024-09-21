@@ -476,12 +476,12 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                {
                   // TODO: skinning is not implemented with thick lines, and must be done in the transform shader.
 
-                  const { instancesStride, matrixOffset, normalMatrixOffset, colorOffset } = shapeNode;
+                  const { instancesStride, matrixOffset, colorOffset } = shapeNode;
 
                   transformShaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 2);
 
-                  if (normalMatrixOffset !== undefined)
-                     transformShaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 2);
+                  // if (normalMatrixOffset !== undefined)
+                  //    transformShaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 2);
 
                   const
                      coordIndexStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
