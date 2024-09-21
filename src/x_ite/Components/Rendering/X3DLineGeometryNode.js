@@ -474,6 +474,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (transformShaderNode .getProgram ()))
                {
+                  // TODO: skinning is not implemented with thick lines, and must be done in the transform shader.
+
                   const { instancesStride, matrixOffset, normalMatrixOffset, colorOffset } = shapeNode;
 
                   transformShaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 2);
