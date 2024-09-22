@@ -99,9 +99,9 @@ main ()
    // 1 --- 2
 
    #if defined (X3D_INSTANCING)
-      mat4 invInstanceModelViewProjectionMatrix = inverse (x3d_InstanceMatrix) * invModelViewProjectionMatrix;
+      mat4 unProjectMatrix = inverse (x3d_InstanceMatrix) * invModelViewProjectionMatrix;
    #else
-      mat4 invInstanceModelViewProjectionMatrix = invModelViewProjectionMatrix;
+      mat4 unProjectMatrix = invModelViewProjectionMatrix;
    #endif
 
    if (gl_InstanceID % 2 == 0)
@@ -110,9 +110,9 @@ main ()
       vec2 pq1 = projected0 .xy - offset * neg1;
       vec2 pq2 = projected1 .xy - offset * neg1;
 
-      vec4 p0 = unProjectPoint (vec3 (pq0 .xy, projected0 .z), invInstanceModelViewProjectionMatrix, viewport);
-      vec4 p1 = unProjectPoint (vec3 (pq1 .xy, projected0 .z), invInstanceModelViewProjectionMatrix, viewport);
-      vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), invInstanceModelViewProjectionMatrix, viewport);
+      vec4 p0 = unProjectPoint (vec3 (pq0 .xy, projected0 .z), unProjectMatrix, viewport);
+      vec4 p1 = unProjectPoint (vec3 (pq1 .xy, projected0 .z), unProjectMatrix, viewport);
+      vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), unProjectMatrix, viewport);
 
       coordIndex0  = x3d_CoordIndex0;
       lineStipple0 = l0;
@@ -141,9 +141,9 @@ main ()
       vec2 pq2 = projected1 .xy - offset * neg0;
       vec2 pq3 = projected1 .xy + offset * neg0;
 
-      vec4 p0 = unProjectPoint (vec3 (pq0 .xy, projected0 .z), invInstanceModelViewProjectionMatrix, viewport);
-      vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), invInstanceModelViewProjectionMatrix, viewport);
-      vec4 p3 = unProjectPoint (vec3 (pq3 .xy, projected1 .z), invInstanceModelViewProjectionMatrix, viewport);
+      vec4 p0 = unProjectPoint (vec3 (pq0 .xy, projected0 .z), unProjectMatrix, viewport);
+      vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), unProjectMatrix, viewport);
+      vec4 p3 = unProjectPoint (vec3 (pq3 .xy, projected1 .z), unProjectMatrix, viewport);
 
       coordIndex0  = x3d_CoordIndex0;
       lineStipple0 = l0;
