@@ -2,6 +2,8 @@ export default /* glsl */ `#version 300 es
 
 precision highp float;
 
+#if defined (X3D_PASS_0)
+
 uniform vec4  viewport;
 uniform mat4  modelViewProjectionMatrix;
 uniform mat4  invModelViewProjectionMatrix;
@@ -96,15 +98,21 @@ main ()
    // |   \ |
    // 1 --- 2
 
+   #if defined (X3D_INSTANCING)
+      mat4 invInstanceModelViewProjectionMatrix = inverse (x3d_InstanceMatrix) * invModelViewProjectionMatrix;
+   #else
+      mat4 invInstanceModelViewProjectionMatrix = invModelViewProjectionMatrix;
+   #endif
+
    if (gl_InstanceID % 2 == 0)
    {
       vec2 pq0 = projected0 .xy + offset * neg1;
       vec2 pq1 = projected0 .xy - offset * neg1;
       vec2 pq2 = projected1 .xy - offset * neg1;
 
-      vec4 p0 = unProjectPoint (vec3 (pq0 .xy, projected0 .z), invModelViewProjectionMatrix, viewport);
-      vec4 p1 = unProjectPoint (vec3 (pq1 .xy, projected0 .z), invModelViewProjectionMatrix, viewport);
-      vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), invModelViewProjectionMatrix, viewport);
+      vec4 p0 = unProjectPoint (vec3 (pq0 .xy, projected0 .z), invInstanceModelViewProjectionMatrix, viewport);
+      vec4 p1 = unProjectPoint (vec3 (pq1 .xy, projected0 .z), invInstanceModelViewProjectionMatrix, viewport);
+      vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), invInstanceModelViewProjectionMatrix, viewport);
 
       coordIndex0  = x3d_CoordIndex0;
       lineStipple0 = l0;
@@ -133,9 +141,9 @@ main ()
       vec2 pq2 = projected1 .xy - offset * neg0;
       vec2 pq3 = projected1 .xy + offset * neg0;
 
-      vec4 p0 = unProjectPoint (vec3 (pq0 .xy, projected0 .z), invModelViewProjectionMatrix, viewport);
-      vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), invModelViewProjectionMatrix, viewport);
-      vec4 p3 = unProjectPoint (vec3 (pq3 .xy, projected1 .z), invModelViewProjectionMatrix, viewport);
+      vec4 p0 = unProjectPoint (vec3 (pq0 .xy, projected0 .z), invInstanceModelViewProjectionMatrix, viewport);
+      vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), invInstanceModelViewProjectionMatrix, viewport);
+      vec4 p3 = unProjectPoint (vec3 (pq3 .xy, projected1 .z), invInstanceModelViewProjectionMatrix, viewport);
 
       coordIndex0  = x3d_CoordIndex0;
       lineStipple0 = l0;
@@ -159,4 +167,32 @@ main ()
       vertex2      = p3;
    }
 }
+#endif
+
+#if defined (X3D_PASS_1)
+
+#if defined (X3D_INSTANCING)
+   in mat4 x3d_InstanceMatrix;
+   in mat4 x3d_InstanceNormalMatrix;
+#endif
+
+// Registered in X3DShapeContext.
+out mat4 instanceMatrix0;
+out mat4 instanceNormalMatrix0;
+out mat4 instanceMatrix1;
+out mat4 instanceNormalMatrix1;
+out mat4 instanceMatrix2;
+out mat4 instanceNormalMatrix2;
+
+void
+main ()
+{
+   instanceMatrix0       = x3d_InstanceMatrix;
+   instanceNormalMatrix0 = x3d_InstanceNormalMatrix;
+   instanceMatrix1       = x3d_InstanceMatrix;
+   instanceNormalMatrix1 = x3d_InstanceNormalMatrix;
+   instanceMatrix2       = x3d_InstanceMatrix;
+   instanceNormalMatrix2 = x3d_InstanceNormalMatrix;
+}
+#endif
 `;

@@ -56,17 +56,18 @@ import Matrix3           from "../../../standard/Math/Numbers/Matrix3.js";
 import Matrix4           from "../../../standard/Math/Numbers/Matrix4.js";
 
 const
-   _linetypeTextures                 = Symbol (),
-   _hatchStyleTextures               = Symbol (),
-   _defaultAppearance                = Symbol (),
-   _defaultPointProperties           = Symbol (),
-   _defaultLineProperties            = Symbol (),
-   _defaultMaterial                  = Symbol (),
-   _lineFillTextureProperties        = Symbol (),
-   _lineTransformShaderNode          = Symbol (),
-   _lineTransformInstancedShaderNode = Symbol (),
-   _lineTransformFeedback            = Symbol (),
-   _defaultInstanceMatrices          = Symbol ();
+   _linetypeTextures                  = Symbol (),
+   _hatchStyleTextures                = Symbol (),
+   _defaultAppearance                 = Symbol (),
+   _defaultPointProperties            = Symbol (),
+   _defaultLineProperties             = Symbol (),
+   _defaultMaterial                   = Symbol (),
+   _lineFillTextureProperties         = Symbol (),
+   _lineTransformShaderNode           = Symbol (),
+   _lineTransformInstancedShaderNode0 = Symbol (),
+   _lineTransformInstancedShaderNode1 = Symbol (),
+   _lineTransformFeedback             = Symbol (),
+   _defaultInstanceMatrices           = Symbol ();
 
 function X3DShapeContext ()
 {
@@ -175,7 +176,7 @@ Object .assign (X3DShapeContext .prototype,
    },
    getLineTransformShader ()
    {
-      this [_lineTransformShaderNode] = this .createLineTransformShader (false);
+      this [_lineTransformShaderNode] = this .createLineTransformShader (0, false);
 
       this .getLineTransformShader = function () { return this [_lineTransformShaderNode]; };
 
@@ -183,32 +184,59 @@ Object .assign (X3DShapeContext .prototype,
 
       return this [_lineTransformShaderNode];
    },
-   getLineTransformInstancedShader ()
+   getLineTransformInstancedShader0 ()
    {
-      this [_lineTransformInstancedShaderNode] = this .createLineTransformShader (true);
+      this [_lineTransformInstancedShaderNode0] = this .createLineTransformShader (0, true);
 
-      this .getLineTransformInstancedShader = function () { return this [_lineTransformInstancedShaderNode]; };
+      this .getLineTransformInstancedShader0 = function () { return this [_lineTransformInstancedShaderNode0]; };
 
-      Object .defineProperty (this, "getLineTransformInstancedShader", { enumerable: false });
+      Object .defineProperty (this, "getLineTransformInstancedShader0", { enumerable: false });
 
-      return this [_lineTransformInstancedShaderNode];
+      return this [_lineTransformInstancedShaderNode0];
    },
-   createLineTransformShader (instanced)
+   getLineTransformInstancedShader1 ()
    {
+      this [_lineTransformInstancedShaderNode1] = this .createLineTransformShader (1, true);
+
+      this .getLineTransformInstancedShader1 = function () { return this [_lineTransformInstancedShaderNode1]; };
+
+      Object .defineProperty (this, "getLineTransformInstancedShader1", { enumerable: false });
+
+      return this [_lineTransformInstancedShaderNode1];
+   },
+   createLineTransformShader (pass, instanced)
+   {
+      const options = [`X3D_PASS_${pass}`];
+
+      if (instanced)
+         options .push ("X3D_INSTANCING");
+
       const uniformNames = [
-         "viewport",
-         "modelViewProjectionMatrix",
-         "invModelViewProjectionMatrix",
-         "linewidthScaleFactor1_2",
-      ];
+         [
+            "viewport",
+            "modelViewProjectionMatrix",
+            "invModelViewProjectionMatrix",
+            "linewidthScaleFactor1_2",
+         ],
+         [ ],
+      ]
+      [pass];
 
       const transformFeedbackVaryings = [
-         "coordIndex0", "lineStipple0", "fogDepth0", "color0", "normal0", "vertex0",
-         "coordIndex1", "lineStipple1", "fogDepth1", "color1", "normal1", "vertex1",
-         "coordIndex2", "lineStipple2", "fogDepth2", "color2", "normal2", "vertex2",
-      ];
+         [
+            "coordIndex0", "lineStipple0", "fogDepth0", "color0", "normal0", "vertex0",
+            "coordIndex1", "lineStipple1", "fogDepth1", "color1", "normal1", "vertex1",
+            "coordIndex2", "lineStipple2", "fogDepth2", "color2", "normal2", "vertex2",
+         ],
+         [
+            "instanceMatrix0", "instanceNormalMatrix0",
+            "instanceMatrix1", "instanceNormalMatrix1",
+            "instanceMatrix2", "instanceNormalMatrix2",
+         ],
+      ]
+      [pass];
 
-      return this .createShader (`LineTransform${instanced ? "Instanced" : ""}`, "LineTransform", "LineTransform", instanced ? ["X3D_INSTANCING"] : [ ], uniformNames, transformFeedbackVaryings);
+      return this .createShader (`LineTransform${instanced ? "Instanced" : ""}`, "LineTransform", "LineTransform", options, uniformNames, transformFeedbackVaryings);
    },
    getLineTransformFeedback ()
    {
