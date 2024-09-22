@@ -285,6 +285,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          if (!linePropertiesNode)
             return false;
 
+         // Also important for display.
          if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
             this .updateLengthSoFar (gl, renderContext);
 
@@ -534,6 +535,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          if (!linePropertiesNode)
             return false;
 
+         // Also important for displayInstanced.
          if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
             this .updateLengthSoFar (gl, renderContext);
 
