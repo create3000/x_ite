@@ -80,7 +80,9 @@ main ()
       vec3 projected1 = projectPoint (x3d_Vertex1, modelViewProjectionMatrix, viewport);
    #endif
 
-   float neg = projected0 .z > 1.0 || projected1 .z > 1.0 ? -1.0 : 1.0;
+   // Test if point is behind zNear.
+   float neg0 = projected0 .z > 1.0 ? -1.0 : 1.0;
+   float neg1 = projected1 .z > 1.0 ? -1.0 : 1.0;
 
    vec2 direction = normalize (projected1 .xy - projected0 .xy);
    vec2 offset    = vec2 (-direction .y, direction .x) * linewidthScaleFactor1_2;
@@ -96,9 +98,9 @@ main ()
 
    if (gl_InstanceID % 2 == 0)
    {
-      vec2 pq0 = projected0 .xy + offset;
-      vec2 pq1 = projected0 .xy - offset;
-      vec2 pq2 = projected1 .xy - offset;
+      vec2 pq0 = projected0 .xy + offset * neg1;
+      vec2 pq1 = projected0 .xy - offset * neg1;
+      vec2 pq2 = projected1 .xy - offset * neg1;
 
       vec4 p0 = unProjectPoint (vec3 (pq0 .xy, projected0 .z), invModelViewProjectionMatrix, viewport);
       vec4 p1 = unProjectPoint (vec3 (pq1 .xy, projected0 .z), invModelViewProjectionMatrix, viewport);
@@ -127,9 +129,9 @@ main ()
    }
    else
    {
-      vec2 pq0 = projected0 .xy + offset * neg;
-      vec2 pq2 = projected1 .xy - offset * neg;
-      vec2 pq3 = projected1 .xy + offset * neg;
+      vec2 pq0 = projected0 .xy + offset * neg0;
+      vec2 pq2 = projected1 .xy - offset * neg0;
+      vec2 pq3 = projected1 .xy + offset * neg0;
 
       vec4 p0 = unProjectPoint (vec3 (pq0 .xy, projected0 .z), invModelViewProjectionMatrix, viewport);
       vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), invModelViewProjectionMatrix, viewport);
