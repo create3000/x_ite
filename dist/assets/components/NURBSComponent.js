@@ -1,5 +1,5 @@
-/* X_ITE v10.5.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.2")];
+/* X_ITE v10.5.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -3361,20 +3361,29 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    },
    buildNurbsTexCoords (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension)
    {
-      const texCoordArray = this .getTexCoords ();
+      const multiTexCoordArray = this .getMultiTexCoords ();
 
-      this .getMultiTexCoords () .push (texCoordArray);
-
-      if (this .texCoordNode && this .texCoordNode .getSize () <= uDimension * vDimension)
+      if (this .texCoordNode)
       {
-         const
-            texUDegree       = uOrder - 1,
-            texVDegree       = vOrder - 1,
-            texUKnots        = uKnots,
-            texVKnots        = vKnots,
-            texControlPoints = this .getTexControlPoints (this .texControlPoints, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, this .texCoordNode);
+         this .texCoordNode .init (multiTexCoordArray);
 
-         this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
+         const
+            textureCoordinates = this .texCoordNode .getTextureCoordinates ?.(),
+            numMultiTexCoords  = multiTexCoordArray .length;
+
+         for (let i = 0; i < numMultiTexCoords; ++ i)
+         {
+            const
+               texCoordArray    = multiTexCoordArray [i],
+               texCoordNode     = textureCoordinates ?.[i] ?? this .texCoordNode,
+               texUDegree       = uOrder - 1,
+               texVDegree       = vOrder - 1,
+               texUKnots        = uKnots,
+               texVKnots        = vKnots,
+               texControlPoints = this .getTexControlPoints (this .texControlPoints, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
+
+            this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
+         }
       }
       else if (this .nurbsTexCoordNode ?.isValid ())
       {
@@ -3385,12 +3394,17 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
             texUKnots        = this .getKnots (this .texUKnots, false, node ._uOrder .getValue (), node ._uDimension .getValue (), node ._uKnot),
             texVKnots        = this .getKnots (this .texVKnots, false, node ._vOrder .getValue (), node ._vDimension .getValue (), node ._vKnot),
             texWeights       = this .getUVWeights (this .texWeights, node ._uDimension .getValue (), node ._vDimension .getValue (), node ._weight),
-            texControlPoints = node .getControlPoints (texWeights);
+            texControlPoints = node .getControlPoints (texWeights),
+            texCoordArray    = this .getTexCoords ();
 
+         multiTexCoordArray .push (texCoordArray);
          this .createNurbsTexCoords (texUDegree, texVDegree, texUKnots, texVKnots, texControlPoints, texCoordArray);
       }
       else
       {
+         const texCoordArray = this .getTexCoords ();
+
+         multiTexCoordArray .push (texCoordArray);
          this .createDefaultNurbsTexCoords (texCoordArray);
       }
    },

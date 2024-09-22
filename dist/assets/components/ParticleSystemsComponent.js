@@ -1,5 +1,5 @@
-/* X_ITE v10.5.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.2")];
+/* X_ITE v10.5.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -2950,7 +2950,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
             // Setup shader.
 
             shaderNode .enable (gl);
-            shaderNode .setUniforms (gl, this .geometryContext, renderContext);
+            shaderNode .setUniforms (gl, renderContext, this .geometryContext);
 
             if (this .numTexCoords)
             {
