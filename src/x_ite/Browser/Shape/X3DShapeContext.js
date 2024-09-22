@@ -52,8 +52,6 @@ import UnlitMaterial     from "../../Components/Shape/UnlitMaterial.js";
 import ImageTexture      from "../../Components/Texturing/ImageTexture.js";
 import TextureProperties from "../../Components/Texturing/TextureProperties.js";
 import URLs              from "../Networking/URLs.js";
-import Matrix3           from "../../../standard/Math/Numbers/Matrix3.js";
-import Matrix4           from "../../../standard/Math/Numbers/Matrix4.js";
 
 const
    _linetypeTextures                  = Symbol (),
@@ -66,8 +64,7 @@ const
    _lineTransformShaderNode           = Symbol (),
    _lineTransformInstancedShaderNode0 = Symbol (),
    _lineTransformInstancedShaderNode1 = Symbol (),
-   _lineTransformFeedback             = Symbol (),
-   _defaultInstanceMatrices           = Symbol ();
+   _lineTransformFeedback             = Symbol ();
 
 function X3DShapeContext ()
 {
@@ -249,23 +246,6 @@ Object .assign (X3DShapeContext .prototype,
       Object .defineProperty (this, "getLineTransformFeedback", { enumerable: false });
 
       return this [_lineTransformFeedback];
-   },
-   getDefaultInstanceMatrices ()
-   {
-      const
-         gl   = this .getContext (),
-         data = new Float32Array ([... Matrix4 .Identity, ... Matrix3 .Identity]);
-
-      this [_defaultInstanceMatrices] = gl .createBuffer ();
-
-      gl .bindBuffer (gl .ARRAY_BUFFER, this [_defaultInstanceMatrices]);
-      gl .bufferData (gl .ARRAY_BUFFER, data, gl .STATIC_DRAW);
-
-      this .getDefaultInstanceMatrices = function () { return this [_defaultInstanceMatrices]; };
-
-      Object .defineProperty (this, "getDefaultInstanceMatrices", { enumerable: false });
-
-      return this [_defaultInstanceMatrices];
    },
 });
 
