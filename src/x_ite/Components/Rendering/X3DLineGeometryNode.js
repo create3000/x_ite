@@ -180,7 +180,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             }
 
             gl .frontFace (gl .CCW);
-            gl .enable (gl .CULL_FACE);
+            gl .disable (gl .CULL_FACE);
             gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount * 3);
 
             return;
@@ -366,7 +366,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                }
 
                gl .frontFace (gl .CCW);
-               gl .enable (gl .CULL_FACE);
+               gl .disable (gl .CULL_FACE);
                gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
 
                for (const node of renderModeNodes)
@@ -621,7 +621,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                }
 
                gl .frontFace (gl .CCW);
-               gl .enable (gl .CULL_FACE);
+               gl .disable (gl .CULL_FACE);
                gl .drawArrays (primitiveMode, 0, this .vertexCount * 3 * shapeNode .getNumInstances ());
 
                for (const node of renderModeNodes)
