@@ -68,12 +68,14 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, X3DGeometryNode .pr
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
-      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+      const
+         browser      = this .getBrowser (),
+         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
 
       if (this .getLive () .getValue () || alwaysUpdate)
-         this .getBrowser () .getCylinderOptions () .addInterest ("requestRebuild", this);
+         browser .getCylinderOptions () .addInterest ("requestRebuild", this);
       else
-         this .getBrowser () .getCylinderOptions () .removeInterest ("requestRebuild", this);
+         browser .getCylinderOptions () .removeInterest ("requestRebuild", this);
    },
    build ()
    {

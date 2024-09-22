@@ -71,12 +71,14 @@ Object .assign (Object .setPrototypeOf (Arc2D .prototype, X3DLineGeometryNode .p
    {
       X3DLineGeometryNode .prototype .set_live__ .call (this);
 
-      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+      const
+         browser      = this .getBrowser (),
+         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
 
       if (this .getLive () .getValue () || alwaysUpdate)
-         this .getBrowser () .getArc2DOptions () .addInterest ("requestRebuild", this);
+         browser .getArc2DOptions () .addInterest ("requestRebuild", this);
       else
-         this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
+         browser .getArc2DOptions () .removeInterest ("requestRebuild", this);
    },
    getSweepAngle ()
    {

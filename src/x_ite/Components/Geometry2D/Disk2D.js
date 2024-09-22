@@ -71,12 +71,14 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
-      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+      const
+         browser      = this .getBrowser (),
+         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
 
       if (this .getLive () .getValue () || alwaysUpdate)
-         this .getBrowser () .getDisk2DOptions () .addInterest ("requestRebuild", this);
+         browser .getDisk2DOptions () .addInterest ("requestRebuild", this);
       else
-         this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
+         browser .getDisk2DOptions () .removeInterest ("requestRebuild", this);
    },
    build ()
    {
