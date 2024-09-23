@@ -54,17 +54,16 @@ import TextureProperties from "../../Components/Texturing/TextureProperties.js";
 import URLs              from "../Networking/URLs.js";
 
 const
-   _linetypeTextures                  = Symbol (),
-   _hatchStyleTextures                = Symbol (),
-   _defaultAppearance                 = Symbol (),
-   _defaultPointProperties            = Symbol (),
-   _defaultLineProperties             = Symbol (),
-   _defaultMaterial                   = Symbol (),
-   _lineFillTextureProperties         = Symbol (),
-   _lineTransformShaderNode           = Symbol (),
-   _lineTransformInstancedShaderNode0 = Symbol (),
-   _lineTransformInstancedShaderNode1 = Symbol (),
-   _lineTransformFeedback             = Symbol ();
+   _linetypeTextures                 = Symbol (),
+   _hatchStyleTextures               = Symbol (),
+   _defaultAppearance                = Symbol (),
+   _defaultPointProperties           = Symbol (),
+   _defaultLineProperties            = Symbol (),
+   _defaultMaterial                  = Symbol (),
+   _lineFillTextureProperties        = Symbol (),
+   _lineTransformShaderNode          = Symbol (),
+   _lineTransformInstancedShaderNode = Symbol (),
+   _lineTransformFeedback            = Symbol ();
 
 function X3DShapeContext ()
 {
@@ -181,25 +180,11 @@ Object .assign (X3DShapeContext .prototype,
 
       return this [_lineTransformShaderNode];
    },
-   getLineTransformInstancedShader0 ()
+   getLineTransformInstancedShader (pass)
    {
-      this [_lineTransformInstancedShaderNode0] = this .createLineTransformShader (0, true);
+      this [_lineTransformInstancedShaderNode] ??= [ ];
 
-      this .getLineTransformInstancedShader0 = function () { return this [_lineTransformInstancedShaderNode0]; };
-
-      Object .defineProperty (this, "getLineTransformInstancedShader0", { enumerable: false });
-
-      return this [_lineTransformInstancedShaderNode0];
-   },
-   getLineTransformInstancedShader1 ()
-   {
-      this [_lineTransformInstancedShaderNode1] = this .createLineTransformShader (1, true);
-
-      this .getLineTransformInstancedShader1 = function () { return this [_lineTransformInstancedShaderNode1]; };
-
-      Object .defineProperty (this, "getLineTransformInstancedShader1", { enumerable: false });
-
-      return this [_lineTransformInstancedShaderNode1];
+      return this [_lineTransformInstancedShaderNode] [pass] ??= this .createLineTransformShader (pass, true);
    },
    createLineTransformShader (pass, instanced)
    {
@@ -216,6 +201,7 @@ Object .assign (X3DShapeContext .prototype,
             "linewidthScaleFactor1_2",
          ],
          [ ],
+         [ ],
       ]
       [pass];
 
@@ -226,9 +212,14 @@ Object .assign (X3DShapeContext .prototype,
             "coordIndex2", "lineStipple2", "fogDepth2", "color2", "normal2", "vertex2",
          ],
          [
-            "instanceMatrix0", "instanceNormalMatrix0",
-            "instanceMatrix1", "instanceNormalMatrix1",
-            "instanceMatrix2", "instanceNormalMatrix2",
+            "instanceMatrix0",
+            "instanceMatrix1",
+            "instanceMatrix2",
+         ],
+         [
+            "instanceNormalMatrix0",
+            "instanceNormalMatrix1",
+            "instanceNormalMatrix2",
          ],
       ]
       [pass];

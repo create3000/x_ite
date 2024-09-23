@@ -27,7 +27,7 @@ in vec4  x3d_Color1;
 in vec3  x3d_Normal1;
 in vec4  x3d_Vertex1;
 
-// Registered in X3DShapeContext.
+// Registered in X3DShapeContext, 3 * 16 = 48 floats.
 out float coordIndex0;
 out vec3  lineStipple0;
 out float fogDepth0;
@@ -173,25 +173,38 @@ main ()
 
 #if defined (X3D_INSTANCING)
    in mat4 x3d_InstanceMatrix;
+#endif
+
+// Registered in X3DShapeContext, 3 * 16 = 48 floats.
+out mat4 instanceMatrix0;
+out mat4 instanceMatrix1;
+out mat4 instanceMatrix2;
+
+void
+main ()
+{
+   instanceMatrix0 = x3d_InstanceMatrix;
+   instanceMatrix1 = x3d_InstanceMatrix;
+   instanceMatrix2 = x3d_InstanceMatrix;
+}
+#endif
+
+#if defined (X3D_PASS_2)
+
+#if defined (X3D_INSTANCING)
    in mat3 x3d_InstanceNormalMatrix;
 #endif
 
-// Registered in X3DShapeContext.
-out mat4 instanceMatrix0;
+// Registered in X3DShapeContext, 3 * 9 = 27 floats.
 out mat3 instanceNormalMatrix0;
-out mat4 instanceMatrix1;
 out mat3 instanceNormalMatrix1;
-out mat4 instanceMatrix2;
 out mat3 instanceNormalMatrix2;
 
 void
 main ()
 {
-   instanceMatrix0       = x3d_InstanceMatrix;
    instanceNormalMatrix0 = x3d_InstanceNormalMatrix;
-   instanceMatrix1       = x3d_InstanceMatrix;
    instanceNormalMatrix1 = x3d_InstanceNormalMatrix;
-   instanceMatrix2       = x3d_InstanceMatrix;
    instanceNormalMatrix2 = x3d_InstanceNormalMatrix;
 }
 #endif

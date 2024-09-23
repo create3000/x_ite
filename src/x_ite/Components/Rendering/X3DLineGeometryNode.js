@@ -54,8 +54,12 @@ import Vector4         from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 
 const
-   _numLines0 = Symbol (),
-   _numLines1 = Symbol ();
+   _numLines0            = Symbol (),
+   _numLines1            = Symbol (),
+   _numLines2            = Symbol (),
+   _lineTrianglesBuffer0 = Symbol (),
+   _lineTrianglesBuffer1 = Symbol (),
+   _lineTrianglesBuffer2 = Symbol ();
 
 function X3DLineGeometryNode (executionContext)
 {
@@ -555,7 +559,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             viewport             = renderObject .getViewVolume () .getViewport (),
             projectionMatrix     = renderObject .getProjectionMatrix () .get (),
             primitiveMode        = browser .getPrimitiveMode (gl .TRIANGLES),
-            transformShaderNode0 = browser .getLineTransformInstancedShader0 ();
+            transformShaderNode0 = browser .getLineTransformInstancedShader (0);
 
          modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));
          invModelViewProjectionMatrixArray .set (matrix .inverse ());
@@ -647,9 +651,10 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          if (shapeNode [_numLines0] !== numLines)
          {
-            shapeNode [_numLines0] = numLines;
+            shapeNode [_numLines0]              = numLines;
+            shapeNode [_lineTrianglesBuffer0] ??= gl .createBuffer ();
 
-            gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode .lineTrianglesBuffer0);
+            gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode [_lineTrianglesBuffer0]);
             gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
          }
 
@@ -657,7 +662,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          gl .bindBuffer (gl .ARRAY_BUFFER, null);
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
-         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, shapeNode .lineTrianglesBuffer0);
+         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, shapeNode [_lineTrianglesBuffer0]);
          gl .enable (gl .RASTERIZER_DISCARD);
          gl .beginTransformFeedback (gl .POINTS);
          gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2 * shapeNode .getNumInstances ());
@@ -668,13 +673,13 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          // DEBUG
 
          // const data = new Float32Array (16 * 6 * this .vertexCount / 2);
-         // gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode .lineTrianglesBuffer0);
+         // gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode [_lineTrianglesBuffer0]);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
          // console .log (data);
 
          // Pass 1
 
-         const transformShaderNode1 = browser .getLineTransformInstancedShader1 ();
+         const transformShaderNode1 = browser .getLineTransformInstancedShader (1);
 
          transformShaderNode1 .enable (gl);
 
@@ -682,31 +687,27 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (transformShaderNode1 .getProgram ()))
          {
-            // TODO: skinning is not implemented with thick lines, and must be done in the transform shader.
-
-            const { instancesStride, matrixOffset, normalMatrixOffset } = shapeNode;
+            const { instancesStride, matrixOffset } = shapeNode;
 
             transformShaderNode1 .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
-
-            if (normalMatrixOffset !== undefined)
-               transformShaderNode1 .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
          }
 
          // Create lineTrianglesBuffer1
 
          if (shapeNode [_numLines1] !== numLines)
          {
-            shapeNode [_numLines1] = numLines;
+            shapeNode [_numLines1]              = numLines;
+            shapeNode [_lineTrianglesBuffer1] ??= gl .createBuffer ();
 
-            gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode .lineTrianglesBuffer1);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (25 * 6 * numLines), gl .DYNAMIC_DRAW);
+            gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode [_lineTrianglesBuffer1]);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
          }
 
          // Transform lines.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, null);
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
-         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, shapeNode .lineTrianglesBuffer1);
+         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, shapeNode [_lineTrianglesBuffer1]);
          gl .enable (gl .RASTERIZER_DISCARD);
          gl .beginTransformFeedback (gl .POINTS);
          gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount, shapeNode .getNumInstances ());
@@ -716,10 +717,58 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          // DEBUG
 
-         // const data = new Float32Array ((16 + 9) * 6 * 2);
-         // gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode .lineTrianglesBuffer1);
+         // const data = new Float32Array (16 * 6 * 2);
+         // gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode [_lineTrianglesBuffer1]);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
          // console .log (data);
+
+         // Pass 2
+
+         if (this .hasNormals && shapeNode .normalMatrixOffset)
+         {
+            const transformShaderNode2 = browser .getLineTransformInstancedShader (2);
+
+            transformShaderNode2 .enable (gl);
+
+            // Setup vertex attributes.
+
+            if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (transformShaderNode2 .getProgram ()))
+            {
+               const { instancesStride, normalMatrixOffset } = shapeNode;
+
+               transformShaderNode2 .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
+            }
+
+            // Create lineTrianglesBuffer2
+
+            if (shapeNode [_numLines2] !== numLines)
+            {
+               shapeNode [_numLines2]              = numLines;
+               shapeNode [_lineTrianglesBuffer2] ??= gl .createBuffer ();
+
+               gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode [_lineTrianglesBuffer2]);
+               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (9 * 6 * numLines), gl .DYNAMIC_DRAW);
+            }
+
+            // Transform lines.
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, null);
+            gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
+            gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, shapeNode [_lineTrianglesBuffer2]);
+            gl .enable (gl .RASTERIZER_DISCARD);
+            gl .beginTransformFeedback (gl .POINTS);
+            gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount, shapeNode .getNumInstances ());
+            gl .endTransformFeedback ();
+            gl .disable (gl .RASTERIZER_DISCARD);
+            gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
+
+            // DEBUG
+
+            // const data = new Float32Array (9 * 6 * 2);
+            // gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode [_lineTrianglesBuffer2]);
+            // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
+            // console .log (data);
+         }
 
          // Render triangles.
 
@@ -735,18 +784,10 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
          {
-            const
-               instancesStride    = 25 * Float32Array .BYTES_PER_ELEMENT,
-               matrixOffset       = 0,
-               normalMatrixOffset = 16 * Float32Array .BYTES_PER_ELEMENT;
+            shaderNode .enableInstanceMatrixAttribute (gl, shapeNode [_lineTrianglesBuffer1], 0, 0, 0);
 
-            shaderNode .enableInstanceMatrixAttribute (gl, shapeNode .lineTrianglesBuffer1, instancesStride, matrixOffset, 0);
-
-            if (this .hasNormals)
-            {
-               if (shapeNode .normalMatrixOffset)
-                  shaderNode .enableInstanceNormalMatrixAttribute (gl, shapeNode .lineTrianglesBuffer1, instancesStride, normalMatrixOffset, 0);
-            }
+            if (this .hasNormals && shapeNode .normalMatrixOffset)
+               shaderNode .enableInstanceNormalMatrixAttribute (gl, shapeNode [_lineTrianglesBuffer2], 0, 0, 0);
 
             const
                stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
@@ -760,19 +801,19 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             // for (let i = 0, length = attribNodes .length; i < length; ++ i)
             //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-            shaderNode .enableCoordIndexAttribute  (gl, shapeNode .lineTrianglesBuffer0, stride, coordIndexOffset);
-            shaderNode .enableLineStippleAttribute (gl, shapeNode .lineTrianglesBuffer0, stride, lineStippleOffset);
+            shaderNode .enableCoordIndexAttribute  (gl, shapeNode [_lineTrianglesBuffer0], stride, coordIndexOffset);
+            shaderNode .enableLineStippleAttribute (gl, shapeNode [_lineTrianglesBuffer0], stride, lineStippleOffset);
 
             if (this .hasFogCoords)
-               shaderNode .enableFogDepthAttribute (gl, shapeNode .lineTrianglesBuffer0, stride, fogCoordOffset);
+               shaderNode .enableFogDepthAttribute (gl, shapeNode [_lineTrianglesBuffer0], stride, fogCoordOffset);
 
             if (geometryContext .colorMaterial)
-               shaderNode .enableColorAttribute (gl, shapeNode .lineTrianglesBuffer0, stride, colorOffset);
+               shaderNode .enableColorAttribute (gl, shapeNode [_lineTrianglesBuffer0], stride, colorOffset);
 
             if (this .hasNormals)
-               shaderNode .enableNormalAttribute (gl, shapeNode .lineTrianglesBuffer0, stride, normalOffset);
+               shaderNode .enableNormalAttribute (gl, shapeNode [_lineTrianglesBuffer0], stride, normalOffset);
 
-            shaderNode .enableVertexAttribute (gl, shapeNode .lineTrianglesBuffer0, stride, vertexOffset);
+            shaderNode .enableVertexAttribute (gl, shapeNode [_lineTrianglesBuffer0], stride, vertexOffset);
 
             this .updateInstances = false;
          }

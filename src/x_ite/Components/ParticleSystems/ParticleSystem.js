@@ -187,9 +187,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          thickLinesVertexArrayObject: new VertexArray (gl),
       });
 
-      this .lineTrianglesBuffer0 = gl .createBuffer ();
-      this .lineTrianglesBuffer1 = gl .createBuffer ();
-
       // Create forces stuff.
 
       this .forcesTexture       = this .createTexture ();
