@@ -127,32 +127,25 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
 
       return function ()
       {
-         if (this .numInstances)
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
-            if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+            if (this .getGeometry ())
             {
-               if (this .getGeometry ())
-               {
-                  const geometryBBox = this .getGeometry () .getBBox ();
+               this .bbox .set ();
 
-                  this .bbox .set ();
+               const geometryBBox = this .getGeometry () .getBBox ();
 
-                  for (const matrix of this .matrices)
-                     this .bbox .add (bbox .assign (geometryBBox) .multRight (matrix));
-               }
-               else
-               {
-                  this .bbox .set ();
-               }
+               for (const matrix of this .matrices)
+                  this .bbox .add (bbox .assign (geometryBBox) .multRight (matrix));
             }
             else
             {
-               this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+               this .bbox .set ();
             }
          }
          else
          {
-            this .bbox .set ();
+            this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
          }
 
          this .getBBoxSize ()   .assign (this .bbox .size);
