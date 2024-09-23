@@ -316,6 +316,7 @@ const X_ITE_TESTS = [
    { path: "Rendering/IndexedTriangleStripSet.x3dv" },
    { path: "Rendering/L-System.x3dz" },
    { path: "Rendering/LineSet.x3dv" },
+   { path: "Rendering/LinesInstancedNormals.x3d" },
    { path: "Rendering/Normals.x3d" },
    { path: "Rendering/OIT.x3d" },
    { path: "Rendering/PointSet.x3dv" },
