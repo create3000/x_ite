@@ -695,7 +695,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             shapeNode .numLines1 = numLines;
 
             gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode .lineTrianglesBuffer1);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (32 * 6 * numLines), gl .DYNAMIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (25 * 6 * numLines), gl .DYNAMIC_DRAW);
          }
 
          // Transform lines.
@@ -712,8 +712,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          // DEBUG
 
-         // const data = new Float32Array (16 * 6 * 2);
-         // gl .bindBuffer (gl .ARRAY_BUFFER, instances .lineTrianglesBuffer1);
+         // const data = new Float32Array ((16 + 9) * 6 * 2);
+         // gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode .lineTrianglesBuffer1);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
          // console .log (data);
 
@@ -732,14 +732,17 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
          {
             const
-               instancesStride    = 32 * Float32Array .BYTES_PER_ELEMENT,
+               instancesStride    = 25 * Float32Array .BYTES_PER_ELEMENT,
                matrixOffset       = 0,
-               normalMatrixOffset = 16;
+               normalMatrixOffset = 16 * Float32Array .BYTES_PER_ELEMENT;
 
             shaderNode .enableInstanceMatrixAttribute (gl, shapeNode .lineTrianglesBuffer1, instancesStride, matrixOffset, 0);
 
-            if (shapeNode .normalMatrixOffset)
-               shaderNode .enableInstanceNormalMatrixAttribute (gl, shapeNode .lineTrianglesBuffer1, instancesStride, normalMatrixOffset, 0);
+            if (this .hasNormals)
+            {
+               if (shapeNode .normalMatrixOffset)
+                  shaderNode .enableInstanceNormalMatrixAttribute (gl, shapeNode .lineTrianglesBuffer1, instancesStride, normalMatrixOffset, 0);
+            }
 
             const
                stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
@@ -762,7 +765,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             if (geometryContext .colorMaterial)
                shaderNode .enableColorAttribute (gl, shapeNode .lineTrianglesBuffer0, stride, colorOffset);
 
-               if (this .hasNormals)
+            if (this .hasNormals)
                shaderNode .enableNormalAttribute (gl, shapeNode .lineTrianglesBuffer0, stride, normalOffset);
 
             shaderNode .enableVertexAttribute (gl, shapeNode .lineTrianglesBuffer0, stride, vertexOffset);

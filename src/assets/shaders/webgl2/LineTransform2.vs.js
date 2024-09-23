@@ -173,16 +173,16 @@ main ()
 
 #if defined (X3D_INSTANCING)
    in mat4 x3d_InstanceMatrix;
-   in mat4 x3d_InstanceNormalMatrix;
+   in mat3 x3d_InstanceNormalMatrix;
 #endif
 
 // Registered in X3DShapeContext.
 out mat4 instanceMatrix0;
-out mat4 instanceNormalMatrix0;
+out mat3 instanceNormalMatrix0;
 out mat4 instanceMatrix1;
-out mat4 instanceNormalMatrix1;
+out mat3 instanceNormalMatrix1;
 out mat4 instanceMatrix2;
-out mat4 instanceNormalMatrix2;
+out mat3 instanceNormalMatrix2;
 
 void
 main ()
