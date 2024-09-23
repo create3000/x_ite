@@ -410,16 +410,13 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                   transformShaderNode2 .enableFloatAttrib (gl, "x3d_Tangent1", this .tangentBuffer, 4, tangentStride, tangentOffset1);
                }
 
-               if (this .hasNormals)
-               {
-                  const
-                     normalStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
-                     normalOffset0 = 0,
-                     normalOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT;
+               const
+                  normalStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
+                  normalOffset0 = 0,
+                  normalOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT;
 
-                  transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
-                  transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
-               }
+               transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
+               transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
             }
 
             // Create lineTrianglesBuffer2
@@ -477,8 +474,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                if (this .hasTangents)
                   shaderNode .enableTangentAttribute (gl, this .lineTrianglesBuffer2, stride, tangentOffset);
 
-               if (this .hasNormals)
-                  shaderNode .enableNormalAttribute (gl, this .lineTrianglesBuffer2, stride, normalOffset);
+               shaderNode .enableNormalAttribute (gl, this .lineTrianglesBuffer2, stride, normalOffset);
             }
 
             const
@@ -809,16 +805,13 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                   transformShaderNode2 .enableFloatAttrib (gl, "x3d_Tangent1", this .tangentBuffer, 4, tangentStride, tangentOffset1);
                }
 
-               if (this .hasNormals)
-               {
-                  const
-                     normalStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
-                     normalOffset0 = 0,
-                     normalOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT;
+               const
+                  normalStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
+                  normalOffset0 = 0,
+                  normalOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT;
 
-                  transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
-                  transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
-               }
+               transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
+               transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
             }
 
             // Create lineTrianglesBuffer2
@@ -882,8 +875,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                if (this .hasTangents)
                   shaderNode .enableTangentAttribute (gl, shapeNode [_lineTrianglesBuffer2], stride, tangentOffset);
 
-               if (this .hasNormals)
-                  shaderNode .enableNormalAttribute (gl, shapeNode [_lineTrianglesBuffer2], stride, normalOffset);
+               shaderNode .enableNormalAttribute (gl, shapeNode [_lineTrianglesBuffer2], stride, normalOffset);
             }
 
             const
