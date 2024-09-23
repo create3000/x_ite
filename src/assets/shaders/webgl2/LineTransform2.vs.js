@@ -196,7 +196,7 @@ main ()
    in vec4 x3d_Tangent;
 #endif
 
-// Registered in X3DShapeContext, 3 * 9 = 27 floats.
+// Registered in X3DShapeContext, 3 * (9 + 4) = 39 floats.
 out mat3 instanceNormalMatrix0;
 out vec4 tangent0;
 out mat3 instanceNormalMatrix1;
