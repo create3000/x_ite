@@ -201,9 +201,9 @@ Object .assign (X3DShapeContext .prototype,
 
       const transformFeedbackVaryings = [
          [
-            "coordIndex0", "lineStipple0", "fogDepth0", "color0", "normal0", "vertex0",
-            "coordIndex1", "lineStipple1", "fogDepth1", "color1", "normal1", "vertex1",
-            "coordIndex2", "lineStipple2", "fogDepth2", "color2", "normal2", "vertex2",
+            "coordIndex0", "lineStipple0", "fogDepth0", "color0", "vertex0",
+            "coordIndex1", "lineStipple1", "fogDepth1", "color1", "vertex1",
+            "coordIndex2", "lineStipple2", "fogDepth2", "color2", "vertex2",
          ],
          [
             "instanceMatrix0",
@@ -211,9 +211,9 @@ Object .assign (X3DShapeContext .prototype,
             "instanceMatrix2",
          ],
          [
-            "instanceNormalMatrix0", "tangent0",
-            "instanceNormalMatrix1", "tangent1",
-            "instanceNormalMatrix2", "tangent2",
+            "instanceNormalMatrix0", "tangent0", "normal0",
+            "instanceNormalMatrix1", "tangent1", "normal1",
+            "instanceNormalMatrix2", "tangent2", "normal2",
          ],
       ]
       [pass];

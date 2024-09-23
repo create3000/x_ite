@@ -18,13 +18,11 @@ in float x3d_LengthSoFar;
 in float x3d_CoordIndex0;
 in float x3d_FogDepth0;
 in vec4  x3d_Color0;
-in vec3  x3d_Normal0;
 in vec4  x3d_Vertex0;
 
 in float x3d_CoordIndex1;
 in float x3d_FogDepth1;
 in vec4  x3d_Color1;
-in vec3  x3d_Normal1;
 in vec4  x3d_Vertex1;
 
 // Registered in X3DShapeContext, 3 * 16 = 48 floats.
@@ -32,21 +30,18 @@ out float coordIndex0;
 out vec3  lineStipple0;
 out float fogDepth0;
 out vec4  color0;
-out vec3  normal0;
 out vec4  vertex0;
 
 out float coordIndex1;
 out vec3  lineStipple1;
 out float fogDepth1;
 out vec4  color1;
-out vec3  normal1;
 out vec4  vertex1;
 
 out float coordIndex2;
 out vec3  lineStipple2;
 out float fogDepth2;
 out vec4  color2;
-out vec3  normal2;
 out vec4  vertex2;
 
 vec3
@@ -118,21 +113,18 @@ main ()
       lineStipple0 = l0;
       fogDepth0    = x3d_FogDepth0;
       color0       = x3d_Color0;
-      normal0      = x3d_Normal0;
       vertex0      = p0;
 
       coordIndex1  = x3d_CoordIndex0;
       lineStipple1 = l0;
       fogDepth1    = x3d_FogDepth0;
       color1       = x3d_Color0;
-      normal1      = x3d_Normal0;
       vertex1      = p1;
 
       coordIndex2  = x3d_CoordIndex1;
       lineStipple2 = l1;
       fogDepth2    = x3d_FogDepth1;
       color2       = x3d_Color1;
-      normal2      = x3d_Normal1;
       vertex2      = p2;
    }
    else
@@ -149,21 +141,18 @@ main ()
       lineStipple0 = l0;
       fogDepth0    = x3d_FogDepth0;
       color0       = x3d_Color0;
-      normal0      = x3d_Normal0;
       vertex0      = p0;
 
       coordIndex1  = x3d_CoordIndex1;
       lineStipple1 = l1;
       fogDepth1    = x3d_FogDepth1;
       color1       = x3d_Color1;
-      normal1      = x3d_Normal1;
       vertex1      = p2;
 
       coordIndex2  = x3d_CoordIndex1;
       lineStipple2 = l1;
       fogDepth2    = x3d_FogDepth1;
       color2       = x3d_Color1;
-      normal2      = x3d_Normal1;
       vertex2      = p3;
    }
 }
@@ -193,26 +182,50 @@ main ()
 
 #if defined (X3D_INSTANCING)
    in mat3 x3d_InstanceNormalMatrix;
-   in vec4 x3d_Tangent;
+   in vec3 x3d_Normal0;
+   in vec3 x3d_Normal1;
+   in vec4 x3d_Tangent0;
+   in vec4 x3d_Tangent1;
 #endif
 
 // Registered in X3DShapeContext, 3 * (9 + 4) = 39 floats.
 out mat3 instanceNormalMatrix0;
 out vec4 tangent0;
+out vec3 normal0;
 out mat3 instanceNormalMatrix1;
 out vec4 tangent1;
+out vec3 normal1;
 out mat3 instanceNormalMatrix2;
 out vec4 tangent2;
+out vec3 normal2;
 
 void
 main ()
 {
-   instanceNormalMatrix0 = x3d_InstanceNormalMatrix;
-   tangent0              = x3d_Tangent;
-   instanceNormalMatrix1 = x3d_InstanceNormalMatrix;
-   tangent1              = x3d_Tangent;
-   instanceNormalMatrix2 = x3d_InstanceNormalMatrix;
-   tangent2              = x3d_Tangent;
+   if (gl_InstanceID % 2 == 0)
+   {
+      instanceNormalMatrix0 = x3d_InstanceNormalMatrix;
+      tangent0              = x3d_Tangent0;
+      normal0               = x3d_Normal0;
+      instanceNormalMatrix1 = x3d_InstanceNormalMatrix;
+      tangent1              = x3d_Tangent0;
+      normal1               = x3d_Normal0;
+      instanceNormalMatrix2 = x3d_InstanceNormalMatrix;
+      tangent2              = x3d_Tangent1;
+      normal2               = x3d_Normal1;
+   }
+   else
+   {
+      instanceNormalMatrix0 = x3d_InstanceNormalMatrix;
+      tangent0              = x3d_Tangent0;
+      normal0               = x3d_Normal0;
+      instanceNormalMatrix1 = x3d_InstanceNormalMatrix;
+      tangent1              = x3d_Tangent1;
+      normal1               = x3d_Normal1;
+      instanceNormalMatrix2 = x3d_InstanceNormalMatrix;
+      tangent2              = x3d_Tangent1;
+      normal2               = x3d_Normal1;
+   }
 }
 #endif
 `;

@@ -338,9 +338,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                colorStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
                colorOffset0      = 0,
                colorOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT,
-               normalStride      = 6 * Float32Array .BYTES_PER_ELEMENT,
-               normalOffset0     = 0,
-               normalOffset1     = 3 * Float32Array .BYTES_PER_ELEMENT,
                vertexStride      = 8 * Float32Array .BYTES_PER_ELEMENT,
                vertexOffset0     = 0,
                vertexOffset1     = 4 * Float32Array .BYTES_PER_ELEMENT;
@@ -368,15 +365,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
             }
 
-            if (this .hasNormals)
-            {
-               transformShaderNode .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
-               transformShaderNode .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
-            }
-
             transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
             transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
-
          }
 
          // Transform lines.
@@ -413,13 +403,12 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          if (this .thickLinesVertexArrayObject .enable (shaderNode .getProgram ()))
          {
             const
-               stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
+               stride            = 13 * Float32Array .BYTES_PER_ELEMENT,
                coordIndexOffset  = 0,
                lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
                fogCoordOffset    = 4 * Float32Array .BYTES_PER_ELEMENT,
                colorOffset       = 5 * Float32Array .BYTES_PER_ELEMENT,
-               normalOffset      = 9 * Float32Array .BYTES_PER_ELEMENT,
-               vertexOffset      = 12 * Float32Array .BYTES_PER_ELEMENT;
+               vertexOffset      = 9 * Float32Array .BYTES_PER_ELEMENT;
 
             // for (let i = 0, length = attribNodes .length; i < length; ++ i)
             //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -432,9 +421,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
             if (this .colorMaterial)
                shaderNode .enableColorAttribute (gl, this .lineTrianglesBuffer, stride, colorOffset);
-
-               if (this .hasNormals)
-               shaderNode .enableNormalAttribute (gl, this .lineTrianglesBuffer, stride, normalOffset);
 
             shaderNode .enableVertexAttribute (gl, this .lineTrianglesBuffer, stride, vertexOffset);
          }
@@ -582,8 +568,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          if (instances .thickLinesVertexArrayObject .update (this .updateInstances) .enable (transformShaderNode0 .getProgram ()))
          {
-            // TODO: skinning is not implemented with thick lines, and must be done in the transform shader.
-
             const { instancesStride, matrixOffset, colorOffset } = shapeNode;
 
             transformShaderNode0 .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 2);
@@ -600,9 +584,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                colorStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
                colorOffset0      = 0,
                colorOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT,
-               normalStride      = 6 * Float32Array .BYTES_PER_ELEMENT,
-               normalOffset0     = 0,
-               normalOffset1     = 3 * Float32Array .BYTES_PER_ELEMENT,
                vertexStride      = 8 * Float32Array .BYTES_PER_ELEMENT,
                vertexOffset0     = 0,
                vertexOffset1     = 4 * Float32Array .BYTES_PER_ELEMENT;
@@ -638,12 +619,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                }
             }
 
-            if (this .hasNormals)
-            {
-               transformShaderNode0 .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
-               transformShaderNode0 .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
-            }
-
             transformShaderNode0 .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
             transformShaderNode0 .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
          }
@@ -658,7 +633,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             shapeNode [_lineTrianglesBuffer0] ??= gl .createBuffer ();
 
             gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode [_lineTrianglesBuffer0]);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (13 * 6 * numLines), gl .DYNAMIC_DRAW);
          }
 
          // Transform lines.
@@ -739,10 +714,32 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             {
                const { instancesStride, normalMatrixOffset } = shapeNode;
 
-               transformShaderNode2 .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
+               transformShaderNode2 .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 2);
 
                if (this .hasTangents)
                   transformShaderNode2 .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
+
+               const
+                  tangentStride  = 8 * Float32Array .BYTES_PER_ELEMENT,
+                  tangentOffset0 = 0,
+                  tangentOffset1 = 4 * Float32Array .BYTES_PER_ELEMENT;
+
+               if (this .hasTangents)
+               {
+                  transformShaderNode2 .enableFloatAttrib (gl, "x3d_Tangent0", this .tangentBuffer, 4, tangentStride, tangentOffset0);
+                  transformShaderNode2 .enableFloatAttrib (gl, "x3d_Tangent1", this .tangentBuffer, 4, tangentStride, tangentOffset1);
+               }
+
+               const
+                  normalStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
+                  normalOffset0 = 0,
+                  normalOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT;
+
+               if (this .hasNormals)
+               {
+                  transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
+                  transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
+               }
             }
 
             // Create lineTrianglesBuffer2
@@ -753,7 +750,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                shapeNode [_lineTrianglesBuffer2] ??= gl .createBuffer ();
 
                gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode [_lineTrianglesBuffer2]);
-               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ((9 + 4) * 6 * numLines), gl .DYNAMIC_DRAW);
+               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ((9 + 4 + 3) * 6 * numLines), gl .DYNAMIC_DRAW);
             }
 
             // Transform lines.
@@ -763,7 +760,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, shapeNode [_lineTrianglesBuffer2]);
             gl .enable (gl .RASTERIZER_DISCARD);
             gl .beginTransformFeedback (gl .POINTS);
-            gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount, shapeNode .getNumInstances ());
+            gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2 * shapeNode .getNumInstances ());
             gl .endTransformFeedback ();
             gl .disable (gl .RASTERIZER_DISCARD);
             gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
@@ -795,25 +792,28 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             if (this .hasNormals)
             {
                const
-                  stride             = (9 + 4) * Float32Array .BYTES_PER_ELEMENT,
+                  stride             = (9 + 4 + 3) * Float32Array .BYTES_PER_ELEMENT,
                   normalMatrixOffset = 0,
-                  tangentOffset      = 9 * Float32Array .BYTES_PER_ELEMENT;
+                  tangentOffset      = 9 * Float32Array .BYTES_PER_ELEMENT,
+                  normalOffset       = 13 * Float32Array .BYTES_PER_ELEMENT;
 
                if (shapeNode .normalMatrixOffset)
                   shaderNode .enableInstanceNormalMatrixAttribute (gl, shapeNode [_lineTrianglesBuffer2], stride, normalMatrixOffset, 0);
 
                if (this .hasTangents)
                   shaderNode .enableTangentAttribute (gl, shapeNode [_lineTrianglesBuffer2], stride, tangentOffset);
+
+               if (this .hasNormals)
+                  shaderNode .enableNormalAttribute (gl, shapeNode [_lineTrianglesBuffer2], stride, normalOffset);
             }
 
             const
-               stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
+               stride            = 13 * Float32Array .BYTES_PER_ELEMENT,
                coordIndexOffset  = 0,
                lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
                fogCoordOffset    = 4 * Float32Array .BYTES_PER_ELEMENT,
                colorOffset       = 5 * Float32Array .BYTES_PER_ELEMENT,
-               normalOffset      = 9 * Float32Array .BYTES_PER_ELEMENT,
-               vertexOffset      = 12 * Float32Array .BYTES_PER_ELEMENT;
+               vertexOffset      = 9 * Float32Array .BYTES_PER_ELEMENT;
 
             // for (let i = 0, length = attribNodes .length; i < length; ++ i)
             //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -826,9 +826,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
             if (geometryContext .colorMaterial)
                shaderNode .enableColorAttribute (gl, shapeNode [_lineTrianglesBuffer0], stride, colorOffset);
-
-            if (this .hasNormals)
-               shaderNode .enableNormalAttribute (gl, shapeNode [_lineTrianglesBuffer0], stride, normalOffset);
 
             shaderNode .enableVertexAttribute (gl, shapeNode [_lineTrianglesBuffer0], stride, vertexOffset);
 
