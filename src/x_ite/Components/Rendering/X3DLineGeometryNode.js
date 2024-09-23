@@ -53,6 +53,10 @@ import Vector2         from "../../../standard/Math/Numbers/Vector2.js";
 import Vector4         from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 
+const
+   _numLines0 = Symbol (),
+   _numLines1 = Symbol ();
+
 function X3DLineGeometryNode (executionContext)
 {
    if (!this .getExecutionContext ())
@@ -641,9 +645,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          const numLines = this .getVertices () .length / 8 * shapeNode .getNumInstances ();
 
-         if (shapeNode .numLines0 !== numLines)
+         if (shapeNode [_numLines0] !== numLines)
          {
-            shapeNode .numLines0 = numLines;
+            shapeNode [_numLines0] = numLines;
 
             gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode .lineTrianglesBuffer0);
             gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
@@ -690,9 +694,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          // Create lineTrianglesBuffer1
 
-         if (shapeNode .numLines1 !== numLines)
+         if (shapeNode [_numLines1] !== numLines)
          {
-            shapeNode .numLines1 = numLines;
+            shapeNode [_numLines1] = numLines;
 
             gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode .lineTrianglesBuffer1);
             gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (25 * 6 * numLines), gl .DYNAMIC_DRAW);
