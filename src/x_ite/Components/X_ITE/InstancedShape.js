@@ -69,14 +69,11 @@ function InstancedShape (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "matrices", new Fields .SFTime ());
 
-   this .min   = new Vector3 ();
-   this .max   = new Vector3 ();
-   this .scale = new Vector3 (1, 1, 1);
-
    this .numInstances       = 0;
    this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (16 + 9); // mat4 + mat3
    this .matrixOffset       = 0;
    this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * 16;
+   this .matrices           = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode .prototype),
@@ -126,10 +123,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    },
    set_bbox__: (function ()
    {
-      const
-         min  = new Vector3 (),
-         max  = new Vector3 (),
-         bbox = new Box3 ();
+      const bbox = new Box3 ();
 
       return function ()
       {
@@ -138,18 +132,18 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
             if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
             {
                if (this .getGeometry ())
-                  bbox .assign (this .getGeometry () .getBBox ());
+               {
+                  const geometryBBox = this .getGeometry () .getBBox ();
+
+                  this .bbox .set ();
+
+                  for (const matrix of this .matrices)
+                     this .bbox .add (bbox .assign (geometryBBox) .multRight (matrix));
+               }
                else
-                  bbox .set ();
-
-               const
-                  size1_2 = bbox .size .multiply (this .scale .magnitude () / 2),
-                  center  = bbox .center;
-
-               min .assign (this .min) .add (center) .subtract (size1_2);
-               max .assign (this .max) .add (center) .add      (size1_2);
-
-               this .bbox .setExtents (min, max);
+               {
+                  this .bbox .set ();
+               }
             }
             else
             {
@@ -187,33 +181,25 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          numInstances         = Math .max (numTranslations, numRotations, numScales, numScaleOrientations, numCenters),
          stride               = this .instancesStride / Float32Array .BYTES_PER_ELEMENT,
          length               = this .instancesStride * numInstances,
-         data                 = new Float32Array (length),
-         matrix               = new Matrix4 ();
+         data                 = new Float32Array (length);
 
       this .numInstances = numInstances;
 
-      const
-         min   = this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
-         max   = this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY),
-         scale = this .scale .assign (numScales ? max : Vector3 .One);
-
       for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
       {
+         const matrix = this .matrices [i] ??= new Matrix4 ();
+
          matrix .set (numTranslations      ? translations      [Math .min (i, numTranslations      - 1)] .getValue () : null,
                       numRotations         ? rotations         [Math .min (i, numRotations         - 1)] .getValue () : null,
                       numScales            ? scales            [Math .min (i, numScales            - 1)] .getValue () : null,
                       numScaleOrientations ? scaleOrientations [Math .min (i, numScaleOrientations - 1)] .getValue () : null,
                       numCenters           ? centers           [Math .min (i, numCenters           - 1)] .getValue () : null);
 
-         if (numScales)
-            scale .max (scales [Math .min (i, numScales - 1)] .getValue ());
-
          data .set (matrix, o);
          data .set (matrix .submatrix .transpose () .inverse (), o + 16);
-
-         min .min (matrix .origin);
-         max .max (matrix .origin);
       }
+
+      this .matrices .length = numInstances;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .instances);
       gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
