@@ -989,8 +989,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .geometryKey += this .geometryType;
       this .geometryKey += this .hasFogCoords  ? "1" : "0";
       this .geometryKey += this .colorMaterial ? "1" : "0";
-      this .geometryKey += this .hasNormals    ? "1" : "0";
       this .geometryKey += this .hasTangents   ? "1" : "0";
+      this .geometryKey += this .hasNormals    ? "1" : "0";
    },
    updateRenderFunctions ()
    {

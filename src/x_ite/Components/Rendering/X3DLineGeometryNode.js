@@ -171,11 +171,11 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          shaderNode .enableLineStippleAttribute (gl, this .lineStippleBuffer, 0, 0);
 
-         if (this .hasNormals)
-            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
-
          if (this .hasTangents)
             shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
+
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
       }
@@ -261,11 +261,11 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          if (this .colorMaterial)
             shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-         if (this .hasNormals)
-            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
-
          if (this .hasTangents)
             shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
+
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
       }
@@ -509,6 +509,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             else
                shaderNode .enableColorAttribute (gl, instances, instancesStride, colorOffset, 1);
          }
+
+         if (this .hasTangents)
+            shaderNode .enableNormalAttribute (gl, this .tangentBuffer, 0, 0);
 
          if (this .hasNormals)
             shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
