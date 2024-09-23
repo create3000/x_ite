@@ -72,7 +72,7 @@ function X3DLineGeometryNode (executionContext)
 
    this .lineStipples                = new Float32Array ();
    this .lineStippleBuffer           = gl .createBuffer ();
-   this .lineTrianglesBuffer         = gl .createBuffer ();
+   this .lineTrianglesBuffer0        = gl .createBuffer ();
    this .thickLinesVertexArrayObject = new VertexArray (gl);
 
    this .setGeometryType (1);
@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
       gl .bufferData (gl .ARRAY_BUFFER, this .lineStipples, gl .DYNAMIC_DRAW);
 
-      gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer);
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer0);
       gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
    },
    updateLengthSoFar: (() =>
@@ -198,19 +198,14 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       if (this .thickLinesVertexArrayObject .enable (shaderNode .getProgram ()))
       {
          const
-            stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
+            stride            = 13 * Float32Array .BYTES_PER_ELEMENT,
             coordIndexOffset  = 0,
             lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
-            normalOffset      = 9 * Float32Array .BYTES_PER_ELEMENT,
-            vertexOffset      = 12 * Float32Array .BYTES_PER_ELEMENT;
+            vertexOffset      = 9 * Float32Array .BYTES_PER_ELEMENT;
 
-         shaderNode .enableCoordIndexAttribute  (gl, this .lineTrianglesBuffer, stride, coordIndexOffset);
-         shaderNode .enableLineStippleAttribute (gl, this .lineTrianglesBuffer, stride, lineStippleOffset);
-
-         if (this .hasNormals)
-            shaderNode .enableNormalAttribute (gl, this .lineTrianglesBuffer, stride, normalOffset);
-
-         shaderNode .enableVertexAttribute (gl, this .lineTrianglesBuffer, stride, vertexOffset);
+         shaderNode .enableCoordIndexAttribute  (gl, this .lineTrianglesBuffer0, stride, coordIndexOffset);
+         shaderNode .enableLineStippleAttribute (gl, this .lineTrianglesBuffer0, stride, lineStippleOffset);
+         shaderNode .enableVertexAttribute      (gl, this .lineTrianglesBuffer0, stride, vertexOffset);
       }
 
       gl .frontFace (gl .CCW);
@@ -313,7 +308,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));
          invModelViewProjectionMatrixArray .set (matrix .inverse ());
 
-         // Start
+         // Pass 1
 
          transformShaderNode .enable (gl);
 
@@ -369,11 +364,13 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
          }
 
+         const numLines = this .getVertices () .length / 8;
+
          // Transform lines.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, null);
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
-         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .lineTrianglesBuffer);
+         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .lineTrianglesBuffer0);
          gl .enable (gl .RASTERIZER_DISCARD);
          gl .beginTransformFeedback (gl .POINTS);
          gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2);
@@ -384,9 +381,77 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          // DEBUG
 
          // const data = new Float32Array (16 * 6 * this .vertexCount / 2);
-         // gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer);
+         // gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer0);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
          // console .log (data);
+
+         // Pass 2
+
+         if (this .hasNormals)
+         {
+            const transformShaderNode2 = browser .getLineTransformInstancedShader (2);
+
+            transformShaderNode2 .enable (gl);
+
+            // Setup vertex attributes.
+            if (this .thickLinesVertexArrayObject .enable (transformShaderNode2 .getProgram ()))
+            {
+               if (this .hasTangents)
+                  transformShaderNode2 .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
+
+               if (this .hasTangents)
+               {
+                  const
+                     tangentStride  = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     tangentOffset0 = 0,
+                     tangentOffset1 = 4 * Float32Array .BYTES_PER_ELEMENT;
+
+                  transformShaderNode2 .enableFloatAttrib (gl, "x3d_Tangent0", this .tangentBuffer, 4, tangentStride, tangentOffset0);
+                  transformShaderNode2 .enableFloatAttrib (gl, "x3d_Tangent1", this .tangentBuffer, 4, tangentStride, tangentOffset1);
+               }
+
+               if (this .hasNormals)
+               {
+                  const
+                     normalStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     normalOffset0 = 0,
+                     normalOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT;
+
+                  transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
+                  transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
+               }
+            }
+
+            // Create lineTrianglesBuffer2
+
+            if (this .numLines2 !== numLines)
+            {
+               this .numLines2              = numLines;
+               this .lineTrianglesBuffer2 ??= gl .createBuffer ();
+
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer2);
+               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ((9 + 4 + 3) * 6 * numLines), gl .DYNAMIC_DRAW);
+            }
+
+            // Transform lines.
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, null);
+            gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
+            gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .lineTrianglesBuffer2);
+            gl .enable (gl .RASTERIZER_DISCARD);
+            gl .beginTransformFeedback (gl .POINTS);
+            gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2);
+            gl .endTransformFeedback ();
+            gl .disable (gl .RASTERIZER_DISCARD);
+            gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
+
+            // DEBUG
+
+            // const data = new Float32Array (9 * 6 * 2);
+            // gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode [_lineTrianglesBuffer2]);
+            // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
+            // console .log (data);
+         }
 
          // Render triangles.
 
@@ -402,6 +467,20 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          if (this .thickLinesVertexArrayObject .enable (shaderNode .getProgram ()))
          {
+            if (this .hasNormals)
+            {
+               const
+                  stride        = (9 + 4 + 3) * Float32Array .BYTES_PER_ELEMENT,
+                  tangentOffset = 9 * Float32Array .BYTES_PER_ELEMENT,
+                  normalOffset  = 13 * Float32Array .BYTES_PER_ELEMENT;
+
+               if (this .hasTangents)
+                  shaderNode .enableTangentAttribute (gl, this .lineTrianglesBuffer2, stride, tangentOffset);
+
+               if (this .hasNormals)
+                  shaderNode .enableNormalAttribute (gl, this .lineTrianglesBuffer2, stride, normalOffset);
+            }
+
             const
                stride            = 13 * Float32Array .BYTES_PER_ELEMENT,
                coordIndexOffset  = 0,
@@ -413,16 +492,16 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             // for (let i = 0, length = attribNodes .length; i < length; ++ i)
             //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-            shaderNode .enableCoordIndexAttribute  (gl, this .lineTrianglesBuffer, stride, coordIndexOffset);
-            shaderNode .enableLineStippleAttribute (gl, this .lineTrianglesBuffer, stride, lineStippleOffset);
+            shaderNode .enableCoordIndexAttribute  (gl, this .lineTrianglesBuffer0, stride, coordIndexOffset);
+            shaderNode .enableLineStippleAttribute (gl, this .lineTrianglesBuffer0, stride, lineStippleOffset);
 
             if (this .hasFogCoords)
-               shaderNode .enableFogDepthAttribute (gl, this .lineTrianglesBuffer, stride, fogCoordOffset);
+               shaderNode .enableFogDepthAttribute (gl, this .lineTrianglesBuffer0, stride, fogCoordOffset);
 
             if (this .colorMaterial)
-               shaderNode .enableColorAttribute (gl, this .lineTrianglesBuffer, stride, colorOffset);
+               shaderNode .enableColorAttribute (gl, this .lineTrianglesBuffer0, stride, colorOffset);
 
-            shaderNode .enableVertexAttribute (gl, this .lineTrianglesBuffer, stride, vertexOffset);
+            shaderNode .enableVertexAttribute (gl, this .lineTrianglesBuffer0, stride, vertexOffset);
          }
 
          gl .frontFace (gl .CCW);
@@ -719,24 +798,24 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                if (this .hasTangents)
                   transformShaderNode2 .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
 
-               const
-                  tangentStride  = 8 * Float32Array .BYTES_PER_ELEMENT,
-                  tangentOffset0 = 0,
-                  tangentOffset1 = 4 * Float32Array .BYTES_PER_ELEMENT;
-
                if (this .hasTangents)
                {
+                  const
+                     tangentStride  = 8 * Float32Array .BYTES_PER_ELEMENT,
+                     tangentOffset0 = 0,
+                     tangentOffset1 = 4 * Float32Array .BYTES_PER_ELEMENT;
+
                   transformShaderNode2 .enableFloatAttrib (gl, "x3d_Tangent0", this .tangentBuffer, 4, tangentStride, tangentOffset0);
                   transformShaderNode2 .enableFloatAttrib (gl, "x3d_Tangent1", this .tangentBuffer, 4, tangentStride, tangentOffset1);
                }
 
-               const
-                  normalStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
-                  normalOffset0 = 0,
-                  normalOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT;
-
                if (this .hasNormals)
                {
+                  const
+                     normalStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
+                     normalOffset0 = 0,
+                     normalOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT;
+
                   transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal0", this .normalBuffer, 3, normalStride, normalOffset0);
                   transformShaderNode2 .enableFloatAttrib (gl, "x3d_Normal1", this .normalBuffer, 3, normalStride, normalOffset1);
                }
