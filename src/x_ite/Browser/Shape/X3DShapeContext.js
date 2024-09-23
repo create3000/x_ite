@@ -172,13 +172,7 @@ Object .assign (X3DShapeContext .prototype,
    },
    getLineTransformShader ()
    {
-      this [_lineTransformShaderNode] = this .createLineTransformShader (0, false);
-
-      this .getLineTransformShader = function () { return this [_lineTransformShaderNode]; };
-
-      Object .defineProperty (this, "getLineTransformShader", { enumerable: false });
-
-      return this [_lineTransformShaderNode];
+      return this [_lineTransformShaderNode] ??= this .createLineTransformShader (0, false);
    },
    getLineTransformInstancedShader (pass)
    {
