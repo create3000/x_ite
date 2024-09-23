@@ -737,6 +737,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                const { instancesStride, normalMatrixOffset } = shapeNode;
 
                transformShaderNode2 .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
+
+               if (this .hasTangents)
+                  transformShaderNode2 .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
             }
 
             // Create lineTrianglesBuffer2
@@ -747,7 +750,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                shapeNode [_lineTrianglesBuffer2] ??= gl .createBuffer ();
 
                gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode [_lineTrianglesBuffer2]);
-               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (9 * 6 * numLines), gl .DYNAMIC_DRAW);
+               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ((9 + 4) * 6 * numLines), gl .DYNAMIC_DRAW);
             }
 
             // Transform lines.
@@ -786,8 +789,19 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          {
             shaderNode .enableInstanceMatrixAttribute (gl, shapeNode [_lineTrianglesBuffer1], 0, 0, 0);
 
-            if (this .hasNormals && shapeNode .normalMatrixOffset)
-               shaderNode .enableInstanceNormalMatrixAttribute (gl, shapeNode [_lineTrianglesBuffer2], 0, 0, 0);
+            if (this .hasNormals)
+            {
+               const
+                  stride             = (9 + 4) * Float32Array .BYTES_PER_ELEMENT,
+                  normalMatrixOffset = 0,
+                  tangentOffset      = 9 * Float32Array .BYTES_PER_ELEMENT;
+
+               if (shapeNode .normalMatrixOffset)
+                  shaderNode .enableInstanceNormalMatrixAttribute (gl, shapeNode [_lineTrianglesBuffer2], stride, normalMatrixOffset, 0);
+
+               if (this .hasTangents)
+                  shaderNode .enableTangentAttribute (gl, shapeNode [_lineTrianglesBuffer2], stride, tangentOffset);
+            }
 
             const
                stride            = 16 * Float32Array .BYTES_PER_ELEMENT,

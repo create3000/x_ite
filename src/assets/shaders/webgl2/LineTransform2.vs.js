@@ -193,19 +193,26 @@ main ()
 
 #if defined (X3D_INSTANCING)
    in mat3 x3d_InstanceNormalMatrix;
+   in vec4 x3d_Tangent;
 #endif
 
 // Registered in X3DShapeContext, 3 * 9 = 27 floats.
 out mat3 instanceNormalMatrix0;
+out vec4 tangent0;
 out mat3 instanceNormalMatrix1;
+out vec4 tangent1;
 out mat3 instanceNormalMatrix2;
+out vec4 tangent2;
 
 void
 main ()
 {
    instanceNormalMatrix0 = x3d_InstanceNormalMatrix;
+   tangent0              = x3d_Tangent;
    instanceNormalMatrix1 = x3d_InstanceNormalMatrix;
+   tangent1              = x3d_Tangent;
    instanceNormalMatrix2 = x3d_InstanceNormalMatrix;
+   tangent2              = x3d_Tangent;
 }
 #endif
 `;

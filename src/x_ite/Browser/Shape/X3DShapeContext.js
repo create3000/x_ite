@@ -211,9 +211,9 @@ Object .assign (X3DShapeContext .prototype,
             "instanceMatrix2",
          ],
          [
-            "instanceNormalMatrix0",
-            "instanceNormalMatrix1",
-            "instanceNormalMatrix2",
+            "instanceNormalMatrix0", "tangent0",
+            "instanceNormalMatrix1", "tangent1",
+            "instanceNormalMatrix2", "tangent2",
          ],
       ]
       [pass];
