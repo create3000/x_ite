@@ -2108,16 +2108,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       {
          vertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
          thickLinesVertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
-         lineTrianglesBuffer: gl .createBuffer (),
-         numLines: 0,
       });
 
       this .outputParticles = Object .assign (gl .createBuffer (),
       {
          vertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
          thickLinesVertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
-         lineTrianglesBuffer: gl .createBuffer (),
-         numLines: 0,
       });
 
       // Create forces stuff.

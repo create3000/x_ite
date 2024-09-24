@@ -1310,7 +1310,6 @@ const external_X_ITE_X3D_VertexArray_namespaceObject = __X_ITE_X3D__ .VertexArra
 var external_X_ITE_X3D_VertexArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_VertexArray_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
-var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
 ;// CONCATENATED MODULE: external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
@@ -1389,14 +1388,11 @@ function InstancedShape (executionContext)
 
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "matrices", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
-   this .min   = new (external_X_ITE_X3D_Vector3_default()) ();
-   this .max   = new (external_X_ITE_X3D_Vector3_default()) ();
-   this .scale = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 1);
-
    this .numInstances       = 0;
    this .instancesStride    = Float32Array .BYTES_PER_ELEMENT * (16 + 9); // mat4 + mat3
    this .matrixOffset       = 0;
    this .normalMatrixOffset = Float32Array .BYTES_PER_ELEMENT * 16;
+   this .matrices           = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_ITE_X3D_X3DShapeNode_default()).prototype),
@@ -1418,8 +1414,6 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
       {
          vertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
          thickLinesVertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
-         lineTrianglesBuffer: gl .createBuffer (),
-         numLines: 0,
       });
 
       this ._translations      .addInterest ("set_transform__", this);
@@ -1445,39 +1439,29 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
    },
    set_bbox__: (function ()
    {
-      const
-         min  = new (external_X_ITE_X3D_Vector3_default()) (),
-         max  = new (external_X_ITE_X3D_Vector3_default()) (),
-         bbox = new (external_X_ITE_X3D_Box3_default()) ();
+      const bbox = new (external_X_ITE_X3D_Box3_default()) ();
 
       return function ()
       {
-         if (this .numInstances)
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
-            if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+            if (this .getGeometry ())
             {
-               if (this .getGeometry ())
-                  bbox .assign (this .getGeometry () .getBBox ());
-               else
-                  bbox .set ();
+               this .bbox .set ();
 
-               const
-                  size1_2 = bbox .size .multiply (this .scale .magnitude () / 2),
-                  center  = bbox .center;
+               const geometryBBox = this .getGeometry () .getBBox ();
 
-               min .assign (this .min) .add (center) .subtract (size1_2);
-               max .assign (this .max) .add (center) .add      (size1_2);
-
-               this .bbox .setExtents (min, max);
+               for (const matrix of this .matrices)
+                  this .bbox .add (bbox .assign (geometryBBox) .multRight (matrix));
             }
             else
             {
-               this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+               this .bbox .set ();
             }
          }
          else
          {
-            this .bbox .set ();
+            this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
          }
 
          this .getBBoxSize ()   .assign (this .bbox .size);
@@ -1506,33 +1490,25 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
          numInstances         = Math .max (numTranslations, numRotations, numScales, numScaleOrientations, numCenters),
          stride               = this .instancesStride / Float32Array .BYTES_PER_ELEMENT,
          length               = this .instancesStride * numInstances,
-         data                 = new Float32Array (length),
-         matrix               = new (external_X_ITE_X3D_Matrix4_default()) ();
+         data                 = new Float32Array (length);
 
       this .numInstances = numInstances;
 
-      const
-         min   = this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
-         max   = this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY),
-         scale = this .scale .assign (numScales ? max : (external_X_ITE_X3D_Vector3_default()).One);
-
       for (let i = 0, o = 0; i < numInstances; ++ i, o += stride)
       {
+         const matrix = this .matrices [i] ??= new (external_X_ITE_X3D_Matrix4_default()) ();
+
          matrix .set (numTranslations      ? translations      [Math .min (i, numTranslations      - 1)] .getValue () : null,
                       numRotations         ? rotations         [Math .min (i, numRotations         - 1)] .getValue () : null,
                       numScales            ? scales            [Math .min (i, numScales            - 1)] .getValue () : null,
                       numScaleOrientations ? scaleOrientations [Math .min (i, numScaleOrientations - 1)] .getValue () : null,
                       numCenters           ? centers           [Math .min (i, numCenters           - 1)] .getValue () : null);
 
-         if (numScales)
-            scale .max (scales [Math .min (i, numScales - 1)] .getValue ());
-
          data .set (matrix, o);
          data .set (matrix .submatrix .transpose () .inverse (), o + 16);
-
-         min .min (matrix .origin);
-         max .max (matrix .origin);
       }
+
+      this .matrices .length = numInstances;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .instances);
       gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);

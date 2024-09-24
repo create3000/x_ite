@@ -841,12 +841,14 @@ Object .assign (Object .setPrototypeOf (Arc2D .prototype, (external_X_ITE_X3D_X3
    {
       external_X_ITE_X3D_X3DLineGeometryNode_default().prototype .set_live__ .call (this);
 
-      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+      const
+         browser      = this .getBrowser (),
+         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
 
       if (this .getLive () .getValue () || alwaysUpdate)
-         this .getBrowser () .getArc2DOptions () .addInterest ("requestRebuild", this);
+         browser .getArc2DOptions () .addInterest ("requestRebuild", this);
       else
-         this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
+         browser .getArc2DOptions () .removeInterest ("requestRebuild", this);
    },
    getSweepAngle ()
    {
@@ -993,12 +995,14 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, (external_X_ITE_X
    {
       external_X_ITE_X3D_X3DGeometryNode_default().prototype .set_live__ .call (this);
 
-      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+      const
+         browser      = this .getBrowser (),
+         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
 
       if (this .getLive () .getValue () || alwaysUpdate)
-         this .getBrowser () .getArcClose2DOptions () .addInterest ("requestRebuild", this);
+         browser .getArcClose2DOptions () .addInterest ("requestRebuild", this);
       else
-         this .getBrowser () .getArcClose2DOptions () .removeInterest ("requestRebuild", this);
+         browser .getArcClose2DOptions () .removeInterest ("requestRebuild", this);
    },
    getSweepAngle ()
    {
@@ -1202,12 +1206,14 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, (external_X_ITE_X3D
    {
       external_X_ITE_X3D_X3DLineGeometryNode_default().prototype .set_live__ .call (this);
 
-      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+      const
+         browser      = this .getBrowser (),
+         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
 
       if (this .getLive () .getValue () || alwaysUpdate)
-         this .getBrowser () .getCircle2DOptions () .addInterest ("requestRebuild", this);
+         browser .getCircle2DOptions () .addInterest ("requestRebuild", this);
       else
-         this .getBrowser () .getCircle2DOptions () .removeInterest ("requestRebuild", this);
+         browser .getCircle2DOptions () .removeInterest ("requestRebuild", this);
    },
    build ()
    {
@@ -1321,21 +1327,20 @@ function Disk2D (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X3DGeometryNode_default()).prototype),
+   (external_X_ITE_X3D_X3DLineGeometryNode_default()).prototype,
 {
-   initialize ()
-   {
-      external_X_ITE_X3D_X3DGeometryNode_default().prototype .initialize .call (this);
-   },
    set_live__ ()
    {
       external_X_ITE_X3D_X3DGeometryNode_default().prototype .set_live__ .call (this);
 
-      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+      const
+         browser      = this .getBrowser (),
+         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
 
       if (this .getLive () .getValue () || alwaysUpdate)
-         this .getBrowser () .getDisk2DOptions () .addInterest ("requestRebuild", this);
+         browser .getDisk2DOptions () .addInterest ("requestRebuild", this);
       else
-         this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
+         browser .getDisk2DOptions () .removeInterest ("requestRebuild", this);
    },
    build ()
    {

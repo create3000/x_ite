@@ -2014,12 +2014,14 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
    },
    set_live__ ()
    {
-       const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+      const
+         browser      = this .getBrowser (),
+         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
 
        if (this .getLive () .getValue () || alwaysUpdate)
-          this .getBrowser () .getBrowserOptions () ._TextureQuality .addInterest ("set_dimensions__", this);
+          browser .getBrowserOptions () ._TextureQuality .addInterest ("set_dimensions__", this);
       else
-         this .getBrowser () .getBrowserOptions () ._TextureQuality .removeInterest ("set_dimensions__", this);
+         browser .getBrowserOptions () ._TextureQuality .removeInterest ("set_dimensions__", this);
    },
    set_dimensions__ ()
    {

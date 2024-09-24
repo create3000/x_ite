@@ -3,7 +3,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-10.5.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 5:
+/***/ 845:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -16081,7 +16081,7 @@ const FontStyle_default_ = FontStyle;
 /* harmony default export */ const Text_FontStyle = (external_X_ITE_X3D_Namespace_default().add ("FontStyle", FontStyle_default_));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(254);
-/* provided dependency */ var opentype = __webpack_require__(5);
+/* provided dependency */ var opentype = __webpack_require__(845);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16319,17 +16319,19 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
    {
       external_X_ITE_X3D_X3DGeometryNode_default().prototype .set_live__ .call (this);
 
-      const alwaysUpdate = this .isLive () && this .getBrowser () .getBrowserOption ("AlwaysUpdateGeometries");
+      const
+         browser      = this .getBrowser (),
+         alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
 
       if (this .getLive () .getValue () || alwaysUpdate)
       {
-         this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
-         this .getBrowser () .getBrowserOptions () ._TextCompression  .addInterest ("requestRebuild", this);
+         browser .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
+         browser .getBrowserOptions () ._TextCompression  .addInterest ("requestRebuild", this);
       }
       else
       {
-         this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .removeInterest ("requestRebuild", this);
-         this .getBrowser () .getBrowserOptions () ._TextCompression  .removeInterest ("requestRebuild", this);
+         browser .getBrowserOptions () ._PrimitiveQuality .removeInterest ("requestRebuild", this);
+         browser .getBrowserOptions () ._TextCompression  .removeInterest ("requestRebuild", this);
       }
    },
    set_fontStyle__ ()
