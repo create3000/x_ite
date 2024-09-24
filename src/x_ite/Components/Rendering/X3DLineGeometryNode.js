@@ -113,7 +113,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       gl .bufferData (gl .ARRAY_BUFFER, this .lineStipples, gl .DYNAMIC_DRAW);
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer0);
-      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
+      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ((16 * 6) * numLines), gl .DYNAMIC_DRAW);
    },
    updateLengthSoFar: (() =>
    {
@@ -427,7 +427,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                this .lineTrianglesBuffer2 ??= gl .createBuffer ();
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .lineTrianglesBuffer2);
-               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ((9 + 4 + 3) * 6 * numLines), gl .DYNAMIC_DRAW);
+               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ((16 * 6) * numLines), gl .DYNAMIC_DRAW);
             }
 
             // Transform lines.
@@ -708,7 +708,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             shapeNode [_lineTrianglesBuffer0] ??= gl .createBuffer ();
 
             gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode [_lineTrianglesBuffer0]);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (13 * 6 * numLines), gl .DYNAMIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ((13 * 6) * numLines), gl .DYNAMIC_DRAW);
          }
 
          // Transform lines.
@@ -753,7 +753,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             shapeNode [_lineTrianglesBuffer1] ??= gl .createBuffer ();
 
             gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode [_lineTrianglesBuffer1]);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ((16 * 6) * numLines), gl .DYNAMIC_DRAW);
          }
 
          // Transform lines.
@@ -822,7 +822,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                shapeNode [_lineTrianglesBuffer2] ??= gl .createBuffer ();
 
                gl .bindBuffer (gl .ARRAY_BUFFER, shapeNode [_lineTrianglesBuffer2]);
-               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ((9 + 4 + 3) * 6 * numLines), gl .DYNAMIC_DRAW);
+               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ((16 * 6) * numLines), gl .DYNAMIC_DRAW);
             }
 
             // Transform lines.
