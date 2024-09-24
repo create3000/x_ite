@@ -25,7 +25,7 @@ in float x3d_FogDepth1;
 in vec4  x3d_Color1;
 in vec4  x3d_Vertex1;
 
-// Registered in X3DShapeContext, 3 * 16 = 48 floats.
+// Registered in X3DShapeContext, 3 * 13 = 39 floats.
 out float coordIndex0;
 out vec3  lineStipple0;
 out float fogDepth0;
@@ -188,7 +188,7 @@ main ()
    in vec4 x3d_Tangent1;
 #endif
 
-// Registered in X3DShapeContext, 3 * (9 + 4) = 39 floats.
+// Registered in X3DShapeContext, 3 * (9 + 4 + 3) = 48 floats.
 out mat3 instanceNormalMatrix0;
 out vec4 tangent0;
 out vec3 normal0;
