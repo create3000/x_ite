@@ -118,21 +118,43 @@ Object .assign (X3DBoundedObject .prototype,
    {
       const
          bbox   = new Box3 (),
-         matrix = new Matrix4 ();
+         points = [ ];
 
       return function (type, renderObject)
       {
-         const modelViewMatrix = renderObject .getModelViewMatrix ();
+         if (!this .bboxNode)
+         {
+            this .bboxNode = this .getBrowser () .createBBoxNode ();
+            this .nodeBBox = new Box3 ();
+         }
 
          this .getBBox (bbox);
-         matrix .set (bbox .center, null, bbox .size);
 
-         modelViewMatrix .push ();
-         modelViewMatrix .multLeft (matrix);
+         if (!bbox .equals (this .nodeBBox))
+         {
+            this .nodeBBox .assign (bbox);
 
-         this .getBrowser () .getBBoxNode () .traverse (type, renderObject);
+            const
+               { x: sx, y: sy, z: sz } = bbox .size .divide (2),
+               { x: cx, y: cy, z: cz } = bbox .center;
 
-         modelViewMatrix .pop ();
+            points .length = 0;
+            points .push (
+                sx + cx,  sy + cy,  sz + cz,
+               -sx + cx,  sy + cy,  sz + cz,
+               -sx + cx, -sy + cy,  sz + cz,
+                sx + cx, -sy + cy,  sz + cz,
+                sx + cx,  sy + cy, -sz + cz,
+               -sx + cx,  sy + cy, -sz + cz,
+               -sx + cx, -sy + cy, -sz + cz,
+                sx + cx, -sy + cy, -sz + cz,
+            );
+
+            this .bboxNode ._geometry .coord .point = points;
+            this .bboxNode ._geometry .getValue () .rebuild ();
+         }
+
+         this .bboxNode .traverse (type, renderObject);
       };
    })(),
    addTransformSensor (transformSensorNode)
