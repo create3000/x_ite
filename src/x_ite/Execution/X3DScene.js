@@ -1034,12 +1034,8 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this ._loadCount = this [_loadingObjects] .size;
 
-      const browser = this .getBrowser ();
-
-      if (this === browser .getExecutionContext ())
-         browser .removeLoadingObject (node);
-
-      this .getScene () ?.removeLoadingObject (node);
+      this .getBrowser () .removeLoadingObject (node);
+      this .getScene ()  ?.removeLoadingObject (node);
    },
 });
 
