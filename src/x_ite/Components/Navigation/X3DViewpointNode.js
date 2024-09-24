@@ -172,12 +172,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       this .navigationInfoNode = X3DCast (X3DConstants .NavigationInfo, this ._navigationInfo);
 
-      if (!this .navigationInfoNode)
-         return;
-
-      this ._isBound .addFieldInterest (this .navigationInfoNode ._set_bind);
-
-      this .navigationInfoNode ._set_bind = this ._isBound;
+      if (this .navigationInfoNode)
+         this ._isBound .addFieldInterest (this .navigationInfoNode ._set_bind);
    },
    set_bound__ ()
    {
