@@ -123,15 +123,18 @@ Object .assign (X3DBoundedObject .prototype,
 
       return function (type, renderObject)
       {
-         const modelViewMatrix = renderObject .getModelViewMatrix ();
+         const
+            browser         = this .getBrowser (),
+            m               = browser .getRenderingProperty ("ContentScale") === 1 ? 0 : 1e-5,
+            modelViewMatrix = renderObject .getModelViewMatrix ();
 
          this .getBBox (bbox);
-         matrix .set (bbox .center, null, size .set (1e-5, 1e-5, 1e-5) .max (bbox .size));
+         matrix .set (bbox .center, null, size .set (m, m, m) .max (bbox .size));
 
          modelViewMatrix .push ();
          modelViewMatrix .multLeft (matrix);
 
-         this .getBrowser () .getBBoxNode () .traverse (type, renderObject);
+         browser .getBBoxNode () .traverse (type, renderObject);
 
          modelViewMatrix .pop ();
       };
