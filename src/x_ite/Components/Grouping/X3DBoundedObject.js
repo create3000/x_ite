@@ -118,18 +118,18 @@ Object .assign (X3DBoundedObject .prototype,
    {
       const
          bbox   = new Box3 (),
-         size   = new Vector3 (),
+         eps    = new Vector3 (1e-5, 1e-5, 1e-5),
          matrix = new Matrix4 ();
 
       return function (type, renderObject)
       {
          const
             browser         = this .getBrowser (),
-            m               = browser .getRenderingProperty ("ContentScale") === 1 ? 0 : 1e-5,
+            m               = browser .getRenderingProperty ("ContentScale") === 1 ? Vector3 .Zero : eps,
             modelViewMatrix = renderObject .getModelViewMatrix ();
 
          this .getBBox (bbox);
-         matrix .set (bbox .center, null, size .set (m, m, m) .max (bbox .size));
+         matrix .set (bbox .center, null, bbox .size .max (m));
 
          modelViewMatrix .push ();
          modelViewMatrix .multLeft (matrix);
