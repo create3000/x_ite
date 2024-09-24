@@ -118,6 +118,7 @@ Object .assign (X3DBoundedObject .prototype,
    {
       const
          bbox   = new Box3 (),
+         size   = new Vector3 (),
          matrix = new Matrix4 ();
 
       return function (type, renderObject)
@@ -125,7 +126,7 @@ Object .assign (X3DBoundedObject .prototype,
          const modelViewMatrix = renderObject .getModelViewMatrix ();
 
          this .getBBox (bbox);
-         matrix .set (bbox .center, null, bbox .size);
+         matrix .set (bbox .center, null, size .set (1e-5, 1e-5, 1e-5) .max (bbox .size));
 
          modelViewMatrix .push ();
          modelViewMatrix .multLeft (matrix);
