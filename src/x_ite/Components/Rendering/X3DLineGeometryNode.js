@@ -171,9 +171,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          shaderNode .enableLineStippleAttribute (gl, this .lineStippleBuffer, 0, 0);
 
-         if (this .hasTangents)
-            shaderNode .enableTangentAttribute (gl, this .tangentBuffer, 0, 0);
-
          if (this .hasNormals)
             shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
 
