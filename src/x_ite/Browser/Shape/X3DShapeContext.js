@@ -67,7 +67,8 @@ const
 
 function X3DShapeContext ()
 {
-   this [_hatchStyleTextures] = [ ];
+   this [_lineTransformInstancedShaderNode] = [ ];
+   this [_hatchStyleTextures]               = [ ];
 }
 
 Object .assign (X3DShapeContext .prototype,
@@ -176,8 +177,6 @@ Object .assign (X3DShapeContext .prototype,
    },
    getLineTransformInstancedShader (pass)
    {
-      this [_lineTransformInstancedShaderNode] ??= [ ];
-
       return this [_lineTransformInstancedShaderNode] [pass] ??= this .createLineTransformShader (pass, true);
    },
    createLineTransformShader (pass, instanced)
