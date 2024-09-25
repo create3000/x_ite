@@ -182,13 +182,22 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
    },
    displaySimpleThick (gl, renderContext, shaderNode)
    {
-      const linePropertiesNode = renderContext .shapeNode .getAppearance () .getStyleProperties (1);
+      const
+         shapeNode          = renderContext .shapeNode,
+         linePropertiesNode = shapeNode .getAppearance () .getStyleProperties (1);
 
       if (!linePropertiesNode)
          return false;
 
       if (!linePropertiesNode .getTransformLines ())
          return false;
+
+      // Check if pass 1 and/or pass 2 are already run.
+
+      const numLines = this .getVertices () .length / 8 * shapeNode .getNumInstances ();
+
+      if (this .numLines2 !== numLines)
+         return true;
 
       // Setup vertex attributes.
 
@@ -264,6 +273,16 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       if (!linePropertiesNode .getTransformLines ())
          return false;
+
+      // Check if pass 1 and/or pass 2 are already run.
+
+      const numLines = this .getVertices () .length / 8 * shapeNode .getNumInstances ();
+
+      if (shapeNode [_numLines0] !== numLines)
+         return true;
+
+      if (shapeNode [_numLines2] !== numLines)
+         return true;
 
       // Setup vertex attributes.
 
