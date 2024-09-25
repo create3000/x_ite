@@ -240,10 +240,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
       {
-         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
-
-         if (particleOffset !== undefined)
-            shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
+         const { instancesStride, matrixOffset, normalMatrixOffset } = shapeNode;
 
          shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
 
