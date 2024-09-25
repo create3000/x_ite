@@ -711,11 +711,11 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    {
       if (this .double ())
       {
-         let x = this .value;
+         const x = this .value;
 
          if (this .double ())
          {
-            let y = this .value;
+            const y = this .value;
 
             array .push (x, y);
             return true;
@@ -728,15 +728,15 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    {
       if (this .double ())
       {
-         let x = this .value;
+         const x = this .value;
 
          if (this .double ())
          {
-            let y = this .value;
+            const y = this .value;
 
             if (this .double ())
             {
-               let z = this .value;
+               const z = this .value;
 
                array .push (x, y, z)
                return true;

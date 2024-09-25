@@ -88,11 +88,6 @@ const Grammar = Expressions ({
 function STLAParser (scene)
 {
    X3DParser .call (this, scene);
-
-   // Globals
-
-   this .vector = [ ];
-   this .point  = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .prototype),
@@ -202,8 +197,8 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
          geometry .normalPerVertex = false;
          geometry .normal          = normal;
          geometry .coord           = coordinate;
-         normal .vector            = this .vector;
-         coordinate .point         = this .point;
+         normal .vector            = this .normals;
+         coordinate .point         = this .vertices;
 
          if (name)
          {
@@ -225,21 +220,21 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
    },
    facets ()
    {
-      this .vector .length = 0;
-      this .point  .length = 0;
+      this .normals  = [ ];
+      this .vertices = [ ];
 
-      while (this .facet ())
+      while (this .facet (this .normals, this .vertices))
          ;
    },
-   facet ()
+   facet (normals, vertices)
    {
       this .comments ()
 
       if (Grammar .facet .parse (this))
       {
-         if (this .normal ())
+         if (this .normal (normals))
          {
-            if (this .loop ())
+            if (this .loop (vertices))
             {
                this .comments ();
 
@@ -253,7 +248,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
 
       return false;
    },
-   normal ()
+   normal (normals)
    {
       this .whitespacesNoLineTerminator ();
 
@@ -261,16 +256,17 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       {
          if (this .double ())
          {
-            this .vector .push (this .value);
+            const x = this .value;
 
             if (this .double ())
             {
-               this .vector .push (this .value);
+               const y = this .value;
 
                if (this .double ())
                {
-                  this .vector .push (this .value);
+                  const z = this .value;
 
+                  normals .push (x, y, z);
                   return true;
                }
 
@@ -285,7 +281,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
 
       throw new Error ("Expected 'normal' statement.");
    },
-   loop ()
+   loop (vertices)
    {
       this .comments ();
 
@@ -295,11 +291,11 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
 
          if (Grammar .loop .parse (this))
          {
-            if (this .vertex ())
+            if (this .vertex (vertices))
             {
-               if (this .vertex ())
+               if (this .vertex (vertices))
                {
-                  if (this .vertex ())
+                  if (this .vertex (vertices))
                   {
                      this .comments ();
 
@@ -317,7 +313,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
 
       throw new Error ("Expected 'outer' statement.");
    },
-   vertex ()
+   vertex (vertices)
    {
       this .comments ();
 
@@ -325,16 +321,17 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       {
          if (this .double ())
          {
-            this .point .push (this .value);
+            const x = this .value;
 
             if (this .double ())
             {
-               this .point .push (this .value);
+               const y = this .value;
 
                if (this .double ())
                {
-                  this .point .push (this .value);
+                  const z = this .value;
 
+                  vertices .push (x, y, z);
                   return true;
                }
 
