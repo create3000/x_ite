@@ -48,8 +48,6 @@
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Expressions  from "./Expressions.js";
-import Vector2      from "../../standard/Math/Numbers/Vector2.js";
-import Vector3      from "../../standard/Math/Numbers/Vector3.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import DEVELOPMENT  from "../DEVELOPMENT.js";
 
@@ -117,8 +115,6 @@ function OBJParser (scene)
    this .groups          = new Map ();
    this .materials       = new Map ();
    this .textures        = new Map ();
-   this .point2          = new Vector2 ();
-   this .point3          = new Vector3 ();
    this .lastIndex       = 0;
 }
 
@@ -173,6 +169,10 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       this .normal          = scene .createNode ("Normal");
       this .coord           = scene .createNode ("Coordinate");
 
+      this .texCoords = [ ];
+      this .normals   = [ ];
+      this .vertices  = [ ];
+
       this .object .children .push (this .group);
 
       scene .getRootNodes () .push (this .object);
@@ -180,6 +180,10 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       // Parse scene.
 
       await this .statements ();
+
+      this .texCoord .point  = this .texCoords;
+      this .normal   .vector = this .normals;
+      this .coord    .point  = this .vertices;
 
       this .optimizeSceneGraph (scene .getRootNodes ());
 
@@ -447,27 +451,23 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    },
    vts ()
    {
-      const point = this .texCoord .point;
+      const texCoords = this .texCoords;
 
       let result = false;
 
-      while (this .vt (point))
+      while (this .vt (texCoords))
          result = true;
 
       return result;
    },
-   vt (point)
+   vt (texCoords)
    {
       this .comments ();
 
       if (Grammar .vt .parse (this))
       {
-         if (this .vec2 ())
-         {
-            point .push (this .point2);
-
+         if (this .vec2 (texCoords))
             return true;
-         }
 
          throw new Error ("Expected a texture coordinate.");
       }
@@ -476,27 +476,23 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    },
    vns ()
    {
-      const vector = this .normal .vector;
+      const normals = this .normals;
 
       let result = false;
 
-      while (this .vn (vector))
+      while (this .vn (normals))
          result = true;
 
       return result;
    },
-   vn (vector)
+   vn (normals)
    {
       this .comments ();
 
       if (Grammar .vn .parse (this))
       {
-         if (this .vec3 ())
-         {
-            vector .push (this .point3);
-
+         if (this .vec3 (normals))
             return true;
-         }
 
          throw new Error ("Expected a normal vector.");
       }
@@ -505,27 +501,23 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    },
    vs ()
    {
-      const point = this .coord .point;
+      const vertices = this .vertices;
 
       let result = false;
 
-      while (this .v (point))
+      while (this .v (vertices))
          result = true;
 
       return result;
    },
-   v (point)
+   v (vertices)
    {
       this .comments ();
 
       if (Grammar .v .parse (this))
       {
-         if (this .vec3 ())
-         {
-            point .push (this .point3);
-
+         if (this .vec3 (vertices))
             return true;
-         }
 
          throw new Error ("Expected a vertex coordinate.");
       }
@@ -595,9 +587,9 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             coordIndex         = geometry .coordIndex,
             numTexCoordIndices = texCoordIndex .length,
             numNormalIndices   = normalIndex .length,
-            numTexCoords       = this .texCoord .point .length,
-            numNormals         = this .normal .vector .length,
-            numCoords          = this .coord .point .length;
+            numTexCoords       = this .texCoords .length,
+            numNormals         = this .normals .length,
+            numCoords          = this .vertices .length;
 
          while (this .indices (texCoordIndex, normalIndex, coordIndex, numTexCoords, numNormals, numCoords))
             ;
@@ -688,36 +680,38 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       return false;
    },
-   vec2 ()
+   vec2 (array)
    {
       if (this .double ())
       {
-         this .point2 .x = this .value;
+         let x = this .value;
 
          if (this .double ())
          {
-            this .point2 .y = this .value;
+            let y = this .value;
 
+            array .push (x, y);
             return true;
          }
       }
 
       return false;
    },
-   vec3 ()
+   vec3 (array)
    {
       if (this .double ())
       {
-         this .point3 .x = this .value;
+         let x = this .value;
 
          if (this .double ())
          {
-            this .point3 .y = this .value;
+            let y = this .value;
 
             if (this .double ())
             {
-               this .point3 .z = this .value;
+               let z = this .value;
 
+               array .push (x, y, z)
                return true;
             }
          }
@@ -1057,7 +1051,7 @@ Object .assign (MaterialParser .prototype,
          this .value = this .CONSTANTS .get (this .result [2] .toUpperCase ());
 
          if (this .result [1] === "-")
-            this .value = - this .value;
+            this .value = -this .value;
 
          return true;
       }
