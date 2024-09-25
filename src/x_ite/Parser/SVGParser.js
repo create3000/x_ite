@@ -2721,11 +2721,13 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    {
       // Callback for when segments intersect and must be split.
 
+      const points = coordinateNode .point;
+
       function combineCallback (coords, data, weight)
       {
-         const index = coordinateNode .point .length;
+         const index = points .length;
 
-         coordinateNode .point .push (new Vector3 (... coords));
+         points .push (coords);
 
          return index;
       }
