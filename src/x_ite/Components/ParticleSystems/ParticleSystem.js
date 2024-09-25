@@ -887,6 +887,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    { },
    traverse (type, renderObject)
    {
+      if (this .geometryType === GeometryTypes .GEOMETRY)
+      {
+         if (!this .getGeometry ())
+            return;
+      }
+
       switch (type)
       {
          case TraverseType .POINTER:
@@ -920,11 +926,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          }
       }
 
-      if (this .geometryType === GeometryTypes .GEOMETRY)
-      {
-         // Currently used for ScreenText and Tools.
-         this .getGeometry () ?.traverse (type, renderObject);
-      }
+      // Currently used for ScreenText and Tools.
+      this .getGeometry () .traverse (type, renderObject);
    },
    displaySimple (gl, renderContext, shaderNode)
    {
