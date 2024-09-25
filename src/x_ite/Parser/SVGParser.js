@@ -982,7 +982,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
             // Create contour indices.
 
-            const indices = geometryNode .coordIndex;
+            const indices = [ ];
 
             for (const points of contours)
             {
@@ -994,6 +994,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
                indices .push (-1);
             }
+
+            geometryNode .coordIndex = indices;
          }
       }
 
