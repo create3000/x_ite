@@ -774,7 +774,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          // Pass 2
 
-         if (this .hasNormals && shapeNode .normalMatrixOffset)
+         if (this .hasNormals)
          {
             const transformShaderNode2 = browser .getLineTransformInstancedShader (2);
 
